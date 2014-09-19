@@ -83,6 +83,8 @@ public:
 #elif defined(__WXGTK__)
     static const int CHECKBOX_INDENT = 25;
 #endif
+
+    static wxColour GetTextColor();
 };
 
 

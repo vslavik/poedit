@@ -263,6 +263,7 @@ private:
         void OnTextEditingCommandUpdate(wxUpdateUIEvent& event);
 #endif
 
+        void OnSuggestion(wxCommandEvent& event);
         void OnAutoTranslate(wxCommandEvent& event);
         void OnAutoTranslateAll(wxCommandEvent& event);
         bool AutoTranslateCatalog(int *matchesCount = nullptr);

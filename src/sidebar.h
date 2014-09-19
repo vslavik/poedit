@@ -26,27 +26,41 @@
 #ifndef Poedit_sidebar_h
 #define Poedit_sidebar_h
 
+#include <cstdint>
 #include <memory>
 #include <vector>
 
+#include <wx/event.h>
 #include <wx/panel.h>
 
+#include "language.h"
+#include "tm/suggestions.h"
+
+class WXDLLIMPEXP_CORE wxMenu;
+class WXDLLIMPEXP_CORE wxMenuItem;
 class WXDLLIMPEXP_CORE wxSizer;
 class WXDLLIMPEXP_CORE wxStaticText;
+class WXDLLIMPEXP_CORE wxStaticBitmap;
 
+class Catalog;
 class CatalogItem;
+class ExplanationLabel;
+
+struct Suggestion;
+class SuggestionsProvider;
+class SuggestionWidget;
+class Sidebar;
 
 
 /// Implements part of the sidebar.
 class SidebarBlock
 {
 public:
-    SidebarBlock(wxWindow *parent, const wxString& label);
     virtual ~SidebarBlock() {}
 
     wxSizer *GetSizer() const { return m_sizer; }
 
-    void Show(bool show);
+    virtual void Show(bool show);
 
     void SetItem(CatalogItem *item);
 
@@ -57,10 +71,74 @@ public:
     virtual bool IsGrowable() const { return false; }
 
 protected:
+    enum Flags
+    {
+        NoUpperMargin = 1
+    };
+
+    SidebarBlock(Sidebar *parent, const wxString& label, int flags = 0);
+
+    Sidebar *m_parent;
     wxSizer *m_innerSizer;
 
 private:
     wxSizer *m_sizer;
+};
+
+
+wxDECLARE_EVENT(EVT_SUGGESTION_SELECTED, wxCommandEvent);
+
+/// Sidebar block implementation translation suggestions
+class SuggestionsSidebarBlock : public SidebarBlock
+{
+public:
+    SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu);
+    ~SuggestionsSidebarBlock();
+
+    void Show(bool show) override;
+    bool IsGrowable() const override { return true; }
+    bool ShouldShowForItem(CatalogItem *item) const override;
+    void Update(CatalogItem *item) override;
+
+protected:
+    // How many entries to request from a single provider?
+    static const int SUGGESTIONS_REQUEST_COUNT = 9;
+    // How many entries can have shortcuts?
+    static const int SUGGESTIONS_MENU_ENTRIES = 9;
+
+    void UpdateVisibility();
+
+    virtual wxBitmap GetIconForSuggestion(const Suggestion& s) const;
+    virtual wxString GetTooltipForSuggestion(const Suggestion& s) const;
+
+    void ClearMessage();
+    void SetMessage(const wxString& icon, const wxString& text);
+
+    virtual void ClearSuggestions();
+    virtual void UpdateSuggestions(const SuggestionsList& hits);
+    virtual void OnQueriesFinished();
+
+    virtual void BuildSuggestionsMenu(int count = SUGGESTIONS_MENU_ENTRIES);
+    virtual void UpdateSuggestionsMenu();
+
+    void QueryProvider(SuggestionsBackend& backend, CatalogItem *item);
+
+protected:
+    std::unique_ptr<SuggestionsProvider> m_provider;
+
+    wxMenu *m_suggestionsMenu;
+
+    wxSizer *m_msgSizer;
+    bool m_msgPresent;
+    wxStaticBitmap *m_msgIcon;
+    ExplanationLabel *m_msgText;
+    wxStaticText *m_iGotNothing;
+
+    SuggestionsList m_suggestions;
+    std::vector<SuggestionWidget*> m_suggestionsWidgets;
+    std::vector<wxMenuItem*> m_suggestionMenuItems;
+    int m_pendingQueries;
+    uint64_t m_latestQueryId;
 };
 
 /**
@@ -71,14 +149,18 @@ private:
 class Sidebar : public wxPanel
 {
 public:
-    Sidebar(wxWindow *parent);
+    Sidebar(wxWindow *parent, wxMenu *suggestionsMenu);
     ~Sidebar();
 
     /// Update selected item, if there's a single one. May be nullptr.
-    void SetSelectedItem(CatalogItem *item);
+    void SetSelectedItem(Catalog *catalog, CatalogItem *item);
 
     /// Tell the sidebar there's multiple selection.
     void SetMultipleSelection();
+
+    /// Returns currently selected item
+    CatalogItem *GetSelectedItem() const { return m_selectedItem; }
+    Language GetCurrentLanguage() const;
 
     /// Refreshes displayed content
     void RefreshContent();
@@ -93,6 +175,7 @@ private:
     void OnPaint(wxPaintEvent&);
 
 private:
+    Catalog *m_catalog;
     CatalogItem *m_selectedItem;
 
     std::vector<std::unique_ptr<SidebarBlock>> m_blocks;

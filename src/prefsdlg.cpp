@@ -107,6 +107,12 @@ public:
     }
 
 protected:
+    void TransferDataFromWindowAndUpdateUI(wxCommandEvent&)
+    {
+        TransferDataFromWindow();
+        PoeditFrame::UpdateAllAfterPreferencesChange();
+    }
+
     virtual void InitValues(const wxConfigBase& cfg) = 0;
     virtual void SaveValues(wxConfigBase& cfg) = 0;
 
@@ -318,12 +324,6 @@ public:
         }
     }
 
-    void TransferDataFromWindowAndUpdateUI(wxCommandEvent&)
-    {
-        TransferDataFromWindow();
-        PoeditFrame::UpdateAllAfterPreferencesChange();
-    }
-
 private:
     wxTextCtrl *m_userName, *m_userEmail;
     wxCheckBox *m_compileMo, *m_showSummary, *m_focusToText, *m_spellchecking;
@@ -403,8 +403,9 @@ public:
 
         if (wxPreferencesEditor::ShouldApplyChangesImmediately())
         {
-            m_useTM->Bind(wxEVT_CHECKBOX, [=](wxCommandEvent&){ TransferDataFromWindow(); });
             m_useTMWhenUpdating->Bind(wxEVT_CHECKBOX, [=](wxCommandEvent&){ TransferDataFromWindow(); });
+            // Some settings directly affect the UI, so need a more expensive handler:
+            m_useTM->Bind(wxEVT_CHECKBOX, &TMPageWindow::TransferDataFromWindowAndUpdateUI, this);
         }
     }
 

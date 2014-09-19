@@ -50,6 +50,8 @@ dist_uiicons_DATA = \
 		ui/poedit-status-modified.png \
 		ui/poedit-status-nothing.png \
 		ui/window-close.png \
+		ui/SuggestionError.png \
+		ui/SuggestionTM.png \
 		../artwork/PoeditWelcome.png
 
 

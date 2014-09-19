@@ -94,16 +94,20 @@ void AutoWrappingText::OnSize(wxSizeEvent& e)
 ExplanationLabel::ExplanationLabel(wxWindow *parent, const wxString& label)
     : AutoWrappingText(parent, label)
 {
-#if defined(__WXOSX__)
+#if defined(__WXOSX__) || defined(__WXGTK__)
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-    SetForegroundColour(wxColour("#777777"));
-#elif defined(__WXGTK__)
-    SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-#else
-    SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT));
 #endif
+    SetForegroundColour(GetTextColor());
 }
 
+wxColour ExplanationLabel::GetTextColor()
+{
+#if defined(__WXOSX__)
+    return wxColour("#777777");
+#else
+    return wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT);
+#endif
+}
 
 
 LearnMoreLink::LearnMoreLink(wxWindow *parent, const wxString& url, wxString label)

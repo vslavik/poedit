@@ -654,6 +654,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("go_prev_unfinished"), PoeditFrame::OnPrevUnfinished)
    EVT_MENU           (XRCID("go_next_unfinished"), PoeditFrame::OnNextUnfinished)
    EVT_MENU_RANGE     (ID_POPUP_REFS, ID_POPUP_REFS + 999, PoeditFrame::OnReference)
+   EVT_COMMAND        (wxID_ANY, EVT_SUGGESTION_SELECTED, PoeditFrame::OnSuggestion)
    EVT_MENU_RANGE     (ID_POPUP_TRANS, ID_POPUP_TRANS + 999,
                        PoeditFrame::OnAutoTranslate)
    EVT_MENU           (XRCID("menu_auto_translate"), PoeditFrame::OnAutoTranslateAll)
@@ -989,7 +990,8 @@ wxWindow* PoeditFrame::CreateContentViewPO()
     m_list->PushEventHandler(new ListHandler(this));
 
 
-    m_sidebar = new Sidebar(main);
+    auto suggestionsMenu = GetMenuBar()->FindItem(XRCID("menu_suggestions"))->GetSubMenu();
+    m_sidebar = new Sidebar(main, suggestionsMenu);
     mainSizer->Add(m_sidebar, wxSizerFlags().Expand().Border(wxLEFT, 1));
 
 
@@ -1206,6 +1208,9 @@ void PoeditFrame::UpdateTextLanguage()
     m_textTrans->SetLanguageRTL(isRTL);
     for (auto tp : m_textTransPlural)
         tp->SetLanguageRTL(isRTL);
+
+    if (m_sidebar)
+        m_sidebar->RefreshContent();
 }
 
 
@@ -1890,7 +1895,7 @@ void PoeditFrame::OnListSel(wxListEvent& event)
         if (m_list->HasMultipleSelection())
             m_sidebar->SetMultipleSelection();
         else
-            m_sidebar->SetSelectedItem(GetCurrentItem()); // may be nullptr
+            m_sidebar->SetSelectedItem(m_catalog, GetCurrentItem()); // may be nullptr
     }
 
     if (hasFocus)
@@ -2943,6 +2948,23 @@ void PoeditFrame::OnPurgeDeleted(wxCommandEvent& WXUNUSED(event))
     });
 }
 
+void PoeditFrame::OnSuggestion(wxCommandEvent& event)
+{
+    CatalogItem *entry = GetCurrentItem();
+    if (!entry)
+        return;
+
+    entry->SetTranslation(event.GetString());
+    entry->SetFuzzy(false);
+    entry->SetModified(true);
+
+    // FIXME: instead of this mess, use notifications of catalog change
+    m_modified = true;
+    UpdateTitle();
+
+    UpdateToTextCtrl();
+    m_list->RefreshSelectedItems();
+}
 
 void PoeditFrame::OnAutoTranslate(wxCommandEvent& event)
 {
