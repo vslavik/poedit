@@ -43,6 +43,7 @@
 #include <Lucene.h>
 #include <LuceneException.h>
 #include <MMapDirectory.h>
+#include <SerialMergeScheduler.h>
 #include <SimpleFSDirectory.h>
 #include <StandardAnalyzer.h>
 #include <IndexWriter.h>
@@ -303,6 +304,7 @@ public:
     TranslationMemoryWriterImpl(DirectoryPtr dir, AnalyzerPtr analyzer)
     {
         m_writer = newLucene<IndexWriter>(dir, analyzer, IndexWriter::MaxFieldLengthLIMITED);
+        m_writer->setMergeScheduler(newLucene<SerialMergeScheduler>());
     }
 
     ~TranslationMemoryWriterImpl()
