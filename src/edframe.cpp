@@ -3390,31 +3390,34 @@ void PoeditFrame::AddBookmarksMenu(wxMenu *parent)
     parent->AppendSeparator();
     parent->AppendSubMenu(menu, _("&Bookmarks"));
 
-#if defined(__WXMAC__)
+#ifdef __WXOSX__
     // on Mac, Alt+something is used during normal typing, so we shouldn't
     // use it as shortcuts:
-    #define LABEL_BOOKMARK_SET   _("Set Bookmark %i\tCtrl+%i")
-    #define LABEL_BOOKMARK_GO    _("Go to Bookmark %i\tCtrl+Alt+%i")
-#elif defined(__WXMSW__)
-    #define LABEL_BOOKMARK_SET   _("Set bookmark %i\tAlt+%i")
-    #define LABEL_BOOKMARK_GO    _("Go to bookmark %i\tCtrl+%i")
-#elif defined(__WXGTK__)
-    #define LABEL_BOOKMARK_SET   _("Set Bookmark %i\tAlt+%i")
-    #define LABEL_BOOKMARK_GO    _("Go to Bookmark %i\tCtrl+%i")
+    #define BK_ACCEL_SET  "Ctrl+rawctrl+%i"
+    #define BK_ACCEL_GO   "Ctrl+Alt+%i"
 #else
-    #error "what is correct capitalization for this toolkit?"
+    #define BK_ACCEL_SET  "Alt+%i"
+    #define BK_ACCEL_GO   "Ctrl+Alt+%i"
+#endif
+
+#ifdef __WXMSW__
+    #define BK_LABEL_SET  _("Set bookmark %i")
+    #define BK_LABEL_GO   _("Go to bookmark %i")
+#else
+    #define BK_LABEL_SET  _("Set Bookmark %i")
+    #define BK_LABEL_GO   _("Go to Bookmark %i")
 #endif
 
     for (int i = 0; i < 10; i++)
     {
-        menu->Append(ID_BOOKMARK_SET + i,
-                     wxString::Format(LABEL_BOOKMARK_SET, i, i));
+        auto label = BK_LABEL_SET + "\t" + BK_ACCEL_SET;
+        menu->Append(ID_BOOKMARK_SET + i, wxString::Format(label, i, i));
     }
     menu->AppendSeparator();
     for (int i = 0; i < 10; i++)
     {
-        menu->Append(ID_BOOKMARK_GO + i,
-                     wxString::Format(LABEL_BOOKMARK_GO, i, i));
+        auto label = BK_LABEL_GO + "\t" + BK_ACCEL_GO;
+        menu->Append(ID_BOOKMARK_GO + i, wxString::Format(label, i, i));
     }
 }
 
