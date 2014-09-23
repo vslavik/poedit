@@ -3179,6 +3179,8 @@ void PoeditFrame::SetCustomFonts()
 
 void PoeditFrame::OnSize(wxSizeEvent& event)
 {
+    wxWindowUpdateLocker lock(this);
+
     event.Skip();
 
     // see the comment in PoeditFrame ctor

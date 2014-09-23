@@ -578,6 +578,8 @@ int PoeditListCtrl::OnGetItemImage(long item) const
 
 void PoeditListCtrl::OnSize(wxSizeEvent& event)
 {
+    wxWindowUpdateLocker lock(this);
+
     SizeColumns();
     event.Skip();
 }
