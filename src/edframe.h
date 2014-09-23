@@ -44,7 +44,6 @@ class WXDLLIMPEXP_FWD_CORE wxStaticText;
 #include "gexecute.h"
 #include "edlistctrl.h"
 #include "edapp.h"
-#include "tm/transmem.h"
 
 class ListHandler;
 class TextctrlHandler;
@@ -264,7 +263,6 @@ private:
 #endif
 
         void OnSuggestion(wxCommandEvent& event);
-        void OnAutoTranslate(wxCommandEvent& event);
         void OnAutoTranslateAll(wxCommandEvent& event);
         bool AutoTranslateCatalog(int *matchesCount = nullptr);
 
@@ -299,8 +297,6 @@ private:
         Catalog *m_catalog;
         wxString m_fileName;
         bool m_fileExistsOnDisk;
-
-        SuggestionsList m_autoTranslations;
 
         wxPanel *m_bottomPanel;
         wxSplitterWindow *m_splitter;

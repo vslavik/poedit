@@ -96,7 +96,6 @@ const wxWindowID ID_POEDIT_FIRST = wxID_HIGHEST + 10000;
 const unsigned   ID_POEDIT_STEP  = 1000;
 
 const wxWindowID ID_POPUP_REFS   = ID_POEDIT_FIRST + 1*ID_POEDIT_STEP;
-const wxWindowID ID_POPUP_TRANS  = ID_POEDIT_FIRST + 2*ID_POEDIT_STEP;
 const wxWindowID ID_POPUP_DUMMY  = ID_POEDIT_FIRST + 3*ID_POEDIT_STEP;
 const wxWindowID ID_BOOKMARK_GO  = ID_POEDIT_FIRST + 4*ID_POEDIT_STEP;
 const wxWindowID ID_BOOKMARK_SET = ID_POEDIT_FIRST + 5*ID_POEDIT_STEP;
@@ -655,8 +654,6 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("go_next_unfinished"), PoeditFrame::OnNextUnfinished)
    EVT_MENU_RANGE     (ID_POPUP_REFS, ID_POPUP_REFS + 999, PoeditFrame::OnReference)
    EVT_COMMAND        (wxID_ANY, EVT_SUGGESTION_SELECTED, PoeditFrame::OnSuggestion)
-   EVT_MENU_RANGE     (ID_POPUP_TRANS, ID_POPUP_TRANS + 999,
-                       PoeditFrame::OnAutoTranslate)
    EVT_MENU           (XRCID("menu_auto_translate"), PoeditFrame::OnAutoTranslateAll)
    EVT_MENU_RANGE     (ID_BOOKMARK_GO, ID_BOOKMARK_GO + 9,
                        PoeditFrame::OnGoToBookmark)
@@ -2966,25 +2963,6 @@ void PoeditFrame::OnSuggestion(wxCommandEvent& event)
     m_list->RefreshSelectedItems();
 }
 
-void PoeditFrame::OnAutoTranslate(wxCommandEvent& event)
-{
-    CatalogItem *entry = GetCurrentItem();
-    wxCHECK_RET( entry, "no entry selected" );
-
-    int ind = event.GetId() - ID_POPUP_TRANS;
-
-    entry->SetTranslation(m_autoTranslations[ind].text);
-    entry->SetFuzzy(false);
-    entry->SetModified(true);
-
-    // FIXME: instead of this mess, use notifications of catalog change
-    m_modified = true;
-    UpdateTitle();
-
-    UpdateToTextCtrl();
-    m_list->RefreshSelectedItems();
-}
-
 void PoeditFrame::OnAutoTranslateAll(wxCommandEvent&)
 {
     int matches = 0;
@@ -3110,44 +3088,6 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
                  wxString(_("Edit Comment"))
                  #endif
                    + "\tCtrl+M");
-
-    if (wxConfig::Get()->ReadBool("use_tm", true))
-    {
-        wxBusyCursor bcur;
-        CatalogItem& dt = (*m_catalog)[item];
-        std::string langcode(m_catalog->GetLanguage().Code());
-        m_autoTranslations = TranslationMemory::Get().Search(langcode, dt.GetString().ToStdWstring());
-        if (!m_autoTranslations.empty())
-        {
-            menu->AppendSeparator();
-            wxMenuItem *it2 = new wxMenuItem
-                                  (
-                                      menu,
-                                      ID_POPUP_DUMMY+1,
-                                      #ifdef __WXMSW__
-                                      _("Translation suggestions:")
-                                      #else
-                                      _("Translation Suggestions:")
-                                      #endif
-                                  );
-#ifdef __WXMSW__
-            it2->SetFont(m_boldGuiFont);
-            menu->Append(it2);
-#else
-            menu->Append(it2);
-            it2->Enable(false);
-#endif
-
-            for (size_t i = 0; i < m_autoTranslations.size(); i++)
-            {
-                wxString s;
-                // TRANSLATORS: Quoted text with leading 4 spaces
-                s.Printf(_(L"    “%s”"), m_autoTranslations[i].text);
-                s.Replace("&", "&&");
-                menu->Append(ID_POPUP_TRANS + int(i), s);
-            }
-        }
-    }
 
     if ( !refs.empty() )
     {
