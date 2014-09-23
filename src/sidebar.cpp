@@ -675,6 +675,8 @@ void Sidebar::RefreshContent()
 
 void Sidebar::SetUpperHeight(int size)
 {
+    wxWindowUpdateLocker lock(this);
+
     int pos = GetSize().y - size;
 #ifdef __WXOSX__
     pos += 4;

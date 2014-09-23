@@ -896,23 +896,10 @@ wxWindow* PoeditFrame::CreateContentViewPO()
     main->Hide();
 #endif
 
-#if defined(__WXMSW__)
-    const int SPLITTER_FLAGS = wxSP_NOBORDER;
-#elif defined(__WXMAC__)
-    // wxMac doesn't show XORed line:
-    const int SPLITTER_FLAGS = wxSP_LIVE_UPDATE;
-#else
-    const int SPLITTER_FLAGS = wxSP_3DBORDER;
-#endif
-
     m_splitter = new wxSplitterWindow(main, -1,
                                       wxDefaultPosition, wxDefaultSize,
-                                      SPLITTER_FLAGS);
-#ifdef __WXMSW__
-    m_splitter->Bind(wxEVT_SPLITTER_SASH_POS_CHANGED, &PoeditFrame::OnSplitterSashMoving, this);
-#else
+                                      wxSP_NOBORDER | wxSP_LIVE_UPDATE);
     m_splitter->Bind(wxEVT_SPLITTER_SASH_POS_CHANGING, &PoeditFrame::OnSplitterSashMoving, this);
-#endif
 
     mainSizer->Add(m_splitter, wxSizerFlags(1).Expand());
 
