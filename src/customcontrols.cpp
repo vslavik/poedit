@@ -27,6 +27,7 @@
 
 #include <wx/textwrapper.h>
 #include <wx/settings.h>
+#include <wx/wupdlock.h>
 
 namespace
 {
@@ -66,6 +67,7 @@ AutoWrappingText::AutoWrappingText(wxWindow *parent, const wxString& label)
 
 void AutoWrappingText::SetAndWrapLabel(const wxString& label)
 {
+    wxWindowUpdateLocker lock(this);
     m_text = label;
     m_wrapWidth = GetSize().x;
     LabelWrapper().WrapAndSetLabel(this, label, m_wrapWidth);
@@ -81,6 +83,8 @@ void AutoWrappingText::OnSize(wxSizeEvent& e)
     int w = e.GetSize().x;
     if (w == m_wrapWidth)
         return;
+
+    wxWindowUpdateLocker lock(this);
 
     m_wrapWidth = w;
     LabelWrapper().WrapAndSetLabel(this, m_text, w);
