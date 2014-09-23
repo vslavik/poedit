@@ -764,6 +764,7 @@ PoeditFrame::PoeditFrame() :
     m_textOrig = nullptr;
     m_textOrigPlural = nullptr;
     m_splitter = nullptr;
+    m_sidebarSplitter = nullptr;
     m_sidebar = nullptr;
 
     // make sure that the [ID_POEDIT_FIRST,ID_POEDIT_LAST] range of IDs is not
@@ -896,12 +897,17 @@ wxWindow* PoeditFrame::CreateContentViewPO()
     main->Hide();
 #endif
 
-    m_splitter = new wxSplitterWindow(main, -1,
+    m_sidebarSplitter = new wxSplitterWindow(main, -1,
+                                      wxDefaultPosition, wxDefaultSize,
+                                      wxSP_NOBORDER | wxSP_LIVE_UPDATE);
+    m_sidebarSplitter->Bind(wxEVT_SPLITTER_SASH_POS_CHANGING, &PoeditFrame::OnSidebarSplitterSashMoving, this);
+
+    mainSizer->Add(m_sidebarSplitter, wxSizerFlags(1).Expand());
+
+    m_splitter = new wxSplitterWindow(m_sidebarSplitter, -1,
                                       wxDefaultPosition, wxDefaultSize,
                                       wxSP_NOBORDER | wxSP_LIVE_UPDATE);
     m_splitter->Bind(wxEVT_SPLITTER_SASH_POS_CHANGING, &PoeditFrame::OnSplitterSashMoving, this);
-
-    mainSizer->Add(m_splitter, wxSizerFlags(1).Expand());
 
     // make only the upper part grow when resizing
     m_splitter->SetSashGravity(1.0);
@@ -970,13 +976,13 @@ wxWindow* PoeditFrame::CreateContentViewPO()
     m_bottomPanel->SetSizer(panelSizer);
 
     m_splitter->SetMinimumPaneSize(200);
+    m_sidebarSplitter->SetMinimumPaneSize(200);
 
     m_list->PushEventHandler(new ListHandler(this));
 
 
     auto suggestionsMenu = GetMenuBar()->FindItem(XRCID("menu_suggestions"))->GetSubMenu();
-    m_sidebar = new Sidebar(main, suggestionsMenu);
-    mainSizer->Add(m_sidebar, wxSizerFlags().Expand().Border(wxLEFT, 1));
+    m_sidebar = new Sidebar(m_sidebarSplitter, suggestionsMenu);
 
 
     ShowPluralFormUI(false);
@@ -1006,7 +1012,11 @@ wxWindow* PoeditFrame::CreateContentViewPO()
         if ( wxConfigBase::Get()->Read(WindowStatePath(this) + "maximized", long(0)) )
             m_setSashPositionsWhenMaximized = true;
 
-        m_splitter->SplitHorizontally(m_list, m_bottomPanel, (int)wxConfigBase::Get()->Read("splitter", -250L));
+        m_splitter->SplitHorizontally(m_list, m_bottomPanel, (int)wxConfigBase::Get()->Read("/splitter", -250L));
+
+        auto split = GetSize().x * wxConfigBase::Get()->ReadDouble("/sidebar_splitter", 0.75);
+        m_sidebarSplitter->SplitVertically(m_splitter, m_sidebar, split);
+
         if (m_sidebar)
             m_sidebar->SetUpperHeight(m_splitter->GetSashPosition());
     });
@@ -3180,7 +3190,13 @@ void PoeditFrame::OnSize(wxSizeEvent& event)
         Layout();
 
         // then set sash positions
-        m_splitter->SetSashPosition((int)wxConfig::Get()->Read("splitter", 240L));
+        m_splitter->SetSashPosition((int)wxConfig::Get()->Read("/splitter", 240L));
+    }
+
+    if (m_sidebarSplitter)
+    {
+        auto split = wxConfigBase::Get()->ReadDouble("/sidebar_splitter", 0.75);
+        m_sidebarSplitter->SetSashPosition(split * event.GetSize().x);
     }
 }
 
@@ -3331,6 +3347,11 @@ void PoeditFrame::OnSplitterSashMoving(wxSplitterEvent& event)
         m_sidebar->SetUpperHeight(pos);
 }
 
+void PoeditFrame::OnSidebarSplitterSashMoving(wxSplitterEvent& event)
+{
+    auto split = (double)event.GetSashPosition() / (double)GetSize().x;
+    wxConfigBase::Get()->Write("/sidebar_splitter", split);
+}
 
 void PoeditFrame::AddBookmarksMenu(wxMenu *parent)
 {

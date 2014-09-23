@@ -235,6 +235,7 @@ private:
         void OnListRightClick(wxMouseEvent& event);
         void OnListFocus(wxFocusEvent& event);
         void OnSplitterSashMoving(wxSplitterEvent& event);
+        void OnSidebarSplitterSashMoving(wxSplitterEvent& event);
         void OnCloseWindow(wxCloseEvent& event);
         void OnReference(wxCommandEvent& event);
         void OnReferencesMenu(wxCommandEvent& event);
@@ -300,6 +301,7 @@ private:
 
         wxPanel *m_bottomPanel;
         wxSplitterWindow *m_splitter;
+        wxSplitterWindow *m_sidebarSplitter;
         PoeditListCtrl *m_list;
         wxStaticText *m_labelContext;
         ErrorBar *m_errorBar;
