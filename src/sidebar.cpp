@@ -472,14 +472,7 @@ void SuggestionsSidebarBlock::BuildSuggestionsMenu(int count)
 
 void SuggestionsSidebarBlock::UpdateSuggestionsMenu()
 {
-    auto m = m_suggestionsMenu;
-
-    auto menuItems = m->GetMenuItems();
-    for (auto i: menuItems)
-    {
-        if (std::find(m_suggestionMenuItems.begin(), m_suggestionMenuItems.end(), i) != m_suggestionMenuItems.end())
-            m->Remove(i);
-    }
+    ClearSuggestionsMenu();
 
     int index = 0;
     for (auto s: m_suggestions)
@@ -491,12 +484,24 @@ void SuggestionsSidebarBlock::UpdateSuggestionsMenu()
         text += wxString::Format("\tCtrl+%d", index+1);
 
         auto item = m_suggestionMenuItems[index];
-        m->Append(item);
+        m_suggestionsMenu->Append(item);
 
         item->SetItemLabel(text);
         item->SetBitmap(GetIconForSuggestion(s));
 
         index++;
+    }
+}
+
+void SuggestionsSidebarBlock::ClearSuggestionsMenu()
+{
+    auto m = m_suggestionsMenu;
+
+    auto menuItems = m->GetMenuItems();
+    for (auto i: menuItems)
+    {
+        if (std::find(m_suggestionMenuItems.begin(), m_suggestionMenuItems.end(), i) != m_suggestionMenuItems.end())
+            m->Remove(i);
     }
 }
 
@@ -534,7 +539,13 @@ void SuggestionsSidebarBlock::Show(bool show)
 {
     SidebarBlock::Show(show);
     if (show)
+    {
         UpdateVisibility();
+    }
+    else
+    {
+        ClearSuggestionsMenu();
+    }
 }
 
 bool SuggestionsSidebarBlock::ShouldShowForItem(CatalogItem*) const
@@ -672,9 +683,13 @@ void Sidebar::RefreshContent()
     if (!IsShown())
         return;
 
+    auto item = m_selectedItem;
+    if (!IsThisEnabled())
+        item = nullptr;
+
     wxWindowUpdateLocker lock(this);
     for (auto& b: m_blocks)
-        b->SetItem(m_selectedItem);
+        b->SetItem(item);
     Layout();
 }
 
@@ -692,6 +707,10 @@ void Sidebar::SetUpperHeight(int size)
     Layout();
 }
 
+void Sidebar::DoEnable(bool)
+{
+    RefreshContent();
+}
 
 void Sidebar::OnPaint(wxPaintEvent&)
 {

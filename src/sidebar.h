@@ -120,6 +120,7 @@ protected:
 
     virtual void BuildSuggestionsMenu(int count = SUGGESTIONS_MENU_ENTRIES);
     virtual void UpdateSuggestionsMenu();
+    virtual void ClearSuggestionsMenu();
 
     void QueryProvider(SuggestionsBackend& backend, CatalogItem *item);
 
@@ -167,6 +168,9 @@ public:
 
     /// Set max height of the upper (not input-aligned) part.
     void SetUpperHeight(int size);
+
+protected:
+    void DoEnable(bool enable) override;
 
 private:
     enum BlockPos { Top, Bottom };

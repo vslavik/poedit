@@ -985,6 +985,7 @@ wxWindow* PoeditFrame::CreateContentViewPO()
 
     auto suggestionsMenu = GetMenuBar()->FindItem(XRCID("menu_suggestions"))->GetSubMenu();
     m_sidebar = new Sidebar(m_sidebarSplitter, suggestionsMenu);
+    m_sidebar->Bind(wxEVT_UPDATE_UI, &PoeditFrame::OnSingleSelectionUpdate, this);
 
     ShowPluralFormUI(false);
     UpdateMenu();
