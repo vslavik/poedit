@@ -2286,6 +2286,9 @@ static wxString TransformNewval(const wxString& val)
 
 void PoeditFrame::UpdateFromTextCtrl()
 {
+    if (!m_list || !m_list->HasSingleSelection())
+        return;
+
     CatalogItem *entry = GetCurrentItem();
     if ( !entry )
         return;
