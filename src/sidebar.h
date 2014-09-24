@@ -53,7 +53,7 @@ class Sidebar;
 
 
 /// Implements part of the sidebar.
-class SidebarBlock
+class SidebarBlock : public std::enable_shared_from_this<SidebarBlock>
 {
 public:
     virtual ~SidebarBlock() {}
@@ -178,7 +178,7 @@ private:
     Catalog *m_catalog;
     CatalogItem *m_selectedItem;
 
-    std::vector<std::unique_ptr<SidebarBlock>> m_blocks;
+    std::vector<std::shared_ptr<SidebarBlock>> m_blocks;
 
     wxSizer *m_blocksSizer;
     wxSizer *m_topBlocksSizer, *m_bottomBlocksSizer;

@@ -560,36 +560,38 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, Catalog
     // we need something to talk to GUI thread through that is guaranteed
     // to exist, and the app object is a good choice:
     wxApp *app = wxTheApp;
-    wxWeakRef<Sidebar> sidebar = m_parent;
+    std::weak_ptr<SuggestionsSidebarBlock> weakSelf = std::dynamic_pointer_cast<SuggestionsSidebarBlock>(shared_from_this());
 
     m_provider->SuggestTranslation
     (
         backend,
-        sidebar->GetCurrentLanguage().Code(),
+        m_parent->GetCurrentLanguage().Code(),
         item->GetString(),
         SUGGESTIONS_REQUEST_COUNT,
 
         // when receiving data
         [=](const SuggestionsList& hits){
-            app->CallAfter([=]{
+            app->CallAfter([weakSelf,thisQueryId,hits]{
+                auto self = weakSelf.lock();
                 // maybe this call is already out of date:
-                if (!sidebar || m_latestQueryId != thisQueryId)
+                if (!self || self->m_latestQueryId != thisQueryId)
                     return;
-                UpdateSuggestions(hits);
-                if (--m_pendingQueries == 0)
-                    OnQueriesFinished();
+                self->UpdateSuggestions(hits);
+                if (--self->m_pendingQueries == 0)
+                    self->OnQueriesFinished();
             });
         },
 
         // on error:
         [=](std::exception_ptr e){
-            app->CallAfter([=]{
+            app->CallAfter([weakSelf,thisQueryId,e]{
+                auto self = weakSelf.lock();
                 // maybe this call is already out of date:
-                if (!sidebar || m_latestQueryId != thisQueryId)
+                if (!self || self->m_latestQueryId != thisQueryId)
                     return;
-                SetMessage("SuggestionError", DescribeException(e));
-                if (--m_pendingQueries == 0)
-                    OnQueriesFinished();
+                self->SetMessage("SuggestionError", DescribeException(e));
+                if (--self->m_pendingQueries == 0)
+                    self->OnQueriesFinished();
             });
         }
     );
