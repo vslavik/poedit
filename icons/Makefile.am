@@ -37,7 +37,6 @@ dist_uiicons_DATA = \
 		ui/toolbar-24/document-properties.png \
 		ui/toolbar-24/document-new.png \
 		ui/toolbar-24/edit-delete.png \
-		ui/toolbar-24/poedit-comment.png \
 		ui/toolbar-24/poedit-fuzzy.png \
 		ui/toolbar-24/poedit-update.png \
 		ui/toolbar-24/poedit-validate.png \

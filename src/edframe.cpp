@@ -2745,7 +2745,6 @@ void PoeditFrame::UpdateMenu()
     toolbar->EnableTool(XRCID("menu_update"), editable);
     toolbar->EnableTool(XRCID("menu_validate"), editable);
     toolbar->EnableTool(XRCID("menu_fuzzy"), editable);
-    toolbar->EnableTool(XRCID("menu_comment"), editable);
 
     menubar->Enable(XRCID("menu_update"), editable);
     menubar->Enable(XRCID("menu_validate"), editable);
