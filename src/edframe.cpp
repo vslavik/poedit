@@ -1067,6 +1067,8 @@ void PoeditFrame::DestroyContentView()
     m_textOrig = nullptr;
     m_textOrigPlural = nullptr;
     m_splitter = nullptr;
+    m_sidebarSplitter = nullptr;
+    m_sidebar = nullptr;
 }
 
 
