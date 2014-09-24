@@ -637,6 +637,8 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("sort_by_translation"), PoeditFrame::OnSortByTranslation)
    EVT_MENU           (XRCID("sort_group_by_context"), PoeditFrame::OnSortGroupByContext)
    EVT_MENU           (XRCID("sort_untrans_first"), PoeditFrame::OnSortUntranslatedFirst)
+   EVT_MENU           (XRCID("show_sidebar"),      PoeditFrame::OnShowHideSidebar)
+   EVT_UPDATE_UI      (XRCID("show_sidebar"),      PoeditFrame::OnUpdateShowHideSidebar)
    EVT_MENU           (XRCID("menu_copy_from_src"), PoeditFrame::OnCopyFromSource)
    EVT_MENU           (XRCID("menu_clear"),       PoeditFrame::OnClearTranslation)
    EVT_MENU           (XRCID("menu_references"),  PoeditFrame::OnReferencesMenu)
@@ -984,7 +986,6 @@ wxWindow* PoeditFrame::CreateContentViewPO()
     auto suggestionsMenu = GetMenuBar()->FindItem(XRCID("menu_suggestions"))->GetSubMenu();
     m_sidebar = new Sidebar(m_sidebarSplitter, suggestionsMenu);
 
-
     ShowPluralFormUI(false);
     UpdateMenu();
 
@@ -1014,8 +1015,17 @@ wxWindow* PoeditFrame::CreateContentViewPO()
 
         m_splitter->SplitHorizontally(m_list, m_bottomPanel, (int)wxConfigBase::Get()->Read("/splitter", -250L));
 
-        auto split = GetSize().x * wxConfigBase::Get()->ReadDouble("/sidebar_splitter", 0.75);
-        m_sidebarSplitter->SplitVertically(m_splitter, m_sidebar, split);
+        if (wxConfigBase::Get()->ReadBool("/sidebar_shown", true))
+        {
+            auto split = GetSize().x * wxConfigBase::Get()->ReadDouble("/sidebar_splitter", 0.75);
+            m_sidebarSplitter->SplitVertically(m_splitter, m_sidebar, split);
+        }
+        else
+        {
+            m_sidebar->Hide();
+            m_sidebarSplitter->Initialize(m_splitter);
+            Layout();
+        }
 
         if (m_sidebar)
             m_sidebar->SetUpperHeight(m_splitter->GetSashPosition());
@@ -3475,6 +3485,44 @@ void PoeditFrame::OnSortUntranslatedFirst(wxCommandEvent& event)
     m_list->sortOrder.untransFirst = event.IsChecked();
     m_list->Sort();
 }
+
+
+void PoeditFrame::OnShowHideSidebar(wxCommandEvent&)
+{
+    bool toShow = !m_sidebarSplitter->IsSplit();
+
+    if (toShow)
+    {
+        auto split = GetSize().x * wxConfigBase::Get()->ReadDouble("/sidebar_splitter", 0.75);
+        m_sidebarSplitter->SplitVertically(m_splitter, m_sidebar, split);
+        m_sidebar->RefreshContent();
+    }
+    else
+    {
+        m_sidebarSplitter->Unsplit(m_sidebar);
+    }
+
+    wxConfigBase::Get()->Write("/sidebar_shown", toShow);
+}
+
+void PoeditFrame::OnUpdateShowHideSidebar(wxUpdateUIEvent& event)
+{
+    event.Enable(m_sidebar != nullptr);
+    if (!m_sidebar)
+        return;
+
+    bool shown = m_sidebarSplitter->IsSplit();
+#ifdef __WXOSX__
+    auto shortcut = "\tCtrl+Alt+S";
+    if (shown)
+        event.SetText(_("Hide Sidebar") + shortcut);
+    else
+        event.SetText(_("Show Sidebar") + shortcut);
+#else
+    event.Check(shown);
+#endif
+}
+
 
 void PoeditFrame::OnSelectionUpdate(wxUpdateUIEvent& event)
 {

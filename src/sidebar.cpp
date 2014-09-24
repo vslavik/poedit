@@ -667,6 +667,9 @@ Language Sidebar::GetCurrentLanguage() const
 
 void Sidebar::RefreshContent()
 {
+    if (!IsShown())
+        return;
+
     wxWindowUpdateLocker lock(this);
     for (auto& b: m_blocks)
         b->SetItem(m_selectedItem);

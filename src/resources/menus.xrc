@@ -230,6 +230,13 @@
         <label platform="unix|mac">_Untranslated Entries First</label>
         <checkable>1</checkable>
       </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="show_sidebar">
+        <label platform="win">Show sidebar</label>
+        <label platform="mac">Show Sidebar</label>
+        <checkable platform="win|unix">1</checkable>
+        <accel>Ctrl+Alt+S</accel>
+      </object>
       <style>wxMENU_TEAROFF</style>
     </object>
     <object class="wxMenu" name="menu_window" platform="mac">
