@@ -354,7 +354,7 @@ END_EVENT_TABLE()
 // user input and performs some user input processing, such as autocorrections.
 // We need to avoid this, because Poedit's text control is filled with data
 // when moving in the list control: https://github.com/vslavik/poedit/issues/81
-// Solve this by using a customized control with overriden DoSetValue().
+// Solve this by using a customized control with overridden DoSetValue().
 class CustomizedTextCtrl : public wxTextCtrl
 {
 public:
@@ -410,8 +410,8 @@ protected:
                                  NSCharacterEncodingDocumentAttribute: @(NSUTF8StringEncoding)
                                };
         NSData *data = [text dataFromRange:NSMakeRange(0, [text length]) documentAttributes:attrs error:nil];
-        if (data)
-            return wxString::FromUTF8Unchecked((const char*)[data bytes], [data length]);
+        if (data && [data length] > 0)
+            return wxString::FromUTF8((const char*)[data bytes], [data length]);
         else
             return wxTextCtrl::DoGetValue();
     }
@@ -3094,8 +3094,7 @@ void PoeditFrame::OnAutoTranslateAll(wxCommandEvent&)
     else
     {
         msg = _("No entries could be filled from the translation memory.");
-        details = _("The TM doesn’t contain any strings similar to the content of this file. "
-                    "It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually.");
+        details = _(L"The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually.");
     }
 
     wxWindowPtr<wxMessageDialog> dlg(

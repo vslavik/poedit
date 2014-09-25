@@ -43,6 +43,7 @@
 #include <Lucene.h>
 #include <LuceneException.h>
 #include <MMapDirectory.h>
+#include <SerialMergeScheduler.h>
 #include <SimpleFSDirectory.h>
 #include <StandardAnalyzer.h>
 #include <IndexWriter.h>
@@ -92,7 +93,7 @@ public:
 #endif
 
     TranslationMemoryImpl()
-        : m_dir(newLucene<DirectoryType>(GetDatabaseDir())),
+        : m_dir(GetDatabaseDir()),
           m_analyzer(newLucene<StandardAnalyzer>(LuceneVersion::LUCENE_CURRENT))
     {}
 
@@ -111,7 +112,7 @@ private:
     SearcherPtr Searcher();
 
 private:
-    DirectoryPtr     m_dir;
+    std::wstring     m_dir;
     AnalyzerPtr      m_analyzer;
     IndexReaderPtr   m_reader;
     std::mutex       m_readerMutex;
@@ -145,7 +146,7 @@ IndexReaderPtr TranslationMemoryImpl::Reader()
     if ( m_reader )
         m_reader = m_reader->reopen();
     else
-        m_reader = IndexReader::open(m_dir, true);
+        m_reader = IndexReader::open(newLucene<DirectoryType>(m_dir), true);
     return m_reader;
 }
 
@@ -303,6 +304,7 @@ public:
     TranslationMemoryWriterImpl(DirectoryPtr dir, AnalyzerPtr analyzer)
     {
         m_writer = newLucene<IndexWriter>(dir, analyzer, IndexWriter::MaxFieldLengthLIMITED);
+        m_writer->setMergeScheduler(newLucene<SerialMergeScheduler>());
     }
 
     ~TranslationMemoryWriterImpl()
@@ -411,7 +413,7 @@ std::shared_ptr<TranslationMemory::Writer> TranslationMemoryImpl::CreateWriter()
 {
     try
     {
-        return std::make_shared<TranslationMemoryWriterImpl>(m_dir, m_analyzer);
+        return std::make_shared<TranslationMemoryWriterImpl>(newLucene<DirectoryType>(m_dir), m_analyzer);
     }
     CATCH_AND_RETHROW_EXCEPTION
 }
