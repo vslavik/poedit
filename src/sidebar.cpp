@@ -42,6 +42,8 @@
 #include <wx/stattext.h>
 #include <wx/wupdlock.h>
 
+#include <algorithm>
+
 #define SIDEBAR_BACKGROUND      wxColour("#EDF0F4")
 #define GRAY_LINES_COLOR        wxColour(220,220,220)
 #define GRAY_LINES_COLOR_DARK   wxColour(180,180,180)
@@ -577,7 +579,7 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, Catalog
     (
         backend,
         m_parent->GetCurrentLanguage().Code(),
-        item->GetString(),
+        item->GetString().ToStdWstring(),
         SUGGESTIONS_REQUEST_COUNT,
 
         // when receiving data

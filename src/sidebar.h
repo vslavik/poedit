@@ -36,11 +36,11 @@
 #include "language.h"
 #include "tm/suggestions.h"
 
-class WXDLLIMPEXP_CORE wxMenu;
-class WXDLLIMPEXP_CORE wxMenuItem;
-class WXDLLIMPEXP_CORE wxSizer;
-class WXDLLIMPEXP_CORE wxStaticText;
-class WXDLLIMPEXP_CORE wxStaticBitmap;
+class WXDLLIMPEXP_FWD_CORE wxMenu;
+class WXDLLIMPEXP_FWD_CORE wxMenuItem;
+class WXDLLIMPEXP_FWD_CORE wxSizer;
+class WXDLLIMPEXP_FWD_CORE wxStaticText;
+class WXDLLIMPEXP_FWD_CORE wxStaticBitmap;
 
 class Catalog;
 class CatalogItem;
