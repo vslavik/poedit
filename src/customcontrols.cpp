@@ -65,6 +65,13 @@ AutoWrappingText::AutoWrappingText(wxWindow *parent, const wxString& label)
     Bind(wxEVT_SIZE, &ExplanationLabel::OnSize, this);
 }
 
+void AutoWrappingText::SetAlignment(int align)
+{
+    if (GetWindowStyleFlag() & align)
+        return;
+    SetWindowStyleFlag(wxST_NO_AUTORESIZE | align);
+}
+
 void AutoWrappingText::SetAndWrapLabel(const wxString& label)
 {
     wxWindowUpdateLocker lock(this);

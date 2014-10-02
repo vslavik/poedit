@@ -57,6 +57,7 @@ public:
     static const int CHECKBOX_INDENT = 25;
 #endif
 
+    void SetAlignment(int align);
     void SetAndWrapLabel(const wxString& label);
 
 protected:

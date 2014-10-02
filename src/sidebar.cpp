@@ -253,6 +253,8 @@ class SuggestionWidget : public wxPanel
 public:
     SuggestionWidget(wxWindow *parent) : wxPanel(parent, wxID_ANY)
     {
+        m_appIsRTL = (wxTheApp->GetLayoutDirection() == wxLayout_RightToLeft);
+
         m_icon = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
         m_text = new AutoWrappingText(this, "TEXT");
         m_info = new wxStaticText(this, wxID_ANY, "100%");
@@ -285,7 +287,7 @@ public:
         }
     }
 
-    void SetValue(int index, const Suggestion& s, const wxBitmap& icon, const wxString& tooltip)
+    void SetValue(int index, const Suggestion& s, bool isRTL, const wxBitmap& icon, const wxString& tooltip)
     {
         m_value = s;
 
@@ -307,7 +309,21 @@ public:
         }
 
         m_icon->SetBitmap(icon);
-        m_text->SetAndWrapLabel(wxControl::EscapeMnemonics(s.text));
+
+        auto text = wxControl::EscapeMnemonics(s.text);
+        if (isRTL)
+            text = L"\u202b" + text;
+        else
+            text = L"\u202a" + text;
+        m_text->SetAndWrapLabel(text);
+
+        // a quirk of wx API: if the current locale is RTL, the meaning of L and R is reversed
+        // for alignments
+        if (m_appIsRTL)
+            isRTL = !isRTL;
+
+        m_text->SetAlignment(isRTL ? wxALIGN_RIGHT : wxALIGN_LEFT);
+        m_text->SetAndWrapLabel(text);
 
         m_icon->SetToolTip(tooltip);
 
@@ -344,6 +360,7 @@ private:
     AutoWrappingText *m_text;
     wxStaticText *m_info;
     wxColour m_bg, m_bgHighlight;
+    bool m_appIsRTL;
 };
 
 
@@ -441,10 +458,11 @@ void SuggestionsSidebarBlock::UpdateSuggestions(const SuggestionsList& hits)
     m_innerSizer->Layout();
 
     // update shown suggestions:
+    bool isRTL = m_parent->GetCurrentLanguage().IsRTL();
     for (size_t i = 0; i < m_suggestions.size(); ++i)
     {
         auto s = m_suggestions[i];
-        m_suggestionsWidgets[i]->SetValue((int)i, s, GetIconForSuggestion(s), GetTooltipForSuggestion(s));
+        m_suggestionsWidgets[i]->SetValue((int)i, s, isRTL, GetIconForSuggestion(s), GetTooltipForSuggestion(s));
     }
 
     m_innerSizer->Layout();
@@ -482,14 +500,20 @@ void SuggestionsSidebarBlock::UpdateSuggestionsMenu()
 {
     ClearSuggestionsMenu();
 
+    bool isRTL = m_parent->GetCurrentLanguage().IsRTL();
+    wxString formatMask;
+    if (isRTL)
+        formatMask = L"\u202b%s\u202c\tCtrl+%d";
+    else
+        formatMask = L"\u202a%s\u202c\tCtrl+%d";
+
     int index = 0;
     for (auto s: m_suggestions)
     {
         if (index >= SUGGESTIONS_MENU_ENTRIES)
             break;
 
-        wxString text = s.text;
-        text += wxString::Format("\tCtrl+%d", index+1);
+        auto text = wxString::Format(formatMask, s.text, index+1);
 
         auto item = m_suggestionMenuItems[index];
         m_suggestionsMenu->Append(item);
