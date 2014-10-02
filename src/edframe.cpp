@@ -2255,9 +2255,9 @@ namespace
 struct EventHandlerDisabler
 {
     EventHandlerDisabler(wxEvtHandler *h) : m_hnd(h)
-        { m_hnd->SetEvtHandlerEnabled(false); }
+        { if (m_hnd) m_hnd->SetEvtHandlerEnabled(false); }
     ~EventHandlerDisabler()
-        { m_hnd->SetEvtHandlerEnabled(true); }
+        { if (m_hnd) m_hnd->SetEvtHandlerEnabled(true); }
 
     wxEvtHandler *m_hnd;
 };
@@ -3134,7 +3134,7 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
 }
 
 
-static inline void SetCtrlFont(wxWindow *win, const wxFont& font)
+static inline void SetCtrlFont(wxWindow *win, const wxFont& font, wxWindow *anotherWin = nullptr)
 {
 #ifdef __WXMSW__
     // Native wxMSW text control sends EN_CHANGE when the font changes,
@@ -3143,6 +3143,7 @@ static inline void SetCtrlFont(wxWindow *win, const wxFont& font)
     // so we can't just filter it out completely. What we can do, however,
     // is to disable *our* handling of the event.
     EventHandlerDisabler disabler(win->GetEventHandler());
+    EventHandlerDisabler disabler2(anotherWin);
 #endif
     win->SetFont(font);
 }
@@ -3184,7 +3185,7 @@ void PoeditFrame::SetCustomFonts()
             fi.FromString(name);
             wxFont font;
             font.SetNativeFontInfo(fi);
-            SetCtrlFont(m_textComment, font);
+            SetCtrlFont(m_textComment, font, this);
             SetCtrlFont(m_textAutoComments, font);
             SetCtrlFont(m_textOrig, font);
             SetCtrlFont(m_textOrigPlural, font);
