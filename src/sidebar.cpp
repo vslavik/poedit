@@ -366,8 +366,14 @@ SuggestionsSidebarBlock::SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu)
     m_innerSizer->AddSpacer(10);
 
     m_iGotNothing = new wxStaticText(parent, wxID_ANY,
-                                     // TRANSLATORS: This is shown when no translation suggestions can be found in the TM.
-                                     _("no matches found"));
+                                #ifdef __WXMSW__
+                                     // TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
+                                     _("No matches found")
+                                #else
+                                     // TRANSLATORS: This is shown when no translation suggestions can be found in the TM (OS X, Linux).
+                                     _("No Matches Found")
+                                #endif
+                                     );
     m_iGotNothing->SetForegroundColour(ExplanationLabel::GetTextColor().ChangeLightness(150));
     m_iGotNothing->SetWindowVariant(wxWINDOW_VARIANT_NORMAL);
 #ifdef __WXMSW__
