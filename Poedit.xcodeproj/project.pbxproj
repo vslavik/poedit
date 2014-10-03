@@ -36,6 +36,7 @@
 		B24ACD5F16F6201F00399242 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B24ACD5E16F6201F00399242 /* Cocoa.framework */; };
 		B24ACD6916F6201F00399242 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B24ACD6716F6201F00399242 /* InfoPlist.strings */; };
 		B24ACD8416F6263900399242 /* Poedit.iconset in Resources */ = {isa = PBXBuildFile; fileRef = B24ACD8316F6263900399242 /* Poedit.iconset */; };
+		B251159119DEC7E50053255C /* Sparkle.framework in Copy Private Frameworks */ = {isa = PBXBuildFile; fileRef = B256797417075E6000C52BC5 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B256797517075E6000C52BC5 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B256797417075E6000C52BC5 /* Sparkle.framework */; };
 		B2567977170763B700C52BC5 /* libwx_osx_cocoa_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2567976170763B700C52BC5 /* libwx_osx_cocoa_static.a */; };
 		B2579C7F1920BFA000BEBC31 /* NSObject+REResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = B2579C7E1920BFA000BEBC31 /* NSObject+REResponder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -95,7 +96,6 @@
 		B2D76A51181D028B0083C9D9 /* libboost_thread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A4B181D028B0083C9D9 /* libboost_thread.a */; };
 		B2DFCCFB19B5FD15003DFAD0 /* sidebar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2DFCCF919B5FD15003DFAD0 /* sidebar.cpp */; };
 		B2E2184C199A76B100EA2784 /* syntaxhighlighter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2E2184A199A76B100EA2784 /* syntaxhighlighter.cpp */; };
-		B2E836D91709EB0D00F31559 /* Sparkle.framework in Copy Private Frameworks */ = {isa = PBXBuildFile; fileRef = B256797417075E6000C52BC5 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B2E836DE1709ECD600F31559 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = B2E836DD1709ECD600F31559 /* dsa_pub.pem */; };
 		B2E836E91709ED2A00F31559 /* window-close.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836E01709ED2A00F31559 /* window-close.png */; };
 		B2E836EA1709ED2A00F31559 /* poedit-status-automatic.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836E11709ED2A00F31559 /* poedit-status-automatic.png */; };
@@ -189,7 +189,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B2E836D91709EB0D00F31559 /* Sparkle.framework in Copy Private Frameworks */,
+				B251159119DEC7E50053255C /* Sparkle.framework in Copy Private Frameworks */,
 			);
 			name = "Copy Private Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -810,7 +810,6 @@
 				B24ACD5816F6201F00399242 /* Frameworks */,
 				B24ACD5916F6201F00399242 /* Resources */,
 				B2E836D81709EB0700F31559 /* Copy Private Frameworks */,
-				B2846D0B17BCF65D00DDC6F8 /* Remove Headers From Private Frameworks */,
 				B23D1F72181446EF00E6B212 /* Copy Auxiliary Binaries */,
 				B2B7D470170DD91C00ED0AFE /* Copy Gettext bundle */,
 				B2E83707170C96DB00F31559 /* Install translations */,
@@ -957,20 +956,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		B2846D0B17BCF65D00DDC6F8 /* Remove Headers From Private Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Remove Headers From Private Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "find \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\" -name Headers -exec rm -rf {} \\; 2>/dev/null || true";
-		};
 		B2CC62E117DB7E2D0097461B /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
