@@ -33,6 +33,7 @@
 #include <wx/dir.h>
 #include <wx/filename.h>
 
+#include <time.h>
 #include <mutex>
 
 #include <boost/uuid/uuid.hpp>
@@ -51,6 +52,7 @@
 #include <IndexReader.h>
 #include <Document.h>
 #include <Field.h>
+#include <DateField.h>
 #include <StringUtils.h>
 #include <TermQuery.h>
 #include <BooleanQuery.h>
@@ -221,7 +223,8 @@ void PerformSearch(IndexSearcherPtr searcher,
             auto t = doc->get(L"trans");
             if (!ContainsResult(results, t))
             {
-                Suggestion r {t, score};
+                time_t ts = DateField::stringToTime(doc->get(L"created"));
+                Suggestion r {t, score, ts};
                 results.push_back(r);
             }
         }
@@ -293,7 +296,8 @@ SuggestionsList TranslationMemoryImpl::Search(const std::string& lang,
                 if (std::abs(tokensCount2 - sourceTokensCount) <= MAX_ALLOWED_LENGTH_DIFFERENCE &&
                     !ContainsResult(results, t))
                 {
-                    Suggestion r {t, score};
+                    time_t ts = DateField::stringToTime(doc->get(L"created"));
+                    Suggestion r {t, score, ts};
                     results.push_back(r);
                 }
             }
@@ -375,6 +379,8 @@ public:
 
             doc->add(newLucene<Field>(L"uuid", itemUUID,
                                       Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
+            doc->add(newLucene<Field>(L"created", DateField::timeToString(time(NULL)),
+                                      Field::STORE_YES, Field::INDEX_NO));
             doc->add(newLucene<Field>(L"srclang", L"en",
                                       Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
             doc->add(newLucene<Field>(L"lang", lang,
