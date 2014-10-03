@@ -1387,8 +1387,8 @@ wxString FormatStringForFile(const wxString& text)
 #ifdef __WXOSX__
 
 @interface CompiledMOFilePresenter : NSObject<NSFilePresenter>
-@property (atomic, strong) NSURL *presentedItemURL;
-@property (atomic, strong) NSURL *primaryPresentedItemURL;
+@property (atomic, copy) NSURL *presentedItemURL;
+@property (atomic, copy) NSURL *primaryPresentedItemURL;
 @end
 
 @implementation CompiledMOFilePresenter
