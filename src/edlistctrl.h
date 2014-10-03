@@ -154,6 +154,9 @@ class PoeditListCtrl : public wxListView
         /// Returns true if exactly one item is selected.
         bool HasSingleSelection() const { return GetSelectedItemCount() == 1; }
 
+        /// Returns true if more than one item are selected.
+        bool HasMultipleSelection() const { return GetSelectedItemCount() > 1; }
+
         void RefreshSelectedItems()
         {
             for (auto i = GetFirstSelected(); i != -1; i = GetNextSelected(i))

@@ -566,7 +566,7 @@ int PoeditListCtrl::OnGetItemImage(long item) const
 
     if (d.IsAutomatic())
         index |= IMG_AUTOMATIC;
-    if (d.HasComment())
+    if (d.HasComment() || d.HasAutoComments())
         index |= IMG_COMMENT;
     if (d.IsModified())
         index |= IMG_MODIFIED;
@@ -578,6 +578,8 @@ int PoeditListCtrl::OnGetItemImage(long item) const
 
 void PoeditListCtrl::OnSize(wxSizeEvent& event)
 {
+    wxWindowUpdateLocker lock(this);
+
     SizeColumns();
     event.Skip();
 }

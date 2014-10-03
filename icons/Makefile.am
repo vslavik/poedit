@@ -37,10 +37,10 @@ dist_uiicons_DATA = \
 		ui/toolbar-24/document-properties.png \
 		ui/toolbar-24/document-new.png \
 		ui/toolbar-24/edit-delete.png \
-		ui/toolbar-24/poedit-comment.png \
 		ui/toolbar-24/poedit-fuzzy.png \
 		ui/toolbar-24/poedit-update.png \
 		ui/toolbar-24/poedit-validate.png \
+		ui/toolbar-24/sidebar.png \
 		ui/poedit-status-automatic.png \
 		ui/poedit-status-cat-mid.png \
 		ui/poedit-status-cat-no.png \
@@ -50,6 +50,8 @@ dist_uiicons_DATA = \
 		ui/poedit-status-modified.png \
 		ui/poedit-status-nothing.png \
 		ui/window-close.png \
+		ui/SuggestionError.png \
+		ui/SuggestionTM.png \
 		../artwork/PoeditWelcome.png
 
 

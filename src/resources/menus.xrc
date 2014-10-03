@@ -95,10 +95,14 @@
         <accel platform="unix|win">Ctrl+M</accel>
       </object>
       <object class="separator"/>
+      <object class="wxMenu" name="menu_suggestions">
+        <label>Suggestions</label>
+      </object>
       <object class="wxMenuItem" name="menu_references">
         <label platform="win">_Show references</label>
         <label platform="unix|mac">_Show References</label>
       </object>
+      <object class="separator"/>
       <object class="wxMenuItem" name="wxID_FIND" platform="unix|win">
         <label>_Find...</label>
         <accel>Ctrl+F</accel>
@@ -139,17 +143,6 @@
         <label platform="unix|mac">Display Entry _IDs</label>
         <checkable>1</checkable>
       </object>
-      <object class="wxMenuItem" name="menu_auto_comments_win">
-        <label platform="win">Display _notes for translators</label>
-        <label platform="unix|mac">Display _Notes for Translators</label>
-        <checkable>1</checkable>
-      </object>
-      <object class="separator"/>
-      <object class="wxMenuItem" name="menu_comment_win">
-        <label platform="win">_Comment window</label>
-        <label platform="unix|mac">_Comment Window</label>
-        <checkable>1</checkable>
-      </object>
       <object class="separator"/>
       <object class="wxMenuItem" name="sort_by_order">
         <label platform="win">Sort by _file order</label>
@@ -172,11 +165,17 @@
         <label platform="unix|mac">_Group By Context</label>
         <checkable>1</checkable>
       </object>
-      <object class="separator"/>
       <object class="wxMenuItem" name="sort_untrans_first">
         <label platform="win">_Untranslated entries first</label>
         <label platform="unix|mac">_Untranslated Entries First</label>
         <checkable>1</checkable>
+      </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="show_sidebar">
+        <label platform="win">Show sidebar</label>
+        <label platform="mac">Show Sidebar</label>
+        <checkable platform="win|unix">1</checkable>
+        <accel>Ctrl+Alt+S</accel>
       </object>
       <style>wxMENU_TEAROFF</style>
     </object>

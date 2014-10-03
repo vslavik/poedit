@@ -34,6 +34,7 @@
 #include <wx/windowptr.h>
 
 class WXDLLIMPEXP_FWD_CORE wxSplitterWindow;
+class WXDLLIMPEXP_FWD_CORE wxSplitterEvent;
 class WXDLLIMPEXP_FWD_CORE wxTextCtrl;
 class WXDLLIMPEXP_FWD_CORE wxGauge;
 class WXDLLIMPEXP_FWD_CORE wxNotebook;
@@ -43,7 +44,6 @@ class WXDLLIMPEXP_FWD_CORE wxStaticText;
 #include "gexecute.h"
 #include "edlistctrl.h"
 #include "edapp.h"
-#include "tm/transmem.h"
 
 class ListHandler;
 class TextctrlHandler;
@@ -54,6 +54,7 @@ class TranslationTextCtrl;
 class PoeditFrame;
 class AttentionBar;
 class ErrorBar;
+class Sidebar;
 
 /** This class provides main editing frame. It handles user's input
     and provides frontend to catalog editing engine. Nothing fancy.
@@ -160,7 +161,9 @@ class PoeditFrame : public wxFrame
 
     private:
         /// Refreshes controls.
-        void RefreshControls();
+        enum { Refresh_NoCatalogChanged = 1 };
+        void RefreshControls(int flags = 0);
+
         /// Sets controls custom fonts.
         void SetCustomFonts();
         void SetAccelerators();
@@ -188,9 +191,6 @@ class PoeditFrame : public wxFrame
         void UpdateTitle();
         /// Updates menu -- disables and enables items.
         void UpdateMenu();
-
-        /// Updates the editable nature of the comment window
-        void UpdateCommentWindowEditable();
 
         // Called when catalog's language possibly changed
         void UpdateTextLanguage();
@@ -234,6 +234,8 @@ private:
         void OnListSel(wxListEvent& event);
         void OnListRightClick(wxMouseEvent& event);
         void OnListFocus(wxFocusEvent& event);
+        void OnSplitterSashMoving(wxSplitterEvent& event);
+        void OnSidebarSplitterSashMoving(wxSplitterEvent& event);
         void OnCloseWindow(wxCloseEvent& event);
         void OnReference(wxCommandEvent& event);
         void OnReferencesMenu(wxCommandEvent& event);
@@ -241,20 +243,20 @@ private:
         void OnRightClick(wxCommandEvent& event);
         void OnFuzzyFlag(wxCommandEvent& event);
         void OnIDsFlag(wxCommandEvent& event);
-        void OnCommentWinFlag(wxCommandEvent& event);
-        void OnAutoCommentsWinFlag(wxCommandEvent& event);
         void OnCopyFromSource(wxCommandEvent& event);
         void OnClearTranslation(wxCommandEvent& event);
         void OnFind(wxCommandEvent& event);
         void OnFindNext(wxCommandEvent& event);
         void OnFindPrev(wxCommandEvent& event);
         void OnEditComment(wxCommandEvent& event);
-        void OnCommentWindowText(wxCommandEvent& event);
         void OnSortByFileOrder(wxCommandEvent&);
         void OnSortBySource(wxCommandEvent&);
         void OnSortByTranslation(wxCommandEvent&);
         void OnSortGroupByContext(wxCommandEvent&);
         void OnSortUntranslatedFirst(wxCommandEvent&);
+
+        void OnShowHideSidebar(wxCommandEvent& event);
+        void OnUpdateShowHideSidebar(wxUpdateUIEvent& event);
 
         void OnSelectionUpdate(wxUpdateUIEvent& event);
         void OnSingleSelectionUpdate(wxUpdateUIEvent& event);
@@ -264,7 +266,7 @@ private:
         void OnTextEditingCommandUpdate(wxUpdateUIEvent& event);
 #endif
 
-        void OnAutoTranslate(wxCommandEvent& event);
+        void OnSuggestion(wxCommandEvent& event);
         void OnAutoTranslateAll(wxCommandEvent& event);
         bool AutoTranslateCatalog(int *matchesCount = nullptr);
 
@@ -280,9 +282,6 @@ private:
         bool ExportCatalog(const wxString& filename);
 
         void OnSize(wxSizeEvent& event);
-
-        // updates the status of both comment windows: Automatic and Translator's
-        void UpdateDisplayCommentWin();
 
         void ShowPluralFormUI(bool show = true);
 
@@ -301,22 +300,17 @@ private:
         DECLARE_EVENT_TABLE()
 
     private:
-        bool m_commentWindowEditable;
         Catalog *m_catalog;
         wxString m_fileName;
         bool m_fileExistsOnDisk;
 
-        TranslationMemory::Results m_autoTranslations;
-
-        wxPanel *m_bottomLeftPanel;
-        wxPanel *m_bottomRightPanel;
-        wxSplitterWindow *m_splitter, *m_bottomSplitter;
+        wxPanel *m_bottomPanel;
+        wxSplitterWindow *m_splitter;
+        wxSplitterWindow *m_sidebarSplitter;
         PoeditListCtrl *m_list;
-        wxStaticText *m_labelComment, *m_labelAutoComments;
         wxStaticText *m_labelContext;
         ErrorBar *m_errorBar;
         SourceTextCtrl *m_textOrig, *m_textOrigPlural;
-        wxTextCtrl *m_textComment, *m_textAutoComments;
         TranslationTextCtrl *m_textTrans;
         std::vector<TranslationTextCtrl*> m_textTransPlural;
         TranslationTextCtrl *m_textTransSingularForm;
@@ -329,12 +323,11 @@ private:
         wxFont m_normalGuiFont, m_boldGuiFont;
 
         AttentionBar *m_attentionBar;
+        Sidebar *m_sidebar;
 
         bool m_modified;
         bool m_hasObsoleteItems;
         bool m_displayIDs;
-        bool m_displayCommentWin;
-        bool m_displayAutoCommentsWin;
         bool m_dontAutoclearFuzzyStatus;
         bool m_setSashPositionsWhenMaximized;
 

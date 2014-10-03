@@ -43,12 +43,36 @@ public:
 
 };
 
+// Label that auto-wraps itself to fit surrounding control's width.
+class AutoWrappingText : public wxStaticText
+{
+public:
+    AutoWrappingText(wxWindow *parent, const wxString& label);
+
+#if defined(__WXOSX__)
+    static const int CHECKBOX_INDENT = 19;
+#elif defined(__WXMSW__)
+    static const int CHECKBOX_INDENT = 17;
+#elif defined(__WXGTK__)
+    static const int CHECKBOX_INDENT = 25;
+#endif
+
+    void SetAlignment(int align);
+    void SetAndWrapLabel(const wxString& label);
+
+protected:
+    void OnSize(wxSizeEvent& e);
+
+    wxString m_text;
+    int m_wrapWidth;
+};
+
 
 // Longer, often multiline, explanation label used to provide more information
 // about the effects of some less obvious settings. Typeset using smaller font
 // on OS X and grey appearence. Auto-wraps itself to fit surrounding control's
 // width.
-class ExplanationLabel : public wxStaticText
+class ExplanationLabel : public AutoWrappingText
 {
 public:
     ExplanationLabel(wxWindow *parent, const wxString& label);
@@ -61,11 +85,7 @@ public:
     static const int CHECKBOX_INDENT = 25;
 #endif
 
-private:
-    void OnSize(wxSizeEvent& e);
-
-    wxString m_text;
-    int m_wrapWidth;
+    static wxColour GetTextColor();
 };
 
 

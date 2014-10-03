@@ -107,6 +107,12 @@ public:
     }
 
 protected:
+    void TransferDataFromWindowAndUpdateUI(wxCommandEvent&)
+    {
+        TransferDataFromWindow();
+        PoeditFrame::UpdateAllAfterPreferencesChange();
+    }
+
     virtual void InitValues(const wxConfigBase& cfg) = 0;
     virtual void SaveValues(wxConfigBase& cfg) = 0;
 
@@ -174,8 +180,6 @@ public:
 
         m_spellchecking = new wxCheckBox(this, wxID_ANY, _("Check spelling"));
         sizer->Add(m_spellchecking, wxSizerFlags().Border(wxTOP));
-        m_commentWinEditable = new wxCheckBox(this, wxID_ANY, _("Comment window is editable"));
-        sizer->Add(m_commentWinEditable, wxSizerFlags().Border(wxTOP));
         m_focusToText = new wxCheckBox(this, wxID_ANY, _("Always change focus to text input field"));
         sizer->Add(m_focusToText, wxSizerFlags().Border(wxTOP));
         wxString explainFocus(_("Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."));
@@ -247,7 +251,6 @@ public:
             m_useFontText->Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this);
             Bind(wxEVT_FONTPICKER_CHANGED, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this);
             m_focusToText->Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this);
-            m_commentWinEditable->Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this);
             m_spellchecking->Bind(wxEVT_CHECKBOX, &GeneralPageWindow::TransferDataFromWindowAndUpdateUI, this);
         }
 
@@ -267,7 +270,6 @@ public:
         m_compileMo->SetValue(cfg.ReadBool("compile_mo", true));
         m_showSummary->SetValue(cfg.ReadBool("show_summary", false));
         m_focusToText->SetValue(cfg.ReadBool("focus_to_text", false));
-        m_commentWinEditable->SetValue(cfg.ReadBool("comment_window_editable", false));
         m_keepCrlf->SetValue(cfg.ReadBool("keep_crlf", true));
 
         if (IsSpellcheckingAvailable())
@@ -294,7 +296,6 @@ public:
         cfg.Write("compile_mo", m_compileMo->GetValue());
         cfg.Write("show_summary", m_showSummary->GetValue());
         cfg.Write("focus_to_text", m_focusToText->GetValue());
-        cfg.Write("comment_window_editable", m_commentWinEditable->GetValue());
         cfg.Write("keep_crlf", m_keepCrlf->GetValue());
 
         if (IsSpellcheckingAvailable())
@@ -323,15 +324,9 @@ public:
         }
     }
 
-    void TransferDataFromWindowAndUpdateUI(wxCommandEvent&)
-    {
-        TransferDataFromWindow();
-        PoeditFrame::UpdateAllAfterPreferencesChange();
-    }
-
 private:
     wxTextCtrl *m_userName, *m_userEmail;
-    wxCheckBox *m_compileMo, *m_showSummary, *m_focusToText, *m_commentWinEditable, *m_spellchecking;
+    wxCheckBox *m_compileMo, *m_showSummary, *m_focusToText, *m_spellchecking;
     wxChoice *m_crlf;
     wxCheckBox *m_keepCrlf;
     wxCheckBox *m_useFontList, *m_useFontText;
@@ -418,8 +413,9 @@ public:
 
         if (wxPreferencesEditor::ShouldApplyChangesImmediately())
         {
-            m_useTM->Bind(wxEVT_CHECKBOX, [=](wxCommandEvent&){ TransferDataFromWindow(); });
             m_useTMWhenUpdating->Bind(wxEVT_CHECKBOX, [=](wxCommandEvent&){ TransferDataFromWindow(); });
+            // Some settings directly affect the UI, so need a more expensive handler:
+            m_useTM->Bind(wxEVT_CHECKBOX, &TMPageWindow::TransferDataFromWindowAndUpdateUI, this);
         }
     }
 

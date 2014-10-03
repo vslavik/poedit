@@ -54,16 +54,12 @@ FindFrame::FindFrame(wxWindow *parent,
                      PoeditListCtrl *list,
                      Catalog *c,
                      wxTextCtrl *textCtrlOrig,
-                     wxTextCtrl *textCtrlTrans,
-                     wxTextCtrl *textCtrlComments,
-                     wxTextCtrl *textCtrlAutoComments)
+                     wxTextCtrl *textCtrlTrans)
         : m_listCtrl(list),
           m_catalog(c),
           m_position(-1),
           m_textCtrlOrig(textCtrlOrig),
-          m_textCtrlTrans(textCtrlTrans),
-          m_textCtrlComments(textCtrlComments),
-          m_textCtrlAutoComments(textCtrlAutoComments)
+          m_textCtrlTrans(textCtrlTrans)
 {
     wxXmlResource::Get()->LoadDialog(this, parent, "find_frame");
 
@@ -382,21 +378,20 @@ bool FindFrame::DoFind(int dir)
               txt = m_textCtrlTrans;
               break;
             case Found_InComments:
-              txt = m_textCtrlComments;
-              break;
             case Found_InAutoComments:
-              txt = m_textCtrlAutoComments;
-              break;
-            case Found_Not: // silence compiler warning, can't get here
+            case Found_Not:
               break;
         }
 
-        textc = txt->GetValue();
-        if (!caseSens)
-            textc.MakeLower();
-        int pos = textc.Find(text);
-        if (pos != wxNOT_FOUND)
-            txt->SetSelection(pos, pos + text.length());
+        if (txt)
+        {
+            textc = txt->GetValue();
+            if (!caseSens)
+                textc.MakeLower();
+            int pos = textc.Find(text);
+            if (pos != wxNOT_FOUND)
+                txt->SetSelection(pos, pos + text.length());
+        }
 
         return true;
     }
