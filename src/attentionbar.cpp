@@ -92,7 +92,7 @@ AttentionBar::AttentionBar(wxWindow *parent)
 
     wxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
     sizer->AddSpacer(wxSizerFlags::GetDefaultBorder());
-    sizer->Add(m_icon, wxSizerFlags().Center().Border(wxRIGHT, SMALL_BORDER));
+    sizer->Add(m_icon, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
     sizer->Add(m_label, wxSizerFlags(1).Center().Border(wxALL, SMALL_BORDER));
     sizer->Add(m_buttons, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
     sizer->Add(btnClose, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
