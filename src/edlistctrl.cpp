@@ -83,87 +83,12 @@ const wxColour gs_TranspColor(254, 0, 253); // FIXME: get rid of this
 
 enum
 {
-    IMG_NOTHING   = 0x00,
-    IMG_AUTOMATIC = 0x01,
-    IMG_COMMENT   = 0x02,
-    IMG_MODIFIED  = 0x04,
-    IMG_BK0       =  1 << 3,
-    IMG_BK1       =  2 << 3,
-    IMG_BK2       =  3 << 3,
-    IMG_BK3       =  4 << 3,
-    IMG_BK4       =  5 << 3,
-    IMG_BK5       =  6 << 3,
-    IMG_BK6       =  7 << 3,
-    IMG_BK7       =  8 << 3,
-    IMG_BK8       =  9 << 3,
-    IMG_BK9       = 10 << 3
+    IMG_NOTHING,
+    IMG_AUTOMATIC,
+    IMG_COMMENT,
+    IMG_MODIFIED,
+    IMG_BOOKMARK
 };
-
-
-wxBitmap AddDigit(int digit, int x, int y, const wxBitmap& bmp)
-{
-    wxMemoryDC dc;
-    int width = bmp.GetWidth();
-    int height = bmp.GetHeight();
-    wxBitmap tmpBmp;
-    tmpBmp.CreateScaled(bmp.GetScaledWidth(), bmp.GetScaledHeight(), -1, bmp.GetScaleFactor());
-    dc.SelectObject(tmpBmp);
-    dc.SetPen(*wxTRANSPARENT_PEN);
-    dc.SetBrush(wxBrush(gs_TranspColor, wxSOLID));
-    dc.DrawRectangle(0, 0, width, height);
-
-    dc.DrawBitmap(bmp, 0,0,true);
-
-    dc.SetPen(*wxBLACK_PEN);
-    for(int i = 0; i < 5; i++)
-    {
-        for(int j = 0; j < 3; j++)
-        {
-            if (g_digits[digit][i][j] == 1)
-                dc.DrawPoint(x+j, y+i);
-        }
-    }
-
-    dc.SelectObject(wxNullBitmap);
-    tmpBmp.SetMask(new wxMask(tmpBmp, gs_TranspColor));
-    return tmpBmp;
-}
-
-wxBitmap MergeBitmaps(const wxBitmap& bmp1, const wxBitmap& bmp2)
-{
-    wxMemoryDC dc;
-    wxBitmap tmpBmp;
-    tmpBmp.CreateScaled(bmp1.GetScaledWidth(), bmp1.GetScaledHeight(), -1, bmp1.GetScaleFactor());
-
-    dc.SelectObject(tmpBmp);
-    dc.SetPen(*wxTRANSPARENT_PEN);
-    dc.SetBrush(wxBrush(gs_TranspColor, wxSOLID));
-    dc.DrawRectangle(0, 0, bmp1.GetWidth(), bmp1.GetHeight());
-    dc.DrawBitmap(bmp1, 0, 0, true);
-    dc.DrawBitmap(bmp2, 0, 0, true);
-    dc.SelectObject(wxNullBitmap);
-
-    tmpBmp.SetMask(new wxMask(tmpBmp, gs_TranspColor));
-    return tmpBmp;
-}
-
-wxBitmap BitmapFromList(wxImageList* list, int index)
-{
-    int width, height;
-    list->GetSize(index, width, height);
-    wxMemoryDC dc;
-    wxBitmap bmp(width, height);
-    dc.SelectObject(bmp);
-    dc.SetPen(*wxTRANSPARENT_PEN);
-    dc.SetBrush(wxBrush(gs_TranspColor, wxSOLID));
-    dc.DrawRectangle(0, 0, width, height);
-
-    list->Draw(index, dc, 0, 0, wxIMAGELIST_DRAW_TRANSPARENT);
-
-    dc.SelectObject(wxNullBitmap);
-    bmp.SetMask(new wxMask(bmp, gs_TranspColor));
-    return bmp;
-}
 
 } // anonymous namespace
 
@@ -192,39 +117,14 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
 
     CreateColumns();
 
-    int i;
     wxImageList *list = new wxImageList(16, 16);
 
-    // IMG_NOTHING:
+    // IMG_XXX:
     list->Add(wxArtProvider::GetBitmap("poedit-status-nothing"));
-
-    // IMG_AUTOMATIC:
     list->Add(wxArtProvider::GetBitmap("poedit-status-automatic"));
-    // IMG_COMMENT:
     list->Add(wxArtProvider::GetBitmap("poedit-status-comment"));
-    // IMG_AUTOMATIC | IMG_COMMENT:
-    list->Add(MergeBitmaps(wxArtProvider::GetBitmap("poedit-status-automatic"),
-                           wxArtProvider::GetBitmap("poedit-status-comment")));
-
-    // IMG_MODIFIED
     list->Add(wxArtProvider::GetBitmap("poedit-status-modified"));
-
-    // IMG_MODIFIED variations:
-    for (i = 1; i < IMG_MODIFIED; i++)
-    {
-        list->Add(MergeBitmaps(BitmapFromList(list, i),
-                               wxArtProvider::GetBitmap("poedit-status-modified")));
-    }
-
-    // BK_XX variations:
-    for (int bk = 0; bk < 10; bk++)
-    {
-        for(i = 0; i <= (IMG_AUTOMATIC|IMG_COMMENT|IMG_MODIFIED); i++)
-        {
-            wxBitmap bmp = BitmapFromList(list, i);
-            list->Add(AddDigit(bk, 0, 0, bmp));
-        }
-    }
+    list->Add(wxArtProvider::GetBitmap("poedit-status-bookmark"));
 
     AssignImageList(list, wxIMAGE_LIST_SMALL);
 
@@ -562,18 +462,17 @@ int PoeditListCtrl::OnGetItemImage(long item) const
         return IMG_NOTHING;
 
     const CatalogItem& d = ListIndexToCatalogItem((int)item);
-    int index = IMG_NOTHING;
 
-    if (d.IsAutomatic())
-        index |= IMG_AUTOMATIC;
-    if (d.HasComment() || d.HasAutoComments())
-        index |= IMG_COMMENT;
-    if (d.IsModified())
-        index |= IMG_MODIFIED;
-
-    index |= (static_cast<int>(d.GetBookmark())+1) << 3;
-
-    return index;
+    if (d.GetBookmark() != NO_BOOKMARK)
+        return IMG_BOOKMARK;
+    else if (d.HasComment())
+        return IMG_COMMENT;
+    else if (d.IsAutomatic())
+        return IMG_AUTOMATIC;
+    else if (d.IsModified())
+        return IMG_MODIFIED;
+    else
+        return IMG_NOTHING;
 }
 
 void PoeditListCtrl::OnSize(wxSizeEvent& event)

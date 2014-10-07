@@ -42,13 +42,13 @@ dist_uiicons_DATA = \
 		ui/toolbar-24/poedit-validate.png \
 		ui/toolbar-24/sidebar.png \
 		ui/poedit-status-automatic.png \
-		ui/poedit-status-cat-mid.png \
-		ui/poedit-status-cat-no.png \
-		ui/poedit-status-cat-ok.png \
-		ui/poedit-status-comment-modif.png \
+		ui/poedit-status-bookmark.png \
 		ui/poedit-status-comment.png \
 		ui/poedit-status-modified.png \
 		ui/poedit-status-nothing.png \
+		ui/poedit-status-cat-mid.png \
+		ui/poedit-status-cat-no.png \
+		ui/poedit-status-cat-ok.png \
 		ui/window-close.png \
 		ui/SuggestionError.png \
 		ui/SuggestionTM.png \
