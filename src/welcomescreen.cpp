@@ -139,7 +139,7 @@ WelcomeScreenBase::WelcomeScreenBase(wxWindow *parent)
     m_fntSub = wxFont(wxFontInfo(11).FaceName(HEADER_FACE).Light());
 #elif defined(__WXMSW__)
     #define HEADER_FACE "Segoe UI"
-    m_fntHeader = wxFont(wxFontInfo(24).FaceName("Segoe UI Light"));
+    m_fntHeader = wxFont(wxFontInfo(20).FaceName("Segoe UI Light").AntiAliased());
     m_fntNorm = wxFont(wxFontInfo(10).FaceName(HEADER_FACE));
     m_fntSub = wxFont(wxFontInfo(9).FaceName(HEADER_FACE));
 #else
