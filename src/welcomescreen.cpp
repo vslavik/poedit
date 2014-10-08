@@ -121,16 +121,11 @@ typedef wxStaticText HeaderStaticText;
 
 WelcomeScreenBase::WelcomeScreenBase(wxWindow *parent)
     : wxPanel(parent, wxID_ANY),
-      m_clrHeader("#444444"),
+      m_clrHeader("#555555"),
       m_clrNorm("#444444"),
       m_clrSub("#aaaaaa")
 {
-#ifdef  __WXMSW__
     SetBackgroundColour(wxColour("#fffcf5"));
-#else
-    SetBackgroundStyle(wxBG_STYLE_PAINT);
-    Bind(wxEVT_PAINT, &WelcomeScreenPanel::OnPaint, this);
-#endif
 
 #if defined(__WXOSX__)
     #define HEADER_FACE "Helvetica Neue"
@@ -156,17 +151,6 @@ WelcomeScreenBase::WelcomeScreenBase(wxWindow *parent)
         GetParent()->GetEventHandler()->AddPendingEvent(event);
     });
 }
-
-
-void WelcomeScreenBase::OnPaint(wxPaintEvent&)
-{
-    wxAutoBufferedPaintDC dc(this);
-    wxRect rect(dc.GetSize());
-
-    dc.GradientFillLinear(rect, wxColour("#ffffff"), wxColour("#fffceb"), wxBOTTOM);
-}
-
-
 
 
 WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)

@@ -37,9 +37,6 @@ protected:
 
     wxFont m_fntHeader, m_fntNorm, m_fntSub;
     wxColour m_clrHeader, m_clrNorm, m_clrSub;
-
-private:
-    void OnPaint(wxPaintEvent&);
 };
 
 /// Content view for initially opened Poedit, without a file
