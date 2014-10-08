@@ -202,7 +202,6 @@ AC_SUBST(WX_LIBS)
 AC_CONFIG_FILES([
          Makefile
          src/Makefile
-         icons/Makefile
          artwork/Makefile
          locales/Makefile
          docs/Makefile

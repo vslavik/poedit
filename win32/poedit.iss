@@ -73,7 +73,7 @@ AppContact=support@poedit.net
 UninstallDisplayIcon={app}\Poedit.exe
 UninstallDisplayName=Poedit
 MinVersion=0,5.01.2600sp3
-WizardSmallImageFile=icons\installer_wizard_image.bmp
+WizardSmallImageFile=artwork\windows\installer_wizard_image.bmp
 AppPublisherURL=http://poedit.net/
 DisableProgramGroupPage=true
 
@@ -95,8 +95,8 @@ Source: {#CONFIG}\icudt*.dat; DestDir: {app}
 Source: deps\gettext\COPYING; DestDir: {app}\Docs; DestName: GNU_Gettext_COPYING.txt
 Source: COPYING; DestDir: {app}\Docs; DestName: Copying.txt
 Source: NEWS; DestDir: {app}\Docs; DestName: News.txt
-Source: icons\mime-win32\xp\*.ico; DestDir: {app}\Resources; OnlyBelowVersion: 0,6.0.6000
-Source: icons\mime-win32\vista\*.ico; DestDir: {app}\Resources; MinVersion: 0,6.0.6000
+Source: artwork\windows\xp\*.ico; DestDir: {app}\Resources; OnlyBelowVersion: 0,6.0.6000
+Source: artwork\windows\vista\*.ico; DestDir: {app}\Resources; MinVersion: 0,6.0.6000
 Source: {#CRT_REDIST}\*.dll; DestDir: {app}
 Source: "{#CONFIG}\Resources\*"; DestDir: "{app}\Resources"; Flags: recursesubdirs
 Source: "{#CONFIG}\Translations\*"; DestDir: "{app}\Translations"; Flags: recursesubdirs
