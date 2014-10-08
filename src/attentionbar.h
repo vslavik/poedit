@@ -45,6 +45,7 @@ public:
     {
         Info,
         Warning,
+        Question,
         Error
     };
 

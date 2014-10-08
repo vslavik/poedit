@@ -155,6 +155,9 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
         case AttentionMessage::Warning:
             iconName = wxART_WARNING;
             break;
+        case AttentionMessage::Question:
+            iconName = wxART_QUESTION;
+            break;
         case AttentionMessage::Error:
             iconName = wxART_ERROR;
             break;
