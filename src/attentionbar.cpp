@@ -39,11 +39,11 @@
 #endif
 
 #ifdef __WXOSX__
-    #define SMALL_BORDER   5
+    #define SMALL_BORDER   7
     #define BUTTONS_SPACE 10
 #else
     #define SMALL_BORDER   3
-    #define BUTTONS_SPACE  3
+    #define BUTTONS_SPACE  5
 #endif
 
 BEGIN_EVENT_TABLE(AttentionBar, wxPanel)
@@ -56,14 +56,16 @@ AttentionBar::AttentionBar(wxWindow *parent)
               wxTAB_TRAVERSAL | wxBORDER_NONE)
 {
 #ifdef __WXMSW__
-    wxColour bg("#FFF499"); // match Visual Studio 2012+'s aesthetics
-#else
-    wxColour bg = wxSystemSettings::GetColour(wxSYS_COLOUR_INFOBK);
+    SetBackgroundColour("#FFF499"); // match Visual Studio 2012+'s aesthetics
 #endif
-    SetBackgroundColour(bg);
-    SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_INFOTEXT));
+#ifdef __WXOSX__
+    SetBackgroundColour("#FCDE59");
+    SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
 
+#ifndef __WXGTK__
     m_icon = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
+#endif
     m_label = new wxStaticText(this, wxID_ANY, wxEmptyString);
 
     m_buttons = new wxBoxSizer(wxHORIZONTAL);
@@ -78,21 +80,22 @@ AttentionBar::AttentionBar(wxWindow *parent)
                 );
     btnClose->SetToolTip(_("Hide this notification message"));
 #ifdef __WXMSW__
-    btnClose->SetBackgroundColour(bg);
+    btnClose->SetBackgroundColour(GetBackgroundColour());
 #endif
-#ifdef __WXOSX__
-    SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-#endif
+
 #if defined(__WXOSX__) || defined(__WXMSW__)
-    Bind(wxEVT_PAINT, &AttentionBar::OnPaint, this);
     wxFont boldFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
     boldFont.SetWeight(wxFONTWEIGHT_BOLD);
     m_label->SetFont(boldFont);
-#endif //
+#endif
+
+    Bind(wxEVT_PAINT, &AttentionBar::OnPaint, this);
 
     wxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
     sizer->AddSpacer(wxSizerFlags::GetDefaultBorder());
+#ifndef __WXGTK__
     sizer->Add(m_icon, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
+#endif
     sizer->Add(m_label, wxSizerFlags(1).Center().Border(wxALL, SMALL_BORDER));
     sizer->Add(m_buttons, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
     sizer->Add(btnClose, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
@@ -104,40 +107,19 @@ AttentionBar::AttentionBar(wxWindow *parent)
 }
 
 
-#ifdef __WXOSX__
 void AttentionBar::OnPaint(wxPaintEvent&)
 {
     wxPaintDC dc(this);
-
     wxRect rect(dc.GetSize());
 
-    dc.SetPen(wxColour(254,230,93));
-    dc.DrawLine(rect.GetTopLeft(), rect.GetTopRight());
-    dc.SetPen(wxColour(176,120,7));
-    dc.DrawLine(rect.GetBottomLeft(), rect.GetBottomRight());
-
-    rect.Deflate(0,1);
-    dc.GradientFillLinear
-       (
-         rect,
-         wxColour(254,220,48),
-         wxColour(253,188,11),
-         wxDOWN
-       );
-}
-#endif // __WXOSX__
-
-#ifdef __WXMSW__
-void AttentionBar::OnPaint(wxPaintEvent&)
-{
-    wxPaintDC dc(this);
-
-    wxRect rect(dc.GetSize());
+    auto bg = GetBackgroundColour();
     dc.SetBrush(*wxTRANSPARENT_BRUSH);
-    dc.SetPen(wxColour("#e5dd8c"));
-    dc.DrawRoundedRectangle(rect, 1);
+    dc.SetPen(bg.ChangeLightness(90));
+#ifndef __WXOSX__
+    dc.DrawLine(rect.GetTopLeft(), rect.GetTopRight());
+#endif
+    dc.DrawLine(rect.GetBottomLeft(), rect.GetBottomRight());
 }
-#endif // __WXMSW__
 
 
 void AttentionBar::ShowMessage(const AttentionMessage& msg)
@@ -145,8 +127,24 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
     if ( msg.IsBlacklisted() )
         return;
 
+#ifdef __WXGTK__
+    switch ( msg.m_kind )
+    {
+        case AttentionMessage::Info:
+            SetBackgroundColour(wxColour(252,252,189));
+            break;
+        case AttentionMessage::Warning:
+            SetBackgroundColour(wxColour(250,173,61));
+            break;
+        case AttentionMessage::Question:
+            SetBackgroundColour(wxColour(138,173,212));
+            break;
+        case AttentionMessage::Error:
+            SetBackgroundColour(wxColour(237,54,54));
+            break;
+    }
+#else
     wxString iconName;
-
     switch ( msg.m_kind )
     {
         case AttentionMessage::Info:
@@ -162,8 +160,9 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
             iconName = wxART_ERROR;
             break;
     }
-
     m_icon->SetBitmap(wxArtProvider::GetBitmap(iconName, wxART_MENU, wxSize(16, 16)));
+#endif
+
     m_label->SetLabelText(msg.m_text);
 
     m_buttons->Clear(true/*delete_windows*/);

@@ -122,12 +122,12 @@ public:
 private:
     void OnClose(wxCommandEvent& event);
     void OnAction(wxCommandEvent& event);
-#if defined(__WXOSX__) || defined(__WXMSW__)
     void OnPaint(wxPaintEvent& event);
-#endif
 
 private:
+#ifndef __WXGTK__
     wxStaticBitmap *m_icon;
+#endif
     wxStaticText *m_label;
     wxSizer *m_buttons;
     typedef std::map<wxObject*, AttentionMessage::Callback> ActionsMap;
