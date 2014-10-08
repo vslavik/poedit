@@ -62,7 +62,7 @@ public:
         @see AddToBlacklist
      */
     AttentionMessage(const wxString& id, Kind kind, const wxString& text)
-        : m_id(id), m_kind(kind), m_text(text) {}
+        : m_id(id), m_kind(kind), m_text(text), m_explanation("") {}
 
     typedef std::function<void()> Callback;
 
@@ -79,9 +79,13 @@ public:
     /// Adds "Don't show again" action.
     void AddDontShowAgain();
 
+    /// Set additional explanatory text
+    void SetExplanation(const wxString& txt) { m_explanation = txt; }
+
     wxString m_id;
     Kind m_kind;
     wxString m_text;
+    wxString m_explanation;
 
     typedef std::pair<wxString, Callback> Action;
     typedef std::vector<Action> Actions;
@@ -129,6 +133,7 @@ private:
     wxStaticBitmap *m_icon;
 #endif
     wxStaticText *m_label;
+    wxStaticText *m_explanation;
     wxSizer *m_buttons;
     typedef std::map<wxObject*, AttentionMessage::Callback> ActionsMap;
     ActionsMap m_actions;

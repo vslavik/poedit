@@ -66,7 +66,10 @@ AttentionBar::AttentionBar(wxWindow *parent)
 #ifndef __WXGTK__
     m_icon = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
 #endif
-    m_label = new wxStaticText(this, wxID_ANY, wxEmptyString);
+    m_label = new wxStaticText(this, wxID_ANY, "");
+
+    m_explanation = new wxStaticText(this, wxID_ANY, "");
+    m_explanation->SetForegroundColour(GetBackgroundColour().ChangeLightness(40));
 
     m_buttons = new wxBoxSizer(wxHORIZONTAL);
 
@@ -96,7 +99,11 @@ AttentionBar::AttentionBar(wxWindow *parent)
 #ifndef __WXGTK__
     sizer->Add(m_icon, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
 #endif
-    sizer->Add(m_label, wxSizerFlags(1).Center().Border(wxALL, SMALL_BORDER));
+
+    auto labelSizer = new wxBoxSizer(wxVERTICAL);
+    labelSizer->Add(m_label, wxSizerFlags().Expand());
+    labelSizer->Add(m_explanation, wxSizerFlags().Expand());
+    sizer->Add(labelSizer, wxSizerFlags(1).Center().DoubleBorder(wxALL));
     sizer->Add(m_buttons, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
     sizer->Add(btnClose, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
 
@@ -164,6 +171,8 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
 #endif
 
     m_label->SetLabelText(msg.m_text);
+    m_explanation->SetLabel(msg.m_explanation);
+    m_explanation->GetContainingSizer()->Show(m_explanation, !msg.m_explanation.empty());
 
     m_buttons->Clear(true/*delete_windows*/);
     m_actions.clear();
