@@ -257,13 +257,7 @@ public:
 
         m_icon = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
         m_text = new AutoWrappingText(this, "TEXT");
-        m_info = new wxStaticText(this, wxID_ANY, "100%");
-        m_info->SetForegroundColour(ExplanationLabel::GetTextColor());
-    #ifdef __WXMSW__
-        m_info->SetFont(m_info->GetFont().Smaller());
-    #else
-        m_info->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-    #endif
+        m_info = new InfoStaticText(this);
 
         auto top = new wxBoxSizer(wxHORIZONTAL);
         auto right = new wxBoxSizer(wxVERTICAL);
@@ -334,6 +328,22 @@ public:
     }
 
 private:
+    class InfoStaticText : public wxStaticText
+    {
+    public:
+        InfoStaticText(wxWindow *parent) : wxStaticText(parent, wxID_ANY, "100%")
+        {
+            SetForegroundColour(ExplanationLabel::GetTextColor());
+        #ifdef __WXMSW__
+            SetFont(GetFont().Smaller());
+        #else
+            SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+        #endif
+        }
+
+        void DoEnable(bool) override {} // wxOSX's disabling would break color
+    };
+
     void OnMouseMove(wxMouseEvent& e)
     {
         auto rectWin = GetClientRect();
