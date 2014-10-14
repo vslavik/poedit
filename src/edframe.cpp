@@ -3347,8 +3347,9 @@ void PoeditFrame::OnSize(wxSizeEvent& event)
         Layout();
 
         // then set sash positions
-        m_splitter->SetSashPosition((int)wxConfig::Get()->Read("splitter", 240L));
-        if ( m_bottomSplitter->IsSplit() )
+        if (m_splitter)
+            m_splitter->SetSashPosition((int)wxConfig::Get()->Read("splitter", 240L));
+        if ( m_bottomSplitter && m_bottomSplitter->IsSplit() )
         {
             m_bottomSplitter->SetSashPosition(
                 (int)wxConfig::Get()->Read("bottom_splitter", -250L));
