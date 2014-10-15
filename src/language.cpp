@@ -56,10 +56,10 @@ namespace
 
 // see http://www.gnu.org/software/gettext/manual/html_node/Header-Entry.html
 // for description of permitted formats
-const wregex RE_LANG_CODE(L"([a-z]){2,3}(_[A-Z]{2})?(@[a-z]+)?");
+const wregex RE_LANG_CODE(L"([a-z]){2,3}(_([A-Z]{2}|[0-9]{3}))?(@[a-z]+)?");
 
 // a more permissive variant of the same that TryNormalize() would fix
-const wregex RE_LANG_CODE_PERMISSIVE(L"([a-zA-Z]){2,3}([_-][a-zA-Z]{2})?(@[a-zA-Z]+)?");
+const wregex RE_LANG_CODE_PERMISSIVE(L"([a-zA-Z]){2,3}([_-]([a-zA-Z]{2}|[0-9]{3}))?(@[a-zA-Z]+)?");
 
 // try some normalizations: s/-/_/, case adjustments
 void TryNormalize(std::wstring& s)
@@ -142,12 +142,6 @@ const DisplayNamesData& GetDisplayNamesData()
             // TODO: for now, ignore variants here and in FormatForRoundtrip(),
             //       because translating them between gettext and ICU is nontrivial
             if (variant != nullptr && *variant != '\0')
-                continue;
-            
-            // Discard locales for regions (e.g. "English (World)" or "Arabic (World)",
-            // because the base language (en, ar) is enough for our purposes. There are
-            // only a few such locales in ICU: ar_001, en_001, en_150, es_419.
-            if (country && *country >= '0' && *country <= '9')
                 continue;
 
             icu::UnicodeString s;
