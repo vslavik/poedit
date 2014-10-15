@@ -7,7 +7,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Revision: 49313 $
+//  Version     : $Revision$
 //
 //  Description : tests function template test case
 // ***************************************************************************

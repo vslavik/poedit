@@ -5,10 +5,15 @@
 <!--
   Boost.Geometry (aka GGL, Generic Geometry Library)
 
-  Copyright (c) 2009-2011 Mateusz Loskot, London, UK.
-  Copyright (c) 2009-2011 Barend Gehrels, Amsterdam, the Netherlands.
-  Copyright (c) 2009-2011 Bruno Lalande, Paris, France.
-  Copyright (c) 2013 Adam Wulkiewicz, Lodz, Poland.
+  Copyright (c) 2009-2014 Mateusz Loskot, London, UK.
+  Copyright (c) 2009-2014 Barend Gehrels, Amsterdam, the Netherlands.
+  Copyright (c) 2009-2014 Bruno Lalande, Paris, France.
+  Copyright (c) 2013-2014 Adam Wulkiewicz, Lodz, Poland.
+
+  This file was modified by Oracle on 2014.
+  Modifications copyright (c) 2014, Oracle and/or its affiliates.
+
+  Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 
   Use, modification and distribution is subject to the Boost Software License,
   Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -215,16 +220,16 @@
 </tgroup>
 
 <!-- ###### CONSTANTS / COORDINATE SYSTEMS ################################ -->
-<tgroup cols="2">
+<tgroup cols="3">
  <colspec colname="a"/>
  <colspec colname="b"/>
  <colspec colname="c"/>
-  <thead>
+ <thead>
   <row>
    <entry valign="center" namest="a" nameend="b">
     <bridgehead renderas="sect2">Constants</bridgehead>
    </entry>
-   <entry valign="center" namest="b" nameend="c">
+   <entry valign="center" namest="c" nameend="c">
     <bridgehead renderas="sect2">Coordinate Systems</bridgehead>
    </entry>
   </row>
@@ -318,10 +323,13 @@
     </simplelist>
     <bridgehead renderas="sect3">Predicates</bridgehead>
     <simplelist type="vert" columns="1">
+     <member><link linkend="geometry.reference.algorithms.crosses">crosses</link></member>
      <member><link linkend="geometry.reference.algorithms.covered_by">covered_by</link></member>
      <member><link linkend="geometry.reference.algorithms.disjoint">disjoint</link></member>
      <member><link linkend="geometry.reference.algorithms.equals">equals</link></member>
      <member><link linkend="geometry.reference.algorithms.intersects">intersects</link></member>
+     <member><link linkend="geometry.reference.algorithms.is_simple">is_simple</link></member>
+     <member><link linkend="geometry.reference.algorithms.is_valid">is_valid</link></member>
      <member><link linkend="geometry.reference.algorithms.overlaps">overlaps</link></member>
      <member><link linkend="geometry.reference.algorithms.touches">touches</link></member>
      <member><link linkend="geometry.reference.algorithms.within">within</link></member>
@@ -348,6 +356,10 @@
         <link linkend="geometry.reference.algorithms.assign.assign_values_5_4_coordinate_values">4</link>
         coordinate values)
      </member>
+    </simplelist>
+    <bridgehead renderas="sect3">Buffer</bridgehead>
+    <simplelist type="vert" columns="1">
+     <member><link linkend="geometry.reference.algorithms.buffer">buffer</link></member>
     </simplelist>
    </entry>
    <entry valign="top">
@@ -505,6 +517,20 @@
     </simplelist>
    </entry>
    <entry valign="top">
+    <bridgehead renderas="sect3">Buffer</bridgehead>
+    <simplelist type="vert" columns="1">
+     <member><link linkend="geometry.reference.strategies.strategy_buffer_distance_asymmetric">strategy::buffer::distance_asymmetric</link></member>
+     <member><link linkend="geometry.reference.strategies.strategy_buffer_distance_symmetric">strategy::buffer::distance_symmetric</link></member>
+     <member><link linkend="geometry.reference.strategies.strategy_buffer_end_flat">strategy::buffer::end_flat</link></member>
+     <member><link linkend="geometry.reference.strategies.strategy_buffer_end_round">strategy::buffer::end_round</link></member>
+     <member><link linkend="geometry.reference.strategies.strategy_buffer_join_miter">strategy::buffer::join_miter</link></member>
+     <member><link linkend="geometry.reference.strategies.strategy_buffer_join_round">strategy::buffer::join_round</link></member>
+     <member><link linkend="geometry.reference.strategies.strategy_buffer_point_circle">strategy::buffer::point_circle</link></member>
+     <member><link linkend="geometry.reference.strategies.strategy_buffer_point_square">strategy::buffer::point_square</link></member>
+     <member><link linkend="geometry.reference.strategies.strategy_buffer_side_straight">strategy::buffer::side_straight</link></member>
+    </simplelist>
+   </entry>
+   <entry valign="top">
     <bridgehead renderas="sect3">Centroid</bridgehead>
     <simplelist type="vert" columns="1">
      <member><link linkend="geometry.reference.strategies.strategy_centroid_bashein_detmer">strategy::centroid::bashein_detmer</link></member>
@@ -514,22 +540,22 @@
   </row>
   <row>
    <entry valign="top">
-    <bridgehead renderas="sect3">Distance</bridgehead>
-    <simplelist type="vert" columns="1">
-     <member><link linkend="geometry.reference.strategies.strategy_distance_projected_point">strategy::distance::projected_point</link></member>
-     <member><link linkend="geometry.reference.strategies.strategy_distance_pythagoras">strategy::distance::pythagoras</link></member>
-     <member><link linkend="geometry.reference.strategies.strategy_distance_cross_track">strategy::distance::cross_track</link></member>
-     <member><link linkend="geometry.reference.strategies.strategy_distance_haversine">strategy::distance::haversine</link></member>
-    </simplelist>
-   </entry>
-   <entry valign="top">
     <bridgehead renderas="sect3">Convex Hull</bridgehead>
     <simplelist type="vert" columns="1">
      <member><link linkend="geometry.reference.strategies.strategy_convex_hull_graham_andrew">strategy::convex_hull::graham_andrew</link></member>
     </simplelist>
    </entry>
-  </row>
-  <row>
+   <entry valign="top">
+    <bridgehead renderas="sect3">Distance</bridgehead>
+    <simplelist type="vert" columns="1">
+     <member><link linkend="geometry.reference.strategies.strategy_distance_projected_point">strategy::distance::projected_point</link></member>
+     <member><link linkend="geometry.reference.strategies.strategy_distance_pythagoras">strategy::distance::pythagoras</link></member>
+     <member><link linkend="geometry.reference.strategies.strategy_distance_pythagoras_box_box">strategy::distance::pythagoras_box_box</link></member>
+     <member><link linkend="geometry.reference.strategies.strategy_distance_pythagoras_point_box">strategy::distance::pythagoras_point_box</link></member>
+     <member><link linkend="geometry.reference.strategies.strategy_distance_cross_track">strategy::distance::cross_track</link></member>
+     <member><link linkend="geometry.reference.strategies.strategy_distance_haversine">strategy::distance::haversine</link></member>
+    </simplelist>
+   </entry>
    <entry valign="top">
     <bridgehead renderas="sect3">Side</bridgehead>
     <simplelist type="vert" columns="1">
@@ -538,14 +564,14 @@
      <member><link linkend="geometry.reference.strategies.strategy_side_spherical_side_formula">strategy::side::spherical_side_formula</link></member>
     </simplelist>
    </entry>
+  </row>
+  <row>
    <entry valign="top">
     <bridgehead renderas="sect3">Simplify</bridgehead>
     <simplelist type="vert" columns="1">
      <member><link linkend="geometry.reference.strategies.strategy_simplify_douglas_peucker">strategy::simplify::douglas_peucker</link></member>
     </simplelist>
    </entry>
-  </row>
-  <row>
    <entry valign="top">
     <bridgehead renderas="sect3">Transform</bridgehead>
     <simplelist type="vert" columns="1">
@@ -620,6 +646,37 @@
     <bridgehead renderas="sect3">Products</bridgehead>
     <simplelist type="vert" columns="1">
      <member><link linkend="geometry.reference.arithmetic.dot_product">dot_product</link></member>
+    </simplelist>
+   </entry>
+  </row>
+ </tbody>
+</tgroup>
+
+<!-- ###### IO ########################################################################### -->
+<tgroup cols="2">
+ <colspec colname="a"/>
+ <colspec colname="b"/>
+ <thead>
+  <row>
+   <entry valign="center" namest="a" nameend="b">
+    <bridgehead renderas="sect2">IO</bridgehead>
+   </entry>
+  </row>
+ </thead>
+ <tbody>
+  <row>
+   <entry valign="top">
+    <bridgehead renderas="sect3">WKT (Well-Known Text)</bridgehead>
+    <simplelist type="vert" columns="1">
+     <member><link linkend="geometry.reference.io.wkt.read_wkt">read_wkt</link></member>
+     <member><link linkend="geometry.reference.io.wkt.wkt">wkt</link></member>
+    </simplelist>
+   </entry>
+   <entry valign="top">
+    <bridgehead renderas="sect3">SVG (Scalable Vector Graphics)</bridgehead>
+    <simplelist type="vert" columns="1">
+     <member><link linkend="geometry.reference.io.svg.svg">svg</link></member>
+     <member><link linkend="geometry.reference.io.svg.svg_mapper">svg_mapper</link></member>
     </simplelist>
    </entry>
   </row>
@@ -734,13 +791,13 @@
     <simplelist type="vert" columns="1">
      <member><link linkend="geometry.reference.spatial_indexes.group__predicates.contains_geometry_const___">contains(Geometry const &amp;)</link></member>
      <member><link linkend="geometry.reference.spatial_indexes.group__predicates.covered_by_geometry_const___">covered_by(Geometry const &amp;)</link></member>
-        <member><link linkend="geometry.reference.spatial_indexes.group__predicates.covers_geometry_const___">covers(Geometry const &amp;)</link></member>
+     <member><link linkend="geometry.reference.spatial_indexes.group__predicates.covers_geometry_const___">covers(Geometry const &amp;)</link></member>
 	 <member><link linkend="geometry.reference.spatial_indexes.group__predicates.disjoint_geometry_const___">disjoint(Geometry const &amp;)</link></member>
 	 <member><link linkend="geometry.reference.spatial_indexes.group__predicates.intersects_geometry_const___">intersects(Geometry const &amp;)</link></member>
 	 <member><link linkend="geometry.reference.spatial_indexes.group__predicates.overlaps_geometry_const___">overlaps(Geometry const &amp;)</link></member>
 	 <member><link linkend="geometry.reference.spatial_indexes.group__predicates.within_geometry_const___">within(Geometry const &amp;)</link></member>
 	 <member><link linkend="geometry.reference.spatial_indexes.group__predicates.satisfies_unarypredicate_const___">satisfies(UnaryPredicate const &amp;)</link></member>
-	 <member><link linkend="geometry.reference.spatial_indexes.group__predicates.nearest_point_const____unsigned_">nearest(Point const &amp;, unsigned)</link></member>
+	 <member><link linkend="geometry.reference.spatial_indexes.group__predicates.nearest_geometry_const____unsigned_">nearest(Geometry const &amp;, unsigned)</link></member>
     </simplelist>
    </entry>
    <!--entry valign="top">

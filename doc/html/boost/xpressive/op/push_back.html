@@ -26,7 +26,7 @@
 <a name="boost.xpressive.op.push_back"></a><div class="titlepage"></div>
 <div class="refnamediv">
 <h2><span class="refentrytitle">Struct push_back</span></h2>
-<p>boost::xpressive::op::push_back</p>
+<p>boost::xpressive::op::push_back &#8212; <code class="computeroutput"><a class="link" href="push_back.html" title="Struct push_back">push_back</a></code> is a PolymorphicFunctionObject for pushing an element into the back of a container. </p>
 </div>
 <h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp" title="Header &lt;boost/xpressive/regex_actions.hpp&gt;">boost/xpressive/regex_actions.hpp</a>&gt;
@@ -36,17 +36,52 @@
   <span class="comment">// types</span>
   <span class="keyword">typedef</span> <span class="keyword">void</span> <a name="boost.xpressive.op.push_back.result_type"></a><span class="identifier">result_type</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="push_back.html#idp167948616-bb">public member functions</a></span>
+  <span class="comment">// <a class="link" href="push_back.html#idp350717280-bb">public member functions</a></span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sequence<span class="special">,</span> <span class="keyword">typename</span> Value<span class="special">&gt;</span> 
-    <span class="keyword">void</span> <a class="link" href="push_back.html#idp167948824-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">Value</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <span class="keyword">void</span> <a class="link" href="push_back.html#idp350717840-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">Value</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp258032408"></a><h2>Description</h2>
+<a name="idp531984688"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp258032616"></a><h3>
-<a name="idp167948616-bb"></a><code class="computeroutput">push_back</code> public member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sequence<span class="special">,</span> <span class="keyword">typename</span> Value<span class="special">&gt;</span> 
-  <span class="keyword">void</span> <a name="idp167948824-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span> seq<span class="special">,</span> <span class="identifier">Value</span> <span class="keyword">const</span> <span class="special">&amp;</span> val<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp531985104"></a><h3>
+<a name="idp350717280-bb"></a><code class="computeroutput">push_back</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sequence<span class="special">,</span> <span class="keyword">typename</span> Value<span class="special">&gt;</span> 
+  <span class="keyword">void</span> <a name="idp350717840-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span> seq<span class="special">,</span> <span class="identifier">Value</span> <span class="keyword">const</span> <span class="special">&amp;</span> val<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Equivalent to <code class="computeroutput">seq.push_back(val)</code>. <p>
+
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">seq</code></span></p></td>
+<td><p>The sequence into which the value should be pushed. </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">val</code></span></p></td>
+<td><p>The value to push into the sequence. </p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p><code class="computeroutput">void</code> </p></td>
+</tr>
+</tbody>
+</table></div>
+</li></ol></div>
 </div>
 </div>
 </div>

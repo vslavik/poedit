@@ -114,9 +114,9 @@ typedef multiset<alloc_int, std::less<alloc_int>, AllocIntAllocator> MultiSet;
 //[multi]flat_map/set
 typedef std::pair<alloc_int, alloc_int> FlatMapNode;
 typedef scoped_allocator_adaptor<SimpleAllocator<FlatMapNode> > FlatMapAllocator;
-typedef flat_map<alloc_int, alloc_int, std::less<alloc_int>, MapAllocator> FlatMap;
+typedef flat_map<alloc_int, alloc_int, std::less<alloc_int>, FlatMapAllocator> FlatMap;
 typedef flat_set<alloc_int, std::less<alloc_int>, AllocIntAllocator> FlatSet;
-typedef flat_multimap<alloc_int, alloc_int, std::less<alloc_int>, MapAllocator> FlatMultiMap;
+typedef flat_multimap<alloc_int, alloc_int, std::less<alloc_int>, FlatMapAllocator> FlatMultiMap;
 typedef flat_multiset<alloc_int, std::less<alloc_int>, AllocIntAllocator> FlatMultiSet;
 
 //vector, deque, list, slist, stable_vector.
@@ -238,7 +238,7 @@ struct container_wrapper
    : public Container
 {
    typedef typename Container::allocator_type   allocator_type;
-  
+
    container_wrapper(const allocator_type &a)
       : Container(a)
    {}

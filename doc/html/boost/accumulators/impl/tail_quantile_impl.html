@@ -6,7 +6,7 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../../accumulators/reference.html#header.boost.accumulators.statistics_fwd_hpp" title="Header &lt;boost/accumulators/statistics_fwd.hpp&gt;">
-<link rel="prev" href="non_coherent_t_idp33649864.html" title="Struct template non_coherent_tail_mean_impl">
+<link rel="prev" href="non_coherent_t_idp66966928.html" title="Struct template non_coherent_tail_mean_impl">
 <link rel="next" href="tail_variate_impl.html" title="Struct template tail_variate_impl">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="non_coherent_t_idp33649864.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../accumulators/reference.html#header.boost.accumulators.statistics_fwd_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tail_variate_impl.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="non_coherent_t_idp66966928.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../accumulators/reference.html#header.boost.accumulators.statistics_fwd_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tail_variate_impl.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.accumulators.impl.tail_quantile_impl"></a><div class="titlepage"></div>
@@ -34,32 +34,32 @@
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sample<span class="special">,</span> <span class="keyword">typename</span> LeftRight<span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="tail_quantile_impl.html" title="Struct template tail_quantile_impl">tail_quantile_impl</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">accumulator_base</span> <span class="special">{</span>
   <span class="comment">// <a class="link" href="tail_quantile_impl.html#boost.accumulators.impl.tail_quantile_implconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="tail_quantile_impl.html#idp33679608-bb"><span class="identifier">tail_quantile_impl</span></a><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="tail_quantile_impl.html#idp67026064-bb"><span class="identifier">tail_quantile_impl</span></a><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="tail_quantile_impl.html#idp33678184-bb">public member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="identifier">result_type</span> <a class="link" href="tail_quantile_impl.html#idp33678392-bb"><span class="identifier">result</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="tail_quantile_impl.html#idp67022688-bb">public member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="identifier">result_type</span> <a class="link" href="tail_quantile_impl.html#idp67023248-bb"><span class="identifier">result</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp57833960"></a><h2>Description</h2>
-<p>The estimation of a tail quantile <span class="inlinemediaobject"><img src="../../../images/accumulators//form_63.png"></span> with level <span class="inlinemediaobject"><img src="../../../images/accumulators//form_45.png"></span> based on order statistics requires the caching of at least the <span class="inlinemediaobject"><img src="../../../images/accumulators//form_58.png"></span> smallest or the <span class="inlinemediaobject"><img src="../../../images/accumulators//form_59.png"></span> largest samples, <span class="inlinemediaobject"><img src="../../../images/accumulators//form_60.png"></span> being the total number of samples. The largest of the <span class="inlinemediaobject"><img src="../../../images/accumulators//form_58.png"></span> smallest samples or the smallest of the <span class="inlinemediaobject"><img src="../../../images/accumulators//form_59.png"></span> largest samples provides an estimate for the quantile:</p>
+<a name="idp116737328"></a><h2>Description</h2>
+<p>The estimation of a tail quantile <span class="inlinemediaobject"><img src="../../../images/accumulators//form_53.png"></span> with level <span class="inlinemediaobject"><img src="../../../images/accumulators//form_26.png"></span> based on order statistics requires the caching of at least the <span class="inlinemediaobject"><img src="../../../images/accumulators//form_97.png"></span> smallest or the <span class="inlinemediaobject"><img src="../../../images/accumulators//form_98.png"></span> largest samples, <span class="inlinemediaobject"><img src="../../../images/accumulators//form_47.png"></span> being the total number of samples. The largest of the <span class="inlinemediaobject"><img src="../../../images/accumulators//form_97.png"></span> smallest samples or the smallest of the <span class="inlinemediaobject"><img src="../../../images/accumulators//form_98.png"></span> largest samples provides an estimate for the quantile:</p>
 <div class="equation">
-<a name="idp57843128"></a><p class="title"><b>Equation&#160;1.16.&#160;</b></p>
-<div class="equation-contents"><div class="mediaobject" align="center"><img src="../../../images/accumulators//form_64.png" align="middle"></div></div>
+<a name="idp116755152"></a><p class="title"><b>Equation&#160;1.24.&#160;</b></p>
+<div class="equation-contents"><div class="mediaobject" align="center"><img src="../../../images/accumulators//form_101.png" align="middle"></div></div>
 </div>
 <p><br class="equation-break"></p>
 <p>
 </p>
 <div class="refsect2">
-<a name="idp57844664"></a><h3>
+<a name="idp116758128"></a><h3>
 <a name="boost.accumulators.impl.tail_quantile_implconstruct-copy-destruct"></a><code class="computeroutput">tail_quantile_impl</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp33679608-bb"></a><span class="identifier">tail_quantile_impl</span><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp67026064-bb"></a><span class="identifier">tail_quantile_impl</span><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp57847960"></a><h3>
-<a name="idp33678184-bb"></a><code class="computeroutput">tail_quantile_impl</code> public member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="identifier">result_type</span> <a name="idp33678392-bb"></a><span class="identifier">result</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp116764736"></a><h3>
+<a name="idp67022688-bb"></a><code class="computeroutput">tail_quantile_impl</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="identifier">result_type</span> <a name="idp67023248-bb"></a><span class="identifier">result</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>
@@ -73,7 +73,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="non_coherent_t_idp33649864.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../accumulators/reference.html#header.boost.accumulators.statistics_fwd_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tail_variate_impl.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="non_coherent_t_idp66966928.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../accumulators/reference.html#header.boost.accumulators.statistics_fwd_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tail_variate_impl.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

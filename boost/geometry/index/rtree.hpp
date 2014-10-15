@@ -3,7 +3,7 @@
 // R-tree implementation
 //
 // Copyright (c) 2008 Federico J. Fernandez.
-// Copyright (c) 2011-2013 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2011-2014 Adam Wulkiewicz, Lodz, Poland.
 //
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -12,13 +12,30 @@
 #ifndef BOOST_GEOMETRY_INDEX_RTREE_HPP
 #define BOOST_GEOMETRY_INDEX_RTREE_HPP
 
+// STD
 #include <algorithm>
 
+// Boost
 #include <boost/tuple/tuple.hpp>
 #include <boost/move/move.hpp>
 
-#include <boost/geometry/geometry.hpp>
+// Boost.Geometry
+#include <boost/geometry/algorithms/detail/comparable_distance/interface.hpp>
+#include <boost/geometry/algorithms/centroid.hpp>
+#include <boost/geometry/algorithms/covered_by.hpp>
+#include <boost/geometry/algorithms/disjoint.hpp>
+#include <boost/geometry/algorithms/equals.hpp>
+#include <boost/geometry/algorithms/intersects.hpp>
+#include <boost/geometry/algorithms/overlaps.hpp>
+#include <boost/geometry/algorithms/touches.hpp>
+#include <boost/geometry/algorithms/within.hpp>
 
+#include <boost/geometry/geometries/point.hpp>
+#include <boost/geometry/geometries/box.hpp>
+
+#include <boost/geometry/strategies/strategies.hpp>
+
+// Boost.Geometry.Index
 #include <boost/geometry/index/detail/config_begin.hpp>
 
 #include <boost/geometry/index/detail/assert.hpp>
@@ -101,8 +118,8 @@ Predefined algorithms with run-time parameters are:
 \par IndexableGetter
 The object of IndexableGetter type translates from Value to Indexable each time r-tree requires it. Which means that this
 operation is done for each Value access. Therefore the IndexableGetter should return the Indexable by
-const reference instead of a value. Default one can translate all types adapted to Point
-or Box concepts (called Indexables). It also handles <tt>std::pair<Indexable, T></tt> and
+const reference instead of a value. Default one can translate all types adapted to Point, Box or Segment
+concepts (called Indexables). It also handles <tt>std::pair<Indexable, T></tt> and
 <tt>boost::tuple<Indexable, ...></tt>. For example, if <tt>std::pair<Box, int></tt> is stored in the
 container, the default IndexableGetter translates from <tt>std::pair<Box, int> const&</tt> to <tt>Box const&</tt>.
 
@@ -1780,6 +1797,9 @@ inline void swap(rtree<Value, Parameters, IndexableGetter, EqualTo, Allocator> &
 }
 
 }}} // namespace boost::geometry::index
+
+// TODO: don't include the implementation at the end of the file
+#include <boost/geometry/algorithms/detail/comparable_distance/implementation.hpp>
 
 #include <boost/geometry/index/detail/config_end.hpp>
 

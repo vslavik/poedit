@@ -55,12 +55,12 @@ project
         #<toolset>clang:<cxxflags>-fpermissive # doesn't work
         <toolset>clang:<cxxflags>-Wunused-function
 
-        <toolset>gcc-mingw-4.4.0:<cxxflags>-fdiagnostics-show-option
-        <toolset>gcc-mingw-4.5.0:<cxxflags>-fdiagnostics-show-option
-        <toolset>gcc-mingw-4.6.0:<cxxflags>-fdiagnostics-show-option
-        <toolset>gcc-mingw-4.6.3:<cxxflags>-fdiagnostics-show-option
-        <toolset>gcc-mingw-4.7.0:<cxxflags>-fdiagnostics-show-option
-        <toolset>gcc-mingw-4.8.0:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.4.0:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.5.0:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.6.0:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.6.3:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.7.0:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.8.0:<cxxflags>-fdiagnostics-show-option
 
         <toolset>darwin-4.6.2:<cxxflags>-ansi
         #<toolset>darwin-4.6.2:<cxxflags>-Wno-delete-non-virtual-dtor # doesn't work
@@ -209,6 +209,7 @@ rule thread-compile ( sources : reqs * : name )
           [ thread-test test_thread.cpp ]
           [ thread-test test_thread_id.cpp ]
           [ thread-test test_hardware_concurrency.cpp ]
+          [ thread-test test_physical_concurrency.cpp ]
           [ thread-test test_thread_move.cpp ]
           [ thread-test test_thread_return_local.cpp ]
           [ thread-test test_thread_move_return.cpp ]
@@ -278,6 +279,9 @@ rule thread-compile ( sources : reqs * : name )
           #[ thread-run test_7160.cpp ]
           [ thread-run test_7328.cpp ]
           [ thread-run test_7571.cpp ]
+          [ thread-run test_9319.cpp ]
+          [ thread-run test_9711.cpp ]
+          
     ;
 
 
@@ -320,6 +324,7 @@ rule thread-compile ( sources : reqs * : name )
     test-suite ts_async
     :
           [ thread-run2-noit ./sync/futures/async/async_pass.cpp : async__async_p ]
+          [ thread-run2-noit ./sync/futures/async/async_executor_pass.cpp : async__async_executor_p ]
     ;
 
     #explicit ts_promise ;
@@ -716,6 +721,14 @@ rule thread-compile ( sources : reqs * : name )
           [ thread-run2 ../example/producer_consumer.cpp : ex_producer_consumer ]
           [ thread-run2 ../example/not_interleaved.cpp : ex_not_interleaved ]
           [ thread-run2 ../example/lambda_future.cpp : ex_lambda_future ]
+          [ thread-run2 ../example/not_interleaved2.cpp : ex_not_interleaved2 ]
+          [ thread-run2 ../example/thread_pool.cpp : ex_thread_pool ]
+          [ thread-run2 ../example/user_scheduler.cpp : ex_user_scheduler ]
+          [ thread-run2 ../example/executor.cpp : ex_executor ]
+          [ thread-run2 ../example/future_when_all.cpp : future_when_all ]
+          [ thread-run2 ../example/parallel_accumulate.cpp : ex_parallel_accumulate ]
+          [ thread-run2 ../example/parallel_quick_sort.cpp : ex_parallel_quick_sort ]
+          [ thread-run2 ../example/with_lock_guard.cpp : ex_with_lock_guard ]
 
     ;
 
@@ -772,29 +785,69 @@ rule thread-compile ( sources : reqs * : name )
 
     ;
 
+
+    test-suite ts_with_lock_guard
+    :
+          [ thread-run2-noit ./sync/mutual_exclusion/with_lock_guard/with_lock_guard_simple.cpp : with_lock_guard_simple_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/with_lock_guard/with_lock_guard_bind.cpp : with_lock_guard_bind_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/with_lock_guard/with_lock_guard_move.cpp : with_lock_guard_move_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/with_lock_guard/with_lock_guard_lambda.cpp : with_lock_guard_lambda_p ]
+    ;
+
+    explicit ts_invoke ;
+    test-suite ts_invoke
+    :
+          [ thread-run2-noit ./functional/invoke/invoke_int_0_pass.cpp : invoke_int_0_p ]
+          [ thread-run2-noit ./functional/invoke/invoke_lvalue_pass.cpp : invoke_lvalue_p ]
+          [ thread-run2-noit ./functional/invoke/invoke_rvalue_pass.cpp : invoke_rvalue_p ]
+    ;
+
+    explicit ts_invoker ;
+    test-suite ts_invoker
+    :
+          [ thread-run2-noit ./functional/invoker/invoker_int_0_pass.cpp : invoker_int_0_p ]
+          [ thread-run2-noit ./functional/invoker/invoker_lvalue_pass.cpp : invoker_lvalue_p ]
+          [ thread-run2-noit ./functional/invoker/invoker_rvalue_pass.cpp : invoker_rvalue_p ]
+    ;
+
+    explicit ts_more ;
+    test-suite ts_more
+    :
+          [ thread-run test_7666.cpp ]
+          [ thread-run test_7720.cpp ]
+          [ thread-run test_7755.cpp ]
+          [ thread-run test_8455.cpp ]
+          [ thread-run test_8508.cpp ]
+          #[ thread-run test_8557.cpp ]
+          [ thread-run test_8586.cpp ]
+          [ thread-run test_8943.cpp ]
+          [ thread-run test_8960.cpp ]
+          [ thread-run test_9079_a.cpp ]
+          [ thread-run test_9079_b.cpp ]
+          [ thread-run test_9192.cpp ]
+    ;
+    
+    explicit ts_more_cpp11 ;
+    test-suite ts_more_cpp11
+    :
+          [ thread-run test_8596.cpp ]
+          [ thread-run test_8600.cpp ]
+    ;
+    
     explicit ts_ ;
     test-suite ts_
     :
-
           #[ thread-run ../example/test_so.cpp ]
           #[ thread-run ../example/test_so2.cpp ]
-
-          #[ compile virtual_noexcept.cpp ]
-          #[ thread-run test_7720.cpp ]
-          #[ thread-run test_7666.cpp ]
-          #[ thread-run test_7755.cpp ]
           #[ thread-run ../example/perf_condition_variable.cpp ]
           #[ thread-run ../example/perf_shared_mutex.cpp ]
           #[ thread-run ../example/std_async_test.cpp ]
-          #[ thread-run test_8508.cpp ]
-          #[ thread-run test_8586.cpp ]
-          #[ thread-run test_8596.cpp ]
-          #[ thread-run test_8600.cpp ]
-          #[ thread-run test_8943.cpp ]
-          #[ thread-run test_8960.cpp ]
-          [ thread-run test_9079_a.cpp ]
-          [ thread-run test_9079_b.cpp ]
-
+          #[ compile virtual_noexcept.cpp ]
+          #[ thread-run clang_main.cpp ]         
+          #[ thread-run test_9303.cpp ]
+          #[ thread-run test_9720.cpp ]
+          #[ thread-run test_10125.cpp ]
+          #[ thread-run test_10128.cpp ]
     ;
 
 }

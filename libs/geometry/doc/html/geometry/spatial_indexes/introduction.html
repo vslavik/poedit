@@ -160,7 +160,7 @@
               </td>
 <td>
                 <p>
-                  1.67s
+                  0.64s
                 </p>
               </td>
 </tr>
@@ -311,56 +311,36 @@
             elements are stored in static-size containers,
           </li>
 <li class="listitem">
-            advanced queries - e.g. search for 5 nearest Values to some point and
+            advanced queries, e.g. search for 5 nearest Values to some point and
             intersecting some Geometry but not within the other one,
           </li>
 <li class="listitem">
-            iterative queries - by use of iterators,
+            iterative queries by use of iterators,
           </li>
 <li class="listitem">
-            C++11 conformant: move semantics, stateful allocators,
+            C++11 conformant - move semantics, stateful allocators,
           </li>
 <li class="listitem">
             capable to store Value type with no default constructor,
           </li>
 <li class="listitem">
-            in-memory storage (shared memory by use of Boost.Interprocess allocator).
+            in-memory storage by use of the default std::allocator&lt;&gt;,
+          </li>
+<li class="listitem">
+            other storage options - shared memory and mapped file by use of Boost.Interprocess
+            allocators.
           </li>
 </ul></div>
 <h5>
 <a name="geometry.spatial_indexes.introduction.h2"></a>
-        <span class="phrase"><a name="geometry.spatial_indexes.introduction.planned_features"></a></span><a class="link" href="introduction.html#geometry.spatial_indexes.introduction.planned_features">Planned
-        features</a>
-      </h5>
-<p>
-        Below you can find features that will (or probably will) be added in the
-        future releases:
-      </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
-<li class="listitem">
-            path/ray query predicate - search for Values along Segment or LineString,
-            closest to the starting point,
-          </li>
-<li class="listitem">
-            user-defined distance calculation in nearest() predicate,
-          </li>
-<li class="listitem">
-            serialization,
-          </li>
-<li class="listitem">
-            persistent storage.
-          </li>
-</ul></div>
-<h5>
-<a name="geometry.spatial_indexes.introduction.h3"></a>
         <span class="phrase"><a name="geometry.spatial_indexes.introduction.dependencies"></a></span><a class="link" href="introduction.html#geometry.spatial_indexes.introduction.dependencies">Dependencies</a>
       </h5>
 <p>
-        R-tree depends on <span class="bold"><strong>Boost.Move</strong></span>, <span class="bold"><strong>Boost.Container</strong></span>, <span class="bold"><strong>Boost.Tuple</strong></span>,
-        <span class="bold"><strong>Boost.Utility</strong></span>, <span class="bold"><strong>Boost.MPL</strong></span>.
+        R-tree depends on Boost.Container, Boost.Core, Boost.Move, Boost.MPL, Boost.Range,
+        Boost.Tuple.
       </p>
 <h5>
-<a name="geometry.spatial_indexes.introduction.h4"></a>
+<a name="geometry.spatial_indexes.introduction.h3"></a>
         <span class="phrase"><a name="geometry.spatial_indexes.introduction.contributors"></a></span><a class="link" href="introduction.html#geometry.spatial_indexes.introduction.contributors">Contributors</a>
       </h5>
 <p>
@@ -368,7 +348,7 @@
         the Google Summer of Code 2008 program, mentored by Hartmut Kaiser.
       </p>
 <h5>
-<a name="geometry.spatial_indexes.introduction.h5"></a>
+<a name="geometry.spatial_indexes.introduction.h4"></a>
         <span class="phrase"><a name="geometry.spatial_indexes.introduction.spatial_thanks"></a></span><a class="link" href="introduction.html#geometry.spatial_indexes.introduction.spatial_thanks">Spatial thanks</a>
       </h5>
 <p>
@@ -405,7 +385,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2014 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam
+      Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

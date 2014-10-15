@@ -70,7 +70,7 @@ an invalid pointer, or creating a memory leak.
         If an exception occurs, <i>referenced</i> pointers will not need to be deleted
         so there will be no memory leaks. The destructor of this class won't attempt to
         delete these pointers so there will be no problem with dangling references.
-        <i>owned</i> pointers are handled exactly as described above.
+        <i>Owned</i> pointers are handled exactly as described above.
         <p>
         <li><h4>class contains <i>referenced</i> pointers which might be created by load</h4>
         If a <i>referenced</i> pointer is loaded before its corresponding <i>owned</i>
@@ -81,7 +81,7 @@ an invalid pointer, or creating a memory leak.
         <li>Trap exceptions with a <code style="white-space: normal">try/catch</code> block.
         <li>Within the catch part, invoke the archive function 
         <code style="white-space: normal">delete_created_pointers()</code> to delete any pointers
-        created by the class load.  Without out other action, objects created in
+        created by the class load.  Without other action, objects created in
         this way would end up as memory leaks as they are not considered <i>owned</i>
         pointers and hence aren't destroyed.
         <li>The object's destructor won't try

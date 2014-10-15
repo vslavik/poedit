@@ -6,7 +6,7 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-// $Id: compose.cpp 83371 2013-03-09 19:03:08Z steven_watanabe $
+// $Id$
 
 #include <boost/type_erasure/builtin.hpp>
 #include <boost/type_erasure/operators.hpp>

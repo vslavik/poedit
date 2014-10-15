@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2014.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -99,7 +99,7 @@ public:
 
     ~stream_compound_pool()
     {
-        register stream_compound_t* p = NULL;
+        stream_compound_t* p = NULL;
         while ((p = m_Top) != NULL)
         {
             m_Top = p->next;
@@ -111,7 +111,7 @@ public:
     static stream_compound_pool& get()
     {
         tls_ptr_type& ptr = base_type::get();
-        register this_type* p = ptr.get();
+        this_type* p = ptr.get();
         if (!p)
         {
             std::auto_ptr< this_type > pNew(new this_type());
@@ -135,7 +135,7 @@ stream_provider< CharT >::allocate_compound(record& rec)
     stream_compound_pool< char_type >& pool = stream_compound_pool< char_type >::get();
     if (pool.m_Top)
     {
-        register stream_compound* p = pool.m_Top;
+        stream_compound* p = pool.m_Top;
         pool.m_Top = p->next;
         p->next = NULL;
         p->stream.attach_record(rec);

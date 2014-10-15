@@ -13,6 +13,8 @@
 #include <vector>
 
 #include <boost/graph/graph_traits.hpp>
+#include <boost/graph/iteration_macros.hpp>
+#include <boost/property_map/property_map.hpp>
 
 namespace boost {
 
@@ -34,7 +36,8 @@ struct r_c_shortest_paths_label
     pred_edge( ed ), 
     resident_vertex( vd ), 
     b_is_dominated( false ), 
-    b_is_processed( false )
+    b_is_processed( false ),
+    b_is_valid( true )
   {}
   r_c_shortest_paths_label& operator=( const r_c_shortest_paths_label& other )
   {
@@ -51,6 +54,7 @@ struct r_c_shortest_paths_label
   const typename graph_traits<Graph>::vertex_descriptor resident_vertex;
   bool b_is_dominated;
   bool b_is_processed;
+  bool b_is_valid;
 }; // r_c_shortest_paths_label
 
 template<class Graph, class Resource_Container>
@@ -58,6 +62,7 @@ inline bool operator==
 ( const r_c_shortest_paths_label<Graph, Resource_Container>& l1, 
   const r_c_shortest_paths_label<Graph, Resource_Container>& l2 )
 {
+  assert (l1.b_is_valid && l2.b_is_valid);
   return 
     l1.cumulated_resource_consumption == l2.cumulated_resource_consumption;
 }
@@ -67,6 +72,7 @@ inline bool operator!=
 ( const r_c_shortest_paths_label<Graph, Resource_Container>& l1, 
   const r_c_shortest_paths_label<Graph, Resource_Container>& l2 )
 {
+  assert (l1.b_is_valid && l2.b_is_valid);
   return 
     !( l1 == l2 );
 }
@@ -76,6 +82,7 @@ inline bool operator<
 ( const r_c_shortest_paths_label<Graph, Resource_Container>& l1, 
   const r_c_shortest_paths_label<Graph, Resource_Container>& l2 )
 {
+  assert (l1.b_is_valid && l2.b_is_valid);
   return 
     l1.cumulated_resource_consumption < l2.cumulated_resource_consumption;
 }
@@ -85,6 +92,7 @@ inline bool operator>
 ( const r_c_shortest_paths_label<Graph, Resource_Container>& l1, 
   const r_c_shortest_paths_label<Graph, Resource_Container>& l2 )
 {
+  assert (l1.b_is_valid && l2.b_is_valid);
   return 
     l2.cumulated_resource_consumption < l1.cumulated_resource_consumption;
 }
@@ -94,6 +102,7 @@ inline bool operator<=
 ( const r_c_shortest_paths_label<Graph, Resource_Container>& l1, 
   const r_c_shortest_paths_label<Graph, Resource_Container>& l2 )
 {
+  assert (l1.b_is_valid && l2.b_is_valid);
   return 
     l1 < l2 || l1 == l2;
 }
@@ -103,6 +112,7 @@ inline bool operator>=
 ( const r_c_shortest_paths_label<Graph, Resource_Container>& l1, 
   const r_c_shortest_paths_label<Graph, Resource_Container>& l2 )
 {
+  assert (l1.b_is_valid && l2.b_is_valid);
   return l2 < l1 || l1 == l2;
 }
 
@@ -185,9 +195,6 @@ void r_c_shortest_paths_dispatch
   pareto_optimal_resource_containers.clear();
   pareto_optimal_solutions.clear();
 
-  typedef typename boost::graph_traits<Graph>::vertices_size_type
-    vertices_size_type;
-
   size_t i_label_num = 0;
   typedef 
     typename 
@@ -216,18 +223,40 @@ void r_c_shortest_paths_dispatch
 
   Splabel splabel_first_label = Splabel( first_label );
   unprocessed_labels.push( splabel_first_label );
-  std::vector<std::list<Splabel> > vec_vertex_labels( num_vertices( g ) );
-  vec_vertex_labels[vertex_index_map[s]].push_back( splabel_first_label );
-  std::vector<typename std::list<Splabel>::iterator> 
-    vec_last_valid_positions_for_dominance( num_vertices( g ) );
-  for( vertices_size_type i = 0; i < num_vertices( g ); ++i )
-    vec_last_valid_positions_for_dominance[i] = vec_vertex_labels[i].begin();
-  std::vector<size_t> vec_last_valid_index_for_dominance( num_vertices( g ), 0 );
+  std::vector<std::list<Splabel> > vec_vertex_labels_data( num_vertices( g ) );
+  iterator_property_map<typename std::vector<std::list<Splabel> >::iterator,
+                        VertexIndexMap>
+    vec_vertex_labels(vec_vertex_labels_data.begin(), vertex_index_map);
+  vec_vertex_labels[s].push_back( splabel_first_label );
+  typedef
+    std::vector<typename std::list<Splabel>::iterator> 
+    vec_last_valid_positions_for_dominance_data_type;
+  vec_last_valid_positions_for_dominance_data_type
+    vec_last_valid_positions_for_dominance_data( num_vertices( g ) );
+  iterator_property_map<
+      typename vec_last_valid_positions_for_dominance_data_type::iterator,
+      VertexIndexMap>
+    vec_last_valid_positions_for_dominance
+      (vec_last_valid_positions_for_dominance_data.begin(),
+       vertex_index_map);
+  BGL_FORALL_VERTICES_T(v, g, Graph) {
+    put(vec_last_valid_positions_for_dominance, v, vec_vertex_labels[v].begin());
+  }
+  std::vector<size_t> vec_last_valid_index_for_dominance_data( num_vertices( g ), 0 );
+  iterator_property_map<std::vector<size_t>::iterator, VertexIndexMap>
+    vec_last_valid_index_for_dominance
+      (vec_last_valid_index_for_dominance_data.begin(), vertex_index_map);
   std::vector<bool> 
-    b_vec_vertex_already_checked_for_dominance( num_vertices( g ), false );
+    b_vec_vertex_already_checked_for_dominance_data( num_vertices( g ), false );
+  iterator_property_map<std::vector<bool>::iterator, VertexIndexMap>
+    b_vec_vertex_already_checked_for_dominance
+      (b_vec_vertex_already_checked_for_dominance_data.begin(),
+       vertex_index_map);
+
   while( !unprocessed_labels.empty()  && vis.on_enter_loop(unprocessed_labels, g) )
   {
     Splabel cur_label = unprocessed_labels.top();
+    assert (cur_label->b_is_valid);
     unprocessed_labels.pop();
     vis.on_label_popped( *cur_label, g );
     // an Splabel object in unprocessed_labels and the respective Splabel 
@@ -242,13 +271,15 @@ void r_c_shortest_paths_dispatch
     // if there is a chance that extending the 
     // label leads to new undominated labels, which in turn is possible only 
     // if the label to be extended is undominated
+    assert (cur_label->b_is_valid);
     if( !cur_label->b_is_dominated )
     {
-      vertices_size_type i_cur_resident_vertex_num = get(vertex_index_map, cur_label->resident_vertex);
+      typename boost::graph_traits<Graph>::vertex_descriptor
+        i_cur_resident_vertex = cur_label->resident_vertex;
       std::list<Splabel>& list_labels_cur_vertex = 
-        vec_vertex_labels[i_cur_resident_vertex_num];
+        get(vec_vertex_labels, i_cur_resident_vertex);
       if( list_labels_cur_vertex.size() >= 2 
-          && vec_last_valid_index_for_dominance[i_cur_resident_vertex_num] 
+          && vec_last_valid_index_for_dominance[i_cur_resident_vertex] 
                < list_labels_cur_vertex.size() )
       {
         typename std::list<Splabel>::iterator outer_iter = 
@@ -257,14 +288,14 @@ void r_c_shortest_paths_dispatch
         while( outer_iter != list_labels_cur_vertex.end() )
         {
           Splabel cur_outer_splabel = *outer_iter;
+          assert (cur_outer_splabel->b_is_valid);
           typename std::list<Splabel>::iterator inner_iter = outer_iter;
           if( !b_outer_iter_at_or_beyond_last_valid_pos_for_dominance 
               && outer_iter == 
-                   vec_last_valid_positions_for_dominance
-                     [i_cur_resident_vertex_num] )
+                   get(vec_last_valid_positions_for_dominance,
+                       i_cur_resident_vertex) )
             b_outer_iter_at_or_beyond_last_valid_pos_for_dominance = true;
-          if( !b_vec_vertex_already_checked_for_dominance
-                [i_cur_resident_vertex_num] 
+          if( !get(b_vec_vertex_already_checked_for_dominance, i_cur_resident_vertex)
               || b_outer_iter_at_or_beyond_last_valid_pos_for_dominance )
           {
             ++inner_iter;
@@ -272,14 +303,15 @@ void r_c_shortest_paths_dispatch
           else
           {
             inner_iter = 
-              vec_last_valid_positions_for_dominance
-                [i_cur_resident_vertex_num];
+              get(vec_last_valid_positions_for_dominance,
+                  i_cur_resident_vertex);
             ++inner_iter;
           }
           bool b_outer_iter_erased = false;
           while( inner_iter != list_labels_cur_vertex.end() )
           {
             Splabel cur_inner_splabel = *inner_iter;
+            assert (cur_inner_splabel->b_is_valid);
             if( dominance( cur_outer_splabel->
                              cumulated_resource_consumption, 
                            cur_inner_splabel->
@@ -290,6 +322,7 @@ void r_c_shortest_paths_dispatch
               list_labels_cur_vertex.erase( buf );
               if( cur_inner_splabel->b_is_processed )
               {
+                cur_inner_splabel->b_is_valid = false;
                 l_alloc.destroy( cur_inner_splabel.get() );
                 l_alloc.deallocate( cur_inner_splabel.get(), 1 );
               }
@@ -308,8 +341,10 @@ void r_c_shortest_paths_dispatch
               ++outer_iter;
               list_labels_cur_vertex.erase( buf );
               b_outer_iter_erased = true;
+              assert (cur_outer_splabel->b_is_valid);
               if( cur_outer_splabel->b_is_processed )
               {
+                cur_outer_splabel->b_is_valid = false;
                 l_alloc.destroy( cur_outer_splabel.get() );
                 l_alloc.deallocate( cur_outer_splabel.get(), 1 );
               }
@@ -322,33 +357,37 @@ void r_c_shortest_paths_dispatch
             ++outer_iter;
         }
         if( list_labels_cur_vertex.size() > 1 )
-          vec_last_valid_positions_for_dominance[i_cur_resident_vertex_num] = 
-            (--(list_labels_cur_vertex.end()));
+          put(vec_last_valid_positions_for_dominance, i_cur_resident_vertex,
+            (--(list_labels_cur_vertex.end())));
         else
-          vec_last_valid_positions_for_dominance[i_cur_resident_vertex_num] = 
-            list_labels_cur_vertex.begin();
-        b_vec_vertex_already_checked_for_dominance
-          [i_cur_resident_vertex_num] = true;
-        vec_last_valid_index_for_dominance[i_cur_resident_vertex_num] = 
-          list_labels_cur_vertex.size() - 1;
+          put(vec_last_valid_positions_for_dominance, i_cur_resident_vertex,
+            list_labels_cur_vertex.begin());
+        put(b_vec_vertex_already_checked_for_dominance,
+            i_cur_resident_vertex, true);
+        put(vec_last_valid_index_for_dominance, i_cur_resident_vertex,
+          list_labels_cur_vertex.size() - 1);
       }
     }
+    assert (b_all_pareto_optimal_solutions || cur_label->b_is_valid);
     if( !b_all_pareto_optimal_solutions && cur_label->resident_vertex == t )
     {
       // the devil don't sleep
       if( cur_label->b_is_dominated )
       {
+        cur_label->b_is_valid = false;
         l_alloc.destroy( cur_label.get() );
         l_alloc.deallocate( cur_label.get(), 1 );
       }
       while( unprocessed_labels.size() )
       {
         Splabel l = unprocessed_labels.top();
+        assert (l->b_is_valid);
         unprocessed_labels.pop();
         // delete only dominated labels, because nondominated labels are 
         // deleted at the end of the function
         if( l->b_is_dominated )
         {
+          l->b_is_valid = false;
           l_alloc.destroy( l.get() );
           l_alloc.deallocate( l.get(), 1 );
         }
@@ -386,6 +425,7 @@ void r_c_shortest_paths_dispatch
         if( !b_feasible )
         {
           vis.on_label_not_feasible( *new_label, g );
+          new_label->b_is_valid = false;
           l_alloc.destroy( new_label );
           l_alloc.deallocate( new_label, 1 );
         }
@@ -395,7 +435,7 @@ void r_c_shortest_paths_dispatch
             ref_new_label = *new_label;
           vis.on_label_feasible( ref_new_label, g );
           Splabel new_sp_label( new_label );
-          vec_vertex_labels[vertex_index_map[new_sp_label->resident_vertex]].
+          vec_vertex_labels[new_sp_label->resident_vertex].
             push_back( new_sp_label );
           unprocessed_labels.push( new_sp_label );
         }
@@ -403,12 +443,14 @@ void r_c_shortest_paths_dispatch
     }
     else
     {
+      assert (cur_label->b_is_valid);
       vis.on_label_dominated( *cur_label, g );
+      cur_label->b_is_valid = false;
       l_alloc.destroy( cur_label.get() );
       l_alloc.deallocate( cur_label.get(), 1 );
     }
   }
-  std::list<Splabel> dsplabels = vec_vertex_labels[vertex_index_map[t]];
+  std::list<Splabel> dsplabels = get(vec_vertex_labels, t);
   typename std::list<Splabel>::const_iterator csi = dsplabels.begin();
   typename std::list<Splabel>::const_iterator csi_end = dsplabels.end();
   // if d could be reached from o
@@ -420,12 +462,14 @@ void r_c_shortest_paths_dispatch
         cur_pareto_optimal_path;
       const r_c_shortest_paths_label<Graph, Resource_Container>* p_cur_label = 
         (*csi).get();
+      assert (p_cur_label->b_is_valid);
       pareto_optimal_resource_containers.
         push_back( p_cur_label->cumulated_resource_consumption );
       while( p_cur_label->num != 0 )
       {
         cur_pareto_optimal_path.push_back( p_cur_label->pred_edge );
         p_cur_label = p_cur_label->p_pred_label;
+        assert (p_cur_label->b_is_valid);
       }
       pareto_optimal_solutions.push_back( cur_pareto_optimal_path );
       if( !b_all_pareto_optimal_solutions )
@@ -433,13 +477,13 @@ void r_c_shortest_paths_dispatch
     }
   }
 
-  size_t i_size = vec_vertex_labels.size();
-  for( size_t i = 0; i < i_size; ++i )
-  {
+  BGL_FORALL_VERTICES_T(i, g, Graph) {
     const std::list<Splabel>& list_labels_cur_vertex = vec_vertex_labels[i];
     csi_end = list_labels_cur_vertex.end();
     for( csi = list_labels_cur_vertex.begin(); csi != csi_end; ++csi )
     {
+      assert ((*csi)->b_is_valid);
+      (*csi)->b_is_valid = false;
       l_alloc.destroy( (*csi).get() );
       l_alloc.deallocate( (*csi).get(), 1 );
     }

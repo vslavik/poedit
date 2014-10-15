@@ -17,10 +17,8 @@
 #include <boost/geometry/geometries/linestring.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
 #include <boost/geometry/geometries/polygon.hpp>
-#include <boost/geometry/multi/geometries/multi_point.hpp>
-#include <boost/geometry/multi/geometries/multi_polygon.hpp>
-
-#include <boost/geometry/io/wkt/wkt.hpp>
+#include <boost/geometry/geometries/multi_point.hpp>
+#include <boost/geometry/geometries/multi_polygon.hpp>
 
 #include <boost/foreach.hpp>
 
@@ -44,7 +42,7 @@ int main()
     mp.push_back(point_type(0,0));
     mp.push_back(point_type(3,3));
 
-    std::cout 
+    std::cout
         << "Point-Poly: " << boost::geometry::distance(p, poly) << std::endl
         << "Point-Line: " << boost::geometry::distance(p, line) << std::endl
         << "Point-MultiPoint: " << boost::geometry::distance(p, mp) << std::endl;

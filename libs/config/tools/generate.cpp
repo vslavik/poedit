@@ -31,7 +31,7 @@ std::string copyright(
 "//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)\n"
 "\n"
 "//  See http://www.boost.org/libs/config for the most recent version."
-"//\n//  Revision $Id: generate.cpp 73153 2011-07-16 20:12:46Z eric_niebler $\n//\n");
+"//\n//  Revision $Id$\n//\n");
 
 std::stringstream config_test1;
 std::stringstream config_test1a;

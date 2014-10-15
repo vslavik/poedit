@@ -110,7 +110,7 @@ static bool test_overlay_p_q(std::string const& caseid,
         if ((area_i > 0 && bg::touches(p, q))
             || (area_i <= 0 && bg::intersects(p, q) && ! bg::touches(p, q)))
         {
-            std::cout << "Wrong 'touch'! " 
+            std::cout << "Wrong 'touch'! "
                 << " Intersection area: " << area_i
                 << " Touch gives: " << std::boolalpha << bg::touches(p, q)
                 << std::endl;

@@ -23,21 +23,22 @@
 #include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/thread/detail/memory.hpp>
-#include <boost/interprocess/smart_ptr/unique_ptr.hpp>
+//#include <boost/interprocess/smart_ptr/unique_ptr.hpp>
+#include <boost/thread/csbl/memory/unique_ptr.hpp>
 
-//void func(boost::promise<boost::interprocess::unique_ptr<int, boost::default_delete<int> > > p)
-boost::promise<boost::interprocess::unique_ptr<int, boost::default_delete<int> > > p;
+//void func(boost::promise<boost::csbl::unique_ptr<int> > p)
+boost::promise<boost::csbl::unique_ptr<int> > p;
 void func()
 {
-  boost::interprocess::unique_ptr<int, boost::default_delete<int> > uptr(new int(5));
+  boost::csbl::unique_ptr<int> uptr(new int(5));
   p.set_value_at_thread_exit(boost::move(uptr));
 }
 
 int main()
 {
   {
-    //boost::promise<boost::interprocess::unique_ptr<int, boost::default_delete<int>> > p;
-    boost::future<boost::interprocess::unique_ptr<int, boost::default_delete<int> > > f = p.get_future();
+    //boost::promise<boost::csbl::unique_ptr<int> > > p;
+    boost::future<boost::csbl::unique_ptr<int> > f = p.get_future();
     //boost::thread(func, boost::move(p)).detach();
     boost::thread(func).detach();
     BOOST_TEST(*f.get() == 5);

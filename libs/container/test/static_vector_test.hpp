@@ -13,6 +13,7 @@
 
 #include <boost/container/static_vector.hpp>
 
+#define BOOST_SP_DISABLE_THREADS
 #include <boost/shared_ptr.hpp>
 #include "movable_int.hpp"
 

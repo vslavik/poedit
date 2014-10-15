@@ -14,7 +14,10 @@
     <purpose>
       <simpara>Expands to the length of the
         template parameter list for
-        <code><classname>variant</classname></code>.</simpara>
+        <code><classname>variant</classname></code>. Not used if
+        <code><macroname>BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES</macroname></code>
+        is not defined. 
+      </simpara>
     </purpose>
 
     <description>
@@ -23,6 +26,17 @@
         template arguments. That is, BOOST_VARIANT_LIMIT_TYPES must be greater
         or equal to <code>10</code>.</para>
     </description>
+  </macro>
+
+  <macro name="BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES">
+    <purpose>
+      <simpara>If this macro is defined, then library won't use C++11 variadic templates.
+        Users may define this macro to make 
+        <code><macroname>BOOST_VARIANT_ENUM_PARAMS</macroname></code>
+        and <code><macroname>BOOST_VARIANT_ENUM_SHIFTED_PARAMS</macroname></code> expand
+        to a comma-separated sequence instead of variadic templates.
+      </simpara>
+    </purpose>
   </macro>
 
   <macro name="BOOST_VARIANT_ENUM_PARAMS" kind="functionlike">
@@ -34,7 +48,21 @@
     </purpose>
 
     <description>
-      <para>Expands to a comma-separated sequence of length
+      <para> When variadic templates are available and
+        <code><macroname>BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES</macroname></code>
+        is not defined, expands to variadic template list in the following manner:
+        <code><programlisting>
+            BOOST_VARIANT_ENUM_PARAMS(T)                    => T0, TN...
+            BOOST_VARIANT_ENUM_PARAMS(class T)              => class T0, class... TN
+            BOOST_VARIANT_ENUM_PARAMS(class Something)      => class Something0, class... SomethingN
+            BOOST_VARIANT_ENUM_PARAMS(typename Something)   => typename Something0, typename... SomethingN
+            BOOST_VARIANT_ENUM_PARAMS(Something)            => Something0, SomethingN...
+            BOOST_VARIANT_ENUM_PARAMS(Something)            => Something0, SomethingN...
+        </programlisting></code>
+      </para>
+
+      <para>
+        Otherwise expands to a comma-separated sequence of length
         <code><macroname>BOOST_VARIANT_LIMIT_TYPES</macroname></code>, where
         each element in the sequence consists of the concatenation of
         <emphasis>param</emphasis> with its zero-based index into the
@@ -59,7 +87,21 @@
     </purpose>
 
     <description>
-      <para>Expands to a comma-separated sequence of length
+      <para> When variadic templates are available and
+        <code><macroname>BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES</macroname></code>
+        is not defined, expands to variadic template list in the following manner:
+        <code><programlisting>
+            BOOST_VARIANT_ENUM_SHIFTED_PARAMS(T)                    => TN...
+            BOOST_VARIANT_ENUM_SHIFTED_PARAMS(class T)              => class... TN
+            BOOST_VARIANT_ENUM_SHIFTED_PARAMS(class Something)      => class... SomethingN
+            BOOST_VARIANT_ENUM_SHIFTED_PARAMS(typename Something)   => typename... SomethingN
+            BOOST_VARIANT_ENUM_SHIFTED_PARAMS(Something)            => SomethingN...
+            BOOST_VARIANT_ENUM_SHIFTED_PARAMS(Something)            => SomethingN...
+        </programlisting></code>
+      </para>
+
+      <para>
+        Otherwise expands to a comma-separated sequence of length
         <code><macroname>BOOST_VARIANT_LIMIT_TYPES</macroname> - 1</code>,
         where each element in the sequence consists of the concatenation of
         <emphasis>param</emphasis> with its one-based index into the sequence.

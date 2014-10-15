@@ -33,6 +33,7 @@ test-suite variant
     [ run variant_reference_test.cpp ]
     [ run variant_comparison_test.cpp ]
     [ run variant_visit_test.cpp ]
+    [ run variant_polymorphic_get_test.cpp ]
     [ run variant_multivisit_test.cpp ]
     [ run hash_variant_test.cpp ]
     [ run rvalue_test.cpp ]
@@ -46,6 +47,7 @@ test-suite variant
       <toolset>clang:<cxxflags>-fno-exceptions
       : variant_noexcept_test
     ]
+    [ run variant_swap_test.cpp ]
    ; 
 
 

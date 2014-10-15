@@ -19,6 +19,8 @@ namespace quickbook
         , inline_phrase(impl_->inline_phrase, "inline_phrase")
         , phrase_start(impl_->phrase_start, "phrase")
         , block_start(impl_->block_start, "block")
+        , attribute_template_body(impl_->attribute_template_body,
+            "attribute_template_body")
         , doc_info(impl_->doc_info_details, "doc_info")
     {
     }

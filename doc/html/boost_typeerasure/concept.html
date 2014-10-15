@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_typeerasure.html" title="Chapter&#160;33.&#160;Boost.TypeErasure">
+<link rel="up" href="../boost_typeerasure.html" title="Chapter&#160;35.&#160;Boost.TypeErasure">
 <link rel="prev" href="multi.html" title="Functions with Multiple Arguments">
 <link rel="next" href="any.html" title="Using Any">
 </head>
@@ -62,7 +62,7 @@
       </p>
 <p>
         Now, we can use this in an <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>
-        using <code class="computeroutput"><a class="link" href="../boost/type_erasure/call_idp100909224.html" title="Function call">call</a></code> to
+        using <code class="computeroutput"><a class="link" href="../boost/type_erasure/call_idp298185456.html" title="Function call">call</a></code> to
         dispatch the operation.
       </p>
 <p>
@@ -327,20 +327,18 @@
         (For the source of the examples in this section see <a href="../../../libs/type_erasure/example/associated.cpp" target="_top">associated.cpp</a>)
       </p>
 <p>
-        Associated types are defined using the <code class="computeroutput"><a class="link" href="../boost/type_erasure/deduced.html" title="Struct template deduced">deduced</a></code>
+        Associated types such as <code class="computeroutput"><span class="keyword">typename</span>
+        <span class="identifier">T</span><span class="special">::</span><span class="identifier">value_type</span></code> or <code class="computeroutput"><span class="keyword">typename</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">iterator_traits</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">reference</span></code> are quite common in template
+        programming. Boost.TypeErasure handles them using the <code class="computeroutput"><a class="link" href="../boost/type_erasure/deduced.html" title="Struct template deduced">deduced</a></code>
         template. <code class="computeroutput"><a class="link" href="../boost/type_erasure/deduced.html" title="Struct template deduced">deduced</a></code>
-        is just like an ordinary placeholder, except that the type that it binds
-        to is determined by calling a metafunction and does not need to be specified
-        explicitly.
+        is just like an ordinary <code class="computeroutput"><a class="link" href="../boost/type_erasure/placeholder.html" title="Struct placeholder">placeholder</a></code>,
+        except that the type that it binds to is determined by calling a metafunction
+        and does not need to be specified explicitly.
       </p>
 <p>
-        For example, we can define a concept for holding any iterator, raw pointer,
-        or smart pointer as follows.
-      </p>
-<p>
-        Note the extra trickery to make sure that it is safe to instantiate pointee
-        with a placeholder, because argument dependant lookup can cause spurious
-        instantiations.
+        For example, we can define a concept for holding an iterator, raw pointer,
+        or smart pointer as follows. First, we define a metafunction called <code class="computeroutput"><span class="identifier">pointee</span></code> defining the associated type.
       </p>
 <p>
 </p>
@@ -352,8 +350,19 @@
         <span class="identifier">boost</span><span class="special">::</span><span class="identifier">pointee</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
     <span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">type</span><span class="special">;</span>
 <span class="special">};</span>
-
-<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span> <span class="special">=</span> <span class="identifier">_self</span><span class="special">&gt;</span>
+</pre>
+<p>
+      </p>
+<p>
+        Note that we can't just use <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">pointee</span></code>,
+        because this metafunction needs to be safe to instantiate with placeholders.
+        It doesn't matter what it returns as long as it doesn't give an error. (The
+        library never tries to instantiate it with a placeholder, but argument dependent
+        lookup can cause spurious instantiations.)
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span> <span class="special">=</span> <span class="identifier">_self</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">pointer</span> <span class="special">:</span>
     <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span>
         <span class="identifier">copy_constructible</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;,</span>

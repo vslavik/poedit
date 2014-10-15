@@ -74,8 +74,8 @@ void test_star(int count, int min_points, int max_points, T rotation, p_q_settin
         for (int i = min_points; i <= max_points; i++)
         {
             std::ostringstream out;
-            out << "_" << string_from_type<T>::name() << "_"  
-                << string_from_type<CalculationType>::name() << "_" 
+            out << "_" << string_from_type<T>::name() << "_"
+                << string_from_type<CalculationType>::name() << "_"
                 << i << "_int";
 
             polygon p;

@@ -27,7 +27,7 @@
 <a name="geometry.reference.strategies.strategy_side_side_by_triangle"></a><a class="link" href="strategy_side_side_by_triangle.html" title="strategy::side::side_by_triangle">strategy::side::side_by_triangle</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp63341256"></a><a class="indexterm" name="idp63341592"></a><a class="indexterm" name="idp63341928"></a>
+          <a class="indexterm" name="idp126658768"></a><a class="indexterm" name="idp126659456"></a><a class="indexterm" name="idp126660144"></a>
 Check at which side of a segment a point lies: left of segment (&gt; 0),
           right of segment (&lt; 0), on segment (0)
         </p>
@@ -103,6 +103,7 @@ Check at which side of a segment a point lies: left of segment (&gt; 0),
 <col>
 <col>
 <col>
+<col>
 </colgroup>
 <thead><tr>
 <th>
@@ -126,7 +127,34 @@ Check at which side of a segment a point lies: left of segment (&gt; 0),
                   </p>
                 </th>
 </tr></thead>
-<tbody><tr>
+<tbody>
+<tr>
+<td>
+                  <p>
+</p>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">coordinate_type</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">promoted_type</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">P1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">P2</span><span class="special">,</span>
+         <span class="keyword">typename</span> <span class="identifier">P</span><span class="special">&gt;</span>
+<span class="identifier">promoted_type</span> <span class="identifier">side_value</span><span class="special">(</span><span class="identifier">P1</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">p1</span><span class="special">,</span> <span class="identifier">P2</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">p2</span><span class="special">,</span> <span class="identifier">P</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">p</span><span class="special">)</span></pre>
+<p>
+                  </p>
+                </td>
+<td>
+                </td>
+<td>
+                  <p>
+                    <span class="bold"><strong>P1 const &amp;</strong></span>: <span class="emphasis"><em>p1</em></span>:
+                  </p>
+                  <p>
+                    <span class="bold"><strong>P2 const &amp;</strong></span>: <span class="emphasis"><em>p2</em></span>:
+                  </p>
+                  <p>
+                    <span class="bold"><strong>P const &amp;</strong></span>: <span class="emphasis"><em>p</em></span>:
+                  </p>
+                </td>
+<td>
+                </td>
+</tr>
+<tr>
 <td>
                   <p>
 </p>
@@ -148,7 +176,10 @@ Check at which side of a segment a point lies: left of segment (&gt; 0),
                     <span class="bold"><strong>P const &amp;</strong></span>: <span class="emphasis"><em>p</em></span>:
                   </p>
                 </td>
-</tr></tbody>
+<td>
+                </td>
+</tr>
+</tbody>
 </table></div>
 <h6>
 <a name="geometry.reference.strategies.strategy_side_side_by_triangle.h3"></a>
@@ -160,7 +191,8 @@ Check at which side of a segment a point lies: left of segment (&gt; 0),
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2014 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam
+      Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -137,9 +137,9 @@
 <tr>
 <td>
                 <p>
-                  <code class="computeroutput"><span class="identifier">T</span><span class="special">&amp;</span>
-                  <span class="identifier">T</span><span class="special">::</span><span class="identifier">add</span><span class="special">(</span><span class="identifier">J</span> <span class="identifier">pos</span><span class="special">,</span> <span class="keyword">const</span>
-                  <span class="identifier">P</span><span class="special">&amp;)</span></code>
+                  <code class="computeroutput"><span class="identifier">J</span> <span class="identifier">T</span><span class="special">::</span><span class="identifier">add</span><span class="special">(</span><span class="identifier">J</span>
+                  <span class="identifier">pos</span><span class="special">,</span>
+                  <span class="keyword">const</span> <span class="identifier">P</span><span class="special">&amp;)</span></code>
                 </p>
                 </td>
 <td>
@@ -165,10 +165,9 @@
 <tr>
 <td>
                 <p>
-                  <code class="computeroutput"><span class="identifier">T</span><span class="special">&amp;</span>
-                  <span class="identifier">add</span><span class="special">(</span><span class="identifier">T</span><span class="special">&amp;,</span>
-                  <span class="identifier">J</span> <span class="identifier">pos</span><span class="special">,</span> <span class="keyword">const</span>
-                  <span class="identifier">P</span><span class="special">&amp;)</span></code>
+                  <code class="computeroutput"><span class="identifier">J</span> <span class="identifier">add</span><span class="special">(</span><span class="identifier">T</span><span class="special">&amp;,</span> <span class="identifier">J</span>
+                  <span class="identifier">pos</span><span class="special">,</span>
+                  <span class="keyword">const</span> <span class="identifier">P</span><span class="special">&amp;)</span></code>
                 </p>
                 </td>
 <td>
@@ -453,7 +452,7 @@
           The next table contains complexity characteristics for <code class="computeroutput"><span class="identifier">add</span></code>.
         </p>
 <div class="table">
-<a name="id1189059"></a><p class="title"><b>Table&#160;1.21.&#160;Time Complexity for member function add on icl
+<a name="id1155216"></a><p class="title"><b>Table&#160;1.21.&#160;Time Complexity for member function add on icl
         containers</b></p>
 <div class="table-contents"><table class="table" summary="Time Complexity for member function add on icl
         containers">
@@ -623,23 +622,22 @@
 </table></div>
 </div>
 <br class="table-break"><a name="boost_icl.function_reference.addition.functions.hinted_addition"></a><h6>
-<a name="id1189484"></a>
+<a name="id1155640"></a>
           <a class="link" href="addition.html#boost_icl.function_reference.addition.functions.hinted_addition">Hinted
           addition</a>
         </h6>
 <p>
-          Function <code class="computeroutput"><span class="identifier">T</span><span class="special">&amp;</span>
-          <span class="identifier">T</span><span class="special">::</span><span class="identifier">add</span><span class="special">(</span><span class="identifier">T</span><span class="special">::</span><span class="identifier">iterator</span>
-          <span class="identifier">prior</span><span class="special">,</span>
-          <span class="keyword">const</span> <span class="identifier">P</span><span class="special">&amp;</span> <span class="identifier">addend</span><span class="special">)</span></code> allows for an addition in <span class="emphasis"><em><span class="bold"><strong>constant time</strong></span></em></span>, if <code class="computeroutput"><span class="identifier">addend</span></code>
-          can be inserted right after iterator <code class="computeroutput"><span class="identifier">prior</span></code>
+          Function <code class="computeroutput"><span class="identifier">J</span> <span class="identifier">T</span><span class="special">::</span><span class="identifier">add</span><span class="special">(</span><span class="identifier">J</span> <span class="identifier">prior</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">P</span><span class="special">&amp;</span> <span class="identifier">addend</span><span class="special">)</span></code>
+          allows for an addition in <span class="emphasis"><em><span class="bold"><strong>constant time</strong></span></em></span>,
+          if <code class="computeroutput"><span class="identifier">addend</span></code> can be inserted
+          right after iterator <code class="computeroutput"><span class="identifier">prior</span></code>
           without collision. If this is not possible the complexity characteristics
           are as stated for the non hinted addition above. Hinted addition is available
           for these combinations of types: 
 </p>
 <pre class="programlisting"><span class="comment">// overload table for addition with hint        T\P| e i b p   
-</span><span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">T</span><span class="special">::</span><span class="identifier">add</span><span class="special">(</span><span class="identifier">T</span><span class="special">::</span><span class="identifier">iterator</span> <span class="identifier">prior</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">P</span><span class="special">&amp;)</span>          <span class="special">---+--------</span>
-<span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">add</span><span class="special">(</span><span class="identifier">T</span><span class="special">&amp;,</span> <span class="identifier">T</span><span class="special">::</span><span class="identifier">iterator</span> <span class="identifier">prior</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">P</span><span class="special">&amp;)</span>          <span class="identifier">s</span> <span class="special">|</span> <span class="identifier">s</span>
+</span><span class="identifier">J</span> <span class="identifier">T</span><span class="special">::</span><span class="identifier">add</span><span class="special">(</span><span class="identifier">J</span> <span class="identifier">prior</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">P</span><span class="special">&amp;)</span>                     <span class="special">---+--------</span>
+<span class="identifier">J</span> <span class="identifier">add</span><span class="special">(</span><span class="identifier">T</span><span class="special">&amp;,</span> <span class="identifier">J</span> <span class="identifier">prior</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">P</span><span class="special">&amp;)</span>                     <span class="identifier">s</span> <span class="special">|</span> <span class="identifier">s</span>
                                                  <span class="identifier">m</span> <span class="special">|</span>     <span class="identifier">m</span>
                                                  <span class="identifier">S</span> <span class="special">|</span>   <span class="identifier">S</span>      
                                                  <span class="identifier">M</span> <span class="special">|</span>       <span class="identifier">M</span>   
@@ -706,7 +704,7 @@
         </p>
 </div>
 <a name="boost_icl.function_reference.addition.complexity"></a><h5>
-<a name="id1190193"></a>
+<a name="id1156317"></a>
         <a class="link" href="addition.html#boost_icl.function_reference.addition.complexity">Complexity</a>
       </h5>
 <p>
@@ -737,7 +735,7 @@
         is used that provides the desired kind of size.
       </p>
 <div class="table">
-<a name="id1190411"></a><p class="title"><b>Table&#160;1.22.&#160;Time Complexity for inplace Addition on element
+<a name="id1157636"></a><p class="title"><b>Table&#160;1.22.&#160;Time Complexity for inplace Addition on element
       containers</b></p>
 <div class="table-contents"><table class="table" summary="Time Complexity for inplace Addition on element
       containers">
@@ -833,7 +831,7 @@
         is given by this table.
       </p>
 <div class="table">
-<a name="id1190656"></a><p class="title"><b>Table&#160;1.23.&#160;Time Complexity for inplace Addition on interval
+<a name="id1157881"></a><p class="title"><b>Table&#160;1.23.&#160;Time Complexity for inplace Addition on interval
       containers</b></p>
 <div class="table-contents"><table class="table" summary="Time Complexity for inplace Addition on interval
       containers">

@@ -13,6 +13,8 @@
 #define BOOST_INTRUSIVE_GET_PARENT_FROM_MEMBER_HPP
 
 #include <boost/intrusive/detail/config_begin.hpp>
+#include <boost/intrusive/intrusive_fwd.hpp>
+
 #include <boost/intrusive/detail/parent_from_member.hpp>
 
 namespace boost {

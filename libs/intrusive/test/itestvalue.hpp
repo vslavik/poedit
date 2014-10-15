@@ -16,6 +16,8 @@
 #include <iostream>
 #include <boost/intrusive/options.hpp>
 #include <boost/functional/hash.hpp>
+#include "nonhook_node.hpp"
+#include <boost/container/vector.hpp>
 
 namespace boost{
 namespace intrusive{
@@ -33,6 +35,7 @@ struct testvalue
 {
    typename Hooks::member_hook_type        node_;
    typename Hooks::auto_member_hook_type   auto_node_;
+   typename Hooks::nonhook_node_member_type nhn_member_;
    int value_;
 
    static const bool constant_time_size = ConstantTimeSize;
@@ -48,24 +51,26 @@ struct testvalue
       :  value_ (src.value_)
    {}
 
-   // testvalue is used in std::vector and thus prev and next
+   // testvalue is used in boost::container::vector and thus prev and next
    // have to be handled appropriately when copied:
    testvalue & operator= (const testvalue& src)
    {
-      Hooks::base_hook_type::operator=(src);
-      Hooks::auto_base_hook_type::operator=(src);
+      Hooks::base_hook_type::operator=(static_cast<const typename Hooks::base_hook_type&>(src));
+      Hooks::auto_base_hook_type::operator=(static_cast<const typename Hooks::auto_base_hook_type&>(src));
       this->node_       = src.node_;
       this->auto_node_  = src.auto_node_;
+      this->nhn_member_ = src.nhn_member_;
       value_ = src.value_;
       return *this;
    }
 
    void swap_nodes(testvalue &other)
    {
-      Hooks::base_hook_type::swap_nodes(other);
-      Hooks::auto_base_hook_type::swap_nodes(other);
+      Hooks::base_hook_type::swap_nodes(static_cast<typename Hooks::base_hook_type&>(other));
+      Hooks::auto_base_hook_type::swap_nodes(static_cast<typename Hooks::auto_base_hook_type&>(other));
       node_.swap_nodes(other.node_);
       auto_node_.swap_nodes(other.auto_node_);
+      nhn_member_.swap_nodes(other.nhn_member_);
    }
 
    bool is_linked() const
@@ -73,7 +78,8 @@ struct testvalue
       return Hooks::base_hook_type::is_linked() ||
       Hooks::auto_base_hook_type::is_linked() ||
       node_.is_linked() ||
-      auto_node_.is_linked();
+      auto_node_.is_linked() ||
+      nhn_member_.is_linked();
    }
 
    ~testvalue()
@@ -107,16 +113,21 @@ struct testvalue
    {  return other1.value_ != other2;  }
 };
 
-template<class Hooks, bool ConstantTimeSize>
-std::size_t hash_value(const testvalue<Hooks, ConstantTimeSize> &t)
+template < typename Node_Algorithms, class Hooks, bool ConstantTimeSize >
+void swap_nodes(testvalue< Hooks, ConstantTimeSize >& lhs, testvalue< Hooks, ConstantTimeSize >& rhs)
 {
-   boost::hash<int> hasher;
-   return hasher(t.value_);
+    lhs.swap_nodes(rhs);
 }
 
-template<class Hooks, bool ConstantTimeSize>
-bool priority_order( const testvalue<Hooks, ConstantTimeSize> &t1
-                   , const testvalue<Hooks, ConstantTimeSize> &t2)
+template < typename Value_Type >
+std::size_t hash_value(const Value_Type& t)
+{
+   boost::hash<int> hasher;
+   return hasher((&t)->value_);
+}
+
+template < typename Value_Type >
+bool priority_order(const Value_Type& t1, const Value_Type& t2)
 {
    std::size_t hash1 = hash_value(t1);
    boost::hash_combine(hash1, &t1);
@@ -132,25 +143,52 @@ std::ostream& operator<<
 
 struct even_odd
 {
-   template<class Hooks, bool constant_time_size>
+   template < typename value_type_1, typename value_type_2 >
    bool operator()
-      (const testvalue<Hooks, constant_time_size>& v1
-      ,const testvalue<Hooks, constant_time_size>& v2) const
+      (const value_type_1& v1
+      ,const value_type_2& v2) const
    {
-      if ((v1.value_ & 1) == (v2.value_ & 1))
-         return v1.value_ < v2.value_;
+      if (((&v1)->value_ & 1) == ((&v2)->value_ & 1))
+         return (&v1)->value_ < (&v2)->value_;
       else
-         return v2.value_ & 1;
+         return (&v2)->value_ & 1;
    }
 };
 
 struct is_even
 {
-   template<class Hooks, bool constant_time_size>
+   template <typename value_type>
    bool operator()
-      (const testvalue<Hooks, constant_time_size>& v1) const
-   {  return (v1.value_ & 1) == 0;  }
+      (const value_type& v1) const
+   {  return ((&v1)->value_ & 1) == 0;  }
 };
+
+template <typename>
+struct Value_Container;
+
+template < class Hooks, bool ConstantTimeSize >
+struct Value_Container< testvalue< Hooks, ConstantTimeSize > >
+{
+    typedef boost::container::vector< testvalue< Hooks, ConstantTimeSize > > type;
+};
+
+template < typename T >
+class pointer_holder
+{
+   public:
+   pointer_holder() : _ptr(new T())
+   {}
+
+   ~pointer_holder()
+   { delete _ptr;   }
+
+   const T* get_node() const { return _ptr; }
+   T* get_node() { return _ptr; }
+
+   private:
+   T* const _ptr;
+};
+
 /*
 struct int_testvalue_comp
 {

@@ -1,7 +1,7 @@
 /* Boost libs/numeric/odeint/examples/solar_system.cpp
 
- Copyright 2009-2012 Karsten Ahnert
- Copyright 2009-2012 Mario Mulansky
+ Copyright 2010-2012 Karsten Ahnert
+ Copyright 2011 Mario Mulansky
 
  Solar system example for Hamiltonian stepper
 
@@ -182,7 +182,7 @@ int main( int argc , char **argv )
     //[ integration_solar_system
     typedef symplectic_rkn_sb3a_mclachlan< container_type > stepper_type;
     const double dt = 100.0;
-
+    
     integrate_const(
             stepper_type() ,
             make_pair( solar_system_coor( masses ) , solar_system_momentum( masses ) ) ,

@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../intrusive.html" title="Chapter&#160;14.&#160;Boost.Intrusive">
+<link rel="up" href="../intrusive.html" title="Chapter&#160;16.&#160;Boost.Intrusive">
 <link rel="prev" href="node_algorithms.html" title="Node algorithms with custom NodeTraits">
 <link rel="next" href="thread_safety.html" title="Thread safety guarantees">
 </head>
@@ -150,8 +150,7 @@
             If <code class="computeroutput"><span class="identifier">node_ptr</span></code> is <code class="computeroutput"><span class="identifier">smart_ptr</span><span class="special">&lt;</span><span class="identifier">node_traits</span><span class="special">::</span><span class="identifier">node</span><span class="special">&gt;</span></code>,
             <code class="computeroutput"><span class="identifier">pointer</span></code> must be <code class="computeroutput"><span class="identifier">smart_ptr</span><span class="special">&lt;</span><span class="identifier">value_type</span><span class="special">&gt;</span></code>.
             This can be generically achieved using <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">intrusive</span><span class="special">::</span><span class="identifier">pointer_traits</span></code>
-            (portable implementation of C++11 <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pointer_traits</span></code>)
-            or <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">pointer_to_other</span></code> utility from <span class="bold"><strong>Boost SmartPointers</strong></span> defined in <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">pointer_to_other</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>.
+            (portable implementation of C++11 <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pointer_traits</span></code>).
           </li>
 <li class="listitem">
             <span class="bold"><strong><span class="emphasis"><em>const_pointer</em></span></strong></span>:
@@ -300,12 +299,12 @@
         offers a templatized <code class="computeroutput"><a class="link" href="../boost/intrusive/trivial_value_traits.html" title="Struct template trivial_value_traits">trivial_value_traits</a></code>
         class that does exactly what we want:
       </p>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">intrusive</span><span class="special">/</span><span class="identifier">trivial_value_traits</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-
-<span class="comment">//Now we can define legacy_value_traits just with a single line</span>
-<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">intrusive</span><span class="special">;</span>
-<span class="keyword">typedef</span> <span class="identifier">trivial_value_traits</span><span class="special">&lt;</span><span class="identifier">legacy_node_traits</span><span class="special">,</span> <span class="identifier">normal_link</span><span class="special">&gt;</span> <span class="identifier">legacy_value_traits</span><span class="special">;</span>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">bi</span><span class="special">::</span><span class="identifier">trivial_value_traits</span><span class="special">&lt;</span><span class="identifier">legacy_node_traits</span><span class="special">,</span> <span class="identifier">bi</span><span class="special">::</span><span class="identifier">normal_link</span><span class="special">&gt;</span> <span class="identifier">trivial_legacy_value_traits</span><span class="special">;</span>
 </pre>
+<p>
+      </p>
 <p>
         Now we can just define the containers that will store the legacy abi objects
         and write a little test:
@@ -313,9 +312,13 @@
 <p>
 </p>
 <pre class="programlisting"><span class="comment">//Now define an intrusive list and slist that will store legacy_value objects</span>
-<span class="keyword">typedef</span> <span class="identifier">bi</span><span class="special">::</span><span class="identifier">value_traits</span><span class="special">&lt;</span><span class="identifier">legacy_value_traits</span><span class="special">&gt;</span>      <span class="identifier">ValueTraitsOption</span><span class="special">;</span>
-<span class="keyword">typedef</span> <span class="identifier">bi</span><span class="special">::</span><span class="identifier">list</span><span class="special">&lt;</span><span class="identifier">legacy_value</span><span class="special">,</span> <span class="identifier">ValueTraitsOption</span><span class="special">&gt;</span>  <span class="identifier">LegacyAbiList</span><span class="special">;</span>
-<span class="keyword">typedef</span> <span class="identifier">bi</span><span class="special">::</span><span class="identifier">slist</span><span class="special">&lt;</span><span class="identifier">legacy_value</span><span class="special">,</span> <span class="identifier">ValueTraitsOption</span><span class="special">&gt;</span> <span class="identifier">LegacyAbiSlist</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">bi</span><span class="special">::</span><span class="identifier">value_traits</span><span class="special">&lt;</span><span class="identifier">legacy_value_traits</span><span class="special">&gt;</span>         <span class="identifier">ValueTraitsOption</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">bi</span><span class="special">::</span><span class="identifier">value_traits</span><span class="special">&lt;</span><span class="identifier">trivial_legacy_value_traits</span><span class="special">&gt;</span> <span class="identifier">TrivialValueTraitsOption</span><span class="special">;</span>
+
+<span class="keyword">typedef</span> <span class="identifier">bi</span><span class="special">::</span><span class="identifier">list</span><span class="special">&lt;</span><span class="identifier">legacy_value</span><span class="special">,</span>  <span class="identifier">ValueTraitsOption</span><span class="special">&gt;</span>          <span class="identifier">LegacyAbiList</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">bi</span><span class="special">::</span><span class="identifier">slist</span><span class="special">&lt;</span><span class="identifier">legacy_value</span><span class="special">,</span> <span class="identifier">ValueTraitsOption</span><span class="special">&gt;</span>          <span class="identifier">LegacyAbiSlist</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">bi</span><span class="special">::</span><span class="identifier">list</span><span class="special">&lt;</span><span class="identifier">legacy_value</span><span class="special">,</span>  <span class="identifier">TrivialValueTraitsOption</span><span class="special">&gt;</span>   <span class="identifier">TrivialLegacyAbiList</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">bi</span><span class="special">::</span><span class="identifier">slist</span><span class="special">&lt;</span><span class="identifier">legacy_value</span><span class="special">,</span> <span class="identifier">TrivialValueTraitsOption</span><span class="special">&gt;</span>   <span class="identifier">TrivialLegacyAbiSlist</span><span class="special">;</span>
 
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">List</span><span class="special">&gt;</span>
 <span class="keyword">bool</span> <span class="identifier">test_list</span><span class="special">()</span>
@@ -343,7 +346,9 @@
 
 <span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
-   <span class="keyword">return</span> <span class="identifier">test_list</span><span class="special">&lt;</span><span class="identifier">LegacyAbiList</span><span class="special">&gt;()</span> <span class="special">&amp;&amp;</span> <span class="identifier">test_list</span><span class="special">&lt;</span><span class="identifier">LegacyAbiSlist</span><span class="special">&gt;()</span> <span class="special">?</span> <span class="number">0</span> <span class="special">:</span> <span class="number">1</span><span class="special">;</span>
+   <span class="keyword">return</span> <span class="identifier">test_list</span><span class="special">&lt;</span><span class="identifier">LegacyAbiList</span><span class="special">&gt;()</span>        <span class="special">&amp;&amp;</span> <span class="identifier">test_list</span><span class="special">&lt;</span><span class="identifier">LegacyAbiSlist</span><span class="special">&gt;()</span> <span class="special">&amp;&amp;</span>
+          <span class="identifier">test_list</span><span class="special">&lt;</span><span class="identifier">TrivialLegacyAbiList</span><span class="special">&gt;()</span> <span class="special">&amp;&amp;</span> <span class="identifier">test_list</span><span class="special">&lt;</span><span class="identifier">TrivialLegacyAbiSlist</span><span class="special">&gt;()</span>
+          <span class="special">?</span> <span class="number">0</span> <span class="special">:</span> <span class="number">1</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
 <p>
@@ -468,22 +473,36 @@
         The previous example can be further simplified using the <code class="computeroutput"><a class="link" href="../boost/intrusive/derivation_value_traits.html" title="Struct template derivation_value_traits">derivation_value_traits</a></code>
         class to define a value traits class with a value that stores the <code class="computeroutput"><span class="identifier">simple_node</span></code> as a base class:
       </p>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">intrusive</span><span class="special">/</span><span class="identifier">derivation_value_traits</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">base_1</span><span class="special">{};</span>
+<span class="keyword">class</span> <span class="identifier">base_2</span><span class="special">{};</span>
 
-<span class="comment">//value_1, value_2, simple_node and simple_node_traits are defined</span>
-<span class="comment">//as in the previous example...</span>
-<span class="comment">//...</span>
+<span class="keyword">struct</span> <span class="identifier">value_1</span> <span class="special">:</span>  <span class="keyword">public</span> <span class="identifier">base_1</span><span class="special">,</span> <span class="keyword">public</span> <span class="identifier">simple_node</span>
+<span class="special">{</span>
+   <span class="keyword">int</span>   <span class="identifier">id_</span><span class="special">;</span>
+   <span class="identifier">simple_node</span> <span class="identifier">node_</span><span class="special">;</span>
+<span class="special">};</span>
+
+<span class="keyword">struct</span> <span class="identifier">value_2</span> <span class="special">:</span>  <span class="keyword">public</span> <span class="identifier">base_1</span><span class="special">,</span> <span class="keyword">public</span> <span class="identifier">base_2</span><span class="special">,</span> <span class="keyword">public</span> <span class="identifier">simple_node</span>
+<span class="special">{</span>
+   <span class="identifier">simple_node</span> <span class="identifier">node_</span><span class="special">;</span>
+   <span class="keyword">float</span> <span class="identifier">id_</span><span class="special">;</span>
+<span class="special">};</span>
 
 <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">intrusive</span><span class="special">;</span>
 
-<span class="comment">//Now define the needed value traits using</span>
+<span class="comment">//Now define the needed value traits using derivation_value_traits</span>
 <span class="keyword">typedef</span> <span class="identifier">derivation_value_traits</span><span class="special">&lt;</span><span class="identifier">value_1</span><span class="special">,</span> <span class="identifier">simple_node_traits</span><span class="special">,</span> <span class="identifier">normal_link</span><span class="special">&gt;</span> <span class="identifier">ValueTraits1</span><span class="special">;</span>
 <span class="keyword">typedef</span> <span class="identifier">derivation_value_traits</span><span class="special">&lt;</span><span class="identifier">value_2</span><span class="special">,</span> <span class="identifier">simple_node_traits</span><span class="special">,</span> <span class="identifier">normal_link</span><span class="special">&gt;</span> <span class="identifier">ValueTraits2</span><span class="special">;</span>
 
-<span class="comment">//Now define the containers</span>
-<span class="keyword">typedef</span> <span class="identifier">list</span> <span class="special">&lt;</span><span class="identifier">value1</span><span class="special">,</span> <span class="identifier">value_traits</span><span class="special">&lt;</span><span class="identifier">ValueTraits1</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">Value1List</span><span class="special">;</span>
-<span class="keyword">typedef</span> <span class="identifier">list</span> <span class="special">&lt;</span><span class="identifier">value2</span><span class="special">,</span> <span class="identifier">value_traits</span><span class="special">&lt;</span><span class="identifier">ValueTraits2</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">Value2List</span><span class="special">;</span>
+<span class="comment">//Now define two intrusive lists. Both lists will use the same algorithms:</span>
+<span class="comment">// circular_list_algorithms&lt;simple_node_traits&gt;</span>
+<span class="keyword">typedef</span> <span class="identifier">list</span> <span class="special">&lt;</span><span class="identifier">value_1</span><span class="special">,</span> <span class="identifier">value_traits</span><span class="special">&lt;</span><span class="identifier">ValueTraits1</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">Value1List</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">list</span> <span class="special">&lt;</span><span class="identifier">value_2</span><span class="special">,</span> <span class="identifier">value_traits</span><span class="special">&lt;</span><span class="identifier">ValueTraits2</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">Value2List</span><span class="special">;</span>
 </pre>
+<p>
+      </p>
 <p>
         We can even choose to store <code class="computeroutput"><span class="identifier">simple_node</span></code>
         as a member of <code class="computeroutput"><span class="identifier">value_1</span></code> and
@@ -634,11 +653,11 @@
    <span class="special">{}</span>
 
    <span class="comment">///Note: non static functions!</span>
-   <span class="identifier">node_ptr</span> <span class="identifier">to_node_ptr</span> <span class="special">(</span><span class="identifier">value_type</span> <span class="special">&amp;</span><span class="identifier">value</span><span class="special">)</span>
+   <span class="identifier">node_ptr</span> <span class="identifier">to_node_ptr</span> <span class="special">(</span><span class="identifier">value_type</span> <span class="special">&amp;</span><span class="identifier">value</span><span class="special">)</span> <span class="keyword">const</span>
       <span class="special">{</span>  <span class="keyword">return</span> <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">nodes_</span> <span class="special">+</span> <span class="special">(&amp;</span><span class="identifier">value</span> <span class="special">-</span> <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">ids_</span><span class="special">);</span> <span class="special">}</span>
    <span class="identifier">const_node_ptr</span> <span class="identifier">to_node_ptr</span> <span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span> <span class="special">&amp;</span><span class="identifier">value</span><span class="special">)</span> <span class="keyword">const</span>
       <span class="special">{</span>  <span class="keyword">return</span> <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">nodes_</span> <span class="special">+</span> <span class="special">(&amp;</span><span class="identifier">value</span> <span class="special">-</span> <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">ids_</span><span class="special">);</span> <span class="special">}</span>
-   <span class="identifier">pointer</span> <span class="identifier">to_value_ptr</span><span class="special">(</span><span class="identifier">node_ptr</span> <span class="identifier">n</span><span class="special">)</span>
+   <span class="identifier">pointer</span> <span class="identifier">to_value_ptr</span><span class="special">(</span><span class="identifier">node_ptr</span> <span class="identifier">n</span><span class="special">)</span> <span class="keyword">const</span>
       <span class="special">{</span>  <span class="keyword">return</span> <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">ids_</span> <span class="special">+</span> <span class="special">(</span><span class="identifier">n</span> <span class="special">-</span> <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">nodes_</span><span class="special">);</span> <span class="special">}</span>
    <span class="identifier">const_pointer</span> <span class="identifier">to_value_ptr</span><span class="special">(</span><span class="identifier">const_node_ptr</span> <span class="identifier">n</span><span class="special">)</span> <span class="keyword">const</span>
       <span class="special">{</span>  <span class="keyword">return</span> <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">ids_</span> <span class="special">+</span> <span class="special">(</span><span class="identifier">n</span> <span class="special">-</span> <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">nodes_</span><span class="special">);</span> <span class="special">}</span>

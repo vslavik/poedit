@@ -3,11 +3,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class sub_range</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Range 2.0">
 <link rel="up" href="../utilities.html" title="Utilities">
 <link rel="prev" href="iterator_range.html" title="Class iterator_range">
-<link rel="next" href="join.html" title="Function join">
+<link rel="next" href="combine.html" title="Function combine">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,9 +20,9 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="iterator_range.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../utilities.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="join.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="iterator_range.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../utilities.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="combine.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
-<div class="section range_reference_utilities_sub_range">
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="range.reference.utilities.sub_range"></a><a class="link" href="sub_range.html" title="Class sub_range">Class <code class="computeroutput"><span class="identifier">sub_range</span></code></a>
 </h4></div></div></div>
@@ -36,7 +36,7 @@
         </p>
 <h5>
 <a name="range.reference.utilities.sub_range.h0"></a>
-          <span><a name="range.reference.utilities.sub_range.synopsis"></a></span><a class="link" href="sub_range.html#range.reference.utilities.sub_range.synopsis">Synopsis</a>
+          <span class="phrase"><a name="range.reference.utilities.sub_range.synopsis"></a></span><a class="link" href="sub_range.html#range.reference.utilities.sub_range.synopsis">Synopsis</a>
         </h5>
 <p>
 </p>
@@ -46,11 +46,17 @@
     <span class="keyword">class</span> <span class="identifier">sub_range</span> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">iterator_range</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">range_iterator</span><span class="special">&lt;</span><span class="identifier">ForwardRange</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="special">&gt;</span>
     <span class="special">{</span>
     <span class="keyword">public</span><span class="special">:</span>
+        <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">range_value</span><span class="special">&lt;</span><span class="identifier">ForwardRange</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">value_type</span><span class="special">;</span>
         <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">range_iterator</span><span class="special">&lt;</span><span class="identifier">ForwardRange</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">iterator</span><span class="special">;</span>
         <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">range_iterator</span><span class="special">&lt;</span><span class="keyword">const</span> <span class="identifier">ForwardRange</span><span class="special">&gt;::</span><span class="identifier">type</span>  <span class="identifier">const_iterator</span><span class="special">;</span>
-        <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">iterator_difference</span><span class="special">&lt;</span><span class="identifier">iterator</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">difference_type</span><span class="special">;</span>
+        <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">range_difference</span><span class="special">&lt;</span><span class="identifier">ForwardRange</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">difference_type</span><span class="special">;</span>
+        <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">range_size</span><span class="special">&lt;</span><span class="identifier">ForwardRange</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">size_type</span><span class="special">;</span>
+        <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">range_reference</span><span class="special">&lt;</span><span class="identifier">ForwardRange</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">reference</span><span class="special">;</span>
+        <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">range_reference</span><span class="special">&lt;</span><span class="keyword">const</span> <span class="identifier">ForwardRange</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">const_reference</span><span class="special">;</span>
 
     <span class="keyword">public</span><span class="special">:</span> <span class="comment">// construction, assignment</span>
+        <span class="identifier">sub_range</span><span class="special">();</span>
+
         <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">class</span> <span class="identifier">ForwardTraversalIterator</span> <span class="special">&gt;</span>
         <span class="identifier">sub_range</span><span class="special">(</span> <span class="identifier">ForwardTraversalIterator</span> <span class="identifier">Begin</span><span class="special">,</span> <span class="identifier">ForwardTraversalIterator</span> <span class="identifier">End</span> <span class="special">);</span>
 
@@ -66,20 +72,25 @@
         <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">class</span> <span class="identifier">ForwardRange2</span> <span class="special">&gt;</span>
         <span class="identifier">sub_range</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span> <span class="keyword">const</span> <span class="identifier">ForwardRange2</span><span class="special">&amp;</span> <span class="identifier">r</span> <span class="special">);</span>
 
-    <span class="keyword">public</span><span class="special">:</span>  <span class="comment">// Forward Range functions</span>
-        <span class="identifier">iterator</span>        <span class="identifier">begin</span><span class="special">();</span>
-        <span class="identifier">const_iterator</span>  <span class="identifier">begin</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
-        <span class="identifier">iterator</span>        <span class="identifier">end</span><span class="special">();</span>
-        <span class="identifier">const_iterator</span>  <span class="identifier">end</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+        <span class="comment">// iterator accessors</span>
+        <span class="identifier">const_iterator</span> <span class="identifier">begin</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+        <span class="identifier">iterator</span> <span class="identifier">begin</span><span class="special">();</span>
+        <span class="identifier">const_iterator</span> <span class="identifier">end</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+        <span class="identifier">iterator</span> <span class="identifier">end</span><span class="special">();</span>
 
-    <span class="keyword">public</span><span class="special">:</span> <span class="comment">// convenience</span>
-        <span class="identifier">value_type</span><span class="special">&amp;</span>       <span class="identifier">front</span><span class="special">();</span>
-        <span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">front</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
-        <span class="identifier">value_type</span><span class="special">&amp;</span>       <span class="identifier">back</span><span class="special">();</span>
-        <span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">back</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
-        <span class="comment">// for Random Access Range only:</span>
-        <span class="identifier">value_type</span><span class="special">&amp;</span>       <span class="keyword">operator</span><span class="special">[](</span> <span class="identifier">size_type</span> <span class="identifier">at</span> <span class="special">);</span>
-        <span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">[](</span> <span class="identifier">size_type</span> <span class="identifier">at</span> <span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+        <span class="identifier">reference</span> <span class="identifier">front</span><span class="special">();</span>
+        <span class="identifier">const_reference</span> <span class="identifier">front</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+
+        <span class="identifier">sub_range</span><span class="special">&amp;</span> <span class="identifier">advance_begin</span><span class="special">(</span><span class="identifier">difference_type</span> <span class="identifier">n</span><span class="special">);</span>
+        <span class="identifier">sub_range</span><span class="special">&amp;</span> <span class="identifier">advance_end</span><span class="special">(</span><span class="identifier">difference_type</span> <span class="identifier">n</span><span class="special">);</span>
+
+        <span class="comment">// If traversal &gt;= bidirectional:</span>
+        <span class="identifier">reference</span> <span class="identifier">back</span><span class="special">();</span>
+        <span class="identifier">const_reference</span> <span class="identifier">back</span><span class="special">();</span>
+
+        <span class="comment">// If traversal &gt;= random-access:</span>
+        <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">[](</span><span class="identifier">difference_type</span> <span class="identifier">n</span><span class="special">);</span>
+        <span class="identifier">const_reference</span> <span class="keyword">operator</span><span class="special">[](</span><span class="identifier">difference_type</span> <span class="identifier">n</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 
     <span class="keyword">public</span><span class="special">:</span>
         <span class="comment">// rest of interface inherited from iterator_range</span>
@@ -116,7 +127,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="iterator_range.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../utilities.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="join.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="iterator_range.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../utilities.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="combine.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

@@ -1,6 +1,6 @@
 #  Boost.Container library documentation Jamfile  ---------------------------------
 #
-#  Copyright Ion Gaztanaga 2009-2012. Use, modification and
+#  Copyright Ion Gaztanaga 2009-2013. Use, modification and
 #  distribution is subject to the Boost Software License, Version
 #  1.0. (See accompanying file LICENSE_1_0.txt or copy at
 #  http://www.boost.org/LICENSE_1_0.txt)
@@ -35,7 +35,9 @@ doxygen autodoc
                                    \"BOOST_RV_REF_BEG=\" \\
                                    \"BOOST_RV_REF_END=&&\" \\
                                    \"BOOST_COPY_ASSIGN_REF(T)=const T &\" \\
-                                   \"BOOST_FWD_REF(a)=a &&\""
+                                   \"BOOST_FWD_REF(a)=a &&\" \\
+                                   \"BOOST_INTRUSIVE_OPTION_CONSTANT(OPTION_NAME, TYPE, VALUE, CONSTANT_NAME)   = template<TYPE VALUE> struct OPTION_NAME{};\" \\
+                                   \"BOOST_INTRUSIVE_OPTION_TYPE(OPTION_NAME, TYPE, TYPEDEF_EXPR, TYPEDEF_NAME) = template<class TYPE> struct OPTION_NAME{};\" "
         <xsl:param>"boost.doxygen.reftitle=Boost.Container Header Reference"
    ;
 
@@ -59,22 +61,22 @@ boostbook standalone
         <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/doc/html
 
         # Build requirements go here:
-       
+
         # <auto-index>on (or off) one turns on (or off) indexing:
         <auto-index>on
-       
+
         # Turns on (or off) auto-index-verbose for diagnostic info.
         # This is highly recommended until you have got all the many details correct!
         <auto-index-verbose>on
-       
+
         # Choose the indexing method (separately for html and PDF) - see manual.
         # Choose indexing method for PDFs:
         <format>pdf:<auto-index-internal>off
-       
+
         # Choose indexing method for html:
         <format>html:<auto-index-internal>on
         <format>docbook:<auto-index-internal>on
-       
+
         # Set the name of the script file to use (index.idx is popular):
         <auto-index-script>$(here)/index.idx
         # Commands in the script file should all use RELATIVE PATHS

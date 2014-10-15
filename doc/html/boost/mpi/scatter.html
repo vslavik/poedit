@@ -49,7 +49,7 @@
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
   <span class="keyword">void</span> <span class="identifier">scatter</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="communicator.html" title="Class communicator">communicator</a> <span class="special">&amp;</span> comm<span class="special">,</span> <span class="identifier">T</span> <span class="special">*</span> out_values<span class="special">,</span> <span class="keyword">int</span> n<span class="special">,</span> <span class="keyword">int</span> root<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp164091880"></a><h2>Description</h2>
+<a name="idp339084384"></a><h2>Description</h2>
 <p><code class="computeroutput">scatter</code> is a collective algorithm that scatters the values stored in the <code class="computeroutput">root</code> process (inside a vector) to all of the processes in the communicator. The vector <code class="computeroutput">out_values</code> (only significant at the <code class="computeroutput">root</code>) is indexed by the process number to which the corresponding value will be sent. The type <code class="computeroutput">T</code> of the values may be any type that is serializable or has an associated MPI data type.</p>
 <p>When the type <code class="computeroutput">T</code> has an associated MPI data type, this routine invokes <code class="computeroutput">MPI_Scatter</code> to scatter the values.</p>
 <p>

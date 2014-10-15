@@ -1,5 +1,5 @@
 /*
-Copyright Redshift Software, Inc. 2008-2013
+Copyright Rene Rivera 2008-2013
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE_1_0.txt or copy at
 http://www.boost.org/LICENSE_1_0.txt)
@@ -63,8 +63,8 @@ http://www.boost.org/LICENSE_1_0.txt)
 #   define BOOST_OS_SVR4 BOOST_VERSION_NUMBER_AVAILABLE
 #endif
 
-#if BOOST_ARCH_ALPHA
-#   define _AVAILABLE
+#if BOOST_OS_SVR4
+#   define BOOST_OS_SVR4_AVAILABLE
 #endif
 
 #define BOOST_OS_SVR4_NAME "SVR4 Environment"

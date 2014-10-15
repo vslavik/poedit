@@ -1902,11 +1902,12 @@ struct Empty : public msm::front::euml::func_state&lt;Empty_tag,Empty_Entry,Empt
                  </sect2>
             </sect1>
             <sect1>
-                <title><command xml:id="eUML-front-end"/>eUML (experimental)</title>
+                <title><command xml:id="eUML-front-end"/>eUML</title>
                 <para><emphasis role="underline">Important note</emphasis>: eUML requires a compiler
-                    supporting Boost.Typeof. More generally, eUML has experimental status because
-                    some compilers will start crashing when a state machine becomes too big (usually
-                    when you write huge actions).</para>
+                    supporting Boost.Typeof. Full eUML has experimental status (but not if only the
+                    transition table is written using eUML) because some compilers will start
+                    crashing when a state machine becomes too big (usually when you write huge
+                    actions).</para>
                 <para>The previous front-ends are simple to write but still force an amount of
                     noise, mostly MPL types, so it would be nice to write code looking like C++
                     (with a C++ action language) directly inside the transition table, like UML
@@ -4033,6 +4034,22 @@ typename ::boost::enable_if&lt;
         </chapter>
         <chapter>
             <title>Version history</title>
+            <sect1>
+                <title>From V2.26 to V2.27 (Boost 1.56)</title>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>Bugfix: no_transition in case of an exception.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Bugfix: Trac 9280</para>
+                        </listitem>
+                        <listitem>
+                            <para>Bugfix: incomplete namespace names in eUML</para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </sect1>
             <sect1>
                 <title>From V2.25 to V2.26 (Boost 1.55)</title>
                 <para>

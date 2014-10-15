@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2011-2012. Distributed under the Boost
+// (C) Copyright Ion Gaztanaga 2011-2013. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying file
 // LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
@@ -68,7 +68,7 @@ class test_allocator
    }
 
    std::size_t max_size() const
-   {  return std::size_t(Id);  }
+   {  return std::size_t(-1);  }
 
    T* allocate(std::size_t n)
    {  return (T*)::new char[n*sizeof(T)];  }
@@ -723,7 +723,7 @@ int main()
    }
 
    {
-      vector<int, scoped_allocator_adaptor< test_allocator<int, 0> > > dummy; 
+      vector<int, scoped_allocator_adaptor< test_allocator<int, 0> > > dummy;
       dummy.push_back(0);
    }
 

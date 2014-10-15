@@ -7,7 +7,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Revision: 57993 $
+//  Version     : $Revision$
 //
 //  Description : basic_cstring unit test
 // *****************************************************************************

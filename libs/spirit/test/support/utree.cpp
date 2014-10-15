@@ -25,7 +25,7 @@ inline bool check(boost::spirit::utree const& val, std::string expected)
     if (s.str() == expected + " ")
         return true;
 
-    std::cerr << "got result: " << s.str() 
+    std::cerr << "got result: " << s.str()
               << ", expected: " << expected << std::endl;
     return false;
 }
@@ -88,8 +88,8 @@ int main()
         // single element string
         utree val('x');
         BOOST_TEST(check(val, "\"x\""));
-        
-        // empty string 
+
+        // empty string
         utree val1("");
         BOOST_TEST(check(val1, "\"\""));
     }
@@ -195,6 +195,19 @@ int main()
         val.insert(val.begin(), val2.begin(), val2.end());
         BOOST_TEST(check(val, "( 123.456 \"Mah Doggie\" \"Chuckie\" ( 123.456 \"Mah Doggie\" ) )"));
         BOOST_TEST_EQ(val.size(), 4U);
+
+        // Regeression Ticket #6714
+        it = val.insert(val.end(), 111);
+        BOOST_TEST(it != val.begin());
+        BOOST_TEST(it == --val.end());
+        BOOST_TEST(*it == 111);
+
+        val.clear();
+        it = val.insert(val.begin(), 222);
+        BOOST_TEST(it == val.begin());
+        BOOST_TEST(it == --val.end());
+        BOOST_TEST(*it == 222);
+        // Regeression Ticket #6714
     }
 
     {
@@ -319,17 +332,17 @@ int main()
         BOOST_TEST((utree(false) && utree(true))  == utree(false));
         BOOST_TEST((utree(true)  && utree(false)) == utree(false));
         BOOST_TEST((utree(true)  && utree(true))  == utree(true));
-        
+
         BOOST_TEST((utree(0) && utree(0)) == utree(false));
         BOOST_TEST((utree(0) && utree(1)) == utree(false));
         BOOST_TEST((utree(1) && utree(0)) == utree(false));
         BOOST_TEST((utree(1) && utree(1)) == utree(true));
-        
+
         BOOST_TEST((utree(false) || utree(false)) == utree(false));
         BOOST_TEST((utree(false) || utree(true))  == utree(true));
         BOOST_TEST((utree(true)  || utree(false)) == utree(true));
         BOOST_TEST((utree(true)  || utree(true))  == utree(true));
-        
+
         BOOST_TEST((utree(0) || utree(0)) == utree(false));
         BOOST_TEST((utree(0) || utree(1)) == utree(true));
         BOOST_TEST((utree(1) || utree(0)) == utree(true));
@@ -380,7 +393,7 @@ int main()
 
     {
         // check the tag
-        // TODO: test tags on all utree types 
+        // TODO: test tags on all utree types
         utree x;
         x.tag(123);
         BOOST_TEST_EQ(x.tag(), 123);
@@ -411,7 +424,7 @@ int main()
         utree f = stored_function<one_two_three>();
         f.eval(utree());
     }
-    
+
     {
         // test referenced functions
         using boost::spirit::referenced_function;

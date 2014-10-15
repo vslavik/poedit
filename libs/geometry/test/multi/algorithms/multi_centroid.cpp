@@ -15,6 +15,8 @@
 
 #include <algorithms/test_centroid.hpp>
 
+#include <boost/core/ignore_unused.hpp>
+
 #include <boost/geometry/multi/core/point_order.hpp>
 #include <boost/geometry/multi/algorithms/centroid.hpp>
 #include <boost/geometry/multi/strategies/cartesian/centroid_average.hpp>
@@ -35,6 +37,8 @@ template <typename P>
 void test_2d(bool is_integer = false)
 {
     typedef typename bg::coordinate_type<P>::type ct;
+    boost::ignore_unused<ct>();
+
 #ifdef REPORT_RESULTS
     std::cout << std::endl << "type: " << typeid(ct).name() << " size: " << sizeof(ct) << std::endl;
 #endif

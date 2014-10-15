@@ -40,7 +40,7 @@ namespace client
             if (err_pos_base != BaseIterator())
                 dump_error_line(err_pos_base);
         }
-
+        
         void dump_error_line(BaseIterator err_pos_base) const
         {
             int line;

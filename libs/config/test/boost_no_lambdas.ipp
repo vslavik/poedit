@@ -18,7 +18,7 @@ namespace boost_no_cxx11_lambdas {
 
 int test()
 {
-  [](){};
+  (void)[](){};
   return 0;
 }
 

@@ -23,7 +23,7 @@ int main()
     typedef boost::geometry::model::polygon<point_type> polygon_type;
 
     typedef boost::geometry::coordinate_system<polygon_type>::type system;
-    
+
     std::cout << "system: " << typeid(system).name() << std::endl;
 
     return 0;

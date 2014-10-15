@@ -15,6 +15,7 @@
 #include <boost/foreach.hpp>
 #include <fstream>
 #include <iterator>
+#include <vector>
 
 namespace quickbook
 {

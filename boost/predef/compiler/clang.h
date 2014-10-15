@@ -1,5 +1,5 @@
 /*
-Copyright Redshift Software, Inc. 2008-2013
+Copyright Rene Rivera 2008-2014
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE_1_0.txt or copy at
 http://www.boost.org/LICENSE_1_0.txt)
@@ -29,18 +29,29 @@ Version number available as major, minor, and patch.
 #define BOOST_COMP_CLANG BOOST_VERSION_NUMBER_NOT_AVAILABLE
 
 #if defined(__clang__)
-#   undef BOOST_COMP_CLANG
-#   define BOOST_COMP_CLANG BOOST_VERSION_NUMBER(__clang_major__,__clang_minor__,__clang_patchlevel__)
+#   define BOOST_COMP_CLANG_DETECTION BOOST_VERSION_NUMBER(__clang_major__,__clang_minor__,__clang_patchlevel__)
 #endif
 
-#if BOOST_COMP_CLANG
+#ifdef BOOST_COMP_CLANG_DETECTION
+#   if defined(BOOST_PREDEF_DETAIL_COMP_DETECTED)
+#       define BOOST_COMP_CLANG_EMULATED BOOST_COMP_CLANG_DETECTION
+#   else
+#       undef BOOST_COMP_CLANG
+#       define BOOST_COMP_CLANG BOOST_COMP_CLANG_DETECTION
+#   endif
 #   define BOOST_COMP_CLANG_AVAILABLE
+#   include <boost/predef/detail/comp_detected.h>
 #endif
 
 #define BOOST_COMP_CLANG_NAME "Clang"
 
 #include <boost/predef/detail/test.h>
 BOOST_PREDEF_DECLARE_TEST(BOOST_COMP_CLANG,BOOST_COMP_CLANG_NAME)
+
+#ifdef BOOST_COMP_CLANG_EMULATED
+#include <boost/predef/detail/test.h>
+BOOST_PREDEF_DECLARE_TEST(BOOST_COMP_CLANG_EMULATED,BOOST_COMP_CLANG_NAME)
+#endif
 
 
 #endif

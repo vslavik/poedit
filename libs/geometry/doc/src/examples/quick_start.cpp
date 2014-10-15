@@ -114,7 +114,7 @@ int main(void)
     double d = distance(a, b);
     std::cout << "Distance a-b is: " << d << std::endl;
     //]
-    
+
     //[quickstart_point_in_polygon
     double points[][2] = {{2.0, 1.3}, {4.1, 3.0}, {5.3, 2.6}, {2.9, 0.7}, {2.0, 1.3}};
     model::polygon<model::d2::point_xy<double> > poly;
@@ -122,7 +122,7 @@ int main(void)
     boost::tuple<double, double> p = boost::make_tuple(3.7, 2.0);
     std::cout << "Point p is in polygon? " << std::boolalpha << within(p, poly) << std::endl;
     //]
-    
+
     //[quickstart_area
     std::cout << "Area: " << area(poly) << std::endl;
     //]
@@ -131,16 +131,16 @@ int main(void)
     double d2 = distance(a, p);
     std::cout << "Distance a-p is: " << d2 << std::endl;
     //]
-    
+
     //[quick_start_spherical
     typedef boost::geometry::model::point
         <
             double, 2, boost::geometry::cs::spherical_equatorial<boost::geometry::degree>
         > spherical_point;
-    
+
     spherical_point amsterdam(4.90, 52.37);
     spherical_point paris(2.35, 48.86);
-    
+
     double const earth_radius = 3959; // miles
     std::cout << "Distance in miles: " << distance(amsterdam, paris) * earth_radius << std::endl;
     //]
@@ -161,7 +161,7 @@ int main(void)
         assign_values(r2, 200, 300, 220, 320);
     }
     //]
-    
+
     return 0;
 }
 

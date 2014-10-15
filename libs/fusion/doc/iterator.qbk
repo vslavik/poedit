@@ -161,6 +161,7 @@ the following invariants always hold:
 * __std_pair__ iterator
 * __boost_array__ iterator
 * __vector__ iterator
+* __map__ iterator
 * __single_view__ iterator
 * __iterator_range__ (where adapted sequence is a __bidirectional_sequence__)
 * __transform_view__ (where adapted sequence is a __bidirectional_sequence__)
@@ -206,6 +207,7 @@ the following expressions must be valid:
 
 [heading Models]
 * __vector__ iterator
+* __map__ iterator
 * __std_pair__ iterator
 * __boost_array__ iterator
 * __single_view__ iterator
@@ -993,9 +995,9 @@ Returns the key type associated with the element referenced by an associative it
 [heading Example]
     typedef __map__<__pair__<float,int> > vec;
     typedef __result_of_begin__<vec>::type first;
-	
+
     BOOST_MPL_ASSERT((boost::is_same<__result_of_key_of__<first>::type, float>));
-    
+
 [endsect]
 
 [section value_of_data]
@@ -1032,9 +1034,9 @@ Returns the type of the data property associated with the element referenced by 
 [heading Example]
     typedef __map__<__pair__<float,int> > vec;
     typedef __result_of_begin__<vec>::type first;
-	
+
     BOOST_MPL_ASSERT((boost::is_same<__result_of_value_of_data__<first>::type, int>));
-    
+
 [endsect]
 
 [section deref_data]

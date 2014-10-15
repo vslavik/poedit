@@ -19,7 +19,6 @@
 #include <boost/intrusive/pointer_traits.hpp>
 #include <cstddef>
 #include <boost/intrusive/detail/mpl.hpp>
-#include <boost/pointer_cast.hpp>
 
 namespace boost {
 namespace intrusive {

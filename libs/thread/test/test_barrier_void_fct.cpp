@@ -24,7 +24,7 @@ void void_fct() {
 }
 
 const int N_THREADS=3;
-boost::barrier gen_barrier(N_THREADS, void_fct);
+boost::barrier gen_barrier(N_THREADS, &void_fct);
 
 void barrier_thread()
 {

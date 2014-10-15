@@ -333,17 +333,17 @@ rule::delete_
     >
  ``]]
  [[`expression::local_variable<Key>`] [``rule::custom_terminal``]]
- [[`expression::let<Locals, Statement`] [
+ [[`expression::let<Locals, Statement>`] [
 ``
 rule::let
     : expression::let<terminal<proto::_>, meta_grammar>
 ``]]
- [[`expression::lambda<OuterEnv, Locals, Statement`] [
+ [[`expression::lambda<OuterEnv, Locals, Statement>`] [
 ``
 rule::lambda
     : expression::lambda<terminal<proto::_>, terminal<proto::_>, meta_grammar>
 ``]]
- [[`expression::lambda_actor<Locals, Statement`] [
+ [[`expression::lambda_actor<Locals, Statement>`] [
 ``
 rule::lambda_actor
     : expression::lambda_actor<terminal<proto::_>, meta_grammar>

@@ -378,7 +378,7 @@ The following example takes a html file and outputs a list of all the linked fil
       char c;
       while(is.get(c))
       {
-         // use logarithmic growth stategy, in case
+         // use logarithmic growth strategy, in case
          // in_avail (above) returned zero:
          if(s.capacity() == s.size())
             s.reserve(s.capacity() * 3);

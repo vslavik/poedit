@@ -23,7 +23,7 @@ void test_content(Geometry const& geometry,
 {
     typename bgi::detail::default_content_result<Geometry>::type value = bgi::detail::content(geometry);
 
-#ifdef GEOMETRY_TEST_DEBUG
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
     std::ostringstream out;
     out << typeid(typename bg::coordinate_type<Geometry>::type).name()
         << " "

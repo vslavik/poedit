@@ -101,7 +101,7 @@ inline bool check_x(
    // Note that this test catches both infinity and NaN.
    // Some distributions permit x to be infinite, so these must be tested 1st and return,
    // leaving this test to catch any NaNs.
-   // See Normal, Logistic and Cauchy for example.
+   // See Normal, Logistic, Laplace and Cauchy for example.
    if(!(boost::math::isfinite)(x))
    {
       *result = policies::raise_domain_error<RealType>(

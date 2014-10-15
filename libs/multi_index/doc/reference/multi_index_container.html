@@ -119,7 +119,7 @@ synopsis</a>
 <span class=keyword>typename</span> <span class=identifier>nth_index</span><span class=special>&lt;</span>
   <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;,</span><span class=identifier>N</span>
 <span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&amp;</span>
-<span class=identifier>get</span><span class=special>(</span><span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=identifier>m</span><span class=special>);</span>
+<span class=identifier>get</span><span class=special>(</span><span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=identifier>m</span><span class=special>)</span><span class=keyword>noexcept</span><span class=special>;</span>
 
 <span class=keyword>template</span><span class=special>&lt;</span>
   <span class=keyword>int</span> <span class=identifier>N</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>Value</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>Allocator</span>
@@ -127,7 +127,7 @@ synopsis</a>
 <span class=keyword>const</span> <span class=keyword>typename</span> <span class=identifier>nth_index</span><span class=special>&lt;</span>
   <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;,</span><span class=identifier>N</span>
 <span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&amp;</span>
-<span class=identifier>get</span><span class=special>(</span><span class=keyword>const</span> <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=identifier>m</span><span class=special>);</span>
+<span class=identifier>get</span><span class=special>(</span><span class=keyword>const</span> <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=identifier>m</span><span class=special>)</span><span class=keyword>noexcept</span><span class=special>;</span>
 
 <span class=keyword>template</span><span class=special>&lt;</span>
   <span class=keyword>typename</span> <span class=identifier>Tag</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>Value</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>Allocator</span>
@@ -135,7 +135,7 @@ synopsis</a>
 <span class=keyword>typename</span> <span class=identifier>index</span><span class=special>&lt;</span>
   <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;,</span><span class=identifier>Tag</span>
 <span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&amp;</span>
-<span class=identifier>get</span><span class=special>(</span><span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=identifier>m</span><span class=special>);</span>
+<span class=identifier>get</span><span class=special>(</span><span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=identifier>m</span><span class=special>)</span><span class=keyword>noexcept</span><span class=special>;</span>
 
 <span class=keyword>template</span><span class=special>&lt;</span>
   <span class=keyword>typename</span> <span class=identifier>Tag</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>Value</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>Allocator</span>
@@ -143,7 +143,7 @@ synopsis</a>
 <span class=keyword>const</span> <span class=keyword>typename</span> <span class=identifier>index</span><span class=special>&lt;</span>
   <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;,</span><span class=identifier>Tag</span>
 <span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&amp;</span>
-<span class=identifier>get</span><span class=special>(</span><span class=keyword>const</span> <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=identifier>m</span><span class=special>);</span>
+<span class=identifier>get</span><span class=special>(</span><span class=keyword>const</span> <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=identifier>m</span><span class=special>)</span><span class=keyword>noexcept</span><span class=special>;</span>
 
 <span class=comment>// multi_index_container global functions for projection of iterators:</span>
 
@@ -314,14 +314,14 @@ operators and functions associated with the index (vg. comparison and
   <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=keyword>operator</span><span class=special>=(</span>
     <span class=identifier>std</span><span class=special>::</span><span class=identifier>initializer_list</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>&gt;</span> <span class=identifier>list</span><span class=special>)</span>
 
-  <span class=identifier>allocator_type</span> <span class=identifier>get_allocator</span><span class=special>()</span><span class=keyword>const</span><span class=special>;</span>
+  <span class=identifier>allocator_type</span> <span class=identifier>get_allocator</span><span class=special>()</span><span class=keyword>const</span> <span class=keyword>noexcept</span><span class=special>;</span>
 
   <span class=comment>// retrieval of indices</span>
 
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>int</span> <span class=identifier>N</span><span class=special>&gt;</span> <span class=keyword>typename</span> <span class=identifier>nth_index</span><span class=special>&lt;</span><span class=identifier>N</span><span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&amp;</span> <span class=identifier>get</span><span class=special>();</span>
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>int</span> <span class=identifier>N</span><span class=special>&gt;</span> <span class=keyword>const</span> <span class=keyword>typename</span> <span class=identifier>nth_index</span><span class=special>&lt;</span><span class=identifier>N</span><span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&amp;</span> <span class=identifier>get</span><span class=special>()</span><span class=keyword>const</span><span class=special>;</span>
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>Tag</span><span class=special>&gt;</span> <span class=keyword>typename</span> <span class=identifier>index</span><span class=special>&lt;</span><span class=identifier>Tag</span><span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&amp;</span> <span class=identifier>get</span><span class=special>()</span>
-  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>Tag</span><span class=special>&gt;</span> <span class=keyword>const</span> <span class=keyword>typename</span> <span class=identifier>index</span><span class=special>&lt;</span><span class=identifier>Tag</span><span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&amp;</span> <span class=identifier>get</span><span class=special>()</span><span class=keyword>const</span><span class=special>;</span>
+  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>int</span> <span class=identifier>N</span><span class=special>&gt;</span> <span class=keyword>typename</span> <span class=identifier>nth_index</span><span class=special>&lt;</span><span class=identifier>N</span><span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&amp;</span> <span class=identifier>get</span><span class=special>()</span><span class=keyword>noexcept</span><span class=special>;</span>
+  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>int</span> <span class=identifier>N</span><span class=special>&gt;</span> <span class=keyword>const</span> <span class=keyword>typename</span> <span class=identifier>nth_index</span><span class=special>&lt;</span><span class=identifier>N</span><span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&amp;</span> <span class=identifier>get</span><span class=special>()</span><span class=keyword>const</span> <span class=keyword>noexcept</span><span class=special>;</span>
+  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>Tag</span><span class=special>&gt;</span> <span class=keyword>typename</span> <span class=identifier>index</span><span class=special>&lt;</span><span class=identifier>Tag</span><span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&amp;</span> <span class=identifier>get</span><span class=special>()</span><span class=keyword>noexcept</span><span class=special>;</span>
+  <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>Tag</span><span class=special>&gt;</span> <span class=keyword>const</span> <span class=keyword>typename</span> <span class=identifier>index</span><span class=special>&lt;</span><span class=identifier>Tag</span><span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&amp;</span> <span class=identifier>get</span><span class=special>()</span><span class=keyword>const</span> <span class=keyword>noexcept</span><span class=special>;</span>
 
   <span class=comment>// projection of iterators</span>
 
@@ -379,7 +379,7 @@ operators and functions associated with the index (vg. comparison and
 <span class=keyword>typename</span> <span class=identifier>nth_index</span><span class=special>&lt;</span>
   <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;,</span><span class=identifier>N</span>
 <span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&amp;</span>
-<span class=identifier>get</span><span class=special>(</span><span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=identifier>m</span><span class=special>)</span>
+<span class=identifier>get</span><span class=special>(</span><span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=identifier>m</span><span class=special>)</span><span class=keyword>noexcept</span>
 <span class=special>{</span>
   <span class=keyword>return</span> <span class=identifier>m</span><span class=special>.</span><span class=identifier>get</span><span class=special>&lt;</span><span class=identifier>N</span><span class=special>&gt;();</span>
 <span class=special>}</span>
@@ -390,7 +390,7 @@ operators and functions associated with the index (vg. comparison and
 <span class=keyword>const</span> <span class=keyword>typename</span> <span class=identifier>nth_index</span><span class=special>&lt;</span>
   <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;,</span><span class=identifier>N</span>
 <span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&amp;</span>
-<span class=identifier>get</span><span class=special>(</span><span class=keyword>const</span> <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=identifier>m</span><span class=special>)</span>
+<span class=identifier>get</span><span class=special>(</span><span class=keyword>const</span> <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=identifier>m</span><span class=special>)</span><span class=keyword>noexcept</span>
 <span class=special>{</span>
   <span class=keyword>return</span> <span class=identifier>m</span><span class=special>.</span><span class=identifier>get</span><span class=special>&lt;</span><span class=identifier>N</span><span class=special>&gt;();</span>
 <span class=special>}</span>
@@ -401,7 +401,7 @@ operators and functions associated with the index (vg. comparison and
 <span class=keyword>typename</span> <span class=identifier>index</span><span class=special>&lt;</span>
   <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;,</span><span class=identifier>Tag</span>
 <span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&amp;</span>
-<span class=identifier>get</span><span class=special>(</span><span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=identifier>m</span><span class=special>)</span>
+<span class=identifier>get</span><span class=special>(</span><span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=identifier>m</span><span class=special>)</span><span class=keyword>noexcept</span>
 <span class=special>{</span>
   <span class=keyword>return</span> <span class=identifier>m</span><span class=special>.</span><span class=identifier>get</span><span class=special>&lt;</span><span class=identifier>Tag</span><span class=special>&gt;();</span>
 <span class=special>}</span>
@@ -412,7 +412,7 @@ operators and functions associated with the index (vg. comparison and
 <span class=keyword>const</span> <span class=keyword>typename</span> <span class=identifier>index</span><span class=special>&lt;</span>
   <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;,</span><span class=identifier>Tag</span>
 <span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&amp;</span>
-<span class=identifier>get</span><span class=special>(</span><span class=keyword>const</span> <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=identifier>m</span><span class=special>)</span>
+<span class=identifier>get</span><span class=special>(</span><span class=keyword>const</span> <span class=identifier>multi_index_container</span><span class=special>&lt;</span><span class=identifier>Value</span><span class=special>,</span><span class=identifier>IndexSpecifierList</span><span class=special>,</span><span class=identifier>Allocator</span><span class=special>&gt;&amp;</span> <span class=identifier>m</span><span class=special>)</span><span class=keyword>noexcept</span>
 <span class=special>{</span>
   <span class=keyword>return</span> <span class=identifier>m</span><span class=special>.</span><span class=identifier>get</span><span class=special>&lt;</span><span class=identifier>Tag</span><span class=special>&gt;();</span>
 <span class=special>}</span>
@@ -537,7 +537,7 @@ scheme outlined in the
     <ul>
       <li>Non-equal allocator instances are supported: swapping two non-equal
         instances must not throw any exception.
-      </li>s
+      </li>
       <li>For every type <code>T</code>,
         the type <code>Allocator::rebind&lt;T&gt;::other::pointer</code> can be any
         kind of random access iterator, provided that it is explicitly constructible from
@@ -804,7 +804,7 @@ number of elements of <code>list</code>.<br>
 of the types of <code>ctor_args_list</code> do not throw.
 </blockquote>
 
-<code>allocator_type get_allocator()const;</code>
+<code>allocator_type get_allocator()const noexcept;</code>
 
 <blockquote>
 Returns a copy of the <code>allocator_type</code> object used to construct
@@ -814,27 +814,25 @@ the <code>multi_index_container</code>.<br>
 
 <h4><a name="index_retrieval">Index retrieval operations</a></h4>
 
-<code>template&lt;int N> typename nth_index&lt;N>::type&amp; get();</code>
+<code>template&lt;int N> typename nth_index&lt;N>::type&amp; get()noexcept;</code>
 
 <blockquote>
 <b>Requires:</b> <code>0 &lt;= N &lt; I</code>.<br>
 <b>Effects:</b> Returns a reference to the
 <code>nth_index&lt;N>::type</code> index held by <code>*this</code>.<br>
 <b>Complexity:</b> Constant.<br>
-<b>Exception safety:</b> <code>nothrow</code>.
 </blockquote>
 
-<code>template&lt;int N> const typename nth_index&lt;N>::type&amp; get()const;</code>
+<code>template&lt;int N> const typename nth_index&lt;N>::type&amp; get()const noexcept;</code>
 
 <blockquote>
 <b>Requires:</b> <code>0 &lt;= N &lt; I</code>.<br>
 <b>Effects:</b> Returns a <code>const</code> reference to the
 <code>nth_index&lt;N>::type</code> index held by <code>*this</code>.<br>
 <b>Complexity:</b> Constant.<br>
-<b>Exception safety:</b> <code>nothrow</code>.
 </blockquote>
 
-<code>template&lt;typename Tag> typename index&lt;Tag>::type&amp; get()</code>
+<code>template&lt;typename Tag> typename index&lt;Tag>::type&amp; get()noexcept;</code>
 
 <blockquote>
 <b>Requires:</b> <code>Tag</code> is such that <code>index&lt;Tag>::type</code>
@@ -843,10 +841,9 @@ is valid.<br>
 <code>index&lt;Tag>::type</code> index held by
 <code>*this</code>.<br>
 <b>Complexity:</b> Constant.<br>
-<b>Exception safety:</b> <code>nothrow</code>.
 </blockquote>
 
-<code>template&lt;typename Tag> const typename index&lt;Tag>::type&amp; get()const;</code>
+<code>template&lt;typename Tag> const typename index&lt;Tag>::type&amp; get()const noexcept;</code>
 
 <blockquote>
 <b>Requires:</b> <code>Tag</code> is such that <code>index&lt;Tag>::type</code>
@@ -855,7 +852,6 @@ is valid.<br>
 <code>index&lt;Tag>::type</code> index held by
 <code>*this</code>.<br>
 <b>Complexity:</b> Constant.<br>
-<b>Exception safety:</b> <code>nothrow</code>.
 </blockquote>
 
 <h4><a name="projection">Projection operations</a></h4>
@@ -996,7 +992,7 @@ Index reference
 
 <br>
 
-<p>Revised July 3rd 2013</p>
+<p>Revised October 12th 2013</p>
 
 <p>&copy; Copyright 2003-2013 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 

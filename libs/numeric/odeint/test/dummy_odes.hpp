@@ -6,8 +6,8 @@
   tba.
   [end_description]
 
-  Copyright 2009-2012 Karsten Ahnert
-  Copyright 2009-2012 Mario Mulansky
+  Copyright 2012-2013 Karsten Ahnert
+  Copyright 2013 Mario Mulansky
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE_1_0.txt or
@@ -17,8 +17,6 @@
 
 #ifndef LIBS_NUMERIC_ODEINT_TEST_DUMMY_ODES_HPP_DEFINED
 #define LIBS_NUMERIC_ODEINT_TEST_DUMMY_ODES_HPP_DEFINED
-
-#include "vector_space_1d.hpp"
 
 #include <boost/fusion/include/at_c.hpp>
 
@@ -44,7 +42,7 @@ struct constant_system_functor_vector_space
     template< class State , class Deriv , class Time >
     void operator()( const State &x , Deriv &dxdt , const Time t  ) const
     {
-        dxdt.m_x = 1.0;
+        dxdt = 1.0;
     }
 };
 
@@ -66,7 +64,7 @@ void constant_system_standard( const State &x , Deriv &dxdt , const Time t )
 template< class State , class Deriv , class Time >
 void constant_system_vector_space( const State &x , Deriv &dxdt , const Time t ) 
 {
-    dxdt.m_x = 1.0;
+    dxdt = 1.0;
 }
 
 template< class State , class Deriv , class Time >
@@ -104,18 +102,18 @@ struct default_coor_func
 struct constant_mom_func_vector_space_1d
 {
     template< class T >
-    void operator()( const vector_space_1d< T > &q , vector_space_1d< T > &dp ) const
+    void operator()( const T &q , T &dp ) const
     {
-        dp.m_x = 1.0;
+        dp = 1.0;
     }
 };
 
 struct default_coor_func_vector_space_1d
 {
     template< class T >
-    void operator()( const vector_space_1d< T > &p , vector_space_1d< T > &dq ) const
+    void operator()( const T &p , T &dq ) const
     {
-        dq.m_x = p.m_x;
+        dq = p;
     }
 };
 
@@ -123,16 +121,15 @@ struct default_coor_func_vector_space_1d
 
 
 
-struct harmonic_oscillator
+
+
+struct empty_system
 {
-    template< class State , class Deriv , class Time >
-    void operator()( const State &x , Deriv &dxdt , Time t ) const
+    template <class State >
+    void operator()( const State &x , State &dxdt , double t ) const
     {
-        dxdt[0] = x[1];
-        dxdt[1] = - x[0];
     }
 };
-
 
 
 

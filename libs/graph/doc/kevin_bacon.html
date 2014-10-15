@@ -156,7 +156,7 @@ descriptor from the map's <TT>pos</TT> iterator.
   tokenizer&lt;&gt;::iterator i = line_toks.begin();
   std::string actors_name = *i++;
 
-  tie(pos, inserted) = actors.insert(std::make_pair(actors_name, Vertex()));
+  boost::tie(pos, inserted) = actors.insert(std::make_pair(actors_name, Vertex()));
   if (inserted) {
     u = add_vertex(g);
     actor_name[u] = actors_name;
@@ -174,7 +174,7 @@ actor into the graph.
 <PRE>
   std::string movie_name = *i++;
       
-  tie(pos, inserted) = actors.insert(std::make_pair(*i, Vertex()));
+  boost::tie(pos, inserted) = actors.insert(std::make_pair(*i, Vertex()));
   if (inserted) {
     v = add_vertex(g);
     actor_name[v] = *i;
@@ -190,7 +190,7 @@ the name of the connecting movie.
 <P>
 <PRE>
   graph_traits&lt;Graph&gt;::edge_descriptor e;
-  tie(e, inserted) = add_edge(u, v, g);
+  boost::tie(e, inserted) = add_edge(u, v, g);
   if (inserted)
     connecting_movie[e] = movie_name;
 </PRE>

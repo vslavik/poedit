@@ -6,6 +6,7 @@
 <!--
                      Copyright (c) 2001 Jeremy Siek
               Copyright (c) 2003-2004, 2008 Gennaro Prota
+                    Copyright (c) 2014 Ahmed Charles
 
        Distributed under the Boost Software License, Version 1.0.
           (See accompanying file LICENSE_1_0.txt or copy at
@@ -163,10 +164,16 @@ public:
     <a href=
 "#cons5">dynamic_bitset</a>(const dynamic_bitset&amp; b);
 
+    <a href=
+"#move-cons">dynamic_bitset</a>(dynamic_bitset&amp;&amp; b);
+
     void <a href="#swap">swap</a>(dynamic_bitset&amp; b);
 
     dynamic_bitset&amp; <a href=
 "#assign">operator=</a>(const dynamic_bitset&amp; b);
+
+    dynamic_bitset&amp; <a href=
+"#move-assign">operator=</a>(dynamic_bitset&amp;&amp; b);
 
     allocator_type <a href="#get_allocator">get_allocator()</a> const;
 
@@ -195,20 +202,22 @@ public:
     dynamic_bitset&amp; <a href="#flip2">flip</a>(size_type n);
     dynamic_bitset&amp; <a href="#flip1">flip</a>();
     bool <a href="#test">test</a>(size_type n) const;
+    bool <a href="#test">test_set</a>(size_type n, bool val = true);
+    bool <a href="#all">all</a>() const;
     bool <a href="#any">any</a>() const;
     bool <a href="#none">none</a>() const;
     dynamic_bitset <a href="#op-not">operator~</a>() const;
-    size_type <a href="#count">count</a>() const;
+    size_type <a href="#count">count</a>() const noexcept;
 
     reference <a href="#bracket">operator[]</a>(size_type pos);
     bool <a href="#const-bracket">operator[]</a>(size_type pos) const;
 
     unsigned long <a href="#to_ulong">to_ulong</a>() const;
 
-    size_type <a href="#size">size</a>() const;
-    size_type <a href="#num_blocks">num_blocks</a>() const;
-    size_type <a href="#max_size">max_size</a>() const;
-    bool <a href="#empty">empty</a>() const;
+    size_type <a href="#size">size</a>() const noexcept;
+    size_type <a href="#num_blocks">num_blocks</a>() const noexcept;
+    size_type <a href="#max_size">max_size</a>() const noexcept;
+    bool <a href="#empty">empty</a>() const noexcept;
 
     bool <a href="#is_subset_of">is_subset_of</a>(const dynamic_bitset&amp; a) const;
     bool <a href="#is_proper_subset_of">is_proper_subset_of</a>(const dynamic_bitset&amp; a) const;
@@ -623,6 +632,20 @@ allocator in <tt>x</tt>. <br />
 
 <hr />
 <pre>
+<a id="move-cons">dynamic_bitset</a>(dynamic_bitset&amp;&amp; x)
+</pre>
+
+<b>Effects:</b> Constructs a bitset that is the same as the bitset
+<tt>x</tt>, while using the resources from <tt>x</tt>. The allocator
+for this bitset is moved from the allocator in <tt>x</tt>. <br />
+ <b>Postconditions:</b> For all <tt>i</tt> in the range
+<tt>[0,x.size())</tt>, <tt>(*this)[i] == x[i]</tt>.<br />
+ <b>Throws:</b> An allocation error if memory is exhausted
+(<tt>std::bad_alloc</tt> if
+<tt>Allocator=std::allocator</tt>).
+
+<hr />
+<pre>
 template &lt;typename BlockInputIterator&gt;
 explicit
 <a id=
@@ -763,6 +786,20 @@ dynamic_bitset&amp; <a id=
  <b>Throws:</b> nothing. <br />
 (Required by <a href=
 "http://www.sgi.com/tech/stl/Assignable.html">Assignable</a>.)
+
+<hr />
+<pre>
+dynamic_bitset&amp; <a id=
+"move-assign">operator=</a>(dynamic_bitset&amp;&amp; x)
+</pre>
+
+<b>Effects:</b> This bitset becomes the same as the bitset
+<tt>x</tt>, while using the resources from <tt>x</tt>.<br />
+ <b>Postconditions:</b> For all <tt>i</tt> in the range
+<tt>[0,x.size())</tt>, <tt>(*this)[i] == x[i]</tt>.<br />
+ <b>Returns:</b> <tt>*this</tt>.<br />
+ <b>Throws:</b> An allocation error if memory is exhausted
+(<tt>std::bad_alloc</tt> if <tt>Allocator=std::allocator</tt>).
 
 <hr />
 <pre>
@@ -1089,6 +1126,15 @@ set.<br />
 
 <hr />
 <pre>
+bool <a id="all">all</a>() const
+</pre>
+
+<b>Returns:</b> <tt>true</tt> if all bits in this bitset are set or
+if <tt>size() == 0</tt>, and otherwise returns <tt>false</tt>.<br />
+<b>Throws:</b> nothing.
+
+<hr />
+<pre>
 bool <a id="any">any</a>() const
 </pre>
 
@@ -1113,6 +1159,18 @@ bool <a id="test">test</a>(size_type n) const
 <b>Precondition:</b> <tt>n &lt; this-&gt;size()</tt>.<br />
  <b>Returns:</b> <tt>true</tt> if bit <tt>n</tt> is set and
 <tt>false</tt> is bit <tt>n</tt> is 0.
+
+<hr />
+<pre>
+bool <a id="test">test_set</a>(size_type n, bool val = true)
+</pre>
+
+<b>Precondition:</b> <tt>n &lt; this-&gt;size()</tt>.<br />
+ <b>Effects:</b> Sets bit <tt>n</tt> if <tt>val</tt> is
+<tt>true</tt>, and clears bit <tt>n</tt> if <tt>val</tt> is
+<tt>false</tt>. <br />
+ <b>Returns:</b> <tt>true</tt> if the previous state of bit
+<tt>n</tt> was set and <tt>false</tt> is bit <tt>n</tt> is 0.
 
 <hr />
 <pre>
@@ -1509,6 +1567,14 @@ exception guarantee.
 <hr />
 <h3><a id="changes-from-previous-ver">Changes from previous version(s)</a></h3>
 
+<h4><i>Changes in Boost 1.56.0</i></h4>
+<ul>
+<li>Support for C++11 move constructors.</li>
+<li>Warning fixes on MSVC 2013.</li>
+<li>Support for C++11 minimal allocators.</li>
+<li>Add noexcept specifications.</li>
+</ul>
+
 <h4><i>Changes in Boost 1.37.0</i></h4>
 <ul>
 <li>The constructor from a block range implements a "do the right thing"
@@ -1561,9 +1627,12 @@ applied to their corresponding <tt>dynamic_bitset</tt>s.
 </li>
 </ul>
 <i>General improvements</i>
-<br /><br />
+<ul>
+<li>
 Several optimizations to member and non-member functions and to the
 nested class <tt>reference</tt>.
+</li>
+</ul>
 
 <hr />
 <h3><a id="see-also">See also</a></h3>
@@ -1594,6 +1663,14 @@ href="mailto:cda@freshsources.com">cda@freshsources.com</a>)<br
 <td>Copyright &copy; 2003-2004, 2008</td> <td><a
         href="http://gennaro-prota.50webs.com/">Gennaro Prota</a>
     (name.surname yahoo.com)</td>
+</tr>
+<tr>
+<td>Copyright &copy; 2014</td>
+<td>Ahmed Charles (<a href="mailto:acharles@outlook.com">acharles@outlook.com</a>)</td>
+</tr>
+<tr>
+<td>Copyright &copy; 2014</td>
+<td>Glen Fernandes (<a href="mailto:glenfe@live.com">glenfe@live.com</a>)</td>
 </tr>
 </table>
 <br />

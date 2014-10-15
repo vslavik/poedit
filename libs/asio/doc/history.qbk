@@ -1,11 +1,75 @@
 [/
- / Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+ / Copyright (c) 2003-2014 Christopher M. Kohlhoff (chris at kohlhoff dot com)
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
 [section:history Revision History]
+
+[heading Asio 1.10.4 / Boost 1.56]
+
+* Stopped using certain Winsock functions that are marked as deprecated in the
+  latest Visual C++ and Windows SDK.
+* Fixed a shadow variable warning on Windows.
+* Fixed a regression in the [^kqueue] backend that was introduced in Asio
+  1.10.2.
+* Added a workaround for building the unit tests with [^gcc] on AIX.
+
+[heading Asio 1.10.3]
+
+* Worked around a [^gcc] problem to do with anonymous enums ([ticket 10042]).
+* Reverted the Windows `HANDLE` backend change to ignore `ERROR_MORE_DATA`.
+  Instead, the error will be propagated as with any other (i.e. in an
+  `error_code` or thrown as a `system_error`), and the number of bytes
+  transferred will be returned. For code that needs to handle partial messages,
+  the `error_code` overload should be used ([ticket 10034]).
+* Fixed an off-by-one error in the `signal_set` implementation's signal
+  number check ([ticket 9324]).
+* Changed the Windows IOCP backend to not assume that
+  `SO_UPDATE_CONNECT_CONTEXT` is defined ([ticket 10016]).
+* Fixed a Windows-specific issue, introduced in Asio 1.10.2, by using
+  `VerifyVersionInfo` rather than `GetVersionEx`, as `GetVersionEx` has been
+  deprecated.
+* Changed to use SSE2 intrinsics rather than inline assembly, to allow the
+  Cray compiler to work.
+
+[heading Asio 1.10.2]
+
+* Fixed `asio::spawn()` to work correctly with new Boost.Coroutine interface
+  ([ticket 9442], [ticket 9928]).
+* Ensured that incomplete `asio::spawn()` coroutines are correctly unwound when
+  cleaned up by the `io_service` destructor ([ticket 9731]).
+* Fixed delegation of continuation hook for handlers produced by
+  `io_service::wrap()` and `strand::wrap()` ([ticket 9741]).
+* Changed the Windows I/O completion port backend to use `ConnectEx`, if
+  available, for connection-oriented IP sockets.
+* Changed the `io_service` backend for non-Windows (and non-IOCP Windows)
+  platforms to use a single condition variable per `io_service` instance.
+  This addresses a potential race condition when `run_one()` is used from
+  multiple threads.
+* Prevented integer overflow when computing timeouts based on some
+  `boost::chrono` and `std::chrono` clocks ([ticket 9662], [ticket 9778]).
+* Made further changes to `EV_CLEAR` handling in the kqueue backend, to address
+  other cases where the `close()` system call may hang on Mac OS X.
+* Fixed infinite recursion in implementation of
+  `resolver_query_base::flags::operator~` ([ticket 9548]).
+* Made the `select` reactor more efficient on Windows for large numbers of
+  sockets ([ticket 9528]).
+* Fixed a Windows-specific type-aliasing issue reported by [^gcc] ([ticket
+  9550]).
+* Prevented execution of compile-time-only buffer test to avoid triggering an
+  address sanitiser warning ([ticket 8295]).
+* Disabled the `GetQueuedCompletionStatus` timeout workaround on recent
+  versions of Windows.
+* Added support for string-based scope IDs when using link-local multicast
+  addresses.
+* Changed IPv6 multicast group join to use the address's scope ID as the
+  interface, if an interface is not explicitly specified.
+* Fixed multicast test failure on Mac OS X and the BSDs by using a link-local
+  multicast address.
+* Various minor documentation improvements ([ticket 8295], [ticket 9605],
+  [ticket 9771]).
 
 [heading Asio 1.10.1 / Boost 1.55]
 
@@ -58,9 +122,11 @@
 * Removed a use of `std::min` in the Windows IOCP backend to avoid a
   dependency on the `<algorithm>` header ([ticket 8758]).
 * Eliminated some unnecessary handler copies.
+* Fixed support for older versions of OpenSSL that do not provide the
+  `SSL_CTX_clear_options` function ([ticket 9273]).
 * Fixed various minor and cosmetic issues in code and documentation
   (including [ticket 8347], [ticket 8950], [ticket 8953], [ticket 8965],
-  [ticket 8997]).
+  [ticket 8997], [ticket 9230]).
 
 [heading Asio 1.10.0 / Boost 1.54]
 

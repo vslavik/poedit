@@ -3,7 +3,9 @@
  *  
  * Created on: Dec 12, 2011
  *
- * Copyright 2011 Rajeev Singh
+ * Copyright 2012 Karsten Ahnert
+ * Copyright 2012-2013 Rajeev Singh
+ * Copyright 2012-2013 Mario Mulansky
  *
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or
@@ -81,12 +83,12 @@ int main( int argc , char **argv )
     for (int i=0; i<2; i++)
         x2[i] = 1.0; //(1.0 * rand()) / RAND_MAX;
 
-    size_t num_of_steps2 = integrate_const( make_dense_output< runge_kutta_dopri5< vector_type > >( 1.0e-6 , 1.0e-6 ) ,
-            vdp_stiff() , x2 , 0.0 , 1000.0 , 1.0
-            , cout << phoenix::arg_names::arg2 << " " << phoenix::arg_names::arg1[0] << " " << phoenix::arg_names::arg1[1] << "\n"
-            );
+    //size_t num_of_steps2 = integrate_const( make_dense_output< runge_kutta_dopri5< vector_type > >( 1.0e-6 , 1.0e-6 ) ,
+    //        vdp_stiff() , x2 , 0.0 , 1000.0 , 1.0
+    //        , cout << phoenix::arg_names::arg2 << " " << phoenix::arg_names::arg1[0] << " " << phoenix::arg_names::arg1[1] << "\n"
+    //        );
     //]
-    clog << num_of_steps2 << endl;
+    //clog << num_of_steps2 << endl;
 
 
     return 0;

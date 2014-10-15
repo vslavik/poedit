@@ -34,21 +34,21 @@
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a> <span class="special">{</span>
   <span class="comment">// <a class="link" href="skeleton_proxy.html#boost.mpi.skeleton_proxyconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="skeleton_proxy.html#idp98147400-bb"><span class="identifier">skeleton_proxy</span></a><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="skeleton_proxy.html#idp223682752-bb"><span class="identifier">skeleton_proxy</span></a><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
   <span class="comment">// public data members</span>
   <span class="identifier">T</span> <span class="special">&amp;</span> <span class="identifier">object</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp166330648"></a><h2>Description</h2>
+<a name="idp343432208"></a><h2>Description</h2>
 <p>The <code class="computeroutput"><a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a></code> is a lightweight proxy object used to indicate that the skeleton of an object, not the object itself, should be transmitted. It can be used with the <code class="computeroutput">send</code> and <code class="computeroutput">recv</code> operations of communicators or the <code class="computeroutput">broadcast</code> collective. When a <code class="computeroutput"><a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a></code> is sent, Boost.MPI generates a description containing the structure of the stored object. When that skeleton is received, the receiving object is reshaped to match the structure. Once the skeleton of an object as been transmitted, its <code class="computeroutput">content</code> can be transmitted separately (often several times) without changing the structure of the object. </p>
 <div class="refsect2">
-<a name="idp166334232"></a><h3>
+<a name="idp343438816"></a><h3>
 <a name="boost.mpi.skeleton_proxyconstruct-copy-destruct"></a><code class="computeroutput">skeleton_proxy</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp98147400-bb"></a><span class="identifier">skeleton_proxy</span><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span> x<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp223682752-bb"></a><span class="identifier">skeleton_proxy</span><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span> x<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructs a <code class="computeroutput"><code class="computeroutput"><a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a></code></code> that references object <code class="computeroutput">x</code>.</p>
 <p>
 </p>

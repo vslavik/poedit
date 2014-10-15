@@ -60,6 +60,7 @@ namespace quickbook
         grammar inline_phrase;
         grammar phrase_start;
         grammar block_start;
+        grammar attribute_template_body;
         grammar doc_info;
 
         quickbook_grammar(quickbook::state&);

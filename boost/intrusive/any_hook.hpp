@@ -75,7 +75,7 @@ struct make_any_base_hook
 //! \c link_mode<> will specify the linking mode of the hook (\c normal_link, \c safe_link).
 //!
 //! \c void_pointer<> is the pointer type that will be used internally in the hook
-//! and the the container configured to use this hook.
+//! and the container configured to use this hook.
 #if defined(BOOST_INTRUSIVE_DOXYGEN_INVOKED) || defined(BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
 template<class ...Options>
 #else
@@ -175,7 +175,7 @@ struct make_any_member_hook
 //! \c link_mode<> will specify the linking mode of the hook (\c normal_link or \c safe_link).
 //!
 //! \c void_pointer<> is the pointer type that will be used internally in the hook
-//! and the the container configured to use this hook.
+//! and the container configured to use this hook.
 #if defined(BOOST_INTRUSIVE_DOXYGEN_INVOKED) || defined(BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
 template<class ...Options>
 #else

@@ -72,6 +72,13 @@ Output:
   std::numeric_limits<double>::digits10 = 15
   std::numeric_limits<double>::max_digits10 = 17
 
+  1>  Description: Autorun "J:\Cpp\Misc\Debug\zztest_max_digits10.exe"
+  1>  Platform: Win32
+  1>  Compiler: Microsoft Visual C++ version 12.0
+  1>  STL     : Dinkumware standard library version 610
+  1>  Boost   : 1.55.0
+  1>  std::numeric_limits<double>::digits10 = 15
+  1>  std::numeric_limits<double>::max_digits10 = 17
 
 
 */

@@ -1,7 +1,7 @@
 /* Boost check_gmp.cpp test file
 
- Copyright 2009 Karsten Ahnert
- Copyright 2009 Mario Mulansky
+ Copyright 2010-2011 Karsten Ahnert
+ Copyright 2011 Mario Mulansky
 
  This file tests the odeint library with the gmp arbitrary precision types
 
@@ -39,6 +39,12 @@ BOOST_AUTO_TEST_CASE( gsl )
     euler< state_type > euler;
 
     state_type x = gsl_vector_alloc( 3 );
+
+    // check resizing
+    state_type y = 0;
+    boost::numeric::odeint::resize( y , x );
+    BOOST_CHECK( 0 != y );
+
     gsl_vector_set( x , 0 , 1.0);
     gsl_vector_set( x , 1 , 1.0);
     gsl_vector_set( x , 2 , 2.0);

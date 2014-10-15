@@ -28,24 +28,24 @@
 <span class="keyword">class</span> <a class="link" href="runtime_error.html" title="Class runtime_error">runtime_error</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">runtime_error</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="runtime_error.html#boost.log.runtime_errorconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">explicit</span> <a class="link" href="runtime_error.html#idp25032200-bb"><span class="identifier">runtime_error</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="runtime_error.html#idp25032968-bb"><span class="special">~</span><span class="identifier">runtime_error</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="runtime_error.html#idp15087904-bb"><span class="identifier">runtime_error</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="runtime_error.html#idp15089536-bb"><span class="special">~</span><span class="identifier">runtime_error</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp53406200"></a><h2>Description</h2>
+<a name="idp115715792"></a><h2>Description</h2>
 <p>Exceptions derived from this class indicate a problem that may not directly be caused by the user's code that interacts with the library, such as errors caused by input data. </p>
 <div class="refsect2">
-<a name="idp53406712"></a><h3>
+<a name="idp115716656"></a><h3>
 <a name="boost.log.runtime_errorconstruct-copy-destruct"></a><code class="computeroutput">runtime_error</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp25032200-bb"></a><span class="identifier">runtime_error</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> descr<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp15087904-bb"></a><span class="identifier">runtime_error</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> descr<span class="special">)</span><span class="special">;</span></pre>
 <p>Initializing constructor. Creates an exception with the specified error message. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp25032968-bb"></a><span class="special">~</span><span class="identifier">runtime_error</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp15089536-bb"></a><span class="special">~</span><span class="identifier">runtime_error</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Destructor </p>
 </li>
 </ol></div>
@@ -54,7 +54,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2013 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2014 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

@@ -11,6 +11,8 @@
 #include <boost/math/tools/precision.hpp>
 #include <boost/regex.hpp>
 #include <boost/test/test_tools.hpp>
+#include <iostream>
+#include <iomanip>
 
 #if defined(BOOST_INTEL)
 #  pragma warning(disable:239)

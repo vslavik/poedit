@@ -6,8 +6,8 @@
  This file tests the Fusion algebra.
  [end_description]
 
- Copyright 2009-2012 Karsten Ahnert
- Copyright 2009-2012 Mario Mulansky
+ Copyright 2011-2012 Karsten Ahnert
+ Copyright 2011-2013 Mario Mulansky
 
  Distributed under the Boost Software License, Version 1.0.
  (See accompanying file LICENSE_1_0.txt or
@@ -174,10 +174,10 @@ BOOST_AUTO_TEST_CASE( for_each15 )
 }
 
 
-BOOST_AUTO_TEST_CASE( reduce )
+BOOST_AUTO_TEST_CASE( norm_inf )
 {
-    double sum = algebra.reduce( fusion::make_vector( 1.0 , 2.0 , 3.0 ) , std::plus< double >() , 0.0 );
-    BOOST_CHECK_CLOSE( sum , 6.0 , 1.0e-10 );
+    double nrm = algebra.norm_inf( fusion::make_vector( 1.0 , 2.0 , 3.0 ) );
+    BOOST_CHECK_CLOSE( nrm , 3.0 , 1.0e-10 );
 }
 
 

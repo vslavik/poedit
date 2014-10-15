@@ -25,7 +25,7 @@ unsigned int size_fct() {
   return N_THREADS;
 }
 
-boost::barrier gen_barrier(N_THREADS, size_fct);
+boost::barrier gen_barrier(N_THREADS, &size_fct);
 
 void barrier_thread()
 {

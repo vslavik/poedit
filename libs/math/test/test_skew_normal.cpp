@@ -26,6 +26,7 @@ using boost::math::skew_normal_distribution;
 using boost::math::skew_normal;
 
 #include <iostream>
+#include <iomanip>
 using std::cout;
 using std::endl;
 using std::setprecision;

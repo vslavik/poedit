@@ -47,7 +47,7 @@ using namespace boost::multi_index;
 #endif
 
 template<typename Sequence>
-static void local_test_rearrange(BOOST_EXPLICIT_TEMPLATE_TYPE(Sequence))
+static void local_test_rearrange()
 {
   typedef typename Sequence::iterator   iterator;
   typedef typename Sequence::value_type value_type;
@@ -121,10 +121,6 @@ void test_rearrange()
     indexed_by<sequenced<> >
   > int_list;
 
-  /* MSVC++ 6.0 chokes on local_test_rearrange without this
-   * explicit instantiation
-   */
-  int_list il;
   local_test_rearrange<int_list>();
 
   typedef multi_index_container<
@@ -132,6 +128,5 @@ void test_rearrange()
     indexed_by<random_access<> >
   > int_vector;
 
-  int_vector iv;
   local_test_rearrange<int_vector>();
 }

@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Chapter&#160;9.&#160;Boost.Foreach</title>
+<title>Chapter&#160;11.&#160;Boost.Foreach</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
@@ -25,7 +25,7 @@
 <div class="chapter">
 <div class="titlepage"><div>
 <div><h2 class="title">
-<a name="foreach"></a>Chapter&#160;9.&#160;Boost.Foreach</h2></div>
+<a name="foreach"></a>Chapter&#160;11.&#160;Boost.Foreach</h2></div>
 <div><div class="author"><h3 class="author">
 <span class="firstname">Eric</span> <span class="surname">Niebler</span>
 </h3></div></div>
@@ -282,7 +282,7 @@
       I discourage this. It leads to name conflicts within the <code class="computeroutput"><span class="identifier">BOOST_FOREACH</span></code>
       macro itself, where <code class="computeroutput"><span class="identifier">foreach</span></code>
       is the name of a namespace. Besides, <code class="computeroutput"><span class="identifier">foreach</span></code>
-      is a common-eough identifier; even <a href="http://qt.digia.com/" target="_top">Qt</a>
+      is a common-enough identifier; even <a href="http://qt.digia.com/" target="_top">Qt</a>
       defines it as a macro. If you insist on using <code class="computeroutput"><span class="identifier">foreach</span></code>,
       you might try something like this:
     </p>
@@ -297,13 +297,13 @@
 <span class="preprocessor">#define</span> <span class="identifier">foreach</span>   <span class="identifier">BOOST_FOREACH</span>
 </pre>
 <p>
-      This will work around <span class="emphasis"><em>some</em></span> of the problem you're likely
+      This will work around <span class="emphasis"><em>some</em></span> of the problems you're likely
       to encounter, but not all. Prefer using a different identifier.
     </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: October 02, 2013 at 23:25:37 GMT</small></p></td>
+<td align="left"><p><small>Last revised: July 29, 2014 at 09:04:43 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

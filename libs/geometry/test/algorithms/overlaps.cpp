@@ -1,19 +1,20 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
-//
+
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
+
+// This file was modified by Oracle on 2014.
+// Modifications copyright (c) 2014 Oracle and/or its affiliates.
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 #include <algorithms/test_overlaps.hpp>
 
-
-#include <boost/geometry/geometries/geometries.hpp>
-#include <boost/geometry/geometries/point_xy.hpp>
-
-
 template <typename P>
-void test_2d()
+void test_box_box_2d()
 {
 #if defined(BOOST_GEOMETRY_COMPILE_FAIL)
     test_geometry<P, P>("POINT(1 1)", "POINT(1 1)", true);
@@ -42,7 +43,56 @@ void test_3d()
     test_geometry<bg::model::box<P>, bg::model::box<P> >("BOX(1 1 1, 3 3 3)", "BOX(4 4 4,6 6 6)", false);
 }
 
+template <typename P>
+void test_pp()
+{
+    typedef bg::model::multi_point<P> mpt;
 
+    test_geometry<mpt, mpt>("MULTIPOINT(0 0,1 1,2 2)", "MULTIPOINT(1 1,3 3,4 4)", true);
+    test_geometry<mpt, mpt>("MULTIPOINT(0 0,1 1,2 2)", "MULTIPOINT(1 1,2 2)", false);
+}
+
+template <typename P>
+void test_ll()
+{
+    typedef bg::model::linestring<P> ls;
+    typedef bg::model::multi_linestring<ls> mls;
+
+    test_geometry<ls, ls>("LINESTRING(0 0,2 2,3 1)", "LINESTRING(1 1,2 2,4 4)", true);
+    test_geometry<ls, ls>("LINESTRING(0 0,2 2,4 0)", "LINESTRING(0 1,2 1,3 2)", false);
+
+    test_geometry<ls, mls>("LINESTRING(0 0,2 2,3 1)", "MULTILINESTRING((1 1,2 2),(2 2,4 4))", true);
+    test_geometry<ls, mls>("LINESTRING(0 0,2 2,3 1)", "MULTILINESTRING((1 1,2 2),(3 3,4 4))", true);
+    test_geometry<ls, mls>("LINESTRING(0 0,3 3,3 1)", "MULTILINESTRING((3 3,2 2),(0 0,1 1))", false);
+}
+
+template <typename P>
+void test_aa()
+{
+    typedef bg::model::polygon<P> poly;
+    typedef bg::model::multi_polygon<poly> mpoly;
+
+    test_geometry<poly, poly>("POLYGON((0 0,0 5,5 5,5 0,0 0))", "POLYGON((3 3,3 9,9 9,9 3,3 3))", true);
+    test_geometry<poly, poly>("POLYGON((0 0,0 5,5 5,5 0,0 0))", "POLYGON((5 5,5 9,9 9,9 5,5 5))", false);
+    test_geometry<poly, poly>("POLYGON((0 0,0 5,5 5,5 0,0 0))", "POLYGON((3 3,3 5,5 5,5 3,3 3))", false);
+
+    test_geometry<poly, mpoly>("POLYGON((0 0,0 5,5 5,5 0,0 0))",
+                               "MULTIPOLYGON(((3 3,3 5,5 5,5 3,3 3)),((5 5,5 6,6 6,6 5,5 5)))",
+                               true);
+    test_geometry<mpoly, mpoly>("MULTIPOLYGON(((3 3,3 5,5 5,5 3,3 3)),((0 0,0 3,3 3,3 0,0,0)))",
+                                "MULTIPOLYGON(((3 3,3 5,5 5,5 3,3 3)),((5 5,5 6,6 6,6 5,5 5)))",
+                                true);
+}
+
+template <typename P>
+void test_2d()
+{
+    test_pp<P>();
+    test_ll<P>();
+    test_aa<P>();
+
+    test_box_box_2d<P>();
+}
 
 int test_main( int , char* [] )
 {

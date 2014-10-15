@@ -88,9 +88,9 @@
 <p>
           <span class="inlinemediaobject"><img src="../images/../../../images/pc2.png" align="middle"></span>
         </p>
-<a name="boost_pool.pool.pooling.concepts.dynamic_memory_allocation_is_often_inefficient"></a><h6>
-<a name="boost_pool.pool.pooling.concepts.dynamic_memory_allocation_is_often_inefficient-heading"></a>
-          <a class="link" href="pooling.html#boost_pool.pool.pooling.concepts.dynamic_memory_allocation_is_often_inefficient">Dynamic
+<h6>
+<a name="boost_pool.pool.pooling.concepts.h0"></a>
+          <span><a name="boost_pool.pool.pooling.concepts.dynamic_memory_allocation_is_often_inefficient"></a></span><a class="link" href="pooling.html#boost_pool.pool.pooling.concepts.dynamic_memory_allocation_is_often_inefficient">Dynamic
           memory allocation is often inefficient</a>
         </h6>
 <p>
@@ -189,9 +189,9 @@
 </h4></div></div></div>
 <div class="toc"><dl><dt><span class="section"><a href="pooling.html#boost_pool.pool.pooling.alignment.chunks">How Contiguous
           Chunks are Handled</a></span></dt></dl></div>
-<a name="boost_pool.pool.pooling.alignment.terminology"></a><h5>
-<a name="boost_pool.pool.pooling.alignment.terminology-heading"></a>
-          <a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.terminology">Terminology</a>
+<h5>
+<a name="boost_pool.pool.pooling.alignment.h0"></a>
+          <span><a name="boost_pool.pool.pooling.alignment.terminology"></a></span><a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.terminology">Terminology</a>
         </h5>
 <p>
           Review the <a class="link" href="pooling.html#boost_pool.pool.pooling.concepts" title="Basic ideas behind pooling">concepts</a>
@@ -200,9 +200,9 @@
           fixed-size chunks. These chunks are what are allocated and deallocated
           by the user.
         </p>
-<a name="boost_pool.pool.pooling.alignment.overview"></a><h5>
-<a name="boost_pool.pool.pooling.alignment.overview-heading"></a>
-          <a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.overview">Overview</a>
+<h5>
+<a name="boost_pool.pool.pooling.alignment.h1"></a>
+          <span><a name="boost_pool.pool.pooling.alignment.overview"></a></span><a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.overview">Overview</a>
         </h5>
 <p>
           Each Pool has a single free list that can extend over a number of memory
@@ -211,9 +211,9 @@
           It is the use of <code class="computeroutput"><span class="keyword">new</span><span class="special">[]</span></code>
           that allows us to guarantee alignment.
         </p>
-<a name="boost_pool.pool.pooling.alignment.proof_of_concept__guaranteeing_alignment"></a><h5>
-<a name="boost_pool.pool.pooling.alignment.proof_of_concept__guaranteeing_alignment-heading"></a>
-          <a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.proof_of_concept__guaranteeing_alignment">Proof
+<h5>
+<a name="boost_pool.pool.pooling.alignment.h2"></a>
+          <span><a name="boost_pool.pool.pooling.alignment.proof_of_concept__guaranteeing_alignment"></a></span><a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.proof_of_concept__guaranteeing_alignment">Proof
           of Concept: Guaranteeing Alignment</a>
         </h5>
 <p>
@@ -223,9 +223,9 @@
           Let <code class="computeroutput"><span class="identifier">POD_size</span></code> be the number
           of characters allocated.
         </p>
-<a name="boost_pool.pool.pooling.alignment.predicate_1__arrays_may_not_have_padding"></a><h6>
-<a name="boost_pool.pool.pooling.alignment.predicate_1__arrays_may_not_have_padding-heading"></a>
-          <a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.predicate_1__arrays_may_not_have_padding">Predicate
+<h6>
+<a name="boost_pool.pool.pooling.alignment.h3"></a>
+          <span><a name="boost_pool.pool.pooling.alignment.predicate_1__arrays_may_not_have_padding"></a></span><a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.predicate_1__arrays_may_not_have_padding">Predicate
           1: Arrays may not have padding</a>
         </h6>
 <p>
@@ -241,9 +241,9 @@
           Therefore, arrays cannot contain padding, though the elements within the
           arrays may contain padding.
         </p>
-<a name="boost_pool.pool.pooling.alignment.predicate_2__any_block_of_memory_allocated_as_an_array_of_characters_through__code__phrase_role__keyword__operator__phrase___phrase_role__keyword__new__phrase__phrase_role__special______phrase___code___hereafter_referred_to_as_the_block__is_properly_aligned_for_any_object_of_that_size_or_smaller"></a><h6>
-<a name="boost_pool.pool.pooling.alignment.predicate_2__any_block_of_memory_allocated_as_an_array_of_characters_through__code__phrase_role__keyword__operator__phrase___phrase_role__keyword__new__phrase__phrase_role__special______phrase___code___hereafter_referred_to_as_the_block__is_properly_aligned_for_any_object_of_that_size_or_smaller-heading"></a>
-          <a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.predicate_2__any_block_of_memory_allocated_as_an_array_of_characters_through__code__phrase_role__keyword__operator__phrase___phrase_role__keyword__new__phrase__phrase_role__special______phrase___code___hereafter_referred_to_as_the_block__is_properly_aligned_for_any_object_of_that_size_or_smaller">Predicate
+<h6>
+<a name="boost_pool.pool.pooling.alignment.h4"></a>
+          <span><a name="boost_pool.pool.pooling.alignment.predicate_2__any_block_of_memory_allocated_as_an_array_of_characters_through__code__phrase_role__keyword__operator__phrase___phrase_role__keyword__new__phrase__phrase_role__special______phrase___code___hereafter_referred_to_as_the_block__is_properly_aligned_for_any_object_of_that_size_or_smaller"></a></span><a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.predicate_2__any_block_of_memory_allocated_as_an_array_of_characters_through__code__phrase_role__keyword__operator__phrase___phrase_role__keyword__new__phrase__phrase_role__special______phrase___code___hereafter_referred_to_as_the_block__is_properly_aligned_for_any_object_of_that_size_or_smaller">Predicate
           2: Any block of memory allocated as an array of characters through <code class="computeroutput"><span class="keyword">operator</span> <span class="keyword">new</span><span class="special">[]</span></code> (hereafter referred to as the block)
           is properly aligned for any object of that size or smaller</a>
         </h6>
@@ -271,9 +271,9 @@
               types will later be placed."</em></span>
             </li>
 </ul></div>
-<a name="boost_pool.pool.pooling.alignment.consider__imaginary_object_type_element_of_a_size_which_is_a_multiple_of_some_actual_object_size__assume__code__phrase_role__keyword__sizeof__phrase__phrase_role__special_____phrase__phrase_role__identifier__element__phrase__phrase_role__special_____phrase___phrase_role__special___gt___phrase___phrase_role__identifier__pod_size__phrase___code_"></a><h6>
-<a name="boost_pool.pool.pooling.alignment.consider__imaginary_object_type_element_of_a_size_which_is_a_multiple_of_some_actual_object_size__assume__code__phrase_role__keyword__sizeof__phrase__phrase_role__special_____phrase__phrase_role__identifier__element__phrase__phrase_role__special_____phrase___phrase_role__special___gt___phrase___phrase_role__identifier__pod_size__phrase___code_-heading"></a>
-          <a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.consider__imaginary_object_type_element_of_a_size_which_is_a_multiple_of_some_actual_object_size__assume__code__phrase_role__keyword__sizeof__phrase__phrase_role__special_____phrase__phrase_role__identifier__element__phrase__phrase_role__special_____phrase___phrase_role__special___gt___phrase___phrase_role__identifier__pod_size__phrase___code_">Consider:
+<h6>
+<a name="boost_pool.pool.pooling.alignment.h5"></a>
+          <span><a name="boost_pool.pool.pooling.alignment.consider__imaginary_object_type_element_of_a_size_which_is_a_multiple_of_some_actual_object_size__assume__code__phrase_role__keyword__sizeof__phrase__phrase_role__special_____phrase__phrase_role__identifier__element__phrase__phrase_role__special_____phrase___phrase_role__special___gt___phrase___phrase_role__identifier__pod_size__phrase___code_"></a></span><a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.consider__imaginary_object_type_element_of_a_size_which_is_a_multiple_of_some_actual_object_size__assume__code__phrase_role__keyword__sizeof__phrase__phrase_role__special_____phrase__phrase_role__identifier__element__phrase__phrase_role__special_____phrase___phrase_role__special___gt___phrase___phrase_role__identifier__pod_size__phrase___code_">Consider:
           imaginary object type Element of a size which is a multiple of some actual
           object size; assume <code class="computeroutput"><span class="keyword">sizeof</span><span class="special">(</span><span class="identifier">Element</span><span class="special">)</span> <span class="special">&gt;</span> <span class="identifier">POD_size</span></code></a>
         </h6>
@@ -285,9 +285,9 @@
           Note that the block is properly aligned for an Element. This directly follows
           from Predicate 2.
         </p>
-<a name="boost_pool.pool.pooling.alignment.corollary_1__the_block_is_properly_aligned_for_an_array_of_elements"></a><h6>
-<a name="boost_pool.pool.pooling.alignment.corollary_1__the_block_is_properly_aligned_for_an_array_of_elements-heading"></a>
-          <a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.corollary_1__the_block_is_properly_aligned_for_an_array_of_elements">Corollary
+<h6>
+<a name="boost_pool.pool.pooling.alignment.h6"></a>
+          <span><a name="boost_pool.pool.pooling.alignment.corollary_1__the_block_is_properly_aligned_for_an_array_of_elements"></a></span><a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.corollary_1__the_block_is_properly_aligned_for_an_array_of_elements">Corollary
           1: The block is properly aligned for an array of Elements</a>
         </h6>
 <p>
@@ -301,9 +301,9 @@
 <p>
           (Specifically, array types are object types.)
         </p>
-<a name="boost_pool.pool.pooling.alignment.corollary_2__for_any_pointer__code__phrase_role__identifier__p__phrase___code__and_integer__code__phrase_role__identifier__i__phrase___code___if__code__phrase_role__identifier__p__phrase___code__is_properly_aligned_for_the_type_it_points_to__then__code__phrase_role__identifier__p__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code___when_well_defined__is_properly_aligned_for_that_type__in_other_words__if_an_array_is_properly_aligned__then_each_element_in_that_array_is_properly_aligned"></a><h6>
-<a name="boost_pool.pool.pooling.alignment.corollary_2__for_any_pointer__code__phrase_role__identifier__p__phrase___code__and_integer__code__phrase_role__identifier__i__phrase___code___if__code__phrase_role__identifier__p__phrase___code__is_properly_aligned_for_the_type_it_points_to__then__code__phrase_role__identifier__p__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code___when_well_defined__is_properly_aligned_for_that_type__in_other_words__if_an_array_is_properly_aligned__then_each_element_in_that_array_is_properly_aligned-heading"></a>
-          <a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.corollary_2__for_any_pointer__code__phrase_role__identifier__p__phrase___code__and_integer__code__phrase_role__identifier__i__phrase___code___if__code__phrase_role__identifier__p__phrase___code__is_properly_aligned_for_the_type_it_points_to__then__code__phrase_role__identifier__p__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code___when_well_defined__is_properly_aligned_for_that_type__in_other_words__if_an_array_is_properly_aligned__then_each_element_in_that_array_is_properly_aligned">Corollary
+<h6>
+<a name="boost_pool.pool.pooling.alignment.h7"></a>
+          <span><a name="boost_pool.pool.pooling.alignment.corollary_2__for_any_pointer__code__phrase_role__identifier__p__phrase___code__and_integer__code__phrase_role__identifier__i__phrase___code___if__code__phrase_role__identifier__p__phrase___code__is_properly_aligned_for_the_type_it_points_to__then__code__phrase_role__identifier__p__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code___when_well_defined__is_properly_aligned_for_that_type__in_other_words__if_an_array_is_properly_aligned__then_each_element_in_that_array_is_properly_aligned"></a></span><a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.corollary_2__for_any_pointer__code__phrase_role__identifier__p__phrase___code__and_integer__code__phrase_role__identifier__i__phrase___code___if__code__phrase_role__identifier__p__phrase___code__is_properly_aligned_for_the_type_it_points_to__then__code__phrase_role__identifier__p__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code___when_well_defined__is_properly_aligned_for_that_type__in_other_words__if_an_array_is_properly_aligned__then_each_element_in_that_array_is_properly_aligned">Corollary
           2: For any pointer <code class="computeroutput"><span class="identifier">p</span></code> and
           integer <code class="computeroutput"><span class="identifier">i</span></code>, if <code class="computeroutput"><span class="identifier">p</span></code> is properly aligned for the type it
           points to, then <code class="computeroutput"><span class="identifier">p</span> <span class="special">+</span>
@@ -324,22 +324,22 @@
           <span class="identifier">i</span></code> both point into or one past
           the same array.
         </p>
-<a name="boost_pool.pool.pooling.alignment.let___code__phrase_role__keyword__sizeof__phrase__phrase_role__special_____phrase__phrase_role__identifier__element__phrase__phrase_role__special_____phrase___code__be_the_least_common_multiple_of_sizes_of_several_actual_objects__t1__t2__t3______"></a><h6>
-<a name="boost_pool.pool.pooling.alignment.let___code__phrase_role__keyword__sizeof__phrase__phrase_role__special_____phrase__phrase_role__identifier__element__phrase__phrase_role__special_____phrase___code__be_the_least_common_multiple_of_sizes_of_several_actual_objects__t1__t2__t3______-heading"></a>
-          <a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.let___code__phrase_role__keyword__sizeof__phrase__phrase_role__special_____phrase__phrase_role__identifier__element__phrase__phrase_role__special_____phrase___code__be_the_least_common_multiple_of_sizes_of_several_actual_objects__t1__t2__t3______">Let:
+<h6>
+<a name="boost_pool.pool.pooling.alignment.h8"></a>
+          <span><a name="boost_pool.pool.pooling.alignment.let___code__phrase_role__keyword__sizeof__phrase__phrase_role__special_____phrase__phrase_role__identifier__element__phrase__phrase_role__special_____phrase___code__be_the_least_common_multiple_of_sizes_of_several_actual_objects__t1__t2__t3______"></a></span><a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.let___code__phrase_role__keyword__sizeof__phrase__phrase_role__special_____phrase__phrase_role__identifier__element__phrase__phrase_role__special_____phrase___code__be_the_least_common_multiple_of_sizes_of_several_actual_objects__t1__t2__t3______">Let:
           <code class="computeroutput"><span class="keyword">sizeof</span><span class="special">(</span><span class="identifier">Element</span><span class="special">)</span></code>
           be the least common multiple of sizes of several actual objects (T1, T2,
           T3, ...)</a>
         </h6>
-<a name="boost_pool.pool.pooling.alignment.let__block_be_a_pointer_to_the_memory_block__pe_be__element____block__and_pn_be__tn____block"></a><h6>
-<a name="boost_pool.pool.pooling.alignment.let__block_be_a_pointer_to_the_memory_block__pe_be__element____block__and_pn_be__tn____block-heading"></a>
-          <a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.let__block_be_a_pointer_to_the_memory_block__pe_be__element____block__and_pn_be__tn____block">Let:
+<h6>
+<a name="boost_pool.pool.pooling.alignment.h9"></a>
+          <span><a name="boost_pool.pool.pooling.alignment.let__block_be_a_pointer_to_the_memory_block__pe_be__element____block__and_pn_be__tn____block"></a></span><a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.let__block_be_a_pointer_to_the_memory_block__pe_be__element____block__and_pn_be__tn____block">Let:
           block be a pointer to the memory block, pe be (Element *) block, and pn
           be (Tn *) block</a>
         </h6>
-<a name="boost_pool.pool.pooling.alignment.corollary_3__for_each_integer__code__phrase_role__identifier__i__phrase___code___such_that__code__phrase_role__identifier__pe__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code__is_well_defined__then_for_each_n__there_exists_some_integer__code__phrase_role__identifier__jn__phrase___code__such_that__code__phrase_role__identifier__pn__phrase___phrase_role__special_____phrase___phrase_role__identifier__jn__phrase___code__is_well_defined_and_refers_to_the_same_memory_address_as__code__phrase_role__identifier__pe__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code_"></a><h6>
-<a name="boost_pool.pool.pooling.alignment.corollary_3__for_each_integer__code__phrase_role__identifier__i__phrase___code___such_that__code__phrase_role__identifier__pe__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code__is_well_defined__then_for_each_n__there_exists_some_integer__code__phrase_role__identifier__jn__phrase___code__such_that__code__phrase_role__identifier__pn__phrase___phrase_role__special_____phrase___phrase_role__identifier__jn__phrase___code__is_well_defined_and_refers_to_the_same_memory_address_as__code__phrase_role__identifier__pe__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code_-heading"></a>
-          <a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.corollary_3__for_each_integer__code__phrase_role__identifier__i__phrase___code___such_that__code__phrase_role__identifier__pe__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code__is_well_defined__then_for_each_n__there_exists_some_integer__code__phrase_role__identifier__jn__phrase___code__such_that__code__phrase_role__identifier__pn__phrase___phrase_role__special_____phrase___phrase_role__identifier__jn__phrase___code__is_well_defined_and_refers_to_the_same_memory_address_as__code__phrase_role__identifier__pe__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code_">Corollary
+<h6>
+<a name="boost_pool.pool.pooling.alignment.h10"></a>
+          <span><a name="boost_pool.pool.pooling.alignment.corollary_3__for_each_integer__code__phrase_role__identifier__i__phrase___code___such_that__code__phrase_role__identifier__pe__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code__is_well_defined__then_for_each_n__there_exists_some_integer__code__phrase_role__identifier__jn__phrase___code__such_that__code__phrase_role__identifier__pn__phrase___phrase_role__special_____phrase___phrase_role__identifier__jn__phrase___code__is_well_defined_and_refers_to_the_same_memory_address_as__code__phrase_role__identifier__pe__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code_"></a></span><a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.corollary_3__for_each_integer__code__phrase_role__identifier__i__phrase___code___such_that__code__phrase_role__identifier__pe__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code__is_well_defined__then_for_each_n__there_exists_some_integer__code__phrase_role__identifier__jn__phrase___code__such_that__code__phrase_role__identifier__pn__phrase___phrase_role__special_____phrase___phrase_role__identifier__jn__phrase___code__is_well_defined_and_refers_to_the_same_memory_address_as__code__phrase_role__identifier__pe__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code_">Corollary
           3: For each integer <code class="computeroutput"><span class="identifier">i</span></code>,
           such that <code class="computeroutput"><span class="identifier">pe</span> <span class="special">+</span>
           <span class="identifier">i</span></code> is well-defined, then for each
@@ -356,9 +356,9 @@
           the array of Elements is also a boundary of each element in each array
           of Tn.
         </p>
-<a name="boost_pool.pool.pooling.alignment.theorem__for_each_integer__code__phrase_role__identifier__i__phrase___code___such_that__code__phrase_role__identifier__pe__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code__is_well_defined__that_address__pe___i__is_properly_aligned_for_each_type_tn"></a><h6>
-<a name="boost_pool.pool.pooling.alignment.theorem__for_each_integer__code__phrase_role__identifier__i__phrase___code___such_that__code__phrase_role__identifier__pe__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code__is_well_defined__that_address__pe___i__is_properly_aligned_for_each_type_tn-heading"></a>
-          <a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.theorem__for_each_integer__code__phrase_role__identifier__i__phrase___code___such_that__code__phrase_role__identifier__pe__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code__is_well_defined__that_address__pe___i__is_properly_aligned_for_each_type_tn">Theorem:
+<h6>
+<a name="boost_pool.pool.pooling.alignment.h11"></a>
+          <span><a name="boost_pool.pool.pooling.alignment.theorem__for_each_integer__code__phrase_role__identifier__i__phrase___code___such_that__code__phrase_role__identifier__pe__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code__is_well_defined__that_address__pe___i__is_properly_aligned_for_each_type_tn"></a></span><a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.theorem__for_each_integer__code__phrase_role__identifier__i__phrase___code___such_that__code__phrase_role__identifier__pe__phrase___phrase_role__special_____phrase___phrase_role__identifier__i__phrase___code__is_well_defined__that_address__pe___i__is_properly_aligned_for_each_type_tn">Theorem:
           For each integer <code class="computeroutput"><span class="identifier">i</span></code>, such
           that <code class="computeroutput"><span class="identifier">pe</span> <span class="special">+</span>
           <span class="identifier">i</span></code> is well-defined, that address
@@ -371,10 +371,10 @@
           <span class="identifier">jn</span></code> is well-defined. It is properly
           aligned from Predicate 2 and Corollaries 1 and 2.
         </p>
-<a name="boost_pool.pool.pooling.alignment.use_of_the_theorem"></a><h5>
-<a name="boost_pool.pool.pooling.alignment.use_of_the_theorem-heading"></a>
-          <a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.use_of_the_theorem">Use
-          of the Theorem</a>
+<h5>
+<a name="boost_pool.pool.pooling.alignment.h12"></a>
+          <span><a name="boost_pool.pool.pooling.alignment.use_of_the_theorem"></a></span><a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.use_of_the_theorem">Use of the
+          Theorem</a>
         </h5>
 <p>
           The proof above covers alignment requirements for cutting chunks out of
@@ -406,9 +406,9 @@
           of all three sizes. This guarantees alignment provided all alignments are
           powers of two: something that appears to be true on all known platforms.
         </p>
-<a name="boost_pool.pool.pooling.alignment.a_look_at_the_memory_block"></a><h5>
-<a name="boost_pool.pool.pooling.alignment.a_look_at_the_memory_block-heading"></a>
-          <a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.a_look_at_the_memory_block">A
+<h5>
+<a name="boost_pool.pool.pooling.alignment.h13"></a>
+          <span><a name="boost_pool.pool.pooling.alignment.a_look_at_the_memory_block"></a></span><a class="link" href="pooling.html#boost_pool.pool.pooling.alignment.a_look_at_the_memory_block">A
           Look at the Memory Block</a>
         </h5>
 <p>
@@ -495,9 +495,9 @@
 <a name="boost_pool.pool.pooling.simple_segregated"></a><a class="link" href="pooling.html#boost_pool.pool.pooling.simple_segregated" title="Simple Segregated Storage (Not for the faint of heart - Embedded programmers only!)">Simple Segregated
         Storage (Not for the faint of heart - Embedded programmers only!)</a>
 </h4></div></div></div>
-<a name="boost_pool.pool.pooling.simple_segregated.introduction"></a><h5>
-<a name="boost_pool.pool.pooling.simple_segregated.introduction-heading"></a>
-          <a class="link" href="pooling.html#boost_pool.pool.pooling.simple_segregated.introduction">Introduction</a>
+<h5>
+<a name="boost_pool.pool.pooling.simple_segregated.h0"></a>
+          <span><a name="boost_pool.pool.pooling.simple_segregated.introduction"></a></span><a class="link" href="pooling.html#boost_pool.pool.pooling.simple_segregated.introduction">Introduction</a>
         </h5>
 <p>
           <code class="computeroutput"><a class="link" href="../../header/boost/pool/simple_segregated_storage_hpp.html" title="Header &lt;boost/pool/simple_segregated_storage.hpp&gt;">simple_segregated_storage.hpp</a></code>
@@ -511,9 +511,9 @@
           systems. This class delegates many difficult preconditions to the user
           (especially alignment issues). For more general usage, see the other <a class="link" href="interfaces.html" title="Boost Pool Interfaces - What interfaces are provided and when to use each one.">Pool Interfaces</a>.
         </p>
-<a name="boost_pool.pool.pooling.simple_segregated.synopsis"></a><h5>
-<a name="boost_pool.pool.pooling.simple_segregated.synopsis-heading"></a>
-          <a class="link" href="pooling.html#boost_pool.pool.pooling.simple_segregated.synopsis">Synopsis</a>
+<h5>
+<a name="boost_pool.pool.pooling.simple_segregated.h1"></a>
+          <span><a name="boost_pool.pool.pooling.simple_segregated.synopsis"></a></span><a class="link" href="pooling.html#boost_pool.pool.pooling.simple_segregated.synopsis">Synopsis</a>
         </h5>
 <pre class="programlisting">template &lt;typename SizeType = std::size_t&gt;
 class simple_segregated_storage
@@ -548,9 +548,9 @@ class simple_segregated_storage
         size_type partition_sz);
 };
 </pre>
-<a name="boost_pool.pool.pooling.simple_segregated.semantics"></a><h5>
-<a name="boost_pool.pool.pooling.simple_segregated.semantics-heading"></a>
-          <a class="link" href="pooling.html#boost_pool.pool.pooling.simple_segregated.semantics">Semantics</a>
+<h5>
+<a name="boost_pool.pool.pooling.simple_segregated.h2"></a>
+          <span><a name="boost_pool.pool.pooling.simple_segregated.semantics"></a></span><a class="link" href="pooling.html#boost_pool.pool.pooling.simple_segregated.semantics">Semantics</a>
         </h5>
 <p>
           An object of type <code class="computeroutput"><span class="identifier">simple_segregated_storage</span><span class="special">&lt;</span><span class="identifier">SizeType</span><span class="special">&gt;</span></code> is empty if its free list is empty.

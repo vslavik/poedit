@@ -16,6 +16,7 @@ namespace iterator_range_test_detail
     {
         double source[] = { 0.0, 1.0, 2.0, 3.0, 4.0, 5.0 };        
         boost::iterator_range<float*> rng = boost::make_iterator_range(source);
+        boost::ignore_unused_variable_warning(rng);
     }
 }
 

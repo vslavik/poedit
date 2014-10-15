@@ -34,6 +34,7 @@
 #include <boost/test/floating_point_comparison.hpp> // for BOOST_CHECK_CLOSE_FRACTION, BOOST_CHECK_EQUAL...
 
 #include <iostream>
+#include <iomanip>
   using std::cout; using std::endl; using std::fixed;
   using std::right; using std::left; using std::showpoint;
   using std::showpos; using std::setw; using std::setprecision;

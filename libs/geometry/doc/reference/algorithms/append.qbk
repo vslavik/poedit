@@ -1,9 +1,14 @@
 [/============================================================================
   Boost.Geometry (aka GGL, Generic Geometry Library)
 
-  Copyright (c) 2009-2012 Barend Gehrels, Amsterdam, the Netherlands.
-  Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
-  Copyright (c) 2009-2012 Bruno Lalande, Paris, France.
+  Copyright (c) 2009-2014 Barend Gehrels, Amsterdam, the Netherlands.
+  Copyright (c) 2009-2014 Mateusz Loskot, London, UK.
+  Copyright (c) 2009-2014 Bruno Lalande, Paris, France.
+
+  This file was modified by Oracle on 2014.
+  Modifications copyright (c) 2014, Oracle and/or its affiliates.
+
+  Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 
   Use, modification and distribution is subject to the Boost Software License,
   Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -14,7 +19,7 @@
 
 [heading_conformance_no_ogc __this_function__]
 
-[include generated/append_status.qbk]
+[include reference/status/append_status.qbk]
 
 [heading Behavior]
 [table
@@ -26,6 +31,22 @@
 	either the exterior ring (the default) or specify a zero-based index for one of the interior rings. 
 	In the last case, the interior rings are not resized automatically, 
 	so ensure that the zero-based index is smaller than the number of interior rings]]
+[[__multi_linestring__][Appends point or range to the end of the
+        linestring with the given multi index.
+        The multi-linestring is not resized automatically, so ensure
+        that the multi index is smaller than then number of linestring
+        in the multi-linestring.]]
+[[__multi_polygon__][Appends point or range to the end of the polygon
+        (without explicitly closing it) with the given multi-index.
+        The point or range is appended at the end of the
+        exterior ring (the default) or specify a zero-based ring index for
+        the interior rings.
+        The multi-polygon is not resized automatically, so ensure
+        that the multi index is smaller than then number of polygon
+        in the multi-polygon. The same applies for the interior rings
+        of the polygon: the interior rings are not resized
+        automatically, so ensure that the zero-based ring index is
+        smaller than the number of interior rings of the polygon.]]
 ]
 
 [heading Complexity]

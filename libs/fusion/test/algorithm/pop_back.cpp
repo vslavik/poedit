@@ -1,7 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2011 Joel de Guzman
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
@@ -75,7 +75,7 @@ main()
         //~ std::cout << pop_back(l) << std::endl;
     //~ }
 
-#ifndef BOOST_NO_AUTO_DECLARATIONS
+#ifndef BOOST_NO_CXX11_AUTO_DECLARATIONS
     {
         auto vec = make_vector(1, 3.14, "hello");
 

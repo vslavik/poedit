@@ -4,7 +4,7 @@
 <title>Random Access Sequence</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.1">
+<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../concepts.html" title="Concepts">
 <link rel="prev" href="bidirectional_sequence.html" title="Bidirectional Sequence">
 <link rel="next" href="associative_sequence.html" title="Associative Sequence">
@@ -57,10 +57,14 @@
 <dd><p>
                 A Random Access Sequence type
               </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">M</span></code></span></dt>
+<dd><p>
+                An <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
+                integral constant
+              </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">N</span></code></span></dt>
 <dd><p>
-                An <a href="http://www.boost.org/libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
-                Integral Constant</a>
+                An integral constant
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">o</span></code></span></dt>
 <dd><p>
@@ -154,7 +158,7 @@
 <tr>
 <td>
                   <p>
-                    <code class="computeroutput"><a class="link" href="../intrinsic/functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;(</span><span class="identifier">s</span><span class="special">)</span></code>
+                    <code class="computeroutput"><a class="link" href="../intrinsic/functions/at_c.html" title="at_c"><code class="computeroutput"><span class="identifier">at_c</span></code></a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;(</span><span class="identifier">s</span><span class="special">)</span></code>
                   </p>
                 </td>
 <td>
@@ -173,7 +177,52 @@
 <tr>
 <td>
                   <p>
-                    <code class="computeroutput"><a class="link" href="../intrinsic/functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;(</span><span class="identifier">s</span><span class="special">)</span>
+                    <code class="computeroutput"><a class="link" href="../intrinsic/functions/at_c.html" title="at_c"><code class="computeroutput"><span class="identifier">at_c</span></code></a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;(</span><span class="identifier">s</span><span class="special">)</span>
+                    <span class="special">=</span> <span class="identifier">o</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Any type
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">s</span></code> is mutable
+                    and <code class="computeroutput"><span class="identifier">e</span> <span class="special">=</span>
+                    <span class="identifier">o</span></code>, where <code class="computeroutput"><span class="identifier">e</span></code> is the first element in the
+                    sequence, is a valid expression.
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Constant
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><a class="link" href="../intrinsic/functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a><span class="special">&lt;</span><span class="identifier">M</span><span class="special">&gt;(</span><span class="identifier">s</span><span class="special">)</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Any type
+                  </p>
+                </td>
+<td>
+                </td>
+<td>
+                  <p>
+                    Constant
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><a class="link" href="../intrinsic/functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a><span class="special">&lt;</span><span class="identifier">M</span><span class="special">&gt;(</span><span class="identifier">s</span><span class="special">)</span>
                     <span class="special">=</span> <span class="identifier">o</span></code>
                   </p>
                 </td>
@@ -311,18 +360,32 @@
                   </p>
                 </th>
 </tr></thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>
                   <p>
-                    <code class="computeroutput"><a class="link" href="../intrinsic/functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;(</span><span class="identifier">s</span><span class="special">)</span></code>
+                    <code class="computeroutput"><a class="link" href="../intrinsic/functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a><span class="special">&lt;</span><span class="identifier">M</span><span class="special">&gt;(</span><span class="identifier">s</span><span class="special">)</span></code>
                   </p>
                 </td>
 <td>
                   <p>
-                    The Nth element from the beginning of the sequence; see <a class="link" href="../intrinsic/functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a>.
+                    The Mth element from the beginning of the sequence; see <a class="link" href="../intrinsic/functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a>.
                   </p>
                 </td>
-</tr></tbody>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><a class="link" href="../intrinsic/functions/at_c.html" title="at_c"><code class="computeroutput"><span class="identifier">at_c</span></code></a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;(</span><span class="identifier">s</span><span class="special">)</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    The Nth element from the beginning of the sequence; see <a class="link" href="../intrinsic/functions/at_c.html" title="at_c"><code class="computeroutput"><span class="identifier">at_c</span></code></a>.
+                  </p>
+                </td>
+</tr>
+</tbody>
 </table></div>
 <h6>
 <a name="fusion.sequence.concepts.random_access_sequence.h5"></a>
@@ -337,6 +400,9 @@
             </li>
 <li class="listitem">
               <a class="link" href="../../container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a>
+            </li>
+<li class="listitem">
+              <a class="link" href="../../container/map.html" title="map"><code class="computeroutput"><span class="identifier">map</span></code></a>
             </li>
 <li class="listitem">
               <a class="link" href="../../view/reverse_view.html" title="reverse_view"><code class="computeroutput"><span class="identifier">reverse_view</span></code></a>

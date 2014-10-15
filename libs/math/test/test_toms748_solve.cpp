@@ -12,6 +12,8 @@
 #include <boost/math/tools/toms748_solve.hpp>
 #include <boost/math/special_functions/gamma.hpp>
 #include <boost/math/special_functions/beta.hpp>
+#include <iostream>
+#include <iomanip>
 
 //
 // Test functor implements the same test cases as used by

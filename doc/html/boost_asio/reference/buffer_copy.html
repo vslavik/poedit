@@ -27,7 +27,7 @@
 <a name="boost_asio.reference.buffer_copy"></a><a class="link" href="buffer_copy.html" title="buffer_copy">buffer_copy</a>
 </h3></div></div></div>
 <p>
-        <a class="indexterm" name="idp78745048"></a> 
+        <a class="indexterm" name="idp159570256"></a> 
 The <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">buffer_copy</span></code> function is used to copy bytes
         from a source buffer (or buffer sequence) to a target buffer (or buffer sequence).
       </p>
@@ -257,6 +257,11 @@ The <code class="computeroutput"><span class="identifier">boost</span><span clas
         This prevents buffer overflow, regardless of the buffer sizes used in the
         copy operation.
       </p>
+<p>
+        Note that <a class="link" href="buffer_copy.html" title="buffer_copy"><code class="computeroutput"><span class="identifier">buffer_copy</span></code></a> is implemented in terms
+        of <code class="computeroutput"><span class="identifier">memcpy</span></code>, and consequently
+        it cannot be used to copy between overlapping memory regions.
+      </p>
 <h5>
 <a name="boost_asio.reference.buffer_copy.h0"></a>
         <span class="phrase"><a name="boost_asio.reference.buffer_copy.requirements"></a></span><a class="link" href="buffer_copy.html#boost_asio.reference.buffer_copy.requirements">Requirements</a>
@@ -270,7 +275,7 @@ The <code class="computeroutput"><span class="identifier">boost</span><span clas
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2013 Christopher M. Kohlhoff<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2014 Christopher M. Kohlhoff<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -65,6 +65,12 @@
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(TargetDir)\$(TargetName).exe" ../.. -text -brief</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Executing test $(TargetName).exe...</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -95,6 +101,7 @@
     <ClCompile Include="..\..\assert_macro_check.cpp" />
     <ClCompile Include="..\..\copyright_check.cpp" />
     <ClCompile Include="..\..\crlf_check.cpp" />
+    <ClCompile Include="..\..\deprecated_macro_check.cpp" />
     <ClCompile Include="..\..\end_check.cpp" />
     <ClCompile Include="..\..\inspect.cpp" />
     <ClCompile Include="..\..\license_check.cpp" />

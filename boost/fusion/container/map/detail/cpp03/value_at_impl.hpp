@@ -8,6 +8,7 @@
 #if !defined(BOOST_FUSION_MAP_DETAIL_VALUE_AT_IMPL_HPP)
 #define BOOST_FUSION_MAP_DETAIL_VALUE_AT_IMPL_HPP
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/mpl/at.hpp>
 
 namespace boost { namespace fusion

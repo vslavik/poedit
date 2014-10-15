@@ -13,6 +13,7 @@
 #include <boost/chrono/round.hpp>
 #include <boost/chrono/ceil.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <cstdio>
 
 int main()
 {
@@ -26,10 +27,16 @@ int main()
       // does not change anything: strm2<<time_fmt(boost::chrono::timezone::utc);
       boost::chrono::system_clock::time_point atnow2;
       strm<<atnow<<std::endl;
+      time_t t = boost::chrono::system_clock::to_time_t(atnow);
+      std::cout << "A:" << std::endl;
+      puts(ctime(&t));
+      std::cout << "A:" << std::endl;
       std::cout << "A:" << strm.str()<< std::endl;
+      std::cout << "A:" << atnow.time_since_epoch().count() << std::endl;
       strm>>atnow2;
       strm2<<atnow2<<std::endl;
       std::cout << "B:" << strm2.str()<< std::endl;
+      std::cout << "B:" << atnow2.time_since_epoch().count()<< std::endl;
       BOOST_TEST_EQ(atnow.time_since_epoch().count(), atnow2.time_since_epoch().count());
 
       // 1 sec wrong:

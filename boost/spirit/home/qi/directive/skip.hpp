@@ -26,6 +26,7 @@
 #include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/vector.hpp>
+#include <boost/utility/enable_if.hpp>
 
 namespace boost { namespace spirit
 {
@@ -75,12 +76,23 @@ namespace boost { namespace spirit { namespace qi
 
         template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
-        bool parse(Iterator& first, Iterator const& last
+        typename enable_if<detail::is_unused_skipper<Skipper>, bool>::type
+        parse(Iterator& first, Iterator const& last
           , Context& context, Skipper const& u // --> The skipper is reintroduced
           , Attribute& attr_) const
         {
             return subject.parse(first, last, context
               , detail::get_skipper(u), attr_);
+        }
+        template <typename Iterator, typename Context
+          , typename Skipper, typename Attribute>
+        typename disable_if<detail::is_unused_skipper<Skipper>, bool>::type
+        parse(Iterator& first, Iterator const& last
+          , Context& context, Skipper const& skipper
+          , Attribute& attr_) const
+        {
+            return subject.parse(first, last, context
+              , skipper, attr_);
         }
 
         template <typename Context>

@@ -268,7 +268,7 @@
               for this parameter is computed via the traits class <code class="computeroutput"><span class="identifier">expression_template_default</span></code>
               whose member <code class="computeroutput"><span class="identifier">value</span></code>
               defaults to <code class="computeroutput"><span class="identifier">et_on</span></code> unless
-              the the traits class is specialized for a particular backend.
+              the traits class is specialized for a particular backend.
             </p></dd>
 </dl>
 </div>
@@ -475,13 +475,15 @@
             A value greater that 0 for <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span> <span class="special">&gt;</span> <span class="identifier">other</span></code>
           </li>
 <li class="listitem">
+<p class="simpara">
             Zero for <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span>
             <span class="special">==</span> <span class="identifier">other</span></code>
-          </li>
-</ul></div>
+          </p>
 <pre class="programlisting"><span class="identifier">Backend</span><span class="special">&amp;</span> <span class="identifier">backend</span><span class="special">();</span>
 <span class="keyword">const</span> <span class="identifier">Backend</span><span class="special">&amp;</span> <span class="identifier">backend</span><span class="special">()</span><span class="keyword">const</span><span class="special">;</span>
 </pre>
+</li>
+</ul></div>
 <p>
         Returns the underlying back-end instance used by <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
       </p>
@@ -589,7 +591,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h5"></a>
-        <span class="phrase"><a name="boost_multiprecision.ref.number.arithmetic_with_a_higher_precision_result"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.arithmetic_with_a_higher_precision_result">Arithmetic
+        <span class="phrase"><a name="boost_multiprecision.ref.number.arithmetic_with_a_higher_precisi"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.arithmetic_with_a_higher_precisi">Arithmetic
         with a higher precision result</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">ResultType</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Source1</span> <span class="keyword">class</span> <span class="identifier">Source2</span><span class="special">&gt;</span>
@@ -621,7 +623,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h6"></a>
-        <span class="phrase"><a name="boost_multiprecision.ref.number.non_member_standard_library_function_support"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.non_member_standard_library_function_support">Non-member
+        <span class="phrase"><a name="boost_multiprecision.ref.number.non_member_standard_library_func"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.non_member_standard_library_func">Non-member
         standard library function support</a>
       </h5>
 <pre class="programlisting"><span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">abs</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
@@ -1255,7 +1257,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h10"></a>
-        <span class="phrase"><a name="boost_multiprecision.ref.number.boost_math_interoperability_support"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.boost_math_interoperability_support">Boost.Math
+        <span class="phrase"><a name="boost_multiprecision.ref.number.boost_math_interoperability_supp"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.boost_math_interoperability_supp">Boost.Math
         Interoperability Support</a>
       </h5>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">math</span><span class="special">{</span>
@@ -1278,7 +1280,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h11"></a>
-        <span class="phrase"><a name="boost_multiprecision.ref.number.std__numeric_limits_support"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.std__numeric_limits_support">std::numeric_limits
+        <span class="phrase"><a name="boost_multiprecision.ref.number.std_numeric_limits_support"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.std_numeric_limits_support">std::numeric_limits
         support</a>
       </h5>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">std</span><span class="special">{</span>
@@ -1301,7 +1303,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2012 John Maddock and Christopher Kormanyos<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2013 John Maddock and Christopher Kormanyos<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

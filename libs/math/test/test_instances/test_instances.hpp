@@ -336,32 +336,48 @@ namespace boost{ namespace math{
 #ifdef TEST_GROUP_7
    // Bessel functions:
    template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_bessel_j(BOOST_MATH_TEST_TYPE v, BOOST_MATH_TEST_TYPE x, const policies::policy<> & pol);
+   template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_bessel_j_prime(BOOST_MATH_TEST_TYPE v, BOOST_MATH_TEST_TYPE x, const policies::policy<> & pol);
 
    template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_bessel_j(BOOST_MATH_TEST_TYPE v, BOOST_MATH_TEST_TYPE x);
+   template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_bessel_j_prime(BOOST_MATH_TEST_TYPE v, BOOST_MATH_TEST_TYPE x);
    template detail::bessel_traits<int, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_bessel_j(int v, BOOST_MATH_TEST_TYPE x);
+   template detail::bessel_traits<int, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_bessel_j_prime(int v, BOOST_MATH_TEST_TYPE x);
 
    template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type sph_bessel(unsigned v, BOOST_MATH_TEST_TYPE x, const policies::policy<> & pol);
+   template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type sph_bessel_prime(unsigned v, BOOST_MATH_TEST_TYPE x, const policies::policy<> & pol);
 
    template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type sph_bessel(unsigned v, BOOST_MATH_TEST_TYPE x);
+   template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type sph_bessel_prime(unsigned v, BOOST_MATH_TEST_TYPE x);
 
    template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_bessel_i(BOOST_MATH_TEST_TYPE v, BOOST_MATH_TEST_TYPE x, const policies::policy<> & pol);
+   template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_bessel_i_prime(BOOST_MATH_TEST_TYPE v, BOOST_MATH_TEST_TYPE x, const policies::policy<> & pol);
 
    template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_bessel_i(BOOST_MATH_TEST_TYPE v, BOOST_MATH_TEST_TYPE x);
+   template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_bessel_i_prime(BOOST_MATH_TEST_TYPE v, BOOST_MATH_TEST_TYPE x);
    template detail::bessel_traits<int, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_bessel_i(int v, BOOST_MATH_TEST_TYPE x);
+   template detail::bessel_traits<int, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_bessel_i_prime(int v, BOOST_MATH_TEST_TYPE x);
 
    template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_bessel_k(BOOST_MATH_TEST_TYPE v, BOOST_MATH_TEST_TYPE x, const policies::policy<> & pol);
+   template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_bessel_k_prime(BOOST_MATH_TEST_TYPE v, BOOST_MATH_TEST_TYPE x, const policies::policy<> & pol);
 
    template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_bessel_k(BOOST_MATH_TEST_TYPE v, BOOST_MATH_TEST_TYPE x);
+   template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_bessel_k_prime(BOOST_MATH_TEST_TYPE v, BOOST_MATH_TEST_TYPE x);
    template detail::bessel_traits<int, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_bessel_k(int v, BOOST_MATH_TEST_TYPE x);
+   template detail::bessel_traits<int, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_bessel_k_prime(int v, BOOST_MATH_TEST_TYPE x);
 
    template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_neumann(BOOST_MATH_TEST_TYPE v, BOOST_MATH_TEST_TYPE x, const policies::policy<> & pol);
+   template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_neumann_prime(BOOST_MATH_TEST_TYPE v, BOOST_MATH_TEST_TYPE x, const policies::policy<> & pol);
 
    template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_neumann(BOOST_MATH_TEST_TYPE v, BOOST_MATH_TEST_TYPE x);
+   template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_neumann_prime(BOOST_MATH_TEST_TYPE v, BOOST_MATH_TEST_TYPE x);
    template detail::bessel_traits<int, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_neumann(int v, BOOST_MATH_TEST_TYPE x);
+   template detail::bessel_traits<int, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type cyl_neumann_prime(int v, BOOST_MATH_TEST_TYPE x);
 
    template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type sph_neumann(unsigned v, BOOST_MATH_TEST_TYPE x, const policies::policy<> & pol);
+   template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type sph_neumann_prime(unsigned v, BOOST_MATH_TEST_TYPE x, const policies::policy<> & pol);
 
    template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type sph_neumann(unsigned v, BOOST_MATH_TEST_TYPE x);
+   template detail::bessel_traits<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, policies::policy<> >::result_type sph_neumann_prime(unsigned v, BOOST_MATH_TEST_TYPE x);
 #endif
 #ifdef TEST_GROUP_8
    // Airy Functions:

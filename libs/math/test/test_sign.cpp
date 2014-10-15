@@ -145,16 +145,11 @@ BOOST_AUTO_TEST_CASE( test_main )
    // (Parameter value, arbitrarily zero, only communicates the floating point type).
    test_spots(0.0F, "float"); // Test float. OK at decdigits = 0 tolerance = 0.0001 %
    test_spots(0.0, "double"); // Test double. OK at decdigits 7, tolerance = 1e07 %
-#ifndef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
+   // long double support for the sign functions is considered "core" so we always test it
+   // even when long double support is turned off via BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
    test_spots(0.0L, "long double"); // Test long double.
 #ifndef BOOST_MATH_NO_REAL_CONCEPT_TESTS
    test_spots(boost::math::concepts::real_concept(0), "real_concept"); // Test real_concept.
-#endif
-#else
-   std::cout << "<note>The long double tests have been disabled on this platform "
-      "either because the long double overloads of the usual math functions are "
-      "not available at all, or because they are too inaccurate for these tests "
-      "to pass.</note>" << std::cout;
 #endif
 
    

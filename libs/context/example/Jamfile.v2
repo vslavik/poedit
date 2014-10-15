@@ -13,27 +13,26 @@ import indirect ;
 import modules ;
 import os ;
 import toolset ;
-
-if [ os.name ] = SOLARIS
-{
-  lib socket ;
-  lib nsl ;
-}
-else if [ os.name ] = NT
-{
-  lib ws2_32 ;
-  lib mswsock ;
-}
-else if [ os.name ] = HPUX
-{
-  lib ipv6 ;
-}
+import architecture ;
 
 project boost/context/example
     : requirements
       <library>/boost/context//boost_context
       <link>static
     ;
+
+rule configure ( properties * )
+{
+    local result ;
+    if ( ! ( <toolset>gcc in $(properties) &&
+           <address-model>64 in $(properties) &&
+           <architecture>x86 in $(properties) ) )
+    {
+        result = <build>no ;
+    }
+
+    return $(result) ;
+}
 
 exe jump
     : jump.cpp
@@ -45,4 +44,17 @@ exe exit
 
 exe transfer
     : transfer.cpp
+    ;
+
+exe exception
+    : exception.cpp
+    ;
+
+exe stacked
+    : stacked.cpp
+    ;
+
+exe echosse
+    : echosse.cpp
+    : <conditional>@configure
     ;

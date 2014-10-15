@@ -20,9 +20,11 @@
 #endif
 
 #include <boost/timer.hpp>
+#include <boost/typeof/typeof.hpp>
 
 #include <boost/concept/requires.hpp>
 #include <boost/concept_check.hpp>
+#include <boost/core/ignore_unused.hpp>
 
 #include <boost/geometry/algorithms/assign.hpp>
 #include <boost/geometry/strategies/cartesian/distance_pythagoras.hpp>
@@ -122,7 +124,12 @@ void test_services()
     {
 
         // Compile-check if there is a strategy for this type
-        typedef typename services::default_strategy<bg::point_tag, P1, P2>::type pythagoras_strategy_type;
+        typedef typename services::default_strategy
+            <
+                bg::point_tag, bg::point_tag, P1, P2
+            >::type pythagoras_strategy_type;
+
+        boost::ignore_unused<pythagoras_strategy_type>();
     }
 
 
@@ -253,7 +260,9 @@ void test_integer(bool check_types)
     if (check_types)
     {
         BOOST_CHECK((boost::is_same<distance_type, double>::type::value));
-        BOOST_CHECK((boost::is_same<cdistance_type, boost::long_long_type>::type::value));
+        // comparable_distance results in now double too, obviously because
+        // comp.distance point-segment can be fraction, even for integer input
+        BOOST_CHECK((boost::is_same<cdistance_type, double>::type::value));
     }
 }
 

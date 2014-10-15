@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../../quickbook.html" title="Chapter&#160;40.&#160;Quickbook 1.6">
+<link rel="up" href="../../quickbook.html" title="Chapter&#160;43.&#160;Quickbook 1.6">
 <link rel="prev" href="structure.html" title="Document Structure">
 <link rel="next" href="block.html" title="Block Level Elements">
 </head>
@@ -185,7 +185,7 @@ the true business precept.]
           </li>
 </ul></div>
 <div class="table">
-<a name="quickbook.syntax.phrase.simple_formatting.more_formatting_samples"></a><p class="title"><b>Table&#160;40.1.&#160;More Formatting Samples</b></p>
+<a name="quickbook.syntax.phrase.simple_formatting.more_formatting_samples"></a><p class="title"><b>Table&#160;43.1.&#160;More Formatting Samples</b></p>
 <div class="table-contents"><table class="table" summary="More Formatting Samples">
 <colgroup>
 <col>
@@ -410,37 +410,67 @@ And one for the little boy who lives down the lane.
 <a name="quickbook.syntax.phrase.role"></a><a name="quickbook.ref.role"></a><a class="link" href="phrase.html#quickbook.syntax.phrase.role" title="Role">Role</a>
 </h3></div></div></div>
 <p>
-        Sometime the basic formatting options aren't enough, and you wish to use
-        CSS to style the generated html. For these cases you can use the <code class="computeroutput">role</code>
-        phase element. For example:
+        This generates a docbook phrase with a <code class="computeroutput">role</code> attribute, which
+        can be used to classify the phrase. This can be used to mark text for a use
+        that isn't covered elsewhere. The docbook <code class="computeroutput">role</code> will generate
+        a html class, which can be used to style text. And the xsl stylesheets can
+        be customized to treat certain roles specially when generating pdfs.
+      </p>
+<p>
+        The boostbook css stylesheets, and xsl stylesheets contain support for a
+        limited number of colours that can be used with <code class="computeroutput">role</code>. For example
+        if you write:
       </p>
 <pre class="programlisting">[role red Text content]
 </pre>
 <p>
-        Will generate the docbook:
+        You'll get red text if you're using the boostbook css (for html) or the boostbook
+        xsl for generating pdfs.
       </p>
-<pre class="programlisting">&lt;phrase role="red"&gt;Text content&lt;/phrase&gt;
-</pre>
 <p>
-        Which will generate html along the lines of:
+        The full list of colours that will be available is:
       </p>
-<pre class="programlisting">&lt;span class="red"&gt;Text content&lt;/span&gt;
-</pre>
-<p>
-        And then you can use css to style this however you wish.
-      </p>
-<div class="note"><table border="0" summary="Note">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../doc/src/images/note.png"></td>
-<th align="left">Note</th>
-</tr>
-<tr><td align="left" valign="top"><p>
-          When generating other formats such as pdfs, your css is not going to apply,
-          so this will appear as normal, unstyled text. The docbook <code class="literal">role</code>
-          attribute is meant to be used as a more general mechanism, so you might
-          be able to take advantage of it by some other means.
-        </p></td></tr>
-</table></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <span class="red">red</span>
+          </li>
+<li class="listitem">
+            <span class="green">green</span>
+          </li>
+<li class="listitem">
+            <span class="lime">lime</span>
+          </li>
+<li class="listitem">
+            <span class="blue">blue</span>
+          </li>
+<li class="listitem">
+            <span class="navy">navy</span>
+          </li>
+<li class="listitem">
+            <span class="yellow">yellow</span>
+          </li>
+<li class="listitem">
+            <span class="magenta">magenta</span>
+          </li>
+<li class="listitem">
+            <span class="indigo">indigo</span>
+          </li>
+<li class="listitem">
+            <span class="cyan">cyan</span>
+          </li>
+<li class="listitem">
+            <span class="purple">purple</span>
+          </li>
+<li class="listitem">
+            <span class="gold">gold</span>
+          </li>
+<li class="listitem">
+            <span class="silver">silver</span>
+          </li>
+<li class="listitem">
+            <span class="gray">gray</span>
+          </li>
+</ul></div>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -557,7 +587,7 @@ C++ comment `// looks like this` whereas a Python comment [python]
         Python comment <code class="computeroutput"><span class="comment">#looks like this</span></code>.
       </p>
 <div class="table">
-<a name="quickbook.syntax.phrase.source_mode.supported_source_modes"></a><p class="title"><b>Table&#160;40.2.&#160;Supported Source Modes</b></p>
+<a name="quickbook.syntax.phrase.source_mode.supported_source_modes"></a><p class="title"><b>Table&#160;43.2.&#160;Supported Source Modes</b></p>
 <div class="table-contents"><table class="table" summary="Supported Source Modes">
 <colgroup>
 <col>

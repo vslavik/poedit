@@ -24,7 +24,6 @@ namespace std{
 
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/split_member.hpp>
-#include <boost/serialization/vector.hpp>
 
 //A holds a pointer to another A, but doesn't own the pointer.
 //objCount
@@ -41,89 +40,85 @@ class A
     {
         static int i = 0;
         ar >> BOOST_SERIALIZATION_NVP(next_);
-        if(++i == 3)
-            boost::serialization::throw_exception(boost::archive::archive_exception(
-                boost::archive::archive_exception::no_exception
-            ));
+        //if(++i == 3)
+        //    boost::serialization::throw_exception(boost::archive::archive_exception(
+        //        boost::archive::archive_exception::no_exception
+        //    ));
+        ++loadcount;
     }
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 public:
     A()
     {
+        if(test && objcount == 3)
+            boost::serialization::throw_exception(boost::archive::archive_exception(
+                boost::archive::archive_exception::no_exception
+            ));
         next_ = 0;
         ++objcount;
     }
-    A(const A& a)
-    {
-        next_ = a.next_; ++objcount;
-    }
-    ~A()
-    {
+    ~A(){
+        delete next_;
         --objcount;
     }
     A* next_;
     static int objcount;
+    static bool test;
+    static int loadcount;
 };
 
 
 int A::objcount = 0;
+int A::loadcount = 0;
+bool A::test = false;
 
 int
 test_main( int /* argc */, char* /* argv */[] )
 {
-    std::vector<A*> vec;
-    A* a = new A;
-    a->next_ = 0;
-    vec.push_back(a);
 
     //fill the vector with chained A's. The vector is assumed
     //to own the objects - we will destroy the objects through this vector.
+
+    A * head = new A;
+    A* last = head;
     unsigned int i;
-    for(i   = 1; i < 10; ++i)
+    for(i = 1; i < 9; ++i)
     {
-        a = new A;
-        vec[i - 1]->next_ = a;
-        a->next_ = 0;
-        vec.push_back(a);
+        A *a = new A;
+        last->next_ = a;
+        last = a;
     }
 
     const char * testfile = boost::archive::tmpnam(0);
     BOOST_REQUIRE(NULL != testfile);
 
-    //output the vector
+    //output the list
     {
         test_ostream os(testfile, TEST_STREAM_FLAGS);
         test_oarchive oa(os, TEST_ARCHIVE_FLAGS);
-        oa << BOOST_SERIALIZATION_NVP(vec);
+        oa << BOOST_SERIALIZATION_NVP(head);
     }
 
-    //erase the objects
-    for(i = 0; i < vec.size(); ++i)
-        delete vec[i];
-    vec.clear();
+    delete head;
+    BOOST_CHECK(A::objcount == 0);
 
-    //read the vector back
+    head = NULL;
+    A::test = true;
+    //read the list back
     {
         test_istream is(testfile, TEST_STREAM_FLAGS);
         test_iarchive ia(is, TEST_ARCHIVE_FLAGS);
         BOOST_TRY {
-            ia >> BOOST_SERIALIZATION_NVP(vec);
+            ia >> BOOST_SERIALIZATION_NVP(head);
         }
         BOOST_CATCH (...){
             ia.delete_created_pointers();
-            vec.clear();
         }
         BOOST_CATCH_END
     }
 
-    //delete the objects
-    for(i = 0; i < vec.size(); ++i)
-        delete vec[i];
-    vec.clear();
-
     //identify the leaks
-    BOOST_CHECK(A::objcount == 0);
+    BOOST_CHECK(A::loadcount == 0);
     std::remove(testfile);
     return EXIT_SUCCESS;
 }
-

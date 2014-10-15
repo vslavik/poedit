@@ -11,6 +11,7 @@
 // Disable a warning from <xutility> since this noise might
 // stop us detecting a problem in our code.
 #include <boost/range/counting_range.hpp>
+#include <boost/range/adaptor/indirected.hpp>
 
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test.hpp>
@@ -50,6 +51,22 @@ namespace boost
             counting_range_test_impl<Container>(0, 1);
             counting_range_test_impl<Container>(-100, 100);
             counting_range_test_impl<Container>(50, 55);
+        }
+
+        void counting_range_test_range()
+        {
+            std::vector<int> v;
+            for (int i = 0; i < 10; ++i)
+                v.push_back(i);
+
+            std::vector<std::vector<int>::iterator> x;
+            push_back(x, counting_range(v));
+
+            std::vector<int> t;
+            push_back(t, x | boost::adaptors::indirected);
+
+            BOOST_CHECK_EQUAL_COLLECTIONS(t.begin(), t.end(),
+                                          v.begin(), v.end());
         }
     }
 

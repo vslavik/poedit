@@ -75,7 +75,7 @@ struct constify
 struct add_pointer
 {
     template <typename T>
-    T* const
+    T* /*const*/
     operator()(T& t) const
     {
         return &t;
@@ -85,7 +85,7 @@ struct add_pointer
 struct add_const_pointer
 {
     template <typename T>
-    const T* const
+    const T* /*const*/
     operator()(T const& t) const
     {
         return &t;

@@ -7,13 +7,10 @@
 
 #include "static_assert_same.hpp"
 
-#include <boost/type_traits/broken_compiler_spec.hpp>
-
 #include <boost/iterator/detail/minimum_category.hpp>
 
 struct X { int a; };
 
-BOOST_TT_BROKEN_COMPILER_SPEC(X)
 
 struct Xiter : boost::iterator_adaptor<Xiter,X*>
 {

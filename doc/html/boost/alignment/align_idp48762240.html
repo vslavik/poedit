@@ -1,0 +1,100 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Function align</title>
+<link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
+<link rel="up" href="../../align/reference.html#header.boost.align.align_hpp" title="Header &lt;boost/align/align.hpp&gt;">
+<link rel="prev" href="../../align/reference.html" title="Reference">
+<link rel="next" href="aligned_alloc.html" title="Function aligned_alloc">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../boost.png"></td>
+<td align="center"><a href="../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../align/reference.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../align/reference.html#header.boost.align.align_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="aligned_alloc.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="refentry">
+<a name="boost.alignment.align_idp48762240"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Function align</span></h2>
+<p>boost::alignment::align</p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../align/reference.html#header.boost.align.align_hpp" title="Header &lt;boost/align/align.hpp&gt;">boost/align/align.hpp</a>&gt;
+
+</span>
+<span class="keyword">void</span> <span class="special">*</span> <span class="identifier">align</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> alignment<span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> size<span class="special">,</span> <span class="keyword">void</span> <span class="special">*</span><span class="special">&amp;</span> ptr<span class="special">,</span> 
+             <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">&amp;</span> space<span class="special">)</span><span class="special">;</span></pre></div>
+<div class="refsect1">
+<a name="idp125223216"></a><h2>Description</h2>
+<p>If it is possible to fit <code class="computeroutput">size</code> bytes of storage aligned by <code class="computeroutput">alignment</code> into the buffer pointed to by <code class="computeroutput">ptr</code> with length <code class="computeroutput">space</code>, the function updates <code class="computeroutput">ptr</code> to point to the first possible address of such storage and decreases <code class="computeroutput">space</code> by the number of bytes used for alignment. Otherwise, the function does nothing.</p>
+<p>
+
+</p>
+<p><span class="bold"><strong>Note:</strong></span> The function updates its <code class="computeroutput">ptr</code> and space arguments so that it can be called repeatedly with possibly different <code class="computeroutput">alignment</code> and <code class="computeroutput">size</code> arguments for the same buffer. </p>
+<p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="computeroutput">alignment</code></span></p></td>
+<td><p>Shall be a fundamental alignment value or an extended alignment value, and shall be a power of two.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">ptr</code></span></p></td>
+<td><p>Shall point to contiguous storage of at least <code class="computeroutput">space</code> bytes.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">size</code></span></p></td>
+<td><p>The size in bytes of storage to fit into the buffer.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="computeroutput">space</code></span></p></td>
+<td><p>The length of the buffer.</p></td>
+</tr>
+</tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p>A null pointer if the requested aligned buffer would not fit into the available space, otherwise the adjusted value of <code class="computeroutput">ptr</code>.</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Glen Fernandes<p>
+        Distributed under the <a href="http://boost.org/LICENSE_1_0.txt" target="_top">Boost
+        Software License, Version 1.0</a>.
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../align/reference.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../align/reference.html#header.boost.align.align_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="aligned_alloc.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

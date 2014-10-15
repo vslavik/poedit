@@ -21,7 +21,7 @@
 
 void test_coordinate_cast(std::string const& s, int expected_nom, int expected_denom)
 {
-	boost::rational<int> a = bg::detail::coordinate_cast<boost::rational<int> >::apply(s);
+    boost::rational<int> a = bg::detail::coordinate_cast<boost::rational<int> >::apply(s);
     BOOST_CHECK_EQUAL(a.numerator(), expected_nom);
     BOOST_CHECK_EQUAL(a.denominator(), expected_denom);
 }

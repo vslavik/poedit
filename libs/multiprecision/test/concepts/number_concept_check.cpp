@@ -21,7 +21,8 @@
 #if !defined(TEST_MPF_50) && !defined(TEST_BACKEND) && !defined(TEST_MPZ) \
    && !defined(TEST_CPP_DEC_FLOAT) && !defined(TEST_MPFR_50)\
    && !defined(TEST_MPFR_6) && !defined(TEST_MPFR_15) && !defined(TEST_MPFR_17) \
-   && !defined(TEST_MPFR_30) && !defined(TEST_CPP_DEC_FLOAT_NO_ET) && !defined(TEST_LOGGED_ADAPTER)
+   && !defined(TEST_MPFR_30) && !defined(TEST_CPP_DEC_FLOAT_NO_ET) && !defined(TEST_LOGGED_ADAPTER)\
+   && !defined(TEST_CPP_BIN_FLOAT)
 #  define TEST_MPF_50
 #  define TEST_BACKEND
 #  define TEST_MPZ
@@ -33,6 +34,7 @@
 #  define TEST_CPP_DEC_FLOAT
 #  define TEST_CPP_DEC_FLOAT_NO_ET
 #  define TEST_LOGGED_ADAPTER
+#  define TEST_CPP_BIN_FLOAT
 
 #ifdef _MSC_VER
 #pragma message("CAUTION!!: No backend type specified so testing everything.... this will take some time!!")
@@ -51,6 +53,9 @@
 #endif
 #if defined(TEST_CPP_DEC_FLOAT) || defined(TEST_CPP_DEC_FLOAT_NO_ET) || defined(TEST_LOGGED_ADAPTER)
 #include <boost/multiprecision/cpp_dec_float.hpp>
+#endif
+#if defined(TEST_CPP_BIN_FLOAT)
+#include <boost/multiprecision/cpp_bin_float.hpp>
 #endif
 #if defined(TEST_MPFR_50) || defined(TEST_MPFR_6) || defined(TEST_MPFR_15) || defined(TEST_MPFR_17) || defined(TEST_MPFR_30)
 #include <boost/multiprecision/mpfr.hpp>
@@ -192,6 +197,9 @@ void foo()
 #ifdef TEST_CPP_DEC_FLOAT
    test_extra(boost::multiprecision::cpp_dec_float_50());
 #endif
+#ifdef TEST_CPP_BIN_FLOAT
+   test_extra(boost::multiprecision::cpp_bin_float_50());
+#endif
 #ifdef TEST_CPP_DEC_FLOAT_NO_ET
    test_extra(boost::multiprecision::number<boost::multiprecision::cpp_dec_float<100>, boost::multiprecision::et_off>());
 #endif
@@ -225,6 +233,9 @@ int main()
 #endif
 #ifdef TEST_CPP_DEC_FLOAT
    BOOST_CONCEPT_ASSERT((boost::math::concepts::RealTypeConcept<boost::multiprecision::cpp_dec_float_50>));
+#endif
+#ifdef TEST_CPP_BIN_FLOAT
+   BOOST_CONCEPT_ASSERT((boost::math::concepts::RealTypeConcept<boost::multiprecision::cpp_bin_float_50>));
 #endif
 #ifdef TEST_LOGGED_ADAPTER
    typedef boost::multiprecision::number<boost::multiprecision::logged_adaptor<boost::multiprecision::cpp_dec_float<50> > > num_t;

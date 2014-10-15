@@ -59,7 +59,10 @@ public:
   template <std::size_t Dims> struct            const_array_view;
   
 
-  // structors
+  static const std::size_t dimensionality = NumDims;
+
+
+  // constructors and destructors
 
   template <typename ExtentList>
   explicit multi_array_ref(element* data, const ExtentList& sizes,

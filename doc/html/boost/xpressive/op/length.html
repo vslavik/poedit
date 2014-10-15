@@ -26,7 +26,7 @@
 <a name="boost.xpressive.op.length"></a><div class="titlepage"></div>
 <div class="refnamediv">
 <h2><span class="refentrytitle">Struct length</span></h2>
-<p>boost::xpressive::op::length</p>
+<p>boost::xpressive::op::length &#8212; <code class="computeroutput">length</code> is a PolymorphicFunctionObject for fetching the length of <code class="computeroutput"><a class="link" href="../sub_match.html" title="Struct template sub_match">sub_match</a></code>. </p>
 </div>
 <h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp" title="Header &lt;boost/xpressive/regex_actions.hpp&gt;">boost/xpressive/regex_actions.hpp</a>&gt;
@@ -38,20 +38,50 @@
   <span class="keyword">struct</span> <a class="link" href="length/result.html" title="Struct template result">result</a> <span class="special">{</span>
   <span class="special">}</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> This<span class="special">,</span> <span class="keyword">typename</span> Sub<span class="special">&gt;</span> 
-  <span class="keyword">struct</span> <a class="link" href="length/result_This_S_idp167983416.html" title="Struct template result&lt;This(Sub)&gt;">result</a><span class="special">&lt;</span><span class="identifier">This</span><span class="special">(</span><span class="identifier">Sub</span><span class="special">)</span><span class="special">&gt;</span> <span class="special">{</span>
+  <span class="keyword">struct</span> <a class="link" href="length/result_This_S_idp350827440.html" title="Struct template result&lt;This(Sub)&gt;">result</a><span class="special">&lt;</span><span class="identifier">This</span><span class="special">(</span><span class="identifier">Sub</span><span class="special">)</span><span class="special">&gt;</span> <span class="special">{</span>
     <span class="comment">// types</span>
-    <span class="keyword">typedef</span> <span class="identifier">remove_reference</span><span class="special">&lt;</span> <span class="identifier">Sub</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">::</span><span class="identifier">difference_type</span> <a class="link" href="length/result_This_S_idp167983416.html#boost.xpressive.op.length.result_This(S_idp167983416.type"><span class="identifier">type</span></a><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">remove_reference</span><span class="special">&lt;</span> <span class="identifier">Sub</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">::</span><span class="identifier">difference_type</span> <a class="link" href="length/result_This_S_idp350827440.html#boost.xpressive.op.length.result_This(S_idp350827440.type"><span class="identifier">type</span></a><span class="special">;</span>
   <span class="special">}</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="length.html#idp167984872-bb">public member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sub<span class="special">&gt;</span> <span class="identifier">Sub</span><span class="special">::</span><span class="identifier">difference_type</span> <a class="link" href="length.html#idp167985080-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Sub</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="length.html#idp350830544-bb">public member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sub<span class="special">&gt;</span> <span class="identifier">Sub</span><span class="special">::</span><span class="identifier">difference_type</span> <a class="link" href="length.html#idp350831104-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Sub</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp258439976"></a><h2>Description</h2>
+<a name="idp532876896"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp258440184"></a><h3>
-<a name="idp167984872-bb"></a><code class="computeroutput">length</code> public member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sub<span class="special">&gt;</span> <span class="identifier">Sub</span><span class="special">::</span><span class="identifier">difference_type</span> <a name="idp167985080-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Sub</span> <span class="keyword">const</span> <span class="special">&amp;</span> sub<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp532877312"></a><h3>
+<a name="idp350830544-bb"></a><code class="computeroutput">length</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sub<span class="special">&gt;</span> <span class="identifier">Sub</span><span class="special">::</span><span class="identifier">difference_type</span> <a name="idp350831104-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Sub</span> <span class="keyword">const</span> <span class="special">&amp;</span> sub<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<p>
+
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><code class="computeroutput">sub</code></span></p></td>
+<td><p>The <code class="computeroutput"><code class="computeroutput"><a class="link" href="../sub_match.html" title="Struct template sub_match">sub_match</a></code></code> object. </p></td>
+</tr></tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p><code class="computeroutput">sub.length()</code> </p></td>
+</tr>
+</tbody>
+</table></div>
+</li></ol></div>
 </div>
 </div>
 </div>

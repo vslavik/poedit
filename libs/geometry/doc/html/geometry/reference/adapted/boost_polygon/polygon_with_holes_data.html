@@ -37,7 +37,7 @@
           </h6>
 <p>
             Boost.Polygon's points (as well as polygons) can be used by Boost.Geometry.
-            The two libraries can therefore be used together. Using a boost::polygon::point_data&lt;...&gt;,
+            The two libraries can therefore be used together. Using a boost::polygon::polygon_with_holes_data&lt;...&gt;,
             algorithms from both Boost.Polygon and Boost.Geometry can be called.
           </p>
 <h6>
@@ -64,7 +64,7 @@
             <span class="phrase"><a name="geometry.reference.adapted.boost_polygon.polygon_with_holes_data.example"></a></span><a class="link" href="polygon_with_holes_data.html#geometry.reference.adapted.boost_polygon.polygon_with_holes_data.example">Example</a>
           </h6>
 <p>
-            Shows how to use Boost.Polygon points within Boost.Geometry
+            Shows how to use Boost.Polygon polygon_with_holes_data within Boost.Geometry
           </p>
 <p>
 </p>
@@ -74,11 +74,36 @@
 
 <span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">polygon</span><span class="special">::</span><span class="identifier">point_data</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">a</span><span class="special">(</span><span class="number">1</span><span class="special">,</span> <span class="number">2</span><span class="special">),</span> <span class="identifier">b</span><span class="special">(</span><span class="number">3</span><span class="special">,</span> <span class="number">4</span><span class="special">);</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Distance (using Boost.Geometry): "</span>
-        <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">geometry</span><span class="special">::</span><span class="identifier">distance</span><span class="special">(</span><span class="identifier">a</span><span class="special">,</span> <span class="identifier">b</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Distance (using Boost.Polygon): "</span>
-        <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">polygon</span><span class="special">::</span><span class="identifier">euclidean_distance</span><span class="special">(</span><span class="identifier">a</span><span class="special">,</span> <span class="identifier">b</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">polygon</span><span class="special">::</span><span class="identifier">polygon_with_holes_data</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">polygon</span><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">polygon</span><span class="special">::</span><span class="identifier">polygon_traits</span><span class="special">&lt;</span><span class="identifier">polygon</span><span class="special">&gt;::</span><span class="identifier">point_type</span> <span class="identifier">point</span><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">polygon</span><span class="special">::</span><span class="identifier">polygon_with_holes_traits</span><span class="special">&lt;</span><span class="identifier">polygon</span><span class="special">&gt;::</span><span class="identifier">hole_type</span> <span class="identifier">hole</span><span class="special">;</span>
+
+    <span class="identifier">point</span> <span class="identifier">pts</span><span class="special">[</span><span class="number">5</span><span class="special">]</span> <span class="special">=</span> <span class="special">{</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">polygon</span><span class="special">::</span><span class="identifier">construct</span><span class="special">&lt;</span><span class="identifier">point</span><span class="special">&gt;(</span><span class="number">0</span><span class="special">,</span> <span class="number">0</span><span class="special">),</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">polygon</span><span class="special">::</span><span class="identifier">construct</span><span class="special">&lt;</span><span class="identifier">point</span><span class="special">&gt;(</span><span class="number">0</span><span class="special">,</span> <span class="number">10</span><span class="special">),</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">polygon</span><span class="special">::</span><span class="identifier">construct</span><span class="special">&lt;</span><span class="identifier">point</span><span class="special">&gt;(</span><span class="number">10</span><span class="special">,</span> <span class="number">10</span><span class="special">),</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">polygon</span><span class="special">::</span><span class="identifier">construct</span><span class="special">&lt;</span><span class="identifier">point</span><span class="special">&gt;(</span><span class="number">10</span><span class="special">,</span> <span class="number">0</span><span class="special">),</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">polygon</span><span class="special">::</span><span class="identifier">construct</span><span class="special">&lt;</span><span class="identifier">point</span><span class="special">&gt;(</span><span class="number">0</span><span class="special">,</span> <span class="number">0</span><span class="special">)</span>
+    <span class="special">};</span>
+    <span class="identifier">point</span> <span class="identifier">hole_pts</span><span class="special">[</span><span class="number">5</span><span class="special">]</span> <span class="special">=</span> <span class="special">{</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">polygon</span><span class="special">::</span><span class="identifier">construct</span><span class="special">&lt;</span><span class="identifier">point</span><span class="special">&gt;(</span><span class="number">1</span><span class="special">,</span> <span class="number">1</span><span class="special">),</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">polygon</span><span class="special">::</span><span class="identifier">construct</span><span class="special">&lt;</span><span class="identifier">point</span><span class="special">&gt;(</span><span class="number">9</span><span class="special">,</span> <span class="number">1</span><span class="special">),</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">polygon</span><span class="special">::</span><span class="identifier">construct</span><span class="special">&lt;</span><span class="identifier">point</span><span class="special">&gt;(</span><span class="number">9</span><span class="special">,</span> <span class="number">9</span><span class="special">),</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">polygon</span><span class="special">::</span><span class="identifier">construct</span><span class="special">&lt;</span><span class="identifier">point</span><span class="special">&gt;(</span><span class="number">1</span><span class="special">,</span> <span class="number">9</span><span class="special">),</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">polygon</span><span class="special">::</span><span class="identifier">construct</span><span class="special">&lt;</span><span class="identifier">point</span><span class="special">&gt;(</span><span class="number">1</span><span class="special">,</span> <span class="number">1</span><span class="special">)</span>
+    <span class="special">};</span>
+
+    <span class="identifier">hole</span> <span class="identifier">hls</span><span class="special">[</span><span class="number">1</span><span class="special">];</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">polygon</span><span class="special">::</span><span class="identifier">set_points</span><span class="special">(</span><span class="identifier">hls</span><span class="special">[</span><span class="number">0</span><span class="special">],</span> <span class="identifier">hole_pts</span><span class="special">,</span> <span class="identifier">hole_pts</span><span class="special">+</span><span class="number">5</span><span class="special">);</span>
+
+    <span class="identifier">polygon</span> <span class="identifier">poly</span><span class="special">;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">polygon</span><span class="special">::</span><span class="identifier">set_points</span><span class="special">(</span><span class="identifier">poly</span><span class="special">,</span> <span class="identifier">pts</span><span class="special">,</span> <span class="identifier">pts</span><span class="special">+</span><span class="number">5</span><span class="special">);</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">polygon</span><span class="special">::</span><span class="identifier">set_holes</span><span class="special">(</span><span class="identifier">poly</span><span class="special">,</span> <span class="identifier">hls</span><span class="special">,</span> <span class="identifier">hls</span><span class="special">+</span><span class="number">1</span><span class="special">);</span>
+
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Area (using Boost.Geometry): "</span>
+        <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">geometry</span><span class="special">::</span><span class="identifier">area</span><span class="special">(</span><span class="identifier">poly</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Area (using Boost.Polygon): "</span>
+        <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">polygon</span><span class="special">::</span><span class="identifier">area</span><span class="special">(</span><span class="identifier">poly</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 
     <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span>
@@ -88,13 +113,14 @@
 <p>
             Output:
           </p>
-<pre class="programlisting">Distance (using Boost.Geometry): 2.82843
-Distance (using Boost.Polygon): 2.82843
+<pre class="programlisting">Area (using Boost.Geometry): 36
+Area (using Boost.Polygon): 36
 </pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2014 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam
+      Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

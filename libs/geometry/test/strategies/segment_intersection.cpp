@@ -103,16 +103,23 @@ static void test_segment_intersection(int caseno,
     segment_type s34(p3,p4);
 
     // Get the intersection point (or two points)
-    segment_intersection_points<P> is
-        = strategy::intersection::relate_cartesian_segments
+    typedef bg::detail::no_rescale_policy rescale_policy_type;
+    rescale_policy_type rescale_policy;
+
+    typedef bg::segment_intersection_points
+    <
+        P,
+        typename bg::segment_ratio_type
         <
-            policies::relate::segments_intersection_points
-                <
-                    segment_type,
-                    segment_type,
-                    segment_intersection_points<P>
-                >
-        >::apply(s12, s34);
+            P,
+            rescale_policy_type
+        >::type
+    > result_type;
+
+    result_type is = strategy::intersection::relate_cartesian_segments
+        <
+            bg::policies::relate::segments_intersection_points<result_type>
+        >::apply(s12, s34, rescale_policy);
 
     // Get the Dimension Extended 9 Intersection Matrix (de9im) for Segments
     // (this one is extended by GGL having opposite)
@@ -127,8 +134,8 @@ static void test_segment_intersection(int caseno,
     // Get just a character for Left/Right/intersects/etc, purpose is more for debugging
     policies::relate::direction_type dir = strategy::intersection::relate_cartesian_segments
         <
-            policies::relate::segments_direction<segment_type, segment_type>
-        >::apply(s12, s34);
+            policies::relate::segments_direction
+        >::apply(s12, s34, rescale_policy);
 
     int expected_count = 0;
 

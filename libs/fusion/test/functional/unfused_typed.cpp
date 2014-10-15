@@ -85,7 +85,7 @@ void result_type_tests()
     typedef fusion::unfused_typed< test_func<>, types0 > t0;
     BOOST_TEST(( is_same< boost::result_of< t0 () >::type, long >::value ));
     typedef fusion::unfused_typed< test_func<>, types1 > t1;
-    BOOST_TEST(( is_same< boost::result_of< t1 (int) >::type, long >::value ));
+    BOOST_TEST(( is_same< boost::result_of< t1 (long &) >::type, long >::value ));
 }
 
 #if defined(BOOST_MSVC) && BOOST_MSVC < 1400

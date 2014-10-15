@@ -250,16 +250,6 @@ public :
 };
 
 
-template
-<
-    typename CalculationType,
-    typename Strategy
->
-struct strategy_point_point<cross_track<CalculationType, Strategy> >
-{
-    typedef Strategy type;
-};
-
 
 
 /*
@@ -294,7 +284,7 @@ struct default_strategy
 template <typename Point, typename PointOfSegment, typename Strategy>
 struct default_strategy
     <
-        segment_tag, Point, PointOfSegment,
+        point_tag, segment_tag, Point, PointOfSegment,
         spherical_equatorial_tag, spherical_equatorial_tag,
         Strategy
     >
@@ -307,7 +297,7 @@ struct default_strategy
                     boost::is_void<Strategy>,
                     typename default_strategy
                         <
-                            point_tag, Point, PointOfSegment,
+                            point_tag, point_tag, Point, PointOfSegment,
                             spherical_equatorial_tag, spherical_equatorial_tag
                         >::type,
                     Strategy
@@ -315,6 +305,22 @@ struct default_strategy
         > type;
 };
 
+
+template <typename PointOfSegment, typename Point, typename Strategy>
+struct default_strategy
+    <
+        segment_tag, point_tag, PointOfSegment, Point,
+        spherical_equatorial_tag, spherical_equatorial_tag,
+        Strategy
+    >
+{
+    typedef typename default_strategy
+        <
+            point_tag, segment_tag, Point, PointOfSegment,
+            spherical_equatorial_tag, spherical_equatorial_tag,
+            Strategy
+        >::type type;
+};
 
 
 } // namespace services

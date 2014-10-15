@@ -99,6 +99,23 @@ namespace boost_range_test_algorithm_find
         std::vector<int>::const_iterator it2 = boost::find(cvi, 0);
         BOOST_CHECK( it == it2 );
     }
+    
+    // The find algorithm can be used like a "contains" algorithm
+    // since the returned iterator_range is convertible to bool.
+    // Therefore if the return value is an empty range it will
+    // convert to the equivalent to "false" whereas a range that
+    // is not empty will convert to "true". Therefore one can
+    // use the syntax boost::find<boost::return_found_end>(rng, x)
+    // as a contains function.
+    void test_find_as_contains()
+    {
+        std::list<int> l;
+        for (int i = 0; i < 10; ++i)
+            l.push_back(i);
+        
+        BOOST_CHECK(boost::find<boost::return_found_end>(l, 3));
+        BOOST_CHECK(!boost::find<boost::return_found_end>(l, 10));
+    }
 }
 
 boost::unit_test::test_suite*
@@ -108,6 +125,7 @@ init_unit_test_suite(int argc, char* argv[])
         = BOOST_TEST_SUITE( "RangeTestSuite.algorithm.find" );
 
     test->add( BOOST_TEST_CASE( &boost_range_test_algorithm_find::test_find ) );
+    test->add( BOOST_TEST_CASE( &boost_range_test_algorithm_find::test_find_as_contains ) );
 
     return test;
 }

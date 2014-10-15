@@ -6,8 +6,8 @@
  This file tests interaction between the algebras and the operations.
  [end_description]
 
- Copyright 2009-2012 Karsten Ahnert
- Copyright 2009-2012 Mario Mulansky
+ Copyright 2011-2012 Karsten Ahnert
+ Copyright 2011-2013 Mario Mulansky
 
  Distributed under the Boost Software License, Version 1.0.
  (See accompanying file LICENSE_1_0.txt or
@@ -115,61 +115,14 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( for_each8 , algebra_type , algebra_types )
     BOOST_CHECK_CLOSE( x1[1] , 168.0 , 1.0e-10 );
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE( reduce , algebra_type , algebra_types )
+BOOST_AUTO_TEST_CASE_TEMPLATE( norm_inf , algebra_type , algebra_types )
 {
     algebra_type algebra;
     boost::array< double , 2 > x = {{ 1.25 , 2.25 }};
-    double sum = algebra.reduce( x , std::plus< double >() , 0.0 );
-    BOOST_CHECK_CLOSE( sum , 3.5 , 1.0e-10 );
+    double nrm = algebra.norm_inf( x );
+    BOOST_CHECK_CLOSE( nrm , 2.25 , 1.0e-10 );
     BOOST_CHECK_CLOSE( x[0] , 1.25 , 1.0e-10 );
     BOOST_CHECK_CLOSE( x[1] , 2.25 , 1.0e-10 );
-}
-
-struct adder
-{
-    template< typename Value , typename T1 , typename T2 >
-    Value operator()( Value val , T1 t1 , T2 t2 ) const
-    {
-        return val + t1 + t2;
-    }
-
-    template< typename Value , typename T1 , typename T2 , typename T3 >
-    Value operator()( Value val , T1 t1 , T2 t2 , T3 t3 ) const
-    {
-        return val + t1 + t2 + t3 ;
-    }
-
-    template< typename Value , typename T1 , typename T2 , typename T3 , typename T4 >
-    Value operator()( Value val , T1 t1 , T2 t2 , T3 t3 , T4 t4 ) const
-    {
-        return val + t1 + t2 + t3 + t4 ;
-    }
-
-};
-
-BOOST_AUTO_TEST_CASE( reduce2 )
-{
-    range_algebra algebra;
-    boost::array< double , 2 > x1 = {{ 1.25 , 2.25 }} , x2 = {{ 0.5 , -1.0 }};
-    double sum = algebra.reduce2( x1 , x2 , adder() , 0.0 );
-    BOOST_CHECK_CLOSE( sum , 3.0 , 1.0e-10 );
-
-}
-
-BOOST_AUTO_TEST_CASE( reduce3 )
-{
-    range_algebra algebra;
-    boost::array< double , 2 > x1 = {{ 1.25 , 2.25 }} , x2 = {{ 0.5 , -1.0 }} , x3 = {{ 5.0 , 10.0 }};
-    double sum = algebra.reduce3( x1 , x2 , x3 , adder() , 0.0 );
-    BOOST_CHECK_CLOSE( sum , 18.0 , 1.0e-10 );
-}
-
-BOOST_AUTO_TEST_CASE( reduce4 )
-{
-    range_algebra algebra;
-    boost::array< double , 2 > x1 = {{ 1.25 , 2.25 }} , x2 = {{ 0.5 , -1.0 }} , x3 = {{ 5.0 , 10.0 }} , x4 = {{ 2.0 , -1.0 }};
-    double sum = algebra.reduce4( x1 , x2 , x3 , x4 , adder() , 0.0 );
-    BOOST_CHECK_CLOSE( sum , 19.0 , 1.0e-10 );
 }
 
 

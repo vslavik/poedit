@@ -41,8 +41,7 @@ namespace
             last++;
         int* r = tst.find(s, last);
         BOOST_TEST((r != 0) == expected);
-        if (r != 0)
-            BOOST_TEST((s-first) == N);
+        BOOST_TEST((s-first) == N);
         if (r)
             BOOST_TEST(*r == val);
     }
@@ -109,6 +108,15 @@ void tests()
         docheck(lookup, "applepiexxx", true, 8, 456); // partial match
         docheck(lookup, "apple", true, 5, 123); // full match
         docheck(lookup, "applexxx", true, 5, 123); // partial match
+        docheck(lookup, "adam", false); // no-match
+
+        add(lookup, "a", 101);
+        docheck(lookup, "applepie", true, 8, 456); // full match
+        docheck(lookup, "banana", false); // no-match
+        docheck(lookup, "applepiexxx", true, 8, 456); // partial match
+        docheck(lookup, "apple", true, 5, 123); // full match
+        docheck(lookup, "applexxx", true, 5, 123); // partial match
+        docheck(lookup, "adam", true, 1, 101); // partial match
     }
 
     { // variation of above

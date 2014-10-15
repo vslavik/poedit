@@ -43,7 +43,7 @@ the <A href="traits.html#wrappers"><code>is_wrapper</code></a> trait for
 these wrapper classes is set to true.
 
 <h3><a name="binaryobjects">Binary Objects</a></h3>
-A binary object is just an sequence of bytes stored as raw
+A binary object is just a sequence of bytes stored as raw
 binary data.  This would most likely be used for a large amount
 of "light weight" data such as a pixel map or embedded binary file.
 The header file 
@@ -59,7 +59,7 @@ which will construct a temporary binary object that can be serialized just like 
 Its default serialization is to use archive class primitives 
 <code style="white-space: normal">save_binary</code> and <code>load_binary</code>.  
 Note that it doesn't allocated any storage or create any objects.
-Its sole purpose is to pass the data size and address as pair to the archive class.  
+Its sole purpose is to pass the data size and address as a pair to the archive class.  
 
 
 <h3><a name="arrays">Arrays</a></h3>
@@ -91,7 +91,7 @@ public:
 };
 </code></pre>
 that can be serialized just like any other object.
-Its default serialization is to use serialize each array element.  
+Its default serialization is to serialize each array element.  
 Note that it doesn't allocated any storage or create any objects.
 Its sole purpose is to pass the data type, size and address to the archive class.
 
@@ -171,7 +171,7 @@ xml_oarchive & operator&(const boost::serialization::nvp<T> & t)
 }
 </code></pre>
 The most obvious and convient name to assign to as the XML data item name
-is - surpise! - the name of the C++ class data member.  So our serialization
+is - surprise! - the name of the C++ class data member.  So our serialization
 code will look like:
 <pre><code>
 ar & make_nvp("my_variable", my_variable);

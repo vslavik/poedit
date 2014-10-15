@@ -12,9 +12,11 @@ using namespace boost;
 
 shared_mutex mtx;
 
+const int max_count = 100;
 void f()
 {
-    while (true)
+    int count =max_count;
+    while (count--)
     {
         upgrade_lock<shared_mutex> lock(mtx);
     }
@@ -22,7 +24,8 @@ void f()
 
 void g()
 {
-    while (true)
+    int count =max_count;
+    while (count--)
     {
         shared_lock<shared_mutex> lock(mtx);
     }
@@ -30,7 +33,8 @@ void g()
 
 void h()
 {
-    while (true)
+    int count =max_count;
+    while (count--)
     {
         unique_lock<shared_mutex> lock(mtx);
     }

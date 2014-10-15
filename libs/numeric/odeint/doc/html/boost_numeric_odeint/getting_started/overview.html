@@ -26,15 +26,6 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_numeric_odeint.getting_started.overview"></a><a class="link" href="overview.html" title="Overview">Overview</a>
 </h3></div></div></div>
-<div class="caution"><table border="0" summary="Caution">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="../../../../../../../doc/src/images/caution.png"></td>
-<th align="left">Caution</th>
-</tr>
-<tr><td align="left" valign="top"><p>
-          Boost.Numeric.Odeint is not an official boost library!
-        </p></td></tr>
-</table></div>
 <p>
         odeint is a library for solving initial value problems (IVP) of ordinary
         differential equations. Mathematically, these problems are formulated as
@@ -90,14 +81,14 @@
             GSL
           </li>
 <li class="listitem">
-            <a href="http://www.boost.org/doc/libs/release/libs/range/index.html" target="_top">Boost.Range</a>
+            <a href="http://www.boost.org/doc/libs/release/libs/range/" target="_top">Boost.Range</a>
           </li>
 <li class="listitem">
-            <a href="http://www.boost.org/doc/libs/release/libs/fusion/index.html" target="_top">Boost.Fusion</a>
+            <a href="http://www.boost.org/doc/libs/release/libs/fusion/" target="_top">Boost.Fusion</a>
             (the state type can be a fusion vector)
           </li>
 <li class="listitem">
-            <a href="http://www.boost.org/doc/libs/release/libs/units/index.html" target="_top">Boost.Units</a>
+            <a href="http://www.boost.org/doc/libs/release/libs/units/" target="_top">Boost.Units</a>
           </li>
 <li class="listitem">
             <a href="http://software.intel.com/en-us/articles/intel-mkl/" target="_top">Intel
@@ -107,7 +98,7 @@
             <a href="https://github.com/ddemidov/vexcl" target="_top">VexCL</a> for OpenCL
           </li>
 <li class="listitem">
-            <a href="http://www.boost.org/doc/libs/1_47_0/libs/graph/doc/table_of_contents.html" target="_top">Boost.Graph</a>
+            <a href="http://www.boost.org/doc/libs/release/libs/graph/" target="_top">Boost.Graph</a>
             (still experimentally)
           </li>
 </ul></div>
@@ -1152,6 +1143,54 @@
                 <p>
                   Symplectic solver with 5 stages and order 4, can be used with arbitrary
                   precision types.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Velocity Verlet
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">velocity_verlet</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <a class="link" href="../concepts/stepper.html" title="Stepper">Stepper</a>
+                </p>
+              </td>
+<td>
+                <p>
+                  <a class="link" href="../concepts/second_order_system.html" title="Second Order System">Second
+                  Order System</a>
+                </p>
+              </td>
+<td>
+                <p>
+                  1
+                </p>
+              </td>
+<td>
+                <p>
+                  No
+                </p>
+              </td>
+<td>
+                <p>
+                  No
+                </p>
+              </td>
+<td>
+                <p>
+                  Yes
+                </p>
+              </td>
+<td>
+                <p>
+                  Velocity verlet method suitable for molecular dynamics simulation.
                 </p>
               </td>
 </tr>

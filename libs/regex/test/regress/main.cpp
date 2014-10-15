@@ -184,19 +184,6 @@ const int* make_array(int first, ...)
    return data;
 }
 
-#ifdef BOOST_NO_EXCEPTIONS
-
-namespace boost{
-
-void throw_exception(std::exception const & e)
-{
-   std::abort();
-}
-
-}
-
-#endif
-
 void test(const char& c, const test_regex_replace_tag& tag)
 {
    do_test(c, tag);
@@ -225,7 +212,7 @@ void test(const wchar_t& c, const test_invalid_regex_tag& tag)
 }
 #endif
 
-#ifdef BOOST_NO_EXCETIONS
+#ifdef BOOST_NO_EXCEPTIONS
 namespace boost{
 
 void throw_exception( std::exception const & e )
@@ -235,6 +222,14 @@ void throw_exception( std::exception const & e )
 }
 
 }
-#endif
+
+int main(int argc, char * argv[])
+{
+   return cpp_main(argc, argv);
+}
+
+#else
 
 #include <boost/test/included/prg_exec_monitor.hpp>
+
+#endif

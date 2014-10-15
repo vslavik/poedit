@@ -8,6 +8,7 @@
 #ifndef BOOST_BUILD_PCH_ENABLED
 #define BOOST_MATH_OVERFLOW_ERROR_POLICY ignore_error
 #include <boost/math/special_functions/bessel.hpp>
+#include <boost/math/special_functions/bessel_prime.hpp>
 #endif
 
 #define BOOST_MATH_TEST_TYPE double

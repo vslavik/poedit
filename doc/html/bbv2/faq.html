@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../bbv2.html" title="Chapter&#160;42.&#160;Boost.Build V2 User Manual">
+<link rel="up" href="../bbv2.html" title="Chapter&#160;45.&#160;Boost.Build V2 User Manual">
 <link rel="prev" href="extender.html" title="Extender Manual">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -56,6 +56,10 @@
     </a></span></dt>
 <dt><span class="section"><a href="faq.html#bbv2.recipies.site-config">Targets in site-config.jam</a></span></dt>
 <dt><span class="section"><a href="faq.html#bbv2.faq.header-only-libraries">Header-only libraries</a></span></dt>
+<dt><span class="section"><a href="faq.html#bbv2.faq.names">
+        What is the difference between Boost.Build, 
+        <code class="filename">b2</code>, <code class="filename">bjam</code> and Perforce Jam?
+      </a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -514,10 +518,36 @@ alias mylib ;
 <p>
     </p>
 </div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="bbv2.faq.names"></a>
+        What is the difference between Boost.Build, 
+        <code class="filename">b2</code>, <code class="filename">bjam</code> and Perforce Jam?
+      </h3></div></div></div>
+<p>
+        Boost.Build is the name of the complete build system. The executable that runs
+        it is <code class="filename">b2</code>. That executable is written in C and implements
+        performance-critical algorithms, like traversal of dependency graph and executing
+        commands. It also implements an interpreted language used to implement the rest of 
+        Boost.Build. This executable is formally called "Boost.Build engine".
+      </p>
+<p>
+        The Boost.Build engine is derived from an earlier build tool called Perforce Jam. Originally,
+        there were just minor changes, and the filename was <code class="filename">bjam</code>. Later on,
+        with more and more changes, the similarity of names because a disservice to users, and as of
+        Boost 1.47.0, the official name of the executable was changed to <code class="filename">b2</code>.
+        A copy named <code class="filename">bjam</code> is still created for compatibility,
+        but you are encouraged to use the new name in all cases.
+      </p>
+<p>
+        Perforce Jam was an important foundation, and we gratefully acknowledge its influence,
+        but for users today, these tools share only some basics of the interpreted language.
+      </p>
+</div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2009 Vladimir Prus<p>Distributed under the Boost Software License, Version 1.0.
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2009, 2014 Vladimir Prus<p>Distributed under the Boost Software License, Version 1.0.
       (See accompanying file <code class="filename">LICENSE_1_0.txt</code> or copy at 
       <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

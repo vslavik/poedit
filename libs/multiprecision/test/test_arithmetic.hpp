@@ -19,6 +19,21 @@ struct is_boost_rational : public boost::mpl::false_{};
 #pragma warning(disable:4127)
 #endif
 
+template <class Target, class Source>
+Target checked_lexical_cast(const Source& val)
+{
+   try
+   {
+      return boost::lexical_cast<Target>(val);
+   }
+   catch(...)
+   {
+      std::cerr << "Error in lexical cast\nSource type = " << typeid(Source).name() << " \"" << val << "\"\n";
+      std::cerr << "Target type = " << typeid(Target).name() << std::endl;
+      throw;
+   }
+}
+
 
 bool isfloat(float){ return true; }
 bool isfloat(double){ return true; }
@@ -925,13 +940,15 @@ void test_negative_mixed(boost::mpl::true_ const&)
    Num tol = 0;
 #endif
    std::ios_base::fmtflags f = boost::is_floating_point<Num>::value ? std::ios_base::scientific : std::ios_base::fmtflags(0);
+   int digits_to_print = boost::is_floating_point<Num>::value && std::numeric_limits<Num>::is_specialized
+      ? std::numeric_limits<Num>::digits10 + 5 : 0;
    if(std::numeric_limits<target_type>::digits <= std::numeric_limits<Real>::digits)
    {
-      BOOST_CHECK_CLOSE(n1, boost::lexical_cast<target_type>(Real(n1).str(0, f)), tol);
+      BOOST_CHECK_CLOSE(n1, checked_lexical_cast<target_type>(Real(n1).str(digits_to_print, f)), tol);
    }
-   BOOST_CHECK_CLOSE(n2, boost::lexical_cast<target_type>(Real(n2).str(0, f)), 0);
-   BOOST_CHECK_CLOSE(n3, boost::lexical_cast<target_type>(Real(n3).str(0, f)), 0);
-   BOOST_CHECK_CLOSE(n4, boost::lexical_cast<target_type>(Real(n4).str(0, f)), 0);
+   BOOST_CHECK_CLOSE(n2, checked_lexical_cast<target_type>(Real(n2).str(digits_to_print, f)), 0);
+   BOOST_CHECK_CLOSE(n3, checked_lexical_cast<target_type>(Real(n3).str(digits_to_print, f)), 0);
+   BOOST_CHECK_CLOSE(n4, checked_lexical_cast<target_type>(Real(n4).str(digits_to_print, f)), 0);
    // Assignment:
    Real r(0);
    BOOST_CHECK(r != static_cast<cast_type>(n1));
@@ -1218,13 +1235,15 @@ void test_mixed(const boost::mpl::true_&)
    Num tol = 0;
 #endif
    std::ios_base::fmtflags f = boost::is_floating_point<Num>::value ? std::ios_base::scientific : std::ios_base::fmtflags(0);
+   int digits_to_print = boost::is_floating_point<Num>::value && std::numeric_limits<Num>::is_specialized 
+      ? std::numeric_limits<Num>::digits10 + 5 : 0;
    if(std::numeric_limits<target_type>::digits <= std::numeric_limits<Real>::digits)
    {
-      BOOST_CHECK_CLOSE(n1, boost::lexical_cast<target_type>(Real(n1).str(0, f)), tol);
+      BOOST_CHECK_CLOSE(n1, checked_lexical_cast<target_type>(Real(n1).str(digits_to_print, f)), tol);
    }
-   BOOST_CHECK_CLOSE(n2, boost::lexical_cast<target_type>(Real(n2).str(0, f)), 0);
-   BOOST_CHECK_CLOSE(n3, boost::lexical_cast<target_type>(Real(n3).str(0, f)), 0);
-   BOOST_CHECK_CLOSE(n4, boost::lexical_cast<target_type>(Real(n4).str(0, f)), 0);
+   BOOST_CHECK_CLOSE(n2, checked_lexical_cast<target_type>(Real(n2).str(digits_to_print, f)), 0);
+   BOOST_CHECK_CLOSE(n3, checked_lexical_cast<target_type>(Real(n3).str(digits_to_print, f)), 0);
+   BOOST_CHECK_CLOSE(n4, checked_lexical_cast<target_type>(Real(n4).str(digits_to_print, f)), 0);
    // Assignment:
    Real r(0);
    BOOST_CHECK(r != static_cast<cast_type>(n1));
@@ -1777,5 +1796,24 @@ void test()
    test_conditional(a, (a + 0));
 
    test_signed_ops<Real>(boost::mpl::bool_<std::numeric_limits<Real>::is_signed>());
+   //
+   // Test move:
+   //
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+   Real m(static_cast<Real&&>(a));
+   BOOST_CHECK_EQUAL(m, 20);
+   // Move from already moved from object:
+   Real m2(static_cast<Real&&>(a));
+   // assign from moved from object 
+   // (may result in "a" being left in valid state as implementation artifact):
+   c = static_cast<Real&&>(a);
+   // assignment to moved-from objects:
+   c = static_cast<Real&&>(m);
+   BOOST_CHECK_EQUAL(c, 20);
+   m2 = c;
+   BOOST_CHECK_EQUAL(c, 20);
+   // Destructor of "a" checks destruction of moved-from-object...
+   Real m3(static_cast<Real&&>(a));
+#endif
 }
 

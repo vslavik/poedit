@@ -106,7 +106,7 @@ The ``iterator_category`` member of ``iterator_facade`` is
 
 .. parsed-literal::
 
-  *iterator-category*\ (CategoryOrTraversal, value_type, reference)
+  *iterator-category*\ (CategoryOrTraversal, reference, value_type)
 
 where *iterator-category* is defined as follows:
 

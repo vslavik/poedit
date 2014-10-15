@@ -32,7 +32,8 @@ int main ()
          //Create a file mapping
          windows_shared_memory mapping
             (create_only, names[i_name], read_write, FileSize);
-
+         if(mapping.get_size() < FileSize)
+            return 1;
          {
 
             //Create two mapped regions, one half of the file each

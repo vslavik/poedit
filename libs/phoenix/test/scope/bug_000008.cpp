@@ -11,11 +11,13 @@
   // for a description of the bug being tested for by this program
   //
   // This code is borrowed from Spirit's bug_000008.cpp test for multithreads.
+  // Now modified to point to the Phoenix headers
+  // instead of the ones in Spirit.
 #include <iostream>
 #include <boost/config.hpp>
 #include <boost/assert.hpp>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/home/phoenix/scope/dynamic.hpp>
+#include <boost/phoenix/scope/dynamic.hpp>
 
 #if defined(DONT_HAVE_BOOST)                        \
     || !defined(BOOST_HAS_THREADS)                  \
@@ -42,15 +44,16 @@ main()
 #else
 // the real MT stuff
 
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_scope.hpp>
+#include <boost/phoenix/operator.hpp>
+#include <boost/phoenix/scope.hpp>
 #include <boost/thread.hpp>
 
 static const int number_of_calls_per_thread=20000;
 
 struct test_dynamic : boost::phoenix::dynamic<int>
 {
-    test_dynamic() : b(*this) {}
+  //    test_dynamic() : b(*this) {}
+  test_dynamic() : b(init<0>(this)) {}
     member1 b;
 };
 

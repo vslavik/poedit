@@ -328,10 +328,10 @@ int main()
    using namespace boost::interprocess;
    typedef allocator<double, managed_shared_memory::segment_manager> alloc_t;
 
-   std::size_t n = 0x1 << 26; 
+   std::size_t n = 0x1 << 26;
    std::size_t file_size = n * sizeof(double) + 1000000;
 
-   {  
+   {
       shared_memory_object::remove("MyMappedFile");
       managed_shared_memory segment(open_or_create, "MyMappedFile", file_size);
       shared_memory_object::remove("MyMappedFile");

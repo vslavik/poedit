@@ -56,7 +56,7 @@ namespace boost { namespace geometry { namespace traits {
 // by specializing the "use_std" traits to false.
 // It should therefore implement the traits:: clear / append_point
 template <typename P>
-struct custom_linestring2 : std::deque<P> // std::pair<typename std::vector<P>::const_iterator, typename std::vector<P>::const_iterator> 
+struct custom_linestring2 : std::deque<P> // std::pair<typename std::vector<P>::const_iterator, typename std::vector<P>::const_iterator>
 {
 };
 

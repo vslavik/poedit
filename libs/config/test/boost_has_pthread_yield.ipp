@@ -18,6 +18,7 @@ void f()
 {
     // this is never called, it just has to compile:
     int res = pthread_yield();
+    (void)res;
 }
 
 int test()

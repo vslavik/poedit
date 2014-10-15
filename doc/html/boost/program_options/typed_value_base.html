@@ -35,25 +35,25 @@
 <span class="keyword">class</span> <a class="link" href="typed_value_base.html" title="Class typed_value_base">typed_value_base</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="typed_value_base.html#boost.program_options.typed_value_baseconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="typed_value_base.html#idp104440568-bb"><span class="special">~</span><span class="identifier">typed_value_base</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="typed_value_base.html#idp205277568-bb"><span class="special">~</span><span class="identifier">typed_value_base</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="typed_value_base.html#idp100197464-bb">public member functions</a></span>
-  <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">type_info</span> <span class="special">&amp;</span> <a class="link" href="typed_value_base.html#idp100197640-bb"><span class="identifier">value_type</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="typed_value_base.html#idp110877616-bb">public member functions</a></span>
+  <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">type_info</span> <span class="special">&amp;</span> <a class="link" href="typed_value_base.html#idp110878176-bb"><span class="identifier">value_type</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp168773400"></a><h2>Description</h2>
+<a name="idp348298368"></a><h2>Description</h2>
 <p>Base class for all option that have a fixed type, and are willing to announce this type to the outside world. Any 'value_semantics' for which you want to find out the type can be dynamic_cast-ed to <a class="link" href="typed_value_base.html" title="Class typed_value_base">typed_value_base</a>. If conversion succeeds, the 'type' method can be called. </p>
 <div class="refsect2">
-<a name="idp168774536"></a><h3>
+<a name="idp348300128"></a><h3>
 <a name="boost.program_options.typed_value_baseconstruct-copy-destruct"></a><code class="computeroutput">typed_value_base</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp104440568-bb"></a><span class="special">~</span><span class="identifier">typed_value_base</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp205277568-bb"></a><span class="special">~</span><span class="identifier">typed_value_base</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp168777672"></a><h3>
-<a name="idp100197464-bb"></a><code class="computeroutput">typed_value_base</code> public member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">type_info</span> <span class="special">&amp;</span> <a name="idp100197640-bb"></a><span class="identifier">value_type</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp348306640"></a><h3>
+<a name="idp110877616-bb"></a><code class="computeroutput">typed_value_base</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">virtual</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">type_info</span> <span class="special">&amp;</span> <a name="idp110878176-bb"></a><span class="identifier">value_type</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>

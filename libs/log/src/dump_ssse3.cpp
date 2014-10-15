@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2014.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -21,6 +21,12 @@
 #include <boost/cstdint.hpp>
 #include <boost/log/detail/config.hpp>
 #include <boost/log/detail/header.hpp>
+
+#if defined(__x86_64) || defined(__x86_64__) || \
+    defined(__amd64__) || defined(__amd64) || \
+    defined(_M_X64)
+#define BOOST_LOG_AUX_X86_64
+#endif
 
 namespace boost {
 
@@ -46,31 +52,58 @@ union xmm_constant
 {
     uint8_t as_bytes[16];
     __m128i as_mm;
+
+    BOOST_FORCEINLINE operator __m128i () const { return as_mm; }
 };
 
-static const xmm_constant mm_15 = {{ 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F }};
-static const xmm_constant mm_9 = {{ 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9 }};
-static const xmm_constant mm_char_0 = {{ '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0' }};
-static const xmm_constant mm_char_space_mask = {{ ' ', 0, 0, ' ', 0, 0, ' ', 0, 0, ' ', 0, 0, ' ', 0, 0, ' ' }};
 static const xmm_constant mm_shuffle_pattern1 = {{ 0x80, 0, 1, 0x80, 2, 3, 0x80, 4, 5, 0x80, 6, 7, 0x80, 8, 9, 0x80 }};
 static const xmm_constant mm_shuffle_pattern2 = {{ 0, 1, 0x80, 2, 3, 0x80, 4, 5, 0x80, 6, 7, 0x80, 8, 9, 0x80, 10 }};
 static const xmm_constant mm_shuffle_pattern3 = {{ 5, 0x80, 6, 7, 0x80, 8, 9, 0x80, 10, 11, 0x80, 12, 13, 0x80, 14, 15 }};
 
+#if defined(BOOST_LOG_AUX_X86_64)
+
+// x86-64 architecture has more registers which we can utilize to pass constants
+#define BOOST_LOG_AUX_MM_CONSTANT_ARGS_DECL __m128i mm_15, __m128i mm_9, __m128i mm_char_0, __m128i mm_char_space,
+#define BOOST_LOG_AUX_MM_CONSTANT_ARGS mm_15, mm_9, mm_char_0, mm_char_space,
+#define BOOST_LOG_AUX_MM_CONSTANTS \
+    const __m128i mm_15 = _mm_set1_epi32(0x0F0F0F0F);\
+    const __m128i mm_9 = _mm_set1_epi32(0x09090909);\
+    const __m128i mm_char_0 = _mm_set1_epi32(0x30303030);\
+    const __m128i mm_char_space = _mm_set1_epi32(0x20202020);
+
+#else
+
+// MSVC in 32-bit mode is not able to pass all constants to dump_pack, and is also not able to align them on the stack, so we have to fetch them from global constants
+static const xmm_constant mm_15 = {{ 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F }};
+static const xmm_constant mm_9 = {{ 0x09, 0x09, 0x09, 0x09, 0x09, 0x09, 0x09, 0x09, 0x09, 0x09, 0x09, 0x09, 0x09, 0x09, 0x09, 0x09 }};
+static const xmm_constant mm_char_0 = {{ 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30 }};
+static const xmm_constant mm_char_space = {{ 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }};
+#define BOOST_LOG_AUX_MM_CONSTANT_ARGS_DECL
+#define BOOST_LOG_AUX_MM_CONSTANT_ARGS
+#define BOOST_LOG_AUX_MM_CONSTANTS
+
+#endif
+
 //! Dumps a pack of input data into a string of 8 bit ASCII characters
-static BOOST_FORCEINLINE void dump_pack(__m128i mm_char_10_to_a, __m128i mm_input, __m128i& mm_output1, __m128i& mm_output2, __m128i& mm_output3)
+static BOOST_FORCEINLINE void dump_pack
+(
+    BOOST_LOG_AUX_MM_CONSTANT_ARGS_DECL
+    __m128i mm_char_10_to_a, __m128i mm_input,
+    __m128i& mm_output1, __m128i& mm_output2, __m128i& mm_output3
+)
 {
     // Split half-bytes
-    __m128i mm_input_hi = _mm_and_si128(_mm_srli_epi16(mm_input, 4), mm_15.as_mm);
-    __m128i mm_input_lo = _mm_and_si128(mm_input, mm_15.as_mm);
+    __m128i mm_input_hi = _mm_and_si128(_mm_srli_epi16(mm_input, 4), mm_15);
+    __m128i mm_input_lo = _mm_and_si128(mm_input, mm_15);
 
     // Stringize each of the halves
-    __m128i mm_addend_hi = _mm_cmpgt_epi8(mm_input_hi, mm_9.as_mm);
-    __m128i mm_addend_lo = _mm_cmpgt_epi8(mm_input_lo, mm_9.as_mm);
+    __m128i mm_addend_hi = _mm_cmpgt_epi8(mm_input_hi, mm_9);
+    __m128i mm_addend_lo = _mm_cmpgt_epi8(mm_input_lo, mm_9);
     mm_addend_hi = _mm_and_si128(mm_char_10_to_a, mm_addend_hi);
     mm_addend_lo = _mm_and_si128(mm_char_10_to_a, mm_addend_lo);
 
-    mm_input_hi = _mm_add_epi8(mm_input_hi, mm_char_0.as_mm);
-    mm_input_lo = _mm_add_epi8(mm_input_lo, mm_char_0.as_mm);
+    mm_input_hi = _mm_add_epi8(mm_input_hi, mm_char_0);
+    mm_input_lo = _mm_add_epi8(mm_input_lo, mm_char_0);
 
     mm_input_hi = _mm_add_epi8(mm_input_hi, mm_addend_hi);
     mm_input_lo = _mm_add_epi8(mm_input_lo, mm_addend_lo);
@@ -86,12 +119,9 @@ static BOOST_FORCEINLINE void dump_pack(__m128i mm_char_10_to_a, __m128i mm_inpu
     mm_output2 = _mm_shuffle_epi8(_mm_alignr_epi8(mm_2, mm_1, 10), mm_shuffle_pattern2.as_mm);
     mm_output3 = _mm_shuffle_epi8(mm_2, mm_shuffle_pattern3.as_mm);
 
-    __m128i mm_char_space = mm_char_space_mask.as_mm;
-    mm_output1 = _mm_or_si128(mm_output1, mm_char_space);
-    mm_char_space = _mm_srli_si128(mm_char_space, 1);
-    mm_output2 = _mm_or_si128(mm_output2, mm_char_space);
-    mm_char_space = _mm_srli_si128(mm_char_space, 1);
-    mm_output3 = _mm_or_si128(mm_output3, mm_char_space);
+    mm_output1 = _mm_max_epu8(mm_output1, mm_char_space);
+    mm_output2 = _mm_max_epu8(mm_output2, mm_char_space);
+    mm_output3 = _mm_max_epu8(mm_output3, mm_char_space);
 }
 
 template< typename CharT >
@@ -144,16 +174,21 @@ BOOST_FORCEINLINE void dump_data_ssse3(const void* data, std::size_t size, std::
 
     // First, check the input alignment
     const uint8_t* p = static_cast< const uint8_t* >(data);
-    if (const std::size_t prealign_size = ((16u - ((uintptr_t)p & 15u)) & 15u))
+    const std::size_t prealign_size = ((16u - ((uintptr_t)p & 15u)) & 15u);
+    if (BOOST_UNLIKELY(prealign_size > 0))
     {
         __m128i mm_input = _mm_lddqu_si128(reinterpret_cast< const __m128i* >(p));
+        BOOST_LOG_AUX_MM_CONSTANTS
+
         __m128i mm_output1, mm_output2, mm_output3;
-        dump_pack(mm_char_10_to_a, mm_input, mm_output1, mm_output2, mm_output3);
+        dump_pack(BOOST_LOG_AUX_MM_CONSTANT_ARGS mm_char_10_to_a, mm_input, mm_output1, mm_output2, mm_output3);
+
         store_characters(mm_output1, buf);
         store_characters(mm_output2, buf + 16u);
         store_characters(mm_output3, buf + 32u);
 
         strm.write(buf_begin, prealign_size * 3u - 1u);
+
         buf_begin = buf;
         size -= prealign_size;
         p += prealign_size;
@@ -164,11 +199,14 @@ BOOST_FORCEINLINE void dump_data_ssse3(const void* data, std::size_t size, std::
     for (std::size_t i = 0; i < stride_count; ++i)
     {
         char_type* b = buf;
+        BOOST_LOG_AUX_MM_CONSTANTS
+
         for (unsigned int j = 0; j < packs_per_stride; ++j, b += 3u * 16u, p += 16u)
         {
             __m128i mm_input = _mm_load_si128(reinterpret_cast< const __m128i* >(p));
             __m128i mm_output1, mm_output2, mm_output3;
-            dump_pack(mm_char_10_to_a, mm_input, mm_output1, mm_output2, mm_output3);
+            dump_pack(BOOST_LOG_AUX_MM_CONSTANT_ARGS mm_char_10_to_a, mm_input, mm_output1, mm_output2, mm_output3);
+
             store_characters(mm_output1, b);
             store_characters(mm_output2, b + 16u);
             store_characters(mm_output3, b + 32u);
@@ -178,17 +216,21 @@ BOOST_FORCEINLINE void dump_data_ssse3(const void* data, std::size_t size, std::
         buf_begin = buf;
     }
 
-    if (tail_size > 0)
+    if (BOOST_UNLIKELY(tail_size > 0))
     {
         char_type* b = buf;
         while (tail_size >= 16u)
         {
             __m128i mm_input = _mm_load_si128(reinterpret_cast< const __m128i* >(p));
+            BOOST_LOG_AUX_MM_CONSTANTS
+
             __m128i mm_output1, mm_output2, mm_output3;
-            dump_pack(mm_char_10_to_a, mm_input, mm_output1, mm_output2, mm_output3);
+            dump_pack(BOOST_LOG_AUX_MM_CONSTANT_ARGS mm_char_10_to_a, mm_input, mm_output1, mm_output2, mm_output3);
+
             store_characters(mm_output1, b);
             store_characters(mm_output2, b + 16u);
             store_characters(mm_output3, b + 32u);
+
             b += 3u * 16u;
             p += 16u;
             tail_size -= 16u;

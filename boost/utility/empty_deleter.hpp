@@ -4,6 +4,7 @@
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
  */
+
 /*!
  * \file   empty_deleter.hpp
  * \author Andrey Semashev
@@ -16,28 +17,27 @@
  * deleted (i.e. a variable on the stack or some global singleton, like <tt>std::cout</tt>).
  */
 
-#ifndef BOOST_UTILITY_EMPTY_DELETER_HPP_INCLUDED_
-#define BOOST_UTILITY_EMPTY_DELETER_HPP_INCLUDED_
+#ifndef BOOST_UTILITY_EMPTY_DELETER_HPP
+#define BOOST_UTILITY_EMPTY_DELETER_HPP
 
 #include <boost/config.hpp>
+#include <boost/core/null_deleter.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
+#if defined(__GNUC__)
+#pragma message "This header is deprecated, use boost/core/null_deleter.hpp instead."
+#elif defined(_MSC_VER)
+#pragma message("This header is deprecated, use boost/core/null_deleter.hpp instead.")
+#endif
+
 namespace boost {
 
-//! A function object that does nothing and can be used as an empty deleter for \c shared_ptr
-struct empty_deleter
-{
-    //! Function object result type
-    typedef void result_type;
-    /*!
-     * Does nothing
-     */
-    void operator() (const volatile void*) const BOOST_NOEXCEPT {}
-};
+//! A deprecated name for \c null_deleter
+typedef null_deleter empty_deleter;
 
 } // namespace boost
 
-#endif // BOOST_UTILITY_EMPTY_DELETER_HPP_INCLUDED_
+#endif // BOOST_UTILITY_EMPTY_DELETER_HPP

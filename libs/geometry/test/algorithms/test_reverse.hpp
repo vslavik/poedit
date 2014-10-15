@@ -1,4 +1,4 @@
-// Boost.Geometry (aka GGL, Generic Geometry Library) 
+// Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
 // Copyright (c) 2010-2012 Barend Gehrels, Amsterdam, the Netherlands.
@@ -13,16 +13,13 @@
 
 #include <geometry_test_common.hpp>
 #include <boost/geometry/algorithms/reverse.hpp>
-
 #include <boost/geometry/io/wkt/wkt.hpp>
+#include <boost/variant/variant.hpp>
 
 
 template <typename Geometry>
-void test_geometry(std::string const& wkt, std::string const& expected)
+void check_geometry(Geometry& geometry, std::string const& wkt, std::string const& expected)
 {
-    Geometry geometry;
-
-    bg::read_wkt(wkt, geometry);
     bg::reverse(geometry);
 
     std::ostringstream out;
@@ -32,6 +29,17 @@ void test_geometry(std::string const& wkt, std::string const& expected)
         "reverse: " << wkt
         << " expected " << expected
         << " got " << out.str());
+}
+
+template <typename Geometry>
+void test_geometry(std::string const& wkt, std::string const& expected)
+{
+    Geometry geometry;
+    bg::read_wkt(wkt, geometry);
+    boost::variant<Geometry> v(geometry);
+
+    check_geometry(geometry, wkt, expected);
+    check_geometry(v, wkt, expected);
 }
 
 

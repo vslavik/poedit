@@ -14,4 +14,7 @@ void bessel_tests_2()
 #ifdef TEST_CPP_DEC_FLOAT
    time_proc("cpp_dec_float_50", test_bessel<cpp_dec_float_50>, 3);
 #endif
+#ifdef TEST_CPP_BIN_FLOAT
+   time_proc("cpp_bin_float_50", test_bessel<cpp_bin_float_50>, 3);
+#endif
 }

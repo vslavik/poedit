@@ -33,6 +33,12 @@
 
 struct X
 {
+    // SGI-related compilers have odd compiler-synthesized ctors dtors
+    #ifdef __PATHSCALE__
+    X() {}
+    ~X() {}
+    #endif
+
     int operator()()
     {
         return 17041;

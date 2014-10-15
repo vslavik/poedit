@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2004-2012. Distributed under the Boost
+// (C) Copyright Ion Gaztanaga 2004-2013. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying file
 // LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
@@ -10,6 +10,10 @@
 
 #include <boost/container/detail/config_begin.hpp>
 #include <boost/container/list.hpp>
+#include <boost/container/allocator.hpp>
+#include <boost/container/node_allocator.hpp>
+#include <boost/container/adaptive_pool.hpp>
+
 #include "dummy_test_allocator.hpp"
 #include <memory>
 #include "movable_int.hpp"
@@ -23,14 +27,29 @@ namespace boost {
 namespace container {
 
 //Explicit instantiation to detect compilation errors
-template class boost::container::list<test::movable_and_copyable_int,
-   test::simple_allocator<test::movable_and_copyable_int> >;
+template class boost::container::list
+   < test::movable_and_copyable_int
+   , test::simple_allocator<test::movable_and_copyable_int> >;
 
-template class boost::container::list<test::movable_and_copyable_int,
-   test::dummy_test_allocator<test::movable_and_copyable_int> >;
+template class boost::container::list
+   < test::movable_and_copyable_int
+   , test::dummy_test_allocator<test::movable_and_copyable_int> >;
 
-template class boost::container::list<test::movable_and_copyable_int,
-   std::allocator<test::movable_and_copyable_int> >;
+template class boost::container::list
+   < test::movable_and_copyable_int
+   , std::allocator<test::movable_and_copyable_int> >;
+
+template class boost::container::list
+   < test::movable_and_copyable_int
+   , allocator<test::movable_and_copyable_int> >;
+
+template class boost::container::list
+   < test::movable_and_copyable_int
+   , adaptive_pool<test::movable_and_copyable_int> >;
+
+template class boost::container::list
+   < test::movable_and_copyable_int
+   , node_allocator<test::movable_and_copyable_int> >;
 
 namespace container_detail {
 
@@ -42,12 +61,6 @@ template class iterator
 }
 
 }}
-
-typedef list<int> MyList;
-
-typedef list<test::movable_int> MyMoveList;
-typedef list<test::movable_and_copyable_int> MyCopyMoveList;
-typedef list<test::copyable_int> MyCopyList;
 
 class recursive_list
 {
@@ -67,6 +80,42 @@ void recursive_list_test()//Test for recursive types
    }
 }
 
+template<class VoidAllocator>
+struct GetAllocatorCont
+{
+   template<class ValueType>
+   struct apply
+   {
+      typedef list< ValueType
+                  , typename allocator_traits<VoidAllocator>
+                        ::template portable_rebind_alloc<ValueType>::type
+                  > type;
+   };
+};
+
+template<class VoidAllocator>
+int test_cont_variants()
+{
+   typedef typename GetAllocatorCont<VoidAllocator>::template apply<int>::type MyCont;
+   typedef typename GetAllocatorCont<VoidAllocator>::template apply<test::movable_int>::type MyMoveCont;
+   typedef typename GetAllocatorCont<VoidAllocator>::template apply<test::movable_and_copyable_int>::type MyCopyMoveCont;
+   typedef typename GetAllocatorCont<VoidAllocator>::template apply<test::copyable_int>::type MyCopyCont;
+
+   if(test::list_test<MyCont, true>())
+      return 1;
+   if(test::list_test<MyMoveCont, true>())
+      return 1;
+   if(test::list_test<MyCopyMoveCont, true>())
+      return 1;
+   if(test::list_test<MyCopyMoveCont, true>())
+      return 1;
+   if(test::list_test<MyCopyCont, true>())
+      return 1;
+
+   return 0;
+}
+
+
 int main ()
 {
    recursive_list_test();
@@ -78,23 +127,42 @@ int main ()
       move_assign = boost::move(move_ctor);
       move_assign.swap(original);
    }
-   if(test::list_test<MyList, true>())
-      return 1;
 
-   if(test::list_test<MyMoveList, true>())
+   ////////////////////////////////////
+   //    Testing allocator implementations
+   ////////////////////////////////////
+   //       std:allocator
+   if(test_cont_variants< std::allocator<void> >()){
+      std::cerr << "test_cont_variants< std::allocator<void> > failed" << std::endl;
       return 1;
-
-   if(test::list_test<MyCopyMoveList, true>())
+   }
+   //       boost::container::allocator
+   if(test_cont_variants< allocator<void> >()){
+      std::cerr << "test_cont_variants< allocator<void> > failed" << std::endl;
       return 1;
-
-   if(test::list_test<MyCopyList, true>())
+   }
+   //       boost::container::node_allocator
+   if(test_cont_variants< node_allocator<void> >()){
+      std::cerr << "test_cont_variants< node_allocator<void> > failed" << std::endl;
       return 1;
+   }
+   //       boost::container::adaptive_pool
+   if(test_cont_variants< adaptive_pool<void> >()){
+      std::cerr << "test_cont_variants< adaptive_pool<void> > failed" << std::endl;
+      return 1;
+   }
 
+   ////////////////////////////////////
+   //    Emplace testing
+   ////////////////////////////////////
    const test::EmplaceOptions Options = (test::EmplaceOptions)(test::EMPLACE_BACK | test::EMPLACE_FRONT | test::EMPLACE_BEFORE);
 
    if(!boost::container::test::test_emplace<list<test::EmplaceInt>, Options>())
       return 1;
 
+   ////////////////////////////////////
+   //    Allocator propagation testing
+   ////////////////////////////////////
    if(!boost::container::test::test_propagate_allocator<list>())
       return 1;
 

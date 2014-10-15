@@ -6,7 +6,7 @@
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/config for the most recent version.//
-//  Revision $Id: no_rvalue_references_fail.cpp 85088 2013-07-20 17:17:10Z andysem $
+//  Revision $Id$
 //
 
 

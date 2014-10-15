@@ -80,7 +80,7 @@ namespace boost { namespace spirit { namespace qi
               , typename mpl::and_<
                     traits::one_element_sequence<attr_type_>
                   , mpl::not_<traits::one_element_sequence<Attribute> >
-                >::type 
+                >::type
             >::type attr_local(attr_);
 
             // return false if *any* of the parsers fail

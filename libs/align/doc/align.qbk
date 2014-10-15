@@ -1,0 +1,496 @@
+[/
+  Copyright (c) 2014 Glen Joseph Fernandes
+  glenfe at live dot com
+
+  Distributed under the Boost Software License,
+  Version 1.0. (See accompanying file LICENSE_1_0.txt
+  or copy at http://boost.org/LICENSE_1_0.txt)
+]
+
+[library Boost.Align
+  [quickbook 1.5]
+  [id align]
+  [copyright 2014 Glen Fernandes]
+  [authors [Fernandes, Glen]]
+  [dirname align]
+  [license Distributed under the
+    [@http://boost.org/LICENSE_1_0.txt Boost Software License,
+      Version 1.0].
+  ]
+]
+
+[section Introduction]
+
+This library provides function *align* for
+implementations which do not have the C++11 standard
+library `std::align` function available.
+
+It provides allocation and deallocation functions,
+*aligned_alloc* and *aligned_free*, as their
+functionality is not yet available in the C++ standard
+library. They use platform specific functions, if
+available, or use standard library functions in
+conjunction with `align`.
+
+It provides C++ allocators, class templates
+*aligned_allocator* and *aligned_allocator_adaptor*,
+which respect alignment. The first uses `aligned_alloc`
+and `aligned_free` while the second uses the allocator
+in conjunction with `align`.
+
+It provides a deleter, class *aligned_delete*, which
+makes use of `aligned_free`. It is suitable for use
+with constructed objects allocated with `aligned_alloc`.
+
+It provides type trait *alignment_of* for
+implementations without a conforming C++11 standard
+library `std::alignment_of` type trait.
+
+It also provides function *is_aligned* to test the
+alignment of a pointer.
+
+[endsect]
+
+[section Rationale]
+
+C++11 added the ability to specify increased alignment
+(over-alignment) for class types. Unfortunately,
+`::operator new` allocation functions, `new` expressions,
+and the default allocator, `std::allocator`, do not
+support dynamic memory allocation of over-aligned data.
+
+The *align* function can be used to align a pointer and
+is provided for implementations which do not yet provide
+`std::align`.
+
+The *aligned_alloc* function can be used in place of
+`::operator new` to specify the alignment of the memory
+allocated.
+
+The *aligned_allocator* class template can be used in
+place of `std::allocator` as an alignment-aware
+default allocator.
+
+The *aligned_allocator_adaptor* class template can be
+used to adapt any allocator into an alignment-aware
+allocator.
+
+The *aligned_delete* class can be used in place of
+`std::default_delete` to destroy and free objects
+allocated with `aligned_alloc`.
+
+The *alignment_of* type trait gets the alignment of
+a type, and is provided for implementations without
+`std::alignment_of`.
+
+The *is_aligned* function can be used to compare the
+alignment value of a pointer.
+
+[endsect]
+
+[section Tutorial]
+
+[section Using align]
+
+We want to default-construct an object of a potentially
+over-aligned generic type, `T`, in storage of size `n`,
+whose address is stored in a pointer, `p`.
+
+``
+#include <boost/align/align.hpp>
+``
+
+Use the `align` function to adjust the pointer so that it
+is suitably aligned.
+
+``
+auto result = boost::alignment::
+    align(alignof(T), sizeof(T), p, n);
+``
+
+If successful, `n` is decreased by the byte count that
+`p` was advanced to be suitably aligned, and the adjusted
+value of `p` is returned. It now points to an address at
+which to construct an object of type `T`.
+
+``
+if (result) {
+    ::new(result) T();
+}
+``
+
+If unsuccessful, because `n` has insufficient space
+to fit an object of the requested size after adjusting
+`p` to have the requested alignment, a null pointer is
+returned and `p` and `n` are not changed.
+
+``
+else {
+    throw std::exception();
+}
+``
+
+[endsect]
+
+[section Using aligned_alloc]
+
+We want to dynamically allocate storage for, and
+default-construct within that storage, an object of a
+generic type `T` that is potentially over-aligned.
+
+``
+#include <boost/align/aligned_alloc.hpp>
+``
+
+Allocate an object of a desired alignment and size using
+the `aligned_alloc` allocation function.
+
+``
+auto p = boost::alignment::
+    aligned_alloc(alignof(T), sizeof(T));
+``
+
+If successful, a non-null pointer is returned. To free
+this storage the `aligned_free` function is used.
+
+``
+if (p) {
+    try {
+        ::new(p) T();
+    } catch (...) {
+        boost::alignment::aligned_free(p);
+        throw;
+    }
+}
+``
+
+If unsuccessful, a null pointer is returned.
+
+``
+else {
+    throw std::bad_alloc();
+}
+``
+
+Free this storage, via the `aligned_free` function,
+when it is no longer required.
+
+``
+boost::alignment::aligned_free(p);
+``
+
+[endsect]
+
+[section Using aligned_allocator]
+
+We want to use standard library allocator-aware
+containers, such as `vector`, with a generic type,
+`T`, that is potentially over-aligned.
+
+``
+#include <boost/align/aligned_allocator.hpp>
+``
+
+Specify the `aligned_allocator` allocator via the
+container's allocator template parameter.
+
+``
+std::vector<T, boost::alignment::
+    aligned_allocator<T> > v;
+``
+
+If we wanted a vector of a different type, such as
+`int`, but desired that each integer object had the
+alignment of `T`, this is possible by specifying
+the minimum alignment with the allocator.
+
+``
+std::vector<int, boost::alignment::
+    aligned_allocator<int, alignof(T)> > v;
+``
+
+[endsect]
+
+[section Using aligned_allocator_adaptor]
+
+We want to make an existing allocator type, `A`,
+alignment-aware and use it with a standard library
+container, such as `vector`, with a type, `T`,
+that is potentially over-aligned.
+
+``
+#include <boost/align/aligned_allocator_adaptor.hpp>
+``
+
+We use class template `aligned_allocator_adaptor` as
+the vector's allocator type.
+
+``
+std::vector<T, boost::alignment::
+    aligned_allocator_adaptor<A> > v(a);
+``
+
+If we wanted a vector of a different type, such as
+`int`, but desired that each integer object had the
+alignment of `T`, this is possible by specifying
+the minimum alignment with the allocator adaptor.
+
+``
+std::vector<int, boost::alignment::
+    aligned_allocator_adaptor<A, alignof(T)> > v(a);
+``
+
+[endsect]
+
+[section Using aligned_delete]
+
+We want a default deleter for use with `unique_ptr`
+that can be used to deallocate and destroy objects
+which were constructed in storage that was allocated
+with `aligned_alloc`.
+
+``
+#include <boost/align/aligned_delete.hpp>
+``
+
+Storage is allocated for the object using
+`aligned_alloc`.
+
+``
+auto p = boost::alignment::
+    aligned_alloc(alignof(T), sizeof(T));
+if (!p) {
+    throw std::bad_alloc();
+}
+``
+
+An object is constructed in that storage
+using placement new.
+
+``
+try {
+    q = ::new(p) T();
+} catch (...) {
+    boost::alignment::aligned_free(p);
+    throw;
+}
+``
+
+Use the `aligned_delete` class as the deleter
+template parameter.
+
+``
+std::unique_ptr<T,
+    boost::alignment::aligned_delete> u(q);
+``
+
+[endsect]
+
+[section Using alignment_of]
+
+We want to assert at compile time that the alignment
+of a type, `T`, is at least as large as the alignment
+of a type, `U`.
+
+``
+#include <boost/align/alignment_of.hpp>
+``
+
+Use the `alignment_of` class template to determine
+the alignment of the type.
+
+``
+static_assert(boost::alignment::alignment_of<T>::
+    value >= boost::alignment::alignment_of<U>::
+    value, "");
+``
+
+[endsect]
+
+[section Using is_aligned]
+
+We want to assert that the alignment of a pointer, `p`,
+is at least the alignment of a generic type, `T`, that
+is potentially over-aligned.
+
+``
+#include <boost/align/is_aligned.hpp>
+``
+
+Use the `is_aligned` function to test the alignment of
+the pointer.
+
+``
+assert(boost::alignment::is_aligned(alignof(T), p));
+``
+
+[endsect]
+
+[endsect]
+
+[section Examples]
+
+[section aligned_ptr and make_aligned]
+
+[import ../example/aligned_ptr.hpp]
+[import ../example/make_aligned.hpp]
+[import ../example/make_aligned.cpp]
+
+[aligned_ptr_hpp]
+[make_aligned_hpp]
+[make_aligned_cpp]
+
+[endsect]
+
+[section aligned_vector]
+
+[import ../example/aligned_vector.hpp]
+[import ../example/aligned_vector.cpp]
+
+[aligned_vector_hpp]
+[aligned_vector_cpp]
+
+[endsect]
+
+[endsect]
+
+[xinclude reference.xml]
+
+[section Vocabulary]
+
+[section 3.11 \[basic.align\]]
+
+Object types have *alignment requirements* which place
+restrictions on the addresses at which an object of that
+type may be allocated. An *alignment* is an
+implementation-defined integer value representing the
+number of bytes between successive addresses at which a
+given object can be allocated. An object type imposes an
+alignment requirement on every object of that type;
+stricter alignment can be requested using the alignment
+specifier.
+
+A *fundamental alignment* is represented by an alignment
+less than or equal to the greatest alignment supported by
+the implementation in all contexts, which is equal to
+`alignof(std::max_align_t)`. The alignment required for a
+type might be different when it is used as the type of a
+complete object and when it is used as the type of a
+subobject.
+
+[tip
+  ``
+  struct B { long double d; };
+  struct D : virtual B { char c; };
+  ``
+  When `D` is the type of a complete object, it will have
+  a subobject of type `B`, so it must be aligned
+  appropriately for a `long double`. If `D` appears as a
+  subobject of another object that also has `B` as a
+  virtual base class, the `B` subobject might be part of
+  a different subobject, reducing the alignment
+  requirementson the `D` subobject. ]
+
+The result of the `alignof` operator reflects
+the alignment requirement of the type in the
+complete-object case.
+
+An *extended alignment* is represented by an alignment
+greater than `alignof(std::max_align_t)`. It is
+implementation-defined whether any extended alignments
+are supported and the contexts in which they are
+supported. A type having an extended alignment
+requirement is an *over-aligned type*.
+
+[note Every over-aligned type is or contains a class
+  type to which extended alignment applies (possibly
+  through a non-static data member).]
+
+Alignments are represented as values of the type
+`std::size_t`. Valid alignments include only those values
+returned by an `alignof` expression for the fundamental
+types plus an additional implementation-defined set of
+values, which may be empty. Every alignment value shall
+be a non-negative integral power of two.
+
+Alignments have an order from *weaker* to *stronger* or
+*stricter* alignments. Stricter alignments have larger
+alignment values. An address that satisfies an alignment
+requirement also satisfies any weaker valid alignment
+requirement.
+
+The alignment requirement of a complete type can be
+queried using an `alignof` expression. Furthermore, the
+types `char`, `signed char`, and `unsigned char` shall
+have the weakest alignment requirement.
+
+[note This enables the character types to be used as the
+  underlying type for an aligned memory area.]
+
+Comparing alignments is meaningful and provides the
+obvious results:
+
+* Two alignments are equal when their numeric values are
+  equal.
+* Two alignments are different when their numeric values
+  are not equal.
+* When an alignment is larger than another it represents
+  a stricter alignment.
+
+[note The runtime pointer alignment function can be used
+  to obtain an aligned pointer within a buffer; the
+  aligned-storage templates in the library can be used to
+  obtain aligned storage.]
+
+If a request for a specific extended alignment in a
+specific context is not supported by an implementation,
+the program is ill-formed. Additionally, a request for
+runtime allocation of dynamic storage for which the
+requested alignment cannot be honored shall be treated
+as an allocation failure.
+
+[endsect]
+
+[endsect]
+
+[section Compatibility]
+
+The following compilers and platforms have been tested.
+
+* clang 3.0, 3.1, 3.2, 3.4, 3.5, linux
+* gcc 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, linux
+* icc 11.1, 12.1, 13.0, linux
+* msvc 9.0, 10.0, 11.0, 12.0, windows
+
+Any conforming C++11 or C++03 compiler is supported.
+
+[endsect]
+
+[section Acknowledgments]
+
+Thank you to everyone who reviewed this library and
+helped me improve the design, implementation, tests,
+or documentation.
+
+* Peter Dimov
+* Andrey Semashev
+* Bjorn Reese
+* Steven Watanabe
+* Antony Polukhin
+* Lars Viklund
+* Michael Spencer
+* Paul A. Bristow
+
+Thank you to Ahmed Charles for managing the review.
+
+[endsect]
+
+[section History]
+
+[section Version 1.0]
+
+* Glen Fernandes implemented the Boost.Align library.
+
+[endsect]
+
+[endsect]

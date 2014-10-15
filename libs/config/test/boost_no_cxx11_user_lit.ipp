@@ -19,7 +19,7 @@ struct my_literal
    constexpr my_literal() : val(0) {}
    constexpr my_literal(int i) : val(i) {}
    constexpr my_literal(const my_literal& a) : val(a.val) {}
-   constexpr bool operator==(const my_literal& a) { return val == a.val; }
+   constexpr bool operator==(const my_literal& a) const { return val == a.val; }
    int val;
 };
 

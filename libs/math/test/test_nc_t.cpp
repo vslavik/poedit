@@ -37,6 +37,7 @@
 #include "test_out_of_range.hpp"
 
 #include <iostream>
+#include <iomanip>
 using std::cout;
 using std::endl;
 #include <limits>
@@ -226,6 +227,9 @@ void test_spot(
      RealType Q,     // Complement of CDF
      RealType tol)   // Test tolerance
 {
+   // An extra fudge factor for real_concept which has a less accurate tgamma:
+   RealType tolerance_tgamma_extra = std::numeric_limits<RealType>::is_specialized ? 1 : 5;
+
    boost::math::non_central_t_distribution<RealType> dist(df, ncp);
    BOOST_CHECK_CLOSE(
       cdf(dist, t), P, tol);
@@ -235,11 +239,11 @@ void test_spot(
       BOOST_CHECK_CLOSE(
          variance(dist), naive_variance(df, ncp), tol);
       BOOST_CHECK_CLOSE(
-         skewness(dist), naive_skewness(df, ncp), tol * 10);
+         skewness(dist), naive_skewness(df, ncp), tol * 10 * tolerance_tgamma_extra);
       BOOST_CHECK_CLOSE(
-         kurtosis_excess(dist), naive_kurtosis_excess(df, ncp), tol * 50);
+         kurtosis_excess(dist), naive_kurtosis_excess(df, ncp), tol * 50 * tolerance_tgamma_extra);
       BOOST_CHECK_CLOSE(
-         kurtosis(dist), 3 + naive_kurtosis_excess(df, ncp), tol * 50);
+         kurtosis(dist), 3 + naive_kurtosis_excess(df, ncp), tol * 50 * tolerance_tgamma_extra);
    }
    catch(const std::domain_error&)
    {

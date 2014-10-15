@@ -38,7 +38,7 @@ http://www.boost.org/LICENSE_1_0.txt)
   <dt><a href="#compiletime_messages">Compile Time Warnings and Errors</a>
 </dl>
 Serialization of data depends on the type of the data.  For example, for
-primitive types such as an <code style="white-space: normal">int</code>, it wouldn't make sense to save
+primitive types such as <code style="white-space: normal">int</code>, it wouldn't make sense to save
 a version number in the archive. Likewise, for a data type that is never
 serialized through a pointer, it would (almost) never make sense to track
 the address of objects saved to/loaded from the archive as it will never
@@ -232,12 +232,12 @@ statisfactory for our purposes for the following reasons:
   <li>There might be classes locally defined in different code modules
   that have the same name. 
   <li>There might be classes with different names that we want to
-  consider equivalent for purposes of of serialization.
+  consider equivalent for purposes of serialization.
 </ul>
 <p>
 So in the serialization library, this is addressed by invoking
 <code style="white-space: normal">BOOST_CLASS_EXPORT_KEY2(my_class, "my_class_external_identifier")</code>
-in the header file which declares he class.
+in the header file which declares the class.
 In a large majority of applications, the class name works just fine
 for the external identifier string so the following short cut is
 defined -
@@ -248,8 +248,8 @@ programs which do not use DLLS, one can specify
 <code style="white-space: normal">BOOST_CLASS_EXPORT(my_class)</code>
 or
 <code style="white-space: normal">BOOST_CLASS_EXPORT_GUID(my_class, "my_class_external_identifier")</code>
-in either he declaration header or definition.  These macros
-expand to invocation of the of both of the macros described above.
+in either the declaration header or definition.  These macros
+expand to invocation of both of the macros described above.
 <i>(<b>GUID</b> stands for <b>G</b>lobally <b>U</b>nique <b>ID</b>entfier.)</i>
 <p>
 <i>(<a target="detail" href="special.html#export">Elsewhere</a>
@@ -267,7 +267,7 @@ in more than one module (or DLL).
 
 <h3><a name="abstract">Abstract</a></h3>
 When serializing an object through a pointer to its base class,
-the library needs to determine whether or not the bas is abstract
+the library needs to determine whether or not the base is abstract
 (i.e. has at least one virtual function).  The library uses the
 type trait macro <code style="white-space: normal">BOOST_IS_ABSTRACT(T)</code>
 to do this.  Not all compilers support this type trait and corresponding
@@ -333,10 +333,9 @@ This is illustrated by the test program
 Other implementations are possible and might be necessary for
 certain special cases.
 
-version.hpp</a>.  
 <h3><a name="wrappers">Wrappers</a></h3>
-Archives need to treat wrappers diffently from other types since, for example,
-they usually are non-const object while output archives require that any
+Archives need to treat wrappers differently from other types since, for example,
+they usually are non-const objects while output archives require that any
 serialized object (with the exception of a wrapper) be const. 
 
 This header file <a href="../../../boost/serialization/wrapper.hpp">wrapper.hpp</a>
@@ -471,7 +470,7 @@ struct tracking_level&lt;nvp&lt;T&gt; &gt;
 #endif
 </code></pre>
 This can be problematic when one wants to make his code <strong>and archives</strong>
-portable to other platforms.  It means the she objects will be serialized differently
+portable to other platforms.  It means the objects will be serialized differently
 depending on the platform used.  This implies that objects saved from one platform
 won't be loaded properly on another.  In other words, archives won't be portable.
 <p>
@@ -517,13 +516,13 @@ and template parameters should be assigned according to the following table:
 Some serialization traits can conflict with other ones.  Sometimes these conflicts
 will result in erroneous behavior (E.G. creating of archives which could not be read)
 and other times they represent a probable misconception on the part of the
-library user which could result in suprising behavior.  The extent possible,
+library user which could result in suprising behavior.  To the extent possible,
 these conflicts are detected at compile time and errors (BOOST_STATIC_ASSERT) 
-or warnings (BOOST_STATIC_WARNING) are generated. The are generated in a
-compiler dependent way manner which should show an chain of instantiation
+or warnings (BOOST_STATIC_WARNING) are generated. They are generated in a
+compiler dependent manner which should show a chain of instantiation
 to the point where the error/warning is detected.  Without this capability,
 it would be very hard to track down errors or unexpected behavior in library
-usage.  Here is list of the conflicts trapped:
+usage.  Here is a list of the conflicts trapped:
 
 <dl>
 <dt><h2><a name="object_level">object_level</a> - error</h2></dt>
@@ -632,9 +631,9 @@ class K {
   discovered that when loading the archives made in the last month (reading the 
   log). Things don't work. The second log entry is always the same as the 
   first. After a series of very long and increasingly acrimonius email exchanges, 
-its discovered 
-  that programmer (3) accidently broke programmer(2)'s code .This is because by 
-  serializing via a pointer, the "log" object now being tracked.  This is because
+it's discovered 
+  that programmer(3) accidently broke programmer(2)'s code .This is because by 
+  serializing via a pointer, the "log" object is now being tracked.  This is because
   the default tracking behavior is "track_selectively".  This means that class
   instances are tracked only if they are serialized through pointers anywhere in
   the program. Now multiple saves from the same address result in only the first one 
@@ -642,11 +641,11 @@ its discovered
   data might have been changed.  When it comes time to load the data, all instances of the log record show the same data.
   In this way, the behavior of a functioning piece of code is changed due the side
   effect of a change in an otherwise disjoint module.
-  Worse yet, the data has been lost and cannot not be now recovered from the archives.
+  Worse yet, the data has been lost and cannot be recovered from the archives.
   People are really upset and disappointed with boost (at least the serialization system).
   <p>
   <li>
-  After a lot of investigation, it's discovered what the source of the problem
+  After a lot of investigation, it's discovered what the source of the problem is
   and class construct_from is marked "track_never" by including:
 <code style="white-space: normal"><pre>
 BOOST_CLASS_TRACKING(construct_from, track_never) 
@@ -660,7 +659,7 @@ have its own distinct raw pointer. This will break
 <code style="white-space: normal">shared_ptr</code> and cause a memory leak.  Again,
 The cause of this problem is very far removed from the point of discovery.  It could 
 well be that the problem is not even discovered until after the archives are loaded.
-Now we not only have difficult to find and fix program bug, but we have a bunch of
+Now we not only have a difficult to find and fix program bug, but we have a bunch of
 invalid archives and lost data.
 </ol>
 
@@ -673,7 +672,7 @@ invalid archives and lost data.
 ar &lt;&lt; x; 
 </pre></code>
   <p>
-  <li>The programmer curses (another %^&*&* hoop to jump through). If he's in a 
+  <li>The programmer curses (another %^&*&* hoop to jump through). He's in a 
   hurry (and who isn't) and would prefer not to <code style="white-space: normal">const_cast</code>
   - because it looks bad.  So he'll just make the following change an move on. 
 <code style="white-space: normal"><pre>
@@ -697,8 +696,8 @@ ar &lt;&lt; x
   <p>
   He's mildly annoyed now he tries the following: 
   <ul>
-    <li>He considers making f() a const - but presumable that shifts the const 
-    error to somewhere else. And his doesn't want to fiddle with "his" code to 
+    <li>He considers making f() a const - but presumably that shifts the const 
+    error to somewhere else. And he doesn't want to fiddle with "his" code to 
     work around a quirk in the serializaition system 
     <p>
     <li>He removes the <code style="white-space: normal">const</code>
@@ -748,7 +747,7 @@ Note that in this second scenario
 
 It's true that these messages may sometimes flag code that is currently correct and
 that this may be annoying to some programmers.  However, this example illustrates
-my view that these messages are useful and that any such annoyance is small price to
+my view that these messages are useful and that any such annoyance is a small price to
 pay to avoid particularly vexing programming errors.
 
 </dd>
@@ -765,7 +764,7 @@ level <= object_serializable.
 in this case, indication that an object is tracked is
 not stored in the archive itself - see level == object_serializable.
 Since class information is not saved in the archive, the existence
-or absense of the operation ar << T * anywhere else in the 
+or absence of the operation ar << T * anywhere else in the 
 program is used to infer that an object of this type should be tracked.
 <p>
 A problem arises when a program which reads an archive

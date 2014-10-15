@@ -13,10 +13,9 @@
 
 #include <boost/iterator.hpp>
 #include <boost/intrusive/pointer_plus_bits.hpp>
-#include <boost/pointer_cast.hpp>
 #include <boost/intrusive/pointer_traits.hpp>
 
-#if (defined _MSC_VER) && (_MSC_VER >= 1200)
+#if (defined _MSC_VER)
 #  pragma once
 #endif
 
@@ -259,38 +258,6 @@ inline void swap (smart_ptr<T> &pt,
    typename smart_ptr<T>::value_type *ptr = pt.operator->();
    pt = pt2;
    pt2 = ptr;
-}
-
-//!Simulation of static_cast between pointers. Never throws.
-template<class T, class U>
-inline smart_ptr<T>
-   static_pointer_cast(const smart_ptr<U> & r)
-{
-   return smart_ptr<T>(r, detail::static_cast_tag());
-}
-
-//!Simulation of const_cast between pointers. Never throws.
-template<class T, class U>
-inline smart_ptr<T>const_pointer_cast(smart_ptr<U> const & r)
-{
-   return smart_ptr<T>(r, detail::const_cast_tag());
-}
-
-//!Simulation of dynamic_cast between pointers. Never throws.
-template<class T, class U>
-inline smart_ptr<T>
-   dynamic_pointer_cast(smart_ptr<U> const & r)
-{
-   return smart_ptr<T>
-            (r, detail::dynamic_cast_tag());
-}
-
-//!Simulation of reinterpret_cast between pointers. Never throws.
-template<class T, class U>
-inline smart_ptr<T>
-   reinterpret_pointer_cast(smart_ptr<U> const & r)
-{
-   return smart_ptr<T>(r, detail::reinterpret_cast_tag());
 }
 
 }  //namespace intrusive {

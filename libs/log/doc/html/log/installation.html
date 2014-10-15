@@ -62,7 +62,7 @@
             MSVC 8.0 (without SP1) and older.
           </li>
 <li class="listitem">
-            GCC 4.0 and older.
+            GCC 4.2 and older.
           </li>
 <li class="listitem">
             Borland C++ 5.5.1 (free version). Newer versions might or might not work.
@@ -81,6 +81,29 @@
       </p>
 <h5>
 <a name="log.installation.supported_compilers.h0"></a>
+        <span class="phrase"><a name="log.installation.supported_compilers.notes_for_gcc_users"></a></span><a class="link" href="installation.html#log.installation.supported_compilers.notes_for_gcc_users">Notes
+        for GCC users</a>
+      </h5>
+<p>
+        GCC versions since 4.5 support link time optimization (LTO), when most of
+        optimizations and binary code generation happens at linking stage. This allows
+        to perform more advanced optimizations and produce faster code. Unfortunately,
+        it does not play well with projects containing source files that need to
+        be compiled with different compiler options. Boost.Log is one of such projects,
+        some parts of its sources contain optimizations for modern CPUs and will
+        not run on older CPUs. Enabling LTO for Boost.Log will produce binaries incompatible
+        with older CPUs (GCC <a href="http://gcc.gnu.org/bugzilla/show_bug.cgi?id=61043" target="_top">bug</a>),
+        which will likely result in crashes in run time. For this reason GCC LTO
+        is not supported in Boost.Log.
+      </p>
+<p>
+        There is a GCC <a href="http://gcc.gnu.org/bugzilla/show_bug.cgi?id=60607" target="_top">bug</a>
+        which may cause compilation failures when <code class="computeroutput"><span class="special">-</span><span class="identifier">march</span><span class="special">=</span><span class="identifier">native</span></code> command line argument is used. It
+        is recommended to avoid using <code class="computeroutput"><span class="special">-</span><span class="identifier">march</span><span class="special">=</span><span class="identifier">native</span></code> argument (or <code class="computeroutput"><span class="identifier">instruction</span><span class="special">-</span><span class="identifier">set</span><span class="special">=</span><span class="identifier">native</span></code> bjam property) and instead explicitly
+        specify the target CPU (e.g. <code class="computeroutput"><span class="identifier">instruction</span><span class="special">-</span><span class="identifier">set</span><span class="special">=</span><span class="identifier">sandy</span><span class="special">-</span><span class="identifier">bridge</span></code>).
+      </p>
+<h5>
+<a name="log.installation.supported_compilers.h1"></a>
         <span class="phrase"><a name="log.installation.supported_compilers.notes_for_mingw__cygwin_and_visual_studio_express_edition_users"></a></span><a class="link" href="installation.html#log.installation.supported_compilers.notes_for_mingw__cygwin_and_visual_studio_express_edition_users">Notes
         for MinGW, Cygwin and Visual Studio Express Edition users</a>
       </h5>
@@ -109,8 +132,7 @@
         Another way is to attempt to use the <code class="computeroutput"><span class="identifier">windmc</span><span class="special">.</span><span class="identifier">exe</span></code> tool
         distributed with MinGW and Cygwin, which is the analogue of the original
         <code class="computeroutput"><span class="identifier">mc</span><span class="special">.</span><span class="identifier">exe</span></code>. In order to do that you will have
-        to patch Boost.Build files (in particular, the <code class="computeroutput"><span class="identifier">tools</span><span class="special">/</span><span class="identifier">build</span><span class="special">/</span><span class="identifier">v2</span><span class="special">/</span><span class="identifier">tools</span><span class="special">/</span><span class="identifier">mc</span><span class="special">.</span><span class="identifier">jam</span></code>
-        file) as described in <a href="https://svn.boost.org/trac/boost/ticket/4111" target="_top">this</a>
+        to patch Boost.Build files (in particular, the <code class="computeroutput"><span class="identifier">tools</span><span class="special">/</span><span class="identifier">build</span><span class="special">/</span><span class="identifier">tools</span><span class="special">/</span><span class="identifier">mc</span><span class="special">.</span><span class="identifier">jam</span></code> file) as described in <a href="https://svn.boost.org/trac/boost/ticket/4111" target="_top">this</a>
         ticket. After that you will be able to specify the <code class="computeroutput"><span class="identifier">mc</span><span class="special">-</span><span class="identifier">compiler</span><span class="special">=</span><span class="identifier">windmc</span></code>
         option to bjam to build the library.
       </p>
@@ -129,7 +151,7 @@
         to locale and IO-streams management.
       </p>
 <h5>
-<a name="log.installation.supported_compilers.h1"></a>
+<a name="log.installation.supported_compilers.h2"></a>
         <span class="phrase"><a name="log.installation.supported_compilers.additional_notes_for_cygwin_users"></a></span><a class="link" href="installation.html#log.installation.supported_compilers.additional_notes_for_cygwin_users">Additional
         notes for Cygwin users</a>
       </h5>
@@ -146,7 +168,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2013 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2014 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

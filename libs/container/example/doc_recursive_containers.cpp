@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2009-2012. Distributed under the Boost
+// (C) Copyright Ion Gaztanaga 2009-2013. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying file
 // LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
@@ -11,9 +11,10 @@
 #include <boost/container/detail/workaround.hpp>
 //[doc_recursive_containers
 #include <boost/container/vector.hpp>
+#include <boost/container/stable_vector.hpp>
+#include <boost/container/deque.hpp>
 #include <boost/container/list.hpp>
 #include <boost/container/map.hpp>
-#include <boost/container/stable_vector.hpp>
 #include <boost/container/string.hpp>
 
 using namespace boost::container;
@@ -23,6 +24,10 @@ struct data
    int               i_;
    //A vector holding still undefined class 'data'
    vector<data>      v_;
+   //A stable_vector holding still undefined class 'data'
+   stable_vector<data> sv_;
+   //A stable_vector holding still undefined class 'data'
+   deque<data> d_;
    //A list holding still undefined 'data'
    list<data>        l_;
    //A map holding still undefined 'data'

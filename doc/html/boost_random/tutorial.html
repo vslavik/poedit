@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_random.html" title="Chapter&#160;23.&#160;Boost.Random">
-<link rel="prev" href="../boost_random.html" title="Chapter&#160;23.&#160;Boost.Random">
+<link rel="up" href="../boost_random.html" title="Chapter&#160;25.&#160;Boost.Random">
+<link rel="prev" href="../boost_random.html" title="Chapter&#160;25.&#160;Boost.Random">
 <link rel="next" href="reference.html" title="Reference">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -107,7 +107,7 @@
               does not take a <span class="emphasis"><em>half-open range</em></span>. Instead it takes
               a <span class="emphasis"><em>closed range</em></span>. Given the parameters 1 and 6,
               <code class="computeroutput"><a class="link" href="../boost/random/uniform_int_distribution.html" title="Class template uniform_int_distribution">uniform_int_distribution</a></code>
-              can can produce any of the values 1, 2, 3, 4, 5, or 6.
+              can produce any of the values 1, 2, 3, 4, 5, or 6.
             </p></td></tr>
 </table></div>
 </td>
@@ -207,7 +207,7 @@
         <span class="string">"ABCDEFGHIJKLMNOPQRSTUVWXYZ"</span>
         <span class="string">"1234567890"</span>
         <span class="string">"!@#$%^&amp;*()"</span>
-        <span class="string">"`~-_=+[{]{\\|;:'\",&lt;.&gt;/? "</span><span class="special">);</span>
+        <span class="string">"`~-_=+[{]}\\|;:'\",&lt;.&gt;/? "</span><span class="special">);</span>
     <a class="co" name="boost_random.tutorial.generating_a_random_password.c2" href="tutorial.html#boost_random.tutorial.generating_a_random_password.c3"><img src="../../../doc/src/images/callouts/2.png" alt="2" border="0"></a><span class="identifier">boost</span><span class="special">::</span><span class="identifier">random</span><span class="special">::</span><span class="identifier">random_device</span> <span class="identifier">rng</span><span class="special">;</span>
     <a class="co" name="boost_random.tutorial.generating_a_random_password.c4" href="tutorial.html#boost_random.tutorial.generating_a_random_password.c5"><img src="../../../doc/src/images/callouts/3.png" alt="3" border="0"></a><span class="identifier">boost</span><span class="special">::</span><span class="identifier">random</span><span class="special">::</span><span class="identifier">uniform_int_distribution</span><span class="special">&lt;&gt;</span> <span class="identifier">index_dist</span><span class="special">(</span><span class="number">0</span><span class="special">,</span> <span class="identifier">chars</span><span class="special">.</span><span class="identifier">size</span><span class="special">()</span> <span class="special">-</span> <span class="number">1</span><span class="special">);</span>
     <span class="keyword">for</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="number">8</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>

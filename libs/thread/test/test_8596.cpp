@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include <functional>
-#include <future>
+//#include <future>
 
 #include <boost/thread.hpp>
 #include <boost/shared_ptr.hpp>

@@ -101,7 +101,7 @@ namespace boost
             }
             //Error check:
             if(static_cast<boost::uintmax_t>(i-k) >= max_iter)
-               policies::raise_evaluation_error(
+               return policies::raise_evaluation_error(
                   "cdf(non_central_chi_squared_distribution<%1%>, %1%)",
                   "Series did not converge, closest value was %1%", sum, pol);
             //
@@ -175,7 +175,7 @@ namespace boost
             }
             //Error check:
             if(static_cast<boost::uintmax_t>(i) >= max_iter)
-               policies::raise_evaluation_error(
+               return policies::raise_evaluation_error(
                   "cdf(non_central_chi_squared_distribution<%1%>, %1%)",
                   "Series did not converge, closest value was %1%", sum, pol);
             return sum;
@@ -274,7 +274,7 @@ namespace boost
 
             //Error check:
             if(static_cast<boost::uintmax_t>(i) >= max_iter)
-               policies::raise_evaluation_error(
+               return policies::raise_evaluation_error(
                   "cdf(non_central_chi_squared_distribution<%1%>, %1%)",
                   "Series did not converge, closest value was %1%", sum, pol);
 
@@ -433,9 +433,9 @@ namespace boost
             // Special cases get short-circuited first:
             //
             if(p == 0)
-               return comp ? tools::max_value<RealType>() : 0;
+               return comp ? policies::raise_overflow_error<RealType>(function, 0, Policy()) : 0;
             if(p == 1)
-               return comp ? 0 : tools::max_value<RealType>();
+               return comp ? 0 : policies::raise_overflow_error<RealType>(function, 0, Policy());
             //
             // This is Pearson's approximation to the quantile, see
             // Pearson, E. S. (1959) "Note on an approximation to the distribution of 
@@ -597,7 +597,7 @@ namespace boost
             RealType result = ir.first + (ir.second - ir.first) / 2;
             if(max_iter >= policies::get_max_root_iterations<Policy>())
             {
-               policies::raise_evaluation_error<RealType>(function, "Unable to locate solution in a reasonable time:"
+               return policies::raise_evaluation_error<RealType>(function, "Unable to locate solution in a reasonable time:"
                   " or there is no answer to problem.  Current best guess is %1%", result, Policy());
             }
             return result;
@@ -653,7 +653,7 @@ namespace boost
             RealType result = ir.first + (ir.second - ir.first) / 2;
             if(max_iter >= policies::get_max_root_iterations<Policy>())
             {
-               policies::raise_evaluation_error<RealType>(function, "Unable to locate solution in a reasonable time:"
+               return policies::raise_evaluation_error<RealType>(function, "Unable to locate solution in a reasonable time:"
                   " or there is no answer to problem.  Current best guess is %1%", result, Policy());
             }
             return result;

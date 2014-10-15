@@ -21,9 +21,9 @@
 int main()
 {
     typedef boost::geometry::model::d2::point_xy<double> point_type;
-    
+
     point_type p(1.4, 2.6);
-    
+
     std::vector<point_type> v;
     for (double x = 0.0; x <= 4.0; x++)
     {
@@ -32,7 +32,7 @@ int main()
             v.push_back(point_type(x, y));
         }
     }
-    
+
     point_type min_p;
     double min_d = boost::numeric::bounds<double>::highest();
     BOOST_FOREACH(point_type const& pv, v)
@@ -44,8 +44,8 @@ int main()
             min_p = pv;
         }
     }
-    
-    std::cout 
+
+    std::cout
         << "Closest: " << boost::geometry::dsv(min_p) << std::endl
         << "At: " << boost::geometry::distance(p, min_p) << std::endl;
 

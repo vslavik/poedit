@@ -36,23 +36,23 @@
 <dt><span class="section"><a href="interfaces.html#boost_pool.pool.interfaces.interfaces.pool_allocator">pool_allocator</a></span></dt>
 </dl></dd>
 </dl></div>
-<a name="boost_pool.pool.interfaces.introduction"></a><h5>
-<a name="boost_pool.pool.interfaces.introduction-heading"></a>
-        <a class="link" href="interfaces.html#boost_pool.pool.interfaces.introduction">Introduction</a>
+<h5>
+<a name="boost_pool.pool.interfaces.h0"></a>
+        <span><a name="boost_pool.pool.interfaces.introduction"></a></span><a class="link" href="interfaces.html#boost_pool.pool.interfaces.introduction">Introduction</a>
       </h5>
 <p>
         There are several interfaces provided which allow users great flexibility
         in how they want to use Pools. Review the <a class="link" href="pooling.html#boost_pool.pool.pooling.concepts" title="Basic ideas behind pooling">concepts</a>
         document to get the basic understanding of how the various pools work.
       </p>
-<a name="boost_pool.pool.interfaces.terminology_and_tradeoffs"></a><h4>
-<a name="boost_pool.pool.interfaces.terminology_and_tradeoffs-heading"></a>
-        <a class="link" href="interfaces.html#boost_pool.pool.interfaces.terminology_and_tradeoffs">Terminology
+<h4>
+<a name="boost_pool.pool.interfaces.h1"></a>
+        <span><a name="boost_pool.pool.interfaces.terminology_and_tradeoffs"></a></span><a class="link" href="interfaces.html#boost_pool.pool.interfaces.terminology_and_tradeoffs">Terminology
         and Tradeoffs</a>
       </h4>
-<a name="boost_pool.pool.interfaces.object_usage_vs__singleton_usage"></a><h6>
-<a name="boost_pool.pool.interfaces.object_usage_vs__singleton_usage-heading"></a>
-        <a class="link" href="interfaces.html#boost_pool.pool.interfaces.object_usage_vs__singleton_usage">Object
+<h6>
+<a name="boost_pool.pool.interfaces.h2"></a>
+        <span><a name="boost_pool.pool.interfaces.object_usage_vs__singleton_usage"></a></span><a class="link" href="interfaces.html#boost_pool.pool.interfaces.object_usage_vs__singleton_usage">Object
         Usage vs. Singleton Usage</a>
       </h6>
 <p>
@@ -67,9 +67,9 @@
         System memory allocated by Pool objects with Singleton Usage may be freed
         through release_memory or purge_memory.
       </p>
-<a name="boost_pool.pool.interfaces.out_of_memory_conditions__exceptions_vs__null_return"></a><h6>
-<a name="boost_pool.pool.interfaces.out_of_memory_conditions__exceptions_vs__null_return-heading"></a>
-        <a class="link" href="interfaces.html#boost_pool.pool.interfaces.out_of_memory_conditions__exceptions_vs__null_return">Out-of-Memory
+<h6>
+<a name="boost_pool.pool.interfaces.h3"></a>
+        <span><a name="boost_pool.pool.interfaces.out_of_memory_conditions__exceptions_vs__null_return"></a></span><a class="link" href="interfaces.html#boost_pool.pool.interfaces.out_of_memory_conditions__exceptions_vs__null_return">Out-of-Memory
         Conditions: Exceptions vs. Null Return</a>
       </h6>
 <p>
@@ -78,9 +78,9 @@
         to <code class="computeroutput"><span class="keyword">return</span> <span class="number">0</span></code>
         instead of throwing an exception.
       </p>
-<a name="boost_pool.pool.interfaces.ordered_versus_unordered"></a><h6>
-<a name="boost_pool.pool.interfaces.ordered_versus_unordered-heading"></a>
-        <a class="link" href="interfaces.html#boost_pool.pool.interfaces.ordered_versus_unordered">Ordered
+<h6>
+<a name="boost_pool.pool.interfaces.h4"></a>
+        <span><a name="boost_pool.pool.interfaces.ordered_versus_unordered"></a></span><a class="link" href="interfaces.html#boost_pool.pool.interfaces.ordered_versus_unordered">Ordered
         versus unordered</a>
       </h6>
 <p>
@@ -139,7 +139,6 @@
             is always <code class="computeroutput"><span class="identifier">default_user_allocator_new_delete</span></code>.
           </p>
 <p>
-            
 </p>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">default_user_allocator_new_delete</span>
 <span class="special">{</span>
@@ -197,7 +196,7 @@
 <p>
           </p>
 <p>
-            <span class="bold"><strong>Example:</strong></span> 
+            <span class="bold"><strong>Example:</strong></span>
 </p>
 <pre class="programlisting"><span class="keyword">void</span> <span class="identifier">func</span><span class="special">()</span>
 <span class="special">{</span>
@@ -237,7 +236,6 @@
             <span class="bold"><strong>Synopsis</strong></span>
           </p>
 <p>
-            
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">ElementType</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">UserAllocator</span> <span class="special">=</span> <span class="identifier">default_user_allocator_new_delete</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">object_pool</span>
@@ -311,7 +309,6 @@
             <span class="bold"><strong>Synopsis</strong></span>
           </p>
 <p>
-            
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Tag</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="identifier">RequestedSize</span><span class="special">,</span>
     <span class="keyword">typename</span> <span class="identifier">UserAllocator</span> <span class="special">=</span> <span class="identifier">default_user_allocator_new_delete</span><span class="special">&gt;</span>
@@ -445,7 +442,6 @@
             <span class="bold"><strong>Synopsis</strong></span>
           </p>
 <p>
-            
 </p>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">pool_allocator_tag</span> <span class="special">{</span> <span class="special">};</span>
 

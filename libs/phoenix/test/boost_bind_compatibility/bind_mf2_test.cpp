@@ -146,7 +146,6 @@ void member_function_test()
 
     // 8
 
-    /*
     bind(&X::f8, &x, 1, 2, 3, 4, 5, 6, 7, 8 )();
     bind(&X::f8, ref(x), 1, 2, 3, 4, 5, 6, 7, 8 )();
 
@@ -155,7 +154,6 @@ void member_function_test()
     bind(&X::g8, ref(x), 1, 2, 3, 4, 5, 6, 7, 8 )();
 
     BOOST_TEST( x.hash == 23558 );
-    */
 }
 
 int main()

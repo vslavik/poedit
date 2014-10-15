@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2004-2012. Distributed under the Boost
+// (C) Copyright Ion Gaztanaga 2004-2013. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying file
 // LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
@@ -20,8 +20,11 @@ namespace boost{
 namespace container {
 namespace test{
 
-struct PrintValues : public std::unary_function<int, void>
+struct PrintValues
 {
+	typedef int    argument_type;
+	typedef void   result_type;
+
    void operator() (int value) const
    {
       std::cout << value << " ";
@@ -49,7 +52,7 @@ void PrintContainers(MyBoostCont *boostcont, MyStdCont *stdcont)
       std::cout << *itboost << std::endl;
    }
    std::cout << "MyStdCont" << std::endl;
- 
+
    for(; itstd != itstdend; ++itstd){
       std::cout << *itstd << std::endl;
    }

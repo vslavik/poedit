@@ -1,5 +1,5 @@
 /*
-Copyright Redshift Software, Inc. 2008-2013
+Copyright Rene Rivera 2008-2014
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE_1_0.txt or copy at
 http://www.boost.org/LICENSE_1_0.txt)
@@ -26,17 +26,28 @@ http://www.boost.org/LICENSE_1_0.txt)
 #define BOOST_COMP_GCCXML BOOST_VERSION_NUMBER_NOT_AVAILABLE
 
 #if defined(__GCCXML__)
-#   undef BOOST_COMP_GCCXML
-#   define BOOST_COMP_GCCXML BOOST_VERSION_NUMBER_AVAILABLE
+#   define BOOST_COMP_GCCXML_DETECTION BOOST_VERSION_NUMBER_AVAILABLE
 #endif
 
-#if BOOST_COMP_GCCXML
+#ifdef BOOST_COMP_GCCXML_DETECTION
+#   if defined(BOOST_PREDEF_DETAIL_COMP_DETECTED)
+#       define BOOST_COMP_GCCXML_EMULATED BOOST_COMP_GCCXML_DETECTION
+#   else
+#       undef BOOST_COMP_GCCXML
+#       define BOOST_COMP_GCCXML BOOST_COMP_GCCXML_DETECTION
+#   endif
 #   define BOOST_COMP_GCCXML_AVAILABLE
+#   include <boost/predef/detail/comp_detected.h>
 #endif
 
 #define BOOST_COMP_GCCXML_NAME "GCC XML"
 
 #include <boost/predef/detail/test.h>
 BOOST_PREDEF_DECLARE_TEST(BOOST_COMP_GCCXML,BOOST_COMP_GCCXML_NAME)
+
+#ifdef BOOST_COMP_GCCXML_EMULATED
+#include <boost/predef/detail/test.h>
+BOOST_PREDEF_DECLARE_TEST(BOOST_COMP_GCCXML_EMULATED,BOOST_COMP_GCCXML_NAME)
+#endif
 
 #endif

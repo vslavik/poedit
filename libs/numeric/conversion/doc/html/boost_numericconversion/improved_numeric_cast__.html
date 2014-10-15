@@ -3,9 +3,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Improved numeric_cast&lt;&gt;</title>
 <link rel="stylesheet" href="../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.NumericConversion">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.NumericConversion">
+<link rel="prev" href="numeric_converter_policy_classes.html" title="Numeric Converter Policy Classes">
+<link rel="next" href="../numeric_conversion/history_and_acknowledgments.html" title="History and Acknowledgments">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -18,48 +20,46 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="u" href="../index.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a>
+<a accesskey="p" href="numeric_converter_policy_classes.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../numeric_conversion/history_and_acknowledgments.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_numericconversion.improved_numeric_cast__"></a><a class="link" href="improved_numeric_cast__.html" title="Improved numeric_cast&lt;&gt;">Improved
     numeric_cast&lt;&gt;</a>
 </h2></div></div></div>
-    
-    <div class="section">
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="improved_numeric_cast__.html#boost_numericconversion.improved_numeric_cast__.introduction">Introduction</a></span></dt>
+<dt><span class="section"><a href="improved_numeric_cast__.html#boost_numericconversion.improved_numeric_cast__.numeric_cast">numeric_cast</a></span></dt>
+<dt><span class="section"><a href="improved_numeric_cast__.html#boost_numericconversion.improved_numeric_cast__.numeric_cast_traits">numeric_cast_traits</a></span></dt>
+<dt><span class="section"><a href="improved_numeric_cast__.html#boost_numericconversion.improved_numeric_cast__.examples">Examples</a></span></dt>
+</dl></div>
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_numericconversion.improved_numeric_cast__.introduction"></a><a class="link" href="improved_numeric_cast__.html#boost_numericconversion.improved_numeric_cast__.introduction" title="Introduction">Introduction</a>
 </h3></div></div></div>
-      
-      <p>
+<p>
         The lack of preservation of range makes conversions between numeric types
         error prone. This is true for both implicit conversions and explicit conversions
         (through <code class="computeroutput"><span class="keyword">static_cast</span></code>). <a class="link" href="improved_numeric_cast__.html#boost_numericconversion.improved_numeric_cast__.numeric_cast" title="numeric_cast"><code class="computeroutput"><span class="identifier">numeric_cast</span></code></a> detects loss of range
         when a numeric type is converted, and throws an exception if the range cannot
         be preserved.
       </p>
-      <p>
+<p>
         There are several situations where conversions are unsafe:
       </p>
-      <div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-          
             Conversions from an integral type with a wider range than the target
             integral type.
-          
-        </li>
+          </li>
 <li class="listitem">
-          
             Conversions from unsigned to signed (and vice versa) integral types.
-          
-        </li>
+          </li>
 <li class="listitem">
-          
             Conversions from floating point types to integral types.
-          
-        </li>
+          </li>
 </ul></div>
-      <p>
+<p>
         The C++ Standard does not specify the behavior when a numeric type is assigned
         a value that cannot be represented by the type, except for unsigned integral
         types [3.9.1.4], which must obey the laws of arithmetic modulo 2n (this implies
@@ -69,19 +69,18 @@
         to unsigned) makes any code that may produce positive or negative overflows
         exposed to portability issues.
       </p>
-      <p>
+<p>
         By default <code class="computeroutput"><span class="identifier">numeric_cast</span></code> adheres
         to the rules for implicit conversions mandated by the C++ Standard, such
         as truncating floating point types when converting to integral types. The
         implementation must guarantee that for a conversion to a type that can hold
         all possible values of the source type, there will be no runtime overhead.
       </p>
-    </div>
-    <div class="section">
+</div>
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_numericconversion.improved_numeric_cast__.numeric_cast"></a><a class="link" href="improved_numeric_cast__.html#boost_numericconversion.improved_numeric_cast__.numeric_cast" title="numeric_cast">numeric_cast</a>
 </h3></div></div></div>
-      
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Target</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Source</span><span class="special">&gt;</span> <span class="keyword">inline</span>
 <span class="identifier">Target</span> <span class="identifier">numeric_cast</span><span class="special">(</span> <span class="identifier">Source</span> <span class="identifier">arg</span> <span class="special">)</span>
 <span class="special">{</span>
@@ -100,7 +99,7 @@
     <span class="keyword">return</span> <span class="identifier">converter</span><span class="special">::</span><span class="identifier">convert</span><span class="special">(</span><span class="identifier">arg</span><span class="special">);</span>
 <span class="special">}</span>
 </pre>
-      <p>
+<p>
         <code class="computeroutput"><span class="identifier">numeric_cast</span></code> returns the
         result of converting a value of type Source to a value of type Target. If
         out-of-range is detected, an overflow policy is executed whose default behavior
@@ -109,12 +108,11 @@
         and <a class="link" href="numeric_converter_policy_classes.html#numeric_conversion_possitive_overflow">positive_overflow</a>
         ).
       </p>
-    </div>
-    <div class="section">
+</div>
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_numericconversion.improved_numeric_cast__.numeric_cast_traits"></a><a class="link" href="improved_numeric_cast__.html#boost_numericconversion.improved_numeric_cast__.numeric_cast_traits" title="numeric_cast_traits">numeric_cast_traits</a>
 </h3></div></div></div>
-      
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Target</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Source</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">EnableIf</span> <span class="special">=</span> <span class="keyword">void</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">numeric_cast_traits</span>
 <span class="special">{</span>
@@ -123,31 +121,26 @@
     <span class="keyword">typedef</span> <span class="identifier">Trunc</span><span class="special">&lt;</span><span class="identifier">Source</span><span class="special">&gt;</span>           <span class="identifier">rounding_policy</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
-      <p>
+<p>
         The behavior of <code class="computeroutput"><span class="identifier">numeric_cast</span></code>
         may be tailored for custom numeric types through the specialization of <code class="computeroutput"><span class="identifier">numeric_cast_traits</span></code>. (see <a class="link" href="type_requirements_and_user_defined_types_support.html" title="Type Requirements and User-defined-types support">User
         Defined Types</a> for details. )
       </p>
-    </div>
-    <div class="section">
+</div>
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_numericconversion.improved_numeric_cast__.examples"></a><a class="link" href="improved_numeric_cast__.html#boost_numericconversion.improved_numeric_cast__.examples" title="Examples">Examples</a>
 </h3></div></div></div>
-      
-      <p>
+<p>
         The following example performs some typical conversions between numeric types:
       </p>
-      <div class="orderedlist"><ol class="orderedlist" type="1">
+<div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-          
             include &lt;boost/numeric/conversion/cast.hpp&gt;
-          
-        </li>
+          </li>
 <li class="listitem">
-          
             include &lt;iostream&gt;
-          
-        </li>
+          </li>
 </ol></div>
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
@@ -200,15 +193,20 @@
     <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
-    </div>
-  </div>
+</div>
+</div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer"></div></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2004-2007 Fernando
+      Luis Cacciola Carballal<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="u" href="../index.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a>
+<a accesskey="p" href="numeric_converter_policy_classes.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../numeric_conversion/history_and_acknowledgments.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

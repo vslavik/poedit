@@ -15,6 +15,8 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/array.hpp>
 #include "table_type.hpp"
+#include <iostream>
+#include <iomanip>
 
 #define BOOST_CHECK_CLOSE_EX(a, b, prec, i) \
    {\

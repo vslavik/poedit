@@ -75,7 +75,7 @@ void test_transformations_spherical()
     // 2: Spherical-equatorial (lat=5, so it is near the equator)
     bg::model::point<T, 2, bg::cs::spherical_equatorial<bg::degree> > se(input_long, input_lat);
 
-    // 2a: to radian 
+    // 2a: to radian
     bg::model::point<T, 2, bg::cs::spherical_equatorial<bg::radian> > ser;
     bg::transform(se, ser);
     BOOST_CHECK_CLOSE(bg::get<0>(ser), expected_long, 0.001);

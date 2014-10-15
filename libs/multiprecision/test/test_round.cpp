@@ -15,13 +15,16 @@
 #include <boost/random/mersenne_twister.hpp>
 #include "test.hpp"
 
-#if !defined(TEST_MPF_50) && !defined(TEST_MPF) && !defined(TEST_BACKEND) && !defined(TEST_CPP_DEC_FLOAT) && !defined(TEST_MPFR) && !defined(TEST_MPFR_50) && !defined(TEST_MPFI_50) && !defined(TEST_FLOAT128)
+#if !defined(TEST_MPF_50) && !defined(TEST_MPF) && !defined(TEST_BACKEND) && !defined(TEST_CPP_DEC_FLOAT)\
+   && !defined(TEST_MPFR) && !defined(TEST_MPFR_50) && !defined(TEST_MPFI_50) && !defined(TEST_FLOAT128)\
+   && !defined(TEST_CPP_BIN_FLOAT)
 #  define TEST_MPF_50
 #  define TEST_MPFR_50
 #  define TEST_MPFI_50
 #  define TEST_BACKEND
 #  define TEST_CPP_DEC_FLOAT
 #  define TEST_FLOAT128
+#  define TEST_CPP_BIN_FLOAT
 
 #ifdef _MSC_VER
 #pragma message("CAUTION!!: No backend type specified so testing everything.... this will take some time!!")
@@ -46,6 +49,9 @@
 #endif
 #ifdef TEST_CPP_DEC_FLOAT
 #include <boost/multiprecision/cpp_dec_float.hpp>
+#endif
+#ifdef TEST_CPP_BIN_FLOAT
+#include <boost/multiprecision/cpp_bin_float.hpp>
 #endif
 #ifdef TEST_FLOAT128
 #include <boost/multiprecision/float128.hpp>
@@ -117,8 +123,20 @@ typename boost::enable_if_c<boost::multiprecision::is_interval_number<T>::value>
 //
 // We may not have an abs overload for long long so provide a fall back:
 //
+inline unsigned safe_abs(int const& v)
+{
+   return v < 0 ? static_cast<unsigned>(1u) + static_cast<unsigned>(-(v+1)) : v;
+}
+inline unsigned long safe_abs(long const& v)
+{
+   return v < 0 ? static_cast<unsigned long>(1u) + static_cast<unsigned long>(-(v+1)) : v;
+}
+inline unsigned long long safe_abs(long long const& v)
+{
+   return v < 0 ? static_cast<unsigned long long>(1u) + static_cast<unsigned long long>(-(v+1)) : v;
+}
 template <class T>
-inline T safe_abs(T const& v ...)
+inline typename boost::disable_if_c<boost::is_integral<T>::value, T>::type safe_abs(T const& v)
 {
    return v < 0 ? -v : v;
 }
@@ -433,6 +451,10 @@ int main()
    test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<59, long long, std::allocator<void> > > >();
    test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<58, long long, std::allocator<void> > > >();
 #endif
+#endif
+#ifdef TEST_CPP_BIN_FLOAT
+   test<boost::multiprecision::cpp_bin_float_50>();
+   test<boost::multiprecision::cpp_bin_float_100>();
 #endif
 #ifdef TEST_BACKEND
    test<boost::multiprecision::number<boost::multiprecision::concepts::number_backend_float_architype> >();

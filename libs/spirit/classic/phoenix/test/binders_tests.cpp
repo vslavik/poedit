@@ -16,7 +16,8 @@
 #include <boost/spirit/include/phoenix1_binders.hpp>
 
 using namespace phoenix;
-using namespace std;
+using std::cout;
+using std::endl;
 
     ///////////////////////////////////////////////////////////////////////////////
     struct print_ { // a typical STL style monomorphic functor

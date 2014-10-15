@@ -21,15 +21,15 @@ int main()
         <
             boost::geometry::model::point<double, 2, boost::geometry::cs::cartesian>
         > box_type;
-        
+
     // Define the Boost.Range compatible type:
-    typedef boost::geometry::box_view<box_type> box_view;        
-        
+    typedef boost::geometry::box_view<box_type> box_view;
+
     box_type box;
     boost::geometry::assign_values(box, 0, 0, 4, 4);
-    
+
     box_view view(box);
-    
+
     // Iterating in clockwise direction over the points of this box
     for (boost::range_iterator<box_view const>::type it = boost::begin(view);
         it != boost::end(view); ++it)
@@ -37,10 +37,10 @@ int main()
         std::cout << " " << boost::geometry::dsv(*it);
     }
     std::cout << std::endl;
-    
+
     // Note that a box_view is tagged as a ring, so supports area etc.
     std::cout << "Area: " << boost::geometry::area(view) << std::endl;
-    
+
     return 0;
 }
 

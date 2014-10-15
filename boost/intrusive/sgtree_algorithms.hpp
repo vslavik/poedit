@@ -18,9 +18,9 @@
 #define BOOST_INTRUSIVE_SGTREE_ALGORITHMS_HPP
 
 #include <boost/intrusive/detail/config_begin.hpp>
+#include <boost/intrusive/intrusive_fwd.hpp>
 
 #include <cstddef>
-#include <boost/intrusive/intrusive_fwd.hpp>
 #include <boost/intrusive/detail/assert.hpp>
 #include <boost/intrusive/detail/utilities.hpp>
 #include <boost/intrusive/bstree_algorithms.hpp>
@@ -187,6 +187,7 @@ class sgtree_algorithms
    //! @copydoc ::boost::intrusive::bstree_algorithms::count(const const_node_ptr&,const KeyType&,KeyNodePtrCompare)
    template<class KeyType, class KeyNodePtrCompare>
    static std::size_t count(const const_node_ptr & header, const KeyType &key, KeyNodePtrCompare comp);
+
    #endif   //#ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
 
    //! @copydoc ::boost::intrusive::bstree_algorithms::insert_equal_upper_bound(const node_ptr&,const node_ptr&,NodePtrCompare)
@@ -330,25 +331,21 @@ class sgtree_algorithms
          //than the weight balanced method.
          node_ptr s = x;
          std::size_t size = 1;
-         for(std::size_t ancestor = 1; true; ++ancestor){
-            if(ancestor == depth){ //Check if whole tree must be rebuilt
-               max_tree_size = tree_size;
-               bstree_algo::rebalance_subtree(NodeTraits::get_parent(s));
-               break;
-            }
-            else{ //Go to the next scapegoat candidate
-               const node_ptr s_parent = NodeTraits::get_parent(s);
-               const node_ptr s_parent_left = NodeTraits::get_left(s_parent);
-               //Obtain parent's size (previous size + parent + sibling tree)
-               const node_ptr s_sibling = s_parent_left == s ? NodeTraits::get_right(s_parent) : s_parent_left;
-               size += 1 + bstree_algo::subtree_size(s_sibling);
-               s = s_parent;
-               if(ancestor > h_alpha(size)){ //is 's' scapegoat?
-                  bstree_algo::rebalance_subtree(s);
-                  break;
-               }
+         for(std::size_t ancestor = 1; ancestor != depth; ++ancestor){
+            const node_ptr s_parent = NodeTraits::get_parent(s);
+            const node_ptr s_parent_left = NodeTraits::get_left(s_parent);
+            //Obtain parent's size (previous size + parent + sibling tree)
+            const node_ptr s_sibling = s_parent_left == s ? NodeTraits::get_right(s_parent) : s_parent_left;
+            size += 1 + bstree_algo::subtree_size(s_sibling);
+            s = s_parent;
+            if(ancestor > h_alpha(size)){ //is 's' scapegoat?
+               bstree_algo::rebalance_subtree(s);
+               return;
             }
          }
+         //The whole tree must be rebuilt
+         max_tree_size = tree_size;
+         bstree_algo::rebalance_subtree(NodeTraits::get_parent(s));
       }
    }
    /// @endcond

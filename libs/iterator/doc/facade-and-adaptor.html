@@ -26,7 +26,7 @@
 Lab</a>, <a class="last reference external" href="http://www.styleadvisor.com">Zephyr Associates, Inc.</a></td></tr>
 <tr><th class="docinfo-name">Date:</th>
 <td>2006-09-11</td></tr>
-<tr class="field"><th class="docinfo-name">Number:</th><td class="field-body">This is a revised version of <a class="reference external" href="http://anubis.dkuug.dk/jtc1/sc22/wg21/docs/papers/2003/n1530.html">N1530</a>=03-0113, which was
+<tr class="field"><th class="docinfo-name">Number:</th><td class="field-body">This is a revised version of <a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2003/n1530.html">N1530</a>=03-0113, which was
 accepted for Technical Report 1 by the C++ standard
 committee's library working group.</td>
 </tr>
@@ -239,29 +239,29 @@ Iterator Concepts.</p>
 <div class="section" id="iterator-concepts">
 <h2><a class="toc-backref" href="#id18">Iterator Concepts</a></h2>
 <p>This proposal is formulated in terms of the new <tt class="docutils literal"><span class="pre">iterator</span> <span class="pre">concepts</span></tt>
-as proposed in <a class="reference external" href="http://anubis.dkuug.dk/JTC1/SC22/WG21/docs/papers/2003/n1550.html">n1550</a>, since user-defined and especially adapted
+as proposed in <a class="reference external" href="http://www.open-std.org/JTC1/SC22/WG21/docs/papers/2003/n1550.htm">n1550</a>, since user-defined and especially adapted
 iterators suffer from the well known categorization problems that are
 inherent to the current iterator categories.</p>
-<p>This proposal does not strictly depend on proposal <a class="reference external" href="http://anubis.dkuug.dk/JTC1/SC22/WG21/docs/papers/2003/n1550.html">n1550</a>, as there
+<p>This proposal does not strictly depend on proposal <a class="reference external" href="http://www.open-std.org/JTC1/SC22/WG21/docs/papers/2003/n1550.htm">n1550</a>, as there
 is a direct mapping between new and old categories. This proposal
-could be reformulated using this mapping if <a class="reference external" href="http://anubis.dkuug.dk/JTC1/SC22/WG21/docs/papers/2003/n1550.html">n1550</a> was not accepted.</p>
+could be reformulated using this mapping if <a class="reference external" href="http://www.open-std.org/JTC1/SC22/WG21/docs/papers/2003/n1550.htm">n1550</a> was not accepted.</p>
 </div>
 <div class="section" id="interoperability">
 <h2><a class="toc-backref" href="#id19">Interoperability</a></h2>
 <p>The question of iterator interoperability is poorly addressed in the
 current standard.  There are currently two defect reports that are
 concerned with interoperability issues.</p>
-<p>Issue <a class="reference external" href="http://anubis.dkuug.dk/jtc1/sc22/wg21/docs/lwg-defects.html#179">179</a> concerns the fact that mutable container iterator types
+<p>Issue <a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21/docs/lwg-defects.html#179">179</a> concerns the fact that mutable container iterator types
 are only required to be convertible to the corresponding constant
 iterator types, but objects of these types are not required to
 interoperate in comparison or subtraction expressions.  This situation
 is tedious in practice and out of line with the way built in types
 work.  This proposal implements the proposed resolution to issue
-<a class="reference external" href="http://anubis.dkuug.dk/jtc1/sc22/wg21/docs/lwg-defects.html#179">179</a>, as most standard library implementations do nowadays. In other
+<a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21/docs/lwg-defects.html#179">179</a>, as most standard library implementations do nowadays. In other
 words, if an iterator type A has an implicit or user defined
 conversion to an iterator type B, the iterator types are interoperable
 and the usual set of operators are available.</p>
-<p>Issue <a class="reference external" href="http://anubis.dkuug.dk/jtc1/sc22/wg21/docs/lwg-active.html#280">280</a> concerns the current lack of interoperability between
+<p>Issue <a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21/docs/lwg-active.html#280">280</a> concerns the current lack of interoperability between
 reverse iterator types. The proposed new reverse_iterator template
 fixes the issues raised in 280. It provides the desired
 interoperability without introducing unwanted overloads.</p>
@@ -422,8 +422,8 @@ member (e.g. <a class="reference internal" href="#counting"><tt class="docutils 
 into the temporary iterator <tt class="docutils literal"><span class="pre">p+n</span></tt>, which is destroyed when
 <tt class="docutils literal"><span class="pre">operator[]</span></tt> returns.</p>
 <p>Writable iterators built with <tt class="docutils literal"><span class="pre">iterator_facade</span></tt> implement the
-semantics required by the preferred resolution to <a class="reference external" href="http://anubis.dkuug.dk/jtc1/sc22/wg21/docs/lwg-active.html#299">issue 299</a> and
-adopted by proposal <a class="reference external" href="http://anubis.dkuug.dk/JTC1/SC22/WG21/docs/papers/2003/n1550.html">n1550</a>: the result of <tt class="docutils literal"><span class="pre">p[n]</span></tt> is an object
+semantics required by the preferred resolution to <a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21/docs/lwg-active.html#299">issue 299</a> and
+adopted by proposal <a class="reference external" href="http://www.open-std.org/JTC1/SC22/WG21/docs/papers/2003/n1550.htm">n1550</a>: the result of <tt class="docutils literal"><span class="pre">p[n]</span></tt> is an object
 convertible to the iterator's <tt class="docutils literal"><span class="pre">value_type</span></tt>, and <tt class="docutils literal"><span class="pre">p[n]</span> <span class="pre">=</span> <span class="pre">x</span></tt> is
 equivalent to <tt class="docutils literal"><span class="pre">*(p</span> <span class="pre">+</span> <span class="pre">n)</span> <span class="pre">=</span> <span class="pre">x</span></tt> (Note: This result object may be
 implemented as a proxy containing a copy of <tt class="docutils literal"><span class="pre">p+n</span></tt>).  This approach

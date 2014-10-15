@@ -77,8 +77,6 @@ void test_reference_content(T& t, const T& value1, const T& value2)
 template <typename Base, typename Derived>
 void base_derived_test(Derived d)
 {
-    typedef typename boost::is_pointer<Base>::type is_ptr;
-
     Base b(d);
     BOOST_CHECK((check_base_derived(
           b

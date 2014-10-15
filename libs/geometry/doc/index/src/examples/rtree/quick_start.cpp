@@ -66,6 +66,8 @@ int main(void)
     rtree.query(bgi::nearest(point(0, 0), 5), std::back_inserter(result_n));
     //]
 
+    // note: in Boost.Geometry WKT representation of a box is polygon
+
     //[rtree_quickstart_output
     // display results
     std::cout << "spatial query box:" << std::endl;

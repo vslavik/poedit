@@ -1,6 +1,6 @@
 /*
- * Copyright 2009-2012 Karsten Ahnert
- * Copyright 2009-2012 Mario Mulansky
+ * Copyright 2012 Karsten Ahnert
+ * Copyright 2013 Mario Mulansky
  *
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or
@@ -14,7 +14,7 @@
 
 #include <boost/numeric/odeint.hpp>
 //[ vexcl_includes
-#include <boost/numeric/odeint/external/vexcl/vexcl_resize.hpp>
+#include <boost/numeric/odeint/external/vexcl/vexcl.hpp>
 //]
 
 namespace odeint = boost::numeric::odeint;
@@ -58,7 +58,7 @@ int main( int argc , char **argv )
     // set up number of system, time step and integration time
     const size_t n = 1024 * 1024;
     const double dt = 0.01;
-    const double t_max = 100.0;
+    const double t_max = 1000.0;
 
     // initialize R
     double Rmin = 0.1 , Rmax = 50.0 , dR = ( Rmax - Rmin ) / double( n - 1 );
@@ -73,10 +73,7 @@ int main( int argc , char **argv )
     X(2) = 10.0;
 
     // create a stepper
-    runge_kutta4<
-        state_type , double , state_type , double ,
-        odeint::vector_space_algebra , odeint::default_operations
-        > stepper;
+    runge_kutta4< state_type > stepper;
 
     // solve the system
     integrate_const( stepper , sys_func( R ) , X , 0.0 , t_max , dt );

@@ -154,7 +154,7 @@ main()
         BOOST_TEST(v3 > v2);
         BOOST_TEST(v3 >= v2);
     }
-
+    
     {
         fusion::vector<std::string, std::string> v1("Lincoln", "Abraham");
         ns::name v2("Roosevelt", "Franklin");

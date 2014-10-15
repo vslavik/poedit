@@ -277,7 +277,7 @@ bool verify(std::string const& caseid, MultiPolygon const& mp, Linestring const&
     length_type len_intersection = bg::length(intersection);
     if (! bg::math::equals(len_input, len_difference + len_intersection))
     {
-        std::cout << "Input: " << len_input 
+        std::cout << "Input: " << len_input
             << " difference: " << len_difference
             << " intersection: " << len_intersection
             << std::endl;

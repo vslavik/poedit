@@ -8,11 +8,13 @@
 
 #include <boost/config.hpp>
 
-#if !defined(BOOST_NO_RVALUE_REFERENCES)
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
 
 #include <boost/fusion/container/vector/vector.hpp>
 
-#define FUSION_SEQUENCE boost::fusion::vector
+#define FUSION_SEQUENCE boost::fusion::vector<std::vector<x>>
+#define FUSION_SEQUENCE2 boost::fusion::vector<std::vector<x>, x>
+
 #include "move.hpp"
 
 #else
@@ -22,7 +24,7 @@
 int
 main()
 {
-#if !defined(BOOST_NO_RVALUE_REFERENCES)
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
     test();
 #endif
 

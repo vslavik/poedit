@@ -190,8 +190,8 @@ void test_serialization_unordered_set_helper()
     ifs.close();
 
     BOOST_CHECK_EQUAL( vec.size(), vec2.size() );
-    BOOST_CHECK_EQUAL( (*vec2.begin()).i, 0 );
-    BOOST_CHECK_EQUAL( (*++vec2.begin()).i, -1 );
+    BOOST_CHECK_EQUAL( (*vec2.begin()).i, -1 );
+    BOOST_CHECK_EQUAL( (*++vec2.begin()).i, 0 );
 }
 
 template< class Map, class OArchive, class IArchive >

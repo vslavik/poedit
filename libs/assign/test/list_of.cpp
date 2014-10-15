@@ -130,6 +130,7 @@ void test_vector_matrix()
     using namespace boost;
     using namespace boost::assign;
     using namespace std;
+    using boost::array;
 
 #if BOOST_WORKAROUND(BOOST_DINKUMWARE_STDLIB, == 1)  || BOOST_WORKAROUND(BOOST_MSVC, <=1300)
 #else    

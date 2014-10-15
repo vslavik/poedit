@@ -14,24 +14,32 @@
 #include <iostream>
 #include <functional>
 
+struct Y {
+    Y(int y = 0) : y_(y) {}
+    bool operator==(const Y& rhs) { return y_ == rhs.y_; }
+private:
+    int y_;
+    };
+
 struct X {
   int foo(int);
-  std::ostream& foo2(std::ostream&) const;
+  Y& foo2(Y&) const;
 };
 int X::foo(int x) { return -x; }
-std::ostream& X::foo2(std::ostream& x) const { return x; }
+Y& X::foo2(Y& x) const { return x; }
 
 int main()
 {
     boost::function2<int, X*, int> f;
-    boost::function2<std::ostream&, X*, std::ostream&> f2;
-
+    boost::function2<Y&, X*, Y&> f2;
+    Y y1;
+    
     f = &X::foo;
     f2 = &X::foo2;
 
     X x;
     BOOST_TEST(f(&x, 5) == -5);
-    BOOST_TEST(f2(&x, boost::ref(std::cout)) == std::cout);
+    BOOST_TEST(f2(&x, boost::ref(y1)) == y1);
 
     return ::boost::report_errors();
 }

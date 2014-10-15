@@ -31,8 +31,7 @@
 <h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../header/boost/numeric/odeint/stepper/controlled_runge_kutta_hpp.html" title="Header &lt;boost/numeric/odeint/stepper/controlled_runge_kutta.hpp&gt;">boost/numeric/odeint/stepper/controlled_runge_kutta.hpp</a>&gt;
 
-</span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Value<span class="special">,</span> <span class="keyword">typename</span> Algebra <span class="special">=</span> <span class="identifier">range_algebra</span><span class="special">,</span> 
-         <span class="keyword">typename</span> Operations <span class="special">=</span> <span class="identifier">default_operations</span><span class="special">&gt;</span> 
+</span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Value<span class="special">,</span> <span class="keyword">typename</span> Algebra<span class="special">,</span> <span class="keyword">typename</span> Operations<span class="special">&gt;</span> 
 <span class="keyword">class</span> <a class="link" href="default_error_checker.html" title="Class template default_error_checker">default_error_checker</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// types</span>
@@ -41,59 +40,59 @@
   <span class="keyword">typedef</span> <span class="identifier">Operations</span> <a name="boost.numeric.odeint.default_error_checker.operations_type"></a><span class="identifier">operations_type</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="default_error_checker.html#boost.numeric.odeint.default_error_checkerconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="default_error_checker.html#idp26847048-bb"><span class="identifier">default_error_checker</span></a><span class="special">(</span><span class="identifier">value_type</span> <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span> <span class="identifier">value_type</span> <span class="special">&gt;</span><span class="special">(</span><span class="number">1</span><span class="special">.</span><span class="number">0e</span><span class="special">-</span><span class="number">6</span><span class="special">)</span><span class="special">,</span> 
+  <a class="link" href="default_error_checker.html#idp48896288-bb"><span class="identifier">default_error_checker</span></a><span class="special">(</span><span class="identifier">value_type</span> <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span> <span class="identifier">value_type</span> <span class="special">&gt;</span><span class="special">(</span><span class="number">1</span><span class="special">.</span><span class="number">0e</span><span class="special">-</span><span class="number">6</span><span class="special">)</span><span class="special">,</span> 
                         <span class="identifier">value_type</span> <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span> <span class="identifier">value_type</span> <span class="special">&gt;</span><span class="special">(</span><span class="number">1</span><span class="special">.</span><span class="number">0e</span><span class="special">-</span><span class="number">6</span><span class="special">)</span><span class="special">,</span> 
                         <span class="identifier">value_type</span> <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span> <span class="identifier">value_type</span> <span class="special">&gt;</span><span class="special">(</span><span class="number">1</span><span class="special">)</span><span class="special">,</span> 
                         <span class="identifier">value_type</span> <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span> <span class="identifier">value_type</span> <span class="special">&gt;</span><span class="special">(</span><span class="number">1</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="default_error_checker.html#idp26840424-bb">public member functions</a></span>
+  <span class="comment">// <a class="link" href="default_error_checker.html#idp48882080-bb">public member functions</a></span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> State<span class="special">,</span> <span class="keyword">typename</span> Deriv<span class="special">,</span> <span class="keyword">typename</span> Err<span class="special">,</span> <span class="keyword">typename</span> Time<span class="special">&gt;</span> 
-    <span class="identifier">value_type</span> <a class="link" href="default_error_checker.html#idp26840632-bb"><span class="identifier">error</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">State</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Deriv</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">Err</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">Time</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <span class="identifier">value_type</span> <a class="link" href="default_error_checker.html#idp48882640-bb"><span class="identifier">error</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">State</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Deriv</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">Err</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">Time</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> State<span class="special">,</span> <span class="keyword">typename</span> Deriv<span class="special">,</span> <span class="keyword">typename</span> Err<span class="special">,</span> <span class="keyword">typename</span> Time<span class="special">&gt;</span> 
-    <span class="identifier">value_type</span> <a class="link" href="default_error_checker.html#idp26843672-bb"><span class="identifier">error</span></a><span class="special">(</span><span class="identifier">algebra_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">State</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Deriv</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">Err</span> <span class="special">&amp;</span><span class="special">,</span> 
+    <span class="identifier">value_type</span> <a class="link" href="default_error_checker.html#idp48889040-bb"><span class="identifier">error</span></a><span class="special">(</span><span class="identifier">algebra_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">State</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Deriv</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">Err</span> <span class="special">&amp;</span><span class="special">,</span> 
                      <span class="identifier">Time</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp56273368"></a><h2>Description</h2>
+<a name="idp97205728"></a><h2>Description</h2>
 <p>This class provides the default mechanism to compare the error estimates reported by Runge-Kutta error steppers with user defined error bounds. It is used by the controlled_runge_kutta steppers.</p>
 <p>
 </p>
 <div class="refsect2">
-<a name="idp56274040"></a><h3>Template Parameters</h3>
+<a name="idp97206864"></a><h3>Template Parameters</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">typename</span> Value</pre>
 <p>The value type. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">typename</span> Algebra <span class="special">=</span> <span class="identifier">range_algebra</span></pre>
+<pre class="literallayout"><span class="keyword">typename</span> Algebra</pre>
 <p>The algebra type. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">typename</span> Operations <span class="special">=</span> <span class="identifier">default_operations</span></pre>
+<pre class="literallayout"><span class="keyword">typename</span> Operations</pre>
 <p>The operations type. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp56278856"></a><h3>
+<a name="idp97213984"></a><h3>
 <a name="boost.numeric.odeint.default_error_checkerconstruct-copy-destruct"></a><code class="computeroutput">default_error_checker</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp26847048-bb"></a><span class="identifier">default_error_checker</span><span class="special">(</span><span class="identifier">value_type</span> eps_abs <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span> <span class="identifier">value_type</span> <span class="special">&gt;</span><span class="special">(</span><span class="number">1</span><span class="special">.</span><span class="number">0e</span><span class="special">-</span><span class="number">6</span><span class="special">)</span><span class="special">,</span> 
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp48896288-bb"></a><span class="identifier">default_error_checker</span><span class="special">(</span><span class="identifier">value_type</span> eps_abs <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span> <span class="identifier">value_type</span> <span class="special">&gt;</span><span class="special">(</span><span class="number">1</span><span class="special">.</span><span class="number">0e</span><span class="special">-</span><span class="number">6</span><span class="special">)</span><span class="special">,</span> 
                       <span class="identifier">value_type</span> eps_rel <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span> <span class="identifier">value_type</span> <span class="special">&gt;</span><span class="special">(</span><span class="number">1</span><span class="special">.</span><span class="number">0e</span><span class="special">-</span><span class="number">6</span><span class="special">)</span><span class="special">,</span> 
                       <span class="identifier">value_type</span> a_x <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span> <span class="identifier">value_type</span> <span class="special">&gt;</span><span class="special">(</span><span class="number">1</span><span class="special">)</span><span class="special">,</span> 
                       <span class="identifier">value_type</span> a_dxdt <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span> <span class="identifier">value_type</span> <span class="special">&gt;</span><span class="special">(</span><span class="number">1</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp56295512"></a><h3>
-<a name="idp26840424-bb"></a><code class="computeroutput">default_error_checker</code> public member functions</h3>
+<a name="idp97248048"></a><h3>
+<a name="idp48882080-bb"></a><code class="computeroutput">default_error_checker</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> State<span class="special">,</span> <span class="keyword">typename</span> Deriv<span class="special">,</span> <span class="keyword">typename</span> Err<span class="special">,</span> <span class="keyword">typename</span> Time<span class="special">&gt;</span> 
-  <span class="identifier">value_type</span> <a name="idp26840632-bb"></a><span class="identifier">error</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">State</span> <span class="special">&amp;</span> x_old<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Deriv</span> <span class="special">&amp;</span> dxdt_old<span class="special">,</span> <span class="identifier">Err</span> <span class="special">&amp;</span> x_err<span class="special">,</span> 
+  <span class="identifier">value_type</span> <a name="idp48882640-bb"></a><span class="identifier">error</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">State</span> <span class="special">&amp;</span> x_old<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Deriv</span> <span class="special">&amp;</span> dxdt_old<span class="special">,</span> <span class="identifier">Err</span> <span class="special">&amp;</span> x_err<span class="special">,</span> 
                    <span class="identifier">Time</span> dt<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 <li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> State<span class="special">,</span> <span class="keyword">typename</span> Deriv<span class="special">,</span> <span class="keyword">typename</span> Err<span class="special">,</span> <span class="keyword">typename</span> Time<span class="special">&gt;</span> 
-  <span class="identifier">value_type</span> <a name="idp26843672-bb"></a><span class="identifier">error</span><span class="special">(</span><span class="identifier">algebra_type</span> <span class="special">&amp;</span> algebra<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">State</span> <span class="special">&amp;</span> x_old<span class="special">,</span> 
+  <span class="identifier">value_type</span> <a name="idp48889040-bb"></a><span class="identifier">error</span><span class="special">(</span><span class="identifier">algebra_type</span> <span class="special">&amp;</span> algebra<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">State</span> <span class="special">&amp;</span> x_old<span class="special">,</span> 
                    <span class="keyword">const</span> <span class="identifier">Deriv</span> <span class="special">&amp;</span> dxdt_old<span class="special">,</span> <span class="identifier">Err</span> <span class="special">&amp;</span> x_err<span class="special">,</span> <span class="identifier">Time</span> dt<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>

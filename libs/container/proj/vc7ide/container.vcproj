@@ -20,7 +20,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../../../.."
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;BOOST_DATE_TIME_NO_LIB"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -61,7 +61,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../../.."
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;BOOST_DATE_TIME_NO_LIB"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -99,10 +99,13 @@
 			Name="container"
 			Filter="">
 			<File
-				RelativePath="..\..\..\..\boost\container\allocator_traits.hpp">
+				RelativePath="..\..\..\..\boost\container\adaptive_pool.hpp">
 			</File>
 			<File
-				RelativePath="..\..\..\..\boost\container\container_exceptions.hpp">
+				RelativePath="..\..\..\..\boost\container\allocator.hpp">
+			</File>
+			<File
+				RelativePath="..\..\..\..\boost\container\allocator_traits.hpp">
 			</File>
 			<File
 				RelativePath="..\..\..\..\boost\container\container_fwd.hpp">
@@ -121,6 +124,12 @@
 			</File>
 			<File
 				RelativePath="..\..\..\..\boost\container\map.hpp">
+			</File>
+			<File
+				RelativePath="..\..\..\..\boost\container\node_allocator.hpp">
+			</File>
+			<File
+				RelativePath="..\..\..\..\boost\container\options.hpp">
 			</File>
 			<File
 				RelativePath="..\..\..\..\boost\container\scoped_allocator.hpp">
@@ -156,6 +165,9 @@
 				Name="detail"
 				Filter="">
 				<File
+					RelativePath="..\..\..\..\boost\container\detail\adaptive_node_pool.hpp">
+				</File>
+				<File
 					RelativePath="..\..\..\..\boost\container\detail\adaptive_node_pool_impl.hpp">
 				</File>
 				<File
@@ -165,10 +177,19 @@
 					RelativePath="..\..\..\..\boost\container\detail\algorithms.hpp">
 				</File>
 				<File
+					RelativePath="..\..\..\..\boost\container\detail\alloc_lib.h">
+				</File>
+				<File
 					RelativePath="..\..\..\..\boost\container\detail\allocation_type.hpp">
 				</File>
 				<File
 					RelativePath="..\..\..\..\boost\container\detail\allocator_version_traits.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\detail\auto_link.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\detail\boost_cont_ext_auto_link.hpp">
 				</File>
 				<File
 					RelativePath="..\..\..\..\boost\container\detail\config_begin.hpp">
@@ -204,7 +225,13 @@
 					RelativePath="..\..\..\..\boost\container\detail\multiallocation_chain.hpp">
 				</File>
 				<File
+					RelativePath="..\..\..\..\boost\container\detail\mutex.hpp">
+				</File>
+				<File
 					RelativePath="..\..\..\..\boost\container\detail\node_alloc_holder.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\detail\node_pool.hpp">
 				</File>
 				<File
 					RelativePath="..\..\..\..\boost\container\detail\node_pool_impl.hpp">
@@ -216,7 +243,13 @@
 					RelativePath="..\..\..\..\boost\container\detail\pool_common.hpp">
 				</File>
 				<File
+					RelativePath="..\..\..\..\boost\container\detail\pool_common_alloc.hpp">
+				</File>
+				<File
 					RelativePath="..\..\..\..\boost\container\detail\preprocessor.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\detail\singleton.hpp">
 				</File>
 				<File
 					RelativePath="..\..\..\..\boost\container\detail\transform_iterator.hpp">
@@ -281,6 +314,9 @@
 			Filter="">
 			<File
 				RelativePath="..\..\test\check_equal_containers.hpp">
+			</File>
+			<File
+				RelativePath="..\..\test\default_init_test.hpp">
 			</File>
 			<File
 				RelativePath="..\..\test\dummy_test_allocator.hpp">

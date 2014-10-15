@@ -98,7 +98,9 @@ void test_duration_division()
 void test_duration_multiply()
 {
     hours h15= 5 * hours(3);
+    (void)h15;
     hours h6= hours(3) *2;
+    (void)h6;
 }
 
 void f(duration<double> d, double res)  // accept floating point seconds
@@ -183,8 +185,11 @@ int main()
 
     duration<double, boost::milli> d = milliseconds(3) * 2.5;
     duration<double, boost::milli> d2 = 2.5 * milliseconds(3) ;
+    (void)d2;
     duration<double, boost::milli> d3 = milliseconds(3) / 2.5;
+    (void)d3;
     duration<double, boost::milli> d4 = milliseconds(3) + milliseconds(5) ;
+    (void)d4;
     inspect_duration(milliseconds(3) * 2.5, "milliseconds(3) * 2.5");
     std::cout << d.count() << '\n';
 //    milliseconds ms(3.5);  // doesn't compile

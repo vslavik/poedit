@@ -37,7 +37,7 @@ can be deduced from their types.</p>
 </tbody>
 </table>
 <!-- @jam_prefix.append('''
-project test : requirements <include>. <source>/boost//headers ;''') -->
+project test : requirements <include>. <implicit-dependency>/boost//headers ;''') -->
 <!-- @example.prepend('''
 #include <boost/parameter.hpp>
 
@@ -727,7 +727,7 @@ worse—think of the kinds of errors you get from your STL
 implementation when you make a mistake).<a class="footnote-reference" href="#conceptcpp" id="id7"><sup>4</sup></a></li>
 <li>The problems with exposing such permissive function template
 signatures have been the subject of much discussion, especially
-in the presence of <a class="reference external" href="http://anubis.dkuug.dk/jtc1/sc22/wg21/docs/lwg-defects.html#225">unqualified calls</a>.  If all we want is to
+in the presence of <a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21/docs/lwg-defects.html#225">unqualified calls</a>.  If all we want is to
 avoid unintentional argument-dependent lookup (ADL), we can
 isolate <tt class="docutils literal"><span class="pre">depth_first_search</span></tt> in a namespace containing no
 types<a class="footnote-reference" href="#using" id="id8"><sup>6</sup></a>, but suppose we <em>want</em> it to found via ADL?</li>
@@ -1601,7 +1601,7 @@ using boost::mpl::_;''') -->
 int main()
 {}''') -->
 <!-- @test('run', howmany='all') -->
-<p>Note that because of the <a class="reference external" href="http://std.dkuug.dk/jtc1/sc22/wg21/docs/papers/2002/n1385.htm">forwarding problem</a>, <tt class="docutils literal"><span class="pre">parameter::parameters::operator()</span></tt>
+<p>Note that because of the <a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2002/n1385.htm">forwarding problem</a>, <tt class="docutils literal"><span class="pre">parameter::parameters::operator()</span></tt>
 can't accept non-const rvalues.</p>
 </div>
 <div class="section" id="extracting-parameter-types">

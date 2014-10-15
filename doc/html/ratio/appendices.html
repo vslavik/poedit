@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../ratio.html" title="Chapter&#160;24.&#160;Boost.Ratio 2.0.0">
+<link rel="up" href="../ratio.html" title="Chapter&#160;26.&#160;Boost.Ratio 2.1.0">
 <link rel="prev" href="reference.html" title="Reference">
-<link rel="next" href="../ref.html" title="Chapter&#160;25.&#160;Boost.Ref">
+<link rel="next" href="../ref.html" title="Chapter&#160;27.&#160;Boost.Ref">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -42,6 +42,8 @@
 <a name="ratio.appendices.history"></a><a class="link" href="appendices.html#ratio.appendices.history" title="Appendix A: History">Appendix A: History</a>
 </h3></div></div></div>
 <div class="toc"><dl class="toc">
+<dt><span class="section"><a href="appendices.html#ratio.appendices.history.__version_2_1_0__febreary_1__2014___1_56__"><span class="bold"><strong>Version 2.1.0, Febreary 1, 2014 - 1.56</strong></span> </a></span></dt>
+<dt><span class="section"><a href="appendices.html#ratio.appendices.history.__version_2_0_1__febreary_1__2013___1_53__"><span class="bold"><strong>Version 2.0.1, Febreary 1, 2013 - 1.53</strong></span> </a></span></dt>
 <dt><span class="section"><a href="appendices.html#ratio.appendices.history.__version_2_0_0__november_1__2012___1_52__"><span class="bold"><strong>Version 2.0.0, November 1, 2012 - 1.52</strong></span> </a></span></dt>
 <dt><span class="section"><a href="appendices.html#ratio.appendices.history.__version_1_0_3__august_1__2012___1_51__"><span class="bold"><strong>Version 1.0.3, August 1, 2012 - 1.51</strong></span> </a></span></dt>
 <dt><span class="section"><a href="appendices.html#ratio.appendices.history.__version_1_0_2__april_1__2012___1_50__"><span class="bold"><strong>Version 1.0.2, April 1, 2012 - 1.50</strong></span> </a></span></dt>
@@ -51,6 +53,37 @@
 <dt><span class="section"><a href="appendices.html#ratio.appendices.history.__version_0_2_0__september_22__2010__"><span class="bold"><strong>Version 0.2.0, September 22, 2010</strong></span> </a></span></dt>
 <dt><span class="section"><a href="appendices.html#ratio.appendices.history.__version_0_1_0__september_10__2010__"><span class="bold"><strong>Version 0.1.0, September 10, 2010</strong></span> </a></span></dt>
 </dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="ratio.appendices.history.__version_2_1_0__febreary_1__2014___1_56__"></a><a class="link" href="appendices.html#ratio.appendices.history.__version_2_1_0__febreary_1__2014___1_56__" title="Version 2.1.0, Febreary 1, 2014 - 1.56"><span class="bold"><strong>Version 2.1.0, Febreary 1, 2014 - 1.56</strong></span> </a>
+</h4></div></div></div>
+<p>
+          <span class="bold"><strong>New Features:</strong></span>
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/XXXX" target="_top">#XXXX</a>
+              Add ratio_power.
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/XXXX" target="_top">#XXXX</a>
+              Add IEC binary prefixes.
+            </li>
+</ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="ratio.appendices.history.__version_2_0_1__febreary_1__2013___1_53__"></a><a class="link" href="appendices.html#ratio.appendices.history.__version_2_0_1__febreary_1__2013___1_53__" title="Version 2.0.1, Febreary 1, 2013 - 1.53"><span class="bold"><strong>Version 2.0.1, Febreary 1, 2013 - 1.53</strong></span> </a>
+</h4></div></div></div>
+<p>
+          <span class="bold"><strong>Fixes:</strong></span>
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/7616" target="_top">#7616</a>
+              br_mul::nan - warning C4293: '&lt;&lt;' : shift count negative or too
+              big, undefined behavior`.
+            </li></ul></div>
+</div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="ratio.appendices.history.__version_2_0_0__november_1__2012___1_52__"></a><a class="link" href="appendices.html#ratio.appendices.history.__version_2_0_0__november_1__2012___1_52__" title="Version 2.0.0, November 1, 2012 - 1.52"><span class="bold"><strong>Version 2.0.0, November 1, 2012 - 1.52</strong></span> </a>
@@ -70,6 +103,14 @@
           are deprecated. Use ratio_string&lt;&gt;::symbol and ratio_string&lt;&gt;::prefix
           respectively. These functions be removed in 1.55.
         </p>
+<p>
+          <span class="bold"><strong>Fixes:</strong></span>
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/7478" target="_top">#7478</a>
+              Compiles fails with compilers supporting char16_t and char32_t fails
+              if the library doesn't provides std::u16string and std::u32string.
+            </li></ul></div>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
@@ -270,7 +311,7 @@
                <span class="special">((</span><span class="identifier">d1</span> <span class="special">*</span> <span class="identifier">d2</span><span class="special">)</span> <span class="special">/</span> <span class="identifier">gcd</span><span class="special">(</span><span class="identifier">d1</span><span class="special">,</span><span class="identifier">d2</span><span class="special">))</span>
 </pre>
 <p>
-        Multipliying and diving by gcd(n1,n2) in numerator
+        Multiplying and diving by gcd(n1,n2) in numerator
       </p>
 <pre class="programlisting"><span class="special">(</span> <span class="special">((</span><span class="identifier">gcd</span><span class="special">(</span><span class="identifier">n1</span><span class="special">,</span><span class="identifier">n2</span><span class="special">)*(</span><span class="identifier">n1</span><span class="special">/</span><span class="identifier">gcd</span><span class="special">(</span><span class="identifier">n1</span><span class="special">,</span><span class="identifier">n2</span><span class="special">)))</span> <span class="special">*</span> <span class="special">(</span><span class="identifier">d2</span><span class="special">/</span><span class="identifier">gcd</span><span class="special">(</span><span class="identifier">d1</span><span class="special">,</span><span class="identifier">d2</span><span class="special">)))</span>  <span class="special">+</span>
   <span class="special">((</span><span class="identifier">gcd</span><span class="special">(</span><span class="identifier">n1</span><span class="special">,</span><span class="identifier">n2</span><span class="special">)*(</span><span class="identifier">n2</span><span class="special">/</span><span class="identifier">gcd</span><span class="special">(</span><span class="identifier">n1</span><span class="special">,</span><span class="identifier">n2</span><span class="special">)))</span> <span class="special">*</span> <span class="special">(</span><span class="identifier">d1</span><span class="special">/</span><span class="identifier">gcd</span><span class="special">(</span><span class="identifier">d1</span><span class="special">,</span><span class="identifier">d2</span><span class="special">)))</span>

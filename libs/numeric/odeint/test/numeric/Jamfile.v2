@@ -1,4 +1,5 @@
-# (C) Copyright 2010 : Karsten Ahnert, Mario Mulansky
+# Copyright 2012 Karsten Ahnert
+# Copyright 2012 Mario Mulansky
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
@@ -13,7 +14,7 @@ project
     : requirements
       <library>/boost/test//boost_unit_test_framework
       <define>BOOST_ALL_NO_LIB=1
-      <include>../../../..
+      <include>../../include
       <link>static
       <toolset>clang:<cxxflags>-Wno-unused-variable
 
@@ -25,5 +26,7 @@ test-suite "odeint"
      [ run runge_kutta.cpp ]
      [ run symplectic.cpp ]
      [ run rosenbrock.cpp ]
+     [ run adams_bashforth.cpp ]
+     [ run adams_bashforth_moulton.cpp ]
      : <testing.launcher>valgrind
      ;

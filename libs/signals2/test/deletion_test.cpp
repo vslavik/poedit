@@ -238,6 +238,53 @@ test_disconnect_equal()
   BOOST_CHECK(test_output == "013");
 }
 
+struct signal_deletion_tester 
+{ 
+public:
+  signal_deletion_tester() {
+    b_has_run = false;
+    sig = new boost::signals2::signal<void(void)>();
+    connection0 = sig->connect(0, boost::bind(&signal_deletion_tester::a, this)); 
+    connection1 = sig->connect(1, boost::bind(&signal_deletion_tester::b, this));
+  }
+  
+  ~signal_deletion_tester()
+  {
+    if(sig != 0)
+      delete sig;
+  }
+  
+  void a() 
+  {
+    if(sig != 0)
+      delete sig;
+    sig = 0;
+  }
+  
+  void b() 
+  {
+    b_has_run = true;
+  } 
+  
+  boost::signals2::signal<void(void)> *sig;
+  bool b_has_run;
+  boost::signals2::connection connection0;
+  boost::signals2::connection connection1;
+}; 
+
+// If a signal is deleted mid-invocation, the invocation in progress
+// should complete normally.  Once all invocations complete, all
+// slots which were connected to the deleted signal should be in the 
+// disconnected state.
+static void test_signal_deletion()
+{
+  signal_deletion_tester tester;
+  (*tester.sig)();
+  BOOST_CHECK(tester.b_has_run);
+  BOOST_CHECK(tester.connection0.connected() == false);
+  BOOST_CHECK(tester.connection1.connected() == false);
+}
+
 int test_main(int, char* [])
 {
   test_remove_self();
@@ -245,5 +292,6 @@ int test_main(int, char* [])
   test_remove_after();
   test_bloodbath();
   test_disconnect_equal();
+  test_signal_deletion();
   return 0;
 }

@@ -6,9 +6,51 @@ Currently open bug reports can be viewed
 All bug reports including closed ones can be viewed
 [@https://svn.boost.org/trac/boost/query?status=assigned&status=closed&status=new&status=reopened&component=math&col=id&col=summary&col=status&col=type&col=milestone&col=component&order=priority here].
 
+[h4 Math-2.0.0 (Boost-1.56.0)]
+
+* [*Breaking change]: moved a number of non-core headers that are predominantly used for internal
+maintenance into `libs/math/include_private`.  The headers effected are `boost/math/tools/test_data.hpp`,
+`boost/math/tools/remez.hpp`, `boost/math/constants/generate.hpp`, `boost/math/tools/solve.hpp`,
+`boost/math/tools/test.hpp`.
+You can continue to use these headers by adding `libs/math/include_private` to your compiler's include path.
+* [*Breaking change]: A number of distributions and special functions were returning the maximum finite value
+rather than raising an __overflow_error, this has now been fixed, which means these functions now behave as
+documented.  However, since the default behavior on raising an __overflow_error is to throw a `std::overflow_error`
+exception, applications which have come to reply rely on these functions not throwing may experience exceptions
+where they did not before.  The special functions involved are __gamma_p_inva, __gamma_q_inva, 
+__ibeta_inva, __ibetac_inva, __ibeta_invb, __ibetac_invb, __gamma_p_inv, __gamma_q_inv.  The distributions
+involved are __pareto_distrib, __beta_distrib, __geometric_distrib, __negative_binomial_distrib,
+__binomial_distrib, __chi_squared_distrib, __gamma_distrib, __inverse_chi_squared_distrib, 
+__inverse_gamma_distrib.  See [@https://svn.boost.org/trac/boost/ticket/10111 #10111].
+* Fix __round and __trunc functions so they can be used with integer arguments, see [@https://svn.boost.org/trac/boost/ticket/10066 #10066].
+* Fix Halley iteration to handle zero derivative (with non-zero second derivative), see [@https://svn.boost.org/trac/boost/ticket/10046 #10046].
+
+[h4 Math-1.9.1]
+
+* Fix Geometric distribution use of Policies, see [@https://svn.boost.org/trac/boost/ticket/9833 #9833].
+* Fix corner cases in the negative binomial distribution, see [@https://svn.boost.org/trac/boost/ticket/9834 #9834].
+* Fix compilation failures on Mac OS.
+
+[h4 Math-1.9.0]
+
+* Changed version number to new Boost.Math specific version now that we're in the modular Boost world.
+* Added __bernoulli_numbers, changed arbitrary precision __tgamma/__lgamma to use Sterling's approximation (from Nikhar Agrawal).
+* Added first derivatives of the Bessel functions: __cyl_bessel_j_prime, __cyl_neumann_prime, __cyl_bessel_i_prime, __cyl_bessel_k_prime, __sph_bessel_prime and __sph_neumann_prime (from Anton Bikineev).
+* Fixed buggy Student's t example code, along with docs for testing sample means for equivalence.
+* Documented `max_iter` parameter in root finding code better, see [@https://svn.boost.org/trac/boost/ticket/9225 #9225].
+* Add option to explicitly enable/disable use of __float128 in constants code, see [@https://svn.boost.org/trac/boost/ticket/9240 #9240].
+* Cleaned up handling of negative values in Bessel I0 and I1 code (removed dead code), see [@https://svn.boost.org/trac/boost/ticket/9512 #9512].
+* Fixed handling of very small values passed to __tgamma and __lgamma so they don't generate spurious overflows (thanks to Rocco Romeo).
+* [@https://svn.boost.org/trac/boost/ticket/9672 #9672 PDF and CDF of a Laplace distribution throwing domain_error]
+Random variate can now be infinite.
+* Fixed several corner cases in __rising_factorial, __falling_factorial and __tgamma_delta_ratio with thanks to Rocco Romeo.
+* Fixed several corner cases in __rising_factorial, __falling_factorial and __tgamma_delta_ratio (thanks to Rocco Romeo).
+* Removed constant `pow23_four_minus_pi ` whose value did not match the name (and was unused by Boost.Math), see
+[@https://svn.boost.org/trac/boost/ticket/9712 #9712].
+
 [h4 Boost-1.55]
 
-* Suppress numerous warnings (mostly from GCC-4.8 and MSVC) [@https://svn.boost.org/trac/boost/ticket/8384 #8384], [@https://svn.boost.org/trac/boost/ticket/8855 #8855], 
+* Suppress numerous warnings (mostly from GCC-4.8 and MSVC) [@https://svn.boost.org/trac/boost/ticket/8384 #8384], [@https://svn.boost.org/trac/boost/ticket/8855 #8855],
 [@https://svn.boost.org/trac/boost/ticket/9107 #9107], [@https://svn.boost.org/trac/boost/ticket/9109 #9109]..
 * Fixed PGI compilation issue [@https://svn.boost.org/trac/boost/ticket/8333 #8333].
 * Fixed PGI constant value initialization issue that caused erf to generate incorrect results [@https://svn.boost.org/trac/boost/ticket/8621 #8621].
@@ -20,6 +62,7 @@ All bug reports including closed ones can be viewed
 * Improve consistency of argument reduction in the elliptic integrals [@https://svn.boost.org/trac/boost/ticket/9104 #9104].
 * Fix bug in inverse incomplete beta that results in cancellation errors when the beta function is really an arcsine or Student's T distribution.
 * Fix issue in Bessel I and K function continued fractions that causes spurious over/underflow.
+* Add improvement to non-central chi squared distribution quantile due to Thomas Luu.
 
 [h4 Boost-1.54]
 

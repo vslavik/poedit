@@ -136,7 +136,7 @@
                   API in the <code class="computeroutput"><span class="identifier">timer</span></code>
                   attribute. This will result in significantly less accurate time
                   readings. The macro is intended to solve possible problems with
-                  earlier revisions of AMD Athlon CPU, described <a href="http://support.microsoft.com/?scid=kb;en-us;895980" target="_top">here</a>
+                  earlier revisions of AMD Athlon CPU, described <a href="http://support.microsoft.com/?scid=kb%3ben-us%3b895980" target="_top">here</a>
                   and <a href="http://support.microsoft.com/?id=896256" target="_top">here</a>.
                   There are also known chipset hardware failures that may prevent
                   this API from functioning properly (see <a href="http://support.microsoft.com/kb/274323" target="_top">here</a>).
@@ -151,9 +151,9 @@
               </td>
 <td>
                 <p>
-                  Affects only the compilation of the library. If for some reason
-                  support for the native SysLog API is not detected automatically,
-                  define this macro to forcibly enable it
+                  Affects only compilation of the library. If for some reason support
+                  for the native SysLog API is not detected automatically, define
+                  this macro to forcibly enable it
                 </p>
               </td>
 </tr>
@@ -165,7 +165,7 @@
               </td>
 <td>
                 <p>
-                  Affects only the compilation of the library. If defined, the parsers
+                  Affects only compilation of the library. If defined, the parsers
                   for settings will be built without any default factories for filters
                   and formatters. The user will have to register all attributes in
                   the library before parsing any filters or formatters from strings.
@@ -181,9 +181,9 @@
               </td>
 <td>
                 <p>
-                  Affects only the compilation of the library. If defined, none of
-                  the facilities related to the parsers for settings will be built.
-                  This can substantially reduce the binary size.
+                  Affects only compilation of the library. If defined, none of the
+                  facilities related to the parsers for settings will be built. This
+                  can substantially reduce the binary size.
                 </p>
               </td>
 </tr>
@@ -195,7 +195,7 @@
               </td>
 <td>
                 <p>
-                  Affects only the compilation of the library. If defined, the support
+                  Affects only compilation of the library. If defined, the support
                   for debugger output on Windows will not be built.
                 </p>
               </td>
@@ -208,7 +208,7 @@
               </td>
 <td>
                 <p>
-                  Affects only the compilation of the library. If defined, the support
+                  Affects only compilation of the library. If defined, the support
                   for Windows event log will not be built. Defining the macro also
                   makes Message Compiler toolset unnecessary.
                 </p>
@@ -222,7 +222,7 @@
               </td>
 <td>
                 <p>
-                  Affects only the compilation of the library. If defined, the support
+                  Affects only compilation of the library. If defined, the support
                   for syslog backend will not be built.
                 </p>
               </td>
@@ -235,7 +235,7 @@
               </td>
 <td>
                 <p>
-                  Affects only the compilation of users' code. If defined, some deprecated
+                  Affects only compilation of users' code. If defined, some deprecated
                   shorthand macro names will not be available.
                 </p>
               </td>
@@ -248,13 +248,13 @@
               </td>
 <td>
                 <p>
-                  Affects the compilation of both the library and users' code. This
-                  macro is Windows-specific. If defined, the library makes use of
-                  the Windows NT 6 (Vista, Server 2008) and later APIs to generate
-                  more efficient code. This macro will also enable some experimental
-                  features of the library. Note, however, that the resulting binary
-                  will not run on Windows prior to NT 6. In order to use this feature
-                  Platform SDK 6.0 or later is required.
+                  Affects compilation of both the library and users' code. This macro
+                  is Windows-specific. If defined, the library makes use of the Windows
+                  NT 6 (Vista, Server 2008) and later APIs to generate more efficient
+                  code. This macro will also enable some experimental features of
+                  the library. Note, however, that the resulting binary will not
+                  run on Windows prior to NT 6. In order to use this feature Platform
+                  SDK 6.0 or later is required.
                 </p>
               </td>
 </tr>
@@ -266,10 +266,37 @@
               </td>
 <td>
                 <p>
-                  Affects only the compilation of the library. This macro enables
-                  support for compiler intrinsics for thread-local storage. Defining
-                  it may improve performance of Boost.Log if certain usage limitations
-                  are acceptable. See below for more comments.
+                  Affects only compilation of the library. This macro enables support
+                  for compiler intrinsics for thread-local storage. Defining it may
+                  improve performance of Boost.Log if certain usage limitations are
+                  acceptable. See below for more comments.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_LOG_USE_STD_REGEX</span></code>,
+                  <code class="computeroutput"><span class="identifier">BOOST_LOG_USE_BOOST_REGEX</span></code>
+                  or <code class="computeroutput"><span class="identifier">BOOST_LOG_USE_BOOST_XPRESSIVE</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Affects only compilation of the library. By defining one of these
+                  macros the user can instruct Boost.Log to use <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">regex</span></code>,
+                  <a href="http://www.boost.org/doc/libs/release/libs/regex/index.html" target="_top">Boost.Regex</a>
+                  or <a href="http://www.boost.org/doc/libs/release/doc/html/xpressive.html" target="_top">Boost.Xpressive</a>
+                  internally for string matching filters parsed from strings and
+                  settings. If none of these macros is defined then Boost.Log uses
+                  <a href="http://www.boost.org/doc/libs/release/libs/regex/index.html" target="_top">Boost.Regex</a>
+                  by default. Using <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">regex</span></code>
+                  or <a href="http://www.boost.org/doc/libs/release/libs/regex/index.html" target="_top">Boost.Regex</a>
+                  typically produces smaller executables, <a href="http://www.boost.org/doc/libs/release/libs/regex/index.html" target="_top">Boost.Regex</a>
+                  usually also being the fastest in run time. Using <a href="http://www.boost.org/doc/libs/release/doc/html/xpressive.html" target="_top">Boost.Xpressive</a>
+                  allows to eliminate the dependency on <a href="http://www.boost.org/doc/libs/release/libs/regex/index.html" target="_top">Boost.Regex</a>
+                  compiled binary. Note that these macros do not affect <a class="link" href="../detailed/expressions.html#log.detailed.expressions.predicates.advanced_string_matching" title="Advanced string matching filter">filtering
+                  expressions</a> created by users.
                 </p>
               </td>
 </tr>
@@ -293,8 +320,9 @@
         The logging library uses several other Boost libraries that require building
         too. These are <a href="http://www.boost.org/doc/libs/release/libs/filesystem/doc/index.htm" target="_top">Boost.Filesystem</a>,
         <a href="http://www.boost.org/doc/libs/release/libs/system/doc/index.html" target="_top">Boost.System</a>,
-        <a href="http://www.boost.org/doc/libs/release/doc/html/date_time.html" target="_top">Boost.DateTime</a>
-        and <a href="http://www.boost.org/doc/libs/release/doc/html/thread.html" target="_top">Boost.Thread</a>.
+        <a href="http://www.boost.org/doc/libs/release/doc/html/date_time.html" target="_top">Boost.DateTime</a>,
+        <a href="http://www.boost.org/doc/libs/release/doc/html/thread.html" target="_top">Boost.Thread</a>
+        and in some configurations <a href="http://www.boost.org/doc/libs/release/libs/regex/index.html" target="_top">Boost.Regex</a>.
         Refer to their documentation for detailed instructions on the building procedure.
       </p>
 <p>
@@ -345,7 +373,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2013 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2014 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

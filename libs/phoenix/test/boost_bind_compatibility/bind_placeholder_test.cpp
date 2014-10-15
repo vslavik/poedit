@@ -79,11 +79,9 @@ int main()
     custom_placeholder<7> p8;
     custom_placeholder<8> p9;
 
-    /*
     BOOST_TEST( 
         bind( f, p1, p2, p3, p4, p5, p6, p7, p8, p9 )
         ( x1, x2, x3, x4, x5, x6, x7, x8, x9 ) == 987654321L );
-    */
 
     return boost::report_errors();
 }

@@ -6,7 +6,7 @@
  * accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
  *
- * $Id: test_random_number_generator.cpp 71018 2011-04-05 21:27:52Z steven_watanabe $
+ * $Id$
  */
 
 #include <boost/random/random_number_generator.hpp>

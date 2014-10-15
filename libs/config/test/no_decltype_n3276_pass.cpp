@@ -6,7 +6,7 @@
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/config for the most recent version.//
-//  Revision $Id: no_decltype_n3276_pass.cpp 79537 2012-07-15 15:59:05Z marshall $
+//  Revision $Id$
 //
 
 
@@ -27,11 +27,11 @@
 #ifndef BOOST_NO_CXX11_DECLTYPE_N3276
 #include "boost_no_decltype_n3276.ipp"
 #else
-namespace boost_no_decltype_n3276 = empty_boost;
+namespace boost_no_cxx11_decltype_n3276 = empty_boost;
 #endif
 
 int main( int, char *[] )
 {
-   return boost_no_decltype_n3276::test();
+   return boost_no_cxx11_decltype_n3276::test();
 }
 

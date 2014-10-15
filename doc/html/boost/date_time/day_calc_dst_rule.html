@@ -43,34 +43,34 @@
   <span class="keyword">typedef</span> <span class="identifier">spec</span><span class="special">::</span><span class="identifier">end_rule</span>       <a name="boost.date_time.day_calc_dst_rule.end_rule"></a><span class="identifier">end_rule</span><span class="special">;</span>  
 
   <span class="comment">// <a class="link" href="day_calc_dst_rule.html#boost.date_time.day_calc_dst_ruleconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="day_calc_dst_rule.html#idp25527992-bb"><span class="identifier">day_calc_dst_rule</span></a><span class="special">(</span><span class="identifier">start_rule</span><span class="special">,</span> <span class="identifier">end_rule</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="day_calc_dst_rule.html#idp39605776-bb"><span class="identifier">day_calc_dst_rule</span></a><span class="special">(</span><span class="identifier">start_rule</span><span class="special">,</span> <span class="identifier">end_rule</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="day_calc_dst_rule.html#idp25474808-bb">public member functions</a></span>
-  <span class="identifier">date_type</span> <a class="link" href="day_calc_dst_rule.html#idp25475016-bb"><span class="identifier">start_day</span></a><span class="special">(</span><span class="identifier">year_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="day_calc_dst_rule.html#idp19572184-bb"><span class="identifier">start_rule_as_string</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">date_type</span> <a class="link" href="day_calc_dst_rule.html#idp19572664-bb"><span class="identifier">end_day</span></a><span class="special">(</span><span class="identifier">year_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="day_calc_dst_rule.html#idp19573464-bb"><span class="identifier">end_rule_as_string</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="day_calc_dst_rule.html#idp47648096-bb">public member functions</a></span>
+  <span class="keyword">virtual</span> <span class="identifier">date_type</span> <a class="link" href="day_calc_dst_rule.html#idp109562640-bb"><span class="identifier">start_day</span></a><span class="special">(</span><span class="identifier">year_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="day_calc_dst_rule.html#idp109564720-bb"><span class="identifier">start_rule_as_string</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">virtual</span> <span class="identifier">date_type</span> <a class="link" href="day_calc_dst_rule.html#idp107321184-bb"><span class="identifier">end_day</span></a><span class="special">(</span><span class="identifier">year_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="day_calc_dst_rule.html#idp100859200-bb"><span class="identifier">end_rule_as_string</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp89314424"></a><h2>Description</h2>
+<a name="idp194178576"></a><h2>Description</h2>
 <p>This class is used to generate specific sets of dst rules</p>
 <p>
 </p>
 <div class="refsect2">
-<a name="idp89314952"></a><h3>
+<a name="idp194179504"></a><h3>
 <a name="boost.date_time.day_calc_dst_ruleconstruct-copy-destruct"></a><code class="computeroutput">day_calc_dst_rule</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp25527992-bb"></a><span class="identifier">day_calc_dst_rule</span><span class="special">(</span><span class="identifier">start_rule</span> dst_start<span class="special">,</span> <span class="identifier">end_rule</span> dst_end<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp39605776-bb"></a><span class="identifier">day_calc_dst_rule</span><span class="special">(</span><span class="identifier">start_rule</span> dst_start<span class="special">,</span> <span class="identifier">end_rule</span> dst_end<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp89318968"></a><h3>
-<a name="idp25474808-bb"></a><code class="computeroutput">day_calc_dst_rule</code> public member functions</h3>
+<a name="idp194187584"></a><h3>
+<a name="idp47648096-bb"></a><code class="computeroutput">day_calc_dst_rule</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="identifier">date_type</span> <a name="idp25475016-bb"></a><span class="identifier">start_day</span><span class="special">(</span><span class="identifier">year_type</span> y<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="idp19572184-bb"></a><span class="identifier">start_rule_as_string</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">date_type</span> <a name="idp19572664-bb"></a><span class="identifier">end_day</span><span class="special">(</span><span class="identifier">year_type</span> y<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="idp19573464-bb"></a><span class="identifier">end_rule_as_string</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">date_type</span> <a name="idp109562640-bb"></a><span class="identifier">start_day</span><span class="special">(</span><span class="identifier">year_type</span> y<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="idp109564720-bb"></a><span class="identifier">start_rule_as_string</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">date_type</span> <a name="idp107321184-bb"></a><span class="identifier">end_day</span><span class="special">(</span><span class="identifier">year_type</span> y<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="idp100859200-bb"></a><span class="identifier">end_rule_as_string</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>

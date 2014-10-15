@@ -15,7 +15,7 @@ template <typename Polygon, typename Generator, typename Settings>
 inline void make_square_polygon(Polygon& polygon, Generator& generator, Settings const& settings)
 {
     using namespace boost::geometry;
-    
+
     typedef typename point_type<Polygon>::type point_type;
     typedef typename coordinate_type<Polygon>::type coordinate_type;
 

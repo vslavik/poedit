@@ -1,5 +1,5 @@
 [/
-              Copyright Andrey Semashev 2007 - 2013.
+              Copyright Andrey Semashev 2007 - 2014.
      Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
               http://www.boost.org/LICENSE_1_0.txt)
@@ -46,7 +46,7 @@ The placeholder can be used both in filters and formatters:
 
 The call to `set_filter` registers a composite filter that consists of two elementary subfilters: the first one checks the severity level, and the second checks the channel name. The call to `set_formatter` installs a formatter that composes a string containing the severity level and the channel name along with the message text.
 
-[heading Customizing fallback policy]
+[section:fallback_policies Customizing fallback policy]
 
 By default, when the requested attribute value is not found in the record, `attr` will return an empty reference. In case of filters, this will result in `false` in any ordering expressions, and in case of formatters the output from the placeholder will be empty. This behavior can be changed:
 
@@ -72,7 +72,9 @@ The default behavior is also accessible through the `or_none` modifier. The modi
 
 In `bind` expressions, the bound function object will still receive the [link log.detailed.utilities.value_ref `value_ref`]-wrapped values in place of the modified `attr` placeholder. Even though both `or_throw` and `or_default` modifiers guarantee that the bound function will receive a filled reference, [link log.detailed.utilities.value_ref `value_ref`] is still needed if the value type is specified as a type sequence. Also, the reference wrapper may contain a tag type which may be useful for formatting customization.
 
-[heading Attribute tags and custom formatting operators]
+[endsect]
+
+[section:tags Attribute tags and custom formatting operators]
 
 The `TagT` type in the [link log.detailed.expressions.attr abstract description] of `attr` above is optional and by default is `void`. This is an attribute tag which can be used to customize the output formatters produce for different attributes. This tag is forwarded to the [link log.detailed.utilities.manipulators.to_log `to_log`] manipulator when the extracted attribute value is put to a stream (this behavior is warranted by [link log.detailed.utilities.value_ref `value_ref`] implementation). Here's a quick example:
 
@@ -81,6 +83,8 @@ The `TagT` type in the [link log.detailed.expressions.attr abstract description]
 [@boost:/libs/log/example/doc/expressions_attr_fmt_tag.cpp See the complete code].
 
 Here we specify a different formatting operator for the severity level wrapped in the [link log.detailed.utilities.manipulators.to_log `to_log_manip`] manipulator marked with the tag `severity_tag`. This operator will be called when log records are formatted while the regular `operator<<` will be used in other contexts.
+
+[endsect]
 
 [endsect]
 
@@ -212,6 +216,7 @@ The attribute can also be identified by an attribute keyword or name and type.
 
     // Supporting headers
     #include <``[boost_log_support_regex_hpp]``>
+    #include <``[boost_log_support_std_regex_hpp]``>
     #include <``[boost_log_support_xpressive_hpp]``>
     #include <``[boost_log_support_spirit_qi_hpp]``>
     #include <``[boost_log_support_spirit_classic_hpp]``>
@@ -358,10 +363,15 @@ The first argument names the attribute and the second is the format string. The 
 
 [table Named scope format placeholders
     [[Placeholder][Meaning][Example]]
-    [[%n]         [Scope name]["void foo()"]]
-    [[%f]         [Source file name of the scope]["foo.cpp"]]
+    [[%n]         [Scope name]["void bar::foo()"]]
+    [[%c]         [Function name, if the scope is denoted with `BOOST_LOG_FUNCTION`, otherwise the full scope name. See the note below.]["bar::foo"]]
+    [[%C]         [Function name, without the function scope, if the scope is denoted with `BOOST_LOG_FUNCTION`, otherwise the full scope name. See the note below.]["foo"]]
+    [[%f]         [Source file name of the scope]["/home/user/project/foo.cpp"]]
+    [[%F]         [Source file name of the scope, without the path]["foo.cpp"]]
     [[%l]         [Line number in the source file]["45"]]
 ]
+
+[note As described in the [link log.detailed.attributes.named_scope named scope] attribute description, it is possible to use `BOOST_LOG_FUNCTION` macro to automatically generate scope names from the enclosing function name. Unfortunately, the actual format of the generated strings is compiler-dependent and in many cases it includes the complete signature of the function. When "%c" or "%C" format flag is specified, the library attempts to parse the generated string to extract the function name. Since C++ syntax is very context dependent and complex, it is not possible to parse function signature correctly in all cases, so the library is basically guessing. Depending on the string format, this may fail or produce incorrect results. In particular, type conversion operators can pose problems for the parser. In case if the parser fails to recognize the function signature the library falls back to using the whole string (i.e. behave equivalent to the "%n" flag). To alleviate the problem the user can replace the problematic `BOOST_LOG_FUNCTION` usage with the `BOOST_LOG_NAMED_SCOPE` macro and explicitly write the desired scope name. Scope names denoted with `BOOST_LOG_NAMED_SCOPE` will not be interpreted by the library and will be output as is. In general, for portability and runtime performance reasons it is preferable to always use `BOOST_LOG_NAMED_SCOPE` and "%n" format flag.]
 
 While the format string describes the presentation of each named scope in the list, the following named arguments allow to customize the list traversal and formatting:
 
@@ -369,6 +379,8 @@ While the format string describes the presentation of each named scope in the li
 * `iteration`. The argument describes the direction of iteration through scopes. Can have values `forward` (default) or `reverse`.
 * `delimiter`. The argument can be used to specify the delimiters between scopes. The default delimiter depends on the `iteration` argument. If `iteration == forward` the default `delimiter` will be "->", otherwise it will be "<-".
 * `depth`. The argument can be used to limit the number of scopes to put to log. The formatter will print `depth` innermost scopes and, if there are more scopes left, append an ellipsis to the written sequence. By default the formatter will write all scope names.
+* `incomplete_marker`. The argument can be used to specify the string that is used to indicate that the list has been limited by the `depth` argument. By default the "..." string is used as the marker.
+* `empty_marker`. The argument can be used to specify the string to output in case if the scope list is empty. By default nothing is output in this case.
 
 Here are a few usage examples:
 
@@ -396,7 +408,7 @@ Here are a few usage examples:
     );
 
     // Puts the scope stack in forward order, no more than 2 inner scopes:
-    // ... -> outer scope -> inner scope
+    // ... outer scope -> inner scope
     sink->set_formatter
     (
         expr::stream
@@ -408,7 +420,7 @@ Here are a few usage examples:
     );
 
     // Puts the scope stack in reverse order, no more than 2 inner scopes:
-    // inner scope <- outer scope <- ...
+    // inner scope <- outer scope <<and more>>...
     sink->set_formatter
     (
         expr::stream
@@ -416,8 +428,11 @@ Here are a few usage examples:
                 "Scopes",
                 keywords::format = "%n",
                 keywords::iteration = expr::reverse,
+                keywords::incomplete_marker = " <<and more>>..."
                 keywords::depth = 2)
     );
+
+[tip An empty string can be specified as the `incomplete_marker` parameter, in which case there will be no indication that the list was truncated.]
 
 [endsect]
 

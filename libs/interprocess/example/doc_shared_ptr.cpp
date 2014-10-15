@@ -94,7 +94,9 @@ int main ()
       assert(owner1->shared_ptr_.use_count() == 2);
       assert(owner2->shared_ptr_.use_count() == 2);
       assert(owner1->shared_ptr_.get() == owner2->shared_ptr_.get());
-
+      //<-
+      (void)owner2;
+      //->
       //The mapped file is unmapped here. Objects have been flushed to disk
    }
    {

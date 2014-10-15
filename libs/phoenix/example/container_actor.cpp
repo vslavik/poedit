@@ -64,7 +64,7 @@ struct container_actor
     typename phoenix::expression::function<phoenix::stl::end, that_type>::type const
     end() const
     {
-        return phoenix::begin(*this);
+        return phoenix::end(*this);
     }
 
     typename phoenix::expression::function<size_impl, that_type>::type const

@@ -962,7 +962,7 @@ inline void eval_trunc(T& result, const T& a)
 {
    BOOST_STATIC_ASSERT_MSG(number_category<T>::value == number_kind_floating_point, "The trunc function is only valid for floating point types.");
    int c = eval_fpclassify(a);
-   if(c == FP_NAN || c == FP_INFINITE)
+   if(c == (int)FP_NAN || c == (int)FP_INFINITE)
    {
       result = boost::math::policies::raise_rounding_error("boost::multiprecision::trunc<%1%>(%1%)", 0, number<T>(a), number<T>(a), boost::math::policies::policy<>()).backend();
       return;
@@ -979,7 +979,7 @@ inline void eval_round(T& result, const T& a)
    BOOST_STATIC_ASSERT_MSG(number_category<T>::value == number_kind_floating_point, "The round function is only valid for floating point types.");
    typedef typename boost::multiprecision::detail::canonical<float, T>::type fp_type;
    int c = eval_fpclassify(a);
-   if(c == FP_NAN || c == FP_INFINITE)
+   if((c == (int)FP_NAN) || (c == (int)FP_INFINITE))
    {
       result = boost::math::policies::raise_rounding_error("boost::multiprecision::round<%1%>(%1%)", 0, number<T>(a), number<T>(a), boost::math::policies::policy<>()).backend();
       return;
@@ -1233,7 +1233,7 @@ template <class Backend, multiprecision::expression_template_option ExpressionTe
 inline bool isfinite BOOST_PREVENT_MACRO_SUBSTITUTION(const multiprecision::number<Backend, ExpressionTemplates>& arg)
 {
    int v = (fpclassify)(arg);
-   return (v != FP_INFINITE) && (v != FP_NAN);
+   return (v != (int)FP_INFINITE) && (v != (int)FP_NAN);
 }
 template <class tag, class A1, class A2, class A3, class A4>
 inline bool isfinite BOOST_PREVENT_MACRO_SUBSTITUTION(const multiprecision::detail::expression<tag, A1, A2, A3, A4>& arg)
@@ -1244,7 +1244,7 @@ inline bool isfinite BOOST_PREVENT_MACRO_SUBSTITUTION(const multiprecision::deta
 template <class Backend, multiprecision::expression_template_option ExpressionTemplates>
 inline bool isnan BOOST_PREVENT_MACRO_SUBSTITUTION(const multiprecision::number<Backend, ExpressionTemplates>& arg)
 {
-   return (fpclassify)(arg) == FP_NAN;
+   return (fpclassify)(arg) == (int)FP_NAN;
 }
 template <class tag, class A1, class A2, class A3, class A4>
 inline bool isnan BOOST_PREVENT_MACRO_SUBSTITUTION(const multiprecision::detail::expression<tag, A1, A2, A3, A4>& arg)
@@ -1255,7 +1255,7 @@ inline bool isnan BOOST_PREVENT_MACRO_SUBSTITUTION(const multiprecision::detail:
 template <class Backend, multiprecision::expression_template_option ExpressionTemplates>
 inline bool isinf BOOST_PREVENT_MACRO_SUBSTITUTION(const multiprecision::number<Backend, ExpressionTemplates>& arg)
 {
-   return (fpclassify)(arg) == FP_INFINITE;
+   return (fpclassify)(arg) == (int)FP_INFINITE;
 }
 template <class tag, class A1, class A2, class A3, class A4>
 inline bool isinf BOOST_PREVENT_MACRO_SUBSTITUTION(const multiprecision::detail::expression<tag, A1, A2, A3, A4>& arg)
@@ -1266,7 +1266,7 @@ inline bool isinf BOOST_PREVENT_MACRO_SUBSTITUTION(const multiprecision::detail:
 template <class Backend, multiprecision::expression_template_option ExpressionTemplates>
 inline bool isnormal BOOST_PREVENT_MACRO_SUBSTITUTION(const multiprecision::number<Backend, ExpressionTemplates>& arg)
 {
-   return (fpclassify)(arg) == FP_NORMAL;
+   return (fpclassify)(arg) == (int)FP_NORMAL;
 }
 template <class tag, class A1, class A2, class A3, class A4>
 inline bool isnormal BOOST_PREVENT_MACRO_SUBSTITUTION(const multiprecision::detail::expression<tag, A1, A2, A3, A4>& arg)
@@ -2007,8 +2007,10 @@ UNARY_OP_FUNCTOR(cosh, number_kind_floating_point)
 UNARY_OP_FUNCTOR(sinh, number_kind_floating_point)
 UNARY_OP_FUNCTOR(tanh, number_kind_floating_point)
 
-HETERO_BINARY_OP_FUNCTOR(ldexp, int, number_kind_floating_point)
-HETERO_BINARY_OP_FUNCTOR(frexp, int*, number_kind_floating_point)
+HETERO_BINARY_OP_FUNCTOR(ldexp, short, number_kind_floating_point)
+HETERO_BINARY_OP_FUNCTOR(frexp, short*, number_kind_floating_point)
+HETERO_BINARY_OP_FUNCTOR_B(ldexp, int, number_kind_floating_point)
+HETERO_BINARY_OP_FUNCTOR_B(frexp, int*, number_kind_floating_point)
 HETERO_BINARY_OP_FUNCTOR_B(ldexp, long, number_kind_floating_point)
 HETERO_BINARY_OP_FUNCTOR_B(frexp, long*, number_kind_floating_point)
 HETERO_BINARY_OP_FUNCTOR_B(ldexp, long long, number_kind_floating_point)

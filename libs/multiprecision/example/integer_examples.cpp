@@ -78,8 +78,7 @@ void print_factorials()
 
 /*`
 The output from this routine is:
-[template nul[]] [# fix for quickbook bug]
-[pre [nul]
+[pre
                                        1
                                        2
                                        6

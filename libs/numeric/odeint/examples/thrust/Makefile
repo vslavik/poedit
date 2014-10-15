@@ -1,5 +1,5 @@
-# Copyright 2009-2012 Karsten Ahnert
-# Copyright 2009-2012 Mario Mulansky
+# Copyright 2011-2013 Mario Mulansky
+# Copyright 2011-2012 Karsten Ahnert
 #
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or
@@ -11,14 +11,14 @@
 CUDA_ROOT = /usr/local/cuda
 ARCH = sm_13
 
-CC = gcc-4.4
-CXX = gcc-4.4
+CC = gcc
+CXX = g++
 NVCC = $(CUDA_ROOT)/bin/nvcc
 # NVCC = g++
 
 INCLUDES += -I$(BOOST_ROOT) -I$(THRUST_ROOT) -I$(CUDA_ROOT)/include -I../../../../..
 
-NVCCFLAGS = -O3 $(INCLUDES) -arch $(ARCH) --compiler-bindir=/usr/bin/g++-4.4  -Xcompiler -fopenmp -DTHRUST_DEVICE_BACKEND=THRUST_DEVICE_BACKEND_OMP
+NVCCFLAGS = -O3 $(INCLUDES) -arch $(ARCH) --compiler-bindir=/opt/gcc4.6.2/bin/  -Xcompiler -fopenmp -DTHRUST_DEVICE_BACKEND=THRUST_DEVICE_BACKEND_OMP
 # NVCCFLAGS = -O3 $(INCLUDES) -arch $(ARCH) --compiler-bindir=/usr/bin/g++-4.3 -Xcompiler -fopenmp -DTHRUST_DEVICE_BACKEND=THRUST_DEVICE_BACKEND_OMP 
 
 # NVCCFLAGS = -O3 $(INCLUDES) -arch $(ARCH) --compiler-bindir=/usr/bin/g++-4.3
@@ -29,7 +29,7 @@ NVCCFLAGS = -O3 $(INCLUDES) -arch $(ARCH) --compiler-bindir=/usr/bin/g++-4.4  -X
 #-Xcompiler -fopenmp -DTHRUST_DEVICE_BACKEND=THRUST_DEVICE_BACKEND_OMP 
 
 
-LDLIBS = -lcudart -lgomp
+LDLIBS = -lstdc++ -lm -lcudart -lgomp
 LDFLAGS = -L$(CUDA_ROOT)/lib64
 
 %.co : %.cu

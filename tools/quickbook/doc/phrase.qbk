@@ -168,26 +168,36 @@ And one for the little boy who lives down the lane.
 [#quickbook.ref.role]
 [section:role Role]
 
-Sometime the basic formatting options aren't enough, and you wish
-to use CSS to style the generated html. For these cases you can
-use the `role` phase element. For example:
+This generates a docbook phrase with a `role` attribute, which can be used
+to classify the phrase. This can be used to mark text for a use that isn't
+covered elsewhere. The docbook `role` will generate a html class, which can
+be used to style text. And the xsl stylesheets can be customized to treat
+certain roles specially when generating pdfs.
+
+The boostbook css stylesheets, and xsl stylesheets
+contain support for a limited number of colours that can be used with
+`role`. For example if you write:
 
     [role red Text content]
 
-Will generate the docbook:
+You'll get red text if you're using the boostbook css (for html) or
+the boostbook xsl for generating pdfs.
 
-    <phrase role="red">Text content</phrase>
+The full list of colours that will be available is:
 
-Which will generate html along the lines of:
-
-    <span class="red">Text content</span>
-
-And then you can use css to style this however you wish.
-
-[note When generating other formats such as pdfs, your css is not going to
-      apply, so this will appear as normal, unstyled text. The docbook
-      =role= attribute is meant to be used as a more general mechanism, so
-      you might be able to take advantage of it by some other means.]
+* [role red red]
+* [role green green]
+* [role lime lime]
+* [role blue blue]
+* [role navy navy]
+* [role yellow yellow]
+* [role magenta magenta]
+* [role indigo indigo]
+* [role cyan cyan]
+* [role purple purple]
+* [role gold gold]
+* [role silver silver]
+* [role gray gray]
 
 [endsect] [/role]
 

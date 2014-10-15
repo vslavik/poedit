@@ -103,7 +103,7 @@ int main(int argc, char* argv[])
     char const* first = str.c_str();
     char const* last = &first[str.size()];
 
-    // Parsing is done based on the the token stream, not the character stream.
+    // Parsing is done based on the token stream, not the character stream.
     bool r = lex::tokenize_and_parse(first, last, word_count, g);
 
     if (r) {    // success

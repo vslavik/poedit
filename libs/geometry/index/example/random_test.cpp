@@ -10,6 +10,8 @@
 #include <iostream>
 
 #define BOOST_GEOMETRY_INDEX_DETAIL_EXPERIMENTAL
+
+#include <boost/geometry.hpp>
 #include <boost/geometry/index/rtree.hpp>
 
 #include <boost/foreach.hpp>

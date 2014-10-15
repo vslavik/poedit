@@ -14,7 +14,7 @@
 * [*Precondition:] The `value_type` of the range is an instantiation of `std::pair`.
 * [*Postcondition:] For all elements `x` in the returned range, `x` is the result of `y.second` where `y` is the corresponding element in the original range.
 * [*Range Category:] __single_pass_range__
-* [*Range Return Type:] for constant ranges, `boost::select_second_const<typeof(rng)>` otherwise `boost:select_second_mutable<typeof(rng)>`
+* [*Range Return Type:] for constant ranges, `boost::select_second_const<decltype(rng)>` otherwise `boost:select_second_mutable<decltype(rng)>`
 * [*Returned Range Category:] The range category of `rng`.
 
 [section:map_values_example map_values example]

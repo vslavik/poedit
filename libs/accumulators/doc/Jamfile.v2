@@ -93,9 +93,8 @@ doxygen accdoc
         <dependency>gs.check
     ;
 
-# Generate the HTML form of the stats documentation, as this
-# causes Doxygen to generate .png images for the LaTeX formulas
-# embedded in the doc comments.
+# Generate the HTML form of the stats documentation, as this causes Doxygen to
+# generate .png images for the LaTeX formulas embedded in the doc comments.
 doxygen statsdoc.html
     :
         [ glob ../../../boost/accumulators/statistics*.hpp ]
@@ -133,8 +132,8 @@ actions copy-latex-pngs
     echo "Stamped" > "$(<)"
 }
 
-# This causes the png files built above to be copied
-# into the html/images/accumulators directory.
+# This causes the png files built above to be copied into the
+# html/images/accumulators directory.
 make statsdoclatex.tag
     : statsdoc.html
     : @copy-latex-pngs

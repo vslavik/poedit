@@ -6,6 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
+#include <utility> // for std::forward used by boost/range in some cases.
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 #include <boost/phoenix/bind.hpp>
@@ -18,6 +19,7 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
 
 
 namespace phoenix = boost::phoenix;

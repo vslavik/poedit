@@ -1,7 +1,7 @@
 /* Boost libs/numeric/odeint/examples/simple1d.cpp
 
- Copyright 2009-2012 Karsten Ahnert
- Copyright 2009-2012 Mario Mulansky
+ Copyright 2012-2013 Mario Mulansky
+ Copyright 2012 Karsten Ahnert
 
  example for a simple one-dimensional 1st order ODE
 
@@ -33,8 +33,8 @@ void write_cout( const double &x , const double t )
     cout << t << '\t' << x << endl;
 }
 
-// state_type = value_type = deriv_type = time_type = double
-typedef runge_kutta_dopri5< double , double , double , double , vector_space_algebra , default_operations , never_resizer > stepper_type;
+// state_type = double
+typedef runge_kutta_dopri5< double > stepper_type;
 
 int main()
 {

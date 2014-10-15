@@ -41,9 +41,9 @@ int test_main(int, char**) {
   function_requires<ReadWritePropertyMapConcept<function_property_map<return_fixed_ref<int>, int>, int> >();
   function_requires<LvaluePropertyMapConcept<function_property_map<return_fixed_ref<int>, int>, int> >();
 
-  BOOST_STATIC_ASSERT((boost::is_same<typename boost::property_traits<function_property_map<add1<int>, int> >::category, boost::readable_property_map_tag>::value));
-  BOOST_STATIC_ASSERT((boost::is_same<typename boost::property_traits<function_property_map<add1_val<int>, int> >::category, boost::readable_property_map_tag>::value));
-  BOOST_STATIC_ASSERT((boost::is_same<typename boost::property_traits<function_property_map<return_fixed_ref<int>, int> >::category, boost::lvalue_property_map_tag>::value));
+  BOOST_STATIC_ASSERT((boost::is_same<boost::property_traits<function_property_map<add1<int>, int> >::category, boost::readable_property_map_tag>::value));
+  BOOST_STATIC_ASSERT((boost::is_same<boost::property_traits<function_property_map<add1_val<int>, int> >::category, boost::readable_property_map_tag>::value));
+  BOOST_STATIC_ASSERT((boost::is_same<boost::property_traits<function_property_map<return_fixed_ref<int>, int> >::category, boost::lvalue_property_map_tag>::value));
 
   BOOST_CHECK(get(function_property_map<add1<int>, int>(), 3) == 4);
   BOOST_CHECK(get(function_property_map<add1<int>, int>(add1<int>()), 4) == 5);

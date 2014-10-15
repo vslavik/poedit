@@ -69,7 +69,7 @@ namespace noexcept_tests
             BOOST_NOEXCEPT {}
 
         hash_nothrow_move() { test_throw("Constructor"); }
-        hash_nothrow_move(hash_nothrow_move const& x) { test_throw("Copy"); }
+        hash_nothrow_move(hash_nothrow_move const&) { test_throw("Copy"); }
         hash_nothrow_move& operator=(hash_nothrow_move const&)
         { test_throw("Assign"); return *this; }
         std::size_t operator()(int x) const
@@ -85,7 +85,7 @@ namespace noexcept_tests
         equal_to_nothrow_move(BOOST_RV_REF(equal_to_nothrow_move))
             BOOST_NOEXCEPT {}
         equal_to_nothrow_move() { test_throw("Constructor"); }
-        equal_to_nothrow_move(equal_to_nothrow_move const& x)
+        equal_to_nothrow_move(equal_to_nothrow_move const&)
         { test_throw("Copy"); }
         equal_to_nothrow_move& operator=(equal_to_nothrow_move const&)
         { test_throw("Assign"); return *this; }

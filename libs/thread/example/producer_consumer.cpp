@@ -7,21 +7,28 @@
 // adapted from the example given by Howard Hinnant in
 
 #define BOOST_THREAD_VERSION 4
+#define BOOST_THREAD_QUEUE_DEPRECATE_OLD
 
 #include <iostream>
 #include <boost/thread/scoped_thread.hpp>
+#ifdef XXXX
 #include <boost/thread/externally_locked_stream.hpp>
+    typedef  boost::externally_locked_stream<std::ostream> the_ostream;
+#else
+    typedef std::ostream the_ostream;
+    typedef std::istream the_istream;
+#endif
 #include <boost/thread/sync_queue.hpp>
 
-void producer(boost::externally_locked_stream<std::ostream> &mos, boost::sync_queue<int> & sbq)
+void producer(the_ostream &mos, boost::sync_queue<int> & sbq)
 {
   using namespace boost;
   try {
     for(int i=0; ;++i)
     {
-      //sbq.push(i);
-      sbq << i;
-      mos << "push(" << i << ") "<< sbq.size()<<"\n";
+      sbq.push_back(i);
+      //sbq << i;
+      mos << "push_back(" << i << ") "<< sbq.size()<<"\n";
       this_thread::sleep_for(chrono::milliseconds(200));
     }
   }
@@ -35,16 +42,19 @@ void producer(boost::externally_locked_stream<std::ostream> &mos, boost::sync_qu
   }
 }
 
-void consumer(boost::externally_locked_stream<std::ostream> &mos, boost::sync_queue<int> & sbq)
+void consumer(
+    the_ostream &mos,
+    boost::sync_queue<int> & sbq)
 {
   using namespace boost;
   try {
     for(int i=0; ;++i)
     {
       int r;
-      //sbq.pull(r);
-      sbq >> r;
+      sbq.pull_front(r);
+      //sbq >> r;
       mos << i << " pull(" << r << ") "<< sbq.size()<<"\n";
+
       this_thread::sleep_for(chrono::milliseconds(250));
     }
   }
@@ -57,17 +67,18 @@ void consumer(boost::externally_locked_stream<std::ostream> &mos, boost::sync_qu
     mos << "exception !!!\n";
   }
 }
-void consumer2(boost::externally_locked_stream<std::ostream> &mos, boost::sync_queue<int> & sbq)
+void consumer2(the_ostream &mos, boost::sync_queue<int> & sbq)
 {
   using namespace boost;
   try {
-    bool closed=false;
     for(int i=0; ;++i)
     {
       int r;
-      sbq.pull(r, closed);
-      if (closed) break;
-      mos << i << " pull(" << r << ")\n";
+      queue_op_status st = sbq.try_pull_front(r);
+      if (queue_op_status::closed == st) break;
+      if (queue_op_status::success == st) {
+        mos << i << " pull(" << r << ")\n";
+      }
       this_thread::sleep_for(chrono::milliseconds(250));
     }
   }
@@ -76,7 +87,7 @@ void consumer2(boost::externally_locked_stream<std::ostream> &mos, boost::sync_q
     mos << "exception !!!\n";
   }
 }
-//void consumer3(boost::externally_locked_stream<std::ostream> &mos, boost::sync_queue<int> & sbq)
+//void consumer3(the_ostream &mos, boost::sync_queue<int> & sbq)
 //{
 //  using namespace boost;
 //  bool closed=false;
@@ -100,11 +111,17 @@ int main()
 {
   using namespace boost;
 
+#ifdef XXXX
   recursive_mutex terminal_mutex;
 
   externally_locked_stream<std::ostream> mcerr(std::cerr, terminal_mutex);
   externally_locked_stream<std::ostream> mcout(std::cout, terminal_mutex);
   externally_locked_stream<std::istream> mcin(std::cin, terminal_mutex);
+#else
+  the_ostream &mcerr = std::cout;
+  the_ostream &mcout = std::cerr;
+  //the_istream &mcin = std::cin;
+#endif
 
   sync_queue<int> sbq;
 

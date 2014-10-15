@@ -69,10 +69,11 @@ void test_make_expr()
 void test_make_expr_ref()
 {
     int i = 42;
-    proto::terminal<int const &>::type t1 = proto::make_expr<proto::tag::terminal>(boost::cref(1)); // DANGEROUS
+    int const ci = 84;
+    proto::terminal<int const &>::type t1 = proto::make_expr<proto::tag::terminal>(boost::cref(ci));
     proto::terminal<int &>::type t2 = proto::make_expr<proto::tag::terminal>(boost::ref(i));
     BOOST_CHECK_EQUAL(&i, &proto::value(t2));
-    proto::unary_plus<proto::terminal<int const &>::type>::type p1 = proto::make_expr<proto::tag::unary_plus>(boost::cref(1)); // DANGEROUS
+    proto::unary_plus<proto::terminal<int const &>::type>::type p1 = proto::make_expr<proto::tag::unary_plus>(boost::cref(ci));
     proto::unary_plus<proto::terminal<int &>::type>::type p2 = proto::make_expr<proto::tag::unary_plus>(boost::ref(i));
     BOOST_CHECK_EQUAL(proto::value(proto::child(p2)), 42);
 
@@ -143,10 +144,11 @@ void test_make_expr_functional()
 void test_make_expr_functional_ref()
 {
     int i = 42;
-    proto::terminal<int const &>::type t1 = proto::functional::make_expr<proto::tag::terminal>()(boost::cref(1)); // DANGEROUS
+    int const ci = 84;
+    proto::terminal<int const &>::type t1 = proto::functional::make_expr<proto::tag::terminal>()(boost::cref(ci));
     proto::terminal<int &>::type t2 = proto::functional::make_expr<proto::tag::terminal>()(boost::ref(i));
     BOOST_CHECK_EQUAL(&i, &proto::value(t2));
-    proto::unary_plus<proto::terminal<int const &>::type>::type p1 = proto::functional::make_expr<proto::tag::unary_plus>()(boost::cref(1)); // DANGEROUS
+    proto::unary_plus<proto::terminal<int const &>::type>::type p1 = proto::functional::make_expr<proto::tag::unary_plus>()(boost::cref(ci));
     proto::unary_plus<proto::terminal<int &>::type>::type p2 = proto::functional::make_expr<proto::tag::unary_plus>()(boost::ref(i));
     BOOST_CHECK_EQUAL(proto::value(proto::child(p2)), 42);
 

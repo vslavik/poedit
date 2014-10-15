@@ -5,7 +5,7 @@
  * Subject to the Boost Software License, Version 1.0. 
  * (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt)
  * Author: Jeff Garland, Bart Garst
- * $Date: 2013-09-21 13:17:00 -0700 (Sat, 21 Sep 2013) $
+ * $Date$
  */
 
 #include <map>
@@ -180,7 +180,6 @@ namespace boost {
       /*! May throw data_not_accessible, or bad_field_count exceptions */
       void load_from_file(const std::string& pathspec)
       {
-        string_type in_str;
         std::string  buff;
         
         std::ifstream ifs(pathspec.c_str());
@@ -261,8 +260,12 @@ namespace boost {
         e_wn = get_week_num(e_nth);
         
         
-        return new rule_type(start_rule(s_wn, s_d, s_m),
-                             end_rule(e_wn, e_d, e_m));
+        return new rule_type(start_rule(s_wn,
+                                        static_cast<unsigned short>(s_d),
+                                        static_cast<unsigned short>(s_m)),
+                             end_rule(e_wn,
+                                      static_cast<unsigned short>(e_d),
+                                      static_cast<unsigned short>(e_m)));
       }
       //! helper function for parse_rules()
       week_num get_week_num(int nth) const

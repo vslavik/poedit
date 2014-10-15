@@ -10,6 +10,7 @@
 #define QUICKBOOK_DEPENDENCY_TRACKER_HPP
 
 #include <map>
+#include <set>
 #include <iosfwd>
 #include <boost/filesystem/path.hpp>
 
@@ -21,7 +22,11 @@ namespace quickbook
     private:
 
         typedef std::map<fs::path, bool> dependency_list;
+        typedef std::map<fs::path, std::set<fs::path> > glob_list;
+
         dependency_list dependencies;
+        glob_list glob_dependencies;
+        glob_list::iterator last_glob;
 
     public:
 
@@ -31,9 +36,14 @@ namespace quickbook
             escaped = 2
         };
 
+        dependency_tracker();
+
         // Call this before loading any file so that it will be included in the
         // list of dependencies. Returns true if file exists.
         bool add_dependency(fs::path const&);
+
+        void add_glob(fs::path const&);
+        void add_glob_match(fs::path const&);
 
         void write_dependencies(fs::path const&, flags = default_);
         void write_dependencies(std::ostream&, flags = default_);

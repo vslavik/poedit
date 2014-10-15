@@ -26,15 +26,15 @@
 
 
 
-template 
+template
 <
-    typename Geometry1, 
-    typename Geometry2, 
-    bg::overlay_type OverlayType, 
+    typename Geometry1,
+    typename Geometry2,
+    bg::overlay_type OverlayType,
     typename RingIdVector,
     typename WithinVector
 >
-void test_geometry(std::string const& wkt1, std::string const& wkt2, 
+void test_geometry(std::string const& wkt1, std::string const& wkt2,
     RingIdVector const& expected_ids,
     WithinVector const& expected_withins)
 {
@@ -80,7 +80,7 @@ void test_all()
     typedef bg::ring_identifier rid;
 
     test_geometry<bg::model::polygon<P>, bg::model::polygon<P>, bg::overlay_union>(
-        winded[0], winded[1], 
+        winded[0], winded[1],
         boost::assign::list_of
                 (rid(0,-1,-1))
                 (rid(0,-1, 0))
@@ -97,7 +97,7 @@ void test_all()
                 (-1)
                 (-1)
             );
-            
+
             //boost::assign::tuple_list_of(0,-1,-1,-1)(0,-1,0,-1)(0,-1,1,-1)(0,-1,3,-1)(1,-1,1,-1)(1,-1,2,-1));
 
     test_geometry<bg::model::polygon<P>, bg::model::polygon<P>, bg::overlay_intersection>(

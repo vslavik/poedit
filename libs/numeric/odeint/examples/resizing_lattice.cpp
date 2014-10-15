@@ -5,7 +5,8 @@
  * Examplary system is a strongly nonlinear, disordered Hamiltonian lattice
  * where the spreading of energy is investigated
  *
- * Copyright 2009-2012 Karsten Ahnert and Mario Mulansky.
+ * Copyright 2011-2012 Mario Mulansky
+ * Copyright 2012-2013 Karsten Ahnert
  * Distributed under the Boost Software License, Version 1.0. (See
  * accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)

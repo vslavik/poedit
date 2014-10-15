@@ -18,21 +18,21 @@
 
 #define BOOST_CONTEXT_CYCLE
 
-typedef boost::uint64_t cycle_t;
+typedef boost::uint64_t cycle_type;
 
 #if _MSC_VER >= 1400
 # include <intrin.h>
 # pragma intrinsic(__rdtsc)
 inline
-cycle_t cycles()
+cycle_type cycles()
 { return __rdtsc(); }
 #elif defined(__INTEL_COMPILER) || defined(__ICC) || defined(_ECC) || defined(__ICL)
 inline
-cycle_t cycles()
+cycle_type cycles()
 { return __rdtsc(); }
 #elif defined(__GNUC__) || defined(__SUNPRO_C)
 inline
-cycle_t cycles()
+cycle_type cycles()
 {
     boost::uint32_t lo, hi;
 
@@ -48,30 +48,30 @@ cycle_t cycles()
         ::: "%rax", "%rbx", "%rcx", "%rdx"
     );
 
-    return ( cycle_t)hi << 32 | lo; 
+    return ( cycle_type)hi << 32 | lo; 
 }
 #else
 # error "this compiler is not supported"
 #endif
 
-struct measure_cycles
+struct cycle_overhead
 {
-    cycle_t operator()()
+    cycle_type operator()()
     {
-        cycle_t start( cycles() );
+        cycle_type start( cycles() );
         return cycles() - start;
     }
 };
 
 inline
-cycle_t overhead_cycles()
+cycle_type overhead_cycle()
 {
     std::size_t iterations( 10);
-    std::vector< cycle_t >  overhead( iterations, 0);
+    std::vector< cycle_type >  overhead( iterations, 0);
     for ( std::size_t i( 0); i < iterations; ++i)
         std::generate(
             overhead.begin(), overhead.end(),
-            measure_cycles() );
+            cycle_overhead() );
     BOOST_ASSERT( overhead.begin() != overhead.end() );
     return std::accumulate( overhead.begin(), overhead.end(), 0) / iterations;
 }

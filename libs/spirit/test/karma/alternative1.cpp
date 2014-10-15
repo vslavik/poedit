@@ -96,6 +96,14 @@ main()
     }
 
     {
+        optional<std::string> o;
+        BOOST_TEST(test("xyzzy", ("(" << string << ")") | lit("xyzzy"), o));
+
+        o = "plugh";
+        BOOST_TEST(test("(plugh)", ("(" << string << ")") | lit("xyzzy"), o));
+    }
+
+    {
         BOOST_TEST(test("abc", string | int_, std::string("abc")));
         BOOST_TEST(test("1234", string | int_, 1234));
         BOOST_TEST(test("abc", int_ | string, std::string("abc")));
@@ -116,10 +124,12 @@ main()
     {
         boost::optional<int> v;
         BOOST_TEST(test("error", int_ | "error" << omit[-int_], v));
-        BOOST_TEST(test("error", int_ | "error" << omit[int_], v));
+        BOOST_TEST(!test("error", int_ | "error" << omit[int_], v));
+        BOOST_TEST(test("error", int_ | "error" << skip[int_], v));
         v = 1;
         BOOST_TEST(test("1", int_ | "error" << omit[-int_], v));
         BOOST_TEST(test("1", int_ | "error" << omit[int_], v));
+        BOOST_TEST(test("1", int_ | "error" << skip[int_], v));
     }
 
     {

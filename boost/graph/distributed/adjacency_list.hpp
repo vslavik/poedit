@@ -1490,7 +1490,7 @@ namespace boost {
     adjacency_list(const ProcessGroup& pg = ProcessGroup())
       : named_graph_mixin(pg, default_distribution_type(pg, 0)),
         m_local_graph(GraphProperty()), 
-        process_group_(pg, graph::parallel::attach_distributed_object())
+        process_group_(pg, boost::parallel::attach_distributed_object())
     {
       setup_triggers();
     }
@@ -1499,7 +1499,7 @@ namespace boost {
                    const base_distribution_type& distribution)
       : named_graph_mixin(pg, distribution),
         m_local_graph(GraphProperty()), 
-        process_group_(pg, graph::parallel::attach_distributed_object())
+        process_group_(pg, boost::parallel::attach_distributed_object())
     {
       setup_triggers();
     }
@@ -1508,7 +1508,7 @@ namespace boost {
                    const ProcessGroup& pg = ProcessGroup())
       : named_graph_mixin(pg, default_distribution_type(pg, 0)),
         m_local_graph(g), 
-        process_group_(pg, graph::parallel::attach_distributed_object())
+        process_group_(pg, boost::parallel::attach_distributed_object())
     {
       setup_triggers();
     }
@@ -1519,7 +1519,7 @@ namespace boost {
                    const base_distribution_type& distribution)
       : named_graph_mixin(pg, distribution),
         m_local_graph(distribution.block_size(process_id(pg), n), p),
-        process_group_(pg, graph::parallel::attach_distributed_object())
+        process_group_(pg, boost::parallel::attach_distributed_object())
     {
       setup_triggers();
 
@@ -1532,7 +1532,7 @@ namespace boost {
                    const base_distribution_type& distribution)
       : named_graph_mixin(pg, distribution),
         m_local_graph(distribution.block_size(process_id(pg), n), GraphProperty()),
-        process_group_(pg, graph::parallel::attach_distributed_object()) 
+        process_group_(pg, boost::parallel::attach_distributed_object()) 
     {
       setup_triggers();
 
@@ -1545,7 +1545,7 @@ namespace boost {
                    const ProcessGroup& pg = ProcessGroup())
       : named_graph_mixin(pg, default_distribution_type(pg, n)),
         m_local_graph(this->distribution().block_size(process_id(pg), n), p),
-        process_group_(pg, graph::parallel::attach_distributed_object())
+        process_group_(pg, boost::parallel::attach_distributed_object())
     {
       setup_triggers();
 
@@ -1558,7 +1558,7 @@ namespace boost {
       : named_graph_mixin(pg, default_distribution_type(pg, n)),
         m_local_graph(this->distribution().block_size(process_id(pg), n), 
                       GraphProperty()),
-        process_group_(pg, graph::parallel::attach_distributed_object())
+        process_group_(pg, boost::parallel::attach_distributed_object())
     {
       setup_triggers();
 
@@ -1579,7 +1579,7 @@ namespace boost {
                    const GraphProperty& p = GraphProperty())
       : named_graph_mixin(pg, default_distribution_type(pg, n)),
         m_local_graph(this->distribution().block_size(process_id(pg), n), p),
-        process_group_(pg, graph::parallel::attach_distributed_object())
+        process_group_(pg, boost::parallel::attach_distributed_object())
     {
       setup_triggers();
 
@@ -1598,7 +1598,7 @@ namespace boost {
                    const GraphProperty& p = GraphProperty())
       : named_graph_mixin(pg, default_distribution_type(pg, n)),
         m_local_graph(this->distribution().block_size(process_id(pg), n), p),
-        process_group_(pg, graph::parallel::attach_distributed_object())
+        process_group_(pg, boost::parallel::attach_distributed_object())
     {
       setup_triggers();
 
@@ -1618,7 +1618,7 @@ namespace boost {
                    const GraphProperty& p = GraphProperty())
       : named_graph_mixin(pg, distribution),
         m_local_graph(distribution.block_size(process_id(pg), n), p),
-        process_group_(pg, graph::parallel::attach_distributed_object())
+        process_group_(pg, boost::parallel::attach_distributed_object())
     {
       setup_triggers();
 
@@ -1638,7 +1638,7 @@ namespace boost {
                    const GraphProperty& p = GraphProperty())
       : named_graph_mixin(pg, distribution),
         m_local_graph(this->distribution().block_size(process_id(pg), n), p),
-        process_group_(pg, graph::parallel::attach_distributed_object())
+        process_group_(pg, boost::parallel::attach_distributed_object())
     {
       setup_triggers();
 
@@ -2480,7 +2480,7 @@ namespace boost {
       else {
         // Edge is remote, so notify the target's owner that an edge
         // has been added.
-        if (self.process_group_.trigger_context() == graph::parallel::trc_out_of_band)
+        if (self.process_group_.trigger_context() == boost::parallel::trc_out_of_band)
           send_oob(self.process_group_, target.owner, msg_nonlocal_edge,
                    msg_nonlocal_edge_data(result.first.local, property));
         else
@@ -2519,7 +2519,7 @@ namespace boost {
       else {
         // Edge is remote, so notify the target's owner that an edge
         // has been added.
-        if (self.process_group_.trigger_context() == graph::parallel::trc_out_of_band)
+        if (self.process_group_.trigger_context() == boost::parallel::trc_out_of_band)
           send_oob(self.process_group_, target.owner, msg_nonlocal_edge,
                    msg_nonlocal_edge_data(result.first.local, property));
         else

@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../intrusive.html" title="Chapter&#160;14.&#160;Boost.Intrusive">
+<link rel="up" href="../intrusive.html" title="Chapter&#160;16.&#160;Boost.Intrusive">
 <link rel="prev" href="auto_unlink_hooks.html" title="Auto-unlink hooks">
 <link rel="next" href="list.html" title="Intrusive doubly linked list: list">
 </head>
@@ -139,13 +139,13 @@
           </li>
 <li class="listitem">
             <span class="bold"><strong><code class="computeroutput"><span class="identifier">cache_last</span><span class="special">&lt;</span><span class="keyword">bool</span> <span class="identifier">Enable</span><span class="special">&gt;</span></code></strong></span>:
-            the singly linked also stores a pointer to the last element of the singly
-            linked list. This allows <code class="computeroutput"><span class="identifier">O</span><span class="special">(</span><span class="number">1</span><span class="special">)</span></code>
-            swap, <code class="computeroutput"><span class="identifier">splice_after</span><span class="special">(</span><span class="identifier">iterator</span><span class="special">,</span>
+            <code class="computeroutput"><span class="identifier">slist</span></code> also stores a pointer
+            to the last element of the singly linked list. This allows <code class="computeroutput"><span class="identifier">O</span><span class="special">(</span><span class="number">1</span><span class="special">)</span></code> swap,
+            <code class="computeroutput"><span class="identifier">splice_after</span><span class="special">(</span><span class="identifier">iterator</span><span class="special">,</span>
             <span class="identifier">slist</span> <span class="special">&amp;)</span></code>
             and makes the list offer new functions like <code class="computeroutput"><span class="identifier">push_back</span><span class="special">(</span><span class="identifier">reference</span><span class="special">)</span></code> and <code class="computeroutput"><span class="identifier">back</span><span class="special">()</span></code>. Logically, the size an empty list
             is increased in <code class="computeroutput"><span class="keyword">sizeof</span><span class="special">(</span><span class="identifier">void_pointer</span><span class="special">)</span></code>
-            and the the cached last node pointer must be updated in every operation,
+            and the cached last node pointer must be updated in every operation,
             and that might incur in a slight performance impact.
           </li>
 </ul></div>

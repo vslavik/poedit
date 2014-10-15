@@ -31,7 +31,7 @@ int main()
     {
         // initialize lexer
         std::string str("def");
-        token_def ws_tok ("[\\v\\f\\n\\r]*");
+        token_def ws_tok ("[\\v\\f\\n\\r]+");
         lexer_def lex;
         lex.self = c_comment;
         lex.self += cpp_comment | '1' | '2' | '3' | "abc" | str;
@@ -50,7 +50,7 @@ int main()
     {
         // initialize lexer
         lexer_def lex;
-        token_def ws_tok ("[\\v\\f\\n\\r]*");
+        token_def ws_tok ("[\\v\\f\\n\\r]+");
         lex.self = c_comment;
         lex.self += cpp_comment | '1' | '2' | '3';
         lex.self("WHITESPACE") = token_def(' ') | '\t' | ws_tok;

@@ -10,7 +10,7 @@
 #include <iostream>
 #include <iomanip>
 
-#if defined(BOOST_NO_CXX11_HDR_ARRAY) && !defined(BOOST_NO_CXX11_LAMBDAS)
+#if !defined(BOOST_NO_CXX11_HDR_ARRAY) && !defined(BOOST_NO_CXX11_LAMBDAS)
 
 #include <array>
 

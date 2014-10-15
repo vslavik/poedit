@@ -3,6 +3,8 @@
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) ]
 
+[template ticket[number]'''<ulink url="https://svn.boost.org/trac/boost/ticket/'''[number]'''">'''#[number]'''</ulink>''']
+
 [section:changes Change Log]
 
 [h2 Boost 1.33.0]
@@ -159,5 +161,17 @@
 
 * [@https://svn.boost.org/trac/boost/ticket/7957 Ticket 7957]:
   Fixed a typo.
+
+[h2 Boost 1.55.0]
+
+* Simplify a SFINAE check so that it will hopefully work on Sun 5.9
+  ([ticket 8822]).
+* Suppress Visual C++ infinite loop warning ([ticket 8568]).
+
+[h2 Boost 1.56.0]
+
+* Removed some Visual C++ 6 workarounds.
+* Ongoing work on improving `hash_combine`. This changes the combine function
+  which was previously defined in the reference documentation.
 
 [endsect]

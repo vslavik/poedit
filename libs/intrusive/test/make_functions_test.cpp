@@ -183,12 +183,6 @@ int main()
       return 1;
    }
 
-   if(detail::is_same<make_splay_set_base_hook<void_pointer<void*>, link_mode<safe_link> >::type
-                     ,make_splay_set_base_hook<>::type
-                     >::value == false){
-      return 1;
-   }
-
    //Check defined types and implicitly defined types are unequal
    if(detail::is_same<make_list_base_hook<void_pointer<void*>, link_mode<normal_link> >::type
                      ,make_list_base_hook<>::type
@@ -216,12 +210,6 @@ int main()
 
    if(detail::is_same<make_avl_set_base_hook<void_pointer<void*>, link_mode<normal_link> >::type
                      ,make_avl_set_base_hook<>::type
-                     >::value == true){
-      return 1;
-   }
-
-   if(detail::is_same<make_splay_set_base_hook<void_pointer<void*>, link_mode<normal_link> >::type
-                     ,make_splay_set_base_hook<>::type
                      >::value == true){
       return 1;
    }

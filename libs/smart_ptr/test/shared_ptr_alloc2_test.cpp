@@ -91,7 +91,7 @@ public:
         ::operator delete( p );
     }
 
-    pointer allocate( size_type n, void const * )
+    pointer allocate( size_type n, void const * = 0 )
     {
         T * p = static_cast< T* >( ::operator new( n * sizeof( T ) ) );
 
@@ -107,7 +107,7 @@ public:
 
     void construct( pointer p, T const & t )
     {
-        new( p ) T( t );
+        ::new( p ) T( t );
     }
 
     void destroy( pointer p )

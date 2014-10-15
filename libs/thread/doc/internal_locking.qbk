@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2008 Vicente J. Botet Escriba
+ / Copyright (c) 2008,2014 Vicente J. Botet Escriba
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -14,7 +14,7 @@ Consider, for example, modeling a bank account class that supports simultaneous 
 
 From here a component is a model of the `Callable` concept.
 
-On C++11 (Boost) concurrent execution of a component is obtained by means of the `std::thread`(`boost::thread`):
+I C++11 (Boost) concurrent execution of a component is obtained by means of the `std::thread`(`boost::thread`):
 
     boost::thread thread1(S);
 
@@ -53,12 +53,12 @@ The following example includes a bank account of a person (Joe) and two componen
       return 0;
   }
 
-From time to time, the `bankAgent` will deposit $500 in `JoesAccount`. Joe will similarly withdraw $100 from his account. These sentences describe that the bankAgent and Joe are executed concurrently.
+From time to time, the `bankAgent` will deposit $500 in `JoesAccount`. `Joe` will similarly withdraw $100 from his account. These sentences describe that the `bankAgent` and `Joe` are executed concurrently.
 
 [endsect]
 [section  Internal locking]
 
-The above example works well as long as the bankAgent and Joe doesn't access JoesAccount at the same time. There is, however, no guarantee that this will not happen. We may use a mutex to guarantee exclusive access to each bank.
+The above example works well as long as the components `bankAgent` and `Joe` doesn't access `JoesAccount` at the same time. There is, however, no guarantee that this will not happen. We may use a mutex to guarantee exclusive access to each bank.
 
   class BankAccount {
       boost::mutex mtx_;
@@ -82,11 +82,11 @@ The above example works well as long as the bankAgent and Joe doesn't access Joe
       }
   };
 
-Execution of the Deposit and Withdraw operations will no longer be able to make simultaneous access to balance.
+Execution of the `Deposit` and `Withdraw` operations will no longer be able to make simultaneous access to balance.
 
-Mutex is a simple and basic mechanism for obtaining synchronization. In the above example it is relatively easy to be convinced that the synchronization works correctly (in the absence of exception). In a system with several concurrent objects and several shared objects, it may be difficult to describe synchronization by means of mutexes. Programs that make heavy use of mutexes may be difficult to read and write. Instead, we shall introduce a number of generic classes for handling more complicated forms of synchronization and communication.
+A mutex is a simple and basic mechanism for obtaining synchronization. In the above example it is relatively easy to be convinced that the synchronization works correctly (in the absence of exception). In a system with several concurrent objects and several shared objects, it may be difficult to describe synchronization by means of mutexes. Programs that make heavy use of mutexes may be difficult to read and write. Instead, we shall introduce a number of generic classes for handling more complicated forms of synchronization and communication.
 
-With the RAII idiom we can simplify a lot this using the scoped locks. In the code below, guard's constructor locks the passed-in object this, and guard's destructor unlocks this.
+With the RAII idiom we can simplify a lot this using the scoped locks. In the code below, guard's constructor locks the passed-in object `mtx_`, and guard's destructor unlocks `mtx_`.
 
   class BankAccount {
       boost::mutex mtx_; // explicit mutex declaration 
@@ -135,10 +135,10 @@ In an attempt to solve this problem, let's lock the account from the outside dur
       acct.Withdraw(2);
   }
 
-Notice that the code above doesn't compiles, the `mtx_` field is private.
+Notice that the code above doesn't compile, the `mtx_` field is private.
 We have two possibilities:
 
-* make `mtx_` public which seams odd
+* make `mtx_` public which seems odd
 * make the `BankAccount` lockable by adding the lock/unlock functions
 
 We can add these functions explicitly

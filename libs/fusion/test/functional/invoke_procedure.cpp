@@ -10,6 +10,10 @@
 #include <boost/fusion/functional/invocation/invoke_procedure.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+#include <functional>
+#endif
+
 #include <memory>
 #include <boost/noncopyable.hpp>
 
@@ -256,8 +260,19 @@ int main()
 
     vector0 v0;
     vector1 v1(element1);
+
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+    // Note: C++11 will pickup the rvalue overload for the d argument
+    // since we do not have all permutations (expensive!) for all const&
+    // and && arguments. We either have all && or all const& arguments only.
+    // For that matter, use std::ref to disambiguate the call.
+
+    vector2 v2(std::ref(element1), element2);
+    vector3 v3(std::ref(element1), element2, std::ref(element3));
+#else
     vector2 v2(element1, element2);
     vector3 v3(element1, element2, element3);
+#endif
 
     test_sequence(v0);
     test_sequence(v1);

@@ -1,8 +1,10 @@
 [/============================================================================
   Boost.odeint
 
-  Copyright (c) 2009-2012 Karsten Ahnert
-  Copyright (c) 2009-2012 Mario Mulansky
+  Copyright 2009-2012 Karsten Ahnert
+  Copyright 2011-2013 Mario Mulansky
+  Copyright 2012 Sylwester Arabas
+  Copyright 2013 Pascal Germroth
 
   Use, modification and distribution is subject to the Boost Software License,
   Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -33,21 +35,25 @@
 
 
 [def __boost_lambda
-    [@http://www.boost.org/doc/libs/release/doc/html/lambda.html Boost.Lambda]]
+    [@http://www.boost.org/doc/libs/release/libs/lambda/ Boost.Lambda]]
 [def __boost_phoenix
-    [@http://www.boost.org/doc/libs/1_46_1/libs/spirit/phoenix/doc/html/index.html Boost.Phoenix]]
+    [@http://www.boost.org/doc/libs/release/libs/phoenix/ Boost.Phoenix]]
 [def __boost_operators
-    [@http://www.boost.org/doc/libs/release/doc/html/operators.html Boost.Operators]]
+    [@http://www.boost.org/doc/libs/release/libs/utility/operators.htm Boost.Operators]]
 [def __boost_ref
-    [@http://www.boost.org/doc/libs/release/doc/html/ref.html Boost.Ref]]
+    [@http://www.boost.org/doc/libs/release/libs/bind/ref.html Boost.Ref]]
 [def __boost_range
-    [@http://www.boost.org/doc/libs/release/libs/range/index.html Boost.Range]]
+    [@http://www.boost.org/doc/libs/release/libs/range/ Boost.Range]]
 [def __boost_units
-    [@http://www.boost.org/doc/libs/release/libs/units/index.html Boost.Units]]
+    [@http://www.boost.org/doc/libs/release/libs/units/ Boost.Units]]
 [def __boost_fusion
-    [@http://www.boost.org/doc/libs/release/libs/fusion/index.html Boost.Fusion]]
+    [@http://www.boost.org/doc/libs/release/libs/fusion/ Boost.Fusion]]
 [def __boost_graph
-    [@http://www.boost.org/doc/libs/1_47_0/libs/graph/doc/table_of_contents.html Boost.Graph]]
+    [@http://www.boost.org/doc/libs/release/libs/graph/ Boost.Graph]]
+[def __boost_multiprecision
+    [@http://www.boost.org/doc/libs/release/libs/multiprecision/ Boost.Multiprecision]]
+[def __boost_mpi
+    [@http://www.boost.org/doc/libs/release/libs/mpi/ Boost.MPI]]
 
 [def __thrust
     [@http://code.google.com/p/thrust/ Thrust]]
@@ -70,6 +76,8 @@
     [link boost_numeric_odeint.concepts.simple_symplectic_system Simple Symplectic System]]
 [def __implicit_system
     [link boost_numeric_odeint.concepts.implicit_system Implicit System]]
+[def __second_order_system
+    [link boost_numeric_odeint.concepts.second_order_system Second Order System]]
 [def __stepper
     [link boost_numeric_odeint.concepts.stepper Stepper]]
 [def __error_stepper
@@ -116,37 +124,65 @@
 
 
 [def __alpha '''&#945;''']
+[def __Alpha '''&#913;''']
 [def __beta '''&#946;''']
-[def __delta '''&#948;''']
-[def __Delta '''&#916;''']
-[def __lambda '''&#955;'''][/lower case]
-[def __Lambda '''&#923;'''][/upper case]
+[def __Beta '''&#914;''']
 [def __gamma '''&#947;''']
 [def __Gamma '''&#915;''']
-[def __sigma '''&#963;''']
-[def __Sigma '''&#931;''']
-[def __Omega '''&#937;''']
-[def __omega '''&#969;''']
-[def __phi '''&#966;''']
-[def __psi '''&ä968;''']
-[def __Phi '''&#934;''']
-[def __Psi '''&#936;''']
+[def __delta '''&#948;''']
+[def __Delta '''&#916;''']
 [def __epsilon '''&#949;''']
+[def __Epsilon '''&#917;''']
+[def __zeta '''&#950;''']
+[def __Zeta '''&#918;''']
 [def __eta '''&#951;''']
+[def __Eta '''&#919;''']
 [def __theta '''&#952;''']
 [def __Theta '''&#920;''']
+[def __iota '''&#953;''']
+[def __Iota '''&#921;''']
+[def __kappa '''&#954;''']
+[def __Kappa '''&#922;''']
+[def __lambda '''&#955;'''][/lower case]
+[def __Lambda '''&#923;'''][/upper case]
+[def __mu '''&#956;''']
+[def __Mu '''&#924;''']
+[def __nu '''&#957;''']
+[def __Nu '''&#925;''']
 [def __xi '''&#958;''']
+[def __Xi '''&#926;''']
+[def __omicron '''&#959;''']
+[def __Omicron '''&#927;''']
+[def __pi '''&#960;''']
+[def __Pi '''&#928;''']
+[def __rho '''&#961;''']
+[def __Rho '''&#929;''']
+[def __sigma '''&#963;''']
+[def __Sigma '''&#931;''']
+[def __tau '''&#964;''']
+[def __Tau '''&#932;''']
+[def __upsilon '''&#965;''']
+[def __Upsilon '''&#933;''']
+[def __phi '''&#966;''']
+[def __Phi '''&#934;''']
+[def __chi '''&#967;''']
+[def __Chi '''&#935;''']
+[def __psi '''&#968;''']
+[def __Psi '''&#936;''']
+[def __Omega '''&#937;''']
+[def __omega '''&#969;''']
 
 [def __space '''&#8203;''']
 
 
 
 [template super[x]'''<superscript>'''[x]'''</superscript>''']
+[template supl[x]'''<superscript>'''__space[x]'''</superscript>''']
 [template sub[x]'''<subscript>'''[x]'''</subscript>''']
 [template subl[x]'''<subscript>'''__space[x]'''</subscript>''']
 
-[/ [template github_link[url text]'''<ulink url="https://github.com/headmyshoulder/odeint-v2/tree/master/'''[url]'''" target="_blank">'''[text]'''</ulink>''']]
-[template github_link[url text]'''<ulink url="../../../../../'''[url]'''" target="_blank">'''[text]'''</ulink>''']
+[template github_link[url text]'''<ulink url="https://github.com/headmyshoulder/odeint-v2/tree/master/'''[url]'''" target="_blank">'''[text]'''</ulink>''']
+[/ [template github_link[url text]'''<ulink url="../../../../../'''[url]'''" target="_blank">'''[text]'''</ulink>''']]
 
 
 

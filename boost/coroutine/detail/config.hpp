@@ -36,26 +36,14 @@
 #endif
 
 #if defined(BOOST_USE_SEGMENTED_STACKS)
-# if ! (defined(__GNUC__) && __GNUC__ > 3 && __GNUC_MINOR__ > 6)
+# if ! ( (defined(__GNUC__) && __GNUC__ > 3 && __GNUC_MINOR__ > 6) || \
+         (defined(__clang__) && __clang_major__ > 2 && __clang_minor__ > 3) )
 #  error "compiler does not support segmented stacks"
 # endif
 # define BOOST_COROUTINES_SEGMENTS 10
 #endif
 
-#if defined(BOOST_COROUTINES_V2)
-# define BOOST_COROUTINES_UNIDIRECT
-#endif
-
-#if defined(BOOST_COROUTINES_V1)
-# define BOOST_COROUTINES_OLD
-#endif
-
-#if defined(BOOST_COROUTINES_BIDIRECT)
-# define BOOST_COROUTINES_OLD
-#endif
-
-#if ! defined(BOOST_COROUTINES_OLD)
-# define BOOST_COROUTINES_UNIDIRECT
-#endif
+#define BOOST_COROUTINES_UNIDIRECT
+#define BOOST_COROUTINES_SYMMETRIC
 
 #endif // BOOST_COROUTINES_DETAIL_CONFIG_H

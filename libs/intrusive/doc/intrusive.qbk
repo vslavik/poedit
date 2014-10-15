@@ -871,11 +871,11 @@ the section [link intrusive.usage How to use Boost.Intrusive]:
 *  [*`linear<bool Enable>`]: the singly linked list is implemented as a
    null-terminated list instead of a circular list. This allows `O(1)` swap,
    but losses some operations like `container_from_end_iterator`.
-*  [*`cache_last<bool Enable>`]: the singly linked also stores a pointer to the
+*  [*`cache_last<bool Enable>`]: `slist` also stores a pointer to the
    last element of the singly linked list. This allows `O(1)` swap,
    `splice_after(iterator, slist &)` and makes the list offer new functions
    like `push_back(reference)` and `back()`. Logically, the size an empty list is
-   increased in `sizeof(void_pointer)` and the the cached last node pointer must
+   increased in `sizeof(void_pointer)` and the cached last node pointer must
    be updated in every operation, and that might incur in a slight performance impact.
 
 `auto_unlink` hooks are not usable if `linear<true>` and/or `cache_last<true>` options are
@@ -1364,163 +1364,6 @@ the unordered container:
 
 [endsect]
 
-[section:splay_set_multiset Intrusive splay tree based associative containers: splay_set, splay_multiset and , splay_tree]
-
-C++ associative containers are usually based on red-black tree implementations (e.g.: STL,
-Boost.Intrusive associative containers). However, there are other interesting data
-structures that offer some advantages (and also disadvantages).
-
-Splay trees are self-adjusting binary search trees used typically in caches, memory
-allocators and other applications, because splay trees have a "caching effect": recently
-accessed elements have better access times than elements accessed less frequently.
-For more information on splay trees see [@http://en.wikipedia.org/wiki/Splay_tree Wikipedia entry].
-
-[*Boost.Intrusive] offers 3 containers based on splay trees:
-[classref boost::intrusive::splay_set splay_set],
-[classref boost::intrusive::splay_multiset splay_multiset] and
-[classref boost::intrusive::splaytree splaytree]. The first two are similar to
-[classref boost::intrusive::set set] or
-[classref boost::intrusive::multiset multiset] and the latter is a generalization
-that offers functions both to insert unique and multiple keys.
-
-The memory overhead of these containers with Boost.Intrusive hooks is usually 3 pointers.
-An empty, non constant-time size splay container has also a size of 3 pointers.
-
-[section:splay_set_multiset_disadvantages Advantages and disadvantages of splay tree based containers]
-
-Splay tree based intrusive containers have logarithmic complexity in many
-operations like searches, insertions, erasures, etc., but if some elements are
-more frequently accessed than others, splay trees perform faster searches than equivalent
-balanced binary trees (such as red-black trees).
-
-The caching effect offered by splay trees comes with a cost: the tree must be
-rebalanced when an element is searched. This disallows const versions of search
-functions like `find()`, `lower_bound()`, `upper_bound()`, `equal_range()`,
-`count()`, etc.
-
-Because of this, splay-tree based associative containers are not drop-in
-replacements of [classref boost::intrusive::set set]/
-[classref boost::intrusive::multiset multiset].
-
-Apart from this, if element searches are randomized, the tree will be rebalanced
-without taking advantage of the cache effect, so splay trees can offer worse
-performance than other balanced trees for some search patterns.
-
-[endsect]
-
-[section:splay_set_multiset_hooks splay_set, splay_multiset and splaytree hooks]
-
-[classref boost::intrusive::splay_set splay_set],
-[classref boost::intrusive::splay_multiset splay_multiset] and
-[classref boost::intrusive::splaytree splaytree]
-share the same hooks.
-
-[c++]
-
-   template <class ...Options>
-   class splay_set_base_hook;
-
-*  [classref boost::intrusive::splay_set_base_hook splay_set_base_hook]:
-   the user class derives publicly from this class to make
-   it compatible with splay tree based containers.
-
-[c++]
-
-   template <class ...Options>
-   class splay_set_member_hook;
-
-*  [classref boost::intrusive::set_member_hook set_member_hook]:
-   the user class contains a public member of this class to make
-   it compatible with splay tree based containers.
-
-[classref boost::intrusive::splay_set_base_hook splay_set_base_hook] and
-[classref boost::intrusive::splay_set_member_hook splay_set_member_hook] receive
-the same options explained in the section
-[link intrusive.usage How to use Boost.Intrusive]:
-
-*  [*`tag<class Tag>`] (for base hooks only): This argument serves as a tag,
-   so you can derive from more than one base hook.
-   Default: `tag<default_tag>`.
-
-*  [*`link_mode<link_mode_type LinkMode>`]: The linking policy.
-   Default: `link_mode<safe_link>`.
-
-*  [*`void_pointer<class VoidPointer>`]: The pointer type to be used
-   internally in the hook and propagated to the container.
-   Default: `void_pointer<void*>`.
-
-[endsect]
-
-[section:set_multiset_containers splay_set, splay_multiset and splaytree containers]
-
-[c++]
-
-   template <class T, class ...Options>
-   class splay_set;
-
-   template <class T, class ...Options>
-   class splay_multiset;
-
-   template <class T, class ...Options>
-   class splaytree;
-
-These containers receive the same options explained in the section
-[link intrusive.usage How to use Boost.Intrusive]:
-
-*  [*`base_hook<class Hook>`] / [*`member_hook<class T, class Hook, Hook T::* PtrToMember>`] /
-   [*`value_traits<class ValueTraits>`]: To specify the hook type or value traits used
-   to configure the container.  (To learn about value traits go to the section
-   [link intrusive.value_traits Containers with custom ValueTraits].)
-
-*  [*`constant_time_size<bool Enabled>`]: To activate the constant-time `size()` operation.
-   Default: `constant_time_size<true>`
-
-*  [*`size_type<bool Enabled>`]: To specify the type that will be used to store the size
-   of the container. Default: `size_type<std::size_t>`
-
-And they also can receive an additional option:
-
-*  [*`compare<class Compare>`]: Comparison function for the objects to be inserted
-   in containers. The comparison functor must induce a strict weak ordering.
-   Default: `compare< std::less<T> >`
-
-[endsect]
-
-[section:splay_set_bst_hook Splay trees with BST hooks]
-
-Intrusive splay containers can also use plain binary search tree hooks
-[classref boost::intrusive::bs_set_base_hook bs_set_base_hook] and
-[classref boost::intrusive::bs_set_base_hook bs_set_base_hook].
-These hooks can be used by other intrusive containers like
-intrusive scapegoat containers
-[classref boost::intrusive::sg_set sg_set] and
-[classref boost::intrusive::sg_multiset sg_multiset]. A programmer
-might prefer using a binary search tree hook so that the same type
-can be inserted in some situations in a splay container but
-also inserted in other compatible containers when
-the hook is not being used in a splay container.
-
-[classref boost::intrusive::bs_set_base_hook bs_set_base_hook] and
-[classref boost::intrusive::bs_set_base_hook bs_set_member_hook] admit
-the same options as [classref boost::intrusive::splay_set_base_hook splay_set_base_hook].
-
-[endsect]
-
-[section:splay_set_multiset_example Example]
-
-Now let's see a small example using both splay hooks,
-binary search tree hooks and
-[classref boost::intrusive::splay_set splay_set]/
-[classref boost::intrusive::splay_multiset splay_multiset]
-containers:
-
-[import ../example/doc_splay_set.cpp]
-[doc_splay_set_code]
-
-[endsect]
-
-[endsect]
-
 [section:avl_set_multiset Intrusive avl tree based associative containers: avl_set, avl_multiset and avltree]
 
 Similar to red-black trees, AVL trees are balanced binary trees.
@@ -1649,6 +1492,103 @@ containers:
 
 [endsect]
 
+[section:splay_set_multiset Intrusive splay tree based associative containers: splay_set, splay_multiset and , splay_tree]
+
+C++ associative containers are usually based on red-black tree implementations (e.g.: STL,
+Boost.Intrusive associative containers). However, there are other interesting data
+structures that offer some advantages (and also disadvantages).
+
+Splay trees are self-adjusting binary search trees used typically in caches, memory
+allocators and other applications, because splay trees have a "caching effect": recently
+accessed elements have better access times than elements accessed less frequently.
+For more information on splay trees see [@http://en.wikipedia.org/wiki/Splay_tree the corresponding Wikipedia entry].
+
+[*Boost.Intrusive] offers 3 containers based on splay trees:
+[classref boost::intrusive::splay_set splay_set],
+[classref boost::intrusive::splay_multiset splay_multiset] and
+[classref boost::intrusive::splaytree splaytree]. The first two are similar to
+[classref boost::intrusive::set set] or
+[classref boost::intrusive::multiset multiset] and the latter is a generalization
+that offers functions both to insert unique and multiple keys.
+
+The memory overhead of these containers with Boost.Intrusive hooks is usually 3 pointers.
+An empty, non constant-time size splay container has also a size of 3 pointers.
+
+[section:splay_set_multiset_disadvantages Advantages and disadvantages of splay tree based containers]
+
+Splay tree based intrusive containers have logarithmic complexity in many
+operations like searches, insertions, erasures, etc., but if some elements are
+more frequently accessed than others, splay trees perform faster searches than equivalent
+balanced binary trees (such as red-black trees).
+
+The caching effect offered by splay trees comes with a cost: the tree must be
+rebalanced when an element is searched. To maintain const-correctness and thread-safety
+guarantees, this caching effect is not updated when const versions of
+search functions like `find()`, `lower_bound()`, `upper_bound()`, `equal_range()`,
+`count()`... are called. This means that using splay-tree based associative containers as drop-in
+replacements of [classref boost::intrusive::set set]/
+[classref boost::intrusive::multiset multiset], specially for const search functions, 
+might not result in desired performance improvements.
+
+If element searches are randomized, the tree will be continuously srebalanced
+without taking advantage of the cache effect, so splay trees can offer worse
+performance than other balanced trees for several search patterns.
+
+[*Boost.Intrusive] splay associative containers don't use their own hook types but plain Binary search tree hooks.
+See [link intrusive.bst_hooks Binary search tree hooks: bs_set_base_hook and bs_set_member_hook] section for more
+information about these hooks.
+
+[endsect]
+
+[section:set_multiset_containers splay_set, splay_multiset and splaytree containers]
+
+[c++]
+
+   template <class T, class ...Options>
+   class splay_set;
+
+   template <class T, class ...Options>
+   class splay_multiset;
+
+   template <class T, class ...Options>
+   class splaytree;
+
+These containers receive the same options explained in the section
+[link intrusive.usage How to use Boost.Intrusive]:
+
+*  [*`base_hook<class Hook>`] / [*`member_hook<class T, class Hook, Hook T::* PtrToMember>`] /
+   [*`value_traits<class ValueTraits>`]: To specify the hook type or value traits used
+   to configure the container.  (To learn about value traits go to the section
+   [link intrusive.value_traits Containers with custom ValueTraits].)
+
+*  [*`constant_time_size<bool Enabled>`]: To activate the constant-time `size()` operation.
+   Default: `constant_time_size<true>`
+
+*  [*`size_type<bool Enabled>`]: To specify the type that will be used to store the size
+   of the container. Default: `size_type<std::size_t>`
+
+And they also can receive an additional option:
+
+*  [*`compare<class Compare>`]: Comparison function for the objects to be inserted
+   in containers. The comparison functor must induce a strict weak ordering.
+   Default: `compare< std::less<T> >`
+
+[endsect]
+
+[section:splay_set_multiset_example Example]
+
+Now let's see a small example using 
+[classref boost::intrusive::splay_set splay_set]/
+[classref boost::intrusive::splay_multiset splay_multiset]
+containers:
+
+[import ../example/doc_splay_set.cpp]
+[doc_splay_set_code]
+
+[endsect]
+
+[endsect]
+
 
 [section:sg_set_multiset Intrusive scapegoat tree based associative containers: sg_set, sg_multiset and sgtree]
 
@@ -1705,50 +1645,9 @@ An empty, [classref boost::intrusive::sg_set sg_set],
 has also the size of 3 pointers, two integers and two floating point values
 (equivalent to the size of 7 pointers on most systems).
 
-[section:sg_set_multiset_hooks Using binary search tree hooks: bs_set_base_hook and bs_set_member_hook]
-
-[classref boost::intrusive::sg_set sg_set],
-[classref boost::intrusive::sg_multiset sg_multiset] and
-[classref boost::intrusive::sgtree sgtree] don't use their
-own hooks but plain binary search tree hooks. This has many advantages
-since binary search tree hooks can also be used to insert values in
-splay and treap containers.
-
-[c++]
-
-   template <class ...Options>
-   class bs_set_base_hook;
-
-*  [classref boost::intrusive::bs_set_base_hook bs_set_base_hook]:
-   the user class derives publicly from this class to make
-   it compatible with scapegoat tree based containers.
-
-[c++]
-
-   template <class ...Options>
-   class bs_set_member_hook;
-
-*  [classref boost::intrusive::set_member_hook set_member_hook]:
-   the user class contains a public member of this class to make
-   it compatible with scapegoat tree based containers.
-
-[classref boost::intrusive::bs_set_base_hook bs_set_base_hook] and
-[classref boost::intrusive::bs_set_member_hook bs_set_member_hook] receive
-the same options explained in the section
-[link intrusive.usage How to use Boost.Intrusive]:
-
-*  [*`tag<class Tag>`] (for base hooks only): This argument serves as a tag,
-   so you can derive from more than one base hook.
-   Default: `tag<default_tag>`.
-
-*  [*`link_mode<link_mode_type LinkMode>`]: The linking policy.
-   Default: `link_mode<safe_link>`.
-
-*  [*`void_pointer<class VoidPointer>`]: The pointer type to be used
-   internally in the hook and propagated to the container.
-   Default: `void_pointer<void*>`.
-
-[endsect]
+[*Boost.Intrusive] scapegoat associative containers don't use their own hook types but plain Binary search tree hooks.
+See [link intrusive.bst_hooks Binary search tree hooks: bs_set_base_hook and bs_set_member_hook] section for more
+information about these hooks.
 
 [section:sg_set_multiset_containers sg_set, sg_multiset and sgtree containers]
 
@@ -1791,7 +1690,7 @@ And they also can receive additional options:
 
 [section:sg_set_multiset_example Example]
 
-Now let's see a small example using both hooks and
+Now let's see a small example using binary search tree hooks and
 [classref boost::intrusive::sg_set sg_set]/
 [classref boost::intrusive::sg_multiset sg_multiset]
 containers:
@@ -1841,50 +1740,9 @@ An empty, [classref boost::intrusive::treap_set treap_set],
 has also the size of 3 pointers and an integer (supposing empty function objects for key and priority
 comparison and constant-time size).
 
-[section:treap_set_multiset_hooks Using binary search tree hooks: bs_set_base_hook and bs_set_member_hook]
-
-[classref boost::intrusive::treap_set treap_set],
-[classref boost::intrusive::treap_multiset treap_multiset] and
-[classref boost::intrusive::treap treap] don't use their
-own hooks but plain binary search tree hooks. This has many advantages
-since binary search tree hooks can also be used to insert values in
-splay containers and scapegoat trees.
-
-[c++]
-
-   template <class ...Options>
-   class bs_set_base_hook;
-
-*  [classref boost::intrusive::bs_set_base_hook bs_set_base_hook]:
-   the user class derives publicly from this class to make
-   it compatible with scapegoat tree based containers.
-
-[c++]
-
-   template <class ...Options>
-   class bs_set_member_hook;
-
-*  [classref boost::intrusive::set_member_hook set_member_hook]:
-   the user class contains a public member of this class to make
-   it compatible with scapegoat tree based containers.
-
-[classref boost::intrusive::bs_set_base_hook bs_set_base_hook] and
-[classref boost::intrusive::bs_set_member_hook bs_set_member_hook] receive
-the same options explained in the section
-[link intrusive.usage How to use Boost.Intrusive]:
-
-*  [*`tag<class Tag>`] (for base hooks only): This argument serves as a tag,
-   so you can derive from more than one base hook.
-   Default: `tag<default_tag>`.
-
-*  [*`link_mode<link_mode_type LinkMode>`]: The linking policy.
-   Default: `link_mode<safe_link>`.
-
-*  [*`void_pointer<class VoidPointer>`]: The pointer type to be used
-   internally in the hook and propagated to the container.
-   Default: `void_pointer<void*>`.
-
-[endsect]
+[*Boost.Intrusive] treap associative containers don't use their own hook types but plain Binary search tree hooks.
+See [link intrusive.bst_hooks Binary search tree hooks: bs_set_base_hook and bs_set_member_hook] section for more
+information about these hooks.
 
 [section:treap_set_multiset_containers treap_set, treap_multiset and treap containers]
 
@@ -1967,7 +1825,7 @@ the strongest possible behaviour in these situations. In summary:
 
 [section:treap_set_multiset_example Example]
 
-Now let's see a small example using both hooks and
+Now let's see a small example using binary search tree hooks and
 [classref boost::intrusive::treap_set treap_set]/
 [classref boost::intrusive::treap_multiset treap_multiset]
 containers:
@@ -1979,6 +1837,48 @@ containers:
 
 [endsect]
 
+[section:bst_hooks Binary search tree hooks: bs_set_base_hook and bs_set_member_hook]
+
+Binary search tree hooks can be used with several tree-like containers that don't
+need any additional metadata for rebalancing operations. This has many advantages
+since binary search tree hooks can also be used to insert values in
+plain binary search tree, splay tree, scapegoat tree, and treap containers.
+
+[c++]
+
+   template <class ...Options>
+   class bs_set_base_hook;
+
+*  [classref boost::intrusive::bs_set_base_hook bs_set_base_hook]:
+   the user class derives publicly from this class to make
+   it compatible with the mentioned tree based containers.
+
+[c++]
+
+   template <class ...Options>
+   class bs_set_member_hook;
+
+*  [classref boost::intrusive::bs_set_member_hook bs_set_member_hook]:
+   the user class contains a public member of this class to make
+   it compatible with the mentioned tree based containers.
+
+[classref boost::intrusive::bs_set_base_hook bs_set_base_hook] and
+[classref boost::intrusive::bs_set_member_hook bs_set_member_hook] receive
+the same options explained in the section
+[link intrusive.usage How to use Boost.Intrusive]:
+
+*  [*`tag<class Tag>`] (for base hooks only): This argument serves as a tag,
+   so you can derive from more than one base hook.
+   Default: `tag<default_tag>`.
+
+*  [*`link_mode<link_mode_type LinkMode>`]: The linking policy.
+   Default: `link_mode<safe_link>`.
+
+*  [*`void_pointer<class VoidPointer>`]: The pointer type to be used
+   internally in the hook and propagated to the container.
+   Default: `void_pointer<void*>`.
+
+[endsect]
 
 [section:advanced_lookups_insertions Advanced lookup and insertion functions for associative containers]
 
@@ -3135,8 +3035,7 @@ Let's explain each type and function:
    as `node_ptr`: If `node_ptr` is `node*`, `pointer` must be `value_type*`. If
    `node_ptr` is `smart_ptr<node_traits::node>`, `pointer` must be `smart_ptr<value_type>`.
    This can be generically achieved using `boost::intrusive::pointer_traits` (portable implementation of C++11
-   `std::pointer_traits`) or `boost::pointer_to_other` utility from [*Boost SmartPointers]
-   defined in `<boost/pointer_to_other.hpp>`.
+   `std::pointer_traits`).
 
 *  [*['const_pointer]]: The type of a pointer to a `const value_type`. It must be the same pointer type
    as `node_ptr`: If `node_ptr` is `node*`, `const_pointer` must be `const value_type*`. If
@@ -3201,14 +3100,7 @@ intrusive containers, so [*Boost.Intrusive] offers a templatized
 [classref boost::intrusive::trivial_value_traits trivial_value_traits] class
 that does exactly what we want:
 
-[c++]
-
-   #include <boost/intrusive/trivial_value_traits.hpp>
-
-   //Now we can define legacy_value_traits just with a single line
-   using namespace boost::intrusive;
-   typedef trivial_value_traits<legacy_node_traits, normal_link> legacy_value_traits;
-
+[doc_value_traits_trivial]
 
 Now we can just define the containers that will store the legacy abi objects and write
 a little test:
@@ -3260,30 +3152,15 @@ The previous example can be further simplified using the
 class to define a value traits class with a value that stores the
 `simple_node` as a base class:
 
-[c++]
-
-   #include <boost/intrusive/derivation_value_traits.hpp>
-
-   //value_1, value_2, simple_node and simple_node_traits are defined
-   //as in the previous example...
-   //...
-
-   using namespace boost::intrusive;
-
-   //Now define the needed value traits using
-   typedef derivation_value_traits<value_1, simple_node_traits, normal_link> ValueTraits1;
-   typedef derivation_value_traits<value_2, simple_node_traits, normal_link> ValueTraits2;
-
-   //Now define the containers
-   typedef list <value1, value_traits<ValueTraits1> > Value1List;
-   typedef list <value2, value_traits<ValueTraits2> > Value2List;
+[import ../example/doc_derivation_value_traits.cpp]
+[doc_derivation_value_traits_value_traits]
 
 We can even choose to store `simple_node` as a member of `value_1` and `value_2`
 classes and use [classref boost::intrusive::member_value_traits member_value_traits]
 to define the needed value traits classes:
 
-[import ../example/doc_advanced_value_traits2.cpp]
-[doc_advanced_value_traits2_value_traits]
+[import ../example/doc_member_value_traits.cpp]
+[doc_member_value_traits_value_traits]
 
 [endsect]
 
@@ -3582,7 +3459,7 @@ and also derives from `test_class`.
 `func_ptr_adaptor` is just a functor adaptor to convert function objects taking
 `test_list` objects to function objects taking pointers to them.
 
-You can find the full test code code in the
+You can find the full test code in the
 [@../../libs/intrusive/perf/perf_list.cpp perf_list.cpp] source file.
 
 [section:performance_results_push_back Back insertion and destruction]
@@ -3884,10 +3761,39 @@ to be inserted in intrusive containers are allocated using `std::vector` or `std
 
 [section:release_notes Release Notes]
 
+[section:release_notes_boost_1_56_00 Boost 1.56 Release]
+
+*  Improved Doxygen generated reference and updated and fixed forward-declaration header.
+
+*  [*ABI breaking]: Fixed ABI regression introduced in Boost 1.55 version, mainly noticeable on MSVC compilers.
+
+*  [*Source breaking]: Removed previously deprecated `xxx_dont_splay` functions from splay containers,
+   `splay_set_base_hook` and `splay_set_member_hook`from splay containers and `bool splay = true`
+   extra parameter in `splaytree_algorithms` functions.
+
+*  Fixed bugs:
+   *  [@https://svn.boost.org/trac/boost/ticket/8468 #8468: Compile error on visual studio 2010/2012 using vector with custom allocator and aligned types]
+   *  [@https://svn.boost.org/trac/boost/ticket/9332 #9332: ['"has_member_function_callable_with.hpp compile error on msvc-12.0"]].
+   *  [@https://svn.boost.org/trac/boost/ticket/9650 #9650: ['"intrusive list with stateful value traits"]].
+   *  [@https://svn.boost.org/trac/boost/ticket/9746 #9746: Modern Sun CC compiler detects error in intrusive library header]
+   *  [@https://svn.boost.org/trac/boost/ticket/9940 #9940: bad bug in intrusive list with safe_link (or auto_unlink) hooks]
+   *  [@https://svn.boost.org/trac/boost/ticket/9948 #9948: remove use of const_cast in intrusive containers]
+   *  [@https://svn.boost.org/trac/boost/ticket/9949 #9949: clear header node hooks upon intrusive container destruction]
+   *  [@https://svn.boost.org/trac/boost/ticket/9961 #9961: tests for hooks not derived frorm generic_hook]
+
+*  Optimized tree rebalancing code to avoid redundant assignments.
+
+*  Added 64 bit prime values for `suggested_upper_bucket_count`/`suggested_lower_bucket_count` in 64 bit platforms.
+
+*  Deleted workarounds for old SUN_CC compilers, those are now unsupported as modern SunPro compilers are standard-corforming enough.
+
+[endsect]
+
 [section:release_notes_boost_1_55_00 Boost 1.55 Release]
 
 *  [*Source breaking]: Deprecated `xxx_dont_splay` functions from splay containers.
-   Deprecated `splay_set_hook` from splay containers, use `bs_set_hook` instead.
+   Deprecated `splay_set_base_hook` and `splay_set_member_hook`from splay containers, use
+  `bs_set_base_hook` or `bs_set_member_hook` instead.
    Both will be removed in Boost 1.56.
 
 *  [*ABI breaking]: Hash containers' end iterator was implemented pointing to one-past the end of the bucket array

@@ -6,14 +6,14 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../../attributes.html#header.boost.log.attributes.named_scope_hpp" title="Header &lt;boost/log/attributes/named_scope.hpp&gt;">
-<link rel="prev" href="named_scope_entry.html" title="Struct named_scope_entry">
+<link rel="prev" href="named_scope_entry/scope_name_type.html" title="Type scope_name_type">
 <link rel="next" href="named_scope.html" title="Class named_scope">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td></tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="named_scope_entry.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../attributes.html#header.boost.log.attributes.named_scope_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="named_scope.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="named_scope_entry/scope_name_type.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../attributes.html#header.boost.log.attributes.named_scope_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="named_scope.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.log.attributes.named_scope_list"></a><div class="titlepage"></div>
@@ -42,27 +42,27 @@
   <span class="keyword">typedef</span> <span class="identifier">implementation_defined</span>              <a class="link" href="named_scope_list.html#boost.log.attributes.named_scope_list.reverse_iterator"><span class="identifier">reverse_iterator</span></a><span class="special">;</span>      
 
   <span class="comment">// <a class="link" href="named_scope_list.html#boost.log.attributes.named_scope_listconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="named_scope_list.html#idp26092520-bb"><span class="identifier">named_scope_list</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="named_scope_list.html#idp26093304-bb"><span class="identifier">named_scope_list</span></a><span class="special">(</span><a class="link" href="named_scope_list.html" title="Class named_scope_list">named_scope_list</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  named_scope_list&amp; <a class="link" href="named_scope_list.html#idp26094936-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="named_scope_list.html" title="Class named_scope_list">named_scope_list</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="named_scope_list.html#idp26094632-bb"><span class="special">~</span><span class="identifier">named_scope_list</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="named_scope_list.html#idp34754496-bb"><span class="identifier">named_scope_list</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="named_scope_list.html#idp34756192-bb"><span class="identifier">named_scope_list</span></a><span class="special">(</span><a class="link" href="named_scope_list.html" title="Class named_scope_list">named_scope_list</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="named_scope_list.html" title="Class named_scope_list">named_scope_list</a> <span class="special">&amp;</span> <a class="link" href="named_scope_list.html#idp34759632-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="named_scope_list.html" title="Class named_scope_list">named_scope_list</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="named_scope_list.html#idp34758896-bb"><span class="special">~</span><span class="identifier">named_scope_list</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="named_scope_list.html#idp26083704-bb">public member functions</a></span>
-  <span class="identifier">const_iterator</span> <a class="link" href="named_scope_list.html#idp26083912-bb"><span class="identifier">begin</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">const_iterator</span> <a class="link" href="named_scope_list.html#idp26084840-bb"><span class="identifier">end</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">const_reverse_iterator</span> <a class="link" href="named_scope_list.html#idp26085784-bb"><span class="identifier">rbegin</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">const_reverse_iterator</span> <a class="link" href="named_scope_list.html#idp26086728-bb"><span class="identifier">rend</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">size_type</span> <a class="link" href="named_scope_list.html#idp26087688-bb"><span class="identifier">size</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="named_scope_list.html#idp26088600-bb"><span class="identifier">empty</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="named_scope_list.html#idp26089528-bb"><span class="identifier">swap</span></a><span class="special">(</span><a class="link" href="named_scope_list.html" title="Class named_scope_list">named_scope_list</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">const_reference</span> <a class="link" href="named_scope_list.html#idp26090728-bb"><span class="identifier">back</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">const_reference</span> <a class="link" href="named_scope_list.html#idp26091624-bb"><span class="identifier">front</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="named_scope_list.html#idp34735616-bb">public member functions</a></span>
+  <span class="identifier">const_iterator</span> <a class="link" href="named_scope_list.html#idp34736176-bb"><span class="identifier">begin</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">const_iterator</span> <a class="link" href="named_scope_list.html#idp34738176-bb"><span class="identifier">end</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">const_reverse_iterator</span> <a class="link" href="named_scope_list.html#idp34740176-bb"><span class="identifier">rbegin</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">const_reverse_iterator</span> <a class="link" href="named_scope_list.html#idp34742176-bb"><span class="identifier">rend</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">size_type</span> <a class="link" href="named_scope_list.html#idp34744176-bb"><span class="identifier">size</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="named_scope_list.html#idp34746160-bb"><span class="identifier">empty</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="named_scope_list.html#idp34748144-bb"><span class="identifier">swap</span></a><span class="special">(</span><a class="link" href="named_scope_list.html" title="Class named_scope_list">named_scope_list</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">const_reference</span> <a class="link" href="named_scope_list.html#idp34750400-bb"><span class="identifier">back</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">const_reference</span> <a class="link" href="named_scope_list.html#idp34752368-bb"><span class="identifier">front</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp56476792"></a><h2>Description</h2>
+<a name="idp122017120"></a><h2>Description</h2>
 <p>The scope list provides a read-only access to a doubly-linked list of scopes. </p>
 <div class="refsect2">
-<a name="idp56477208"></a><h3>
+<a name="idp122017792"></a><h3>
 <a name="boost.log.attributes.named_scope_listtypes"></a><code class="computeroutput">named_scope_list</code> 
         public
        types</h3>
@@ -90,13 +90,13 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp56486280"></a><h3>
+<a name="idp122035568"></a><h3>
 <a name="boost.log.attributes.named_scope_listconstruct-copy-destruct"></a><code class="computeroutput">named_scope_list</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp26092520-bb"></a><span class="identifier">named_scope_list</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp34754496-bb"></a><span class="identifier">named_scope_list</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Default constructor</p>
 <p>
 </p>
@@ -112,7 +112,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp26093304-bb"></a><span class="identifier">named_scope_list</span><span class="special">(</span><a class="link" href="named_scope_list.html" title="Class named_scope_list">named_scope_list</a> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp34756192-bb"></a><span class="identifier">named_scope_list</span><span class="special">(</span><a class="link" href="named_scope_list.html" title="Class named_scope_list">named_scope_list</a> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
 <p>Copy constructor</p>
 <p>
 </p>
@@ -128,7 +128,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout">named_scope_list&amp; <a name="idp26094936-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="named_scope_list.html" title="Class named_scope_list">named_scope_list</a> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="named_scope_list.html" title="Class named_scope_list">named_scope_list</a> <span class="special">&amp;</span> <a name="idp34759632-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="named_scope_list.html" title="Class named_scope_list">named_scope_list</a> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
 <p>Assignment operator</p>
 <p>
 </p>
@@ -144,17 +144,17 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp26094632-bb"></a><span class="special">~</span><span class="identifier">named_scope_list</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp34758896-bb"></a><span class="special">~</span><span class="identifier">named_scope_list</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Destructor. Destroys the stored entries. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp56501448"></a><h3>
-<a name="idp26083704-bb"></a><code class="computeroutput">named_scope_list</code> public member functions</h3>
+<a name="idp122067248"></a><h3>
+<a name="idp34735616-bb"></a><code class="computeroutput">named_scope_list</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">const_iterator</span> <a name="idp26083912-bb"></a><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">const_iterator</span> <a name="idp34736176-bb"></a><span class="identifier">begin</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
@@ -169,7 +169,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">const_iterator</span> <a name="idp26084840-bb"></a><span class="identifier">end</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">const_iterator</span> <a name="idp34738176-bb"></a><span class="identifier">end</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
@@ -184,7 +184,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">const_reverse_iterator</span> <a name="idp26085784-bb"></a><span class="identifier">rbegin</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">const_reverse_iterator</span> <a name="idp34740176-bb"></a><span class="identifier">rbegin</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
@@ -199,7 +199,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">const_reverse_iterator</span> <a name="idp26086728-bb"></a><span class="identifier">rend</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">const_reverse_iterator</span> <a name="idp34742176-bb"></a><span class="identifier">rend</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
@@ -214,7 +214,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">size_type</span> <a name="idp26087688-bb"></a><span class="identifier">size</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">size_type</span> <a name="idp34744176-bb"></a><span class="identifier">size</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
@@ -229,7 +229,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp26088600-bb"></a><span class="identifier">empty</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp34746160-bb"></a><span class="identifier">empty</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
@@ -244,11 +244,11 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp26089528-bb"></a><span class="identifier">swap</span><span class="special">(</span><a class="link" href="named_scope_list.html" title="Class named_scope_list">named_scope_list</a> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp34748144-bb"></a><span class="identifier">swap</span><span class="special">(</span><a class="link" href="named_scope_list.html" title="Class named_scope_list">named_scope_list</a> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre>
 <p>Swaps two instances of the container </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">const_reference</span> <a name="idp26090728-bb"></a><span class="identifier">back</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">const_reference</span> <a name="idp34750400-bb"></a><span class="identifier">back</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
@@ -263,7 +263,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">const_reference</span> <a name="idp26091624-bb"></a><span class="identifier">front</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">const_reference</span> <a name="idp34752368-bb"></a><span class="identifier">front</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
@@ -283,7 +283,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2013 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2014 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>
@@ -291,7 +291,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="named_scope_entry.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../attributes.html#header.boost.log.attributes.named_scope_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="named_scope.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="named_scope_entry/scope_name_type.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../attributes.html#header.boost.log.attributes.named_scope_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="named_scope.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

@@ -49,8 +49,7 @@ struct WriteFuncNS
     void operator()(const std::string &filename, const Ptree &pt) const
     {
         boost::property_tree::write_xml(filename, pt, std::locale(),
-            boost::property_tree::xml_writer_make_settings(
-                typename Ptree::key_type::value_type(' '), 4));
+            boost::property_tree::xml_writer_make_settings<typename Ptree::key_type>(' ', 4));
     }
 };
 

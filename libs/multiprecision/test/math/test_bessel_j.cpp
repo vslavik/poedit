@@ -53,6 +53,13 @@ void expected_results()
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
+      ".*cpp_bin_float.*",                  // test type(s)
+      ".*JN.*Integer.*",              // test data group
+      ".*", 500000, 150000);       // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
+      ".*",                          // platform
       ".*",                  // test type(s)
       ".*JN.*Integer.*",              // test data group
       ".*", 50000, 15000);       // test function
@@ -63,6 +70,13 @@ void expected_results()
       ".*mpfr_float_backend<18>.*",  // test type(s)
       ".*(JN|j).*|.*Tricky.*",       // test data group
       ".*", 70000, 7000);               // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
+      ".*",                          // platform
+      ".*cpp_bin_float.*",           // test type(s)
+      ".*(JN|j).*|.*Tricky.*",       // test data group
+      ".*", 500000, 200000);               // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib

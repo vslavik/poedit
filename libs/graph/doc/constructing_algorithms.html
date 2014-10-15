@@ -134,7 +134,7 @@ namespace boost {
       mark(V, numeric_limits_max(max_color));
     
     typename GraphTraits::vertex_iterator v, vend;
-    for (tie(v, vend) = vertices(G); v != vend; ++v)
+    for (boost::tie(v, vend) = vertices(G); v != vend; ++v)
       color[*v] = V - 1; // which means "not colored"
     
     for (size_type i = 0; i &lt; V; i++) {
@@ -142,7 +142,7 @@ namespace boost {
 
       // mark all the colors of the adjacent vertices
       typename GraphTraits::adjacency_iterator ai, aend;
-      for (tie(ai, aend) = adjacent_vertices(current, G); ai != aend; ++ai)
+      for (boost::tie(ai, aend) = adjacent_vertices(current, G); ai != aend; ++ai)
         mark[color[*ai]] = i; 
 
       // find the smallest color unused by the adjacent vertices

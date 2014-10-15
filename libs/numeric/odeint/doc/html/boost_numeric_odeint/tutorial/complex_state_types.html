@@ -72,7 +72,7 @@
 <span class="keyword">void</span> <span class="identifier">stuart_landau</span><span class="special">(</span> <span class="keyword">const</span> <span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">x</span> <span class="special">,</span> <span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">dxdt</span> <span class="special">,</span> <span class="keyword">double</span> <span class="identifier">t</span> <span class="special">)</span>
 <span class="special">{</span>
     <span class="keyword">const</span> <span class="identifier">complex</span><span class="special">&lt;</span> <span class="keyword">double</span> <span class="special">&gt;</span> <span class="identifier">I</span><span class="special">(</span> <span class="number">0.0</span> <span class="special">,</span> <span class="number">1.0</span> <span class="special">);</span>
-    <span class="identifier">dxdt</span><span class="special">[</span><span class="number">0</span><span class="special">]</span> <span class="special">=</span> <span class="special">(</span> <span class="number">1.0</span> <span class="special">+</span> <span class="identifier">m_eta</span> <span class="special">*</span> <span class="identifier">I</span> <span class="special">)</span> <span class="special">*</span> <span class="identifier">x</span><span class="special">[</span><span class="number">0</span><span class="special">]</span> <span class="special">-</span> <span class="special">(</span> <span class="number">1.0</span> <span class="special">+</span> <span class="identifier">m_alpha</span> <span class="special">*</span> <span class="identifier">I</span> <span class="special">)</span> <span class="special">*</span> <span class="identifier">norm</span><span class="special">(</span> <span class="identifier">x</span><span class="special">[</span><span class="number">0</span><span class="special">]</span> <span class="special">)</span> <span class="special">*</span> <span class="identifier">x</span><span class="special">[</span><span class="number">0</span><span class="special">];</span>
+    <span class="identifier">dxdt</span> <span class="special">=</span> <span class="special">(</span> <span class="number">1.0</span> <span class="special">+</span> <span class="identifier">m_eta</span> <span class="special">*</span> <span class="identifier">I</span> <span class="special">)</span> <span class="special">*</span> <span class="identifier">x</span> <span class="special">-</span> <span class="special">(</span> <span class="number">1.0</span> <span class="special">+</span> <span class="identifier">m_alpha</span> <span class="special">*</span> <span class="identifier">I</span> <span class="special">)</span> <span class="special">*</span> <span class="identifier">norm</span><span class="special">(</span> <span class="identifier">x</span> <span class="special">)</span> <span class="special">*</span> <span class="identifier">x</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
 <p>
@@ -86,9 +86,11 @@
         When choosing the stepper type one has to account for the "unusual"
         state type: it is a single <code class="computeroutput"><span class="identifier">complex</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span></code> opposed to the vector types used in the
         previous examples. This means that no iterations over vector elements have
-        to be performed inside the stepper algorithm. You can enforce this by supplying
-        additional template arguments to the stepper including the <code class="computeroutput"><span class="identifier">vector_space_algebra</span></code>. Details on the usage
-        of algebras can be found in the section <a class="link" href="../odeint_in_detail/state_types__algebras_and_operations.html" title="State types, algebras and operations">Adapt
+        to be performed inside the stepper algorithm. Odeint already detects that
+        and automatically uses the <code class="computeroutput"><span class="identifier">vector_space_algebra</span></code>
+        for computation. You can enforce this by supplying additional template arguments
+        to the stepper including the <code class="computeroutput"><span class="identifier">vector_space_algebra</span></code>.
+        Details on the usage of algebras can be found in the section <a class="link" href="../odeint_in_detail/state_types__algebras_and_operations.html" title="State types, algebras and operations">Adapt
         your own state types</a>.
       </p>
 <p>
@@ -97,28 +99,15 @@
 
 <span class="keyword">const</span> <span class="keyword">double</span> <span class="identifier">dt</span> <span class="special">=</span> <span class="number">0.1</span><span class="special">;</span>
 
-<span class="keyword">typedef</span> <span class="identifier">runge_kutta4</span><span class="special">&lt;</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="keyword">double</span> <span class="special">,</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="keyword">double</span> <span class="special">,</span>
-                      <span class="identifier">vector_space_algebra</span> <span class="special">&gt;</span> <span class="identifier">stepper_type</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">runge_kutta4</span><span class="special">&lt;</span> <span class="identifier">state_type</span> <span class="special">&gt;</span> <span class="identifier">stepper_type</span><span class="special">;</span>
 
 <span class="identifier">integrate_const</span><span class="special">(</span> <span class="identifier">stepper_type</span><span class="special">()</span> <span class="special">,</span> <span class="identifier">stuart_landau</span><span class="special">(</span> <span class="number">2.0</span> <span class="special">,</span> <span class="number">1.0</span> <span class="special">)</span> <span class="special">,</span> <span class="identifier">x</span> <span class="special">,</span> <span class="number">0.0</span> <span class="special">,</span> <span class="number">10.0</span> <span class="special">,</span> <span class="identifier">dt</span> <span class="special">,</span> <span class="identifier">streaming_observer</span><span class="special">(</span> <span class="identifier">cout</span> <span class="special">)</span> <span class="special">);</span>
 </pre>
 <p>
       </p>
 <p>
-        The full cpp file for the Stuart-Landau example can be found here <a href="../../../../../../../libs/numeric/odeint/examples/stuart_landau.cpp" target="_top">stuart_landau.cpp</a>
+        The full cpp file for the Stuart-Landau example can be found here <a href="https://github.com/headmyshoulder/odeint-v2/tree/master/libs/numeric/odeint/examples/stuart_landau.cpp" target="_top">stuart_landau.cpp</a>
       </p>
-<div class="note"><table border="0" summary="Note">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../doc/src/images/note.png"></td>
-<th align="left">Note</th>
-</tr>
-<tr><td align="left" valign="top"><p>
-          The fact that we have to configure a different algebra is solely due to
-          the fact that we use a non-vector state type and not to the usage of complex
-          values. So for, e.g. <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span> <span class="identifier">complex</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="special">&gt;</span></code>,
-          this would not be required.
-        </p></td></tr>
-</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

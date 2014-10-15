@@ -140,9 +140,29 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
           <postconditions><para><computeroutput>this-&gt;<methodname>empty</methodname>()</computeroutput></para></postconditions>
         </constructor>
 
-        <destructor>
-          <effects><para>Disconnects all slots connected to <computeroutput>*this</computeroutput>.</para></effects>
-        </destructor>
+        <constructor>
+          <parameter name="other">
+            <paramtype>signal &amp;&amp;</paramtype>
+          </parameter>
+          <description><para>Move constructor.</para></description>
+          <postconditions><para>The signal <computeroutput>other</computeroutput>
+            is in a "moved-from" state where it may only be destroyed, swapped, or move assigned.
+            Any other operation on a "moved-from" signal is invalid.</para></postconditions>
+
+          <throws><para>Will not throw.</para></throws>
+        </constructor>
+
+        <copy-assignment>
+          <parameter name="rhs">
+            <paramtype>signal &amp;&amp;</paramtype>
+          </parameter>
+          <description><para>Move assignment.</para></description>
+          <postconditions><para>The signal <computeroutput>rhs</computeroutput>
+            is in a "moved-from" state where it may only be destroyed, swapped, or move assigned.
+            Any other operation on a "moved-from" signal is invalid.</para></postconditions>
+
+          <throws><para>Will not throw.</para></throws>
+        </copy-assignment>
 
         <method-group name="connection management">
           <overloaded-method name="connect">

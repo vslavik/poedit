@@ -27,7 +27,7 @@
 <a name="boost_asio.reference.buffer"></a><a class="link" href="buffer.html" title="buffer">buffer</a>
 </h3></div></div></div>
 <p>
-        <a class="indexterm" name="idp76777400"></a> 
+        <a class="indexterm" name="idp157762368"></a> 
 The <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">buffer</span></code> function is used to create a buffer
         object to represent raw memory, an array of POD elements, a vector of POD
         elements, or a std::string.
@@ -317,6 +317,11 @@ The <code class="computeroutput"><span class="identifier">boost</span><span clas
 <span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">unsigned</span> <span class="keyword">char</span><span class="special">&gt;</span> <span class="identifier">data</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">buffer_size</span><span class="special">(</span><span class="identifier">buffers</span><span class="special">));</span>
 <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">buffer_copy</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">buffer</span><span class="special">(</span><span class="identifier">data</span><span class="special">),</span> <span class="identifier">buffers</span><span class="special">);</span>
 </pre>
+<p>
+        Note that <a class="link" href="buffer_copy.html" title="buffer_copy"><code class="computeroutput"><span class="identifier">buffer_copy</span></code></a> is implemented in terms
+        of <code class="computeroutput"><span class="identifier">memcpy</span></code>, and consequently
+        it cannot be used to copy between overlapping memory regions.
+      </p>
 <h5>
 <a name="boost_asio.reference.buffer.h2"></a>
         <span class="phrase"><a name="boost_asio.reference.buffer.buffer_invalidation"></a></span><a class="link" href="buffer.html#boost_asio.reference.buffer.buffer_invalidation">Buffer
@@ -434,7 +439,7 @@ The <code class="computeroutput"><span class="identifier">boost</span><span clas
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2013 Christopher M. Kohlhoff<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2014 Christopher M. Kohlhoff<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

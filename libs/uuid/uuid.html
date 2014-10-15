@@ -13,6 +13,7 @@
 
 <ol>
     <li><a href="#Introduction">Introduction</a></li>
+    <li><a href="#Configuration">Configuration</a></li>
     <li><a href="#Examples">Examples</a></li>
     <ul>
         <li><a href="#Tagging">Tagging</a></li>
@@ -103,6 +104,35 @@ generated UUIDs (that is, it has never been generated before and it will
 never be generated again), or it is extremely likely to be unique (depending
 on the mechanism).
 
+<h2><a name="Configuration">Configuration</a></h2>
+
+<p>
+The library does not require building or any special configuration to be used.
+However, there are a few options that can be enabled by defining macros prior to
+including library headers. These macros are summarized in the following table.
+
+<p>
+<table border="1">
+<tr>
+<th>Macro</th><th>Description</th>
+</tr>
+<tr>
+<td><tt>BOOST_UUID_NO_SIMD</tt></td><td>If defined, disables any optimizations for <a href="http://en.wikipedia.org/wiki/SIMD">SIMD</a>-enabled processors. Generic versions of algorithms will be used instead. This may result in suboptimal performance. By default, optimized algorithms are used, when the library is able to detect the availability of SIMD extensions at compile time.</td>
+</tr>
+<tr>
+<td><tt>BOOST_UUID_USE_SSE2</tt></td><td>If defined, enables optimizations for <a href="http://en.wikipedia.org/wiki/SSE2">SSE2</a> exstensions available in modern x86 processors.</td>
+</tr>
+<tr>
+<td><tt>BOOST_UUID_USE_SSE3</tt></td><td>If defined, enables optimizations for <a href="http://en.wikipedia.org/wiki/SSE3">SSE3</a> exstensions available in modern x86 processors.</td>
+</tr>
+<tr>
+<td><tt>BOOST_UUID_USE_SSE41</tt></td><td>If defined, enables optimizations for <a href="http://en.wikipedia.org/wiki/SSE4#SSE4.1">SSE4.1</a> exstensions available in modern x86 processors.</td>
+</tr>
+</table>
+
+<p>
+By default the library attempts to detect the availability of SIMD extensions in the target CPU at compile time and automatically defines the appropriate macros if succeeded. The <tt>BOOST_UUID_USE_SSE*</tt> macros can be defined by users, if auto-detection fails and it is known that the target CPU will have the extension. Do not enable these extensions unless you're certain that they will always be available on any machine that will run your program. The library performs no run time checks, so if an extension is missing, the program will likely crash. Note that enabling more advanced extensions implies that more basic ones are also available.
+
 <h2><a name="Examples">Examples</a></h2>
 <h3><a name="Tagging">Tagging</a></h3>
 <pre>
@@ -119,32 +149,32 @@ public:
         : tag(boost::uuids::random_generator()())
         , state(0)
     {}
-    
+
     explicit object(int state)
         : tag(boost::uuids::random_generator()())
         , state(state)
     {}
-    
+
     object(object const&amp; rhs)
         : tag(rhs.tag)
         , state(rhs.state)
     {}
-    
+
     bool operator==(object const&amp; rhs) const {
         return tag == rhs.tag;
     }
-    
+
     object&amp; operator=(object const&amp; rhs) {
         tag = rhs.tag;
         state = rhs.state;
     }
-    
+
     int get_state() const { return state; }
     void set_state(int new_state) { state = new_state; }
-    
+
 private:
     boost::uuids::uuid tag;
-    
+
     int state;
 };
 
@@ -209,7 +239,7 @@ public:
     uuid_class()
         : boost::uuids::uuid(boost::uuids::random_generator()())
     {}
-    
+
     explicit uuid_class(boost::uuids::uuid const&amp; u)
         : boost::uuids::uuid(u)
     {}
@@ -258,25 +288,25 @@ public:
     typedef std::size_t size_type;
     typedef std::ptrdiff_t difference_type;
 
-    static size_type static_size();
+    static constexpr size_type static_size() noexcept;
 
     // iteration
-    iterator begin();
-    iterator end();
-    const_iterator begin() const;
-    const_iterator end() const;
+    iterator begin() noexcept;
+    iterator end() noexcept;
+    const_iterator begin() const noexcept;
+    const_iterator end() const noexcept;
 
-    size_type size() const;
+    constexpr size_type size() const noexcept;
 
-    bool is_nil() const;
-    
+    bool is_nil() const noexcept;
+
     enum variant_type {
         variant_ncs, // NCS backward compatibility
         variant_rfc_4122, // defined in RFC 4122 document
         variant_microsoft, // Microsoft Corporation backward compatibility
         variant_future // future definition
     };
-    variant_type variant() const;
+    variant_type variant() const noexcept;
 
     enum version_type {
         version_unknown = -1,
@@ -286,25 +316,25 @@ public:
         version_random_number_based = 4,
         version_name_based_sha1 = 5
     };
-    version_type version() const;
+    version_type version() const noexcept;
 
     // Swap function
-    void swap(uuid&amp; rhs);
+    void swap(uuid&amp; rhs) noexcept;
 
     uint8_t data[static_size()];
 };
 
 // standard operators
-bool operator==(uuid const&amp; lhs, uuid const&amp; rhs);
-bool operator!=(uuid const&amp; lhs, uuid const&amp; rhs);
-bool operator&lt;(uuid const&amp; lhs, uuid const&amp; rhs);
-bool operator&gt;(uuid const&amp; lhs, uuid const&amp; rhs);
-bool operator&lt;=(uuid const&amp; lhs, uuid const&amp; rhs);
-bool operator&gt;=(uuid const&amp; lhs, uuid const&amp; rhs);
+bool operator==(uuid const&amp; lhs, uuid const&amp; rhs) noexcept;
+bool operator!=(uuid const&amp; lhs, uuid const&amp; rhs) noexcept;
+bool operator&lt;(uuid const&amp; lhs, uuid const&amp; rhs) noexcept;
+bool operator&gt;(uuid const&amp; lhs, uuid const&amp; rhs) noexcept;
+bool operator&lt;=(uuid const&amp; lhs, uuid const&amp; rhs) noexcept;
+bool operator&gt;=(uuid const&amp; lhs, uuid const&amp; rhs) noexcept;
 
-void swap(uuid&amp; lhs, uuid&amp; rhs);
+void swap(uuid&amp; lhs, uuid&amp; rhs) noexcept;
 
-std::size_t hash_value(uuid const&amp; u);
+std::size_t hash_value(uuid const&amp; u) noexcept;
 
 }} // namespace boost::uuids
 </pre>
@@ -335,7 +365,7 @@ both always return 16.
 </pre>
 
 <h4><a name="Nil">Nil uuid</a></h4>
-<p>The function, <tt>boost::uuids::uuid::is_null()</tt> returns true if and
+<p>The function, <tt>boost::uuids::uuid::is_nil()</tt> returns true if and
 only if the <b>uuid</b> is equal to {00000000-0000-0000-0000-000000000000}.
 </p>
 

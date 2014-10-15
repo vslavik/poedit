@@ -75,7 +75,7 @@ void test_string_sequence()
 
 
 
-typedef pair<string,int> tuple; 
+typedef pair<string,int> two_tuple;
 
 template< class C >
 void test_tuple_sequence()
@@ -151,14 +151,14 @@ void check_std()
     test_string_sequence< queue<string> >();             
     test_string_sequence< priority_queue<string> >();    
 
-    test_tuple_sequence< deque<tuple> >();             
-    test_tuple_sequence< list<tuple> >();              
-    test_tuple_sequence< vector<tuple> >();            
-    test_tuple_sequence< set<tuple> >();               
-    test_tuple_sequence< multiset<tuple> >();          
-    test_tuple_sequence< stack<tuple> >();             
-    test_tuple_sequence< queue<tuple> >();             
-    test_tuple_sequence< priority_queue<tuple> >();    
+    test_tuple_sequence< deque<two_tuple> >();             
+    test_tuple_sequence< list<two_tuple> >();              
+    test_tuple_sequence< vector<two_tuple> >();            
+    test_tuple_sequence< set<two_tuple> >();               
+    test_tuple_sequence< multiset<two_tuple> >();          
+    test_tuple_sequence< stack<two_tuple> >();             
+    test_tuple_sequence< queue<two_tuple> >();             
+    test_tuple_sequence< priority_queue<two_tuple> >();    
     test_tuple();
     
     deque<int>          di; 

@@ -27,7 +27,7 @@ namespace std{
 #include "A.ipp"
 
 template <class T>
-int test_vector(T)
+int test_vector()
 {
     const char * testfile = boost::archive::tmpnam(NULL);
     BOOST_REQUIRE(NULL != testfile);
@@ -54,13 +54,13 @@ int test_vector(T)
 
 int test_main( int /* argc */, char* /* argv */[] )
 {
-   int res = test_vector(A());
+   int res = test_vector<A>();
     // test an int vector for which optimized versions should be available
    if (res == EXIT_SUCCESS)
-     res = test_vector(0);  
+     res = test_vector<int>();
     // test a bool vector
    if (res == EXIT_SUCCESS)
-     res = test_vector(false);  
+     res = test_vector<bool>();
    return res;
 }
 

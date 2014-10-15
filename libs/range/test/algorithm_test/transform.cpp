@@ -41,6 +41,8 @@ namespace boost
 
             iterator_t reference_it
                 = std::transform(cont.begin(), cont.end(), reference.begin(), fn);
+                
+            boost::ignore_unused_variable_warning(reference_it);
 
             iterator_t test_it
                 = boost::transform(cont, target.begin(), fn);
@@ -101,6 +103,8 @@ namespace boost
             iterator_t reference_it
                 = std::transform(cont1.begin(), cont1.end(),
                                  cont2.begin(), reference.begin(), fn);
+                                 
+            boost::ignore_unused_variable_warning(reference_it);
 
             iterator_t test_it
                 = boost::transform(cont1, cont2, target.begin(), fn);

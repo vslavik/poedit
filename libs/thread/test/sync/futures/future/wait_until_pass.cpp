@@ -40,7 +40,7 @@ namespace boost
   template <typename OStream>
   OStream& operator<<(OStream& os , boost::future_status st )
   {
-    os << int(st) << " ";
+    os << underlying_cast<int>(st) << " ";
     return os;
   }
   template <typename T>

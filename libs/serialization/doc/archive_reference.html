@@ -35,7 +35,7 @@ http://www.boost.org/LICENSE_1_0.txt)
 
 <h3><a name="trivial">Trivial Archive</a></h3>
 The <a href="archives.html"><strong>Archive</strong></a> concept specifies the functions that a
-class must implement to in order to be used to serialize 
+class must implement in order to be used to serialize 
 <a href="serialization.html"><strong>Serializable</strong></a> types.
 
 Our discussion will focus on archives used for saving as the hierarchy is exactly analogous
@@ -57,7 +57,7 @@ public:
     // serialization library
     typedef boost::mpl::bool_&lt;true&gt; is_saving; 
     typedef boost::mpl::bool_&lt;false&gt; is_loading;
-    template&lt;class T&gt; register_type(){}
+    template&lt;class T&gt; void register_type(){}
     template&lt;class T&gt; trivial_oarchive & operator&lt;&lt;(const T & t){
         return *this;
     }
@@ -77,22 +77,22 @@ For an example see
 <a href="../example/demo_trivial_archive.cpp" target="demo_trivial_archive">
 <code style="white-space: normal">demo_trivial_archive.cpp</code></a>.
 Of course this program won't produce any output as it is.  But it provides
-the starting point for a simple class which can be used to log formated
+the starting point for a simple class which can be used to log formatted
 output.  See the implementation of a <a href="simple_log.html">simple
 log archive</a> to how this has been done.
 
 <h3><a name="implementation">More Useful Archive Classes</a></h3>
 The above example is fine as far as it goes.  But it doesn't implement
 useful features such as serialization of pointers, class versioning
-and others. This library implements a family of full featuared archive
+and others. This library implements a family of full featured archive
 classes appropriate for a variety of purposes.  
 
 <p>
-Our archives have been factored in to a tree of classes in order to minimize
+Our archives have been factored into a tree of classes in order to minimize
 repetition of code.  This is shown in the accompanying 
 <a target="class_diagram" href="class_diagram.html">class diagram</a>.
 
-Any class which fullfills the following requirements will fit into
+Any class which fulfills the following requirements will fit into
 this hierarchy and implement all the features we require.  Deriving from
 the base class <a href="../../../boost/archive/detail/common_oarchive.hpp" target="common_oarchive_hpp">
 common_oarchive.hpp</a> provides all features we desire which
@@ -113,7 +113,7 @@ class complete_oarchive :
     friend class boost::archive::save_access;
 
     // member template for saving primitive types.
-    // Specialize for any types/templates that special treatment
+    // Specialize for any types/templates that require special treatment
     template&lt;class T&gt;
     void save(T &amp; t);
 
@@ -140,15 +140,15 @@ to help render the archive in a particular form.
 
 <dl>
 
-<dt><h4><code>void save_start()</code></h4></dt>
+<dt><h4><code>void save_start(char const *)</code></h4></dt>
 <dd>
 <strong>Default</strong>:Does nothing.<br>
 <strong>Purpose</strong>:To inject/retrieve an object name into the archive.  Used
-by XML archive to inject "&lt;name " before data.
+by XML archive to inject "&lt;name&gt;" before data.
 </dd>
 <p>
 
-<dt><h4><code>void save_end()</code></h4></dt>
+<dt><h4><code>void save_end(char const *)</code></h4></dt>
 <dd>
 <strong>Default</strong>:Does nothing.<br>
 <strong>Purpose</strong>:To inject/retrieve an object name into the archive. Used
@@ -161,12 +161,12 @@ by XML archive to inject "&lt;/name&gt;" after data.
 <strong>Default</strong>:Does nothing.<br>
 <strong>Purpose</strong>:Called <strong>each time</strong> user data is saved. 
 It's not called when archive bookkeeping data is saved.  This is used by XML archives 
-to determine  when to inject a "&gt;" character at end of XML header. XML output archives 
+to determine  when to inject a "&gt;" character at the end of an XML header. XML output archives 
 keep their own internal flag indicating that data being written is header data. This
 internal flag is reset when an object start tag is written. When 
 <code style="white-space: normal">void end_preamble()</code> is invoked and this internal flag is set
 a "&gt;" character is appended to the output and the internal flag is reset. The default
-implementation for <code style="white-space: normal">void end_preamble()</code> is a no-op there by permitting it
+implementation for <code style="white-space: normal">void end_preamble()</code> is a no-op thereby permitting it
 to be optimised away for archive classes that don't use it.
 </dd>
 <p>
@@ -183,7 +183,7 @@ name-value pairs by overriding this function template for name-value pairs.
 This replaces the default name-value pair handling, which is just to throw away the name,
 with one appropriate for XML which writes out the start of an XML tag with the correct object name.
 <p>
-The second argument must be part of the function signature even this it is not used.
+The second argument must be part of the function signature even though it is not used.
 Its purpose is to be sure that code is portable to compilers which fail to correctly
 implement partial function template ordering.  For more information see
 <a href="implementation.html#functiontemplateordering">this</a>.
@@ -242,7 +242,7 @@ One or more of the following issues may need to be addressed:
     example, XML archives need &lt;name ... &gt;...&lt;/name&gt; surrounding
     all data objects.
     <li>Addressing any of the above may generate more issues to be addressed.
-    <li>The archives included with library are all templates which use a
+    <li>The archives included with the library are all templates which use a
     <code style="white-space: normal">stream</code> or
     <code style="white-space: normal">streambuf</code>
     as a template parameter rather than simple classes.
@@ -281,7 +281,7 @@ exception.
 Exhaustive testing of the library requires testing the different aspects of object
 serialization with each archive.  There are 46 different tests that can run with any archive.  
 There are 5 "standard archives" included with the system. 
-(3 in systems don't support wide charactor i/o). 
+(3 in systems that don't support wide charactor i/o). 
 <p>
 In addition, there are 28 other tests which aren't related to any particular archive class.
 <p>
@@ -354,7 +354,7 @@ each time a new archive class is created.
 </ul>
 
 <h4>Implementation</h4>
-The solution is the the pair <code>polymorphic_oarchive</code>
+The solution is the pair <code>polymorphic_oarchive</code>
 and <code>polymorphic_iarchive</code>.  They present a common interface of virtual
 functions - no templates - that is equivalent to the standard templated one.
 
@@ -371,7 +371,7 @@ show how polymorphic archives are to be used. Note the following:
   <li><a target=demo_polymorphic_A_hpp href="../example/demo_polymorphic_A.hpp"><code style="white-space: normal">demo_polymorphic_A.hpp</code></a> and
 <a target=demo_polymorphic_A_cpp href="../example/demo_polymorphic_A.cpp"><code style="white-space: normal">demo_polymorphic_A.cpp</code></a>
 contain no templates and no reference to any specific archive implementation.  That is, they will
-only have to be compiled once for all archive implementations.  The even applies to archives classes
+only have to be compiled once for all archive implementations.  This even applies to archives classes
 created in the future.
   <li>The main program <a target=demo_polymorphic_cp href="../example/demo_polymorphic.cpp"><code style="white-space: normal">demo_polymorphic.cpp</code></a>
 specifies a specific archive implementation.  
@@ -389,7 +389,7 @@ As these contain no code specific to the particular implementation archive, they
 a polymorphic archive implementation from any functioning templated archive implementation.
 <p>
 As a convenience, small header files have been included which contain 
-<code style="white-space: normal">typedef</code> for polymorphic implementation for each corresponding
+a <code style="white-space: normal">typedef</code> for a polymorphic implementation for each corresponding
 templated one.  For example, the headers
 <a target=polymorphic_text_iarchive_hpp href="../../../boost/archive/polymorphic_text_iarchive.hpp"><code style="white-space: normal">polymorphic_text_iarchive.hpp</code></a>
 and
@@ -410,8 +410,8 @@ dispatch table and there is no possibility for a compiler to <code style="white-
 archive functions.  This will result in a detectable degradation in performance for 
 saving and loading archives.
 <p>
-Note this the concept and of polymophic archives is fundamentally incompatible with the
-serialization of new types are are marked "primitive" by the user with:
+Note that the concept of polymophic archives is fundamentally incompatible with the
+serialization of new types that are marked "primitive" by the user with:
 <pre><code> 
 BOOST_CLASS_IMPLEMENTATION(my_primitive_type, boost::serialization::primitive_type)
 </code></pre>
@@ -422,7 +422,7 @@ serialize such a primitive type will result in a compilation error since the com
 interface is static and cannot instantiate code for a new type.
 
 <p>
-The main utility of polymorphic archives will be to permit the buiding of class DLLs that will
+The main utility of polymorphic archives will be to permit the building of class DLLs that will
 include serialization code for all present and future archives with no redundant code.
 <hr>
 <p><i>&copy; Copyright <a href="http://www.rrsd.com">Robert Ramey</a> 2002-2004. 

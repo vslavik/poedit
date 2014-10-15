@@ -29,33 +29,33 @@
 
   <span class="keyword">enum</span> <a name="boost.log.fallback_to_throw.@1"></a>@1 <span class="special">{</span> guaranteed_result = = true <span class="special">}</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="fallback_to_throw.html#idp26009448-bb">public static functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> FunT<span class="special">&gt;</span> <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="fallback_to_throw.html#idp26009656-bb"><span class="identifier">apply_default</span></a><span class="special">(</span><span class="identifier">FunT</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> FunT<span class="special">&gt;</span> <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="fallback_to_throw.html#idp26011144-bb"><span class="identifier">apply_default</span></a><span class="special">(</span><span class="identifier">FunT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="fallback_to_throw.html#idp26012632-bb"><span class="identifier">on_invalid_type</span></a><span class="special">(</span><span class="identifier">type_info_wrapper</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="fallback_to_throw.html#idp26013768-bb"><span class="identifier">on_missing_value</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="fallback_to_throw.html#idp34571808-bb">public static functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> FunT<span class="special">&gt;</span> <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="fallback_to_throw.html#idp34572368-bb"><span class="identifier">apply_default</span></a><span class="special">(</span><span class="identifier">FunT</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> FunT<span class="special">&gt;</span> <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="fallback_to_throw.html#idp34575504-bb"><span class="identifier">apply_default</span></a><span class="special">(</span><span class="identifier">FunT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="fallback_to_throw.html#idp34578640-bb"><span class="identifier">on_invalid_type</span></a><span class="special">(</span><span class="identifier">type_info_wrapper</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="fallback_to_throw.html#idp34580976-bb"><span class="identifier">on_missing_value</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp55914792"></a><h2>Description</h2>
+<a name="idp120863232"></a><h2>Description</h2>
 <p>The <code class="computeroutput"><a class="link" href="fallback_to_throw.html" title="Struct fallback_to_throw">fallback_to_throw</a></code> policy results in throwing an exception if the attribute value cannot be extracted. </p>
 <div class="refsect2">
-<a name="idp55915880"></a><h3>
-<a name="idp26009448-bb"></a><code class="computeroutput">fallback_to_throw</code> public static functions</h3>
+<a name="idp120865216"></a><h3>
+<a name="idp34571808-bb"></a><code class="computeroutput">fallback_to_throw</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> FunT<span class="special">&gt;</span> <span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp26009656-bb"></a><span class="identifier">apply_default</span><span class="special">(</span><span class="identifier">FunT</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> FunT<span class="special">&gt;</span> <span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp34572368-bb"></a><span class="identifier">apply_default</span><span class="special">(</span><span class="identifier">FunT</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
 <p>The method is called in order to apply a function object to the default value. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> FunT<span class="special">&gt;</span> <span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp26011144-bb"></a><span class="identifier">apply_default</span><span class="special">(</span><span class="identifier">FunT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> FunT<span class="special">&gt;</span> <span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp34575504-bb"></a><span class="identifier">apply_default</span><span class="special">(</span><span class="identifier">FunT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
 <p>The method is called in order to apply a function object to the default value. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp26012632-bb"></a><span class="identifier">on_invalid_type</span><span class="special">(</span><span class="identifier">type_info_wrapper</span> <span class="keyword">const</span> <span class="special">&amp;</span> t<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp34578640-bb"></a><span class="identifier">on_invalid_type</span><span class="special">(</span><span class="identifier">type_info_wrapper</span> <span class="keyword">const</span> <span class="special">&amp;</span> t<span class="special">)</span><span class="special">;</span></pre>
 <p>The method is called when value extraction failed because the attribute value has different type than requested. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp26013768-bb"></a><span class="identifier">on_missing_value</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp34580976-bb"></a><span class="identifier">on_missing_value</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>The method is called when value extraction failed because the attribute value was not found. </p>
 </li>
 </ol></div>
@@ -64,7 +64,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2013 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2014 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

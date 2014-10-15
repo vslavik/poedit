@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2014.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -29,6 +29,15 @@ namespace aux {
 
 BOOST_LOG_ANONYMOUS_NAMESPACE {
 
+// cxxabi.h availability macro
+#if defined(BOOST_CLANG)
+#   if defined(__has_include) && __has_include(<cxxabi.h>)
+#       define BOOST_LOG_HAS_CXXABI_H
+#   endif
+#elif defined(__GLIBCXX__) || defined(__GLIBCPP__)
+#   define BOOST_LOG_HAS_CXXABI_H
+#endif
+
 #if defined(BOOST_LOG_HAS_CXXABI_H)
 // MinGW GCC 4.4 seem to not work the same way the newer GCC versions do. As a result, __cxa_get_globals based implementation will always return 0.
 // Just disable it for now and fall back to std::uncaught_exception().
@@ -37,9 +46,15 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
 #define BOOST_LOG_HAS_CXA_GET_GLOBALS
 extern "C" void* __cxa_get_globals();
 #endif
-#elif defined(_MSC_VER) && _MSC_VER >= 1400
+#elif defined(_MSC_VER)
+#if _MSC_VER >= 1900
+// Visual Studio 14 has redesigned CRT
+#define BOOST_LOG_HAS_VCRT_GETPTD
+extern "C" void* __vcrt_getptd();
+#elif _MSC_VER >= 1400
 #define BOOST_LOG_HAS_GETPTD
 extern "C" void* _getptd();
+#endif
 #endif
 
 } // namespace
@@ -53,6 +68,9 @@ BOOST_LOG_API unsigned int unhandled_exception_count() BOOST_NOEXCEPT
 #elif defined(BOOST_LOG_HAS_GETPTD)
     // MSVC specific. Tested on {MSVC2005SP1,MSVC2008SP1,MSVC2010SP1,MSVC2012}x{x32,x64}.
     return *(reinterpret_cast< const unsigned int* >(static_cast< const char* >(_getptd()) + (sizeof(void*) == 8 ? 0x100 : 0x90))); // _tiddata::_ProcessingThrow, x32 offset - 0x90, x64 - 0x100
+#elif defined(BOOST_LOG_HAS_VCRT_GETPTD)
+    // MSVC specific. Tested on {MSVC 14 CTP}x{x32,x64}.
+    return *(reinterpret_cast< const unsigned int* >(static_cast< const char* >(__vcrt_getptd()) + (sizeof(void*) == 8 ? 0x38 : 0x1c))); // __vcrt_ptd::_ProcessingThrow, x32 offset - 0x1c, x64 - 0x38
 #else
     // Portable implementation. Does not allow to detect multiple nested exceptions.
     return static_cast< unsigned int >(std::uncaught_exception());

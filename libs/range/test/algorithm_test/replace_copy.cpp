@@ -38,7 +38,8 @@ namespace
         typedef typename boost::range_value<Container>::type value_type;
         std::vector<value_type> reference;
 
-        typedef BOOST_DEDUCED_TYPENAME std::vector<value_type>::iterator iterator_t;
+        typedef BOOST_DEDUCED_TYPENAME std::vector<value_type>::iterator
+                                            iterator_t BOOST_RANGE_UNUSED;
 
         test_append(
             std::replace_copy(c.begin(), c.end(),

@@ -26,19 +26,6 @@
 namespace boost {
 namespace archive {
 
-template class detail::archive_serializer_map<naked_binary_wiarchive>;
-template class basic_binary_iprimitive<
-    naked_binary_wiarchive,
-    wchar_t, 
-    std::char_traits<wchar_t> 
->;
-template class basic_binary_iarchive<naked_binary_wiarchive> ;
-template class binary_iarchive_impl<
-    naked_binary_wiarchive, 
-    wchar_t, 
-    std::char_traits<wchar_t> 
->;
-
 // explicitly instantiate for this type of text stream
 template class detail::archive_serializer_map<binary_wiarchive>;
 template class basic_binary_iprimitive<

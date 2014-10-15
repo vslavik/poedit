@@ -7,6 +7,7 @@
 
 # See library home page at http://www.boost.org/libs/system
 
+
 project
     : requirements
       <library>/boost/system//boost_system
@@ -50,5 +51,8 @@ project
          ]
          [ run header_only_test.cpp
            :  :  : <link>static
+         ]
+         [ run config_test.cpp
+           :  :  : <test-info>always_show_run_output 
          ]
          ;

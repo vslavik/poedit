@@ -37,33 +37,33 @@
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="error_with_no_option_name.html#boost.program_options.error_with_no_option_nameconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="error_with_no_option_name.html#idp104736888-bb"><span class="identifier">error_with_no_option_name</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="string">""</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="error_with_no_option_name.html#idp104737688-bb"><span class="special">~</span><span class="identifier">error_with_no_option_name</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="error_with_no_option_name.html#idp212170048-bb"><span class="identifier">error_with_no_option_name</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="string">""</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="error_with_no_option_name.html#idp154748272-bb"><span class="special">~</span><span class="identifier">error_with_no_option_name</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="error_with_no_option_name.html#idp104735736-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="error_with_no_option_name.html#idp104735912-bb"><span class="identifier">set_option_name</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="error_with_no_option_name.html#idp159234592-bb">public member functions</a></span>
+  <span class="keyword">virtual</span> <span class="keyword">void</span> <a class="link" href="error_with_no_option_name.html#idp215586992-bb"><span class="identifier">set_option_name</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp167420680"></a><h2>Description</h2>
+<a name="idp345549136"></a><h2>Description</h2>
 <p>Base class of unparsable options, when the desired option cannot be identified.</p>
 <p>It makes no sense to have an option name, when we can't match an option to the parameter</p>
 <p>Having this a part of the <a class="link" href="error_with_option_name.html" title="Class error_with_option_name">error_with_option_name</a> hierachy makes error handling a lot easier, even if the name indicates some sort of conceptual dissonance! </p>
 <div class="refsect2">
-<a name="idp167422120"></a><h3>
+<a name="idp345551632"></a><h3>
 <a name="boost.program_options.error_with_no_option_nameconstruct-copy-destruct"></a><code class="computeroutput">error_with_no_option_name</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><a name="idp104736888-bb"></a><span class="identifier">error_with_no_option_name</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> template_<span class="special">,</span> 
+<li class="listitem"><pre class="literallayout"><a name="idp212170048-bb"></a><span class="identifier">error_with_no_option_name</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> template_<span class="special">,</span> 
                           <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> original_token <span class="special">=</span> <span class="string">""</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a name="idp104737688-bb"></a><span class="special">~</span><span class="identifier">error_with_no_option_name</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp154748272-bb"></a><span class="special">~</span><span class="identifier">error_with_no_option_name</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp167431080"></a><h3>
-<a name="idp104735736-bb"></a><code class="computeroutput">error_with_no_option_name</code> public member functions</h3>
+<a name="idp345569760"></a><h3>
+<a name="idp159234592-bb"></a><code class="computeroutput">error_with_no_option_name</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp104735912-bb"></a><span class="identifier">set_option_name</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">virtual</span> <span class="keyword">void</span> <a name="idp215586992-bb"></a><span class="identifier">set_option_name</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Does NOT set option name, because no option name makes sense </p>
 </li></ol></div>
 </div>

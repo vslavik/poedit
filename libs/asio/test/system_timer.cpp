@@ -2,7 +2,7 @@
 // system_timer.cpp
 // ~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2014 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -245,7 +245,7 @@ void system_timer_cancel_test()
     boost::asio::system_timer t;
     timer() : t(io_service)
     {
-      t.expires_at(boost::asio::system_timer::time_point::max());
+      t.expires_at((boost::asio::system_timer::time_point::max)());
     }
   } timers[50];
 
@@ -294,13 +294,13 @@ void system_timer_custom_allocation_test()
 
   for (int i = 0; i < 50; ++i)
   {
-    timers[i].t.expires_at(boost::asio::system_timer::time_point::max());
+    timers[i].t.expires_at((boost::asio::system_timer::time_point::max)());
     timers[i].t.async_wait(custom_allocation_timer_handler(&allocation_count));
   }
 
   for (int i = 50; i < 100; ++i)
   {
-    timers[i].t.expires_at(boost::asio::system_timer::time_point::min());
+    timers[i].t.expires_at((boost::asio::system_timer::time_point::min)());
     timers[i].t.async_wait(custom_allocation_timer_handler(&allocation_count));
   }
 

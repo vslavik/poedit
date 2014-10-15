@@ -66,6 +66,15 @@ const object python::request_with_value::wrap_test()
 
 
 namespace boost { namespace mpi { namespace python {
+  
+const object request_test(request &req)                                         
+{                                                                               
+  ::boost::optional<status> stat = req.test();                                  
+  if (stat)                                                                     
+    return object(*stat);                                                       
+  else                                                                          
+    return object();                                                            
+}      
 
 extern const char* request_docstring;
 extern const char* request_with_value_docstring;
@@ -83,7 +92,7 @@ void export_request()
     typedef request cl;
     class_<cl>("Request", request_docstring, no_init)
       .def("wait", &cl::wait, request_wait_docstring)
-      .def("test", &cl::test, request_test_docstring)
+      .def("test", &request_test, request_test_docstring)
       .def("cancel", &cl::cancel, request_cancel_docstring)
       ;
   }

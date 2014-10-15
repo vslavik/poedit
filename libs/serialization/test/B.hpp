@@ -2,7 +2,7 @@
 #define BOOST_SERIALIZATION_TEST_B_HPP
 
 // MS compatible compilers support #pragma once
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
+#if defined(_MSC_VER)
 # pragma once
 #endif
 
@@ -18,6 +18,7 @@
 
 #include <cstdlib> // for rand()
 #include <cmath>
+#include <boost/math/special_functions/next.hpp>
 
 #include <boost/config.hpp>
 #if defined(BOOST_NO_STDC_NAMESPACE)
@@ -67,6 +68,7 @@ private:
             ar >> BOOST_SERIALIZATION_NVP(v);
             ar >> BOOST_SERIALIZATION_NVP(w);
             ar >> BOOST_SERIALIZATION_NVP(x);
+            break;
         default:
             break;
         }
@@ -104,9 +106,9 @@ inline bool B::operator==(const B &rhs) const
         && s == rhs.s 
         && t == rhs.t 
         && u == rhs.u 
-        && v == rhs.v 
-        && std::fabs(w - rhs.w) <= std::numeric_limits<float>::round_error()
-        && std::fabs(x - rhs.x) <= std::numeric_limits<float>::round_error()
+        && v == rhs.v
+        && std::abs( boost::math::float_distance(w, rhs.w)) < 2
+        && std::abs( boost::math::float_distance(x, rhs.x)) < 2
     ;
 }
 

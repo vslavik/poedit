@@ -207,7 +207,7 @@ namespace boost { namespace spirit { namespace qi
         template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper
+          , Context&, Skipper const& skipper
           , Attribute& attr_param) const
         {
             typedef detail::real_impl<T, RealPolicies> extract;

@@ -34,7 +34,7 @@ std::string qbk_escaped(std::string const& s)
         {
             case '[' : counter++; break;
             case ']' : counter--; break;
-            case '\\' : 
+            case '\\' :
                 {
                     result += s[i];
                     if (i + 1 < len)
@@ -44,7 +44,7 @@ std::string qbk_escaped(std::string const& s)
                     i++;
                     continue;
                 }
-            case '_' : 
+            case '_' :
                 if (counter == 0)
                 {
                     result += "\\u005f";
@@ -58,6 +58,27 @@ std::string qbk_escaped(std::string const& s)
 }
 
 
+inline void next_item(std::string const& first, std::string const& indent,
+                std::size_t items_per_line,
+                std::size_t& index, std::ostream& out)
+{
+    if (index > 0)
+    {
+        if (index % items_per_line == 0)
+        {
+            out << "," << std::endl << indent;
+        }
+        else
+        {
+            out << ", ";
+        }
+    }
+    else
+    {
+        std::cout << first;
+    }
+    index++;
+}
 
 void quickbook_template_parameter_list(std::vector<parameter> const& parameters,
                 std::string const& related_name,
@@ -65,16 +86,19 @@ void quickbook_template_parameter_list(std::vector<parameter> const& parameters,
 {
     if (!parameters.empty())
     {
-        out << "template<" ;
-        bool first = true;
+        std::string const header = "template<";
+        std::size_t index = 0;
+        std::string const indent(header.length(), ' ');
+        out << header;
         BOOST_FOREACH(parameter const& p, parameters)
         {
             if (p.fulltype.empty())
             {
                 std::cerr << "Warning: template parameter " << p.name << " has no type in " << related_name << std::endl;
             }
-            out << (first ? "" : ", ") << p.fulltype;
-            first = false;
+
+            next_item("", indent, 4, index, out);
+            out << p.fulltype;
         }
         out << ">" << std::endl;
     }
@@ -104,25 +128,25 @@ void quickbook_synopsis(function const& f, std::ostream& out)
             // do nothing
             break;
     }
-    
+
     // Output the parameters
     // Because we want to be able to skip, we cannot use the argstring
     {
-        bool first = true;
+        std::size_t index = 0;
+        std::string const indent(f.name.length() + f.return_type.length() + 2, ' ');
         BOOST_FOREACH(parameter const& p, f.parameters)
         {
             if (! p.skip)
             {
-                out 
-                    << (first ? "(" : ", ")
-                    << p.fulltype << (p.fulltype.empty() ? "" : " ")
+                next_item("(", indent, 3, index, out);
+
+                out << p.fulltype << (p.fulltype.empty() ? "" : " ")
                     << p.name
                     << (p.default_value.empty() ? "" : " = ")
                     << p.default_value;
-                first = false;
             }
         }
-        if (! first)
+        if (index > 0)
         {
             out << ")";
         }
@@ -132,7 +156,7 @@ void quickbook_synopsis(function const& f, std::ostream& out)
         }
     }
 
-    out << "``" 
+    out << "``"
         << std::endl
         << std::endl;
 }
@@ -148,7 +172,7 @@ void quickbook_synopsis(enumeration const& e, std::ostream& out)
         if (! value.initializer.empty())
         {
             // Doxygen 1.6 does not include "=" in the <initializer> tag, Doxygen 1.8 does.
-            // We just remove the "=" to have consisten output
+            // We just remove the "=" to have consistent output
             out << " = " << boost::trim_copy(boost::replace_all_copy(value.initializer, "=", ""));
         }
         first = false;
@@ -157,7 +181,7 @@ void quickbook_synopsis(enumeration const& e, std::ostream& out)
     {
         out << "};";
     }
-    out << "``" 
+    out << "``"
         << std::endl
         << std::endl;
 }
@@ -185,10 +209,44 @@ inline bool includes(std::string const& filename, std::string const& header)
 }
 
 
-void quickbook_header(std::string const& location,
+std::string fix_location(std::string const& raw_location)
+{
+    if ( raw_location.find("detail/") == std::string::npos
+         || raw_location.find("/interface.hpp") == std::string::npos )
+    {
+        return raw_location;
+    }
+
+    std::string fixed_location(raw_location);
+
+    fixed_location.erase(fixed_location.find("detail/"), 7u);
+    fixed_location.erase(fixed_location.find("/interface"), 10u);
+
+    return fixed_location;
+}
+
+
+std::string fix_include_header(std::string const& header)
+{
+    if ( header.find("geometry/geometry.hpp") == std::string::npos )
+    {
+        return header;
+    }
+
+    std::string fixed_header(header);
+
+    fixed_header.erase(fixed_header.find("geometry/"), 9u);
+
+    return fixed_header;
+}
+
+
+void quickbook_header(std::string const& raw_location,
     configuration const& config,
     std::ostream& out)
 {
+    std::string location = fix_location(raw_location);
+
     if (! location.empty())
     {
         std::vector<std::string> including_headers;
@@ -210,7 +268,7 @@ void quickbook_header(std::string const& location,
                 << std::endl << std::endl;
             BOOST_FOREACH(std::string const& header, including_headers)
             {
-                out << "`#include <" << config.start_include << header << ">`" << std::endl;
+                out << "`#include <" << fix_include_header(config.start_include + header) << ">`" << std::endl << std::endl;
             }
 
             out << std::endl << "Or" << std::endl << std::endl;
@@ -221,8 +279,8 @@ void quickbook_header(std::string const& location,
 }
 
 
-void quickbook_markup(std::vector<markup> const& qbk_markup, 
-            markup_order_type order, markup_type type, 
+void quickbook_markup(std::vector<markup> const& qbk_markup,
+            markup_order_type order, markup_type type,
             std::ostream& out)
 {
     bool has_output = false;
@@ -259,9 +317,7 @@ inline std::string to_section_name(std::string const& name)
     return boost::to_lower_copy(boost::replace_all_copy(name, "::", "_"));
 }
 
-
-
-void quickbook_short_output(function const& f, std::ostream& out)
+void quickbook_output_function_parameters(function const& f, std::ostream& out)
 {
     BOOST_FOREACH(parameter const& p, f.parameters)
     {
@@ -272,12 +328,13 @@ void quickbook_short_output(function const& f, std::ostream& out)
     }
     out << std::endl;
     out << std::endl;
+}
 
+void quickbook_output_function_return(function const& f, std::ostream& out)
+{
     if (! f.return_description.empty())
     {
-        out << "][" << std::endl;
         out << f.return_description << std::endl;
-        out << std::endl;
     }
 
     out << std::endl;
@@ -357,7 +414,7 @@ void quickbook_output(function const& f, configuration const& config, std::ostre
         << std::endl;
 
     quickbook_output_indexterm(f.name, out);
-        
+
     out << qbk_escaped(f.brief_description) << std::endl;
     out << std::endl;
 
@@ -478,10 +535,10 @@ void quickbook_output(enumeration const& e, configuration const& config, std::os
     out << std::endl;
 }
 
-void quickbook_output_function(std::vector<function> const& functions, 
+void quickbook_output_function(std::vector<function> const& functions,
                                 function_type type,
                                 std::string const& title,
-                                configuration const& config, std::ostream& out)
+                                configuration const& , std::ostream& out)
 {
     std::string returns = type == function_constructor_destructor ? "" : " [Returns]";
     out << "[heading " << title << "(s)]" << std::endl
@@ -495,8 +552,15 @@ void quickbook_output_function(std::vector<function> const& functions,
             out << "[[";
             quickbook_synopsis(f, out);
             out << "] [" << f.brief_description << "] [";
-            quickbook_short_output(f, out);
-            out << "]]" << std::endl;
+            quickbook_output_function_parameters(f, out);
+            out << "]";
+            if ( type != function_constructor_destructor )
+            {
+                out << "[" << std::endl;
+                quickbook_output_function_return(f, out);
+                out << "]" << std::endl;
+            }
+            out << "]" << std::endl;
         }
     }
     out << "]" << std::endl
@@ -683,7 +747,7 @@ std::string replace_brackets(std::string const& str)
 }
 
 void quickbook_output_enumerations(std::vector<enumeration> const& enumerations,
-                                  configuration const& config,
+                                  configuration const& ,
                                   std::ostream& out)
 {
     out << "[table" << std::endl
@@ -725,7 +789,7 @@ void quickbook_synopsis_short(function const& f, std::ostream& out)
 
 void quickbook_output_functions(std::vector<function> const& functions,
                                 function_type type,
-                                configuration const& config,
+                                configuration const& ,
                                 std::ostream& out,
                                 bool display_all = false,
                                 std::string const& ColTitle = "Function")
@@ -734,7 +798,7 @@ void quickbook_output_functions(std::vector<function> const& functions,
     BOOST_FOREACH(function const& f, functions)
     {
         if ( (display_all || f.type == type) && (f.is_const || f.is_static) && !f.brief_description.empty() )
-            show_modifiers = true;        
+            show_modifiers = true;
     }
 
     out << "[table\n"
@@ -833,7 +897,7 @@ void inline_str_with_links(std::string const& str, std::ostream & out)
                     first = false;
                 }
                 out << str[i];
-            }            
+            }
         }
         else
         {
@@ -863,7 +927,7 @@ void inline_str_with_links(std::string const& str, std::ostream & out)
 void quickbook_template_parameter_list_alt(std::vector<parameter> const& parameters, std::ostream& out)
 {
     std::string next_param;
-    
+
     if ( 2 < parameters.size() )
         next_param = std::string("`,`\n") + "         ";
     else
@@ -981,7 +1045,7 @@ void quickbook_synopsis_alt(class_or_struct const& cos, configuration const& con
         else
             out << short_name.substr(last_scope + 2) << "`" << std::endl;
     }
-    
+
     if (! cos.base_classes.empty())
     {
         out << "`      : ";
@@ -1060,7 +1124,7 @@ bool has_brief_description(Range const& rng, function_type t)
 
 void quickbook_output_functions_details(std::vector<function> const& functions,
                                         function_type type,
-                                        configuration const& config,
+                                        configuration const& ,
                                         std::ostream& out,
                                         bool display_all = false)
 {
@@ -1080,7 +1144,7 @@ void quickbook_output_functions_details(std::vector<function> const& functions,
             out << "[section " << replace_brackets(ss.str()) << "]" << std::endl;
 
             quickbook_output_indexterm(f.name, out);
-            
+
             // Brief description
             out << f.brief_description << std::endl;
             out << std::endl;
@@ -1174,7 +1238,7 @@ void quickbook_output_functions_details(std::vector<function> const& functions,
                 out << "[heading Returns]" << std::endl;
                 out << f.return_description << std::endl;
             }
-            
+
             // Additional paragraphs, note, warning
             output_paragraphs_note_warning(f, out);
 
@@ -1189,7 +1253,7 @@ void quickbook_output_functions_details(std::vector<function> const& functions,
     }
 }
 
-void quickbook_output_enumeration_details(enumeration const& e, configuration const& config, std::ostream& out)
+void quickbook_output_enumeration_details(enumeration const& e, configuration const& , std::ostream& out)
 {
     out << "[#" << e.id << "]\n";
     out << "[section " << e.name << "]" << std::endl
@@ -1276,7 +1340,7 @@ void quickbook_output_alt(documentation const& doc, configuration const& config,
     {
         out << "[endsect]" << std::endl
             << std::endl;
-    }    
+    }
 }
 
 void quickbook_output_alt(class_or_struct const& cos, configuration const& config, std::ostream& out)

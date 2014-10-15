@@ -3,10 +3,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Integer Traits</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="Boost.Integer">
 <link rel="up" href="../index.html" title="Boost.Integer">
-<link rel="prev" href="cstdint.html" title="Standard Integer Types">
+<link rel="prev" href="../index.html" title="Boost.Integer">
 <link rel="next" href="integer.html" title="Integer Type Selection">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,13 +20,13 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="cstdint.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="integer.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../index.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="integer.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="boost_integer.traits"></a><a class="link" href="traits.html" title="Integer Traits"> Integer Traits</a>
+<a name="boost_integer.traits"></a><a class="link" href="traits.html" title="Integer Traits">Integer Traits</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="traits.html#boost_integer.traits.motivation">Motivation</a></span></dt>
 <dt><span class="section"><a href="traits.html#boost_integer.traits.synopsis">Synopsis</a></span></dt>
 <dt><span class="section"><a href="traits.html#boost_integer.traits.description">Description</a></span></dt>
@@ -45,14 +45,14 @@
 <p>
         For integer types, the interesting members of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;&gt;</span></code> are:
       </p>
-<pre class="programlisting"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">bool</span> <span class="identifier">is_specialized</span><span class="special">;</span>      <span class="comment">// Will be true for integer types.
-</span><span class="keyword">static</span> <span class="identifier">T</span> <span class="identifier">min</span><span class="special">()</span> <span class="keyword">throw</span><span class="special">();</span>                <span class="comment">// Smallest representable value.
-</span><span class="keyword">static</span> <span class="identifier">T</span> <span class="identifier">max</span><span class="special">()</span> <span class="keyword">throw</span><span class="special">();</span>                <span class="comment">// Largest representable value.
-</span><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> <span class="identifier">digits</span><span class="special">;</span>               <span class="comment">// For integers, the number of value bits.
-</span><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> <span class="identifier">digits10</span><span class="special">;</span>             <span class="comment">// The number of base 10 digits that can be represented.
-</span><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">bool</span> <span class="identifier">is_signed</span><span class="special">;</span>           <span class="comment">// True if the type is signed.
-</span><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">bool</span> <span class="identifier">is_integer</span><span class="special">;</span>          <span class="comment">// Will be true for all integer types.
-</span></pre>
+<pre class="programlisting"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">bool</span> <span class="identifier">is_specialized</span><span class="special">;</span>      <span class="comment">// Will be true for integer types.</span>
+<span class="keyword">static</span> <span class="identifier">T</span> <span class="identifier">min</span><span class="special">()</span> <span class="keyword">throw</span><span class="special">();</span>                <span class="comment">// Smallest representable value.</span>
+<span class="keyword">static</span> <span class="identifier">T</span> <span class="identifier">max</span><span class="special">()</span> <span class="keyword">throw</span><span class="special">();</span>                <span class="comment">// Largest representable value.</span>
+<span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> <span class="identifier">digits</span><span class="special">;</span>               <span class="comment">// For integers, the number of value bits.</span>
+<span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> <span class="identifier">digits10</span><span class="special">;</span>             <span class="comment">// The number of base 10 digits that can be represented.</span>
+<span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">bool</span> <span class="identifier">is_signed</span><span class="special">;</span>           <span class="comment">// True if the type is signed.</span>
+<span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">bool</span> <span class="identifier">is_integer</span><span class="special">;</span>          <span class="comment">// Will be true for all integer types.</span>
+</pre>
 <p>
         For many uses, these are sufficient. But min() and max() are problematical
         because they are not constant expressions (std::5.19), yet some usages require
@@ -72,11 +72,11 @@
   <span class="special">{</span>
   <span class="keyword">public</span><span class="special">:</span>
      <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">bool</span> <span class="identifier">is_integral</span> <span class="special">=</span> <span class="keyword">false</span><span class="special">;</span>
-     <span class="comment">//
-</span>     <span class="comment">// These members are defined only if T is a built-in
-</span>     <span class="comment">// integal type:
-</span>     <span class="comment">//
-</span>     <span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="identifier">const_min</span> <span class="special">=</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
+     <span class="comment">//</span>
+     <span class="comment">// These members are defined only if T is a built-in</span>
+     <span class="comment">// integal type:</span>
+     <span class="comment">//</span>
+     <span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="identifier">const_min</span> <span class="special">=</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
      <span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="identifier">const_max</span> <span class="special">=</span> <span class="emphasis"><em>implementation-defined</em></span><span class="special">;</span>
   <span class="special">};</span>
 <span class="special">}</span>
@@ -200,8 +200,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001 -2009 Beman Dawes, Daryle Walker, Gennaro Prota,
-      John Maddock<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2009 Beman
+      Dawes, Daryle Walker, Gennaro Prota, John Maddock<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -209,7 +209,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="cstdint.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="integer.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../index.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="integer.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

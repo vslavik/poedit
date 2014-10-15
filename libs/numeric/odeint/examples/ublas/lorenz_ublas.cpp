@@ -1,6 +1,6 @@
 /*
- * Copyright 2009-2012 Karsten Ahnert
- * Copyright 2009-2012 Mario Mulansky
+ * Copyright 2011-2013 Mario Mulansky
+ * Copyright 2012 Karsten Ahnert
  *
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or
@@ -13,26 +13,7 @@
 #include <boost/numeric/odeint.hpp>
 #include <boost/numeric/ublas/vector.hpp>
 
-/* define ublas::vector<double> as resizeable 
- * this is not neccessarily required because this definition already 
- * exists in util/ublas_wrapper.hpp.
- * However, for completeness and educational purpose it is repeated here.
- */
-
-//[ ublas_resizeable
 typedef boost::numeric::ublas::vector< double > state_type;
-
-namespace boost { namespace numeric { namespace odeint {
-
-template<>
-struct is_resizeable< state_type >
-{
-    typedef boost::true_type type;
-    const static bool value = type::value;
-};
-
-} } }
-//]
 
 void lorenz( const state_type &x , state_type &dxdt , const double t )
 {
@@ -52,8 +33,8 @@ int main()
 {
     state_type x(3);
     x[0] = 10.0; x[1] = 5.0 ; x[2] = 0.0;
-    typedef runge_kutta4< state_type , double , state_type , double , vector_space_algebra > stepper;
-    integrate_const( stepper() , lorenz , x ,
+    typedef runge_kutta_dopri5< state_type > stepper;
+    integrate_const( make_dense_output< stepper >( 1E-6 , 1E-6 ) , lorenz , x ,
                      0.0 , 10.0 , 0.1 );
 }
 //]

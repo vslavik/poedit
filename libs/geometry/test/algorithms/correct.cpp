@@ -14,35 +14,16 @@
 
 #include <sstream>
 
-#include <geometry_test_common.hpp>
+#include <algorithms/test_correct.hpp>
 
-#include <boost/geometry/algorithms/correct.hpp>
 #include <boost/geometry/strategies/strategies.hpp>
 
 #include <boost/geometry/io/dsv/write.hpp>
-
-#include <boost/geometry/io/wkt/read.hpp>
-#include <boost/geometry/io/wkt/write.hpp>
 
 #include <boost/geometry/geometries/point_xy.hpp>
 #include <boost/geometry/geometries/box.hpp>
 #include <boost/geometry/geometries/ring.hpp>
 #include <boost/geometry/geometries/polygon.hpp>
-
-
-template <typename Geometry>
-void test_geometry(std::string const& wkt, std::string const& expected)
-{
-    Geometry geometry;
-
-    bg::read_wkt(wkt, geometry);
-    bg::correct(geometry);
-
-    std::ostringstream out;
-    out << bg::wkt(geometry);
-
-    BOOST_CHECK_EQUAL(out.str(), expected);
-}
 
 
 // Note: 3D/box test cannot be done using WKT because:

@@ -1,5 +1,5 @@
 [/
-              Copyright Andrey Semashev 2007 - 2013.
+              Copyright Andrey Semashev 2007 - 2014.
      Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
               http://www.boost.org/LICENSE_1_0.txt)
@@ -8,6 +8,29 @@
 /]
 
 [section:changelog Changelog]
+
+[heading 2.3, Boost 1.56]
+
+[*General changes:]
+
+* For Windows targets, the library now compiles for Windows XP by default.
+* Added indexing operators with [class_log_attribute_name] arguments to [class_log_record] and [class_log_record_view]. The operators behave the same way as the similar operators of [class_log_attribute_value_set] (i.e. return an [class_log_attribute_value] identified by the name).
+* Added operators for non-const object output to [class_log_basic_formatting_ostream]. ([ticket 9389])
+* Added new format flags "%c", "%C" and "%F" to the [link log.detailed.expressions.formatters.named_scope named scope formatter]. The new flags allow putting function names and source file names of named scopes into the formatted strings. ([ticket 9263])
+* Added support for incomplete and empty markers to the [link log.detailed.expressions.formatters.named_scope named scope formatter]. The markers can be used to customize the scope list presentation when the list is empty or limited by the `depth` named parameter. ([ticket 9123])
+* The default presentation for incomplete named scope lists has changed. In previous releases the incomplete marker included a trailing delimiter, for example "scope1<-scope2<-...". From this release the trailing delimiter is omitted, so in the same case the formatting result would be: "scope1<-scope2..." (note the missing trailing "<-").
+* Added a support header for `std::regex`. If `boost/log/support/std_regex.hpp` is included, one can use `std::regex` expressions with [link log.detailed.expressions.predicates.advanced_string_matching string matching filters].
+* By default Boost.Log uses __boost_regex__ internally as the regular expressions backend. __boost_xpressive__ was used in previous releases. This backend is used to implement string matching filters parsed from strings or settings. Using __boost_regex__ by default results in smaller executables and also better runtime performance.
+* Added build configuration macros for regex backend selection. By defining `BOOST_LOG_USE_STD_REGEX`, `BOOST_LOG_USE_BOOST_REGEX` or `BOOST_LOG_USE_BOOST_XPRESSIVE` at Boost.Log build time the user can select which regex implementation will be used by the library internally for the string matching filters parsed from strings and settings. Note that this selection does not affect [link log.detailed.expressions.predicates.advanced_string_matching string matching filters in expressions].
+
+[*Bug fixes:]
+
+* Fixed [link log.detailed.utilities.manipulators.dump `dump`] manipulator output on AVX2-enabled CPUs (e.g. Intel Haswell).
+* Fixed compilation of `get_attribute` method of loggers.
+* Fixed a possible race in `locked_backend()` function implementation of synchronous and asynchronous sink frontends.
+* Fixed a possible infinite block of the logging threads in the asynchronous sink enqueue methods when [class_sinks_block_on_overflow] strategy was used.
+* Added a workaround for ticket [ticket 9363].
+* Added a workaround for MSVC bug that caused the [link log.detailed.utilities.manipulators.add_value `add_value`] manipulator produce garbage attribute values when using with immediate integer constants. ([ticket 9320])
 
 [heading 2.2, Boost 1.55]
 
@@ -24,6 +47,7 @@
 * Fixed [link log.detailed.attributes.timer `timer`] attribute generating incorrect time readings on Windows on heavy thread contention when `QueryPerformanceCounter` API was used.
 * Fixed a bug in the filter parser that prevented using parsed filters with some attributes. For example, parsed filters didn't work with a string-typed attribute value, if the value was compared to a numeric operand.
 * Fixed thread id formatting discrepancies between the default sink and formatters.
+* Fixed parsing RotationTimePoint parameter values from settings, when the time point only included time of day (i.e. daily rotation).
 * Closed tickets: [ticket 8815], [ticket 8819], [ticket 8915], [ticket 8917], [ticket 9139], [ticket 9140], [ticket 9153], [ticket 9155].
 
 [heading 2.1, Boost 1.54]

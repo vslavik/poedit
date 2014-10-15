@@ -42,17 +42,23 @@ void test_with_point(std::string const& caseid,
     P qj = bg::make<P>(qj_x, qj_y);
     P qk = bg::make<P>(qk_x, qk_y);
 
+    typedef typename bg::detail::no_rescale_policy rescale_policy_type;
 
-    typedef bg::detail::overlay::turn_info<P> turn_info;
+    typedef bg::detail::overlay::turn_info
+        <
+            P,
+            typename bg::segment_ratio_type<P, rescale_policy_type>::type
+        > turn_info;
     typedef std::vector<turn_info> tp_vector;
     turn_info model;
     tp_vector info;
+    rescale_policy_type rescale_policy;
     bg::detail::overlay::get_turn_info
         <
-            P, P, turn_info,
             bg::detail::overlay::assign_null_policy
         >::apply(pi, pj, pk, qi, qj, qk,
-        model, std::back_inserter(info));
+                 false, false, false, false, // dummy parameters
+        model, rescale_policy, std::back_inserter(info));
 
 
     if (info.size() == 0)
@@ -72,18 +78,13 @@ void test_with_point(std::string const& caseid,
         }
     }
 
+    BOOST_CHECK_MESSAGE(detected == expected,
+        caseid
+            << (caseid.find("_") == std::string::npos ? "  " : "")
+            << " method: " << method
+            << " detected: " << detected
+            << " expected: " << expected);
 
-    /*
-    std::cout << caseid
-        << (caseid.find("_") == std::string::npos ? "  " : "")
-        << " " << method
-        << " " << detected
-        << " " << order
-        << std::endl;
-    */
-
-
-    BOOST_CHECK_EQUAL(detected, expected);
 
     if (! info.empty())
     {
@@ -327,14 +328,16 @@ void test_all()
             5, 3,   5, 5,   6, 6, // q
             method_collinear, 5, 5, "ui");
 
+    // The next two cases are changed (BSG 2013-09-24), they contain turn info (#buffer_rt_g)
+    // In new approach they are changed back (BSG 2013-10-20)
     test_both<P, double>("ccx1",
             5, 1,   5, 6,   5, 8, // p
             5, 5,   5, 7,   3, 8, // q
-            method_collinear, 5, 6, "cc");
+            method_collinear, 5, 6, "cc"); // "iu");
     test_both<P, double>("cxc1",
             5, 1,   5, 6,   7, 8, // p
             5, 3,   5, 5,   5, 7, // q
-            method_collinear, 5, 5, "cc");
+            method_collinear, 5, 5, "cc"); // "iu");
 
     // Bug in case #54 of "overlay_cases.hpp"
     test_both<P, double>("c_bug1",
@@ -807,7 +810,7 @@ void test_all()
             4, 3,   2, 3,   0, 3, // q
             method_touch, 2, 3, "xx");
 
-    // BSG 2012-05-26 to be decided what's the problem here and what it tests... 
+    // BSG 2012-05-26 to be decided what's the problem here and what it tests...
     // Anyway, test results are not filled out.
     //test_both<P, double>("issue_buffer_mill",
     //        5.1983614873206241 , 6.7259025813913107 , 5.0499999999999998 , 6.4291796067500622 , 5.1983614873206241 , 6.7259025813913107, // p

@@ -18,12 +18,11 @@ namespace std{
     using ::remove;
 }
 #endif
-#include <boost/type_traits/broken_compiler_spec.hpp>
 
-#include <boost/serialization/shared_ptr.hpp>
-#include <boost/serialization/weak_ptr.hpp>
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/export.hpp>
+#include <boost/serialization/shared_ptr.hpp>
+#include <boost/serialization/weak_ptr.hpp>
 
 #include "test_tools.hpp"
 
@@ -96,14 +95,16 @@ public:
 
 int C::count = 0;
 
-void save(const char * testfile, const boost::shared_ptr<A>& spa)
+template<class SP>
+void save(const char * testfile, const SP & spa)
 {
     test_ostream os(testfile, TEST_STREAM_FLAGS);
     test_oarchive oa(os, TEST_ARCHIVE_FLAGS);
     oa << BOOST_SERIALIZATION_NVP(spa);
 }
 
-void load(const char * testfile, boost::shared_ptr<A>& spa)
+template<class SP>
+void load(const char * testfile, SP & spa)
 {
     test_istream is(testfile, TEST_STREAM_FLAGS);
     test_iarchive ia(is, TEST_ARCHIVE_FLAGS);
@@ -111,12 +112,13 @@ void load(const char * testfile, boost::shared_ptr<A>& spa)
 }
 
 // trivial test
-void save_and_load(boost::shared_ptr<A>& spa)
+template<class SP>
+void save_and_load(SP & spa)
 {
     const char * testfile = boost::archive::tmpnam(NULL);
     BOOST_REQUIRE(NULL != testfile);
     save(testfile, spa);
-    boost::shared_ptr<A> spa1;
+    SP spa1;
     load(testfile, spa1);
 
     BOOST_CHECK(
@@ -126,10 +128,11 @@ void save_and_load(boost::shared_ptr<A>& spa)
     std::remove(testfile);
 }
 
+template<class SP>
 void save2(
     const char * testfile, 
-    const boost::shared_ptr<A>& first, 
-    const boost::shared_ptr<A>& second
+    const SP & first,
+    const SP & second
 ){
     test_ostream os(testfile, TEST_STREAM_FLAGS);
     test_oarchive oa(os, TEST_ARCHIVE_FLAGS);
@@ -137,10 +140,11 @@ void save2(
     oa << BOOST_SERIALIZATION_NVP(second);
 }
 
+template<class SP>
 void load2(
     const char * testfile, 
-    boost::shared_ptr<A>& first, 
-    boost::shared_ptr<A>& second)
+    SP & first,
+    SP & second)
 {
     test_istream is(testfile, TEST_STREAM_FLAGS);
     test_iarchive ia(is, TEST_ARCHIVE_FLAGS);
@@ -151,7 +155,8 @@ void load2(
 // Run tests by serializing two shared_ptrs into an archive,
 // clearing them (deleting the objects) and then reloading the
 // objects back from an archive.
-void save_and_load2(boost::shared_ptr<A>& first, boost::shared_ptr<A>& second)
+template<class SP>
+void save_and_load2(SP & first, SP & second)
 {
     const char * testfile = boost::archive::tmpnam(NULL);
     BOOST_REQUIRE(NULL != testfile);
@@ -168,11 +173,12 @@ void save_and_load2(boost::shared_ptr<A>& first, boost::shared_ptr<A>& second)
     std::remove(testfile);
 }
 
+template<class SP, class WP>
 void save3(
     const char * testfile, 
-    boost::shared_ptr<A>& first, 
-    boost::shared_ptr<A>& second,
-    boost::weak_ptr<A>& third
+    SP & first,
+    SP & second,
+    WP & third
 ){
     test_ostream os(testfile, TEST_STREAM_FLAGS);
     test_oarchive oa(os, TEST_ARCHIVE_FLAGS);
@@ -181,26 +187,28 @@ void save3(
     oa << BOOST_SERIALIZATION_NVP(second);
 }
 
+template<class SP, class WP>
 void load3(
     const char * testfile, 
-    boost::shared_ptr<A>& first, 
-    boost::shared_ptr<A>& second,
-    boost::weak_ptr<A>& third
+    SP & first,
+    SP & second,
+    WP & third
 ){
     test_istream is(testfile, TEST_STREAM_FLAGS);
     test_iarchive ia(is, TEST_ARCHIVE_FLAGS);
     // note that we serialize the weak pointer first
     ia >> BOOST_SERIALIZATION_NVP(third);
     // inorder to test that a temporarily solitary weak pointer
-    // correcttly restored.
+    // correctly restored.
     ia >> BOOST_SERIALIZATION_NVP(first);
     ia >> BOOST_SERIALIZATION_NVP(second);
 }
 
+template<class SP, class WP>
 void save_and_load3(
-    boost::shared_ptr<A>& first, 
-    boost::shared_ptr<A>& second,
-    boost::weak_ptr<A>& third
+    SP & first,
+    SP & second,
+    WP & third
 ){
     const char * testfile = boost::archive::tmpnam(NULL);
     BOOST_REQUIRE(NULL != testfile);
@@ -219,14 +227,16 @@ void save_and_load3(
     std::remove(testfile);
 }
 
-void save4(const char * testfile, const boost::shared_ptr<C>& spc)
+template<class SP>
+void save4(const char * testfile, const SP & spc)
 {
     test_ostream os(testfile, TEST_STREAM_FLAGS);
     test_oarchive oa(os, TEST_ARCHIVE_FLAGS);
     oa << BOOST_SERIALIZATION_NVP(spc);
 }
 
-void load4(const char * testfile, boost::shared_ptr<C>& spc)
+template<class SP>
+void load4(const char * testfile, SP & spc)
 {
     test_istream is(testfile, TEST_STREAM_FLAGS);
     test_iarchive ia(is, TEST_ARCHIVE_FLAGS);
@@ -234,12 +244,13 @@ void load4(const char * testfile, boost::shared_ptr<C>& spc)
 }
 
 // trivial test
-void save_and_load4(boost::shared_ptr<C>& spc)
+template<class SP>
+void save_and_load4(SP & spc)
 {
     const char * testfile = boost::archive::tmpnam(NULL);
     BOOST_REQUIRE(NULL != testfile);
     save4(testfile, spc);
-    boost::shared_ptr<C> spc1;
+    SP spc1;
     load4(testfile, spc1);
 
     BOOST_CHECK(
@@ -250,40 +261,40 @@ void save_and_load4(boost::shared_ptr<C>& spc)
 }
 
 // This does the tests
-int test_main(int /* argc */, char * /* argv */[])
-{
+template<template<class T> class SPT , template<class T> class WPT >
+bool test(){
     {
-        boost::shared_ptr<A> spa;
+        SPT<A> spa;
         // These are our shared_ptrs
-        spa = boost::shared_ptr<A>(new A);
-        boost::shared_ptr<A> spa1 = spa;
+        spa = SPT<A>(new A);
+        SPT<A> spa1 = spa;
         spa1 = spa;
     }
     {
         // These are our shared_ptrs
-        boost::shared_ptr<A> spa;
+        SPT<A> spa;
 
         // trivial test 1
         save_and_load(spa);
     
         //trivival test 2
-        spa = boost::shared_ptr<A>(new A);
+        spa = SPT<A>(new A);
         save_and_load(spa);
 
         // Try to save and load pointers to As
-        spa = boost::shared_ptr<A>(new A);
-        boost::shared_ptr<A> spa1 = spa;
+        spa = SPT<A>(new A);
+        SPT<A> spa1 = spa;
         save_and_load2(spa, spa1);
 
         // Try to save and load pointers to Bs
-        spa = boost::shared_ptr<A>(new B);
+        spa = SPT<A>(new B);
         spa1 = spa;
         save_and_load2(spa, spa1);
 
         // test a weak pointer
-        spa = boost::shared_ptr<A>(new A);
+        spa = SPT<A>(new A);
         spa1 = spa;
-        boost::weak_ptr<A> wp = spa;
+        WPT<A> wp = spa;
         save_and_load3(spa, spa1, wp);
         
         // obj of type B gets destroyed
@@ -292,10 +303,21 @@ int test_main(int /* argc */, char * /* argv */[])
     BOOST_CHECK(A::count == 0);
     {
         // Try to save and load pointers to Cs
-        boost::shared_ptr<C> spc;
-        spc = boost::shared_ptr<C>(new C);
+        SPT<C> spc;
+        spc = SPT<C>(new C);
         save_and_load4(spc);
     }
     BOOST_CHECK(C::count == 0);
-    return EXIT_SUCCESS;
+    return true;
 }
+// This does the tests
+int test_main(int /* argc */, char * /* argv */[])
+{
+    bool result = true;
+    result &= test<boost::shared_ptr, boost::weak_ptr>();
+    #ifndef BOOST_NO_CXX11_SMART_PTR
+    result &= test<std::shared_ptr, std::weak_ptr>();
+    #endif
+    return result ? EXIT_SUCCESS : EXIT_FAILURE;
+}
+

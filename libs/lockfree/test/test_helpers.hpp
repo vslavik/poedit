@@ -38,7 +38,7 @@ public:
     {
         std::size_t index = calc_index(id);
 
-        boost::mutex::scoped_lock lock (ref_mutex[index]);
+        boost::lock_guard<boost::mutex> lock (ref_mutex[index]);
 
         std::pair<typename std::set<int_type>::iterator, bool> p;
         p = data[index].insert(id);
@@ -50,7 +50,7 @@ public:
     {
         std::size_t index = calc_index(id);
 
-        boost::mutex::scoped_lock lock (ref_mutex[index]);
+        boost::lock_guard<boost::mutex> lock (ref_mutex[index]);
 
         return data[index].find(id) != data[index].end();
     }
@@ -59,7 +59,7 @@ public:
     {
         std::size_t index = calc_index(id);
 
-        boost::mutex::scoped_lock lock (ref_mutex[index]);
+        boost::lock_guard<boost::mutex> lock (ref_mutex[index]);
 
         if (data[index].find(id) != data[index].end()) {
             data[index].erase(id);
@@ -74,7 +74,7 @@ public:
     {
         std::size_t ret = 0;
         for (int i = 0; i != buckets; ++i) {
-            boost::mutex::scoped_lock lock (ref_mutex[i]);
+            boost::lock_guard<boost::mutex> lock (ref_mutex[i]);
             ret += data[i].size();
         }
         return ret;

@@ -79,7 +79,7 @@
 <dt><span class="section"><a href="boost__geometry__index__rtree/get_allocator__.html">get_allocator()</a></span></dt>
 </dl></div>
 <p>
-          <a class="indexterm" name="idp60182952"></a><a class="indexterm" name="idp60183288"></a><a class="indexterm" name="idp60183624"></a><a class="indexterm" name="idp60183960"></a>
+          <a class="indexterm" name="idp119064112"></a><a class="indexterm" name="idp119064800"></a><a class="indexterm" name="idp119065488"></a><a class="indexterm" name="idp119066176"></a>
 The R-tree spatial index.
         </p>
 <h6>
@@ -136,8 +136,8 @@ The R-tree spatial index.
           time r-tree requires it. Which means that this operation is done for each
           Value access. Therefore the IndexableGetter should return the Indexable
           by const reference instead of a value. Default one can translate all types
-          adapted to Point or Box concepts (called Indexables). It also handles
-          <code class="literal"><code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">Indexable</span><span class="special">,</span>
+          adapted to Point, Box or Segment concepts (called Indexables). It also
+          handles <code class="literal"><code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">Indexable</span><span class="special">,</span>
           <span class="identifier">T</span><span class="special">&gt;</span></code></code>
           and <code class="literal"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">Indexable</span><span class="special">,</span>
           <span class="special">...&gt;</span></code></code>. For example,
@@ -973,7 +973,8 @@ The R-tree spatial index.
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2014 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam
+      Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

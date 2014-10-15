@@ -160,6 +160,8 @@ call <tt>get(vertex_index, g)</tt> returns the actual property map object.
   {
     // ...
 
+    typedef graph_traits&lt;Graph&gt;::vertex_descriptor Vertex;
+
     // get the property map for vertex indices
     typedef property_map&lt;Graph, vertex_index_t&gt;::type IndexMap;
     IndexMap index = get(vertex_index, g);
@@ -167,8 +169,10 @@ call <tt>get(vertex_index, g)</tt> returns the actual property map object.
     std::cout &lt;&lt; &quot;vertices(g) = &quot;;
     typedef graph_traits&lt;Graph&gt;::vertex_iterator vertex_iter;
     std::pair&lt;vertex_iter, vertex_iter&gt; vp;
-    for (vp = vertices(g); vp.first != vp.second; ++vp.first)
-      std::cout &lt;&lt; index[*vp.first] &lt;&lt;  &quot; &quot;;
+    for (vp = vertices(g); vp.first != vp.second; ++vp.first) {
+      Vertex v = *vp.first;
+      std::cout &lt;&lt; index[v] &lt;&lt;  &quot; &quot;;
+    }
     std::cout &lt;&lt; std::endl;
     // ...
     return 0;
@@ -187,7 +191,7 @@ but in this case the iterators are <i>edge iterators</i>. Dereferencing an edge
 iterator gives an edge object. The <tt>source()</tt> and <tt>target()</tt>
 functions return the two vertices that are connected by the edge. Instead of
 explicitly creating a <tt>std::pair</tt> for the iterators, this time we will
-use the <a href="../../tuple/doc/tuple_users_guide.html#tiers"><tt>tie()</tt></a> helper function.
+use the <a href="../../tuple/doc/tuple_users_guide.html#tiers"><tt>boost::tie()</tt></a> helper function.
 This handy function can be used to assign the parts of a <tt>std::pair</tt> into
 two separate variables, in this case <tt>ei</tt> and <tt>ei_end</tt>. This is
 usually more convenient than creating a <tt>std::pair</tt> and is our method of
@@ -200,7 +204,7 @@ choice for the BGL.
     // ...
     std::cout &lt;&lt; &quot;edges(g) = &quot;;
     graph_traits&lt;Graph&gt;::edge_iterator ei, ei_end;
-    for (tie(ei, ei_end) = edges(g); ei != ei_end; ++ei)
+    for (boost::tie(ei, ei_end) = edges(g); ei != ei_end; ++ei)
         std::cout &lt;&lt; &quot;(&quot; &lt;&lt; index[source(*ei, g)] 
                   &lt;&lt; &quot;,&quot; &lt;&lt; index[target(*ei, g)] &lt;&lt; &quot;) &quot;;
     std::cout &lt;&lt; std::endl;
@@ -303,7 +307,7 @@ out-edge of vertex <tt>v</tt>.
       std::cout &lt;&lt; &quot;out-edges: &quot;;
       typename GraphTraits::out_edge_iterator out_i, out_end;
       typename GraphTraits::edge_descriptor e;
-      for (tie(out_i, out_end) = out_edges(v, g); 
+      for (boost::tie(out_i, out_end) = out_edges(v, g); 
            out_i != out_end; ++out_i) {
         e = *out_i;
         Vertex src = source(e, g), targ = target(e, g);
@@ -337,7 +341,7 @@ specified instead of <tt>directedS</tt>.
       std::cout &lt;&lt; &quot;in-edges: &quot;;
       typedef typename graph_traits&lt;Graph&gt; GraphTraits;
       typename GraphTraits::in_edge_iterator in_i, in_end;
-      for (tie(in_i, in_end) = in_edges(v,g); 
+      for (boost::tie(in_i, in_end) = in_edges(v,g); 
            in_i != in_end; ++in_i) {
         e = *in_i;
         Vertex src = source(e, g), targ = target(e, g);
@@ -373,7 +377,7 @@ descriptor for an adjacent vertex.
       std::cout &lt;&lt; &quot;adjacent vertices: &quot;;
       typename graph_traits&lt;Graph&gt;::adjacency_iterator ai;
       typename graph_traits&lt;Graph&gt;::adjacency_iterator ai_end;
-      for (tie(ai, ai_end) = adjacent_vertices(v, g);
+      for (boost::tie(ai, ai_end) = adjacent_vertices(v, g);
            ai != ai_end; ++ai)
         std::cout &lt;&lt; index[*ai] &lt;&lt;  &quot; &quot;;
       std::cout &lt;&lt; std::endl;

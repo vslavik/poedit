@@ -11,7 +11,7 @@
 
 #if !defined(TEST_MPF_50) && !defined(TEST_MPF) && !defined(TEST_BACKEND) && !defined(TEST_MPZ) && \
    !defined(TEST_CPP_DEC_FLOAT) && !defined(TEST_MPFR) && !defined(TEST_MPFR_50) && !defined(TEST_MPQ) && \
-   !defined(TEST_TOMMATH) && !defined(TEST_CPP_INT) && !defined(TEST_MPFI_50) &&!defined(TEST_FLOAT128)
+   !defined(TEST_TOMMATH) && !defined(TEST_CPP_INT) && !defined(TEST_MPFI_50) &&!defined(TEST_FLOAT128) && !defined(TEST_CPP_BIN_FLOAT)
 #  define TEST_MPF_50
 #  define TEST_MPF
 #  define TEST_BACKEND
@@ -24,6 +24,7 @@
 #  define TEST_CPP_INT
 #  define TEST_MPFI_50
 #  define TEST_FLOAT128
+#  define TEST_CPP_BIN_FLOAT
 
 #ifdef _MSC_VER
 #pragma message("CAUTION!!: No backend type specified so testing everything.... this will take some time!!")
@@ -57,6 +58,9 @@
 #endif
 #ifdef TEST_FLOAT128
 #include <boost/multiprecision/float128.hpp>
+#endif
+#ifdef TEST_CPP_BIN_FLOAT
+#include <boost/multiprecision/cpp_bin_float.hpp>
 #endif
 
 #ifdef BOOST_MSVC
@@ -126,6 +130,21 @@ void test_specific(const boost::mpl::int_<boost::multiprecision::number_kind_flo
    BOOST_TEST((boost::math::isnormal)(n));
    BOOST_TEST(!(boost::math::isinf)(n));
    BOOST_TEST(!(boost::math::isnan)(n));
+
+   if(std::numeric_limits<Number>::round_style == std::round_to_nearest)
+   {
+      BOOST_CHECK_EQUAL(std::numeric_limits<Number>::round_error(), 0.5);
+   }
+   else if(std::numeric_limits<Number>::round_style != std::round_indeterminate)
+   {
+      // Round error is 1.0:
+      BOOST_CHECK_EQUAL(std::numeric_limits<Number>::round_error(), 1);
+   }
+   else
+   {
+      // Round error is presumably somewhere between 0.5 and 1:
+      BOOST_CHECK((std::numeric_limits<Number>::round_error() <= 1) && (std::numeric_limits<Number>::round_error() >= 0.5));
+   }
 }
 
 template <class Number>
@@ -149,6 +168,14 @@ void test_specific(const T&)
 template <class Number>
 void test()
 {
+   typedef typename boost::mpl::if_c<
+      std::numeric_limits<Number>::is_specialized,
+      typename boost::multiprecision::number_category<Number>::type,
+      boost::mpl::int_<500> // not a number type
+   >::type fp_test_type;
+
+   test_specific<Number>(fp_test_type());
+
    //
    // Note really a test just yet, but we can at least print out all the values:
    //
@@ -199,14 +226,6 @@ void test()
    PRINT(traps);
    PRINT(tinyness_before);
    PRINT(round_style);
-
-   typedef typename boost::mpl::if_c<
-      std::numeric_limits<Number>::is_specialized,
-      typename boost::multiprecision::number_category<Number>::type,
-      boost::mpl::int_<500> // not a number type
-   >::type fp_test_type;
-
-   test_specific<Number>(fp_test_type());
 }
 
 
@@ -260,6 +279,9 @@ int main()
 #endif
 #ifdef TEST_FLOAT128
    test<boost::multiprecision::float128>();
+#endif
+#ifdef TEST_CPP_BIN_FLOAT
+   test<boost::multiprecision::cpp_bin_float_50>();
 #endif
    return boost::report_errors();
 }

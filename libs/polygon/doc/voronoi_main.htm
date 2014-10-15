@@ -1,26 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
+<html><head>
+
+
+
+
   <meta http-equiv="Content-Language" content="en-us">
-  <meta http-equiv="Content-Type"
- content="text/html; charset=windows-1252">
-  <title>Voronoi Main</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><title>Voronoi Main</title>
+  
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-</head>
-<body>
-<table style="margin: 0pt; padding: 0pt; width: 100%;" border="0"
- cellpadding="0" cellspacing="0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"></head><body>
+<table style="margin: 0pt; padding: 0pt; width: 100%;" border="0" cellpadding="0" cellspacing="0">
   <tbody>
     <tr>
-      <td style="background-color: rgb(238, 238, 238);" nowrap="1"
- valign="top">
-      <div style="padding: 5px;" align="center"> <img
- src="images/boost.png" border="0" height="86" width="277"><a
- title="www.boost.org home page" tabindex="2"
- style="border: medium none ;" href="http://www.boost.org/"> </a></div>
+      <td style="background-color: rgb(238, 238, 238);" nowrap="1" valign="top">
+      <div style="padding: 5px;" align="center"> <img src="images/boost.png" border="0" height="86" width="277"><a title="www.boost.org home page" tabindex="2" style="border: medium none ;" href="http://www.boost.org/"> </a></div>
       <div style="margin: 5px;">
       <h3 class="navbar">Contents</h3>
       <ul>
@@ -74,17 +69,11 @@ Tutorial</a></li>
       </ul>
       </div>
       <h3 class="navbar">Polygon Sponsor</h3>
-      <div style="padding: 5px;" align="center"> <img
- src="images/intlogo.gif" border="0" height="51" width="127"><a
- title="www.adobe.com home page" tabindex="2"
- style="border: medium none ;" href="http://www.adobe.com/"> </a></div>
+      <div style="padding: 5px;" align="center"> <img src="images/intlogo.gif" border="0" height="51" width="127"><a title="www.adobe.com home page" tabindex="2" style="border: medium none ;" href="http://www.adobe.com/"> </a></div>
       </td>
-      <td
- style="padding-left: 10px; padding-right: 10px; padding-bottom: 10px;"
- valign="top" width="100%"><!-- End Header --> <br>
+      <td style="padding-left: 10px; padding-right: 10px; padding-bottom: 10px;" valign="top" width="100%"><!-- End Header --> <br>
       <h1>THE BOOST.POLYGON VORONOI LIBRARY </h1>
-      <img style="width: 900px; height: 300px;" alt=""
- src="images/voronoi3.png"><br>
+      <img style="width: 900px; height: 300px;" alt="" src="images/voronoi3.png"><br>
 The Voronoi extension of the Boost.Polygon library provides
 functionality to construct a <a href="voronoi_diagram.htm">Voronoi
 diagram</a>
@@ -101,12 +90,11 @@ except their endpoints.</li>
 While the first restriction is permanent (it
 allows to give the exact warranties about the output precision and
 algorithm execution flow),
-the second one may be resolved using the Boost.Polygon <a
- href="gtl_segment_concept.htm">segment utils</a>.
+the second one may be resolved using the Boost.Polygon <a href="gtl_segment_concept.htm">segment utils</a>.
 The strong sides of the
 library and main benefits comparing to the other implementations are
-discussed in the following paragraphs.<span style="font-weight: bold;"></span><br>
-      <h2>Fully Functional with Segments</h2>
+discussed in the following paragraphs.<br>
+<h2>Fully Functional with Segments</h2>
 There are just a few implementations of the Voronoi diagram
 construction
 algorithm that can
@@ -154,8 +142,7 @@ output
 geometries can be increased simply by using a floating-point type with
 the larger mantissa. The practical point of this statements is
 explained in the following table:<br>
-      <table style="text-align: left; width: 100%;" border="1"
- cellpadding="2" cellspacing="2">
+      <table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
         <tbody>
           <tr>
             <td style="vertical-align: top;">Output Coordinate Type </td>
@@ -196,10 +183,8 @@ mantissa) </td>
         </tbody>
       </table>
 Detailed description of the absolute and relative errors evaluation can
-be found in the article: <a
- href="http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html">"What
-Every Computer Scientist Should Know About Floating-Point Arithmetic"</a><a
- href="http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html"></a>.<br>
+be found in the article: <a href="http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html">"What
+Every Computer Scientist Should Know About Floating-Point Arithmetic"</a><a href="http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html"></a>.<br>
       <br>
 During the finalization step the implementation unites the Voronoi
 vertices
@@ -218,14 +203,12 @@ both coordinates that are within 2<sup>-18</sup> metres (8
 micrometres or the size of a bacteria) will be considered
 equal and united.<br>
       <h2>Simple Interface </h2>
-The <a href="../../../boost/polygon/voronoi.hpp">boost/polygon/</a><a
- href="../../../boost/polygon/voronoi.hpp">voronoi.hpp</a>
+The <a href="../../../boost/polygon/voronoi.hpp">boost/polygon/</a><a href="../../../boost/polygon/voronoi.hpp">voronoi.hpp</a>
 library header defines the following static functions to integrate the
 Voronoi library
 functionality with the Boost.Polygon interfaces:<br>
       <br>
-      <table style="text-align: left; width: 100%;" border="1"
- cellpadding="2" cellspacing="2">
+      <table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
         <tbody>
           <tr>
             <td style="font-family: Courier New,Courier,monospace;">template
@@ -276,25 +259,27 @@ Corresponding segment type should model the segment concept. </td>
             <td style="font-family: Courier New,Courier,monospace;">template
 &lt;typename PointIterator, typename VD&gt;<br>
 void <span style="font-weight: bold;">construct_voronoi</span>(PointIterator
-first,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+first,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 PointIterator last,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 VD *vd) </td>
             <td>Constructs the Voronoi diagram of a set of points.<br>
-Corresponding point type should model the point concept. </td>
+Corresponding point type should model the point concept.<br>
+Complexity: O(N * log N), memory usage: O(N), where N is the total number of input points.<br>
+ </td>
           </tr>
           <tr>
             <td style="font-family: Courier New,Courier,monospace;">template
 &lt;typename SegmentIterator, typename VD&gt;<br>
 void <span style="font-weight: bold;">construct_voronoi</span>(SegmentIterator
-first,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+first,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 SegmentIterator last,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 VD *vd) </td>
             <td>Constructs the Voronoi diagram of a set of segments.<br>
-Corresponding segment type should model the segment concept. </td>
+Corresponding segment type should model the segment concept.<br>
+Complexity: O(N * log N), memory usage: O(N), where N is the total number of input segments.<br>
+ </td>
           </tr>
           <tr>
             <td style="font-family: Courier New,Courier,monospace;">template
@@ -303,8 +288,7 @@ Corresponding segment type should model the segment concept. </td>
 SegmentIterator,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; typename VD&gt;<br>
 void <span style="font-weight: bold;">construct_voronoi</span>(PointIterator
-p_first,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+p_first,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 PointIterator p_last,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 SegmentIterator s_first,<br>
@@ -315,7 +299,9 @@ VD *vd) </td>
             <td>Constructs the Voronoi
 diagram of a set of points and segments.<br>
 Corresponding point type should model the point concept.<br>
-Corresponding segment type should model the segment concept. </td>
+Corresponding segment type should model the segment concept.<br>
+Complexity: O(N* log N), memory usage: O(N), where N is the total number of input points and segments.<br>
+</td>
           </tr>
         </tbody>
       </table>
@@ -336,14 +322,12 @@ with the
 output geometries and efficiently traverse
 the
 Voronoi graph.
-More details on those topics are covered in the <a
- href="voronoi_basic_tutorial.htm">basic Voronoi tutorial</a>. Advanced
+More details on those topics are covered in the <a href="voronoi_basic_tutorial.htm">basic Voronoi tutorial</a>. Advanced
 usage of the library with the configuration of the coordinate
 types is explained in the <a href="voronoi_advanced_tutorial.htm">advanced
 Voronoi tutorial</a>.
 The library allows users to implement their own Voronoi diagram /
-Delaunay triangulation construction routines based on the <a
- href="voronoi_builder.htm">Voronoi builder API</a>.<br>
+Delaunay triangulation construction routines based on the <a href="voronoi_builder.htm">Voronoi builder API</a>.<br>
       <h2>No Third Party Dependencies </h2>
 The Voronoi extension of the Boost.Polygon library doesn't depend on
 any 3rd party code
@@ -354,12 +338,10 @@ encapsulated as
 part of the implementation. The library is fast to compile (3 public
 and 4 private heades), has strong cohesion between its components and
 is clearly modularized from the rest of the Boost.Polygon library, with
-the optional integration through the <a
- href="../../../boost/polygon/voronoi.hpp">voronoi.hpp</a> header.<br>
+the optional integration through the <a href="../../../boost/polygon/voronoi.hpp">voronoi.hpp</a> header.<br>
       <h2>Extensible for the User Provided Coordinate Types</h2>
 The implementation is coordinate type agnostic. As long
-as the user provided types satisfy the set of the requirements of the <a
- href="voronoi_builder.htm">Voronoi builder</a> coordinate type traits,
+as the user provided types satisfy the set of the requirements of the <a href="voronoi_builder.htm">Voronoi builder</a> coordinate type traits,
 no additional
 changes
 are needed
@@ -441,21 +423,15 @@ benchmarks one may run on
 his/her PC. Upon the community request, more documentation on the
 theoretical aspects of the implementation will be published.
 The
-authors would like to acknowledge the Steven Fortune's article <span
- style="font-family: Arial,Helvetica,sans-serif;"><span
- style="font-weight: bold;"></span></span>"<a
- href="http://dl.acm.org/citation.cfm?id=10549">A Sweepline algorithm
+authors would like to acknowledge the Steven Fortune's article <span style="font-family: Arial,Helvetica,sans-serif;"><span style="font-weight: bold;"></span></span>"<a href="http://dl.acm.org/citation.cfm?id=10549">A Sweepline algorithm
 for Voronoi diagrams</a>", that covers fundamental ideas of the
 current implementation. </td>
     </tr>
     <tr>
       <td style="background-color: rgb(238, 238, 238);" nowrap="1">&nbsp;</td>
-      <td
- style="padding-left: 10px; padding-right: 10px; padding-bottom: 10px;"
- valign="top" width="100%">
+      <td style="padding-left: 10px; padding-right: 10px; padding-bottom: 10px;" valign="top" width="100%">
       <table class="docinfo" id="table2" frame="void" rules="none">
-        <colgroup> <col class="docinfo-name"><col
- class="docinfo-content"> </colgroup> <tbody valign="top">
+        <colgroup> <col class="docinfo-name"><col class="docinfo-content"> </colgroup> <tbody valign="top">
           <tr>
             <th class="docinfo-name">Copyright:</th>
             <td>Copyright © Andrii Sydorchuk 2010-2013.</td>
@@ -463,10 +439,7 @@ current implementation. </td>
           <tr class="field">
             <th class="docinfo-name">License:</th>
             <td class="field-body">Distributed under the Boost Software
-License, Version 1.0. (See accompanying file <tt class="literal"><span
- class="pre">LICENSE_1_0.txt</span></tt> or copy at <a
- class="reference" target="_top"
- href="http://www.boost.org/LICENSE_1_0.txt">
+License, Version 1.0. (See accompanying file <tt class="literal"><span class="pre">LICENSE_1_0.txt</span></tt> or copy at <a class="reference" target="_top" href="http://www.boost.org/LICENSE_1_0.txt">
 http://www.boost.org/LICENSE_1_0.txt</a>)</td>
           </tr>
         </tbody>
@@ -475,5 +448,5 @@ http://www.boost.org/LICENSE_1_0.txt</a>)</td>
     </tr>
   </tbody>
 </table>
-</body>
-</html>
+
+</body></html>

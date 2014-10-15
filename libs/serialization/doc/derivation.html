@@ -47,7 +47,7 @@ The serialization library is
 implemented using the <b>C</b>uriously <b>R</b>ecurring <b>T</b>emplate 
 <b>P</b>attern (<b>CRTP</b>).  Also, all common code is factored out into
 separate modules to minimize code repetition. This makes derivation from
-an existing archive less straight forward than it would otherwise be.
+an existing archive less straightforward than it would otherwise be.
 <p> 
 This example illustrates several issues that have to be addressed when doing
 something like this
@@ -84,13 +84,12 @@ the base classes.
     <li><i></i>Reread <a target="detail" href="headers.html#archiveinternals">Archive Internals</a>.
 This describes the class hierarchy so that you know what to override.
     <li><i>Note the usage of PFTO.</i>  Some compilers fail to provide support for
-partial function template ordering.  The serialization library works around by
+partial function template ordering.  The serialization library works around this by
 using <a target="detail" href="implementation.html#functiontemplateordering">
 <b>P</b>artial <b>F</b>unction <b>T</b>emplate <b>O</b>rdering</a> in several places.
-In archive classes, this takes
-. This is done
+This is done
 in several places, including the archive classes themselves.
-    <li><i>Base class functions will usually need to be explicitly invoked</i>
+    <li><i>Base class functions will usually need to be explicitly invoked.</i>
 We commonly specialize the function name <code style="white-space: normal">save_override</code> 
 for saving primitives. Usage of a function name in a derived class
 "hides" similarly named functions of the base class.  That is, 
@@ -121,7 +120,7 @@ so it's what I use.
 </code></pre>
 for just this purpose.  Failure to include required template definitions
 will result in undefined symbol errors when the program is linked.
-    <li><i>Without alteration, this class cannot be further derived from</i><br>
+    <li><i>Without alteration, this class cannot be further derived from.</i><br>
 Base classes using <b>CRTP</b> must be templates with a parameter corresponding to
 the most derived class.  As presented here, this class doesn't qualify, so
 it cannot be used as a base class.  In order to derive further from this class,
@@ -136,7 +135,7 @@ class log_archive_impl :
     ...
 );
 
-// do not derived from this class !!!
+// do not derive from this class !!!
 class log_archive : 
     public log_archive_impl&lt;log_archive&gt;
 {

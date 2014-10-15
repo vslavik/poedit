@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../atomic.html" title="Chapter&#160;4.&#160;Boost.Atomic">
-<link rel="prev" href="../atomic.html" title="Chapter&#160;4.&#160;Boost.Atomic">
+<link rel="up" href="../atomic.html" title="Chapter&#160;5.&#160;Boost.Atomic">
+<link rel="prev" href="../atomic.html" title="Chapter&#160;5.&#160;Boost.Atomic">
 <link rel="next" href="interface.html" title="Programming interfaces">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -44,10 +44,9 @@
       hierarchies may generally reorder memory references at will. As a consequence
       a program such as:
     </p>
-<p>
-      int x = 0, int y = 0;
-    </p>
-<pre class="programlisting"><span class="identifier">thread1</span><span class="special">:</span>
+<pre class="programlisting"><span class="keyword">int</span> <span class="identifier">x</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">y</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+
+<span class="identifier">thread1</span><span class="special">:</span>
   <span class="identifier">x</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span>
   <span class="identifier">y</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span>
 
@@ -103,7 +102,7 @@
         If this is be thread1, then as a consequence, thread2 cannot succeed at
         <code class="literal">m.lock()</code> before thread1 has executed <code class="literal">m.unlock()</code>,
         consequently A <span class="emphasis"><em>happens-before</em></span> B in this case. By symmetry,
-        if thread2 succeeds at <code class="literal">m.unlock()</code> first, we can conclude
+        if thread2 succeeds at <code class="literal">m.lock()</code> first, we can conclude
         B <span class="emphasis"><em>happens-before</em></span> A.
       </p>
 <p>
@@ -358,7 +357,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2011 Helge Bahmann<br>Copyright &#169; 2012 Tim Blechmann<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011 Helge Bahmann<br>Copyright &#169; 2012 Tim Blechmann<br>Copyright &#169; 2013 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

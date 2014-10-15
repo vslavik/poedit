@@ -61,18 +61,19 @@ struct complement
         typedef complement_traits_aux<Number, size - 1> prev;
      public:
 #if defined(__GNUC__) && __GNUC__ == 4 && __GNUC_MINOR__ == 0 && __GNUC_PATCHLEVEL__ == 2
-      // GCC 4.0.2 ICEs on these C-style casts
+        // GCC 4.0.2 ICEs on these C-style casts
         BOOST_STATIC_CONSTANT(Number, max =
                             Number((prev::max) << CHAR_BIT)
                             + Number(UCHAR_MAX));
         BOOST_STATIC_CONSTANT(Number, min = Number((prev::min) << CHAR_BIT));
 #else
+        // Avoid left shifting negative integers, use multiplication instead
+        BOOST_STATIC_CONSTANT(Number, shift = 1u << CHAR_BIT);
         BOOST_STATIC_CONSTANT(Number, max =
-                            Number(Number(prev::max) << CHAR_BIT)
+                            Number(Number(prev::max) * shift)
                             + Number(UCHAR_MAX));
-        BOOST_STATIC_CONSTANT(Number, min = Number(Number(prev::min) << CHAR_BIT));
+        BOOST_STATIC_CONSTANT(Number, min = Number(Number(prev::min) * shift));
 #endif
-   
     };
 };
 

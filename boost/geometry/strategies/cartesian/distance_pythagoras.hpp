@@ -22,6 +22,7 @@
 
 #include <boost/geometry/strategies/distance.hpp>
 
+#include <boost/geometry/util/math.hpp>
 #include <boost/geometry/util/calculation_type.hpp>
 
 
@@ -85,7 +86,9 @@ public :
           <
               Point1,
               Point2,
-              CalculationType
+              CalculationType,
+              double,
+              double
           >
     {};
 
@@ -156,7 +159,7 @@ public :
     apply(P1 const& p1, P2 const& p2)
     {
         // The cast is necessary for MSVC which considers sqrt __int64 as an ambiguous call
-        return std::sqrt
+        return math::sqrt
             (
                  boost::numeric_cast<typename calculation_type<P1, P2>::type>
                     (
@@ -268,7 +271,10 @@ public :
 
 
 template <typename Point1, typename Point2>
-struct default_strategy<point_tag, Point1, Point2, cartesian_tag, cartesian_tag, void>
+struct default_strategy
+    <
+        point_tag, point_tag, Point1, Point2, cartesian_tag, cartesian_tag
+    >
 {
     typedef pythagoras<> type;
 };

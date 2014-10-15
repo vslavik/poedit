@@ -6,7 +6,7 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-// $Id: test_is_subconcept.cpp 80882 2012-10-06 00:08:26Z steven_watanabe $
+// $Id$
 
 #include <boost/type_erasure/is_subconcept.hpp>
 #include <boost/type_erasure/builtin.hpp>

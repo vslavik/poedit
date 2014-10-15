@@ -62,7 +62,7 @@
 // ============
 //
 // [Dimov1] Dimov, P., Hinnant H., Abrahams, D. The Forwarding Problem
-//          http://std.dkuug.dk/jtc1/sc22/wg21/docs/papers/2002/n1385.htm
+//          http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2002/n1385.htm
 //
 // [Dimov2] Dimov, P. Documentation of boost::mem_fn
 //          http://www.boost.org/libs/bind/mem_fn.html

@@ -96,7 +96,7 @@ struct set_token_value : boost::spirit::lex::lexer<Lexer>
         using lex::_pass;
 
         // define tokens and associate them with the lexer
-        whitespace = "^[ ]*";
+        whitespace = "^[ ]+";
         newline = '\n';
 
         this->self = whitespace[ handle_whitespace(indents) ];

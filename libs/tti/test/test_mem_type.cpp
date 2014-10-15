@@ -23,6 +23,12 @@ int main()
   BOOST_TEST((!boost::tti::valid_member_type<BOOST_TTI_MEMBER_TYPE_GEN(BType)<AnotherType>::type>::value));
   BOOST_TEST((!boost::tti::valid_member_type<BOOST_TTI_MEMBER_TYPE_GEN(NoExistType)<AType,MarkerType>::type,BOOST_TTI_MEMBER_TYPE_GEN(NoExistType)<AType,MarkerType>::boost_tti_marker_type>::value));
   
+  // Passing non-class enclosing type will always use the marker type
+  
+  BOOST_TEST((!boost::tti::valid_member_type<BOOST_TTI_MEMBER_TYPE_GEN(BType)<int>::type>::value));
+  BOOST_TEST((!boost::tti::valid_member_type<TheInteger<AType::BType *>::type>::value));
+  BOOST_TEST((!boost::tti::valid_member_type<NameStruct<long,MarkerType>::type,MarkerType>::value));
+  
   return boost::report_errors();
 
   }

@@ -5,7 +5,7 @@
  * accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
  *
- * $Id: concepts.hpp 72951 2011-07-07 04:57:37Z steven_watanabe $
+ * $Id$
  *
  */
 

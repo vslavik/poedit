@@ -48,7 +48,7 @@ void test_all()
 
     test_dsv<mpoint>
         (
-            "multipoint((1 2),(3 4))", 
+            "multipoint((1 2),(3 4))",
             "((1, 2), (3, 4))"
         );
     test_dsv<mline>
@@ -66,7 +66,7 @@ void test_all()
     // http://geojson.org/geojson-spec.html#id5
     test_dsv<mpoint>
         (
-            "multipoint((1 2),(3 4))", 
+            "multipoint((1 2),(3 4))",
             "[ [1, 2], [3, 4] ]",
             true
         );

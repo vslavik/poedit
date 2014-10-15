@@ -1,5 +1,5 @@
 #
-#          Copyright Andrey Semashev 2007 - 2013.
+#          Copyright Andrey Semashev 2007 - 2014.
 # Distributed under the Boost Software License, Version 1.0.
 #    (See accompanying file LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
@@ -24,8 +24,16 @@ project.push-current [ project.current ] ;
 project.load [ path.join [ path.make $(here:D) ] ../config/x86-ext ] ;
 project.pop-current ;
 
+# Windows libs
 lib psapi ;
 lib ws2_32 ;
+lib mswsock ;
+
+# UNIX libs
+lib rt ;
+lib socket ;
+lib nsl ;
+lib ipv6 ;
 
 feature.feature log-api : generic winnt unix ;
 
@@ -92,37 +100,95 @@ rule select-log-api ( properties * )
     return $(result) ;
 }
 
+rule select-regex-backend ( properties * )
+{
+    local result = ;
+
+    # Use Boost.Regex backend by default. It produces smaller executables and also has the best performance for small string matching.
+    if ! ( <define>BOOST_LOG_WITHOUT_SETTINGS_PARSERS in $(properties) || <define>BOOST_LOG_WITHOUT_DEFAULT_FACTORIES in $(properties) || <define>BOOST_LOG_USE_STD_REGEX in $(properties) || <define>BOOST_LOG_USE_BOOST_XPRESSIVE in $(properties) )
+    {
+        result = <library>/boost/regex//boost_regex ;
+    }
+
+    return $(result) ;
+}
+
 project boost/log
     : source-location ../src
     : requirements
         <conditional>@select-log-api
         <conditional>@check-instruction-set
+        <conditional>@select-regex-backend
         <define>BOOST_SPIRIT_USE_PHOENIX_V3=1
         <define>BOOST_THREAD_DONT_USE_CHRONO=1 # Don't introduce false dependency on Boost.Chrono
+
+        # Disable warnings about using 'insecure' standard C functions
         <toolset>msvc:<define>_SCL_SECURE_NO_WARNINGS
         <toolset>msvc:<define>_SCL_SECURE_NO_DEPRECATE
         <toolset>msvc:<define>_CRT_SECURE_NO_WARNINGS
         <toolset>msvc:<define>_CRT_SECURE_NO_DEPRECATE
-        <toolset>msvc:<cxxflags>/bigobj
-        <toolset>msvc:<cxxflags>/wd4503 # decorated name length exceeded, name was truncated
         <toolset>intel-win:<define>_SCL_SECURE_NO_WARNINGS
         <toolset>intel-win:<define>_SCL_SECURE_NO_DEPRECATE
         <toolset>intel-win:<define>_CRT_SECURE_NO_WARNINGS
         <toolset>intel-win:<define>_CRT_SECURE_NO_DEPRECATE
+
+        <toolset>msvc:<cxxflags>/bigobj
+        <toolset>msvc:<cxxflags>/wd4503 # decorated name length exceeded, name was truncated
+        <toolset>msvc:<cxxflags>/wd4456 # declaration of 'A' hides previous local declaration
+        <toolset>msvc:<cxxflags>/wd4459 # declaration of 'A' hides global declaration
+
+        # Disable Intel warnings:
+        # warning #177: function "X" was declared but never referenced
+        # warning #780: using-declaration ignored -- it refers to the current namespace
+        # warning #2196: routine is both "inline" and "noinline"
+        # remark #1782: #pragma once is obsolete. Use #ifndef guard instead.
+        # remark #193: zero used for undefined preprocessing identifier "X"
+        # remark #304: access control not specified ("public" by default)
+        # remark #981: operands are evaluated in unspecified order
+        # remark #1418: external function definition with no prior declaration
+        # Mostly comes from Boost.Phoenix: warning #411: class "X" defines no constructor to initialize the following: reference member "Y"...
+        # warning #734: "X" (declared at line N of "file.hpp"), required for copy that was eliminated, is inaccessible
+        # warning #279: controlling expression is constant
+        <toolset>intel-win:<cxxflags>"/Qwd177,780,2196,1782,193,304,981,1418,411,734,279"
+        <toolset>intel-linux:<cxxflags>"-wd177,780,2196,1782,193,304,981,1418,411,734,279"
+        <toolset>intel-darwin:<cxxflags>"-wd177,780,2196,1782,193,304,981,1418,411,734,279"
+
         <toolset>darwin:<cxxflags>-ftemplate-depth-1024
+        <toolset>clang:<cxxflags>-ftemplate-depth-1024
         <toolset>gcc:<cxxflags>-ftemplate-depth-1024
+
         <toolset>gcc:<cxxflags>-fno-strict-aliasing  # avoids strict aliasing violations in other Boost components
-        <toolset>gcc-mingw:<linkflags>-Wl,--enable-auto-import
-        <toolset>gcc-cygwin:<linkflags>-Wl,--enable-auto-import
+        <toolset>gcc,<target-os>windows:<linkflags>-Wl,--enable-auto-import
+        <toolset>gcc,<target-os>cygwin:<linkflags>-Wl,--enable-auto-import
+
         <library>/boost/date_time//boost_date_time
         <library>/boost/filesystem//boost_filesystem
         <library>/boost/system//boost_system
         <threading>single:<define>BOOST_LOG_NO_THREADS
         <threading>multi:<library>/boost/thread//boost_thread
+
         <target-os>windows:<library>ws2_32
-        <target-os>freebsd:<linkflags>"-lrt"
-        <target-os>linux:<linkflags>"-lrt -lpthread"
-        <toolset>pgi:<linkflags>"-lrt"
+        <target-os>windows:<library>mswsock
+
+        <target-os>cygwin:<define>__USE_W32_SOCKETS
+        <target-os>cygwin:<library>ws2_32
+        <target-os>cygwin:<library>mswsock
+
+        <target-os>linux:<library>rt
+        <target-os>linux:<define>_XOPEN_SOURCE=600
+        <target-os>linux:<define>_GNU_SOURCE=1
+
+        <target-os>solaris:<define>_XOPEN_SOURCE=500
+        <target-os>solaris:<define>__EXTENSIONS__
+        <target-os>solaris:<library>socket
+        <target-os>solaris:<library>nsl
+
+        <target-os>hpux,<toolset>gcc:<define>_XOPEN_SOURCE_EXTENDED
+        <target-os>hpux:<library>ipv6
+
+        <target-os>freebsd:<library>rt
+        <target-os>qnxnto:<library>socket
+        <toolset>pgi:<library>rt
     : usage-requirements
         <toolset>clang:<cxxflags>-Wno-bind-to-temporary-copy
         <toolset>clang:<cxxflags>-Wno-unused-function
@@ -147,6 +213,7 @@ local BOOST_LOG_COMMON_SRC =
     default_sink.cpp
     text_ostream_backend.cpp
     text_file_backend.cpp
+    text_multifile_backend.cpp
     syslog_backend.cpp
     thread_specific.cpp
     once_block.cpp
@@ -192,7 +259,7 @@ rule ssse3-targets-cond ( properties * )
                 }
                 else
                 {
-                    result = <cxxflags>"-march=core2 -msse -msse2 -msse3 -mssse3" ;
+                    result = <cxxflags>"-march=core2" ;
                 }
             }
             else if <toolset>msvc in $(properties)
@@ -254,11 +321,11 @@ rule avx2-targets-cond ( properties * )
             {
                 if <toolset-intel:platform>win in $(properties)
                 {
-                    result = <cxxflags>"/QxAVX2" ;
+                    result = <cxxflags>"/arch:CORE-AVX2" ;
                 }
                 else
                 {
-                    result = <cxxflags>"-march=core-avx2 -mavx -mavx2 -fabi-version=0" ;
+                    result = <cxxflags>"-march=core-avx2 -fabi-version=0" ;
                 }
             }
             else if <toolset>msvc in $(properties)

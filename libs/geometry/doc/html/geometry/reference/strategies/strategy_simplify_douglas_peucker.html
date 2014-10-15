@@ -27,7 +27,7 @@
 <a name="geometry.reference.strategies.strategy_simplify_douglas_peucker"></a><a class="link" href="strategy_simplify_douglas_peucker.html" title="strategy::simplify::douglas_peucker">strategy::simplify::douglas_peucker</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp63456392"></a><a class="indexterm" name="idp63456728"></a><a class="indexterm" name="idp63457064"></a>
+          <a class="indexterm" name="idp126913024"></a><a class="indexterm" name="idp126913712"></a><a class="indexterm" name="idp126914400"></a>
 Implements the simplify algorithm.
         </p>
 <h6>
@@ -111,6 +111,7 @@ Implements the simplify algorithm.
 <col>
 <col>
 <col>
+<col>
 </colgroup>
 <thead><tr>
 <th>
@@ -139,7 +140,7 @@ Implements the simplify algorithm.
                   <p>
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Range</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">OutputIterator</span><span class="special">&gt;</span>
-<span class="identifier">OutputIterator</span> <span class="identifier">apply</span><span class="special">(</span><span class="identifier">Range</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">range</span><span class="special">,</span> <span class="identifier">OutputIterator</span> <span class="identifier">out</span><span class="special">,</span> <span class="keyword">double</span> <span class="identifier">max_distance</span><span class="special">)</span></pre>
+<span class="identifier">OutputIterator</span> <span class="identifier">apply</span><span class="special">(</span><span class="identifier">Range</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">range</span><span class="special">,</span> <span class="identifier">OutputIterator</span> <span class="identifier">out</span><span class="special">,</span> <span class="identifier">distance_type</span> <span class="identifier">max_distance</span><span class="special">)</span></pre>
 <p>
                   </p>
                 </td>
@@ -153,8 +154,10 @@ Implements the simplify algorithm.
                     <span class="bold"><strong>OutputIterator</strong></span>: <span class="emphasis"><em>out</em></span>:
                   </p>
                   <p>
-                    <span class="bold"><strong>double</strong></span>: <span class="emphasis"><em>max_distance</em></span>:
+                    <span class="bold"><strong>distance_type</strong></span>: <span class="emphasis"><em>max_distance</em></span>:
                   </p>
+                </td>
+<td>
                 </td>
 </tr></tbody>
 </table></div>
@@ -168,7 +171,8 @@ Implements the simplify algorithm.
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2014 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam
+      Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

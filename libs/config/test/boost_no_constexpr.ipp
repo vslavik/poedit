@@ -24,15 +24,15 @@ constexpr const int* xp = addr(x);
 struct A 
 {
    constexpr A(int i) : val(i) { }
-   constexpr operator int() { return val; }
-   constexpr operator long() { return 43; }
+   constexpr operator int()const { return val; }
+   constexpr operator long()const { return 43; }
 private:
    int val;
 };
 
 template<int> struct X { };
 
-constexpr A a = 42;
+constexpr const A a = 42;
 
 X<a> xx; // OK: unique conversion to int
 

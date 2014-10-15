@@ -31,85 +31,93 @@
   <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">char_type</span> <span class="special">&gt;</span> <a name="boost.log.filter_factory.string_type"></a><span class="identifier">string_type</span><span class="special">;</span>  <span class="comment">// String type. </span>
 
   <span class="comment">// <a class="link" href="filter_factory.html#boost.log.filter_factoryconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="filter_factory.html#idp28318696-bb"><span class="identifier">filter_factory</span></a><span class="special">(</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">default</span><span class="special">;</span>
-  <a class="link" href="filter_factory.html#idp28319400-bb"><span class="identifier">filter_factory</span></a><span class="special">(</span><a class="link" href="filter_factory.html" title="Struct template filter_factory">filter_factory</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
-  filter_factory&amp; <a class="link" href="filter_factory.html#idp28320072-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="filter_factory.html" title="Struct template filter_factory">filter_factory</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
-  <a class="link" href="filter_factory.html#idp28319112-bb"><span class="special">~</span><span class="identifier">filter_factory</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="filter_factory.html#idp39293040-bb"><span class="identifier">filter_factory</span></a><span class="special">(</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">default</span><span class="special">;</span>
+  <a class="link" href="filter_factory.html#idp39294720-bb"><span class="identifier">filter_factory</span></a><span class="special">(</span><a class="link" href="filter_factory.html" title="Struct template filter_factory">filter_factory</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
+  <a class="link" href="filter_factory.html" title="Struct template filter_factory">filter_factory</a> <span class="special">&amp;</span> <a class="link" href="filter_factory.html#idp39296256-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="filter_factory.html" title="Struct template filter_factory">filter_factory</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
+  <a class="link" href="filter_factory.html#idp39294016-bb"><span class="special">~</span><span class="identifier">filter_factory</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="filter_factory.html#idp28307080-bb">public member functions</a></span>
-  <span class="identifier">filter</span> <a class="link" href="filter_factory.html#idp28307288-bb"><span class="identifier">on_exists_test</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">filter</span> <a class="link" href="filter_factory.html#idp28308360-bb"><span class="identifier">on_equality_relation</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">filter</span> <a class="link" href="filter_factory.html#idp28309784-bb"><span class="identifier">on_inequality_relation</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">filter</span> <a class="link" href="filter_factory.html#idp28311208-bb"><span class="identifier">on_less_relation</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">filter</span> <a class="link" href="filter_factory.html#idp28312632-bb"><span class="identifier">on_greater_relation</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">filter</span> <a class="link" href="filter_factory.html#idp28314056-bb"><span class="identifier">on_less_or_equal_relation</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
-                                   <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">filter</span> <a class="link" href="filter_factory.html#idp28315480-bb"><span class="identifier">on_greater_or_equal_relation</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
-                                      <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">filter</span> <a class="link" href="filter_factory.html#idp28316920-bb"><span class="identifier">on_custom_relation</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
-                            <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="filter_factory.html#idp39268736-bb">public member functions</a></span>
+  <span class="keyword">virtual</span> <span class="identifier">filter</span> <a class="link" href="filter_factory.html#idp39269296-bb"><span class="identifier">on_exists_test</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">virtual</span> <span class="identifier">filter</span> 
+  <a class="link" href="filter_factory.html#idp39271568-bb"><span class="identifier">on_equality_relation</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">virtual</span> <span class="identifier">filter</span> 
+  <a class="link" href="filter_factory.html#idp39274512-bb"><span class="identifier">on_inequality_relation</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">virtual</span> <span class="identifier">filter</span> <a class="link" href="filter_factory.html#idp39277456-bb"><span class="identifier">on_less_relation</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">virtual</span> <span class="identifier">filter</span> 
+  <a class="link" href="filter_factory.html#idp39280384-bb"><span class="identifier">on_greater_relation</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">virtual</span> <span class="identifier">filter</span> 
+  <a class="link" href="filter_factory.html#idp39283328-bb"><span class="identifier">on_less_or_equal_relation</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">virtual</span> <span class="identifier">filter</span> 
+  <a class="link" href="filter_factory.html#idp39286288-bb"><span class="identifier">on_greater_or_equal_relation</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">virtual</span> <span class="identifier">filter</span> 
+  <a class="link" href="filter_factory.html#idp39289248-bb"><span class="identifier">on_custom_relation</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
+                     <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp69684856"></a><h2>Description</h2>
+<a name="idp147798992"></a><h2>Description</h2>
 <p>The interface class for all filter factories. </p>
 <div class="refsect2">
-<a name="idp69685240"></a><h3>
+<a name="idp147799728"></a><h3>
 <a name="boost.log.filter_factoryconstruct-copy-destruct"></a><code class="computeroutput">filter_factory</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp28318696-bb"></a><span class="identifier">filter_factory</span><span class="special">(</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">default</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp39293040-bb"></a><span class="identifier">filter_factory</span><span class="special">(</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">default</span><span class="special">;</span></pre>
 <p>Default constructor </p>
 </li>
-<li class="listitem"><pre class="literallayout"><a name="idp28319400-bb"></a><span class="identifier">filter_factory</span><span class="special">(</span><a class="link" href="filter_factory.html" title="Struct template filter_factory">filter_factory</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout">filter_factory&amp; <a name="idp28320072-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="filter_factory.html" title="Struct template filter_factory">filter_factory</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp39294720-bb"></a><span class="identifier">filter_factory</span><span class="special">(</span><a class="link" href="filter_factory.html" title="Struct template filter_factory">filter_factory</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a class="link" href="filter_factory.html" title="Struct template filter_factory">filter_factory</a> <span class="special">&amp;</span> <a name="idp39296256-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="filter_factory.html" title="Struct template filter_factory">filter_factory</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp28319112-bb"></a><span class="special">~</span><span class="identifier">filter_factory</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp39294016-bb"></a><span class="special">~</span><span class="identifier">filter_factory</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Virtual destructor </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp69698328"></a><h3>
-<a name="idp28307080-bb"></a><code class="computeroutput">filter_factory</code> public member functions</h3>
+<a name="idp147827760"></a><h3>
+<a name="idp39268736-bb"></a><code class="computeroutput">filter_factory</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">filter</span> <a name="idp28307288-bb"></a><span class="identifier">on_exists_test</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">filter</span> <a name="idp39269296-bb"></a><span class="identifier">on_exists_test</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">)</span><span class="special">;</span></pre>
 <p>The callback for filter for the attribute existence test </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">filter</span> <a name="idp28308360-bb"></a><span class="identifier">on_equality_relation</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> 
-                            <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> arg<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">filter</span> 
+<a name="idp39271568-bb"></a><span class="identifier">on_equality_relation</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> arg<span class="special">)</span><span class="special">;</span></pre>
 <p>The callback for equality relation filter </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">filter</span> <a name="idp28309784-bb"></a><span class="identifier">on_inequality_relation</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> 
-                              <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> arg<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">filter</span> 
+<a name="idp39274512-bb"></a><span class="identifier">on_inequality_relation</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> arg<span class="special">)</span><span class="special">;</span></pre>
 <p>The callback for inequality relation filter </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">filter</span> <a name="idp28311208-bb"></a><span class="identifier">on_less_relation</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> arg<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">filter</span> 
+<a name="idp39277456-bb"></a><span class="identifier">on_less_relation</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> arg<span class="special">)</span><span class="special">;</span></pre>
 <p>The callback for less relation filter </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">filter</span> <a name="idp28312632-bb"></a><span class="identifier">on_greater_relation</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> 
-                           <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> arg<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">filter</span> 
+<a name="idp39280384-bb"></a><span class="identifier">on_greater_relation</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> arg<span class="special">)</span><span class="special">;</span></pre>
 <p>The callback for greater relation filter </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">filter</span> <a name="idp28314056-bb"></a><span class="identifier">on_less_or_equal_relation</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> 
-                                 <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> arg<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">filter</span> 
+<a name="idp39283328-bb"></a><span class="identifier">on_less_or_equal_relation</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> 
+                          <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> arg<span class="special">)</span><span class="special">;</span></pre>
 <p>The callback for less or equal relation filter </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">filter</span> <a name="idp28315480-bb"></a><span class="identifier">on_greater_or_equal_relation</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> 
-                                    <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> arg<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">filter</span> 
+<a name="idp39286288-bb"></a><span class="identifier">on_greater_or_equal_relation</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> 
+                             <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> arg<span class="special">)</span><span class="special">;</span></pre>
 <p>The callback for greater or equal relation filter </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">filter</span> <a name="idp28316920-bb"></a><span class="identifier">on_custom_relation</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> 
-                          <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> rel<span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> arg<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">filter</span> 
+<a name="idp39289248-bb"></a><span class="identifier">on_custom_relation</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> rel<span class="special">,</span> 
+                   <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> arg<span class="special">)</span><span class="special">;</span></pre>
 <p>The callback for custom relation filter </p>
 </li>
 </ol></div>
@@ -118,7 +126,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2013 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2014 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

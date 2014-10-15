@@ -1,5 +1,5 @@
 /*
-Copyright Redshift Software, Inc. 2008-2013
+Copyright Rene Rivera 2008-2014
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE_1_0.txt or copy at
 http://www.boost.org/LICENSE_1_0.txt)
@@ -26,18 +26,29 @@ http://www.boost.org/LICENSE_1_0.txt)
 #define BOOST_COMP_MRI BOOST_VERSION_NUMBER_NOT_AVAILABLE
 
 #if defined(_MRI)
-#   undef BOOST_COMP_MRI
-#   define BOOST_COMP_MRI BOOST_VERSION_NUMBER_AVAILABLE
+#   define BOOST_COMP_MRI_DETECTION BOOST_VERSION_NUMBER_AVAILABLE
 #endif
 
-#if BOOST_COMP_MRI
+#ifdef BOOST_COMP_MRI_DETECTION
+#   if defined(BOOST_PREDEF_DETAIL_COMP_DETECTED)
+#       define BOOST_COMP_MRI_EMULATED BOOST_COMP_MRI_DETECTION
+#   else
+#       undef BOOST_COMP_MRI
+#       define BOOST_COMP_MRI BOOST_COMP_MRI_DETECTION
+#   endif
 #   define BOOST_COMP_MRI_AVAILABLE
+#   include <boost/predef/detail/comp_detected.h>
 #endif
 
 #define BOOST_COMP_MRI_NAME "Microtec C/C++"
 
 #include <boost/predef/detail/test.h>
 BOOST_PREDEF_DECLARE_TEST(BOOST_COMP_MRI,BOOST_COMP_MRI_NAME)
+
+#ifdef BOOST_COMP_MRI_EMULATED
+#include <boost/predef/detail/test.h>
+BOOST_PREDEF_DECLARE_TEST(BOOST_COMP_MRI_EMULATED,BOOST_COMP_MRI_NAME)
+#endif
 
 
 #endif

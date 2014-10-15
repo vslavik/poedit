@@ -27,7 +27,7 @@
 <a name="boost_asio.reference.basic_streambuf.consume"></a><a class="link" href="consume.html" title="basic_streambuf::consume">basic_streambuf::consume</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp76071288"></a> 
+          <a class="indexterm" name="idp156440432"></a> 
 Remove characters from the input sequence.
         </p>
 <pre class="programlisting"><span class="keyword">void</span> <span class="identifier">consume</span><span class="special">(</span>
@@ -39,22 +39,17 @@ Remove characters from the input sequence.
         </p>
 <h6>
 <a name="boost_asio.reference.basic_streambuf.consume.h0"></a>
-          <span class="phrase"><a name="boost_asio.reference.basic_streambuf.consume.exceptions"></a></span><a class="link" href="consume.html#boost_asio.reference.basic_streambuf.consume.exceptions">Exceptions</a>
+          <span class="phrase"><a name="boost_asio.reference.basic_streambuf.consume.remarks"></a></span><a class="link" href="consume.html#boost_asio.reference.basic_streambuf.consume.remarks">Remarks</a>
         </h6>
-<div class="variablelist">
-<p class="title"><b></b></p>
-<dl class="variablelist">
-<dt><span class="term">std::length_error</span></dt>
-<dd><p>
-                If <code class="computeroutput"><span class="identifier">n</span> <span class="special">&gt;</span>
-                <span class="identifier">size</span><span class="special">()</span></code>.
-              </p></dd>
-</dl>
-</div>
+<p>
+          If <code class="computeroutput"><span class="identifier">n</span></code> is greater than the
+          size of the input sequence, the entire input sequence is consumed and no
+          error is issued.
+        </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2013 Christopher M. Kohlhoff<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2014 Christopher M. Kohlhoff<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

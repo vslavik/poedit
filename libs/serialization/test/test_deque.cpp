@@ -34,7 +34,9 @@ int test_main( int /* argc */, char* /* argv */[] )
 
     // test array of objects
     std::deque<A> adeque, adeque1;
-    {   
+    adeque.push_front(A());
+    adeque.push_front(A());
+    {
         test_ostream os(testfile, TEST_STREAM_FLAGS);
         test_oarchive oa(os, TEST_ARCHIVE_FLAGS);
         oa << boost::serialization::make_nvp("adeque",adeque);

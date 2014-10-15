@@ -8,14 +8,11 @@ project : requirements <warnings>all <toolset>gcc:<cxxflags>-Wextra ;
 
 test-suite integer
     : 
-        [ run cstdint_test.cpp : : : <toolset>gcc:<cxxflags>-Wno-long-long <toolset>darwin:<cxxflags>-Wno-long-long ]
-        [ run cstdint_test2.cpp : : : <toolset>gcc:<cxxflags>-Wno-long-long <toolset>darwin:<cxxflags>-Wno-long-long ]
         [ run integer_traits_test.cpp ]
         [ run integer_test.cpp : : : <toolset>gcc:<cxxflags>-Wno-long-long <toolset>darwin:<cxxflags>-Wno-long-long <toolset>sun:<cxxflags>"-Qoption ccfe -tmpldepth=128" ]
         [ run integer_mask_test.cpp ]
         [ run static_log2_test.cpp ]
         [ run static_min_max_test.cpp ]
-        [ compile cstdint_include_test.cpp ]
         [ compile integer_traits_include_test.cpp ]
         [ compile integer_include_test.cpp ]
         [ compile integer_mask_include_test.cpp ]

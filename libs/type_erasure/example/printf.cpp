@@ -6,7 +6,7 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-// $Id: printf.cpp 83393 2013-03-10 03:48:33Z steven_watanabe $
+// $Id$
 
 //[printf
 /*`

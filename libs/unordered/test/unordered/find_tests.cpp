@@ -117,7 +117,6 @@ struct compatible_predicate
 template <class X>
 void find_compatible_keys_test(X*, test::random_generator generator)
 {
-    typedef BOOST_DEDUCED_TYPENAME X::iterator iterator;
     typedef BOOST_DEDUCED_TYPENAME test::random_values<X>::iterator
         value_iterator;
     test::random_values<X> v(500, generator);

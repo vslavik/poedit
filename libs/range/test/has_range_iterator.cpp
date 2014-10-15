@@ -9,6 +9,7 @@
 // For more information, see http://www.boost.org/libs/range/
 //
 #include <boost/range/has_range_iterator.hpp>
+#include <boost/config.hpp>
 
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test.hpp>
@@ -35,12 +36,22 @@ namespace
     {
         test_has_range_iterator_impl< std::vector<int> >(true);
         test_has_range_iterator_impl< MockClassWithoutIterators >(false);
+
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+        test_has_range_iterator_impl<std::vector<int>&&>(true);
+        test_has_range_iterator_impl<MockClassWithoutIterators&&>(false);
+#endif
     }
 
     void test_has_range_const_iterator()
     {
         test_has_range_const_iterator_impl< std::vector<int> >(true);
         test_has_range_const_iterator_impl< MockClassWithoutIterators >(false);
+
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+        test_has_range_const_iterator_impl<std::vector<int>&&>(true);
+        test_has_range_const_iterator_impl<MockClassWithoutIterators&&>(false);
+#endif
     }
 }
 

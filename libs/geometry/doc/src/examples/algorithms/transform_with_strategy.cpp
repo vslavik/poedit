@@ -18,7 +18,7 @@ int main()
 {
     namespace trans = boost::geometry::strategy::transform;
     using boost::geometry::dsv;
-    
+
     typedef boost::geometry::model::point<double, 2, boost::geometry::cs::cartesian> point_type;
 
     point_type p1(1.0, 1.0);
@@ -37,8 +37,8 @@ int main()
     point_type p4;
     trans::rotate_transformer<boost::geometry::degree, double, 2, 2> rotate(90.0);
     boost::geometry::transform(p1, p4, rotate);
-    
-    std::cout 
+
+    std::cout
         << "p1: " << dsv(p1) << std::endl
         << "p2: " << dsv(p2) << std::endl
         << "p3: " << dsv(p3) << std::endl

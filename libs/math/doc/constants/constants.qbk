@@ -70,7 +70,7 @@ You can see the full list of available constants at [link math_toolkit.constants
 
 Some examples of using constants are at [@../../example/constants_eg1.cpp constants_eg1].
 
-[endsect]
+[endsect] [/section:non_templ Use in non-template code]
 
 [section:templ Use in template code]
 
@@ -229,7 +229,7 @@ either construct from a decimal digit string or calculate on the fly depending u
 
 [h5 Custom Specializing a constant]
 
-In addition, for user-defined types that need special handling, it's possible to \[partially-\] specialize
+In addition, for user-defined types that need special handling, it's possible to partially-specialize
 the internal structure used by each constant.  For example, suppose we're using the C++ wrapper around MPFR
 `mpfr_class`: this has its own representation of Pi which we may well wish to use in place of the above
 mechanism.  We can achieve this by specialising the class template `boost::math::constants::detail::constant_pi`:
@@ -327,9 +327,8 @@ This section lists the mathematical constants, their use(s) (and sometimes ratio
 [[one_div_root_pi] [1/[radic][pi]] [0.564189] [] ]
 [[one_div_root_two_pi] [1/[radic](2[pi])] [0.398942] [] ]
 [[root_one_div_pi] [[radic](1/[pi]] [0.564189] [] ]
-[[pi_minus_three] [[pi]-3] [1.41593] [] ]
+[[pi_minus_three] [[pi]-3] [0.141593] [] ]
 [[four_minus_pi] [4 -[pi]] [0.858407] [] ]
-[[pow23_four_minus_pi] [4[super 2/3] - [pi]] [0.795316] [] ]
 [[pi_pow_e] [[pi][super e]] [22.4591] [] ]
 
 [[pi_sqr] [[pi][super 2]] [9.86960] [] ]
@@ -379,10 +378,12 @@ This section lists the mathematical constants, their use(s) (and sometimes ratio
 ] [/table]
 
 
-[note Integer values are *not included* in this list of math constants, however interesting,
+[note Integer values are [*not included] in this list of math constants, however interesting,
 because they can be so easily and exactly constructed, even for UDT, for example: `static_cast<cpp_float>(42)`.]
 
 [tip If you know the approximate value of the constant, you can search for the value to find Boost.Math chosen name in this table.]
+[tip Bernoulli numbers are available at __bernoulli_numbers.]
+[tip Factorials are available at __factorial.]
 
 [endsect]  [/section:constants The constants]
 
@@ -461,7 +462,11 @@ The default is to use `NTL::RR` unless you define an alternate macro, for exampl
 3. It is necessary to link to the Boost.Regex library,
 and probably to your chosen arbitrary precision type library.
 
-4. The complete program to generate the constant `half_pi` using function `calculate_half_pi` is then:
+4. You need to add `libs\math\include_private` to your compiler's include path as the needed
+header is not installed in the usual places by default (this avoids a cyclic dependency between 
+the Math and Multiprecision library's headers).
+
+5. The complete program to generate the constant `half_pi` using function `calculate_half_pi` is then:
 
    #define USE_CPP_FLOAT // If required.
    #include <boost/math/constants/generate.hpp>

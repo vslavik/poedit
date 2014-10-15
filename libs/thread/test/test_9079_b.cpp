@@ -8,6 +8,7 @@
 #include <boost/atomic.hpp>
 //#include <boost/log/trivial.hpp>
 #include <boost/chrono.hpp>
+#include <boost/chrono/chrono_io.hpp>
 #include <boost/thread.hpp>
 #include <boost/thread/condition_variable.hpp>
 
@@ -59,7 +60,9 @@ int main()
 
   //BOOST_LOG_TRIVIAL(info) << "[TaskScheduler::run_and_wait] Scheduling loop - BEGIN";
 
-  while (!foo.is_exiting()) {
+  int i =11;
+  while (i--)
+  {
     const TimePoint next_task_spawn_time = foo.spawn_tasks();
 
     const TimePoint now = real_time_now();
@@ -71,6 +74,8 @@ int main()
     const TimePoint::duration wait_time = next_spawn_time - now;
     if (wait_time > wait_time.zero()) {
       // BOOST_LOG_TRIVIAL(trace) << "WAIT TIME: " << wait_time; // UNCOMMENT THIS: MAKES IT WORKS. WAT??????
+      boost::this_thread::sleep_for(boost::chrono::seconds(1));
+      std::cout << next_spawn_time << std::endl;
       m_task_spawn_condition.wait_until(
           main_thread_lock,
           next_spawn_time); // DON'T WORK: WILL WAIT IF next_spawn_time is too close!

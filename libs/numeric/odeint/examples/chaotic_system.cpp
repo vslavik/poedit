@@ -5,8 +5,8 @@
  * exponents of a chaotic system namely the well known Lorenz system. Furthermore,
  * it shows how odeint interacts with boost.range.
  *
- * Copyright 2009-2012 Karsten Ahnert
- * Copyright 2009-2012 Mario Mulansky
+ * Copyright 2011-2012 Karsten Ahnert
+ * Copyright 2011-2013 Mario Mulansky
  *
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or
@@ -78,7 +78,6 @@ int main( int argc , char **argv )
 {
     state_type x;
     lyap_type lyap;
-    runge_kutta4< state_type > rk4;
 
     fill( x.begin() , x.end() , 0.0 );
     x[0] = 10.0 ; x[1] = 10.0 ; x[2] = 5.0;
@@ -86,6 +85,9 @@ int main( int argc , char **argv )
     const double dt = 0.01;
 
     //[ integrate_transients_with_range
+    // explicitly choose range_algebra to override default choice of array_algebra
+    runge_kutta4< state_type , double , state_type , double , range_algebra > rk4;
+
     // perform 10000 transient steps
     integrate_n_steps( rk4 , lorenz() , std::make_pair( x.begin() , x.begin() + n ) , 0.0 , dt , 10000 );
     //]

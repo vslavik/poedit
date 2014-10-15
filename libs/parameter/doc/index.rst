@@ -30,7 +30,7 @@ __ ../../../../index.htm
   can be deduced from their types.
 
 .. @jam_prefix.append('''
-        project test : requirements <include>. <source>/boost//headers ;''')
+        project test : requirements <include>. <implicit-dependency>/boost//headers ;''')
 
 .. @example.prepend('''
    #include <boost/parameter.hpp>
@@ -783,7 +783,7 @@ signatures.
    isolate ``depth_first_search`` in a namespace containing no
    types [#using]_, but suppose we *want* it to found via ADL?
 
-__ http://anubis.dkuug.dk/jtc1/sc22/wg21/docs/lwg-defects.html#225
+__ http://www.open-std.org/jtc1/sc22/wg21/docs/lwg-defects.html#225
 
 It's usually a good idea to prevent functions from being considered
 for overload resolution when the passed argument types aren't
@@ -1767,7 +1767,7 @@ its function call operator:
 Note that because of the `forwarding problem`_, ``parameter::parameters::operator()``
 can't accept non-const rvalues.
 
-.. _`forwarding problem`: http://std.dkuug.dk/jtc1/sc22/wg21/docs/papers/2002/n1385.htm
+.. _`forwarding problem`: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2002/n1385.htm
 
 Extracting Parameter Types
 ==========================

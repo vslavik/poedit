@@ -6,7 +6,7 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-// $Id: print_sequence.cpp 80604 2012-09-19 22:52:25Z steven_watanabe $
+// $Id$
 
 //[print_sequence
 

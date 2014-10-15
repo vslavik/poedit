@@ -59,6 +59,8 @@
 #pragma wave option(preserve: 1)
 #endif
 
+#define FUSION_HASH #
+
 namespace boost { namespace fusion {
 
     struct deque_tag;
@@ -80,48 +82,34 @@ namespace boost { namespace fusion {
 
 #include <boost/fusion/container/deque/detail/cpp03/deque_forward_ctor.hpp>
 
+        BOOST_FUSION_GPU_ENABLED
         deque()
             {}
 
+        BOOST_FUSION_GPU_ENABLED
         explicit deque(typename add_reference<typename add_const<T0>::type>::type t0)
             : base(t0, detail::nil_keyed_element())
             {}
 
+        BOOST_FUSION_GPU_ENABLED
         explicit deque(deque const& rhs)
             : base(rhs)
             {}
 
-#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
-        template <typename T0_>
-        explicit deque(T0_&& t0
-          , typename enable_if<is_convertible<T0_, T0> >::type* /*dummy*/ = 0
-         )
-            : base(std::forward<T0_>(t0), detail::nil_keyed_element())
-            {}
-
-        explicit deque(deque&& rhs)
-            : base(std::forward<deque>(rhs))
-            {}
-#endif
-
         template<BOOST_PP_ENUM_PARAMS(FUSION_MAX_DEQUE_SIZE, typename U)>
+        BOOST_FUSION_GPU_ENABLED
         deque(deque<BOOST_PP_ENUM_PARAMS(FUSION_MAX_DEQUE_SIZE, U)> const& seq)
             : base(seq)
             {}
 
-#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
-        template<BOOST_PP_ENUM_PARAMS(FUSION_MAX_DEQUE_SIZE, typename U)>
-        deque(deque<BOOST_PP_ENUM_PARAMS(FUSION_MAX_DEQUE_SIZE, U)>&& seq)
-            : base(std::forward<deque<BOOST_PP_ENUM_PARAMS(FUSION_MAX_DEQUE_SIZE, U)>>(seq))
-            {}
-#endif
-
         template<typename Sequence>
+        BOOST_FUSION_GPU_ENABLED
         deque(Sequence const& seq, typename disable_if<is_convertible<Sequence, T0> >::type* /*dummy*/ = 0)
             : base(base::from_iterator(fusion::begin(seq)))
             {}
 
         template <BOOST_PP_ENUM_PARAMS(FUSION_MAX_DEQUE_SIZE, typename U)>
+        BOOST_FUSION_GPU_ENABLED
         deque&
         operator=(deque<BOOST_PP_ENUM_PARAMS(FUSION_MAX_DEQUE_SIZE, U)> const& rhs)
         {
@@ -130,6 +118,7 @@ namespace boost { namespace fusion {
         }
 
         template <typename T>
+        BOOST_FUSION_GPU_ENABLED
         deque&
         operator=(T const& rhs)
         {
@@ -137,14 +126,38 @@ namespace boost { namespace fusion {
             return *this;
         }
 
-#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+#if defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES)
+FUSION_HASH if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+#endif
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) || \
+    (defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES))
+        template <typename T0_>
+        BOOST_FUSION_GPU_ENABLED
+        explicit deque(T0_&& t0
+          , typename enable_if<is_convertible<T0_, T0> >::type* /*dummy*/ = 0
+         )
+            : base(std::forward<T0_>(t0), detail::nil_keyed_element())
+            {}
+        BOOST_FUSION_GPU_ENABLED
+        explicit deque(deque&& rhs)
+            : base(std::forward<deque>(rhs))
+            {}
+        template<BOOST_PP_ENUM_PARAMS(FUSION_MAX_DEQUE_SIZE, typename U)>
+        BOOST_FUSION_GPU_ENABLED
+        deque(deque<BOOST_PP_ENUM_PARAMS(FUSION_MAX_DEQUE_SIZE, U)>&& seq)
+            : base(std::forward<deque<BOOST_PP_ENUM_PARAMS(FUSION_MAX_DEQUE_SIZE, U)>>(seq))
+            {}
         template <typename T>
+        BOOST_FUSION_GPU_ENABLED
         deque&
         operator=(T&& rhs)
         {
             base::operator=(std::forward<T>(rhs));
             return *this;
         }
+#endif
+#if defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES)
+FUSION_HASH endif
 #endif
 
     };
@@ -160,6 +173,7 @@ namespace boost { namespace fusion {
         typedef mpl::false_ is_view;
 
         template <typename Sequence>
+        BOOST_FUSION_GPU_ENABLED
         deque(Sequence const&,
             typename enable_if<
                 mpl::and_<
@@ -167,10 +181,13 @@ namespace boost { namespace fusion {
                   , result_of::empty<Sequence> > >::type* /*dummy*/ = 0)
         {}
 
+        BOOST_FUSION_GPU_ENABLED
         deque() {}
     };
 
 }}
+
+#undef FUSION_HASH
 
 #if defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES)
 #pragma wave option(output: null)

@@ -14,6 +14,17 @@
 #pragma warning(disable:1720)
 #endif
 
+#if defined(new) 
+#  if BOOST_WORKAROUND(BOOST_MSVC, >= 1310)
+#     define BOOST_TT_AUX_MACRO_NEW_DEFINED
+#     pragma push_macro("new")
+#     undef new
+#  else
+#     error "Sorry but you can't include this header if 'new' is defined as a macro."
+#  endif
+#endif
+
+
 struct class_with_new_op {
     void * operator new(std::size_t);
 };

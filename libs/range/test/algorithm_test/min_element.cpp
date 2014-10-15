@@ -104,8 +104,11 @@ namespace boost_range_test_algorithm_min_element
     {
         using namespace boost::assign;
 
-        typedef BOOST_DEDUCED_TYPENAME Container::value_type value_t;
-        typedef BOOST_DEDUCED_TYPENAME boost::remove_const<Container>::type container_t;
+        typedef BOOST_DEDUCED_TYPENAME Container::value_type
+                                                value_t BOOST_RANGE_UNUSED;
+
+        typedef BOOST_DEDUCED_TYPENAME boost::remove_const<Container>::type
+                                                container_t;
 
         boost::range_test::range_return_test_driver test_driver;
 

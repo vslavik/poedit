@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2005-2012. Distributed under the Boost
+// (C) Copyright Ion Gaztanaga 2005-2013. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying file
 // LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
@@ -11,7 +11,7 @@
 #ifndef BOOST_CONTAINER_DUMMY_TEST_ALLOCATOR_HPP
 #define BOOST_CONTAINER_DUMMY_TEST_ALLOCATOR_HPP
 
-#if (defined _MSC_VER)
+#if defined(_MSC_VER)
 #  pragma once
 #endif
 
@@ -32,9 +32,6 @@
 #include <algorithm>
 #include <cstddef>
 #include <cassert>
-
-//!\file
-//!Describes an allocator to test expand capabilities
 
 namespace boost {
 namespace container {

@@ -269,6 +269,18 @@ void instantiate(RealType)
    boost::math::sph_bessel(i, 1);
    boost::math::sph_neumann(i, v2);
    boost::math::sph_neumann(i, i);
+   boost::math::cyl_neumann_prime(v1, v2);
+   boost::math::cyl_neumann_prime(i, v2);
+   boost::math::cyl_bessel_j_prime(v1, v2);
+   boost::math::cyl_bessel_j_prime(i, v2);
+   boost::math::cyl_bessel_i_prime(v1, v2);
+   boost::math::cyl_bessel_i_prime(i, v2);
+   boost::math::cyl_bessel_k_prime(v1, v2);
+   boost::math::cyl_bessel_k_prime(i, v2);
+   boost::math::sph_bessel_prime(i, v2);
+   boost::math::sph_bessel_prime(i, 1);
+   boost::math::sph_neumann_prime(i, v2);
+   boost::math::sph_neumann_prime(i, i);
    boost::math::cyl_bessel_j_zero(v1, i);
    boost::math::cyl_bessel_j_zero(v1, i, i, oi);
    boost::math::cyl_neumann_zero(v1, i);
@@ -321,6 +333,13 @@ void instantiate(RealType)
    boost::math::float_next(v1);
    boost::math::float_prior(v1);
    boost::math::float_distance(v1, v1);
+
+   boost::math::unchecked_bernoulli_b2n<RealType>(i);
+   boost::math::bernoulli_b2n<RealType>(i);
+   boost::math::bernoulli_b2n<RealType>(i, i, &v1);
+   boost::math::tangent_t2n<RealType>(i);
+   boost::math::tangent_t2n<RealType>(i, i, &v1);
+
 #endif
 #ifdef TEST_GROUP_9
    //
@@ -435,6 +454,18 @@ void instantiate(RealType)
    boost::math::sph_bessel(i, 1);
    boost::math::sph_neumann(i, v2 * 1);
    boost::math::sph_neumann(i, i);
+   boost::math::cyl_neumann_prime(v1 * 1, v2 + 0);
+   boost::math::cyl_neumann_prime(i, v2 * 1);
+   boost::math::cyl_bessel_j_prime(v1 * 1, v2 + 0);
+   boost::math::cyl_bessel_j_prime(i, v2 * 1);
+   boost::math::cyl_bessel_i_prime(v1 * 1, v2 + 0);
+   boost::math::cyl_bessel_i_prime(i, v2 * 1);
+   boost::math::cyl_bessel_k_prime(v1 * 1, v2 + 0);
+   boost::math::cyl_bessel_k_prime(i, v2 * 1);
+   boost::math::sph_bessel_prime(i, v2 * 1);
+   boost::math::sph_bessel_prime(i, 1);
+   boost::math::sph_neumann_prime(i, v2 * 1);
+   boost::math::sph_neumann_prime(i, i);
    boost::math::cyl_bessel_j_zero(v1 * 1, i);
    boost::math::cyl_bessel_j_zero(v1 * 1, i, i, oi);
    boost::math::cyl_neumann_zero(v1 * 1, i);
@@ -587,6 +618,18 @@ void instantiate(RealType)
    boost::math::sph_bessel(i, 1, pol);
    boost::math::sph_neumann(i, v2, pol);
    boost::math::sph_neumann(i, i, pol);
+   boost::math::cyl_neumann_prime(v1, v2, pol);
+   boost::math::cyl_neumann_prime(i, v2, pol);
+   boost::math::cyl_bessel_j_prime(v1, v2, pol);
+   boost::math::cyl_bessel_j_prime(i, v2, pol);
+   boost::math::cyl_bessel_i_prime(v1, v2, pol);
+   boost::math::cyl_bessel_i_prime(i, v2, pol);
+   boost::math::cyl_bessel_k_prime(v1, v2, pol);
+   boost::math::cyl_bessel_k_prime(i, v2, pol);
+   boost::math::sph_bessel_prime(i, v2, pol);
+   boost::math::sph_bessel_prime(i, 1, pol);
+   boost::math::sph_neumann_prime(i, v2, pol);
+   boost::math::sph_neumann_prime(i, i, pol);
    boost::math::cyl_bessel_j_zero(v1, i, pol);
    boost::math::cyl_bessel_j_zero(v1, i, i, oi, pol);
    boost::math::cyl_neumann_zero(v1, i, pol);
@@ -643,6 +686,11 @@ void instantiate(RealType)
    boost::math::float_next(v1, pol);
    boost::math::float_prior(v1, pol);
    boost::math::float_distance(v1, v1, pol);
+
+   boost::math::bernoulli_b2n<RealType>(i, pol);
+   boost::math::bernoulli_b2n<RealType>(i, i, &v1, pol);
+   boost::math::tangent_t2n<RealType>(i, pol);
+   boost::math::tangent_t2n<RealType>(i, i, &v1, pol);
 #endif
 #ifdef TEST_GROUP_6
    //
@@ -756,6 +804,18 @@ void instantiate(RealType)
    test::sph_bessel(i, 1);
    test::sph_neumann(i, v2);
    test::sph_neumann(i, i);
+   test::cyl_neumann_prime(v1, v2);
+   test::cyl_neumann_prime(i, v2);
+   test::cyl_bessel_j_prime(v1, v2);
+   test::cyl_bessel_j_prime(i, v2);
+   test::cyl_bessel_i_prime(v1, v2);
+   test::cyl_bessel_i_prime(i, v2);
+   test::cyl_bessel_k_prime(v1, v2);
+   test::cyl_bessel_k_prime(i, v2);
+   test::sph_bessel_prime(i, v2);
+   test::sph_bessel_prime(i, 1);
+   test::sph_neumann_prime(i, v2);
+   test::sph_neumann_prime(i, i);
    test::cyl_bessel_j_zero(v1, i);
    test::cyl_bessel_j_zero(v1, i, i, oi);
    test::cyl_neumann_zero(v1, i);
@@ -951,6 +1011,18 @@ void instantiate_mixed(RealType)
    boost::math::sph_bessel(i, 1);
    boost::math::sph_neumann(i, lr);
    boost::math::sph_neumann(i, i);
+   boost::math::cyl_neumann_prime(fr, dr);
+   boost::math::cyl_neumann_prime(i, s);
+   boost::math::cyl_bessel_j_prime(fr, lr);
+   boost::math::cyl_bessel_j_prime(i, s);
+   boost::math::cyl_bessel_i_prime(fr, lr);
+   boost::math::cyl_bessel_i_prime(i, s);
+   boost::math::cyl_bessel_k_prime(fr, lr);
+   boost::math::cyl_bessel_k_prime(i, s);
+   boost::math::sph_bessel_prime(i, fr);
+   boost::math::sph_bessel_prime(i, 1);
+   boost::math::sph_neumann_prime(i, lr);
+   boost::math::sph_neumann_prime(i, i);
    boost::math::owens_t(fr, dr);
    boost::math::owens_t(i, s);
 
@@ -1076,6 +1148,18 @@ void instantiate_mixed(RealType)
    boost::math::sph_bessel(i, 1, pol);
    boost::math::sph_neumann(i, lr, pol);
    boost::math::sph_neumann(i, i, pol);
+   boost::math::cyl_neumann_prime(fr, dr, pol);
+   boost::math::cyl_neumann_prime(i, s, pol);
+   boost::math::cyl_bessel_j_prime(fr, lr, pol);
+   boost::math::cyl_bessel_j_prime(i, s, pol);
+   boost::math::cyl_bessel_i_prime(fr, lr, pol);
+   boost::math::cyl_bessel_i_prime(i, s, pol);
+   boost::math::cyl_bessel_k_prime(fr, lr, pol);
+   boost::math::cyl_bessel_k_prime(i, s, pol);
+   boost::math::sph_bessel_prime(i, fr, pol);
+   boost::math::sph_bessel_prime(i, 1, pol);
+   boost::math::sph_neumann_prime(i, lr, pol);
+   boost::math::sph_neumann_prime(i, i, pol);
    boost::math::owens_t(fr, dr, pol);
    boost::math::owens_t(i, s, pol);
 #endif
@@ -1192,6 +1276,18 @@ void instantiate_mixed(RealType)
    test::sph_bessel(i, 1);
    test::sph_neumann(i, lr);
    test::sph_neumann(i, i);
+   test::cyl_neumann_prime(fr, dr);
+   test::cyl_neumann_prime(i, s);
+   test::cyl_bessel_j_prime(fr, lr);
+   test::cyl_bessel_j_prime(i, s);
+   test::cyl_bessel_i_prime(fr, lr);
+   test::cyl_bessel_i_prime(i, s);
+   test::cyl_bessel_k_prime(fr, lr);
+   test::cyl_bessel_k_prime(i, s);
+   test::sph_bessel_prime(i, fr);
+   test::sph_bessel_prime(i, 1);
+   test::sph_neumann_prime(i, lr);
+   test::sph_neumann_prime(i, i);
    test::airy_ai(i);
    test::airy_bi(i);
    test::airy_ai_prime(i);

@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2005-2012. Distributed under the Boost
+// (C) Copyright Ion Gaztanaga 2005-2013. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying file
 // LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
@@ -47,7 +47,7 @@
 namespace boost {
 namespace container {
 
-/// @cond
+#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
 namespace container_detail {
 
 template<class VoidPointer>
@@ -99,7 +99,7 @@ struct intrusive_list_type
 };
 
 }  //namespace container_detail {
-/// @endcond
+#endif   //#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
 
 //! A list is a doubly linked list. That is, it is a Sequence that supports both
 //! forward and backward traversal, and (amortized) constant time insertion and
@@ -111,6 +111,9 @@ struct intrusive_list_type
 //! after a list operation than it did before), but the iterators themselves will
 //! not be invalidated or made to point to different elements unless that invalidation
 //! or mutation is explicit.
+//!
+//! \tparam T The type of object that is stored in the list
+//! \tparam Allocator The allocator used for all internal memory management
 #ifdef BOOST_CONTAINER_DOXYGEN_INVOKED
 template <class T, class Allocator = std::allocator<T> >
 #else
@@ -120,7 +123,7 @@ class list
    : protected container_detail::node_alloc_holder
       <Allocator, typename container_detail::intrusive_list_type<Allocator>::type>
 {
-   /// @cond
+   #ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
    typedef typename
       container_detail::intrusive_list_type<Allocator>::type Icont;
    typedef container_detail::node_alloc_holder<Allocator, Icont>  AllocHolder;
@@ -167,7 +170,7 @@ class list
 
    typedef container_detail::iterator<typename Icont::iterator, false>  iterator_impl;
    typedef container_detail::iterator<typename Icont::iterator, true>   const_iterator_impl;
-   /// @endcond
+   #endif   //#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
 
    public:
    //////////////////////////////////////////////
@@ -217,7 +220,7 @@ class list
    //! <b>Effects</b>: Constructs a list that will use a copy of allocator a
    //!   and inserts n copies of value.
    //!
-   //! <b>Throws</b>: If allocator_type's default constructor or copy constructor
+   //! <b>Throws</b>: If allocator_type's default constructor
    //!   throws or T's default or copy constructor throws.
    //!
    //! <b>Complexity</b>: Linear to n.
@@ -228,7 +231,7 @@ class list
    //! <b>Effects</b>: Constructs a list that will use a copy of allocator a
    //!   and inserts n copies of value.
    //!
-   //! <b>Throws</b>: If allocator_type's default constructor or copy constructor
+   //! <b>Throws</b>: If allocator_type's default constructor
    //!   throws or T's default or copy constructor throws.
    //!
    //! <b>Complexity</b>: Linear to n.
@@ -240,7 +243,7 @@ class list
    //!
    //! <b>Postcondition</b>: x == *this.
    //!
-   //! <b>Throws</b>: If allocator_type's default constructor or copy constructor throws.
+   //! <b>Throws</b>: If allocator_type's default constructor throws.
    //!
    //! <b>Complexity</b>: Linear to the elements x contains.
    list(const list& x)
@@ -287,8 +290,8 @@ class list
    //! <b>Effects</b>: Constructs a list that will use a copy of allocator a
    //!   and inserts a copy of the range [first, last) in the list.
    //!
-   //! <b>Throws</b>: If allocator_type's default constructor or copy constructor
-   //!   throws or T's constructor taking an dereferenced InIt throws.
+   //! <b>Throws</b>: If allocator_type's default constructor
+   //!   throws or T's constructor taking a dereferenced InIt throws.
    //!
    //! <b>Complexity</b>: Linear to the range [first, last).
    template <class InpIt>
@@ -329,32 +332,40 @@ class list
       return *this;
    }
 
-   //! <b>Effects</b>: Move assignment. All mx's values are transferred to *this.
+   //! <b>Effects</b>: Move assignment. All x's values are transferred to *this.
    //!
    //! <b>Postcondition</b>: x.empty(). *this contains a the elements x had
    //!   before the function.
    //!
-   //! <b>Throws</b>: If allocator_type's copy constructor throws.
+   //! <b>Throws</b>: If allocator_traits_type::propagate_on_container_move_assignment
+   //!   is false and (allocation throws or value_type's move constructor throws)
    //!
-   //! <b>Complexity</b>: Constant.
+   //! <b>Complexity</b>: Constant if allocator_traits_type::
+   //!   propagate_on_container_move_assignment is true or
+   //!   this->get>allocator() == x.get_allocator(). Linear otherwise.
    list& operator=(BOOST_RV_REF(list) x)
+      BOOST_CONTAINER_NOEXCEPT_IF(allocator_traits_type::propagate_on_container_move_assignment::value)
    {
-      if (&x != this){
-         NodeAlloc &this_alloc = this->node_alloc();
-         NodeAlloc &x_alloc    = x.node_alloc();
-         //If allocators are equal we can just swap pointers
-         if(this_alloc == x_alloc){
-            //Destroy and swap pointers
-            this->clear();
-            this->icont() = boost::move(x.icont());
-            //Move allocator if needed
-            this->AllocHolder::move_assign_alloc(x);
-         }
-         //If unequal allocators, then do a one by one move
-         else{
-            this->assign( boost::make_move_iterator(x.begin())
-                        , boost::make_move_iterator(x.end()));
-         }
+      BOOST_ASSERT(this != &x);
+      NodeAlloc &this_alloc = this->node_alloc();
+      NodeAlloc &x_alloc    = x.node_alloc();
+      const bool propagate_alloc = allocator_traits_type::
+            propagate_on_container_move_assignment::value;
+      const bool allocators_equal = this_alloc == x_alloc; (void)allocators_equal;
+      //Resources can be transferred if both allocators are
+      //going to be equal after this function (either propagated or already equal)
+      if(propagate_alloc || allocators_equal){
+         //Destroy
+         this->clear();
+         //Move allocator if needed
+         this->AllocHolder::move_assign_alloc(x);
+         //Obtain resources
+         this->icont() = boost::move(x.icont());
+      }
+      //Else do a one by one move
+      else{
+         this->assign( boost::make_move_iterator(x.begin())
+                     , boost::make_move_iterator(x.end()));
       }
       return *this;
    }
@@ -1182,7 +1193,7 @@ class list
    //! <b>Throws</b>: If comparison throws.
    //!
    //! <b>Notes</b>: Iterators and references are not invalidated.
-   //!  
+   //!
    //! <b>Complexity</b>: The number of comparisons is approximately N log N, where N
    //!   is the list's size.
    void sort()
@@ -1214,9 +1225,65 @@ class list
    //!
    //! <b>Note</b>: Iterators and references are not invalidated
    void reverse() BOOST_CONTAINER_NOEXCEPT
-   {  this->icont().reverse(); }   
+   {  this->icont().reverse(); }
 
-   /// @cond
+   //! <b>Effects</b>: Returns true if x and y are equal
+   //!
+   //! <b>Complexity</b>: Linear to the number of elements in the container.
+   friend bool operator==(const list& x, const list& y)
+   {
+      if(x.size() != y.size()){
+         return false;
+      }
+      typedef typename list::const_iterator const_iterator;
+      const_iterator end1 = x.end();
+
+      const_iterator i1 = x.begin();
+      const_iterator i2 = y.begin();
+      while (i1 != end1 && *i1 == *i2) {
+         ++i1;
+         ++i2;
+      }
+      return i1 == end1;
+   }
+
+   //! <b>Effects</b>: Returns true if x and y are unequal
+   //!
+   //! <b>Complexity</b>: Linear to the number of elements in the container.
+   friend bool operator!=(const list& x, const list& y)
+   {  return !(x == y); }
+
+   //! <b>Effects</b>: Returns true if x is less than y
+   //!
+   //! <b>Complexity</b>: Linear to the number of elements in the container.
+   friend bool operator<(const list& x, const list& y)
+   {  return std::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());  }
+
+   //! <b>Effects</b>: Returns true if x is greater than y
+   //!
+   //! <b>Complexity</b>: Linear to the number of elements in the container.
+   friend bool operator>(const list& x, const list& y)
+   {  return y < x;  }
+
+   //! <b>Effects</b>: Returns true if x is equal or less than y
+   //!
+   //! <b>Complexity</b>: Linear to the number of elements in the container.
+   friend bool operator<=(const list& x, const list& y)
+   {  return !(y < x);  }
+
+   //! <b>Effects</b>: Returns true if x is equal or greater than y
+   //!
+   //! <b>Complexity</b>: Linear to the number of elements in the container.
+   friend bool operator>=(const list& x, const list& y)
+   {  return !(x < y);  }
+
+   //! <b>Effects</b>: x.swap(y)
+   //!
+   //! <b>Complexity</b>: Constant.
+   friend void swap(list& x, list& y)
+   {  x.swap(y);  }
+
+   #ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
    private:
 
    bool priv_try_shrink(size_type new_size)
@@ -1259,13 +1326,13 @@ class list
       return iterator(this->icont().insert(p.get(), *tmp));
    }
 
-   void priv_push_back (const T &x)  
+   void priv_push_back (const T &x)
    {  this->insert(this->cend(), x);    }
 
    void priv_push_back (BOOST_RV_REF(T) x)
    {  this->insert(this->cend(), boost::move(x));    }
 
-   void priv_push_front (const T &x)  
+   void priv_push_front (const T &x)
    {  this->insert(this->cbegin(), x);  }
 
    void priv_push_front (BOOST_RV_REF(T) x)
@@ -1303,66 +1370,11 @@ class list
       bool operator()(const value_type &a, const value_type &b) const
          {  return a == b;  }
    };
-   /// @endcond
+   #endif   //#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
 
 };
 
-template <class T, class Allocator>
-inline bool operator==(const list<T,Allocator>& x, const list<T,Allocator>& y)
-{
-   if(x.size() != y.size()){
-      return false;
-   }
-   typedef typename list<T,Allocator>::const_iterator const_iterator;
-   const_iterator end1 = x.end();
-
-   const_iterator i1 = x.begin();
-   const_iterator i2 = y.begin();
-   while (i1 != end1 && *i1 == *i2) {
-      ++i1;
-      ++i2;
-   }
-   return i1 == end1;
-}
-
-template <class T, class Allocator>
-inline bool operator<(const list<T,Allocator>& x,
-                      const list<T,Allocator>& y)
-{
-  return std::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());
-}
-
-template <class T, class Allocator>
-inline bool operator!=(const list<T,Allocator>& x, const list<T,Allocator>& y)
-{
-  return !(x == y);
-}
-
-template <class T, class Allocator>
-inline bool operator>(const list<T,Allocator>& x, const list<T,Allocator>& y)
-{
-  return y < x;
-}
-
-template <class T, class Allocator>
-inline bool operator<=(const list<T,Allocator>& x, const list<T,Allocator>& y)
-{
-  return !(y < x);
-}
-
-template <class T, class Allocator>
-inline bool operator>=(const list<T,Allocator>& x, const list<T,Allocator>& y)
-{
-  return !(x < y);
-}
-
-template <class T, class Allocator>
-inline void swap(list<T, Allocator>& x, list<T, Allocator>& y)
-{
-  x.swap(y);
-}
-
-/// @cond
+#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
 
 }  //namespace container {
 
@@ -1375,7 +1387,7 @@ struct has_trivial_destructor_after_move<boost::container::list<T, Allocator> >
 
 namespace container {
 
-/// @endcond
+#endif   //#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
 
 }}
 

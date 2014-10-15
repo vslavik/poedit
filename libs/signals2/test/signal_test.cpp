@@ -29,7 +29,7 @@ struct max_or_default {
     {
       try
       {
-        if(max == false) max = *first;
+        if(!max) max = *first;
         else max = (*first > max.get())? *first : max;
       }
       catch(const boost::bad_weak_ptr &)
@@ -312,6 +312,23 @@ test_swap()
   BOOST_CHECK(sig2() == 2);
 }
 
+void test_move()
+{
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+  typedef boost::signals2::signal<int (), dummy_combiner> signal_type;
+  signal_type sig1(dummy_combiner(1));
+  BOOST_CHECK(sig1() == 1);
+  signal_type sig2(dummy_combiner(2));
+  BOOST_CHECK(sig2() == 2);
+
+  sig1 = std::move(sig2);
+  BOOST_CHECK(sig1() == 2);
+
+  signal_type sig3(std::move(sig1));
+  BOOST_CHECK(sig3() == 2);
+#endif // !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+}
+
 int
 test_main(int, char* [])
 {
@@ -324,5 +341,6 @@ test_main(int, char* [])
   test_typedefs_etc();
   test_set_combiner();
   test_swap();
+  test_move();
   return 0;
 }

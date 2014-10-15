@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../chrono.html" title="Chapter&#160;5.&#160;Boost.Chrono 2.0.2">
+<link rel="up" href="../chrono.html" title="Chapter&#160;6.&#160;Boost.Chrono 2.0.4">
 <link rel="prev" href="users_guide.html" title="User's Guide">
 <link rel="next" href="appendices.html" title="Appendices">
 </head>
@@ -1319,7 +1319,7 @@
           between t1 and t2.).
         </p>
 <div class="table">
-<a name="chrono.reference.cpp0x.clock.clock_requirements"></a><p class="title"><b>Table&#160;5.1.&#160;Clock Requirements</b></p>
+<a name="chrono.reference.cpp0x.clock.clock_requirements"></a><p class="title"><b>Table&#160;6.1.&#160;Clock Requirements</b></p>
 <div class="table-contents"><table class="table" summary="Clock Requirements">
 <colgroup>
 <col>
@@ -1591,7 +1591,7 @@
           a <code class="computeroutput"><span class="identifier">EcClock</span></code> type and <code class="computeroutput"><span class="identifier">ec</span></code> is an instance of a <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">system</span><span class="special">::</span><span class="identifier">error_code</span></code>.
         </p>
 <div class="table">
-<a name="chrono.reference.cpp0x.ecclock.clock_requirements"></a><p class="title"><b>Table&#160;5.2.&#160;Clock Requirements</b></p>
+<a name="chrono.reference.cpp0x.ecclock.clock_requirements"></a><p class="title"><b>Table&#160;6.2.&#160;Clock Requirements</b></p>
 <div class="table-contents"><table class="table" summary="Clock Requirements">
 <colgroup>
 <col>
@@ -2919,7 +2919,7 @@
             <span class="special">&amp;)</span></code></a>
 </h6></div></div></div>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CharT</span><span class="special">&gt;</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;</span> <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.sag.get_time_fmt" title="Non Member Function get_time_fmt(std::ios_base &amp;)"><code class="computeroutput"><span class="identifier">get_time_fmt</span></code></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span> <span class="identifier">ios</span><span class="special">);</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;</span> <span class="identifier">get_time_fmt</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span> <span class="identifier">ios</span><span class="special">);</span>
 </pre>
 <p>
               <span class="bold"><strong>Returns:</strong></span> The stream's time format
@@ -2932,13 +2932,499 @@
             Member Function <code class="computeroutput"><span class="identifier">set_time_fmt</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">&amp;,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;)</span></code></a>
 </h6></div></div></div>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CharT</span><span class="special">&gt;</span>
-<span class="keyword">void</span> <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.sag.set_time_fmt" title="Non Member Function set_time_fmt(std::ios_base&amp;, std::basic_string&lt;CharT&gt; const&amp;)"><code class="computeroutput"><span class="identifier">set_time_fmt</span></code></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">&amp;</span> <span class="identifier">ios</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">fmt</span><span class="special">);</span>
+<span class="keyword">void</span> <span class="identifier">set_time_fmt</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">&amp;</span> <span class="identifier">ios</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">fmt</span><span class="special">);</span>
 </pre>
 <p>
               <span class="bold"><strong>Effects:</strong></span> Set the stream's time format
               attribute associated to <code class="computeroutput"><span class="identifier">ios</span></code>
               with the <code class="computeroutput"><span class="identifier">fmt</span></code> parameter.
             </p>
+<p>
+              The format is composed of zero or more directives. Each directive is
+              composed of one of the following:
+            </p>
+<pre class="programlisting"><span class="special">*</span> <span class="identifier">one</span> <span class="keyword">or</span> <span class="identifier">more</span> <span class="identifier">white</span><span class="special">-</span><span class="identifier">space</span> <span class="identifier">characters</span> <span class="special">(</span><span class="identifier">as</span> <span class="identifier">specified</span> <span class="identifier">by</span> <span class="identifier">isspace</span><span class="special">());</span>
+<span class="special">*</span> <span class="identifier">an</span> <span class="identifier">ordinary</span> <span class="identifier">character</span> <span class="special">(</span><span class="identifier">neither</span> <span class="char">'%'</span> <span class="identifier">nor</span> <span class="identifier">a</span> <span class="identifier">white</span><span class="special">-</span><span class="identifier">space</span> <span class="identifier">character</span><span class="special">);</span>
+<span class="special">*</span> <span class="keyword">or</span> <span class="identifier">a</span> <span class="identifier">conversion</span> <span class="identifier">specification</span><span class="special">.</span>
+</pre>
+<p>
+              Each conversion specification is composed of a '%' character followed
+              by a conversion character which specifies the replacement required.
+              The application shall ensure that there is white-space or other non-alphanumeric
+              characters between any two conversion specifications. The following
+              conversion specifications are supported:
+            </p>
+<div class="table">
+<a name="chrono.reference.io.ios_state_hpp.sag.set_time_fmt.format_tags"></a><p class="title"><b>Table&#160;6.3.&#160;Format tags</b></p>
+<div class="table-contents"><table class="table" summary="Format tags">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                      <p>
+                        Format Specifier
+                      </p>
+                    </th>
+<th>
+                      <p>
+                        Description
+                      </p>
+                    </th>
+<th>
+                      <p>
+                        Example
+                      </p>
+                    </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%%</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        Replaced by <code class="computeroutput"><span class="special">%</span></code>.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">a</span>
+                        <span class="special">%</span><span class="identifier">A</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The day of the week, using the locale's weekday names; either
+                        the abbreviated or full name may be specified.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        "Monday".
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">b</span>
+                        <span class="special">%</span><span class="identifier">B</span>
+                        <span class="special">%</span><span class="identifier">h</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The month, using the locale's month names; either the abbreviated
+                        or full name may be specified.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        "February".
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">c</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        Not supported.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">d</span>
+                        <span class="special">%</span><span class="identifier">e</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The day of the month <code class="computeroutput"><span class="special">[</span><span class="number">01</span><span class="special">,</span><span class="number">31</span><span class="special">]</span></code>;
+                        leading zeros are permitted but not required..
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">D</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The date as <code class="computeroutput"><span class="special">%</span><span class="identifier">m</span><span class="special">/%</span><span class="identifier">d</span><span class="special">/%</span><span class="identifier">y</span></code>.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">F</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The date as <code class="computeroutput"><span class="special">%</span><span class="identifier">Y</span><span class="special">/%</span><span class="identifier">m</span><span class="special">/%</span><span class="identifier">d</span></code>.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">H</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The hour (24-hour clock) <code class="computeroutput"><span class="special">[</span><span class="number">00</span><span class="special">,</span><span class="number">23</span><span class="special">]</span></code>;
+                        leading zeros are permitted but not required.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">I</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The hour (12-hour clock) <code class="computeroutput"><span class="special">[</span><span class="number">01</span><span class="special">,</span><span class="number">12</span><span class="special">]</span></code>;
+                        leading zeros are permitted but not required.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">j</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The day number of the year <code class="computeroutput"><span class="special">[</span><span class="number">001</span><span class="special">,</span><span class="number">366</span><span class="special">]</span></code>;
+                        leading zeros are permitted but not required.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        "060" =&gt; Feb-29.
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">m</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The month number <code class="computeroutput"><span class="special">[</span><span class="number">01</span><span class="special">,</span><span class="number">12</span><span class="special">]</span></code>;
+                        leading zeros are permitted but not required..
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        "01" =&gt; January.
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">M</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The minute <code class="computeroutput"><span class="special">[</span><span class="number">00</span><span class="special">,</span><span class="number">59</span><span class="special">]</span></code>;
+                        leading zeros are permitted but not required.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">n</span>
+                        <span class="special">%</span><span class="identifier">t</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        Any white space..
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">p</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        Not supported.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">r</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        Not supported.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">R</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The time as <code class="computeroutput"><span class="special">%</span><span class="identifier">H</span><span class="special">:%</span><span class="identifier">M</span></code>.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">S</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The seconds <code class="computeroutput"><span class="special">[</span><span class="number">00</span><span class="special">,</span><span class="number">60</span><span class="special">]</span></code>;
+                        leading zeros are permitted but not required.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">T</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The time as <code class="computeroutput"><span class="special">%</span><span class="identifier">H</span><span class="special">:%</span><span class="identifier">M</span><span class="special">:%</span><span class="identifier">S</span></code>.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">U</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        Not supported.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">w</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The weekday as a decimal number <code class="computeroutput"><span class="special">[</span><span class="number">0</span><span class="special">,</span><span class="number">6</span><span class="special">]</span></code>,
+                        with 0 representing Sunday; leading zeros are permitted but
+                        not required..
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        "0" =&gt; Sunday.
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">W</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        Not supported.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">x</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The date, using the locale's date format..
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">X</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        Not supported.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">y</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        Not supported.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        "2005".
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">Y</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The year, including the century (for example, 1988).
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break">
 </div>
 </div>
 <div class="section">

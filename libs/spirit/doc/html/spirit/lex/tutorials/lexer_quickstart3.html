@@ -140,7 +140,7 @@
         <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">self</span><span class="special">.</span><span class="identifier">add</span>
             <span class="special">(</span><span class="identifier">word</span><span class="special">)</span>          <span class="comment">// no token id is needed here</span>
             <span class="special">(</span><span class="char">'\n'</span><span class="special">)</span>          <span class="comment">// characters are usable as tokens as well</span>
-            <span class="special">(</span><span class="string">"."</span><span class="special">,</span> <span class="identifier">IDANY</span><span class="special">)</span>    <span class="comment">// string literals will not be esacped by the library</span>
+            <span class="special">(</span><span class="string">"."</span><span class="special">,</span> <span class="identifier">IDANY</span><span class="special">)</span>    <span class="comment">// string literals will not be escaped by the library</span>
         <span class="special">;</span>
     <span class="special">}</span>
 
@@ -282,7 +282,7 @@
 <p>
           As already described (see: <a class="link" href="../../abstracts/attributes.html" title="Attributes">Attributes</a>),
           the <span class="emphasis"><em>Spirit.Qi</em></span> parser library builds upon a set of
-          of fully attributed parser components. Consequently, all token definitions
+          fully attributed parser components. Consequently, all token definitions
           support this attribute model as well. The most natural way of implementing
           this was to use the token values as the attributes exposed by the parser
           component corresponding to the token definition (you can read more about
@@ -373,10 +373,10 @@
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="spirit.lex.tutorials.lexer_quickstart3.c7"></a><a href="#spirit.lex.tutorials.lexer_quickstart3.c6"><img src="../../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a> </p></td>
 <td valign="top" align="left"><p>
-              Parsing is done based on the the token stream, not the character stream
+              Parsing is done based on the token stream, not the character stream
               read from the input. The function <code class="computeroutput"><span class="identifier">tokenize_and_parse</span><span class="special">()</span></code> wraps the passed iterator range
               <code class="computeroutput"><span class="special">[</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">)</span></code> by the lexical analyzer and uses its
-              exposed iterators to parse the toke stream.
+              exposed iterators to parse the token stream.
             </p></td>
 </tr>
 </table></div>

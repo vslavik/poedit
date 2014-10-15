@@ -8,7 +8,12 @@
 //
 // For more information, see http://www.boost.org/libs/range/
 //
+// Credits:
+// Trac 7376 - was raised by Leonid Gershanovich and his sample was used to
+// make the test case to cover this condition.
+//
 #include <boost/range/join.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 
 #include <boost/foreach.hpp>
 #include <boost/test/test_tools.hpp>
@@ -135,7 +140,11 @@ namespace boost
         {
             Collection1 c1(rng1);
             Collection2 c2(rng2);
-            typedef typename boost::range_value<Collection1>::type value_t;
+            
+            typedef BOOST_DEDUCED_TYPENAME boost::range_value<
+                Collection1
+            >::type value_t BOOST_RANGE_UNUSED;
+            
             fill_with_ints(boost::join(c1,c2));
 
             // Ensure that the size of the written range has not been
@@ -257,7 +266,119 @@ namespace boost
             test_join_impl< std::vector<int>, std::deque<int>  >();
             test_join_impl< std::deque<int>,  std::vector<int> >();
         }
+        
+        void test_join_iterator_reference_type_constness_ticket8483()
+        {
+            // Just test that this compiles.
+            // Before the fix for bug 8483, the reference type of the joined
+            // range's iterator was incorrect ('int&' instead of 'const int&'),
+            // causing compiler errors.
+            const std::vector<int> v1;
+            std::vector<int> v2;
+            std::vector<int> joined;
+            boost::push_back(joined, join(v1, v2));
+        }
 
+        namespace trac7376
+        {
+            struct base_type
+            {
+                explicit base_type(boost::int32_t value)
+                    : value(value)
+                {
+                }
+
+                virtual boost::int32_t get() const = 0;
+
+                boost::int32_t value;
+            };
+
+            struct derived_type1
+                : base_type
+            {
+                derived_type1(boost::int32_t value)
+                    : base_type(value)
+                {
+                }
+
+                virtual boost::int32_t get() const
+                {
+                    return value * 2;
+                }
+            };
+
+            struct derived_type2
+                : base_type
+            {
+                derived_type2(boost::int32_t value)
+                    : base_type(value)
+                {
+                }
+
+                virtual boost::int32_t get() const
+                {
+                    return value * 4;
+                }
+            };
+
+            struct apply_get
+            {
+                typedef boost::int32_t result_type;
+                result_type operator()(const base_type& arg) const
+                {
+                    return arg.get();
+                }
+            };
+
+            void test_reference_types()
+            {
+                using namespace boost::adaptors;
+
+                typedef boost::range_detail::join_iterator<
+                        std::vector<derived_type1>::iterator,
+                        std::vector<derived_type2>::iterator,
+                        const base_type&,
+                        const base_type&
+                > join_iterator_t;
+
+                std::vector<boost::int32_t> reference_output;
+
+                std::vector<derived_type1> x;
+                for (boost::int32_t i = 0; i < 10; ++i)
+                {
+                    x.push_back(derived_type1(i));
+                    reference_output.push_back(i * 2);
+                }
+
+                std::vector<derived_type2> y;
+                for (boost::int32_t i = 0; i < 10; ++i)
+                {
+                    y.push_back(derived_type2(i));
+                    reference_output.push_back(i * 4);
+                }
+
+                join_iterator_t it(
+                    x,
+                    y,
+                    boost::range_detail::join_iterator_begin_tag());
+
+                std::vector<boost::int32_t> output;
+                boost::push_back(
+                    output,
+                    boost::make_iterator_range(
+                        join_iterator_t(
+                            x, y,
+                            boost::range_detail::join_iterator_begin_tag()),
+                        join_iterator_t(
+                            x, y,
+                            boost::range_detail::join_iterator_end_tag()))
+                        | transformed(apply_get()));
+
+                BOOST_CHECK_EQUAL_COLLECTIONS(
+                            output.begin(), output.end(),
+                            reference_output.begin(), reference_output.end());
+            }
+        } // namespace trac7376
     }
 }
 
@@ -268,6 +389,8 @@ init_unit_test_suite(int argc, char* argv[])
         = BOOST_TEST_SUITE( "RangeTestSuite.adaptor.joined" );
 
     test->add( BOOST_TEST_CASE( &boost::join_test ) );
+    test->add( BOOST_TEST_CASE( &boost::test_join_iterator_reference_type_constness_ticket8483 ) );
+    test->add( BOOST_TEST_CASE( &boost::trac7376::test_reference_types ) );
 
     return test;
 }

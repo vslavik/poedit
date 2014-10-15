@@ -105,17 +105,17 @@ struct init1_member
 };
 int init1_member::called = 0;
 
-//#if defined BOOST_THREAD_PLATFORM_PTHREAD
-void f1_member()
+void f1_member_l()
 {
     init1_member o;
-//#if defined BOOST_THREAD_PROVIDES_ONCE_CXX11
-    boost::call_once(flg1_member, &init1_member::call, o, 1);
-//#else
-//    boost::call_once(flg1_member, boost::bind(&init1_member::call, boost::ref(o), 1));
-//#endif
+    int i=1;
+    boost::call_once(flg1_member, &init1_member::call, o, i);
 }
-//#endif
+void f1_member_r()
+{
+    init1_member o;
+    boost::call_once(flg1_member, &init1_member::call, o, 1);
+}
 struct init2
 {
     static int called;
@@ -269,8 +269,8 @@ int main()
 
     // check member function with 1 arg
     {
-        boost::thread t0(f1_member);
-        boost::thread t1(f1_member);
+        boost::thread t0(f1_member_l);
+        boost::thread t1(f1_member_r);
         t0.join();
         t1.join();
         BOOST_TEST(init1_member::called == 1);

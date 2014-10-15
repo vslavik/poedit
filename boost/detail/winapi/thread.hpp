@@ -26,21 +26,21 @@ namespace winapi
     using ::GetCurrentThreadId;
     using ::SleepEx;
     using ::Sleep;
+    using ::SwitchToThread;
 #else
-extern "C" { 
+extern "C" {
 # ifndef UNDER_CE
-    __declspec(dllimport) unsigned long __stdcall 
-        GetCurrentThreadId(void);
-    __declspec(dllimport) unsigned long __stdcall 
-        SleepEx(unsigned long,int);
-    __declspec(dllimport) void __stdcall 
-        Sleep(unsigned long);
+    __declspec(dllimport) DWORD_ WINAPI GetCurrentThreadId(void);
+    __declspec(dllimport) DWORD_ WINAPI SleepEx(DWORD_, BOOL_);
+    __declspec(dllimport) void WINAPI Sleep(DWORD_);
+    __declspec(dllimport) BOOL_ WINAPI SwitchToThread(void);
 #else
     using ::GetCurrentThreadId;
     using ::SleepEx;
     using ::Sleep;
-#endif    
-}    
+    using ::SwitchToThread;
+#endif
+}
 #endif
 }
 }

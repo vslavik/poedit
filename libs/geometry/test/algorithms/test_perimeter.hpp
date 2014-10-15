@@ -1,4 +1,4 @@
-// Boost.Geometry (aka GGL, Generic Geometry Library) 
+// Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
@@ -10,25 +10,26 @@
 #define BOOST_GEOMETRY_TEST_PERIMETER_HPP
 
 
+#include <boost/typeof/typeof.hpp>
+#include <boost/variant/variant.hpp>
+
 #include <geometry_test_common.hpp>
 
 #include <boost/geometry/algorithms/perimeter.hpp>
 #include <boost/geometry/strategies/strategies.hpp>
-
-
 #include <boost/geometry/io/wkt/read.hpp>
 
 
 template <typename Geometry>
 void test_perimeter(Geometry const& geometry, long double expected_perimeter)
 {
-    typename bg::default_distance_result<Geometry>::type perimeter = bg::perimeter(geometry);
+    BOOST_AUTO(perimeter, bg::perimeter(geometry));
 
-#ifdef GEOMETRY_TEST_DEBUG
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
     std::ostringstream out;
     out << typeid(typename bg::coordinate_type<Geometry>::type).name()
         << std::endl
-        << typeid(typename bg::perimeter_result<Geometry>::type).name()
+        << typeid(typename bg::default_length_result<Geometry>::type).name()
         << std::endl
         << "perimeter : " << bg::perimeter(geometry)
         << std::endl;
@@ -44,7 +45,12 @@ void test_geometry(std::string const& wkt, double expected_perimeter)
 {
     Geometry geometry;
     bg::read_wkt(wkt, geometry);
+    boost::variant<Geometry> v(geometry);
+
     test_perimeter(geometry, expected_perimeter);
+#if !defined(BOOST_GEOMETRY_TEST_DEBUG)
+    test_perimeter(v, expected_perimeter);
+#endif
 }
 
 template <typename Geometry>

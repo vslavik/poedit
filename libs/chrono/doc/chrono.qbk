@@ -9,7 +9,7 @@
 
 [library Boost.Chrono
     [quickbook 1.5]
-    [version 2.0.2]
+    [version 2.0.4]
     [authors [Hinnant, Howard]]
     [authors [Dawes, Beman]]
     [authors [Botet Escriba, Vicente J.]]
@@ -57,7 +57,7 @@
 [def __params [*Parameters:]]
 [template param [p] [*[p]:]]
 
-[template mu[]'''&#x3BC;'''] [/ µ Greek small letter mu]
+[template mu[]'''&#x3BC;'''] [/  Greek small letter mu]
 [template plusminus[]'''&#x00B1;'''] [/  ? plus or minus sign]
 
 [def __mus [mu]s]
@@ -642,6 +642,8 @@ MinGW with
 * GCC 4.5.2 -std=c++0x
 * GCC 4.6.0
 * GCC 4.6.0 -std=c++0x
+* GCC 4.8.0
+* GCC 4.8.0 -std=c++0x
 
 Ubuntu with
 * GCC 4.4.6
@@ -662,16 +664,15 @@ OsX with
 * GCC 4.7.0 -std=c++0x
 * GCC 4.7.1
 * GCC 4.7.1 -std=c++0x
-* clang 1.6
-* clang 2.9
-* clang 2.9 -std=c++0x
-* clang 3.0
-* clang 3.0 -std=c++0x
+* GCC 4.7.2
+* GCC 4.7.2 -std=c++0x
+* GCC 4.8.0
+* GCC 4.8.0 -std=c++0x
+* GCC 4.8.1
+* GCC 4.8.1 -std=c++0x
 * clang 3.1
-* clang 3.1 -std=c++0x
 * clang 3.1 -std=c++0x -stdlib=libc++
 * clang 3.2
-* clang 3.2 -std=c++11
 * clang 3.2 -std=c++11 -stdlib=libc++
 
 
@@ -4256,7 +4257,7 @@ __effects Set the stream's __timezone attribute associated to `ios` with the `tz
 [section:get_time_fmt Non Member Function `get_time_fmt(std::ios_base &)`]
 
         template<typename CharT>
-        std::basic_string<CharT> __get_time_fmt(std::ios_base & ios);
+        std::basic_string<CharT> get_time_fmt(std::ios_base & ios);
                        
 __returns The stream's time format attribute associated to `ios`.
         
@@ -4265,9 +4266,50 @@ __returns The stream's time format attribute associated to `ios`.
 [section:set_time_fmt Non Member Function `set_time_fmt(std::ios_base&, std::basic_string<CharT> const&)`]
 
         template<typename CharT>
-        void __set_time_fmt(std::ios_base& ios, std::basic_string<CharT> const& fmt);
+        void set_time_fmt(std::ios_base& ios, std::basic_string<CharT> const& fmt);
         
 __effects Set the stream's time format attribute associated to `ios` with the `fmt` parameter.
+
+The format is composed of zero or more directives. 
+Each directive is composed of one of the following: 
+
+ * one or more white-space characters (as specified by isspace()); 
+ * an ordinary character (neither '%' nor a white-space character); 
+ * or a conversion specification. 
+
+Each conversion specification is composed of a '%' character followed by a conversion character which specifies the replacement required. 
+The application shall ensure that there is white-space or other non-alphanumeric characters between any two conversion specifications. 
+The following conversion specifications are supported:
+
+[table Format tags
+    [[Format Specifier]        [Description ]  [Example]]
+    [[`%%`]        [Replaced by `%`.]  [.]]
+    [[`%a %A`]        [The day of the week, using the locale's weekday names; either the abbreviated or full name may be specified.]  ["Monday".]]
+    [[`%b %B %h`]        [The month, using the locale's month names; either the abbreviated or full name may be specified.]  ["February".]]
+    [[`%c`]        [Not supported.]  [.]]
+    [[`%d %e`]        [The day of the month `[01,31]`; leading zeros are permitted but not required..]  [.]]
+    [[`%D`]        [The date as `%m/%d/%y`.]  [.]]
+    [[`%F`]        [The date as `%Y/%m/%d`.]  [.]]
+    [[`%H`]        [The hour (24-hour clock) `[00,23]`; leading zeros are permitted but not required.]  [.]]
+    [[`%I`]        [The hour (12-hour clock) `[01,12]`; leading zeros are permitted but not required.]  [.]]
+    [[`%j`]        [The day number of the year `[001,366]`; leading zeros are permitted but not required.]  ["060" => Feb-29.]]
+    [[`%m`]        [The month number `[01,12]`; leading zeros are permitted but not required..]  ["01" => January.]]
+    [[`%M`]        [The minute `[00,59]`; leading zeros are permitted but not required.]  [.]]
+    [[`%n %t`]        [Any white space..]  [.]]
+    [[`%p`]        [Not supported.]  [.]]
+    [[`%r`]        [Not supported.]  [.]]
+    [[`%R`]        [The time as `%H:%M`.]  [.]]
+    [[`%S`]        [The seconds `[00,60]`; leading zeros are permitted but not required.]  [.]]
+    [[`%T`]        [The time as `%H:%M:%S`.]  [.]]
+    [[`%U`]        [Not supported.]  [.]]
+    [[`%w`]        [The weekday as a decimal number `[0,6]`, with 0 representing Sunday; leading zeros are permitted but not required..]  ["0" => Sunday.]]
+    [[`%W`]        [Not supported.]  [.]]
+    [[`%x`]        [The date, using the locale's date format..]  [.]]
+    [[`%X`]        [Not supported.]  [.]]
+    [[`%y`]        [Not supported.]  ["2005".]]
+    [[`%Y`]        [The year, including the century (for example, 1988).]  [.]]
+]
+
         
 [endsect]
 
@@ -7322,7 +7364,42 @@ All the units are given using the suffix "s" following the System International 
 [/==================================]
 
 [//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////]
+[section [*Version 2.0.4, July 12, 2014 - 1.56] ]
+
+[*Fixes:]
+
+* [@http://svn.boost.org/trac/boost/ticket/6918 #6918] Boost Chrono compilation failure on HP uX due to undefined pthread_getcpuclockid
+* [@http://svn.boost.org/trac/boost/ticket/8006 #8006] Boost::Chrono Assertion at startup - steady_clock::now() - Windows
+
+* [@http://svn.boost.org/trac/boost/ticket/9337 #9337] chrono::process_cpu_clock time points wrong by factor 1000 on Linux
+* [@http://svn.boost.org/trac/boost/ticket/9342 #9342] Regression on process_cpu_clock::timepoint io on V2
+* [@http://svn.boost.org/trac/boost/ticket/9419 #9419] boost::chrono::floor()/round() and negative durations is wrong
+* [@http://svn.boost.org/trac/boost/ticket/9698 #9698] boost::chrono::thread_clock not declared in OSX
+* [@http://svn.boost.org/trac/boost/ticket/9720 #9720] boost::this_thread::sleep_for() sometimes returns immediately on win32
+* [@http://svn.boost.org/trac/boost/ticket/9859 #9859] Remove references to gcc-mingw
+* [@http://svn.boost.org/trac/boost/ticket/9918 #9918] chrono compilation error on Solaris, funciton timegm
+* [@http://svn.boost.org/trac/boost/ticket/9811 #9811] boost/boost/chrono/duration.hpp:355:56: error: call to non-constexpr function 'static std::numeric_limits<float>::_Ty std::numeric_limits<float>::max()' /home/zosun/input_service/inputservices-core-service/other/boost/boost/chrono/duration.hpp: In static member function 'static constexpr double boost::chrono::detail::chrono_numeric_limits<double, true>::lowest()':
+* [@http://svn.boost.org/trac/boost/ticket/10069 #10069] Overflow in chrono clocks on 32bit
+* [@http://svn.boost.org/trac/boost/ticket/10151 #10151] timegm function not available on QNX
+
+[endsect] [/section [*Version 2.0.4] ]
+
+[//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////]
+[section [*Version 2.0.3, September 29, 2013 - 1.55] ]
+
+[*Fixes:]
+
+* [@http://svn.boost.org/trac/boost/ticket/7868 #7868] chrono_io parses time incorrectly (1.53 and 1.52)   
+* [@http://svn.boost.org/trac/boost/ticket/9028 #9028] Typo in boost/chrono/stopwatches/formatters/base_formatter.hpp  
+* [@http://svn.boost.org/trac/boost/ticket/9147 #9147] uninitialized std::tm
+* [@http://svn.boost.org/trac/boost/ticket/9274 #9274] lost of precission on system_clock input.
+* [@http://svn.boost.org/trac/boost/ticket/9276 #9276] output from a system_clock::time_point get a time_point that is one day later than expected.
+
+[endsect] [/section [*Version 2.0.3] ]
+
+[//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////]
 [section [*Version 2.0.2, June 15, 2013 - 1.54] ]
+
 
 [*Fixes:]
 

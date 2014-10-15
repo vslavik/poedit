@@ -14,6 +14,8 @@
 
 #include <boost/geometry/arithmetic/arithmetic.hpp>
 #include <boost/geometry/algorithms/detail/convert_point_to_point.hpp>
+#include <boost/geometry/algorithms/detail/recalculate.hpp>
+#include <boost/geometry/policies/robustness/robust_point_type.hpp>
 #include <boost/geometry/strategies/side.hpp>
 #include <boost/geometry/util/math.hpp>
 
@@ -25,8 +27,18 @@ namespace boost { namespace geometry
 namespace detail
 {
 
+// Checks if a point ("last_point") causes a spike w.r.t.
+// the specified two other points (segment_a, segment_b)
+//
+//  x-------x------x
+//  a       lp     b
+//
+// Above, lp generates a spike w.r.t. segment(a,b)
+// So specify last point first, then (a,b) (this is unordered, so unintuitive)
 template <typename Point1, typename Point2, typename Point3>
-static inline bool point_is_spike_or_equal(Point1 const& last_point, Point2 const& segment_a, Point3 const& segment_b)
+static inline bool point_is_spike_or_equal(Point1 const& last_point,
+            Point2 const& segment_a,
+            Point3 const& segment_b)
 {
     typedef typename strategy::side::services::default_strategy
     <
@@ -61,6 +73,49 @@ static inline bool point_is_spike_or_equal(Point1 const& last_point, Point2 cons
     }
     return false;
 }
+
+template
+<
+    typename Point1,
+    typename Point2,
+    typename Point3,
+    typename RobustPolicy
+>
+static inline bool point_is_spike_or_equal(Point1 const& last_point,
+            Point2 const& segment_a,
+            Point3 const& segment_b,
+            RobustPolicy const& robust_policy)
+{
+    if (point_is_spike_or_equal(last_point, segment_a, segment_b))
+    {
+        return true;
+    }
+
+    if (! RobustPolicy::enabled)
+    {
+        return false;
+    }
+
+    // Try using specified robust policy
+    typedef typename geometry::robust_point_type
+    <
+        Point1,
+        RobustPolicy
+    >::type robust_point_type;
+
+    robust_point_type last_point_rob, segment_a_rob, segment_b_rob;
+    geometry::recalculate(last_point_rob, last_point, robust_policy);
+    geometry::recalculate(segment_a_rob, segment_a, robust_policy);
+    geometry::recalculate(segment_b_rob, segment_b, robust_policy);
+
+    return point_is_spike_or_equal
+        (
+            last_point_rob,
+            segment_a_rob,
+            segment_b_rob
+        );
+}
+
 
 } // namespace detail
 #endif

@@ -209,7 +209,7 @@ matches a NUL character.
 
 An expression of the form `[[=col=]]`, matches any character or collating element 
 whose primary sort key is the same as that for collating element /col/, 
-as with colating elements the name /col/ may be a 
+as with collating elements the name /col/ may be a 
 [link boost_regex.syntax.collating_names symbolic name].  A primary 
 sort key is one that ignores case, accentation, or locale-specific tailorings; 
 so for example `[[=a=]]` matches any of the characters: 
@@ -257,7 +257,7 @@ The following escape sequences are all synonyms for single characters:
 [[\\xdd][A hexadecimal escape sequence - matches the single character whose code point is 0xdd.]]
 [[\\x{dddd}][A hexadecimal escape sequence - matches the single character whose code point is 0xdddd.]]
 [[\\0ddd][An octal escape sequence - matches the single character whose code point is 0ddd.]]
-[[\\N{Name}][Matches the single character which has the symbolic name name.  For example `\\N{newline}` matches the single character \\n.]]
+[[\\N{Name}][Matches the single character which has the symbolic name ['Name].  For example `\\N{newline}` matches the single character \\n.]]
 ]
 
 [h5 "Single character" character classes:]

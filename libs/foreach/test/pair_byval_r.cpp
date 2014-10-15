@@ -34,6 +34,7 @@ std::pair<int const*,int const*> const my_const_pair(my_array,my_array+5);
 int test_main( int, char*[] )
 {
     boost::mpl::true_ *p = BOOST_FOREACH_IS_LIGHTWEIGHT_PROXY(my_pair);
+    (void)p;
 
     // non-const containers by value
     BOOST_CHECK(sequence_equal_byval_n_r(my_pair, "\5\4\3\2\1"));

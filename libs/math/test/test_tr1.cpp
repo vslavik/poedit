@@ -8,6 +8,8 @@
 #include <boost/test/floating_point_comparison.hpp>
 #include <boost/math/tools/precision.hpp>
 #include <math.h>  // ldexpf
+#include <iostream>
+#include <iomanip>
 
 #ifdef TEST_STD
 #include <cmath>

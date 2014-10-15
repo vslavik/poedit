@@ -25,6 +25,13 @@ int main()
   BOOST_TEST((DAOther<AnotherType,AType>::value));
   BOOST_TEST((BOOST_TTI_HAS_DATA_GEN(ONestStr)<AnotherType,AType::AStructType>::value));
   
+  // Passing non-class enclosing type will return false
+  
+  BOOST_TEST((!BOOST_TTI_HAS_DATA_GEN(IntBT)<unsigned long,AType::BType>::value));
+  BOOST_TEST((!DCMember<AnotherType *,bool>::value));
+  BOOST_TEST((!DCMember<AnotherType &,bool>::value));
+  BOOST_TEST((!BOOST_TTI_HAS_DATA_GEN(AnInt)<int **,long>::value));
+  
   return boost::report_errors();
 
   }

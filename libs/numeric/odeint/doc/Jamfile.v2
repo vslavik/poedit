@@ -1,11 +1,14 @@
-# (C) Copyright 2009 - 2012 : Karsten Ahnert, Mario Mulansky
+# Copyright 2009-2013 Karsten Ahnert
+# Copyright 2011-2012 Mario Mulansky
+# Copyright 2012 Daniel James
+# Copyright 2013 Pascal Germroth
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 
-import quickbook ;
-import boostbook ;
-import doxygen ;
+using quickbook ;
+using boostbook ;
+using doxygen ;
 import modules ;
 
 project : requirements
@@ -49,15 +52,16 @@ else
 
 doxygen reference 
     :
-#    [ glob ../../../../boost/numeric/odeint/*.hpp ] 
-    [ glob ../../../../boost/numeric/odeint/stepper/*.hpp ]
-    [ glob ../../../../boost/numeric/odeint/stepper/base/*.hpp ]
-#    [ glob ../../../../boost/numeric/odeint/stepper/generation/*.hpp ]
-    [ glob ../../../../boost/numeric/odeint/integrate/*.hpp ]
-#    [ glob ../../../../boost/numeric/odeint/iterator/*.hpp ]
-#    [ glob ../../../../boost/numeric/odeint/algebra/*.hpp ]
-#    [ glob ../../../../boost/numeric/odeint/util/*.hpp ]
-#    ../../../../boost/numeric/odeint.hpp
+#    [ glob ../include/boost/numeric/odeint/*.hpp ] 
+    [ glob ../include/boost/numeric/odeint/stepper/*.hpp ]
+    [ glob ../incude/boost/numeric/odeint/stepper/base/*.hpp ]
+#    [ glob ../include/boost/numeric/odeint/stepper/generation/*.hpp ]
+    [ glob ../include/boost/numeric/odeint/integrate/*.hpp : ../include/boost/numeric/odeint/integrate/null_observer.hpp ../include/boost/numeric/odeint/integrate/observer_collection.hpp ]
+    [ glob ../include/boost/numeric/odeint/iterator/*.hpp ]
+#    [ glob ../include/boost/numeric/odeint/iterator/impl/*.hpp ]
+#    [ glob ../include/boost/numeric/odeint/algebra/*.hpp ]
+#    [ glob ../include/boost/numeric/odeint/util/*.hpp ]
+#    ../include/boost/numeric/odeint.hpp
     : 
 
     # Lots of parameters passed to Doxygen. You can see these in the doxygen docs, or the Wizard Expert tab displays them.

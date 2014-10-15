@@ -51,16 +51,15 @@
                       | allow_dash_for_short), 
                <a class="link" href="style_t.html#boost.program_options.command_line_style.style_t.default_style">default_style</a> = = unix_style <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp167011784"></a><h2>Description</h2>
-<p>Various possible styles of options.
-</p>
-<p>There are "long" options, which start with "&amp;ndash;" and "short", which start with either "-" or "/". Both kinds can be allowed or disallowed, see allow_long and allow_short. The allowed character for short options is also configurable.</p>
-<p>Option's value can be specified in the same token as name ("&amp;ndash;foo=bar"), or in the next token.</p>
+<a name="idp344761616"></a><h2>Description</h2>
+<p>Various possible styles of options.</p>
+<p>There are "long" options, which start with "--" and "short", which start with either "-" or "/". Both kinds can be allowed or disallowed, see allow_long and allow_short. The allowed character for short options is also configurable.</p>
+<p>Option's value can be specified in the same token as name ("--foo=bar"), or in the next token.</p>
 <p>It's possible to introduce long options by the same character as short options, see allow_long_disguise.</p>
 <p>Finally, guessing (specifying only prefix of option) and case insensitive processing are supported. </p>
 <div class="variablelist"><dl class="variablelist compact">
 <dt><span class="term"><code class="computeroutput">allow_long</code><a name="boost.program_options.command_line_style.style_t.allow_long"></a></span></dt>
-<dd>Allow "&amp;ndash;long_name" style. </dd>
+<dd>Allow "--long_name" style. </dd>
 <dt><span class="term"><code class="computeroutput">allow_short</code><a name="boost.program_options.command_line_style.style_t.allow_short"></a></span></dt>
 <dd>Allow "-&lt;single character" style. </dd>
 <dt><span class="term"><code class="computeroutput">allow_dash_for_short</code><a name="boost.program_options.command_line_style.style_t.allow_dash_for_short"></a></span></dt>

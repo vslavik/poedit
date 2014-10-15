@@ -1,8 +1,9 @@
 [/============================================================================
   Boost.odeint
 
-  Copyright (c) 2009-2012 Karsten Ahnert
-  Copyright (c) 2009-2012 Mario Mulansky
+  Copyright 2011-2012 Karsten Ahnert
+  Copyright 2011-2013 Mario Mulansky
+  Copyright 2012 Sylwester Arabas
 
   Use, modification and distribution is subject to the Boost Software License,
   Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -383,6 +384,7 @@ So for controlled steppers the following things have to be implemented:
 
 [endsect]
 
+[/
 [section Boost.Ublas]
 As an example for the employment of the `vector_space_algebra` we will adopt
 `ublas::vector` from __ublas to work as a state type in odeint.
@@ -408,6 +410,7 @@ You can find the full example in [github_link
 libs/numeric/odeint/examples/ublas/lorenz_ublas.cpp lorenz_ublas.cpp].
 
 [endsect]
+/]
 
 [section Point type]
 
@@ -435,22 +438,28 @@ element-wise absolute value for the state type:
 
 [point3D_abs_div]
 
-Finally, we have to add a specialization for `reduce` implementing a reduction
-over the state type:
+Finally, we have to provide a specialization to calculate the infintity norm of a state:
 
-[point3D_reduce]
+[point3D_norm]
 
 Again, note that the two last steps were only required if you want to use
 controlled steppers.
 For simple steppers definition of the simple `+=` and `*=` operators are
 sufficient.
 Having defined such a point type, we can easily perform the integration on a Lorenz
-system by using the `vector_space_algebra` again:
+system by explicitely configuring the `vector_space_algebra` in the stepper's
+template argument list:
 
 [point3D_main]
 
 The whole example can be found in [github_link
 libs/numeric/odeint/examples/lorenz_point.cpp lorenz_point.cpp]
+
+[note For the most `state_types`, odeint is able to automatically determine
+the correct algebra and operations. But if you want to use your own `state_type`, as in this
+example with `point3D`, you have to manually configure the right
+algebra/operations, unless your `state_type` works with the default choice of
+`range_algebra` and `default_operations`.]
 
 [endsect]
 

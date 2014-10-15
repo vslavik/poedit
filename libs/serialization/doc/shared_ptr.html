@@ -121,7 +121,7 @@ the same pointer deserialzed above.  Default object tracking will ensure
 that no more than one instance of the object is created and that the
 pointer returned by multiple deserializations are all the same. Hence,
 regardless of how many instances of <code style="white-space: normal">shared_ptr/shared_count</code>
-corresponding to a particular object are created, the will all point
+corresponding to a particular object are created, they will all point
 to the same object.
 <p>
 Since <code style="white-space: normal">sp_counted_base_impl&lt;P, D&gt;</code> is derived from 
@@ -150,7 +150,7 @@ inline void serialize(
 ){
 }
 </code></pre>
-It would seem we're done, running the test program,
+It would seem we're done, but running the test program,
 <a href="../example/demo_shared_ptr.cpp" target="demo_shared_ptr_cpp">
 demo_shared_ptr.cpp
 </a>,
@@ -197,7 +197,7 @@ void_cast_register&lt;
     boost::detail::sp_counted_base, 
 &gt;();
 </code></pre>
-and we don't have to include a trival serializer for <code style="white-space: normal">sp_counted_base</code>
+and we don't have to include a trival serializer for <code style="white-space: normal">sp_counted_base</code>.
 <p>
 Finally we need to specify name-value pair wrappers if we want to be able
 to use this serialization with XML archives.
@@ -219,9 +219,9 @@ shared pointers:
 BOOST_SHARED_POINTER_EXPORT(T)
 BOOST_SHARED_POINTER_EXPORT_GUID(T, K)
 </pre></code>
-These are specialize versions of the macros used for exporting classes serialized through raw pointers.
+These are specialized versions of the macros used for exporting classes serialized through raw pointers.
 <p>
-Clearly, complete, correct and exception safe serialization of smart pointers is going to
+Clear, complete, correct and exception safe serialization of smart pointers is going to
 be a challenge.  I hope that this implementation provides a useful
 starting point for such an effort.
 <hr>

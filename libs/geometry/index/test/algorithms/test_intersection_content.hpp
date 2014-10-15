@@ -20,7 +20,7 @@ void test_intersection_content(Geometry const& geometry1, Geometry const& geomet
 {
     typename bgi::detail::default_content_result<Geometry>::type value = bgi::detail::intersection_content(geometry1, geometry2);
 
-#ifdef GEOMETRY_TEST_DEBUG
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
     std::ostringstream out;
     out << typeid(typename bg::coordinate_type<Geometry>::type).name()
         << " "

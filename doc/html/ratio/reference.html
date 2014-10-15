@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../ratio.html" title="Chapter&#160;24.&#160;Boost.Ratio 2.0.0">
+<link rel="up" href="../ratio.html" title="Chapter&#160;26.&#160;Boost.Ratio 2.1.0">
 <link rel="prev" href="users_guide.html" title="User's Guide">
 <link rel="next" href="appendices.html" title="Appendices">
 </head>
@@ -178,11 +178,14 @@
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">R1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">R2</span><span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_arithmetic" title="ratio Arithmetic"><code class="computeroutput"><span class="identifier">ratio_subtract</span></code></a><span class="special">;</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">R1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">R2</span><span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_arithmetic" title="ratio Arithmetic"><code class="computeroutput"><span class="identifier">ratio_multiply</span></code></a><span class="special">;</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">R1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">R2</span><span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_arithmetic" title="ratio Arithmetic"><code class="computeroutput"><span class="identifier">ratio_divide</span></code></a><span class="special">;</span>
+<span class="preprocessor">#ifdef</span> <span class="identifier">BOOST_RATIO_EXTENSIONS</span>
+    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">R</span><span class="special">,</span><span class="keyword">int</span> <span class="identifier">P</span><span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_arithmetic" title="ratio Arithmetic"><code class="computeroutput"><span class="identifier">ratio_power</span></code></a><span class="special">;</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">R</span><span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_arithmetic" title="ratio Arithmetic"><code class="computeroutput"><span class="identifier">ratio_negate</span></code></a><span class="special">;</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">R</span><span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_arithmetic" title="ratio Arithmetic"><code class="computeroutput"><span class="identifier">ratio_sign</span></code></a><span class="special">;</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">R</span><span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_arithmetic" title="ratio Arithmetic"><code class="computeroutput"><span class="identifier">ratio_abs</span></code></a><span class="special">;</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">R1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">R2</span><span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_arithmetic" title="ratio Arithmetic"><code class="computeroutput"><span class="identifier">ratio_gcd</span></code></a><span class="special">;</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">R1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">R2</span><span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_arithmetic" title="ratio Arithmetic"><code class="computeroutput"><span class="identifier">ratio_lcm</span></code></a><span class="special">;</span>
+<span class="preprocessor">#endif</span>
 
     <span class="comment">// ratio comparison</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">R1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">R2</span><span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_comparison" title="ratio Comparison"><code class="computeroutput"><span class="identifier">ratio_equal</span></code></a><span class="special">;</span>
@@ -209,6 +212,16 @@
     <span class="keyword">typedef</span> <span class="identifier">ratio</span><span class="special">&lt;</span>      <span class="number">1000000000000LL</span><span class="special">,</span> <span class="number">1LL</span><span class="special">&gt;</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_si_typedefs" title="SI typedefs"><code class="computeroutput"><span class="identifier">tera</span></code></a><span class="special">;</span>
     <span class="keyword">typedef</span> <span class="identifier">ratio</span><span class="special">&lt;</span>   <span class="number">1000000000000000LL</span><span class="special">,</span> <span class="number">1LL</span><span class="special">&gt;</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_si_typedefs" title="SI typedefs"><code class="computeroutput"><span class="identifier">peta</span></code></a><span class="special">;</span>
     <span class="keyword">typedef</span> <span class="identifier">ratio</span><span class="special">&lt;</span><span class="number">1000000000000000000LL</span><span class="special">,</span> <span class="number">1LL</span><span class="special">&gt;</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_si_typedefs" title="SI typedefs"><code class="computeroutput"><span class="identifier">exa</span></code></a><span class="special">;</span>
+
+<span class="preprocessor">#ifdef</span> <span class="identifier">BOOST_RATIO_EXTENSIONS</span>
+    <span class="comment">// convenience IEC typedefs</span>
+    <span class="keyword">typedef</span> <span class="identifier">ratio</span><span class="special">&lt;</span>                                   <span class="number">1024LL</span><span class="special">&gt;</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_iec_typedefs" title="IEC typedefs"><code class="computeroutput"><span class="identifier">kibi</span></code></a><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">ratio</span><span class="special">&lt;</span>                            <span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">&gt;</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_iec_typedefs" title="IEC typedefs"><code class="computeroutput"><span class="identifier">mebi</span></code></a><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">ratio</span><span class="special">&lt;</span>                     <span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">&gt;</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_iec_typedefs" title="IEC typedefs"><code class="computeroutput"><span class="identifier">gibi</span></code></a><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">ratio</span><span class="special">&lt;</span>              <span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">&gt;</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_iec_typedefs" title="IEC typedefs"><code class="computeroutput"><span class="identifier">tebi</span></code></a><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">ratio</span><span class="special">&lt;</span>       <span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">&gt;</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_iec_typedefs" title="IEC typedefs"><code class="computeroutput"><span class="identifier">pebi</span></code></a><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">ratio</span><span class="special">&lt;</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">&gt;</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_iec_typedefs" title="IEC typedefs"><code class="computeroutput"><span class="identifier">exbi</span></code></a><span class="special">;</span>
+<span class="preprocessor">#endif</span>
 <span class="special">}</span>
 </pre>
 </div>
@@ -222,6 +235,8 @@
 <dt><span class="section"><a href="reference.html#ratio.reference.std.ratio_hpp.ratio_arithmetic"><code class="computeroutput"><span class="identifier">ratio</span></code> Arithmetic</a></span></dt>
 <dt><span class="section"><a href="reference.html#ratio.reference.std.ratio_hpp.ratio_comparison"><code class="computeroutput"><span class="identifier">ratio</span></code> Comparison</a></span></dt>
 <dt><span class="section"><a href="reference.html#ratio.reference.std.ratio_hpp.ratio_si_typedefs">SI
+          typedefs</a></span></dt>
+<dt><span class="section"><a href="reference.html#ratio.reference.std.ratio_hpp.ratio_iec_typedefs">IEC
           typedefs</a></span></dt>
 <dt><span class="section"><a href="reference.html#ratio.reference.std.ratio_hpp.limitations">Limitations</a></span></dt>
 <dt><span class="section"><a href="reference.html#ratio.reference.std.ratio_hpp.extensions">Extensions</a></span></dt>
@@ -449,8 +464,28 @@
           </p>
 <h6>
 <a name="ratio.reference.std.ratio_hpp.ratio_arithmetic.h4"></a>
+            <span class="phrase"><a name="ratio.reference.std.ratio_hpp.ratio_arithmetic._code__phrase_role__identifier__ratio_power__phrase__phrase_role__special___lt__gt___phrase___code_"></a></span><a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_arithmetic._code__phrase_role__identifier__ratio_power__phrase__phrase_role__special___lt__gt___phrase___code_"><code class="computeroutput"><span class="identifier">ratio_power</span><span class="special">&lt;&gt;</span></code></a>
+          </h6>
+<p>
+            Included only if <a class="link" href="reference.html#ratio.reference.config_hpp.ext" title="Extensions"><code class="computeroutput"><span class="identifier">BOOST_RATIO_EXTENSIONS</span></code></a> is defined.
+          </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">R</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">P</span><span class="special">&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_power</span> <span class="special">{</span>
+   <span class="keyword">typedef</span>  <span class="special">[/</span><span class="identifier">see</span> <span class="identifier">below</span><span class="special">]</span>  <span class="identifier">type</span><span class="special">;</span>
+<span class="special">};</span>
+</pre>
+<p>
+            The nested typedef <code class="computeroutput"><span class="identifier">type</span></code>
+            is a synonym for <code class="computeroutput"><span class="identifier">R</span><span class="special">*</span>
+            <span class="special">*</span><span class="identifier">R</span></code>
+            P times.
+          </p>
+<h6>
+<a name="ratio.reference.std.ratio_hpp.ratio_arithmetic.h5"></a>
             <span class="phrase"><a name="ratio.reference.std.ratio_hpp.ratio_arithmetic._code__phrase_role__identifier__ratio_negate__phrase__phrase_role__special___lt__gt___phrase___code_"></a></span><a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_arithmetic._code__phrase_role__identifier__ratio_negate__phrase__phrase_role__special___lt__gt___phrase___code_"><code class="computeroutput"><span class="identifier">ratio_negate</span><span class="special">&lt;&gt;</span></code></a>
           </h6>
+<p>
+            Included only if <a class="link" href="reference.html#ratio.reference.config_hpp.ext" title="Extensions"><code class="computeroutput"><span class="identifier">BOOST_RATIO_EXTENSIONS</span></code></a> is defined.
+          </p>
 <p>
             This extension of the C++ standard helps in the definition of some <span class="bold"><strong>Boost.MPL</strong></span> numeric metafunctions.
           </p>
@@ -463,9 +498,12 @@
             is a synonym for <code class="computeroutput"><a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio" title="Class Template ratio&lt;&gt;"><code class="computeroutput"><span class="identifier">ratio</span></code></a><span class="special">&lt;-</span><span class="identifier">R</span><span class="special">::</span><span class="identifier">num</span><span class="special">,</span> <span class="identifier">R</span><span class="special">::</span><span class="identifier">den</span><span class="special">&gt;::</span><span class="identifier">type</span></code>.
           </p>
 <h6>
-<a name="ratio.reference.std.ratio_hpp.ratio_arithmetic.h5"></a>
+<a name="ratio.reference.std.ratio_hpp.ratio_arithmetic.h6"></a>
             <span class="phrase"><a name="ratio.reference.std.ratio_hpp.ratio_arithmetic._code__phrase_role__identifier__ratio_abs__phrase__phrase_role__special___lt__gt___phrase___code_"></a></span><a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_arithmetic._code__phrase_role__identifier__ratio_abs__phrase__phrase_role__special___lt__gt___phrase___code_"><code class="computeroutput"><span class="identifier">ratio_abs</span><span class="special">&lt;&gt;</span></code></a>
           </h6>
+<p>
+            Included only if <a class="link" href="reference.html#ratio.reference.config_hpp.ext" title="Extensions"><code class="computeroutput"><span class="identifier">BOOST_RATIO_EXTENSIONS</span></code></a> is defined.
+          </p>
 <p>
             This extension of the C++ standard helps in the definition of some <span class="bold"><strong>Boost.MPL</strong></span> numeric metafunctions.
           </p>
@@ -478,9 +516,12 @@
             is a synonym for <code class="computeroutput"><a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio" title="Class Template ratio&lt;&gt;"><code class="computeroutput"><span class="identifier">ratio</span></code></a><span class="special">&lt;</span><span class="identifier">abs_c</span><span class="special">&lt;</span><span class="identifier">intmax_t</span><span class="special">,</span><span class="identifier">R</span><span class="special">::</span><span class="identifier">num</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">,</span> <span class="identifier">R</span><span class="special">::</span><span class="identifier">den</span><span class="special">&gt;::</span><span class="identifier">type</span></code>.
           </p>
 <h6>
-<a name="ratio.reference.std.ratio_hpp.ratio_arithmetic.h6"></a>
+<a name="ratio.reference.std.ratio_hpp.ratio_arithmetic.h7"></a>
             <span class="phrase"><a name="ratio.reference.std.ratio_hpp.ratio_arithmetic._code__phrase_role__identifier__ratio_sign__phrase__phrase_role__special___lt__gt___phrase___code_"></a></span><a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_arithmetic._code__phrase_role__identifier__ratio_sign__phrase__phrase_role__special___lt__gt___phrase___code_"><code class="computeroutput"><span class="identifier">ratio_sign</span><span class="special">&lt;&gt;</span></code></a>
           </h6>
+<p>
+            Included only if <a class="link" href="reference.html#ratio.reference.config_hpp.ext" title="Extensions"><code class="computeroutput"><span class="identifier">BOOST_RATIO_EXTENSIONS</span></code></a> is defined.
+          </p>
 <p>
             This extension of the C++ standard helps in the definition of some <span class="bold"><strong>Boost.MPL</strong></span> numeric metafunctions.
           </p>
@@ -493,9 +534,12 @@
             is a synonym for <code class="computeroutput"><span class="identifier">sign_c</span><span class="special">&lt;</span><span class="identifier">intmax_t</span><span class="special">,</span><span class="identifier">R</span><span class="special">::</span><span class="identifier">num</span><span class="special">&gt;::</span><span class="identifier">type</span></code>.
           </p>
 <h6>
-<a name="ratio.reference.std.ratio_hpp.ratio_arithmetic.h7"></a>
+<a name="ratio.reference.std.ratio_hpp.ratio_arithmetic.h8"></a>
             <span class="phrase"><a name="ratio.reference.std.ratio_hpp.ratio_arithmetic._code__phrase_role__identifier__ratio_gcd__phrase__phrase_role__special___lt__gt___phrase___code_"></a></span><a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_arithmetic._code__phrase_role__identifier__ratio_gcd__phrase__phrase_role__special___lt__gt___phrase___code_"><code class="computeroutput"><span class="identifier">ratio_gcd</span><span class="special">&lt;&gt;</span></code></a>
           </h6>
+<p>
+            Included only if <a class="link" href="reference.html#ratio.reference.config_hpp.ext" title="Extensions"><code class="computeroutput"><span class="identifier">BOOST_RATIO_EXTENSIONS</span></code></a> is defined.
+          </p>
 <p>
             This extension of the C++ standard helps in the definition of some <span class="bold"><strong>Boost.MPL</strong></span> numeric metafunctions.
           </p>
@@ -508,9 +552,12 @@
             is a synonym for <code class="computeroutput"><span class="identifier">ratio</span><span class="special">&lt;</span><span class="identifier">gcd_c</span><span class="special">&lt;</span><span class="identifier">intmax_t</span><span class="special">,</span> <span class="identifier">R1</span><span class="special">::</span><span class="identifier">num</span><span class="special">,</span> <span class="identifier">R2</span><span class="special">::</span><span class="identifier">num</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">,</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">lcm_c</span><span class="special">&lt;</span><span class="identifier">intmax_t</span><span class="special">,</span> <span class="identifier">R1</span><span class="special">::</span><span class="identifier">den</span><span class="special">,</span> <span class="identifier">R2</span><span class="special">::</span><span class="identifier">den</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">&gt;::</span><span class="identifier">type</span></code>.
           </p>
 <h6>
-<a name="ratio.reference.std.ratio_hpp.ratio_arithmetic.h8"></a>
+<a name="ratio.reference.std.ratio_hpp.ratio_arithmetic.h9"></a>
             <span class="phrase"><a name="ratio.reference.std.ratio_hpp.ratio_arithmetic._code__phrase_role__identifier__ratio_lcm__phrase__phrase_role__special___lt__gt___phrase___code_"></a></span><a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_arithmetic._code__phrase_role__identifier__ratio_lcm__phrase__phrase_role__special___lt__gt___phrase___code_"><code class="computeroutput"><span class="identifier">ratio_lcm</span><span class="special">&lt;&gt;</span></code></a>
           </h6>
+<p>
+            Included only if <a class="link" href="reference.html#ratio.reference.config_hpp.ext" title="Extensions"><code class="computeroutput"><span class="identifier">BOOST_RATIO_EXTENSIONS</span></code></a> is defined.
+          </p>
 <p>
             This extension of the C++ standard helps in the definition of some <span class="bold"><strong>Boost.MPL</strong></span> numeric metafunctions.
           </p>
@@ -607,6 +654,29 @@
 <span class="keyword">typedef</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio" title="Class Template ratio&lt;&gt;"><code class="computeroutput"><span class="identifier">ratio</span></code></a><span class="special">&lt;</span>      <span class="number">1000000000000LL</span><span class="special">,</span> <span class="number">1LL</span><span class="special">&gt;</span> <span class="identifier">tera</span><span class="special">;</span>
 <span class="keyword">typedef</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio" title="Class Template ratio&lt;&gt;"><code class="computeroutput"><span class="identifier">ratio</span></code></a><span class="special">&lt;</span>   <span class="number">1000000000000000LL</span><span class="special">,</span> <span class="number">1LL</span><span class="special">&gt;</span> <span class="identifier">peta</span><span class="special">;</span>
 <span class="keyword">typedef</span> <a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio" title="Class Template ratio&lt;&gt;"><code class="computeroutput"><span class="identifier">ratio</span></code></a><span class="special">&lt;</span><span class="number">1000000000000000000LL</span><span class="special">,</span> <span class="number">1LL</span><span class="special">&gt;</span> <span class="identifier">exa</span><span class="special">;</span>
+</pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="ratio.reference.std.ratio_hpp.ratio_iec_typedefs"></a><a class="link" href="reference.html#ratio.reference.std.ratio_hpp.ratio_iec_typedefs" title="IEC typedefs">IEC
+          typedefs</a>
+</h5></div></div></div>
+<p>
+            Included only if <a class="link" href="reference.html#ratio.reference.config_hpp.ext" title="Extensions"><code class="computeroutput"><span class="identifier">BOOST_RATIO_EXTENSIONS</span></code></a> is defined.
+          </p>
+<p>
+            The <a href="http://http://en.wikipedia.org/wiki/Binary_prefix#Specific_units_of_IEC_60027-2_A.2_and_ISO.2FIEC_80000" target="_top">Specific
+            units of IEC 60027-2 A.2 and ISO/IEC 80000</a> specifies height IEC
+            prefixes. <span class="bold"><strong>Boost.Ratio</strong></span> defines all except
+            <code class="computeroutput"><span class="identifier">zebi</span></code> and <code class="computeroutput"><span class="identifier">yobi</span></code>
+          </p>
+<pre class="programlisting"><span class="comment">// convenience ETC typedefs</span>
+<span class="keyword">typedef</span> <span class="identifier">ratio</span><span class="special">&lt;</span>                                   <span class="number">1024LL</span><span class="special">&gt;</span> <span class="identifier">kibi</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">ratio</span><span class="special">&lt;</span>                            <span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">&gt;</span> <span class="identifier">mebi</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">ratio</span><span class="special">&lt;</span>                     <span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">&gt;</span> <span class="identifier">gibi</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">ratio</span><span class="special">&lt;</span>              <span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">&gt;</span> <span class="identifier">tebi</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">ratio</span><span class="special">&lt;</span>       <span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">&gt;</span> <span class="identifier">pebi</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">ratio</span><span class="special">&lt;</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">*</span><span class="number">1024LL</span><span class="special">&gt;</span> <span class="identifier">exbi</span><span class="special">;</span>
 </pre>
 </div>
 <div class="section">
@@ -772,6 +842,37 @@
     <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">exa</span><span class="special">,</span> <span class="keyword">char16_t</span><span class="special">&gt;;</span>
     <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">exa</span><span class="special">,</span> <span class="keyword">char32_t</span><span class="special">&gt;;</span>
     <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">exa</span><span class="special">,</span> <span class="keyword">wchar_t</span><span class="special">&gt;;</span>
+
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">kibi</span><span class="special">,</span> <span class="keyword">char</span><span class="special">&gt;;</span>
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">kibi</span><span class="special">,</span> <span class="keyword">char16_t</span><span class="special">&gt;;</span>
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">kibi</span><span class="special">,</span> <span class="keyword">char32_t</span><span class="special">&gt;;</span>
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">kibi</span><span class="special">,</span> <span class="keyword">wchar_t</span><span class="special">&gt;;</span>
+
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">mebi</span><span class="special">,</span> <span class="keyword">char</span><span class="special">&gt;;</span>
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">mebi</span><span class="special">,</span> <span class="keyword">char16_t</span><span class="special">&gt;;</span>
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">mebi</span><span class="special">,</span> <span class="keyword">char32_t</span><span class="special">&gt;;</span>
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">mebi</span><span class="special">,</span> <span class="keyword">wchar_t</span><span class="special">&gt;;</span>
+
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">gibi</span><span class="special">,</span> <span class="keyword">char</span><span class="special">&gt;;</span>
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">gibi</span><span class="special">,</span> <span class="keyword">char16_t</span><span class="special">&gt;;</span>
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">gibi</span><span class="special">,</span> <span class="keyword">char32_t</span><span class="special">&gt;;</span>
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">gibi</span><span class="special">,</span> <span class="keyword">wchar_t</span><span class="special">&gt;;</span>
+
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">tebi</span><span class="special">,</span> <span class="keyword">char</span><span class="special">&gt;;</span>
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">tebi</span><span class="special">,</span> <span class="keyword">char16_t</span><span class="special">&gt;;</span>
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">tebi</span><span class="special">,</span> <span class="keyword">char32_t</span><span class="special">&gt;;</span>
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">tebi</span><span class="special">,</span> <span class="keyword">wchar_t</span><span class="special">&gt;;</span>
+
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">pebi</span><span class="special">,</span> <span class="keyword">char</span><span class="special">&gt;;</span>
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">pebi</span><span class="special">,</span> <span class="keyword">char16_t</span><span class="special">&gt;;</span>
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">pebi</span><span class="special">,</span> <span class="keyword">char32_t</span><span class="special">&gt;;</span>
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">pebi</span><span class="special">,</span> <span class="keyword">wchar_t</span><span class="special">&gt;;</span>
+
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">yobi</span><span class="special">,</span> <span class="keyword">char</span><span class="special">&gt;;</span>
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">yobi</span><span class="special">,</span> <span class="keyword">char16_t</span><span class="special">&gt;;</span>
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">yobi</span><span class="special">,</span> <span class="keyword">char32_t</span><span class="special">&gt;;</span>
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">ratio_string</span><span class="special">&lt;</span><span class="identifier">yobi</span><span class="special">,</span> <span class="keyword">wchar_t</span><span class="special">&gt;;</span>
+
 <span class="special">}</span>
 </pre>
 <div class="section">
@@ -861,11 +962,17 @@
           for <code class="computeroutput"><span class="identifier">ratio_string</span><span class="special">&lt;&gt;</span></code></a>
 </h5></div></div></div>
 <p>
+            With compilers supporting char16_t and char32_t and with a standard library
+            don't providing std::u16string and std::u32string you will need to define
+            the macros BOOST_NO_CXX11_U16STRING and BOOST_NO_CXX11_U32STRING until
+            Boost.Config defines them.
+          </p>
+<p>
             For each specialization the table gives the return value for <code class="computeroutput"><span class="identifier">prefix</span><span class="special">()</span></code>
             and <code class="computeroutput"><span class="identifier">symbol</span><span class="special">()</span></code>.
           </p>
 <div class="table">
-<a name="ratio.reference.io.ratio_io_hpp.spe.the_return_values_of_specializations_of_ratio_string"></a><p class="title"><b>Table&#160;24.1.&#160;The return values of specializations of ratio_string</b></p>
+<a name="ratio.reference.io.ratio_io_hpp.spe.the_return_values_of_specializations_of_ratio_string"></a><p class="title"><b>Table&#160;26.1.&#160;The return values of specializations of ratio_string</b></p>
 <div class="table-contents"><table class="table" summary="The return values of specializations of ratio_string">
 <colgroup>
 <col>

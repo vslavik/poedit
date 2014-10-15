@@ -12,7 +12,6 @@
 #define BOOST_THREAD_VERSION 4
 
 #include <boost/thread/synchronized_value.hpp>
-#include <boost/thread/testable_mutex.hpp>
 
 #include <boost/detail/lightweight_test.hpp>
 
@@ -20,12 +19,10 @@ int main()
 {
 
   {
-      boost::synchronized_value<int, boost::testable_mutex<boost::mutex> > f;
-      BOOST_TEST(! f.mutex().is_locked());
+      boost::synchronized_value<int, boost::mutex > f;
   }
   {
-      boost::synchronized_value<int, boost::testable_mutex<boost::timed_mutex> > f;
-      BOOST_TEST(! f.mutex().is_locked());
+      boost::synchronized_value<int, boost::timed_mutex> f;
   }
 
   return boost::report_errors();

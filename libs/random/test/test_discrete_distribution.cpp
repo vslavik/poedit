@@ -5,7 +5,7 @@
  * accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
  *
- * $Id: test_discrete_distribution.cpp 85813 2013-09-21 20:17:00Z jewillco $
+ * $Id$
  *
  */
 

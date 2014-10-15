@@ -1,10 +1,15 @@
 [/============================================================================
   Boost.Geometry (aka GGL, Generic Geometry Library)
 
-  Copyright (c) 2009-2012 Barend Gehrels, Amsterdam, the Netherlands.
-  Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
-  Copyright (c) 2009-2012 Bruno Lalande, Paris, France.
-  Copyright (c) 2013 Adam Wulkiewicz, Lodz, Poland.
+  Copyright (c) 2009-2014 Barend Gehrels, Amsterdam, the Netherlands.
+  Copyright (c) 2009-2014 Mateusz Loskot, London, UK.
+  Copyright (c) 2009-2014 Bruno Lalande, Paris, France.
+  Copyright (c) 2013-2014 Adam Wulkiewicz, Lodz, Poland.
+
+  This file was modified by Oracle on 2014.
+  Modifications copyright (c) 2014, Oracle and/or its affiliates.
+
+  Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 
   Use, modification and distribution is subject to the Boost Software License,
   Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -89,6 +94,8 @@
 [include generated/covered_by.qbk]
 [endsect]
 
+[include generated/crosses.qbk]
+
 [include generated/difference.qbk]
 [include generated/disjoint.qbk]
 
@@ -114,6 +121,9 @@
 [section:intersects intersects]
 [include generated/intersects.qbk]
 [endsect]
+
+[include generated/is_simple.qbk]
+[include generated/is_valid.qbk]
 
 [section:length length]
 [include generated/length.qbk]
@@ -221,7 +231,8 @@
 
 [section:io IO (input/output)]
 [section:wkt WKT (Well-Known Text)]
-[/include generated/wkt.qbk/]
+[include reference/io/wkt_format.qbk]
+[include generated/wkt.qbk]
 [endsect]
 [section:svg SVG (Scalable Vector Graphics)]
 [include generated/svg.qbk]
@@ -283,11 +294,22 @@
 
 [section:strategies Strategies]
 [include generated/distance_pythagoras.qbk]
+[include generated/distance_pythagoras_box_box.qbk]
+[include generated/distance_pythagoras_point_box.qbk]
 [include generated/distance_haversine.qbk]
 [include generated/distance_projected_point.qbk]
 [include generated/distance_cross_track.qbk]
 [include generated/area_surveyor.qbk]
 [include generated/area_huiller.qbk]
+[include generated/buffer_join_round.qbk]
+[include generated/buffer_join_miter.qbk]
+[include generated/buffer_end_round.qbk]
+[include generated/buffer_end_flat.qbk]
+[include generated/buffer_distance_symmetric.qbk]
+[include generated/buffer_distance_asymmetric.qbk]
+[include generated/buffer_point_circle.qbk]
+[include generated/buffer_point_square.qbk]
+[include generated/buffer_side_straight.qbk]
 [include generated/centroid_average.qbk]
 [include generated/centroid_bashein_detmer.qbk]
 [include generated/convex_hull_graham_andrew.qbk]

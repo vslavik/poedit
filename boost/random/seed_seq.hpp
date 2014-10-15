@@ -7,7 +7,7 @@
  *
  * See http://www.boost.org for most recent version including documentation.
  *
- * $Id: seed_seq.hpp 85813 2013-09-21 20:17:00Z jewillco $
+ * $Id$
  *
  */
 

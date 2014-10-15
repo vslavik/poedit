@@ -1,6 +1,12 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
-//
+
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
+
+// This file was modified by Oracle on 2013, 2014.
+// Modifications copyright (c) 2013-2014 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -10,8 +16,91 @@
 #include <boost/geometry/geometries/geometries.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
 
+#include <boost/geometry/multi/geometries/multi_linestring.hpp>
 
+#include <boost/geometry/multi/core/topological_dimension.hpp>
+#include <boost/geometry/multi/core/point_order.hpp>
+#include <boost/geometry/multi/core/closure.hpp>
+#include <boost/geometry/multi/algorithms/detail/sections/sectionalize.hpp>
+#include <boost/geometry/multi/algorithms/detail/overlay/get_turns.hpp>
+#include <boost/geometry/multi/algorithms/equals.hpp>
+#include <boost/geometry/multi/io/wkt/read.hpp>
 
+namespace bgm = bg::model;
+
+template <typename P>
+void test_segment_segment()
+{
+    typedef bgm::segment<P> seg;
+
+    test_geometry<seg, seg>("seg2d_1", "LINESTRING(0 0, 3 3)", "LINESTRING(0 0, 3 3)", true);
+    test_geometry<seg, seg>("seg2d_1", "LINESTRING(0 0, 3 3)", "LINESTRING(3 3, 0 0)", true);
+
+    test_geometry<seg, seg>("seg2d_1", "LINESTRING(0 0, 3 3)", "LINESTRING(0 0, 1 1)", false);
+    test_geometry<seg, seg>("seg2d_1", "LINESTRING(0 0, 3 3)", "LINESTRING(3 3, 2 2)", false);
+
+    test_geometry<seg, seg>("seg2d_1", "LINESTRING(0 0, 3 3)", "LINESTRING(1 1, 4 4)", false);
+    test_geometry<seg, seg>("seg2d_1", "LINESTRING(0 0, 3 3)", "LINESTRING(1 0, 2 0)", false);
+}
+
+template <typename P>
+void test_linestring_linestring()
+{
+    typedef bgm::linestring<P> ls;
+
+    test_geometry<ls, ls>("ls2d_1", "LINESTRING(1 1, 3 3)", "LINESTRING(3 3, 1 1)", true);
+    test_geometry<ls, ls>("ls2d_2", "LINESTRING(1 1, 3 3, 2 5)", "LINESTRING(1 1, 2 2, 3 3, 2 5)", true);
+    test_geometry<ls, ls>("ls2d_3", "LINESTRING(1 0, 3 3, 2 5)", "LINESTRING(1 1, 2 2, 3 3, 2 5)", false);
+    test_geometry<ls, ls>("ls2d_4", "LINESTRING(1 0, 3 3, 2 5)", "LINESTRING(1 1, 3 3, 2 5)", false);
+    test_geometry<ls, ls>("ls2d_5", "LINESTRING(0 5,5 5,10 5,10 0,5 0,5 5,5 10,10 10,15 10,15 5,10 5,10 10,10 15)",
+                                    "LINESTRING(0 5,15 5,15 10,5 10,5 0,10 0,10 15)", true);
+    test_geometry<ls, ls>("ls2d_6", "LINESTRING(0 5,5 5,10 5,10 10,5 10,5 5,5 0)", "LINESTRING(0 5,5 5,5 10,10 10,10 5,5 5,5 0)", true);
+    test_geometry<ls, ls>("ls2d_7", "LINESTRING(0 5,10 5,10 10,5 10,5 0)", "LINESTRING(0 5,5 5,5 10,10 10,10 5,5 5,5 0)", true);
+    test_geometry<ls, ls>("ls2d_8", "LINESTRING(0 0,5 0,5 0,6 0)", "LINESTRING(0 0,6 0)", true);
+
+    test_geometry<ls, ls>("ls2d_seg", "LINESTRING(1 1,2 2)", "LINESTRING(1 1,2 2)", true);
+    test_geometry<ls, ls>("ls2d_rev", "LINESTRING(1 1,2 2)", "LINESTRING(2 2,1 1)", true);
+
+    test_geometry<ls, ls>("ls2d_spike", "LINESTRING(0 0,5 0,3 0,6 0)", "LINESTRING(0 0,6 0)", true);
+
+    test_geometry<ls, ls>("ls2d_ring1", "LINESTRING(0 0,5 0,5 5,0 5,0 0)", "LINESTRING(5 5,0 5,0 0,5 0,5 5)", true);
+    test_geometry<ls, ls>("ls2d_ring2", "LINESTRING(0 0,5 0,5 5,0 5,0 0)", "LINESTRING(5 5,5 0,0 0,0 5,5 5)", true);
+    test_geometry<ls, ls>("ls2d_overl_ring1", "LINESTRING(0 0,5 0,5 5,0 5,0 0)", "LINESTRING(5 5,0 5,0 0,5 0,5 5,0 5)", true);
+    test_geometry<ls, ls>("ls2d_overl_ring2", "LINESTRING(0 0,5 0,5 5,0 5,0 0)", "LINESTRING(5 5,5 0,0 0,0 5,5 5,5 0)", true);
+}
+
+template <typename P>
+void test_linestring_multilinestring()
+{
+    typedef bgm::linestring<P> ls;
+    typedef bgm::multi_linestring<ls> mls;
+
+    test_geometry<ls, mls>("ls_mls_1", "LINESTRING(0 0,1 0,2 0)", "MULTILINESTRING((0 0,2 0))", true);
+    test_geometry<ls, mls>("ls_mls_1", "LINESTRING(0 0,1 0,2 0)", "MULTILINESTRING((0 0,1 0),(1 0,2 0))", true);
+    test_geometry<ls, mls>("ls_mls_1", "LINESTRING(0 0,2 0,4 0)", "MULTILINESTRING((0 0,2 0),(2 0,3 0),(3 0,4 0))", true);
+    test_geometry<ls, mls>("ls_mls_1", "LINESTRING(0 0,2 0,4 0)", "MULTILINESTRING((0 0,2 0),(2 0,3 0),(2 0,3 0),(3 0,4 0))", true);
+    test_geometry<ls, mls>("ls_mls_1", "LINESTRING(0 0,2 0,4 0)", "MULTILINESTRING((0 0,2 0),(3 0,4 0))", false);
+
+    test_geometry<ls, mls>("ls_mls_spike", "LINESTRING(0 0,2 0,2 2,2 0,4 0)", "MULTILINESTRING((0 0,4 0),(2 2,2 0))", true);
+    test_geometry<ls, mls>("ls_mls_spike", "LINESTRING(0 0,2 0,2 2,2 0,4 0)", "MULTILINESTRING((0 0,4 0),(2 2,2 -1))", false);
+
+    test_geometry<ls, mls>("ls_mls_ring1", "LINESTRING(0 0,5 0,5 5,0 5,0 0)", "MULTILINESTRING((5 5,0 5,0 0),(0 0,5 0,5 5))", true);
+    test_geometry<ls, mls>("ls_mls_ring2", "LINESTRING(0 0,5 0,5 5,0 5,0 0)", "MULTILINESTRING((5 5,5 0,0 0),(0 0,0 5,5 5))", true);
+    test_geometry<ls, mls>("ls_mls_overl_ring1", "LINESTRING(0 0,5 0,5 5,0 5,0 0)", "MULTILINESTRING((5 5,0 5,0 0),(0 0,5 0,5 5,0 5))", true);
+    test_geometry<ls, mls>("ls_mls_overl_ring2", "LINESTRING(0 0,5 0,5 5,0 5,0 0)", "MULTILINESTRING((5 5,5 0,0 0),(0 0,0 5,5 5,5 0))", true);
+}
+
+template <typename P>
+void test_multilinestring_multilinestring()
+{
+    typedef bgm::linestring<P> ls;
+    typedef bgm::multi_linestring<ls> mls;
+
+    test_geometry<mls, mls>("ls_mls_mls",
+                            "MULTILINESTRING((0 5,10 5,10 10,5 10),(5 10,5 0,5 2),(5 2,5 5,0 5))",
+                            "MULTILINESTRING((5 5,0 5),(5 5,5 0),(10 10,10 5,5 5,5 10,10 10))",
+                            true);
+}
 
 template <typename P>
 void test_all()
@@ -19,7 +108,7 @@ void test_all()
     typedef bg::model::box<P> box;
     typedef bg::model::ring<P> ring;
     typedef bg::model::polygon<P> polygon;
-    typedef bg::model::linestring<P> linestring;
+    //typedef bg::model::linestring<P> linestring;
 
     std::string case_p1 = "POLYGON((0 0,0 2,2 2,0 0))";
 
@@ -90,14 +179,14 @@ void test_all()
 
     test_geometry<polygon, box>("boxpoly2", "POLYGON((1 1,1 2,2 2,2 1,1 1))", "BOX(1 1,2 3)", false);
 
-    // linestring/linestring
-    // simplex
-    test_geometry<linestring, linestring>("ls1", "LINESTRING(1 1,2 2)", "LINESTRING(1 1,2 2)", true);
+    test_geometry<polygon, polygon>("poly_holes_shifted_points",
+        "POLYGON((0 0,0 3,3 3,3 0,0 0),(1 1,2 1,2 2,1 2,1 1))",
+        "POLYGON((0 0,0 3,3 3,3 0,0 0),(2 2,1 2,1 1,2 1,2 2))", true);
 
-    // REVERSE linestring
-    // Is this equal? To be decided.
-    //test_geometry<linestring, linestring>("ls1", "LINESTRING(1 1,2 2)", "LINESTRING(2 2,1 1)", true);
-
+    test_segment_segment<P>();
+    test_linestring_linestring<P>();
+    test_linestring_multilinestring<P>();
+    test_multilinestring_multilinestring<P>();
 }
 
 

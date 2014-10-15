@@ -68,10 +68,10 @@ The following options apply only if BOOST_REGEX_NON_RECURSIVE is set.
 [table
 [[macro][description]]
 [[BOOST_REGEX_BLOCKSIZE][In non-recursive mode, Boost.Regex uses largish blocks of memory to act as a stack for the state machine, the larger the block size then the fewer allocations that will take place.  This defaults to 4096 bytes, which is large enough to match the vast majority of regular expressions without further allocations, however, you can choose smaller or larger values depending upon your platforms characteristics.]]
-[[BOOST_REGEX_MAX_BLOCKS][Tells Boost.Regex how many blocks of size BOOST_REGEX_BLOCKSIZE it is permitted to use.  If this value is exceeded then Boost.Regex will stop trying to find a match and throw a std::runtime_error.  Defaults to 1024, don't forget to tweek this value if you alter BOOST_REGEX_BLOCKSIZE by much.]]
+[[BOOST_REGEX_MAX_BLOCKS][Tells Boost.Regex how many blocks of size BOOST_REGEX_BLOCKSIZE it is permitted to use.  If this value is exceeded then Boost.Regex will stop trying to find a match and throw a std::runtime_error.  Defaults to 1024, don't forget to tweak this value if you alter BOOST_REGEX_BLOCKSIZE by much.]]
 [[BOOST_REGEX_MAX_CACHE_BLOCKS][Tells Boost.Regex how many memory blocks to store in 
          it's internal cache - memory blocks are taken from this cache rather than by calling 
-         ::operator new.  Generally speeking this can be an order of magnitude faster than 
+         ::operator new.  Generally speaking this can be an order of magnitude faster than 
          calling ::opertator new each time a memory block is required, but has the 
          downside that Boost.Regex can end up caching a large chunk of memory (by default 
          up to 16 blocks each of BOOST_REGEX_BLOCKSIZE size).  If memory is tight then try 

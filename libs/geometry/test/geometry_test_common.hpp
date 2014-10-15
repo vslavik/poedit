@@ -25,6 +25,7 @@
 #endif // defined(_MSC_VER)
 
 #include <boost/config.hpp>
+#include <boost/concept_check.hpp>
 
 
 #if defined(BOOST_INTEL_CXX_VERSION)
@@ -34,6 +35,7 @@
 
 #include <boost/foreach.hpp>
 
+#include <string_from_type.hpp>
 
 // Include some always-included-for-testing files
 #if ! defined(BOOST_GEOMETRY_NO_BOOST_TEST)
@@ -83,52 +85,13 @@
 namespace bg = boost::geometry;
 
 
-template <typename T>
-struct string_from_type {};
-
-template <> struct string_from_type<void>
-{ static std::string name() { return "v"; }  };
-
-template <> struct string_from_type<float>
-{ static std::string name() { return "f"; }  };
-
-template <> struct string_from_type<double>
-{ static std::string name() { return "d"; }  };
-
-template <> struct string_from_type<long double>
-{ static std::string name() { return "e"; }  };
-
-template <> struct string_from_type<int>
-{ static std::string name() { return "i"; }  };
-
-#if defined(HAVE_TTMATH)
-    template <> struct string_from_type<ttmath_big>
-    { static std::string name() { return "t"; }  };
-#endif
-
-#if defined(BOOST_RATIONAL_HPP) 
-template <typename T> struct string_from_type<boost::rational<T> >
-{ static std::string name() { return "r"; }  };
-#endif
-
-
-#if defined(HAVE_GMP)
-    template <> struct string_from_type<boost::numeric_adaptor::gmp_value_type>
-    { static std::string name() { return "g"; }  };
-#endif
-
-#if defined(HAVE_CLN)
-    template <> struct string_from_type<boost::numeric_adaptor::cln_value_type>
-    { static std::string name() { return "c"; }  };
-#endif
-
-
 template <typename CoordinateType, typename T1, typename T2>
 inline T1 if_typed_tt(T1 value_tt, T2 value)
 {
 #if defined(HAVE_TTMATH)
     return boost::is_same<CoordinateType, ttmath_big>::type::value ? value_tt : value;
 #else
+    boost::ignore_unused_variable_warning(value_tt);
     return value;
 #endif
 }
@@ -172,7 +135,7 @@ struct mathematical_policy
     {
         return 90 - value;
     }
-    
+
 };
 
 

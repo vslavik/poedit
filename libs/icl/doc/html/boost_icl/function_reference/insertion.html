@@ -135,7 +135,7 @@
 <tr>
 <td>
                 <p>
-                  <code class="computeroutput"><span class="identifier">V</span> <span class="identifier">T</span><span class="special">::</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">J</span>
+                  <code class="computeroutput"><span class="identifier">J</span> <span class="identifier">T</span><span class="special">::</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">J</span>
                   <span class="identifier">pos</span><span class="special">,</span>
                   <span class="keyword">const</span> <span class="identifier">P</span><span class="special">&amp;)</span></code>
                 </p>
@@ -164,7 +164,7 @@
 <tr>
 <td>
                 <p>
-                  <code class="computeroutput"><span class="identifier">V</span> <span class="identifier">insert</span><span class="special">(</span><span class="identifier">T</span><span class="special">&amp;,</span> <span class="identifier">J</span>
+                  <code class="computeroutput"><span class="identifier">J</span> <span class="identifier">insert</span><span class="special">(</span><span class="identifier">T</span><span class="special">&amp;,</span> <span class="identifier">J</span>
                   <span class="identifier">pos</span><span class="special">,</span>
                   <span class="keyword">const</span> <span class="identifier">P</span><span class="special">&amp;)</span></code>
                 </p>
@@ -283,7 +283,7 @@
 </tbody>
 </table></div>
 <a name="boost_icl.function_reference.insertion.synopsis.insertion"></a><h6>
-<a name="id1198772"></a>
+<a name="id1163803"></a>
           <a class="link" href="insertion.html#boost_icl.function_reference.insertion.synopsis.insertion">Insertion</a>
         </h6>
 <p>
@@ -304,7 +304,7 @@
           the map.
         </p>
 <a name="boost_icl.function_reference.insertion.synopsis.setting_values"></a><h6>
-<a name="id1198878"></a>
+<a name="id1163910"></a>
           <a class="link" href="insertion.html#boost_icl.function_reference.insertion.synopsis.setting_values">Setting
           values</a>
         </h6>
@@ -341,7 +341,7 @@
 <p>
         </p>
 <div class="table">
-<a name="id1199186"></a><p class="title"><b>Table&#160;1.27.&#160;Time Complexity for member function insert on
+<a name="id1164217"></a><p class="title"><b>Table&#160;1.27.&#160;Time Complexity for member function insert on
         icl containers</b></p>
 <div class="table-contents"><table class="table" summary="Time Complexity for member function insert on
         icl containers">
@@ -521,7 +521,7 @@
 <p>
         </p>
 <div class="table">
-<a name="id1199786"></a><p class="title"><b>Table&#160;1.28.&#160;Time Complexity for inplace insertion on element
+<a name="id1165381"></a><p class="title"><b>Table&#160;1.28.&#160;Time Complexity for inplace insertion on element
         containers</b></p>
 <div class="table-contents"><table class="table" summary="Time Complexity for inplace insertion on element
         containers">
@@ -621,7 +621,7 @@
           is given by this table.
         </p>
 <div class="table">
-<a name="id1200022"></a><p class="title"><b>Table&#160;1.29.&#160;Time Complexity for inplace insertion on interval
+<a name="id1165618"></a><p class="title"><b>Table&#160;1.29.&#160;Time Complexity for inplace insertion on interval
         containers</b></p>
 <div class="table-contents"><table class="table" summary="Time Complexity for inplace insertion on interval
         containers">
@@ -800,26 +800,25 @@
 </table></div>
 </div>
 <br class="table-break"><a name="boost_icl.function_reference.insertion.insertion.hinted_insertion"></a><h5>
-<a name="id1200390"></a>
+<a name="id1165986"></a>
           <a class="link" href="insertion.html#boost_icl.function_reference.insertion.insertion.hinted_insertion">Hinted
           insertion</a>
         </h5>
 <p>
-          Function <code class="computeroutput"><span class="identifier">T</span><span class="special">&amp;</span>
-          <span class="identifier">T</span><span class="special">::</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">T</span><span class="special">::</span><span class="identifier">iterator</span>
-          <span class="identifier">prior</span><span class="special">,</span>
-          <span class="keyword">const</span> <span class="identifier">P</span><span class="special">&amp;</span> <span class="identifier">addend</span><span class="special">)</span></code> allows for an insertion in <span class="emphasis"><em><span class="bold"><strong>constant time</strong></span></em></span>, if <code class="computeroutput"><span class="identifier">addend</span></code>
-          can be inserted right after iterator <code class="computeroutput"><span class="identifier">prior</span></code>
+          Function <code class="computeroutput"><span class="identifier">J</span> <span class="identifier">T</span><span class="special">::</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">J</span> <span class="identifier">prior</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">P</span><span class="special">&amp;</span> <span class="identifier">addend</span><span class="special">)</span></code>
+          allows for an insertion in <span class="emphasis"><em><span class="bold"><strong>constant time</strong></span></em></span>,
+          if <code class="computeroutput"><span class="identifier">addend</span></code> can be inserted
+          right after iterator <code class="computeroutput"><span class="identifier">prior</span></code>
           without collision. If this is not possible the complexity characteristics
           are as stated for the non hinted insertion above. Hinted insertion is available
           for these combinations of types: 
 </p>
-<pre class="programlisting"><span class="comment">// overload table for insertion with hint     T\P| e i b p  
-</span><span class="identifier">V</span> <span class="identifier">T</span><span class="special">::</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">J</span> <span class="identifier">pos</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">P</span><span class="special">&amp;)</span>                  <span class="special">---+--------</span>
-<span class="identifier">V</span> <span class="identifier">insert</span><span class="special">(</span><span class="identifier">T</span><span class="special">&amp;,</span> <span class="identifier">J</span> <span class="identifier">pos</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">P</span><span class="special">&amp;)</span>                  <span class="identifier">s</span> <span class="special">|</span> <span class="identifier">s</span>
-                                               <span class="identifier">m</span> <span class="special">|</span>     <span class="identifier">m</span>
-                                               <span class="identifier">S</span> <span class="special">|</span>   <span class="identifier">S</span>     
-                                               <span class="identifier">M</span> <span class="special">|</span>       <span class="identifier">M</span> 
+<pre class="programlisting"><span class="comment">// overload table for insertion with hint        T\P| e i b p  
+</span><span class="identifier">J</span> <span class="identifier">T</span><span class="special">::</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">J</span> <span class="identifier">pos</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">P</span><span class="special">&amp;)</span>                     <span class="special">---+--------</span>
+<span class="identifier">J</span> <span class="identifier">insert</span><span class="special">(</span><span class="identifier">T</span><span class="special">&amp;,</span> <span class="identifier">J</span> <span class="identifier">pos</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">P</span><span class="special">&amp;)</span>                     <span class="identifier">s</span> <span class="special">|</span> <span class="identifier">s</span>
+                                                  <span class="identifier">m</span> <span class="special">|</span>     <span class="identifier">m</span>
+                                                  <span class="identifier">S</span> <span class="special">|</span>   <span class="identifier">S</span>     
+                                                  <span class="identifier">M</span> <span class="special">|</span>       <span class="identifier">M</span> 
 </pre>
 <p>
         </p>
@@ -840,7 +839,7 @@
 <p>
         </p>
 <div class="table">
-<a name="id1202423"></a><p class="title"><b>Table&#160;1.30.&#160;Time Complexity for member function `set`</b></p>
+<a name="id1166368"></a><p class="title"><b>Table&#160;1.30.&#160;Time Complexity for member function `set`</b></p>
 <div class="table-contents"><table class="table" summary="Time Complexity for member function `set`">
 <colgroup>
 <col>

@@ -13,7 +13,7 @@
 #include <boost/concept_check.hpp>
 
 namespace boost { namespace container { namespace container_detail { namespace concept {
-  
+
 /**
  * VArrayStrategyConcept
  *
@@ -41,7 +41,7 @@ struct VArrayStrategy {
 
             // must implement allocate_failed
             str->allocate_failed();
-            
+
             boost::ignore_unused_variable_warning(str);
         }
     };

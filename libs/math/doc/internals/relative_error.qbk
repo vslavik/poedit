@@ -6,6 +6,11 @@
 #include <boost/math/tools/test.hpp>
 ``
 
+[important
+The header `boost/math/tools/test.hpp` is located under `libs/math/include_private`
+and is not installed to the usual locations by default, you will need to add `libs/math/include_private`
+to your compiler's include path in order to use this header.]
+
    template <class T>
    T relative_error(T a, T b);
    

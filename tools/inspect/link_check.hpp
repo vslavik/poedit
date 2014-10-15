@@ -30,7 +30,7 @@ namespace boost
       long m_duplicate_bookmark_errors;
 
       typedef std::map< string, int > m_path_map;
-      m_path_map m_paths; // first() is relative initial_path()
+      m_path_map m_paths; // first() is relative to search_root_path()
 
       void do_url( const string & url, const string & library_name,
         const path & full_source_path, bool no_link_errors,

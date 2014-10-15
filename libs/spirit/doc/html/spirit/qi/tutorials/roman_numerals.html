@@ -324,7 +324,7 @@
               parser that consumes no input but is always successful. We use it to
               initialize <code class="computeroutput"><span class="identifier">_val</span></code>, the
               rule's synthesized attribute, to zero before anything else. The actual
-              parser starts at <code class="computeroutput"><span class="special">+</span><span class="identifier">char_</span><span class="special">(</span><span class="char">'M'</span><span class="special">)</span></code>,
+              parser starts at <code class="computeroutput"><span class="special">+</span><span class="identifier">lit</span><span class="special">(</span><span class="char">'M'</span><span class="special">)</span></code>,
               parsing roman thousands. Using <code class="computeroutput"><span class="identifier">eps</span></code>
               this way is good for doing pre and post initializations.
             </li>

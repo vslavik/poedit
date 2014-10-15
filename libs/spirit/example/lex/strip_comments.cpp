@@ -62,9 +62,9 @@ struct strip_comments_tokens : lex::lexer<Lexer>
       : strip_comments_tokens::base_type(lex::match_flags::match_default)
     {
         // define tokens and associate them with the lexer
-        cppcomment = "\\/\\/[^\n]*";    // '//[^\n]*'
-        ccomment = "\\/\\*";            // '/*'
-        endcomment = "\\*\\/";          // '*/'
+        cppcomment = "\"//\"[^\n]*";    // '//[^\n]*'
+        ccomment = "\"/*\"";            // '/*'
+        endcomment = "\"*/\"";          // '*/'
 
         // The following tokens are associated with the default lexer state 
         // (the "INITIAL" state). Specifying 'INITIAL' as a lexer state is 
@@ -135,7 +135,7 @@ int main(int argc, char* argv[])
     strip_comments_tokens<lexer_type> strip_comments;           // Our lexer
     strip_comments_grammar<iterator_type> g (strip_comments);   // Our parser 
 
-    // Parsing is done based on the the token stream, not the character 
+    // Parsing is done based on the token stream, not the character 
     // stream read from the input.
     std::string str (read_from_file(1 == argc ? "strip_comments.input" : argv[1]));
     base_iterator_type first = str.begin();

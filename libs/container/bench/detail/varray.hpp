@@ -10,7 +10,7 @@
 #ifndef BOOST_CONTAINER_DETAIL_VARRAY_HPP
 #define BOOST_CONTAINER_DETAIL_VARRAY_HPP
 
-#if (defined _MSC_VER)
+#if defined(_MSC_VER)
 #  pragma once
 #endif
 
@@ -19,8 +19,8 @@
 #include <boost/container/detail/preprocessor.hpp>
 
 #include "varray_util.hpp"
-#include "varray_concept.hpp"
-#include <boost/iterator/iterator_concepts.hpp>
+//#include "varray_concept.hpp"
+//#include <boost/iterator/iterator_concepts.hpp>
 
 #ifndef BOOST_NO_EXCEPTIONS
 #include <stdexcept>
@@ -53,13 +53,13 @@ template <typename Value, std::size_t Capacity, typename Strategy>
 class varray;
 
 namespace strategy {
-    
+
 // TODO: Improve error messages
 //       possibly include N in the strategy, and provide size as an optoinal allocate_failed parameter?
 //       Example of current error with reserve(4) when capacity is 3:
 //          "boost/container/varray.hpp(66): size can't exceed the capacity"
 //       Could say
-//          "cannot reserve(4) due to fixed capacity of 3 elements"    
+//          "cannot reserve(4) due to fixed capacity of 3 elements"
 
 //! @brief The default strategy.
 //!
@@ -189,12 +189,12 @@ struct varray_traits
  * change in size, along with the static allocation, low overhead, and fixed capacity of boost::array.
  *
  * A varray is a sequence that supports random access to elements, constant time insertion and
- * removal of elements at the end, and linear time insertion and removal of elements at the beginning or 
+ * removal of elements at the end, and linear time insertion and removal of elements at the beginning or
  * in the middle. The number of elements in a varray may vary dynamically up to a fixed capacity
- * because elements are stored within the object itself similarly to an array. However, objects are 
+ * because elements are stored within the object itself similarly to an array. However, objects are
  * initialized as they are inserted into varray unlike C arrays or std::array which must construct
  * all elements on instantiation. The behavior of varray enables the use of statically allocated
- * elements in cases with complex object lifetime requirements that would otherwise not be trivially 
+ * elements in cases with complex object lifetime requirements that would otherwise not be trivially
  * possible.
  *
  * @par Error Handling
@@ -219,7 +219,7 @@ class varray
     typedef container_detail::varray_traits<
         Value, Capacity, Strategy
     > vt;
-    
+
     typedef typename vt::error_handler errh;
 
     BOOST_MPL_ASSERT_MSG(
@@ -229,7 +229,7 @@ class varray
         (varray)
     );
 
-    BOOST_CONCEPT_ASSERT((concept::VArrayStrategy<Strategy>));
+    //BOOST_CONCEPT_ASSERT((concept::VArrayStrategy<Strategy>));
 
     typedef boost::aligned_storage<
         sizeof(Value[Capacity]),
@@ -298,7 +298,7 @@ public:
     //! @param count    The number of values which will be contained in the container.
     //!
     //! @par Throws
-    //!   If Value's default constructor throws.
+    //!   If Value's value initialization throws.
     //! @internal
     //!   @li If a throwing error handler is specified, throws when the capacity is exceeded. (not by default).
     //! @endinternal
@@ -353,8 +353,8 @@ public:
     varray(Iterator first, Iterator last)
         : m_size(0)
     {
-        BOOST_CONCEPT_ASSERT((boost_concepts::ForwardTraversal<Iterator>)); // Make sure you passed a ForwardIterator
-        
+        //BOOST_CONCEPT_ASSERT((boost_concepts::ForwardTraversal<Iterator>)); // Make sure you passed a ForwardIterator
+
         this->assign(first, last);                                                    // may throw
     }
 
@@ -393,7 +393,7 @@ public:
         : m_size(other.size())
     {
         errh::check_capacity(*this, other.size());                                  // may throw
-        
+
         namespace sv = varray_detail;
         sv::uninitialized_copy(other.begin(), other.end(), this->begin());          // may throw
     }
@@ -610,7 +610,7 @@ public:
         typedef typename
         vt::use_optimized_swap use_optimized_swap;
 
-        this->swap_dispatch(other, use_optimized_swap()); 
+        this->swap_dispatch(other, use_optimized_swap());
     }
 
     //! @pre <tt>count <= capacity()</tt>
@@ -621,7 +621,7 @@ public:
     //! @param count    The number of elements which will be stored in the container.
     //!
     //! @par Throws
-    //!   If Value's default constructor throws.
+    //!   If Value's value initialization throws.
     //! @internal
     //!   @li If a throwing error handler is specified, throws when the capacity is exceeded. (not by default).
     //! @endinternal
@@ -672,7 +672,7 @@ public:
         else
         {
             errh::check_capacity(*this, count);                                     // may throw
-            
+
             std::uninitialized_fill(this->end(), this->begin() + count, value);     // may throw
         }
         m_size = count; // update end
@@ -716,7 +716,7 @@ public:
         typedef typename vt::disable_trivial_init dti;
 
         errh::check_capacity(*this, m_size + 1);                                    // may throw
-        
+
         namespace sv = varray_detail;
         sv::construct(dti(), this->end(), value);                                          // may throw
         ++m_size; // update end
@@ -844,7 +844,7 @@ public:
             namespace sv = varray_detail;
 
             difference_type to_move = std::distance(position, this->end());
-            
+
             // TODO - should following lines check for exception and revert to the old size?
 
             if ( count < static_cast<size_type>(to_move) )
@@ -890,7 +890,7 @@ public:
     template <typename Iterator>
     iterator insert(iterator position, Iterator first, Iterator last)
     {
-        BOOST_CONCEPT_ASSERT((boost_concepts::ForwardTraversal<Iterator>)); // Make sure you passed a ForwardIterator
+        //BOOST_CONCEPT_ASSERT((boost_concepts::ForwardTraversal<Iterator>)); // Make sure you passed a ForwardIterator
 
         typedef typename boost::iterator_traversal<Iterator>::type traversal;
         this->insert_dispatch(position, first, last, traversal());
@@ -945,9 +945,9 @@ public:
 
         errh::check_iterator_end_eq(*this, first);
         errh::check_iterator_end_eq(*this, last);
-        
+
         difference_type n = std::distance(first, last);
-        
+
         //TODO - add invalid range check?
         //BOOST_ASSERT_MSG(0 <= n, "invalid range");
         //TODO - add this->size() check?
@@ -975,7 +975,7 @@ public:
     template <typename Iterator>
     void assign(Iterator first, Iterator last)
     {
-        BOOST_CONCEPT_ASSERT((boost_concepts::ForwardTraversal<Iterator>)); // Make sure you passed a ForwardIterator
+        //BOOST_CONCEPT_ASSERT((boost_concepts::ForwardTraversal<Iterator>)); // Make sure you passed a ForwardIterator
 
         typedef typename boost::iterator_traversal<Iterator>::type traversal;
         this->assign_dispatch(first, last, traversal());                            // may throw
@@ -1346,7 +1346,7 @@ public:
         return boost::addressof(*(this->ptr()));
     }
 
-    
+
     //! @brief Returns iterator to the first element.
     //!
     //! @return iterator to the first element contained in the vector.
@@ -1606,7 +1606,7 @@ private:
             typename varray<value_type, C, S>::aligned_storage_type
         >::type
         storage_type;
-        
+
         storage_type temp;
         Value * temp_ptr = reinterpret_cast<Value*>(temp.address());
 
@@ -1728,10 +1728,10 @@ private:
     template <typename Iterator>
     void insert_dispatch(iterator position, Iterator first, Iterator last, boost::random_access_traversal_tag const&)
     {
-        BOOST_CONCEPT_ASSERT((boost_concepts::RandomAccessTraversal<Iterator>)); // Make sure you passed a RandomAccessIterator
-        
+        //BOOST_CONCEPT_ASSERT((boost_concepts::RandomAccessTraversal<Iterator>)); // Make sure you passed a RandomAccessIterator
+
         errh::check_iterator_end_eq(*this, position);
-        
+
         typename boost::iterator_difference<Iterator>::type
             count = std::distance(first, last);
 
@@ -1766,7 +1766,7 @@ private:
 
             std::ptrdiff_t d = std::distance(position, this->begin() + Capacity);
             std::size_t count = sv::uninitialized_copy_s(first, last, position, d);                     // may throw
-            
+
             errh::check_capacity(*this, count <= static_cast<std::size_t>(d) ? m_size + count : Capacity + 1);  // may throw
 
             m_size += count;
@@ -1775,7 +1775,7 @@ private:
         {
             typename boost::iterator_difference<Iterator>::type
                 count = std::distance(first, last);
-            
+
             errh::check_capacity(*this, m_size + count);                                                // may throw
 
             this->insert_in_the_middle(position, first, last, count);                                   // may throw
@@ -1977,7 +1977,7 @@ public:
         errh::check_capacity(*this, count);                                         // may throw
     }
 
-    
+
     // nothrow
     void reserve(size_type count)
     {
@@ -2015,7 +2015,7 @@ public:
     void insert(iterator, Iterator first, Iterator last)
     {
         // TODO - add MPL_ASSERT, check if Iterator is really an iterator
-        typedef typename boost::iterator_traversal<Iterator>::type traversal;
+        //typedef typename boost::iterator_traversal<Iterator>::type traversal;
         errh::check_capacity(*this, std::distance(first, last));                    // may throw
     }
 
@@ -2039,7 +2039,7 @@ public:
     void assign(Iterator first, Iterator last)
     {
         // TODO - add MPL_ASSERT, check if Iterator is really an iterator
-        typedef typename boost::iterator_traversal<Iterator>::type traversal;
+        //typedef typename boost::iterator_traversal<Iterator>::type traversal;
         errh::check_capacity(*this, std::distance(first, last));                    // may throw
     }
 

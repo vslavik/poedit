@@ -219,7 +219,7 @@ Now we'll need to define a suitable policy that will call these handlers,
 and define some forwarding functions that make use of the policy:
 */
 
-namespace
+namespace mymath
 { // unnamed.
 
 using namespace boost::math::policies;
@@ -238,7 +238,7 @@ BOOST_MATH_DECLARE_SPECIAL_FUNCTIONS(user_error_policy)
 } // unnamed namespace
 
 /*`
-We now have a set of forwarding functions, defined in an unnamed namespace,
+We now have a set of forwarding functions, defined in namespace mymath,
 that all look something like this:
 
 ``
@@ -250,7 +250,7 @@ inline typename boost::math::tools::promote_args<RT>::type
 }
 ``
 
-So that when we call `tgamma(z)` we really end up calling
+So that when we call `mymath::tgamma(z)` we really end up calling
 `boost::math::tgamma(z, user_error_policy())`, and any
 errors will get directed to our own error handlers:
 */
@@ -259,16 +259,16 @@ int main()
 {
    // Raise a domain error:
    cout << "Result of erf_inv(-10) is: "
-      << erf_inv(-10) << std::endl << endl;
+      << mymath::erf_inv(-10) << std::endl << endl;
    // Raise a pole error:
    cout << "Result of tgamma(-10) is: "
-      << tgamma(-10) << std::endl << endl;
+      << mymath::tgamma(-10) << std::endl << endl;
    // Raise an overflow error:
    cout << "Result of tgamma(3000) is: "
-      << tgamma(3000) << std::endl << endl;
+      << mymath::tgamma(3000) << std::endl << endl;
    // Raise an underflow error:
    cout << "Result of tgamma(-190.5) is: "
-      << tgamma(-190.5) << std::endl << endl;
+      << mymath::tgamma(-190.5) << std::endl << endl;
    // Unfortunately we can't predicably raise a denormalised
    // result, nor can we raise an evaluation error in this example
    // since these should never really occur!

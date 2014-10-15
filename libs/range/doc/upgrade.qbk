@@ -5,6 +5,22 @@
 /]
 [section:upgrade Upgrade version of Boost.Range]
 
+[section:upgrade_from_1_55 Upgrade from version 1.55]
+# __iterator_range__ is now implemented by implementing the member functions
+`size()`, `operator[]` via inheritance of base-classes specialized by the
+traversal type of the underlying iterator. This is normally requires no
+alteration of code. It does mean that types that derive from iterator_range may
+need to prefix `this->` to the various member functions. Additionally it has
+been noted that some calling code was relying on member functions such as
+`size()` being present despite the underlying iterators not being random-access
+due to `iterator_reference<Iter>::type` not being a reference. The suggested
+refactoring is to use `boost::size(rng)`.
+# The undocumented __iterator_range__ `pop_front()` has been deprecated and is
+replaced by `drop_front(). Similarly `pop_back()` has been replaced by
+`drop_back()`.
+
+[endsect]
+
 [section:upgrade_from_1_49 Upgrade from version 1.49]
 
 # __size__ now returns the type Rng::size_type if the range has size_type;

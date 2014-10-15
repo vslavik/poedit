@@ -12,7 +12,7 @@
 #if !defined(TEST_MPF) && !defined(TEST_MPZ) && \
    !defined(TEST_CPP_DEC_FLOAT) && !defined(TEST_MPFR) && !defined(TEST_MPQ) \
    && !defined(TEST_TOMMATH) && !defined(TEST_TOMMATH_BOOST_RATIONAL) && !defined(TEST_MPZ_BOOST_RATIONAL)\
-   && !defined(TEST_CPP_INT) && !defined(TEST_CPP_INT_RATIONAL)
+   && !defined(TEST_CPP_INT) && !defined(TEST_CPP_INT_RATIONAL) && !defined(TEST_CPP_BIN_FLOAT)
 #  define TEST_MPF
 #  define TEST_MPZ
 #  define TEST_MPQ
@@ -22,6 +22,7 @@
 #  define TEST_TOMMATH
 #  define TEST_CPP_INT
 #  define TEST_CPP_INT_RATIONAL
+#  define TEST_CPP_BIN_FLOAT
 
 #ifdef _MSC_VER
 #pragma message("CAUTION!!: No backend type specified so testing everything.... this will take some time!!")
@@ -38,6 +39,9 @@
 #endif
 #ifdef TEST_CPP_DEC_FLOAT
 #include <boost/multiprecision/cpp_dec_float.hpp>
+#endif
+#ifdef TEST_CPP_BIN_FLOAT
+#include <boost/multiprecision/cpp_bin_float.hpp>
 #endif
 #if defined(TEST_MPFR)
 #include <boost/multiprecision/mpfr.hpp>
@@ -83,15 +87,6 @@ private:
 };
 
 unsigned bits_wanted; // for integer types
-
-namespace boost{ namespace multiprecision{
-
-template<>
-class number_category<boost::int64_t> : public mpl::int_<number_kind_integer>{};
-template<>
-class number_category<boost::uint64_t> : public mpl::int_<number_kind_integer>{};
-
-}}
 
 template <class T, int Type>
 struct tester
@@ -840,6 +835,11 @@ int main()
    test<boost::multiprecision::cpp_dec_float_50>("cpp_dec_float", 50);
    test<boost::multiprecision::cpp_dec_float_100>("cpp_dec_float", 100);
    test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<500> > >("cpp_dec_float", 500);
+#endif
+#ifdef TEST_CPP_BIN_FLOAT
+   test<boost::multiprecision::cpp_bin_float_50>("cpp_bin_float", 50);
+   test<boost::multiprecision::cpp_bin_float_100>("cpp_bin_float", 100);
+   test<boost::multiprecision::number<boost::multiprecision::cpp_bin_float<500> > >("cpp_bin_float", 500);
 #endif
 #ifdef TEST_MPFR
    test<boost::multiprecision::mpfr_float_50>("mpfr_float", 50);

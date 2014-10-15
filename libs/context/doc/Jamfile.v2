@@ -1,14 +1,20 @@
-# (C) Copyright 2008 Anthony Williams
+# (C) Copyright 2008 Oliver Kowalke
 #
 # Distributed under the Boost Software License, Version 1.0. (See accompanying 
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-xml context : context.qbk ;
+project context/doc ;
 
-boostbook standalone
+import boostbook ;
+import quickbook ;
+import modules ;
+
+boostbook context
     :
-        context
+        context.qbk
     :
+        # Path for links to Boost:
+        <xsl:param>boost.root=../../../..
         # HTML options first:
         # How far down we chunk nested sections, basically all of them:
         <xsl:param>chunk.section.depth=3
@@ -20,6 +26,4 @@ boostbook standalone
         <xsl:param>toc.max.depth=3
         # How far down we go with TOC's
         <xsl:param>generate.section.toc.level=10
-        # Path for links to Boost:
-        <xsl:param>boost.root=../../../..
     ;

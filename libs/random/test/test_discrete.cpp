@@ -5,7 +5,7 @@
  * accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
  *
- * $Id: test_discrete.cpp 71018 2011-04-05 21:27:52Z steven_watanabe $
+ * $Id$
  *
  */
 
@@ -92,7 +92,7 @@ bool handle_option(int& argc, char**& argv, char opt, T& value) {
 
 int main(int argc, char** argv) {
     int repeat = 10;
-    int max_n = 100000;
+    int max_n = 10000;
     long long trials = 1000000ll;
 
     if(argc > 0) {

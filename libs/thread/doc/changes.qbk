@@ -1,6 +1,6 @@
 [/
   (C) Copyright 2007-11 Anthony Williams.
-  (C) Copyright 2011-13 Vicente J. Botet Escriba.
+  (C) Copyright 2011-14 Vicente J. Botet Escriba.
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE_1_0.txt or copy at
   http://www.boost.org/LICENSE_1_0.txt).
@@ -8,23 +8,101 @@
 
 [section:changes History]
 
+[heading Version 4.3.0 - boost 1.56]
+
+[*Know Bugs:]
+
+* [@http://svn.boost.org/trac/boost/ticket/2442 #2442] Application statically linked with Boost.Thread crashes when Google Desktop is installed (Windows XP)
+* [@http://svn.boost.org/trac/boost/ticket/3926 #3926] thread_specific_ptr + dlopen library causes a SIGSEGV.
+* [@http://svn.boost.org/trac/boost/ticket/4833 #4833] MinGW/test_tss_lib: Support of automatic tss cleanup for native threading API not available
+* [@http://svn.boost.org/trac/boost/ticket/6782 #6782] call_once uses incorrect barrier intrinsic on Visual Studio
+* [@http://svn.boost.org/trac/boost/ticket/7319 #7319] Take care of c++std-lib-32966 issue
+* [@http://svn.boost.org/trac/boost/ticket/8600 #8600] wait_for_any hangs, if called with multiple copies of shared_future referencing same task
+* [@http://svn.boost.org/trac/boost/ticket/9307 #9307] future::fallback_to assert with ERRORRRRR boost: mutex lock failed in pthread_mutex_lock: Invalid argument
+* [@http://svn.boost.org/trac/boost/ticket/9308 #9308] future::async fails with terminate called throwing an exception when called with a lambda - clang-darwin-asan11
+* [@http://svn.boost.org/trac/boost/ticket/9310 #9310] test_4648_lib fails on clang-darwin-asan11
+* [@http://svn.boost.org/trac/boost/ticket/9311 #9311] ex_lambda_future fails on msvc-11.0
+
+* [@http://svn.boost.org/trac/boost/ticket/9425 #9425] Boost promise & future does not use supplied allocator for value storage
+* [@http://svn.boost.org/trac/boost/ticket/9558 #9558] future continuations unit test hangs in get()/pthread_cond_wait() on Mac 10.7/32-bit/x86/darwin-4.2.1
+
+Please take a look at [@https://svn.boost.org/trac/boost/query?status=assigned&status=new&status=reopened&component=thread&type=!Feature+Requests&col=id&col=summary&order=id thread Know Bugs] to see the current state.
+
+Please take a look at [@http://www.boost.org/development/tests/release/developer/thread.html thread trunk regression test] to see the last snapshot.
+
+
+[*Sever limitations:]
+
+There are some severe bugs that prevent the use of the library on concrete contexts, in particular:
+
+* on thread specific storage that prevent the library to be used with dynamic libraries,
+* The experimental features of boost::future have some severe holes that make the program crash unexpectedly.
+
+[*New Experimental Features:]
+
+* [@http://svn.boost.org/trac/boost/ticket/7446 #7446] Async: Add when_any.
+* [@http://svn.boost.org/trac/boost/ticket/7447 #7447] Async: Add when_all.
+* [@http://svn.boost.org/trac/boost/ticket/7448 #7448] Async: Add async taking a scheduler parameter.
+* [@http://svn.boost.org/trac/boost/ticket/8274 #8274] Synchro: Add concurrent queue
+* [@http://svn.boost.org/trac/boost/ticket/8518 #8518] Synchro: Add a latch class.
+* [@http://svn.boost.org/trac/boost/ticket/8513 #8513] Async: Add a basic thread_pool executor.
+* [@http://svn.boost.org/trac/boost/ticket/8516 #8516] Async: Add future/shared_future::then taking a scheduler as parameter.
+
+[*Fixed Bugs:]
+
+* [@http://svn.boost.org/trac/boost/ticket/8070 #8070] prefer GetTickCount64 over GetTickCount
+* [@http://svn.boost.org/trac/boost/ticket/9333 #9333] ex_scoped_thread compile fails on msvc-12.0
+* [@http://svn.boost.org/trac/boost/ticket/9366 #9366] async(Executor, ...) fails to compile with msvc-10,11,12 	
+* [@http://svn.boost.org/trac/boost/ticket/9402 #9402] test_excutor regression on msvc-10,11,12
+* [@http://svn.boost.org/trac/boost/ticket/9404 #9404] ex_make_future regression error
+* [@http://svn.boost.org/trac/boost/ticket/9471 #9471] Synchronization documentation nits
+* [@http://svn.boost.org/trac/boost/ticket/9535 #9535] Missing exception safety might result in crash
+* [@http://svn.boost.org/trac/boost/ticket/9618 #9618] try_join_for problem: program is not terminate.
+* [@http://svn.boost.org/trac/boost/ticket/9673 #9673] thread compilation with MingW/gcc on Windows gives errors
+* [@http://svn.boost.org/trac/boost/ticket/9708 #9708] boost::condition_variable::timed_wait unexpectedly wakes up while should wait infinite
+* [@http://svn.boost.org/trac/boost/ticket/9711 #9711] future continuation called twice
+
 [heading Version 4.2.0 - boost 1.55]
+
+[*Know Bugs:]
+
+* [@http://svn.boost.org/trac/boost/ticket/2442 #2442] Application statically linked with Boost.Thread crashes when Google Desktop is installed (Windows XP)
+* [@http://svn.boost.org/trac/boost/ticket/3926 #3926] thread_specific_ptr + dlopen library causes a SIGSEGV.
+* [@http://svn.boost.org/trac/boost/ticket/4833 #4833] MinGW/test_tss_lib: Support of automatic tss cleanup for native threading API not available
+* [@http://svn.boost.org/trac/boost/ticket/6782 #6782] call_once uses incorrect barrier intrinsic on Visual Studio
+* [@http://svn.boost.org/trac/boost/ticket/7319 #7319] Take care of c++std-lib-32966 issue
+* [@http://svn.boost.org/trac/boost/ticket/8600 #8600] wait_for_any hangs, if called with multiple copies of shared_future referencing same task
+* [@http://svn.boost.org/trac/boost/ticket/9307 #9307] future::fallback_to assert with ERRORRRRR boost: mutex lock failed in pthread_mutex_lock: Invalid argument
+* [@http://svn.boost.org/trac/boost/ticket/9308 #9308] future::async fails with terminate called throwing an exception when called with a lambda - clang-darwin-asan11
+* [@http://svn.boost.org/trac/boost/ticket/9311 #9311] ex_lambda_future fails on msvc-11.0
+* [@http://svn.boost.org/trac/boost/ticket/9310 #9310] test_4648_lib fails on clang-darwin-asan11
+
+Please take a look at [@https://svn.boost.org/trac/boost/query?status=assigned&status=new&status=reopened&component=thread&type=!Feature+Requests&col=id&col=summary&order=id thread trunk regression test] to see the current state.
+
+[*Sever limitations:]
+
+There are some severe bugs that prevent the use of the library on concrete contexts, in particular:
+
+* on thread specific storage that prevent the library to be used with dynamic libraries,
+* The experimental features of boost::future have some severe holes that make the program crash unexpectedly.
 
 [*New Features:]
 
 * [@http://svn.boost.org/trac/boost/ticket/8519 #8519] Synchro: Update class barrier with a completion function.
 
 * [@http://svn.boost.org/trac/boost/ticket/8515 #8515] Async: Add shared_future::then.
+* [@http://svn.boost.org/trac/boost/ticket/8519 #8519] Synchro: Update class barrier with a completion function
 * [@http://svn.boost.org/trac/boost/ticket/8615 #8615] Async: Replace make_future/make_shared_future by make_ready_future.
 * [@http://svn.boost.org/trac/boost/ticket/8627 #8627] Async: Add future<>::unwrap and unwrapping constructor.
 * [@http://svn.boost.org/trac/boost/ticket/8677 #8677] Async: Add future<>::get_or.
 * [@http://svn.boost.org/trac/boost/ticket/8678 #8678] Async: Add future<>::fallback_to.
-* [@http://svn.boost.org/trac/boost/ticket/8955 #8955] Request for more efficient way to get exception_ptr from future.
-
 * [@http://svn.boost.org/trac/boost/ticket/8891 #8891] upgrade_to_unique_lock: missing mutex() function.
+* [@http://svn.boost.org/trac/boost/ticket/8955 #8955] Request for more efficient way to get exception_ptr from future.
 
 [*Fixed Bugs:]
 
+* [@http://svn.boost.org/trac/boost/ticket/7461 #7461] detail::win32::ReleaseSemaphore may be called with count_to_release equal to 0
+* [@http://svn.boost.org/trac/boost/ticket/8070 #8070] prefer GetTickCount64 over GetTickCount
 * [@http://svn.boost.org/trac/boost/ticket/8768 #8768] win32 condition_variable::wait_until infinite wait in rare cases.
 * [@http://svn.boost.org/trac/boost/ticket/8817 #8817] Boost Thread Windows CE _createthreadex handling breaks mingw w64.
 * [@http://svn.boost.org/trac/boost/ticket/8943 #8943] Failed to compile code using boost::call_once with Intel C++ Composer XE 2013 on Windows.
@@ -425,10 +503,7 @@ The following features will be included in next releases.
   * [@http://svn.boost.org/trac/boost/ticket/7589 #7589] Synchro: Add polymorphic lockables.
 
 # Add some features based on C++ proposals, in particular
-  * [@http://svn.boost.org/trac/boost/ticket/8274 #8274] Synchro: Add concurrent queue
-  * [@http://svn.boost.org/trac/boost/ticket/8518 #8518] Synchro: Add a latch class.
   * [@http://svn.boost.org/trac/boost/ticket/8273 #8273] Synchro: Add externally locked streams.
-  * [@http://svn.boost.org/trac/boost/ticket/8513 #8513] Async: Add a basic thread_pool executor.
   * [@http://svn.boost.org/trac/boost/ticket/8514 #8514] Async: Add a thread_pool executor with work stealing.
 
 # Add some of the extension proposed in [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3428.pdf A Standardized Representation of Asynchronous Operations] or extension to them, in particular

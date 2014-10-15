@@ -12,7 +12,12 @@ rule test_all
 
    for local fileb in [ glob *.cpp ]
    {
-      all_rules += [ run $(fileb) ] ;
+      all_rules += [ run $(fileb)
+      :  # additional args
+      :  # test-files
+      :  # requirements
+        <toolset>msvc:<cxxflags>/bigobj
+      ] ;
    }
 
    return $(all_rules) ;

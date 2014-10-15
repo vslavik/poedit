@@ -982,7 +982,7 @@
           equivalent is used.
         </p>
 <p>
-          You can also use the <code class="computeroutput"><a class="link" href="../../boost/log/make_attr_orde_idp28271256.html" title="Function template make_attr_ordering">make_attr_ordering</a></code> generator
+          You can also use the <code class="computeroutput"><a class="link" href="../../boost/log/make_attr_orde_idp39194832.html" title="Function template make_attr_ordering">make_attr_ordering</a></code> generator
           function to automatically generate the <code class="computeroutput"><a class="link" href="../../boost/log/attribute_value_ordering.html" title="Class template attribute_value_ordering">attribute_value_ordering</a></code>
           instance based on the attribute value name and the ordering function. This
           might be useful if the ordering function has a non-trivial type, like the
@@ -1010,7 +1010,7 @@
           by the library, therefore in order to reacquire the exception object it
           has to rethrow it. The header defines an <code class="computeroutput"><a class="link" href="../../boost/log/exception_handler.html" title="Class template exception_handler">exception_handler</a></code>
           template functor that does just that and then forwards the exception object
-          to a unary user-defined functional object. The <code class="computeroutput"><a class="link" href="../../boost/log/make_exception_idp27891112.html" title="Function template make_exception_handler">make_exception_handler</a></code>
+          to a unary user-defined functional object. The <code class="computeroutput"><a class="link" href="../../boost/log/make_exception_idp33988032.html" title="Function template make_exception_handler">make_exception_handler</a></code>
           function can be used to simplify the handler construction. All expected
           exception types should be specified explicitly in the call, in the order
           they would appear in the <code class="computeroutput"><span class="keyword">catch</span></code>
@@ -1130,7 +1130,7 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../utilities.html#header.boost.log.utility.manipulators.to_log_hpp" title="Header &lt;boost/log/utility/manipulators/to_log.hpp&gt;">boost/log/utility/manipulators/to_log.hpp</a></code><span class="special">&gt;</span>
 </pre>
 <p>
-            The <code class="computeroutput"><a class="link" href="../../boost/log/to_log_idp28241304.html" title="Function template to_log">to_log</a></code>
+            The <code class="computeroutput"><a class="link" href="../../boost/log/to_log_idp39130176.html" title="Function template to_log">to_log</a></code>
             function creates a stream manipulator that simply outputs the adopted
             value to the stream. By default its behavior is equivalent to simply
             putting the value to the stream. However, the user is able to overload
@@ -1171,7 +1171,7 @@
             value contexts as well. The library uses this feature to allow different
             formatting ruled for different attribute values, even if the stored value
             type is the same. To do so one has to specify an explicit template argument
-            for <code class="computeroutput"><a class="link" href="../../boost/log/to_log_idp28241304.html" title="Function template to_log">to_log</a></code>,
+            for <code class="computeroutput"><a class="link" href="../../boost/log/to_log_idp39130176.html" title="Function template to_log">to_log</a></code>,
             a tag type, which will be embedded into the manipulator type and thus
             will allow to define different insertion operators:
           </p>
@@ -1259,7 +1259,7 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../utilities.html#header.boost.log.utility.manipulators.dump_hpp" title="Header &lt;boost/log/utility/manipulators/dump.hpp&gt;">boost/log/utility/manipulators/dump.hpp</a></code><span class="special">&gt;</span>
 </pre>
 <p>
-            The <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp28218648.html" title="Function template dump">dump</a></code>
+            The <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp39082320.html" title="Function template dump">dump</a></code>
             function creates a manipulator that outputs binary contents of a contiguous
             memory region. This can be useful for logging some low level binary data,
             such as encoded network packets or entries of a binary file. The use
@@ -1283,12 +1283,12 @@
 <span class="special">}</span>
 </pre>
 <p>
-            There is another manipulator called <code class="computeroutput"><a class="link" href="../../boost/log/dump_elements_idp28221288.html" title="Function template dump_elements">dump_elements</a></code> for printing
+            There is another manipulator called <code class="computeroutput"><a class="link" href="../../boost/log/dump_elements_idp39087632.html" title="Function template dump_elements">dump_elements</a></code> for printing
             binary representation of non-byte array elements. The special manipulator
             for this case is necessary because the units of the size argument of
-            <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp28218648.html" title="Function template dump">dump</a></code>
-            can be confusing (is it in bytes or in elements?). Therefore <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp28218648.html" title="Function template dump">dump</a></code>
-            will not compile when used for non-byte input data. <code class="computeroutput"><a class="link" href="../../boost/log/dump_elements_idp28221288.html" title="Function template dump_elements">dump_elements</a></code> accepts
+            <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp39082320.html" title="Function template dump">dump</a></code>
+            can be confusing (is it in bytes or in elements?). Therefore <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp39082320.html" title="Function template dump">dump</a></code>
+            will not compile when used for non-byte input data. <code class="computeroutput"><a class="link" href="../../boost/log/dump_elements_idp39087632.html" title="Function template dump_elements">dump_elements</a></code> accepts
             the same arguments, and its size-related arguments always designate the
             number of elements to process.
           </p>
@@ -1374,7 +1374,7 @@
 <p>
             Pretty easy, isn't it? There is also the <code class="computeroutput"><span class="identifier">wadd_console_log</span></code>
             function for wide-character console. If you want to put logs to some
-            other standard stream, you can pass the stream to the <code class="computeroutput"><a class="link" href="../../boost/log/add_console_lo_idp28281912.html" title="Function template add_console_log">add_console_log</a></code> function
+            other standard stream, you can pass the stream to the <code class="computeroutput"><a class="link" href="../../boost/log/add_console_lo_idp39218032.html" title="Function template add_console_log">add_console_log</a></code> function
             as an argument. E.g. enabling logging to <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span></code>
             instead of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">clog</span></code> would look like this:
           </p>
@@ -1420,7 +1420,7 @@
 <span class="special">}</span>
 </pre>
 <p>
-            The <code class="computeroutput"><a class="link" href="../../boost/log/add_console_lo_idp28281912.html" title="Function template add_console_log">add_console_log</a></code>
+            The <code class="computeroutput"><a class="link" href="../../boost/log/add_console_lo_idp39218032.html" title="Function template add_console_log">add_console_log</a></code>
             and <code class="computeroutput"><a class="link" href="../../boost/log/add_file_log.html" title="Function template add_file_log">add_file_log</a></code>
             functions do not conflict and may be combined freely, so it is possible
             to set up logging to the console and a couple of files, including filtering
@@ -2183,7 +2183,17 @@ relation:
 </tbody>
 </table></div>
 </div>
-<br class="table-break"><p>
+<br class="table-break"><div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              The text file sink uses <a href="http://www.boost.org/doc/libs/release/libs/filesystem/doc/index.htm" target="_top">Boost.Filesystem</a>
+              internally, which may cause problems on process termination. See <a class="link" href="../rationale/why_crash_on_term.html" title="Why my application crashes on process termination when file sinks are used?">here</a> for more details.
+            </p></td></tr>
+</table></div>
+<p>
             The time-based rotation can be set up with one of the two parameters:
             RotationInterval or RotationTimePoint. Not more than one of these parameters
             should be specified for a given sink. If none is specified, no time-based
@@ -2492,7 +2502,7 @@ AutoFlush=true
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2013 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2014 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

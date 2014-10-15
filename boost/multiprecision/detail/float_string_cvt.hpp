@@ -16,7 +16,8 @@
 
 namespace boost{ namespace multiprecision{ namespace detail{
 
-inline void round_string_up_at(std::string& s, int pos, int& expon)
+template <class I>
+inline void round_string_up_at(std::string& s, int pos, I& expon)
 {
    //
    // Rounds up a string representation of a number at pos:
@@ -64,19 +65,19 @@ std::string convert_to_string(Backend b, std::streamsize digits, std::ios_base::
 
    int fpt = eval_fpclassify(b);
 
-   if(fpt == FP_ZERO)
+   if(fpt == (int)FP_ZERO)
    {
       result = "0";
       iszero = true;
    }
-   else if(fpt == FP_INFINITE)
+   else if(fpt == (int)FP_INFINITE)
    {
       if(b.compare(ui_type(0)) < 0)
          return "-inf";
       else
          return ((f & std::ios_base::showpos) == std::ios_base::showpos) ? "+inf" : "inf";
    }
-   else if(fpt == FP_NAN)
+   else if(fpt == (int)FP_NAN)
    {
       return "nan";
    }

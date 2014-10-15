@@ -3,7 +3,7 @@
 #ifndef BOOST_ANY_INCLUDED
 #define BOOST_ANY_INCLUDED
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
+#if defined(_MSC_VER)
 # pragma once
 #endif
 
@@ -27,10 +27,11 @@
 #include <boost/static_assert.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/is_same.hpp>
+#include <boost/type_traits/is_const.hpp>
 
 // See boost/python/type_id.hpp
 // TODO: add BOOST_TYPEID_COMPARE_BY_NAME to config.hpp
-# if (defined(__GNUC__) && __GNUC__ >= 3) \
+# if defined(__GNUC__) \
  || defined(_AIX) \
  || (   defined(__sgi) && defined(__host_mips)) \
  || (defined(__hpux) && defined(__HP_aCC)) \
@@ -38,11 +39,6 @@
 #  define BOOST_AUX_ANY_TYPE_ID_NAME
 #include <cstring>
 # endif 
-
-#if defined(_MSC_VER) 
-#pragma warning(push)
-#pragma warning(disable: 4172) // Mistakenly warns: returning address of local variable or temporary
-#endif
 
 namespace boost
 {
@@ -76,7 +72,9 @@ namespace boost
 
         // Perfect forwarding of ValueType
         template<typename ValueType>
-        any(ValueType&& value, typename boost::disable_if<boost::is_same<any&, ValueType> >::type* = 0)
+        any(ValueType&& value
+            , typename boost::disable_if<boost::is_same<any&, ValueType> >::type* = 0 // disable if value has type `any&`
+            , typename boost::disable_if<boost::is_const<ValueType> >::type* = 0) // disable if value has type `const ValueType&&`
           : content(new holder< typename decay<ValueType>::type >(static_cast<ValueType&&>(value)))
         {
         }
@@ -268,15 +266,6 @@ namespace boost
     {
         typedef BOOST_DEDUCED_TYPENAME remove_reference<ValueType>::type nonref;
 
-#ifdef BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION
-        // If 'nonref' is still reference type, it means the user has not
-        // specialized 'remove_reference'.
-
-        // Please use BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION macro
-        // to generate specialization of remove_reference for your class
-        // See type traits library documentation for details
-        BOOST_STATIC_ASSERT(!is_reference<nonref>::value);
-#endif
 
         nonref * result = any_cast<nonref>(&operand);
         if(!result)
@@ -299,26 +288,19 @@ namespace boost
     inline ValueType any_cast(const any & operand)
     {
         typedef BOOST_DEDUCED_TYPENAME remove_reference<ValueType>::type nonref;
-
-#ifdef BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION
-        // The comment in the above version of 'any_cast' explains when this
-        // assert is fired and what to do.
-        BOOST_STATIC_ASSERT(!is_reference<nonref>::value);
-#endif
-
         return any_cast<const nonref &>(const_cast<any &>(operand));
     }
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     template<typename ValueType>
-    inline ValueType&& any_cast(any&& operand)
+    inline ValueType any_cast(any&& operand)
     {
         BOOST_STATIC_ASSERT_MSG(
-            boost::is_rvalue_reference<ValueType&&>::value 
+            boost::is_rvalue_reference<ValueType&&>::value /*true if ValueType is rvalue or just a value*/
             || boost::is_const< typename boost::remove_reference<ValueType>::type >::value,
             "boost::any_cast shall not be used for getting nonconst references to temporary objects" 
         );
-        return any_cast<ValueType&&>(operand);
+        return any_cast<ValueType>(operand);
     }
 #endif
 
@@ -346,9 +328,5 @@ namespace boost
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif
 
 #endif

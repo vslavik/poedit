@@ -214,12 +214,12 @@ example, the following code will result in undefined (bad) behavior:
 
   <b>// Attempt to remove all the vertices. Wrong!</b>
   graph_traits&lt;Graph&gt;::vertex_iterator vi, vi_end;
-  for (tie(vi, vi_end) = vertices(G); vi != vi_end; ++vi)
+  for (boost::tie(vi, vi_end) = vertices(G); vi != vi_end; ++vi)
     remove_vertex(*vi, G);
 
   <b>// Remove all the vertices. This is still wrong!</b>
   graph_traits&lt;Graph&gt;::vertex_iterator vi, vi_end, next;
-  tie(vi, vi_end) = vertices(G);
+  boost::tie(vi, vi_end) = vertices(G);
   for (next = vi; vi != vi_end; vi = next) {
     ++next;
     remove_vertex(*vi, G);
@@ -247,12 +247,12 @@ actual vertex that was removed. The following code demonstrates this.
 
   <b>// Attempt to remove all the vertices. Wrong!</b>
   graph_traits&lt;Graph&gt;::vertex_iterator vi, vi_end;
-  for (tie(vi, vi_end) = vertices(G); vi != vi_end; ++vi)
+  for (boost::tie(vi, vi_end) = vertices(G); vi != vi_end; ++vi)
     remove_vertex(*vi, G);
 
   <b>// Remove all the vertices. This is OK.</b>
   graph_traits&lt;Graph&gt;::vertex_iterator vi, vi_end, next;
-  tie(vi, vi_end) = vertices(G);
+  boost::tie(vi, vi_end) = vertices(G);
   for (next = vi; vi != vi_end; vi = next) {
     ++next;
     remove_vertex(*vi, G);
@@ -281,7 +281,7 @@ vertex descriptors have become invalid, the result is incorrect.
   remove_vertex(s, G); <b>// Bad idea! Invalidates vertex descriptors in parent vector.</b>
 
   <b>// The following will produce incorrect results</b>
-  for(tie(vi, vend) = vertices(G); vi != vend; ++vi)
+  for(boost::tie(vi, vend) = vertices(G); vi != vend; ++vi)
     std::cout << p[*vi] << " is the parent of " << *vi << std::endl;
 </pre>
 

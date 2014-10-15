@@ -17,6 +17,9 @@
 functionality for dense, packed and sparse matrices. The design and implementation unify mathematical notation via
 operator overloading and efficient code generation via expression templates.</p>
 
+<h2>API Reference Documentation</h2>
+A full Reference documentation is available <a href="doxydoc/html/index.html">on this page</a>.
+
 <h2>Functionality</h2>
 
 <p>uBLAS provides templated C++ classes for dense, unit and sparse vectors, dense, identity, triangular, banded,
@@ -25,7 +28,6 @@ adaptor classes and indirect arrays. The library covers the usual basic linear a
 different norms, addition and subtraction of vectors and matrices and multiplication with a scalar, inner and outer
 products of vectors, matrix vector and matrix matrix products and triangular solver. The glue between containers, views
 and expression templated operations is a mostly <a href="http://www.sgi.com/tech/stl">STL</a> conforming iterator interface.</p>
-<p>Please consult the <a href="release_notes.htm">release notes</a> for details on the latest changes.</p>
 
 <h2>Documentation</h2>
 
@@ -300,42 +302,6 @@ and expression templated operations is a mostly <a href="http://www.sgi.com/tech
 </ul></li>
 </ul>
 
-<h2>API Reference Documentation</h2>
-A full Reference documenation is available on <a href="html/index.html">this page</a>.
-
-<h2>Supported Platforms</h2>
-
-<p>The current version of uBLAS expects a modern (ISO standard compliant) compiler. Compilers targeted and tested with
-this release are:</p>
-
-<ul>
-<li>GCC 3.2.3, 3.3.x, 3.4.x, 4.0.x</li>
-
-<li>MSVC 7.1, 8.0</li>
-
-<li>ICC 8.0, 8.1</li>
-
-<li>Visual age 6</li>
-
-<li>Codewarrior 9.4, 9.5</li>
-</ul>
-
-<p>The version of uBLAS in Boost 1.32.0 (and earlier) support many older compilers. If you are using such a compiler
-please use this version of uBLAS. Compilers known to accept this older library are:</p>
-
-<ul>
-<li>MSVC 6.0 with STLPort-4.5.3, 7.0, 7.1</li>
-
-<li>GCC 2.95.x, 3.0.x, 3.1.x, 3.2.x, 3.3.x, 3.4.x</li>
-
-<li>ICC 7.0, 7.1 8.0</li>
-
-<li>Comeau 4.2.x</li>
-
-<li>Codewarrior 8.3</li>
-</ul>
-
-<p>For possible problems please consider to consult the Boost regression tests.</p>
 <a name="further_information" id="further_information"></a>
 <h2>Known limitations:</h2>
 
@@ -373,8 +339,9 @@ programs reside <a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/boost/bo
 contributed to the development of this library: David Abrahams, Ed Brey, Fernando Cacciola, Juan Jose Gomez Cadenas,
 Beman Dawes, Matt Davies, Bob Fletcher, Kresimir Fresl, Joachim Kessel, Patrick Kowalzick, Toon Knapen, Hendrik Kueck,
 John Maddock, Jens Maurer, Alexei Novakov, Gary Powell, Joachim Pyras, Peter Schmitteckert, Jeremy Siek, Markus Steffl,
-Michael Stevens, Benedikt Weber, Martin Weiser, Gunter Winkler, Marc Zimmermann, David Bellot, Marco Guazzone, Nasos Iliopoulus, the members of <a href="http://www.boost.org">Boost</a> and all others contributors around the world. I promise I will try to add their names to this list.</p>
-
+Michael Stevens, Benedikt Weber, Martin Weiser, Gunter Winkler, Marc Zimmermann, Marco Guazzone, Nasos Iliopoulus, the members of <a href="http://www.boost.org">Boost</a> and all others contributors around the world. I promise I will try to add their names to this list.</p>
+<p>
+This library is currently maintained by <a="mailto:david.bellot@gmail.com">David Bellot</a>.
 <h2>Frequently Asked Questions</h2>
 
 <p>Q: Should I use uBLAS for new projects?<br/>
@@ -414,7 +381,7 @@ prod&lt;</code><code><em>matrix_type</em></code> <code>&gt; (B, C))</code>.</p>
 
 <hr />
 
-<p>Copyright (&copy;) 2000-2010 Joerg Walter, Mathias Koch, Gunter Winkler, David Bellot<br />
+<p>Copyright (&copy;) 2000-2011 Joerg Walter, Mathias Koch, Gunter Winkler, David Bellot<br />
 Use, modification and distribution are subject to the Boost Software License, Version 1.0. (See accompanying file
 LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>
 ).</p>

@@ -3,7 +3,8 @@
  *
  * This example show how one can use matrices as state types in odeint.
  *
- * Copyright 2009-2012 Karsten Ahnert and Mario Mulansky.
+ * Copyright 2011-2012 Karsten Ahnert
+ * Copyright 2011-2013 Mario Mulansky
  * Distributed under the Boost Software License, Version 1.0. (See
  * accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -144,8 +145,13 @@ int main( int argc , char **argv )
 
     cout << "set term x11" << endl;
     cout << "set pm3d map" << endl;
-    integrate_const( runge_kutta4< state_type >() , two_dimensional_phase_lattice( 1.2 ) ,
-            x , 0.0 , 1001.0 , 0.1 , boost::ref( obs ) );
+
+    integrate_const( runge_kutta4<state_type>() , two_dimensional_phase_lattice( 1.2 ) ,
+                     x , 0.0 , 1001.0 , 0.1 , boost::ref( obs ) );
+
+    // controlled steppers work only after ublas bugfix
+    //integrate_const( make_dense_output< runge_kutta_dopri5< state_type > >( 1E-6 , 1E-6 ) , two_dimensional_phase_lattice( 1.2 ) ,
+    //        x , 0.0 , 1001.0 , 0.1 , boost::ref( obs ) );
 
 
     return 0;

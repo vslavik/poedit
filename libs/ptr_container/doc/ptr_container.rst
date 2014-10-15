@@ -320,7 +320,7 @@ __ http://www.cuj.com/documents/s=7986/cujcexp2002henney/henney.htm
 .. [8] C++ Standard Library Closed Issues List (Revision 27), 
        Item 218, `Algorithms do not use binary predicate objects for default comparisons`__.
 
-__ http://anubis.dkuug.dk/jtc1/sc22/wg21/docs/lwg-closed.html#218       
+__ http://www.open-std.org/jtc1/sc22/wg21/docs/lwg-closed.html#218       
  
 .. [9] C++ Standard Library Active Issues List (Revision 27), 
        Item 226, `User supplied specializations or overloads of namespace std function templates`__. 

@@ -36,13 +36,13 @@ techiques on how to use the library to address specific situations.
 
 <h2><a name="functionobject"></a>Serializing a Function Object</h2>
 An example on how to serialize a function object.  I believe this
-could be done by serializing pointer to the object in question.  Since
-the Serialization library resurrects pointer of the correct type
+could be done by serializing a pointer to the object in question.  Since
+the Serialization library resurrects a pointer of the correct type
 this should be easily implementable.
 <p>
 If a group of function objects were all derived from the
 same polymorphic base class - perhaps via multiple inheritance,
-the the function object effectively becomes a "variable" which
+then the function object effectively becomes a "variable" which
 encapsulates code.
 <p>
 This case study would show how to do this.
@@ -51,19 +51,19 @@ This case study would show how to do this.
 
 Often users want to add their own special functionality to an
 existing archive.  Examples of this are performance enhancements
-for specific types, Adjustment of output syntax for xml archives,
+for specific types, adjustment of output syntax for xml archives,
 and logging/debug output as archives are written and/or read.
-If this functionalty is implemented as an "adaptor" template
-which takes the base class as a template argument, such functionality
-appended to any archive for which that funtionality makes sense.
+If this functionality is implemented as an "adaptor" template
+which takes the base class as a template argument, such functionality could be
+appended to any archive for which that functionality makes sense.
 For example, an adaptor for generating an xml schema could be
-appended to both wide narrow character versions of xml archives.
+appended to both wide and narrow character versions of xml archives.
 <p>
 This case study would show how to make a useful archive adaptor.
 
 <h2><a name="archivehelper"></a>Archive Helpers</h2>
 Some types are not serializable as they stand.  That is - they
-do not fullfill the requirements of the "Serializable Concept".
+do not fulfill the requirements of the "Serializable Concept".
 The iconic example of this is boost::shared_ptr.  Sometimes
 these types could be made serializable by adding code inside
 the library.  Of course, doing that would create a lifetime

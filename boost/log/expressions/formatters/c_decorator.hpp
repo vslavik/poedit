@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2014.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -90,7 +90,7 @@ struct c_decorator_traits< wchar_t >
     static std::size_t print_escaped(wchar_t (&buf)[N], wchar_t c)
     {
         const wchar_t* format;
-        register unsigned int val;
+        unsigned int val;
         if (sizeof(wchar_t) == 1)
         {
             format = L"\\x%0.2X";

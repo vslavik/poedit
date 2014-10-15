@@ -1,7 +1,9 @@
-// Boost.Geometry (aka GGL, Generic Geometry Library) 
+// Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2014 Adam Wulkiewicz, Lodz, Poland.
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -28,6 +30,15 @@ void check_geometry(Geometry1 const& geometry1,
                     bool expected)
 {
     bool detected = bg::equals(geometry1, geometry2);
+
+    BOOST_CHECK_MESSAGE(detected == expected,
+        "case: " << caseid
+        << " equals: " << wkt1
+        << " to " << wkt2
+        << " -> Expected: " << expected
+        << " detected: " << detected);
+
+    detected = bg::equals(geometry2, geometry1);
 
     BOOST_CHECK_MESSAGE(detected == expected,
         "case: " << caseid

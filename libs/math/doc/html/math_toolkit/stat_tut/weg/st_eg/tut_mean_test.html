@@ -2,9 +2,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Testing a sample mean for difference from a "true" mean</title>
-<link rel="stylesheet" href="../../../../boostbook.css" type="text/css">
+<link rel="stylesheet" href="../../../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../../index.html" title="Math Toolkit">
+<link rel="home" href="../../../../index.html" title="Math Toolkit 1.9.0">
 <link rel="up" href="../st_eg.html" title="Student's t Distribution Examples">
 <link rel="prev" href="tut_mean_intervals.html" title="Calculating confidence intervals on the mean with the Students-t distribution">
 <link rel="next" href="tut_mean_size.html" title="Estimating how large a sample size would have to become in order to give a significant Students-t test result with a single sample test">
@@ -171,12 +171,12 @@
                   </td>
 <td>
                     <p>
-                      Reject if CDF of t &gt; significance level:
+                      Reject if CDF of t &gt; 1 - significance level:
                     </p>
                     <p>
-                      <code class="computeroutput"><span class="identifier">cdf</span><span class="special">(</span><span class="identifier">dist</span><span class="special">,</span>
-                      <span class="identifier">t</span><span class="special">)</span>
-                      <span class="special">&gt;</span> <span class="identifier">alpha</span></code>
+                      <code class="computeroutput"><span class="identifier">cdf</span><span class="special">(</span><span class="identifier">complement</span><span class="special">(</span><span class="identifier">dist</span><span class="special">,</span>
+                      <span class="identifier">t</span><span class="special">))</span>
+                      <span class="special">&lt;</span> <span class="identifier">alpha</span></code>
                     </p>
                   </td>
 </tr>
@@ -189,12 +189,12 @@
                   </td>
 <td>
                     <p>
-                      Reject if complement of CDF of t &gt; significance level:
+                      Reject if complement of CDF of t &lt; significance level:
                     </p>
                     <p>
-                      <code class="computeroutput"><span class="identifier">cdf</span><span class="special">(</span><span class="identifier">complement</span><span class="special">(</span><span class="identifier">dist</span><span class="special">,</span>
-                      <span class="identifier">t</span><span class="special">))</span>
-                      <span class="special">&gt;</span> <span class="identifier">alpha</span></code>
+                      <code class="computeroutput"><span class="identifier">cdf</span><span class="special">(</span><span class="identifier">dist</span><span class="special">,</span>
+                      <span class="identifier">t</span><span class="special">)</span>
+                      <span class="special">&lt;</span> <span class="identifier">alpha</span></code>
                     </p>
                   </td>
 </tr>
@@ -222,26 +222,26 @@
             3.5.2</a> of the <a href="http://www.itl.nist.gov/div898/handbook/" target="_top">NIST/SEMATECH
             e-Handbook of Statistical Methods.</a>.
           </p>
-<pre class="programlisting">   __________________________________
-   Student t test for a single sample
-   __________________________________
+<pre class="programlisting">__________________________________
+Student t test for a single sample
+__________________________________
 
-   Number of Observations                                 =  195
-   Sample Mean                                            =  9.26146
-   Sample Standard Deviation                              =  0.02279
-   Expected True Mean                                     =  5.00000
+Number of Observations                                 =  195
+Sample Mean                                            =  9.26146
+Sample Standard Deviation                              =  0.02279
+Expected True Mean                                     =  5.00000
 
-   Sample Mean - Expected Test Mean                       =  4.26146
-   Degrees of Freedom                                     =  194
-   T Statistic                                            =  2611.28380
-   Probability that difference is due to chance           =  0.000e+000
+Sample Mean - Expected Test Mean                       =  4.26146
+Degrees of Freedom                                     =  194
+T Statistic                                            =  2611.28380
+Probability that difference is due to chance           =  0.000e+000
 
-   Results for Alternative Hypothesis and alpha           =  0.0500
+Results for Alternative Hypothesis and alpha           =  0.0500
 
-   Alternative Hypothesis     Conclusion
-   Mean != 5.000              NOT REJECTED
-   Mean  &lt; 5.000              REJECTED
-   Mean  &gt; 5.000              NOT REJECTED
+Alternative Hypothesis     Conclusion
+Mean != 5.000            NOT REJECTED
+Mean  &lt; 5.000            REJECTED
+Mean  &gt; 5.000            NOT REJECTED
 </pre>
 <p>
             You will note the line that says the probability that the difference
@@ -259,26 +259,26 @@
             N. Miller, Ellis Horwood ISBN 0 13 0309907.</em></span> The values result
             from the determination of mercury by cold-vapour atomic absorption.
           </p>
-<pre class="programlisting">   __________________________________
-   Student t test for a single sample
-   __________________________________
+<pre class="programlisting">__________________________________
+Student t test for a single sample
+__________________________________
 
-   Number of Observations                                 =  3
-   Sample Mean                                            =  37.80000
-   Sample Standard Deviation                              =  0.96437
-   Expected True Mean                                     =  38.90000
+Number of Observations                                 =  3
+Sample Mean                                            =  37.80000
+Sample Standard Deviation                              =  0.96437
+Expected True Mean                                     =  38.90000
 
-   Sample Mean - Expected Test Mean                       =  -1.10000
-   Degrees of Freedom                                     =  2
-   T Statistic                                            =  -1.97566
-   Probability that difference is due to chance           =  1.869e-001
+Sample Mean - Expected Test Mean                       =  -1.10000
+Degrees of Freedom                                     =  2
+T Statistic                                            =  -1.97566
+Probability that difference is due to chance           =  1.869e-001
 
-   Results for Alternative Hypothesis and alpha           =  0.0500
+Results for Alternative Hypothesis and alpha           =  0.0500
 
-   Alternative Hypothesis     Conclusion
-   Mean != 38.900             REJECTED
-   Mean  &lt; 38.900             REJECTED
-   Mean  &gt; 38.900             REJECTED
+Alternative Hypothesis     Conclusion
+Mean != 38.900            REJECTED
+Mean  &lt; 38.900            NOT REJECTED
+Mean  &gt; 38.900            NOT REJECTED
 </pre>
 <p>
             As you can see the small number of measurements (3) has led to a large
@@ -317,9 +317,10 @@ Mean  &gt; 38.900            REJECTED
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012, 2013 Paul A. Bristow, Christopher Kormanyos,
-      Hubert Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin
-      Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012, 2013 Nikhar Agrawal, Anton Bikineev,
+      Paul A. Bristow, Christopher Kormanyos, Hubert Holin, Bruno Lalande, John Maddock,
+      Johan R&#229;de, Gautam Sewani, Benjamin Sobotta, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

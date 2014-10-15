@@ -6,7 +6,7 @@
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/config for the most recent version.//
-//  Revision $Id: no_long_long_pass.cpp 51606 2009-03-04 14:28:36Z bemandawes $
+//  Revision $Id$
 //
 
 

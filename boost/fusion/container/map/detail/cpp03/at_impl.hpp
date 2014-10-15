@@ -8,6 +8,7 @@
 #if !defined(BOOST_FUSION_MAP_DETAIL_AT_IMPL_HPP)
 #define BOOST_FUSION_MAP_DETAIL_AT_IMPL_HPP
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/support/detail/access.hpp>
 #include <boost/type_traits/is_const.hpp>
 #include <boost/mpl/at.hpp>
@@ -33,6 +34,7 @@ namespace boost { namespace fusion
                 element;
                 typedef typename detail::ref_result<element>::type type;
     
+                BOOST_FUSION_GPU_ENABLED
                 static type
                 call(Sequence& m)
                 {
@@ -48,6 +50,7 @@ namespace boost { namespace fusion
                 element;
                 typedef typename detail::cref_result<element>::type type;
     
+                BOOST_FUSION_GPU_ENABLED
                 static type
                 call(Sequence const& m)
                 {

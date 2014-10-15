@@ -13,7 +13,7 @@
 #include <boost/geometry/geometries/point.hpp>
 #include <boost/geometry/geometries/box.hpp>
 
-//#define GEOMETRY_TEST_DEBUG
+//#define BOOST_GEOMETRY_TEST_DEBUG
 
 void test_large_integers()
 {

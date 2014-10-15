@@ -218,31 +218,31 @@ most important differences are:
   <span class=keyword>void</span> <span class=identifier>assign</span><span class=special>(</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>initializer_list</span><span class=special>&lt;</span><span class=identifier>value_type</span><span class=special>&gt;</span> <span class=identifier>list</span><span class=special>);</span>
   <span class=keyword>void</span> <span class=identifier>assign</span><span class=special>(</span><span class=identifier>size_type</span> <span class=identifier>n</span><span class=special>,</span><span class=keyword>const</span> <span class=identifier>value_type</span><span class=special>&amp;</span> <span class=identifier>value</span><span class=special>);</span>
     
-  <span class=identifier>allocator_type</span> <span class=identifier>get_allocator</span><span class=special>()</span><span class=keyword>const</span><span class=special>;</span>
+  <span class=identifier>allocator_type</span> <span class=identifier>get_allocator</span><span class=special>()</span><span class=keyword>const</span> <span class=keyword>noexcept</span><span class=special>;</span>
 
   <span class=comment>// iterators:</span>
 
-  <span class=identifier>iterator</span>               <span class=identifier>begin</span><span class=special>();</span>
-  <span class=identifier>const_iterator</span>         <span class=identifier>begin</span><span class=special>()</span><span class=keyword>const</span><span class=special>;</span>
-  <span class=identifier>iterator</span>               <span class=identifier>end</span><span class=special>();</span>
-  <span class=identifier>const_iterator</span>         <span class=identifier>end</span><span class=special>()</span><span class=keyword>const</span><span class=special>;</span>
-  <span class=identifier>reverse_iterator</span>       <span class=identifier>rbegin</span><span class=special>();</span>
-  <span class=identifier>const_reverse_iterator</span> <span class=identifier>rbegin</span><span class=special>()</span><span class=keyword>const</span><span class=special>;</span>
-  <span class=identifier>reverse_iterator</span>       <span class=identifier>rend</span><span class=special>();</span>
-  <span class=identifier>const_reverse_iterator</span> <span class=identifier>rend</span><span class=special>()</span><span class=keyword>const</span><span class=special>;</span>
-  <span class=identifier>const_iterator</span>         <span class=identifier>cbegin</span><span class=special>()</span><span class=keyword>const</span><span class=special>;</span>
-  <span class=identifier>const_iterator</span>         <span class=identifier>cend</span><span class=special>()</span><span class=keyword>const</span><span class=special>;</span>
-  <span class=identifier>const_reverse_iterator</span> <span class=identifier>crbegin</span><span class=special>()</span><span class=keyword>const</span><span class=special>;</span>
-  <span class=identifier>const_reverse_iterator</span> <span class=identifier>crend</span><span class=special>()</span><span class=keyword>const</span><span class=special>;</span>
+  <span class=identifier>iterator</span>               <span class=identifier>begin</span><span class=special>()</span><span class=keyword>noexcept</span><span class=special>;</span>
+  <span class=identifier>const_iterator</span>         <span class=identifier>begin</span><span class=special>()</span><span class=keyword>const</span> <span class=keyword>noexcept</span><span class=special>;</span>
+  <span class=identifier>iterator</span>               <span class=identifier>end</span><span class=special>()</span><span class=keyword>noexcept</span><span class=special>;</span>
+  <span class=identifier>const_iterator</span>         <span class=identifier>end</span><span class=special>()</span><span class=keyword>const</span> <span class=keyword>noexcept</span><span class=special>;</span>
+  <span class=identifier>reverse_iterator</span>       <span class=identifier>rbegin</span><span class=special>()</span><span class=keyword>noexcept</span><span class=special>;</span>
+  <span class=identifier>const_reverse_iterator</span> <span class=identifier>rbegin</span><span class=special>()</span><span class=keyword>const</span> <span class=keyword>noexcept</span><span class=special>;</span>
+  <span class=identifier>reverse_iterator</span>       <span class=identifier>rend</span><span class=special>()</span><span class=keyword>noexcept</span><span class=special>;</span>
+  <span class=identifier>const_reverse_iterator</span> <span class=identifier>rend</span><span class=special>()</span><span class=keyword>const</span> <span class=keyword>noexcept</span><span class=special>;</span>
+  <span class=identifier>const_iterator</span>         <span class=identifier>cbegin</span><span class=special>()</span><span class=keyword>const</span> <span class=keyword>noexcept</span><span class=special>;</span>
+  <span class=identifier>const_iterator</span>         <span class=identifier>cend</span><span class=special>()</span><span class=keyword>const</span> <span class=keyword>noexcept</span><span class=special>;</span>
+  <span class=identifier>const_reverse_iterator</span> <span class=identifier>crbegin</span><span class=special>()</span><span class=keyword>const</span> <span class=keyword>noexcept</span><span class=special>;</span>
+  <span class=identifier>const_reverse_iterator</span> <span class=identifier>crend</span><span class=special>()</span><span class=keyword>const</span> <span class=keyword>noexcept</span><span class=special>;</span>
 
   <span class=identifier>iterator</span>       <span class=identifier>iterator_to</span><span class=special>(</span><span class=keyword>const</span> <span class=identifier>value_type</span><span class=special>&amp;</span> <span class=identifier>x</span><span class=special>);</span>
   <span class=identifier>const_iterator</span> <span class=identifier>iterator_to</span><span class=special>(</span><span class=keyword>const</span> <span class=identifier>value_type</span><span class=special>&amp;</span> <span class=identifier>x</span><span class=special>)</span><span class=keyword>const</span><span class=special>;</span>
 
   <span class=comment>// capacity:</span>
 
-  <span class=keyword>bool</span>      <span class=identifier>empty</span><span class=special>()</span><span class=keyword>const</span><span class=special>;</span>
-  <span class=identifier>size_type</span> <span class=identifier>size</span><span class=special>()</span><span class=keyword>const</span><span class=special>;</span>
-  <span class=identifier>size_type</span> <span class=identifier>max_size</span><span class=special>()</span><span class=keyword>const</span><span class=special>;</span>
+  <span class=keyword>bool</span>      <span class=identifier>empty</span><span class=special>()</span><span class=keyword>const</span> <span class=keyword>noexcept</span><span class=special>;</span>
+  <span class=identifier>size_type</span> <span class=identifier>size</span><span class=special>()</span><span class=keyword>const</span> <span class=keyword>noexcept</span><span class=special>;</span>
+  <span class=identifier>size_type</span> <span class=identifier>max_size</span><span class=special>()</span><span class=keyword>const</span> <span class=keyword>noexcept</span><span class=special>;</span>
 
   <span class=keyword>void</span> <span class=identifier>resize</span><span class=special>(</span><span class=identifier>size_type</span> <span class=identifier>n</span><span class=special>);</span>
   <span class=keyword>void</span> <span class=identifier>resize</span><span class=special>(</span><span class=identifier>size_type</span> <span class=identifier>n</span><span class=special>,</span><span class=keyword>const</span> <span class=identifier>value_type</span><span class=special>&amp;</span> <span class=identifier>x</span><span class=special>);</span>
@@ -286,7 +286,7 @@ most important differences are:
 
   <span class=keyword>void</span> <span class=identifier>swap</span><span class=special>(</span><b>index class name</b><span class=special>&amp;</span> <span class=identifier>x</span><span class=special>);</span>
 
-  <span class=keyword>void</span> <span class=identifier>clear</span><span class=special>();</span>
+  <span class=keyword>void</span> <span class=identifier>clear</span><span class=special>()</span><span class=keyword>noexcept</span><span class=special>;</span>
 
   <span class=comment>// list operations:</span>
 
@@ -308,7 +308,7 @@ most important differences are:
   <span class=keyword>void</span> <span class=identifier>sort</span><span class=special>();</span>
   <span class=keyword>template</span> <span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>Compare</span><span class=special>&gt;</span> <span class=keyword>void</span> <span class=identifier>sort</span><span class=special>(</span><span class=identifier>Compare</span> <span class=identifier>comp</span><span class=special>);</span>
 
-  <span class=keyword>void</span> <span class=identifier>reverse</span><span class=special>();</span>
+  <span class=keyword>void</span> <span class=identifier>reverse</span><span class=special>()</span><span class=keyword>noexcept</span><span class=special>;</span>
 
   <span class=comment>// rearrange operations:</span>
 
@@ -922,13 +922,12 @@ is stable, i.e. equivalent elements preserve their relative position.<br>
 not throw; otherwise, basic.
 </blockquote>
 
-<code>void reverse();</code>
+<code>void reverse()noexcept;</code>
 
 <blockquote>
 <b>Effects:</b> Reverses the order of the elements in the index.<br>
 <b>Postconditions:</b> Validity of iterators and references is preserved.<br>
 <b>Complexity:</b> <code>O(n)</code>.<br>
-<b>Exception safety:</b> <code>nothrow</code>.
 </blockquote>
 
 <h4><a name="rearrange_operations">Rearrange operations</a></h4>
@@ -1043,7 +1042,7 @@ Random access indices
 
 <br>
 
-<p>Revised July 8th 2013</p>
+<p>Revised October 12th 2013</p>
 
 <p>&copy; Copyright 2003-2013 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 

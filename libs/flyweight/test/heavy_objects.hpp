@@ -1,6 +1,6 @@
 /* Classes for Boost.Flyweight key-value tests.
  *
- * Copyright 2006-2009 Joaquin M Lopez Munoz.
+ * Copyright 2006-2014 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -11,7 +11,7 @@
 #ifndef BOOST_FLYWEIGHT_TEST_HEAVY_OBJECTS_HPP
 #define BOOST_FLYWEIGHT_TEST_HEAVY_OBJECTS_HPP
 
-#if defined(_MSC_VER)&&(_MSC_VER>=1200)
+#if defined(_MSC_VER)
 #pragma once
 #endif
 
@@ -22,7 +22,7 @@
 
 struct texture
 {
-  texture(const std::string& str=""):str(str){}
+  texture(const std::string& str_=""):str(str_){}
 
   friend bool operator==(
     const texture& x,const texture& y){return x.str==y.str;}
@@ -57,7 +57,7 @@ struct from_texture_to_string
 
 struct factorization:private boost::noncopyable
 {
-  factorization(int n=0):n(n){}
+  factorization(int n_=0):n(n_){}
 
   friend bool operator==(
     const factorization& x,const factorization& y){return x.n==y.n;}

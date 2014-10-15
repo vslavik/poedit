@@ -39,10 +39,6 @@ class Derived : public Base1, public Base2
 #pragma warning(pop)
 #endif
 
-BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION(Base1)
-BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION(Base2)
-BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION(Derived)
-
 // if compiler doesn't support TPS, the smart_cast syntax doesn't
 // work for references.  One has to use the smart_cast_reference
 // syntax (tested below ) instead.
@@ -150,10 +146,6 @@ public:
 #ifdef BOOST_MSVC
 #pragma warning(pop)
 #endif
-
-BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION(VBase1)
-BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION(VBase2)
-BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION(VDerived)
 
 // see above
 

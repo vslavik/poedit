@@ -11,7 +11,7 @@
 #ifndef BOOST_FLYWEIGHT_TEST_INTERMOD_HOLDER_DLL_HPP
 #define BOOST_FLYWEIGHT_TEST_INTERMOD_HOLDER_DLL_HPP
 
-#if defined(_MSC_VER)&&(_MSC_VER>=1200)
+#if defined(_MSC_VER)
 #pragma once
 #endif
 

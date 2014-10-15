@@ -5,38 +5,31 @@
           http://www.boost.org/LICENSE_1_0.txt)
 */
 
-/*******************************************************************
- *                                                                 *
- *  -------------------------------------------------------------  *
- *  |  0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  *
- *  -------------------------------------------------------------  *
- *  |  0  |  4  |  8  |  12 |  16 |  20 |  24 |  28 |  32 |  36 |  *
- *  -------------------------------------------------------------  *
- *  |  S0 |  S1 |  S2 |  S3 |  S4 |  S5 |  S6 |  S7 |  FP |  SP |  *
- *  -------------------------------------------------------------  *
- *  -------------------------------------------------------------  *
- *  |  10 |  11 |                                               |  *
- *  -------------------------------------------------------------  *
- *  |  40 |  44 |                                               |  *
- *  -------------------------------------------------------------  *
- *  |  RA |  PC |                                               |  *
- *  -------------------------------------------------------------  *
- *  -------------------------------------------------------------  *
- *  |  12 |  13 |                                               |  *
- *  -------------------------------------------------------------  *
- *  |  48 |  52 |                                               |  *
- *  -------------------------------------------------------------  *
- *  |  sp | size|                                               |  *
- *  -------------------------------------------------------------  *
- *  -------------------------------------------------------------  *
- *  |  14 |  15 |  16 |  17 |  18 |  19 |                       |  *
- *  -------------------------------------------------------------  *
- *  |  56 |  64 |  72 |  80 |  88 |  96 |                       |  *
- *  -------------------------------------------------------------  *
- *  | F20 | F22 | F24 | F26 | F28 | F30 |                       |  *
- *  -------------------------------------------------------------  *
- *                                                                 *
- * *****************************************************************/
+/*******************************************************
+ *                                                     *
+ *  -------------------------------------------------  *
+ *  |  0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  *
+ *  -------------------------------------------------  *
+ *  |  0  |  4  |  8  |  12 |  16 |  20 |  24 |  28 |  *
+ *  -------------------------------------------------  *
+ *  |    F20    |    F22    |    F24    |    F26    |  *
+ *  -------------------------------------------------  *
+ *  -------------------------------------------------  *
+ *  |  8  |  9  |  10 |  11 |  12 |  13 |  14 |  15 |  *
+ *  -------------------------------------------------  *
+ *  |  32 |  36 |  40 |  44 |  48 |  52 |  56 |  60 |  *
+ *  -------------------------------------------------  *
+ *  |    F28    |    F30    |  S0 |  S1 |  S2 |  S3 |  *
+ *  -------------------------------------------------  *
+ *  -------------------------------------------------  *
+ *  |  16 |  17 |  18 |  19 |  20 |  21 |  22 |     |  *
+ *  -------------------------------------------------  *
+ *  |  64 |  68 |  72 |  76 |  80 |  84 |  88 |     |  *
+ *  -------------------------------------------------  *
+ *  |  S4 |  S5 |  S6 |  S7 |  FP |  RA |  PC |     |  *
+ *  -------------------------------------------------  *
+ *                                                     *
+ * *****************************************************/
 
 .text
 .globl jump_fcontext
@@ -44,54 +37,80 @@
 .type jump_fcontext,@function
 .ent jump_fcontext
 jump_fcontext:
-    sw      $s0, ($a0)      # save S0
-    sw      $s1, 4($a0)     # save S1
-    sw      $s2, 8($a0)     # save S2
-    sw      $s3, 12($a0)    # save S3
-    sw      $s4, 16($a0)    # save S4
-    sw      $s5, 20($a0)    # save S5
-    sw      $s6, 24($a0)    # save S6
-    sw      $s7, 28($a0)    # save S7
-    sw      $fp, 32($a0)    # save FP
-    sw      $sp, 36($a0)    # save SP
-    sw      $ra, 40($a0)    # save RA
-    sw      $ra, 44($a0)    # save RA as PC
+    # reserve space on stack
+    addiu $sp, $sp, -92
+
+    sw  $s0, 48($sp)  # save S0
+    sw  $s1, 52($sp)  # save S1
+    sw  $s2, 56($sp)  # save S2
+    sw  $s3, 60($sp)  # save S3
+    sw  $s4, 64($sp)  # save S4
+    sw  $s5, 68($sp)  # save S5
+    sw  $s6, 72($sp)  # save S6
+    sw  $s7, 76($sp)  # save S7
+    sw  $fp, 80($sp)  # save FP
+    sw  $ra, 84($sp)  # save RA
+    sw  $ra, 88($sp)  # save RA as PC
 
 #if defined(__mips_hard_float)
-    beqz    $a3,  1f        # test if fpu env should be preserved 
-    s.d     $f20, 56($a0)   # save F20
-    s.d     $f22, 64($a0)   # save F22
-    s.d     $f24, 72($a0)   # save F24
-    s.d     $f26, 80($a0)   # save F26
-    s.d     $f28, 88($a0)   # save F28
-    s.d     $f30, 96($a0)   # save F30
+    # test if fpu env should be preserved 
+    beqz    $a3,  1f
 
-    l.d     $f20, 56($a1)   # restore F20
-    l.d     $f22, 64($a1)   # restore F22
-    l.d     $f24, 72($a1)   # restore F24
-    l.d     $f26, 80($a1)   # restore F26
-    l.d     $f28, 88($a1)   # restore F28
-    l.d     $f30, 96($a1)   # restore F30
+    s.d  $f20, ($sp)  # save F20
+    s.d  $f22, 8($sp)  # save F22
+    s.d  $f24, 16($sp)  # save F24
+    s.d  $f26, 24($sp)  # save F26
+    s.d  $f28, 32($sp)  # save F28
+    s.d  $f30, 40($sp)  # save F30
+
 1:
 #endif
 
-    lw      $s0, ($a1)      # restore S0
-    lw      $s1, 4($a1)     # restore S1
-    lw      $s2, 8($a1)     # restore S2
-    lw      $s3, 12($a1)    # restore S3
-    lw      $s4, 16($a1)    # restore S4
-    lw      $s5, 20($a1)    # restore S5
-    lw      $s6, 24($a1)    # restore S6
-    lw      $s7, 28($a1)    # restore S7
-    lw      $fp, 32($a1)    # restore FP
-    lw      $sp, 36($a1)    # restore SP
-    lw      $ra, 40($a1)    # restore RA
+    # store SP (pointing to context-data) in A0
+    sw  $sp, ($a0)
 
-    move    $v0, $a2        # use third arg as return value after jump
-    move    $a0, $a2        # use third arg as first arg in context function
+    # restore SP (pointing to context-data) from A1
+    move  $sp, $a1
 
-    lw      $t9, 44($a1)    # load PC
-    jr      $t9             # jump to context
+
+#if defined(__mips_hard_float)
+    # test if fpu env should be preserved 
+    beqz    $a3,  2f
+
+    l.d  $f20, ($sp)  # restore F20
+    l.d  $f22, 8($sp)  # restore F22
+    l.d  $f24, 16($sp)  # restore F24
+    l.d  $f26, 24($sp)  # restore F26
+    l.d  $f28, 32($sp)  # restore F28
+    l.d  $f30, 40($sp)  # restore F30
+
+2:
+#endif
+
+    lw  $s0, 48($sp)  # restore S0
+    lw  $s1, 52($sp)  # restore S1
+    lw  $s2, 56($sp)  # restore S2
+    lw  $s3, 60($sp)  # restore S3
+    lw  $s4, 64($sp)  # restore S4
+    lw  $s5, 68($sp)  # restore S5
+    lw  $s6, 72($sp)  # restore S6
+    lw  $s7, 76($sp)  # restore S7
+    lw  $fp, 80($sp)  # restore FP
+    lw  $ra, 84($sp)  # restore RA
+
+    # load PC
+    lw  $t9, 88($sp)
+
+    # adjust stack
+    addiu $sp, $sp, 92
+
+    # use third arg as return value after jump
+    move  $v0, $a2
+    # use third arg as first arg in context function
+    move  $a0, $a2
+
+    # jump to context
+    jr  $t9
 .end jump_fcontext
 .size jump_fcontext, .-jump_fcontext
 

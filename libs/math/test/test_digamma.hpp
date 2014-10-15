@@ -72,5 +72,18 @@ void test_digamma(T, const char* name)
 
    do_test_digamma<T>(digamma_neg_data, name, "Digamma Function: Negative Values");
 
+    static const boost::array<boost::array<T, 2>, 5> digamma_bugs = {{
+       // Test cases from Rocco Romeo:
+        {{ static_cast<T>(std::ldexp(1.0, -100)), SC_(-1.26765060022822940149670320537657721566490153286060651209008e30) }},
+        {{ static_cast<T>(-std::ldexp(1.0, -100)), SC_(1.26765060022822940149670320537542278433509846713939348790992e30) }},
+        {{ static_cast<T>(1), SC_(-0.577215664901532860606512090082402431042159335939923598805767) }},
+        {{ static_cast<T>(-1) + static_cast<T>(std::ldexp(1.0, -20)), SC_(-1.04857557721314249602848739817764518743062133735858753112190e6) }},
+        {{ static_cast<T>(-1) - static_cast<T>(std::ldexp(1.0, -20)), SC_(1.04857642278181269259522681939281063878220298942888100442172e6) }},
+    }};
+   do_test_digamma<T>(digamma_bugs, name, "Digamma Function: Values near 0");
+
+   BOOST_CHECK_THROW(boost::math::digamma(T(0)), std::domain_error);
+   BOOST_CHECK_THROW(boost::math::digamma(T(-1)), std::domain_error);
+   BOOST_CHECK_THROW(boost::math::digamma(T(-2)), std::domain_error);
 }
 

@@ -15,7 +15,7 @@
 * [*Postcondition:] For all elements `x` in the returned range, `x` is the result of `fun(y)` where `y` is the corresponding element in the original range.
 * [*Throws:] Whatever the copy-constructor of `fun` might throw.
 * [*Range Category:] __single_pass_range__
-* [*Range Return Type:] `boost::transformed_range<typeof(rng)>`
+* [*Range Return Type:] `boost::transformed_range<decltype(rng)>`
 * [*Returned Range Category:] The range category of `rng`.
 
 [section:transformed_example transformed example]

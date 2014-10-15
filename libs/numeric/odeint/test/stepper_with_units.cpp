@@ -6,8 +6,8 @@
  This file tests if the steppers play well with Boost.Units.
  [end_description]
 
- Copyright 2009-2012 Karsten Ahnert
- Copyright 2009-2012 Mario Mulansky
+ Copyright 2011-2012 Karsten Ahnert
+ Copyright 2011-2013 Mario Mulansky
 
  Distributed under the Boost Software License, Version 1.0.
  (See accompanying file LICENSE_1_0.txt or
@@ -47,6 +47,7 @@
 #include <boost/numeric/odeint/stepper/bulirsch_stoer.hpp>
 #include <boost/numeric/odeint/stepper/bulirsch_stoer_dense_out.hpp>
 #include <boost/numeric/odeint/algebra/fusion_algebra.hpp>
+#include <boost/numeric/odeint/algebra/fusion_algebra_dispatcher.hpp>
 
 
 using namespace boost::numeric::odeint;
@@ -240,46 +241,46 @@ void check_dense_output_stepper( Stepper &stepper )
 
 class stepper_types : public mpl::vector
 <
-    euler< state_type , value_type , deriv_type , time_type , fusion_algebra >,
-    runge_kutta4< state_type , value_type , deriv_type , time_type , fusion_algebra > ,
-    runge_kutta4_classic< state_type , value_type , deriv_type , time_type , fusion_algebra > ,
-    runge_kutta_cash_karp54< state_type , value_type , deriv_type , time_type , fusion_algebra >,
-    runge_kutta_cash_karp54_classic< state_type , value_type , deriv_type , time_type , fusion_algebra >
+    euler< state_type , value_type , deriv_type , time_type >,
+    runge_kutta4< state_type , value_type , deriv_type , time_type > ,
+    runge_kutta4_classic< state_type , value_type , deriv_type , time_type > ,
+    runge_kutta_cash_karp54< state_type , value_type , deriv_type , time_type >,
+    runge_kutta_cash_karp54_classic< state_type , value_type , deriv_type , time_type >
     // don't run rk78 test - gcc requires > 5GB RAM to compile this
-    //, runge_kutta_fehlberg78< state_type , value_type , deriv_type , time_type , fusion_algebra >
+    //, runge_kutta_fehlberg78< state_type , value_type , deriv_type , time_type >
     > { };
 
 class fsal_stepper_types : public mpl::vector
 <
-    runge_kutta_dopri5< state_type , value_type , deriv_type , time_type , fusion_algebra >
+    runge_kutta_dopri5< state_type , value_type , deriv_type , time_type >
     > { };
 
 class error_stepper_types : public mpl::vector
 <
-    runge_kutta_cash_karp54_classic< state_type , value_type , deriv_type , time_type , fusion_algebra >
-    //, runge_kutta_fehlberg78< state_type , value_type , deriv_type , time_type , fusion_algebra >
+    runge_kutta_cash_karp54_classic< state_type , value_type , deriv_type , time_type >
+    //, runge_kutta_fehlberg78< state_type , value_type , deriv_type , time_type >
     > { };
 
 class fsal_error_stepper_types : public mpl::vector
 <
-    runge_kutta_dopri5< state_type , value_type , deriv_type , time_type , fusion_algebra >
+    runge_kutta_dopri5< state_type , value_type , deriv_type , time_type >
     > { };
 
 class controlled_stepper_types : public mpl::vector
 <
-    controlled_runge_kutta< runge_kutta_cash_karp54_classic< state_type , value_type , deriv_type , time_type , fusion_algebra > > ,
-    controlled_runge_kutta< runge_kutta_dopri5< state_type , value_type , deriv_type , time_type , fusion_algebra > >
-    , bulirsch_stoer< state_type , value_type , deriv_type , time_type , fusion_algebra >
+    controlled_runge_kutta< runge_kutta_cash_karp54_classic< state_type , value_type , deriv_type , time_type > > ,
+    controlled_runge_kutta< runge_kutta_dopri5< state_type , value_type , deriv_type , time_type > >
+    , bulirsch_stoer< state_type , value_type , deriv_type , time_type >
     // rk78 with units needs up to 3GB memory to compile - disable testing...
-    //, controlled_runge_kutta< runge_kutta_fehlberg78< state_type , value_type , deriv_type , time_type , fusion_algebra > >
+    //, controlled_runge_kutta< runge_kutta_fehlberg78< state_type , value_type , deriv_type , time_type > >
     > { };
 
 class dense_output_stepper_types : public mpl::vector
 <
-    dense_output_runge_kutta< euler< state_type , value_type , deriv_type , time_type , fusion_algebra > > ,
+    dense_output_runge_kutta< euler< state_type , value_type , deriv_type , time_type > > ,
     dense_output_runge_kutta<
-        controlled_runge_kutta< runge_kutta_dopri5< state_type , value_type , deriv_type , time_type , fusion_algebra > > > 
-    //, bulirsch_stoer_dense_out< state_type , value_type , deriv_type , time_type , fusion_algebra >
+        controlled_runge_kutta< runge_kutta_dopri5< state_type , value_type , deriv_type , time_type > > >
+    //, bulirsch_stoer_dense_out< state_type , value_type , deriv_type , time_type >
     > { };
 
 

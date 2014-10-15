@@ -1,14 +1,15 @@
 [book Math Toolkit
     [quickbook 1.6]
-    [copyright 2006, 2007, 2008, 2009, 2010, 2012, 2013 Paul A. Bristow, Christopher Kormanyos, Hubert Holin, Bruno Lalande, John Maddock, Johan Råde, Gautam Sewani, Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang]
+    [copyright 2006, 2007, 2008, 2009, 2010, 2012, 2013 Nikhar Agrawal, Anton Bikineev, Paul A. Bristow, Christopher Kormanyos, Hubert Holin, Bruno Lalande, John Maddock, Johan Råde, Gautam Sewani, Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang]
     [/purpose ISBN 0-9504833-2-X  978-0-9504833-2-0, Classification 519.2-dc22]
     [license
         Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
         [@http://www.boost.org/LICENSE_1_0.txt])
     ]
-    [authors [Bristow, Paul A.], [Holin, Hubert], [Kormanyos, Christopher], [Lalande, Bruno], [Maddock, John], [Råde, Johan], [Sobotta, Benjamin], [Sewani, Gautam], [van den Berg, Thijs], [Walker, Daryle], [Zhang, Xiaogang] ]
-    [/last-revision $Date: 2013-09-28 09:19:47 -0700 (Sat, 28 Sep 2013) $]
+    [authors [Agrawal, Nikhar], [Bikineev, Anton], [Bristow, Paul A.], [Holin, Hubert], [Kormanyos, Christopher], [Lalande, Bruno], [Maddock, John], [Råde, Johan], [Sobotta, Benjamin], [Sewani, Gautam], [van den Berg, Thijs], [Walker, Daryle], [Zhang, Xiaogang]]
+    [/last-revision $Date$]
+    [version 1.9.0]
 ]
 
 [template mathpart[id title]
@@ -148,6 +149,9 @@ and use the function's name as the link text.]
 [def __ellint_2  [link math_toolkit.ellint.ellint_2 ellint_2]]
 [def __ellint_3  [link math_toolkit.ellint.ellint_3 ellint_3]]
 
+[/ Bernoulli functions and numbers]
+[def __bernoulli_numbers  [link math_toolkit.number_series.bernoulli_numbers Bernoulli numbers]]
+
 [/Bessel functions]
 [def __cyl_bessel_j  [link math_toolkit.bessel.bessel_first cyl_bessel_j]]
 [def __cyl_neumann  [link math_toolkit.bessel.bessel_first cyl_neumann]]
@@ -155,6 +159,13 @@ and use the function's name as the link text.]
 [def __cyl_bessel_k  [link math_toolkit.bessel.mbessel cyl_bessel_k]]
 [def __sph_bessel  [link math_toolkit.bessel.sph_bessel sph_bessel]]
 [def __sph_neumann  [link math_toolkit.bessel.sph_bessel sph_neumann]]
+
+[def __cyl_bessel_j_prime  [link math_toolkit.bessel.bessel_derivatives cyl_bessel_j_prime]]
+[def __cyl_neumann_prime  [link math_toolkit.bessel.bessel_derivatives cyl_neumann_prime]]
+[def __cyl_bessel_i_prime  [link math_toolkit.bessel.bessel_derivatives cyl_bessel_i_prime]]
+[def __cyl_bessel_k_prime  [link math_toolkit.bessel.bessel_derivatives cyl_bessel_k_prime]]
+[def __sph_bessel_prime  [link math_toolkit.bessel.bessel_derivatives sph_bessel_prime]]
+[def __sph_neumann_prime  [link math_toolkit.bessel.bessel_derivatives sph_neumann_prime]]
 
 [/Hankel Functions]
 [def __cyl_hankel_1  [link math_toolkit.hankel.cyl_hankel cyl_hankel_1]]
@@ -283,7 +294,7 @@ and use the function's name as the link text.]
 [def __non_central_t_distrib [link math_toolkit.dist_ref.dists.nc_t_dist noncentral T distribution]]
 [def __normal_distrib [link math_toolkit.dist_ref.dists.normal_dist Normal Distribution]]
 [def __poisson_distrib [link math_toolkit.dist_ref.dists.poisson_dist Poisson Distribution]]
-[def __pareto_distrib [link math_toolkit.dist_ref.dists.pareto_dist Pareto Distribution]]
+[def __pareto_distrib [link math_toolkit.dist_ref.dists.pareto Pareto Distribution]]
 [def __students_t_distrib [link math_toolkit.dist_ref.dists.students_t_dist Students t Distribution]]
 [def __skew_normal_distrib [link math_toolkit.dist_ref.dists.skew_normal_dist Skew Normal Distribution]]
 [def __weibull_distrib [link math_toolkit.dist_ref.dists.weibull_dist Weibull Distribution]]
@@ -384,6 +395,7 @@ using the quantile function on the [NAME] distribution.  The
 describe how to change the rounding policy
 for these distributions.
 ] [/ caution]
+
 ] [/ template discrete_quantile_warning]
 
 [block '''<bookinfo><releaseinfo>'''
@@ -424,12 +436,28 @@ and as a CD ISBN 0-9504833-2-X  978-0-9504833-2-0, Classification 519.2-dc22.
 
 [endmathpart] [/section:main_overview Overview]
 
+[mathpart utils Floating Point Utilities]
+[include fp_utilities/rounding_func.qbk]
+[include fp_utilities/fpclassify.qbk]
+[include fp_utilities/sign.qbk]
+[include fp_utilities/fp_facets.qbk]
+[include fp_utilities/float_next.qbk]
+[endmathpart]
+
+[mathpart cstdfloat..Specified-width floating-point typedefs]
+[include cstdfloat/cstdfloat.qbk]
+[endmathpart] [/mathpart cstdfloat..Fixed-width floating-point types]
+
+[include constants/constants.qbk]
+
 [mathpart dist Statistical Distributions and Functions]
 [include distributions/dist_tutorial.qbk]
 [include distributions/dist_reference.qbk] [/includes all individual distribution.qbk files]
 [endmathpart] [/section:dist Statistical Distributions and Functions]
 
 [mathpart special Special Functions]
+
+[include sf/number_series.qbk]
 
 [section:sf_gamma Gamma Functions]
 [include sf/tgamma.qbk]
@@ -467,6 +495,7 @@ and as a CD ISBN 0-9504833-2-X  978-0-9504833-2-0, Classification 519.2-dc22.
 [include sf/bessel_jy.qbk]
 [include sf/bessel_ik.qbk]
 [include sf/bessel_spherical.qbk]
+[include sf/bessel_prime.qbk]
 [endsect] [/section:bessel Bessel Functions]
 
 [/Hankel functions]
@@ -497,14 +526,6 @@ and as a CD ISBN 0-9504833-2-X  978-0-9504833-2-0, Classification 519.2-dc22.
 
 [endmathpart] [/section:special Special Functions]
 
-[mathpart utils Floating Point Utilities]
-[include fp_utilities/rounding_func.qbk]
-[include fp_utilities/fpclassify.qbk]
-[include fp_utilities/sign.qbk]
-[include fp_utilities/fp_facets.qbk]
-[include fp_utilities/float_next.qbk]
-[endmathpart]
-
 [mathpart extern_c TR1 and C99 external "C" Functions]
 [section:main_tr1 C99 and TR1 C Functions Overview]
 [tr1_overview]
@@ -513,7 +534,6 @@ and as a CD ISBN 0-9504833-2-X  978-0-9504833-2-0, Classification 519.2-dc22.
 [include tr1/tr1_ref.qbk]
 [endmathpart]
 
-[include constants/constants.qbk]
 
 [include complex/complex-tr1.qbk]
 [include quaternion/math-quaternion.qbk]
@@ -582,7 +602,7 @@ and as a CD ISBN 0-9504833-2-X  978-0-9504833-2-0, Classification 519.2-dc22.
 [endmathpart]
 
 [/ math.qbk
-  Copyright 2008, 2010, 2012, 2013 John Maddock and Paul A. Bristow.
+  Copyright 2008, 2010, 2012, 2013, 2014 John Maddock and Paul A. Bristow.
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE_1_0.txt or copy at
   http://www.boost.org/LICENSE_1_0.txt).

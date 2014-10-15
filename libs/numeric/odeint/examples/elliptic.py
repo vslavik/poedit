@@ -1,6 +1,6 @@
 """
- Copyright 2009-2012 Karsten Ahnert
- Copyright 2009-2012 Mario Mulansky
+ Copyright 2011 Mario Mulansky
+ Copyright 2012 Karsten Ahnert
 
  Stochastic euler stepper example and Ornstein-Uhlenbeck process
 

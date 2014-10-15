@@ -7,6 +7,7 @@
 #if !defined(FUSION_MAP_TIE_07222005_1247)
 #define FUSION_MAP_TIE_07222005_1247
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/container/map/map.hpp>
 
 #if !defined(BOOST_FUSION_HAS_VARIADIC_MAP)
@@ -29,18 +30,19 @@ namespace boost { namespace fusion
             struct apply
             {
                 typedef map<fusion::pair<Key, T&>...> type;
-        };
+            };
         };
     }
 
     template <typename ...Key, typename ...T>
+    BOOST_FUSION_GPU_ENABLED
     inline map<fusion::pair<Key, T&>...>
     map_tie(T&... arg)
     {
         typedef map<fusion::pair<Key, T&>...> result_type;
         return result_type(arg...);
     }
-}}
+ }}
 
 #endif
 #endif

@@ -1,5 +1,5 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
-// Unit Test
+// Robustness Test
 
 // Copyright (c) 2009-2012 Barend Gehrels, Amsterdam, the Netherlands.
 

@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2005-2012. Distributed under the Boost
+// (C) Copyright Ion Gaztanaga 2005-2013. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying file
 // LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
@@ -11,7 +11,7 @@
 #ifndef BOOST_CONTAINER_EXPAND_BWD_TEST_ALLOCATOR_HPP
 #define BOOST_CONTAINER_EXPAND_BWD_TEST_ALLOCATOR_HPP
 
-#if (defined _MSC_VER)
+#if defined(_MSC_VER)
 #  pragma once
 #endif
 
@@ -28,9 +28,6 @@
 #include <algorithm>
 #include <cstddef>
 #include <cassert>
-
-//!\file
-//!Describes an allocator to test expand capabilities
 
 namespace boost {
 namespace container {
@@ -111,7 +108,7 @@ class expand_bwd_test_allocator
    {  return m_size;   }
 
    friend void swap(self_t &alloc1, self_t &alloc2)
-   { 
+   {
       boost::container::swap_dispatch(alloc1.mp_buffer, alloc2.mp_buffer);
       boost::container::swap_dispatch(alloc1.m_size,    alloc2.m_size);
       boost::container::swap_dispatch(alloc1.m_offset,  alloc2.m_offset);
@@ -128,7 +125,7 @@ class expand_bwd_test_allocator
       (void)preferred_size;   (void)reuse;   (void)command;
       //This allocator only expands backwards!
       assert(m_allocations == 0 || (command & boost::container::expand_bwd));
-     
+
       received_size = limit_size;
 
       if(m_allocations == 0){

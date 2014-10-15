@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../xpressive.html" title="Chapter&#160;38.&#160;Boost.Xpressive">
-<link rel="prev" href="../xpressive.html" title="Chapter&#160;38.&#160;Boost.Xpressive">
+<link rel="up" href="../xpressive.html" title="Chapter&#160;41.&#160;Boost.Xpressive">
+<link rel="prev" href="../xpressive.html" title="Chapter&#160;41.&#160;Boost.Xpressive">
 <link rel="next" href="reference.html" title="Reference">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -164,7 +164,7 @@ world
 </pre>
 <p>
         To create a regular expression object from a string, you must call a factory
-        method such as <code class="literal"><code class="computeroutput"><a class="link" href="../boost/xpressive/basic_regex.html#idp167843160-bb">basic_regex&lt;&gt;::compile()</a></code></code>.
+        method such as <code class="literal"><code class="computeroutput"><a class="link" href="../boost/xpressive/basic_regex.html#idp352184416-bb">basic_regex&lt;&gt;::compile()</a></code></code>.
         This is another area in which xpressive differs from other object-oriented
         regular expression libraries. Other libraries encourage you to think of a
         regular expression as a kind of string on steroids. In xpressive, regular
@@ -318,7 +318,7 @@ world
         begin with the nickel tour of the types and algorithms xpressive provides.
       </p>
 <div class="table">
-<a name="boost_xpressive.user_s_guide.quick_start.t0"></a><p class="title"><b>Table&#160;38.1.&#160;xpressive's Tool-Box</b></p>
+<a name="boost_xpressive.user_s_guide.quick_start.t0"></a><p class="title"><b>Table&#160;41.1.&#160;xpressive's Tool-Box</b></p>
 <div class="table-contents"><table class="table" summary="xpressive's Tool-Box">
 <colgroup>
 <col>
@@ -504,7 +504,7 @@ world
         right types based on the type of your iterator.
       </p>
 <div class="table">
-<a name="boost_xpressive.user_s_guide.quick_start.t1"></a><p class="title"><b>Table&#160;38.2.&#160;xpressive Typedefs vs. Iterator Types</b></p>
+<a name="boost_xpressive.user_s_guide.quick_start.t1"></a><p class="title"><b>Table&#160;41.2.&#160;xpressive Typedefs vs. Iterator Types</b></p>
 <div class="table-contents"><table class="table" summary="xpressive Typedefs vs. Iterator Types">
 <colgroup>
 <col>
@@ -696,7 +696,7 @@ world
         has tools for all that and more. Below is a quick reference:
       </p>
 <div class="table">
-<a name="boost_xpressive.user_s_guide.quick_start.t2"></a><p class="title"><b>Table&#160;38.3.&#160;Tasks and Tools</b></p>
+<a name="boost_xpressive.user_s_guide.quick_start.t2"></a><p class="title"><b>Table&#160;41.3.&#160;Tasks and Tools</b></p>
 <div class="table-contents"><table class="table" summary="Tasks and Tools">
 <colgroup>
 <col>
@@ -1040,7 +1040,7 @@ world
           in static xpressive.
         </p>
 <div class="table">
-<a name="boost_xpressive.user_s_guide.creating_a_regex_object.static_regexes.t0"></a><p class="title"><b>Table&#160;38.4.&#160;Perl syntax vs. Static xpressive syntax</b></p>
+<a name="boost_xpressive.user_s_guide.creating_a_regex_object.static_regexes.t0"></a><p class="title"><b>Table&#160;41.4.&#160;Perl syntax vs. Static xpressive syntax</b></p>
 <div class="table-contents"><table class="table" summary="Perl syntax vs. Static xpressive syntax">
 <colgroup>
 <col>
@@ -1229,7 +1229,7 @@ world
                 </td>
 <td>
                   <p>
-                    <code class="computeroutput"><a class="link" href="../boost/xpressive/repeat_idp168331528.html" title="Function template repeat">repeat</a><span class="special">&lt;</span><span class="identifier">n</span><span class="special">,</span><span class="identifier">m</span><span class="special">&gt;(</span><span class="identifier">a</span><span class="special">)</span></code>
+                    <code class="computeroutput"><a class="link" href="../boost/xpressive/repeat.html" title="Function repeat">repeat</a><span class="special">&lt;</span><span class="identifier">n</span><span class="special">,</span><span class="identifier">m</span><span class="special">&gt;(</span><span class="identifier">a</span><span class="special">)</span></code>
                   </p>
                 </td>
 <td>
@@ -1298,7 +1298,7 @@ world
                 </td>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="special">-</span><a class="link" href="../boost/xpressive/repeat_idp168331528.html" title="Function template repeat">repeat</a><span class="special">&lt;</span><span class="identifier">n</span><span class="special">,</span><span class="identifier">m</span><span class="special">&gt;(</span><span class="identifier">a</span><span class="special">)</span></code>
+                    <code class="computeroutput"><span class="special">-</span><a class="link" href="../boost/xpressive/repeat.html" title="Function repeat">repeat</a><span class="special">&lt;</span><span class="identifier">n</span><span class="special">,</span><span class="identifier">m</span><span class="special">&gt;(</span><span class="identifier">a</span><span class="special">)</span></code>
                   </p>
                 </td>
 <td>
@@ -2034,9 +2034,9 @@ world
           and Assignment</a>
         </h3>
 <p>
-          There are two ways to create a dynamic regex: with the <code class="literal"><code class="computeroutput"><a class="link" href="../boost/xpressive/basic_regex.html#idp167843160-bb">basic_regex&lt;&gt;::compile()</a></code></code>
+          There are two ways to create a dynamic regex: with the <code class="literal"><code class="computeroutput"><a class="link" href="../boost/xpressive/basic_regex.html#idp352184416-bb">basic_regex&lt;&gt;::compile()</a></code></code>
           function or with the <code class="literal"><code class="computeroutput"><a class="link" href="../boost/xpressive/regex_compiler.html" title="Struct template regex_compiler">regex_compiler&lt;&gt;</a></code></code>
-          class template. Use <code class="literal"><code class="computeroutput"><a class="link" href="../boost/xpressive/basic_regex.html#idp167843160-bb">basic_regex&lt;&gt;::compile()</a></code></code>
+          class template. Use <code class="literal"><code class="computeroutput"><a class="link" href="../boost/xpressive/basic_regex.html#idp352184416-bb">basic_regex&lt;&gt;::compile()</a></code></code>
           if you want the default locale. Use <code class="literal"><code class="computeroutput"><a class="link" href="../boost/xpressive/regex_compiler.html" title="Struct template regex_compiler">regex_compiler&lt;&gt;</a></code></code>
           if you need to specify a different locale. In the section on <a class="link" href="user_s_guide.html#boost_xpressive.user_s_guide.grammars_and_nested_matches" title="Grammars and Nested Matches">regex
           grammars</a>, we'll see another use for <code class="literal"><code class="computeroutput"><a class="link" href="../boost/xpressive/regex_compiler.html" title="Struct template regex_compiler">regex_compiler&lt;&gt;</a></code></code>.
@@ -2053,7 +2053,7 @@ world
 <span class="identifier">sregex</span> <span class="identifier">re</span> <span class="special">=</span> <span class="identifier">compiler</span><span class="special">.</span><span class="identifier">compile</span><span class="special">(</span> <span class="string">"this|that"</span><span class="special">,</span> <span class="identifier">regex_constants</span><span class="special">::</span><span class="identifier">icase</span> <span class="special">);</span>
 </pre>
 <p>
-          <code class="literal"><code class="computeroutput"><a class="link" href="../boost/xpressive/basic_regex.html#idp167843160-bb">basic_regex&lt;&gt;::compile()</a></code></code>
+          <code class="literal"><code class="computeroutput"><a class="link" href="../boost/xpressive/basic_regex.html#idp352184416-bb">basic_regex&lt;&gt;::compile()</a></code></code>
           is implemented in terms of <code class="literal"><code class="computeroutput"><a class="link" href="../boost/xpressive/regex_compiler.html" title="Struct template regex_compiler">regex_compiler&lt;&gt;</a></code></code>.
         </p>
 <h3>
@@ -2274,7 +2274,7 @@ world
         object named <code class="computeroutput"><span class="identifier">what</span></code>.
       </p>
 <div class="table">
-<a name="boost_xpressive.user_s_guide.accessing_results.t0"></a><p class="title"><b>Table&#160;38.5.&#160;match_results&lt;&gt; Accessors</b></p>
+<a name="boost_xpressive.user_s_guide.accessing_results.t0"></a><p class="title"><b>Table&#160;41.5.&#160;match_results&lt;&gt; Accessors</b></p>
 <div class="table-contents"><table class="table" summary="match_results&lt;&gt; Accessors">
 <colgroup>
 <col>
@@ -2443,7 +2443,7 @@ world
         object called <code class="computeroutput"><span class="identifier">sub</span></code>.
       </p>
 <div class="table">
-<a name="boost_xpressive.user_s_guide.accessing_results.t1"></a><p class="title"><b>Table&#160;38.6.&#160;sub_match&lt;&gt; Accessors</b></p>
+<a name="boost_xpressive.user_s_guide.accessing_results.t1"></a><p class="title"><b>Table&#160;41.6.&#160;sub_match&lt;&gt; Accessors</b></p>
 <div class="table-contents"><table class="table" summary="sub_match&lt;&gt; Accessors">
 <colgroup>
 <col>
@@ -2584,7 +2584,7 @@ Ther is her face
         The possible values of the bitmask are:
       </p>
 <div class="table">
-<a name="boost_xpressive.user_s_guide.string_substitutions.t0"></a><p class="title"><b>Table&#160;38.7.&#160;Format Flags</b></p>
+<a name="boost_xpressive.user_s_guide.string_substitutions.t0"></a><p class="title"><b>Table&#160;41.7.&#160;Format Flags</b></p>
 <div class="table-contents"><table class="table" summary="Format Flags">
 <colgroup>
 <col>
@@ -2712,7 +2712,7 @@ Ther is her face
         ECMA-262 mode.
       </p>
 <div class="table">
-<a name="boost_xpressive.user_s_guide.string_substitutions.t1"></a><p class="title"><b>Table&#160;38.8.&#160;Format Escape Sequences</b></p>
+<a name="boost_xpressive.user_s_guide.string_substitutions.t1"></a><p class="title"><b>Table&#160;41.8.&#160;Format Escape Sequences</b></p>
 <div class="table-contents"><table class="table" summary="Format Escape Sequences">
 <colgroup>
 <col>
@@ -2810,7 +2810,7 @@ Ther is her face
         the following escape sequences are recognized:
       </p>
 <div class="table">
-<a name="boost_xpressive.user_s_guide.string_substitutions.t2"></a><p class="title"><b>Table&#160;38.9.&#160;Sed Format Escape Sequences</b></p>
+<a name="boost_xpressive.user_s_guide.string_substitutions.t2"></a><p class="title"><b>Table&#160;41.9.&#160;Sed Format Escape Sequences</b></p>
 <div class="table-contents"><table class="table" summary="Sed Format Escape Sequences">
 <colgroup>
 <col>
@@ -2989,7 +2989,7 @@ Ther is her face
         the following escape sequences are recognized:
       </p>
 <div class="table">
-<a name="boost_xpressive.user_s_guide.string_substitutions.t3"></a><p class="title"><b>Table&#160;38.10.&#160;Perl Format Escape Sequences</b></p>
+<a name="boost_xpressive.user_s_guide.string_substitutions.t3"></a><p class="title"><b>Table&#160;41.10.&#160;Perl Format Escape Sequences</b></p>
 <div class="table-contents"><table class="table" summary="Perl Format Escape Sequences">
 <colgroup>
 <col>
@@ -3404,7 +3404,7 @@ Ther is her face
         <code class="computeroutput"><span class="identifier">regex_constants</span><span class="special">::</span><span class="identifier">match_flag_type</span></code>:
       </p>
 <div class="table">
-<a name="boost_xpressive.user_s_guide.string_substitutions.t4"></a><p class="title"><b>Table&#160;38.11.&#160;Formatter Signatures</b></p>
+<a name="boost_xpressive.user_s_guide.string_substitutions.t4"></a><p class="title"><b>Table&#160;41.11.&#160;Formatter Signatures</b></p>
 <div class="table-contents"><table class="table" summary="Formatter Signatures">
 <colgroup>
 <col>
@@ -4637,7 +4637,7 @@ cindy
         templates to make things easier. The following table shows the equivalencies:
       </p>
 <div class="table">
-<a name="boost_xpressive.user_s_guide.semantic_actions_and_user_defined_assertions.t0"></a><p class="title"><b>Table&#160;38.12.&#160;reference&lt;&gt; and value&lt;&gt;</b></p>
+<a name="boost_xpressive.user_s_guide.semantic_actions_and_user_defined_assertions.t0"></a><p class="title"><b>Table&#160;41.12.&#160;reference&lt;&gt; and value&lt;&gt;</b></p>
 <div class="table-contents"><table class="table" summary="reference&lt;&gt; and value&lt;&gt;">
 <colgroup>
 <col>
@@ -4705,7 +4705,7 @@ cindy
         into one using <code class="computeroutput"><span class="identifier">local</span><span class="special">&lt;&gt;</span></code>.
       </p>
 <div class="table">
-<a name="boost_xpressive.user_s_guide.semantic_actions_and_user_defined_assertions.t1"></a><p class="title"><b>Table&#160;38.13.&#160;local&lt;&gt; vs. reference&lt;&gt;</b></p>
+<a name="boost_xpressive.user_s_guide.semantic_actions_and_user_defined_assertions.t1"></a><p class="title"><b>Table&#160;41.13.&#160;local&lt;&gt; vs. reference&lt;&gt;</b></p>
 <div class="table-contents"><table class="table" summary="local&lt;&gt; vs. reference&lt;&gt;">
 <colgroup>
 <col>
@@ -4891,7 +4891,7 @@ cindy
         assertions, which you can use to match the beginning and end of a string,
         respectively. Xpressive lets you define your own assertions. A custom assertion
         is a contition which must be true at a point in the match in order for the
-        match to succeed. You can check a custom assertion with xpressive's <code class="literal"><code class="computeroutput">check()</code></code> function.
+        match to succeed. You can check a custom assertion with xpressive's <code class="literal"><code class="computeroutput"><a class="link" href="../boost/xpressive/check.html" title="Function template check">check()</a></code></code> function.
       </p>
 <p>
         There are a couple of ways to define a custom assertion. The simplest is
@@ -5388,7 +5388,7 @@ cindy
         and <code class="computeroutput"><span class="identifier">i</span></code> of type <code class="computeroutput"><span class="keyword">int</span></code>:
       </p>
 <div class="table">
-<a name="boost_xpressive.user_s_guide.concepts.t0"></a><p class="title"><b>Table&#160;38.14.&#160;CharT Requirements</b></p>
+<a name="boost_xpressive.user_s_guide.concepts.t0"></a><p class="title"><b>Table&#160;41.14.&#160;CharT Requirements</b></p>
 <div class="table-contents"><table class="table" summary="CharT Requirements">
 <colgroup>
 <col>
@@ -5643,7 +5643,7 @@ cindy
         is an object of <code class="computeroutput"><span class="keyword">const</span> <span class="keyword">char</span></code>.
       </p>
 <div class="table">
-<a name="boost_xpressive.user_s_guide.concepts.t1"></a><p class="title"><b>Table&#160;38.15.&#160;Traits Requirements</b></p>
+<a name="boost_xpressive.user_s_guide.concepts.t1"></a><p class="title"><b>Table&#160;41.15.&#160;Traits Requirements</b></p>
 <div class="table-contents"><table class="table" summary="Traits Requirements">
 <colgroup>
 <col>

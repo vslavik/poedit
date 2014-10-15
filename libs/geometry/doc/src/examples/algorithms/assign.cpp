@@ -30,7 +30,7 @@ int main()
     box b;
     boost::geometry::assign_values(p1, 1, 1);
     boost::geometry::assign_values(b, 1, 1, 2, 2);
-    
+
     // Assign a box to a polygon (target = source)
     polygon p;
     boost::geometry::assign(p, b);
@@ -38,7 +38,7 @@ int main()
     // Assign a point to another point type (conversion of point-type)
     boost::tuple<double, double> p2;
     boost::geometry::assign(p2, p1);
-        
+
     using boost::geometry::dsv;
     std::cout
         << "box: " << dsv(b) << std::endl

@@ -13,6 +13,8 @@
 #include <boost/math/concepts/real_concept.hpp>
 #include <boost/array.hpp>
 #include <boost/math/special_functions/hankel.hpp>
+#include <iostream>
+#include <iomanip>
 
 #ifdef _MSC_VER
 #  pragma warning(disable : 4756 4127) // overflow in constant arithmetic

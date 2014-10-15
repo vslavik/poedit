@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2004-2012. Distributed under the Boost
+// (C) Copyright Ion Gaztanaga 2004-2013. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying file
 // LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
@@ -17,6 +17,10 @@
 #include <list>
 
 #include <boost/container/deque.hpp>
+#include <boost/container/allocator.hpp>
+#include <boost/container/node_allocator.hpp>
+#include <boost/container/adaptive_pool.hpp>
+
 #include "print_container.hpp"
 #include "check_equal_containers.hpp"
 #include "dummy_test_allocator.hpp"
@@ -29,6 +33,7 @@
 #include "emplace_test.hpp"
 #include "propagate_allocator_test.hpp"
 #include "vector_test.hpp"
+#include "default_init_test.hpp"
 #include <boost/detail/no_exceptions_support.hpp>
 
 using namespace boost::container;
@@ -48,6 +53,18 @@ template class boost::container::deque
 template class boost::container::deque
  < test::movable_and_copyable_int
  , std::allocator<test::movable_and_copyable_int> >;
+
+template class boost::container::deque
+   < test::movable_and_copyable_int
+   , allocator<test::movable_and_copyable_int> >;
+
+template class boost::container::deque
+   < test::movable_and_copyable_int
+   , adaptive_pool<test::movable_and_copyable_int> >;
+
+template class boost::container::deque
+   < test::movable_and_copyable_int
+   , node_allocator<test::movable_and_copyable_int> >;
 
 }}
 
@@ -145,11 +162,8 @@ bool do_test()
    typedef std::deque<int> MyStdDeque;
    const int max = 100;
    BOOST_TRY{
-      //Shared memory allocator must be always be initialized
-      //since it has no default constructor
       MyCntDeque *cntdeque = new MyCntDeque;
       MyStdDeque *stddeque = new MyStdDeque;
-      //Compare several shared memory deque operations with std::deque
       for(int i = 0; i < max*100; ++i){
          IntType move_me(i);
          cntdeque->insert(cntdeque->end(), boost::move(move_me));
@@ -274,11 +288,11 @@ bool do_test()
 
       cntdeque->resize(100);
       stddeque->resize(100);
-      if(!test::CheckEqualContainers(cntdeque, stddeque)) return 1;        
+      if(!test::CheckEqualContainers(cntdeque, stddeque)) return 1;
 
       cntdeque->resize(200);
       stddeque->resize(200);
-      if(!test::CheckEqualContainers(cntdeque, stddeque)) return 1;        
+      if(!test::CheckEqualContainers(cntdeque, stddeque)) return 1;
 
       delete cntdeque;
       delete stddeque;
@@ -290,9 +304,41 @@ bool do_test()
       return false;
    }
    BOOST_CATCH_END
-  
+
    std::cout << std::endl << "Test OK!" << std::endl;
    return true;
+}
+
+template<class VoidAllocator>
+struct GetAllocatorCont
+{
+   template<class ValueType>
+   struct apply
+   {
+      typedef deque< ValueType
+                    , typename allocator_traits<VoidAllocator>
+                        ::template portable_rebind_alloc<ValueType>::type
+                    > type;
+   };
+};
+
+template<class VoidAllocator>
+int test_cont_variants()
+{
+   typedef typename GetAllocatorCont<VoidAllocator>::template apply<int>::type MyCont;
+   typedef typename GetAllocatorCont<VoidAllocator>::template apply<test::movable_int>::type MyMoveCont;
+   typedef typename GetAllocatorCont<VoidAllocator>::template apply<test::movable_and_copyable_int>::type MyCopyMoveCont;
+   typedef typename GetAllocatorCont<VoidAllocator>::template apply<test::copyable_int>::type MyCopyCont;
+
+   if(test::vector_test<MyCont>())
+      return 1;
+   if(test::vector_test<MyMoveCont>())
+      return 1;
+   if(test::vector_test<MyCopyMoveCont>())
+      return 1;
+   if(test::vector_test<MyCopyCont>())
+      return 1;
+   return 0;
 }
 
 
@@ -319,31 +365,48 @@ int main ()
       d.resize(1);
    }
 
-   {
-      typedef deque<int> MyDeque;
-      typedef deque<test::movable_int> MyMoveDeque;
-      typedef deque<test::movable_and_copyable_int> MyCopyMoveDeque;
-      typedef deque<test::copyable_int> MyCopyDeque;
-      if(test::vector_test<MyDeque>())
-         return 1;
-      if(test::vector_test<MyMoveDeque>())
-         return 1;
-      if(test::vector_test<MyCopyMoveDeque>())
-         return 1;
-      if(test::vector_test<MyCopyDeque>())
-         return 1;
-      if(!test::default_init_test< deque<int, test::default_init_allocator<int> > >()){
-         std::cerr << "Default init test failed" << std::endl;
-         return 1;
-      }
+   ////////////////////////////////////
+   //    Allocator implementations
+   ////////////////////////////////////
+   //       std:allocator
+   if(test_cont_variants< std::allocator<void> >()){
+      std::cerr << "test_cont_variants< std::allocator<void> > failed" << std::endl;
+      return 1;
+   }
+   //       boost::container::allocator
+   if(test_cont_variants< allocator<void> >()){
+      std::cerr << "test_cont_variants< allocator<void> > failed" << std::endl;
+      return 1;
+   }
+   //       boost::container::node_allocator
+   if(test_cont_variants< node_allocator<void> >()){
+      std::cerr << "test_cont_variants< node_allocator<void> > failed" << std::endl;
+      return 1;
+   }
+   //       boost::container::adaptive_pool
+   if(test_cont_variants< adaptive_pool<void> >()){
+      std::cerr << "test_cont_variants< adaptive_pool<void> > failed" << std::endl;
+      return 1;
+   }
+   ////////////////////////////////////
+   //    Default init test
+   ////////////////////////////////////
+   if(!test::default_init_test< deque<int, test::default_init_allocator<int> > >()){
+      std::cerr << "Default init test failed" << std::endl;
+      return 1;
    }
 
+   ////////////////////////////////////
+   //    Emplace testing
+   ////////////////////////////////////
    const test::EmplaceOptions Options = (test::EmplaceOptions)(test::EMPLACE_BACK | test::EMPLACE_FRONT | test::EMPLACE_BEFORE);
 
    if(!boost::container::test::test_emplace
       < deque<test::EmplaceInt>, Options>())
       return 1;
-
+   ////////////////////////////////////
+   //    Allocator propagation testing
+   ////////////////////////////////////
    if(!boost::container::test::test_propagate_allocator<deque>())
       return 1;
 

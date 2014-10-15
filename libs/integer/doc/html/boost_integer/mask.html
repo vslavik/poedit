@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Integer Masks</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="Boost.Integer">
 <link rel="up" href="../index.html" title="Boost.Integer">
 <link rel="prev" href="integer.html" title="Integer Type Selection">
@@ -24,9 +24,9 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="boost_integer.mask"></a><a class="link" href="mask.html" title="Integer Masks"> Integer Masks</a>
+<a name="boost_integer.mask"></a><a class="link" href="mask.html" title="Integer Masks">Integer Masks</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="mask.html#boost_integer.mask.overview">Overview</a></span></dt>
 <dt><span class="section"><a href="mask.html#boost_integer.mask.synopsis">Synopsis</a></span></dt>
 <dt><span class="section"><a href="mask.html#boost_integer.mask.single_bit_mask_class_template">Single
@@ -56,8 +56,8 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_integer.mask.synopsis"></a><a class="link" href="mask.html#boost_integer.mask.synopsis" title="Synopsis">Synopsis</a>
 </h3></div></div></div>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cstddef</span><span class="special">&gt;</span>  <span class="comment">// for std::size_t
-</span>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cstddef</span><span class="special">&gt;</span>  <span class="comment">// for std::size_t</span>
+
 <span class="keyword">namespace</span> <span class="identifier">boost</span>
 <span class="special">{</span>
 
@@ -85,10 +85,10 @@
     <span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">bit_count</span>      <span class="special">=</span> <span class="identifier">Bits</span><span class="special">;</span>
 <span class="special">};</span>
 
-<span class="comment">// Specializations for low_bits_mask_t exist for certain bit counts.
-</span>
-<span class="special">}</span>  <span class="comment">// namespace boost
-</span></pre>
+<span class="comment">// Specializations for low_bits_mask_t exist for certain bit counts.</span>
+
+<span class="special">}</span>  <span class="comment">// namespace boost</span>
+</pre>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -105,8 +105,10 @@
         of <code class="literal">high_bit_mask_t</code>.
       </p>
 <div class="table">
-<a name="boost_integer.mask.single_bit_mask_class_template.members_of_the__boost__high_bit_mask_t__class_template"></a><p class="title"><b>Table&#160;2.&#160;Members of the `boost::high_bit_mask_t` Class Template</b></p>
-<div class="table-contents"><table class="table" summary="Members of the `boost::high_bit_mask_t` Class Template">
+<a name="boost_integer.mask.single_bit_mask_class_template.members_of_the__boost__high_bit_mask_t__class_template"></a><p class="title"><b>Table&#160;2.&#160;Members of the <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">high_bit_mask_t</span></code>
+        Class Template</b></p>
+<div class="table-contents"><table class="table" summary="Members of the boost::high_bit_mask_t
+        Class Template">
 <colgroup>
 <col>
 <col>
@@ -205,8 +207,8 @@
         type. The following table describes the members of <code class="literal">low_bits_mask_t</code>.
       </p>
 <div class="table">
-<a name="boost_integer.mask.group_bit_mask_class_template.members_of_the___boost__low_bits_mask_t__class_template"></a><p class="title"><b>Table&#160;3.&#160;Members of the [^boost::low_bits_mask_t] Class Template</b></p>
-<div class="table-contents"><table class="table" summary="Members of the [^boost::low_bits_mask_t] Class Template">
+<a name="boost_integer.mask.group_bit_mask_class_template.members_of_the___boost__low_bits_mask_t__class_template"></a><p class="title"><b>Table&#160;3.&#160;Members of the <code class="literal">boost::low_bits_mask_t</code> Class Template</b></p>
+<div class="table-contents"><table class="table" summary="Members of the boost::low_bits_mask_t Class Template">
 <colgroup>
 <col>
 <col>
@@ -310,8 +312,8 @@
 </h3></div></div></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">integer</span><span class="special">/</span><span class="identifier">integer_mask</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
-<span class="comment">//...
-</span>
+<span class="comment">//...</span>
+
 <span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
     <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">high_bit_mask_t</span><span class="special">&lt;</span><span class="number">29</span><span class="special">&gt;</span>  <span class="identifier">mask1_type</span><span class="special">;</span>
@@ -319,13 +321,13 @@
 
     <span class="identifier">mask1_type</span><span class="special">::</span><span class="identifier">least</span>  <span class="identifier">my_var1</span><span class="special">;</span>
     <span class="identifier">mask2_type</span><span class="special">::</span><span class="identifier">fast</span>   <span class="identifier">my_var2</span><span class="special">;</span>
-    <span class="comment">//...
-</span>
+    <span class="comment">//...</span>
+
     <span class="identifier">my_var1</span> <span class="special">|=</span> <span class="identifier">mask1_type</span><span class="special">::</span><span class="identifier">high_bit</span><span class="special">;</span>
     <span class="identifier">my_var2</span> <span class="special">&amp;=</span> <span class="identifier">mask2_type</span><span class="special">::</span><span class="identifier">sig_bits_fast</span><span class="special">;</span>
 
-    <span class="comment">//...
-</span><span class="special">}</span>
+    <span class="comment">//...</span>
+<span class="special">}</span>
 </pre>
 </div>
 <div class="section">
@@ -363,8 +365,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001 -2009 Beman Dawes, Daryle Walker, Gennaro Prota,
-      John Maddock<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2009 Beman
+      Dawes, Daryle Walker, Gennaro Prota, John Maddock<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -22,6 +22,7 @@
 #include <boost/geometry/algorithms/difference.hpp>
 #include <boost/geometry/algorithms/intersects.hpp>
 #include <boost/geometry/algorithms/within.hpp>
+#include <boost/geometry/policies/robustness/get_rescale_policy.hpp>
 
 #include <boost/geometry/geometries/geometries.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
@@ -40,12 +41,18 @@
 template <typename Geometry>
 inline void test_assemble(std::string const& id, Geometry const& p, Geometry const& q, char operation = 'i')
 {
+    typedef typename bg::point_type<Geometry>::type point_type;
+    typedef typename bg::rescale_policy_type<point_type>::type
+        rescale_policy_type;
+    rescale_policy_type rescale_policy
+        = bg::get_rescale_policy<rescale_policy_type>(p, q);
+
 
     std::vector<Geometry> u, i, d1, d2;
     bg::detail::union_::union_insert<Geometry>(p, q, std::back_inserter(u));
     bg::detail::intersection::intersection_insert<Geometry>(p, q, std::back_inserter(i));
-    bg::detail::difference::difference_insert<Geometry>(p, q, std::back_inserter(d1));
-    bg::detail::difference::difference_insert<Geometry>(q, p, std::back_inserter(d2));
+    bg::detail::difference::difference_insert<Geometry>(p, q, rescale_policy, std::back_inserter(d1));
+    bg::detail::difference::difference_insert<Geometry>(q, p, rescale_policy, std::back_inserter(d2));
 
     if (operation == 'i')
     {
@@ -72,21 +79,13 @@ inline void test_assemble(std::string const& id, Geometry const& p, Geometry con
             area_d2 += bg::area(g);
         }
 
-
         type diff = (area_p + area_q) - area_u - area_i;
         type diff_d1 = (area_u - area_q) - area_d1;
         type diff_d2 = (area_u - area_p) - area_d2;
 
-        BOOST_CHECK_CLOSE(diff, 0.0, 0.001);
-
-        // Gives small deviations on gcc:
-        // difference{0.001%} between diff_d1{1.1102230246251565e-016} and 0.0{0} exceeds 0.001%
-        //BOOST_CHECK_CLOSE(diff_d1, 0.0, 0.001);
-        //BOOST_CHECK_CLOSE(diff_d2, 0.0, 0.001);
-
         bool ok = abs(diff) < 0.001
-            || abs(diff_d1) < 0.001
-            || abs(diff_d2) < 0.001;
+            && abs(diff_d1) < 0.001
+            && abs(diff_d2) < 0.001;
 
         BOOST_CHECK_MESSAGE(ok,
             id << " diff:  "

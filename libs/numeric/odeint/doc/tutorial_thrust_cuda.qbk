@@ -1,8 +1,9 @@
 [/============================================================================
   Boost.odeint
 
-  Copyright (c) 2009-2012 Karsten Ahnert
-  Copyright (c) 2009-2012 Mario Mulansky
+  Copyright 2011-2013 Karsten Ahnert
+  Copyright 2011-2013 Mario Mulansky
+  Copyright 2012 Sylwester Arabas
 
   Use, modification and distribution is subject to the Boost Software License,
   Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -85,9 +86,15 @@ The system function is defined via
 
 This class is used within the `do_step` and `integrate` method. It defines a member structure `sys_functor` for the r.h.s. of each individual oscillator and the `operator()` for the use in the steppers and integrators of odeint. The functor computes first the mean field of ['__phi[subl k]] and secondly calculates the whole r.h.s. of the ODE using this mean field. Note, how nicely `thrust::tuple` and `thrust::zip_iterator` play together.
 
-Now, we are ready to put everything together. All we have to do for making odeint ready for using the GPU is to parametrize the stepper with the appropriate thrust algebra/operations:
+Now we are ready to put everything together. All we have to do for making
+odeint ready for using the GPU is to parametrize the stepper with the `state_type`
+and `value_type`:
 
 [thrust_phase_ensemble_define_rk4]
+
+[note We have specifically define four template parameters because we have to
+override the default parameter value `double` with `value_type` to ensure our
+programs runs properly if we use `float` as fundamental data type.]
 
 You can also use a controlled or dense output stepper, e.g.
 

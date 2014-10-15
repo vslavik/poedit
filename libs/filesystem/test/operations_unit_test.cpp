@@ -31,6 +31,7 @@
 #   error Configuration not supported: Boost.Filesystem V3 and later requires std::wstring support
 # endif
 
+#include <boost/foreach.hpp>
 #include <boost/system/error_code.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
@@ -145,10 +146,94 @@ namespace
 
     for (; it != end; ++it)
     {
-//      cout << "  " << it->path().string() << "\n";
+      //cout << "  " << it->path() << "\n";
+    }
+
+    CHECK(directory_iterator(".") != directory_iterator());
+    CHECK(directory_iterator() == end);
+
+#ifndef BOOST_NO_CXX11_RANGE_BASED_FOR
+    for (directory_entry& x : directory_iterator("."))
+    {
+      CHECK(!x.path().empty());
+       //cout << "  " << x.path() << "\n";
+    }
+    const directory_iterator dir_itr(".");
+    for (directory_entry& x : dir_itr)
+    {
+      CHECK(!x.path().empty());
+      //cout << "  " << x.path() << "\n";
+    }
+#endif
+
+    BOOST_FOREACH(directory_entry& x, directory_iterator("."))
+    {
+      CHECK(!x.path().empty());
+      //cout << "  " << x.path() << "\n";
     }
 
     cout << "directory_iterator_test complete" << endl;
+  }
+
+  //  recursive_directory_iterator_test  -----------------------------------------------//
+
+  void recursive_directory_iterator_test()
+  {
+    cout << "recursive_directory_iterator_test..." << endl;
+
+    recursive_directory_iterator end;
+
+    recursive_directory_iterator it("..");
+
+    CHECK(!it->path().empty());
+
+    if (is_regular_file(it->status()))
+    {
+      CHECK(is_regular_file(it->symlink_status()));
+      CHECK(!is_directory(it->status()));
+      CHECK(!is_symlink(it->status()));
+      CHECK(!is_directory(it->symlink_status()));
+      CHECK(!is_symlink(it->symlink_status()));
+    }
+    else
+    {
+      CHECK(is_directory(it->status()));
+      CHECK(is_directory(it->symlink_status()));
+      CHECK(!is_regular_file(it->status()));
+      CHECK(!is_regular_file(it->symlink_status()));
+      CHECK(!is_symlink(it->status()));
+      CHECK(!is_symlink(it->symlink_status()));
+    }
+
+    for (; it != end; ++it)
+    {
+      //cout << "  " << it->path() << "\n";
+    }
+
+    CHECK(recursive_directory_iterator("..") != recursive_directory_iterator());
+    CHECK(recursive_directory_iterator() == end);
+
+#ifndef BOOST_NO_CXX11_RANGE_BASED_FOR
+    for (directory_entry& x : recursive_directory_iterator(".."))
+    {
+      CHECK(!x.path().empty());
+      //cout << "  " << x.path() << "\n";
+    }
+    const recursive_directory_iterator dir_itr("..");
+    for (directory_entry& x : dir_itr)
+    {
+      CHECK(!x.path().empty());
+      //cout << "  " << x.path() << "\n";
+    }
+#endif
+
+    BOOST_FOREACH(directory_entry& x, recursive_directory_iterator(".."))
+    {
+      CHECK(!x.path().empty());
+      //cout << "  " << x.path() << "\n";
+    }
+
+    cout << "recursive_directory_iterator_test complete" << endl;
   }
 
   //  operations_test  -------------------------------------------------------//
@@ -258,6 +343,7 @@ int cpp_main(int, char*[])
   file_status_test();
   query_test();
   directory_iterator_test();
+  recursive_directory_iterator_test();
   operations_test();
   directory_entry_test();
   directory_entry_overload_test();

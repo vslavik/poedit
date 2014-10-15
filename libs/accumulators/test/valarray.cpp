@@ -22,13 +22,13 @@ using namespace unit_test;
 using namespace accumulators;
 
 template<typename T>
-typename enable_if<is_floating_point<T> >::type is_equal_or_close(T const &left, T const &right)
+typename boost::enable_if<is_floating_point<T> >::type is_equal_or_close(T const &left, T const &right)
 {
     BOOST_CHECK_CLOSE(left, right, 1e-5);
 }
 
 template<typename T>
-typename disable_if<is_floating_point<T> >::type is_equal_or_close(T const &left, T const &right)
+typename boost::disable_if<is_floating_point<T> >::type is_equal_or_close(T const &left, T const &right)
 {
     BOOST_CHECK_EQUAL(left, right);
 }

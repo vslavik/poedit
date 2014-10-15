@@ -9,7 +9,7 @@
 
 //[rings
 /*`
-Shows how to access the exterior ring (one) 
+Shows how to access the exterior ring (one)
 and interior rings (zero or more) of a polygon.
 Also shows the related ring_type and interior_type.
 */
@@ -27,17 +27,17 @@ int main()
     typedef boost::geometry::model::polygon<point> polygon_type;
 
     polygon_type poly;
-    
+
     typedef boost::geometry::ring_type<polygon_type>::type ring_type;
     ring_type& ring = boost::geometry::exterior_ring(poly);
-    
+
     // For a ring of model::polygon, you can call "push_back".
     // (internally, it is done using a traits::push_back class)
     ring.push_back(point(0, 0));
     ring.push_back(point(0, 5));
     ring.push_back(point(5, 4));
     ring.push_back(point(0, 0));
-    
+
     ring_type inner;
     inner.push_back(point(1, 1));
     inner.push_back(point(2, 1));
@@ -49,16 +49,16 @@ int main()
     interiors.push_back(inner);
 
     std::cout << boost::geometry::dsv(poly) << std::endl;
-    
-    // So int_type defines a collection of rings, 
+
+    // So int_type defines a collection of rings,
     // which is a Boost.Range compatible range
     // The type of an element of the collection is the very same ring type again.
     // We show that.
     typedef boost::range_value<int_type>::type int_ring_type;
-    
-    std::cout 
+
+    std::cout
         << std::boolalpha
-        << boost::is_same<ring_type, int_ring_type>::value 
+        << boost::is_same<ring_type, int_ring_type>::value
         << std::endl;
 
     return 0;

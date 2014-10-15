@@ -569,7 +569,7 @@ anywhere in the program - a memory leak.
 There are couple of ways of fixing this.  One way is to explicitly manage the bus stops.
 However, a more robust and transparent is to use 
 <code style="white-space: normal">shared_ptr</code> rather than raw pointers. Along
-with serialization implemenations for the Standard Library, the serialization library
+with serialization implementations for the Standard Library, the serialization library
 includes implementation of serialization for 
 <code style="white-space: normal">boost::shared ptr</code>.  Given this, it should be
 easy to alter any of these examples to eliminate the memory leak. This is left 

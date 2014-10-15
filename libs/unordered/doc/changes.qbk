@@ -47,7 +47,7 @@ First official release.
 
 [h2 Boost 1.38.0]
 
-* Use [@boost:/libs/utility/swap.html `boost::swap`].
+* Use [@boost:/libs/core/swap.html `boost::swap`].
 * [@https://svn.boost.org/trac/boost/ticket/2237 Ticket 2237]:
   Document that the equality and inequality operators are undefined for two
   objects if their equality predicates aren't equivalent. Thanks to Daniel
@@ -234,5 +234,22 @@ C++11 support has resulted in some breaking changes:
   release.
 * If the hash function and equality predicate are known to both have nothrow
   move assignment or construction then use them.
+
+[h2 Boost 1.55.0]
+
+* Avoid some warnings ([ticket 8851], [ticket 8874]).
+* Avoid exposing some detail functions via. ADL on the iterators.
+* Follow the standard by only using the allocators' construct and destroy
+  methods to construct and destroy stored elements. Don't use them for internal
+  data like pointers.
+
+[h2 Boost 1.56.0]
+
+* Fix some shadowed variable warnings ([ticket 9377]).
+* Fix allocator use in documentation ([ticket 9719]).
+* Always use prime number of buckets for integers. Fixes performance
+  regression when inserting consecutive integers, although makes other
+  uses slower ([ticket 9282]).
+* Only construct elements using allocators, as specified in C++11 standard.
 
 [endsect]

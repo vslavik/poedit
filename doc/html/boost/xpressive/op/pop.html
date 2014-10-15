@@ -26,7 +26,7 @@
 <a name="boost.xpressive.op.pop"></a><div class="titlepage"></div>
 <div class="refnamediv">
 <h2><span class="refentrytitle">Struct pop</span></h2>
-<p>boost::xpressive::op::pop</p>
+<p>boost::xpressive::op::pop &#8212; <code class="computeroutput">pop</code> is a PolymorphicFunctionObject for popping an element from a container. </p>
 </div>
 <h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp" title="Header &lt;boost/xpressive/regex_actions.hpp&gt;">boost/xpressive/regex_actions.hpp</a>&gt;
@@ -36,15 +36,44 @@
   <span class="comment">// types</span>
   <span class="keyword">typedef</span> <span class="keyword">void</span> <a name="boost.xpressive.op.pop.result_type"></a><span class="identifier">result_type</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="pop.html#idp167953736-bb">public member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sequence<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="pop.html#idp167953944-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="pop.html#idp350736192-bb">public member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sequence<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="pop.html#idp350736752-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp258072248"></a><h2>Description</h2>
+<a name="idp532080720"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp258072456"></a><h3>
-<a name="idp167953736-bb"></a><code class="computeroutput">pop</code> public member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sequence<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp167953944-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span> seq<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp532081136"></a><h3>
+<a name="idp350736192-bb"></a><code class="computeroutput">pop</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sequence<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp350736752-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span> seq<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Equivalent to <code class="computeroutput">seq.pop()</code>. <p>
+
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><code class="computeroutput">seq</code></span></p></td>
+<td><p>The sequence from which to pop. </p></td>
+</tr></tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p><code class="computeroutput">void</code> </p></td>
+</tr>
+</tbody>
+</table></div>
+</li></ol></div>
 </div>
 </div>
 </div>

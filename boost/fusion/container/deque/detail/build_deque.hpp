@@ -7,6 +7,7 @@
 #if !defined(BOOST_FUSION_BUILD_DEQUE_02032013_1921)
 #define BOOST_FUSION_BUILD_DEQUE_02032013_1921
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/iterator/equal_to.hpp>
 #include <boost/fusion/iterator/next.hpp>
 #include <boost/fusion/iterator/value_of.hpp>
@@ -25,6 +26,7 @@ namespace boost { namespace fusion { namespace detail
     struct build_deque<First, Last, true>
     {
         typedef deque<> type;
+        BOOST_FUSION_GPU_ENABLED
         static type
         call(First const&, Last const&)
         {
@@ -40,6 +42,7 @@ namespace boost { namespace fusion { namespace detail
     {
         typedef deque<T, Rest...> type;
 
+        BOOST_FUSION_GPU_ENABLED
         static type
         call(T const& first, deque<Rest...> const& rest)
         {
@@ -61,6 +64,7 @@ namespace boost { namespace fusion { namespace detail
 
         typedef typename push_front::type type;
 
+        BOOST_FUSION_GPU_ENABLED
         static type
         call(First const& f, Last const& l)
         {

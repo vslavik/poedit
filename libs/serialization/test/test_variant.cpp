@@ -18,8 +18,8 @@
 #include <cstddef> // NULL
 #include <cstdio> // remove
 #include <fstream>
-#include <cmath> // for fabs()
 #include <boost/config.hpp>
+#include <boost/math/special_functions/next.hpp>
 #if defined(BOOST_NO_STDC_NAMESPACE)
 namespace std{ 
     using ::remove;
@@ -68,7 +68,7 @@ public:
     template <class T, class U>
     bool operator()( const T & t, const U & u) const 
     {
-        typedef BOOST_DEDUCED_TYPENAME boost::mpl::eval_if<boost::is_same<T, U>,
+        typedef typename boost::mpl::eval_if<boost::is_same<T, U>,
             boost::mpl::identity<same>,
             boost::mpl::identity<not_same>
         >::type type;
@@ -77,11 +77,11 @@ public:
 
     bool operator()( const float & lhs, const float & rhs ) const
     {
-        return std::fabs(lhs- rhs) < std::numeric_limits<float>::round_error();
+        return std::abs( boost::math::float_distance(lhs, rhs)) < 2;
     }
     bool operator()( const double & lhs, const double & rhs ) const
     {
-        return std::fabs(lhs - rhs) < std::numeric_limits<float>::round_error();
+        return std::abs( boost::math::float_distance(lhs, rhs)) < 2;
     }
 };
 

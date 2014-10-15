@@ -10,6 +10,7 @@
 
 #include <boost/static_assert.hpp>
 #include <boost/type_traits.hpp>
+#include <boost/concept_check.hpp>
 #include <boost/config.hpp>
 
 enum Container {};
@@ -51,6 +52,7 @@ void compat1()
 {
     std::vector<int> v;
     iterator_of< std::vector<int> >::type i = v.begin();
+    boost::ignore_unused_variable_warning(i);
 }
 
 #include <boost/test/included/unit_test.hpp> 

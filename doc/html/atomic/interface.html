@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../atomic.html" title="Chapter&#160;4.&#160;Boost.Atomic">
+<link rel="up" href="../atomic.html" title="Chapter&#160;5.&#160;Boost.Atomic">
 <link rel="prev" href="thread_coordination.html" title="Thread coordination using Boost.Atomic">
 <link rel="next" href="usage_examples.html" title="Usage examples">
 </head>
@@ -27,6 +27,7 @@
 <a name="atomic.interface"></a><a class="link" href="interface.html" title="Programming interfaces">Programming interfaces</a>
 </h2></div></div></div>
 <div class="toc"><dl class="toc">
+<dt><span class="section"><a href="interface.html#atomic.interface.configuration">Configuration and building</a></span></dt>
 <dt><span class="section"><a href="interface.html#atomic.interface.interface_memory_order">Memory order</a></span></dt>
 <dt><span class="section"><a href="interface.html#atomic.interface.interface_atomic_object">Atomic objects</a></span></dt>
 <dt><span class="section"><a href="interface.html#atomic.interface.interface_fences">Fences</a></span></dt>
@@ -34,8 +35,121 @@
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
+<a name="atomic.interface.configuration"></a><a class="link" href="interface.html#atomic.interface.configuration" title="Configuration and building">Configuration and building</a>
+</h3></div></div></div>
+<p>
+        The library contains header-only and compiled parts. The library is header-only
+        for lock-free cases but requires a separate binary to implement the lock-based
+        emulation. Users are able to detect whether linking to the compiled part
+        is required by checking the <a class="link" href="interface.html#atomic.interface.feature_macros" title="Feature testing macros">feature
+        macros</a>.
+      </p>
+<p>
+        The following macros affect library behavior:
+      </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Macro
+                </p>
+              </th>
+<th>
+                <p>
+                  Description
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_NO_CMPXCHG16B</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Affects 64-bit x86 MSVC builds. When defined, the library assumes
+                  the target CPU does not support <code class="computeroutput"><span class="identifier">cmpxchg16b</span></code>
+                  instruction used to support 128-bit atomic operations. This is
+                  the case with some early 64-bit AMD CPUs, all Intel CPUs and current
+                  AMD CPUs support this instruction. The library does not perform
+                  runtime detection of this instruction, so running the code that
+                  uses 128-bit atomics on such CPUs will result in crashes, unless
+                  this macro is defined. Note that the macro does not affect GCC
+                  and compatible compilers because the library infers this information
+                  from the compiler-defined macros.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_FORCE_FALLBACK</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  When defined, all operations are implemented with locks. This is
+                  mostly used for testing and should not be used in real world projects.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_DYN_LINK</span></code>
+                  and <code class="computeroutput"><span class="identifier">BOOST_ALL_DYN_LINK</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Control library linking. If defined, the library assumes dynamic
+                  linking, otherwise static. The latter macro affects all Boost libraries,
+                  not just <span class="bold"><strong>Boost.Atomic</strong></span>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_NO_LIB</span></code>
+                  and <code class="computeroutput"><span class="identifier">BOOST_ALL_NO_LIB</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Control library auto-linking on Windows. When defined, disables
+                  auto-linking. The latter macro affects all Boost libraries, not
+                  just <span class="bold"><strong>Boost.Atomic</strong></span>.
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+<p>
+        Besides macros, it is important to specify the correct compiler options for
+        the target CPU. With GCC and compatible compilers this affects whether particular
+        atomic operations are lock-free or not.
+      </p>
+<p>
+        Boost building process is described in the <a href="http://www.boost.org/doc/libs/release/more/getting_started/" target="_top">Getting
+        Started guide</a>. For example, you can build <span class="bold"><strong>Boost.Atomic</strong></span>
+        with the following command line:
+      </p>
+<pre class="programlisting">bjam --with-atomic variant=release instruction-set=core2 stage
+</pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
 <a name="atomic.interface.interface_memory_order"></a><a class="link" href="interface.html#atomic.interface.interface_memory_order" title="Memory order">Memory order</a>
 </h3></div></div></div>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">memory_order</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
 <p>
         The enumeration <code class="literal">boost::memory_order</code> defines the following
         values to represent memory ordering constraints:
@@ -72,7 +186,8 @@
                   either a) further operations do not depend on the outcome of the
                   atomic operation or b) ordering is enforced through stand-alone
                   <code class="computeroutput"><span class="identifier">atomic_thread_fence</span></code>
-                  operations
+                  operations. The operation on the atomic value itself is still atomic
+                  though.
                 </p>
               </td>
 </tr>
@@ -113,8 +228,8 @@
 <td>
                 <p>
                   Perform <code class="computeroutput"><span class="identifier">consume</span></code>
-                  operation. More restrictive (and usually more efficient) than
-                  <code class="computeroutput"><span class="identifier">memory_order_acquire</span></code>
+                  operation. More relaxed (and on some architectures more efficient)
+                  than <code class="computeroutput"><span class="identifier">memory_order_acquire</span></code>
                   as it only affects succeeding operations that are computationally-dependent
                   on the value retrieved from an atomic variable.
                 </p>
@@ -142,7 +257,7 @@
 <td>
                 <p>
                   Enforce sequential consistency. Implies <code class="computeroutput"><span class="identifier">memory_order_acq_rel</span></code>,
-                  but additional enforces total order for all operations such qualified.
+                  but additionally enforces total order for all operations such qualified.
                 </p>
               </td>
 </tr>
@@ -165,27 +280,28 @@
 <dt><span class="section"><a href="interface.html#atomic.interface.interface_atomic_object.interface_atomic_pointer"><code class="literal">boost::atomic&lt;<span class="emphasis"><em>pointer</em></span>&gt;</code>
         template class</a></span></dt>
 </dl></div>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">atomic</span><span class="special">/</span><span class="identifier">atomic</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
 <p>
         <code class="literal">boost::atomic&lt;<span class="emphasis"><em>T</em></span>&gt;</code> provides methods
         for atomically accessing variables of a suitable type <code class="literal"><span class="emphasis"><em>T</em></span></code>.
-        The type is suitable if it satisfies one of the following constraints:
+        The type is suitable if it is <span class="emphasis"><em>trivially copyable</em></span> (3.9/9
+        [basic.types]). Following are examples of the types compatible with this
+        requirement:
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-            it is an integer, boolean, enum or pointer type
+            a scalar type (e.g. integer, boolean, enum or pointer type)
           </li>
 <li class="listitem">
-            it is any other data-type (<code class="literal">class</code> or <code class="literal">struct</code>)
-            that has a non-throwing default constructor, that is copyable via <code class="literal">memcpy</code>
-            and comparable via <code class="literal">memcmp</code>.
+            a <code class="literal">class</code> or <code class="literal">struct</code> that has no non-trivial
+            copy or move constructors or assignment operators, has a trivial destructor,
+            and that is comparable via <code class="literal">memcmp</code>.
           </li>
 </ul></div>
 <p>
-        Note that all classes having a trivial default constructor, no destructor
-        and no virtual methods satisfy the second condition according to C++98. On
-        a given platform, other data-types <span class="emphasis"><em>may</em></span> also satisfy
-        this constraint, however you should exercise caution as the behaviour becomes
-        implementation-defined. Also be warned that structures with "padding"
+        Note that classes with virtual functions or virtual base classes do not satisfy
+        the requirements. Also be warned that structures with "padding"
         between data members may compare non-equal via <code class="literal">memcmp</code>
         even though all members are equal.
       </p>
@@ -584,6 +700,8 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="atomic.interface.interface_fences"></a><a class="link" href="interface.html#atomic.interface.interface_fences" title="Fences">Fences</a>
 </h3></div></div></div>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">atomic</span><span class="special">/</span><span class="identifier">fences</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -636,6 +754,8 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="atomic.interface.feature_macros"></a><a class="link" href="interface.html#atomic.interface.feature_macros" title="Feature testing macros">Feature testing macros</a>
 </h3></div></div></div>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">atomic</span><span class="special">/</span><span class="identifier">capabilities</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
 <p>
         <span class="bold"><strong>Boost.Atomic</strong></span> defines a number of macros
         to allow compile-time detection whether an atomic data type is implemented
@@ -796,19 +916,6 @@
 <tr>
 <td>
                 <p>
-                  <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_INT128_LOCK_FREE</span></code>
-                </p>
-              </td>
-<td>
-                <p>
-                  Indicate whether <code class="computeroutput"><span class="identifier">atomic</span><span class="special">&lt;</span><span class="identifier">int128_type</span><span class="special">&gt;</span></code> (including signed/unsigned
-                  variants) is lock-free. This macro is a non-standard extension.
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
                   <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_ADDRESS_LOCK_FREE</span></code>
                   or <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_POINTER_LOCK_FREE</span></code>
                 </p>
@@ -848,11 +955,118 @@
 </tr>
 </tbody>
 </table></div>
+<p>
+        In addition to these standard macros, <span class="bold"><strong>Boost.Atomic</strong></span>
+        also defines a number of extension macros, which can also be useful. Like
+        the standard ones, these macros are defined to values <code class="computeroutput"><span class="number">0</span></code>,
+        <code class="computeroutput"><span class="number">1</span></code> and <code class="computeroutput"><span class="number">2</span></code>
+        to indicate whether the corresponding operations are lock-free or not.
+      </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Macro
+                </p>
+              </th>
+<th>
+                <p>
+                  Description
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_INT8_LOCK_FREE</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Indicate whether <code class="computeroutput"><span class="identifier">atomic</span><span class="special">&lt;</span><span class="identifier">int8_type</span><span class="special">&gt;</span></code> is lock-free.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_INT16_LOCK_FREE</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Indicate whether <code class="computeroutput"><span class="identifier">atomic</span><span class="special">&lt;</span><span class="identifier">int16_type</span><span class="special">&gt;</span></code> is lock-free.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_INT32_LOCK_FREE</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Indicate whether <code class="computeroutput"><span class="identifier">atomic</span><span class="special">&lt;</span><span class="identifier">int32_type</span><span class="special">&gt;</span></code> is lock-free.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_INT64_LOCK_FREE</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Indicate whether <code class="computeroutput"><span class="identifier">atomic</span><span class="special">&lt;</span><span class="identifier">int64_type</span><span class="special">&gt;</span></code> is lock-free.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_INT128_LOCK_FREE</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Indicate whether <code class="computeroutput"><span class="identifier">atomic</span><span class="special">&lt;</span><span class="identifier">int128_type</span><span class="special">&gt;</span></code> is lock-free.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_NO_ATOMIC_FLAG_INIT</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Defined after including <code class="computeroutput"><span class="identifier">atomic_flag</span><span class="special">.</span><span class="identifier">hpp</span></code>,
+                  if the implementation does not support the <code class="computeroutput"><span class="identifier">BOOST_ATOMIC_FLAG_INIT</span></code>
+                  macro for static initialization of <code class="computeroutput"><span class="identifier">atomic_flag</span></code>.
+                  This macro is typically defined for pre-C++11 compilers.
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+<p>
+        In the table above, <code class="computeroutput"><span class="identifier">intN_type</span></code>
+        is a type that fits storage of contiguous <code class="computeroutput"><span class="identifier">N</span></code>
+        bits, suitably aligned for atomic operations.
+      </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2011 Helge Bahmann<br>Copyright &#169; 2012 Tim Blechmann<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2011 Helge Bahmann<br>Copyright &#169; 2012 Tim Blechmann<br>Copyright &#169; 2013 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
