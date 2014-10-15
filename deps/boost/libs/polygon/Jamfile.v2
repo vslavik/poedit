@@ -10,8 +10,9 @@ project
     : requirements
         <warnings>all
         <toolset>intel:<warnings>on
+        <toolset>intel-win:<cxxflags>"/bigobj"
         <toolset>gcc:<cxxflags>"-pedantic -Wall -Wstrict-aliasing -fstrict-aliasing -Wno-long-long"
-        <toolset>msvc:<cxxflags>/W4
+        <toolset>msvc:<cxxflags>"/W4 /bigobj"
         <include>../..
         <include>.
     ;

@@ -51,13 +51,17 @@ protected:
 
     base(): use_count_(0)
     {
+        ++instances;
     }
 
     virtual ~base()
     {
+        --instances;
     }
 
 public:
+
+    static long instances;
 
     long use_count() const
     {
@@ -90,6 +94,8 @@ public:
 
 #endif
 };
+
+long base::instances = 0;
 
 } // namespace N
 
@@ -161,18 +167,26 @@ void pointer_constructor()
         BOOST_TEST(px.get() == 0);
     }
 
+    BOOST_TEST( N::base::instances == 0 );
+
     {
         X * p = new X;
         BOOST_TEST(p->use_count() == 0);
+
+        BOOST_TEST( N::base::instances == 1 );
 
         boost::intrusive_ptr<X> px(p);
         BOOST_TEST(px.get() == p);
         BOOST_TEST(px->use_count() == 1);
     }
 
+    BOOST_TEST( N::base::instances == 0 );
+
     {
         X * p = new X;
         BOOST_TEST(p->use_count() == 0);
+
+        BOOST_TEST( N::base::instances == 1 );
 
 #if defined(BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP)
         using boost::intrusive_ptr_add_ref;
@@ -184,6 +198,8 @@ void pointer_constructor()
         BOOST_TEST(px.get() == p);
         BOOST_TEST(px->use_count() == 1);
     }
+
+    BOOST_TEST( N::base::instances == 0 );
 }
 
 void copy_constructor()
@@ -224,17 +240,27 @@ void copy_constructor()
         BOOST_TEST(px.get() == py.get());
     }
 
+    BOOST_TEST( N::base::instances == 0 );
+
     {
         boost::intrusive_ptr<X> px(new X);
         boost::intrusive_ptr<X> px2(px);
-        BOOST_TEST(px2.get() == px.get());
+        BOOST_TEST( px2.get() == px.get() );
+
+        BOOST_TEST( N::base::instances == 1 );
     }
+
+    BOOST_TEST( N::base::instances == 0 );
 
     {
         boost::intrusive_ptr<Y> py(new Y);
         boost::intrusive_ptr<X> px(py);
-        BOOST_TEST(px.get() == py.get());
+        BOOST_TEST( px.get() == py.get() );
+
+        BOOST_TEST( N::base::instances == 1 );
     }
+
+    BOOST_TEST( N::base::instances == 0 );
 }
 
 void test()
@@ -251,15 +277,23 @@ namespace n_destructor
 
 void test()
 {
-    boost::intrusive_ptr<X> px(new X);
-    BOOST_TEST(px->use_count() == 1);
+    BOOST_TEST( N::base::instances == 0 );
 
     {
-        boost::intrusive_ptr<X> px2(px);
-        BOOST_TEST(px->use_count() == 2);
+        boost::intrusive_ptr<X> px(new X);
+        BOOST_TEST(px->use_count() == 1);
+
+        BOOST_TEST( N::base::instances == 1 );
+
+        {
+            boost::intrusive_ptr<X> px2(px);
+            BOOST_TEST(px->use_count() == 2);
+        }
+
+        BOOST_TEST(px->use_count() == 1);
     }
 
-    BOOST_TEST(px->use_count() == 1);
+    BOOST_TEST( N::base::instances == 0 );
 }
 
 } // namespace n_destructor
@@ -287,6 +321,174 @@ void test()
 }
 
 } // namespace n_assignment
+
+namespace n_reset
+{
+
+void test()
+{
+    BOOST_TEST( N::base::instances == 0 );
+
+    {
+        boost::intrusive_ptr<X> px;
+        BOOST_TEST( px.get() == 0 );
+
+        px.reset();
+        BOOST_TEST( px.get() == 0 );
+
+        X * p = new X;
+        BOOST_TEST( p->use_count() == 0 );
+        BOOST_TEST( N::base::instances == 1 );
+
+        px.reset( p );
+        BOOST_TEST( px.get() == p );
+        BOOST_TEST( px->use_count() == 1 );
+
+        px.reset();
+        BOOST_TEST( px.get() == 0 );
+    }
+
+    BOOST_TEST( N::base::instances == 0 );
+
+    {
+        boost::intrusive_ptr<X> px( new X );
+        BOOST_TEST( N::base::instances == 1 );
+
+        px.reset( 0 );
+        BOOST_TEST( px.get() == 0 );
+    }
+
+    BOOST_TEST( N::base::instances == 0 );
+
+    {
+        boost::intrusive_ptr<X> px( new X );
+        BOOST_TEST( N::base::instances == 1 );
+
+        px.reset( 0, false );
+        BOOST_TEST( px.get() == 0 );
+    }
+
+    BOOST_TEST( N::base::instances == 0 );
+
+    {
+        boost::intrusive_ptr<X> px( new X );
+        BOOST_TEST( N::base::instances == 1 );
+
+        px.reset( 0, true );
+        BOOST_TEST( px.get() == 0 );
+    }
+
+    BOOST_TEST( N::base::instances == 0 );
+
+    {
+        X * p = new X;
+        BOOST_TEST( p->use_count() == 0 );
+
+        BOOST_TEST( N::base::instances == 1 );
+
+        boost::intrusive_ptr<X> px;
+        BOOST_TEST( px.get() == 0 );
+
+        px.reset( p, true );
+        BOOST_TEST( px.get() == p );
+        BOOST_TEST( px->use_count() == 1 );
+    }
+
+    BOOST_TEST( N::base::instances == 0 );
+
+    {
+        X * p = new X;
+        BOOST_TEST( p->use_count() == 0 );
+
+        BOOST_TEST( N::base::instances == 1 );
+
+#if defined(BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP)
+        using boost::intrusive_ptr_add_ref;
+#endif
+        intrusive_ptr_add_ref( p );
+        BOOST_TEST( p->use_count() == 1 );
+
+        boost::intrusive_ptr<X> px;
+        BOOST_TEST( px.get() == 0 );
+
+        px.reset( p, false );
+        BOOST_TEST( px.get() == p );
+        BOOST_TEST( px->use_count() == 1 );
+    }
+
+    BOOST_TEST( N::base::instances == 0 );
+
+    {
+        boost::intrusive_ptr<X> px( new X );
+        BOOST_TEST( px.get() != 0 );
+        BOOST_TEST( px->use_count() == 1 );
+
+        BOOST_TEST( N::base::instances == 1 );
+
+        X * p = new X;
+        BOOST_TEST( p->use_count() == 0 );
+
+        BOOST_TEST( N::base::instances == 2 );
+
+        px.reset( p );
+        BOOST_TEST( px.get() == p );
+        BOOST_TEST( px->use_count() == 1 );
+
+        BOOST_TEST( N::base::instances == 1 );
+    }
+
+    BOOST_TEST( N::base::instances == 0 );
+
+    {
+        boost::intrusive_ptr<X> px( new X );
+        BOOST_TEST( px.get() != 0 );
+        BOOST_TEST( px->use_count() == 1 );
+
+        BOOST_TEST( N::base::instances == 1 );
+
+        X * p = new X;
+        BOOST_TEST( p->use_count() == 0 );
+
+        BOOST_TEST( N::base::instances == 2 );
+
+        px.reset( p, true );
+        BOOST_TEST( px.get() == p );
+        BOOST_TEST( px->use_count() == 1 );
+
+        BOOST_TEST( N::base::instances == 1 );
+    }
+
+    BOOST_TEST( N::base::instances == 0 );
+
+    {
+        boost::intrusive_ptr<X> px( new X );
+        BOOST_TEST( px.get() != 0 );
+        BOOST_TEST( px->use_count() == 1 );
+
+        BOOST_TEST( N::base::instances == 1 );
+
+        X * p = new X;
+        BOOST_TEST( p->use_count() == 0 );
+
+#if defined(BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP)
+        using boost::intrusive_ptr_add_ref;
+#endif
+        intrusive_ptr_add_ref( p );
+        BOOST_TEST( p->use_count() == 1 );
+
+        BOOST_TEST( N::base::instances == 2 );
+
+        px.reset( p, false );
+        BOOST_TEST( px.get() == p );
+        BOOST_TEST( px->use_count() == 1 );
+
+        BOOST_TEST( N::base::instances == 1 );
+    }
+
+    BOOST_TEST( N::base::instances == 0 );
+}
+
+} // namespace n_reset
 
 namespace n_access
 {
@@ -329,6 +531,30 @@ void test()
 #endif
 
         BOOST_TEST(get_pointer(px) == px.get());
+    }
+
+    {
+        boost::intrusive_ptr<X> px;
+        X* detached = px.detach();
+        BOOST_TEST( px.get() == 0 );
+        BOOST_TEST( detached == 0 );
+    }
+
+    {
+        X * p = new X;
+        BOOST_TEST( p->use_count() == 0 );
+
+        boost::intrusive_ptr<X> px( p );
+        BOOST_TEST( px.get() == p );
+        BOOST_TEST( px->use_count() == 1 );
+
+        X * detached = px.detach();
+        BOOST_TEST( px.get() == 0 );
+
+        BOOST_TEST( detached == p );
+        BOOST_TEST( detached->use_count() == 1 );
+
+        delete detached;
     }
 }
 
@@ -548,6 +774,7 @@ int main()
     n_constructors::test();
     n_destructor::test();
     n_assignment::test();
+    n_reset::test();
     n_access::test();
     n_swap::test();
     n_comparison::test();

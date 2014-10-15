@@ -600,7 +600,7 @@ void construct(DisableTrivialInit const&, I pos, BOOST_RV_REF(P) p)
 // Needed by emplace_back() and emplace()
 
 #if !defined(BOOST_CONTAINER_VARRAY_DISABLE_EMPLACE)
-#if !defined(BOOST_NO_VARIADIC_TEMPLATES)
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
 
 template <typename DisableTrivialInit, typename I, class ...Args>
 inline
@@ -612,10 +612,10 @@ void construct(DisableTrivialInit const&,
     new (static_cast<void*>(boost::addressof(*pos))) V(::boost::forward<Args>(args)...);    // may throw
 }
 
-#else // !BOOST_NO_VARIADIC_TEMPLATES
+#else // !BOOST_NO_CXX11_VARIADIC_TEMPLATES
 
-// BOOST_NO_RVALUE_REFERENCES -> P0 const& p0
-// !BOOST_NO_RVALUE_REFERENCES -> P0 && p0
+// BOOST_NO_CXX11_RVALUE_REFERENCES -> P0 const& p0
+// !BOOST_NO_CXX11_RVALUE_REFERENCES -> P0 && p0
 // which means that version with one parameter may take V const& v
 
 #define BOOST_PP_LOCAL_MACRO(n)                                                                     \
@@ -635,7 +635,7 @@ void construct(DisableTrivialInit const&,                                       
 #define BOOST_PP_LOCAL_LIMITS (1, BOOST_CONTAINER_MAX_CONSTRUCTOR_PARAMETERS)
 #include BOOST_PP_LOCAL_ITERATE()
 
-#endif // !BOOST_NO_VARIADIC_TEMPLATES
+#endif // !BOOST_NO_CXX11_VARIADIC_TEMPLATES
 #endif // !BOOST_CONTAINER_VARRAY_DISABLE_EMPLACE
 
 // assign(I, V)

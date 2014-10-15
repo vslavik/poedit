@@ -22,7 +22,7 @@
 
 
 template <typename Box, bool Reverse>
-void test_geometry(std::string const& wkt, std::string const& expected, 
+void test_geometry(std::string const& wkt, std::string const& expected,
             bg::order_selector expected_order)
 {
 

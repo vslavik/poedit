@@ -2,7 +2,7 @@
 #define LOG_ARCHIVE_HPP
 
 // MS compatible compilers support #pragma once
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
+#if defined(_MSC_VER)
 # pragma once
 #endif
 
@@ -17,6 +17,13 @@
 //  See http://www.boost.org for updates, documentation, and revision history.
 
 #include <boost/archive/xml_oarchive.hpp>
+
+namespace boost {
+namespace archive {
+    namespace detail {
+        template<class Archive> class interface_oarchive;
+    } // namespace detail
+} // namespace archive
 
 /////////////////////////////////////////////////////////////////////////
 // log data to an output stream.  This illustrates a simpler implemenation

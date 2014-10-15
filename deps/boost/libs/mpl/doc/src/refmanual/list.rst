@@ -102,7 +102,7 @@ Example
 .. parsed-literal::
     
     typedef list<float,double,long double> floats;
-    typedef push_front<floating_types,int>::type types;
+    typedef push_front<floats,int>::type types;
     
     BOOST_MPL_ASSERT(( is_same< front<types>::type, int > ));
 

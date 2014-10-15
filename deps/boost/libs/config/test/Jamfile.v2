@@ -65,5 +65,14 @@ test-suite config
     ]
     [ compile-fail threads/test_thread_fail1.cpp ]
     [ compile-fail threads/test_thread_fail2.cpp ]
-    [ compile boost_fallthrough_test.cpp : <toolset>clang:<cxxflags>"-std=c++11 -Wimplicit-fallthrough" <warnings-as-errors>on <warnings>all ]
+    [ compile boost_fallthrough_test.cpp : [ check-target-builds has_clang_implicit_fallthrough "Clang implicit fallthrough" : <toolset>clang:<cxxflags>"-std=c++11 -Wimplicit-fallthrough" <warnings-as-errors>on <warnings>all ] ]
+    [ run cstdint_test.cpp : : : <warnings>all <toolset>gcc:<cxxflags>"-Wno-long-long -Wextra" <toolset>darwin:<cxxflags>-Wno-long-long ]
+    [ run cstdint_test2.cpp : : : <warnings>all <toolset>gcc:<cxxflags>"-Wno-long-long -Wextra" <toolset>darwin:<cxxflags>-Wno-long-long ]
+    [ compile cstdint_include_test.cpp : <warnings>all <toolset>gcc:<cxxflags>-Wextra ]
   ;
+
+obj has_clang_implicit_fallthrough : cmd_line_check.cpp :
+		<toolset>clang:<cxxflags>"-std=c++11 -Wimplicit-fallthrough" <warnings-as-errors>on <warnings>all ;
+
+explicit has_clang_implicit_fallthrough ;
+

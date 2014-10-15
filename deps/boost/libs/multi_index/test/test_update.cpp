@@ -31,17 +31,33 @@ struct null_hash
   std::size_t operator()(const T&)const{return 0;}
 };
 
+struct assign_value
+{
+  assign_value(int n):n_(n){}
+
+  void operator()(int& x)const{x=n_;}
+
+  int n_;
+};
+
 template<class MultiIndexContainer>
-void test_stable_update(BOOST_EXPLICIT_TEMPLATE_TYPE(MultiIndexContainer))
+void test_stable_update()
 {
   typedef typename MultiIndexContainer::iterator  iterator;
   typedef typename MultiIndexContainer::size_type size_type;
 
   MultiIndexContainer c;
-  c.insert(0);c.insert(0);c.insert(0);c.insert(0);
-  c.insert(1);c.insert(1);c.insert(1);
-  c.insert(2);c.insert(2);
+  c.insert(0);
+  c.insert(1);c.insert(1);
+  c.insert(2);c.insert(2);c.insert(2);c.insert(2);
   c.insert(3);
+  c.insert(4);c.insert(4);c.insert(4);
+  c.insert(5);c.insert(5);
+  c.insert(6);
+  c.insert(7);
+  size_type num_elems=
+    c.count(0)+c.count(1)+c.count(2)+c.count(3)+
+    c.count(4)+c.count(5)+c.count(6)+c.count(7);
 
   for(size_type n=c.size();n--;){
     iterator it=boost::next(c.begin(),n);
@@ -54,6 +70,18 @@ void test_stable_update(BOOST_EXPLICIT_TEMPLATE_TYPE(MultiIndexContainer))
 
     c.modify(it,do_nothing(),do_nothing());
     BOOST_TEST((size_type)std::distance(c.begin(),it)==n);
+
+    for(int i=0;i<=8;++i){
+      MultiIndexContainer cpy(c);
+      bool b=c.modify(it,assign_value(i),assign_value(*it));
+      BOOST_TEST(b||(size_type)std::distance(c.begin(),it)==n);
+      BOOST_TEST(c.count(0)+c.count(1)+c.count(2)+c.count(3)+c.count(4)+
+                  c.count(5)+c.count(6)+c.count(7)+c.count(8)==num_elems);
+      if(b){
+        c=cpy;
+        it=boost::next(c.begin(),n);
+      }
+    }
   }
 }
 
@@ -148,16 +176,16 @@ void test_update()
     BOOST_TEST(!iis.modify_key(iis.begin(),increment_int));
     BOOST_TEST(iis.size()==2);
 
-    nth_index_iterator<int_int_set,1>::type it=ii1.find(5);
-    BOOST_TEST(ii1.modify_key(it,increment_int));
-    BOOST_TEST(ii1.modify_key(it,increment_int));
-    BOOST_TEST(ii1.modify_key(it,increment_int,decrement_int));
-    BOOST_TEST(ii1.modify_key(it,increment_int));
+    nth_index_iterator<int_int_set,1>::type it_=ii1.find(5);
+    BOOST_TEST(ii1.modify_key(it_,increment_int));
+    BOOST_TEST(ii1.modify_key(it_,increment_int));
+    BOOST_TEST(ii1.modify_key(it_,increment_int,decrement_int));
+    BOOST_TEST(ii1.modify_key(it_,increment_int));
 
-    BOOST_TEST(!ii1.modify_key(it,increment_int,decrement_int));
+    BOOST_TEST(!ii1.modify_key(it_,increment_int,decrement_int));
     BOOST_TEST(ii1.size()==2);
 
-    BOOST_TEST(!ii1.modify_key(it,increment_int));
+    BOOST_TEST(!ii1.modify_key(it_,increment_int));
     BOOST_TEST(ii1.size()==1);
   }
   {
@@ -214,11 +242,8 @@ void test_update()
       indexed_by<
         ordered_non_unique<identity<int> >
       >
-    > int_set;
-
-    /* MSVC++ 6.0 needs this out-of-template definition */ 
-    int_set dummy1;
-    test_stable_update<int_set>();
+    > int_multiset;
+    test_stable_update<int_multiset>();
 
     typedef multi_index_container<
       int,
@@ -226,8 +251,6 @@ void test_update()
         hashed_unique<identity<int> >
       >
     > int_hashed_set;
-
-    int_hashed_set dummy2;
     test_stable_update<int_hashed_set>();
 
     typedef multi_index_container<
@@ -236,8 +259,6 @@ void test_update()
         hashed_unique<identity<int> >
       >
     > int_hashed_multiset;
-
-    int_hashed_multiset dummy3;
     test_stable_update<int_hashed_multiset>();
 
     typedef multi_index_container<
@@ -246,8 +267,6 @@ void test_update()
         hashed_unique<identity<int>,null_hash>
       >
     > degenerate_int_hashed_set;
-
-    degenerate_int_hashed_set dummy4;
     test_stable_update<degenerate_int_hashed_set>();
 
     typedef multi_index_container<
@@ -256,8 +275,6 @@ void test_update()
         hashed_non_unique<identity<int>,null_hash>
       >
     > degenerate_int_hashed_multiset;
-
-    degenerate_int_hashed_multiset dummy5;
     test_stable_update<degenerate_int_hashed_multiset>();
   }
 }

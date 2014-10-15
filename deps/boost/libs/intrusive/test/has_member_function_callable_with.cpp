@@ -68,7 +68,7 @@ class has_member_function_named_func
 
 }}}
 
-#if !defined(BOOST_CONTAINER_PERFECT_FORWARDING)
+#if !defined(BOOST_INTRUSIVE_PERFECT_FORWARDING)
 
    namespace boost{
    namespace intrusive{
@@ -147,7 +147,7 @@ class has_member_function_named_func
             <Fun, true , void , void , void>
          {
             template<class U>
-            static decltype(boost::move_detail::declval<Fun>().func(), has_member_function_callable_with::yes_type()) Test(Fun* f);
+            static decltype(boost::move_detail::declval<U>().func(), has_member_function_callable_with::yes_type()) Test(U* f);
 
             template<class U>
             static has_member_function_callable_with::no_type Test(...);
@@ -259,7 +259,7 @@ class has_member_function_named_func
 
    }}}
 
-#else
+#else //#if !defined(BOOST_INTRUSIVE_PERFECT_FORWARDING)
 
    namespace boost{
    namespace intrusive{
@@ -283,6 +283,7 @@ class has_member_function_named_func
    namespace intrusive{
    namespace intrusive_detail{
 
+   #ifdef BOOST_NO_CXX11_DECLTYPE
    template<class F, std::size_t N = sizeof(boost::move_detail::declval<F>().func(), 0)>
    struct zeroarg_checker_func
    {
@@ -299,12 +300,19 @@ class has_member_function_named_func
       zeroarg_checker_func(int);
    };
 
+   #endif   //BOOST_NO_CXX11_DECLTYPE
+
    template<typename Fun>
    struct has_member_function_callable_with_func_impl
       <Fun, true>
    {
-      template<class U>
-      static zeroarg_checker_func<U> Test(zeroarg_checker_func<U>*);
+      #ifndef BOOST_NO_CXX11_DECLTYPE
+      template<class U, class V = decltype(boost::move_detail::declval<U>().func()) >
+         static boost_intrusive_has_member_function_callable_with::yes_type Test(U*);
+      #else
+         template<class U>
+         static zeroarg_checker_func<U> Test(zeroarg_checker_func<U>*);
+      #endif
 
       template <class U>
       static has_member_function_callable_with::no_type Test(...);
@@ -356,7 +364,7 @@ class has_member_function_named_func
 
    }}}
 
-#endif
+#endif   //#if !defined(BOOST_INTRUSIVE_PERFECT_FORWARDING)
 
 struct functor
 {

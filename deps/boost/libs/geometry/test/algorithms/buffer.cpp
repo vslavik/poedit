@@ -13,6 +13,8 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 
+#include <boost/variant/variant.hpp>
+
 #include <geometry_test_common.hpp>
 
 #include <boost/geometry/algorithms/buffer.hpp>
@@ -32,10 +34,15 @@ void test_all()
 
     P p1(0, 0);
     P p2(2, 2);
-    bg::model::box<P> b1(p1, p2);
 
-    bg::model::box<P> b2;
+    typedef bg::model::box<P> box_type;
+
+    box_type b1(p1, p2);
+    box_type b2;
     bg::buffer(b1, b2, coordinate_type(2));
+
+    boost::variant<box_type> v(b1);
+    bg::buffer(v, b2, coordinate_type(2));
 
     // TODO: Check if buffer is correct
     // using bg::equals to compare boxes

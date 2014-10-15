@@ -578,9 +578,11 @@ that are not yet supported by a particular compiler or library.
 [table
 [[Macro     ][Description     ]]
 
+[[`BOOST_NO_CXX11_ADDRESSOF`][The standard library header <memory> has no working std::addressof.]]
 [[`BOOST_NO_CXX11_ALIGNAS`][The compiler does not support the `alignas` keyword.]]
 [[`BOOST_NO_CXX11_ALLOCATOR`][The standard library does not provide a C++11 version of `std::allocator` in <memory>.]]
-[[`BOOST_NO_CXX11_ATOMIC_SP`][The standard library <memory> does not support atomic smart pointer operations.]]
+[[`BOOST_NO_CXX11_ATOMIC_SMART_PTR`][The standard library <memory> does not support atomic smart pointer operations.]]
+[[`BOOST_NO_CXX11_HDR_ATOMIC`][The standard library does not provide header <atomic>.]]
 [[`BOOST_NO_CXX11_HDR_ARRAY`][The standard library does not provide header <array>.]]
 [[`BOOST_NO_CXX11_HDR_CHRONO`][The standard library does not provide header <chrono>.]]
 [[`BOOST_NO_CXX11_HDR_CODECVT`][The standard library does not provide header <codecvt>.]]
@@ -602,6 +604,7 @@ that are not yet supported by a particular compiler or library.
 [[`BOOST_NO_CXX11_HDR_UNORDERED_SET`][The standard library does not provide header <unordered_set>.]]
 [[`BOOST_NO_CXX11_INLINE_NAMESPACES`][The compiler does not support inline namespaces.]]
 [[`BOOST_NO_CXX11_SMART_PTR`][The standard library header <memory> has no shared_ptr and unique_ptr.]]
+[[`BOOST_NO_CXX11_STD_ALIGN`][The standard library header <memory> has no working std::align.]]
 
 [[`BOOST_NO_CXX11_AUTO_DECLARATIONS`][The compiler does not support
 type deduction for variables declared with the `auto` keyword (`auto var = ...;`).
@@ -660,6 +663,10 @@ range-based for statements.
 ]]
 [[`BOOST_NO_CXX11_RAW_LITERALS`][The compiler does not support
 raw string literals. 
+]]
+[[`BOOST_NO_CXX11_REF_QUALIFIERS`][The compiler does not support
+ref-qualifiers on member functions as described in 
+[@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2439.htm N2439]. 
 ]]
 [[`BOOST_NO_CXX11_RVALUE_REFERENCES`][The compiler does not support
 r-value references. 
@@ -1061,7 +1068,7 @@ used to create a mangled name in combination with a predefined macro such a
 ]]
 [[`BOOST_FORCEINLINE`][
 This macro can be used in place of the `inline` keyword to instruct the compiler
-that a function should always be inlined.
+that the function should always be inlined.
 Overuse of this macro can lead to significant bloat, while good use can increase
 performance in certain cases, such as computation-intensive code built through
 generative programming techniques.
@@ -1081,7 +1088,7 @@ able to debug errors more easily.
 ]]
 [[`BOOST_NOINLINE`][
 This macro can be used in place of the `inline` keyword to instruct the compiler
-that a function should never be inlined. One should typically use this macro
+that the function should never be inlined. One should typically use this macro
 to mark functions that are unlikely to be called, such as error handling routines.
 
 Usage example:
@@ -1091,6 +1098,26 @@ Usage example:
       // ...
   }
 ``
+]]
+[[`BOOST_NORETURN`][
+This macro can be used before the function declaration or definition to instruct the compiler
+that the function does not return normally (i.e. with a `return` statement or by leaving
+the function scope, if the function return type is `void`). The macro can be used to mark
+functions that always throw exceptions or terminate the application. Compilers that support
+this markup may use this information to specifically organize the code surrounding calls to
+this function and suppress warnings about missing `return` statements in the functions
+enclosing such calls.
+
+Usage example:
+``
+  BOOST_NORETURN void on_error_occurred(const char* descr)
+  {
+      throw std::runtime_error(descr);
+  }
+``
+
+If the compiler does not support this markup, `BOOST_NORETURN` is defined empty and an
+additional macro `BOOST_NO_NORETURN` is defined.
 ]]
 [[`BOOST_LIKELY(X)`
   `BOOST_UNLIKELY(X)`][

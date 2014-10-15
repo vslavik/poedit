@@ -15,7 +15,7 @@
 * [*Postcondition:] For all adjacent elements `[x]` in the returned range, `pred(x)` is `true`.
 * [*Throws:] Whatever the copy constructor of `pred` might throw.
 * [*Range Category:] __forward_range__
-* [*Range Return Type:] `boost::filtered_range<typeof(rng)>`
+* [*Range Return Type:] `boost::filtered_range<decltype(rng)>`
 * [*Returned Range Category:] The minimum of the range category of `rng` and __bidirectional_range__
 
 [section:filtered_example filtered example]

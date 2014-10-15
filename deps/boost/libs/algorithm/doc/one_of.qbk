@@ -75,7 +75,7 @@ All of the variants of `one_of` and `one_of_equal` take their parameters by valu
 
 * `one_of` and `one_of_equal` both return false for empty ranges, no matter what is passed to test against. 
 
-* The second parameter to `one_of_value` is a template parameter, rather than deduced from the first parameter (`std::iterator_traits<InputIterator>::value_type`) because that allows more flexibility for callers, and takes advantage of built-in comparisons for the type that is pointed to by the iterator.  The function is defined to return true if, for one element in the sequence, the expression `*iter == val` evaluates to true (where `iter` is an iterator to each element in the sequence)
+* The second parameter to `one_of_equal` is a template parameter, rather than deduced from the first parameter (`std::iterator_traits<InputIterator>::value_type`) because that allows more flexibility for callers, and takes advantage of built-in comparisons for the type that is pointed to by the iterator.  The function is defined to return true if, for one element in the sequence, the expression `*iter == val` evaluates to true (where `iter` is an iterator to each element in the sequence)
 
 [endsect]
 

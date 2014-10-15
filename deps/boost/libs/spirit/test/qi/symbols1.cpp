@@ -145,6 +145,7 @@ main()
             ("Tutit", 4)
             ("Kim", 5)
             ("Joey", 6)
+            ("Joeyboy", 7)
         ;
 
         int i;
@@ -160,6 +161,8 @@ main()
         BOOST_TEST(i == 5);
         BOOST_TEST((test_attr("Joey", sym, i)));
         BOOST_TEST(i == 6);
+        BOOST_TEST((test_attr("Joeyboy", sym, i)));
+        BOOST_TEST(i == 7);
         BOOST_TEST((!test_attr("XXX", sym, i)));
 
         // double add:

@@ -128,13 +128,14 @@ Random tests in key problem areas are also used.
 
 [h4 Implementation]
 
-The generic version of this function is implemented by combining the series and 
-continued fraction representations for the incomplete gamma function:
+The generic version of this function is implemented using Sterling's approximation
+for large arguments:
 
-[equation lgamm2]
+[equation gamma6]
 
-where /l/ is an arbitrary integration limit: choosing [^l = max(10, a)] 
-seems to work fairly well.  For negative /z/ the logarithm version of the 
+For small arguments, the logarithm of tgamma is used.
+
+For negative /z/ the logarithm version of the 
 reflection formula is used:
 
 [equation lgamm3]

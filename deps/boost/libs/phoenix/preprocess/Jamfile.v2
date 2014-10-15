@@ -4,6 +4,8 @@
 
 # Generates preprocessed files with wave.
 
+project : requirements <link>static <variant>release ;
+
 import feature ;
 import toolset ;
 
@@ -16,7 +18,7 @@ actions wave bind PHOENIX-LIMIT
   $(>[2]) -o- -DBOOST_PHOENIX_LIMIT=$(PHOENIX-LIMIT) --config-file wave.cfg $(>[1])
 }
 
-W = ../../../tools/wave/build//wave ;
+W = /boost/libs/wave/tool//wave ;
 
 make preprocess_phoenix_10
   : preprocess_phoenix.cpp $(W) : wave : <phoenix-limit>10

@@ -123,7 +123,7 @@ typedef <a href="./next.html" class="identifier">next</a>&lt;i<sub>n</sub>&gt;::
 </tr>
 <tr class="field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first">Equivalent to</p>
 <pre class="last literal-block">
-<a href="./for-each.html" class="identifier">for_each</a>&lt; tranform_view&lt;s,op&gt; &gt;( f );
+<a href="./for-each.html" class="identifier">for_each</a>&lt; <a href="./transform-view.html" class="identifier">transform_view</a>&lt;s,op&gt; &gt;( f );
 </pre>
 </td>
 </tr>
@@ -141,7 +141,7 @@ struct value_printer
 {
     template&lt; typename U &gt; void operator()(U x)
     {
-        std::cout &lt;&lt; x &lt;&lt; 'n';
+        std::cout &lt;&lt; x &lt;&lt; '\n';
     }
 };
 

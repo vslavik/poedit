@@ -8,7 +8,8 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/geometry/geometry.hpp>
-#include <boost/geometry/multi/multi.hpp>
-#include <boost/geometry/multi/geometries/multi_point.hpp>
+#include <boost/geometry/geometries/multi_point.hpp>
+#include <boost/geometry/geometries/multi_linestring.hpp>
+#include <boost/geometry/geometries/multi_polygon.hpp>
 #include <boost/geometry/io/wkt/wkt.hpp>
 

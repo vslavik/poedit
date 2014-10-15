@@ -1,6 +1,10 @@
 // -----------------------------------------------------------
 //              Copyright (c) 2001 Jeremy Siek
 //           Copyright (c) 2003-2006 Gennaro Prota
+//             Copyright (c) 2014 Ahmed Charles
+//
+// Copyright (c) 2014 Glen Joseph Fernandes
+// glenfe at live dot com
 //
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -14,6 +18,28 @@
 #include "boost/config.hpp"
 
 #include "boost/detail/workaround.hpp"
+
+#if !defined(BOOST_NO_CXX11_ALLOCATOR)
+#include <cstdlib>
+
+template<class T>
+class minimal_allocator {
+public:
+    typedef T value_type;
+
+    T* allocate(std::size_t n) {
+        void* p = std::malloc(sizeof(T) * n);
+        if (!p) {
+            throw std::bad_alloc();
+        }
+        return static_cast<T*>(p);
+    }
+
+    void deallocate(T* p, std::size_t) {
+        std::free(p);
+    }
+};
+#endif
 
 #define BOOST_BITSET_TEST_COUNT(x) (sizeof(x)/sizeof(x[0]))
 
@@ -117,9 +143,6 @@ void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
   //=====================================================================
   // Test construction from unsigned long
   {
-    typedef typename bitset_type::size_type size_type;
-
-
     // NOTE:
     //
     // 1. keep this in sync with the numeric types supported
@@ -240,29 +263,70 @@ void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
     Tests::copy_constructor(b);
   }
   //=====================================================================
-  // Test assignment operator
+  // Test copy assignment operator
   {
     bitset_type a, b;
-    Tests::assignment_operator(a, b);
+    Tests::copy_assignment_operator(a, b);
   }
   {
     bitset_type a(std::string("1")), b(std::string("0"));
-    Tests::assignment_operator(a, b);
+    Tests::copy_assignment_operator(a, b);
   }
   {
     bitset_type a(long_string), b(long_string);
-    Tests::assignment_operator(a, b);
+    Tests::copy_assignment_operator(a, b);
   }
   {
     bitset_type a;
     bitset_type b(long_string); // b greater than a, a empty
-    Tests::assignment_operator(a, b);
+    Tests::copy_assignment_operator(a, b);
   }
   {
     bitset_type a(std::string("0"));
     bitset_type b(long_string); // b greater than a
-    Tests::assignment_operator(a, b);
+    Tests::copy_assignment_operator(a, b);
   }
+
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+  //=====================================================================
+  // Test move constructor
+  {
+    boost::dynamic_bitset<Block> b;
+    Tests::move_constructor(b);
+  }
+  {
+    boost::dynamic_bitset<Block> b(std::string("0"));
+    Tests::move_constructor(b);
+  }
+  {
+    boost::dynamic_bitset<Block> b(long_string);
+    Tests::move_constructor(b);
+  }
+  //=====================================================================
+  // Test move assignment operator
+  {
+    bitset_type a, b;
+    Tests::move_assignment_operator(a, b);
+  }
+  {
+    bitset_type a(std::string("1")), b(std::string("0"));
+    Tests::move_assignment_operator(a, b);
+  }
+  {
+    bitset_type a(long_string), b(long_string);
+    Tests::move_assignment_operator(a, b);
+  }
+  {
+    bitset_type a;
+    bitset_type b(long_string); // b greater than a, a empty
+    Tests::move_assignment_operator(a, b);
+  }
+  {
+    bitset_type a(std::string("0"));
+    bitset_type b(long_string); // b greater than a
+    Tests::move_assignment_operator(a, b);
+  }
+#endif // BOOST_NO_CXX11_RVALUE_REFERENCES
   //=====================================================================
   // Test swap
   {
@@ -420,6 +484,14 @@ void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
       bit_vec[i] = long_string[n - 1 - i] == '0' ? 0 : 1;
     Tests::operator_bracket(b, bit_vec);
   }
+#if !defined(BOOST_NO_CXX11_ALLOCATOR)
+  {
+     typedef boost::dynamic_bitset<Block,
+       minimal_allocator<Block> > Bitset;
+     Bitset b;
+     bitset_test<Bitset>::max_size(b);
+  }
+#endif
 }
 
 int

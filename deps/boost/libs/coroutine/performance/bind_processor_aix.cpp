@@ -18,7 +18,7 @@ extern "C"
 
 void bind_to_processor( unsigned int n)
 {
-    if ( ::bindprocessor( BINDTHREAD, ::thread_self(), static_cast< cpu_t >( n) ) == -1)
+    if ( ::bindprocessor( BINDTHREAD, ::thread_yield(), static_cast< cpu_t >( n) ) == -1)
         throw std::runtime_error("::bindprocessor() failed");
 }
 

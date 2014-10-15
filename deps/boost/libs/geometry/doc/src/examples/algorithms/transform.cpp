@@ -20,18 +20,18 @@ int main()
 
     // Select a point near the pole (theta=5.0, phi=15.0)
     bg::model::point<long double, 2, bg::cs::spherical<bg::degree> > p1(15.0, 5.0);
-    
+
     // Transform from degree to radian. Default strategy is automatically selected,
     // it will convert from degree to radian
     bg::model::point<long double, 2, bg::cs::spherical<bg::radian> > p2;
     bg::transform(p1, p2);
-    
-    // Transform from degree (lon-lat) to 3D (x,y,z). Default strategy is automatically selected, 
+
+    // Transform from degree (lon-lat) to 3D (x,y,z). Default strategy is automatically selected,
     // it will consider points on a unit sphere
     bg::model::point<long double, 3, bg::cs::cartesian> p3;
     bg::transform(p1, p3);
-    
-    std::cout 
+
+    std::cout
         << "p1: " << bg::dsv(p1) << std::endl
         << "p2: " << bg::dsv(p2) << std::endl
         << "p3: " << bg::dsv(p3) << std::endl;

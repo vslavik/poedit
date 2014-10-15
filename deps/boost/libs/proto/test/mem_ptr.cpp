@@ -62,14 +62,14 @@ struct my_terminal
     typename proto::result_of::make_expr<proto::tag::function, my_terminal const &, A0 &>::type const
     operator()(A0 &a0) const
     {
-        return proto::make_expr<proto::tag::function>(boost::cref(*this), boost::ref(a0));
+        return proto::make_expr<proto::tag::function>(boost::ref(*this), boost::ref(a0));
     }
 
     template<typename A0>
     typename proto::result_of::make_expr<proto::tag::function, my_terminal const &, A0 const &>::type const
     operator()(A0 const &a0) const
     {
-        return proto::make_expr<proto::tag::function>(boost::cref(*this), boost::cref(a0));
+        return proto::make_expr<proto::tag::function>(boost::ref(*this), boost::ref(a0));
     }
 };
 

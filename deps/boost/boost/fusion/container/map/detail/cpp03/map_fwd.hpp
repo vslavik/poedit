@@ -7,6 +7,7 @@
 #if !defined(FUSION_MAP_FORWARD_07212005_1105)
 #define FUSION_MAP_FORWARD_07212005_1105
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/container/map/detail/cpp03/limits.hpp>
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
 
@@ -14,7 +15,7 @@
 #include <boost/fusion/container/map/detail/cpp03/preprocessed/map_fwd.hpp>
 #else
 #if defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "detail/preprocessed/map" FUSION_MAX_MAP_SIZE_STR "_fwd.hpp")
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/map" FUSION_MAX_MAP_SIZE_STR "_fwd.hpp")
 #endif
 
 /*=============================================================================

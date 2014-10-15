@@ -21,35 +21,41 @@ local multi-threading = <library>/boost/thread
                         <threading>multi <define>BOOST_ALL_NO_LIB=1 ;
 
 test-suite phoenix_core :
-    [ run core/primitives_tests.cpp ] 
+    [ run core/custom_terminal.cpp ]
+    [ run core/intel_test.cpp ]
+    [ run core/primitives_tests.cpp ]
+    ;
+
+test-suite phoenix_stdlib :
+    [ run stdlib/cmath.cpp ]
     ;
 
 test-suite phoenix_operator :
-    [ run operator/arithmetic_tests.cpp ] 
+    [ run operator/arithmetic_tests.cpp ]
     [ run operator/bitwise_tests.cpp ]
-    [ run operator/comparison_tests.cpp ] 
+    [ run operator/comparison_tests.cpp ]
     [ run operator/if_else_tests.cpp ]
     [ run operator/io_tests.cpp ]
     [ run operator/logical_tests.cpp ]
     [ run operator/misc_binary_tests.cpp ]
     [ run operator/self_tests.cpp ]
-    [ run operator/unary_tests.cpp ] 
+    [ run operator/unary_tests.cpp ]
     [ run operator/member.cpp ]
     ;
 
 test-suite phoenix_object :
-    [ run object/cast_tests.cpp ] 
-    [ run object/new_delete_tests.cpp ] 
+    [ run object/cast_tests.cpp ]
+    [ run object/new_delete_tests.cpp ]
     ;
 
 test-suite phoenix_function :
-    [ run function/adapt_function.cpp ] 
-    [ run function/function_tests.cpp ] 
-#    [ run function/function_tests_phx2.cpp ] 
+    [ run function/adapt_function.cpp ]
+    [ run function/function_tests.cpp ]
+#    [ run function/function_tests_phx2.cpp ]
     ;
 
 test-suite phoenix_bind :
-    [ run bind/bind_function_tests.cpp ] 
+    [ run bind/bind_function_tests.cpp ]
     [ run bind/bind_function_object_tests.cpp ]
 #    [ run bind/bind_function_object_tests_phx2.cpp ]
     [ run bind/bind_member_function_tests.cpp ]
@@ -58,10 +64,11 @@ test-suite phoenix_bind :
     ;
     
 test-suite phoenix_statement :
-    [ run statement/if_tests.cpp ] 
-    [ run statement/loops_tests.cpp ] 
-    [ run statement/switch_tests.cpp ] 
+    [ run statement/if_tests.cpp ]
+    [ run statement/loops_tests.cpp ]
+    [ run statement/switch_tests.cpp ]
     [ run statement/exceptions.cpp ]
+    [ run statement/bug5715.cpp ]
     ;
         
 test-suite phoenix_container :
@@ -80,15 +87,21 @@ test-suite phoenix_container :
     ;
 
 test-suite phoenix_scope :
-    [ run scope/lambda_tests.cpp ] 
-#    [ run scope/lambda_tests_phx2.cpp ] 
-    [ run scope/let_tests.cpp ] 
-    [ run scope/dynamic_tests.cpp ] 
+    [ run scope/lambda_tests.cpp ]
+#    [ run scope/lambda_tests_phx2.cpp ]
+    [ run scope/let_tests.cpp ]
+    [ run scope/more_lambda_tests.cpp ]
+    [ run scope/more_let_tests.cpp ]
+    [ run scope/dynamic_tests.cpp ]
     [ run scope/bug3289.cpp ]
-    [ run scope/bug_000008.cpp : : : $(multi-threading) ] 
+    [ run scope/bug8298.cpp ]
+    [ compile-fail scope/bug8298f.cpp ]
+    [ run scope/bug_000008.cpp : : : $(multi-threading) ]
     ;
 
 test-suite phoenix_algorithm :
+    [ run algorithm/for_each.cpp ]
+    [ run algorithm/for_test.cpp ]
     [ run algorithm/iteration.cpp ]
     [ run algorithm/transformation1.cpp ]
     [ run algorithm/transformation2.cpp ]
@@ -124,8 +137,14 @@ test-suite phoenix_boost_bind_compatibility :
 test-suite phoenix_regression :
     [ run regression/bug4853.cpp ]
     [ run regression/bug5626.cpp ]
+    [ run regression/bug5824.cpp ]
+ #   [ run regression/bug5875.cpp ]
     [ run regression/bug5968.cpp ]
     [ run regression/bug6040.cpp ]
+    [ run regression/bug6268.cpp ]
+    [ run regression/bug7165.cpp ]
+    [ compile-fail regression/bug7166.cpp ]
+    [ run regression/bug7624.cpp ]
     ;
 
 test-suite phoenix_include :
@@ -136,25 +155,31 @@ test-suite phoenix_include :
     [ run include/object.cpp ]
     [ run include/operator.cpp ]
     [ run include/scope.cpp ]
+    [ run include/spirit.cpp ]
+#    [ run include/spirit_no_specialize.cpp ]
     [ run include/statement.cpp ]
     [ run include/stl.cpp ]
     [ run include/version.cpp ]
+    [ run include/bind/bind_member_function.cpp ]
+    [ run include/bind/bind_member_variable.cpp ]
     [ run include/core/actor.cpp ]
     [ run include/core/argument.cpp ]
     [ run include/core/arity.cpp ]
+    [ run include/core/debug.cpp ]
     [ run include/core/domain.cpp ]
     [ run include/core/environment.cpp ]
     [ run include/core/expression.cpp ]
     [ run include/core/function_equal.cpp ]
     [ run include/core/is_actor.cpp ]
     [ run include/core/is_nullary.cpp ]
-    [ run include/core/nothing.cpp ]
-    [ run include/core/meta_grammar.cpp ]
     [ run include/core/limits.cpp ]
+    [ run include/core/meta_grammar.cpp ]
+    [ run include/core/nothing.cpp ]
+    [ run include/core/reference.cpp ]
     [ run include/core/terminal.cpp ]
+ #   [ run include/core/bug7730.cpp ]
     [ run include/core/value.cpp ]
     [ run include/core/visit_each.cpp ]
-    [ run include/core/reference.cpp ]
     [ run include/function/function.cpp : : : : function_function ]
     [ run include/fusion/at.cpp ]
     [ run include/object/const_cast.cpp ]

@@ -90,7 +90,8 @@ namespace boost
         template<class Container>
         void test_random_shuffle_nogen_impl(Container& cont)
         {
-            typedef BOOST_DEDUCED_TYPENAME range_iterator<Container>::type iterator_t;
+            typedef BOOST_DEDUCED_TYPENAME range_iterator<Container>::type
+                                                iterator_t BOOST_RANGE_UNUSED;
 
             const int MAX_RETRIES = 10000;
 

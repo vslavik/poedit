@@ -10,5 +10,5 @@
 
 test-suite boost-geometry-multi-algorithms-overlay
     : 
-    [ run multi_traverse.cpp ]
+    [ run multi_traverse.cpp : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE <define>BOOST_GEOMETRY_RESCALE_TO_ROBUST ]
      ;

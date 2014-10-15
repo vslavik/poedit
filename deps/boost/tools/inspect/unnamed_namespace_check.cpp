@@ -15,7 +15,7 @@ namespace
 {
 
   boost::regex unnamed_namespace_regex(
-     "\\<namespace\\s(\\?\\?<|\\{)" // trigraph ??< or {
+     "\\<namespace\\s*(\\?\\?<|\\{)" // trigraph ??< or {
   );
 
 } // unnamed namespace (ironical? :-)

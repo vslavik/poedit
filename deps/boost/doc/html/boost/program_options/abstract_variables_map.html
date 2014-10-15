@@ -35,39 +35,40 @@
 <span class="keyword">class</span> <a class="link" href="abstract_variables_map.html" title="Class abstract_variables_map">abstract_variables_map</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="abstract_variables_map.html#boost.program_options.abstract_variables_mapconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="abstract_variables_map.html#idp97481864-bb"><span class="identifier">abstract_variables_map</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="abstract_variables_map.html#idp97481928-bb"><span class="identifier">abstract_variables_map</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="abstract_variables_map.html" title="Class abstract_variables_map">abstract_variables_map</a> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="abstract_variables_map.html#idp97482488-bb"><span class="special">~</span><span class="identifier">abstract_variables_map</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="abstract_variables_map.html#idp141908736-bb"><span class="identifier">abstract_variables_map</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="abstract_variables_map.html#idp141909024-bb"><span class="identifier">abstract_variables_map</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="abstract_variables_map.html" title="Class abstract_variables_map">abstract_variables_map</a> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="abstract_variables_map.html#idp141910448-bb"><span class="special">~</span><span class="identifier">abstract_variables_map</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="abstract_variables_map.html#idp97476616-bb">public member functions</a></span>
-  <span class="keyword">const</span> <a class="link" href="variable_value.html" title="Class variable_value">variable_value</a> <span class="special">&amp;</span> <a class="link" href="abstract_variables_map.html#idp97476792-bb"><span class="keyword">operator</span><span class="special">[</span><span class="special">]</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="abstract_variables_map.html#idp97480728-bb"><span class="identifier">next</span></a><span class="special">(</span><a class="link" href="abstract_variables_map.html" title="Class abstract_variables_map">abstract_variables_map</a> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="abstract_variables_map.html#idp157426112-bb">public member functions</a></span>
+  <span class="keyword">const</span> <a class="link" href="variable_value.html" title="Class variable_value">variable_value</a> <span class="special">&amp;</span> <a class="link" href="abstract_variables_map.html#idp157426672-bb"><span class="keyword">operator</span><span class="special">[</span><span class="special">]</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="abstract_variables_map.html#idp96452672-bb"><span class="identifier">next</span></a><span class="special">(</span><a class="link" href="abstract_variables_map.html" title="Class abstract_variables_map">abstract_variables_map</a> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="abstract_variables_map.html#idp97482552-bb">private member functions</a></span>
-  <span class="keyword">const</span> <a class="link" href="variable_value.html" title="Class variable_value">variable_value</a> <span class="special">&amp;</span> <a class="link" href="abstract_variables_map.html#idp97482728-bb"><span class="identifier">get</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="abstract_variables_map.html#idp41402784-bb">private member functions</a></span>
+  <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="link" href="variable_value.html" title="Class variable_value">variable_value</a> <span class="special">&amp;</span> <a class="link" href="abstract_variables_map.html#idp41403248-bb"><span class="identifier">get</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp169088968"></a><h2>Description</h2>
+<a name="idp348938160"></a><h2>Description</h2>
 <p>Implements string-&gt;string mapping with convenient value casting facilities. </p>
 <div class="refsect2">
-<a name="idp169089592"></a><h3>
+<a name="idp348939040"></a><h3>
 <a name="boost.program_options.abstract_variables_mapconstruct-copy-destruct"></a><code class="computeroutput">abstract_variables_map</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><a name="idp97481864-bb"></a><span class="identifier">abstract_variables_map</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a name="idp97481928-bb"></a><span class="identifier">abstract_variables_map</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="abstract_variables_map.html" title="Class abstract_variables_map">abstract_variables_map</a> <span class="special">*</span> next<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a name="idp97482488-bb"></a><span class="special">~</span><span class="identifier">abstract_variables_map</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp141908736-bb"></a><span class="identifier">abstract_variables_map</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp141909024-bb"></a><span class="identifier">abstract_variables_map</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="abstract_variables_map.html" title="Class abstract_variables_map">abstract_variables_map</a> <span class="special">*</span> next<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp141910448-bb"></a><span class="special">~</span><span class="identifier">abstract_variables_map</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp169097400"></a><h3>
-<a name="idp97476616-bb"></a><code class="computeroutput">abstract_variables_map</code> public member functions</h3>
+<a name="idp348954784"></a><h3>
+<a name="idp157426112-bb"></a><code class="computeroutput">abstract_variables_map</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">const</span> <a class="link" href="variable_value.html" title="Class variable_value">variable_value</a> <span class="special">&amp;</span> <a name="idp97476792-bb"></a><span class="keyword">operator</span><span class="special">[</span><span class="special">]</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> name<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">const</span> <a class="link" href="variable_value.html" title="Class variable_value">variable_value</a> <span class="special">&amp;</span> <a name="idp157426672-bb"></a><span class="keyword">operator</span><span class="special">[</span><span class="special">]</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> name<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Obtains the value of variable 'name', from *this and possibly from the chain of variable maps.</p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
 <p>if there's no value in *this.</p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
 <li class="listitem"><p>if there's next variable map, returns value from it</p></li>
@@ -75,10 +76,8 @@
 </ul></div>
 <p>
 </p>
-</li></ul></div>
-<p>
-</p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+</li>
+<li class="listitem">
 <p>if there's defaulted value</p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
 <li class="listitem"><p>if there's next varaible map, which has a non-defauled value, return that</p></li>
@@ -86,24 +85,23 @@
 </ul></div>
 <p>
 </p>
-</li></ul></div>
-<p>
-</p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>if there's a non-defauled value, returns it. </p></li></ul></div>
+</li>
+<li class="listitem"><p>if there's a non-defauled value, returns it. </p></li>
+</ul></div>
 <p>
 </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp97480728-bb"></a><span class="identifier">next</span><span class="special">(</span><a class="link" href="abstract_variables_map.html" title="Class abstract_variables_map">abstract_variables_map</a> <span class="special">*</span> next<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp96452672-bb"></a><span class="identifier">next</span><span class="special">(</span><a class="link" href="abstract_variables_map.html" title="Class abstract_variables_map">abstract_variables_map</a> <span class="special">*</span> next<span class="special">)</span><span class="special">;</span></pre>
 <p>Sets next variable map, which will be used to find variables not found in *this. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp169109880"></a><h3>
-<a name="idp97482552-bb"></a><code class="computeroutput">abstract_variables_map</code> private member functions</h3>
+<a name="idp348978784"></a><h3>
+<a name="idp41402784-bb"></a><code class="computeroutput">abstract_variables_map</code> private member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">const</span> <a class="link" href="variable_value.html" title="Class variable_value">variable_value</a> <span class="special">&amp;</span> <a name="idp97482728-bb"></a><span class="identifier">get</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> name<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">virtual</span> <span class="keyword">const</span> <a class="link" href="variable_value.html" title="Class variable_value">variable_value</a> <span class="special">&amp;</span> <a name="idp41403248-bb"></a><span class="identifier">get</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> name<span class="special">)</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span></pre>
 <p>Returns value of variable 'name' stored in *this, or empty value otherwise. </p>
 </li></ol></div>
 </div>

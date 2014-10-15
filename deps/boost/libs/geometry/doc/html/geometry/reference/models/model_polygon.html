@@ -27,7 +27,7 @@
 <a name="geometry.reference.models.model_polygon"></a><a class="link" href="model_polygon.html" title="model::polygon">model::polygon</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp59822808"></a><a class="indexterm" name="idp59823096"></a>
+          <a class="indexterm" name="idp118334128"></a><a class="indexterm" name="idp118334816"></a>
 The polygon contains an outer ring and zero or more inner rings.
         </p>
 <h6>
@@ -44,7 +44,8 @@ The polygon contains an outer ring and zero or more inner rings.
         </h6>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Point</span><span class="special">,</span> <span class="keyword">bool</span> <span class="identifier">ClockWise</span><span class="special">,</span> <span class="keyword">bool</span> <span class="identifier">Closed</span><span class="special">,</span> <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span><span class="special">,</span> <span class="keyword">typename</span> <span class="special">&gt;</span> <span class="keyword">class</span> <span class="identifier">PointList</span><span class="special">,</span> <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span><span class="special">,</span> <span class="keyword">typename</span> <span class="special">&gt;</span> <span class="keyword">class</span> <span class="identifier">RingList</span><span class="special">,</span> <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="special">&gt;</span> <span class="keyword">class</span> <span class="identifier">PointAlloc</span><span class="special">,</span> <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="special">&gt;</span> <span class="keyword">class</span> <span class="identifier">RingAlloc</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Point</span><span class="special">,</span> <span class="keyword">bool</span> <span class="identifier">ClockWise</span><span class="special">,</span> <span class="keyword">bool</span> <span class="identifier">Closed</span><span class="special">,</span> <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span><span class="special">,</span> <span class="keyword">typename</span> <span class="special">&gt;</span> <span class="keyword">class</span> <span class="identifier">PointList</span><span class="special">,</span>
+         <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span><span class="special">,</span> <span class="keyword">typename</span> <span class="special">&gt;</span> <span class="keyword">class</span> <span class="identifier">RingList</span><span class="special">,</span> <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="special">&gt;</span> <span class="keyword">class</span> <span class="identifier">PointAlloc</span><span class="special">,</span> <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="special">&gt;</span> <span class="keyword">class</span> <span class="identifier">RingAlloc</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">model</span><span class="special">::</span><span class="identifier">polygon</span>
 <span class="special">{</span>
   <span class="comment">// ...</span>
@@ -212,6 +213,7 @@ The polygon contains an outer ring and zero or more inner rings.
 <col>
 <col>
 <col>
+<col>
 </colgroup>
 <thead><tr>
 <th>
@@ -248,6 +250,8 @@ The polygon contains an outer ring and zero or more inner rings.
                 </td>
 <td>
                 </td>
+<td>
+                </td>
 </tr>
 <tr>
 <td>
@@ -256,6 +260,8 @@ The polygon contains an outer ring and zero or more inner rings.
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">inner_container_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">inners</span><span class="special">()</span></pre>
 <p>
                   </p>
+                </td>
+<td>
                 </td>
 <td>
                 </td>
@@ -274,6 +280,8 @@ The polygon contains an outer ring and zero or more inner rings.
                 </td>
 <td>
                 </td>
+<td>
+                </td>
 </tr>
 <tr>
 <td>
@@ -282,6 +290,8 @@ The polygon contains an outer ring and zero or more inner rings.
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">inner_container_type</span> <span class="special">&amp;</span> <span class="identifier">inners</span><span class="special">()</span></pre>
 <p>
                   </p>
+                </td>
+<td>
                 </td>
 <td>
                 </td>
@@ -300,6 +310,8 @@ The polygon contains an outer ring and zero or more inner rings.
                   <p>
                     Utility method, clears outer and inner rings.
                   </p>
+                </td>
+<td>
                 </td>
 <td>
                 </td>
@@ -325,7 +337,8 @@ The polygon contains an outer ring and zero or more inner rings.
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2014 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam
+      Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

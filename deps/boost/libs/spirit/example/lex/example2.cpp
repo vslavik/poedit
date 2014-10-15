@@ -143,7 +143,7 @@ int main()
     iterator_type iter = tokens.begin(it, str.end());
     iterator_type end = tokens.end();
 
-    // Parsing is done based on the the token stream, not the character 
+    // Parsing is done based on the token stream, not the character 
     // stream read from the input.
     bool r = qi::parse(iter, end, calc);
 

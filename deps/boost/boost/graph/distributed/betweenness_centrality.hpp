@@ -197,21 +197,21 @@ namespace boost {
     // have not yet been received.
     void synchronize()
     {
-      using boost::graph::parallel::synchronize;
+      using boost::parallel::synchronize;
       synchronize(pg);
     }
     
     // Setup triggers for msg_relax messages
     void setup_triggers()
     {
-      using boost::graph::parallel::simple_trigger;
+      using boost::parallel::simple_trigger;
       simple_trigger(pg, msg_relax, this, 
                      &betweenness_centrality_delta_stepping_impl::handle_msg_relax);
     }
 
     void handle_msg_relax(int /*source*/, int /*tag*/,
                           const std::pair<Vertex, typename MessageValue::type>& data,
-                          trigger_receive_context)
+                          boost::parallel::trigger_receive_context)
     { relax(data.second.second, data.first, data.second.first); }
 
     const Graph& g;
@@ -281,7 +281,7 @@ namespace boost {
       vertex_index(vertex_index),
 #endif
       delta(delta),
-      pg(boost::graph::parallel::process_group_adl(g), attach_distributed_object()),
+      pg(boost::graph::parallel::process_group_adl(g), boost::parallel::attach_distributed_object()),
       owner(get(vertex_owner, g)),
       local(get(vertex_local, g))
 

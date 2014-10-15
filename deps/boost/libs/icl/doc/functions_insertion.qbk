@@ -17,11 +17,11 @@
 
 [[`V T::insert(const P&)`]                         [__ei]    [__bp]   [__e]    [__b]  ]
 [[`V insert(T&, const P&)`]                        [__ei]    [__bp]   [__e]    [__b]  ]
-[[`V T::insert(J pos, const P&)`]                  [__i]     [__p]    [__e]    [__b]  ]
-[[`V insert(T&, J pos, const P&)`]                 [__i]     [__p]    [__e]    [__b]  ]
+[[`J T::insert(J pos, const P&)`]                  [__i]     [__p]    [__e]    [__b]  ]
+[[`J insert(T&, J pos, const P&)`]                 [__i]     [__p]    [__e]    [__b]  ]
 [[`T& insert(T&, const P&)`]                      [__eiS]   [__bpM]   [__es]   [__bm] ]
 [[`T& T::set(const P&)`]                             [ ]     [__bp]   [ ]      [1]    ]
-[[`T& set_at(T&, const P&)`]                         [ ]     [__bp]   [ ]      [1]    ]
+[[`T& set_at(T&, const P&)`]                         [ ]     [__bp]   [ ]      [1]    ] 
 
 ]
 
@@ -102,18 +102,18 @@ is given by this table.
 
 [h4 Hinted insertion]
 
-Function `T& T::insert(T::iterator prior, const P& addend)` allows
+Function `J T::insert(J prior, const P& addend)` allows
 for an insertion in ['*constant time*], if `addend` can be inserted
 right after iterator `prior` without collision. If this is not possible
 the complexity characteristics are as stated for the non hinted insertion
 above. Hinted insertion is available for these combinations of types:
 ``
-// overload table for insertion with hint     T\P| e i b p  
-V T::insert(J pos, const P&)                  ---+--------
-V insert(T&, J pos, const P&)                  s | s
-                                               m |     m
-                                               S |   S     
-                                               M |       M 
+// overload table for insertion with hint        T\P| e i b p  
+J T::insert(J pos, const P&)                     ---+--------
+J insert(T&, J pos, const P&)                     s | s
+                                                  m |     m
+                                                  S |   S     
+                                                  M |       M 
 ``
 
 [endsect][/ Insertion]

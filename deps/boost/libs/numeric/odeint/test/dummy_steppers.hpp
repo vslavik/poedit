@@ -6,8 +6,8 @@
  Dummy steppers for several tests.
  [end_description]
 
- Copyright 2009-2011 Karsten Ahnert
- Copyright 2009-2011 Mario Mulansky
+ Copyright 2012 Karsten Ahnert
+ Copyright 2012 Mario Mulansky
 
  Distributed under the Boost Software License, Version 1.0.
  (See accompanying file LICENSE_1_0.txt or
@@ -82,6 +82,11 @@ struct dummy_dense_output_stepper
     const state_type& current_state( void ) const
     {
         return m_x;
+    }
+
+    const time_type& current_time_step( void ) const
+    {
+        return m_dt;
     }
 
     state_type m_x;

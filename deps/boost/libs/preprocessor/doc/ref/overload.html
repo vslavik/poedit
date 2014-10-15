@@ -7,7 +7,7 @@
 <div style="margin-left: 0px;"> The <b>BOOST_PP_OVERLOAD</b> variadic macro expands to the name of a non-variadic macro having a given number of parameters.<br>
  </div>
 <h4>Usage</h4>
-<div class="code"> <b>BOOST_PP_OVERLOAD</b>(<i>prefix</i>,...) <sup>(v)</sup><br>
+<div class="code"> <b>BOOST_PP_OVERLOAD</b>(<i>prefix</i>,...) <a href="../topics/variadic_macros.html#VNotation" target="_self"><sup>(v)</sup></a><br>
  </div>
 <h4>Arguments</h4>
 <dl>
@@ -36,7 +36,7 @@ a series of non-variadic macros doing very similar things.
 <pre>#include &lt;<a href="../headers/facilities/overload.html">boost/preprocessor/facilities/overload.hpp</a>&gt;<br>#include &lt;<a href="../headers/cat.html">boost/preprocessor/cat.hpp</a>&gt;<br>#include &lt;<a href="../headers/facilities/empty.html">boost/preprocessor/facilities/empty.hpp</a>&gt;<br>#include &lt;<a href="../headers/arithmetic/add.html">boost/preprocessor/arithmetic/add.hpp</a>&gt;<br><br>#define MACRO_1(number) MACRO_2(number,10)<br>#define MACRO_2(number1,number2) <a href="add.html">BOOST_PP_ADD</a>(number1,number2)<br><br>#define MACRO_ADD_NUMBERS(...) <a href="overload.html">BOOST_PP_OVERLOAD</a>(MACRO_,__VA_ARGS__)(__VA_ARGS__)<br><br>// or for Visual C++<br><br>#define MACRO_ADD_NUMBERS(...) \<br>  <a href="cat.html">BOOST_PP_CAT</a>(<a href="overload.html">BOOST_PP_OVERLOAD</a>(MACRO_,__VA_ARGS__)(__VA_ARGS__),<a href="empty.html">BOOST_PP_EMPTY</a>())<br><br>MACRO_ADD_NUMBERS(5) // output is 15<br>MACRO_ADD_NUMBERS(3,6) // output is 9<br></pre>
 </div>
 <hr size="1">
-<div style="margin-left: 0px;"> <i></i><i>© Copyright Edward Diener 2011</i> </div>
+<div style="margin-left: 0px;"> <i></i><i>© Copyright Edward Diener 2011,2013</i> </div>
 <div style="margin-left: 0px;">
 <p><small>Distributed under the Boost Software License, Version 1.0.
 (See accompanying file <a href="../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</a>

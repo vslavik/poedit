@@ -158,8 +158,8 @@
         </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">unsigned</span> <span class="identifier">Digits10</span><span class="special">,</span> <span class="identifier">expression_template_option</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;</span>
 <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;</span> <span class="identifier">intersect</span><span class="special">(</span>
-	<span class="keyword">const</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span> <span class="identifier">a</span><span class="special">,</span>
-	<span class="keyword">const</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span>  <span class="identifier">b</span><span class="special">);</span>
+  <span class="keyword">const</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span> <span class="identifier">a</span><span class="special">,</span>
+  <span class="keyword">const</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span>  <span class="identifier">b</span><span class="special">);</span>
 </pre>
 <p>
           Returns the interval which is the intersection of the <span class="emphasis"><em>a</em></span>
@@ -168,8 +168,8 @@
         </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">unsigned</span> <span class="identifier">Digits10</span><span class="special">,</span> <span class="identifier">expression_template_option</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;</span>
 <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;</span> <span class="identifier">hull</span><span class="special">(</span>
-	<span class="keyword">const</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span> <span class="identifier">a</span><span class="special">,</span>
-	<span class="keyword">const</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span>  <span class="identifier">b</span><span class="special">);</span>
+  <span class="keyword">const</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span> <span class="identifier">a</span><span class="special">,</span>
+  <span class="keyword">const</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span>  <span class="identifier">b</span><span class="special">);</span>
 </pre>
 <p>
           Returns the interval which is the union of <span class="emphasis"><em>a</em></span> and
@@ -231,12 +231,9 @@
         </p>
 <h6>
 <a name="boost_multiprecision.tut.interval.mpfi.h0"></a>
-          <span class="phrase"><a name="boost_multiprecision.tut.interval.mpfi.__ulink_url__http___perso_ens_lyon_fr_nathalie_revol_software_html__mpfi__ulink__example_"></a></span><a class="link" href="mpfi.html#boost_multiprecision.tut.interval.mpfi.__ulink_url__http___perso_ens_lyon_fr_nathalie_revol_software_html__mpfi__ulink__example_">
-          MPFI
+          <span class="phrase"><a name="boost_multiprecision.tut.interval.mpfi.mpfi_example"></a></span><a class="link" href="mpfi.html#boost_multiprecision.tut.interval.mpfi.mpfi_example"> MPFI
           example:</a>
         </h6>
-<p>
-</p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">multiprecision</span><span class="special">/</span><span class="identifier">mpfi</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
 <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">;</span>
@@ -265,12 +262,10 @@
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">overlap</span><span class="special">(</span><span class="identifier">i1</span><span class="special">,</span> <span class="identifier">i2</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">subset</span><span class="special">(</span><span class="identifier">i1</span><span class="special">,</span> <span class="identifier">i2</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 </pre>
-<p>
-        </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2012 John Maddock and Christopher Kormanyos<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2013 John Maddock and Christopher Kormanyos<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

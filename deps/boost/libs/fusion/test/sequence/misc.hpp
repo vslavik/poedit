@@ -95,6 +95,7 @@ struct test_intrinsics2
 {
     typedef boost::fusion::FUSION_SEQUENCE<> seq0;
 
+#if !defined(BOOST_FUSION_SEQUENCE_CONVERSION_IS_NOT_SEQUENCE__TYPE_PRESERVING)
 #if !defined(FUSION_FORWARD_ONLY) // list has no back/prev
 
     typedef boost::fusion::FUSION_SEQUENCE<int> target1;
@@ -114,6 +115,8 @@ struct test_intrinsics2
     typedef boost::fusion::FUSION_SEQUENCE<double, int> target4;
     typedef boost::mpl::push_front<seq3, double>::type seq4;
     BOOST_STATIC_ASSERT((boost::mpl::equal<seq4, target4>::value));
+
+#endif
 };
 
 void

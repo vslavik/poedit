@@ -7,13 +7,7 @@
 =============================================================================*/
 
 #define BOOST_TEST_MAIN
-#define BOOST_TEST_ALTERNATIVE_INIT_API
-#ifdef BOOST_HEAP_INCLUDE_TESTS
-#include <boost/test/included/unit_test.hpp>
-#else
 #include <boost/test/unit_test.hpp>
-#endif
-
 
 #include <algorithm>
 

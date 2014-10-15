@@ -30,6 +30,30 @@
 # define BOOST_INTERLOCKED_COMPARE_EXCHANGE_POINTER InterlockedCompareExchangePointer
 # define BOOST_INTERLOCKED_EXCHANGE_POINTER InterlockedExchangePointer
 
+#elif defined( BOOST_USE_INTRIN_H )
+
+#include <intrin.h>
+
+# define BOOST_INTERLOCKED_INCREMENT _InterlockedIncrement
+# define BOOST_INTERLOCKED_DECREMENT _InterlockedDecrement
+# define BOOST_INTERLOCKED_COMPARE_EXCHANGE _InterlockedCompareExchange
+# define BOOST_INTERLOCKED_EXCHANGE _InterlockedExchange
+# define BOOST_INTERLOCKED_EXCHANGE_ADD _InterlockedExchangeAdd
+
+# if defined(_M_IA64) || defined(_M_AMD64) || defined(__x86_64__) || defined(__x86_64)
+
+#  define BOOST_INTERLOCKED_COMPARE_EXCHANGE_POINTER _InterlockedCompareExchangePointer
+#  define BOOST_INTERLOCKED_EXCHANGE_POINTER _InterlockedExchangePointer
+
+# else
+
+#  define BOOST_INTERLOCKED_COMPARE_EXCHANGE_POINTER(dest,exchange,compare) \
+    ((void*)BOOST_INTERLOCKED_COMPARE_EXCHANGE((long volatile*)(dest),(long)(exchange),(long)(compare)))
+#  define BOOST_INTERLOCKED_EXCHANGE_POINTER(dest,exchange) \
+    ((void*)BOOST_INTERLOCKED_EXCHANGE((long volatile*)(dest),(long)(exchange)))
+
+# endif
+
 #elif defined(_WIN32_WCE)
 
 #if _WIN32_WCE >= 0x600
@@ -92,19 +116,10 @@ extern "C" long __cdecl _InterlockedExchangeAdd( long volatile *, long );
 
 #endif
 
-# pragma intrinsic( _InterlockedIncrement )
-# pragma intrinsic( _InterlockedDecrement )
-# pragma intrinsic( _InterlockedCompareExchange )
-# pragma intrinsic( _InterlockedExchange )
-# pragma intrinsic( _InterlockedExchangeAdd )
-
 # if defined(_M_IA64) || defined(_M_AMD64)
 
 extern "C" void* __cdecl _InterlockedCompareExchangePointer( void* volatile *, void*, void* );
 extern "C" void* __cdecl _InterlockedExchangePointer( void* volatile *, void* );
-
-#  pragma intrinsic( _InterlockedCompareExchangePointer )
-#  pragma intrinsic( _InterlockedExchangePointer )
 
 #  define BOOST_INTERLOCKED_COMPARE_EXCHANGE_POINTER _InterlockedCompareExchangePointer
 #  define BOOST_INTERLOCKED_EXCHANGE_POINTER _InterlockedExchangePointer

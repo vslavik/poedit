@@ -38,10 +38,10 @@
     <span class="keyword">typedef</span> <span class="keyword">void</span> <a class="link" href="attribute_value_ordering/l1_visitor.html#boost.log.attribute_value_ordering.l1_visitor.result_type"><span class="identifier">result_type</span></a><span class="special">;</span>
 
     <span class="comment">// <a class="link" href="attribute_value_ordering/l1_visitor.html#boost.log.attribute_value_ordering.l1_visitorconstruct-copy-destruct">construct/copy/destruct</a></span>
-    <a class="link" href="attribute_value_ordering/l1_visitor.html#idp28262136-bb"><span class="identifier">l1_visitor</span></a><span class="special">(</span><a class="link" href="attribute_value_ordering.html" title="Class template attribute_value_ordering">attribute_value_ordering</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <a class="link" href="attribute_value_ordering/l1_visitor.html#idp39174464-bb"><span class="identifier">l1_visitor</span></a><span class="special">(</span><a class="link" href="attribute_value_ordering.html" title="Class template attribute_value_ordering">attribute_value_ordering</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-    <span class="comment">// <a class="link" href="attribute_value_ordering/l1_visitor.html#idp28260712-bb">public member functions</a></span>
-    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> LeftT<span class="special">&gt;</span> <span class="identifier">result_type</span> <a class="link" href="attribute_value_ordering/l1_visitor.html#idp28260920-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">LeftT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <span class="comment">// <a class="link" href="attribute_value_ordering/l1_visitor.html#idp39171088-bb">public member functions</a></span>
+    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> LeftT<span class="special">&gt;</span> <span class="identifier">result_type</span> <a class="link" href="attribute_value_ordering/l1_visitor.html#idp39171648-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">LeftT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
   <span class="special">}</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> LeftT<span class="special">&gt;</span> 
   <span class="keyword">struct</span> <a class="link" href="attribute_value_ordering/l2_visitor.html" title="Struct template l2_visitor">l2_visitor</a> <span class="special">{</span>
@@ -49,29 +49,29 @@
     <span class="keyword">typedef</span> <span class="keyword">void</span> <a class="link" href="attribute_value_ordering/l2_visitor.html#boost.log.attribute_value_ordering.l2_visitor.result_type"><span class="identifier">result_type</span></a><span class="special">;</span>
 
     <span class="comment">// <a class="link" href="attribute_value_ordering/l2_visitor.html#boost.log.attribute_value_ordering.l2_visitorconstruct-copy-destruct">construct/copy/destruct</a></span>
-    <a class="link" href="attribute_value_ordering/l2_visitor.html#idp28265752-bb"><span class="identifier">l2_visitor</span></a><span class="special">(</span><span class="identifier">FunT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">LeftT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <a class="link" href="attribute_value_ordering/l2_visitor.html#idp39182592-bb"><span class="identifier">l2_visitor</span></a><span class="special">(</span><span class="identifier">FunT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">LeftT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-    <span class="comment">// <a class="link" href="attribute_value_ordering/l2_visitor.html#idp28264328-bb">public member functions</a></span>
-    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> RightT<span class="special">&gt;</span> <span class="identifier">result_type</span> <a class="link" href="attribute_value_ordering/l2_visitor.html#idp28264536-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">RightT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <span class="comment">// <a class="link" href="attribute_value_ordering/l2_visitor.html#idp39179216-bb">public member functions</a></span>
+    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> RightT<span class="special">&gt;</span> <span class="identifier">result_type</span> <a class="link" href="attribute_value_ordering/l2_visitor.html#idp39179776-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">RightT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
   <span class="special">}</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="attribute_value_ordering.html#boost.log.attribute_value_orderingconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">explicit</span> <a class="link" href="attribute_value_ordering.html#idp28269400-bb"><span class="identifier">attribute_value_ordering</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
+  <span class="keyword">explicit</span> <a class="link" href="attribute_value_ordering.html#idp39190864-bb"><span class="identifier">attribute_value_ordering</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
                                     <span class="identifier">FunT</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="identifier">FunT</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="attribute_value_ordering.html#idp28267800-bb">public member functions</a></span>
-  <span class="identifier">result_type</span> <a class="link" href="attribute_value_ordering.html#idp28268008-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="attribute_value_ordering.html#idp39187232-bb">public member functions</a></span>
+  <span class="identifier">result_type</span> <a class="link" href="attribute_value_ordering.html#idp39187792-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp69345672"></a><h2>Description</h2>
+<a name="idp147110816"></a><h2>Description</h2>
 <p>This predicate allows to order log records based on values of a specifically named attribute associated with them. Two given log records being compared should both have the specified attribute value of the specified type to be able to be ordered properly. As a special case, if neither of the records have the value, these records are considered equivalent. Otherwise, the ordering results are unspecified. </p>
 <div class="refsect2">
-<a name="idp69346424"></a><h3>
+<a name="idp147111904"></a><h3>
 <a name="boost.log.attribute_value_orderingconstruct-copy-destruct"></a><code class="computeroutput">attribute_value_ordering</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp28269400-bb"></a><span class="identifier">attribute_value_ordering</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp39190864-bb"></a><span class="identifier">attribute_value_ordering</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> 
                                   <span class="identifier">FunT</span> <span class="keyword">const</span> <span class="special">&amp;</span> fun <span class="special">=</span> <span class="identifier">FunT</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Initializing constructor.</p>
 <p>
@@ -104,10 +104,10 @@
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp69355720"></a><h3>
-<a name="idp28267800-bb"></a><code class="computeroutput">attribute_value_ordering</code> public member functions</h3>
+<a name="idp147130464"></a><h3>
+<a name="idp39187232-bb"></a><code class="computeroutput">attribute_value_ordering</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="identifier">result_type</span> <a name="idp28268008-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> left<span class="special">,</span> <span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> right<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">result_type</span> <a name="idp39187792-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> left<span class="special">,</span> <span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> right<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Ordering operator </p>
 </li></ol></div>
 </div>
@@ -115,7 +115,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2013 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2014 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

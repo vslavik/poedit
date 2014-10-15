@@ -49,7 +49,7 @@ void create_svg(std::string const& filename, Geometry const& a, Geometry const& 
     boost::ignore_unused_variable_warning(a);
     boost::ignore_unused_variable_warning(b);
     boost::ignore_unused_variable_warning(range);
-#endif    
+#endif
 }
 
 // NOTE: convert manually from svg to png using Inkscape ctrl-shift-E

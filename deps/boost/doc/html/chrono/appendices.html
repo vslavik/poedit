@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../chrono.html" title="Chapter&#160;5.&#160;Boost.Chrono 2.0.2">
+<link rel="up" href="../chrono.html" title="Chapter&#160;6.&#160;Boost.Chrono 2.0.4">
 <link rel="prev" href="reference.html" title="Reference">
-<link rel="next" href="../idp18721496-bb.html" title="Chapter&#160;6.&#160;Boost.Concept_Check">
+<link rel="next" href="../circular_buffer.html" title="Chapter&#160;7.&#160;Boost.Circular Buffer">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="reference.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../chrono.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../idp18721496-bb.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="reference.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../chrono.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../circular_buffer.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
@@ -40,6 +40,8 @@
 <a name="chrono.appendices.history"></a><a class="link" href="appendices.html#chrono.appendices.history" title="Appendix: History">Appendix: History</a>
 </h3></div></div></div>
 <div class="toc"><dl class="toc">
+<dt><span class="section"><a href="appendices.html#chrono.appendices.history.__version_2_0_4__july_12__2014___1_56__"><span class="bold"><strong>Version 2.0.4, July 12, 2014 - 1.56</strong></span> </a></span></dt>
+<dt><span class="section"><a href="appendices.html#chrono.appendices.history.__version_2_0_3__september_29__2013___1_55__"><span class="bold"><strong>Version 2.0.3, September 29, 2013 - 1.55</strong></span> </a></span></dt>
 <dt><span class="section"><a href="appendices.html#chrono.appendices.history.__version_2_0_2__june_15__2013___1_54__"><span class="bold"><strong>Version 2.0.2, June 15, 2013 - 1.54</strong></span> </a></span></dt>
 <dt><span class="section"><a href="appendices.html#chrono.appendices.history.__version_2_0_1__january_18__2013___1_53__"><span class="bold"><strong>Version 2.0.1, January 18, 2013 - 1.53</strong></span> </a></span></dt>
 <dt><span class="section"><a href="appendices.html#chrono.appendices.history.__version_2_0_0__october_23__2012___1_52__"><span class="bold"><strong>Version 2.0.0, October 23, 2012 - 1.52</strong></span> </a></span></dt>
@@ -50,6 +52,99 @@
 <dt><span class="section"><a href="appendices.html#chrono.appendices.history.__version_1_1_0__mars_17__2011__"><span class="bold"><strong>Version 1.1.0, Mars 17, 2011</strong></span> </a></span></dt>
 <dt><span class="section"><a href="appendices.html#chrono.appendices.history.__version_1_0_0__january_6__2011__"><span class="bold"><strong>Version 1.0.0, January 6, 2011</strong></span> </a></span></dt>
 </dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="chrono.appendices.history.__version_2_0_4__july_12__2014___1_56__"></a><a class="link" href="appendices.html#chrono.appendices.history.__version_2_0_4__july_12__2014___1_56__" title="Version 2.0.4, July 12, 2014 - 1.56"><span class="bold"><strong>Version 2.0.4, July 12, 2014 - 1.56</strong></span> </a>
+</h4></div></div></div>
+<p>
+          <span class="bold"><strong>Fixes:</strong></span>
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/6918" target="_top">#6918</a>
+              Boost Chrono compilation failure on HP uX due to undefined pthread_getcpuclockid
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/8006" target="_top">#8006</a>
+              Boost::Chrono Assertion at startup - steady_clock::now() - Windows
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9337" target="_top">#9337</a>
+              chrono::process_cpu_clock time points wrong by factor 1000 on Linux
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9342" target="_top">#9342</a>
+              Regression on process_cpu_clock::timepoint io on V2
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9419" target="_top">#9419</a>
+              boost::chrono::floor()/round() and negative durations is wrong
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9698" target="_top">#9698</a>
+              boost::chrono::thread_clock not declared in OSX
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9720" target="_top">#9720</a>
+              boost::this_thread::sleep_for() sometimes returns immediately on win32
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9859" target="_top">#9859</a>
+              Remove references to gcc-mingw
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9918" target="_top">#9918</a>
+              chrono compilation error on Solaris, funciton timegm
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9811" target="_top">#9811</a>
+              boost/boost/chrono/duration.hpp:355:56: error: call to non-constexpr
+              function 'static std::numeric_limits&lt;float&gt;::_Ty std::numeric_limits&lt;float&gt;::max()'
+              /home/zosun/input_service/inputservices-core-service/other/boost/boost/chrono/duration.hpp:
+              In static member function 'static constexpr double boost::chrono::detail::chrono_numeric_limits&lt;double,
+              true&gt;::lowest()':
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/10069" target="_top">#10069</a>
+              Overflow in chrono clocks on 32bit
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/10151" target="_top">#10151</a>
+              timegm function not available on QNX
+            </li>
+</ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="chrono.appendices.history.__version_2_0_3__september_29__2013___1_55__"></a><a class="link" href="appendices.html#chrono.appendices.history.__version_2_0_3__september_29__2013___1_55__" title="Version 2.0.3, September 29, 2013 - 1.55"><span class="bold"><strong>Version 2.0.3, September 29, 2013 - 1.55</strong></span> </a>
+</h4></div></div></div>
+<p>
+          <span class="bold"><strong>Fixes:</strong></span>
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/7868" target="_top">#7868</a>
+              chrono_io parses time incorrectly (1.53 and 1.52)
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9028" target="_top">#9028</a>
+              Typo in boost/chrono/stopwatches/formatters/base_formatter.hpp
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9147" target="_top">#9147</a>
+              uninitialized std::tm
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9274" target="_top">#9274</a>
+              lost of precission on system_clock input.
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9276" target="_top">#9276</a>
+              output from a system_clock::time_point get a time_point that is one
+              day later than expected.
+            </li>
+</ul></div>
+</div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="chrono.appendices.history.__version_2_0_2__june_15__2013___1_54__"></a><a class="link" href="appendices.html#chrono.appendices.history.__version_2_0_2__june_15__2013___1_54__" title="Version 2.0.2, June 15, 2013 - 1.54"><span class="bold"><strong>Version 2.0.2, June 15, 2013 - 1.54</strong></span> </a>
@@ -596,7 +691,7 @@
         on each platform
       </p>
 <div class="table">
-<a name="chrono.appendices.implementation.clock_api_correspondence"></a><p class="title"><b>Table&#160;5.3.&#160;Clock API correspondence</b></p>
+<a name="chrono.appendices.implementation.clock_api_correspondence"></a><p class="title"><b>Table&#160;6.4.&#160;Clock API correspondence</b></p>
 <div class="table-contents"><table class="table" summary="Clock API correspondence">
 <colgroup>
 <col>
@@ -908,7 +1003,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="reference.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../chrono.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../idp18721496-bb.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="reference.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../chrono.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../circular_buffer.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

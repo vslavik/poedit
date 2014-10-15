@@ -32,16 +32,20 @@ class Base {
         ar & m_i;
     }
 protected:
-    bool operator==(const Base &rhs) const {
+    bool equals(const Base &rhs) const {
         return m_i == rhs.m_i;
     }
     Base(int i = 0) :
         m_i(i)
     {}
-    virtual ~Base();
+    virtual ~Base(){};
+public:
+    virtual bool operator==(const Base &rhs) const {
+        return false;
+    }// = 0;
 };
 
-class Derived :  public Base {
+class Derived :  private Base {
     friend class boost::serialization::access;
 private:
     template<class Archive>
@@ -49,8 +53,8 @@ private:
         ar & boost::serialization::base_object<Base>(*this);
     }
 public:
-    bool operator==(const Derived &rhs) const {
-        return Base::operator==(rhs);
+    virtual bool operator==(const Derived &rhs) const {
+        return Base::equals(static_cast<const Base &>(rhs));
     }
     Derived(int i = 0) :
         Base(i)
@@ -93,7 +97,10 @@ test_main( int /* argc */, char* /* argv */[] )
         ia >> boost::serialization::make_nvp("ta", ta1);
     }
     BOOST_CHECK(ta != ta1);
-    BOOST_CHECK(*static_cast<Derived *>(ta) == *static_cast<Derived *>(ta1));
+    BOOST_CHECK(*ta == *ta1);
+    //BOOST_CHECK(*static_cast<Derived *>(ta) == *static_cast<Derived *>(ta1));
+    
     std::remove(testfile);
+
     return 0;
 }

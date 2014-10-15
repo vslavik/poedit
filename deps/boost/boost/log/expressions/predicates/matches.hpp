@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2014.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -39,18 +39,11 @@ namespace expressions {
 /*!
  * The predicate checks if the attribute value matches a regular expression. The attribute value is assumed to be of a string type.
  */
-#if !defined(BOOST_NO_CXX11_TEMPLATE_ALIASES)
-
-template< typename T, typename RegexT, typename FallbackPolicyT = fallback_to_none >
-using attribute_matches = aux::attribute_predicate< T, RegexT, matches_fun, FallbackPolicyT >;
-
-#else // !defined(BOOST_NO_CXX11_TEMPLATE_ALIASES)
-
 template< typename T, typename RegexT, typename FallbackPolicyT = fallback_to_none >
 class attribute_matches :
-    public aux::attribute_predicate< T, RegexT, matches_fun, FallbackPolicyT >
+    public aux::attribute_predicate< T, typename boost::log::aux::match_traits< RegexT >::compiled_type, matches_fun, FallbackPolicyT >
 {
-    typedef aux::attribute_predicate< T, RegexT, matches_fun, FallbackPolicyT > base_type;
+    typedef aux::attribute_predicate< T, typename boost::log::aux::match_traits< RegexT >::compiled_type, matches_fun, FallbackPolicyT > base_type;
 
 public:
     /*!
@@ -59,7 +52,7 @@ public:
      * \param name Attribute name
      * \param rex The regular expression to match the attribute value against
      */
-    attribute_matches(attribute_name const& name, RegexT const& rex) : base_type(name, rex)
+    attribute_matches(attribute_name const& name, RegexT const& rex) : base_type(name, boost::log::aux::match_traits< RegexT >::compile(rex))
     {
     }
 
@@ -71,12 +64,10 @@ public:
      * \param arg Additional parameter for the fallback policy
      */
     template< typename U >
-    attribute_matches(attribute_name const& name, RegexT const& rex, U const& arg) : base_type(name, rex, arg)
+    attribute_matches(attribute_name const& name, RegexT const& rex, U const& arg) : base_type(name, boost::log::aux::match_traits< RegexT >::compile(rex), arg)
     {
     }
 };
-
-#endif // !defined(BOOST_NO_CXX11_TEMPLATE_ALIASES)
 
 /*!
  * The function generates a terminal node in a template expression. The node will check if the attribute value,

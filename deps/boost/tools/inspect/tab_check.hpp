@@ -20,7 +20,7 @@ namespace boost
     public:
 
       tab_check();
-      virtual const char * name() const { return "*Tab*"; }
+      virtual const char * name() const { return "*Tabs*"; }
       virtual const char * desc() const { return "tabs in file"; }
 
       virtual void inspect(

@@ -294,7 +294,7 @@ int main()
 
     // To calculate distance, declare and construct a strategy with average earth radius
     boost::geometry::strategy::distance::haversine<double> haversine(6372795.0);
-        
+
     // Main functionality: calculate shortest routes from/to all cities
 
     // For the first one, the complete route is stored as a linestring
@@ -371,7 +371,7 @@ int main()
         mapper.text(city.get<0>(), city.get<1>(),
                 "fill:rgb(0,0,0);font-family:Arial;font-size:10px", 5, 5);
     }
-#endif    
+#endif
 
     return 0;
 }

@@ -291,7 +291,7 @@ void test_uninitialized_access( T const* )
   {
     // This should throw because 'def' is uninitialized
     T const& n = def.get() ;
-    unused_variable(n);
+    boost::ignore_unused(n);
     passed = true ;
   }
   catch (...) {}
@@ -302,7 +302,7 @@ void test_uninitialized_access( T const* )
   {
     // This should throw because 'def' is uninitialized
     T const& n = *def ;
-    unused_variable(n);
+    boost::ignore_unused(n);
     passed = true ;
   }
   catch (...) {}
@@ -312,7 +312,7 @@ void test_uninitialized_access( T const* )
   try
   {
     T v(5) ;
-    unused_variable(v);
+    boost::ignore_unused(v);
     // This should throw because 'def' is uninitialized
     *def = v ;
     passed = true ;
@@ -325,7 +325,7 @@ void test_uninitialized_access( T const* )
   {
     // This should throw because 'def' is uninitialized
     T v = *(def.operator->()) ;
-    unused_variable(v);
+    boost::ignore_unused(v);
     passed = true ;
   }
   catch (...) {}
@@ -840,11 +840,21 @@ void test_with_builtin_types()
   test_none( ARG(double) ) ;
 }
 
+// MSVC < 11.0 doesn't destroy X when we call ptr->VBase::VBase.
+// Make sure that we work around this bug.
+struct VBase : virtual X
+{
+    VBase(int v) : X(v) {}
+    // MSVC 8.0 doesn't generate this correctly...
+    VBase(const VBase& other) : X(static_cast<const X&>(other)) {}
+};
+
 void test_with_class_type()
 {
   TRACE( std::endl << BOOST_CURRENT_FUNCTION   );
 
   test_basics( ARG(X) );
+  test_basics( ARG(VBase) );
   test_conditional_ctor_and_get_valur_or( ARG(X) );
   test_direct_value_manip( ARG(X) );
   test_uninitialized_access( ARG(X) );
@@ -1076,8 +1086,8 @@ namespace optional_swap_test
   //
   void swap(boost::optional<class_whose_explicit_ctor_should_be_used> & x, boost::optional<class_whose_explicit_ctor_should_be_used> & y)
   {
-    bool hasX = x;
-    bool hasY = y;
+    bool hasX(x);
+    bool hasY(y);
 
     if ( !hasX && !hasY )
      return;

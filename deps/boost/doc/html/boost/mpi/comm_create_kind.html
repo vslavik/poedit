@@ -35,15 +35,13 @@
 
 <span class="keyword">enum</span> <span class="identifier">comm_create_kind</span> <span class="special">{</span> comm_duplicate, comm_take_ownership, comm_attach <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp164688248"></a><h2>Description</h2>
+<a name="idp340237584"></a><h2>Description</h2>
 <p>The values for this enumeration determine how a Boost.MPI communicator will behave when constructed with an MPI communicator. The options are:</p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><code class="computeroutput">comm_duplicate:</code> Duplicate the MPI_Comm communicator to create a new communicator (e.g., with MPI_Comm_dup). This new MPI_Comm communicator will be automatically freed when the Boost.MPI communicator (and all copies of it) is destroyed.</p></li></ul></div>
-<p>
-</p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><code class="computeroutput">comm_take_ownership:</code> Take ownership of the communicator. It will be freed automatically when all of the Boost.MPI communicators go out of scope. This option must not be used with MPI_COMM_WORLD.</p></li></ul></div>
-<p>
-</p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><code class="computeroutput">comm_attach:</code> The Boost.MPI communicator will reference the existing MPI communicator but will not free it when the Boost.MPI communicator goes out of scope. This option should only be used when the communicator is managed by the user or MPI library (e.g., MPI_COMM_WORLD). </p></li></ul></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p><code class="computeroutput">comm_duplicate:</code> Duplicate the MPI_Comm communicator to create a new communicator (e.g., with MPI_Comm_dup). This new MPI_Comm communicator will be automatically freed when the Boost.MPI communicator (and all copies of it) is destroyed.</p></li>
+<li class="listitem"><p><code class="computeroutput">comm_take_ownership:</code> Take ownership of the communicator. It will be freed automatically when all of the Boost.MPI communicators go out of scope. This option must not be used with MPI_COMM_WORLD.</p></li>
+<li class="listitem"><p><code class="computeroutput">comm_attach:</code> The Boost.MPI communicator will reference the existing MPI communicator but will not free it when the Boost.MPI communicator goes out of scope. This option should only be used when the communicator is managed by the user or MPI library (e.g., MPI_COMM_WORLD). </p></li>
+</ul></div>
 <p>
 </p>
 </div>

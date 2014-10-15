@@ -6,7 +6,7 @@
 ==============================================================================*/
 #include <boost/config.hpp>
 
-#if defined(BOOST_NO_RVALUE_REFERENCES)
+#if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
 #error "Valid only on compilers that support rvalues"
 #endif
 
@@ -73,7 +73,7 @@ namespace test_detail
         return T();
     }
 
-    typedef FUSION_SEQUENCE<std::vector<x>> return_type;
+    typedef FUSION_SEQUENCE return_type;
 
     return_type
     generate()
@@ -84,7 +84,7 @@ namespace test_detail
         return return_type();
     }
 
-    typedef FUSION_SEQUENCE<std::vector<x>, x> return_type2;
+    typedef FUSION_SEQUENCE2 return_type2;
 
     return_type2
     generate2()

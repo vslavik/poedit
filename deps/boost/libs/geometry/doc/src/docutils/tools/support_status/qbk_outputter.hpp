@@ -36,11 +36,11 @@ struct qbk_table_row_header
     void operator()(G)
     {
         m_out
-            << "[" 
+            << "["
             << qbk_geometry_name
                 <
                     typename boost::geometry::tag<G>::type
-                >::name() 
+                >::name()
             << "]";
     }
 };
@@ -70,7 +70,7 @@ struct qbk_outputter
     }
 
     template <typename Types>
-    inline void table_header() 
+    inline void table_header()
     {
         m_out << "[table" << std::endl << "[[ ]";
         boost::mpl::for_each<Types>(qbk_table_row_header(m_out));
@@ -81,25 +81,25 @@ struct qbk_outputter
         m_out << "[table" << std::endl << "[[Geometry][Status]]" << std::endl;
     }
 
-    inline void table_footer() 
+    inline void table_footer()
     {
         m_out << "]" << std::endl;
     }
 
     template <typename G>
-    inline void begin_row() 
+    inline void begin_row()
     {
-        m_out 
+        m_out
             << "[["
             << qbk_geometry_name
                 <
                     typename boost::geometry::tag<G>::type
                 >::name()
-            << "]" 
+            << "]"
             ;
     }
 
-    inline void end_row() 
+    inline void end_row()
     {
         m_out << "]" << std::endl;
     }

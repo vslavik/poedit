@@ -1,0 +1,359 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Tutorial</title>
+<link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
+<link rel="up" href="../align.html" title="Chapter&#160;2.&#160;Boost.Align">
+<link rel="prev" href="rationale.html" title="Rationale">
+<link rel="next" href="examples.html" title="Examples">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../boost.png"></td>
+<td align="center"><a href="../../../index.html">Home</a></td>
+<td align="center"><a href="../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="rationale.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../align.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="examples.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="align.tutorial"></a><a class="link" href="tutorial.html" title="Tutorial">Tutorial</a>
+</h2></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="tutorial.html#align.tutorial.using_align">Using align</a></span></dt>
+<dt><span class="section"><a href="tutorial.html#align.tutorial.using_aligned_alloc">Using aligned_alloc</a></span></dt>
+<dt><span class="section"><a href="tutorial.html#align.tutorial.using_aligned_allocator">Using aligned_allocator</a></span></dt>
+<dt><span class="section"><a href="tutorial.html#align.tutorial.using_aligned_allocator_adaptor">Using
+      aligned_allocator_adaptor</a></span></dt>
+<dt><span class="section"><a href="tutorial.html#align.tutorial.using_aligned_delete">Using aligned_delete</a></span></dt>
+<dt><span class="section"><a href="tutorial.html#align.tutorial.using_alignment_of">Using alignment_of</a></span></dt>
+<dt><span class="section"><a href="tutorial.html#align.tutorial.using_is_aligned">Using is_aligned</a></span></dt>
+</dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="align.tutorial.using_align"></a><a class="link" href="tutorial.html#align.tutorial.using_align" title="Using align">Using align</a>
+</h3></div></div></div>
+<p>
+        We want to default-construct an object of a potentially over-aligned generic
+        type, <code class="computeroutput"><span class="identifier">T</span></code>, in storage of size
+        <code class="computeroutput"><span class="identifier">n</span></code>, whose address is stored
+        in a pointer, <code class="computeroutput"><span class="identifier">p</span></code>.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">align</span><span class="special">/</span><span class="identifier">align</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      </p>
+<p>
+        Use the <code class="computeroutput"><span class="identifier">align</span></code> function to
+        adjust the pointer so that it is suitably aligned.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">auto</span> <span class="identifier">result</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span>
+    <span class="identifier">align</span><span class="special">(</span><span class="keyword">alignof</span><span class="special">(</span><span class="identifier">T</span><span class="special">),</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="identifier">T</span><span class="special">),</span> <span class="identifier">p</span><span class="special">,</span> <span class="identifier">n</span><span class="special">);</span>
+</pre>
+<p>
+      </p>
+<p>
+        If successful, <code class="computeroutput"><span class="identifier">n</span></code> is decreased
+        by the byte count that <code class="computeroutput"><span class="identifier">p</span></code>
+        was advanced to be suitably aligned, and the adjusted value of <code class="computeroutput"><span class="identifier">p</span></code> is returned. It now points to an address
+        at which to construct an object of type <code class="computeroutput"><span class="identifier">T</span></code>.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">if</span> <span class="special">(</span><span class="identifier">result</span><span class="special">)</span> <span class="special">{</span>
+    <span class="special">::</span><span class="keyword">new</span><span class="special">(</span><span class="identifier">result</span><span class="special">)</span> <span class="identifier">T</span><span class="special">();</span>
+<span class="special">}</span>
+</pre>
+<p>
+      </p>
+<p>
+        If unsuccessful, because <code class="computeroutput"><span class="identifier">n</span></code>
+        has insufficient space to fit an object of the requested size after adjusting
+        <code class="computeroutput"><span class="identifier">p</span></code> to have the requested alignment,
+        a null pointer is returned and <code class="computeroutput"><span class="identifier">p</span></code>
+        and <code class="computeroutput"><span class="identifier">n</span></code> are not changed.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">else</span> <span class="special">{</span>
+    <span class="keyword">throw</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">exception</span><span class="special">();</span>
+<span class="special">}</span>
+</pre>
+<p>
+      </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="align.tutorial.using_aligned_alloc"></a><a class="link" href="tutorial.html#align.tutorial.using_aligned_alloc" title="Using aligned_alloc">Using aligned_alloc</a>
+</h3></div></div></div>
+<p>
+        We want to dynamically allocate storage for, and default-construct within
+        that storage, an object of a generic type <code class="computeroutput"><span class="identifier">T</span></code>
+        that is potentially over-aligned.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">align</span><span class="special">/</span><span class="identifier">aligned_alloc</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      </p>
+<p>
+        Allocate an object of a desired alignment and size using the <code class="computeroutput"><span class="identifier">aligned_alloc</span></code> allocation function.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">auto</span> <span class="identifier">p</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span>
+    <span class="identifier">aligned_alloc</span><span class="special">(</span><span class="keyword">alignof</span><span class="special">(</span><span class="identifier">T</span><span class="special">),</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="identifier">T</span><span class="special">));</span>
+</pre>
+<p>
+      </p>
+<p>
+        If successful, a non-null pointer is returned. To free this storage the
+        <code class="computeroutput"><span class="identifier">aligned_free</span></code> function is
+        used.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">if</span> <span class="special">(</span><span class="identifier">p</span><span class="special">)</span> <span class="special">{</span>
+    <span class="keyword">try</span> <span class="special">{</span>
+        <span class="special">::</span><span class="keyword">new</span><span class="special">(</span><span class="identifier">p</span><span class="special">)</span> <span class="identifier">T</span><span class="special">();</span>
+    <span class="special">}</span> <span class="keyword">catch</span> <span class="special">(...)</span> <span class="special">{</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span><span class="identifier">aligned_free</span><span class="special">(</span><span class="identifier">p</span><span class="special">);</span>
+        <span class="keyword">throw</span><span class="special">;</span>
+    <span class="special">}</span>
+<span class="special">}</span>
+</pre>
+<p>
+      </p>
+<p>
+        If unsuccessful, a null pointer is returned.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">else</span> <span class="special">{</span>
+    <span class="keyword">throw</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">bad_alloc</span><span class="special">();</span>
+<span class="special">}</span>
+</pre>
+<p>
+      </p>
+<p>
+        Free this storage, via the <code class="computeroutput"><span class="identifier">aligned_free</span></code>
+        function, when it is no longer required.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span><span class="identifier">aligned_free</span><span class="special">(</span><span class="identifier">p</span><span class="special">);</span>
+</pre>
+<p>
+      </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="align.tutorial.using_aligned_allocator"></a><a class="link" href="tutorial.html#align.tutorial.using_aligned_allocator" title="Using aligned_allocator">Using aligned_allocator</a>
+</h3></div></div></div>
+<p>
+        We want to use standard library allocator-aware containers, such as <code class="computeroutput"><span class="identifier">vector</span></code>, with a generic type, <code class="computeroutput"><span class="identifier">T</span></code>, that is potentially over-aligned.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">align</span><span class="special">/</span><span class="identifier">aligned_allocator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      </p>
+<p>
+        Specify the <code class="computeroutput"><span class="identifier">aligned_allocator</span></code>
+        allocator via the container's allocator template parameter.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span>
+    <span class="identifier">aligned_allocator</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">v</span><span class="special">;</span>
+</pre>
+<p>
+      </p>
+<p>
+        If we wanted a vector of a different type, such as <code class="computeroutput"><span class="keyword">int</span></code>,
+        but desired that each integer object had the alignment of <code class="computeroutput"><span class="identifier">T</span></code>,
+        this is possible by specifying the minimum alignment with the allocator.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span>
+    <span class="identifier">aligned_allocator</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">alignof</span><span class="special">(</span><span class="identifier">T</span><span class="special">)&gt;</span> <span class="special">&gt;</span> <span class="identifier">v</span><span class="special">;</span>
+</pre>
+<p>
+      </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="align.tutorial.using_aligned_allocator_adaptor"></a><a class="link" href="tutorial.html#align.tutorial.using_aligned_allocator_adaptor" title="Using aligned_allocator_adaptor">Using
+      aligned_allocator_adaptor</a>
+</h3></div></div></div>
+<p>
+        We want to make an existing allocator type, <code class="computeroutput"><span class="identifier">A</span></code>,
+        alignment-aware and use it with a standard library container, such as <code class="computeroutput"><span class="identifier">vector</span></code>, with a type, <code class="computeroutput"><span class="identifier">T</span></code>,
+        that is potentially over-aligned.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">align</span><span class="special">/</span><span class="identifier">aligned_allocator_adaptor</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      </p>
+<p>
+        We use class template <code class="computeroutput"><span class="identifier">aligned_allocator_adaptor</span></code>
+        as the vector's allocator type.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span>
+    <span class="identifier">aligned_allocator_adaptor</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">v</span><span class="special">(</span><span class="identifier">a</span><span class="special">);</span>
+</pre>
+<p>
+      </p>
+<p>
+        If we wanted a vector of a different type, such as <code class="computeroutput"><span class="keyword">int</span></code>,
+        but desired that each integer object had the alignment of <code class="computeroutput"><span class="identifier">T</span></code>,
+        this is possible by specifying the minimum alignment with the allocator adaptor.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span>
+    <span class="identifier">aligned_allocator_adaptor</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="keyword">alignof</span><span class="special">(</span><span class="identifier">T</span><span class="special">)&gt;</span> <span class="special">&gt;</span> <span class="identifier">v</span><span class="special">(</span><span class="identifier">a</span><span class="special">);</span>
+</pre>
+<p>
+      </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="align.tutorial.using_aligned_delete"></a><a class="link" href="tutorial.html#align.tutorial.using_aligned_delete" title="Using aligned_delete">Using aligned_delete</a>
+</h3></div></div></div>
+<p>
+        We want a default deleter for use with <code class="computeroutput"><span class="identifier">unique_ptr</span></code>
+        that can be used to deallocate and destroy objects which were constructed
+        in storage that was allocated with <code class="computeroutput"><span class="identifier">aligned_alloc</span></code>.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">align</span><span class="special">/</span><span class="identifier">aligned_delete</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      </p>
+<p>
+        Storage is allocated for the object using <code class="computeroutput"><span class="identifier">aligned_alloc</span></code>.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">auto</span> <span class="identifier">p</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span>
+    <span class="identifier">aligned_alloc</span><span class="special">(</span><span class="keyword">alignof</span><span class="special">(</span><span class="identifier">T</span><span class="special">),</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="identifier">T</span><span class="special">));</span>
+<span class="keyword">if</span> <span class="special">(!</span><span class="identifier">p</span><span class="special">)</span> <span class="special">{</span>
+    <span class="keyword">throw</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">bad_alloc</span><span class="special">();</span>
+<span class="special">}</span>
+</pre>
+<p>
+      </p>
+<p>
+        An object is constructed in that storage using placement new.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">try</span> <span class="special">{</span>
+    <span class="identifier">q</span> <span class="special">=</span> <span class="special">::</span><span class="keyword">new</span><span class="special">(</span><span class="identifier">p</span><span class="special">)</span> <span class="identifier">T</span><span class="special">();</span>
+<span class="special">}</span> <span class="keyword">catch</span> <span class="special">(...)</span> <span class="special">{</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span><span class="identifier">aligned_free</span><span class="special">(</span><span class="identifier">p</span><span class="special">);</span>
+    <span class="keyword">throw</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+      </p>
+<p>
+        Use the <code class="computeroutput"><span class="identifier">aligned_delete</span></code> class
+        as the deleter template parameter.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">unique_ptr</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span><span class="identifier">aligned_delete</span><span class="special">&gt;</span> <span class="identifier">u</span><span class="special">(</span><span class="identifier">q</span><span class="special">);</span>
+</pre>
+<p>
+      </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="align.tutorial.using_alignment_of"></a><a class="link" href="tutorial.html#align.tutorial.using_alignment_of" title="Using alignment_of">Using alignment_of</a>
+</h3></div></div></div>
+<p>
+        We want to assert at compile time that the alignment of a type, <code class="computeroutput"><span class="identifier">T</span></code>, is at least as large as the alignment
+        of a type, <code class="computeroutput"><span class="identifier">U</span></code>.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">align</span><span class="special">/</span><span class="identifier">alignment_of</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      </p>
+<p>
+        Use the <code class="computeroutput"><span class="identifier">alignment_of</span></code> class
+        template to determine the alignment of the type.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">static_assert</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span><span class="identifier">alignment_of</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span>
+    <span class="identifier">value</span> <span class="special">&gt;=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span><span class="identifier">alignment_of</span><span class="special">&lt;</span><span class="identifier">U</span><span class="special">&gt;::</span>
+    <span class="identifier">value</span><span class="special">,</span> <span class="string">""</span><span class="special">);</span>
+</pre>
+<p>
+      </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="align.tutorial.using_is_aligned"></a><a class="link" href="tutorial.html#align.tutorial.using_is_aligned" title="Using is_aligned">Using is_aligned</a>
+</h3></div></div></div>
+<p>
+        We want to assert that the alignment of a pointer, <code class="computeroutput"><span class="identifier">p</span></code>,
+        is at least the alignment of a generic type, <code class="computeroutput"><span class="identifier">T</span></code>,
+        that is potentially over-aligned.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">align</span><span class="special">/</span><span class="identifier">is_aligned</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      </p>
+<p>
+        Use the <code class="computeroutput"><span class="identifier">is_aligned</span></code> function
+        to test the alignment of the pointer.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="identifier">assert</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span><span class="identifier">is_aligned</span><span class="special">(</span><span class="keyword">alignof</span><span class="special">(</span><span class="identifier">T</span><span class="special">),</span> <span class="identifier">p</span><span class="special">));</span>
+</pre>
+<p>
+      </p>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Glen Fernandes<p>
+        Distributed under the <a href="http://boost.org/LICENSE_1_0.txt" target="_top">Boost
+        Software License, Version 1.0</a>.
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="rationale.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../align.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="examples.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

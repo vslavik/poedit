@@ -1,7 +1,7 @@
 /* Boost libs/numeric/odeint/examples/point_type.hpp
 
- Copyright 2009-2012 Karsten Ahnert
- Copyright 2009-2012 Mario Mulansky
+ Copyright 2010-2012 Karsten Ahnert
+ Copyright 2011 Mario Mulansky
 
  solar system example for Hamiltonian stepper
 

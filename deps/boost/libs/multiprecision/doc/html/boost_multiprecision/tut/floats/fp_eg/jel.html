@@ -42,15 +42,11 @@
             If we were to implement this at double precision using Boost.Math's facilities
             for the Gamma and Bessel function calls it would look like this:
           </p>
-<p>
-</p>
 <pre class="programlisting"><span class="keyword">double</span> <span class="identifier">JEL1</span><span class="special">(</span><span class="keyword">double</span> <span class="identifier">v</span><span class="special">,</span> <span class="keyword">double</span> <span class="identifier">z</span><span class="special">)</span>
 <span class="special">{</span>
    <span class="keyword">return</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">v</span> <span class="special">+</span> <span class="number">1</span><span class="special">)</span> <span class="special">*</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">cyl_bessel_j</span><span class="special">(</span><span class="identifier">v</span><span class="special">,</span> <span class="identifier">z</span><span class="special">)</span> <span class="special">/</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">pow</span><span class="special">(</span><span class="identifier">z</span> <span class="special">/</span> <span class="number">2</span><span class="special">,</span> <span class="identifier">v</span><span class="special">);</span>
 <span class="special">}</span>
 </pre>
-<p>
-          </p>
 <p>
             Calling this function as:
           </p>
@@ -66,16 +62,12 @@
             type <code class="computeroutput"><span class="identifier">cpp_dec_float_50</span></code>
             as the argument type:
           </p>
-<p>
-</p>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">::</span><span class="identifier">cpp_dec_float_50</span>
    <span class="identifier">JEL2</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">::</span><span class="identifier">cpp_dec_float_50</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">::</span><span class="identifier">cpp_dec_float_50</span> <span class="identifier">z</span><span class="special">)</span>
 <span class="special">{</span>
    <span class="keyword">return</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">v</span> <span class="special">+</span> <span class="number">1</span><span class="special">)</span> <span class="special">*</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">cyl_bessel_j</span><span class="special">(</span><span class="identifier">v</span><span class="special">,</span> <span class="identifier">z</span><span class="special">)</span> <span class="special">/</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">::</span><span class="identifier">pow</span><span class="special">(</span><span class="identifier">z</span> <span class="special">/</span> <span class="number">2</span><span class="special">,</span> <span class="identifier">v</span><span class="special">);</span>
 <span class="special">}</span>
 </pre>
-<p>
-          </p>
 <p>
             The implementation is almost the same as before, but with one key difference
             - we can no longer call <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pow</span></code>,
@@ -107,8 +99,6 @@
             type (<code class="computeroutput"><span class="keyword">float</span></code>, <code class="computeroutput"><span class="keyword">double</span></code> etc), or with a multiprecision
             type:
           </p>
-<p>
-</p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Float</span><span class="special">&gt;</span>
 <span class="identifier">Float</span> <span class="identifier">JEL3</span><span class="special">(</span><span class="identifier">Float</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">Float</span> <span class="identifier">z</span><span class="special">)</span>
 <span class="special">{</span>
@@ -116,8 +106,6 @@
    <span class="keyword">return</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">v</span> <span class="special">+</span> <span class="number">1</span><span class="special">)</span> <span class="special">*</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">cyl_bessel_j</span><span class="special">(</span><span class="identifier">v</span><span class="special">,</span> <span class="identifier">z</span><span class="special">)</span> <span class="special">/</span> <span class="identifier">pow</span><span class="special">(</span><span class="identifier">z</span> <span class="special">/</span> <span class="number">2</span><span class="special">,</span> <span class="identifier">v</span><span class="special">);</span>
 <span class="special">}</span>
 </pre>
-<p>
-          </p>
 <p>
             Once again the code is almost the same as before, but the call to <code class="computeroutput"><span class="identifier">pow</span></code> has changed yet again. We need
             the call to resolve to either <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pow</span></code>
@@ -165,8 +153,6 @@
             from Boost.Math which calculates the return type of mixed-argument functions,
             here's how the new code looks now:
           </p>
-<p>
-</p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Float1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Float2</span><span class="special">&gt;</span>
 <span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">tools</span><span class="special">::</span><span class="identifier">promote_args</span><span class="special">&lt;</span><span class="identifier">Float1</span><span class="special">,</span> <span class="identifier">Float2</span><span class="special">&gt;::</span><span class="identifier">type</span>
    <span class="identifier">JEL4</span><span class="special">(</span><span class="identifier">Float1</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">Float2</span> <span class="identifier">z</span><span class="special">)</span>
@@ -175,8 +161,6 @@
    <span class="keyword">return</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">v</span> <span class="special">+</span> <span class="number">1</span><span class="special">)</span> <span class="special">*</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">cyl_bessel_j</span><span class="special">(</span><span class="identifier">v</span><span class="special">,</span> <span class="identifier">z</span><span class="special">)</span> <span class="special">/</span> <span class="identifier">pow</span><span class="special">(</span><span class="identifier">z</span> <span class="special">/</span> <span class="number">2</span><span class="special">,</span> <span class="identifier">v</span><span class="special">);</span>
 <span class="special">}</span>
 </pre>
-<p>
-          </p>
 <p>
             As you can see the two arguments to the function are now separate template
             types, and the return type is computed using the <code class="computeroutput"><span class="identifier">promote_args</span></code>
@@ -217,7 +201,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2012 John Maddock and Christopher Kormanyos<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2013 John Maddock and Christopher Kormanyos<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

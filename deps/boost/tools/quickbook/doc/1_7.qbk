@@ -46,12 +46,15 @@ It can also be used to set the source mode for elements:
 ]
 ```
 
-When used before a section, it sets the source mode for the section element,
-not the whole section.
+When used before a section, it sets the source mode for the whole section.
 
-Currently it does not support other syntactic entities such as paragraphs
-and lists. It will currently be used to the next code block or element.
-This is a bit messy, but I'm not sure what would be a good idea.
+If it appears at the beginning of a paragraph, it will be used for the
+whole paragraph only if there's a newline, eg.
+
+```
+[!c++]
+A declaration `void foo();` and a definition `void foo() {}`.
+```
 
 [endsect]
 
@@ -119,20 +122,15 @@ generates:
 
 [endsect]
 
-[section:templates_in_link_values Templates in link values]
+[section:templates_in_attributes Templates in some attributes]
 
-There's very premilinary support for calling templates in link values. A lot
-more work needs to be done, including:
+There's support for calling templates in link values, anchors, roles and
+includes. This is sometimes a bit of a change, especially in places where
+spaces are currently allowed, so I might try using a slightly different
+grammar where required. I think I also need to add some validation, since
+the parser can allow more symbols than some of the old ones.
 
-* Considering other places where templates could be called (e.g. images are
-  quite tricky, as templates could get confused with attributes, should
-  templates be callable from something like an element's id?).
-* Trimming spaces from the body of the template (which can cause surprising
-  results).
-* Checking that the contents of the template are appropriate for the context.
-  Possibly even using a different grammar.
-
-[endsect] [/templates_in_link_values]
+[endsect] [/templates_in_attributes]
 
 [section:list_markup_in_tables List Markup in Nested Blocks]
 
@@ -167,6 +165,26 @@ as:
 
 If a phrase template has phrase content mixed with block elements, it'll generate
 output as if it was expanded inline.
+
+[endsect]
+
+[section:glob Including multiple files with Globs]
+
+One can now include multiple files at once using a glob pattern for the
+file reference:
+
+    [include sub/*/*.qbk]
+    [include include/*.h]
+
+All the matching files, and intermediate irectories, will match and be
+included. The glob pattern can be "\*" for matching zero or more characters,
+"?" for matching a single character, "\[<c>-<c>\]" to match a character class,
+"\[\^<char>-<char>\]" to exclusive match a character class, "\\\\" to escape
+a glob special character which is then matched, and anything else is matched
+to the character.
+
+[note Because of the escaping in file references the "\\\\" glob escape is
+a double "\\"; i.e. and escaped back-slash.]
 
 [endsect]
 

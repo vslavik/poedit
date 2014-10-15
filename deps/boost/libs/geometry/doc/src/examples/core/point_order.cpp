@@ -22,7 +22,7 @@ int main()
     typedef boost::geometry::model::polygon<point_type, false> polygon_type;
 
     boost::geometry::order_selector order = boost::geometry::point_order<polygon_type>::value;
-    
+
     std::cout << "order: " << order << std::endl
         << "(clockwise = " << boost::geometry::clockwise
         << ", counterclockwise = " << boost::geometry::counterclockwise

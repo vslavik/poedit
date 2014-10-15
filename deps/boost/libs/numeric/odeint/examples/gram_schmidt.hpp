@@ -1,8 +1,8 @@
 /*
  boost header: numeric/odeint/gram_schmitt.hpp
 
- Copyright 2009-2012 Karsten Ahnert
- Copyright 2009-2012 Mario Mulansky
+ Copyright 2011-2013 Karsten Ahnert
+ Copyright 2011 Mario Mulansky
 
  Distributed under the Boost Software License, Version 1.0.
  (See accompanying file LICENSE_1_0.txt or
@@ -12,6 +12,7 @@
 #ifndef BOOST_NUMERIC_ODEINT_GRAM_SCHMITT_HPP_INCLUDED
 #define BOOST_NUMERIC_ODEINT_GRAM_SCHMITT_HPP_INCLUDED
 
+#include <boost/throw_exception.hpp>
 #include <iterator>
 #include <algorithm>
 #include <numeric>
@@ -38,7 +39,7 @@ void gram_schmidt( StateType &x , LyapType &lyap , size_t n )
 {
     if( !num_of_lyap ) return;
     if( ptrdiff_t( ( num_of_lyap + 1 ) * n ) != std::distance( x.begin() , x.end() ) )
-        throw std::domain_error( "renormalization() : size of state does not match the number of lyapunov exponents." );
+        BOOST_THROW_EXCEPTION( std::domain_error( "renormalization() : size of state does not match the number of lyapunov exponents." ) );
 
     typedef typename StateType::value_type value_type;
     typedef typename StateType::iterator iterator;

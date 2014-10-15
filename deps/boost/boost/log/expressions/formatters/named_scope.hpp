@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2014.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -50,6 +50,8 @@
 #include <boost/log/keywords/delimiter.hpp>
 #include <boost/log/keywords/depth.hpp>
 #include <boost/log/keywords/iteration.hpp>
+#include <boost/log/keywords/empty_marker.hpp>
+#include <boost/log/keywords/incomplete_marker.hpp>
 #include <boost/log/detail/header.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
@@ -132,6 +134,10 @@ private:
     element_formatter_type m_element_formatter;
     //! Element delimiter
     string_type m_delimiter;
+    //! Incomplete list marker
+    string_type m_incomplete_marker;
+    //! Empty list marker
+    string_type m_empty_marker;
     //! Maximum number of elements to output
     value_type::size_type m_depth;
     //! Iteration direction
@@ -139,9 +145,19 @@ private:
 
 public:
     //! Initializing constructor
-    format_named_scope_impl(element_formatter_type const& element_formatter, string_type const& delimiter, value_type::size_type depth, scope_iteration_direction direction) :
+    format_named_scope_impl
+    (
+        element_formatter_type const& element_formatter,
+        string_type const& delimiter,
+        string_type const& incomplete_marker,
+        string_type const& empty_marker,
+        value_type::size_type depth,
+        scope_iteration_direction direction
+    ) :
         m_element_formatter(element_formatter),
         m_delimiter(delimiter),
+        m_incomplete_marker(incomplete_marker),
+        m_empty_marker(empty_marker),
         m_depth(depth),
         m_direction(direction)
     {
@@ -150,6 +166,8 @@ public:
     format_named_scope_impl(format_named_scope_impl const& that) :
         m_element_formatter(that.m_element_formatter),
         m_delimiter(that.m_delimiter),
+        m_incomplete_marker(that.m_incomplete_marker),
+        m_empty_marker(that.m_empty_marker),
         m_depth(that.m_depth),
         m_direction(that.m_direction)
     {
@@ -158,10 +176,17 @@ public:
     //! Formatting operator
     result_type operator() (stream_type& strm, value_type const& scopes) const
     {
-        if (m_direction == expressions::forward)
-            format_forward(strm, scopes);
+        if (!scopes.empty())
+        {
+            if (m_direction == expressions::forward)
+                format_forward(strm, scopes);
+            else
+                format_reverse(strm, scopes);
+        }
         else
-            format_reverse(strm, scopes);
+        {
+            strm << m_empty_marker;
+        }
     }
 
 private:
@@ -183,7 +208,7 @@ private:
         if (it != end)
         {
             if (it != scopes.begin())
-                strm << "..." << m_delimiter;
+                strm << m_incomplete_marker;
 
             m_element_formatter(strm, *it);
             for (++it; it != end; ++it)
@@ -218,7 +243,7 @@ private:
             }
 
             if (it != scopes.rend())
-                strm << m_delimiter << "...";
+                strm << m_incomplete_marker;
         }
     }
 };
@@ -266,8 +291,18 @@ private:
 public:
     //! Initializing constructor
     template< typename FormatT >
-    format_named_scope_terminal(attribute_name const& name, fallback_policy const& fallback, FormatT const& element_format, string_type const& delimiter, value_type::size_type depth, scope_iteration_direction direction) :
-        m_name(name), m_formatter(aux::parse_named_scope_format(element_format), delimiter, depth, direction), m_visitor_invoker(fallback)
+    format_named_scope_terminal
+    (
+        attribute_name const& name,
+        fallback_policy const& fallback,
+        FormatT const& element_format,
+        string_type const& delimiter,
+        string_type const& incomplete_marker,
+        string_type const& empty_marker,
+        value_type::size_type depth,
+        scope_iteration_direction direction
+    ) :
+        m_name(name), m_formatter(aux::parse_named_scope_format(element_format), delimiter, incomplete_marker, empty_marker, depth, direction), m_visitor_invoker(fallback)
     {
     }
     //! Copy constructor
@@ -392,24 +427,28 @@ public:
 
 namespace aux {
 
-//! Auxiliary traits to acquire correct default delimiter depending on the character type
+//! Auxiliary traits to acquire default formatter parameters depending on the character type
 template< typename CharT >
-struct default_scope_delimiter;
+struct default_named_scope_params;
 
 #ifdef BOOST_LOG_USE_CHAR
 template< >
-struct default_scope_delimiter< char >
+struct default_named_scope_params< char >
 {
-    static const char* forward() { return "->"; }
-    static const char* reverse() { return "<-"; }
+    static const char* forward_delimiter() { return "->"; }
+    static const char* reverse_delimiter() { return "<-"; }
+    static const char* incomplete_marker() { return "..."; }
+    static const char* empty_marker() { return ""; }
 };
 #endif
 #ifdef BOOST_LOG_USE_WCHAR_T
 template< >
-struct default_scope_delimiter< wchar_t >
+struct default_named_scope_params< wchar_t >
 {
-    static const wchar_t* forward() { return L"->"; }
-    static const wchar_t* reverse() { return L"<-"; }
+    static const wchar_t* forward_delimiter() { return L"->"; }
+    static const wchar_t* reverse_delimiter() { return L"<-"; }
+    static const wchar_t* incomplete_marker() { return L"..."; }
+    static const wchar_t* empty_marker() { return L""; }
 };
 #endif
 
@@ -418,8 +457,9 @@ BOOST_FORCEINLINE format_named_scope_actor< FallbackPolicyT, CharT, ActorT > for
 {
     typedef format_named_scope_actor< FallbackPolicyT, CharT, ActorT > actor_type;
     typedef typename actor_type::terminal_type terminal_type;
+    typedef default_named_scope_params< CharT > default_params;
     scope_iteration_direction dir = args[keywords::iteration | expressions::forward];
-    const CharT* default_delimiter = (dir == expressions::forward ? default_scope_delimiter< CharT >::forward() : default_scope_delimiter< CharT >::reverse());
+    const CharT* default_delimiter = (dir == expressions::forward ? default_params::forward_delimiter() : default_params::reverse_delimiter());
     typename actor_type::base_type act =
     {{
          terminal_type
@@ -428,6 +468,8 @@ BOOST_FORCEINLINE format_named_scope_actor< FallbackPolicyT, CharT, ActorT > for
              fallback,
              args[keywords::format],
              args[keywords::delimiter | default_delimiter],
+             args[keywords::incomplete_marker | default_params::incomplete_marker()],
+             args[keywords::empty_marker | default_params::empty_marker()],
              args[keywords::depth | static_cast< attributes::named_scope::value_type::size_type >(0)],
              dir
          )
@@ -552,7 +594,7 @@ format_named_scope(attribute_actor< T, FallbackPolicyT, TagT, ActorT > const& pl
 #if !defined(BOOST_LOG_DOXYGEN_PASS)
 
 #   define BOOST_PP_FILENAME_1 <boost/log/detail/named_scope_fmt_pp.hpp>
-#   define BOOST_PP_ITERATION_LIMITS (1, 4)
+#   define BOOST_PP_ITERATION_LIMITS (1, 6)
 #   include BOOST_PP_ITERATE()
 
 #else // BOOST_LOG_DOXYGEN_PASS
@@ -564,6 +606,8 @@ format_named_scope(attribute_actor< T, FallbackPolicyT, TagT, ActorT > const& pl
  * \param args An set of named parameters. Supported parameters:
  *             \li \c format - A format string for named scopes. The string can contain "%n", "%f" and "%l" placeholders for the scope name, file and line number, respectively. This parameter is mandatory.
  *             \li \c delimiter - A string that is used to delimit the formatted scope names. Default: "->" or "<-", depending on the iteration direction.
+ *             \li \c incomplete_marker - A string that is used to indicate that the list was printed incomplete because of depth limitation. Default: "...".
+ *             \li \c empty_marker - A string that is output in case if the scope list is empty. Default: "", i.e. nothing is output.
  *             \li \c iteration - Iteration direction, see \c scope_iteration_direction enumeration. Default: forward.
  *             \li \c depth - Iteration depth. Default: unlimited.
  */

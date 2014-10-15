@@ -20,7 +20,7 @@ project boost-geometry-index-test
 test-suite boost-geometry-index-varray
     :
     [ run varray_old.cpp ]
-    [ run varray.cpp ]
+    [ run varray.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
     ;
 
 build-project algorithms ;

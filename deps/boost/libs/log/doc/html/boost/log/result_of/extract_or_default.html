@@ -31,13 +31,13 @@
   <span class="keyword">typedef</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">if_</span><span class="special">&lt;</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">is_sequence</span><span class="special">&lt;</span> <span class="identifier">extracted_type</span> <span class="special">&gt;</span><span class="special">,</span> <span class="identifier">value_ref</span><span class="special">&lt;</span> <span class="identifier">extracted_type</span><span class="special">,</span> <span class="identifier">TagT</span> <span class="special">&gt;</span><span class="special">,</span> <span class="identifier">extracted_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span>                                                                                                  <a name="boost.log.result_of.extract_or_default.type"></a><span class="identifier">type</span><span class="special">;</span>          
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp57061000"></a><h2>Description</h2>
+<a name="idp123220640"></a><h2>Description</h2>
 <p>The metafunction results in a type that is in form of <code class="computeroutput">T const&amp;</code>, if <code class="computeroutput">T</code> is not an MPL type sequence and <code class="computeroutput">DefaultT</code> is the same as <code class="computeroutput">T</code>, or <code class="computeroutput">value_ref&lt; TypesT, TagT &gt;</code> otherwise, with <code class="computeroutput">TypesT</code> being a type sequence comprising the types from sequence <code class="computeroutput">T</code> and <code class="computeroutput">DefaultT</code>, if it is not present in <code class="computeroutput">T</code> already. </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2013 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2014 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

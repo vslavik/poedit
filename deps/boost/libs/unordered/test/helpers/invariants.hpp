@@ -105,7 +105,8 @@ namespace test
                 i = 0; i < x1.bucket_count(); ++i)
         {
             for (BOOST_DEDUCED_TYPENAME X::const_local_iterator
-                    begin = x1.begin(i), end = x1.end(i); begin != end; ++begin)
+                    begin2 = x1.begin(i), end2 = x1.end(i);
+                    begin2 != end2; ++begin2)
             {
                 ++bucket_size;
             }

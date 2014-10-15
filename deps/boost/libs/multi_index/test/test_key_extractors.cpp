@@ -62,9 +62,6 @@ struct test_derived_class:test_class
   test_derived_class(int i,int j):test_class(i,j){}
 };
 
-BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION(test_class)
-BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION(test_derived_class)
-
 typedef identity<test_class>                                       idn;
 typedef identity<const test_class>                                 cidn;
 typedef BOOST_MULTI_INDEX_MEMBER(test_class,int,int_member)        key_m;
@@ -133,9 +130,6 @@ struct test_nc_derived_class:test_nc_class
   test_nc_derived_class(int i=0):test_nc_class(i){}
   test_nc_derived_class(int i,int j):test_nc_class(i,j){}
 };
-
-BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION(test_nc_class)
-BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION(test_nc_derived_class)
 
 typedef identity<test_nc_class>                                nc_idn;
 typedef identity<const test_nc_class>                          nc_cidn;

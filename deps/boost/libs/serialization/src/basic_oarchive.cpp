@@ -331,6 +331,12 @@ basic_oarchive_impl::save_pointer(
                     // makes a copy when passing a non-const to a const.  This
                     // is permitted by the standard but rarely seen in practice
                     const class_name_type cn(key);
+                    if(cn.size() > (BOOST_SERIALIZATION_MAX_KEY_SIZE - 1))
+                        boost::serialization::throw_exception(
+                            boost::archive::archive_exception(
+                                boost::archive::archive_exception::
+                                    invalid_class_name)
+                            );
                     // write out the external class identifier
                     ar.vsave(cn);
                 }

@@ -30,7 +30,7 @@ namespace boost { namespace geometry
 
 // Silence warning C4127: conditional expression is constant
 #if defined(_MSC_VER)
-#pragma warning(push)  
+#pragma warning(push)
 #pragma warning(disable : 4127)
 #endif
 

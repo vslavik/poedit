@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../thread.html" title="Chapter&#160;30.&#160;Thread 4.2.0">
+<link rel="up" href="../thread.html" title="Chapter&#160;32.&#160;Thread 4.3.0">
 <link rel="prev" href="future.html" title="Future">
 <link rel="next" href="ScopedThreads.html" title="Scoped Threads">
 </head>
@@ -665,6 +665,8 @@
         EXTENSION</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.hardware_concurrency">Static
         member function <code class="computeroutput"><span class="identifier">hardware_concurrency</span><span class="special">()</span></code></a></span></dt>
+<dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.physical_concurrency">Static
+        member function <code class="computeroutput"><span class="identifier">physical_concurrency</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.nativehandle">Member
         function <code class="computeroutput"><span class="identifier">native_handle</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.equals"><code class="computeroutput"><span class="keyword">operator</span><span class="special">==</span></code>
@@ -737,6 +739,7 @@
     <span class="keyword">void</span> <span class="identifier">detach</span><span class="special">();</span>
 
     <span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="identifier">hardware_concurrency</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">;</span>
+    <span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="identifier">physical_concurrency</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">;</span>
 
     <span class="keyword">typedef</span> <span class="identifier">platform</span><span class="special">-</span><span class="identifier">specific</span><span class="special">-</span><span class="identifier">type</span> <span class="identifier">native_handle_type</span><span class="special">;</span>
     <span class="identifier">native_handle_type</span> <span class="identifier">native_handle</span><span class="special">();</span>
@@ -824,24 +827,6 @@
 </h4></div></div></div>
 <pre class="programlisting"><span class="identifier">thread</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">thread</span><span class="special">&amp;&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
 </pre>
-<div class="warning"><table border="0" summary="Warning">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../doc/src/images/warning.png"></td>
-<th align="left">Warning</th>
-</tr>
-<tr><td align="left" valign="top">
-<p>
-            DEPRECATED since 3.0.0: BOOST_THREAD_DONT_PROVIDE_THREAD_MOVE_ASSIGN_CALLS_TERMINATE_IF_JOINABLE
-            behavior.
-          </p>
-<p>
-            Available only up to Boost 1.56.
-          </p>
-<p>
-            Join the thread before moving.
-          </p>
-</td></tr>
-</table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
 <dl class="variablelist">
@@ -853,12 +838,12 @@
               </p>
 <p>
                 - if defined BOOST_THREAD_DONT_PROVIDE_THREAD_MOVE_ASSIGN_CALLS_TERMINATE_IF_JOINABLE:
-                If there was a thread previously associated with <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code> then that thread is detached,
+                If the thread is joinable call <a class="link" href="thread_management.html#thread.thread_management.thread.detach" title="Member function detach()"><code class="computeroutput"><span class="identifier">detach</span><span class="special">()</span></code></a>,
                 DEPRECATED
               </p>
 <p>
                 - if defined BOOST_THREAD_PROVIDES_THREAD_MOVE_ASSIGN_CALLS_TERMINATE_IF_JOINABLE:
-                If the thread is joinable calls to std::terminate.
+                If the thread is joinable calls to <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">terminate</span><span class="special">()</span></code>.
               </p>
 </dd>
 <dt><span class="term">Postconditions:</span></dt>
@@ -1115,24 +1100,6 @@
 </h4></div></div></div>
 <pre class="programlisting"><span class="special">~</span><span class="identifier">thread</span><span class="special">();</span>
 </pre>
-<div class="warning"><table border="0" summary="Warning">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../doc/src/images/warning.png"></td>
-<th align="left">Warning</th>
-</tr>
-<tr><td align="left" valign="top">
-<p>
-            DEPRECATED since 3.0.0: BOOST_THREAD_DONT_PROVIDE_THREAD_DESTRUCTOR_CALLS_TERMINATE_IF_JOINABLE
-            behavior.
-          </p>
-<p>
-            Available only up to Boost 1.56.
-          </p>
-<p>
-            Join the thread before destroying or use a scoped thread.
-          </p>
-</td></tr>
-</table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
 <dl class="variablelist">
@@ -1140,13 +1107,13 @@
 <dd>
 <p>
                 - if defined BOOST_THREAD_DONT_PROVIDE_THREAD_DESTRUCTOR_CALLS_TERMINATE_IF_JOINABLE:
-                If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
-                has an associated thread of execution, calls <a class="link" href="thread_management.html#thread.thread_management.thread.detach" title="Member function detach()"><code class="computeroutput"><span class="identifier">detach</span><span class="special">()</span></code></a>,
+                If the thread is joinable calls <a class="link" href="thread_management.html#thread.thread_management.thread.detach" title="Member function detach()"><code class="computeroutput"><span class="identifier">detach</span><span class="special">()</span></code></a>,
                 DEPRECATED
               </p>
 <p>
-                - BOOST_THREAD_PROVIDES_THREAD_DESTRUCTOR_CALLS_TERMINATE_IF_JOINABLE:
-                If the thread is joinable calls to std::terminate. Destroys <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
+                - if defined BOOST_THREAD_PROVIDES_THREAD_DESTRUCTOR_CALLS_TERMINATE_IF_JOINABLE:
+                If the thread is joinable calls to <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">terminate</span></code>.
+                Destroys <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
               </p>
 </dd>
 <dt><span class="term">Throws:</span></dt>
@@ -1155,12 +1122,14 @@
               </p></dd>
 <dt><span class="term">Note:</span></dt>
 <dd><p>
-                Either implicitly detaching or joining a <code class="computeroutput"><span class="identifier">joinable</span><span class="special">()</span></code> thread in its destructor could
+                The reason to moving to std::terminate is that either implicitly
+                detaching or joining a <code class="computeroutput"><span class="identifier">joinable</span><span class="special">()</span></code> thread in its destructor could
                 result in difficult to debug correctness (for <code class="computeroutput"><span class="identifier">detach</span></code>)
                 or performance (for <code class="computeroutput"><span class="identifier">join</span></code>)
                 bugs encountered only when an exception is raised. Thus the programmer
                 must ensure that the destructor is never executed while the thread
-                is still joinable.
+                is still joinable. Join the thread before destroying or use an scoped
+                thread.
               </p></dd>
 </dl>
 </div>
@@ -1270,9 +1239,6 @@
 <tr><td align="left" valign="top">
 <p>
             DEPRECATED since 3.00.
-          </p>
-<p>
-            Available only up to Boost 1.56.
           </p>
 <p>
             Use instead <a class="link" href="thread_management.html#thread.thread_management.thread.try_join_for" title="Member function try_join_for() EXTENSION"><code class="computeroutput"><span class="identifier">try_join_for</span></code></a>, <a class="link" href="thread_management.html#thread.thread_management.thread.try_join_until" title="Member function try_join_until() EXTENSION"><code class="computeroutput"><span class="identifier">try_join_until</span></code></a>.
@@ -1592,6 +1558,29 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
+<a name="thread.thread_management.thread.physical_concurrency"></a><a class="link" href="thread_management.html#thread.thread_management.thread.physical_concurrency" title="Static member function physical_concurrency()">Static
+        member function <code class="computeroutput"><span class="identifier">physical_concurrency</span><span class="special">()</span></code></a>
+</h4></div></div></div>
+<pre class="programlisting"><span class="keyword">unsigned</span> <span class="identifier">physical_concurrency</span><span class="special">()</span> <span class="identifier">noexecpt</span><span class="special">;</span>
+</pre>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl class="variablelist">
+<dt><span class="term">Returns:</span></dt>
+<dd><p>
+                The number of physical cores available on the current system. In
+                contrast to <code class="computeroutput"><span class="identifier">hardware_concurrency</span><span class="special">()</span></code> it does not return the number of
+                virtual cores, but it counts only physical cores.
+              </p></dd>
+<dt><span class="term">Throws:</span></dt>
+<dd><p>
+                Nothing
+              </p></dd>
+</dl>
+</div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
 <a name="thread.thread_management.thread.nativehandle"></a><a class="link" href="thread_management.html#thread.thread_management.thread.nativehandle" title="Member function native_handle()">Member
         function <code class="computeroutput"><span class="identifier">native_handle</span><span class="special">()</span></code></a>
 </h4></div></div></div>
@@ -1632,9 +1621,6 @@
             DEPRECATED since 4.0.0.
           </p>
 <p>
-            Available only up to Boost 1.58.
-          </p>
-<p>
             Use <code class="computeroutput"><span class="identifier">a</span><span class="special">.</span><a class="link" href="thread_management.html#thread.thread_management.thread.get_id" title="Member function get_id()"><code class="computeroutput"><span class="identifier">get_id</span></code></a><span class="special">()==</span><span class="identifier">b</span><span class="special">.</span><a class="link" href="thread_management.html#thread.thread_management.thread.get_id" title="Member function get_id()"><code class="computeroutput"><span class="identifier">get_id</span></code></a><span class="special">()</span></code>
             instead`.
           </p>
@@ -1665,9 +1651,6 @@
 <tr><td align="left" valign="top">
 <p>
             DEPRECATED since 4.0.0.
-          </p>
-<p>
-            Available only up to Boost 1.58.
           </p>
 <p>
             Use <code class="computeroutput"><span class="identifier">a</span><span class="special">.</span><a class="link" href="thread_management.html#thread.thread_management.thread.get_id" title="Member function get_id()"><code class="computeroutput"><span class="identifier">get_id</span></code></a><span class="special">()!=</span><span class="identifier">b</span><span class="special">.</span><a class="link" href="thread_management.html#thread.thread_management.thread.get_id" title="Member function get_id()"><code class="computeroutput"><span class="identifier">get_id</span></code></a><span class="special">()</span></code>
@@ -1701,9 +1684,6 @@
 <tr><td align="left" valign="top">
 <p>
             DEPRECATED since 3.0.0.
-          </p>
-<p>
-            Available only up to Boost 1.56.
           </p>
 <p>
             Use <code class="computeroutput"><span class="identifier">this_thread</span><span class="special">::</span><a class="link" href="thread_management.html#thread.thread_management.this_thread.sleep_for" title="Non-member function sleep_for()"><code class="computeroutput"><span class="identifier">sleep_for</span></code></a><span class="special">()</span></code>
@@ -1748,9 +1728,6 @@
 <tr><td align="left" valign="top">
 <p>
             DEPRECATED since 3.0.0.
-          </p>
-<p>
-            Available only up to Boost 1.56.
           </p>
 <p>
             Use <code class="computeroutput"><span class="identifier">this_thread</span><span class="special">::</span><a class="link" href="thread_management.html#thread.thread_management.this_thread.yield" title="Non-member function yield()"><code class="computeroutput"><span class="identifier">yield</span></code></a><span class="special">()</span></code>.
@@ -2358,9 +2335,6 @@
 <tr><td align="left" valign="top">
 <p>
             DEPRECATED since 3.0.0.
-          </p>
-<p>
-            Available only up to Boost 1.56.
           </p>
 <p>
             Use <code class="computeroutput"><a class="link" href="thread_management.html#thread.thread_management.this_thread.sleep_for" title="Non-member function sleep_for()"><code class="computeroutput"><span class="identifier">sleep_for</span></code></a><span class="special">()</span></code>
@@ -2994,7 +2968,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -11 Anthony Williams<br>Copyright &#169; 2011 -13 Vicente J. Botet Escriba<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -11 Anthony Williams<br>Copyright &#169; 2011 -14 Vicente J. Botet Escriba<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

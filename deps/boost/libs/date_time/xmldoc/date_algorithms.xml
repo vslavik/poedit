@@ -176,23 +176,29 @@ days_before_weekday(d, gw); // 4 days</screen>
         
 	<row>
 	  <entry valign="top" morerows="1"><screen>date next_weekday(date, greg_weekday)</screen></entry>
-	  <entry> Generates a date object representing the date of the following weekday from the given date.</entry>
+	  <entry> Generates a date object representing the date of the following weekday from the given date. Can return the given date.</entry>
 	</row>
 	<row>
 	  <entry><screen>date d(2004,Jun,1); // Tuesday
-greg_weekday gw(Friday);
-next_weekday(d, gw); // 2004-Jun-4</screen>
+greg_weekday gw1(Friday);
+greg_weekday gw2(Tuesday);
+next_weekday(d, gw1); // 2004-Jun-4
+next_weekday(d, gw2); // 2004-Jun-1
+      </screen>
 	  </entry>
         </row>
         
 	<row>
 	  <entry valign="top" morerows="1"><screen>date previous_weekday(date, greg_weekday)</screen></entry>
-	  <entry> Generates a date object representing the date of the previous weekday from the given date.</entry>
+	  <entry> Generates a date object representing the date of the previous weekday from the given date. Can return the given date. </entry>
 	</row>
 	<row>
           <entry><screen>date d(2004,Jun,1); // Tuesday
-greg_weekday gw(Friday);
-previous_weekday(d, gw); // 2004-May-28</screen>
+greg_weekday gw1(Friday);
+greg_weekday gw2(Tuesday);
+previous_weekday(d, gw1); // 2004-May-28
+previous_weekday(d, gw2); // 2004-Jun-1
+      </screen>
 	  </entry>
 	</row>
       </tbody>

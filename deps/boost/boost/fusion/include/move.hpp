@@ -7,6 +7,7 @@
 #if !defined(FUSION_INCLUDE_MOVE)
 #define FUSION_INCLUDE_MOVE
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/algorithm/auxiliary/move.hpp>
 
 #endif

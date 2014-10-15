@@ -6,8 +6,8 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../intrusive/reference.html#header.boost.intrusive.unordered_set_hook_hpp" title="Header &lt;boost/intrusive/unordered_set_hook.hpp&gt;">
-<link rel="prev" href="make_unordered_idp39797848.html" title="Struct template make_unordered_set_member_hook">
-<link rel="next" href="../../lambda.html" title="Chapter&#160;15.&#160;Boost.Lambda">
+<link rel="prev" href="make_unordered_idp74204912.html" title="Struct template make_unordered_set_member_hook">
+<link rel="next" href="../../lambda.html" title="Chapter&#160;17.&#160;Boost.Lambda">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="make_unordered_idp39797848.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../intrusive/reference.html#header.boost.intrusive.unordered_set_hook_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../lambda.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="make_unordered_idp74204912.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../intrusive/reference.html#header.boost.intrusive.unordered_set_hook_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../lambda.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.intrusive.unordered_set_member_hook"></a><div class="titlepage"></div>
@@ -37,71 +37,71 @@
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="unordered_set_member_hook.html#boost.intrusive.unordered_set_member_hookconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="unordered_set_member_hook.html#idp39812488-bb"><span class="identifier">unordered_set_member_hook</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="unordered_set_member_hook.html#idp39814296-bb"><span class="identifier">unordered_set_member_hook</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="unordered_set_member_hook.html" title="Class template unordered_set_member_hook">unordered_set_member_hook</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  unordered_set_member_hook&amp; <a class="link" href="unordered_set_member_hook.html#idp39817496-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="unordered_set_member_hook.html" title="Class template unordered_set_member_hook">unordered_set_member_hook</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="unordered_set_member_hook.html#idp39819992-bb"><span class="special">~</span><span class="identifier">unordered_set_member_hook</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="unordered_set_member_hook.html#idp74234320-bb"><span class="identifier">unordered_set_member_hook</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="unordered_set_member_hook.html#idp74238096-bb"><span class="identifier">unordered_set_member_hook</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="unordered_set_member_hook.html" title="Class template unordered_set_member_hook">unordered_set_member_hook</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="unordered_set_member_hook.html" title="Class template unordered_set_member_hook">unordered_set_member_hook</a> <span class="special">&amp;</span> <a class="link" href="unordered_set_member_hook.html#idp74244480-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="unordered_set_member_hook.html" title="Class template unordered_set_member_hook">unordered_set_member_hook</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="unordered_set_member_hook.html#idp74249808-bb"><span class="special">~</span><span class="identifier">unordered_set_member_hook</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="unordered_set_member_hook.html#idp39805048-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="unordered_set_member_hook.html#idp39805256-bb"><span class="identifier">swap_nodes</span></a><span class="special">(</span><a class="link" href="unordered_set_member_hook.html" title="Class template unordered_set_member_hook">unordered_set_member_hook</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="unordered_set_member_hook.html#idp39807512-bb"><span class="identifier">is_linked</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="unordered_set_member_hook.html#idp39810456-bb"><span class="identifier">unlink</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="unordered_set_member_hook.html#idp74218672-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="unordered_set_member_hook.html#idp74219232-bb"><span class="identifier">swap_nodes</span></a><span class="special">(</span><a class="link" href="unordered_set_member_hook.html" title="Class template unordered_set_member_hook">unordered_set_member_hook</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="unordered_set_member_hook.html#idp74224256-bb"><span class="identifier">is_linked</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="unordered_set_member_hook.html#idp74230240-bb"><span class="identifier">unlink</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp156718376"></a><h2>Description</h2>
+<a name="idp324255824"></a><h2>Description</h2>
 <p>Put a public data member <a class="link" href="unordered_set_member_hook.html" title="Class template unordered_set_member_hook">unordered_set_member_hook</a> in order to store objects of this class in an unordered_set/unordered_multi_set. <a class="link" href="unordered_set_member_hook.html" title="Class template unordered_set_member_hook">unordered_set_member_hook</a> holds the data necessary for maintaining the unordered_set/unordered_multi_set and provides an appropriate <a class="link" href="value_traits.html" title="Struct template value_traits">value_traits</a> class for unordered_set/unordered_multi_set.</p>
 <p>The hook admits the following options: <code class="computeroutput">void_pointer&lt;&gt;</code>, <code class="computeroutput">link_mode&lt;&gt;</code> and <code class="computeroutput">store_hash&lt;&gt;</code>.</p>
-<p><code class="computeroutput">void_pointer&lt;&gt;</code> is the pointer type that will be used internally in the hook and the the container configured to use this hook.</p>
+<p><code class="computeroutput">void_pointer&lt;&gt;</code> is the pointer type that will be used internally in the hook and the container configured to use this hook.</p>
 <p><code class="computeroutput">link_mode&lt;&gt;</code> will specify the linking mode of the hook (<code class="computeroutput">normal_link</code>, <code class="computeroutput">auto_unlink</code> or <code class="computeroutput">safe_link</code>).</p>
 <p><code class="computeroutput">store_hash&lt;&gt;</code> will tell the hook to store the hash of the value to speed up rehashings. </p>
 <div class="refsect2">
-<a name="idp156724184"></a><h3>
+<a name="idp324266624"></a><h3>
 <a name="boost.intrusive.unordered_set_member_hookconstruct-copy-destruct"></a><code class="computeroutput">unordered_set_member_hook</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp39812488-bb"></a><span class="identifier">unordered_set_member_hook</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp74234320-bb"></a><span class="identifier">unordered_set_member_hook</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects</strong></span>: If <code class="computeroutput"><a class="link" href="link_mode.html" title="Struct template link_mode">link_mode</a></code> is <code class="computeroutput">auto_unlink</code> or <code class="computeroutput">safe_link</code> initializes the node to an unlinked state.</p>
 <p><span class="bold"><strong>Throws</strong></span>: Nothing. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp39814296-bb"></a><span class="identifier">unordered_set_member_hook</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="unordered_set_member_hook.html" title="Class template unordered_set_member_hook">unordered_set_member_hook</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp74238096-bb"></a><span class="identifier">unordered_set_member_hook</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="unordered_set_member_hook.html" title="Class template unordered_set_member_hook">unordered_set_member_hook</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects</strong></span>: If <code class="computeroutput"><a class="link" href="link_mode.html" title="Struct template link_mode">link_mode</a></code> is <code class="computeroutput">auto_unlink</code> or <code class="computeroutput">safe_link</code> initializes the node to an unlinked state. The argument is ignored.</p>
 <p><span class="bold"><strong>Throws</strong></span>: Nothing.</p>
 <p><span class="bold"><strong>Rationale</strong></span>: Providing a copy-constructor makes classes using the hook STL-compliant without forcing the user to do some additional work. <code class="computeroutput">swap</code> can be used to emulate move-semantics. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout">unordered_set_member_hook&amp; <a name="idp39817496-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="unordered_set_member_hook.html" title="Class template unordered_set_member_hook">unordered_set_member_hook</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="unordered_set_member_hook.html" title="Class template unordered_set_member_hook">unordered_set_member_hook</a> <span class="special">&amp;</span> <a name="idp74244480-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="unordered_set_member_hook.html" title="Class template unordered_set_member_hook">unordered_set_member_hook</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects</strong></span>: Empty function. The argument is ignored.</p>
 <p><span class="bold"><strong>Throws</strong></span>: Nothing.</p>
 <p><span class="bold"><strong>Rationale</strong></span>: Providing an assignment operator makes classes using the hook STL-compliant without forcing the user to do some additional work. <code class="computeroutput">swap</code> can be used to emulate move-semantics. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp39819992-bb"></a><span class="special">~</span><span class="identifier">unordered_set_member_hook</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp74249808-bb"></a><span class="special">~</span><span class="identifier">unordered_set_member_hook</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects</strong></span>: If <code class="computeroutput"><a class="link" href="link_mode.html" title="Struct template link_mode">link_mode</a></code> is <code class="computeroutput">normal_link</code>, the destructor does nothing (ie. no code is generated). If <code class="computeroutput"><a class="link" href="link_mode.html" title="Struct template link_mode">link_mode</a></code> is <code class="computeroutput">safe_link</code> and the object is stored in an <code class="computeroutput"><a class="link" href="unordered_set.html" title="Class template unordered_set">unordered_set</a></code> an assertion is raised. If <code class="computeroutput"><a class="link" href="link_mode.html" title="Struct template link_mode">link_mode</a></code> is <code class="computeroutput">auto_unlink</code> and <code class="computeroutput">is_linked()</code> is true, the node is unlinked.</p>
 <p><span class="bold"><strong>Throws</strong></span>: Nothing. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp156747256"></a><h3>
-<a name="idp39805048-bb"></a><code class="computeroutput">unordered_set_member_hook</code> public member functions</h3>
+<a name="idp324313984"></a><h3>
+<a name="idp74218672-bb"></a><code class="computeroutput">unordered_set_member_hook</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp39805256-bb"></a><span class="identifier">swap_nodes</span><span class="special">(</span><a class="link" href="unordered_set_member_hook.html" title="Class template unordered_set_member_hook">unordered_set_member_hook</a> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp74219232-bb"></a><span class="identifier">swap_nodes</span><span class="special">(</span><a class="link" href="unordered_set_member_hook.html" title="Class template unordered_set_member_hook">unordered_set_member_hook</a> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects</strong></span>: Swapping two nodes swaps the position of the elements related to those nodes in one or two containers. That is, if the node this is part of the element e1, the node x is part of the element e2 and both elements are included in the containers s1 and s2, then after the swap-operation e1 is in s2 at the position of e2 and e2 is in s1 at the position of e1. If one element is not in a container, then after the swap-operation the other element is not in a container. Iterators to e1 and e2 related to those nodes are invalidated.</p>
 <p><span class="bold"><strong>Complexity</strong></span>: Constant</p>
 <p><span class="bold"><strong>Throws</strong></span>: Nothing. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp39807512-bb"></a><span class="identifier">is_linked</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp74224256-bb"></a><span class="identifier">is_linked</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Precondition</strong></span>: <code class="computeroutput"><a class="link" href="link_mode.html" title="Struct template link_mode">link_mode</a></code> must be <code class="computeroutput">safe_link</code> or <code class="computeroutput">auto_unlink</code>.</p>
 <p><span class="bold"><strong>Returns</strong></span>: true, if the node belongs to a container, false otherwise. This function can be used to test whether <code class="computeroutput">unordered_set::iterator_to</code> will return a valid iterator.</p>
 <p><span class="bold"><strong>Complexity</strong></span>: Constant </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp39810456-bb"></a><span class="identifier">unlink</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp74230240-bb"></a><span class="identifier">unlink</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects</strong></span>: Removes the node if it's inserted in a container. This function is only allowed if <code class="computeroutput"><a class="link" href="link_mode.html" title="Struct template link_mode">link_mode</a></code> is <code class="computeroutput">auto_unlink</code>.</p>
 <p><span class="bold"><strong>Throws</strong></span>: Nothing. </p>
 </li>
@@ -119,7 +119,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="make_unordered_idp39797848.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../intrusive/reference.html#header.boost.intrusive.unordered_set_hook_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../lambda.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="make_unordered_idp74204912.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../intrusive/reference.html#header.boost.intrusive.unordered_set_hook_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../../lambda.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

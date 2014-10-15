@@ -34,6 +34,7 @@ char const *my_const_ntcs  = my_ntcs;
 int test_main( int, char*[] )
 {
     boost::mpl::true_ *p = BOOST_FOREACH_IS_LIGHTWEIGHT_PROXY(my_ntcs);
+    (void)p;
 
     // non-const containers by value
     BOOST_CHECK(sequence_equal_byval_n(my_ntcs, "\1\2\3\4\5"));

@@ -1,4 +1,4 @@
-// Boost.Geometry (aka GGL, Generic Geometry Library) 
+// Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
@@ -23,7 +23,7 @@ void test_length(Geometry const& geometry, long double expected_length)
 {
     BOOST_AUTO(length, bg::length(geometry));
 
-#ifdef GEOMETRY_TEST_DEBUG
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
     std::ostringstream out;
     out << typeid(typename bg::coordinate_type<Geometry>::type).name()
         << std::endl
@@ -44,7 +44,9 @@ void test_geometry(std::string const& wkt, double expected_length)
     Geometry geometry;
     bg::read_wkt(wkt, geometry);
     test_length(geometry, expected_length);
+#if !defined(BOOST_GEOMETRY_TEST_DEBUG)
     test_length(boost::variant<Geometry>(geometry), expected_length);
+#endif
 }
 
 template <typename Geometry>

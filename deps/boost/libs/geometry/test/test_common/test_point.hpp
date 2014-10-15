@@ -1,4 +1,4 @@
-// Boost.Geometry (aka GGL, Generic Geometry Library) 
+// Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
@@ -17,6 +17,7 @@
 #include <boost/geometry/core/coordinate_dimension.hpp>
 #include <boost/geometry/core/cs.hpp>
 #include <boost/geometry/core/tag.hpp>
+#include <boost/geometry/geometries/register/point.hpp>
 
 // NOTE: since Boost 1.51 the Point type may always be a pointer.
 // Therefore the traits class don't need to add a pointer.
@@ -32,8 +33,19 @@ struct test_point
     float c1, c2, c3;
 };
 
+struct test_const_point
+{
+    test_const_point()
+      : c1(0.0), c2(0.0), c3(0.0) { }
+
+    test_const_point(float c1, float c2, float c3)
+      : c1(c1), c2(c2), c3(c3) { }
+
+    const float c1, c2, c3;
+};
 
 } // namespace test
+
 
 
 namespace boost { namespace geometry { namespace traits {
@@ -90,5 +102,10 @@ template<> struct access<test::test_point, 2>
 };
 
 }}} // namespace bg::traits
+
+BOOST_GEOMETRY_REGISTER_POINT_3D_CONST(test::test_const_point,
+                                       float,
+                                       boost::geometry::cs::cartesian,
+                                       c1, c2, c3);
 
 #endif // GEOMETRY_TEST_TEST_COMMON_TEST_POINT_HPP

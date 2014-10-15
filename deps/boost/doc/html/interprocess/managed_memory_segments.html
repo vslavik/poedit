@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../interprocess.html" title="Chapter&#160;13.&#160;Boost.Interprocess">
+<link rel="up" href="../interprocess.html" title="Chapter&#160;15.&#160;Boost.Interprocess">
 <link rel="prev" href="synchronization_mechanisms.html" title="Synchronization mechanisms">
 <link rel="next" href="allocators_containers.html" title="Allocators, containers and memory allocation algorithms">
 </head>
@@ -379,13 +379,13 @@
 <p>
           Windows users might also want to use native windows shared memory instead
           of the portable <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_memory_object.html" title="Class shared_memory_object">shared_memory_object</a></code>
-          managed memory. This is achieved through the <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp27635768.html" title="Class template basic_managed_windows_shared_memory">basic_managed_windows_shared_memory</a></code>
+          managed memory. This is achieved through the <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp50047728.html" title="Class template basic_managed_windows_shared_memory">basic_managed_windows_shared_memory</a></code>
           class. To use it just include:
         </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">managed_windows_shared_memory</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          This class has the same interface as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp27615976.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
+          This class has the same interface as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp49505024.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
           but uses native windows shared memory. Note that this managed class has
           the same lifetime issues as the windows shared memory: when the last process
           attached to the windows shared memory is detached from the memory (or ends/crashes)
@@ -406,18 +406,18 @@
 <p>
           Unix users might also want to use XSI (system V) instead of the portable
           <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_memory_object.html" title="Class shared_memory_object">shared_memory_object</a></code>
-          managed memory. This is achieved through the <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp27654792.html" title="Class template basic_managed_xsi_shared_memory">basic_managed_xsi_shared_memory</a></code>
+          managed memory. This is achieved through the <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp49545728.html" title="Class template basic_managed_xsi_shared_memory">basic_managed_xsi_shared_memory</a></code>
           class. To use it just include:
         </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">managed_xsi_shared_memory</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          This class has nearly the same interface as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp27615976.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
+          This class has nearly the same interface as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp49505024.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
           but uses XSI shared memory as backend.
         </p>
 </div>
 <p>
-        For more information about managed XSI shared memory capabilities, see <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp27654792.html" title="Class template basic_managed_xsi_shared_memory">basic_managed_xsi_shared_memory</a></code>
+        For more information about managed XSI shared memory capabilities, see <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp49545728.html" title="Class template basic_managed_xsi_shared_memory">basic_managed_xsi_shared_memory</a></code>
         class reference.
       </p>
 </div>
@@ -809,7 +809,7 @@
           That is, the mutex type used to synchronize named/unique allocations is
           defined by the <code class="computeroutput"><span class="identifier">MemoryAlgorithm</span><span class="special">::</span><span class="identifier">mutex_family</span><span class="special">::</span><span class="identifier">recursive_mutex_type</span></code>
           type. For shared memory, and memory mapped file based managed segments
-          this recursive mutex is defined as <code class="computeroutput"><a class="link" href="../boost/interprocess/interprocess_r_idp28226744.html" title="Class interprocess_recursive_mutex">interprocess_recursive_mutex</a></code>.
+          this recursive mutex is defined as <code class="computeroutput"><a class="link" href="../boost/interprocess/interprocess_r_idp50817792.html" title="Class interprocess_recursive_mutex">interprocess_recursive_mutex</a></code>.
         </p>
 <p>
           If two processes can call:
@@ -991,7 +991,7 @@
 
    <span class="comment">//Now test "get_instance_name" function.</span>
    <span class="identifier">assert</span><span class="special">(</span><span class="number">0</span> <span class="special">==</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">strcmp</span><span class="special">(</span><span class="identifier">managed_shared_memory</span><span class="special">::</span><span class="identifier">get_instance_name</span><span class="special">(</span><span class="identifier">named_object</span><span class="special">),</span> <span class="string">"Object name"</span><span class="special">));</span>
-   <span class="identifier">assert</span><span class="special">(</span><span class="number">0</span> <span class="special">==</span> <span class="identifier">managed_shared_memory</span><span class="special">::</span><span class="identifier">get_instance_name</span><span class="special">(</span><span class="identifier">unique_object</span><span class="special">));</span>
+   <span class="identifier">assert</span><span class="special">(</span><span class="number">0</span> <span class="special">==</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">strcmp</span><span class="special">(</span><span class="identifier">managed_shared_memory</span><span class="special">::</span><span class="identifier">get_instance_name</span><span class="special">(</span><span class="identifier">unique_object</span><span class="special">),</span> <span class="keyword">typeid</span><span class="special">(</span><span class="identifier">my_class</span><span class="special">).</span><span class="identifier">name</span><span class="special">()));</span>
    <span class="identifier">assert</span><span class="special">(</span><span class="number">0</span> <span class="special">==</span> <span class="identifier">managed_shared_memory</span><span class="special">::</span><span class="identifier">get_instance_name</span><span class="special">(</span><span class="identifier">anon_object</span><span class="special">));</span>
 
    <span class="comment">//Now test "get_instance_type" function.</span>
@@ -1129,7 +1129,7 @@
           fit the managed segment.
         </p>
 <p>
-          Here we have an example showing how to grow and shrink to fit <code class="computeroutput"><a class="link" href="indexes_reference.html#boost.interprocess.managed_shared_memory">managed_shared_memory</a></code>:
+          Here we have an example showing how to grow and shrink to fit <code class="computeroutput"><a class="link" href="acknowledgements_notes.html#boost.interprocess.managed_shared_memory">managed_shared_memory</a></code>:
         </p>
 <p>
 </p>
@@ -1194,7 +1194,7 @@
 <p>
         </p>
 <p>
-          <code class="computeroutput"><a class="link" href="indexes_reference.html#boost.interprocess.managed_mapped_file">managed_mapped_file</a></code>
+          <code class="computeroutput"><a class="link" href="acknowledgements_notes.html#boost.interprocess.managed_mapped_file">managed_mapped_file</a></code>
           also offers a similar function to grow or shrink_to_fit the managed file.
           Please, remember that <span class="bold"><strong>no process should be modifying
           the file/shared memory while the growing/shrinking process is performed</strong></span>.
@@ -1417,7 +1417,7 @@
               Allocation ot N buffers of memory, each one of different size.
             </li>
 </ul></div>
-<pre class="programlisting"><span class="comment">//!Allocates n_elements of elem_bytes bytes. </span>
+<pre class="programlisting"><span class="comment">//!Allocates n_elements of elem_bytes bytes.</span>
 <span class="comment">//!Throws bad_alloc on failure. chain.size() is not increased on failure.</span>
 <span class="keyword">void</span> <span class="identifier">allocate_many</span><span class="special">(</span><span class="identifier">size_type</span> <span class="identifier">elem_bytes</span><span class="special">,</span> <span class="identifier">size_type</span> <span class="identifier">n_elements</span><span class="special">,</span> <span class="identifier">multiallocation_chain</span> <span class="special">&amp;</span><span class="identifier">chain</span><span class="special">);</span>
 
@@ -1425,7 +1425,7 @@
 <span class="comment">//!Throws bad_alloc on failure. chain.size() is not increased on failure.</span>
 <span class="keyword">void</span> <span class="identifier">allocate_many</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">size_type</span> <span class="special">*</span><span class="identifier">element_lengths</span><span class="special">,</span> <span class="identifier">size_type</span> <span class="identifier">n_elements</span><span class="special">,</span> <span class="identifier">size_type</span> <span class="identifier">sizeof_element</span><span class="special">,</span> <span class="identifier">multiallocation_chain</span> <span class="special">&amp;</span><span class="identifier">chain</span><span class="special">);</span>
 
-<span class="comment">//!Allocates n_elements of elem_bytes bytes. </span>
+<span class="comment">//!Allocates n_elements of elem_bytes bytes.</span>
 <span class="comment">//!Non-throwing version. chain.size() is not increased on failure.</span>
 <span class="keyword">void</span> <span class="identifier">allocate_many</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">nothrow_t</span><span class="special">,</span> <span class="identifier">size_type</span> <span class="identifier">elem_bytes</span><span class="special">,</span> <span class="identifier">size_type</span> <span class="identifier">n_elements</span><span class="special">,</span> <span class="identifier">multiallocation_chain</span> <span class="special">&amp;</span><span class="identifier">chain</span><span class="special">);</span>
 
@@ -2168,7 +2168,7 @@
           can also be used to place STL compatible containers in the user segment.
         </p>
 <p>
-          <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp27607368.html" title="Class template basic_managed_external_buffer">basic_managed_external_buffer</a></code>
+          <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp49486928.html" title="Class template basic_managed_external_buffer">basic_managed_external_buffer</a></code>
           can be also useful to build small databases for embedded systems limiting
           the size of the used memory to a predefined memory chunk, instead of letting
           the database fragment the heap memory.
@@ -2226,7 +2226,7 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">managed_heap_memory</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          The use is exactly the same as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp27607368.html" title="Class template basic_managed_external_buffer">basic_managed_external_buffer</a></code>,
+          The use is exactly the same as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp49486928.html" title="Class template basic_managed_external_buffer">basic_managed_external_buffer</a></code>,
           except that memory is created by the managed memory segment itself using
           dynamic (new/delete) memory.
         </p>

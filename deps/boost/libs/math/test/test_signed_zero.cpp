@@ -20,7 +20,10 @@
 #include <locale>
 #include <sstream>
 #include <ostream>
+#include <iostream>
+#include <iomanip>
 #include <limits>
+#include <iostream>
 
 namespace {
 

@@ -1,6 +1,6 @@
-/* Boost.Flyweight test of flyweight forwarding ctors.
+/* Boost.Flyweight test of flyweight forwarding and initializer_list ctors.
  *
- * Copyright 2006-2008 Joaquin M Lopez Munoz.
+ * Copyright 2006-2014 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -11,12 +11,12 @@
 #include "test_multictor.hpp"
 
 #include <boost/config.hpp> /* keep it first to prevent nasty warns in MSVC */
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/detail/workaround.hpp>
 #include <boost/flyweight.hpp> 
 #include <boost/functional/hash.hpp>
 #include <boost/tuple/tuple.hpp>
 #include <boost/tuple/tuple_comparison.hpp>
-#include "test_basic_template.hpp"
 
 using boost::flyweight;
 
@@ -72,6 +72,69 @@ inline std::size_t hash_value(const multictor& x)
 } /* namespace boost */
 #endif
 
+#if !defined(BOOST_NO_SFINAE)&&!defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST)
+
+#if !defined(BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX)
+#define INIT0(_) {}
+#define INIT1(a) {a}
+#define INIT2(a,b) {a,b}
+#define INIT_LIST1(a) {a}
+#define INIT_LIST2(a,b) {a,b}
+#else
+#define INIT0(_)
+#define INIT1(a) ((a))
+#define INIT2(a,b) ((a),(b))
+#define INIT_LIST1(a) ({a})
+#define INIT_LIST2(a,b) ({a,b})
+#endif
+
+struct initctor
+{
+  struct arg{arg(int= 0){}};
+  
+  initctor():res(-1){}
+  initctor(arg,arg):res(-2){}
+  initctor(int,unsigned int):res(-3){}
+  
+  initctor(std::initializer_list<int> list):res(0)
+  {
+    typedef const int* iterator;
+    for(iterator it=list.begin(),it_end=list.end();it!=it_end;++it){
+      res+=*it;
+    }
+  }
+  
+  initctor(std::initializer_list<unsigned int> list):res(0)
+  {
+    typedef const unsigned int* iterator;
+    for(iterator it=list.begin(),it_end=list.end();it!=it_end;++it){
+      res+=(int)(*it)*2;
+    }
+  }
+
+  friend bool operator==(const initctor& x,const initctor& y)
+  {
+    return x.res==y.res;
+  }
+
+  int res;
+};
+
+#if defined(BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP)
+namespace boost{
+#endif
+
+inline std::size_t hash_value(const initctor& x)
+{
+  return (std::size_t)(x.res);
+}
+
+#if defined(BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP)
+} /* namespace boost */
+#endif
+
+#endif
+
 void test_multictor()
 {
   flyweight<multictor> f;
@@ -102,4 +165,27 @@ void test_multictor()
   flyweight<multictor> f4(1,'a',3.1416,"boost",x4);
   multictor            m4(1,'a',3.1416,"boost",x4);
   BOOST_TEST(f4==m4);
+
+#if !defined(BOOST_NO_SFINAE)&&!defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST)
+  flyweight<initctor> ff INIT0();
+  BOOST_TEST(ff.get().res==-1);
+
+  ff=flyweight<initctor> INIT2(initctor::arg(),1);
+  BOOST_TEST(ff.get().res==-2);
+
+  flyweight<initctor> ff0 INIT2(initctor::arg(),initctor::arg());
+  BOOST_TEST(ff0.get().res==-2);
+  
+  ff0={1};
+  BOOST_TEST(ff0.get().res==1);
+  
+  flyweight<initctor> ff1 INIT_LIST2(1,2);
+  BOOST_TEST(ff1.get().res==3);
+  
+  ff1={1u,2u,3u};
+  BOOST_TEST(ff1.get().res==12);
+
+  flyweight<initctor> ff2 INIT_LIST1(1u);
+  BOOST_TEST(ff2.get().res==2);
+#endif
 }

@@ -55,8 +55,6 @@
             float. Let's make a generic template subroutine using this three-point
             central difference rule. In particular:
           </p>
-<p>
-</p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">value_type</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">function_type</span><span class="special">&gt;</span>
    <span class="identifier">value_type</span> <span class="identifier">derivative</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">value_type</span> <span class="identifier">dx</span><span class="special">,</span> <span class="identifier">function_type</span> <span class="identifier">func</span><span class="special">)</span>
 <span class="special">{</span>
@@ -79,8 +77,6 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
-<p>
             The <code class="computeroutput"><span class="identifier">derivative</span><span class="special">()</span></code>
             template function can be used to compute the first derivative of any
             function to <span class="emphasis"><em>O(dx<sup>6</sup>)</em></span>. For example, consider the first
@@ -94,8 +90,6 @@
             The code below computes the derivative in Equation 3 for float, double
             and boost's multiple-precision type cpp_dec_float_50.
           </p>
-<p>
-</p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iomanip</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">multiprecision</span><span class="special">/</span><span class="identifier">cpp_dec_float</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -158,8 +152,6 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
-<p>
             The expected value of the derivative is 0.5. This central difference
             rule in this example is ill-conditioned, meaning it suffers from slight
             loss of precision. With that in mind, the results agree with the expected
@@ -174,8 +166,6 @@
             result obtained from a call to <span class="emphasis"><em>gamma_p_derivative</em></span>,
             the results agree to approximately 44 digits:
           </p>
-<p>
-</p>
 <pre class="programlisting"><span class="identifier">cpp_dec_float_50</span> <span class="identifier">gd</span> <span class="special">=</span> <span class="identifier">derivative</span><span class="special">(</span>
    <span class="identifier">cpp_dec_float_50</span><span class="special">(</span><span class="number">2</span><span class="special">),</span>
    <span class="identifier">cpp_dec_float_50</span><span class="special">(</span><span class="number">1.0E-9</span><span class="special">),</span>
@@ -192,12 +182,10 @@
 <span class="comment">// 2.70670566473225383787998989944968806815253190143120e-01</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">gamma_p_derivative</span><span class="special">(</span><span class="identifier">cpp_dec_float_50</span><span class="special">(</span><span class="number">2</span><span class="special">),</span> <span class="identifier">cpp_dec_float_50</span><span class="special">(</span><span class="number">2</span><span class="special">))</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 </pre>
-<p>
-          </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2012 John Maddock and Christopher Kormanyos<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2013 John Maddock and Christopher Kormanyos<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -5,7 +5,6 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-
 #ifdef _MSC_VER
 #  pragma warning (disable : 4127) // conditional expression is constant.
 #  pragma warning (disable : 4512) // assignment operator could not be generated.
@@ -58,7 +57,7 @@ int main()
    BOOST_CONSTANTS_GENERATE(root_one_div_pi);
    BOOST_CONSTANTS_GENERATE(pi_minus_three);
    BOOST_CONSTANTS_GENERATE(four_minus_pi);
-   BOOST_CONSTANTS_GENERATE(pow23_four_minus_pi);
+   //BOOST_CONSTANTS_GENERATE(pow23_four_minus_pi);
 
    BOOST_CONSTANTS_GENERATE(pi_pow_e);
    BOOST_CONSTANTS_GENERATE(pi_sqr);
@@ -95,8 +94,6 @@ int main()
       BOOST_CONSTANTS_GENERATE(euler);
       BOOST_CONSTANTS_GENERATE(one_div_euler);
       BOOST_CONSTANTS_GENERATE(euler_sqr);
-
-
  //  BOOST_CONSTANTS_GENERATE(gamma);
  //  BOOST_CONSTANTS_GENERATE(one_div_gamma);
  //  BOOST_CONSTANTS_GENERATE(gamma_sqr);

@@ -8,6 +8,7 @@
 #ifndef BOOST_FUSION_CONTAINER_MAP_DETAIL_VALUE_OF_DATA_IMPL_HPP
 #define BOOST_FUSION_CONTAINER_MAP_DETAIL_VALUE_OF_DATA_IMPL_HPP
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/container/map/detail/cpp03/value_of_impl.hpp>
 
 namespace boost { namespace fusion { namespace extension

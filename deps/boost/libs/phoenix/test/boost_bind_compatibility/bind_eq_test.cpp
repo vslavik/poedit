@@ -360,7 +360,6 @@ template<class F> void test_8(F f)
 
 template<class F, class V> void test_9_(F f, V v1, V v2)
 {
-/*
     test_eq( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1) );
     test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v2) );
     test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v1, v1, v1, v1, v1, v2, v1) );
@@ -371,20 +370,17 @@ template<class F, class V> void test_9_(F f, V v1, V v2)
     test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v1, v2, v1, v1, v1, v1, v1, v1) );
     test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v1, v2, v1, v1, v1, v1, v1, v1, v1) );
     test_ne( bind(f, v1, v1, v1, v1, v1, v1, v1, v1, v1), bind(f, v2, v1, v1, v1, v1, v1, v1, v1, v1) );
-*/
 }
 
-/*
 template<class F> void test_9(F f)
 {
-    //test_eq( bind(f, _1, _2, _3, _4, _5, _6, _7, _8, _9), bind(f, _1, _2, _3, _4, _5, _6, _7, _8, _9) );
+    test_eq( bind(f, _1, _2, _3, _4, _5, _6, _7, _8, _9), bind(f, _1, _2, _3, _4, _5, _6, _7, _8, _9) );
 
-    //test_9_( f, X(1), X(2) );
+    test_9_( f, X(1), X(2) );
 
     X a(0), b(0);
-    //test_9_( f, ref(a), ref(b) );
+    test_9_( f, ref(a), ref(b) );
 }
-*/
 
 int main()
 {
@@ -435,10 +431,8 @@ int main()
 
     // 9
 
-    /*
     test_9( f_9 );
     test_9( fv_9 );
-    */
 
     return boost::report_errors();
 }

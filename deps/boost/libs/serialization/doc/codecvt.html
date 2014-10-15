@@ -42,7 +42,7 @@ template&lt;
 <h2>Rationale</h2>
 
 
-    UTF-8 is a method of encoding Unicode text in environments where 
+    UTF-8 is a method of encoding Unicode text in environments
     where data is stored as 8-bit characters and some ascii characters 
     are considered special (i.e. Unix filesystem filenames) and tend
     to appear more commonly than other characters.  While
@@ -88,7 +88,7 @@ template&lt;
 <h2>Requirements</h2>
 
     <tt>utf8_codecvt_facet</tt> defaults to using <tt>char</tt> as
-    it's external data type and <tt>wchar_t</tt> as it's internal
+    its external data type and <tt>wchar_t</tt> as its internal
     datatype, but on some architectures <tt>wchar_t</tt> is
     not large enough to hold UCS-4 characters.  In order to use
     another internal type.You must also specialize <tt>std::codecvt</tt>

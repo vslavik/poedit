@@ -7,7 +7,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Revision: 57993 $
+//  Version     : $Revision$
 //
 //  Description : tests all Test Tools but output_test_stream
 // ***************************************************************************

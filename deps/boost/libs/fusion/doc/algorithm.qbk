@@ -134,7 +134,7 @@ the first call) and [arg_desc] of `seq`.
         >
     typename result_of_name_macro<Sequence, State const, F>::type name_macro(
         Sequence& seq, State const& initial_state, F f);
-        
+
     template<
         typename Sequence,
         typename State,
@@ -1841,6 +1841,50 @@ Constant. Returns a view which is lazily evaluated.
 
 [endsect]
 
+[section flatten]
+
+[heading Description]
+Returns a new sequence without nested sequences.
+
+[heading Synopsis]
+    template<
+        typename Sequence
+        >
+    typename __result_of_flatten__<Sequence>::type flatten(Sequence& seq);
+    
+    template<
+        typename Sequence
+        >
+    typename __result_of_flatten__<Sequence const>::type flatten(Sequence const& seq);
+
+[table Parameters
+    [[Parameter][Requirement][Description]]
+    [[`seq`][A model of __forward_sequence__][Operation's argument]]
+]
+
+[heading Expression Semantics]
+    __flatten__(seq);
+
+[*Return type]:
+
+* A model of __forward_sequence__.
+
+[*Semantics]: Returns a new sequence containing all the leaf elements of `seq`.
+
+[heading Complexity]
+Constant. Returns a view which is lazily evaluated.
+
+[heading Header]
+
+    #include <boost/fusion/algorithm/transformation/flatten.hpp>
+    #include <boost/fusion/include/flatten.hpp>
+
+[heading Example]
+    const __vector__<int, int, __vector__<int, int>, int> vec(1, 2, __make_vector__(3, 4), 5);
+    assert(__flatten__(vec) == __make_vector__(1, 2, 3, 4, 5)));
+
+[endsect]
+
 [endsect]
 
 [section Metafunctions]
@@ -2630,6 +2674,44 @@ Constant.
 
     #include <boost/fusion/algorithm/transformation/push_front.hpp>
     #include <boost/fusion/include/push_front.hpp>
+
+[endsect]
+
+[section flatten]
+
+[heading Description]
+Returns the result type of __flatten__, given the input sequence type.
+
+[heading Synopsis]
+    template<
+        typename Sequence
+        >
+    struct flatten
+    {
+        typedef __unspecified__ type;
+    };
+
+[table Parameters
+    [[Parameter][Requirement][Description]]
+    [[`Sequence`][A model of __forward_sequence__][Operation's argument]]
+]
+
+[heading Expression Semantics]
+    __result_of_flatten__<Sequence>::type
+
+[*Return type]:
+
+* A model of __forward_sequence__.
+
+[*Semantics]: Returns a sequence with all the leaf elements of `Sequence`.
+
+[heading Complexity]
+Constant.
+
+[heading Header]
+
+    #include <boost/fusion/algorithm/transformation/flatten.hpp>
+    #include <boost/fusion/include/flatten.hpp>
 
 [endsect]
 

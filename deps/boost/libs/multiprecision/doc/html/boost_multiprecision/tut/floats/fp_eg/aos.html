@@ -39,8 +39,6 @@
             The area of a circle can be computed in generic programming using Boost.Math
             for the constant &#960; as shown below:
           </p>
-<p>
-</p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">constants</span><span class="special">/</span><span class="identifier">constants</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
@@ -50,8 +48,6 @@
    <span class="keyword">return</span> <span class="identifier">pi</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;()</span> <span class="special">*</span> <span class="identifier">r</span> <span class="special">*</span> <span class="identifier">r</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
-<p>
-          </p>
 <p>
             It is possible to use <code class="computeroutput"><span class="identifier">area_of_a_circle</span><span class="special">()</span></code> with built-in floating-point types
             as well as floating-point types from Boost.Multiprecision. In particular,
@@ -64,8 +60,6 @@
             123/100 for <code class="computeroutput"><span class="keyword">float</span></code>, <code class="computeroutput"><span class="keyword">double</span></code> and <code class="computeroutput"><span class="identifier">cpp_dec_float_50</span></code>
             with the program below.
           </p>
-<p>
-</p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iomanip</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">multiprecision</span><span class="special">/</span><span class="identifier">cpp_dec_float</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -103,8 +97,6 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
-<p>
             In the next example we'll look at calling both standard library and Boost.Math
             functions from within generic code. We'll also show how to cope with
             template arguments which are expression-templates rather than number
@@ -113,7 +105,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2012 John Maddock and Christopher Kormanyos<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2013 John Maddock and Christopher Kormanyos<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

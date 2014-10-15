@@ -74,12 +74,9 @@ struct comparison_equal_length
     composite_key_result_equal_to<CompositeKeyResult> eq;
     composite_key_result_less<CompositeKeyResult>     lt;
     composite_key_result_greater<CompositeKeyResult>  gt;
-
-#if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-    std::equal_to<CompositeKeyResult> std_eq;
-    std::less<CompositeKeyResult>     std_lt;
-    std::greater<CompositeKeyResult>  std_gt;
-#endif
+    std::equal_to<CompositeKeyResult>                 std_eq;
+    std::less<CompositeKeyResult>                     std_lt;
+    std::greater<CompositeKeyResult>                  std_gt;
 
     return  (x< y) && !(y< x)&&
            !(x==y) && !(y==x)&&
@@ -87,18 +84,12 @@ struct comparison_equal_length
            !(x> y) &&  (y> x)&&
            !(x>=y) &&  (y>=x)&&
             (x<=y) && !(y<=x)&&
-
           !eq(x,y) && !eq(y,x)&&
            lt(x,y) && !lt(y,x)&&
-          !gt(x,y) &&  gt(y,x)
-
-#if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-                   &&
+          !gt(x,y) &&  gt(y,x)&&
       !std_eq(x,y) && !std_eq(y,x)&&
        std_lt(x,y) && !std_lt(y,x)&&
-      !std_gt(x,y) &&  std_gt(y,x)
-#endif
-                    ;
+      !std_gt(x,y) &&  std_gt(y,x);
   }
 
   static bool is_greater(const CompositeKeyResult& x,const T2& y)
@@ -106,12 +97,9 @@ struct comparison_equal_length
     composite_key_result_equal_to<CompositeKeyResult> eq;
     composite_key_result_less<CompositeKeyResult>     lt;
     composite_key_result_greater<CompositeKeyResult>  gt;
-
-#if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-    std::equal_to<CompositeKeyResult> std_eq;
-    std::less<CompositeKeyResult>     std_lt;
-    std::greater<CompositeKeyResult>  std_gt;
-#endif
+    std::equal_to<CompositeKeyResult>                 std_eq;
+    std::less<CompositeKeyResult>                     std_lt;
+    std::greater<CompositeKeyResult>                  std_gt;
 
     return !(x< y) &&  (y< x)&&
            !(x==y) && !(y==x)&&
@@ -119,18 +107,12 @@ struct comparison_equal_length
             (x> y) && !(y> x)&&
             (x>=y) && !(y>=x)&&
            !(x<=y) &&  (y<=x)&&
-
           !eq(x,y) && !eq(y,x)&&
           !lt(x,y) &&  lt(y,x)&&
-           gt(x,y) && !gt(y,x)
-
-#if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-                   &&
+           gt(x,y) && !gt(y,x)&&
       !std_eq(x,y) && !std_eq(y,x)&&
       !std_lt(x,y) &&  std_lt(y,x)&&
-       std_gt(x,y) && !std_gt(y,x)
-#endif
-                    ;
+       std_gt(x,y) && !std_gt(y,x);
   }
 
   static bool is_equiv(const CompositeKeyResult& x,const T2& y)
@@ -138,12 +120,9 @@ struct comparison_equal_length
     composite_key_result_equal_to<CompositeKeyResult> eq;
     composite_key_result_less<CompositeKeyResult>     lt;
     composite_key_result_greater<CompositeKeyResult>  gt;
-
-#if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-    std::equal_to<CompositeKeyResult> std_eq;
-    std::less<CompositeKeyResult>     std_lt;
-    std::greater<CompositeKeyResult>  std_gt;
-#endif
+    std::equal_to<CompositeKeyResult>                 std_eq;
+    std::less<CompositeKeyResult>                     std_lt;
+    std::greater<CompositeKeyResult>                  std_gt;
 
     return !(x< y) && !(y< x)&&
             (x==y) &&  (y==x)&&
@@ -151,18 +130,12 @@ struct comparison_equal_length
            !(x> y) && !(y> x)&&
             (x>=y) &&  (y>=x)&&
             (x<=y) &&  (y<=x)&&
-
            eq(x,y) &&  eq(y,x)&&
           !lt(x,y) && !lt(y,x)&&
-          !gt(x,y) && !gt(y,x)
-
-#if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-                   &&
+          !gt(x,y) && !gt(y,x)&&
        std_eq(x,y) &&  std_eq(y,x)&&
       !std_lt(x,y) && !std_lt(y,x)&&
-      !std_gt(x,y) && !std_gt(y,x)
-#endif
-                    ;
+      !std_gt(x,y) && !std_gt(y,x);
   }
 };
 
@@ -173,78 +146,51 @@ struct comparison_different_length
   {
     composite_key_result_less<CompositeKeyResult>    lt;
     composite_key_result_greater<CompositeKeyResult> gt;
-
-#if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-    std::less<CompositeKeyResult>    std_lt;
-    std::greater<CompositeKeyResult> std_gt;
-#endif
+    std::less<CompositeKeyResult>                    std_lt;
+    std::greater<CompositeKeyResult>                 std_gt;
 
     return  (x< y) && !(y< x)&&
            !(x> y) &&  (y> x)&&
            !(x>=y) &&  (y>=x)&&
             (x<=y) && !(y<=x)&&
-
            lt(x,y) && !lt(y,x)&&
-          !gt(x,y) &&  gt(y,x)
-          
-#if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-                   &&
+          !gt(x,y) &&  gt(y,x)&&
        std_lt(x,y) && !std_lt(y,x)&&
-      !std_gt(x,y) &&  std_gt(y,x)
-#endif
-                    ;
+      !std_gt(x,y) &&  std_gt(y,x);
   }
 
   static bool is_greater(const CompositeKeyResult& x,const T2& y)
   {
     composite_key_result_less<CompositeKeyResult>    lt;
     composite_key_result_greater<CompositeKeyResult> gt;
-
-#if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-    std::less<CompositeKeyResult>    std_lt;
-    std::greater<CompositeKeyResult> std_gt;
-#endif
+    std::less<CompositeKeyResult>                    std_lt;
+    std::greater<CompositeKeyResult>                 std_gt;
 
     return !(x< y) &&  (y< x)&&
             (x> y) && !(y> x)&&
             (x>=y) && !(y>=x)&&
            !(x<=y) &&  (y<=x)&&
-
           !lt(x,y) &&  lt(y,x)&&
-           gt(x,y) && !gt(y,x)
-
-#if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-                   &&
+           gt(x,y) && !gt(y,x)&&
       !std_lt(x,y) && std_lt(y,x)&&
-       std_gt(x,y) && !std_gt(y,x)
-#endif
-                    ;
+       std_gt(x,y) && !std_gt(y,x);
   }
 
   static bool is_equiv(const CompositeKeyResult& x,const T2& y)
   {
     composite_key_result_less<CompositeKeyResult>    lt;
     composite_key_result_greater<CompositeKeyResult> gt;
-
-#if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-    std::less<CompositeKeyResult>    std_lt;
-    std::greater<CompositeKeyResult> std_gt;
-#endif
+    std::less<CompositeKeyResult>                    std_lt;
+    std::greater<CompositeKeyResult>                 std_gt;
 
     return !(x< y) && !(y< x)&&
            !(x> y) && !(y> x)&&
             (x>=y) &&  (y>=x)&&
             (x<=y) &&  (y<=x)&&
-
           !lt(x,y) && !lt(y,x)&&
-          !gt(x,y) && !gt(y,x)
-
-#if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-                   &&
+          !gt(x,y) && !gt(y,x)&&
       !std_lt(x,y) && !std_lt(y,x)&&
-      !std_gt(x,y) && !std_gt(y,x)
-#endif
-                    ;
+      !std_gt(x,y) && !std_gt(y,x);
   }
 };
 
@@ -355,12 +301,7 @@ void test_composite_key()
   typedef multi_index_container<
     xyz,
     indexed_by<
-      ordered_unique<
-        ckey_t1
-#if defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-        ,composite_key_result_less<ckey_t1::result_type>
-#endif
-      >
+      ordered_unique<ckey_t1>
     >
   > indexed_t1;
 
@@ -576,13 +517,7 @@ void test_composite_key()
   typedef multi_index_container<
     xyz,
     indexed_by<
-      hashed_unique<
-        ckey_t1
-#if defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-        ,composite_key_result_hash<ckey_t1::result_type>
-        ,composite_key_result_equal_to<ckey_t1::result_type>
-#endif
-      >
+      hashed_unique<ckey_t1>
     >
   > indexed_t2;
 

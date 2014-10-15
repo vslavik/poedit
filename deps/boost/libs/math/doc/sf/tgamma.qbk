@@ -152,13 +152,12 @@ to around 100 decimal digits.
 
 [h4 Implementation]
 
-The generic version of the `tgamma` function is implemented by combining the series and 
-continued fraction representations for the incomplete gamma function:
+The generic version of the `tgamma` function is implemented Sterling's approximation
+for lgamma for large z:
 
-[equation gamm2]
+[equation gamma6]
 
-where /l/ is an arbitrary integration limit: choosing [^l = max(10, a)] 
-seems to work fairly well.
+Following exponentiation, downward recursion is then used for small values of z.
 
 For types of known precision the __lanczos is used, a traits class 
 `boost::math::lanczos::lanczos_traits` maps type T to an appropriate
@@ -176,7 +175,7 @@ For z < -20 the reflection formula:
 
 [equation gamm5]
 
-is used.  Particular care has to be taken to evaluate the `z * sin([pi][space] * z)` part: 
+is used.  Particular care has to be taken to evaluate the [^ z * sin([pi][space] * z)] part: 
 a special routine is used to reduce z prior to multiplying by [pi][space] to ensure that the
 result in is the range [0, [pi]/2]. Without this an excessive amount of error occurs
 in this region (which is hard enough already, as the rate of change near a negative pole

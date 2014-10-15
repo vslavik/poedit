@@ -7,12 +7,13 @@
 #define BOOST_MATH_PROMOTE_DOUBLE_POLICY false
 
 #if !defined(TEST_MPFR) && !defined(TEST_MPREAL) && !defined(TEST_MPF) && !defined(TEST_MPREAL) \
-   && !defined(TEST_CPP_DEC_FLOAT) && !defined(TEST_MPFR_CLASS) && !defined(TEST_FLOAT)
+   && !defined(TEST_CPP_DEC_FLOAT) && !defined(TEST_MPFR_CLASS) && !defined(TEST_FLOAT) && !defined(TEST_CPP_BIN_FLOAT)
 #  define TEST_MPFR
 #  define TEST_MPF
 #  define TEST_CPP_DEC_FLOAT
-#  define TEST_MPFR_CLASS
-#  define TEST_MPREAL
+#  define TEST_CPP_BIN_FLOAT
+//#  define TEST_MPFR_CLASS
+//#  define TEST_MPREAL
 #  define TEST_FLOAT
 #endif
 
@@ -33,6 +34,10 @@
 #endif
 #ifdef TEST_CPP_DEC_FLOAT
 #include <boost/multiprecision/cpp_dec_float.hpp>
+#endif
+#ifdef TEST_CPP_BIN_FLOAT
+#include <boost/multiprecision/cpp_bin_float.hpp>
+#include <boost/multiprecision/mpfr.hpp>
 #endif
 #include <boost/math/special_functions/bessel.hpp>
 #include <boost/math/tools/rational.hpp>

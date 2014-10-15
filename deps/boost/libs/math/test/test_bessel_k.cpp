@@ -90,6 +90,13 @@ void expected_results()
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
+      "real_concept",                // test type(s)
+      ".*",                          // test data group
+      ".*", 90, 50);                 // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
+      ".*",                          // platform
       largest_type,                  // test type(s)
       ".*",                          // test data group
       ".*", 35, 15);                 // test function

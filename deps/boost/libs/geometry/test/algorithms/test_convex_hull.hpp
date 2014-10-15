@@ -1,4 +1,4 @@
-// Boost.Geometry (aka GGL, Generic Geometry Library) 
+// Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
@@ -8,6 +8,8 @@
 
 #ifndef BOOST_GEOMETRY_TEST_CONVEX_HULL_HPP
 #define BOOST_GEOMETRY_TEST_CONVEX_HULL_HPP
+
+#include <boost/variant/variant.hpp>
 
 #include <geometry_test_common.hpp>
 
@@ -24,11 +26,10 @@
 
 
 template <typename Geometry, typename Hull>
-void test_convex_hull(Geometry const& geometry, Hull const& hull,
-                      std::size_t size_original, std::size_t size_hull,
+void check_convex_hull(Geometry const& geometry, Hull const& hull,
+                      std::size_t /*size_original*/, std::size_t size_hull,
                       double expected_area, bool reverse)
 {
-
     std::size_t n = bg::num_points(hull);
 
     BOOST_CHECK_MESSAGE(n == size_hull,
@@ -49,55 +50,67 @@ void test_convex_hull(Geometry const& geometry, Hull const& hull,
         ah = -ah;
     }
 
-//std::cout << "Area: " << bg::area(geometry) << std::endl;
-//std::cout << bg::wkt(hull) << std::endl;
-
     BOOST_CHECK_CLOSE(ah, expected_area, 0.001);
 }
+
+template <typename Hull, typename Strategy, typename Geometry>
+void test_convex_hull(Geometry const& geometry,
+                      std::size_t size_original, std::size_t size_hull,
+                      double expected_area,
+                      bool reverse)
+{
+    Hull hull;
+
+    // Test version with output iterator
+    bg::detail::convex_hull::convex_hull_insert(geometry, std::back_inserter(hull.outer()));
+    check_convex_hull(geometry, hull,
+        size_original, size_hull, expected_area, reverse);
+
+    // Test version with ring as output
+    bg::clear(hull);
+    bg::convex_hull(geometry, hull.outer());
+    check_convex_hull(geometry, hull, size_original, size_hull, expected_area, false);
+
+    // Test version with polygon as output
+    bg::clear(hull);
+    bg::convex_hull(geometry, hull);
+    check_convex_hull(geometry, hull, size_original, size_hull, expected_area, false);
+
+    // Test version with strategy
+    bg::clear(hull);
+    bg::convex_hull(geometry, hull.outer(), Strategy());
+    check_convex_hull(geometry, hull, size_original, size_hull, expected_area, false);
+
+    // Test version with output iterator and strategy
+    bg::clear(hull);
+    bg::detail::convex_hull::convex_hull_insert(geometry, std::back_inserter(hull.outer()), Strategy());
+    check_convex_hull(geometry, hull, size_original, size_hull, expected_area, reverse);
+}
+
 
 template <typename Geometry, bool Clockwise>
 void test_geometry_order(std::string const& wkt,
                       std::size_t size_original, std::size_t size_hull,
                       double expected_area)
 {
-    Geometry geometry;
-    bg::read_wkt(wkt, geometry);
-
-    bg::model::polygon
+    typedef bg::model::polygon
         <
             typename bg::point_type<Geometry>::type,
             Clockwise
-        > hull;
+        > hull_type;
 
-    // Test version with output iterator
-    bg::detail::convex_hull::convex_hull_insert(geometry, std::back_inserter(hull.outer()));
-    test_convex_hull(geometry, hull,
-        size_original, size_hull, expected_area, ! Clockwise);
-
-    // Test version with ring as output
-    bg::clear(hull);
-    bg::convex_hull(geometry, hull.outer());
-    test_convex_hull(geometry, hull, size_original, size_hull, expected_area, false);
-
-    // Test version with polygon as output
-    bg::clear(hull);
-    bg::convex_hull(geometry, hull);
-    test_convex_hull(geometry, hull, size_original, size_hull, expected_area, false);
-
-    // Test version with strategy
-    bg::clear(hull);
-    bg::strategy::convex_hull::graham_andrew
+    typedef bg::strategy::convex_hull::graham_andrew
         <
             Geometry,
             typename bg::point_type<Geometry>::type
-        > graham;
-    bg::convex_hull(geometry, hull.outer(), graham);
-    test_convex_hull(geometry, hull, size_original, size_hull, expected_area, false);
+        > strategy_type;
 
-    // Test version with output iterator and strategy
-    bg::clear(hull);
-    bg::detail::convex_hull::convex_hull_insert(geometry, std::back_inserter(hull.outer()), graham);
-    test_convex_hull(geometry, hull, size_original, size_hull, expected_area, ! Clockwise);
+    Geometry geometry;
+    bg::read_wkt(wkt, geometry);
+    boost::variant<Geometry> v(geometry);
+
+    test_convex_hull<hull_type, strategy_type>(geometry, size_original, size_hull, expected_area, !Clockwise);
+    test_convex_hull<hull_type, strategy_type>(v, size_original, size_hull, expected_area, !Clockwise);
 }
 
 template <typename Geometry>

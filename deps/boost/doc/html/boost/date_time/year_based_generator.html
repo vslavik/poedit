@@ -39,34 +39,34 @@
   <span class="keyword">typedef</span> <span class="identifier">calendar_type</span><span class="special">::</span><span class="identifier">year_type</span> <a name="boost.date_time.year_based_generator.year_type"></a><span class="identifier">year_type</span><span class="special">;</span>    
 
   <span class="comment">// <a class="link" href="year_based_generator.html#boost.date_time.year_based_generatorconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="year_based_generator.html#idp21263704-bb"><span class="identifier">year_based_generator</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="year_based_generator.html#idp21263768-bb"><span class="special">~</span><span class="identifier">year_based_generator</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="year_based_generator.html#idp107944976-bb"><span class="identifier">year_based_generator</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="year_based_generator.html#idp107945264-bb"><span class="special">~</span><span class="identifier">year_based_generator</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="year_based_generator.html#idp21262040-bb">public member functions</a></span>
-  <span class="identifier">date_type</span> <a class="link" href="year_based_generator.html#idp21262248-bb"><span class="identifier">get_date</span></a><span class="special">(</span><span class="identifier">year_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="year_based_generator.html#idp21263048-bb"><span class="identifier">to_string</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="year_based_generator.html#idp109744720-bb">public member functions</a></span>
+  <span class="keyword">virtual</span> <span class="identifier">date_type</span> <a class="link" href="year_based_generator.html#idp45483648-bb"><span class="identifier">get_date</span></a><span class="special">(</span><span class="identifier">year_type</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+  <span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="year_based_generator.html#idp109877088-bb"><span class="identifier">to_string</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp87939560"></a><h2>Description</h2>
+<a name="idp191351488"></a><h2>Description</h2>
 <p>This class is a base class for polymorphic function objects that take a year and produce a concrete date. 
 </p>
 <div class="refsect2">
-<a name="idp87940008"></a><h3>
+<a name="idp191352288"></a><h3>
 <a name="boost.date_time.year_based_generatorconstruct-copy-destruct"></a><code class="computeroutput">year_based_generator</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><a name="idp21263704-bb"></a><span class="identifier">year_based_generator</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a name="idp21263768-bb"></a><span class="special">~</span><span class="identifier">year_based_generator</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp107944976-bb"></a><span class="identifier">year_based_generator</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp107945264-bb"></a><span class="special">~</span><span class="identifier">year_based_generator</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp87944968"></a><h3>
-<a name="idp21262040-bb"></a><code class="computeroutput">year_based_generator</code> public member functions</h3>
+<a name="idp191362496"></a><h3>
+<a name="idp109744720-bb"></a><code class="computeroutput">year_based_generator</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="identifier">date_type</span> <a name="idp21262248-bb"></a><span class="identifier">get_date</span><span class="special">(</span><span class="identifier">year_type</span> y<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">date_type</span> <a name="idp45483648-bb"></a><span class="identifier">get_date</span><span class="special">(</span><span class="identifier">year_type</span> y<span class="special">)</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span></pre></li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="idp21263048-bb"></a><span class="identifier">to_string</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns a string for use in a POSIX time_zone string. </li>
+<pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="idp109877088-bb"></a><span class="identifier">to_string</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span></pre>Returns a string for use in a POSIX time_zone string. </li>
 </ol></div>
 </div>
 </div>

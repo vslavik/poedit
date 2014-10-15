@@ -36,6 +36,7 @@
 #include "table_type.hpp"
 
 #include <iostream>
+#include <iomanip>
 using std::cout;
 using std::endl;
 #include <limits>

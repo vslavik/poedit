@@ -13,6 +13,8 @@
 #include <boost/math/tools/test.hpp>
 #include "functor.hpp"
 #include <boost/array.hpp>
+#include <iostream>
+#include <iomanip>
 
 #include "handle_test_result.hpp"
 #include "table_type.hpp"

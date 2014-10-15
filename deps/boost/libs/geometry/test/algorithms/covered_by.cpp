@@ -1,6 +1,8 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
-//
+
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2013 Adam Wulkiewicz, Lodz, Poland.
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -37,6 +39,22 @@ void test_all()
 
     */
 
+    typedef bg::model::segment<P> seg;
+    test_geometry<P, seg>("POINT(1 1)", "LINESTRING(0 0, 2 2)", true);
+    test_geometry<P, seg>("POINT(0 0)", "LINESTRING(0 0, 1 1)", true);
+    test_geometry<P, seg>("POINT(1 0)", "LINESTRING(0 0, 1 1)", false);
+
+    // linestrings
+    typedef bg::model::linestring<P> ls;
+    test_geometry<P, ls>("POINT(0 0)", "LINESTRING(0 0,1 1,2 2)", true);
+    test_geometry<P, ls>("POINT(3 3)", "LINESTRING(0 0,1 1,2 2)", false);
+    test_geometry<P, ls>("POINT(1 1)", "LINESTRING(0 0,2 2,3 3)", true);
+
+    // multi_linestrings
+    typedef bg::model::multi_linestring<ls> mls;
+    test_geometry<P, mls>("POINT(0 0)", "MULTILINESTRING((0 0,1 1,2 2),(0 0,0 1))", true);
+    test_geometry<P, mls>("POINT(0 0)", "MULTILINESTRING((0 0,1 1,2 2),(0 0,0 1),(0 0,1 0))", true);
+
     typedef bg::model::box<P> box_type;
 
     test_geometry<P, box_type>("POINT(1 1)", "BOX(0 0,2 2)", true);
@@ -52,22 +70,6 @@ void test_all()
     test_geometry<box_type, box_type>("BOX(1 1,3 3)", "BOX(0 0,3 3)", true);
     test_geometry<box_type, box_type>("BOX(1 2,3 3)", "BOX(0 0,3 3)", true);
     test_geometry<box_type, box_type>("BOX(1 1,4 3)", "BOX(0 0,3 3)", false);
-
-
-    /*
-    test_within_code<P, box_type>("POINT(1 1)", "BOX(0 0,2 2)", 1);
-    test_within_code<P, box_type>("POINT(1 0)", "BOX(0 0,2 2)", 0);
-    test_within_code<P, box_type>("POINT(0 1)", "BOX(0 0,2 2)", 0);
-    test_within_code<P, box_type>("POINT(0 3)", "BOX(0 0,2 2)", -1);
-    test_within_code<P, box_type>("POINT(3 3)", "BOX(0 0,2 2)", -1);
-
-    test_within_code<box_type, box_type>("BOX(1 1,2 2)", "BOX(0 0,3 3)", 1);
-    test_within_code<box_type, box_type>("BOX(0 1,2 2)", "BOX(0 0,3 3)", 0);
-    test_within_code<box_type, box_type>("BOX(1 0,2 2)", "BOX(0 0,3 3)", 0);
-    test_within_code<box_type, box_type>("BOX(1 1,2 3)", "BOX(0 0,3 3)", 0);
-    test_within_code<box_type, box_type>("BOX(1 1,3 2)", "BOX(0 0,3 3)", 0);
-    test_within_code<box_type, box_type>("BOX(1 1,3 4)", "BOX(0 0,3 3)", -1);
-    */
 }
 
 
@@ -90,7 +92,8 @@ void test_mixed_of()
     typedef boost::geometry::model::box<P1> box_type1;
     typedef boost::geometry::model::box<P2> box_type2;
 
-    polygon_type1 poly1, poly2;
+    polygon_type1 poly1;
+    polygon_type2 poly2;
     boost::geometry::read_wkt("POLYGON((0 0,0 5,5 5,5 0,0 0))", poly1);
     boost::geometry::read_wkt("POLYGON((0 0,0 5,5 5,5 0,0 0))", poly2);
 

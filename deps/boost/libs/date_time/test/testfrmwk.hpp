@@ -6,7 +6,7 @@
  * Use, modification and distribution is subject to the 
  * Boost Software License, Version 1.0. (See accompanying
  * file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt)
- * $Date: 2010-06-09 10:36:07 -0700 (Wed, 09 Jun 2010) $
+ * $Date$
  */
 
 

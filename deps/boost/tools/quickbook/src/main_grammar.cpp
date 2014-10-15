@@ -17,7 +17,7 @@
 #include "phrase_tags.hpp"
 #include "parsers.hpp"
 #include "scoped.hpp"
-#include "input_path.hpp"
+#include "native_text.hpp"
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_chset.hpp>
 #include <boost/spirit/include/classic_if.hpp>
@@ -68,21 +68,6 @@ namespace quickbook
         };
     };
 
-    template <typename T>
-    struct member_action
-    {
-        typedef void(T::*member_function)(parse_iterator, parse_iterator);
-
-        T& l;
-        member_function mf;
-
-        member_action(T& l, member_function mf) : l(l), mf(mf) {}
-
-        void operator()(parse_iterator first, parse_iterator last) const {
-            (l.*mf)(first, last);
-        }
-    };
-
     struct main_grammar_local
     {
         ////////////////////////////////////////////////////////////////////////
@@ -106,7 +91,7 @@ namespace quickbook
                         paragraph_separator, inside_paragraph,
                         code, code_line, blank_line, hr,
                         inline_code, skip_inline_code,
-                        template_,
+                        template_, attribute_template, template_body,
                         code_block, skip_code_block, macro,
                         template_args,
                         template_args_1_4, template_arg_1_4,
@@ -123,7 +108,9 @@ namespace quickbook
         struct block_context_closure : cl::closure<block_context_closure,
             element_info::context>
         {
-            member1 is_block;
+            // Mask used to determine whether or not an element is a block
+            // element.
+            member1 is_block_mask;
         };
 
         cl::rule<scanner> simple_markup, simple_markup_end;
@@ -164,8 +151,8 @@ namespace quickbook
     };
 
     struct process_element_impl : scoped_action_base {
-        process_element_impl(main_grammar_local& l)
-            : l(l), element_context_error_(false) {}
+        process_element_impl(main_grammar_local& l) :
+            l(l), pushed_source_mode_(false), element_context_error_(false) {}
 
         bool start()
         {
@@ -195,12 +182,12 @@ namespace quickbook
 
             assert(l.state_.values.builder.empty());
 
-            if (!l.state_.source_mode_next.empty() &&
+            if (l.state_.source_mode_next &&
                 info_.type != element_info::maybe_block)
             {
-                l.state_.source_mode.swap(saved_source_mode_);
-                l.state_.source_mode = detail::to_s(l.state_.source_mode_next.get_quickbook());
-                l.state_.source_mode_next = value();
+                l.state_.push_tagged_source_mode(l.state_.source_mode_next);
+                pushed_source_mode_ = true;
+                l.state_.source_mode_next = 0;
             }
 
             return true;
@@ -236,14 +223,34 @@ namespace quickbook
         void failure() { l.element_type = element_info::nothing; }
 
         void cleanup() {
-            if (!saved_source_mode_.empty())
-                l.state_.source_mode.swap(saved_source_mode_);
+            if (pushed_source_mode_)
+                l.state_.pop_tagged_source_mode();
         }
 
         main_grammar_local& l;
         element_info info_;
-        std::string saved_source_mode_;
+        bool pushed_source_mode_;
         bool element_context_error_;
+    };
+
+    struct scoped_paragraph : scoped_action_base
+    {
+        scoped_paragraph(quickbook::state& state) :
+            state(state), pushed(false) {}
+
+        bool start() {
+            state.push_tagged_source_mode(state.source_mode_next);
+            pushed = true;
+            state.source_mode_next = 0;
+            return true;
+        }
+
+        void cleanup() {
+            if (pushed) state.pop_tagged_source_mode();
+        }
+
+        quickbook::state& state;
+        bool pushed;
     };
 
     struct in_list_impl {
@@ -317,6 +324,7 @@ namespace quickbook
         element_id_warning_action element_id_warning(state);
 
         scoped_parser<to_value_scoped_action> to_value(state);
+        scoped_parser<scoped_paragraph> scope_paragraph(state);
 
         // Local Actions
         scoped_parser<process_element_impl> process_element(local);
@@ -469,12 +477,15 @@ namespace quickbook
                                                 // Usually superfluous call
                                                 // for paragraphs in lists.
             cl::eps_p                           [paragraph_action]
-        >>  scoped_context(element_info::in_top_level)
-            [   scoped_still_in_block(true)
-                [   local.syntactic_block_item(element_info::is_contextual_block)
-                >>  *(  cl::eps_p(ph::var(local.still_in_block))
-                    >>  local.syntactic_block_item(element_info::is_block)
-                    )
+        >>  scope_paragraph()
+            [
+                scoped_context(element_info::in_top_level)
+                [   scoped_still_in_block(true)
+                    [   local.syntactic_block_item(element_info::is_contextual_block)
+                    >>  *(  cl::eps_p(ph::var(local.still_in_block))
+                        >>  local.syntactic_block_item(element_info::is_block)
+                        )
+                    ]
                 ]
             ]                                   [paragraph_action]
             ;
@@ -497,14 +508,19 @@ namespace quickbook
             |   (cl::eps_p(~cl::ch_p(']')) | qbk_ver(0, 107u))
                                                 [ph::var(local.element_type) = element_info::nothing]
             >>  local.common
+
                 // If the element is a block, then a newline will end the
                 // current syntactic block.
-                // Note that we don't do this for lists in 1.6 to avoid messing
-                // up on nested block elements.
-            >>  !(  cl::eps_p(in_list) >> qbk_ver(106u)
+                //
+                // Note that we don't do this for lists in 1.6, as it causes
+                // the list block to end. The support for nested syntactic
+                // blocks in 1.7 will fix that. Although it does mean the
+                // following line will need to be indented. TODO: Flag that
+                // the indentation check shouldn't be made?
+            >>  !(  cl::eps_p(in_list) >> qbk_ver(106u, 107u)
                 |   cl::eps_p
                     (
-                        ph::static_cast_<int>(local.syntactic_block_item.is_block) &
+                        ph::static_cast_<int>(local.syntactic_block_item.is_block_mask) &
                         ph::static_cast_<int>(ph::var(local.element_type))
                     )
                 >>  eol                         [ph::var(local.still_in_block) = false]
@@ -637,7 +653,24 @@ namespace quickbook
             (   '['
             >>  space
             >>  state.values.list(template_tags::template_)
-                [   (   cl::str_p('`')
+                [   local.template_body
+                >>  ']'
+                ]
+            )                                   [element_action]
+            ;
+
+        local.attribute_template =
+            (   '['
+            >>  space
+            >>  state.values.list(template_tags::attribute_template)
+                [   local.template_body
+                >>  ']'
+                ]
+            )                                   [element_action]
+            ;
+
+        local.template_body =
+                    (   cl::str_p('`')
                     >>  cl::eps_p(cl::punct_p)
                     >>  state.templates.scope
                             [state.values.entry(ph::arg1, ph::arg2, template_tags::escape)]
@@ -659,9 +692,6 @@ namespace quickbook
                     )
                 >>  space
                 >>  !local.template_args
-                >>  ']'
-                ]
-            )                                   [element_action]
             ;
 
         local.template_args =
@@ -917,8 +947,9 @@ namespace quickbook
                 )
             ;
 
-        attribute_value_1_7 =
-            *(  ~cl::eps_p(']' | cl::space_p | comment)
+        attribute_template_body =
+            space
+        >>  *(  ~cl::eps_p(space >> cl::end_p | comment)
             >>  (   cl::eps_p
                     (   cl::ch_p('[')
                     >>  space
@@ -929,13 +960,38 @@ namespace quickbook
                         )
                     )                           [error("Elements not allowed in attribute values.")]
                 >>  local.square_brackets
-                |   local.template_
+                |   local.attribute_template
                 |   cl::eps_p(cl::ch_p('['))    [error("Unmatched template in attribute value.")]
                 >>  local.square_brackets
                 |   raw_escape
                 |   cl::anychar_p               [raw_char]
                 )
             )
+        >>  space
+            ;
+
+
+        attribute_value_1_7 =
+            state.values.save() [
+                +(  ~cl::eps_p(']' | cl::space_p | comment)
+                >>  (   cl::eps_p
+                        (   cl::ch_p('[')
+                        >>  space
+                        >>  (   cl::eps_p(cl::punct_p)
+                            >>  elements
+                            |   elements
+                            >>  (cl::eps_p - (cl::alnum_p | '_'))
+                            )
+                        )                       [error("Elements not allowed in attribute values.")]
+                    >>  local.square_brackets
+                    |   local.attribute_template
+                    |   cl::eps_p(cl::ch_p('['))[error("Unmatched template in attribute value.")]
+                    >>  local.square_brackets
+                    |   raw_escape
+                    |   cl::anychar_p           [raw_char]
+                    )
+                )
+            ]
             ;
 
         //

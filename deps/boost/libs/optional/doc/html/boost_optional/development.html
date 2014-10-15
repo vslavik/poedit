@@ -1,37 +1,37 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Development</title>
-<link rel="stylesheet" href="../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
-<link rel="home" href="../index.html" title="Chapter 1. Boost.Optional">
-<link rel="up" href="../index.html" title="Chapter 1. Boost.Optional">
-<link rel="prev" href="../index.html" title="Chapter 1. Boost.Optional">
+<link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Optional">
+<link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Optional">
+<link rel="prev" href="tutorial.html" title="Tutorial">
 <link rel="next" href="synopsis.html" title="Synopsis">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
 <td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../boost.png"></td>
 <td align="center"><a href="../../../../../index.html">Home</a></td>
-<td align="center"><a href="../../../../libraries.htm">Libraries</a></td>
+<td align="center"><a href="../../../../../libs/libraries.htm">Libraries</a></td>
 <td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
 <td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
 <td align="center"><a href="../../../../../more/index.htm">More</a></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../index.html"><img src="../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="synopsis.html"><img src="../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="tutorial.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="synopsis.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Development">
+<div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_optional.development"></a><a class="link" href="development.html" title="Development">Development</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="development.html#boost_optional.development.the_models">The models</a></span></dt>
 <dt><span class="section"><a href="development.html#boost_optional.development.the_semantics">The semantics</a></span></dt>
 <dt><span class="section"><a href="development.html#boost_optional.development.the_interface">The Interface</a></span></dt>
 </dl></div>
-<div class="section" title="The models">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_optional.development.the_models"></a><a class="link" href="development.html#boost_optional.development.the_models" title="The models">The models</a>
 </h3></div></div></div>
@@ -39,12 +39,12 @@
         In C++, we can <span class="emphasis"><em>declare</em></span> an object (a variable) of type
         <code class="computeroutput"><span class="identifier">T</span></code>, and we can give this variable
         an <span class="emphasis"><em>initial value</em></span> (through an <span class="emphasis"><em>initializer</em></span>.
-        (c.f. 8.5)). When a declaration includes a non-empty initializer (an initial
+        (cf. 8.5)). When a declaration includes a non-empty initializer (an initial
         value is given), it is said that the object has been initialized. If the
         declaration uses an empty initializer (no initial value is given), and neither
         default nor value initialization applies, it is said that the object is
         <span class="bold"><strong>uninitialized</strong></span>. Its actual value exist but
-        has an <span class="emphasis"><em>indeterminate initial value</em></span> (c.f. 8.5.9). <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code> intends
+        has an <span class="emphasis"><em>indeterminate initial value</em></span> (cf. 8.5/11). <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code> intends
         to formalize the notion of initialization (or lack of it) allowing a program
         to test whether an object has been initialized and stating that access to
         the value of an uninitialized object is undefined behavior. That is, when
@@ -67,13 +67,12 @@
         special value: <code class="computeroutput"><span class="identifier">EOF</span></code>, <code class="computeroutput"><span class="identifier">npos</span></code>, -1, etc... This is equivalent to
         adding the special value to the set of possible values of a given type. This
         super set of <code class="computeroutput"><span class="identifier">T</span></code> plus some
-        <span class="emphasis"><em>nil_t</em></span>&#8212;were <code class="computeroutput"><span class="identifier">nil_t</span></code>
-        is some stateless POD-can be modeled in modern languages as a <span class="bold"><strong>discriminated
-        union</strong></span> of T and nil_t. Discriminated unions are often called <span class="emphasis"><em>variants</em></span>.
-        A variant has a <span class="emphasis"><em>current type</em></span>, which in our case is either
-        <code class="computeroutput"><span class="identifier">T</span></code> or <code class="computeroutput"><span class="identifier">nil_t</span></code>.
-        Using the <a href="../../../../variant/index.html" target="_top">Boost.Variant</a>
-        library, this model can be implemented in terms of <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span><span class="identifier">nil_t</span><span class="special">&gt;</span></code>.
+        <span class="emphasis"><em>nil_t</em></span>&#8212;where <code class="computeroutput"><span class="identifier">nil_t</span></code>
+        is some stateless POD&#8212;can be modeled in modern languages as a <span class="bold"><strong>discriminated union</strong></span> of T and nil_t. Discriminated
+        unions are often called <span class="emphasis"><em>variants</em></span>. A variant has a <span class="emphasis"><em>current
+        type</em></span>, which in our case is either <code class="computeroutput"><span class="identifier">T</span></code>
+        or <code class="computeroutput"><span class="identifier">nil_t</span></code>. Using the <a href="../../../../variant/index.html" target="_top">Boost.Variant</a> library, this model
+        can be implemented in terms of <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span><span class="identifier">nil_t</span><span class="special">&gt;</span></code>.
         There is precedent for a discriminated union as a model for an optional value:
         the <a href="http://www.haskell.org/" target="_top">Haskell</a> <span class="bold"><strong>Maybe</strong></span>
         built-in type constructor. Thus, a discriminated union <code class="computeroutput"><span class="identifier">T</span><span class="special">+</span><span class="identifier">nil_t</span></code>
@@ -96,7 +95,7 @@
         value of <code class="computeroutput"><span class="identifier">T</span></code> or nothing.
       </p>
 <p>
-        As of this writing I don't know of any precedence for a variable-size fixed-capacity
+        As of this writing I don't know of any precedent for a variable-size fixed-capacity
         (of 1) stack-based container model for optional values, yet I believe this
         is the consequence of the lack of practical implementations of such a container
         rather than an inherent shortcoming of the container model.
@@ -110,65 +109,65 @@
 <p>
         Discriminated-union:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-<span class="bold"><strong>deep-copy</strong></span> semantics: copies of the variant
-          implies copies of the value.
-        </li>
+            <span class="bold"><strong>deep-copy</strong></span> semantics: copies of the variant
+            implies copies of the value.
+          </li>
 <li class="listitem">
-<span class="bold"><strong>deep-relational</strong></span> semantics: comparisons
-          between variants matches both current types and values
-        </li>
+            <span class="bold"><strong>deep-relational</strong></span> semantics: comparisons
+            between variants matches both current types and values
+          </li>
 <li class="listitem">
-          If the variant's current type is <code class="computeroutput"><span class="identifier">T</span></code>,
-          it is modeling an <span class="emphasis"><em>initialized</em></span> optional.
-        </li>
+            If the variant's current type is <code class="computeroutput"><span class="identifier">T</span></code>,
+            it is modeling an <span class="emphasis"><em>initialized</em></span> optional.
+          </li>
 <li class="listitem">
-          If the variant's current type is not <code class="computeroutput"><span class="identifier">T</span></code>,
-          it is modeling an <span class="emphasis"><em>uninitialized</em></span> optional.
-        </li>
+            If the variant's current type is not <code class="computeroutput"><span class="identifier">T</span></code>,
+            it is modeling an <span class="emphasis"><em>uninitialized</em></span> optional.
+          </li>
 <li class="listitem">
-          Testing if the variant's current type is <code class="computeroutput"><span class="identifier">T</span></code>
-          models testing if the optional is initialized
-        </li>
+            Testing if the variant's current type is <code class="computeroutput"><span class="identifier">T</span></code>
+            models testing if the optional is initialized
+          </li>
 <li class="listitem">
-          Trying to extract a <code class="computeroutput"><span class="identifier">T</span></code> from
-          a variant when its current type is not <code class="computeroutput"><span class="identifier">T</span></code>,
-          models the undefined behavior of trying to access the value of an uninitialized
-          optional
-        </li>
+            Trying to extract a <code class="computeroutput"><span class="identifier">T</span></code>
+            from a variant when its current type is not <code class="computeroutput"><span class="identifier">T</span></code>,
+            models the undefined behavior of trying to access the value of an uninitialized
+            optional
+          </li>
 </ul></div>
 <p>
         Single-element container:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-<span class="bold"><strong>deep-copy</strong></span> semantics: copies of the container
-          implies copies of the value.
-        </li>
+            <span class="bold"><strong>deep-copy</strong></span> semantics: copies of the container
+            implies copies of the value.
+          </li>
 <li class="listitem">
-<span class="bold"><strong>deep-relational</strong></span> semantics: comparisons
-          between containers compare container size and if match, contained value
-        </li>
+            <span class="bold"><strong>deep-relational</strong></span> semantics: comparisons
+            between containers compare container size and if match, contained value
+          </li>
 <li class="listitem">
-          If the container is not empty (contains an object of type <code class="computeroutput"><span class="identifier">T</span></code>), it is modeling an <span class="emphasis"><em>initialized</em></span>
-          optional.
-        </li>
+            If the container is not empty (contains an object of type <code class="computeroutput"><span class="identifier">T</span></code>), it is modeling an <span class="emphasis"><em>initialized</em></span>
+            optional.
+          </li>
 <li class="listitem">
-          If the container is empty, it is modeling an <span class="emphasis"><em>uninitialized</em></span>
-          optional.
-        </li>
+            If the container is empty, it is modeling an <span class="emphasis"><em>uninitialized</em></span>
+            optional.
+          </li>
 <li class="listitem">
-          Testing if the container is empty models testing if the optional is initialized
-        </li>
+            Testing if the container is empty models testing if the optional is initialized
+          </li>
 <li class="listitem">
-          Trying to extract a <code class="computeroutput"><span class="identifier">T</span></code> from
-          an empty container models the undefined behavior of trying to access the
-          value of an uninitialized optional
-        </li>
+            Trying to extract a <code class="computeroutput"><span class="identifier">T</span></code>
+            from an empty container models the undefined behavior of trying to access
+            the value of an uninitialized optional
+          </li>
 </ul></div>
 </div>
-<div class="section" title="The semantics">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_optional.development.the_semantics"></a><a class="link" href="development.html#boost_optional.development.the_semantics" title="The semantics">The semantics</a>
 </h3></div></div></div>
@@ -193,58 +192,59 @@
         We can draw from the purpose of <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>
         the required basic semantics:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-<span class="bold"><strong>Default Construction:</strong></span> To introduce a formally
-          uninitialized wrapped object.
-        </li>
+            <span class="bold"><strong>Default Construction:</strong></span> To introduce a
+            formally uninitialized wrapped object.
+          </li>
 <li class="listitem">
-<span class="bold"><strong>Direct Value Construction via copy:</strong></span> To
-          introduce a formally initialized wrapped object whose value is obtained
-          as a copy of some object.
-        </li>
+            <span class="bold"><strong>Direct Value Construction via copy:</strong></span>
+            To introduce a formally initialized wrapped object whose value is obtained
+            as a copy of some object.
+          </li>
 <li class="listitem">
-<span class="bold"><strong>Deep Copy Construction:</strong></span> To obtain a new
-          yet equivalent wrapped object.
-        </li>
+            <span class="bold"><strong>Deep Copy Construction:</strong></span> To obtain a
+            new yet equivalent wrapped object.
+          </li>
 <li class="listitem">
-<span class="bold"><strong>Direct Value Assignment (upon initialized):</strong></span>
-          To assign a value to the wrapped object.
-        </li>
+            <span class="bold"><strong>Direct Value Assignment (upon initialized):</strong></span>
+            To assign a value to the wrapped object.
+          </li>
 <li class="listitem">
-<span class="bold"><strong>Direct Value Assignment (upon uninitialized):</strong></span>
-          To initialize the wrapped object with a value obtained as a copy of some
-          object.
-        </li>
+            <span class="bold"><strong>Direct Value Assignment (upon uninitialized):</strong></span>
+            To initialize the wrapped object with a value obtained as a copy of some
+            object.
+          </li>
 <li class="listitem">
-<span class="bold"><strong>Assignment (upon initialized):</strong></span> To assign
-          to the wrapped object the value of another wrapped object.
-        </li>
+            <span class="bold"><strong>Assignment (upon initialized):</strong></span> To assign
+            to the wrapped object the value of another wrapped object.
+          </li>
 <li class="listitem">
-<span class="bold"><strong>Assignment (upon uninitialized):</strong></span> To initialize
-          the wrapped object with value of another wrapped object.
-        </li>
+            <span class="bold"><strong>Assignment (upon uninitialized):</strong></span> To
+            initialize the wrapped object with value of another wrapped object.
+          </li>
 <li class="listitem">
-<span class="bold"><strong>Deep Relational Operations (when supported by the
-          type T):</strong></span> To compare wrapped object values taking into account
-          the presence of uninitialized states.
-        </li>
+            <span class="bold"><strong>Deep Relational Operations (when supported by the
+            type T):</strong></span> To compare wrapped object values taking into account
+            the presence of uninitialized states.
+          </li>
 <li class="listitem">
-<span class="bold"><strong>Value access:</strong></span> To unwrap the wrapped object.
-        </li>
+            <span class="bold"><strong>Value access:</strong></span> To unwrap the wrapped
+            object.
+          </li>
 <li class="listitem">
-<span class="bold"><strong>Initialization state query:</strong></span> To determine
-          if the object is formally initialized or not.
-        </li>
+            <span class="bold"><strong>Initialization state query:</strong></span> To determine
+            if the object is formally initialized or not.
+          </li>
 <li class="listitem">
-<span class="bold"><strong>Swap:</strong></span> To exchange wrapped objects. (with
-          whatever exception safety guarantees are provided by <code class="computeroutput"><span class="identifier">T</span></code>'s
-          swap).
-        </li>
+            <span class="bold"><strong>Swap:</strong></span> To exchange wrapped objects. (with
+            whatever exception safety guarantees are provided by <code class="computeroutput"><span class="identifier">T</span></code>'s
+            swap).
+          </li>
 <li class="listitem">
-<span class="bold"><strong>De-initialization:</strong></span> To release the wrapped
-          object (if any) and leave the wrapper in the uninitialized state.
-        </li>
+            <span class="bold"><strong>De-initialization:</strong></span> To release the wrapped
+            object (if any) and leave the wrapper in the uninitialized state.
+          </li>
 </ul></div>
 <p>
         Additional operations are useful, such as converting constructors and converting
@@ -252,7 +252,7 @@
         via a pointer to the wrapped object or null.
       </p>
 </div>
-<div class="section" title="The Interface">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_optional.development.the_interface"></a><a class="link" href="development.html#boost_optional.development.the_interface" title="The Interface">The Interface</a>
 </h3></div></div></div>
@@ -291,9 +291,9 @@
         operations not provided by <code class="computeroutput"><span class="identifier">T</span></code>
         itself which are supported by a special interface.
       </p>
-<a name="boost_optional.development.the_interface.lexically_hinted_value_access_in_the_presence_of_possibly_untitialized_optional_objects__the_operators___and___gt_"></a><h5>
-<a name="id555569"></a>
-        <a class="link" href="development.html#boost_optional.development.the_interface.lexically_hinted_value_access_in_the_presence_of_possibly_untitialized_optional_objects__the_operators___and___gt_">Lexically-hinted
+<h5>
+<a name="boost_optional.development.the_interface.h0"></a>
+        <span class="phrase"><a name="boost_optional.development.the_interface.lexically_hinted_value_access_in_the_presence_of_possibly_untitialized_optional_objects__the_operators___and___gt_"></a></span><a class="link" href="development.html#boost_optional.development.the_interface.lexically_hinted_value_access_in_the_presence_of_possibly_untitialized_optional_objects__the_operators___and___gt_">Lexically-hinted
         Value Access in the presence of possibly untitialized optional objects: The
         operators * and -&gt;</a>
       </h5>
@@ -301,7 +301,7 @@
         A relevant feature of a pointer is that it can have a <span class="bold"><strong>null
         pointer value</strong></span>. This is a <span class="emphasis"><em>special</em></span> value which
         is used to indicate that the pointer is not referring to any object at all.
-        In other words, null pointer values convey the notion of inexistent objects.
+        In other words, null pointer values convey the notion of nonexistent objects.
       </p>
 <p>
         This meaning of the null pointer value allowed pointers to became a <span class="emphasis"><em>de
@@ -309,7 +309,7 @@
         to do to refer to a value which you don't really have is to use a null pointer
         value of the appropriate type. Pointers have been used for decades&#8212;from
         the days of C APIs to modern C++ libraries&#8212;to <span class="emphasis"><em>refer</em></span>
-        to optional (that is, possibly inexistent) objects; particularly as optional
+        to optional (that is, possibly nonexistent) objects; particularly as optional
         arguments to a function, but also quite often as optional data members.
       </p>
 <p>
@@ -328,8 +328,8 @@
         Such a <span class="emphasis"><em>de facto</em></span> idiom for referring to optional objects
         can be formalized in the form of a concept: the <a href="../../../../utility/OptionalPointee.html" target="_top">OptionalPointee</a>
         concept. This concept captures the syntactic usage of operators <code class="computeroutput"><span class="special">*</span></code>, <code class="computeroutput"><span class="special">-&gt;</span></code>
-        and conversion to <code class="computeroutput"><span class="keyword">bool</span></code> to convey
-        the notion of optionality.
+        and contextual conversion to <code class="computeroutput"><span class="keyword">bool</span></code>
+        to convey the notion of optionality.
       </p>
 <p>
         However, pointers are good to <span class="underline">refer</span>
@@ -356,9 +356,9 @@
         possible undefined value because of the idiomatic aid present in the <a href="../../../../utility/OptionalPointee.html" target="_top">OptionalPointee</a> concept
         incarnated by pointers.
       </p>
-<a name="boost_optional.development.the_interface.optional_lt_t_gt__as_a_model_of_optionalpointee"></a><h5>
-<a name="id555831"></a>
-        <a class="link" href="development.html#boost_optional.development.the_interface.optional_lt_t_gt__as_a_model_of_optionalpointee">Optional&lt;T&gt;
+<h5>
+<a name="boost_optional.development.the_interface.h1"></a>
+        <span class="phrase"><a name="boost_optional.development.the_interface.optional_lt_t_gt__as_a_model_of_optionalpointee"></a></span><a class="link" href="development.html#boost_optional.development.the_interface.optional_lt_t_gt__as_a_model_of_optionalpointee">Optional&lt;T&gt;
         as a model of OptionalPointee</a>
       </h5>
 <p>
@@ -367,9 +367,9 @@
         about the possibly uninitialized state appealing to the familiar pointer
         semantics w.r.t. to null pointers.
       </p>
-<div class="warning" title="Warning"><table border="0" summary="Warning">
+<div class="warning"><table border="0" summary="Warning">
 <tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../../../doc/html/images/warning.png"></td>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../../../doc/src/images/warning.png"></td>
 <th align="left">Warning</th>
 </tr>
 <tr><td align="left" valign="top"><p>
@@ -398,7 +398,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2003 -2007 Fernando Luis Cacciola Carballal<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2007 Fernando Luis Cacciola Carballal<br>Copyright &#169; 2014 Andrzej Krzemie&#324;ski<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -406,7 +406,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../index.html"><img src="../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="synopsis.html"><img src="../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="tutorial.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="synopsis.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

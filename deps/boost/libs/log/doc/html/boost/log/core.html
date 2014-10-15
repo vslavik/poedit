@@ -31,62 +31,62 @@
   <span class="keyword">typedef</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a name="boost.log.core.exception_handler_type"></a><span class="identifier">exception_handler_type</span><span class="special">;</span>  <span class="comment">// Exception handler function type. </span>
 
   <span class="comment">// <a class="link" href="core.html#boost.log.coreconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="core.html#idp25169896-bb"><span class="identifier">core</span></a><span class="special">(</span><a class="link" href="core.html" title="Class core">core</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
-  core&amp; <a class="link" href="core.html#idp25170568-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="core.html" title="Class core">core</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
-  <a class="link" href="core.html#idp25169544-bb"><span class="special">~</span><span class="identifier">core</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="core.html#idp32842416-bb"><span class="identifier">core</span></a><span class="special">(</span><a class="link" href="core.html" title="Class core">core</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
+  <a class="link" href="core.html" title="Class core">core</a> <span class="special">&amp;</span> <a class="link" href="core.html#idp32843952-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="core.html" title="Class core">core</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
+  <a class="link" href="core.html#idp32841648-bb"><span class="special">~</span><span class="identifier">core</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="core.html#idp25125816-bb">public member functions</a></span>
-  <span class="keyword">bool</span> <a class="link" href="core.html#idp25126024-bb"><span class="identifier">set_logging_enabled</span></a><span class="special">(</span><span class="keyword">bool</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="core.html#idp25128392-bb"><span class="identifier">get_logging_enabled</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="core.html#idp25129304-bb"><span class="identifier">set_filter</span></a><span class="special">(</span><span class="identifier">filter</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="core.html#idp25130792-bb"><span class="identifier">reset_filter</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="core.html#idp25131576-bb"><span class="identifier">add_sink</span></a><span class="special">(</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">sink</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="core.html#idp25133208-bb"><span class="identifier">remove_sink</span></a><span class="special">(</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">sink</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="core.html#idp25134760-bb"><span class="identifier">remove_all_sinks</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="core.html#idp25135560-bb"><span class="identifier">flush</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="core.html#idp32571120-bb">public member functions</a></span>
+  <span class="keyword">bool</span> <a class="link" href="core.html#idp32571680-bb"><span class="identifier">set_logging_enabled</span></a><span class="special">(</span><span class="keyword">bool</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="core.html#idp32579472-bb"><span class="identifier">get_logging_enabled</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="core.html#idp32581424-bb"><span class="identifier">set_filter</span></a><span class="special">(</span><span class="identifier">filter</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="core.html#idp32584128-bb"><span class="identifier">reset_filter</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="core.html#idp32585488-bb"><span class="identifier">add_sink</span></a><span class="special">(</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">sink</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="core.html#idp32588400-bb"><span class="identifier">remove_sink</span></a><span class="special">(</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">sink</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="core.html#idp32591232-bb"><span class="identifier">remove_all_sinks</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="core.html#idp32592592-bb"><span class="identifier">flush</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
   <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">attribute_set</span><span class="special">::</span><span class="identifier">iterator</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">&gt;</span> 
-  <a class="link" href="core.html#idp25136824-bb"><span class="identifier">add_global_attribute</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">attribute</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="core.html#idp25139592-bb"><span class="identifier">remove_global_attribute</span></a><span class="special">(</span><span class="identifier">attribute_set</span><span class="special">::</span><span class="identifier">iterator</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">attribute_set</span> <a class="link" href="core.html#idp25141848-bb"><span class="identifier">get_global_attributes</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="core.html#idp25142616-bb"><span class="identifier">set_global_attributes</span></a><span class="special">(</span><span class="identifier">attribute_set</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="core.html#idp32522576-bb"><span class="identifier">add_global_attribute</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">attribute</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="core.html#idp32527520-bb"><span class="identifier">remove_global_attribute</span></a><span class="special">(</span><span class="identifier">attribute_set</span><span class="special">::</span><span class="identifier">iterator</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">attribute_set</span> <a class="link" href="core.html#idp32531552-bb"><span class="identifier">get_global_attributes</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="core.html#idp32533168-bb"><span class="identifier">set_global_attributes</span></a><span class="special">(</span><span class="identifier">attribute_set</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">attribute_set</span><span class="special">::</span><span class="identifier">iterator</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">&gt;</span> 
-  <a class="link" href="core.html#idp25144664-bb"><span class="identifier">add_thread_attribute</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">attribute</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="core.html#idp25147848-bb"><span class="identifier">remove_thread_attribute</span></a><span class="special">(</span><span class="identifier">attribute_set</span><span class="special">::</span><span class="identifier">iterator</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">attribute_set</span> <a class="link" href="core.html#idp25150136-bb"><span class="identifier">get_thread_attributes</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="core.html#idp25150920-bb"><span class="identifier">set_thread_attributes</span></a><span class="special">(</span><span class="identifier">attribute_set</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="core.html#idp25152968-bb"><span class="identifier">set_exception_handler</span></a><span class="special">(</span><span class="identifier">exception_handler_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="record.html" title="Class record">record</a> <a class="link" href="core.html#idp25156632-bb"><span class="identifier">open_record</span></a><span class="special">(</span><span class="identifier">attribute_set</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="record.html" title="Class record">record</a> <a class="link" href="core.html#idp25159992-bb"><span class="identifier">open_record</span></a><span class="special">(</span><span class="identifier">attribute_value_set</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="record.html" title="Class record">record</a> <a class="link" href="core.html#idp25163352-bb"><span class="identifier">open_record</span></a><span class="special">(</span><span class="identifier">attribute_value_set</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="core.html#idp25166776-bb"><span class="identifier">push_record</span></a><span class="special">(</span><a class="link" href="record.html" title="Class record">record</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="core.html#idp32536864-bb"><span class="identifier">add_thread_attribute</span></a><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">attribute</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="core.html#idp32803024-bb"><span class="identifier">remove_thread_attribute</span></a><span class="special">(</span><span class="identifier">attribute_set</span><span class="special">::</span><span class="identifier">iterator</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">attribute_set</span> <a class="link" href="core.html#idp32807152-bb"><span class="identifier">get_thread_attributes</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="core.html#idp32808768-bb"><span class="identifier">set_thread_attributes</span></a><span class="special">(</span><span class="identifier">attribute_set</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="core.html#idp32812352-bb"><span class="identifier">set_exception_handler</span></a><span class="special">(</span><span class="identifier">exception_handler_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="record.html" title="Class record">record</a> <a class="link" href="core.html#idp32818944-bb"><span class="identifier">open_record</span></a><span class="special">(</span><span class="identifier">attribute_set</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="record.html" title="Class record">record</a> <a class="link" href="core.html#idp32824672-bb"><span class="identifier">open_record</span></a><span class="special">(</span><span class="identifier">attribute_value_set</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="record.html" title="Class record">record</a> <a class="link" href="core.html#idp32830416-bb"><span class="identifier">open_record</span></a><span class="special">(</span><span class="identifier">attribute_value_set</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="core.html#idp32836208-bb"><span class="identifier">push_record</span></a><span class="special">(</span><a class="link" href="record.html" title="Class record">record</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="core.html#idp25171240-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">core_ptr</span> <a class="link" href="core.html#idp25171448-bb"><span class="identifier">get</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="core.html#idp32846064-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">core_ptr</span> <a class="link" href="core.html#idp32846624-bb"><span class="identifier">get</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp53832152"></a><h2>Description</h2>
+<a name="idp116575520"></a><h2>Description</h2>
 <p>The logging core is used to interconnect log sources and sinks. It also provides a number of basic features, like global filtering and global and thread-specific attribute storage.</p>
 <p>The logging core is a singleton. Users can acquire the core instance by calling the static method <code class="computeroutput">get</code>. </p>
 <div class="refsect2">
-<a name="idp53833240"></a><h3>
+<a name="idp116577408"></a><h3>
 <a name="boost.log.coreconstruct-copy-destruct"></a><code class="computeroutput">core</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><a name="idp25169896-bb"></a><span class="identifier">core</span><span class="special">(</span><a class="link" href="core.html" title="Class core">core</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout">core&amp; <a name="idp25170568-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="core.html" title="Class core">core</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp32842416-bb"></a><span class="identifier">core</span><span class="special">(</span><a class="link" href="core.html" title="Class core">core</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a class="link" href="core.html" title="Class core">core</a> <span class="special">&amp;</span> <a name="idp32843952-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="core.html" title="Class core">core</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span></pre></li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp25169544-bb"></a><span class="special">~</span><span class="identifier">core</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp32841648-bb"></a><span class="special">~</span><span class="identifier">core</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Destructor. Destroys the core, releases any sinks and attributes that were registered. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp53843832"></a><h3>
-<a name="idp25125816-bb"></a><code class="computeroutput">core</code> public member functions</h3>
+<a name="idp116600256"></a><h3>
+<a name="idp32571120-bb"></a><code class="computeroutput">core</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp25126024-bb"></a><span class="identifier">set_logging_enabled</span><span class="special">(</span><span class="keyword">bool</span> enabled <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp32571680-bb"></a><span class="identifier">set_logging_enabled</span><span class="special">(</span><span class="keyword">bool</span> enabled <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span></pre>
 <p>The method enables or disables logging.</p>
 <p>Setting this status to <code class="computeroutput">false</code> allows you to completely wipe out any logging activity, including filtering and generation of attribute values. It is useful if you want to completely disable logging in a running application. The state of logging does not alter any other properties of the logging library, such as filters or sinks, so you can enable logging with the very same settings that you had when the logging was disabled. This feature may also be useful if you want to perform major changes to logging configuration and don't want your application to block on opening or pushing a log record.</p>
 <p>By default logging is enabled.</p>
@@ -120,11 +120,11 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp25128392-bb"></a><span class="identifier">get_logging_enabled</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp32579472-bb"></a><span class="identifier">get_logging_enabled</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>The method allows to detect if logging is enabled. See the comment for <code class="computeroutput">set_logging_enabled</code>. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp25129304-bb"></a><span class="identifier">set_filter</span><span class="special">(</span><span class="identifier">filter</span> <span class="keyword">const</span> <span class="special">&amp;</span> filter<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp32581424-bb"></a><span class="identifier">set_filter</span><span class="special">(</span><span class="identifier">filter</span> <span class="keyword">const</span> <span class="special">&amp;</span> filter<span class="special">)</span><span class="special">;</span></pre>
 <p>The method sets the global logging filter. The filter is applied to every log record that is processed.</p>
 <p>
 </p>
@@ -149,11 +149,11 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp25130792-bb"></a><span class="identifier">reset_filter</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp32584128-bb"></a><span class="identifier">reset_filter</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>The method removes the global logging filter. All log records are passed to sinks without global filtering applied. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp25131576-bb"></a><span class="identifier">add_sink</span><span class="special">(</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">sink</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> s<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp32585488-bb"></a><span class="identifier">add_sink</span><span class="special">(</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">sink</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> s<span class="special">)</span><span class="special">;</span></pre>
 <p>The method adds a new sink. The sink is included into logging process immediately after being added and until being removed. No sink can be added more than once at the same time. If the sink is already registered, the call is ignored.</p>
 <p>
 </p>
@@ -178,7 +178,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp25133208-bb"></a><span class="identifier">remove_sink</span><span class="special">(</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">sink</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> s<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp32588400-bb"></a><span class="identifier">remove_sink</span><span class="special">(</span><span class="identifier">shared_ptr</span><span class="special">&lt;</span> <span class="identifier">sinks</span><span class="special">::</span><span class="identifier">sink</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> s<span class="special">)</span><span class="special">;</span></pre>
 <p>The method removes the sink from the output. The sink will not receive any log records after removal. The call has no effect if the sink is not registered.</p>
 <p>
 </p>
@@ -203,11 +203,11 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp25134760-bb"></a><span class="identifier">remove_all_sinks</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp32591232-bb"></a><span class="identifier">remove_all_sinks</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>The method removes all registered sinks from the output. The sinks will not receive any log records after removal. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp25135560-bb"></a><span class="identifier">flush</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp32592592-bb"></a><span class="identifier">flush</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>The method performs flush on all registered sinks.</p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -221,7 +221,7 @@
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">attribute_set</span><span class="special">::</span><span class="identifier">iterator</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">&gt;</span> 
-<a name="idp25136824-bb"></a><span class="identifier">add_global_attribute</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> <span class="identifier">attribute</span> <span class="keyword">const</span> <span class="special">&amp;</span> attr<span class="special">)</span><span class="special">;</span></pre>
+<a name="idp32522576-bb"></a><span class="identifier">add_global_attribute</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> <span class="identifier">attribute</span> <span class="keyword">const</span> <span class="special">&amp;</span> attr<span class="special">)</span><span class="special">;</span></pre>
 <p>The method adds an attribute to the global attribute set. The attribute will be implicitly added to every log record.</p>
 <p>
 
@@ -259,7 +259,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp25139592-bb"></a><span class="identifier">remove_global_attribute</span><span class="special">(</span><span class="identifier">attribute_set</span><span class="special">::</span><span class="identifier">iterator</span> it<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp32527520-bb"></a><span class="identifier">remove_global_attribute</span><span class="special">(</span><span class="identifier">attribute_set</span><span class="special">::</span><span class="identifier">iterator</span> it<span class="special">)</span><span class="special">;</span></pre>
 <p>The method removes an attribute from the global attribute set.</p>
 <p>
 
@@ -296,11 +296,11 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">attribute_set</span> <a name="idp25141848-bb"></a><span class="identifier">get_global_attributes</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">attribute_set</span> <a name="idp32531552-bb"></a><span class="identifier">get_global_attributes</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>The method returns a copy of the complete set of currently registered global attributes. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp25142616-bb"></a><span class="identifier">set_global_attributes</span><span class="special">(</span><span class="identifier">attribute_set</span> <span class="keyword">const</span> <span class="special">&amp;</span> attrs<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp32533168-bb"></a><span class="identifier">set_global_attributes</span><span class="special">(</span><span class="identifier">attribute_set</span> <span class="keyword">const</span> <span class="special">&amp;</span> attrs<span class="special">)</span><span class="special">;</span></pre>
 <p>The method replaces the complete set of currently registered global attributes with the provided set.</p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -334,7 +334,7 @@
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">attribute_set</span><span class="special">::</span><span class="identifier">iterator</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">&gt;</span> 
-<a name="idp25144664-bb"></a><span class="identifier">add_thread_attribute</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> <span class="identifier">attribute</span> <span class="keyword">const</span> <span class="special">&amp;</span> attr<span class="special">)</span><span class="special">;</span></pre>
+<a name="idp32536864-bb"></a><span class="identifier">add_thread_attribute</span><span class="special">(</span><span class="identifier">attribute_name</span> <span class="keyword">const</span> <span class="special">&amp;</span> name<span class="special">,</span> <span class="identifier">attribute</span> <span class="keyword">const</span> <span class="special">&amp;</span> attr<span class="special">)</span><span class="special">;</span></pre>
 <p>The method adds an attribute to the thread-specific attribute set. The attribute will be implicitly added to every log record made in the current thread.</p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -380,7 +380,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp25147848-bb"></a><span class="identifier">remove_thread_attribute</span><span class="special">(</span><span class="identifier">attribute_set</span><span class="special">::</span><span class="identifier">iterator</span> it<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp32803024-bb"></a><span class="identifier">remove_thread_attribute</span><span class="special">(</span><span class="identifier">attribute_set</span><span class="special">::</span><span class="identifier">iterator</span> it<span class="special">)</span><span class="special">;</span></pre>
 <p>The method removes an attribute from the thread-specific attribute set.</p>
 <p>
 
@@ -417,11 +417,11 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">attribute_set</span> <a name="idp25150136-bb"></a><span class="identifier">get_thread_attributes</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">attribute_set</span> <a name="idp32807152-bb"></a><span class="identifier">get_thread_attributes</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>The method returns a copy of the complete set of currently registered thread-specific attributes. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp25150920-bb"></a><span class="identifier">set_thread_attributes</span><span class="special">(</span><span class="identifier">attribute_set</span> <span class="keyword">const</span> <span class="special">&amp;</span> attrs<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp32808768-bb"></a><span class="identifier">set_thread_attributes</span><span class="special">(</span><span class="identifier">attribute_set</span> <span class="keyword">const</span> <span class="special">&amp;</span> attrs<span class="special">)</span><span class="special">;</span></pre>
 <p>The method replaces the complete set of currently registered thread-specific attributes with the provided set.</p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -454,7 +454,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp25152968-bb"></a><span class="identifier">set_exception_handler</span><span class="special">(</span><span class="identifier">exception_handler_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> handler<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp32812352-bb"></a><span class="identifier">set_exception_handler</span><span class="special">(</span><span class="identifier">exception_handler_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> handler<span class="special">)</span><span class="special">;</span></pre>
 <p>The method sets exception handler function. The function will be called with no arguments in case if an exception occurs during either <code class="computeroutput">open_record</code> or <code class="computeroutput">push_record</code> method execution. Since exception handler is called from a <code class="computeroutput">catch</code> statement, the exception can be rethrown in order to determine its type.</p>
 <p>By default no handler is installed, thus any exception is propagated as usual.</p>
 <p><span class="bold"><strong>See Also:</strong></span></p>
@@ -492,7 +492,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="record.html" title="Class record">record</a> <a name="idp25156632-bb"></a><span class="identifier">open_record</span><span class="special">(</span><span class="identifier">attribute_set</span> <span class="keyword">const</span> <span class="special">&amp;</span> source_attributes<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="record.html" title="Class record">record</a> <a name="idp32818944-bb"></a><span class="identifier">open_record</span><span class="special">(</span><span class="identifier">attribute_set</span> <span class="keyword">const</span> <span class="special">&amp;</span> source_attributes<span class="special">)</span><span class="special">;</span></pre>
 <p>The method attempts to open a new record to be written. While attempting to open a log record all filtering is applied. A successfully opened record can be pushed further to sinks by calling the <code class="computeroutput">push_record</code> method or simply destroyed by destroying the returned object.</p>
 <p>More than one open records are allowed, such records exist independently. All attribute values are acquired during opening the record and do not interact between records.</p>
 <p>The returned records can be copied, however, they must not be passed between different threads.</p>
@@ -526,7 +526,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="record.html" title="Class record">record</a> <a name="idp25159992-bb"></a><span class="identifier">open_record</span><span class="special">(</span><span class="identifier">attribute_value_set</span> <span class="keyword">const</span> <span class="special">&amp;</span> source_attributes<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="record.html" title="Class record">record</a> <a name="idp32824672-bb"></a><span class="identifier">open_record</span><span class="special">(</span><span class="identifier">attribute_value_set</span> <span class="keyword">const</span> <span class="special">&amp;</span> source_attributes<span class="special">)</span><span class="special">;</span></pre>
 <p>The method attempts to open a new record to be written. While attempting to open a log record all filtering is applied. A successfully opened record can be pushed further to sinks by calling the <code class="computeroutput">push_record</code> method or simply destroyed by destroying the returned object.</p>
 <p>More than one open records are allowed, such records exist independently. All attribute values are acquired during opening the record and do not interact between records.</p>
 <p>The returned records can be copied, however, they must not be passed between different threads.</p>
@@ -560,7 +560,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="record.html" title="Class record">record</a> <a name="idp25163352-bb"></a><span class="identifier">open_record</span><span class="special">(</span><span class="identifier">attribute_value_set</span> <span class="special">&amp;&amp;</span> source_attributes<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="record.html" title="Class record">record</a> <a name="idp32830416-bb"></a><span class="identifier">open_record</span><span class="special">(</span><span class="identifier">attribute_value_set</span> <span class="special">&amp;&amp;</span> source_attributes<span class="special">)</span><span class="special">;</span></pre>
 <p>The method attempts to open a new record to be written. While attempting to open a log record all filtering is applied. A successfully opened record can be pushed further to sinks by calling the <code class="computeroutput">push_record</code> method or simply destroyed by destroying the returned object.</p>
 <p>More than one open records are allowed, such records exist independently. All attribute values are acquired during opening the record and do not interact between records.</p>
 <p>The returned records can be copied, however, they must not be passed between different threads.</p>
@@ -594,7 +594,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp25166776-bb"></a><span class="identifier">push_record</span><span class="special">(</span><a class="link" href="record.html" title="Class record">record</a> <span class="special">&amp;&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp32836208-bb"></a><span class="identifier">push_record</span><span class="special">(</span><a class="link" href="record.html" title="Class record">record</a> <span class="special">&amp;&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>
 <p>The method pushes the record to sinks. The record is moved from in the process.</p>
 <p>
 
@@ -633,10 +633,10 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp53965768"></a><h3>
-<a name="idp25171240-bb"></a><code class="computeroutput">core</code> public static functions</h3>
+<a name="idp116840048"></a><h3>
+<a name="idp32846064-bb"></a><code class="computeroutput">core</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">core_ptr</span> <a name="idp25171448-bb"></a><span class="identifier">get</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">core_ptr</span> <a name="idp32846624-bb"></a><span class="identifier">get</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
@@ -655,7 +655,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2013 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2014 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

@@ -797,9 +797,6 @@ void test_get_put(PTREE *)
                                     
 void test_get_child_put_child(PTREE *)
 {
-
-    typedef std::basic_string<CHTYPE> str_t;
-
     PTREE pt(T("ala ma kota"));
 
     // Do insertions via put_child
@@ -1076,7 +1073,6 @@ void test_custom_data_type(PTREE *)
 
     typedef std::basic_string<CHTYPE> Str;
     typedef PTREE::key_compare Comp;
-    typedef PTREE::path_type Path;
 
     // Property_tree with boost::any as data type
     typedef boost::property_tree::basic_ptree<Str, boost::any, Comp> my_ptree;

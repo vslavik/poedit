@@ -40,7 +40,7 @@ int roll_die() {
         __uniform_int_distribution performs this transformation.
         [warning Contrary to common C++ usage __uniform_int_distribution
         does not take a /half-open range/.  Instead it takes a /closed range/.
-        Given the parameters 1 and 6, __uniform_int_distribution can
+        Given the parameters 1 and 6, __uniform_int_distribution
         can produce any of the values 1, 2, 3, 4, 5, or 6.]
     >>*/
     boost::random::uniform_int_distribution<> dist(1, 6);

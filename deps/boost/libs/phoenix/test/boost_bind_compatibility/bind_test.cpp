@@ -79,12 +79,10 @@ long f_8(long a, long b, long c, long d, long e, long f, long g, long h)
     return a + 10 * b + 100 * c + 1000 * d + 10000 * e + 100000 * f + 1000000 * g + 10000000 * h;
 }
 
-/*
 long f_9(long a, long b, long c, long d, long e, long f, long g, long h, long i)
 {
     return a + 10 * b + 100 * c + 1000 * d + 10000 * e + 100000 * f + 1000000 * g + 10000000 * h + 100000000 * i;
 }
-*/
 
 long global_result;
 
@@ -154,7 +152,7 @@ void function_test()
     BOOST_TEST( bind(f_6, _1, 2, 3, 4, 5, 6)(i) == 654321L );
     BOOST_TEST( bind(f_7, _1, 2, 3, 4, 5, 6, 7)(i) == 7654321L );
     BOOST_TEST( bind(f_8, _1, 2, 3, 4, 5, 6, 7, 8)(i) == 87654321L );
-    //BOOST_TEST( bind(f_9, _1, 2, 3, 4, 5, 6, 7, 8, 9)(i) == 987654321L );
+    BOOST_TEST( bind(f_9, _1, 2, 3, 4, 5, 6, 7, 8, 9)(i) == 987654321L );
 
     BOOST_TEST( (bind(fv_0)(i), (global_result == 17041L)) );
     BOOST_TEST( (bind(fv_1, _1)(i), (global_result == 1L)) );
@@ -165,7 +163,7 @@ void function_test()
     BOOST_TEST( (bind(fv_6, _1, 2, 3, 4, 5, 6)(i), (global_result == 654321L)) );
     BOOST_TEST( (bind(fv_7, _1, 2, 3, 4, 5, 6, 7)(i), (global_result == 7654321L)) );
     BOOST_TEST( (bind(fv_8, _1, 2, 3, 4, 5, 6, 7, 8)(i), (global_result == 87654321L)) );
-    //BOOST_TEST( (bind(fv_9, _1, 2, 3, 4, 5, 6, 7, 8, 9)(i), (global_result == 987654321L)) );
+    BOOST_TEST( (bind(fv_9, _1, 2, 3, 4, 5, 6, 7, 8, 9)(i), (global_result == 987654321L)) );
 }
 
 //
@@ -402,16 +400,14 @@ void member_function_test()
 
     // 8
 
-    /*
     bind(&X::f8, &x, 1, 2, 3, 4, 5, 6, 7, 8)();
     bind(&X::f8, ref(x), 1, 2, 3, 4, 5, 6, 7, 8)();
 
     bind(&X::g8, &x, 1, 2, 3, 4, 5, 6, 7, 8)();
     bind(&X::g8, x, 1, 2, 3, 4, 5, 6, 7, 8)();
     bind(&X::g8, ref(x), 1, 2, 3, 4, 5, 6, 7, 8)();
-    */
 
-    //BOOST_TEST( x.hash == 23558 );
+    BOOST_TEST( x.hash == 23558 );
 }
 
 void member_function_void_test()
@@ -496,16 +492,14 @@ void member_function_void_test()
 
     // 8
 
-    /*
     bind(&V::f8, &v, 1, 2, 3, 4, 5, 6, 7, 8)();
     bind(&V::f8, ref(v), 1, 2, 3, 4, 5, 6, 7, 8)();
 
     bind(&V::g8, &v, 1, 2, 3, 4, 5, 6, 7, 8)();
     bind(&V::g8, v, 1, 2, 3, 4, 5, 6, 7, 8)();
     bind(&V::g8, ref(v), 1, 2, 3, 4, 5, 6, 7, 8)();
-    */
 
-    //BOOST_TEST( v.hash == 23558 );
+    BOOST_TEST( v.hash == 23558 );
 }
 
 void nested_bind_test()

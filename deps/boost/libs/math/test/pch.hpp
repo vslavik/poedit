@@ -16,4 +16,7 @@
 
 #include "handle_test_result.hpp"
 
+#include <iostream>
+#include <iomanip>
+
 #endif

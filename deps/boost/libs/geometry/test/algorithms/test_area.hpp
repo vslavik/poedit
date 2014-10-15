@@ -26,7 +26,7 @@ void test_area(Geometry const& geometry,
 {
     typename bg::default_area_result<Geometry>::type area = bg::area(geometry);
 
-#ifdef GEOMETRY_TEST_DEBUG
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
     std::ostringstream out;
     out << typeid(typename bg::coordinate_type<Geometry>::type).name()
         << " "

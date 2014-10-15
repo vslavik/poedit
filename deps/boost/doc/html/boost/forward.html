@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../move/release_notes.html#header.boost.move.utility_hpp" title="Header &lt;boost/move/utility.hpp&gt;">
-<link rel="prev" href="move_idp100849784.html" title="Function template move">
-<link rel="next" href="../mpi.html" title="Chapter&#160;19.&#160;Boost.MPI">
+<link rel="up" href="../move/reference.html#header.boost.move.utility_hpp" title="Header &lt;boost/move/utility.hpp&gt;">
+<link rel="prev" href="move_idp159681920.html" title="Function template move">
+<link rel="next" href="../mpi.html" title="Chapter&#160;21.&#160;Boost.MPI">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="move_idp100849784.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../move/release_notes.html#header.boost.move.utility_hpp"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../mpi.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="move_idp159681920.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../move/reference.html#header.boost.move.utility_hpp"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../mpi.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.forward"></a><div class="titlepage"></div>
@@ -29,26 +29,26 @@
 <p>boost::forward</p>
 </div>
 <h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../move/release_notes.html#header.boost.move.utility_hpp" title="Header &lt;boost/move/utility.hpp&gt;">boost/move/utility.hpp</a>&gt;
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../move/reference.html#header.boost.move.utility_hpp" title="Header &lt;boost/move/utility.hpp&gt;">boost/move/utility.hpp</a>&gt;
 
 </span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">output_reference</span> <span class="identifier">forward</span><span class="special">(</span><span class="identifier">input_reference</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp162005160"></a><h2>Description</h2>
+<a name="idp334964768"></a><h2>Description</h2>
 <p>This function provides limited form of forwarding that is usually enough for in-place construction and avoids the exponential overloading for achieve the limited forwarding in C++03.</p>
 <p>For compilers with rvalue references this function provides perfect forwarding.</p>
 <p>Otherwise:</p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>If input_reference binds to const ::boost::rv&lt;T&gt; &amp; then it output_reference is ::boost::rv&lt;T&gt; &amp;</p></li></ul></div>
-<p>
-</p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>Else, output_reference is equal to input_reference. </p></li></ul></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>If input_reference binds to const ::boost::rv&lt;T&gt; &amp; then it output_reference is ::boost::rv&lt;T&gt; &amp;</p></li>
+<li class="listitem"><p>Else, output_reference is equal to input_reference. </p></li>
+</ul></div>
 <p>
 </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2008-2012 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2008-2014 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -56,7 +56,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="move_idp100849784.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../move/release_notes.html#header.boost.move.utility_hpp"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../mpi.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="move_idp159681920.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../move/reference.html#header.boost.move.utility_hpp"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../mpi.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

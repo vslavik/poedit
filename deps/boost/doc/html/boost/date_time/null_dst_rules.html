@@ -38,30 +38,30 @@
   <span class="keyword">typedef</span> <span class="identifier">time_duration_type_</span> <a name="boost.date_time.null_dst_rules.time_duration_type"></a><span class="identifier">time_duration_type</span><span class="special">;</span>
   <span class="keyword">typedef</span> <span class="identifier">date_type_</span>          <a name="boost.date_time.null_dst_rules.date_type"></a><span class="identifier">date_type</span><span class="special">;</span>         
 
-  <span class="comment">// <a class="link" href="null_dst_rules.html#idp25792488-bb">public static functions</a></span>
+  <span class="comment">// <a class="link" href="null_dst_rules.html#idp100769584-bb">public static functions</a></span>
   <span class="keyword">static</span> <span class="identifier">time_is_dst_result</span> 
-  <a class="link" href="null_dst_rules.html#idp25792696-bb"><span class="identifier">local_is_dst</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">time_duration_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="null_dst_rules.html#idp100770144-bb"><span class="identifier">local_is_dst</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">time_duration_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">static</span> <span class="identifier">time_is_dst_result</span> 
-  <a class="link" href="null_dst_rules.html#idp24577112-bb"><span class="identifier">utc_is_dst</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">time_duration_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="null_dst_rules.html#idp19238328-bb"><span class="identifier">is_dst_boundary_day</span></a><span class="special">(</span><span class="identifier">date_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="identifier">time_duration_type</span> <a class="link" href="../container/flat_multimap.html#idp23829960-bb"><span class="identifier">dst_offset</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="null_dst_rules.html#idp96945664-bb"><span class="identifier">utc_is_dst</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">time_duration_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="null_dst_rules.html#idp102180480-bb"><span class="identifier">is_dst_boundary_day</span></a><span class="special">(</span><span class="identifier">date_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="identifier">time_duration_type</span> <a class="link" href="null_dst_rules.html#idp95571296-bb"><span class="identifier">dst_offset</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp89219960"></a><h2>Description</h2>
+<a name="idp193968944"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp89220168"></a><h3>
-<a name="idp25792488-bb"></a><code class="computeroutput">null_dst_rules</code> public static functions</h3>
+<a name="idp193969360"></a><h3>
+<a name="idp100769584-bb"></a><code class="computeroutput">null_dst_rules</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">static</span> <span class="identifier">time_is_dst_result</span> 
-<a name="idp25792696-bb"></a><span class="identifier">local_is_dst</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">time_duration_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>Calculates if the given local time is dst or not. <p>
+<a name="idp100770144-bb"></a><span class="identifier">local_is_dst</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">time_duration_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>Calculates if the given local time is dst or not. <p>
 </p>
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">static</span> <span class="identifier">time_is_dst_result</span> 
-<a name="idp24577112-bb"></a><span class="identifier">utc_is_dst</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">time_duration_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>Calculates if the given utc time is in dst. </li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp19238328-bb"></a><span class="identifier">is_dst_boundary_day</span><span class="special">(</span><span class="identifier">date_type</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">time_duration_type</span> <a name="idp23829960-bb"></a><span class="identifier">dst_offset</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<a name="idp96945664-bb"></a><span class="identifier">utc_is_dst</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">time_duration_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>Calculates if the given utc time is in dst. </li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp102180480-bb"></a><span class="identifier">is_dst_boundary_day</span><span class="special">(</span><span class="identifier">date_type</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">time_duration_type</span> <a name="idp95571296-bb"></a><span class="identifier">dst_offset</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>

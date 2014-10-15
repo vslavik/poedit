@@ -358,8 +358,8 @@
           </li></ul></div>
 <h5>
 <a name="boost_asio.overview.implementation.h10"></a>
-        <span class="phrase"><a name="boost_asio.overview.implementation.windows_nt__2000__xp__2003_and_vista"></a></span><a class="link" href="implementation.html#boost_asio.overview.implementation.windows_nt__2000__xp__2003_and_vista">Windows
-        NT, 2000, XP, 2003 and Vista</a>
+        <span class="phrase"><a name="boost_asio.overview.implementation.windows_nt__2000__xp__2003__vista__7_and_8"></a></span><a class="link" href="implementation.html#boost_asio.overview.implementation.windows_nt__2000__xp__2003__vista__7_and_8">Windows
+        NT, 2000, XP, 2003, Vista, 7 and 8</a>
       </h5>
 <p>
         Demultiplexing mechanism:
@@ -412,10 +412,82 @@
             single operation.
           </li>
 </ul></div>
+<h5>
+<a name="boost_asio.overview.implementation.h11"></a>
+        <span class="phrase"><a name="boost_asio.overview.implementation.windows_runtime"></a></span><a class="link" href="implementation.html#boost_asio.overview.implementation.windows_runtime">Windows
+        Runtime</a>
+      </h5>
+<p>
+        Boost.Asio provides limited support for the Windows Runtime. It requires
+        that the language extensions be enabled. Due to the restricted facilities
+        exposed by the Windows Runtime API, the support comes with the following
+        caveats:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            The core facilities such as the <code class="computeroutput"><span class="identifier">io_service</span></code>,
+            <code class="computeroutput"><span class="identifier">strand</span></code>, buffers, composed
+            operations, timers, etc., should all work as normal.
+          </li>
+<li class="listitem">
+            For sockets, only client-side TCP is supported.
+          </li>
+<li class="listitem">
+            Explicit binding of a client-side TCP socket is not supported.
+          </li>
+<li class="listitem">
+            The <code class="computeroutput"><span class="identifier">cancel</span><span class="special">()</span></code>
+            function is not supported for sockets. Asynchronous operations may only
+            be cancelled by closing the socket.
+          </li>
+<li class="listitem">
+            Operations that use <code class="computeroutput"><span class="identifier">null_buffers</span></code>
+            are not supported.
+          </li>
+<li class="listitem">
+            Only <code class="computeroutput"><span class="identifier">tcp</span><span class="special">::</span><span class="identifier">no_delay</span></code> and <code class="computeroutput"><span class="identifier">socket_base</span><span class="special">::</span><span class="identifier">keep_alive</span></code>
+            options are supported.
+          </li>
+<li class="listitem">
+            Resolvers do not support service names, only numbers. I.e. you must use
+            "80" rather than "http".
+          </li>
+<li class="listitem">
+            Most resolver query flags have no effect.
+          </li>
+</ul></div>
+<p>
+        Demultiplexing mechanism:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+            Uses the <code class="computeroutput"><span class="identifier">Windows</span><span class="special">::</span><span class="identifier">Networking</span><span class="special">::</span><span class="identifier">Sockets</span><span class="special">::</span><span class="identifier">StreamSocket</span></code> class to implement asynchronous
+            TCP socket operations.
+          </li></ul></div>
+<p>
+        Threads:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            Event completions are delivered to the Windows thread pool and posted
+            to the <code class="computeroutput"><span class="identifier">io_service</span></code> for
+            the handler to be executed.
+          </li>
+<li class="listitem">
+            An additional thread per <code class="computeroutput"><span class="identifier">io_service</span></code>
+            is used to trigger timers. This thread is created on construction of
+            the first timer objects.
+          </li>
+</ul></div>
+<p>
+        Scatter-Gather:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+            For sockets, at most one buffer may be transferred in a single operation.
+          </li></ul></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2013 Christopher M. Kohlhoff<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2014 Christopher M. Kohlhoff<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -108,6 +108,46 @@ void spot_checks()
    BOOST_CHECK_THROW(iterate_over(boost::u8_to_u32_iterator<const boost::uint8_t*>(bad_seq3, bad_seq3, bad_seq3 + 5), boost::u8_to_u32_iterator<const boost::uint8_t*>(bad_seq3 + 5, bad_seq3, bad_seq3 + 5)), std::out_of_range);
    boost::uint8_t bad_seq4[5] = { '.', '*', 0xf6, '.', '*' };
    BOOST_CHECK_THROW(iterate_over(boost::u8_to_u32_iterator<const boost::uint8_t*>(bad_seq4, bad_seq4, bad_seq4 + 5), boost::u8_to_u32_iterator<const boost::uint8_t*>(bad_seq4 + 5, bad_seq4, bad_seq4 + 5)), std::out_of_range);
+
+   // Invalid sequences containing surrogate pairs:
+   const char* invalid_pseq = "\xed\xa0\x80"; // single lowest lead surrogate U+D800
+   BOOST_CHECK_THROW(iterate_over(boost::u8_to_u32_iterator<const char*>(invalid_pseq, invalid_pseq, invalid_pseq + std::strlen(invalid_pseq)), boost::u8_to_u32_iterator<const char*>(invalid_pseq + std::strlen(invalid_pseq), invalid_pseq, invalid_pseq + std::strlen(invalid_pseq))), std::out_of_range);
+   invalid_pseq = "\xed\xb0\x80"; // single lowest trail surrogate U+DC00
+   BOOST_CHECK_THROW(iterate_over(boost::u8_to_u32_iterator<const char*>(invalid_pseq, invalid_pseq, invalid_pseq + std::strlen(invalid_pseq)), boost::u8_to_u32_iterator<const char*>(invalid_pseq + std::strlen(invalid_pseq), invalid_pseq, invalid_pseq + std::strlen(invalid_pseq))), std::out_of_range);
+   invalid_pseq = "\xed\xb0\x80"; // single lowest trail surrogate U+DC00
+   BOOST_CHECK_THROW(iterate_over(boost::u8_to_u32_iterator<const char*>(invalid_pseq, invalid_pseq, invalid_pseq + std::strlen(invalid_pseq)), boost::u8_to_u32_iterator<const char*>(invalid_pseq + std::strlen(invalid_pseq), invalid_pseq, invalid_pseq + std::strlen(invalid_pseq))), std::out_of_range);
+   invalid_pseq = "\xed\xbf\xbf"; // single highest trail surrogate U+DFFF
+   BOOST_CHECK_THROW(iterate_over(boost::u8_to_u32_iterator<const char*>(invalid_pseq, invalid_pseq, invalid_pseq + std::strlen(invalid_pseq)), boost::u8_to_u32_iterator<const char*>(invalid_pseq + std::strlen(invalid_pseq), invalid_pseq, invalid_pseq + std::strlen(invalid_pseq))), std::out_of_range);
+
+   // overlong encodings (created by left-padding with zero bits)
+   invalid_pseq = "\xc0\x80"; // illegal 2-byte encoding of 1-byte character U+0000
+   BOOST_CHECK_THROW(iterate_over(boost::u8_to_u32_iterator<const char*>(invalid_pseq, invalid_pseq, invalid_pseq + std::strlen(invalid_pseq)), boost::u8_to_u32_iterator<const char*>(invalid_pseq + std::strlen(invalid_pseq), invalid_pseq, invalid_pseq + std::strlen(invalid_pseq))), std::out_of_range);
+   invalid_pseq = "\xe0\x80\x80"; // illegal 3-byte encoding of 1-byte character U+0000
+   BOOST_CHECK_THROW(iterate_over(boost::u8_to_u32_iterator<const char*>(invalid_pseq, invalid_pseq, invalid_pseq + std::strlen(invalid_pseq)), boost::u8_to_u32_iterator<const char*>(invalid_pseq + std::strlen(invalid_pseq), invalid_pseq, invalid_pseq + std::strlen(invalid_pseq))), std::out_of_range);
+   invalid_pseq = "\xf0\x80\x80\x80"; // illegal 4-byte encoding of 1-byte character U+0000
+   BOOST_CHECK_THROW(iterate_over(boost::u8_to_u32_iterator<const char*>(invalid_pseq, invalid_pseq, invalid_pseq + std::strlen(invalid_pseq)), boost::u8_to_u32_iterator<const char*>(invalid_pseq + std::strlen(invalid_pseq), invalid_pseq, invalid_pseq + std::strlen(invalid_pseq))), std::out_of_range);
+
+   invalid_pseq = "\xc1\xbf"; // illegal 2-byte encoding of 1-byte character U+007F
+   BOOST_CHECK_THROW(iterate_over(boost::u8_to_u32_iterator<const char*>(invalid_pseq, invalid_pseq, invalid_pseq + std::strlen(invalid_pseq)), boost::u8_to_u32_iterator<const char*>(invalid_pseq + std::strlen(invalid_pseq), invalid_pseq, invalid_pseq + std::strlen(invalid_pseq))), std::out_of_range);
+   invalid_pseq = "\xe0\x81\xbf"; // illegal 3-byte encoding of 1-byte character U+007F
+   BOOST_CHECK_THROW(iterate_over(boost::u8_to_u32_iterator<const char*>(invalid_pseq, invalid_pseq, invalid_pseq + std::strlen(invalid_pseq)), boost::u8_to_u32_iterator<const char*>(invalid_pseq + std::strlen(invalid_pseq), invalid_pseq, invalid_pseq + std::strlen(invalid_pseq))), std::out_of_range);
+   invalid_pseq = "\xf0\x80\x81\xbf"; // illegal 4-byte encoding of 1-byte character U+007F
+   BOOST_CHECK_THROW(iterate_over(boost::u8_to_u32_iterator<const char*>(invalid_pseq, invalid_pseq, invalid_pseq + std::strlen(invalid_pseq)), boost::u8_to_u32_iterator<const char*>(invalid_pseq + std::strlen(invalid_pseq), invalid_pseq, invalid_pseq + std::strlen(invalid_pseq))), std::out_of_range);
+
+   invalid_pseq = "\xe0\x82\x80"; // illegal 3-byte encoding of 2-byte character U+0080
+   BOOST_CHECK_THROW(iterate_over(boost::u8_to_u32_iterator<const char*>(invalid_pseq, invalid_pseq, invalid_pseq + std::strlen(invalid_pseq)), boost::u8_to_u32_iterator<const char*>(invalid_pseq + std::strlen(invalid_pseq), invalid_pseq, invalid_pseq + std::strlen(invalid_pseq))), std::out_of_range);
+   invalid_pseq = "\xf0\x80\x82\x80"; // illegal 4-byte encoding of 2-byte character U+0080
+   BOOST_CHECK_THROW(iterate_over(boost::u8_to_u32_iterator<const char*>(invalid_pseq, invalid_pseq, invalid_pseq + std::strlen(invalid_pseq)), boost::u8_to_u32_iterator<const char*>(invalid_pseq + std::strlen(invalid_pseq), invalid_pseq, invalid_pseq + std::strlen(invalid_pseq))), std::out_of_range);
+
+   invalid_pseq = "\xe0\x9f\xbf"; // illegal 3-byte encoding of 2-byte character U+07FF
+   BOOST_CHECK_THROW(iterate_over(boost::u8_to_u32_iterator<const char*>(invalid_pseq, invalid_pseq, invalid_pseq + std::strlen(invalid_pseq)), boost::u8_to_u32_iterator<const char*>(invalid_pseq + std::strlen(invalid_pseq), invalid_pseq, invalid_pseq + std::strlen(invalid_pseq))), std::out_of_range);
+   invalid_pseq = "\xf0\x80\x9f\xbf"; // illegal 4-byte encoding of 2-byte character U+07FF
+   BOOST_CHECK_THROW(iterate_over(boost::u8_to_u32_iterator<const char*>(invalid_pseq, invalid_pseq, invalid_pseq + std::strlen(invalid_pseq)), boost::u8_to_u32_iterator<const char*>(invalid_pseq + std::strlen(invalid_pseq), invalid_pseq, invalid_pseq + std::strlen(invalid_pseq))), std::out_of_range);
+
+   invalid_pseq = "\xf0\x80\xa0\x80"; // illegal 4-byte encoding of 3-byte character U+0800
+   BOOST_CHECK_THROW(iterate_over(boost::u8_to_u32_iterator<const char*>(invalid_pseq, invalid_pseq, invalid_pseq + std::strlen(invalid_pseq)), boost::u8_to_u32_iterator<const char*>(invalid_pseq + std::strlen(invalid_pseq), invalid_pseq, invalid_pseq + std::strlen(invalid_pseq))), std::out_of_range);
+   invalid_pseq = "\xf0\x8f\xbf\xbf"; // illegal 4-byte encoding of 3-byte character U+FFFF
+   BOOST_CHECK_THROW(iterate_over(boost::u8_to_u32_iterator<const char*>(invalid_pseq, invalid_pseq, invalid_pseq + std::strlen(invalid_pseq)), boost::u8_to_u32_iterator<const char*>(invalid_pseq + std::strlen(invalid_pseq), invalid_pseq, invalid_pseq + std::strlen(invalid_pseq))), std::out_of_range);
 }
 
 void test(const std::vector< ::boost::uint32_t>& v)

@@ -23,7 +23,7 @@ int main()
     typedef boost::geometry::model::polygon<point_type> polygon_type;
 
     typedef boost::geometry::coordinate_type<polygon_type>::type ctype;
-    
+
     std::cout << "type: " << typeid(ctype).name() << std::endl;
 
     return 0;

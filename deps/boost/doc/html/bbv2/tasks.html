@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../bbv2.html" title="Chapter&#160;42.&#160;Boost.Build V2 User Manual">
+<link rel="up" href="../bbv2.html" title="Chapter&#160;45.&#160;Boost.Build V2 User Manual">
 <link rel="prev" href="overview.html" title="Overview">
 <link rel="next" href="reference.html" title="Reference">
 </head>
@@ -44,7 +44,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="bbv2.tasks.programs"></a>Programs</h3></div></div></div>
-<a class="indexterm" name="idp265866792"></a><p>
+<a class="indexterm" name="idp548191952"></a><p>
       Programs are created using the <code class="computeroutput">exe</code> rule, which follows the
       <a class="link" href="overview.html#bbv2.main-target-rule-syntax">common syntax</a>. For
       example:
@@ -80,7 +80,7 @@ exe hello : hello.cpp some_library.lib /some_project//library
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="bbv2.tasks.libraries"></a>Libraries</h3></div></div></div>
-<a class="indexterm" name="idp265871096"></a><p>
+<a class="indexterm" name="idp548200480"></a><p>
       Library targets are created using the <code class="computeroutput">lib</code> rule, which
       follows the <a class="link" href="overview.html#bbv2.main-target-rule-syntax">common syntax
       </a>. For example:
@@ -307,7 +307,7 @@ exe main : main.cpp static_libraries ;
       files.
     </p>
 <h4>
-<a name="idp265919544"></a>Basic install</h4>
+<a name="idp548259280"></a>Basic install</h4>
 <p>
       For installing a built target you should use the <code class="computeroutput">install</code>
       rule, which follows the <a class="link" href="overview.html#bbv2.main-target-rule-syntax">
@@ -346,7 +346,7 @@ install dist2 : hello helpers : &lt;location&gt;$(DIST) ;
       variables</a>
     </p>
 <h4>
-<a name="idp265926296"></a>Installing with all dependencies</h4>
+<a name="idp548271984"></a>Installing with all dependencies</h4>
 <p>
       Specifying the names of all libraries to install can be boring. The
       <code class="computeroutput">install</code> allows you to specify only the top-level executable
@@ -370,8 +370,8 @@ install dist : hello
       otherwise, all found target will be installed.
     </p>
 <h4>
-<a name="idp265929496"></a>Preserving Directory Hierarchy</h4>
-<a class="indexterm" name="idp265929688"></a><p>
+<a name="idp548277312"></a>Preserving Directory Hierarchy</h4>
+<a class="indexterm" name="idp548277696"></a><p>
       By default, the <code class="computeroutput">install</code> rule will strip paths from its
       sources. So, if sources include <code class="filename">a/b/c.hpp</code>, the
       <code class="filename">a/b</code> part will be ignored. To make the
@@ -395,7 +395,7 @@ install headers
       an entire directory tree.
     </p>
 <h4>
-<a name="idp265934216"></a>Installing into Several Directories</h4>
+<a name="idp548286016"></a>Installing into Several Directories</h4>
 <p>
       The <a class="link" href="tasks.html#bbv2.tasks.alias" title="Alias"><code class="computeroutput">alias</code></a> rule can be
       used when targets need to be installed into several directories:
@@ -409,7 +409,7 @@ install install-lib : helper : /usr/lib ;
     </p>
 <p>
       Because the <code class="computeroutput">install</code> rule just copies targets, most free
-      features <a href="#ftn.idp265936376" class="footnote" name="idp265936376"><sup class="footnote">[15]</sup></a> have no
+      features <a href="#ftn.idp548289952" class="footnote" name="idp548289952"><sup class="footnote">[15]</sup></a> have no
       effect when used in requirements of the <code class="computeroutput">install</code> rule. The
       only two that matter are <a class="link" href="reference.html#bbv2.builtin.features.dependency">
       <code class="varname">dependency</code></a> and, on Unix, <a class="link" href="reference.html#bbv2.reference.features.dll-path"><code class="varname">dll-path</code>
@@ -450,26 +450,6 @@ unit-test helpers_test : helpers_test.cpp helpers ;
       not miss a unit test failure.
     </p>
 <p>
-      By default, the executable is run directly. Sometimes, it is desirable to
-      run the executable using some helper command. You should use the <code class="literal">
-      testing.launcher</code> property to specify the name of the helper
-      command. For example, if you write:
-</p>
-<pre class="programlisting">
-unit-test helpers_test
-   : helpers_test.cpp helpers
-   : <span class="bold"><strong>&lt;testing.launcher&gt;valgrind</strong></span>
-   ;
-</pre>
-<p>
-      The command used to run the executable will be:
-</p>
-<pre class="screen">
-<span class="bold"><strong>valgrind</strong></span> bin/$toolset/debug/helpers_test
-</pre>
-<p>
-    </p>
-<p>
        There are few specialized testing rules, listed below:
 </p>
 <pre class="programlisting">
@@ -502,8 +482,8 @@ rule run ( sources + : args * : input-files * : requirements * : target-name ?
       <code class="varname">args</code> and <code class="varname">input-files</code> as command-line
       arguments. The <code class="varname">args</code> parameter is passed verbatim and
       the values of the <code class="varname">input-files</code> parameter are treated as
-      paths relative to containing Jamfile, and are adjusted if <span class="command"><strong>bjam
-      </strong></span> is invoked from a different directory. The
+      paths relative to containing Jamfile, and are adjusted if <span class="command"><strong>b2</strong></span> 
+      is invoked from a different directory. The
       <code class="computeroutput">run-fail</code> rule is identical to the <code class="computeroutput">run</code> rule,
       except that it expects that the run fails.
     </p>
@@ -518,7 +498,7 @@ rule run ( sources + : args * : input-files * : requirements * : target-name ?
       target-name</code></em>.output</code>.
     </p>
 <p>
-      <a class="indexterm" name="idp265955784"></a>
+      <a class="indexterm" name="idp548321216"></a>
       If the <code class="literal">preserve-test-targets</code> feature has the value
       <code class="literal">off</code>, then <code class="computeroutput">run</code> and the <code class="computeroutput">run-fail</code>
       rules will remove the executable after running it.  This somewhat decreases
@@ -542,6 +522,60 @@ boost-test(<em class="replaceable"><code>test-type</code></em>) <em class="repla
       files created when test passes into human-readable status table of tests.
       Such processing utilities are not included in Boost.Build.
     </p>
+<p>The following features adjust behaviour of the testing metatargets.</p>
+<div class="variablelist"><dl class="variablelist">
+<dt><span class="term"><code class="literal">testing.arg</code></span></dt>
+<dd>
+<p>
+            Defines an argument to be passed to the target when it is executed
+            before the list of input files.
+          </p>
+<p>
+</p>
+<pre class="programlisting">
+unit-test helpers_test
+  : helpers_test.cpp helpers
+  : <span class="bold"><strong>&lt;testing.arg&gt;"--foo bar"</strong></span>
+  ;
+</pre>
+<p>
+          </p>
+</dd>
+<dt><span class="term"><code class="literal">testing.input-file</code></span></dt>
+<dd><p>
+            Specifies a file to be passed to the executable on the command line
+            after the arguments. All files must be specified in alphabetical
+            order due to constrainsts in the current implementation.
+          </p></dd>
+<dt><span class="term"><code class="literal">testing.launcher</code></span></dt>
+<dd>
+<p>
+            By default, the executable is run directly. Sometimes, it is
+            desirable to run the executable using some helper command. You
+            should use the this property to specify the name of the helper
+            command. For example, if you write:
+</p>
+<pre class="programlisting">
+unit-test helpers_test
+  : helpers_test.cpp helpers
+  : <span class="bold"><strong>&lt;testing.launcher&gt;valgrind</strong></span>
+  ;
+</pre>
+<p>
+            The command used to run the executable will be:
+</p>
+<pre class="screen">
+<span class="bold"><strong>valgrind</strong></span> bin/$toolset/debug/helpers_test
+</pre>
+<p>
+          </p>
+</dd>
+<dt><span class="term"><code class="literal">test-info</code></span></dt>
+<dd><p>
+            A description of the test. This is displayed as part of the
+            <code class="literal">--dump-tests</code> command-line option.
+          </p></dd>
+</dl></div>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -748,7 +782,7 @@ exe app : app.cpp : &lt;implicit-dependency&gt;parser ;
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="bbv2.tasks.crosscompile"></a>Cross-compilation</h3></div></div></div>
-<a class="indexterm" name="idp265991176"></a><p>Boost.Build supports cross compilation with the gcc and msvc
+<a class="indexterm" name="idp548403552"></a><p>Boost.Build supports cross compilation with the gcc and msvc
     toolsets.</p>
 <p>
       When using gcc, you first need to specify your cross compiler
@@ -787,12 +821,12 @@ b2 toolset=gcc-mingw <span class="bold"><strong>target-os=windows</strong></span
 </div>
 <div class="footnotes">
 <br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.idp265936376" class="footnote"><p><a href="#idp265936376" class="para"><sup class="para">[15] </sup></a>see the definition of "free" in <a class="xref" href="reference.html#bbv2.reference.features.attributes" title="Feature Attributes">the section called &#8220;Feature Attributes&#8221;</a>.</p></div>
+<div id="ftn.idp548289952" class="footnote"><p><a href="#idp548289952" class="para"><sup class="para">[15] </sup></a>see the definition of "free" in <a class="xref" href="reference.html#bbv2.reference.features.attributes" title="Feature Attributes">the section called &#8220;Feature Attributes&#8221;</a>.</p></div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2009 Vladimir Prus<p>Distributed under the Boost Software License, Version 1.0.
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2009, 2014 Vladimir Prus<p>Distributed under the Boost Software License, Version 1.0.
       (See accompanying file <code class="filename">LICENSE_1_0.txt</code> or copy at 
       <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -7,6 +7,7 @@
 #if !defined(FUSION_MOVE_01192013_2225)
 #define FUSION_MOVE_01192013_2225
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/sequence/intrinsic/begin.hpp>
 #include <boost/fusion/sequence/intrinsic/end.hpp>
 #include <boost/fusion/sequence/intrinsic/size.hpp>
@@ -33,12 +34,14 @@ namespace boost { namespace fusion
             typedef typename result_of::end<Seq2>::type end2_type;
 
             template <typename I1, typename I2>
+            BOOST_FUSION_GPU_ENABLED
             static void
             call(I1 const&, I2 const&, mpl::true_)
             {
             }
 
             template <typename I1, typename I2>
+            BOOST_FUSION_GPU_ENABLED
             static void
             call(I1 const& src, I2 const& dest, mpl::false_)
             {
@@ -47,6 +50,7 @@ namespace boost { namespace fusion
             }
 
             template <typename I1, typename I2>
+            BOOST_FUSION_GPU_ENABLED
             static void
             call(I1 const& src, I2 const& dest)
             {
@@ -57,6 +61,7 @@ namespace boost { namespace fusion
     }
 
     template <typename Seq1, typename Seq2>
+    BOOST_FUSION_GPU_ENABLED
     inline
     typename
         enable_if_c<

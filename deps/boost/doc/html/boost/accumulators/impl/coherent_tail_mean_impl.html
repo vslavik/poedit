@@ -7,7 +7,7 @@
 <link rel="home" href="../../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../../accumulators/reference.html#header.boost.accumulators.statistics_fwd_hpp" title="Header &lt;boost/accumulators/statistics_fwd.hpp&gt;">
 <link rel="prev" href="tail_impl.html" title="Struct template tail_impl">
-<link rel="next" href="non_coherent_t_idp33649864.html" title="Struct template non_coherent_tail_mean_impl">
+<link rel="next" href="non_coherent_t_idp66966928.html" title="Struct template non_coherent_tail_mean_impl">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="tail_impl.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../accumulators/reference.html#header.boost.accumulators.statistics_fwd_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="non_coherent_t_idp33649864.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="tail_impl.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../accumulators/reference.html#header.boost.accumulators.statistics_fwd_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="non_coherent_t_idp66966928.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.accumulators.impl.coherent_tail_mean_impl"></a><div class="titlepage"></div>
@@ -34,35 +34,35 @@
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sample<span class="special">,</span> <span class="keyword">typename</span> LeftRight<span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="coherent_tail_mean_impl.html" title="Struct template coherent_tail_mean_impl">coherent_tail_mean_impl</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">accumulator_base</span> <span class="special">{</span>
   <span class="comment">// <a class="link" href="coherent_tail_mean_impl.html#boost.accumulators.impl.coherent_tail_mean_implconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="coherent_tail_mean_impl.html#idp33649464-bb"><span class="identifier">coherent_tail_mean_impl</span></a><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="coherent_tail_mean_impl.html#idp66965952-bb"><span class="identifier">coherent_tail_mean_impl</span></a><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="coherent_tail_mean_impl.html#idp33648040-bb">public member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="identifier">result_type</span> <a class="link" href="coherent_tail_mean_impl.html#idp33648248-bb"><span class="identifier">result</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="coherent_tail_mean_impl.html#idp66962576-bb">public member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="identifier">result_type</span> <a class="link" href="coherent_tail_mean_impl.html#idp66963136-bb"><span class="identifier">result</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp57767592"></a><h2>Description</h2>
-<p>The coherent tail mean <span class="inlinemediaobject"><img src="../../../images/accumulators//form_54.png"></span> is equal to the non-coherent tail mean <span class="inlinemediaobject"><img src="../../../images/accumulators//form_55.png"></span> plus a correction term that ensures coherence in case of non-continuous distributions.</p>
+<a name="idp116606416"></a><h2>Description</h2>
+<p>The coherent tail mean <span class="inlinemediaobject"><img src="../../../images/accumulators//form_94.png"></span> is equal to the non-coherent tail mean <span class="inlinemediaobject"><img src="../../../images/accumulators//form_43.png"></span> plus a correction term that ensures coherence in case of non-continuous distributions.</p>
 <div class="equation">
-<a name="idp57770600"></a><p class="title"><b>Equation&#160;1.12.&#160;</b></p>
-<div class="equation-contents"><div class="mediaobject" align="center"><img src="../../../images/accumulators//form_56.png" align="middle"></div></div>
+<a name="idp116612240"></a><p class="title"><b>Equation&#160;1.20.&#160;</b></p>
+<div class="equation-contents"><div class="mediaobject" align="center"><img src="../../../images/accumulators//form_95.png" align="middle"></div></div>
 </div>
 <p><br class="equation-break"></p>
 <div class="equation">
-<a name="idp57772392"></a><p class="title"><b>Equation&#160;1.13.&#160;</b></p>
-<div class="equation-contents"><div class="mediaobject" align="center"><img src="../../../images/accumulators//form_57.png" align="middle"></div></div>
+<a name="idp116615440"></a><p class="title"><b>Equation&#160;1.21.&#160;</b></p>
+<div class="equation-contents"><div class="mediaobject" align="center"><img src="../../../images/accumulators//form_96.png" align="middle"></div></div>
 </div>
 <p><br class="equation-break"> </p>
 <div class="refsect2">
-<a name="idp57774152"></a><h3>
+<a name="idp116618608"></a><h3>
 <a name="boost.accumulators.impl.coherent_tail_mean_implconstruct-copy-destruct"></a><code class="computeroutput">coherent_tail_mean_impl</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp33649464-bb"></a><span class="identifier">coherent_tail_mean_impl</span><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp66965952-bb"></a><span class="identifier">coherent_tail_mean_impl</span><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp57777448"></a><h3>
-<a name="idp33648040-bb"></a><code class="computeroutput">coherent_tail_mean_impl</code> public member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="identifier">result_type</span> <a name="idp33648248-bb"></a><span class="identifier">result</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp116625136"></a><h3>
+<a name="idp66962576-bb"></a><code class="computeroutput">coherent_tail_mean_impl</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="identifier">result_type</span> <a name="idp66963136-bb"></a><span class="identifier">result</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>
@@ -76,7 +76,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="tail_impl.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../accumulators/reference.html#header.boost.accumulators.statistics_fwd_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="non_coherent_t_idp33649864.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="tail_impl.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../accumulators/reference.html#header.boost.accumulators.statistics_fwd_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="non_coherent_t_idp66966928.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

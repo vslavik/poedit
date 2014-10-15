@@ -11,10 +11,18 @@
 template<
     class Container,
     class SinglePassRange
-    >
+>
 Container& insert(Container& target,
                   typename Container::iterator before,
                   const SinglePassRange& from);
+
+// This overload is for target containers that do not require an insertion
+// position e.g. set/map
+template<
+    class Container,
+    class SinglePassRange
+>
+Container& insert(Container& target, const SinglePassRange& from);
 ``
 
 [heading Description]

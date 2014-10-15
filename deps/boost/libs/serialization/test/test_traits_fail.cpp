@@ -34,7 +34,7 @@ BOOST_CLASS_TRACKING(B, boost::serialization::track_always)
 int
 test_main( int /* argc */, char* /* argv */[] )
 {
-    return boost::exit_failure;
+    return EXIT_SUCCESS;
 }
 
 // EOF

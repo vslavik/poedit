@@ -27,8 +27,6 @@ struct my_ptr {
 //  typedef boost::no_traversal_tag iterator_category;
 };
 
-BOOST_TT_BROKEN_COMPILER_SPEC(my_ptr)
-BOOST_TT_BROKEN_COMPILER_SPEC(zow)
 
 // Borland 5.6.4 and earlier drop const all over the place, so this
 // test will fail in the lines marked with (**)

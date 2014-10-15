@@ -13,6 +13,6 @@ project /boost/random
   : usage-requirements <link>shared:<define>BOOST_RANDOM_DYN_LINK
 ;
 
-lib boost_random : [ glob *.cpp ] ;
+lib boost_random : [ glob *.cpp ] /boost//system ;
 
 boost-install boost_random ;

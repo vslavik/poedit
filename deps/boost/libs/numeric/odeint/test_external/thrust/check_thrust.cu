@@ -1,7 +1,7 @@
 /* Boost check_thrust.cu test file
  
- Copyright 2009 Karsten Ahnert
- Copyright 2009 Mario Mulansky
+ Copyright 2010-2013 Mario Mulansky
+ Copyright 2010-2011 Karsten Ahnert
  
  This file tests the use of the euler stepper
   
@@ -13,9 +13,7 @@
 //#include <boost/test/unit_test.hpp>
 
 #include <boost/numeric/odeint/stepper/euler.hpp>
-#include <boost/numeric/odeint/external/thrust/thrust_algebra.hpp>
-#include <boost/numeric/odeint/external/thrust/thrust_operations.hpp>
-#include <boost/numeric/odeint/external/thrust/thrust_resize.hpp>
+#include <boost/numeric/odeint/external/thrust/thrust.hpp>
 
 #include <thrust/device_vector.h>
 #include <thrust/fill.h>
@@ -54,7 +52,7 @@ void test_euler_with_thrust( void )
 {
 	state_type x(1);
 	thrust::fill( x.begin() , x.end() , static_cast<base_type>(0.0) );
-	euler< state_type , base_type , state_type , base_type , thrust_algebra , thrust_operations > euler;
+	euler< state_type , base_type , state_type , base_type > euler;
 	check_stepper_concept( euler , constant_system , x );
 
 

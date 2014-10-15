@@ -41,7 +41,7 @@ namespace test
                 int count = type_ == generate_collisions ?
                     1 + (generate(int_ptr) % 5) : 1;
 
-                for(int i = 0; i < count; ++i) {
+                for(int j = 0; j < count; ++j) {
                     x.push_back(value);
                 }
             }
@@ -71,7 +71,7 @@ namespace test
                 int count = type_ == generate_collisions ?
                     1 + (generate(int_ptr) % 5) : 1;
 
-                for(int i = 0; i < count; ++i) {
+                for(int j = 0; j < count; ++j) {
                     x.push_back(std::pair<key_type const, mapped_type>(
                         key, generate(mapped_ptr)));
                 }

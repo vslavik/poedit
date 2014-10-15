@@ -34,13 +34,13 @@
 </span>
 <span class="keyword">struct</span> <a class="link" href="mark_tag.html" title="Struct mark_tag">mark_tag</a> <span class="special">{</span>
   <span class="comment">// <a class="link" href="mark_tag.html#boost.xpressive.mark_tagconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="mark_tag.html#idp168272824-bb"><span class="identifier">mark_tag</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="mark_tag.html#idp351493072-bb"><span class="identifier">mark_tag</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="mark_tag.html#idp168271464-bb">private static functions</a></span>
-  <span class="keyword">static</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a class="link" href="mark_tag.html#idp168271672-bb"><span class="identifier">make_tag</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="mark_tag.html#idp351489680-bb">private static functions</a></span>
+  <span class="keyword">static</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a class="link" href="mark_tag.html#idp351490256-bb"><span class="identifier">make_tag</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp260764088"></a><h2>Description</h2>
+<a name="idp537564912"></a><h2>Description</h2>
 <p><code class="computeroutput"><a class="link" href="mark_tag.html" title="Struct mark_tag">mark_tag</a></code> is the type of the global sub-match placeholders <code class="computeroutput">s0</code>, <code class="computeroutput">s1</code>, etc.. You can use the <code class="computeroutput"><a class="link" href="mark_tag.html" title="Struct mark_tag">mark_tag</a></code> type to create your own sub-match placeholders with more meaningful names. This is roughly equivalent to the "named capture" feature of dynamic regular expressions.</p>
 <p>To create a named sub-match placeholder, initialize it with a unique integer. The integer must only be unique within the regex in which the placeholder is used. Then you can use it within static regexes to created sub-matches by assigning a sub-expression to it, or to refer back to already created sub-matches.</p>
 <pre class="programlisting"><span class="identifier">mark_tag</span> <span class="identifier">number</span><span class="special">(</span><span class="number">1</span><span class="special">)</span><span class="special">;</span> <span class="comment">// "number" is now equivalent to "s1"</span>
@@ -49,12 +49,12 @@
 </pre>
 <p>After a successful <code class="computeroutput">regex_match()</code> or <code class="computeroutput">regex_search()</code>, the sub-match placeholder can be used to index into the <code class="computeroutput"><a class="link" href="match_results.html" title="Struct template match_results">match_results</a>&lt;&gt;</code> object to retrieve the corresponding sub-match. </p>
 <div class="refsect2">
-<a name="idp260775704"></a><h3>
+<a name="idp537587664"></a><h3>
 <a name="boost.xpressive.mark_tagconstruct-copy-destruct"></a><code class="computeroutput">mark_tag</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp168272824-bb"></a><span class="identifier">mark_tag</span><span class="special">(</span><span class="keyword">int</span> mark_nbr<span class="special">)</span><span class="special">;</span></pre>Initialize a <code class="computeroutput"><a class="link" href="mark_tag.html" title="Struct mark_tag">mark_tag</a></code> placeholder. <p>
+<pre class="literallayout"><a name="idp351493072-bb"></a><span class="identifier">mark_tag</span><span class="special">(</span><span class="keyword">int</span> mark_nbr<span class="special">)</span><span class="special">;</span></pre>Initialize a <code class="computeroutput"><a class="link" href="mark_tag.html" title="Struct mark_tag">mark_tag</a></code> placeholder. <p>
 
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
@@ -85,9 +85,9 @@
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp260783672"></a><h3>
-<a name="idp168271464-bb"></a><code class="computeroutput">mark_tag</code> private static functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a name="idp168271672-bb"></a><span class="identifier">make_tag</span><span class="special">(</span><span class="keyword">int</span> mark_nbr<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp537603600"></a><h3>
+<a name="idp351489680-bb"></a><code class="computeroutput">mark_tag</code> private static functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a name="idp351490256-bb"></a><span class="identifier">make_tag</span><span class="special">(</span><span class="keyword">int</span> mark_nbr<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>

@@ -9,7 +9,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Revision: 49313 $
+//  Version     : $Revision$
 //
 //  Description : tests an ability of Unit Test Framework to catch all kinds
 //  of test errors in a user code and properly report it.

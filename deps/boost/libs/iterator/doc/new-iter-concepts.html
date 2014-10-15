@@ -27,10 +27,10 @@
 Lab</a>, <a class="last reference external" href="http://www.styleadvisor.com">Zephyr Associates, Inc.</a></td></tr>
 <tr><th class="docinfo-name">Date:</th>
 <td>2006-09-11</td></tr>
-<tr class="field"><th class="docinfo-name">Number:</th><td class="field-body">This is a revised version of <a class="reference external" href="http://anubis.dkuug.dk/jtc1/sc22/wg21/docs/papers/2003/n1550.html">n1550</a>=03-0133, which was
+<tr class="field"><th class="docinfo-name">Number:</th><td class="field-body">This is a revised version of <a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2003/n1550.htm">n1550</a>=03-0133, which was
 accepted for Technical Report 1 by the C++ standard
 committee's library working group. This proposal is a
-revision of paper <a class="reference external" href="http://anubis.dkuug.dk/jtc1/sc22/wg21/docs/papers/2001/n1297.html">n1297</a>, <a class="reference external" href="http://anubis.dkuug.dk/jtc1/sc22/wg21/docs/papers/2003/n1477.html">n1477</a>, and <a class="reference external" href="http://anubis.dkuug.dk/jtc1/sc22/wg21/docs/papers/2003/n1531.html">n1531</a>.</td>
+revision of paper <a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2001/n1297.html">n1297</a>, <a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2003/n1477.html">n1477</a>, and <a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2003/n1531.html">n1531</a>.</td>
 </tr>
 <tr><th class="docinfo-name">Copyright:</th>
 <td>Copyright David Abrahams, Jeremy Siek, and Thomas Witt
@@ -127,12 +127,12 @@ requirements in the iterator categories.</p>
 <td><tt class="docutils literal"><span class="pre">*i</span></tt> is convertible to <tt class="docutils literal"><span class="pre">T</span></tt></td>
 </tr>
 <tr><td>Forward Iterator</td>
-<td><tt class="docutils literal"><span class="pre">*i</span></tt> is <tt class="docutils literal"><span class="pre">T&amp;</span></tt> (or <tt class="docutils literal"><span class="pre">const</span> <span class="pre">T&amp;</span></tt> once <a class="reference external" href="http://anubis.dkuug.dk/JTC1/SC22/WG21/docs/lwg-active.html#200">issue 200</a>
+<td><tt class="docutils literal"><span class="pre">*i</span></tt> is <tt class="docutils literal"><span class="pre">T&amp;</span></tt> (or <tt class="docutils literal"><span class="pre">const</span> <span class="pre">T&amp;</span></tt> once <a class="reference external" href="http://www.open-std.org/JTC1/SC22/WG21/docs/lwg-active.html#200">issue 200</a>
 is resolved)</td>
 </tr>
 <tr><td>Random Access Iterator</td>
 <td><tt class="docutils literal"><span class="pre">i[n]</span></tt> is convertible to <tt class="docutils literal"><span class="pre">T</span></tt> (also <tt class="docutils literal"><span class="pre">i[n]</span> <span class="pre">=</span> <span class="pre">t</span></tt>
-is required for mutable iterators once <a class="reference external" href="http://anubis.dkuug.dk/JTC1/SC22/WG21/docs/lwg-active.html#299">issue 299</a>
+is required for mutable iterators once <a class="reference external" href="http://www.open-std.org/JTC1/SC22/WG21/docs/lwg-active.html#299">issue 299</a>
 is resolved)</td>
 </tr>
 </tbody>
@@ -141,7 +141,7 @@ is resolved)</td>
 single hierarchy, many useful iterators can not be appropriately
 categorized. For example, <tt class="docutils literal"><span class="pre">vector&lt;bool&gt;::iterator</span></tt> is almost a
 random access iterator, but the return type is not <tt class="docutils literal"><span class="pre">bool&amp;</span></tt> (see
-<a class="reference external" href="http://anubis.dkuug.dk/JTC1/SC22/WG21/docs/lwg-active.html#96">issue 96</a> and Herb Sutter's paper J16/99-0008 = WG21
+<a class="reference external" href="http://www.open-std.org/JTC1/SC22/WG21/docs/lwg-active.html#96">issue 96</a> and Herb Sutter's paper J16/99-0008 = WG21
 N1185). Therefore, the iterators of <tt class="docutils literal"><span class="pre">vector&lt;bool&gt;</span></tt> only meet the
 requirements of input iterator and output iterator.  This is so
 nonintuitive that the C++ standard contradicts itself on this point.
@@ -344,7 +344,7 @@ approach for specifying <tt class="docutils literal"><span class="pre">operator[
 direction would mean that an iterator satisfying the old Random Access
 Iterator requirements would not necessarily be a model of Readable or
 Writable Lvalue Iterator.  Instead we have chosen a design that
-matches the preferred resolution of <a class="reference external" href="http://anubis.dkuug.dk/JTC1/SC22/WG21/docs/lwg-active.html#299">issue 299</a>: <tt class="docutils literal"><span class="pre">operator[]</span></tt> is
+matches the preferred resolution of <a class="reference external" href="http://www.open-std.org/JTC1/SC22/WG21/docs/lwg-active.html#299">issue 299</a>: <tt class="docutils literal"><span class="pre">operator[]</span></tt> is
 only required to return something convertible to the <tt class="docutils literal"><span class="pre">value_type</span></tt>
 (for a Readable Iterator), and is required to support assignment
 <tt class="docutils literal"><span class="pre">i[n]</span> <span class="pre">=</span> <span class="pre">t</span></tt> (for a Writable Iterator).</p>
@@ -976,7 +976,7 @@ struct random_access_traversal_tag : bidirectional_traversal_tag { };
 <div class="section" id="addition-to-lib-iterator-traits">
 <h2><a class="toc-backref" href="#id23">Addition to [lib.iterator.traits]</a></h2>
 <p>The <tt class="docutils literal"><span class="pre">is_readable_iterator</span></tt> class
-template satisfies the <a class="reference external" href="http://anubis.dkuug.dk/jtc1/sc22/wg21/docs/papers/2003/n1519.htm">UnaryTypeTrait</a> requirements.</p>
+template satisfies the <a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2003/n1519.htm">UnaryTypeTrait</a> requirements.</p>
 <p>Given an iterator type <tt class="docutils literal"><span class="pre">X</span></tt>, <tt class="docutils literal"><span class="pre">is_readable_iterator&lt;X&gt;::value</span></tt>
 yields <tt class="docutils literal"><span class="pre">true</span></tt> if, for an object <tt class="docutils literal"><span class="pre">a</span></tt> of type <tt class="docutils literal"><span class="pre">X</span></tt>, <tt class="docutils literal"><span class="pre">*a</span></tt> is
 convertible to <tt class="docutils literal"><span class="pre">iterator_traits&lt;X&gt;::value_type</span></tt>, and <tt class="docutils literal"><span class="pre">false</span></tt>
@@ -1007,7 +1007,7 @@ otherwise.</p>
 </div>
 <div class="section" id="footnotes">
 <h1><a class="toc-backref" href="#id24">Footnotes</a></h1>
-<p>The UnaryTypeTrait concept is defined in <a class="reference external" href="http://anubis.dkuug.dk/jtc1/sc22/wg21/docs/papers/2003/n1519.htm">n1519</a>; the LWG is
+<p>The UnaryTypeTrait concept is defined in <a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2003/n1519.htm">n1519</a>; the LWG is
 considering adding the requirement that specializations are derived
 from their nested <tt class="docutils literal"><span class="pre">::type</span></tt>.</p>
 <!-- LocalWords:  Abrahams Siek Witt const bool Sutter's WG int UL LI href Lvalue

@@ -162,7 +162,7 @@ public:
          BOOST_THROW_EXCEPTION(std::runtime_error("Unable to interpret input string as a floating point value"));
       }
 #else
-      detail::convert_from_string(*this, s);
+      boost::multiprecision::detail::convert_from_string(*this, s);
 #endif
       return *this;
    }
@@ -206,7 +206,7 @@ public:
       }
       return buf;
 #else
-      return detail::convert_to_string(*this, digits ? digits : 37, f);
+      return boost::multiprecision::detail::convert_to_string(*this, digits ? digits : 37, f);
 #endif
    }
    void negate()

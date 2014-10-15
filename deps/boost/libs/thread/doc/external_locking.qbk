@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2008,2012 Vicente J. Botet Escriba
+ / Copyright (c) 2008,2012,2014 Vicente J. Botet Escriba
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -8,7 +8,7 @@
 [section  External Locking -- `strict_lock` and `externally_locked` classes]
 
 
-[note This tutorial is an adaptation of the paper of Andrei Alexandrescu "Multithreading and the C++ Type System"
+[note This tutorial is an adaptation of the paper by Andrei Alexandrescu "Multithreading and the C++ Type System"
 to the Boost library.]
 
 [/
@@ -163,7 +163,7 @@ Obviously, the caller-ensured locking approach has a safety problem. BankAccount
 To conclude, if in designing a multi-threaded class you settle on internal locking, you expose yourself to inefficiency or deadlocks. On the other hand, if you rely on caller-provided locking, you make your class error-prone and difficult to use. Finally, external locking completely avoids the issue by leaving it all to the client code.
 [endsect]
 ]
-[section  Locks as Permits]
+[section  Locks as permits]
 
 So what to do? Ideally, the BankAccount class should do the following:
 
@@ -182,9 +182,9 @@ For now, let's make a couple of enhancements to the `lock_guard` class template 
 We'll call the enhanced version `strict_lock`. Essentially, a `strict_lock`'s role is only to live on the stack as an automatic variable. 
 `strict_lock` must adhere to a non-copy and non-alias policy. 
 `strict_lock` disables copying by making the copy constructor and the assignment operator private. 
+[/
 While we're at it, let's disable operator new and operator delete. 
 
-[/
 `strict_lock` are not intended to be allocated on the heap. 
 `strict_lock` avoids aliasing by using a slightly less orthodox and less well-known technique: disable address taking.
 ]
@@ -293,7 +293,7 @@ A little code is worth 1,000 words, a (hacked into) saying goes, so here's the n
         }
     };
 
-Now, if you want the benefit of internal locking, you simply call Deposit(int) and Withdraw(int). If you want to use external locking, you lock the object by constructing a `strict_lock<BankAccount>` and then you call `Deposit(int, strict_lock<BankAccount>&)` and `Withdraw(int, strict_lock<BankAccount>&)`. For example, here's the `ATMWithdrawal` function implemented correctly:
+Now, if you want the benefit of internal locking, you simply call `Deposit(int)` and `Withdraw(int)`. If you want to use external locking, you lock the object by constructing a `strict_lock<BankAccount>` and then you call `Deposit(int, strict_lock<BankAccount>&)` and `Withdraw(int, strict_lock<BankAccount>&)`. For example, here's the `ATMWithdrawal` function implemented correctly:
 
     void ATMWithdrawal(BankAccount& acct, int sum) {
         strict_lock<BankAccount> guard(acct);
@@ -453,7 +453,7 @@ We achieved two important goals. First, the declaration of `checkingAcct_` and `
 
 [section  Allowing other strict locks]
 
-Now imagine that the AccountManager function needs to take a `unique_lock` in order to reduce the critical regions. And at some time it needs to access to the `checkingAcct_`. As `unique_lock` is not a strict lock the following code doesn't compiles:
+Now imagine that the AccountManager function needs to take a `unique_lock` in order to reduce the critical regions. And at some time it needs to access to the `checkingAcct_`. As `unique_lock` is not a strict lock the following code doesn't compile:
 
   void AccountManager::AMoreComplicatedChecking2Savings(int amount) {
       unique_lock<AccountManager> guard(*this, defer_lock);
@@ -465,7 +465,7 @@ Now imagine that the AccountManager function needs to take a `unique_lock` in or
       do_something_else();
   }
 
-We need a way to transfer the ownership from the `unique_lock` to a `strict_lock` the time we are working with `savingsAcct_` and then restore the ownership on `unique_lock`.
+We need a way to transfer the ownership from the `unique_lock` to a `strict_lock` during the time we are working with `savingsAcct_` and then restore the ownership on `unique_lock`.
 
   void AccountManager::AMoreComplicatedChecking2Savings(int amount) {
       unique_lock<AccountManager> guard1(*this, defer_lock);
@@ -480,9 +480,9 @@ We need a way to transfer the ownership from the `unique_lock` to a `strict_lock
       guard1.unlock();
   }
 
-In order to make this code compilable we need to store either a Lockable or a `unique_lock<Lockable>` reference depending on the constructor. Store which kind of reference we have stored,and in the destructor call either to the Lockable `unlock` or restore the ownership.
+In order to make this code compilable we need to store either a Lockable or a `unique_lock<Lockable>` reference depending on the constructor. We also need to store which kind of reference we have stored, and in the destructor call either to the Lockable `unlock` or restore the ownership.
 
-This seams too complicated to me. Another possibility is to define a nested strict lock class. The drawback is that instead of having only one strict lock we have two and we need either to duplicate every function taking a `strict_lock` or make these function templates functions. The problem with template functions is that we don't profit anymore of the C++ type system. We must add some static metafunction that check that the Locker parameter is a strict lock. The problem is that we can not really check this or can we?. The `is_strict_lock` metafunction must be specialized by the strict lock developer. We need to belive it "sur parole". The advantage is that now we can manage with more than two strict locks without changing our code. This is really nice.
+This seems too complicated to me. Another possibility is to define a nested strict lock class. The drawback is that instead of having only one strict lock we have two and we need either to duplicate every function taking a `strict_lock` or make these function templates. The problem with template functions is that we don't profit anymore of the C++ type system. We must add some static metafunction that checks that the Locker parameter is a strict lock. The problem is that we can not really check this or can we?. The `is_strict_lock` metafunction must be specialized by the strict lock developer. We need to believe it "sur parole". The advantage is that now we can manage with more than two strict locks without changing our code. This is really nice.
 
 Now we need to state that both classes are `strict_lock`s.
 
@@ -496,9 +496,9 @@ Now we need to state that both classes are `strict_lock`s.
     struct is_strict_lock<nested_strict_lock<Locker> > : mpl::true_ {}
 
 
-Well let me show how this `nested_strict_lock` class looks like and the impacts on the `externally_locked` class and the `AccountManager::AMoreComplicatedFunction` function.
+Well let me show what this `nested_strict_lock` class looks like and the impacts on the `externally_locked` class and the `AccountManager::AMoreComplicatedFunction` function.
 
-First `nested_strict_lock` class will store on a temporary lock the `Locker`, and transfer the lock ownership on the constructor. On destruction he will restore the ownership. Note also that the Locker needs to have already a reference to the mutex otherwise an exception is thrown and the use of the `lock_traits`.
+First `nested_strict_lock` class will store on a temporary lock the `Locker`, and transfer the lock ownership on the constructor. On destruction it will restore the ownership. Note the use of `lock_traits` and that the `Locker` needs to have a reference to the mutex otherwise and exception is thrown.
 
   template <typename Locker >
   class nested_strict_lock

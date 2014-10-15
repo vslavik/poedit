@@ -22,7 +22,7 @@ Consider the two sequences:
 	
 	std::mismatch ( seq1.begin (), seq1.end (), seq2.begin ()); // <3, 3>
 	std::mismatch ( seq2.begin (), seq2.end (), seq1.begin ()); // Undefined behavior
-	std::mismatch ( seq1.begin (), seq1.end (), seq1.begin (), seq2.end ()); // <3, 3>
+	std::mismatch ( seq1.begin (), seq1.end (), seq2.begin (), seq2.end ()); // <3, 3>
 ```
 
 The first N entries in `seq2` are the same as the entries in `seq1` - but that's not all that's in `seq2`. In the second case, the algorithm will read past the end of `seq1`, resulting in undefined behavior (large earthquake, incorrect results, pregnant cat, etc).

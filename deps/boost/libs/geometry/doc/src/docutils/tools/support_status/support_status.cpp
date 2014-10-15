@@ -12,14 +12,13 @@
 #include <fstream>
 #include <sstream>
 
-#include <boost/type_traits/is_base_of.hpp>
 #include <boost/mpl/for_each.hpp>
 #include <boost/mpl/vector.hpp>
+#include <boost/type_traits/is_base_of.hpp>
 
 #define BOOST_GEOMETRY_IMPLEMENTATION_STATUS_BUILD true
 #include <boost/geometry/core/cs.hpp>
 #include <boost/geometry/geometries/geometries.hpp>
-#include <boost/geometry/multi/geometries/multi_geometries.hpp>
 #include <boost/geometry/algorithms/append.hpp>
 #include <boost/geometry/algorithms/area.hpp>
 #include <boost/geometry/algorithms/buffer.hpp>
@@ -35,6 +34,8 @@
 #include <boost/geometry/algorithms/equals.hpp>
 #include <boost/geometry/algorithms/expand.hpp>
 #include <boost/geometry/algorithms/for_each.hpp>
+#include <boost/geometry/algorithms/is_simple.hpp>
+#include <boost/geometry/algorithms/is_valid.hpp>
 #include <boost/geometry/algorithms/length.hpp>
 #include <boost/geometry/algorithms/num_geometries.hpp>
 #include <boost/geometry/algorithms/num_interior_rings.hpp>
@@ -66,7 +67,6 @@
 #include <boost/geometry/multi/algorithms/simplify.hpp>
 #include <boost/geometry/multi/algorithms/transform.hpp>
 #include <boost/geometry/multi/algorithms/unique.hpp>
-#include <boost/geometry/multi/io/wkt/wkt.hpp>
 #include <boost/geometry/strategies/strategies.hpp>
 
 #include "text_outputter.hpp"
@@ -123,6 +123,8 @@ DECLARE_BINARY_ALGORITHM(equals)
 DECLARE_BINARY_ALGORITHM(expand)
 DECLARE_UNARY_ALGORITHM(for_each_point)
 DECLARE_UNARY_ALGORITHM(for_each_segment)
+DECLARE_UNARY_ALGORITHM(is_simple)
+DECLARE_UNARY_ALGORITHM(is_valid)
 DECLARE_UNARY_ALGORITHM(length)
 DECLARE_UNARY_ALGORITHM(num_geometries)
 DECLARE_UNARY_ALGORITHM(num_interior_rings)
@@ -259,10 +261,12 @@ void support_status()
     test_binary_algorithm<expand, all_types, all_types, OutputFactory>("expand");
     test_unary_algorithm<for_each_point, all_types, OutputFactory>("for_each_point");
     test_unary_algorithm<for_each_segment, all_types, OutputFactory>("for_each_segment");
+    test_unary_algorithm<is_simple, all_types, OutputFactory>("is_simple");
+    test_unary_algorithm<is_valid, all_types, OutputFactory>("is_valid");
     test_unary_algorithm<length, all_types, OutputFactory>("length");
     test_unary_algorithm<num_geometries, all_types, OutputFactory>("num_geometries");
     test_unary_algorithm<num_interior_rings, all_types, OutputFactory>("num_interior_rings");
-    test_unary_algorithm<num_interior_rings, all_types, OutputFactory>("num_points");
+    test_unary_algorithm<num_points, all_types, OutputFactory>("num_points");
     test_binary_algorithm<overlaps, all_types, all_types, OutputFactory>("overlaps");
     test_unary_algorithm<perimeter, all_types, OutputFactory>("perimeter");
     test_unary_algorithm<reverse, all_types, OutputFactory>("reverse");

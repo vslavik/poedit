@@ -15,6 +15,7 @@
 #include <iostream>
 #include <string>
 
+#define BOOST_GEOMETRY_UNIT_TEST_SECTIONALIZE
 
 #include <geometry_test_common.hpp>
 
@@ -48,7 +49,7 @@ void test_sectionalize_part()
 
     typedef bg::detail::sectionalize::sectionalize_part
         <
-            Geometry, point_type, sections_type, 1, 10
+            point_type, 1
         > sectionalize_part;
 
     sections_type sections;
@@ -58,22 +59,24 @@ void test_sectionalize_part()
     Geometry geometry;
     geometry.push_back(bg::make<point_type>(1, 1));
 
+    bg::detail::no_rescale_policy rescale_policy;
+
     bg::ring_identifier ring_id;
-    int index = 0;
-    int ndi = 0;
-    sectionalize_part::apply(sections, section, index, ndi, geometry, ring_id);
+    sectionalize_part::apply(sections, geometry, rescale_policy, false, ring_id, 10);
     // There should not yet be anything generated, because it is only ONE point
 
     geometry.push_back(bg::make<point_type>(2, 2));
-    sectionalize_part::apply(sections, section, index, ndi, geometry, ring_id);
+    sectionalize_part::apply(sections, geometry, rescale_policy, false, ring_id, 10);
 
 }
 
 
 template <int DimensionCount, bool Reverse, typename G>
-void test_sectionalize(std::string const caseid, G const& g, std::size_t section_count,
+void test_sectionalize(std::string const& caseid, G const& g, std::size_t section_count,
         std::string const& index_check, std::string const& dir_check)
 {
+    boost::ignore_unused_variable_warning(caseid);
+
     typedef typename bg::point_type<G>::type point;
     typedef bg::model::box<point> box;
     typedef bg::sections<box, DimensionCount> sections;
@@ -313,7 +316,7 @@ void test_large_integers()
 
     bg::sectionalize<false>(int_poly, int_sections);
     bg::sectionalize<false>(double_poly, double_sections);
-    
+
     bool equally_sized = int_sections.size() == double_sections.size();
     BOOST_CHECK(equally_sized);
     if (! equally_sized)

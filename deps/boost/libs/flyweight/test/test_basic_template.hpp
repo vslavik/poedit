@@ -1,6 +1,6 @@
 /* Boost.Flyweight basic test template.
  *
- * Copyright 2006-2009 Joaquin M Lopez Munoz.
+ * Copyright 2006-2014 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -11,7 +11,7 @@
 #ifndef BOOST_FLYWEIGHT_TEST_BASIC_TEMPLATE_HPP
 #define BOOST_FLYWEIGHT_TEST_BASIC_TEMPLATE_HPP
 
-#if defined(_MSC_VER)&&(_MSC_VER>=1200)
+#if defined(_MSC_VER)
 #pragma once
 #endif
 
@@ -23,6 +23,10 @@
 #include <string>
 #include <sstream>
 #include "heavy_objects.hpp"
+
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+#include <utility>
+#endif
 
 #define LENGTHOF(array) (sizeof(array)/sizeof((array)[0]))
 
@@ -41,13 +45,20 @@ void test_basic_template(
     Flyweight                            f1(*it);
     Flyweight                            f2;
     Flyweight                            c1(f1);
-    Flyweight                            c2(static_cast<const Flyweight&>(f2));
+    const Flyweight                      c2(static_cast<const Flyweight&>(f2));
     value_type                           v1(*it);
     boost::value_initialized<value_type> v2;
     BOOST_TEST(f1.get_key()==*it);
     BOOST_TEST((f1==f2)==(f1.get()==v2.data()));
     BOOST_TEST(f1==c1);
     BOOST_TEST(f2==c2);
+
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+    Flyweight cr1(std::move(c1));
+    Flyweight cr2(std::move(c2));
+    BOOST_TEST(f1==cr1);
+    BOOST_TEST(f2==cr2);
+#endif
 
     f1=f1;
     BOOST_TEST(f1==f1);
@@ -110,6 +121,15 @@ void test_basic_with_assign_template(
     BOOST_TEST(f2.get()==v);
     BOOST_TEST(f1==f2);
 
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+    value_type       v1(v);
+    const value_type v2(v);
+    Flyweight        fr1(std::move(v1));
+    Flyweight        fr2(std::move(v2));
+    BOOST_TEST(fr1==v);
+    BOOST_TEST(fr2==v);
+#endif
+
     /* value assignment */
 
     Flyweight f3,f4;
@@ -118,6 +138,12 @@ void test_basic_with_assign_template(
     BOOST_TEST(f2.get()==v);
     BOOST_TEST(f3.get()==v);
     BOOST_TEST(f2==f3);
+
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+    Flyweight fr3;
+    fr3=value_type(*it);
+    BOOST_TEST(fr3.get()==value_type(*it));
+#endif
 
     /* specialized algorithms */
 

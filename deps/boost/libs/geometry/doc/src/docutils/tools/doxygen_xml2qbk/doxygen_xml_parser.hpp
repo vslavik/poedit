@@ -53,9 +53,9 @@ static inline void add_or_set(std::vector<parameter>& parameters, parameter cons
 
 
 
-/// Parses a "para" element 
+/// Parses a "para" element
 /*
-This is used for different purposes within Doxygen. 
+This is used for different purposes within Doxygen.
 - Either a detailed description, possibly containing several sections (para's)
   -> so parse next siblings
 - Or a detailed description also containing qbk records
@@ -138,11 +138,11 @@ static void parse_para(rapidxml::xml_node<>* node, configuration const& config, 
                     {
                         contents += std::string("[link ") + refid + " ";
                         parse_para(node->first_node(), config, contents, skip, false, in_block);
-                        contents += "]";                        
+                        contents += "]";
                         parse_para(node->next_sibling(), config, contents, skip, false, tb);
                         return;
                     }
-                }                                
+                }
             }
             else if (! (
                 (boost::equals(name, "para") && first)
@@ -210,8 +210,8 @@ static void parse_parameter(rapidxml::xml_node<>* node, configuration const& con
         }
         else if (name == "declname") p.name = node->value();
         else if (name == "parametername") p.name = node->value();
-        else if (name == "defname") p.name = node->value(); 
-        else if (name == "defval") 
+        else if (name == "defname") p.name = node->value();
+        else if (name == "defval")
         {
             parse_para(node, config, p.default_value, p.skip);
         }
@@ -439,7 +439,7 @@ static void parse_element(rapidxml::xml_node<>* node, configuration const& confi
                     p.title = title_node->value();
 
                 parse_para(node->first_node("para"), config, p.text, el.skip);
-                
+
                 el.paragraphs.push_back(p);
             }
             else if (kind == "warning")
@@ -649,7 +649,7 @@ static void parse(rapidxml::xml_node<>* node, configuration const& config, docum
                         boost::equals(f.name, std::string("~") + doc.cos.name);
 
                     f.type = c_or_d
-                        ? function_constructor_destructor 
+                        ? function_constructor_destructor
                         : function_member;
                     doc.cos.functions.push_back(f);
                 }

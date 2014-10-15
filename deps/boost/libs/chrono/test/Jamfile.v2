@@ -40,8 +40,8 @@ project
         <toolset>clang:<cxxflags>-pedantic
         <toolset>clang:<cxxflags>-Wno-long-long
         <toolset>clang:<cxxflags>-Wno-variadic-macros
-        <toolset>gcc-mingw-4.5.0:<cxxflags>-Wno-missing-field-initializers
-        <toolset>gcc-mingw-4.5.0:<cxxflags>-fdiagnostics-show-option
+        <toolset>gcc-4.5.0,<target-os>windows:<cxxflags>-Wno-missing-field-initializers 
+ 	<toolset>gcc-4.5.0,<target-os>windows:<cxxflags>-fdiagnostics-show-option 
         <toolset>msvc:<cxxflags>/wd4127
         <toolset>msvc:<cxxflags>/wd4512
 # Note: Some of the remarks from the Intel compiler are disabled
@@ -110,7 +110,7 @@ rule chrono-v1-v2-run ( sources )
         :   <define>BOOST_CHRONO_HEADER_ONLY
             <define>BOOST_ERROR_CODE_HEADER_ONLY
            #<define>BOOST_CHRONO_DONT_PROVIDE_HYBRID_ERROR_HANDLING
-            <define>BOOST_CHRONO_VERSION=2
+           #<define>BOOST_CHRONO_VERSION=1
         :   v1_$(sources[1]:B)_h ]
     ;
 }
@@ -129,44 +129,6 @@ rule chrono-run2 ( sources : name )
     #    :
     #        <library>/boost/system//boost_system/<link>static
     #    : $(name)_s ]
-    [ run $(sources)
-        : :
-        :   <define>BOOST_CHRONO_HEADER_ONLY
-            <define>BOOST_ERROR_CODE_HEADER_ONLY
-           #<define>BOOST_CHRONO_DONT_PROVIDE_HYBRID_ERROR_HANDLING
-            <define>BOOST_CHRONO_VERSION=2
-        : $(name)_h ]
-    ;
-}
-
-rule stopwatch-run ( sources + )
-{
-    return
-    [ run $(sources) ../build//boost_chrono
-        : :
-        :
-            <library>/boost/system//boost_system
-            <define>BOOST_CHRONO_VERSION=2
-        :   $(sources[1]:B)_d  ]
-    [ run $(sources)
-        : :
-        :   <define>BOOST_CHRONO_HEADER_ONLY
-            <define>BOOST_ERROR_CODE_HEADER_ONLY
-           #<define>BOOST_CHRONO_DONT_PROVIDE_HYBRID_ERROR_HANDLING
-            <define>BOOST_CHRONO_VERSION=2
-        : $(name)_h ]
-    ;
-}
-
-rule stopwatch-run2 ( sources + : name )
-{
-    return
-    [ run $(sources) ../build//boost_chrono
-        : :
-        :
-            <library>/boost/system//boost_system
-            <define>BOOST_CHRONO_VERSION=2
-        :   $(name)_d  ]
     [ run $(sources)
         : :
         :   <define>BOOST_CHRONO_HEADER_ONLY
@@ -432,6 +394,7 @@ rule chrono-compile2 ( sources : name )
         [ compile-fail duration/nonmember/times_rep2_lhs_fail.cpp ]
         [ compile-fail duration/nonmember/times_rep2_rhs_fail.cpp ]
         [ chrono-run-header duration/duration_values_pass.cpp ]
+        [ chrono-run-header duration/rounding_pass.cpp  ]
         ;
 
     test-suite "time_point"
@@ -470,9 +433,10 @@ rule chrono-compile2 ( sources : name )
     test-suite "io"
         :
         [ chrono-v1-v2-run-header io/duration_input.cpp  ]
-        [ chrono-v1-v2-run-header io/duration_output.cpp  ]
+        [ chrono-v1-v2-run-header io/duration_output.cpp  ]      
         [ chrono-v1-v2-run-header io/time_point_input.cpp  ]
         [ chrono-v1-v2-run-header io/time_point_output.cpp  ]
+        [ chrono-run test_7868.cpp  ]
         ;
 
     test-suite "win32"
@@ -480,4 +444,10 @@ rule chrono-compile2 ( sources : name )
         [ chrono-run win32_test.cpp  ]
         ;
 
+    explicit ts_ ;
+    test-suite ts_
+        :
+        #[ chrono-run test_7868.cpp  ]
+        #[ chrono-run test_9337.cpp  ]
+        ;
 

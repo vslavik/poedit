@@ -6,7 +6,7 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-// $Id: test_binding.cpp 78460 2012-05-13 19:58:42Z steven_watanabe $
+// $Id$
 
 #include <boost/type_erasure/static_binding.hpp>
 #include <boost/type_erasure/binding.hpp>

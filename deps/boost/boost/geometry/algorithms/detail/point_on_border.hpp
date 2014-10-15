@@ -19,6 +19,7 @@
 
 #include <boost/range.hpp>
 
+#include <boost/geometry/core/tags.hpp>
 #include <boost/geometry/core/point_type.hpp>
 #include <boost/geometry/core/ring_type.hpp>
 
@@ -26,7 +27,7 @@
 
 #include <boost/geometry/algorithms/assign.hpp>
 #include <boost/geometry/algorithms/detail/convert_point_to_point.hpp>
-#include <boost/geometry/algorithms/detail/disjoint.hpp>
+#include <boost/geometry/algorithms/detail/equals/point_point.hpp>
 
 
 namespace boost { namespace geometry
@@ -153,6 +154,35 @@ struct point_on_box
 };
 
 
+template
+<
+    typename Point,
+    typename MultiGeometry,
+    typename Policy
+>
+struct point_on_multi
+{
+    static inline bool apply(Point& point, MultiGeometry const& multi, bool midpoint)
+    {
+        // Take a point on the first multi-geometry
+        // (i.e. the first that is not empty)
+        for (typename boost::range_iterator
+                <
+                    MultiGeometry const
+                >::type it = boost::begin(multi);
+            it != boost::end(multi);
+            ++it)
+        {
+            if (Policy::apply(point, *it, midpoint))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
+
 }} // namespace detail::point_on_border
 #endif // DOXYGEN_NO_DETAIL
 
@@ -200,6 +230,36 @@ struct point_on_border<polygon_tag, Point, Polygon>
 template<typename Point, typename Box>
 struct point_on_border<box_tag, Point, Box>
     : detail::point_on_border::point_on_box<Point, Box>
+{};
+
+
+template<typename Point, typename Multi>
+struct point_on_border<multi_polygon_tag, Point, Multi>
+    : detail::point_on_border::point_on_multi
+        <
+            Point,
+            Multi,
+            detail::point_on_border::point_on_polygon
+                <
+                    Point,
+                    typename boost::range_value<Multi>::type
+                >
+        >
+{};
+
+
+template<typename Point, typename Multi>
+struct point_on_border<multi_linestring_tag, Point, Multi>
+    : detail::point_on_border::point_on_multi
+        <
+            Point,
+            Multi,
+            detail::point_on_border::point_on_range
+                <
+                    Point,
+                    typename boost::range_value<Multi>::type
+                >
+        >
 {};
 
 

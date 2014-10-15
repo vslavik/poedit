@@ -18,10 +18,16 @@
 
 #include <boost/range/sub_range.hpp>
 #include <boost/range/as_literal.hpp>
+#include <boost/test/unit_test.hpp>
 #include <boost/test/test_tools.hpp>
 #include <iostream>
 #include <string>
 #include <vector>
+
+namespace boost_range_test
+{
+    namespace
+    {
 
 void check_sub_range()
 {
@@ -136,13 +142,125 @@ void check_sub_range()
     BOOST_CHECK( rrr == boost::as_literal("HEllo worlD") );
 }
 
-#include <boost/test/unit_test.hpp>
-
-boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] )
+template<class T>
+void check_mutable_type(T&)
 {
-    boost::unit_test::test_suite* test = BOOST_TEST_SUITE( "Range Test Suite" );
+    BOOST_STATIC_ASSERT(!boost::is_const<T>::value);
+}
 
-    test->add( BOOST_TEST_CASE( &check_sub_range ) );
+template<class T>
+void check_constant_type(T&)
+{
+    BOOST_STATIC_ASSERT(boost::is_const<T>::value);
+}
+
+template<class Range, class Iterator>
+void check_is_const_iterator(Iterator it)
+{
+    BOOST_STATIC_ASSERT((
+        boost::is_same<
+            BOOST_DEDUCED_TYPENAME boost::range_iterator<
+                BOOST_DEDUCED_TYPENAME boost::add_const<Range>::type
+            >::type,
+            Iterator
+        >::value));
+}
+
+template<class Range, class Iterator>
+void check_is_iterator(Iterator it)
+{
+    BOOST_STATIC_ASSERT((
+        boost::is_same<
+            BOOST_DEDUCED_TYPENAME boost::range_iterator<
+                BOOST_DEDUCED_TYPENAME boost::remove_const<Range>::type
+            >::type,
+            Iterator
+        >::value));
+}
+
+void const_propagation_mutable_collection(void)
+{
+    typedef std::vector<int> coll_t;
+    typedef boost::sub_range<coll_t> sub_range_t;
+
+    coll_t c;
+    c.push_back(0);
+
+    sub_range_t rng(c);
+    const sub_range_t crng(c);
+
+    check_is_iterator<sub_range_t>(rng.begin());
+    check_is_iterator<sub_range_t>(rng.end());
+
+    check_is_const_iterator<sub_range_t>(crng.begin());
+    check_is_const_iterator<sub_range_t>(crng.end());
+
+    check_mutable_type(rng[0]);
+    check_mutable_type(rng.front());
+    check_mutable_type(rng.back());
+    check_constant_type(crng[0]);
+    check_constant_type(crng.front());
+    check_constant_type(crng.back());
+}
+
+void const_propagation_const_collection(void)
+{
+    typedef std::vector<int> coll_t;
+    typedef boost::sub_range<const coll_t> sub_range_t;
+
+    coll_t c;
+    c.push_back(0);
+
+    sub_range_t rng(c);
+    const sub_range_t crng(c);
+
+    check_is_const_iterator<sub_range_t>(rng.begin());
+    check_is_const_iterator<sub_range_t>(rng.end());
+
+    check_is_const_iterator<sub_range_t>(crng.begin());
+    check_is_const_iterator<sub_range_t>(crng.end());
+
+    check_constant_type(rng[0]);
+    check_constant_type(rng.front());
+    check_constant_type(rng.back());
+    check_constant_type(crng[0]);
+    check_constant_type(crng.front());
+    check_constant_type(crng.back());
+}
+
+inline void test_advance()
+{
+    std::vector<int> l;
+    l.push_back(1);
+    l.push_back(2);
+    typedef boost::sub_range<std::vector<int> > rng_t;
+    rng_t r1(l.begin(), l.end());
+    BOOST_CHECK(r1.advance_begin(1).advance_end(-1).empty());
+    
+    rng_t r2(l.begin(), l.end());
+    BOOST_CHECK_EQUAL(r2.advance_begin(1).size(), 1u);
+    
+    rng_t r3(l.begin(), l.end());
+    BOOST_CHECK_EQUAL(r3.advance_end(-1).size(), 1u);
+}
+
+    } // anonymous namespace
+} // namespace boost_range_test
+
+boost::unit_test::test_suite* init_unit_test_suite(int, char*[])
+{
+    boost::unit_test::test_suite* test =
+            BOOST_TEST_SUITE( "Boost.Range sub_range test suite" );
+
+    test->add(BOOST_TEST_CASE(&boost_range_test::check_sub_range));
+
+    test->add(BOOST_TEST_CASE(
+                  &boost_range_test::const_propagation_const_collection));
+
+    test->add(BOOST_TEST_CASE(
+                  &boost_range_test::const_propagation_mutable_collection));
+
+    test->add(BOOST_TEST_CASE(&boost_range_test::test_advance));
 
     return test;
 }

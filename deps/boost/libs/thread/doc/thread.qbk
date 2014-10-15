@@ -8,10 +8,10 @@
 
 [library Thread
     [quickbook 1.5]
-    [version 4.2.0]
+    [version 4.3.0]
     [authors [Williams, Anthony] [Botet Escriba, Vicente J.]]
     [copyright 2007-11 Anthony Williams]
-    [copyright 2011-13 Vicente J. Botet Escriba]
+    [copyright 2011-14 Vicente J. Botet Escriba]
     [purpose C++ Library for launching threads and synchronizing data between them]
     [category text]
     [license
@@ -239,9 +239,9 @@
 [include condition_variables.qbk]
 [include once.qbk]
 [include barrier.qbk]
-[/include latch.qbk]
+[include latch.qbk]
+[include async_executors.qbk]
 [include futures.qbk]
-[/include async_executors.qbk]
 [endsect]
 
 
@@ -249,7 +249,7 @@
 
 [section:sds Synchronized Data Structures]
 [include synchronized_value.qbk]
-[/include sync_queues_ref.qbk]
+[include sync_queues_ref.qbk]
 [/include sync_streams.qbk]
 [endsect]
 

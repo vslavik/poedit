@@ -127,7 +127,7 @@ int main()
     iterator_type iter = tokens.begin(it, str.end());
     iterator_type end = tokens.end();
 
-    // Parsing is done based on the the token stream, not the character 
+    // Parsing is done based on the token stream, not the character 
     // stream read from the input.
     // Note how we use the lexer defined above as the skip parser.
     bool r = qi::phrase_parse(iter, end, calc, qi::in_state("WS")[tokens.self]);

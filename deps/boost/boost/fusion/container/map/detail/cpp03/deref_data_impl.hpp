@@ -8,6 +8,7 @@
 #ifndef BOOST_FUSION_CONTAINER_MAP_DETAIL_DEREF_DATA_IMPL_HPP
 #define BOOST_FUSION_CONTAINER_MAP_DETAIL_DEREF_DATA_IMPL_HPP
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/iterator/value_of.hpp>
 #include <boost/fusion/iterator/deref.hpp>
 #include <boost/fusion/support/detail/access.hpp>
@@ -35,6 +36,7 @@ namespace boost { namespace fusion { namespace extension
                 >::type
             type;
 
+            BOOST_FUSION_GPU_ENABLED
             static type
             call(It const& it)
             {

@@ -8,9 +8,9 @@
 //
 // See http://www.boost.org/libs/mpl for documentation.
 
-// $Id: bitwise.cpp 49268 2008-10-11 06:26:17Z agurtovoy $
-// $Date: 2008-10-10 23:26:17 -0700 (Fri, 10 Oct 2008) $
-// $Revision: 49268 $
+// $Id$
+// $Date$
+// $Revision$
 
 #include <boost/mpl/bitwise.hpp>
 #include <boost/mpl/integral_c.hpp>
@@ -37,9 +37,9 @@ MPL_TEST_CASE()
     MPL_ASSERT_RELATION( (bitor_<_0,_0>::value), ==, 0 );
     MPL_ASSERT_RELATION( (bitor_<_1,_0>::value), ==, 1 );
     MPL_ASSERT_RELATION( (bitor_<_0,_1>::value), ==, 1 );
-    MPL_ASSERT_RELATION( (bitor_<_0,_ffffffff>::value), ==, 0xffffffff );
-    MPL_ASSERT_RELATION( (bitor_<_1,_ffffffff>::value), ==, 0xffffffff );
-    MPL_ASSERT_RELATION( (bitor_<_8,_ffffffff>::value), ==, 0xffffffff );
+    MPL_ASSERT_RELATION( static_cast<long>(bitor_<_0,_ffffffff>::value), ==, static_cast<long>(0xffffffff) );
+    MPL_ASSERT_RELATION( static_cast<long>(bitor_<_1,_ffffffff>::value), ==, static_cast<long>(0xffffffff) );
+    MPL_ASSERT_RELATION( static_cast<long>(bitor_<_8,_ffffffff>::value), ==, static_cast<long>(0xffffffff) );
 }
 
 MPL_TEST_CASE()
@@ -47,9 +47,9 @@ MPL_TEST_CASE()
     MPL_ASSERT_RELATION( (bitxor_<_0,_0>::value), ==, 0 );
     MPL_ASSERT_RELATION( (bitxor_<_1,_0>::value), ==, 1 );
     MPL_ASSERT_RELATION( (bitxor_<_0,_1>::value), ==, 1 );
-    MPL_ASSERT_RELATION( (bitxor_<_0,_ffffffff>::value), ==, (0xffffffff ^ 0) );
-    MPL_ASSERT_RELATION( (bitxor_<_1,_ffffffff>::value), ==, (0xffffffff ^ 1) );
-    MPL_ASSERT_RELATION( (bitxor_<_8,_ffffffff>::value), ==, (0xffffffff ^ 8) );
+    MPL_ASSERT_RELATION( static_cast<long>(bitxor_<_0,_ffffffff>::value), ==, static_cast<long>(0xffffffff ^ 0) );
+    MPL_ASSERT_RELATION( static_cast<long>(bitxor_<_1,_ffffffff>::value), ==, static_cast<long>(0xffffffff ^ 1) );
+    MPL_ASSERT_RELATION( static_cast<long>(bitxor_<_8,_ffffffff>::value), ==, static_cast<long>(0xffffffff ^ 8) );
 }
 
 MPL_TEST_CASE()

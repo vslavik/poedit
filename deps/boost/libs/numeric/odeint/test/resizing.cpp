@@ -6,8 +6,8 @@
  This file tests the resizing mechanism of odeint.
  [end_description]
 
- Copyright 2009-2012 Karsten Ahnert
- Copyright 2009-2012 Mario Mulansky
+ Copyright 2010-2012 Karsten Ahnert
+ Copyright 2010-2012 Mario Mulansky
 
  Distributed under the Boost Software License, Version 1.0.
  (See accompanying file LICENSE_1_0.txt or
@@ -44,44 +44,15 @@
 #include <boost/numeric/odeint/util/resizer.hpp>
 #include <boost/numeric/odeint/util/is_resizeable.hpp>
 
+#include "resizing_test_state_type.hpp"
+
 using namespace boost::unit_test;
 using namespace boost::numeric::odeint;
 
 namespace mpl = boost::mpl;
 
-size_t adjust_size_count;
-
-typedef boost::array< double , 1 > test_array_type;
-
-namespace boost { namespace numeric { namespace odeint {
 
 
-    template<>
-    struct is_resizeable< test_array_type >
-    {
-        typedef boost::true_type type;
-        const static bool value = type::value;
-    };
-
-    template<>
-    struct same_size_impl< test_array_type , test_array_type >
-    {
-        static bool same_size( const test_array_type &x1 , const test_array_type &x2 )
-        {
-            return false;
-        }
-    };
-
-    template<>
-    struct resize_impl< test_array_type , test_array_type >
-    {
-        static void resize( test_array_type &x1 , const test_array_type &x2 )
-        {
-            adjust_size_count++;
-        }
-    };
-
-} } }
 
 
 

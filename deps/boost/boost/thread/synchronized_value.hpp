@@ -17,7 +17,7 @@
 #include <boost/thread/lock_algorithms.hpp>
 #include <boost/thread/lock_factories.hpp>
 #include <boost/thread/strict_lock.hpp>
-#include <boost/utility/swap.hpp>
+#include <boost/core/swap.hpp>
 #include <boost/utility/declval.hpp>
 //#include <boost/type_traits.hpp>
 //#include <boost/thread/detail/is_nothrow_default_constructible.hpp>
@@ -472,8 +472,8 @@ namespace boost
      */
     synchronized_value(BOOST_THREAD_RV_REF(synchronized_value) other)
     {
-      strict_lock<mutex_type> lk(other.mtx_);
-      value_= boost::move(other.value_);
+      strict_lock<mutex_type> lk(BOOST_THREAD_RV(other).mtx_);
+      value_= boost::move(BOOST_THREAD_RV(other).value_);
     }
 
     // mutation

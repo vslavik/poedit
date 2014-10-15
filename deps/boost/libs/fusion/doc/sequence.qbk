@@ -142,8 +142,8 @@ __bidirectional_iterator__.
 __forward_sequence__
 
 [variablelist Notation
-    [[`s`]       [A Forward Sequence]]
-    [[`S`]       [A Forward Sequence type]]
+    [[`s`]       [A Bidirectional Sequence]]
+    [[`S`]       [A Bidirectional Sequence type]]
     [[`o`]       [An arbitrary object]]
     [[`e`]       [A Sequence element]]
 ]
@@ -189,6 +189,7 @@ are not defined in __forward_sequence__.
 * __std_pair__
 * __boost_array__
 * __vector__
+* __map__
 * __reverse_view__
 * __single_view__
 * __iterator_range__ (where adapted sequence is a Bidirectional Sequence)
@@ -212,7 +213,8 @@ __bidirectional_sequence__
 [variablelist Notation
     [[`s`]       [A Random Access Sequence]]
     [[`S`]       [A Random Access Sequence type]]
-    [[`N`]       [An __mpl_integral_constant__]]
+    [[`M`]       [An __mpl__ integral constant]]
+    [[`N`]       [An integral constant]]
     [[`o`]       [An arbitrary object]]
     [[`e`]       [A Sequence element]]
 ]
@@ -226,12 +228,18 @@ any Random Access Sequence the following must be met:
     [[Expression]       [Return type]                   [Type Requirements]     [Runtime Complexity]]
     [[`__begin__(s)`]       [__random_access_iterator__]    []                      [Constant]]
     [[`__end__(s)`]         [__random_access_iterator__]    []                      [Constant]]
-    [[`__at__<N>(s)`]       [Any type]                      []                      [Constant]]
-    [[`__at__<N>(s) = o`]   [Any type]                      [`s` is mutable and
+    [[`__at_c__<N>(s)`]     [Any type]                      []                      [Constant]]
+    [[`__at_c__<N>(s) = o`] [Any type]                      [`s` is mutable and
                                                         `e = o`, where `e`
                                                         is the first element
                                                         in the sequence, is
-                                                        a valid expression.]    [Constant]]
+                                                        a valid expression.]        [Constant]]
+    [[`__at__<M>(s)`]       [Any type]                      []                      [Constant]]
+    [[`__at__<M>(s) = o`]   [Any type]                      [`s` is mutable and
+                                                        `e = o`, where `e`
+                                                        is the first element
+                                                        in the sequence, is
+                                                        a valid expression.]        [Constant]]
 ]
 
 [heading Result Type Expressions]
@@ -257,7 +265,8 @@ are not defined in __bidirectional_sequence__.
 
 [table
     [[Expression]       [Semantics]]
-    [[`__at__<N>(s)`]       [The Nth element from the beginning of the sequence; see __at__.]]
+    [[`__at__<M>(s)`]         [The Mth element from the beginning of the sequence; see __at__.]]
+    [[`__at_c__<N>(s)`]       [The Nth element from the beginning of the sequence; see __at_c__.]]
 ]
 
 [heading Models]
@@ -265,6 +274,7 @@ are not defined in __bidirectional_sequence__.
 * __std_pair__
 * __boost_array__
 * __vector__
+* __map__
 * __reverse_view__
 * __single_view__
 * __iterator_range__ (where adapted sequence is a Random Access Sequence)
@@ -281,6 +291,7 @@ An Associative Sequence allows efficient retrieval of elements based on keys.
 Like associative sequences in __mpl__, and unlike associative containers in
 __stl__, Fusion associative sequences have no implied ordering relation.
 Instead, type identity is used to impose an equivalence relation on keys.
+Keys are not checked for uniqueness.
 
 [variablelist Notation
     [[`s`]       [An Associative Sequence]]
@@ -640,15 +651,15 @@ in the sequence.
 
 [heading Description]
 
-Returns the N-th element from the beginning of the sequence.
+Returns the M-th element from the beginning of the sequence.
 
 [heading Synopsis]
 
-    template <typename N, typename Sequence>
+    template <typename M, typename Sequence>
     typename __result_of_at__<Sequence, N>::type
     at(Sequence& seq);
 
-    template <typename N, typename Sequence>
+    template <typename M, typename Sequence>
     typename __result_of_at__<Sequence const, N>::type
     at(Sequence const& seq);
 
@@ -657,25 +668,25 @@ Returns the N-th element from the beginning of the sequence.
 [table
     [[Parameter]    [Requirement]                           [Description]]
     [[`seq`]        [Model of __random_access_sequence__]   [The sequence we wish to investigate.]]
-    [[`N`]          [An __mpl_integral_constant__]          [An index from the beginning of the
+    [[`M`]          [An __mpl_integral_constant__]          [An index from the beginning of the
                                                              sequence.]]
 ]
 
 [heading Expression Semantics]
 
-    at<N>(seq);
+    at<M>(seq);
 
-[*Return type]: Returns a reference to the N-th element from the beginning
-of the sequence `seq` if `seq` is mutable and `e = o`, where `e` is the N-th
+[*Return type]: Returns a reference to the M-th element from the beginning
+of the sequence `seq` if `seq` is mutable and `e = o`, where `e` is the M-th
 element from the beginning of the sequence, is a valid expression. Else,
-returns a type convertable to the N-th element from the beginning of the
+returns a type convertable to the M-th element from the beginning of the
 sequence.
 
-[*Precondition]: `0 <= N::value < __size__(s)`
+[*Precondition]: `0 <= M::value < __size__(s)`
 
 [*Semantics]: Equivalent to
 
-    __deref__(__advance__<N>(__begin__(s)))
+    __deref__(__advance__<M>(__begin__(s)))
 
 [heading Header]
 
@@ -848,7 +859,7 @@ Performs an element by element swap of the elements in 2 sequences.
 
 [table
     [[Parameters]    [Requirement]                           [Description]]
-    [[`seq1`, `seq2`]        [Models of __forward_sequence__][The sequences whos elements we wish to swap.]]
+    [[`seq1`, `seq2`][Models of __forward_sequence__][The sequences whos elements we wish to swap.]]
 ]
 
 [heading Expression Semantics]
@@ -1113,7 +1124,7 @@ the actual element type, use __result_of_value_at__].
 [heading Synopsis]
     template<
         typename Seq,
-        typename N>
+        typename M>
     struct at
     {
         typedef __unspecified__ type;
@@ -1122,15 +1133,15 @@ the actual element type, use __result_of_value_at__].
 [table Parameters
     [[Parameter]    [Requirement]   [Description]]
     [[`Seq`][A model of __random_access_sequence__][Argument sequence]]
-    [[`N`][An __mpl_integral_constant__][Index of element]]
+    [[`M`][An __mpl_integral_constant__][Index of element]]
 ]
 
 [heading Expression Semantics]
-    result_of::at<Seq, N>::type
+    result_of::at<Seq, M>::type
 
 [*Return type]: Any type.
 
-[*Semantics]: Returns the result type of using __at__ to access the `N`th element of `Seq`.
+[*Semantics]: Returns the result type of using __at__ to access the `M`th element of `Seq`.
 
 [heading Header]
 
@@ -1155,7 +1166,7 @@ get the actual element type, use __result_of_value_at_c__].
 [heading Synopsis]
     template<
         typename Seq,
-        int M>
+        int N>
     struct at_c
     {
         typedef __unspecified__ type;
@@ -1164,15 +1175,15 @@ get the actual element type, use __result_of_value_at_c__].
 [table Parameters
     [[Parameter]    [Requirement]   [Description]]
     [[`Seq`][A model of __random_access_sequence__][Argument sequence]]
-    [[`M`][Positive integer index][Index of element]]
+    [[`N`][Positive integer index][Index of element]]
 ]
 
 [heading Expression Semantics]
-    result_of::at_c<Seq, M>::type
+    result_of::at_c<Seq, N>::type
 
 [*Return type]: Any type
 
-[*Semantics]: Returns the result type of using __at_c__ to access the `M`th element of `Seq`.
+[*Semantics]: Returns the result type of using __at_c__ to access the `N`th element of `Seq`.
 
 [heading Header]
 
@@ -1194,7 +1205,7 @@ Returns the actual type at a given index from the __sequence__.
 [heading Synopsis]
     template<
         typename Seq,
-        typename N>
+        typename M>
     struct value_at
     {
         typedef __unspecified__ type;
@@ -1203,15 +1214,15 @@ Returns the actual type at a given index from the __sequence__.
 [table Parameters
     [[Parameter]    [Requirement]   [Description]]
     [[`Seq`][A model of __random_access_sequence__][Argument sequence]]
-    [[`N`][An __mpl_integral_constant__][Index of element]]
+    [[`M`][An __mpl_integral_constant__][Index of element]]
 ]
 
 [heading Expression Semantics]
-    result_of::value_at<Seq, N>::type
+    result_of::value_at<Seq, M>::type
 
 [*Return type]: Any type.
 
-[*Semantics]: Returns the actual type at the `N`th element of `Seq`.
+[*Semantics]: Returns the actual type at the `M`th element of `Seq`.
 
 [heading Header]
 
@@ -1233,7 +1244,7 @@ Returns the actual type at a given index from the __sequence__.
 [heading Synopsis]
     template<
         typename Seq,
-        int M>
+        int N>
     struct value_at_c
     {
         typedef __unspecified__ type;
@@ -1242,15 +1253,15 @@ Returns the actual type at a given index from the __sequence__.
 [table Parameters
     [[Parameter]    [Requirement]   [Description]]
     [[`Seq`][A model of __random_access_sequence__][Argument sequence]]
-    [[`M`][Positive integer index][Index of element]]
+    [[`N`][Positive integer index][Index of element]]
 ]
 
 [heading Expression Semantics]
-    result_of::value_at_c<Seq, M>::type
+    result_of::value_at_c<Seq, N>::type
 
 [*Return type]: Any type
 
-[*Semantics]: Returns the actual type at the `M`th element of `Seq`.
+[*Semantics]: Returns the actual type at the `N`th element of `Seq`.
 
 [heading Header]
 
@@ -1376,7 +1387,7 @@ Returns the actual element type associated with a Key from the __sequence__.
 
     #include <boost/fusion/sequence/intrinsic/value_at_key.hpp>
     #include <boost/fusion/include/value_at_key.hpp>
-    
+
 [heading Example]
     typedef __map__<__pair__<int, char>, __pair__<char, char>, __pair__<double, char> > mymap;
     BOOST_MPL_ASSERT((boost::is_same<__result_of_at_key__<mymap, int>::type, char>));

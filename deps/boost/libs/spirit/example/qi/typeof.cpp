@@ -6,20 +6,14 @@
 =============================================================================*/
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
-#include <boost/typeof/typeof.hpp>
+#include <boost/spirit/include/qi_copy.hpp>
+#include <boost/spirit/include/support_auto.hpp>
 #include <iostream>
 #include <string>
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
 ///////////////////////////////////////////////////////////////////////////////
-
-#define BOOST_SPIRIT_AUTO(domain_, name, expr)                                  \
-    typedef boost::proto::result_of::                                           \
-        deep_copy<BOOST_TYPEOF(expr)>::type name##_expr_type;                   \
-    BOOST_SPIRIT_ASSERT_MATCH(                                                  \
-        boost::spirit::domain_::domain, name##_expr_type);                      \
-    BOOST_AUTO(name, boost::proto::deep_copy(expr));                            \
 
 int
 main()
@@ -28,12 +22,22 @@ main()
     using boost::spirit::ascii::char_;
     using boost::spirit::qi::parse;
     typedef std::string::const_iterator iterator_type;
-    
+
 ///////////////////////////////////////////////////////////////////////////////
 // this works for non-c++11 compilers
 #ifdef BOOST_NO_CXX11_AUTO_DECLARATIONS
 
     BOOST_SPIRIT_AUTO(qi, comment, "/*" >> *(char_ - "*/") >> "*/");
+
+///////////////////////////////////////////////////////////////////////////////
+// but this is better for c++11 compilers with auto
+#else
+
+    using boost::spirit::qi::copy;
+
+    auto comment = copy("/*" >> *(char_ - "*/") >> "*/");
+
+#endif
 
     std::string str = "/*This is a comment*/";
     std::string::const_iterator iter = str.begin();

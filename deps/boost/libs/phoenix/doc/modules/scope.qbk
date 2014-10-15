@@ -124,15 +124,21 @@ The scope and lifetimes of the local variables is limited within the let-body.
 `let` blocks can be nested. A local variable may hide an outer local variable.
 For example:
 
-    let(_x = 1, _y = ", World")
+    let(_x = _1, _y = _2)
     [
         // _x here is an int: 1
 
-        let(_x = "Hello") // hides the outer _x
-        [
-            cout << _x << _y // prints "Hello, World"
-        ]
-    ]
+       let(_x = _3) // hides the outer _x
+       [
+           cout << _x << _y // prints "Hello, World"
+       ]
+    ](1," World","Hello,");
+
+The actual values of the parameters _1, _2 and _3 are supplied from the
+bracketed list at the end of the `let`.
+
+There is currently a limitation that the inner `let` cannot be supplied with a
+constant e.g. `let(_x = 1)`.
 
 The RHS (right hand side lambda-expression) of each local-declaration cannot
 refer to any LHS local-id. At this point, the local-ids are not in scope yet;
@@ -155,13 +161,13 @@ an outer scope:
     let(_a = 1)
     [
         let(
-            _a = 1
+            _a = _1
           , _b = _a // Ok. _a refers to the outer _a
         )
         [
             /*. body .*/
         ]
-    ]
+    ](1)
 
 [endsect]
 [section lambda]

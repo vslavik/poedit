@@ -212,15 +212,17 @@ bool rel_close_to(::std::complex<T1> const& x, ::std::complex<T2> const& y, T3 t
 								/* [/BOOST_UBLAS_TEST_DO] */
 
 
-/// Define the end of a test suite.
+/// Define the end of a test suite and return non-zero value if any test failed.
 #define BOOST_UBLAS_TEST_END() 	/* [BOOST_UBLAS_TEST_END] */ \
 								if (test_fails__ > 0) \
 								{ \
 									::std::cerr << "Number of failed tests: " << test_fails__ << ::std::endl; \
+									return 1; \
 								} \
 								else \
 								{ \
 									::std::cerr << "No failed test" << ::std::endl; \
+									return 0; \
 								} \
 								} /* End of test suite */ \
 								/* [/BOOST_UBLAS_TEST_END] */

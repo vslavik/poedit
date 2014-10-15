@@ -35,6 +35,7 @@
 #endif
 
 #include <boost/assign.hpp>
+#include <boost/config.hpp>    
 #include <boost/array.hpp>
 #include <boost/bind.hpp>
 #include <boost/range/numeric.hpp>
@@ -106,9 +107,14 @@ template<typename Rng>
 void test_random_algorithms(Rng & rng, std::random_access_iterator_tag)
 {
     typedef BOOST_DEDUCED_TYPENAME boost::range_iterator<Rng>::type iterator;
+
     typedef BOOST_DEDUCED_TYPENAME boost::range_value<Rng>::type value_type;
-    typedef BOOST_DEDUCED_TYPENAME boost::range_size<Rng>::type size_type;
-    typedef BOOST_DEDUCED_TYPENAME boost::iterator_category<iterator>::type iterator_category;
+
+    typedef BOOST_DEDUCED_TYPENAME boost::range_size<Rng>::type
+                                        size_type BOOST_RANGE_UNUSED;
+
+    typedef BOOST_DEDUCED_TYPENAME boost::iterator_category<iterator>::type
+                                        iterator_category BOOST_RANGE_UNUSED;
 
     // just make sure these compile (for now)
     if(0)
@@ -328,6 +334,8 @@ void test_algorithms(Rng & rng)
         o   = boost::adjacent_difference( rng, boost::begin(out) );
         o   = boost::adjacent_difference( rng, boost::begin(out), 
                                           null_op2() );
+        
+        boost::ignore_unused_variable_warning(b);
          
     }
 

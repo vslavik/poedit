@@ -18,6 +18,11 @@ int main()
   BOOST_TEST(!ATemplateWithParms<AnotherType>::value);
   BOOST_TEST(BOOST_TTI_HAS_TEMPLATE_GEN(SimpleTMP)<AnotherType>::value);
 
+  // Passing non-class enclosing type will return false
+  
+  BOOST_TEST(!HaveCL<AType **>::value);
+  BOOST_TEST(!BOOST_TTI_HAS_TEMPLATE_GEN(SimpleTMP)<char>::value);
+  
   return boost::report_errors();
   
   }

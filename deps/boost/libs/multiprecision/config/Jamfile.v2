@@ -49,7 +49,7 @@ exe has_mpfi : has_mpfi.cpp mpfi mpfr gmp :
       <include>$(mpfr_path) <include>$(gmp_path)/mpfr <include>$(gmp_path)/gmpfrxx <include>$(gmp_path) ;
 obj has_tommath : has_tommath.cpp :
       <include>$(tommath_path) ;
-exe has_float128 : has_float128.cpp quadmath ;
+run has_float128.cpp quadmath : : : : has_float128 ;
 exe has_intel_quad : has_intel_quad.cpp : <cxxflags>-Qoption,cpp,--extended_float_type ;
 
 explicit has_gmp ;

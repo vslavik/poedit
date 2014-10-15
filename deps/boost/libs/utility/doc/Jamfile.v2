@@ -42,6 +42,44 @@ using quickbook ;
 
 path-constant boost-images : ../../../doc/src/images ;
 
+xml base_from_member : base_from_member.qbk ;
+boostbook standalone_base_from_member
+    :
+        base_from_member
+    :
+        # File name of HTML output:
+        <xsl:param>root.filename=base_from_member
+        # How far down we chunk nested sections, basically all of them:
+        <xsl:param>chunk.section.depth=0
+        # Don't put the first section on the same page as the TOC:
+        <xsl:param>chunk.first.sections=0
+        # How far down sections get TOC's
+        <xsl:param>toc.section.depth=1
+        # Max depth in each TOC:
+        <xsl:param>toc.max.depth=1
+        # How far down we go with TOC's
+        <xsl:param>generate.section.toc.level=1
+     ;
+
+xml compressed_pair : compressed_pair.qbk ;
+boostbook standalone_compressed_pair
+    :
+        compressed_pair
+    :
+        # File name of HTML output:
+        <xsl:param>root.filename=compressed_pair
+        # How far down we chunk nested sections, basically all of them:
+        <xsl:param>chunk.section.depth=0
+        # Don't put the first section on the same page as the TOC:
+        <xsl:param>chunk.first.sections=0
+        # How far down sections get TOC's
+        <xsl:param>toc.section.depth=1
+        # Max depth in each TOC:
+        <xsl:param>toc.max.depth=1
+        # How far down we go with TOC's
+        <xsl:param>generate.section.toc.level=1
+     ;
+
 xml declval : declval.qbk ;
 boostbook standalone_declval
     :
@@ -68,25 +106,6 @@ boostbook standalone_string_ref
     :
         # File name of HTML output:
         <xsl:param>root.filename=string_ref
-        # How far down we chunk nested sections, basically all of them:
-        <xsl:param>chunk.section.depth=0
-        # Don't put the first section on the same page as the TOC:
-        <xsl:param>chunk.first.sections=0
-        # How far down sections get TOC's
-        <xsl:param>toc.section.depth=1
-        # Max depth in each TOC:
-        <xsl:param>toc.max.depth=1
-        # How far down we go with TOC's
-        <xsl:param>generate.section.toc.level=1
-     ;
-
-xml explicit_operator_bool : explicit_operator_bool.qbk ;
-boostbook standalone_explicit_operator_bool
-    :
-        explicit_operator_bool
-    :
-        # File name of HTML output:
-        <xsl:param>root.filename=explicit_operator_bool
         # How far down we chunk nested sections, basically all of them:
         <xsl:param>chunk.section.depth=0
         # Don't put the first section on the same page as the TOC:

@@ -1,0 +1,20 @@
+# Copyright 2011-2013 Mario Mulansky
+# Copyright 2012 Karsten Ahnert
+# Copyright 2013 Pascal Germroth
+# Distributed under the Boost Software License, Version 1.0. (See
+# accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+
+import mpi ;
+
+project
+    : requirements
+      <include>../../../../..
+      <include>..
+      <define>BOOST_ALL_NO_LIB=1
+      <library>/boost//timer
+      <library>/boost//mpi
+      <library>/boost//program_options
+    ;
+
+exe osc_chain_1d : osc_chain_1d.cpp ;

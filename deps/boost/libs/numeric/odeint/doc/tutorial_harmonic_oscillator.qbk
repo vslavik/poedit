@@ -1,8 +1,9 @@
 [/============================================================================
   Boost.odeint
 
-  Copyright (c) 2009-2012 Karsten Ahnert
-  Copyright (c) 2009-2012 Mario Mulansky
+  Copyright 2011-2013 Karsten Ahnert
+  Copyright 2011-2012 Mario Mulansky
+  Copyright 2012 Sylwester Arabas
 
   Use, modification and distribution is subject to the Boost Software License,
   Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -105,6 +106,14 @@ In the tables below, one can find all steppers which are working with `make_cont
 [include make_dense_output_table.qbk]
 
 When using `make_controlled` or `make_dense_output` one should be aware which exact type is used and how the step size control works.
+
+[endsect]
+
+[section Using iterators]
+
+odeint supports iterators for solving ODEs. That is, you instantiate a pair of iterators and instead of using the integrate routines with an appropriate observer you put the iterators in one of the algorithm from the C++ standard library or from Boost.Range. An example is
+
+[harm_iterator_const_step]
 
 [endsect]
 

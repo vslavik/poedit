@@ -1,16 +1,18 @@
 //  Copyright Thijs van den Berg, 2008.
 //  Copyright John Maddock 2008.
-//  Copyright Paul A. Bristow 2008, 2009.
+//  Copyright Paul A. Bristow 2008, 2009, 2014.
 
 //  Use, modification and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-// TODO ?? PAB 2 Dec 2008
-
 // add few more tests for farther out than 2??
 // long double test
 // add test for convenience typedef laplace.
+// Permit infinity arguments.
+#ifdef _MSC_VER
+#pragma warning (disable : 4127) // conditional expression is constant.
+#endif
 
 /*
 
@@ -291,7 +293,7 @@ void test_pdf_cdf_ocatave()
 template <class RealType>
 void test_cdf_quantile_symmetry()
 {
-   RealType tolerance(boost::math::tools::epsilon<RealType>() * 500); // 5 eps as a percentage
+   RealType tolerance(boost::math::tools::epsilon<RealType>() * 500); // 5 eps as a percentage.
 
    const float xtest[7] = {  -2.0, -1.0, -0.5, 0.0, 0.5, 1.0, 2.0 };
    
@@ -462,34 +464,54 @@ void test_bad_dist_parameters()
 template <class RealType>
 void test_extreme_function_arguments()
 {
+   using boost::math::laplace_distribution;
    using boost::math::policies::policy;
    using boost::math::policies::overflow_error; 
    using boost::math::policies::ignore_error;
 
    typedef policy<
-      overflow_error<ignore_error> // if argument value causes overflow.
+      overflow_error<ignore_error> // Ignore if argument value causes overflow.
       > ignore_overflow_policy;
 
-   boost::math::laplace_distribution<RealType, ignore_overflow_policy> L1(0, 1);
-   boost::math::laplace_distribution<RealType, ignore_overflow_policy> L2(1, 2);
-   // check pdf at x = +/- infinity
-   BOOST_CHECK_THROW(pdf(L1, +std::numeric_limits<RealType>::infinity()), std::domain_error);
-   BOOST_CHECK_THROW(pdf(L1, -std::numeric_limits<RealType>::infinity()), std::domain_error);
-   BOOST_CHECK_THROW(pdf(L2, +std::numeric_limits<RealType>::infinity()), std::domain_error);
-   BOOST_CHECK_THROW(pdf(L2, -std::numeric_limits<RealType>::infinity()), std::domain_error);
+   laplace_distribution<RealType> L01(0, 1);
+   // Compare random variate x = infinity with RealType max value, usually std::numeric_limits<RealType>::max().
+   using boost::math::tools::max_value;  // In case std::numeric_limits<RealType>::max() is not defined.
+   BOOST_CHECK_EQUAL(pdf(L01, +max_value<RealType>()), pdf(L01, +std::numeric_limits<RealType>::infinity()) );
+   BOOST_CHECK_EQUAL(pdf(L01, -max_value<RealType>()), pdf(L01, -std::numeric_limits<RealType>::infinity()) );
 
-   // check cdf at x = +/- infinity
-   BOOST_CHECK_THROW(cdf(L1, +std::numeric_limits<RealType>::infinity()), std::domain_error);
-   BOOST_CHECK_THROW(cdf(L1, -std::numeric_limits<RealType>::infinity()), std::domain_error);
-   BOOST_CHECK_THROW(cdf(L2, +std::numeric_limits<RealType>::infinity()), std::domain_error);
-   BOOST_CHECK_THROW(cdf(L2, -std::numeric_limits<RealType>::infinity()), std::domain_error);
+  if(std::numeric_limits<RealType>::has_infinity)
+  {
+   laplace_distribution<RealType, ignore_overflow_policy> L1(0, 1);
+   laplace_distribution<RealType, ignore_overflow_policy> L2(1, 2);
+   laplace_distribution<RealType> l01;
 
+   // Check pdf == 0 at x = +/- infinity.
+   BOOST_CHECK_EQUAL(pdf(L01, +std::numeric_limits<RealType>::infinity()), 0 );
+   BOOST_CHECK_EQUAL(pdf(L01, -std::numeric_limits<RealType>::infinity()), 0 );
 
-   // check quantile at p = 0, 1 which return infinity.
+   BOOST_CHECK_EQUAL(cdf(L01, +std::numeric_limits<RealType>::infinity()), 1 );
+   BOOST_CHECK_EQUAL(cdf(L01, -std::numeric_limits<RealType>::infinity()), 0 );
+   BOOST_CHECK_EQUAL(cdf(complement(L01, +std::numeric_limits<RealType>::infinity())), 0 );
+   BOOST_CHECK_EQUAL(cdf(complement(L01, -std::numeric_limits<RealType>::infinity())), 1 );
+
+   // Trac #9672 Feb 2014 x = infinity is now allowed.
+   //BOOST_CHECK_THROW(pdf(L1, +std::numeric_limits<RealType>::infinity()), std::domain_error);
+   //BOOST_CHECK_THROW(pdf(L1, -std::numeric_limits<RealType>::infinity()), std::domain_error);
+   //BOOST_CHECK_THROW(pdf(L2, +std::numeric_limits<RealType>::infinity()), std::domain_error);
+   //BOOST_CHECK_THROW(pdf(L2, -std::numeric_limits<RealType>::infinity()), std::domain_error);
+
+   // Check cdf at x = +/- infinity.
+   //BOOST_CHECK_THROW(cdf(L1, +std::numeric_limits<RealType>::infinity()), std::domain_error);
+   //BOOST_CHECK_THROW(cdf(L1, -std::numeric_limits<RealType>::infinity()), std::domain_error);
+   //BOOST_CHECK_THROW(cdf(L2, +std::numeric_limits<RealType>::infinity()), std::domain_error);
+   //BOOST_CHECK_THROW(cdf(L2, -std::numeric_limits<RealType>::infinity()), std::domain_error);
+
+   // Check quantile at p = 0, 1 which return infinity.
    BOOST_CHECK_EQUAL(quantile(L1, 0), -std::numeric_limits<RealType>::infinity() );
    BOOST_CHECK_EQUAL(quantile(L1, 1), +std::numeric_limits<RealType>::infinity() );
    BOOST_CHECK_EQUAL(quantile(L2, 0), -std::numeric_limits<RealType>::infinity() );
    BOOST_CHECK_EQUAL(quantile(L2, 1), +std::numeric_limits<RealType>::infinity() );
+  }
 }
 
 BOOST_AUTO_TEST_CASE( vs_GNU_Octave )
@@ -503,7 +525,6 @@ BOOST_AUTO_TEST_CASE( cdf_quantile_symmetry )
    test_cdf_quantile_symmetry<float>();
    test_cdf_quantile_symmetry<double>();
 }
-
 
 BOOST_AUTO_TEST_CASE( hazard_pdf_cdf_symmetry )
 {
@@ -537,6 +558,7 @@ BOOST_AUTO_TEST_CASE( bad_dist_parameters )
 
 BOOST_AUTO_TEST_CASE( extreme_function_arguments )
 {
+   BOOST_TEST_MESSAGE("extreme arguments");
    test_extreme_function_arguments<float>();
    test_extreme_function_arguments<double>();
 }

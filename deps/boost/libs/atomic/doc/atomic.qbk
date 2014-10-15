@@ -1,5 +1,6 @@
 [/
  / Copyright (c) 2009 Helge Bahmann
+ / Copyright (c) 2014 Andrey Semashev
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -7,9 +8,10 @@
 
 [library Boost.Atomic
     [quickbook 1.4]
-    [authors [Bahmann, Helge]]
+    [authors [Bahmann, Helge][Semashev, Andrey]]
     [copyright 2011 Helge Bahmann]
     [copyright 2012 Tim Blechmann]
+    [copyright 2013 Andrey Semashev]
     [id atomic]
     [dirname atomic]
     [purpose Atomic operations]
@@ -89,6 +91,7 @@ hierarchies may generally reorder memory references at will.
 As a consequence a program such as:
 
 [c++]
+
   int x = 0, int y = 0;
 
   thread1:
@@ -142,7 +145,7 @@ One can however also arrive at the same conclusion using
 at [^m.lock()]. If this is be thread1, then as a consequence,
 thread2 cannot succeed at [^m.lock()] before thread1 has executed
 [^m.unlock()], consequently A ['happens-before] B in this case.
-By symmetry, if thread2 succeeds at [^m.unlock()] first, we can
+By symmetry, if thread2 succeeds at [^m.lock()] first, we can
 conclude B ['happens-before] A.
 
 Since this already exhausts all options, we can conclude that
@@ -338,7 +341,52 @@ on the same or different atomic variables, or use a "stand-alone"
 
 [section:interface Programming interfaces]
 
+[section:configuration Configuration and building]
+
+The library contains header-only and compiled parts. The library is
+header-only for lock-free cases but requires a separate binary to
+implement the lock-based emulation. Users are able to detect whether
+linking to the compiled part is required by checking the
+[link atomic.interface.feature_macros feature macros].
+
+The following macros affect library behavior:
+
+[table
+    [[Macro] [Description]]
+    [[`BOOST_ATOMIC_NO_CMPXCHG16B`] [Affects 64-bit x86 MSVC builds. When defined,
+      the library assumes the target CPU does not support `cmpxchg16b` instruction used
+      to support 128-bit atomic operations. This is the case with some early 64-bit AMD CPUs,
+      all Intel CPUs and current AMD CPUs support this instruction. The library does not
+      perform runtime detection of this instruction, so running the code that uses 128-bit
+      atomics on such CPUs will result in crashes, unless this macro is defined. Note that
+      the macro does not affect GCC and compatible compilers because the library infers
+      this information from the compiler-defined macros.]]
+    [[`BOOST_ATOMIC_FORCE_FALLBACK`] [When defined, all operations are implemented with locks.
+      This is mostly used for testing and should not be used in real world projects.]]
+    [[`BOOST_ATOMIC_DYN_LINK` and `BOOST_ALL_DYN_LINK`] [Control library linking. If defined,
+      the library assumes dynamic linking, otherwise static. The latter macro affects all Boost
+      libraries, not just [*Boost.Atomic].]]
+    [[`BOOST_ATOMIC_NO_LIB` and `BOOST_ALL_NO_LIB`] [Control library auto-linking on Windows.
+      When defined, disables auto-linking. The latter macro affects all Boost libraries,
+      not just [*Boost.Atomic].]]
+]
+
+Besides macros, it is important to specify the correct compiler options for the target CPU.
+With GCC and compatible compilers this affects whether particular atomic operations are
+lock-free or not.
+
+Boost building process is described in the [@http://www.boost.org/doc/libs/release/more/getting_started/ Getting Started guide].
+For example, you can build [*Boost.Atomic] with the following command line:
+
+[pre
+    bjam --with-atomic variant=release instruction-set=core2 stage
+]
+
+[endsect]
+
 [section:interface_memory_order Memory order]
+
+    #include <boost/memory_order.hpp>
 
 The enumeration [^boost::memory_order] defines the following
 values to represent memory ordering constraints:
@@ -351,7 +399,8 @@ values to represent memory ordering constraints:
       operation. This constraint is suitable only when
       either a) further operations do not depend on the outcome
       of the atomic operation or b) ordering is enforced through
-      stand-alone `atomic_thread_fence` operations
+      stand-alone `atomic_thread_fence` operations. The operation on
+      the atomic value itself is still atomic though.
     ]]
     [[`memory_order_release`] [
       Perform `release` operation. Informally speaking,
@@ -364,8 +413,8 @@ values to represent memory ordering constraints:
       before this point.
     ]]
     [[`memory_order_consume`] [
-      Perform `consume` operation. More restrictive (and
-      usually more efficient) than `memory_order_acquire`
+      Perform `consume` operation. More relaxed (and
+      on some architectures more efficient) than `memory_order_acquire`
       as it only affects succeeding operations that are
       computationally-dependent on the value retrieved from
       an atomic variable.
@@ -373,7 +422,7 @@ values to represent memory ordering constraints:
     [[`memory_order_acq_rel`] [Perform both `release` and `acquire` operation]]
     [[`memory_order_seq_cst`] [
       Enforce sequential consistency. Implies `memory_order_acq_rel`, but
-      additional enforces total order for all operations such qualified.
+      additionally enforces total order for all operations such qualified.
     ]]
 ]
 
@@ -384,20 +433,20 @@ of the various ordering constraints.
 
 [section:interface_atomic_object Atomic objects]
 
+    #include <boost/atomic/atomic.hpp>
+
 [^boost::atomic<['T]>] provides methods for atomically accessing
 variables of a suitable type [^['T]]. The type is suitable if
-it satisfies one of the following constraints:
+it is /trivially copyable/ (3.9/9 \[basic.types\]). Following are
+examples of the types compatible with this requirement:
 
-* it is an integer, boolean, enum or pointer type
-* it is any other data-type ([^class] or [^struct]) that has
-  a non-throwing default constructor, that is copyable via
-  [^memcpy] and comparable via [^memcmp].
+* a scalar type (e.g. integer, boolean, enum or pointer type)
+* a [^class] or [^struct] that has no non-trivial copy or move
+  constructors or assignment operators, has a trivial destructor,
+  and that is comparable via [^memcmp].
 
-Note that all classes having a trivial default constructor,
-no destructor and no virtual methods satisfy the second condition
-according to C++98. On a given platform, other data-types ['may]
-also satisfy this constraint, however you should exercise
-caution as the behaviour becomes implementation-defined. Also be warned
+Note that classes with virtual functions or virtual base classes
+do not satisfy the requirements. Also be warned
 that structures with "padding" between data members may compare
 non-equal via [^memcmp] even though all members are equal.
 
@@ -550,6 +599,8 @@ constraint.
 
 [section:interface_fences Fences]
 
+    #include <boost/atomic/fences.hpp>
+
 [table
     [[Syntax] [Description]]
     [
@@ -565,6 +616,8 @@ constraint.
 [endsect]
 
 [section:feature_macros Feature testing macros]
+
+    #include <boost/atomic/capabilities.hpp>
 
 [*Boost.Atomic] defines a number of macros to allow compile-time
 detection whether an atomic data type is implemented using
@@ -617,10 +670,6 @@ sometimes require a lock, and to `2` if they are always lock-free:
       [Indicate whether `atomic<long long>` (including signed/unsigned variants) is lock-free]
     ]
     [
-      [`BOOST_ATOMIC_INT128_LOCK_FREE`]
-      [Indicate whether `atomic<int128_type>` (including signed/unsigned variants) is lock-free. This macro is a non-standard extension.]
-    ]
-    [
       [`BOOST_ATOMIC_ADDRESS_LOCK_FREE` or `BOOST_ATOMIC_POINTER_LOCK_FREE`]
       [Indicate whether `atomic<T *>` is lock-free]
     ]
@@ -633,6 +682,43 @@ sometimes require a lock, and to `2` if they are always lock-free:
       [Indicate whether `atomic_signal_fence` function is lock-free]
     ]
 ]
+
+In addition to these standard macros, [*Boost.Atomic] also defines a number of extension macros,
+which can also be useful. Like the standard ones, these macros are defined to values `0`, `1` and `2`
+to indicate whether the corresponding operations are lock-free or not.
+
+[table
+    [[Macro] [Description]]
+    [
+      [`BOOST_ATOMIC_INT8_LOCK_FREE`]
+      [Indicate whether `atomic<int8_type>` is lock-free.]
+    ]
+    [
+      [`BOOST_ATOMIC_INT16_LOCK_FREE`]
+      [Indicate whether `atomic<int16_type>` is lock-free.]
+    ]
+    [
+      [`BOOST_ATOMIC_INT32_LOCK_FREE`]
+      [Indicate whether `atomic<int32_type>` is lock-free.]
+    ]
+    [
+      [`BOOST_ATOMIC_INT64_LOCK_FREE`]
+      [Indicate whether `atomic<int64_type>` is lock-free.]
+    ]
+    [
+      [`BOOST_ATOMIC_INT128_LOCK_FREE`]
+      [Indicate whether `atomic<int128_type>` is lock-free.]
+    ]
+    [
+      [`BOOST_ATOMIC_NO_ATOMIC_FLAG_INIT`]
+      [Defined after including `atomic_flag.hpp`, if the implementation
+      does not support the `BOOST_ATOMIC_FLAG_INIT` macro for static
+      initialization of `atomic_flag`. This macro is typically defined
+      for pre-C++11 compilers.]
+    ]
+]
+
+In the table above, `intN_type` is a type that fits storage of contiguous `N` bits, suitably aligned for atomic operations.
 
 [endsect]
 
@@ -683,7 +769,7 @@ limitations that cannot be lifted without compiler support:
   cases this may result in a less efficient code than a C++11 compiler
   could generate.
 * [*No interprocess fallback]: using `atomic<T>` in shared memory only works
-  correctly, if `atomic<T>::is_lock_free() == true`
+  correctly, if `atomic<T>::is_lock_free() == true`.
 
 [endsect]
 
@@ -728,11 +814,14 @@ implementation behaves as expected:
 [*Boost.Atomic] has been tested on and is known to work on
 the following compilers/platforms:
 
-* gcc 4.x: i386, x86_64, ppc32, ppc64, armv5, armv6, alpha
-* Visual Studio Express 2008/Windows XP, i386
+* gcc 4.x: i386, x86_64, ppc32, ppc64, sparcv9, armv6, alpha
+* Visual Studio Express 2008/Windows XP, x86, x64, ARM
 
-If you have an unsupported platform, contact me and I will
-work to add support for it.
+[endsect]
+
+[section:acknowledgements Acknowledgements]
+
+* Adam Wulkiewicz created the logo used on the [@https://github.com/boostorg/atomic GitHub project page]. The logo was taken from his [@https://github.com/awulkiew/boost-logos collection] of Boost logos.
 
 [endsect]
 

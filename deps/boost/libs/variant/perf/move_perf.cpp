@@ -1,4 +1,4 @@
-//  (C) Copyright Antony Polukhin 2012.
+//  (C) Copyright Antony Polukhin 2012-2014.
 //  Use, modification and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -75,7 +75,7 @@ static void do_test(bool do_count_cleanup_time = false) {
     {
         scope sc("boost::variant(variant&&) moving speed");
         for (std::size_t i = 0; i < c_run_count; ++i) {
-            data_to.push_back(std::move(data_from[i]));
+            data_to.push_back(boost::move(data_from[i]));
         }
 
         if (do_count_cleanup_time) {
@@ -108,7 +108,7 @@ static void do_test(bool do_count_cleanup_time = false) {
     {
         scope sc("boost::variant=(variant&&) moving speed on same types");
         for (std::size_t i = 0; i < c_run_count; ++i) {
-            data_to[i] = std::move(data_from[i]); 
+            data_to[i] = boost::move(data_from[i]); 
         }
 
         if (do_count_cleanup_time) {
@@ -142,7 +142,7 @@ static void do_test(bool do_count_cleanup_time = false) {
     {
         scope sc("boost::variant=(variant&&) moving speed on different types");
         for (std::size_t i = 0; i < c_run_count; ++i) {
-            data_to[i] = std::move(data_from[i]); 
+            data_to[i] = boost::move(data_from[i]); 
         }
 
         if (do_count_cleanup_time) {
@@ -176,7 +176,7 @@ static void do_test(bool do_count_cleanup_time = false) {
     {
         scope sc("boost::variant=(variant&&) moving speed on different types II");
         for (std::size_t i = 0; i < c_run_count; ++i) {
-            data_to[i] = std::move(data_from[i]); 
+            data_to[i] = boost::move(data_from[i]); 
         }
 
         if (do_count_cleanup_time) {
@@ -210,7 +210,7 @@ static void do_test(bool do_count_cleanup_time = false) {
     {
         scope sc("boost::variant=(T&&) moving speed");
         for (std::size_t i = 0; i < c_run_count; ++i) {
-            data_to[i] = std::move(s2[i]);
+            data_to[i] = boost::move(s2[i]);
         }
 
         if (do_count_cleanup_time) {
@@ -222,6 +222,13 @@ static void do_test(bool do_count_cleanup_time = false) {
 
 
 int main () {
+
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    std::cout << "# Running tests in C++11 mode (with rvalues).\n";
+#else
+    std::cout << "# Running tests in C++03 mode (without rvalues).\n";
+#endif
+
     do_test(false);
     do_test(true);
 }

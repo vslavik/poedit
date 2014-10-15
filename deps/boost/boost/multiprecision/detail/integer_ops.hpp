@@ -270,6 +270,20 @@ struct double_precision_type
 };
 
 //
+// If the exponent is a signed integer type, then we need to
+// check the value is positive:
+//
+template <class Backend>
+inline void check_sign_of_backend(const Backend& v, const mpl::true_)
+{
+   if(eval_get_sign(v) < 0)
+   {
+      BOOST_THROW_EXCEPTION(std::runtime_error("powm requires a positive exponent."));
+   }
+}
+template <class Backend>
+inline void check_sign_of_backend(const Backend&, const mpl::false_){}
+//
 // Calculate (a^p)%c:
 //
 template <class Backend>
@@ -283,6 +297,8 @@ void eval_powm(Backend& result, const Backend& a, const Backend& p, const Backen
 
    typedef typename double_precision_type<Backend>::type double_type;
    typedef typename boost::multiprecision::detail::canonical<unsigned char, double_type>::type ui_type;
+
+   check_sign_of_backend(p, mpl::bool_<std::numeric_limits<number<Backend> >::is_signed>());
    
    double_type x, y(a), b(p), t;
    x = ui_type(1u);
@@ -315,6 +331,8 @@ void eval_powm(Backend& result, const Backend& a, const Backend& p, Integer c)
    using default_ops::eval_multiply;
    using default_ops::eval_modulus;
    using default_ops::eval_right_shift;
+
+   check_sign_of_backend(p, mpl::bool_<std::numeric_limits<number<Backend> >::is_signed>());
 
    if(eval_get_sign(p) < 0)
    {

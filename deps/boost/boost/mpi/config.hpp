@@ -85,12 +85,12 @@
  *                                                                           *
  *****************************************************************************/
 
-#if defined(BOOST_HAS_DECLSPEC) && (defined(BOOST_MPI_DYN_LINK) || defined(BOOST_ALL_DYN_LINK)) && !defined(BOOST_MPI_STATIC_LINK)
+#if (defined(BOOST_MPI_DYN_LINK) || defined(BOOST_ALL_DYN_LINK)) && !defined(BOOST_MPI_STATIC_LINK)
 #  if defined(BOOST_MPI_SOURCE)
-#     define BOOST_MPI_DECL __declspec(dllexport)
+#     define BOOST_MPI_DECL BOOST_SYMBOL_EXPORT
 #     define BOOST_MPI_BUILD_DLL
 #  else
-#     define BOOST_MPI_DECL __declspec(dllimport)
+#     define BOOST_MPI_DECL BOOST_SYMBOL_IMPORT
 #  endif
 #endif
 

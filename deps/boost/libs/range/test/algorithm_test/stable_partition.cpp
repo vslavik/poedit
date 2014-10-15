@@ -71,6 +71,8 @@ namespace boost_range_test_algorithm_stable_partition
 
                 result_t result2 = boost::stable_partition<return_type>(
                                     boost::make_iterator_range(cont2), policy.pred());
+                                    
+                boost::ignore_unused_variable_warning(result2);
 
                 BOOST_CHECK_EQUAL_COLLECTIONS( cont2.begin(), cont2.end(),
                                                cont.begin(), cont.end() );

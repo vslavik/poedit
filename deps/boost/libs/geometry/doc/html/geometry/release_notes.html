@@ -28,6 +28,133 @@
 </h2></div></div></div>
 <h4>
 <a name="geometry.release_notes.h0"></a>
+      <span class="phrase"><a name="geometry.release_notes.boost_1_56"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_56">Boost
+      1.56</a>
+    </h4>
+<p>
+      <span class="bold"><strong>Additional functionality</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          New algorithm buffer for inflating/deflating geometries (buffer itself
+          already existed but that was only to enlarge a box)
+        </li>
+<li class="listitem">
+          New algorithm remove_spikes, algorithm to remove spikes from a ring, polygon
+          or multi_polygon.
+        </li>
+<li class="listitem">
+          New algorithm point_on_surface, generating a point lying on the surface
+          (interior) of the polygon
+        </li>
+<li class="listitem">
+          New algorithm is_simple, returning true if a geometry is simple according
+          to the OGC standard
+        </li>
+<li class="listitem">
+          New algorithm is_valid, returning true if a geometry is valid according
+          to the OGC standard
+        </li>
+<li class="listitem">
+          New algorithm crosses for checking this spatial relation according to the
+          OGC standard
+        </li>
+<li class="listitem">
+          The set operation algorithms (difference, intersection, sym_difference
+          and union) now support as input pairs of pointlike or linear geometries
+        </li>
+<li class="listitem">
+          The distance and comparable_distance algorithms now support all pairs of
+          geometry combinations
+        </li>
+<li class="listitem">
+          The spatial relations which didn't support it (covered_by, touches, within,
+          etc.) now support as input linear and/or areal geometries
+        </li>
+<li class="listitem">
+          The support for boost::variants as input geometries in various algorithms
+        </li>
+<li class="listitem">
+          The rtree support for indexing segments
+        </li>
+<li class="listitem">
+          The rtree nearest() predicate support for arbitrary geometries
+        </li>
+</ul></div>
+<p>
+      <span class="bold"><strong>Improvements</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+          The rtree pack-creation algorithm optimization (thanks to Lu Wang)
+        </li></ul></div>
+<p>
+      <span class="bold"><strong>Solved tickets</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/8310" target="_top">8310</a>
+          Wrong results with overlapping polygons (fixed using point_on_surface for
+          disjoint)
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/9081" target="_top">9081</a>
+          Booleans create self-intersecting polygons from non-self-intersecting polygons
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/9245" target="_top">9245</a>
+          Check for process errors in make_qbk.py
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/9563" target="_top">9563</a>
+          (Sym)difference not successful, fixed by rescaling to robust type
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/9628" target="_top">9628</a>
+          Wrong result of within() due to the winding strategy not working correctly
+          for nearly-horizontal segments
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/9871" target="_top">9871</a>
+          Remove spike in polygon with only a spike
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/9947" target="_top">9947</a>
+          Missing info about WKT in documentation
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/10019" target="_top">10019</a>
+          Difference of Linestring and Box returns their intersection
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/10077" target="_top">10077</a>
+          Wrong types in concept checks in boost/geometry/arithmetic/arithmetic.hpp
+        </li>
+</ul></div>
+<p>
+      <span class="bold"><strong>Bugfixes</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          intersects(polygon) could return a self-intersection-point for its closing
+          point, fixed
+        </li>
+<li class="listitem">
+          equals() could return invalid results for non-simple linear geometries
+          according to the OGC standard, fixed
+        </li>
+<li class="listitem">
+          touches() didn't work properly for CCW areal geomtries, fixed
+        </li>
+<li class="listitem">
+          rtree nearest queries returned wrong elements for non-cartesian coordinate
+          systems, fixed
+        </li>
+<li class="listitem">
+          rtree crashed in some cases when used with Interprocess allocator, fixed
+        </li>
+</ul></div>
+<h4>
+<a name="geometry.release_notes.h1"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_55"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_55">Boost
       1.55</a>
     </h4>
@@ -57,10 +184,18 @@
 <p>
       <span class="bold"><strong>Bugfixes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
           In some cases .back() or .clear() was called, violating the usage of Concepts.
           Fixed for the reported cases
-        </li></ul></div>
+        </li>
+<li class="listitem">
+          Use consistent side information in cart_intersect and get_turn_info and
+          handle_tangencies and enrich_intersection_info. This is done by switching
+          to integer (if necessary) for the specific 6 points only, zooming in on
+          the 4 or 3 segments
+        </li>
+</ul></div>
 <p>
       <span class="bold"><strong>Solved tickets</strong></span>
     </p>
@@ -118,7 +253,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="geometry.release_notes.h1"></a>
+<a name="geometry.release_notes.h2"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_54"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_54">Boost
       1.54</a>
     </h4>
@@ -203,7 +338,7 @@
           length, num_points)
         </li></ul></div>
 <h4>
-<a name="geometry.release_notes.h2"></a>
+<a name="geometry.release_notes.h3"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_53"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_53">Boost
       1.53</a>
     </h4>
@@ -258,7 +393,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="geometry.release_notes.h3"></a>
+<a name="geometry.release_notes.h4"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_51"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_51">Boost
       1.51</a>
     </h4>
@@ -291,7 +426,7 @@
           spherical distance, fixed (by patch of Karsten Ahnert)
         </li></ul></div>
 <h4>
-<a name="geometry.release_notes.h4"></a>
+<a name="geometry.release_notes.h5"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_50"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_50">Boost
       1.50</a>
     </h4>
@@ -346,7 +481,7 @@
           added algorithm "touches" (OGC SF compliant) for *polygon/*polygon
         </li></ul></div>
 <h4>
-<a name="geometry.release_notes.h5"></a>
+<a name="geometry.release_notes.h6"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_49"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_49">Boost
       1.49</a>
     </h4>
@@ -466,7 +601,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="geometry.release_notes.h6"></a>
+<a name="geometry.release_notes.h7"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_48"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_48">Boost
       1.48</a>
     </h4>
@@ -558,7 +693,7 @@
           Basic (limited) support for Boost.Rational
         </li></ul></div>
 <h4>
-<a name="geometry.release_notes.h7"></a>
+<a name="geometry.release_notes.h8"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_47"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_47">Boost
       1.47</a>
     </h4>
@@ -568,7 +703,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2014 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam
+      Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

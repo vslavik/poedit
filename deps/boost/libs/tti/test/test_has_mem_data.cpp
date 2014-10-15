@@ -21,6 +21,13 @@ int main()
   BOOST_TEST((AOther<AnotherType,AType>::value));
   BOOST_TEST((BOOST_TTI_HAS_MEMBER_DATA_GEN(ONestStr)<AnotherType,AType::AStructType>::value));
   
+  // Test enclosing class as non-class type
+  
+  BOOST_TEST((!CMember<bool,bool>::value));
+  BOOST_TEST((!BOOST_TTI_HAS_MEMBER_DATA_GEN(AnInt)<int,long>::value));
+  BOOST_TEST((!BOOST_TTI_HAS_MEMBER_DATA_GEN(IntBT)<AType &,AType::BType>::value));
+  BOOST_TEST((!AOther<double *,AType>::value));
+  
   return boost::report_errors();
 
   }

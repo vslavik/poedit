@@ -53,6 +53,8 @@ int test_allocator(const T& i)
    // and isn't currently required by anything in boost
    // so don't test for now...
    // a3 = a2;
+
+   (void)a2;
    return 0;
 }
 

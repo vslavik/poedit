@@ -9,6 +9,7 @@
 //////////////////////////////////////////////////////////////////////////////
 #include <boost/interprocess/detail/config_begin.hpp>
 #include <boost/interprocess/detail/intermodule_singleton.hpp>
+#include <boost/interprocess/detail/portable_intermodule_singleton.hpp>
 #include <iostream>
 
 using namespace boost::interprocess;
@@ -46,20 +47,20 @@ class MyThrowingClass
 };
 
 
-template < template<class T, bool LazyInit = false, bool Phoenix = true> class IntermoduleType >
+template < template<class T, bool LazyInit, bool Phoenix> class IntermoduleType >
 int intermodule_singleton_test()
 {
    bool exception_thrown = false;
    bool exception_2_thrown = false;
 
    try{
-      IntermoduleType<MyThrowingClass, true>::get();
+      IntermoduleType<MyThrowingClass, true, false>::get();
    }
    catch(int &){
       exception_thrown = true;
       //Second try
       try{
-         IntermoduleType<MyThrowingClass, true>::get();
+         IntermoduleType<MyThrowingClass, true, false>::get();
       }
       catch(interprocess_exception &){
          exception_2_thrown = true;
@@ -70,15 +71,15 @@ int intermodule_singleton_test()
       return 1;
    }
 
-   MyClass & mc = IntermoduleType<MyClass>::get();
+   MyClass & mc = IntermoduleType<MyClass, true, false>::get();
    mc.shout();
-   IntermoduleType<MyClass>::get().shout();
-   IntermoduleType<MyDerivedClass>::get().shout();
+   IntermoduleType<MyClass, true, false>::get().shout();
+   IntermoduleType<MyDerivedClass, true, false>::get().shout();
 
    //Second try
    exception_2_thrown = false;
    try{
-      IntermoduleType<MyThrowingClass, true>::get();
+      IntermoduleType<MyThrowingClass, true, false>::get();
    }
    catch(interprocess_exception &){
       exception_2_thrown = true;
@@ -221,7 +222,7 @@ class LogDeadReferenceUser
    }
 };
 
-template < template<class T, bool LazyInit = false, bool Phoenix = true> class IntermoduleType >
+template < template<class T, bool LazyInit, bool Phoenix> class IntermoduleType >
 int phoenix_singleton_test()
 {
    typedef int DummyType;
@@ -253,7 +254,7 @@ int phoenix_singleton_test()
    return 0;
 }
 
-template < template<class T, bool LazyInit = false, bool Phoenix = true> class IntermoduleType >
+template < template<class T, bool LazyInit, bool Phoenix> class IntermoduleType >
 int dead_reference_singleton_test()
 {
    typedef int DummyType;
@@ -279,13 +280,13 @@ int dead_reference_singleton_test()
 }
 
 //reduce name length
-template<typename C, bool LazyInit = true, bool Phoenix = true>
+template<typename C, bool LazyInit, bool Phoenix>
 class port_singleton
    : public ipcdetail::portable_intermodule_singleton<C, LazyInit, Phoenix>
 {};
 
 #ifdef BOOST_INTERPROCESS_WINDOWS
-template<typename C, bool LazyInit = true, bool Phoenix = true>
+template<typename C, bool LazyInit, bool Phoenix>
 class win_singleton
    : public ipcdetail::windows_intermodule_singleton< C, LazyInit, Phoenix>
 {};
@@ -303,11 +304,14 @@ int main ()
    }
    #endif
 
+   //Only few platforms support this
+   #ifdef BOOST_INTERPROCESS_ATEXIT_CALLABLE_FROM_ATEXIT
    //Phoenix singletons are tested after main ends,
    //LogPhoenixTester does the work
    phoenix_singleton_test<port_singleton>();
    #ifdef BOOST_INTERPROCESS_WINDOWS
    phoenix_singleton_test<win_singleton>();
+   #endif
    #endif
 
    //Dead reference singletons are tested after main ends,
@@ -321,4 +325,3 @@ int main ()
 }
 
 #include <boost/interprocess/detail/config_end.hpp>
-

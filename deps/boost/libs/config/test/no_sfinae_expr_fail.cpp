@@ -6,7 +6,7 @@
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/config for the most recent version.//
-//  Revision $Id: no_sfinae_expr_fail.cpp 56678 2009-10-09 16:16:02Z johnmaddock $
+//  Revision $Id$
 //
 
 

@@ -1,0 +1,81 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Rationale</title>
+<link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
+<link rel="up" href="../align.html" title="Chapter&#160;2.&#160;Boost.Align">
+<link rel="prev" href="../align.html" title="Chapter&#160;2.&#160;Boost.Align">
+<link rel="next" href="tutorial.html" title="Tutorial">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../boost.png"></td>
+<td align="center"><a href="../../../index.html">Home</a></td>
+<td align="center"><a href="../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../align.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../align.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tutorial.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="align.rationale"></a><a class="link" href="rationale.html" title="Rationale">Rationale</a>
+</h2></div></div></div>
+<p>
+      C++11 added the ability to specify increased alignment (over-alignment) for
+      class types. Unfortunately, <code class="computeroutput"><span class="special">::</span><span class="keyword">operator</span> <span class="keyword">new</span></code>
+      allocation functions, <code class="computeroutput"><span class="keyword">new</span></code> expressions,
+      and the default allocator, <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">allocator</span></code>,
+      do not support dynamic memory allocation of over-aligned data.
+    </p>
+<p>
+      The <span class="bold"><strong>align</strong></span> function can be used to align a
+      pointer and is provided for implementations which do not yet provide <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">align</span></code>.
+    </p>
+<p>
+      The <span class="bold"><strong>aligned_alloc</strong></span> function can be used in
+      place of <code class="computeroutput"><span class="special">::</span><span class="keyword">operator</span>
+      <span class="keyword">new</span></code> to specify the alignment of the
+      memory allocated.
+    </p>
+<p>
+      The <span class="bold"><strong>aligned_allocator</strong></span> class template can be
+      used in place of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">allocator</span></code> as an alignment-aware default allocator.
+    </p>
+<p>
+      The <span class="bold"><strong>aligned_allocator_adaptor</strong></span> class template
+      can be used to adapt any allocator into an alignment-aware allocator.
+    </p>
+<p>
+      The <span class="bold"><strong>aligned_delete</strong></span> class can be used in place
+      of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">default_delete</span></code> to destroy and free objects
+      allocated with <code class="computeroutput"><span class="identifier">aligned_alloc</span></code>.
+    </p>
+<p>
+      The <span class="bold"><strong>alignment_of</strong></span> type trait gets the alignment
+      of a type, and is provided for implementations without <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">alignment_of</span></code>.
+    </p>
+<p>
+      The <span class="bold"><strong>is_aligned</strong></span> function can be used to compare
+      the alignment value of a pointer.
+    </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Glen Fernandes<p>
+        Distributed under the <a href="http://boost.org/LICENSE_1_0.txt" target="_top">Boost
+        Software License, Version 1.0</a>.
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../align.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../align.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tutorial.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

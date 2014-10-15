@@ -14,7 +14,7 @@
 * [*Precondition:] The `value_type` of the range is an instantiation of `std::pair`.
 * [*Postcondition:] For all elements `x` in the returned range, `x` is the result of `y.first` where `y` is the corresponding element in the original range.
 * [*Range Category:] __single_pass_range__
-* [*Range Return Type:] `boost::select_first_range<typeof(rng)>`
+* [*Range Return Type:] `boost::select_first_range<decltype(rng)>`
 * [*Returned Range Category:] The range category of `rng`.
 
 [section:map_keys_example map_keys example]

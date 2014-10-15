@@ -15,6 +15,19 @@ Currently open issues can be viewed [@https://svn.boost.org/trac/boost/query?sta
 
 All issues including closed ones can be viewed [@https://svn.boost.org/trac/boost/query?status=assigned&status=closed&status=new&status=reopened&component=regex&order=priority&col=id&col=summary&col=status&col=type&col=milestone&col=component here].
 
+[h4 Boost.Regex-5.0.0 (Boost-1.56.0)]
+
+* Moved to library-specific version number post the move to Git.  And since we have one (minor) breaking change
+this gets bumped up from v4 to v5.
+* [*Breaking change:] corrected behavior of `basic_regex<>::mark_count()` to match existing documentation,
+`basic_regex<>::subexpression(n)` changed to match, see [@https://svn.boost.org/trac/boost/ticket/9227 #9227]
+* Fixed issue [@https://svn.boost.org/trac/boost/ticket/8903 #8903].
+* Fixed documentation typos from [@https://svn.boost.org/trac/boost/ticket/9283 #9283].
+* Fixed bug in collation code that failed if the locale generated collation strings with embedded nul's,
+see [@https://svn.boost.org/trac/boost/ticket/9451 #9451].
+* Apply patch for unusual thread usage (no statically initiallized mutexes), see [@https://svn.boost.org/trac/boost/ticket/9461 #9461].
+* Added better checks for invalid UTF-8 sequences, see [@https://svn.boost.org/trac/boost/ticket/9473 #9473].
+
 [h4 Boost-1.54]
 
 Fixed issue [@https://svn.boost.org/trac/boost/ticket/8569 #8569].
@@ -119,9 +132,9 @@ and
 * Fixed configuration setup to allow building with VC7.1 - STLport-4.6.2 when using /Zc:wchar_t.
 * Moved declarations class-inline in static_mutex.hpp so that SGI Irix compiler can cope.
 * Added needed standard library #includes to fileiter.hpp, regex_workaround.hpp and cpp_regex_traits.hpp.
-* Fixed a bug where non-greedy repeats could in certain strange curcumstances repeat more times than their maximum value.
+* Fixed a bug where non-greedy repeats could in certain strange circumstances repeat more times than their maximum value.
 * Fixed the value returned by basic_regex<>::empty() from a default constructed object.
-* Changed the deffinition of regex_error to make it backwards compatible with Boost-1.32.0.
+* Changed the definition of regex_error to make it backwards compatible with Boost-1.32.0.
 * Disabled external templates for Intel C++ 8.0 and earlier - otherwise unresolved references can occur.
 * Rewritten extern template code for gcc so that only specific member functions are exported: otherwise strange unresolved references can occur when linking and mixing debug and non-debug code.
 * Initialise all the data members of the unicode_iterators: this keeps gcc from issuing needless warnings.

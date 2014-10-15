@@ -7,6 +7,7 @@
 #if !defined(FUSION_MAP_07212005_1106)
 #define FUSION_MAP_07212005_1106
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/support/pair.hpp>
 #include <boost/fusion/support/category_of.hpp>
 #include <boost/fusion/support/detail/access.hpp>
@@ -28,7 +29,7 @@
 #include <boost/fusion/container/map/detail/cpp03/preprocessed/map.hpp>
 #else
 #if defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "detail/preprocessed/map" FUSION_MAX_MAP_SIZE_STR ".hpp")
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/map" FUSION_MAX_MAP_SIZE_STR ".hpp")
 #endif
 
 /*=============================================================================
@@ -64,29 +65,35 @@ namespace boost { namespace fusion
 
         typedef typename storage_type::size size;
 
+        BOOST_FUSION_GPU_ENABLED
         map()
             : data() {}
 
         template <typename Sequence>
+        BOOST_FUSION_GPU_ENABLED
         map(Sequence const& rhs)
             : data(rhs) {}
 
         #include <boost/fusion/container/map/detail/cpp03/map_forward_ctor.hpp>
 
         template <typename T>
+        BOOST_FUSION_GPU_ENABLED
         map& operator=(T const& rhs)
         {
             data = rhs;
             return *this;
         }
 
+        BOOST_FUSION_GPU_ENABLED
         map& operator=(map const& rhs)
         {
             data = rhs.data;
             return *this;
         }
 
+        BOOST_FUSION_GPU_ENABLED
         storage_type& get_data() { return data; }
+        BOOST_FUSION_GPU_ENABLED
         storage_type const& get_data() const { return data; }
 
     private:

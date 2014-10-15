@@ -18,7 +18,8 @@ void dynamic_interval_ctor_4_ordered_types()
     BOOST_CHECK_EQUAL(icl::lower(IntervalT()), icl::identity_element<T>::value());
     BOOST_CHECK_EQUAL(icl::upper(IntervalT()), icl::identity_element<T>::value());
 
-    IntervalT itv = IntervalT(icl::identity_element<T>::value(), icl::identity_element<T>::value());
+    IntervalT empty_itv = IntervalT(icl::identity_element<T>::value(), icl::identity_element<T>::value());
+    BOOST_CHECK_EQUAL(IntervalT(), empty_itv);
     BOOST_CHECK_EQUAL(IntervalT(), IntervalT(icl::identity_element<T>::value(), icl::identity_element<T>::value()));
     BOOST_CHECK_EQUAL(IntervalT(), IntervalT(icl::identity_element<T>::value(), icl::identity_element<T>::value(), interval_bounds::right_open()));
 }

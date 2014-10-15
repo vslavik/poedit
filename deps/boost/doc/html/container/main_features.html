@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../container.html" title="Chapter&#160;7.&#160;Boost.Container">
-<link rel="prev" href="../container.html" title="Chapter&#160;7.&#160;Boost.Container">
+<link rel="up" href="../container.html" title="Chapter&#160;9.&#160;Boost.Container">
+<link rel="prev" href="../container.html" title="Chapter&#160;9.&#160;Boost.Container">
 <link rel="next" href="exception_handling.html" title="Boost.Container and C++ exceptions">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -158,7 +158,7 @@
    <span class="identifier">l</span><span class="special">.</span><span class="identifier">emplace</span><span class="special">(</span><span class="identifier">l</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="number">0</span><span class="special">);</span>
    <span class="identifier">assert</span><span class="special">(</span><span class="identifier">l</span><span class="special">.</span><span class="identifier">size</span><span class="special">()</span> <span class="special">==</span> <span class="number">1</span><span class="special">);</span>
 
-   <span class="comment">//A new element will be built calling the default constructor</span>
+   <span class="comment">//A new element will be value initialized</span>
    <span class="identifier">l</span><span class="special">.</span><span class="identifier">emplace</span><span class="special">(</span><span class="identifier">l</span><span class="special">.</span><span class="identifier">begin</span><span class="special">());</span>
    <span class="identifier">assert</span><span class="special">(</span><span class="identifier">l</span><span class="special">.</span><span class="identifier">size</span><span class="special">()</span> <span class="special">==</span> <span class="number">2</span><span class="special">);</span>
    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
@@ -227,9 +227,16 @@
         Other functions (...) 2. the effects are undefined in the following cases:
         (...) In particular - if an incomplete type (3.9) is used as a template argument
         when instantiating a template component, unless specifically allowed for
-        that component</em></span></span>&#8221;</span>. Fortunately <span class="bold"><strong>Boost.Container</strong></span>
-        containers are designed to support type erasure and recursive types, so let's
-        see some examples:
+        that component</em></span></span>&#8221;</span>.
+      </p>
+<p>
+        Fortunately all <span class="bold"><strong>Boost.Container</strong></span> containers
+        except <code class="computeroutput"><a class="link" href="../boost/container/static_vector.html" title="Class template static_vector">static_vector</a></code>
+        and <code class="computeroutput"><a class="link" href="../boost/container/basic_string.html" title="Class template basic_string">basic_string</a></code>
+        are designed to support incomplete types. <code class="computeroutput"><a class="link" href="../boost/container/static_vector.html" title="Class template static_vector">static_vector</a></code>
+        is special because it statically allocates memory for <code class="computeroutput"><span class="identifier">value_type</span></code>
+        and this requires complete types and <code class="computeroutput"><a class="link" href="../boost/container/basic_string.html" title="Class template basic_string">basic_string</a></code>
+        implements Small String Optimization which also requires complete types.
       </p>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
@@ -237,15 +244,16 @@
         containers</a>
 </h4></div></div></div>
 <p>
-          All containers offered by <span class="bold"><strong>Boost.Container</strong></span>
-          can be used to define recursive containers:
+          Most <span class="bold"><strong>Boost.Container</strong></span> containers can be
+          used to define recursive containers:
         </p>
 <p>
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">container</span><span class="special">/</span><span class="identifier">vector</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">container</span><span class="special">/</span><span class="identifier">stable_vector</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">container</span><span class="special">/</span><span class="identifier">deque</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">container</span><span class="special">/</span><span class="identifier">list</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">container</span><span class="special">/</span><span class="identifier">map</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">container</span><span class="special">/</span><span class="identifier">stable_vector</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">container</span><span class="special">/</span><span class="identifier">string</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
 <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">container</span><span class="special">;</span>
@@ -255,6 +263,10 @@
    <span class="keyword">int</span>               <span class="identifier">i_</span><span class="special">;</span>
    <span class="comment">//A vector holding still undefined class 'data'</span>
    <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">data</span><span class="special">&gt;</span>      <span class="identifier">v_</span><span class="special">;</span>
+   <span class="comment">//A stable_vector holding still undefined class 'data'</span>
+   <span class="identifier">stable_vector</span><span class="special">&lt;</span><span class="identifier">data</span><span class="special">&gt;</span> <span class="identifier">sv_</span><span class="special">;</span>
+   <span class="comment">//A stable_vector holding still undefined class 'data'</span>
+   <span class="identifier">deque</span><span class="special">&lt;</span><span class="identifier">data</span><span class="special">&gt;</span> <span class="identifier">d_</span><span class="special">;</span>
    <span class="comment">//A list holding still undefined 'data'</span>
    <span class="identifier">list</span><span class="special">&lt;</span><span class="identifier">data</span><span class="special">&gt;</span>        <span class="identifier">l_</span><span class="special">;</span>
    <span class="comment">//A map holding still undefined 'data'</span>
@@ -407,7 +419,7 @@
 <a name="container.main_features.scary_iterators"></a><a class="link" href="main_features.html#container.main_features.scary_iterators" title="SCARY iterators">SCARY iterators</a>
 </h3></div></div></div>
 <p>
-        The paper N2913, titled <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2009/n2913.pdf," target="_top">SCARY
+        The paper N2913, titled <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2009/n2913.pdf%2c" target="_top">SCARY
         Iterator Assignment and Initialization</a>, proposed a requirement that
         a standard container's iterator types have no dependency on any type argument
         apart from the container's <code class="computeroutput"><span class="identifier">value_type</span></code>,

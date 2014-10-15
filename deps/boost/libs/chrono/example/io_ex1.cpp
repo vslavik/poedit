@@ -2,6 +2,7 @@
 
 //  Copyright 2010 Howard Hinnant
 //  Copyright 2010 Vicente J. Botet Escriba
+//  Copyright (c) Microsoft Corporation 2014
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
@@ -53,9 +54,12 @@ int main()
          <<  ClockTick(3) + nanoseconds(10) << '\n';
 
     cout << "\nsystem_clock::now() = " << system_clock::now() << '\n';
+#if defined _MSC_VER && _MSC_VER == 1700
+#else
 #if BOOST_CHRONO_VERSION==2
     cout << "\nsystem_clock::now() = " << time_fmt(chrono::timezone::local) << system_clock::now() << '\n';
     cout << "\nsystem_clock::now() = " << time_fmt(chrono::timezone::local,"%Y/%m/%d") << system_clock::now() << '\n';
+#endif
 #endif
 
 #ifdef BOOST_CHRONO_HAS_CLOCK_STEADY
@@ -73,9 +77,11 @@ int main()
 #endif
 #if defined(BOOST_CHRONO_HAS_PROCESS_CLOCKS)
     cout << "\nprocess_real_cpu_clock::now() = " << process_real_cpu_clock::now() << '\n';
+#if BOOST_PLAT_WINDOWS_DESKTOP
     cout << "\nprocess_user_cpu_clock::now() = " << process_user_cpu_clock::now() << '\n';
     cout << "\nprocess_system_cpu_clock::now() = " << process_system_cpu_clock::now() << '\n';
     cout << "\nprocess_cpu_clock::now() = " << process_cpu_clock::now() << '\n';
+#endif
 #endif
     return 0;
 }

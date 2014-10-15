@@ -2,7 +2,7 @@
 <!DOCTYPE boostbook PUBLIC "-//Boost//DTD BoostBook XML V1.0//EN"
   "http://www.boost.org/tools/boostbook/dtd/boostbook.dtd">
 <boostbook id="boost" xmlns:xi="http://www.w3.org/2001/XInclude"
-           last-revision="$Date: 2013-05-20 21:51:00 -0700 (Mon, 20 May 2013) $">
+           last-revision="$Date$">
   <title>The Boost C++ Libraries BoostBook Documentation Subset</title>
 
   <preface id="about">
@@ -39,6 +39,8 @@
     <title>The Boost C++ Libraries (BoostBook Subset)</title>
 
     <xi:include href="accumulators.xml"/>
+
+    <xi:include href="align.xml"/>
 
     <xi:include href="../../libs/any/doc/any.xml"/>
     <xi:include href="../../libs/array/doc/array.xml"/>
@@ -98,17 +100,7 @@
 
    <xi:include href="chrono.xml"/>
 
-   <library name="Circular Buffer" dirname="circular_buffer" html-only="1"
-            url="../../libs/circular_buffer/index.html">
-     <libraryinfo>
-       <author>
-         <firstname>Jan</firstname>
-         <surname>Gaspar</surname>
-       </author>
-       <librarypurpose>A STL compliant container also known as ring or cyclic buffer</librarypurpose>
-       <librarycategory name="category:containers"/> 
-     </libraryinfo>
-   </library>
+   <xi:include href="circular_buffer.auto_index.docbook"/>
 
    <library name="Compatibility" dirname="compatibility" html-only="1">
      <libraryinfo>
@@ -696,6 +688,7 @@
    </library>
     
    <xi:include href="type_erasure.xml"/>
+   <xi:include href="type_index.xml"/>
 
    <library name="Type Traits" dirname="type_traits" html-only="1">
      <libraryinfo>
@@ -768,9 +761,11 @@
     <xi:include href="../../tools/boostbook/doc/boostbook.xml"/>
     <xi:include href="quickbook.xml"/>
     <xi:include href="jam_docs.xml"/>
-    <xi:include href="../../tools/build/v2/doc/src/userman.xml"/>
+    <xi:include href="../../tools/build/doc/src/userman.xml"/>
   </part>
 </boostbook>
+
+
 
 
 

@@ -7,7 +7,7 @@
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../strategies.html" title="Strategies">
 <link rel="prev" href="strategy_area_surveyor.html" title="strategy::area::surveyor">
-<link rel="next" href="strategy_centroid_average.html" title="strategy::centroid::average">
+<link rel="next" href="strategy_buffer_join_round.html" title="strategy::buffer::join_round">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,14 +20,14 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="strategy_area_surveyor.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../strategies.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="strategy_centroid_average.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="strategy_area_surveyor.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../strategies.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="strategy_buffer_join_round.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="geometry.reference.strategies.strategy_area_huiller"></a><a class="link" href="strategy_area_huiller.html" title="strategy::area::huiller">strategy::area::huiller</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp63098344"></a><a class="indexterm" name="idp63098680"></a><a class="indexterm" name="idp63099016"></a>
+          <a class="indexterm" name="idp124771760"></a><a class="indexterm" name="idp124772448"></a><a class="indexterm" name="idp124773136"></a>
 Area calculation by spherical excess / Huiller's formula.
         </p>
 <h6>
@@ -162,6 +162,7 @@ Area calculation by spherical excess / Huiller's formula.
 <col>
 <col>
 <col>
+<col>
 </colgroup>
 <thead><tr>
 <th>
@@ -209,6 +210,8 @@ Area calculation by spherical excess / Huiller's formula.
                     <span class="bold"><strong>excess_sum &amp;</strong></span>: <span class="emphasis"><em>state</em></span>:
                   </p>
                 </td>
+<td>
+                </td>
 </tr>
 <tr>
 <td>
@@ -224,6 +227,8 @@ Area calculation by spherical excess / Huiller's formula.
                   <p>
                     <span class="bold"><strong>excess_sum const &amp;</strong></span>: <span class="emphasis"><em>state</em></span>:
                   </p>
+                </td>
+<td>
                 </td>
 </tr>
 </tbody>
@@ -249,7 +254,6 @@ Area calculation by spherical excess / Huiller's formula.
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometries</span><span class="special">/</span><span class="identifier">point_xy</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometries</span><span class="special">/</span><span class="identifier">polygon</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">wkt</span><span class="special">/</span><span class="identifier">wkt</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
 <span class="keyword">namespace</span> <span class="identifier">bg</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">geometry</span><span class="special">;</span> <a class="co" name="geometry.reference.strategies.strategy_area_huiller.c0" href="strategy_area_huiller.html#geometry.reference.strategies.strategy_area_huiller.c1"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a>
 
@@ -296,7 +300,8 @@ Area: 0.339837
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2014 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam
+      Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -304,7 +309,7 @@ Area: 0.339837
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="strategy_area_surveyor.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../strategies.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="strategy_centroid_average.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="strategy_area_surveyor.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../strategies.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="strategy_buffer_join_round.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

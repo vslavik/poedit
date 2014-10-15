@@ -299,7 +299,7 @@ int list_test (bool copied_allocators_equal = true)
             boostlist->splice(boostlist->begin(), otherboostlist);
             stdlist->splice(stdlist->begin(), otherstdlist);
             if(!CheckEqualContainers(boostlist, stdlist))
-               return 1;  
+               return 1;
          }
 
          listsize = (int)boostlist->size();

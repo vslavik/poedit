@@ -72,40 +72,40 @@ void make_disconnected_cycles(Graph& g, int num_cycles, int cycle_size)
 
 int test_main(int, char* [])
 {
-  typedef adjacency_list 
-    <vecS, 
-    vecS, 
+  typedef adjacency_list
+    <vecS,
+    vecS,
     undirectedS,
     property<vertex_index_t, int>,
     property<edge_index_t, int>
-    > 
+    >
     VVgraph_t;
-  
-  typedef adjacency_list 
-    <vecS, 
-    listS, 
+
+  typedef adjacency_list
+    <vecS,
+    listS,
     undirectedS,
     property<vertex_index_t, int>,
     property<edge_index_t, int>
-    > 
+    >
     VLgraph_t;
 
   typedef adjacency_list
-    <listS, 
-    vecS, 
+    <listS,
+    vecS,
     undirectedS,
     property<vertex_index_t, int>,
     property<edge_index_t, int>
-    > 
+    >
     LVgraph_t;
 
-  typedef adjacency_list 
-    <listS, 
-    listS, 
+  typedef adjacency_list
+    <listS,
+    listS,
     undirectedS,
     property<vertex_index_t, int>,
     property<edge_index_t, int>
-    > 
+    >
     LLgraph_t;
 
   VVgraph_t gVV;
@@ -116,9 +116,9 @@ int test_main(int, char* [])
   std::vector<int> gVV_components(num_vertices(gVV));
   boost::iterator_property_map<
     std::vector<int>::iterator,
-    typename boost::property_map<VVgraph_t, boost::vertex_index_t>::const_type
+    boost::property_map<VVgraph_t, boost::vertex_index_t>::const_type
   > gVV_components_pm(gVV_components.begin(), get(boost::vertex_index, gVV));
-  BOOST_CHECK(connected_components(gVV, gVV_components_pm) == 
+  BOOST_CHECK(connected_components(gVV, gVV_components_pm) ==
               static_cast<int>(num_cycles));
   make_connected(gVV);
   BOOST_CHECK(connected_components(gVV, gVV_components_pm) == 1);
@@ -132,9 +132,9 @@ int test_main(int, char* [])
   std::vector<int> gLV_components(num_vertices(gLV));
   boost::iterator_property_map<
     std::vector<int>::iterator,
-    typename boost::property_map<VVgraph_t, boost::vertex_index_t>::const_type
+    boost::property_map<VVgraph_t, boost::vertex_index_t>::const_type
   > gLV_components_pm(gLV_components.begin(), get(boost::vertex_index, gLV));
-  BOOST_CHECK(connected_components(gLV, gLV_components_pm) == 
+  BOOST_CHECK(connected_components(gLV, gLV_components_pm) ==
               static_cast<int>(num_cycles));
   make_connected(gLV);
   BOOST_CHECK(connected_components(gLV, gLV_components_pm) == 1);
@@ -146,11 +146,11 @@ int test_main(int, char* [])
   make_disconnected_cycles(gVL, num_cycles, cycle_size);
   reset_edge_index(gVL);
   reset_vertex_index(gVL);
-  BOOST_CHECK(connected_components(gVL, make_vector_property_map<int>(get(vertex_index,gVL))) 
+  BOOST_CHECK(connected_components(gVL, make_vector_property_map<int>(get(vertex_index,gVL)))
               == static_cast<int>(num_cycles)
               );
   make_connected(gVL);
-  BOOST_CHECK(connected_components(gVL, make_vector_property_map<int>(get(vertex_index,gVL))) 
+  BOOST_CHECK(connected_components(gVL, make_vector_property_map<int>(get(vertex_index,gVL)))
               == 1
               );
   BOOST_CHECK(num_edges(gVL) == num_cycles * cycle_size + num_cycles - 1);
@@ -161,10 +161,10 @@ int test_main(int, char* [])
   make_disconnected_cycles(gLL, num_cycles, cycle_size);
   reset_edge_index(gLL);
   reset_vertex_index(gLL);
-  BOOST_CHECK(connected_components(gLL, make_vector_property_map<int>(get(vertex_index,gLL))) 
+  BOOST_CHECK(connected_components(gLL, make_vector_property_map<int>(get(vertex_index,gLL)))
               == static_cast<int>(num_cycles));
   make_connected(gLL);
-  BOOST_CHECK(connected_components(gLL, make_vector_property_map<int>(get(vertex_index,gLL))) 
+  BOOST_CHECK(connected_components(gLL, make_vector_property_map<int>(get(vertex_index,gLL)))
               == 1
               );
   BOOST_CHECK(num_edges(gLL) == num_cycles * cycle_size + num_cycles - 1);

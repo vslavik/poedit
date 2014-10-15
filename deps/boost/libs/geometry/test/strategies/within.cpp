@@ -74,7 +74,7 @@ void test_geometry(std::string const& case_id, std::string const& wkt_point
 }
 
 template <typename Point>
-void test_box_of(std::string const& wkt_point, std::string const& wkt_box, 
+void test_box_of(std::string const& wkt_point, std::string const& wkt_box,
               bool expected_within, bool expected_covered_by)
 {
     typedef bg::model::box<Point> box_type;

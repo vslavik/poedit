@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boostbook.html" title="Chapter&#160;39.&#160;The BoostBook Documentation Format">
+<link rel="up" href="../boostbook.html" title="Chapter&#160;42.&#160;The BoostBook Documentation Format">
 <link rel="prev" href="getting/started.html" title="Getting Started">
 <link rel="next" href="together.html" title="Bringing Together a BoostBook Document">
 </head>
@@ -27,7 +27,7 @@
 <a name="boostbook.documenting"></a>Documenting libraries</h2></div></div></div>
 <div class="toc"><dl class="toc">
 <dt><span class="section"><a href="documenting.html#boostbook.defining">Defining a BoostBook library</a></span></dt>
-<dt><span class="section"><a href="documenting.html#idp263012408">From HTML to BoostBook</a></span></dt>
+<dt><span class="section"><a href="documenting.html#idp542838048">From HTML to BoostBook</a></span></dt>
 <dt><span class="section"><a href="documenting.html#boostbook.sectioning">Sectioning in BoostBook</a></span></dt>
 </dl></div>
 <p>BoostBook is an extension to <a href="http://www.docbook.org" target="_top">DocBook</a>, an XML format for
@@ -43,17 +43,17 @@
     a &lt;library&gt; XML element. To create a skeletal library, we
     need to create a new XML document (call it <code class="computeroutput">any.xml</code>)
     that contains basic information about the library. The following
-    <a class="link" href="documenting.html#boostbook.documenting.skeletal" title="Example&#160;39.1.&#160;A Skeletal BoostBook Library">BoostBook XML
+    <a class="link" href="documenting.html#boostbook.documenting.skeletal" title="Example&#160;42.1.&#160;A Skeletal BoostBook Library">BoostBook XML
     example</a> describes basic information about the <a href="http://www.boost.org/libs/any/index.html" target="_top">Boost.Any</a>
     library:</p>
 <div class="example">
-<a name="boostbook.documenting.skeletal"></a><p class="title"><b>Example&#160;39.1.&#160;A Skeletal BoostBook Library</b></p>
+<a name="boostbook.documenting.skeletal"></a><p class="title"><b>Example&#160;42.1.&#160;A Skeletal BoostBook Library</b></p>
 <div class="example-contents"><pre class="programlisting">
 &lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;!DOCTYPE library PUBLIC "-//Boost//DTD BoostBook XML V1.0//EN"
   "http://www.boost.org/tools/boostbook/dtd/boostbook.dtd"&gt;
 &lt;library name="Any" dirname="any" xmlns:xi="http://www.w3.org/2001/XInclude"
-  id="any" last-revision="$Date: 2008-07-12 20:30:45 +0100 (Sat, 12 Jul 2008) $"&gt;
+  id="any" last-revision="$Date$"&gt;
   &lt;libraryinfo&gt;
     &lt;author&gt;
       &lt;firstname&gt;Kevlin&lt;/firstname&gt;
@@ -96,7 +96,7 @@
           documentation resides, so it should use only lowercase
           alphanumeric characters and underscores.</dd>
 <dt><span class="term"><code class="computeroutput">last-revision</code></span></dt>
-<dd>Always set to <code class="computeroutput">$Date: 2008-07-12 20:30:45 +0100 (Sat, 12 Jul 2008) $</code>, which is
+<dd>Always set to <code class="computeroutput">$Date$</code>, which is
           expanded by CVS to include the date and time that the file
           was last modified.</dd>
 </dl>
@@ -121,17 +121,17 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp263012408"></a>From HTML to BoostBook</h3></div></div></div>
+<a name="idp542838048"></a>From HTML to BoostBook</h3></div></div></div>
 <p>Most library authors are comfortable with writing HTML
     documentation. Writing <a href="http://www.docbook.org" target="_top">DocBook</a> documentation (and,
     by extension, BoostBook documentation) is quite similar to writing
     HTML, except that BoostBook uses different element names from HTML
-    (see <a class="xref" href="documenting.html#html.to.boostbook" title="Table&#160;39.2.&#160;Converting HTML elements to BoostBook">Table&#160;39.2, &#8220;Converting HTML elements to BoostBook&#8221;</a>) and BoostBook XML is a
+    (see <a class="xref" href="documenting.html#html.to.boostbook" title="Table&#160;42.2.&#160;Converting HTML elements to BoostBook">Table&#160;42.2, &#8220;Converting HTML elements to BoostBook&#8221;</a>) and BoostBook XML is a
     much more rigid format than HTML.</p>
 <p>One of the easiest ways to convert HTML documentation into
     BoostBook documentation is to use <a href="http://tidy.sourceforge.net/" target="_top">HTML Tidy</a> to transform
     your HTML into valid XHTML, which will make sure that all elements
-    are properly closed, then apply the transformations in <a class="xref" href="documenting.html#html.to.boostbook" title="Table&#160;39.2.&#160;Converting HTML elements to BoostBook">Table&#160;39.2, &#8220;Converting HTML elements to BoostBook&#8221;</a> to the body of the XHTML
+    are properly closed, then apply the transformations in <a class="xref" href="documenting.html#html.to.boostbook" title="Table&#160;42.2.&#160;Converting HTML elements to BoostBook">Table&#160;42.2, &#8220;Converting HTML elements to BoostBook&#8221;</a> to the body of the XHTML
     document. The following command uses HTML Tidy to transform HTML
     into valid XHTML:</p>
 <pre class="programlisting">
@@ -146,7 +146,7 @@
     contents are built automatically from the titles of sections in
     the BoostBook document.</p>
 <div class="table">
-<a name="html.to.boostbook"></a><p class="title"><b>Table&#160;39.2.&#160;Converting HTML elements to BoostBook</b></p>
+<a name="html.to.boostbook"></a><p class="title"><b>Table&#160;42.2.&#160;Converting HTML elements to BoostBook</b></p>
 <div class="table-contents"><table class="table" summary="Converting HTML elements to BoostBook">
 <colgroup>
 <col>

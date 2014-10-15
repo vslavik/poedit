@@ -6,9 +6,13 @@
 
 #include "boost/coroutine/detail/coroutine_context.hpp"
 
-#ifdef BOOST_MSVC
- #pragma warning (push)
- #pragma warning (disable: 4355) // using 'this' in initializer list
+#ifdef BOOST_HAS_ABI_HEADERS
+#  include BOOST_ABI_PREFIX
+#endif
+
+#if defined(_MSC_VER)
+# pragma warning(push)
+# pragma warning(disable:4355)
 #endif
 
 #if defined(BOOST_USE_SEGMENTED_STACKS)
@@ -18,15 +22,7 @@ void __splitstack_getcontext( void * [BOOST_COROUTINES_SEGMENTS]);
 
 void __splitstack_setcontext( void * [BOOST_COROUTINES_SEGMENTS]);
 
-void __splitstack_releasecontext (void * [BOOST_COROUTINES_SEGMENTS]);
-
-void __splitstack_block_signals_context( void * [BOOST_COROUTINES_SEGMENTS], int *, int *);
-
 }
-#endif
-
-#ifdef BOOST_HAS_ABI_HEADERS
-#  include BOOST_ABI_PREFIX
 #endif
 
 namespace boost {
@@ -34,20 +30,20 @@ namespace coroutines {
 namespace detail {
 
 coroutine_context::coroutine_context() :
-    fcontext_t(), stack_ctx_( this), ctx_( this)
+    stack_ctx_(),
+    ctx_( 0)
 {
 #if defined(BOOST_USE_SEGMENTED_STACKS)
-    __splitstack_getcontext( stack_ctx_->segments_ctx);
+    __splitstack_getcontext( stack_ctx_.segments_ctx);
 #endif
 }
 
-coroutine_context::coroutine_context( ctx_fn fn, stack_context * stack_ctx) :
-    fcontext_t(), stack_ctx_( stack_ctx),
-    ctx_( context::make_fcontext( stack_ctx_->sp, stack_ctx_->size, fn) )
+coroutine_context::coroutine_context( ctx_fn fn, stack_context const& stack_ctx) :
+    stack_ctx_( stack_ctx),
+    ctx_( context::make_fcontext( stack_ctx_.sp, stack_ctx_.size, fn) )
 {}
 
 coroutine_context::coroutine_context( coroutine_context const& other) :
-    fcontext_t(),
     stack_ctx_( other.stack_ctx_),
     ctx_( other.ctx_)
 {}
@@ -67,28 +63,25 @@ intptr_t
 coroutine_context::jump( coroutine_context & other, intptr_t param, bool preserve_fpu)
 {
 #if defined(BOOST_USE_SEGMENTED_STACKS)
-    BOOST_ASSERT( stack_ctx_);
-    BOOST_ASSERT( other.stack_ctx_);
+    __splitstack_getcontext( stack_ctx_.segments_ctx);
+    __splitstack_setcontext( other.stack_ctx_.segments_ctx);
 
-    __splitstack_getcontext( stack_ctx_->segments_ctx);
-    __splitstack_setcontext( other.stack_ctx_->segments_ctx);
-    intptr_t ret = context::jump_fcontext( ctx_, other.ctx_, param, preserve_fpu);
+    intptr_t ret = context::jump_fcontext( & ctx_, other.ctx_, param, preserve_fpu);
 
-    BOOST_ASSERT( stack_ctx_);
-    __splitstack_setcontext( stack_ctx_->segments_ctx);
+    __splitstack_setcontext( stack_ctx_.segments_ctx);
 
     return ret;
 #else
-    return context::jump_fcontext( ctx_, other.ctx_, param, preserve_fpu);
+    return context::jump_fcontext( & ctx_, other.ctx_, param, preserve_fpu);
 #endif
 }
 
 }}}
 
-#ifdef BOOST_HAS_ABI_HEADERS
-#  include BOOST_ABI_SUFFIX
+#if defined(_MSC_VER)
+# pragma warning(pop)
 #endif
 
-#ifdef BOOST_MSVC
- #pragma warning (pop)
+#ifdef BOOST_HAS_ABI_HEADERS
+#  include BOOST_ABI_SUFFIX
 #endif

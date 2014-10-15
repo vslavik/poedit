@@ -27,7 +27,7 @@
 <a name="geometry.reference.core.interior_type"></a><a class="link" href="interior_type.html" title="interior_type">interior_type</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp58632168"></a>
+          <a class="indexterm" name="idp115468544"></a>
 Metafunction defining <span class="bold"><strong>type</strong></span> as the interior_type
           (container type of inner rings) of the specified geometry type.
         </p>
@@ -94,6 +94,15 @@ Metafunction defining <span class="bold"><strong>type</strong></span> as the int
           <span class="phrase"><a name="geometry.reference.core.interior_type.header"></a></span><a class="link" href="interior_type.html#geometry.reference.core.interior_type.header">Header</a>
         </h6>
 <p>
+          Either
+        </p>
+<p>
+          <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
+        </p>
+<p>
+          Or
+        </p>
+<p>
           <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">core</span><span class="special">/</span><span class="identifier">interior_type</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
         </p>
 <h6>
@@ -125,7 +134,7 @@ Metafunction defining <span class="bold"><strong>type</strong></span> as the int
 <span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
     <span class="comment">// Define a polygon storing points in a deque and storing interior rings</span>
-    <span class="comment">// in a list (note that std::list is not supported by most algorithms </span>
+    <span class="comment">// in a list (note that std::list is not supported by most algorithms</span>
     <span class="comment">// because not supporting a random access iterator)</span>
     <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">geometry</span><span class="special">::</span><span class="identifier">model</span><span class="special">::</span><span class="identifier">polygon</span>
         <span class="special">&lt;</span>
@@ -149,7 +158,8 @@ Metafunction defining <span class="bold"><strong>type</strong></span> as the int
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2014 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam
+      Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

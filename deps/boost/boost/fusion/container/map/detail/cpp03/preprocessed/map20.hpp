@@ -21,60 +21,90 @@ namespace boost { namespace fusion
             T0 , T1 , T2 , T3 , T4 , T5 , T6 , T7 , T8 , T9 , T10 , T11 , T12 , T13 , T14 , T15 , T16 , T17 , T18 , T19>
         storage_type;
         typedef typename storage_type::size size;
+        BOOST_FUSION_GPU_ENABLED
         map()
             : data() {}
         template <typename Sequence>
+        BOOST_FUSION_GPU_ENABLED
         map(Sequence const& rhs)
             : data(rhs) {}
+    BOOST_FUSION_GPU_ENABLED
     explicit
     map(T0 const& _0)
         : data(_0) {}
+    BOOST_FUSION_GPU_ENABLED
     map(T0 const& _0 , T1 const& _1)
         : data(_0 , _1) {}
+    BOOST_FUSION_GPU_ENABLED
     map(T0 const& _0 , T1 const& _1 , T2 const& _2)
         : data(_0 , _1 , _2) {}
+    BOOST_FUSION_GPU_ENABLED
     map(T0 const& _0 , T1 const& _1 , T2 const& _2 , T3 const& _3)
         : data(_0 , _1 , _2 , _3) {}
+    BOOST_FUSION_GPU_ENABLED
     map(T0 const& _0 , T1 const& _1 , T2 const& _2 , T3 const& _3 , T4 const& _4)
         : data(_0 , _1 , _2 , _3 , _4) {}
+    BOOST_FUSION_GPU_ENABLED
     map(T0 const& _0 , T1 const& _1 , T2 const& _2 , T3 const& _3 , T4 const& _4 , T5 const& _5)
         : data(_0 , _1 , _2 , _3 , _4 , _5) {}
+    BOOST_FUSION_GPU_ENABLED
     map(T0 const& _0 , T1 const& _1 , T2 const& _2 , T3 const& _3 , T4 const& _4 , T5 const& _5 , T6 const& _6)
         : data(_0 , _1 , _2 , _3 , _4 , _5 , _6) {}
+    BOOST_FUSION_GPU_ENABLED
     map(T0 const& _0 , T1 const& _1 , T2 const& _2 , T3 const& _3 , T4 const& _4 , T5 const& _5 , T6 const& _6 , T7 const& _7)
         : data(_0 , _1 , _2 , _3 , _4 , _5 , _6 , _7) {}
+    BOOST_FUSION_GPU_ENABLED
     map(T0 const& _0 , T1 const& _1 , T2 const& _2 , T3 const& _3 , T4 const& _4 , T5 const& _5 , T6 const& _6 , T7 const& _7 , T8 const& _8)
         : data(_0 , _1 , _2 , _3 , _4 , _5 , _6 , _7 , _8) {}
+    BOOST_FUSION_GPU_ENABLED
     map(T0 const& _0 , T1 const& _1 , T2 const& _2 , T3 const& _3 , T4 const& _4 , T5 const& _5 , T6 const& _6 , T7 const& _7 , T8 const& _8 , T9 const& _9)
         : data(_0 , _1 , _2 , _3 , _4 , _5 , _6 , _7 , _8 , _9) {}
+    BOOST_FUSION_GPU_ENABLED
     map(T0 const& _0 , T1 const& _1 , T2 const& _2 , T3 const& _3 , T4 const& _4 , T5 const& _5 , T6 const& _6 , T7 const& _7 , T8 const& _8 , T9 const& _9 , T10 const& _10)
         : data(_0 , _1 , _2 , _3 , _4 , _5 , _6 , _7 , _8 , _9 , _10) {}
+    BOOST_FUSION_GPU_ENABLED
     map(T0 const& _0 , T1 const& _1 , T2 const& _2 , T3 const& _3 , T4 const& _4 , T5 const& _5 , T6 const& _6 , T7 const& _7 , T8 const& _8 , T9 const& _9 , T10 const& _10 , T11 const& _11)
         : data(_0 , _1 , _2 , _3 , _4 , _5 , _6 , _7 , _8 , _9 , _10 , _11) {}
+    BOOST_FUSION_GPU_ENABLED
     map(T0 const& _0 , T1 const& _1 , T2 const& _2 , T3 const& _3 , T4 const& _4 , T5 const& _5 , T6 const& _6 , T7 const& _7 , T8 const& _8 , T9 const& _9 , T10 const& _10 , T11 const& _11 , T12 const& _12)
         : data(_0 , _1 , _2 , _3 , _4 , _5 , _6 , _7 , _8 , _9 , _10 , _11 , _12) {}
+    BOOST_FUSION_GPU_ENABLED
     map(T0 const& _0 , T1 const& _1 , T2 const& _2 , T3 const& _3 , T4 const& _4 , T5 const& _5 , T6 const& _6 , T7 const& _7 , T8 const& _8 , T9 const& _9 , T10 const& _10 , T11 const& _11 , T12 const& _12 , T13 const& _13)
         : data(_0 , _1 , _2 , _3 , _4 , _5 , _6 , _7 , _8 , _9 , _10 , _11 , _12 , _13) {}
+    BOOST_FUSION_GPU_ENABLED
     map(T0 const& _0 , T1 const& _1 , T2 const& _2 , T3 const& _3 , T4 const& _4 , T5 const& _5 , T6 const& _6 , T7 const& _7 , T8 const& _8 , T9 const& _9 , T10 const& _10 , T11 const& _11 , T12 const& _12 , T13 const& _13 , T14 const& _14)
         : data(_0 , _1 , _2 , _3 , _4 , _5 , _6 , _7 , _8 , _9 , _10 , _11 , _12 , _13 , _14) {}
+    BOOST_FUSION_GPU_ENABLED
     map(T0 const& _0 , T1 const& _1 , T2 const& _2 , T3 const& _3 , T4 const& _4 , T5 const& _5 , T6 const& _6 , T7 const& _7 , T8 const& _8 , T9 const& _9 , T10 const& _10 , T11 const& _11 , T12 const& _12 , T13 const& _13 , T14 const& _14 , T15 const& _15)
         : data(_0 , _1 , _2 , _3 , _4 , _5 , _6 , _7 , _8 , _9 , _10 , _11 , _12 , _13 , _14 , _15) {}
+    BOOST_FUSION_GPU_ENABLED
     map(T0 const& _0 , T1 const& _1 , T2 const& _2 , T3 const& _3 , T4 const& _4 , T5 const& _5 , T6 const& _6 , T7 const& _7 , T8 const& _8 , T9 const& _9 , T10 const& _10 , T11 const& _11 , T12 const& _12 , T13 const& _13 , T14 const& _14 , T15 const& _15 , T16 const& _16)
         : data(_0 , _1 , _2 , _3 , _4 , _5 , _6 , _7 , _8 , _9 , _10 , _11 , _12 , _13 , _14 , _15 , _16) {}
+    BOOST_FUSION_GPU_ENABLED
     map(T0 const& _0 , T1 const& _1 , T2 const& _2 , T3 const& _3 , T4 const& _4 , T5 const& _5 , T6 const& _6 , T7 const& _7 , T8 const& _8 , T9 const& _9 , T10 const& _10 , T11 const& _11 , T12 const& _12 , T13 const& _13 , T14 const& _14 , T15 const& _15 , T16 const& _16 , T17 const& _17)
         : data(_0 , _1 , _2 , _3 , _4 , _5 , _6 , _7 , _8 , _9 , _10 , _11 , _12 , _13 , _14 , _15 , _16 , _17) {}
+    BOOST_FUSION_GPU_ENABLED
     map(T0 const& _0 , T1 const& _1 , T2 const& _2 , T3 const& _3 , T4 const& _4 , T5 const& _5 , T6 const& _6 , T7 const& _7 , T8 const& _8 , T9 const& _9 , T10 const& _10 , T11 const& _11 , T12 const& _12 , T13 const& _13 , T14 const& _14 , T15 const& _15 , T16 const& _16 , T17 const& _17 , T18 const& _18)
         : data(_0 , _1 , _2 , _3 , _4 , _5 , _6 , _7 , _8 , _9 , _10 , _11 , _12 , _13 , _14 , _15 , _16 , _17 , _18) {}
+    BOOST_FUSION_GPU_ENABLED
     map(T0 const& _0 , T1 const& _1 , T2 const& _2 , T3 const& _3 , T4 const& _4 , T5 const& _5 , T6 const& _6 , T7 const& _7 , T8 const& _8 , T9 const& _9 , T10 const& _10 , T11 const& _11 , T12 const& _12 , T13 const& _13 , T14 const& _14 , T15 const& _15 , T16 const& _16 , T17 const& _17 , T18 const& _18 , T19 const& _19)
         : data(_0 , _1 , _2 , _3 , _4 , _5 , _6 , _7 , _8 , _9 , _10 , _11 , _12 , _13 , _14 , _15 , _16 , _17 , _18 , _19) {}
         template <typename T>
-        map&
-        operator=(T const& rhs)
+        BOOST_FUSION_GPU_ENABLED
+        map& operator=(T const& rhs)
         {
             data = rhs;
             return *this;
         }
+        BOOST_FUSION_GPU_ENABLED
+        map& operator=(map const& rhs)
+        {
+            data = rhs.data;
+            return *this;
+        }
+        BOOST_FUSION_GPU_ENABLED
         storage_type& get_data() { return data; }
+        BOOST_FUSION_GPU_ENABLED
         storage_type const& get_data() const { return data; }
     private:
         storage_type data;

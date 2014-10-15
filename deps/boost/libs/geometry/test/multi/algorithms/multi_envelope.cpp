@@ -49,7 +49,7 @@ void test_2d()
 template <typename P>
 void test_3d()
 {
-    typedef bg::model::multi_point<P> mp;
+    //typedef bg::model::multi_point<P> mp;
 }
 
 

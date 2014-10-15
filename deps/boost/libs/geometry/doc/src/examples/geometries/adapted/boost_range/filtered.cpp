@@ -40,9 +40,9 @@ int main()
     line.push_back(xy(6, 2));
     line.push_back(xy(7, 1));
     line.push_back(xy(8, 0));
-    
+
     using boost::adaptors::filtered;
-    std::cout 
+    std::cout
         << boost::geometry::length(line) << std::endl
         << boost::geometry::length(line | filtered(not_two())) << std::endl
         << boost::geometry::dsv(line | filtered(not_two())) << std::endl;

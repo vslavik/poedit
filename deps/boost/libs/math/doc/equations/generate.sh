@@ -7,9 +7,9 @@
 #
 # Paths to tools come first, change these to match your system:
 #
-math2svg='m:\download\open\SVGMath-0.3.1\math2svg.py'
-python=/cygdrive/c/Python26/python.exe
-inkscape=/cygdrive/c/progra~1/Inkscape/inkscape
+math2svg='d:\download\open\SVGMath-0.3.1\math2svg.py'
+python=/cygdrive/c/Python27/python.exe
+inkscape=/cygdrive/c/progra~1/Inkscape/inkscape.exe
 # Image DPI:
 dpi=120
 
@@ -18,7 +18,7 @@ for mmlfile in $*; do
 	pngfile=$(basename $svgfile .svg).png
 	tempfile=temp.mml
 	# strip html wrappers put in by MathCast:
-	cat $mmlfile | tr -d "\r\n" | sed -e 's/.*\(<math[^>]*>.*<\/math>\).*/\1/' > $tempfile
+	cat $mmlfile | tr -d "\r\n" | sed -e 's/.*\(<math[^>]*>.*<\/math>\).*/\1/' -e 's/<semantics>//g' -e 's/<\/semantics>//g' > $tempfile
 	
 	echo Generating $svgfile
 	$python $math2svg $tempfile > $svgfile
@@ -26,6 +26,7 @@ for mmlfile in $*; do
 	$inkscape -d $dpi -e $(cygpath -a -w $pngfile) $(cygpath -a -w $svgfile)
 	rm $tempfile
 done
+
 
 
 

@@ -150,7 +150,7 @@ void function_test()
     bind( f_6, 1, 2, 3, 4, 5, 6 )(); BOOST_TEST( global_result == 654321L );
     bind( f_7, 1, 2, 3, 4, 5, 6, 7 )(); BOOST_TEST( global_result == 7654321L );
     bind( f_8, 1, 2, 3, 4, 5, 6, 7, 8 )(); BOOST_TEST( global_result == 87654321L );
-    //bind( f_9, 1, 2, 3, 4, 5, 6, 7, 8, 9 )(); BOOST_TEST( global_result == 987654321L );
+    bind( f_9, 1, 2, 3, 4, 5, 6, 7, 8, 9 )(); BOOST_TEST( global_result == 987654321L );
 
     bind( fv_0 )(); BOOST_TEST( global_result == 17041L );
     bind( fv_1, 1 )(); BOOST_TEST( global_result == 1L );
@@ -161,7 +161,7 @@ void function_test()
     bind( fv_6, 1, 2, 3, 4, 5, 6 )(); BOOST_TEST( global_result == 654321L );
     bind( fv_7, 1, 2, 3, 4, 5, 6, 7 )(); BOOST_TEST( global_result == 7654321L );
     bind( fv_8, 1, 2, 3, 4, 5, 6, 7, 8 )(); BOOST_TEST( global_result == 87654321L );
-    //bind( fv_9, 1, 2, 3, 4, 5, 6, 7, 8, 9 )(); BOOST_TEST( global_result == 987654321L );
+    bind( fv_9, 1, 2, 3, 4, 5, 6, 7, 8, 9 )(); BOOST_TEST( global_result == 987654321L );
 }
 
 int main()

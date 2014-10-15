@@ -79,7 +79,7 @@ Now we'll need to define a suitable policy that will call these handlers,
 and define some forwarding functions that make use of the policy:
 */
 
-namespace{
+namespace mymath{
 
 using namespace boost::math::policies;
 
@@ -93,7 +93,7 @@ BOOST_MATH_DECLARE_SPECIAL_FUNCTIONS(user_error_policy)
 } // close unnamed namespace
 
 /*`
-We now have a set of forwarding functions defined in an unnamed namespace
+We now have a set of forwarding functions defined in namespace mymath
 that all look something like this:
 
 ``
@@ -105,7 +105,7 @@ inline typename boost::math::tools::promote_args<RT>::type
 }
 ``
 
-So that when we call `tgamma(z)` we really end up calling
+So that when we call `mymath::tgamma(z)` we really end up calling
 `boost::math::tgamma(z, user_error_policy())`, and any
 errors will get directed to our own error handlers.
 */
@@ -113,9 +113,9 @@ errors will get directed to our own error handlers.
 int main()
 {
    cout << "Result of erf_inv(-10) is: "
-      << erf_inv(-10) << endl;
+      << mymath::erf_inv(-10) << endl;
    cout << "Result of tgamma(-10) is: "
-      << tgamma(-10) << endl;
+      << mymath::tgamma(-10) << endl;
 }
 
 /*`

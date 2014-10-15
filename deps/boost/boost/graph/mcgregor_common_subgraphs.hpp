@@ -327,15 +327,11 @@ namespace boost {
             put(correspondence_map_2_to_1, new_vertex2, new_vertex1);
             vertex_stack1.push(new_vertex1);
 
-            // Only output sub-graphs larger than a single vertex
-            if (new_graph_size > 1) {
-            
-              // Returning false from the callback will cancel iteration
-              if (!subgraph_callback(correspondence_map_1_to_2,
-                                     correspondence_map_2_to_1,
-                                     new_graph_size)) {
-                return (false);
-              }
+            // Returning false from the callback will cancel iteration
+            if (!subgraph_callback(correspondence_map_1_to_2,
+                                   correspondence_map_2_to_1,
+                                   new_graph_size)) {
+              return (false);
             }
       
             // Depth-first search into the state space of possible sub-graphs

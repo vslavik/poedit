@@ -30,19 +30,19 @@ int main()
     boost::geometry::exterior_ring(poly1) = tuple_list_of(0, 0)(0, 5)(5, 5)(5, 0)(0, 0);
     boost::geometry::exterior_ring(poly2) = tuple_list_of(5, 0)(0, 0)(0, 5)(5, 5)(5, 0);
 
-    std::cout 
-        << "polygons are spatially " 
+    std::cout
+        << "polygons are spatially "
         << (boost::geometry::equals(poly1, poly2) ? "equal" : "not equal")
         << std::endl;
-    
+
     boost::geometry::model::box<point> box;
     boost::geometry::assign_values(box, 0, 0, 5, 5);
-    
-    std::cout 
-        << "polygon and box are spatially " 
+
+    std::cout
+        << "polygon and box are spatially "
         << (boost::geometry::equals(box, poly2) ? "equal" : "not equal")
         << std::endl;
-    
+
 
     return 0;
 }

@@ -287,7 +287,6 @@ namespace testns
     template <typename T1, typename T>
     void check_type_1(const T& /*t*/)
     {
-        namespace fusion = boost::fusion;
         BOOST_STATIC_ASSERT(( boost::is_same<T
           , typename boost::spirit::terminal<testns::tag::ops>::result<T1>::type >::value ));
     }
@@ -295,7 +294,6 @@ namespace testns
     template <typename T1, typename T2, typename T>
     void check_type_2(const T& /*t*/)
     {
-        namespace fusion = boost::fusion;
         BOOST_STATIC_ASSERT(( boost::is_same<T
           , typename boost::spirit::terminal<testns::tag::ops>::result<T1, T2>::type >::value ));
     }
@@ -303,7 +301,6 @@ namespace testns
     template <typename T1, typename T2, typename T3, typename T>
     void check_type_3(const T& /*t*/)
     {
-        namespace fusion = boost::fusion;
         BOOST_STATIC_ASSERT(( boost::is_same<T
           , typename boost::spirit::terminal<testns::tag::ops>::result<T1, T2, T3>::type >::value ));
     }
@@ -340,62 +337,6 @@ main()
         check_type_3<int, int, int>(IP4);
         BOOST_TEST(test_attr("++---****/", IP4 >> '/', c) && c == 9);
     }
-
-#ifndef BOOST_SPIRIT_USE_PHOENIX_V3
-
-    using boost::phoenix::val;
-    using boost::phoenix::actor;
-    using boost::phoenix::value;
-
-    { // all lazy args
-        int c = 0;
-#define LP1 ops(val(1))
-        check_type_1<actor<value<int> > >(LP1);
-        BOOST_TEST(test_attr("+/", LP1 >> '/', c) && c == 1);
-
-        c = 0;
-#define LP2 ops(val(1), val(4))
-        check_type_2<actor<value<int> >, actor<value<int> > >(LP2);
-        BOOST_TEST(test_attr("+----/", LP2 >> '/', c) && c == 5);
-
-        c = 0;
-#define LP3 ops(val((char)2), val(3.), val(4))
-        check_type_3<actor<value<char> >, actor<value<double> >, actor<value<int> > >(LP3);
-        BOOST_TEST(!test("++---***/", LP3 >> '/'));
-#define LP4 ops(val(1), val(2), val(3))
-        check_type_3<actor<value<int> >, actor<value<int> >, actor<value<int> > >(LP4);
-        BOOST_TEST(test_attr("+--***/", LP4 >> '/', c) && c == 6);
-    }
-
-    { // mixed immediate and lazy args
-        namespace fusion = boost::fusion;
-        namespace phx = boost::phoenix;
-
-        int c = 0;
-#define MP1 ops(val(3), 2)
-        check_type_2<actor<value<int> >, int>(MP1);
-        BOOST_TEST(test_attr("+++--/", MP1 >> '/', c) && c == 5);
-
-        c = 0;
-#define MP2 ops(4, val(1))
-        check_type_2<int, actor<value<int> > >(MP2);
-        BOOST_TEST(test_attr("++++-/", MP2 >> '/', c) && c == 5);
-
-        c = 0;
-#define MP3 ops(2, val(2), val(2))
-        check_type_3<int, actor<value<int> >, actor<value<int> > >(MP3);
-        BOOST_TEST(!test("++-**/", MP3 >> '/'));
-#define MP4 ops(2, val(2), 2)
-        check_type_3<int, actor<value<int> >, int>(MP4);
-        BOOST_TEST(test_attr("++--**/", MP4 >> '/', c) && c == 6);
-
-        c = 0;
-#define MP5 ops(val(5) - val(3), 2, val(2))
-        check_type_3<actor<phx::composite<phx::minus_eval, fusion::vector<value<int>, value<int> > > >, int, actor<value<int> > >(MP5);
-        BOOST_TEST(test_attr("++--**/", MP5 >> '/', c) && c == 6);
-    }
-
-#else // BOOST_SPIRIT_USE_PHOENIX_V3
 
     using boost::phoenix::val;
     using boost::phoenix::actor;
@@ -448,7 +389,6 @@ main()
         check_type_3<phx::expression::minus<value<int>::type, value<int>::type>::type, int, value<int>::type>(MP5);
         BOOST_TEST(test_attr("++--**/", MP5 >> '/', c) && c == 6);
     }
-#endif
 
     return boost::report_errors();
 }

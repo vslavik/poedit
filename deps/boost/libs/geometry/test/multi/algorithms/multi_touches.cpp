@@ -16,6 +16,7 @@
 #include <boost/geometry/multi/algorithms/detail/for_each_range.hpp>
 #include <boost/geometry/multi/core/closure.hpp>
 #include <boost/geometry/multi/core/geometry_id.hpp>
+#include <boost/geometry/multi/core/topological_dimension.hpp>
 #include <boost/geometry/multi/core/ring_type.hpp>
 #include <boost/geometry/multi/views/detail/range_type.hpp>
 
@@ -32,6 +33,8 @@ void test_all()
 {
     typedef bg::model::polygon<P> polygon;
     typedef bg::model::multi_polygon<polygon> mp;
+    typedef bg::model::linestring<P> linestring;
+    typedef bg::model::multi_linestring<linestring> ml;
 
     test_self_touches<mp>("MULTIPOLYGON(((0 0,0 100,100 100,100 0,0 0)))",
             false);
@@ -62,10 +65,22 @@ void test_all()
             true);
 
     // Touch plus inside
-    // TODO fix this
     test_touches<mp, mp>("MULTIPOLYGON(((0 0,0 10,10 10,10 0,0 0)),((20 0,20 10,30 10,30 0,20 0)))",
             "MULTIPOLYGON(((10 10,10 20,20 20,20 10,10 10)),((22 2,28 2,28 8,22 8,22 2)))",
             false);
+
+
+    test_touches<mp, ml>("MULTIPOLYGON(((0 0,0 10,10 10,10 0,0 0)),((20 0,20 10,30 10,30 0,20 0)))",
+            "MULTILINESTRING((10 10,10 20,20 20,20 10,10 10),(30 10,30 20,40 20,40 10,30 10))",
+            true);
+
+    test_touches<mp, ml>("MULTIPOLYGON(((0 0,0 10,10 10,10 0,0 0)),((20 0,20 10,30 10,30 0,20 0)))",
+            "MULTILINESTRING((10 10,10 20,20 20,20 10,10 10),(22 2,28 2,28 8,22 8,22 2))",
+            false);
+
+    test_touches<mp, ml>("MULTIPOLYGON(((0 0,0 10,10 10,10 0,0 0)),((20 0,20 10,30 10,30 0,20 0)))",
+            "MULTILINESTRING((10 10,10 20,20 20,20 10,10 10),(50 2,60 2,60 8,50 8,50 2))",
+            true);
 }
 
 int test_main( int , char* [] )

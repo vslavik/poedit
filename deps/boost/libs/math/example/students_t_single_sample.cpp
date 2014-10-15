@@ -154,12 +154,12 @@ void single_sample_t_test(double M, double Sm, double Sd, unsigned Sn, double al
    else
       cout << "REJECTED\n";
    cout << "Mean  < " << setprecision(3) << fixed << M << "            ";
-   if(cdf(dist, t_stat) < alpha)
+   if(cdf(complement(dist, t_stat)) > alpha)
       cout << "NOT REJECTED\n";
    else
       cout << "REJECTED\n";
    cout << "Mean  > " << setprecision(3) << fixed << M << "            ";
-   if(cdf(complement(dist, t_stat)) < alpha)
+   if(cdf(dist, t_stat) > alpha)
       cout << "NOT REJECTED\n";
    else
       cout << "REJECTED\n";
@@ -266,160 +266,159 @@ Output:
   Generating code
   Finished generating code
   students_t_single_sample.vcxproj -> J:\Cpp\MathToolkit\test\Math_test\Release\students_t_single_sample.exe
-  __________________________________
-  2-Sided Confidence Limits For Mean
-  __________________________________
-  
-  Number of Observations                  =  195
-  Mean                                    =  9.26146
-  Standard Deviation                      =  0.02278881
-  
-  
-  _______________________________________________________________
-  Confidence       T           Interval          Lower          Upper
-   Value (%)     Value          Width            Limit          Limit
-  _______________________________________________________________
-      50.000     0.676       1.103e-003        9.26036        9.26256
-      75.000     1.154       1.883e-003        9.25958        9.26334
-      90.000     1.653       2.697e-003        9.25876        9.26416
-      95.000     1.972       3.219e-003        9.25824        9.26468
-      99.000     2.601       4.245e-003        9.25721        9.26571
-      99.900     3.341       5.453e-003        9.25601        9.26691
-      99.990     3.973       6.484e-003        9.25498        9.26794
-      99.999     4.537       7.404e-003        9.25406        9.26886
-  
-  __________________________________
-  Student t test for a single sample
-  __________________________________
-  
-  Number of Observations                                 =  195
-  Sample Mean                                            =  9.26146
-  Sample Standard Deviation                              =  0.02279
-  Expected True Mean                                     =  5.00000
-  
-  Sample Mean - Expected Test Mean                       =  4.26146
-  Degrees of Freedom                                     =  194
-  T Statistic                                            =  2611.28380
-  Probability that difference is due to chance           =  0.000e+000
-  
-  Results for Alternative Hypothesis and alpha           =  0.0500
-  
-  Alternative Hypothesis     Conclusion
-  Mean != 5.000            NOT REJECTED
-  Mean  < 5.000            REJECTED
-  Mean  > 5.000            NOT REJECTED
-  
-  
-  _____________________________________________________________
-  Estimated sample sizes required for various confidence levels
-  _____________________________________________________________
-  
-  True Mean                               =  5.00000
-  Sample Mean                             =  9.26146
-  Sample Standard Deviation               =  0.02279
-  
-  
-  _______________________________________________________________
-  Confidence       Estimated          Estimated
-   Value (%)      Sample Size        Sample Size
-                (one sided test)    (two sided test)
-  _______________________________________________________________
-      75.000               2               2
-      90.000               2               2
-      95.000               2               2
-      99.000               2               2
-      99.900               3               3
-      99.990               3               3
-      99.999               4               4
-  
-  __________________________________
-  2-Sided Confidence Limits For Mean
-  __________________________________
-  
-  Number of Observations                  =  3
-  Mean                                    =  37.8000000
-  Standard Deviation                      =  0.9643650
-  
-  
-  _______________________________________________________________
-  Confidence       T           Interval          Lower          Upper
-   Value (%)     Value          Width            Limit          Limit
-  _______________________________________________________________
-      50.000     0.816            0.455       37.34539       38.25461
-      75.000     1.604            0.893       36.90717       38.69283
-      90.000     2.920            1.626       36.17422       39.42578
-      95.000     4.303            2.396       35.40438       40.19562
-      99.000     9.925            5.526       32.27408       43.32592
-      99.900    31.599           17.594       20.20639       55.39361
-      99.990    99.992           55.673      -17.87346       93.47346
-      99.999   316.225          176.067     -138.26683      213.86683
-  
-  __________________________________
-  Student t test for a single sample
-  __________________________________
-  
-  Number of Observations                                 =  3
-  Sample Mean                                            =  37.80000
-  Sample Standard Deviation                              =  0.96437
-  Expected True Mean                                     =  38.90000
-  
-  Sample Mean - Expected Test Mean                       =  -1.10000
-  Degrees of Freedom                                     =  2
-  T Statistic                                            =  -1.97566
-  Probability that difference is due to chance           =  1.869e-001
-  
-  Results for Alternative Hypothesis and alpha           =  0.0500
-  
-  Alternative Hypothesis     Conclusion
-  Mean != 38.900            REJECTED
-  Mean  < 38.900            REJECTED
-  Mean  > 38.900            REJECTED
-  
-  
-  __________________________________
-  Student t test for a single sample
-  __________________________________
-  
-  Number of Observations                                 =  3
-  Sample Mean                                            =  37.80000
-  Sample Standard Deviation                              =  0.96437
-  Expected True Mean                                     =  38.90000
-  
-  Sample Mean - Expected Test Mean                       =  -1.10000
-  Degrees of Freedom                                     =  2
-  T Statistic                                            =  -1.97566
-  Probability that difference is due to chance           =  1.869e-001
-  
-  Results for Alternative Hypothesis and alpha           =  0.1000
-  
-  Alternative Hypothesis     Conclusion
-  Mean != 38.900            REJECTED
-  Mean  < 38.900            NOT REJECTED
-  Mean  > 38.900            REJECTED
-  
-  
-  _____________________________________________________________
-  Estimated sample sizes required for various confidence levels
-  _____________________________________________________________
-  
-  True Mean                               =  38.90000
-  Sample Mean                             =  37.80000
-  Sample Standard Deviation               =  0.96437
-  
-  
-  _______________________________________________________________
-  Confidence       Estimated          Estimated
-   Value (%)      Sample Size        Sample Size
-                (one sided test)    (two sided test)
-  _______________________________________________________________
-      75.000               3               4
-      90.000               7               9
-      95.000              11              13
-      99.000              20              22
-      99.900              35              37
-      99.990              50              53
-      99.999              66              68
-  
+__________________________________
+2-Sided Confidence Limits For Mean
+__________________________________
+
+Number of Observations                  =  195
+Mean                                    =  9.26146
+Standard Deviation                      =  0.02278881
+
+
+_______________________________________________________________
+Confidence       T           Interval          Lower          Upper
+ Value (%)     Value          Width            Limit          Limit
+_______________________________________________________________
+    50.000     0.676       1.103e-003        9.26036        9.26256
+    75.000     1.154       1.883e-003        9.25958        9.26334
+    90.000     1.653       2.697e-003        9.25876        9.26416
+    95.000     1.972       3.219e-003        9.25824        9.26468
+    99.000     2.601       4.245e-003        9.25721        9.26571
+    99.900     3.341       5.453e-003        9.25601        9.26691
+    99.990     3.973       6.484e-003        9.25498        9.26794
+    99.999     4.537       7.404e-003        9.25406        9.26886
+
+__________________________________
+Student t test for a single sample
+__________________________________
+
+Number of Observations                                 =  195
+Sample Mean                                            =  9.26146
+Sample Standard Deviation                              =  0.02279
+Expected True Mean                                     =  5.00000
+
+Sample Mean - Expected Test Mean                       =  4.26146
+Degrees of Freedom                                     =  194
+T Statistic                                            =  2611.28380
+Probability that difference is due to chance           =  0.000e+000
+
+Results for Alternative Hypothesis and alpha           =  0.0500
+
+Alternative Hypothesis     Conclusion
+Mean != 5.000            NOT REJECTED
+Mean  < 5.000            REJECTED
+Mean  > 5.000            NOT REJECTED
+
+
+_____________________________________________________________
+Estimated sample sizes required for various confidence levels
+_____________________________________________________________
+
+True Mean                               =  5.00000
+Sample Mean                             =  9.26146
+Sample Standard Deviation               =  0.02279
+
+
+_______________________________________________________________
+Confidence       Estimated          Estimated
+ Value (%)      Sample Size        Sample Size
+              (one sided test)    (two sided test)
+_______________________________________________________________
+    75.000               2               2
+    90.000               2               2
+    95.000               2               2
+    99.000               2               2
+    99.900               3               3
+    99.990               3               3
+    99.999               4               4
+
+__________________________________
+2-Sided Confidence Limits For Mean
+__________________________________
+
+Number of Observations                  =  3
+Mean                                    =  37.8000000
+Standard Deviation                      =  0.9643650
+
+
+_______________________________________________________________
+Confidence       T           Interval          Lower          Upper
+ Value (%)     Value          Width            Limit          Limit
+_______________________________________________________________
+    50.000     0.816            0.455       37.34539       38.25461
+    75.000     1.604            0.893       36.90717       38.69283
+    90.000     2.920            1.626       36.17422       39.42578
+    95.000     4.303            2.396       35.40438       40.19562
+    99.000     9.925            5.526       32.27408       43.32592
+    99.900    31.599           17.594       20.20639       55.39361
+    99.990    99.992           55.673      -17.87346       93.47346
+    99.999   316.225          176.067     -138.26683      213.86683
+
+__________________________________
+Student t test for a single sample
+__________________________________
+
+Number of Observations                                 =  3
+Sample Mean                                            =  37.80000
+Sample Standard Deviation                              =  0.96437
+Expected True Mean                                     =  38.90000
+
+Sample Mean - Expected Test Mean                       =  -1.10000
+Degrees of Freedom                                     =  2
+T Statistic                                            =  -1.97566
+Probability that difference is due to chance           =  1.869e-001
+
+Results for Alternative Hypothesis and alpha           =  0.0500
+
+Alternative Hypothesis     Conclusion
+Mean != 38.900            REJECTED
+Mean  < 38.900            NOT REJECTED
+Mean  > 38.900            NOT REJECTED
+
+
+__________________________________
+Student t test for a single sample
+__________________________________
+
+Number of Observations                                 =  3
+Sample Mean                                            =  37.80000
+Sample Standard Deviation                              =  0.96437
+Expected True Mean                                     =  38.90000
+
+Sample Mean - Expected Test Mean                       =  -1.10000
+Degrees of Freedom                                     =  2
+T Statistic                                            =  -1.97566
+Probability that difference is due to chance           =  1.869e-001
+
+Results for Alternative Hypothesis and alpha           =  0.1000
+
+Alternative Hypothesis     Conclusion
+Mean != 38.900            REJECTED
+Mean  < 38.900            NOT REJECTED
+Mean  > 38.900            REJECTED
+
+
+_____________________________________________________________
+Estimated sample sizes required for various confidence levels
+_____________________________________________________________
+
+True Mean                               =  38.90000
+Sample Mean                             =  37.80000
+Sample Standard Deviation               =  0.96437
+
+
+_______________________________________________________________
+Confidence       Estimated          Estimated
+ Value (%)      Sample Size        Sample Size
+              (one sided test)    (two sided test)
+_______________________________________________________________
+    75.000               3               4
+    90.000               7               9
+    95.000              11              13
+    99.000              20              22
+    99.900              35              37
+    99.990              50              53
+    99.999              66              68
 
 */
 

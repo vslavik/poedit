@@ -45,7 +45,7 @@ void test_all()
                 12, 8, 5.245);
 
     test_geometry<bg::model::box<P> >("box(0 0,2 2)", 4, 5, 4);
-    
+
     test_empty_input<bg::model::linestring<P> >();
     test_empty_input<bg::model::ring<P> >();
     test_empty_input<bg::model::polygon<P> >();

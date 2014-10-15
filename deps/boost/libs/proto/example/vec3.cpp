@@ -113,6 +113,16 @@ struct Vec3
         return *this;
     }
 
+    // This copy-assign is needed because a template is never
+    // considered for copy assignment.
+    Vec3 &operator=(Vec3 const &that)
+    {
+        (*this)[0] = that[0];
+        (*this)[1] = that[1];
+        (*this)[2] = that[2];
+        return *this;
+    }
+
     void print() const
     {
         std::cout << '{' << (*this)[0]

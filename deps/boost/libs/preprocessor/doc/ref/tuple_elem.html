@@ -13,7 +13,7 @@
 <br>
 or<br>
 <br>
-<b>BOOST_PP_TUPLE_ELEM</b>(<i>...</i>) <sup>(v)</sup><b></b><br>
+<b>BOOST_PP_TUPLE_ELEM</b>(<i>...</i>) <a href="../topics/variadic_macros.html#VNotation" target="_self"><sup>(v)</sup></a><b></b><br>
 </div>
 	<h4>Arguments</h4>
 		<dl>
@@ -49,12 +49,12 @@ or<br>
 			<b>Header:</b> &nbsp;<a href="../headers/tuple/elem.html">&lt;boost/preprocessor/tuple/elem.hpp&gt;</a>
 		</div>
 	<h4>Sample Code</h4>
-<div><pre>#include &lt;<a href="../headers/tuple/elem.html">boost/preprocessor/tuple/elem.hpp</a>&gt;<br><br>#define TUPLE (a, b, c, d)<br><br><a href="tuple_elem.html">BOOST_PP_TUPLE_ELEM</a>(4, 0, TUPLE) // expands to a<br><a href="tuple_elem.html">BOOST_PP_TUPLE_ELEM</a>(4, 3, TUPLE) // expands to d<br><br>// or for the variadic version <sup>(v)</sup><br><br><a href="file:///C:/Programming/VersionControl/sandbox/variadics/libs/preprocessor/doc/ref/tuple_elem.html">BOOST_PP_TUPLE_ELEM</a>(0, TUPLE) // expands to a in the variadic version<br><a href="file:///C:/Programming/VersionControl/sandbox/variadics/libs/preprocessor/doc/ref/tuple_elem.html">BOOST_PP_TUPLE_ELEM</a>(3, TUPLE) // expands to d in the variadic version<br></pre></div>
+<div><pre>#include &lt;<a href="../headers/tuple/elem.html">boost/preprocessor/tuple/elem.hpp</a>&gt;<br><br>#define TUPLE (a, b, c, d)<br><br><a href="tuple_elem.html">BOOST_PP_TUPLE_ELEM</a>(4, 0, TUPLE) // expands to a<br><a href="tuple_elem.html">BOOST_PP_TUPLE_ELEM</a>(4, 3, TUPLE) // expands to d<br><br>// or for the variadic version <a href="../topics/variadic_macros.html#VNotation" target="_self"><sup>(v)</sup></a><br><br><a href="file:///C:/Programming/VersionControl/sandbox/variadics/libs/preprocessor/doc/ref/tuple_elem.html">BOOST_PP_TUPLE_ELEM</a>(0, TUPLE) // expands to a in the variadic version<br><a href="file:///C:/Programming/VersionControl/sandbox/variadics/libs/preprocessor/doc/ref/tuple_elem.html">BOOST_PP_TUPLE_ELEM</a>(3, TUPLE) // expands to d in the variadic version<br></pre></div>
 	<hr size="1">
 	<div style="margin-left: 0px;">
 		<i>© Copyright <a href="http://www.housemarque.com" target="_top">Housemarque Oy</a> 2002</i>
 		<br><i>© Copyright Paul Mensonides 2002<br>
-        </i><i>© Copyright Edward Diener 2011</i><br>
+        </i><i>© Copyright Edward Diener 2011,2013</i><br>
 	</div>
 	<div style="margin-left: 0px;">
 		<p><small>Distributed under the Boost Software License, Version 1.0. (See

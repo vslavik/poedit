@@ -8,9 +8,9 @@
 //
 // See http://www.boost.org/libs/mpl for documentation.
 
-// $Id: has_xxx.cpp 63907 2010-07-12 01:36:38Z djwalker $
-// $Date: 2010-07-11 18:36:38 -0700 (Sun, 11 Jul 2010) $
-// $Revision: 63907 $
+// $Id$
+// $Date$
+// $Revision$
 
 #include <boost/mpl/has_xxx.hpp>
 #include <boost/mpl/aux_/config/workaround.hpp>

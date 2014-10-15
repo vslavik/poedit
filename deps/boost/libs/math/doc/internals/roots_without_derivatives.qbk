@@ -182,7 +182,7 @@ These functions locate the root using bisection: function arguments are:
         A best guess may be returned, perhaps significantly wrong.]]
 [[tol]  [A binary functor that specifies the termination condition: the function
         will return the current brackets enclosing the root when /tol(min,max)/ becomes true.]]
-[[max_iter][The maximum number of invocations of /f(x)/ to make while searching for the root.]]
+[[max_iter][The maximum number of invocations of /f(x)/ to make while searching for the root.  On exist this is set to actual number of invocations performed.]]
 ]
 
 [optional_policy]
@@ -251,7 +251,7 @@ particular it is known whether the root is occurs for positive or negative
          for the root.  /tol/ is passed the current brackets at each step, 
          when it returns true then the current brackets are returned as the result.]]
 [[max_iter] [The maximum number of function invocations to perform in the search 
-            for the root.]]
+            for the root.  On exit is set to the actual number of invocations performed.]]
 ]
 
 [optional_policy]

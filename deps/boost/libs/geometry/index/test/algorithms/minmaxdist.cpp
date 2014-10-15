@@ -17,7 +17,7 @@
 #include <boost/geometry/geometries/point.hpp>
 #include <boost/geometry/geometries/box.hpp>
 
-#define GEOMETRY_TEST_DEBUG
+#define BOOST_GEOMETRY_TEST_DEBUG
 
 template <typename Point, typename Indexable>
 void test(Point const& pt, Indexable const& indexable,
@@ -25,7 +25,7 @@ void test(Point const& pt, Indexable const& indexable,
 {
     typename bg::default_distance_result<Point, Indexable>::type value = bgi::detail::minmaxdist(pt, indexable);
 
-#ifdef GEOMETRY_TEST_DEBUG
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
     std::ostringstream out;
     out << typeid(typename bg::coordinate_type<Point>::type).name()
         << " "

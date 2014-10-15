@@ -8,7 +8,7 @@
 #include <boost/config.hpp>
 #include <boost/thread/thread.hpp>
 #include <boost/thread/mutex.hpp>
-#include <boost/container/list.hpp>
+#include <boost/thread/csbl/list.hpp>
 //#include <boost/interprocess/smart_ptr/shared_ptr.hpp>
 #include <boost/smart_ptr.hpp>
 #include <iostream>
@@ -58,7 +58,7 @@ int main()
   {
     typedef boost::shared_ptr<boost::thread >  thread_ptr;
     //typedef boost::interprocess::shared_ptr<boost::thread, std::allocator<boost::thread>, default_delete<boost::thread> >  thread_ptr;
-    typedef boost::container::list<thread_ptr > thread_ptr_list;
+    typedef boost::csbl::list<thread_ptr > thread_ptr_list;
     thread_ptr_list threads;
     for (int i = 0; i < 10; ++i)
     {
@@ -76,7 +76,7 @@ int main()
   {
     typedef boost::shared_ptr<boost::thread >  thread_ptr;
     //typedef boost::interprocess::shared_ptr<boost::thread, std::allocator<boost::thread>, default_delete<boost::thread> >  thread_ptr;
-    typedef boost::container::list<thread_ptr > thread_ptr_list;
+    typedef boost::csbl::list<thread_ptr > thread_ptr_list;
     thread_ptr_list threads;
     for (int i = 0; i < 10; ++i)
     {

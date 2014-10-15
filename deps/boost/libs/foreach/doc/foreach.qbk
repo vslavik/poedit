@@ -196,7 +196,7 @@ name conflicts in your code.
 Lastly, a word of warning. Lots of folks use a `foreach` macro as a short form
 for `BOOST_FOREACH`. I discourage this. It leads to name conflicts within the
 `BOOST_FOREACH` macro itself, where `foreach` is the name of a namespace. Besides,
-`foreach` is a common-eough identifier; even [@http://qt.digia.com/ Qt] defines
+`foreach` is a common-enough identifier; even [@http://qt.digia.com/ Qt] defines
 it as a macro. If you insist on using `foreach`, you might try something like this:
 
     #include <boost/foreach.hpp>
@@ -209,7 +209,7 @@ it as a macro. If you insist on using `foreach`, you might try something like th
     
     #define foreach   BOOST_FOREACH
 
-This will work around /some/ of the problem you're likely to encounter, but not all.
+This will work around /some/ of the problems you're likely to encounter, but not all.
 Prefer using a different identifier.
 
 [endsect]

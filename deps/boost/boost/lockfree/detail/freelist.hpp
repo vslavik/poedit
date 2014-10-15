@@ -22,6 +22,12 @@
 #include <boost/lockfree/detail/parameter.hpp>
 #include <boost/lockfree/detail/tagged_ptr.hpp>
 
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable: 4100) // unreferenced formal parameter
+#pragma warning(disable: 4127) // conditional expression is constant
+#endif
+
 namespace boost    {
 namespace lockfree {
 namespace detail   {
@@ -633,5 +639,10 @@ struct select_tagged_handle
 } /* namespace detail */
 } /* namespace lockfree */
 } /* namespace boost */
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
+
 
 #endif /* BOOST_LOCKFREE_FREELIST_HPP_INCLUDED */

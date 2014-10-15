@@ -153,7 +153,7 @@ bool large_file_exists()
 
     // Fetch last mod date of this file ("large_file_test.cpp")
     string timestamp = 
-        "$Date: 2009-05-20 12:41:20 -0700 (Wed, 20 May 2009) $";
+        "$Date$";
     if (timestamp.size() != 53) { // Length of auto-generated SVN timestamp
         remove_large_file();
         return false;

@@ -148,7 +148,7 @@ Things to take notice of:
 * `eps` is a special spirit parser that consumes no input but is always
   successful. We use it to initialize `_val`, the rule's synthesized
   attribute, to zero before anything else. The actual parser starts at
-  `+char_('M')`, parsing roman thousands. Using `eps` this way is good
+  `+lit('M')`, parsing roman thousands. Using `eps` this way is good
   for doing pre and post initializations.
 
 * The expression `a || b` reads: match a or b and in sequence. That is, if both

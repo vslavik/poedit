@@ -35,7 +35,6 @@
 #include <boost/geometry/algorithms/detail/overlay/turn_info.hpp>
 #include <boost/geometry/algorithms/detail/overlay/enrichment_info.hpp>
 #include <boost/geometry/algorithms/detail/overlay/traversal_info.hpp>
-#include <boost/geometry/algorithms/detail/overlay/calculate_distance_policy.hpp>
 #include <boost/geometry/algorithms/detail/overlay/get_turns.hpp>
 #include <boost/geometry/algorithms/detail/overlay/enrich_intersection_points.hpp>
 #include <boost/geometry/algorithms/detail/overlay/traverse.hpp>
@@ -43,9 +42,6 @@
 
 
 #include <boost/geometry/io/wkt/wkt.hpp>
-
-#define TEST_WITH_SVG
-
 
 #if defined(TEST_WITH_SVG)
 #  include <boost/geometry/io/svg/svg_mapper.hpp>
@@ -75,7 +71,7 @@ void test_traverse(std::string const& caseid, G1 const& g1, G2 const& g2)
     typedef typename boost::range_iterator<const std::vector<turn_info> >::type iterator;
     std::vector<turn_info> ips;
 
-    bg::get_turns<false, false, bg::detail::overlay::calculate_distance_policy>(g1, g2, ips);
+    bg::get_turns<false, false, bg::detail::overlay::assign_null_policy>(g1, g2, ips);
     bg::enrich_intersection_points(ips, g1, g2, strategy_type());
 
     typedef bg::model::ring<typename bg::point_type<G2>::type> ring_type;

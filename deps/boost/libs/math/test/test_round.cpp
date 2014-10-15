@@ -14,6 +14,8 @@
 #include <boost/math/special_functions/modf.hpp>
 #include <boost/math/special_functions/sign.hpp>
 #include <boost/random/mersenne_twister.hpp>
+#include <iostream>
+#include <iomanip>
 
 boost::mt19937 rng;
 

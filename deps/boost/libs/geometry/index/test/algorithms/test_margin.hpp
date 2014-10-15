@@ -22,7 +22,7 @@ void test_margin(Geometry const& geometry,
 {
     typename bgi::detail::default_margin_result<Geometry>::type value = bgi::detail::comparable_margin(geometry);
 
-#ifdef GEOMETRY_TEST_DEBUG
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
     std::ostringstream out;
     out << typeid(typename bg::coordinate_type<Geometry>::type).name()
         << " "

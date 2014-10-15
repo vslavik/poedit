@@ -1,9 +1,15 @@
 // Copyright 2008 Gautam Sewani
+// Copyright 2013 Paul A. Bristow
 
 // Use, modification and distribution are subject to the
 // Boost Software License, Version 1.0.
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+#ifdef _MSC_VER
+#  pragma warning (disable : 4127) // conditional expression is constant.
+#  pragma warning (disable : 4512) // assignment operator could not be generated.
+#endif
 
 #define BOOST_MATH_UNDERFLOW_ERROR_POLICY throw_on_error
 #define BOOST_MATH_OVERFLOW_ERROR_POLICY throw_on_error
@@ -16,12 +22,10 @@
 #include <boost/test/floating_point_comparison.hpp>
 #include "test_out_of_range.hpp"
 
-
 #include <iostream>
    using std::cout;
    using std::endl;
    using std::setprecision;
-
 
 template <class RealType>
 void test_spot(RealType location, RealType scale, RealType x, RealType p, RealType q, RealType tolerance)
@@ -132,13 +136,14 @@ void test_spots(RealType T)
       tolerance);
 
 
-   //test value to check cancellation error in straight/complimented quantile 
-   //the subtraction in the formula location-scale*log term introduces catastrophics cancellator error if location and scale*log term are close
-   //For these values, the tests fail at tolerance, but work at 100*tolerance
+   // Test value to check cancellation error in straight/complemented quantile.
+   // The subtraction in the formula location-scale*log term introduces catastrophic
+   // cancellation error if location and scale*log term are close.
+   // For these values, the tests fail at tolerance, but work at 100*tolerance.
    test_spot(
       static_cast<RealType>(-1.2345L), // location
       static_cast<RealType>(1.4555L), // scale
-      static_cast<RealType>(-0.00125796420642514024493852425918807L),//x
+      static_cast<RealType>(-0.00125796420642514024493852425918807L),// x
       static_cast<RealType>(0.7L), // p
       static_cast<RealType>(0.3L), //q
       80*tolerance);   
@@ -214,9 +219,9 @@ void test_spots(RealType T)
 
    //
    // Things that are errors:
-   //1. domain errors for scale and location
-   //2. x being NAN
-   //3. Probabilies being outside (0,1)
+   // 1. Domain errors for scale and location.
+   // 2. x being NAN.
+   // 3. Probabilies being outside (0,1).
    check_out_of_range<logistic_distribution<RealType> >(0, 1);
    if(std::numeric_limits<RealType>::has_infinity)
    {
@@ -229,25 +234,26 @@ void test_spots(RealType T)
       BOOST_CHECK_EQUAL(cdf(complement(logistic_distribution<RealType>(0, 1), -inf)), 1);
    }
 
-   //location/scale can't be infinity
-   if(std::numeric_limits<RealType>::has_infinity) {
+   // location/scale can't be infinity.
+   if(std::numeric_limits<RealType>::has_infinity)
+   {
       BOOST_CHECK_THROW(
-         logistic_distribution<RealType> dist(std::numeric_limits<RealType>::infinity(),0.5),
+         logistic_distribution<RealType> dist(std::numeric_limits<RealType>::infinity(), 0.5),
          std::domain_error);
       BOOST_CHECK_THROW(
-         logistic_distribution<RealType> dist(0.5,std::numeric_limits<RealType>::infinity()),
+         logistic_distribution<RealType> dist(0.5, std::numeric_limits<RealType>::infinity()),
          std::domain_error);
    }
-   //scale can't be negative or 0
+   // scale can't be negative or 0.
    BOOST_CHECK_THROW(
-      logistic_distribution<RealType> dist(0.5,-0.5),
+      logistic_distribution<RealType> dist(0.5, -0.5),
       std::domain_error);
    BOOST_CHECK_THROW(
-      logistic_distribution<RealType> dist(0.5,0),
+      logistic_distribution<RealType> dist(0.5, 0),
       std::domain_error);
 
-   logistic_distribution<RealType> dist(0.5,0.5);
-   //x can't be NaN,p can't be NaN
+   logistic_distribution<RealType> dist(0.5, 0.5);
+   // x can't be NaN, p can't be NaN.
 
    if (std::numeric_limits<RealType>::has_quiet_NaN)
    {
@@ -258,8 +264,16 @@ void test_spots(RealType T)
       BOOST_CHECK_THROW(quantile(dist, +std::numeric_limits<RealType>::quiet_NaN()), std::domain_error); // p = + infinity
       BOOST_CHECK_THROW(quantile(complement(dist, +std::numeric_limits<RealType>::quiet_NaN())), std::domain_error); // p = + infinity
    }
+   if (std::numeric_limits<RealType>::has_infinity)
+   {
+  // Added test for Trac https://svn.boost.org/trac/boost/ticket/9126#comment:1
+     logistic_distribution<RealType> dist(0., 0.5);
+     BOOST_CHECK_EQUAL(pdf(dist, +std::numeric_limits<RealType>::infinity()), static_cast<RealType>(0) ); // x = infinity
 
-   //p can't be outside (0,1)
+   }
+
+
+   // p can't be outside (0,1).
    BOOST_CHECK_THROW(quantile(dist, static_cast<RealType>(1.1)), std::domain_error); 
    BOOST_CHECK_THROW(quantile(dist, static_cast<RealType>(-0.1)), std::domain_error);
    BOOST_CHECK_THROW(quantile(dist, static_cast<RealType>(1)), std::overflow_error); 
@@ -270,7 +284,7 @@ void test_spots(RealType T)
    BOOST_CHECK_THROW(quantile(complement(dist, static_cast<RealType>(1))), std::overflow_error); 
    BOOST_CHECK_THROW(quantile(complement(dist, static_cast<RealType>(0))), std::overflow_error); 
 
-   //Tests for mean,mode,median,variance,skewness,kurtosis
+   // Tests for mean,mode,median,variance,skewness,kurtosis.
    //mean
    BOOST_CHECK_CLOSE(
       ::boost::math::mean(
@@ -297,7 +311,7 @@ void test_spots(RealType T)
       ::boost::math::variance(
       logistic_distribution<RealType>(2,1)      
       ),//x
-      static_cast<RealType>(3.28986813369645287294483033329205L),              // probability
+      static_cast<RealType>(3.28986813369645287294483033329205L),  // probability
       tolerance);
    //skewness
    BOOST_CHECK_CLOSE(
@@ -322,7 +336,7 @@ BOOST_AUTO_TEST_CASE( test_main )
    boost::math::logistic mycexp1(1.); // Using typedef
    logistic_distribution<> myexp2(1.); // Using default RealType double.
 
-    // Basic sanity-check spot values.
+   // Basic sanity-check spot values.
    // (Parameter value, arbitrarily zero, only communicates the floating point type).
   test_spots(0.0F); // Test float. OK at decdigits = 0 tolerance = 0.0001 %
   test_spots(0.0); // Test double. OK at decdigits 7, tolerance = 1e07 %
@@ -337,7 +351,6 @@ BOOST_AUTO_TEST_CASE( test_main )
       "not available at all, or because they are too inaccurate for these tests "
       "to pass.</note>" << std::cout;
 #endif
-
    
 } // BOOST_AUTO_TEST_CASE( test_main )
 

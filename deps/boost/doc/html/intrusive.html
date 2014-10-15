@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Chapter&#160;14.&#160;Boost.Intrusive</title>
+<title>Chapter&#160;16.&#160;Boost.Intrusive</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
@@ -25,7 +25,7 @@
 <div class="chapter">
 <div class="titlepage"><div>
 <div><h2 class="title">
-<a name="intrusive"></a>Chapter&#160;14.&#160;Boost.Intrusive</h2></div>
+<a name="intrusive"></a>Chapter&#160;16.&#160;Boost.Intrusive</h2></div>
 <div><div class="author"><h3 class="author">
 <span class="firstname">Olaf</span> <span class="surname">Krzikalla</span>
 </h3></div></div>
@@ -119,19 +119,6 @@
 <dt><span class="section"><a href="intrusive/unordered_set_unordered_multiset.html#intrusive.unordered_set_unordered_multiset.custom_bucket_traits">Custom
       bucket traits</a></span></dt>
 </dl></dd>
-<dt><span class="section"><a href="intrusive/splay_set_multiset.html">Intrusive splay tree based
-    associative containers: splay_set, splay_multiset and , splay_tree</a></span></dt>
-<dd><dl>
-<dt><span class="section"><a href="intrusive/splay_set_multiset.html#intrusive.splay_set_multiset.splay_set_multiset_disadvantages">Advantages
-      and disadvantages of splay tree based containers</a></span></dt>
-<dt><span class="section"><a href="intrusive/splay_set_multiset.html#intrusive.splay_set_multiset.splay_set_multiset_hooks">splay_set,
-      splay_multiset and splaytree hooks</a></span></dt>
-<dt><span class="section"><a href="intrusive/splay_set_multiset.html#intrusive.splay_set_multiset.set_multiset_containers">splay_set,
-      splay_multiset and splaytree containers</a></span></dt>
-<dt><span class="section"><a href="intrusive/splay_set_multiset.html#intrusive.splay_set_multiset.splay_set_bst_hook">Splay
-      trees with BST hooks</a></span></dt>
-<dt><span class="section"><a href="intrusive/splay_set_multiset.html#intrusive.splay_set_multiset.splay_set_multiset_example">Example</a></span></dt>
-</dl></dd>
 <dt><span class="section"><a href="intrusive/avl_set_multiset.html">Intrusive avl tree based associative
     containers: avl_set, avl_multiset and avltree</a></span></dt>
 <dd><dl>
@@ -141,11 +128,18 @@
       avl_multiset and avltree containers</a></span></dt>
 <dt><span class="section"><a href="intrusive/avl_set_multiset.html#intrusive.avl_set_multiset.avl_set_multiset_example">Example</a></span></dt>
 </dl></dd>
+<dt><span class="section"><a href="intrusive/splay_set_multiset.html">Intrusive splay tree based
+    associative containers: splay_set, splay_multiset and , splay_tree</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="intrusive/splay_set_multiset.html#intrusive.splay_set_multiset.splay_set_multiset_disadvantages">Advantages
+      and disadvantages of splay tree based containers</a></span></dt>
+<dt><span class="section"><a href="intrusive/splay_set_multiset.html#intrusive.splay_set_multiset.set_multiset_containers">splay_set,
+      splay_multiset and splaytree containers</a></span></dt>
+<dt><span class="section"><a href="intrusive/splay_set_multiset.html#intrusive.splay_set_multiset.splay_set_multiset_example">Example</a></span></dt>
+</dl></dd>
 <dt><span class="section"><a href="intrusive/sg_set_multiset.html">Intrusive scapegoat tree based
     associative containers: sg_set, sg_multiset and sgtree</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="intrusive/sg_set_multiset.html#intrusive.sg_set_multiset.sg_set_multiset_hooks">Using
-      binary search tree hooks: bs_set_base_hook and bs_set_member_hook</a></span></dt>
 <dt><span class="section"><a href="intrusive/sg_set_multiset.html#intrusive.sg_set_multiset.sg_set_multiset_containers">sg_set,
       sg_multiset and sgtree containers</a></span></dt>
 <dt><span class="section"><a href="intrusive/sg_set_multiset.html#intrusive.sg_set_multiset.sg_set_multiset_example">Example</a></span></dt>
@@ -153,14 +147,14 @@
 <dt><span class="section"><a href="intrusive/treap_set_multiset.html">Intrusive treap based associative
     containers: treap_set, treap_multiset and treap</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="intrusive/treap_set_multiset.html#intrusive.treap_set_multiset.treap_set_multiset_hooks">Using
-      binary search tree hooks: bs_set_base_hook and bs_set_member_hook</a></span></dt>
 <dt><span class="section"><a href="intrusive/treap_set_multiset.html#intrusive.treap_set_multiset.treap_set_multiset_containers">treap_set,
       treap_multiset and treap containers</a></span></dt>
 <dt><span class="section"><a href="intrusive/treap_set_multiset.html#intrusive.treap_set_multiset.treap_set_exceptions">Exception
       safety of treap-based intrusive containers</a></span></dt>
 <dt><span class="section"><a href="intrusive/treap_set_multiset.html#intrusive.treap_set_multiset.treap_set_multiset_example">Example</a></span></dt>
 </dl></dd>
+<dt><span class="section"><a href="intrusive/bst_hooks.html">Binary search tree hooks: bs_set_base_hook
+    and bs_set_member_hook</a></span></dt>
 <dt><span class="section"><a href="intrusive/advanced_lookups_insertions.html">Advanced lookup
     and insertion functions for associative containers</a></span></dt>
 <dd><dl>
@@ -243,6 +237,8 @@
 </dl></dd>
 <dt><span class="section"><a href="intrusive/release_notes.html">Release Notes</a></span></dt>
 <dd><dl>
+<dt><span class="section"><a href="intrusive/release_notes.html#intrusive.release_notes.release_notes_boost_1_56_00">Boost
+      1.56 Release</a></span></dt>
 <dt><span class="section"><a href="intrusive/release_notes.html#intrusive.release_notes.release_notes_boost_1_55_00">Boost
       1.55 Release</a></span></dt>
 <dt><span class="section"><a href="intrusive/release_notes.html#intrusive.release_notes.release_notes_boost_1_54_00">Boost
@@ -275,10 +271,10 @@
 <dt><span class="section"><a href="intrusive/acknowledgements.html">Acknowledgements</a></span></dt>
 <dt><span class="section"><a href="intrusive/index.html">Indexes</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="intrusive/index.html#idp126290184">Class Index</a></span></dt>
-<dt><span class="section"><a href="intrusive/index.html#idp126424824">Typedef Index</a></span></dt>
-<dt><span class="section"><a href="intrusive/index.html#idp127963896">Function Index</a></span></dt>
-<dt><span class="section"><a href="intrusive/index.html#idp129093000">Macro Index</a></span></dt>
+<dt><span class="section"><a href="intrusive/index.html#idp268834848">Class Index</a></span></dt>
+<dt><span class="section"><a href="intrusive/index.html#idp269050256">Typedef Index</a></span></dt>
+<dt><span class="section"><a href="intrusive/index.html#idp270099280">Function Index</a></span></dt>
+<dt><span class="section"><a href="intrusive/index.html#idp272190720">Macro Index</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="intrusive/reference.html">Reference</a></span></dt>
 <dd><dl>
@@ -295,12 +291,14 @@
 <dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.circular_slist_algorithms_hpp">Header &lt;boost/intrusive/circular_slist_algorithms.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.derivation_value_traits_hpp">Header &lt;boost/intrusive/derivation_value_traits.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.hashtable_hpp">Header &lt;boost/intrusive/hashtable.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.intrusive_fwd_hpp">Header &lt;boost/intrusive/intrusive_fwd.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.linear_slist_algorithms_hpp">Header &lt;boost/intrusive/linear_slist_algorithms.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.link_mode_hpp">Header &lt;boost/intrusive/link_mode.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.list_hpp">Header &lt;boost/intrusive/list.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.list_hook_hpp">Header &lt;boost/intrusive/list_hook.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.member_value_traits_hpp">Header &lt;boost/intrusive/member_value_traits.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.options_hpp">Header &lt;boost/intrusive/options.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.pack_options_hpp">Header &lt;boost/intrusive/pack_options.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.parent_from_member_hpp">Header &lt;boost/intrusive/parent_from_member.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.pointer_plus_bits_hpp">Header &lt;boost/intrusive/pointer_plus_bits.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.pointer_traits_hpp">Header &lt;boost/intrusive/pointer_traits.hpp&gt;</a></span></dt>
@@ -315,7 +313,6 @@
 <dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.slist_hpp">Header &lt;boost/intrusive/slist.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.slist_hook_hpp">Header &lt;boost/intrusive/slist_hook.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.splay_set_hpp">Header &lt;boost/intrusive/splay_set.hpp&gt;</a></span></dt>
-<dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.splay_set_hook_hpp">Header &lt;boost/intrusive/splay_set_hook.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.splaytree_hpp">Header &lt;boost/intrusive/splaytree.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.splaytree_algorithms_hpp">Header &lt;boost/intrusive/splaytree_algorithms.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="intrusive/reference.html#header.boost.intrusive.treap_hpp">Header &lt;boost/intrusive/treap.hpp&gt;</a></span></dt>
@@ -376,7 +373,7 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: October 02, 2013 at 23:27:10 GMT</small></p></td>
+<td align="left"><p><small>Last revised: July 29, 2014 at 09:05:22 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

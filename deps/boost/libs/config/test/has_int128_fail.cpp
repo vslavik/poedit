@@ -6,7 +6,7 @@
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/config for the most recent version.//
-//  Revision $Id: has_int128_fail.cpp 81827 2012-12-10 17:26:30Z johnmaddock $
+//  Revision $Id$
 //
 
 

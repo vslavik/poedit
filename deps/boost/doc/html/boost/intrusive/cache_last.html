@@ -35,8 +35,8 @@
 <span class="keyword">struct</span> <a class="link" href="cache_last.html" title="Struct template cache_last">cache_last</a> <span class="special">{</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp138736008"></a><h2>Description</h2>
-<p>This option setter specifies if the list container should use a linear implementation instead of a circular one. </p>
+<a name="idp291501888"></a><h2>Description</h2>
+<p>If true, slist also stores a pointer to the last element of the singly linked list. This allows O(1) swap and splice_after(iterator, slist &amp;) for circular slists and makes possible new functions like push_back(reference) and back(). </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

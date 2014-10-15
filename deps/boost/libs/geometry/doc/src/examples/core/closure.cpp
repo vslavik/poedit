@@ -22,10 +22,10 @@ int main()
     typedef boost::geometry::model::polygon<point_type> polygon_type;
 
     boost::geometry::closure_selector clos = boost::geometry::closure<polygon_type>::value;
-    
+
     std::cout << "closure: " << clos << std::endl
         << "(open = " << boost::geometry::open
-        << ", closed = " << boost::geometry::closed 
+        << ", closed = " << boost::geometry::closed
         << ") "<< std::endl;
 
     return 0;

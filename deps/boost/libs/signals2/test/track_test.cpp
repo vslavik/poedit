@@ -33,7 +33,7 @@ struct max_or_default {
     for(; first != last; ++first)
     {
       T value = *first;
-      if(max == false)
+      if(!max)
       {
         max = value;
       }else if(value > *max)

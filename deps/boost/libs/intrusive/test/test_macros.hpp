@@ -13,14 +13,33 @@
 #ifndef BOOST_INTRUSIVE_TEST_TEST_MACROS_HPP
 #define BOOST_INTRUSIVE_TEST_TEST_MACROS_HPP
 
+namespace boost{
+namespace intrusive{
+
+template<class It1, class It2>
+bool test_equal(It1 f1, It1 l1, It2 f2)
+{
+   while(f1 != l1){
+      if(*f1 != *f2){
+         return false;
+      }
+      ++f1;
+      ++f2;
+   }
+   return true;
+}
+
 #define TEST_INTRUSIVE_SEQUENCE( INTVALUES, ITERATOR )\
 {  \
-   BOOST_TEST (std::equal(&INTVALUES[0], &INTVALUES[0] + sizeof(INTVALUES)/sizeof(INTVALUES[0]), ITERATOR) ); \
+   BOOST_TEST (boost::intrusive::test_equal(&INTVALUES[0], &INTVALUES[0] + sizeof(INTVALUES)/sizeof(INTVALUES[0]), ITERATOR) ); \
 }
 
 #define TEST_INTRUSIVE_SEQUENCE_EXPECTED( EXPECTEDVECTOR, ITERATOR )\
 {  \
-   BOOST_TEST (std::equal(EXPECTEDVECTOR.begin(), EXPECTEDVECTOR.end(), ITERATOR) ); \
+   BOOST_TEST (boost::intrusive::test_equal(EXPECTEDVECTOR.begin(), EXPECTEDVECTOR.end(), ITERATOR) ); \
 }
+
+}  //namespace boost{
+}  //namespace intrusive{
 
 #endif

@@ -9,7 +9,7 @@
 // effective.  If your compiler lacks this feature, very few of the
 // tests would compile, and so have been excluded from the test.
 // ------------------------------------------------------------------------------
-// $Id: function_test.cpp 50456 2009-01-04 05:17:02Z bgubenko $
+// $Id$
 // ------------------------------------------------------------------------------
 // $Log$
 // Revision 1.3  2006/12/02 13:57:32  andreas_huber69

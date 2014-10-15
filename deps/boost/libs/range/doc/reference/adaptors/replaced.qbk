@@ -15,8 +15,8 @@
     * `new_value` is convertible to the `value_type` of the range.
     * `old_value` is convertible to the `value_type` of the range.
 * [*Postcondition:] For all elements `x` in the returned range, the value `x` is equal to the value of `(y == old_value) ? new_value : y` where `y` is the corresponding element in the original range.
-* [*Range Category:] __forward_range__
-* [*Range Return Type:] `boost::replaced_range<typeof(rng)>`
+* [*Range Category:] __single_pass_range__
+* [*Range Return Type:] `boost::replaced_range<decltype(rng)>`
 * [*Returned Range Category:] The range category of `rng`.
 
 [section:replaced_example replaced example]

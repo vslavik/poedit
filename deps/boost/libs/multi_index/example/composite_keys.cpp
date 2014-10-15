@@ -81,19 +81,9 @@ typedef multi_index_container<
   file_entry,
   indexed_by<
     /* primary index sorted by name (inside the same directory) */
-    ordered_unique<
-      name_key
-#if defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-      ,composite_key_result_less<name_key::result_type>
-#endif
-    >,
+    ordered_unique<name_key>,
     /* secondary index sorted by size (inside the same directory) */
-    ordered_non_unique<
-      size_key
-#if defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-      ,composite_key_result_less<size_key::result_type>
-#endif
-    >
+    ordered_non_unique<size_key>
   >
 > file_system;
 

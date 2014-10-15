@@ -39,22 +39,22 @@ void test_spikes_in_ticket_8364()
     test_one<polygon, multi_polygon, multi_polygon>("ticket_8364_step3",
         "MULTIPOLYGON(((3232 2532,2136 2790,1032 1764,1032 1458,1032 1212,2136 2328,3232 2220,3232 1056,1031 1056,1031 2856,3232 2856,3232 2532)))",
         "MULTIPOLYGON(((1032 2130,2052 2712,1032 1764,1032 2130)),((3234 2580,3234 2532,2558 2690,3234 2580)),((2558 2690,2136 2760,2052 2712,2136 2790,2558 2690)))",
-        if_typed<ct, int>(1, 2),
-        if_typed<ct, int>(15, 22),
-        if_typed<ct, int>(2775561.0, 2775256.487954), // SQL Server: 2775256.47588724
+        2,
+        if_typed<ct, int>(19, 22),
+        if_typed<ct, int>(2775595.5, 2775256.487954), // SQL Server: 2775256.47588724
         3,
-        14,
-        if_typed<ct, int>(7710.5, 7810.487954)); // SQL Server: 7810.48711165739
+        -1, // don't check point-count
+        if_typed<ct, int>(7907.0, 7810.487954)); // SQL Server: 7810.48711165739
 
     test_one<polygon, multi_polygon, multi_polygon>("ticket_8364_step4",
         "MULTIPOLYGON(((2567 2688,2136 2790,2052 2712,1032 2130,1032 1764,1032 1458,1032 1212,2136 2328,3232 2220,3232 1056,1031 1056,1031 2856,3232 2856,3232 2580,2567 2688)))",
         "MULTIPOLYGON(((1032 2556,1778 2556,1032 2130,1032 2556)),((3234 2580,3234 2556,1778 2556,2136 2760,3234 2580)))",
         1,
         if_typed<ct, int>(17, 20),
-        if_typed<ct, int>(2616292.0, 2616029.559567), // SQL Server: 2616029.55616044
+        if_typed<ct, int>(2616125.0, 2616029.559567), // SQL Server: 2616029.55616044
         1,
         if_typed<ct, int>(9, 11),
-        if_typed<ct, int>(160996.0, 161054.559567)); // SQL Server: 161054.560110092
+        if_typed<ct, int>(161211.5, 161054.559567)); // SQL Server: 161054.560110092
 }
 
 template <typename P, bool ClockWise, bool Closed>
@@ -72,10 +72,10 @@ void test_spikes_in_ticket_8365()
         "MULTIPOLYGON(((5388 1560,4650 1722,3912 1884,4650 1398)),((2442 3186,1704 3348,966 2700,1704 3024)))",
         if_typed<ct, int>(1, 2),
         if_typed<ct, int>(17, 21),
-        if_typed<ct, int>(7974930.5, 7975207.6047877), // SQL Server: 
+        if_typed<ct, int>(7974930.5, 7975207.6047877), // SQL Server:
         2,
-        9,
-        if_typed<ct, int>(199.0, 197.1047877)); // SQL Server: 
+        -1,
+        if_typed<ct, int>(196.5, 197.1047877)); // SQL Server:
 }
 
 
@@ -85,13 +85,13 @@ void test_spikes_in_ticket_8365()
 int test_main(int, char* [])
 {
     test_spikes_in_ticket_8364<bg::model::d2::point_xy<double>, true, true>();
-    test_spikes_in_ticket_8364<bg::model::d2::point_xy<int>, true, true>();
     test_spikes_in_ticket_8364<bg::model::d2::point_xy<double>, false, false>();
-    test_spikes_in_ticket_8364<bg::model::d2::point_xy<int>, false, false>();
-
     test_spikes_in_ticket_8365<bg::model::d2::point_xy<double>, true, true>();
-    test_spikes_in_ticket_8365<bg::model::d2::point_xy<int>, true, true >();
     test_spikes_in_ticket_8365<bg::model::d2::point_xy<double>, false, false>();
+
+    test_spikes_in_ticket_8364<bg::model::d2::point_xy<int>, true, true>();
+    test_spikes_in_ticket_8364<bg::model::d2::point_xy<int>, false, false>();
+    test_spikes_in_ticket_8365<bg::model::d2::point_xy<int>, true, true >();
     test_spikes_in_ticket_8365<bg::model::d2::point_xy<int>, false, false >();
 
 #ifdef HAVE_TTMATH

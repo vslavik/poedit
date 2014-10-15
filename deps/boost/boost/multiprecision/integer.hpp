@@ -79,7 +79,7 @@ struct double_integer
 }
 
 template <class I1, class I2, class I3>
-typename enable_if_c<is_integral<I1>::value && is_integral<I2>::value && is_integral<I3>::value, I1>::type
+typename enable_if_c<is_integral<I1>::value && is_unsigned<I2>::value && is_integral<I3>::value, I1>::type
    powm(const I1& a, I2 b, I3 c)
 {
    typedef typename detail::double_integer<I1>::type double_type;
@@ -99,6 +99,17 @@ typename enable_if_c<is_integral<I1>::value && is_integral<I2>::value && is_inte
       b >>= 1;
    }
    return x % c;
+}
+
+template <class I1, class I2, class I3>
+inline typename enable_if_c<is_integral<I1>::value && is_signed<I2>::value && is_integral<I3>::value, I1>::type
+   powm(const I1& a, I2 b, I3 c)
+{
+   if(b < 0)
+   {
+      BOOST_THROW_EXCEPTION(std::runtime_error("powm requires a positive exponent."));
+   }
+   return powm(a, static_cast<typename make_unsigned<I2>::type>(b), c);
 }
 
 template <class Integer>
@@ -205,7 +216,7 @@ typename enable_if_c<is_integral<Integer>::value, Integer>::type sqrt(const Inte
       return s;
    }
    
-   Integer t;
+   Integer t = 0;
    r = x;
    g /= 2;
    bit_set(s, g);

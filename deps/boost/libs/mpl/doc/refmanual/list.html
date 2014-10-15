@@ -142,7 +142,7 @@ of <tt class="literal"><span class="pre">l</span></tt> in  the same order; see
 <h3><a class="subsection-title" href="#example" name="example">Example</a></h3>
 <pre class="literal-block">
 typedef <a href="./list.html" class="identifier">list</a>&lt;float,double,long double&gt; floats;
-typedef <a href="./push-front.html" class="identifier">push_front</a>&lt;floating_types,int&gt;::type types;
+typedef <a href="./push-front.html" class="identifier">push_front</a>&lt;floats,int&gt;::type types;
 
 <a href="./assert.html" class="identifier">BOOST_MPL_ASSERT</a>(( is_same&lt; <a href="./front.html" class="identifier">front</a>&lt;types&gt;::type, int > ));
 </pre>

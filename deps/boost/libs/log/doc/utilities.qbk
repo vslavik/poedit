@@ -1,5 +1,5 @@
 [/
-              Copyright Andrey Semashev 2007 - 2013.
+              Copyright Andrey Semashev 2007 - 2014.
      Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
               http://www.boost.org/LICENSE_1_0.txt)
@@ -525,6 +525,8 @@ Besides the common settings that all sinks support, some sink backends also acce
     [Mode of scanning for old files in the target directory, see [enumref boost::log::sinks::file::scan_method `scan_method`]. If not specified, no scanning will be performed.]
 ]
 ]
+
+[warning The text file sink uses __boost_filesystem__ internally, which may cause problems on process termination. See [link log.rationale.why_crash_on_term here] for more details.]
 
 The time-based rotation can be set up with one of the two parameters: RotationInterval or RotationTimePoint. Not more than one of these parameters should be specified for a given sink. If none is specified, no time-based rotation will be performed.
 

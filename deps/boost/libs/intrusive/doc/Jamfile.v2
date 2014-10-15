@@ -33,10 +33,12 @@ doxygen autodoc
                   \"BOOST_RV_REF_END=&&\" \\
                   \"list_impl=list\" \\
                   \"slist_impl=slist\" \\
+                  \"bstree_impl=bstree\" \\
+                  \"bs_set_impl=bs_set\" \\
+                  \"bs_multiset_impl=bs_multiset\" \\
+                  \"rbtree_impl=rbtree\" \\
                   \"set_impl=set\" \\
                   \"multiset_impl=multiset\" \\
-                  \"bstree_impl=bstree\" \\
-                  \"rbtree_impl=rbtree\" \\
                   \"unordered_set_impl=unordered_set\" \\
                   \"unordered_multiset_impl=unordered_multiset\" \\
                   \"hashtable_impl=hashtable\" \\
@@ -51,7 +53,9 @@ doxygen autodoc
                   \"avltree_impl=avltree\" \\
                   \"treap_set_impl=treap_set\" \\
                   \"treap_multiset_impl=treap_multiset\" \\
-                  \"treap_impl=treap\""
+                  \"treap_impl=treap\" \\
+                  \"BOOST_INTRUSIVE_OPTION_CONSTANT(OPTION_NAME, TYPE, VALUE, CONSTANT_NAME)   = template<TYPE VALUE> struct OPTION_NAME{};\" \\
+                  \"BOOST_INTRUSIVE_OPTION_TYPE(OPTION_NAME, TYPE, TYPEDEF_EXPR, TYPEDEF_NAME) = template<class TYPE> struct OPTION_NAME{};\" "
    ;
 
 xml intrusive : intrusive.qbk

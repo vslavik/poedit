@@ -250,7 +250,7 @@ void test_mutex_lock()
    boost::interprocess::ipcdetail::thread_launch(tm2, thread_adapter<M>(&lock_and_sleep, &d2, mtx));
 
    //Wait completion
-   
+
    boost::interprocess::ipcdetail::thread_join(tm1);
    boost::interprocess::ipcdetail::thread_sleep((1000*1*BaseSeconds));
    boost::interprocess::ipcdetail::thread_join(tm2);

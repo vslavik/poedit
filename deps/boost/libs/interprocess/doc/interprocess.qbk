@@ -1800,10 +1800,10 @@ To sum up:
 
 [section:upgradable_transitions Lock transitions for Upgradable Mutex]
 
-A sharable mutex has no option to change the acquired lock for another lock 
+A sharable mutex has no option to change the acquired lock for another lock
 atomically.
 
-On the other hand, for an upgradable mutex, a thread that has 
+On the other hand, for an upgradable mutex, a thread that has
 acquired a lock can try to acquire another lock type atomically.
 All lock transitions are not guaranteed to succeed. Even if a transition is guaranteed
 to succeed, some transitions will block the thread waiting until other threads release
@@ -3919,7 +3919,7 @@ There are 2 types of `allocate_many` functions:
 
 [c++]
 
-   //!Allocates n_elements of elem_bytes bytes. 
+   //!Allocates n_elements of elem_bytes bytes.
    //!Throws bad_alloc on failure. chain.size() is not increased on failure.
    void allocate_many(size_type elem_bytes, size_type n_elements, multiallocation_chain &chain);
 
@@ -3927,7 +3927,7 @@ There are 2 types of `allocate_many` functions:
    //!Throws bad_alloc on failure. chain.size() is not increased on failure.
    void allocate_many(const size_type *element_lengths, size_type n_elements, size_type sizeof_element, multiallocation_chain &chain);
 
-   //!Allocates n_elements of elem_bytes bytes. 
+   //!Allocates n_elements of elem_bytes bytes.
    //!Non-throwing version. chain.size() is not increased on failure.
    void allocate_many(std::nothrow_t, size_type elem_bytes, size_type n_elements, multiallocation_chain &chain);
 
@@ -6629,21 +6629,46 @@ want [*Boost.Interprocess] to initialize the COM library with another model, def
 [section:notes_windows_shm_folder Shared memory emulation folder]
 
 Shared memory (`shared_memory_object`) is implemented in windows using memory mapped files, placed in a
-directory in the shared documents folder (`SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders\Common AppData`).
-This directory name is the last bootup time (obtained via COM calls), so that each bootup shared memory is created in a new
+shared directory in the shared documents folder (`SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders\Common AppData`).
+This directory name is the last bootup time obtained via COM calls (if `BOOST_INTERPROCESS_BOOTSTAMP_IS_LASTBOOTUPTIME`) defined
+or searching the system log for a startup event (the default implementation), so that each bootup shared memory is created in a new
 folder obtaining kernel persistence shared memory.
 
-Unfortunately, due to COM implementation related errors, in Boost 1.48 & Boost 1.49 the bootup-time folder was dumped and files
+If using `BOOST_INTERPROCESS_BOOTSTAMP_IS_LASTBOOTUPTIME`, due to COM implementation related errors,
+in Boost 1.48 & Boost 1.49 the bootup-time folder was dumped and files
 were directly created in shared documents folder, reverting to filesystem persistence shared memory. Boost 1.50 fixed those issues
 and recovered bootup time directory and kernel persistence. If you need to reproduce Boost 1.48 & Boost 1.49 behaviour to communicate
 with applications compiled with that version, comment `#define BOOST_INTERPROCESS_HAS_KERNEL_BOOTTIME` directive
 in the Windows configuration part of `boost/interprocess/detail/workaround.hpp`.
 
+If using the default implementation, (`BOOST_INTERPROCESS_BOOTSTAMP_IS_LASTBOOTUPTIME` undefined) and the Startup Event is not
+found, this might be due to some buggy software that floods or erases the event log.
+
+In any error case (shared documents folder is not defined or bootup time could not be obtained, the library throws an error. You still
+can use [*Boost.Interprocess] definining your own directory as the shared directory. Just define `BOOST_INTERPROCESS_SHARED_DIR_PATH`
+when using the library and that path will be used to place shared memory files.
+
 [endsect]
+
+[section:boost:use_windows_h BOOST_USE_WINDOWS_H support]
+
+If `BOOST_USE_WINDOWS_H` is defined, <windows.h> and other windows SDK files are included,
+otherwise the library declares needed functions and structures to reduce the impact of including
+those heavy headers.
 
 [endsect]
 
 [section:notes_linux Notes for Linux users]
+
+[section:notes_linux_shm_folder Shared memory emulation folder]
+
+On systems without POSIX shared memory support shared memory objects are implemented as memory mapped files, using a directory
+placed in "/tmp" that can include (if `BOOST_INTERPROCESS_HAS_KERNEL_BOOTTIME` is defined) the last bootup time (if the Os supports it).
+As in Windows, in any error case obtaining this directory the library throws an error . You still can use
+[*Boost.Interprocess] definining your own directory as the shared directory. Just define `BOOST_INTERPROCESS_SHARED_DIR_PATH`
+when using the library and that path will be used to place shared memory files.
+
+[endsect]
 
 [section:notes_linux_overcommit Overcommit]
 
@@ -6713,15 +6738,56 @@ thank them:
 
 [section:release_notes Release Notes]
 
+[section:release_notes_boost_1_56_00 Boost 1.56 Release]
+*  Fixed bugs:
+   * [@https://svn.boost.org/trac/boost/ticket/9221 Trac #9221 (['"message_queue deadlock on linux"])].
+   * [@https://svn.boost.org/trac/boost/ticket/9226 Trac #9226 (['"On some computers, Common Appdata is empty in registry, so boost interprocess cannot work"])].
+   * [@https://svn.boost.org/trac/boost/ticket/9284 Trac #9284 (['"WaitForSingleObject(mutex) must handle WAIT_ABANDONED"])].
+   * [@https://svn.boost.org/trac/boost/ticket/9285 Trac #9285 (['"CreateMutex returns NULL if fails"])].
+   * [@https://svn.boost.org/trac/boost/ticket/9288 Trac #9288 (['"timed_wait does not check if it has expired"])].
+   * [@https://svn.boost.org/trac/boost/ticket/9408 Trac #9408 (['"Android does not support XSI_SHARED_MEMORY_OBJECTS"]]).
+   * [@https://svn.boost.org/trac/boost/ticket/9729 Trac #9729 (['"crash on managed_external_buffer object construction"]]).
+   * [@https://svn.boost.org/trac/boost/ticket/9767 Trac #9767 (['"bootstamp generation causes error in case of corrupt Windows Event Log"])].
+   * [@https://svn.boost.org/trac/boost/ticket/9835 Trac #9835 (['"Boost Interprocess fails to compile with Android NDK GCC 4.8, -Werror=unused-variable"])].
+   * [@https://svn.boost.org/trac/boost/ticket/9911 Trac #9911 (['"get_tmp_base_dir(...) failure"])].
+   * [@https://svn.boost.org/trac/boost/ticket/9946 Trac #9946 (['"ret_ptr uninitialized in init_atomic_func, fini_atomic_func"])].
+   * [@https://svn.boost.org/trac/boost/ticket/10011 Trac #10011 (['"segment_manager::find( unique_instance_t* ) fails to compile"])].
+   * [@https://svn.boost.org/trac/boost/ticket/10021 Trac #10021 (['"Interprocess and BOOST_USE_WINDOWS_H"])].
+   * [@https://svn.boost.org/trac/boost/ticket/10230 Trac #10230 (['"No Sleep in interprocess::winapi"])].
+   * [@https://github.com/boostorg/interprocess/pull/2 GitHub #2] (['"Provide support for the Cray C++ compiler. The Cray compiler defines __GNUC__"]]).
+   * [@https://github.com/boostorg/interprocess/pull/3 GitHub #3] (['"Fix/mingw interprocess_exception throw in file_wrapper::priv_open_or_create"]]).
+
+*  [*ABI breaking]: [@https://svn.boost.org/trac/boost/ticket/9221 #9221] showed
+   that `BOOST_INTERPROCESS_MSG_QUEUE_CIRCULAR_INDEX` option of message queue,
+   was completely broken so an ABI break was necessary to have a working implementation.
+
+*  Simplified, refactored and unified (timed_)lock code based on try_lock().
+   There were several bugs when handling timeout expirations.
+
+*  Changed the implementation of condition variables' destructors to allow POSIX semantics
+   (the condition variable can be destroyed after all waiting threads have been woken up)..
+
+*  Added `BOOST_INTERPROCESS_SHARED_DIR_PATH` option to define the shared directory used to place shared memory objects
+   when implemented as memory mapped files.
+
+*  Added support for `BOOST_USE_WINDOWS_H`. When this macro is defined Interprocess does not declare
+   used Windows API function and types, includes all needed windows SDK headers and uses types and
+   functions declared by the Windows SDK.
+
+*  Added `get_size` to [classref ::boost:interprocess:windows_shared_memory].
+
+[endsect]
+
 [section:release_notes_boost_1_55_00 Boost 1.55 Release]
 
-*  Fixed bugs [@https://svn.boost.org/trac/boost/ticket/7156 #7156],
-              [@https://svn.boost.org/trac/boost/ticket/7164 #7164],
-              [@https://svn.boost.org/trac/boost/ticket/8277 #8277],
-              [@https://svn.boost.org/trac/boost/ticket/8976 #8976],
-              [@https://svn.boost.org/trac/boost/ticket/9065 #9065],
-              [@https://svn.boost.org/trac/boost/ticket/9073 #9073],
-              [@https://svn.boost.org/trac/boost/ticket/8277 #9908].
+*  Fixed bugs [@https://svn.boost.org/trac/boost/ticket/7156 #7156] (['"interprocess buffer streams leak memory on construction"]]).
+              [@https://svn.boost.org/trac/boost/ticket/7164 #7164] (['"Two potential bugs with b::int::vector of b::i::weak_ptr"]]).
+              [@https://svn.boost.org/trac/boost/ticket/7860 #7860] (['"smart_ptr's yield_k and spinlock utilities can improve spinlock-based sychronization primitives"]]).
+              [@https://svn.boost.org/trac/boost/ticket/8277 #8277] (['"docs for named_mutex erroneously refer to interprocess_mutex"]]).
+              [@https://svn.boost.org/trac/boost/ticket/8976 #8976] (['"shared_ptr fails to compile if used with a scoped_allocator"]]).
+              [@https://svn.boost.org/trac/boost/ticket/9008 #9008] (['"conditions variables fast enough only when opening a multiprocess browser"]]).
+              [@https://svn.boost.org/trac/boost/ticket/9065 #9065] (['"atomic_cas32 inline assembly wrong on ppc32"]]).
+              [@https://svn.boost.org/trac/boost/ticket/9073 #9073] (['"Conflict names 'realloc'"]]).
 
 [endsect]
 

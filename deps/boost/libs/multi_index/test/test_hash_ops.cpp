@@ -17,6 +17,7 @@
 #include <boost/multi_index_container.hpp>
 #include <boost/multi_index/hashed_index.hpp>
 #include <boost/multi_index/identity.hpp>
+#include <vector>
 
 #include <iostream>
 
@@ -90,4 +91,28 @@ void test_hash_ops()
   hc.rehash(1);
   BOOST_TEST(hc.bucket_count()>=1);
   check_load_factor(hc);
+
+  hash_container hc2;
+  hc2.insert(0);
+  hc2.max_load_factor(0.5f/hc2.bucket_count());
+  BOOST_TEST(hc2.load_factor()>hc2.max_load_factor());
+  hc2.reserve(1);
+  BOOST_TEST(hc2.load_factor()<hc2.max_load_factor());
+
+  hash_container hc3;
+  hc3.clear();
+  hc3.max_load_factor(1.0f);
+  hc3.reserve(1000);
+  hash_container::size_type bc3=hc3.bucket_count();
+  BOOST_TEST(bc3>=1000);
+  std::vector<int> v;
+  for(unsigned int n=0;n<bc3;++n)v.push_back(n);
+  hc3.insert(v.begin(),v.end());
+  BOOST_TEST(hc3.bucket_count()==bc3); /* LWG issue 2156 */
+  hc3.max_load_factor(0.25f);
+  hc3.reserve(100);
+  BOOST_TEST(hc3.bucket_count()>bc3);
+  bc3=hc3.bucket_count();
+  hc3.reserve((hash_container::size_type)(3.0f*hc3.max_load_factor()*bc3));
+  BOOST_TEST(hc3.bucket_count()>bc3);
 }

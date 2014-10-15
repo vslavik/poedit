@@ -146,7 +146,7 @@ consume as little input as possible while still producing a match.
 [h4 Possessive repeats]
 
 By default when a repeated pattern does not match then the engine will backtrack until
-a match is found.  However, this behaviour can sometime be undesireable so there are
+a match is found.  However, this behaviour can sometime be undesireble so there are
 also "possessive" repeats: these match as much as possible and do not then allow
 backtracking if the rest of the expression fails to match.
 
@@ -436,13 +436,13 @@ You can create a named subexpression using:
 
 	(?<NAME>expression)
 	
-Which can be then be refered to by the name /NAME/.  Alternatively you can delimit the name
+Which can be then be referred to by the name /NAME/.  Alternatively you can delimit the name
 using 'NAME' as in:
 
 	(?'NAME'expression)
 	
-These named subexpressions can be refered to in a backreference using either [^\g{NAME}] or [^\k<NAME>]
-and can also be refered to by name in a [perl_format] format string for search and replace operations, or in the
+These named subexpressions can be referred to in a backreference using either [^\g{NAME}] or [^\k<NAME>]
+and can also be referred to by name in a [perl_format] format string for search and replace operations, or in the
 [match_results] member functions.
 	
 [h5 Comments]
@@ -557,7 +557,7 @@ executes /no-pattern/.
 * [^(?(R&['name])yes-pattern|no-pattern)]  Executes /yes-pattern/ if we are executing inside a recursion to named sub-expression /name/, otherwise
 executes /no-pattern/.
 * [^(?(DEFINE)never-exectuted-pattern)]  Defines a block of code that is never executed and matches no characters:
-this is usually used to define one or more named sub-expressions which are refered to from elsewhere in the pattern.
+this is usually used to define one or more named sub-expressions which are referred to from elsewhere in the pattern.
 
 [h4 Operator precedence]
 

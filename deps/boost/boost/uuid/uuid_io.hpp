@@ -59,7 +59,7 @@ template <typename ch, typename char_traits>
         }
         
         if (flags & std::ios_base::left) {
-            for (std::streamsize ii=uuid_width; ii<width; ii++) {
+            for (std::streamsize s=uuid_width; s<width; s++) {
                 os << fill;
             }
         }

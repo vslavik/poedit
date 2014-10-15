@@ -13,8 +13,12 @@ int main()
   BOOST_TEST((BOOST_TTI_HAS_STATIC_MEMBER_DATA_GEN(DSMember)<AType,short>::value));
   BOOST_TEST((!BOOST_TTI_HAS_STATIC_MEMBER_DATA_GEN(SomeStaticData)<AnotherType,float>::value));
   BOOST_TEST((StatName<AnotherType,AType::AStructType>::value));
-  
   BOOST_TEST((BOOST_TTI_HAS_STATIC_MEMBER_DATA_GEN(CIntValue)<AnotherType,const int>::value));
+  
+  // Passing non-class enclosing type will return false
+  
+  BOOST_TEST((!BOOST_TTI_HAS_STATIC_MEMBER_DATA_GEN(DSMember)<unsigned short,short>::value));
+  BOOST_TEST((!StatName<AnotherType *,AType::AStructType>::value));
   
   return boost::report_errors();
 

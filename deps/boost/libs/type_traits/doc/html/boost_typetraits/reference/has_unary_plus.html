@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>has_unary_plus</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="up" href="../reference.html" title="Alphabetical Reference">
 <link rel="prev" href="has_unary_minus.html" title="has_unary_minus">
@@ -107,13 +107,13 @@
 <p>
         <span class="bold"><strong>Limitation:</strong></span>
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
             Requires a compiler with working SFINAE.
           </li></ul></div>
 <p>
         <span class="bold"><strong>Known issues:</strong></span>
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             This trait cannot detect whether prefix <code class="computeroutput"><span class="keyword">operator</span><span class="special">+</span></code> is public or not: if <code class="computeroutput"><span class="keyword">operator</span><span class="special">+</span></code> is defined as a private member of <code class="computeroutput"><span class="identifier">Rhs</span></code> then instantiating <code class="computeroutput"><span class="identifier">has_unary_plus</span><span class="special">&lt;</span><span class="identifier">Rhs</span><span class="special">&gt;</span></code>
             will produce a compiler error. For this reason <code class="computeroutput"><span class="identifier">has_unary_plus</span></code>

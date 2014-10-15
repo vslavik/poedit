@@ -1,0 +1,34 @@
+# Copyright (c) 2014 Glen Joseph Fernandes
+# glenfe at live dot com
+#
+# Distributed under the Boost Software License,
+# Version 1.0. (See accompanying file LICENSE_1_0.txt
+# or copy at http://boost.org/LICENSE_1_0.txt)
+
+import doxygen ;
+import quickbook ;
+
+doxygen reference
+  :
+    [ glob ../../../boost/align.hpp ]
+    [ glob ../../../boost/align/*.hpp ]
+  :
+    <doxygen:param>ENABLE_PREPROCESSING=YES
+    <doxygen:param>EXPAND_ONLY_PREDEF=YES
+    <doxygen:param>EXTRACT_ALL=NO
+    <doxygen:param>EXTRACT_PRIVATE=NO
+    <doxygen:param>HIDE_UNDOC_MEMBERS=YES
+    <doxygen:param>MACRO_EXPANSION=YES
+  ;
+
+xml align : align.qbk ;
+
+boostbook standalone
+  :
+    align
+  :
+    <dependency>reference
+    <xsl:param>boost.root=../../../..
+    <xsl:param>generate.section.toc.level=1
+    <xsl:param>toc.max.depth=1
+  ;

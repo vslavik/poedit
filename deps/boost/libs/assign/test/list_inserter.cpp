@@ -62,15 +62,10 @@ void check_list_inserter()
     //
     make_list_inserter( (void (*)(int))&function_ptr )( 5 ),3;
     make_list_inserter( functor() )( 4 ),2;
-    
-#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))
-// BCB would crash
+
     typedef void (vector<int>::* push_back_t)(const int&);
     push_back_t push_back_func = &vector<int>::push_back;
-    make_list_inserter( bind( push_back_func, &v, _1 ) )( 6 ),4;
-#else
-    make_list_inserter( bind( &vector<int>::push_back, &v, _1 ) )( 6 ),4;
-#endif 
+    make_list_inserter( boost::bind( push_back_func, &v, _1 ) )( 6 ),4;
 
     BOOST_CHECK_EQUAL( v.size(), 2u );
     BOOST_CHECK_EQUAL( v[0], 6 );

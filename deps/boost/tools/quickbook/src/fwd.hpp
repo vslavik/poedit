@@ -20,11 +20,12 @@ namespace quickbook
     struct state;
     struct quickbook_grammar;
     struct collector;
-    struct id_manager;
+    struct document_state;
     struct section_info;
     struct file;
     struct template_symbol;
     typedef boost::intrusive_ptr<file> file_ptr;
+    typedef unsigned source_mode_type;
 
     typedef boost::string_ref::const_iterator string_iterator;
     typedef lookback_iterator<string_iterator> parse_iterator;

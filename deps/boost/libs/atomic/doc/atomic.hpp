@@ -90,7 +90,7 @@ public:
         \param value Initial value
         Creates and initializes an atomic variable.
     */
-    atomic(Type value);
+    explicit atomic(Type value);
 
     /**
         \brief Read the current value of the atomic variable
@@ -496,15 +496,14 @@ public:
     */
     Type operator--(int);
 
-private:
     /** \brief Deleted copy constructor */
-    atomic(const atomic &);
+    atomic(const atomic &) = delete;
     /** \brief Deleted copy assignment */
-    void operator=(const atomic &);
+    const atomic & operator=(const atomic &) = delete;
 };
 
 /**
-    \brief Insert explicit fence
+    \brief Insert explicit fence for thread synchronization
     \param order Memory ordering constraint
 
     Inserts an explicit fence. The exact semantic depends on the
@@ -522,5 +521,27 @@ private:
 
 */
 void atomic_thread_fence(memory_order order);
+
+/**
+    \brief Insert explicit fence for synchronization with a signal handler
+    \param order Memory ordering constraint
+
+    Inserts an explicit fence to synchronize with a signal handler called within
+    the context of the same thread. The fence ensures the corresponding operations
+    around it are complete and/or not started. The exact semantic depends on the
+    type of fence inserted:
+
+    - \c memory_order_relaxed: No operation
+    - \c memory_order_release: Ensures the operations before the fence are complete
+    - \c memory_order_acquire or \c memory_order_consume: Ensures the operations
+         after the fence are not started.
+    - \c memory_order_acq_rel or \c memory_order_seq_cst: Ensures the operations
+      around the fence do not cross it.
+
+    Note that this call does not affect visibility order of the memory operations
+    to other threads. It is functionally similar to \c atomic_thread_fence, only
+    it does not generate any instructions to synchronize hardware threads.
+*/
+void atomic_signal_fence(memory_order order);
 
 }

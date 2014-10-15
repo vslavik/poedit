@@ -24,7 +24,7 @@ int main()
 {
     using namespace boost::assign;
     using boost::adaptors::strided;
-    
+
     typedef boost::geometry::model::d2::point_xy<int> xy;
     boost::geometry::model::ring<xy> ring;
     ring += xy(0, 0);
@@ -35,8 +35,8 @@ int main()
     ring += xy(2, 0);
 
     boost::geometry::correct(ring);
-    
-    std::cout 
+
+    std::cout
         << "Normal : " << boost::geometry::dsv(ring) << std::endl
         << "Strided: " << boost::geometry::dsv(ring | strided(2)) << std::endl;
 

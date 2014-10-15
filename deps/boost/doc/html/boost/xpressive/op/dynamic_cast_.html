@@ -26,7 +26,7 @@
 <a name="boost.xpressive.op.dynamic_cast_"></a><div class="titlepage"></div>
 <div class="refnamediv">
 <h2><span class="refentrytitle">Struct template dynamic_cast_</span></h2>
-<p>boost::xpressive::op::dynamic_cast_</p>
+<p>boost::xpressive::op::dynamic_cast_ &#8212; <code class="computeroutput"><a class="link" href="dynamic_cast_.html" title="Struct template dynamic_cast_">dynamic_cast_</a>&lt;&gt;</code> is a PolymorphicFunctionObject for dynamically casting a parameter to a different type. </p>
 </div>
 <h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp" title="Header &lt;boost/xpressive/regex_actions.hpp&gt;">boost/xpressive/regex_actions.hpp</a>&gt;
@@ -36,15 +36,54 @@
   <span class="comment">// types</span>
   <span class="keyword">typedef</span> <span class="identifier">T</span> <a name="boost.xpressive.op.dynamic_cast_.result_type"></a><span class="identifier">result_type</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="dynamic_cast_.html#idp168038808-bb">public member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Value<span class="special">&gt;</span> <span class="identifier">T</span> <a class="link" href="dynamic_cast_.html#idp168039016-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Value</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="dynamic_cast_.html#idp350929360-bb">public member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Value<span class="special">&gt;</span> <span class="identifier">T</span> <a class="link" href="dynamic_cast_.html#idp350929920-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Value</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp259091320"></a><h2>Description</h2>
+<a name="idp533597856"></a><h2>Description</h2>
+<p>
+</p>
 <div class="refsect2">
-<a name="idp259091528"></a><h3>
-<a name="idp168038808-bb"></a><code class="computeroutput">dynamic_cast_</code> public member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Value<span class="special">&gt;</span> <span class="identifier">T</span> <a name="idp168039016-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Value</span> <span class="keyword">const</span> <span class="special">&amp;</span> val<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp533598528"></a><h3>Template Parameters</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+<pre class="literallayout"><span class="keyword">typename</span> T</pre>
+<p>The type to which to dynamically cast the parameter. </p>
+</li></ol></div>
+</div>
+<div class="refsect2">
+<a name="idp533601680"></a><h3>
+<a name="idp350929360-bb"></a><code class="computeroutput">dynamic_cast_</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Value<span class="special">&gt;</span> <span class="identifier">T</span> <a name="idp350929920-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Value</span> <span class="keyword">const</span> <span class="special">&amp;</span> val<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<p>
+
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><code class="computeroutput">val</code></span></p></td>
+<td><p>The value to dynamically cast. </p></td>
+</tr></tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p><code class="computeroutput">dynamic_cast&lt;T&gt;(val)</code> </p></td>
+</tr>
+</tbody>
+</table></div>
+</li></ol></div>
 </div>
 </div>
 </div>

@@ -28,7 +28,7 @@ int main()
 
     point p1(1, 1);
     box bx = boost::geometry::make<box>(1, 1, 2, 2);
-    
+
     // Assign a box to a polygon (conversion box->poly)
     polygon poly;
     boost::geometry::convert(bx, poly);
@@ -36,7 +36,7 @@ int main()
     // Convert a point to another point type (conversion of point-type)
     boost::tuple<double, double> p2;
     boost::geometry::convert(p1, p2); // source -> target
-        
+
     using boost::geometry::dsv;
     std::cout
         << "box: " << dsv(bx) << std::endl

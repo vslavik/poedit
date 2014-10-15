@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../../interprocess/indexes_reference.html#header.boost.interprocess.interprocess_fwd_hpp" title="Header &lt;boost/interprocess/interprocess_fwd.hpp&gt;">
+<link rel="up" href="../../interprocess/acknowledgements_notes.html#header.boost.interprocess.interprocess_fwd_hpp" title="Header &lt;boost/interprocess/interprocess_fwd.hpp&gt;">
 <link rel="prev" href="basic_managed_heap_memory.html" title="Class template basic_managed_heap_memory">
 <link rel="next" href="basic_bufferbuf.html" title="Class template basic_bufferbuf">
 </head>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="basic_managed_heap_memory.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../interprocess/indexes_reference.html#header.boost.interprocess.interprocess_fwd_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="basic_bufferbuf.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="basic_managed_heap_memory.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../interprocess/acknowledgements_notes.html#header.boost.interprocess.interprocess_fwd_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="basic_bufferbuf.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.interprocess.basic_managed_mapped_file"></a><div class="titlepage"></div>
@@ -29,115 +29,115 @@
 <p>boost::interprocess::basic_managed_mapped_file</p>
 </div>
 <h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../interprocess/indexes_reference.html#header.boost.interprocess.interprocess_fwd_hpp" title="Header &lt;boost/interprocess/interprocess_fwd.hpp&gt;">boost/interprocess/interprocess_fwd.hpp</a>&gt;
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../interprocess/acknowledgements_notes.html#header.boost.interprocess.interprocess_fwd_hpp" title="Header &lt;boost/interprocess/interprocess_fwd.hpp&gt;">boost/interprocess/interprocess_fwd.hpp</a>&gt;
 
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharType<span class="special">,</span> <span class="keyword">typename</span> MemoryAlgorithm<span class="special">,</span> 
          <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">class</span> <span class="identifier">IndexConfig</span> <span class="special">&gt;</span> <span class="keyword">class</span> IndexType<span class="special">&gt;</span> 
 <span class="keyword">class</span> <a class="link" href="basic_managed_mapped_file.html" title="Class template basic_managed_mapped_file">basic_managed_mapped_file</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="basic_managed_mapped_file.html#boost.interprocess.basic_managed_mapped_fileconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="basic_managed_mapped_file.html#idp27684056-bb"><span class="identifier">basic_managed_mapped_file</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="basic_managed_mapped_file.html#idp27684408-bb"><span class="identifier">basic_managed_mapped_file</span></a><span class="special">(</span><a class="link" href="create_only_t.html" title="Struct create_only_t">create_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">size_type</span><span class="special">,</span> 
+  <a class="link" href="basic_managed_mapped_file.html#idp49605648-bb"><span class="identifier">basic_managed_mapped_file</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="basic_managed_mapped_file.html#idp49606416-bb"><span class="identifier">basic_managed_mapped_file</span></a><span class="special">(</span><a class="link" href="create_only_t.html" title="Struct create_only_t">create_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">size_type</span><span class="special">,</span> 
                             <span class="keyword">const</span> <span class="keyword">void</span> <span class="special">*</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
                             <span class="keyword">const</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a> <span class="special">&amp;</span> <span class="special">=</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="basic_managed_mapped_file.html#idp27687320-bb"><span class="identifier">basic_managed_mapped_file</span></a><span class="special">(</span><a class="link" href="open_or_create_t.html" title="Struct open_or_create_t">open_or_create_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">size_type</span><span class="special">,</span> 
+  <a class="link" href="basic_managed_mapped_file.html#idp49612352-bb"><span class="identifier">basic_managed_mapped_file</span></a><span class="special">(</span><a class="link" href="open_or_create_t.html" title="Struct open_or_create_t">open_or_create_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">size_type</span><span class="special">,</span> 
                             <span class="keyword">const</span> <span class="keyword">void</span> <span class="special">*</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
                             <span class="keyword">const</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a> <span class="special">&amp;</span> <span class="special">=</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="basic_managed_mapped_file.html#idp27690312-bb"><span class="identifier">basic_managed_mapped_file</span></a><span class="special">(</span><a class="link" href="open_only_t.html" title="Struct open_only_t">open_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">void</span> <span class="special">*</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="basic_managed_mapped_file.html#idp27691864-bb"><span class="identifier">basic_managed_mapped_file</span></a><span class="special">(</span><a class="link" href="open_copy_on_write_t.html" title="Struct open_copy_on_write_t">open_copy_on_write_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> 
+  <a class="link" href="basic_managed_mapped_file.html#idp49618368-bb"><span class="identifier">basic_managed_mapped_file</span></a><span class="special">(</span><a class="link" href="open_only_t.html" title="Struct open_only_t">open_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">void</span> <span class="special">*</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="basic_managed_mapped_file.html#idp49621616-bb"><span class="identifier">basic_managed_mapped_file</span></a><span class="special">(</span><a class="link" href="open_copy_on_write_t.html" title="Struct open_copy_on_write_t">open_copy_on_write_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> 
                             <span class="keyword">const</span> <span class="keyword">void</span> <span class="special">*</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="basic_managed_mapped_file.html#idp27693464-bb"><span class="identifier">basic_managed_mapped_file</span></a><span class="special">(</span><a class="link" href="open_read_only_t.html" title="Struct open_read_only_t">open_read_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">void</span> <span class="special">*</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="basic_managed_mapped_file.html#idp27695048-bb"><span class="identifier">basic_managed_mapped_file</span></a><span class="special">(</span><a class="link" href="basic_managed_mapped_file.html" title="Class template basic_managed_mapped_file">basic_managed_mapped_file</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  basic_managed_mapped_file&amp; <a class="link" href="basic_managed_mapped_file.html#idp27695880-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="basic_managed_mapped_file.html" title="Class template basic_managed_mapped_file">basic_managed_mapped_file</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="basic_managed_mapped_file.html#idp27696840-bb"><span class="special">~</span><span class="identifier">basic_managed_mapped_file</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="basic_managed_mapped_file.html#idp49624880-bb"><span class="identifier">basic_managed_mapped_file</span></a><span class="special">(</span><a class="link" href="open_read_only_t.html" title="Struct open_read_only_t">open_read_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">void</span> <span class="special">*</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="basic_managed_mapped_file.html#idp49628144-bb"><span class="identifier">basic_managed_mapped_file</span></a><span class="special">(</span><a class="link" href="basic_managed_mapped_file.html" title="Class template basic_managed_mapped_file">basic_managed_mapped_file</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="basic_managed_mapped_file.html" title="Class template basic_managed_mapped_file">basic_managed_mapped_file</a> <span class="special">&amp;</span> <a class="link" href="basic_managed_mapped_file.html#idp49629904-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="basic_managed_mapped_file.html" title="Class template basic_managed_mapped_file">basic_managed_mapped_file</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="basic_managed_mapped_file.html#idp49632256-bb"><span class="special">~</span><span class="identifier">basic_managed_mapped_file</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="basic_managed_mapped_file.html#idp27681896-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="basic_managed_mapped_file.html#idp27682104-bb"><span class="identifier">swap</span></a><span class="special">(</span><a class="link" href="basic_managed_mapped_file.html" title="Class template basic_managed_mapped_file">basic_managed_mapped_file</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="basic_managed_mapped_file.html#idp27683352-bb"><span class="identifier">flush</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="basic_managed_mapped_file.html#idp49601296-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="basic_managed_mapped_file.html#idp49601856-bb"><span class="identifier">swap</span></a><span class="special">(</span><a class="link" href="basic_managed_mapped_file.html" title="Class template basic_managed_mapped_file">basic_managed_mapped_file</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="basic_managed_mapped_file.html#idp49604192-bb"><span class="identifier">flush</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="basic_managed_mapped_file.html#idp27697448-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="basic_managed_mapped_file.html#idp27697656-bb"><span class="identifier">grow</span></a><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="basic_managed_mapped_file.html#idp27699304-bb"><span class="identifier">shrink_to_fit</span></a><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="basic_managed_mapped_file.html#idp49633296-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="basic_managed_mapped_file.html#idp49633856-bb"><span class="identifier">grow</span></a><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="basic_managed_mapped_file.html#idp49637184-bb"><span class="identifier">shrink_to_fit</span></a><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp116127272"></a><h2>Description</h2>
+<a name="idp247713792"></a><h2>Description</h2>
 <p>A basic mapped file named object creation class. Initializes the mapped file. Inherits all basic functionality from basic_managed_memory_impl&lt;CharType, AllocationAlgorithm, IndexType&gt; </p>
 <div class="refsect2">
-<a name="idp116128040"></a><h3>
+<a name="idp247714768"></a><h3>
 <a name="boost.interprocess.basic_managed_mapped_fileconstruct-copy-destruct"></a><code class="computeroutput">basic_managed_mapped_file</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp27684056-bb"></a><span class="identifier">basic_managed_mapped_file</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp49605648-bb"></a><span class="identifier">basic_managed_mapped_file</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Creates mapped file and creates and places the segment manager. This can throw. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp27684408-bb"></a><span class="identifier">basic_managed_mapped_file</span><span class="special">(</span><a class="link" href="create_only_t.html" title="Struct create_only_t">create_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">,</span> <span class="identifier">size_type</span> size<span class="special">,</span> 
+<pre class="literallayout"><a name="idp49606416-bb"></a><span class="identifier">basic_managed_mapped_file</span><span class="special">(</span><a class="link" href="create_only_t.html" title="Struct create_only_t">create_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">,</span> <span class="identifier">size_type</span> size<span class="special">,</span> 
                           <span class="keyword">const</span> <span class="keyword">void</span> <span class="special">*</span> addr <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
                           <span class="keyword">const</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a> <span class="special">&amp;</span> perm <span class="special">=</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Creates mapped file and creates and places the segment manager. This can throw. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp27687320-bb"></a><span class="identifier">basic_managed_mapped_file</span><span class="special">(</span><a class="link" href="open_or_create_t.html" title="Struct open_or_create_t">open_or_create_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">,</span> <span class="identifier">size_type</span> size<span class="special">,</span> 
+<pre class="literallayout"><a name="idp49612352-bb"></a><span class="identifier">basic_managed_mapped_file</span><span class="special">(</span><a class="link" href="open_or_create_t.html" title="Struct open_or_create_t">open_or_create_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">,</span> <span class="identifier">size_type</span> size<span class="special">,</span> 
                           <span class="keyword">const</span> <span class="keyword">void</span> <span class="special">*</span> addr <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
                           <span class="keyword">const</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a> <span class="special">&amp;</span> perm <span class="special">=</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Creates mapped file and creates and places the segment manager if segment was not created. If segment was created it connects to the segment. This can throw. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp27690312-bb"></a><span class="identifier">basic_managed_mapped_file</span><span class="special">(</span><a class="link" href="open_only_t.html" title="Struct open_only_t">open_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">,</span> 
+<pre class="literallayout"><a name="idp49618368-bb"></a><span class="identifier">basic_managed_mapped_file</span><span class="special">(</span><a class="link" href="open_only_t.html" title="Struct open_only_t">open_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">,</span> 
                           <span class="keyword">const</span> <span class="keyword">void</span> <span class="special">*</span> addr <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Connects to a created mapped file and its segment manager. This can throw. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp27691864-bb"></a><span class="identifier">basic_managed_mapped_file</span><span class="special">(</span><a class="link" href="open_copy_on_write_t.html" title="Struct open_copy_on_write_t">open_copy_on_write_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">,</span> 
+<pre class="literallayout"><a name="idp49621616-bb"></a><span class="identifier">basic_managed_mapped_file</span><span class="special">(</span><a class="link" href="open_copy_on_write_t.html" title="Struct open_copy_on_write_t">open_copy_on_write_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">,</span> 
                           <span class="keyword">const</span> <span class="keyword">void</span> <span class="special">*</span> addr <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Connects to a created mapped file and its segment manager in copy_on_write mode. This can throw. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp27693464-bb"></a><span class="identifier">basic_managed_mapped_file</span><span class="special">(</span><a class="link" href="open_read_only_t.html" title="Struct open_read_only_t">open_read_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">,</span> 
+<pre class="literallayout"><a name="idp49624880-bb"></a><span class="identifier">basic_managed_mapped_file</span><span class="special">(</span><a class="link" href="open_read_only_t.html" title="Struct open_read_only_t">open_read_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">,</span> 
                           <span class="keyword">const</span> <span class="keyword">void</span> <span class="special">*</span> addr <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Connects to a created mapped file and its segment manager in read-only mode. This can throw. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp27695048-bb"></a><span class="identifier">basic_managed_mapped_file</span><span class="special">(</span><a class="link" href="basic_managed_mapped_file.html" title="Class template basic_managed_mapped_file">basic_managed_mapped_file</a> <span class="special">&amp;&amp;</span> moved<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp49628144-bb"></a><span class="identifier">basic_managed_mapped_file</span><span class="special">(</span><a class="link" href="basic_managed_mapped_file.html" title="Class template basic_managed_mapped_file">basic_managed_mapped_file</a> <span class="special">&amp;&amp;</span> moved<span class="special">)</span><span class="special">;</span></pre>
 <p>Moves the ownership of "moved"'s managed memory to *this. Does not throw </p>
 </li>
 <li class="listitem">
-<pre class="literallayout">basic_managed_mapped_file&amp; <a name="idp27695880-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="basic_managed_mapped_file.html" title="Class template basic_managed_mapped_file">basic_managed_mapped_file</a> <span class="special">&amp;&amp;</span> moved<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="basic_managed_mapped_file.html" title="Class template basic_managed_mapped_file">basic_managed_mapped_file</a> <span class="special">&amp;</span> <a name="idp49629904-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="basic_managed_mapped_file.html" title="Class template basic_managed_mapped_file">basic_managed_mapped_file</a> <span class="special">&amp;&amp;</span> moved<span class="special">)</span><span class="special">;</span></pre>
 <p>Moves the ownership of "moved"'s managed memory to *this. Does not throw </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp27696840-bb"></a><span class="special">~</span><span class="identifier">basic_managed_mapped_file</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp49632256-bb"></a><span class="special">~</span><span class="identifier">basic_managed_mapped_file</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Destroys *this and indicates that the calling process is finished using the resource. The destructor function will deallocate any system resources allocated by the system for use by this process for this resource. The resource can still be opened again calling the open constructor overload. To erase the resource from the system use remove(). </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp116174136"></a><h3>
-<a name="idp27681896-bb"></a><code class="computeroutput">basic_managed_mapped_file</code> public member functions</h3>
+<a name="idp247808960"></a><h3>
+<a name="idp49601296-bb"></a><code class="computeroutput">basic_managed_mapped_file</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp27682104-bb"></a><span class="identifier">swap</span><span class="special">(</span><a class="link" href="basic_managed_mapped_file.html" title="Class template basic_managed_mapped_file">basic_managed_mapped_file</a> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp49601856-bb"></a><span class="identifier">swap</span><span class="special">(</span><a class="link" href="basic_managed_mapped_file.html" title="Class template basic_managed_mapped_file">basic_managed_mapped_file</a> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
 <p>Swaps the ownership of the managed mapped memories managed by *this and other. Never throws. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp27683352-bb"></a><span class="identifier">flush</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp49604192-bb"></a><span class="identifier">flush</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Flushes cached data to file. Never throws </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp116180664"></a><h3>
-<a name="idp27697448-bb"></a><code class="computeroutput">basic_managed_mapped_file</code> public static functions</h3>
+<a name="idp247822000"></a><h3>
+<a name="idp49633296-bb"></a><code class="computeroutput">basic_managed_mapped_file</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp27697656-bb"></a><span class="identifier">grow</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> filename<span class="special">,</span> <span class="identifier">size_type</span> extra_bytes<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp49633856-bb"></a><span class="identifier">grow</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> filename<span class="special">,</span> <span class="identifier">size_type</span> extra_bytes<span class="special">)</span><span class="special">;</span></pre>
 <p>Tries to resize mapped file so that we have room for more objects.</p>
 <p>This function is not synchronized so no other thread or process should be reading or writing the file </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp27699304-bb"></a><span class="identifier">shrink_to_fit</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> filename<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp49637184-bb"></a><span class="identifier">shrink_to_fit</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> filename<span class="special">)</span><span class="special">;</span></pre>
 <p>Tries to resize mapped file to minimized the size of the file.</p>
 <p>This function is not synchronized so no other thread or process should be reading or writing the file </p>
 </li>
@@ -155,7 +155,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="basic_managed_heap_memory.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../interprocess/indexes_reference.html#header.boost.interprocess.interprocess_fwd_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="basic_bufferbuf.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="basic_managed_heap_memory.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../interprocess/acknowledgements_notes.html#header.boost.interprocess.interprocess_fwd_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="basic_bufferbuf.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

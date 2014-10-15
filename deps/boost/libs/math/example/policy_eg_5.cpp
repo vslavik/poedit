@@ -18,7 +18,7 @@ using std::cout;  using std::endl;
 // 'double boost::math::tgamma<int>(T)' and
 // 'double 'anonymous-namespace'::tgamma<int>(RT)'.
 
-namespace
+namespace mymath
 { // unnamed
 
 using namespace boost::math::policies;
@@ -33,7 +33,7 @@ typedef policy<
 BOOST_MATH_DECLARE_SPECIAL_FUNCTIONS(c_policy)
 
 /*`
-So that when we call `tgamma(z)`, we really end up calling
+So that when we call `mymath::tgamma(z)`, we really end up calling
  `boost::math::tgamma(z, anonymous-namespace::c_policy())`.
 */
 
@@ -43,11 +43,11 @@ int main()
 {
    errno = 0;
    cout << "Result of tgamma(30000) is: "
-      << tgamma(30000) << endl;
+      << mymath::tgamma(30000) << endl;
       // tgamma in unnamed namespace in this translation unit (file) only.
    cout << "errno = " << errno << endl;
    cout << "Result of tgamma(-10) is: "
-      << tgamma(-10) << endl;
+      << mymath::tgamma(-10) << endl;
    cout << "errno = " << errno << endl;
    // Default tgamma policy would throw an exception, and abort.
 }

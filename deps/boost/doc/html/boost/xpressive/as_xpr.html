@@ -34,7 +34,7 @@
 </span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Literal<span class="special">&gt;</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <span class="identifier">as_xpr</span><span class="special">(</span><span class="identifier">Literal</span> <span class="keyword">const</span> <span class="special">&amp;</span> literal<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp260961848"></a><h2>Description</h2>
+<a name="idp537944928"></a><h2>Description</h2>
 <p>Use as_xpr() to turn a literal into a regular expression. For instance, "foo" &gt;&gt; "bar" will not compile because both operands to the right-shift operator are const char*, and no such operator exists. Use as_xpr("foo") &gt;&gt; "bar" instead.</p>
 <p>You can use as_xpr() with character literals in addition to string literals. For instance, as_xpr('a') will match an 'a'. You can also complement a character literal, as with ~as_xpr('a'). This will match any one character that is not an 'a'. </p>
 </div>

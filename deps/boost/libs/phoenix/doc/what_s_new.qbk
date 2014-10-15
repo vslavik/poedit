@@ -9,9 +9,25 @@
 
 [section What's New]
 
+[section Phoenix 3.0.5]
+
+This is the latest in a series of updates to Phoenix to fix some bugs and
+to extend the examples. Details of the changes will be found in the __changelog__
+and the release number will be increased for each set of changes released.
+
+* Introduction of __changelog__ and release number increments.
+* Added BOOST_PHOENIX_VERSION_NUMBER using boost/predef style.
+* Fixes to bugs #5714 and #5824 are particularly important as they fixed silent errors
+  in the processing of some compound expressions with commas. *This could cause output
+  from some user codes to change unexpectedly.*
+* TODO 
+  There is still a lot of work to be done on fixes, documentation and examples.
+
+[endsect]
+
 [section Phoenix 3.0]
 
-This is the first official release of Phoenix as first class Boost citizen. As a
+This was the first official release of Phoenix as first class Boost citizen. As a
 consequence of the review of Phoenix V2 the internals got completely rewritten.
 Therefore the internal extension mechanism is different.
 
@@ -19,12 +35,12 @@ Therefore the internal extension mechanism is different.
   For an in depth discussion see the section [link phoenix.inside Inside Phoenix]
 * [link phoenix.modules.function] phoenix::function now supports function objects
   that implement the __boost_result_of__ protocol. *This is a breaking change*
-  
+
   [/as well as the old return type
   deduction protocol. The same is true for [link phoenix.modules.bind Bind].]
 * Boilerplate macros to easily adapt already existing functions and function
   objects
-* [link phoenix.modules.bind Bind] is no completely compatible with Boost.Bind
+* [link phoenix.modules.bind Bind] is not completely compatible with Boost.Bind
 
 [endsect]
 

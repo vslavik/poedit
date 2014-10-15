@@ -1,6 +1,7 @@
 // -----------------------------------------------------------
 //              Copyright (c) 2001 Jeremy Siek
 //        Copyright (c) 2003-2006, 2008 Gennaro Prota
+//             Copyright (c) 2014 Ahmed Charles
 //
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -129,7 +130,7 @@ struct bitset_test {
     // - any remaining bit positions are initialized to zero
     //
 
-    Bitset b(num_bits, num);
+    Bitset b(static_cast<typename Bitset::size_type>(num_bits), static_cast<unsigned long>(num));
 
     // OK, we can now cast to size_type
     typedef typename Bitset::size_type size_type;
@@ -267,11 +268,12 @@ struct bitset_test {
     }
   }
 
-  // assignment operator (absent from std::bitset)
-  static void assignment_operator(const Bitset& lhs, const Bitset& rhs)
+  // copy assignment operator (absent from std::bitset)
+  static void copy_assignment_operator(const Bitset& lhs, const Bitset& rhs)
   {
     Bitset b(lhs);
     b = rhs;
+    b = b; // self assignment check
     BOOST_CHECK(b == rhs);
 
     // Changes to the copy do not affect the original
@@ -281,6 +283,32 @@ struct bitset_test {
       BOOST_CHECK(b[pos] != rhs[pos]);
     }
   }
+
+  static void max_size(const Bitset& b)
+  {
+    BOOST_CHECK(b.max_size() > 0);
+  }
+
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+
+  // move constructor (absent from std::bitset)
+  static void move_constructor(const Bitset& b)
+  {
+    Bitset copy(boost::move(b));
+    BOOST_CHECK(b == copy);
+  }
+
+  // move assignment operator (absent from std::bitset)
+  static void move_assignment_operator(const Bitset& lhs, const Bitset& rhs)
+  {
+    Bitset b(lhs);
+    Bitset c(rhs);
+    b = boost::move(c);
+    b = boost::move(b); // self assignment check
+    BOOST_CHECK(b == rhs);
+  }
+
+#endif // BOOST_NO_CXX11_RVALUE_REFERENCES
 
   static void swap(const Bitset& lhs, const Bitset& rhs)
   {
@@ -689,9 +717,21 @@ struct bitset_test {
     BOOST_CHECK(Bitset(b).set().count() == b.size());
   }
 
+  static void all(const Bitset& b)
+  {
+    BOOST_CHECK(b.all() == (b.count() == b.size()));
+    bool result = true;
+    for(std::size_t i = 0; i < b.size(); ++i)
+      if(!b[i]) {
+        result = false;
+        break;
+      }
+    BOOST_CHECK(b.all() == result);
+  }
+
   static void any(const Bitset& b)
   {
-    //BOOST_CHECK(b.any() == (b.count() > 0));
+    BOOST_CHECK(b.any() == (b.count() != 0));
     bool result = false;
     for(std::size_t i = 0; i < b.size(); ++i)
       if(b[i]) {
@@ -925,6 +965,25 @@ struct bitset_test {
     }
   }
 
+  static void test_set_bit(const Bitset& b, std::size_t pos, bool value)
+  {
+    Bitset lhs(b);
+    std::size_t N = lhs.size();
+    if (pos < N) {
+      Bitset prev(lhs);
+      // Stores a new value in the bit at position pos in lhs.
+      BOOST_CHECK(lhs.test_set(pos, value) == prev[pos]);
+      BOOST_CHECK(lhs[pos] == value);
+
+      // All other values of lhs remain unchanged
+      for (std::size_t I = 0; I < N; ++I)
+        if (I != pos)
+          BOOST_CHECK(lhs[I] == prev[I]);
+    } else {
+      // Not in range, doesn't satisfy precondition.
+    }
+  }
+
   static void operator_shift_left(const Bitset& lhs, std::size_t pos)
   {
     Bitset x(lhs);
@@ -1048,7 +1107,7 @@ struct bitset_test {
       // This test require that os be an output _and_ input stream.
       // Of course dynamic_bitset's operator << doesn't require that.
 
-      size_type total_len = w <= 0 || (size_type)(w) < b.size()? b.size() : w;
+      size_type total_len = w <= 0 || static_cast<size_type>(w) < b.size()? b.size() : static_cast<size_type>(w);
       const string_type padding (total_len - b.size(), fill_char);
       string_type expected;
       boost::to_string(b, expected);
@@ -1139,7 +1198,7 @@ struct bitset_test {
       // {digits} or part of them
       const typename Bitset::size_type max_digits =
             w > 0 && static_cast<typename Bitset::size_type>(w) < b.max_size()
-                               ? w : b.max_size();
+                               ? static_cast<typename Bitset::size_type>(w) : b.max_size();
 
       for( ; pos < len && (pos - after_spaces) < max_digits; ++pos) {
           if(!is_one_or_zero(is, str[pos]))

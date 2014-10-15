@@ -288,6 +288,8 @@ protected:
         // handle overflow
         if ( m_parameters.get_max_elements() < rtree::elements(n).size() )
         {
+            // NOTE: If the exception is thrown current node may contain more than MAX elements or be empty.
+            // Furthermore it may be empty root - internal node.
             split(n);                                                                                           // MAY THROW (V, E: alloc, copy, N:alloc)
         }
     }

@@ -4,117 +4,119 @@
 ;     (See accompanying file LICENSE_1_0.txt or copy at
 ;           http://www.boost.org/LICENSE_1_0.txt)
 
-;  --------------------------------------------------------------
-;  |    0    |    1    |    2    |    3    |    4     |    5    |
-;  --------------------------------------------------------------
-;  |    0h   |   04h   |   08h   |   0ch   |   010h   |   014h  |
-;  --------------------------------------------------------------
-;  |   EDI   |   ESI   |   EBX   |   EBP   |   ESP    |   EIP   |
-;  --------------------------------------------------------------
-;  --------------------------------------------------------------
-;  |    6    |    7    |    8    |                              |
-;  --------------------------------------------------------------
-;  |   018h  |   01ch  |   020h  |                              |
-;  --------------------------------------------------------------
-;  |    sp   |   size  |  limit  |                              |
-;  --------------------------------------------------------------
-;  --------------------------------------------------------------
-;  |    9    |                                                  |
-;  --------------------------------------------------------------
-;  |  024h   |                                                  |
-;  --------------------------------------------------------------
-;  |fc_execpt|                                                  |
-;  --------------------------------------------------------------
-;  --------------------------------------------------------------
-;  |   10    |                                                  |
-;  --------------------------------------------------------------
-;  |  028h   |                                                  |
-;  --------------------------------------------------------------
-;  |fc_strage|                                                  |
-;  --------------------------------------------------------------
-;  --------------------------------------------------------------
-;  |   11    |    12   |                                        |
-;  --------------------------------------------------------------
-;  |  02ch   |   030h  |                                        |
-;  --------------------------------------------------------------
-;  | fc_mxcsr|fc_x87_cw|                                        |
-;  --------------------------------------------------------------
-;  --------------------------------------------------------------
-;  |   13    |                                                  |
-;  --------------------------------------------------------------
-;  |  034h   |                                                  |
-;  --------------------------------------------------------------
-;  |fc_deallo|                                                  |
-;  --------------------------------------------------------------
+;  ---------------------------------------------------------------------------------
+;  |    0    |    1    |    2    |    3    |    4    |    5    |    6    |    7    |
+;  ---------------------------------------------------------------------------------
+;  |    0h   |   04h   |   08h   |   0ch   |   010h  |   014h  |   018h  |   01ch  |
+;  ---------------------------------------------------------------------------------
+;  | fc_mxcsr|fc_x87_cw| fc_strg |fc_deallo|  limit  |   base  |  fc_seh |   EDI   |
+;  ---------------------------------------------------------------------------------
+;  ---------------------------------------------------------------------------------
+;  |    8    |    9    |   10    |    11   |    12   |    13   |    14   |    15   |
+;  ---------------------------------------------------------------------------------
+;  |   020h  |  024h   |  028h   |   02ch  |   030h  |   034h  |   038h  |   03ch  |
+;  ---------------------------------------------------------------------------------
+;  |   ESI   |   EBX   |   EBP   |   EIP   |   EXIT  |         | SEH NXT |SEH HNDLR|
+;  ---------------------------------------------------------------------------------
 
 .386
 .XMM
 .model flat, c
+; standard C library function
 _exit PROTO, value:SDWORD
 .code
 
 make_fcontext PROC EXPORT
-    mov  eax,         [esp+04h]     ; load 1. arg of make_fcontext, pointer to context stack (base)
-    lea  eax,         [eax-038h]    ; reserve space for fcontext_t at top of context stack
+    ; first arg of make_fcontext() == top of context-stack
+    mov  eax, [esp+04h]
+
+    ; reserve space for first argument of context-function
+    ; rax might already point to a 16byte border
+    lea  eax, [eax-08h]
 
     ; shift address in EAX to lower 16 byte boundary
-    ; == pointer to fcontext_t and address of context stack
-    and  eax,         -16
+    and  eax, -16
 
-    mov  ecx,         [esp+04h]     ; load 1. arg of make_fcontext, pointer to context stack (base)
-    mov  [eax+018h],  ecx           ; save address of context stack (base) in fcontext_t
-    mov  edx,         [esp+08h]     ; load 2. arg of make_fcontext, context stack size
-    mov  [eax+01ch],  edx           ; save context stack size in fcontext_t
-    neg  edx                        ; negate stack size for LEA instruction (== substraction)
-    lea  ecx,         [ecx+edx]     ; compute bottom address of context stack (limit)
-    mov  [eax+020h],  ecx           ; save address of context stack (limit) in fcontext_t
-    mov  [eax+034h],  ecx           ; save address of context stack limit as 'dealloction stack'
-    mov  ecx,         [esp+0ch]     ; load 3. arg of make_fcontext, pointer to context function
-    mov  [eax+014h],  ecx           ; save address of context function in fcontext_t
+    ; reserve space for context-data on context-stack
+    ; size for fc_mxcsr .. EIP + return-address for context-function
+    ; on context-function entry: (ESP -0x4) % 8 == 0
+    ; additional space is required for SEH
+    lea  eax, [eax-03ch]
 
-    stmxcsr [eax+02ch]              ; save MMX control word
-    fnstcw  [eax+030h]              ; save x87 control word
+    ; first arg of make_fcontext() == top of context-stack
+    mov  ecx, [esp+04h]
+    ; save top address of context stack as 'base'
+    mov  [eax+014h], ecx
+    ; second arg of make_fcontext() == size of context-stack
+    mov  edx, [esp+08h]
+    ; negate stack size for LEA instruction (== substraction)
+    neg  edx
+    ; compute bottom address of context stack (limit)
+    lea  ecx, [ecx+edx]
+    ; save bottom address of context-stack as 'limit'
+    mov  [eax+010h], ecx
+    ; save bottom address of context-stack as 'dealloction stack'
+    mov  [eax+0ch], ecx
 
-    lea  edx,         [eax-024h]    ; reserve space for last frame and seh on context stack, (ESP - 0x4) % 16 == 0
-    mov  [eax+010h],  edx           ; save address in EDX as stack pointer for context function
+    ; third arg of make_fcontext() == address of context-function
+    mov  ecx, [esp+0ch]
+    mov  [eax+02ch], ecx
 
-    mov  ecx,         finish        ; abs address of finish
-    mov  [edx],       ecx           ; save address of finish as return address for context function
-                                    ; entered after context function returns
+    ; save MMX control- and status-word
+    stmxcsr  [eax]
+    ; save x87 control-word
+    fnstcw  [eax+04h]
+
+    ; compute abs address of label finish
+    mov  ecx, finish
+    ; save address of finish as return-address for context-function
+    ; will be entered after context-function returns
+    mov  [eax+030h], ecx
 
     ; traverse current seh chain to get the last exception handler installed by Windows
     ; note that on Windows Server 2008 and 2008 R2, SEHOP is activated by default
     ; the exception handler chain is tested for the presence of ntdll.dll!FinalExceptionHandler
-    ; at its end by RaiseException all seh andlers are disregarded if not present and the
+    ; at its end by RaiseException all seh-handlers are disregarded if not present and the
     ; program is aborted
     assume  fs:nothing
-    mov     ecx,      fs:[018h]     ; load NT_TIB into ECX
+    ; load NT_TIB into ECX
+    mov  ecx, fs:[0h]
     assume  fs:error
 
 walk:
-    mov  edx,         [ecx]         ; load 'next' member of current SEH into EDX
-    inc  edx                        ; test if 'next' of current SEH is last (== 0xffffffff)
-    jz   found
+    ; load 'next' member of current SEH into EDX
+    mov  edx, [ecx]
+    ; test if 'next' of current SEH is last (== 0xffffffff)
+    inc  edx
+    jz  found
     dec  edx
-    xchg edx,         ecx           ; exchange content; ECX contains address of next SEH
-    jmp  walk                       ; inspect next SEH
+    ; exchange content; ECX contains address of next SEH
+    xchg edx, ecx
+    ; inspect next SEH
+    jmp  walk
 
 found:
-    mov  ecx,         [ecx+04h]     ; load 'handler' member of SEH == address of last SEH handler installed by Windows
-    mov  edx,         [eax+010h]    ; load address of stack pointer for context function
-    mov  [edx+018h],  ecx           ; save address in ECX as SEH handler for context
-    mov  ecx,         0ffffffffh    ; set ECX to -1
-    mov  [edx+014h],  ecx           ; save ECX as next SEH item
-    lea  ecx,         [edx+014h]    ; load address of next SEH item
-    mov  [eax+024h],  ecx           ; save next SEH
+    ; load 'handler' member of SEH == address of last SEH handler installed by Windows
+    mov  ecx, [ecx+04h]
+    ; save address in ECX as SEH handler for context
+    mov  [eax+03ch], ecx
+    ; set ECX to -1
+    mov  ecx, 0ffffffffh
+    ; save ECX as next SEH item
+    mov  [eax+038h], ecx
+    ; load address of next SEH item
+    lea  ecx, [eax+038h]
+    ; save next SEH
+    mov  [eax+018h], ecx
 
-    ret
+    ret ; return pointer to context-data
 
 finish:
-    ; ESP points to same address as ESP on entry of context function + 0x4
-    xor   eax,        eax
-    mov   [esp],      eax           ; exit code is zero
-    call  _exit                     ; exit application
+    ; exit code is zero
+    xor  eax, eax
+    mov  [esp], eax
+    ; exit application
+    call  _exit
     hlt
 make_fcontext ENDP
 END

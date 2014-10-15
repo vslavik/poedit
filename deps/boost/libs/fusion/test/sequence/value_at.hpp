@@ -2,7 +2,7 @@
     Copyright (c) 1999-2003 Jaakko Jarvi
     Copyright (c) 2001-2011 Joel de Guzman
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
@@ -10,6 +10,10 @@
 #include <boost/fusion/sequence/intrinsic/value_at.hpp>
 #include <boost/static_assert.hpp>
 #include <iostream>
+
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+#include <functional>
+#endif
 
 #if !defined(FUSION_AT)
 #define FUSION_AT at_c
@@ -35,7 +39,16 @@ test()
 
     double d = 2.7;
     A a;
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+    // Note: C++11 will pickup the rvalue overload for the d argument
+    // since we do not have all permutations (expensive!) for all const&
+    // and && arguments. We either have all && or all const& arguments only.
+    // For that matter, use std::ref to disambiguate the call.
+
+    FUSION_SEQUENCE<int, double&, const A&, int> t(1, std::ref(d), a, 2);
+#else
     FUSION_SEQUENCE<int, double&, const A&, int> t(1, d, a, 2);
+#endif
     const FUSION_SEQUENCE<int, double&, const A, int> ct(t);
 
     int i  = FUSION_AT<0>(t);
@@ -66,7 +79,7 @@ test()
 
     ++FUSION_AT<0>(t);
     BOOST_TEST(FUSION_AT<0>(t) == 6);
-    
+
     typedef FUSION_SEQUENCE<int, float> seq_type;
 
     BOOST_STATIC_ASSERT(!(

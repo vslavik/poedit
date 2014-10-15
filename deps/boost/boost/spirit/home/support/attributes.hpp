@@ -202,6 +202,19 @@ namespace boost { namespace spirit { namespace traits
     struct is_weak_substitute<T, optional<Expected> >
       : is_weak_substitute<T, Expected> {};
 
+#if !defined(BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES)
+    template <typename T, typename Expected>
+    struct is_weak_substitute<boost::variant<T>, Expected>
+      : is_weak_substitute<T, Expected>
+    {};
+
+    template <typename T0, typename T1, typename ...TN, typename Expected>
+    struct is_weak_substitute<boost::variant<T0, T1, TN...>,
+            Expected>
+      : mpl::bool_<is_weak_substitute<T0, Expected>::type::value &&
+            is_weak_substitute<boost::variant<T1, TN...>, Expected>::type::value>
+    {};
+#else
 #define BOOST_SPIRIT_IS_WEAK_SUBSTITUTE(z, N, _)                              \
     is_weak_substitute<BOOST_PP_CAT(T, N), Expected>::type::value &&          \
     /***/
@@ -220,6 +233,7 @@ namespace boost { namespace spirit { namespace traits
     {};
 
 #undef BOOST_SPIRIT_IS_WEAK_SUBSTITUTE
+#endif
 
     template <typename T>
     struct is_weak_substitute<T, T
@@ -516,7 +530,7 @@ namespace boost { namespace spirit { namespace traits
         {
             if (!val)
                 return 0;
-            return val.get();
+            return traits::size(val.get());
         }
     };
 

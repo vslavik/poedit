@@ -23,6 +23,8 @@ struct AltStruct
 {
 public:
    AltStruct(int x, double y) : x_{x}, y_{y} {}
+   int X() const { return x_; }
+   double Y() const { return y_; }
 private:
    int x_;
    double y_;

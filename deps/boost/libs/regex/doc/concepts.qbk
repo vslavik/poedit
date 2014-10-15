@@ -38,7 +38,7 @@ Note: type charT is not required to support this operation, if the traits class 
 [section:traits_concept Traits Class Requirements]
 
 There are two sets of requirements for the `traits` template argument to 
-[basic_regex]: a mininal interface (which is part of the regex standardization proposal), 
+[basic_regex]: a minimal interface (which is part of the regex standardization proposal), 
 and an optional Boost-specific enhanced interface.
 
 [h4 Minimal requirements.]
@@ -77,7 +77,7 @@ an object of type `X::locale_type`.
 The following additional requirements are strictly optional, 
 however in order for [basic_regex] to take advantage of these additional 
 interfaces, all of the following requirements must be met; [basic_regex] 
-will detect the presence or absense of the member `boost_extensions_tag` and 
+will detect the presence or absence of the member `boost_extensions_tag` and 
 configure itself appropriately.
 
 
@@ -89,8 +89,8 @@ configure itself appropriately.
 [[v.translate(c, b)][X::char_type][Returns a character d such that: for any character d that is to be considered equivalent to c then `v.translate(c,false)==v.translate(d,false)`. Likewise for all characters C that are to be considered equivalent to c when comparisons are to be performed without regard to case, then `v.translate(c,true)==v.translate(C,true)`.]]
 [[v.toi(I1, I2, i)][An integer type capable of holding either a charT or an int.][Behaves as follows: if `p == q` or if `*p` is not a digit character then returns -1. Otherwise performs formatted numeric input on the sequence \[p,q) and returns the result as an int. Postcondition: either p == q or *p is a non-digit character.]]
 [[v.error_string(I)][std::string][Returns a human readable error string for the error condition i, where i is one of the values enumerated by type regex_constants::error_type.  If the value /I/ is not recognized then returns the string "Unknown error" or a localized equivalent.]]
-[[v.tolower(c)][X::char_type][Converts c to lower case, used for Perl-style \l and \L formating operations.]]
-[[v.toupper(c)][X::char_type][Converts c to upper case, used for Perl-style \u and \U formating operations.]]
+[[v.tolower(c)][X::char_type][Converts c to lower case, used for Perl-style \l and \L formatting operations.]]
+[[v.toupper(c)][X::char_type][Converts c to upper case, used for Perl-style \u and \U formatting operations.]]
 ]
 
 [endsect]

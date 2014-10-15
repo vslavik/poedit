@@ -181,6 +181,21 @@ void find_test()
         ( (cv_result.begin()-str1.begin()) == 3) &&
         ( (cv_result.end()-str1.begin()) == 6) );
 
+    string s1("abc def ghi jkl");
+    find_iterator<string::iterator> fEnd;
+
+    find_iterator<string::iterator> fxIt = make_find_iterator(s1,
+            token_finder(is_alnum(), token_compress_on));
+    BOOST_CHECK((fxIt != fEnd) && (*fxIt == string("abc")));
+    ++fxIt;
+    BOOST_CHECK((fxIt != fEnd) && (*fxIt == string("def")));
+    ++fxIt;
+    BOOST_CHECK((fxIt != fEnd) && (*fxIt == string("ghi")));
+    ++fxIt;
+    BOOST_CHECK((fxIt != fEnd) && (*fxIt == string("jkl")));
+    ++fxIt;
+    BOOST_CHECK(fxIt == fEnd);
+
     nc_result=find_token( str1, is_any_of("abc"), token_compress_off );
     BOOST_CHECK( 
         ( (nc_result.begin()-str1.begin()) == 3) &&
@@ -251,19 +266,6 @@ void find_test()
     osstr << find_first( str1, "abc" );
     BOOST_CHECK( osstr.str()=="abc" );
 
-    // Empty string test
-    BOOST_TEST_CHECKPOINT( "overlapping" );
-    
-    std::string overlap_target("aaaa");
-    std::vector<boost::iterator_range<std::string::iterator> > overlap_results;
-    boost::algorithm::find_all(overlap_results, overlap_target, string("aaa"));
-    BOOST_CHECK( overlap_results.size() == 2 );
-
-    std::string overlap_target2("aaaabbbbaaaa");
-    boost::algorithm::find_all(overlap_results, overlap_target2, string("bb"));
-    BOOST_CHECK( overlap_results.size() == 3 );
-    boost::algorithm::find_all(overlap_results, overlap_target2, string("aa"));
-    BOOST_CHECK( overlap_results.size() == 6 );
 }
 
 // test main 

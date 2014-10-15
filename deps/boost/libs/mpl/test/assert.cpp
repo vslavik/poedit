@@ -7,9 +7,9 @@
 //
 // See http://www.boost.org/libs/mpl for documentation.
 
-// $Id: assert.cpp 84442 2013-05-23 14:38:22Z steven_watanabe $
-// $Date: 2013-05-23 07:38:22 -0700 (Thu, 23 May 2013) $
-// $Revision: 84442 $
+// $Id$
+// $Date$
+// $Revision$
 
 #include <boost/mpl/assert.hpp>
 

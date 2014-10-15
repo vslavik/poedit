@@ -168,7 +168,7 @@ and __deref_data__) is a proxy type, an instance of
 has three template arguments:
 
     namespace boost { namespace fusion { namespace extension
-    {    
+    {
         template<
             typename Type
           , int Index
@@ -176,14 +176,14 @@ has three template arguments:
         >
         struct adt_attribute_proxy;
     }}}
-    
+
 When adapting a class type, `adt_attribute_proxy` is specialized for every
 element of the adapted sequence, with `Type` being the class type that is
 adapted, `Index` the 0-based indices of the elements, and `Const` both `true`
 and `false`. The return type of fusion's intrinsic sequence access functions
 for the ['N]th element of an adapted class type `type_name` is
 [^adt_attribute_proxy<type_name, ['N], ['Const]>], with [^['Const]] being `true`
-for constant instances of `type_name` and `false` for non-constant ones. 
+for constant instances of `type_name` and `false` for non-constant ones.
 
 [variablelist Notation
     [[`type_name`]
@@ -205,7 +205,7 @@ for constant instances of `type_name` and `false` for non-constant ones.
 ]
 
 [*Expression Semantics]
- 
+
 [table
     [[Expression]                     [Semantics]]
     [[[^proxy_type['N](inst)]]             [Creates an instance of [^proxy_type['N]] with underlying object `inst`]]

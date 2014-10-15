@@ -36,8 +36,8 @@ BOOST_PYTHON_MODULE(mpi)
   // Setup module documentation
   scope().attr("__doc__") = module_docstring;
   scope().attr("__author__") = "Douglas Gregor <doug.gregor@gmail.com>";
-  scope().attr("__date__") = "$LastChangedDate: 2008-06-26 12:25:44 -0700 (Thu, 26 Jun 2008) $";
-  scope().attr("__version__") = "$Revision: 46743 $";
+  scope().attr("__date__") = "$LastChangedDate$";
+  scope().attr("__version__") = "$Revision$";
   scope().attr("__copyright__") = "Copyright (C) 2006 Douglas Gregor";
   scope().attr("__license__") = "http://www.boost.org/LICENSE_1_0.txt";
 

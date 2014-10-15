@@ -1,5 +1,5 @@
 /*
-Copyright Redshift Software, Inc. 2008-2013
+Copyright Rene Rivera 2008-2013
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE_1_0.txt or copy at
 http://www.boost.org/LICENSE_1_0.txt)
@@ -29,15 +29,18 @@ http://www.boost.org/LICENSE_1_0.txt)
 
 #define BOOST_OS_WINDOWS BOOST_VERSION_NUMBER_NOT_AVAILABLE
 
-#if defined(_WIN32) || defined(_WIN64) || \
+#if !defined(BOOST_PREDEF_DETAIL_OS_DETECTED) && ( \
+    defined(_WIN32) || defined(_WIN64) || \
     defined(__WIN32__) || defined(__TOS_WIN__) || \
-    defined(__WINDOWS__)
+    defined(__WINDOWS__) \
+    )
 #   undef BOOST_OS_WINDOWS
 #   define BOOST_OS_WINDOWS BOOST_VERSION_NUMBER_AVAILABLE
 #endif
 
 #if BOOST_OS_WINDOWS
 #   define BOOST_OS_WINDOWS_AVAILABLE
+#   include <boost/predef/detail/os_detected.h>
 #endif
 
 #define BOOST_OS_WINDOWS_NAME "Microsoft Windows"

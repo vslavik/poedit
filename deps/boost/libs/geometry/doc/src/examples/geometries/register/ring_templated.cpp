@@ -18,7 +18,7 @@
 #include <boost/geometry/geometries/register/ring.hpp>
 
 // Adapt any deque to Boost.Geometry Ring Concept
-BOOST_GEOMETRY_REGISTER_RING_TEMPLATED(std::deque) 
+BOOST_GEOMETRY_REGISTER_RING_TEMPLATED(std::deque)
 
 int main()
 {
@@ -26,12 +26,12 @@ int main()
     boost::geometry::assign_values(ring[0], 0, 0);
     boost::geometry::assign_values(ring[2], 4, 1);
     boost::geometry::assign_values(ring[1], 1, 4);
-    
+
     // Boost.Geometry algorithms work on any deque now
     boost::geometry::correct(ring);
     std::cout << "Area: "  << boost::geometry::area(ring) << std::endl;
     std::cout << "Contents: "  << boost::geometry::wkt(ring) << std::endl;
-    
+
     return 0;
 }
 

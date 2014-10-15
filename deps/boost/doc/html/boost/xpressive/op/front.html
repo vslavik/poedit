@@ -26,7 +26,7 @@
 <a name="boost.xpressive.op.front"></a><div class="titlepage"></div>
 <div class="refnamediv">
 <h2><span class="refentrytitle">Struct front</span></h2>
-<p>boost::xpressive::op::front</p>
+<p>boost::xpressive::op::front &#8212; <code class="computeroutput">front</code> is a PolymorphicFunctionObject for fetching the front element of a container. </p>
 </div>
 <h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp" title="Header &lt;boost/xpressive/regex_actions.hpp&gt;">boost/xpressive/regex_actions.hpp</a>&gt;
@@ -38,23 +38,53 @@
   <span class="keyword">struct</span> <a class="link" href="front/result.html" title="Struct template result">result</a> <span class="special">{</span>
   <span class="special">}</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> This<span class="special">,</span> <span class="keyword">typename</span> Sequence<span class="special">&gt;</span> 
-  <span class="keyword">struct</span> <a class="link" href="front/result_This_S_idp167959864.html" title="Struct template result&lt;This(Sequence)&gt;">result</a><span class="special">&lt;</span><span class="identifier">This</span><span class="special">(</span><span class="identifier">Sequence</span><span class="special">)</span><span class="special">&gt;</span> <span class="special">{</span>
+  <span class="keyword">struct</span> <a class="link" href="front/result_This_S_idp350760080.html" title="Struct template result&lt;This(Sequence)&gt;">result</a><span class="special">&lt;</span><span class="identifier">This</span><span class="special">(</span><span class="identifier">Sequence</span><span class="special">)</span><span class="special">&gt;</span> <span class="special">{</span>
     <span class="comment">// types</span>
-    <span class="keyword">typedef</span> <span class="identifier">remove_reference</span><span class="special">&lt;</span> <span class="identifier">Sequence</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span>                                                                                              <a class="link" href="front/result_This_S_idp167959864.html#boost.xpressive.op.front.result_This(S_idp167959864.sequence_type"><span class="identifier">sequence_type</span></a><span class="special">;</span>
-    <span class="keyword">typedef</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">if_c</span><span class="special">&lt;</span> <span class="identifier">is_const</span><span class="special">&lt;</span> <span class="identifier">sequence_type</span> <span class="special">&gt;</span><span class="special">::</span><a class="link" href="../value.html" title="Struct template value">value</a><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">sequence_type</span><span class="special">::</span><span class="identifier">const_reference</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">sequence_type</span><span class="special">::</span><span class="identifier">reference</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <a class="link" href="front/result_This_S_idp167959864.html#boost.xpressive.op.front.result_This(S_idp167959864.type"><span class="identifier">type</span></a><span class="special">;</span>         
+    <span class="keyword">typedef</span> <span class="identifier">remove_reference</span><span class="special">&lt;</span> <span class="identifier">Sequence</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span>                                                                                              <a class="link" href="front/result_This_S_idp350760080.html#boost.xpressive.op.front.result_This(S_idp350760080.sequence_type"><span class="identifier">sequence_type</span></a><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">if_c</span><span class="special">&lt;</span> <span class="identifier">is_const</span><span class="special">&lt;</span> <span class="identifier">sequence_type</span> <span class="special">&gt;</span><span class="special">::</span><a class="link" href="../value.html" title="Struct template value">value</a><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">sequence_type</span><span class="special">::</span><span class="identifier">const_reference</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">sequence_type</span><span class="special">::</span><span class="identifier">reference</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <a class="link" href="front/result_This_S_idp350760080.html#boost.xpressive.op.front.result_This(S_idp350760080.type"><span class="identifier">type</span></a><span class="special">;</span>         
   <span class="special">}</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="front.html#idp167961992-bb">public member functions</a></span>
+  <span class="comment">// <a class="link" href="front.html#idp350764544-bb">public member functions</a></span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sequence<span class="special">&gt;</span> 
-    <a class="link" href="front/result.html" title="Struct template result">result</a><span class="special">&lt;</span> <a class="link" href="front.html" title="Struct front">front</a><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <a class="link" href="front.html#idp167962200-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <a class="link" href="front/result.html" title="Struct template result">result</a><span class="special">&lt;</span> <a class="link" href="front.html" title="Struct front">front</a><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <a class="link" href="front.html#idp350765104-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp258144312"></a><h2>Description</h2>
+<a name="idp532246048"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp258144520"></a><h3>
-<a name="idp167961992-bb"></a><code class="computeroutput">front</code> public member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sequence<span class="special">&gt;</span> 
-  <a class="link" href="front/result.html" title="Struct template result">result</a><span class="special">&lt;</span> <a class="link" href="front.html" title="Struct front">front</a><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <a name="idp167962200-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span> seq<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp532246464"></a><h3>
+<a name="idp350764544-bb"></a><code class="computeroutput">front</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sequence<span class="special">&gt;</span> 
+  <a class="link" href="front/result.html" title="Struct template result">result</a><span class="special">&lt;</span> <a class="link" href="front.html" title="Struct front">front</a><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <a name="idp350765104-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span> seq<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<p>
+
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><code class="computeroutput">seq</code></span></p></td>
+<td><p>The sequence from which to fetch the front. </p></td>
+</tr></tbody>
+</table></div></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p><code class="computeroutput">seq.front()</code> </p></td>
+</tr>
+</tbody>
+</table></div>
+</li></ol></div>
 </div>
 </div>
 </div>

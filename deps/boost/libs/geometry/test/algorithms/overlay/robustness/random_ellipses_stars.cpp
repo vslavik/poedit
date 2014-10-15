@@ -175,6 +175,7 @@ void test_all(std::string const& type, int seed, int count, p_q_settings setting
     }
     else if (type == "double")
     {
+        settings.tolerance = 1.0e-4;
         test_type<double, Clockwise, Closed>(seed, count, settings);
     }
 #if defined(HAVE_TTMATH)

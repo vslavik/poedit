@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 
+#define BOOST_GEOMETRY_UNIT_TEST_SECTIONALIZE
 
 #include <geometry_test_common.hpp>
 

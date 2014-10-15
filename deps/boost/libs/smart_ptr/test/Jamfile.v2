@@ -1,6 +1,6 @@
 #  Boost.SmartPtr Library test Jamfile
 #
-#  Copyright (c) 2003-2007 Peter Dimov
+#  Copyright (c) 2003-2013 Peter Dimov
 #  Copyright (c) 2003 Dave Abrahams
 #
 #  Distributed under the Boost Software License, Version 1.0. (See
@@ -78,6 +78,12 @@ import testing ;
           [ run sp_array_cast_test.cpp ]
           [ run sp_zero_compare_test.cpp ]
           [ run sp_nullptr_test.cpp ]
+          [ run sa_nullptr_test.cpp ]
+          [ run shared_ptr_alloc3_test.cpp ]
+          [ run shared_ptr_alloc11_test.cpp ]
+          [ run allocate_shared_alloc11_test.cpp ]
+          [ run allocate_shared_construct11_test.cpp ]
+          [ run sp_interlocked_test.cpp ]
 
           [ compile-fail array_fail_spa_sp_c.cpp ]
           [ compile-fail array_fail_sp_spa_c.cpp ]
@@ -136,22 +142,26 @@ import testing ;
           [ compile-fail array_fail_array_access.cpp ]
 
           [ run make_shared_array_test.cpp ]
-          [ run make_shared_arrays_test.cpp ]
-          [ run make_shared_array_create_test.cpp ]
-          [ run make_shared_array_init_test.cpp : : : <toolset>gcc-4.6.3_0x:<cxxflags>-fno-deduce-init-list ]
-          [ run make_shared_arrays_create_test.cpp : : : <toolset>gcc-4.6.3_0x:<cxxflags>-fno-deduce-init-list ]
-          [ run make_shared_arrays_init_test.cpp : : : <toolset>gcc-4.6.3_0x:<cxxflags>-fno-deduce-init-list ]
+          [ run make_shared_arrays_test.cpp : : : <toolset>gcc-4.6.3_0x:<cxxflags>-fno-deduce-init-list ]
           [ run make_shared_array_throws_test.cpp ]
           [ run make_shared_array_esft_test.cpp ]
-          [ run make_shared_array_args_test.cpp ]
+          [ run make_shared_array_noinit_test.cpp ]
+          [ run make_shared_array_value_test.cpp ]
           [ run allocate_shared_array_test.cpp ]
-          [ run allocate_shared_arrays_test.cpp ]
-          [ run allocate_shared_array_create_test.cpp ]
-          [ run allocate_shared_array_init_test.cpp : : : <toolset>gcc-4.6.3_0x:<cxxflags>-fno-deduce-init-list ]
-          [ run allocate_shared_arrays_create_test.cpp : : : <toolset>gcc-4.6.3_0x:<cxxflags>-fno-deduce-init-list ]
-          [ run allocate_shared_arrays_init_test.cpp : : : <toolset>gcc-4.6.3_0x:<cxxflags>-fno-deduce-init-list ]
+          [ run allocate_shared_arrays_test.cpp : : : <toolset>gcc-4.6.3_0x:<cxxflags>-fno-deduce-init-list ]
           [ run allocate_shared_array_throws_test.cpp ]
           [ run allocate_shared_array_esft_test.cpp ]
-          [ run allocate_shared_array_args_test.cpp ]
+          [ run allocate_shared_array_noinit_test.cpp ]
+          [ run allocate_shared_array_value_test.cpp ]
+          [ run allocate_shared_array_construct_test.cpp ]
+
+          [ run make_unique_test.cpp ]
+          [ run make_unique_args_test.cpp ]
+          [ run make_unique_value_test.cpp ]
+          [ run make_unique_noinit_test.cpp ]
+          [ run make_unique_throws_test.cpp ]
+          [ run make_unique_array_test.cpp ]
+          [ run make_unique_array_noinit_test.cpp ]
+          [ run make_unique_array_throws_test.cpp ]
         ;
 }

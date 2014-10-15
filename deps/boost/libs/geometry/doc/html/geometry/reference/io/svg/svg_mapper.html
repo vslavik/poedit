@@ -27,7 +27,7 @@
 <a name="geometry.reference.io.svg.svg_mapper"></a><a class="link" href="svg_mapper.html" title="svg_mapper">svg_mapper</a>
 </h5></div></div></div>
 <p>
-            <a class="indexterm" name="idp59321864"></a>
+            <a class="indexterm" name="idp117373760"></a>
 Helper class to create SVG maps.
           </p>
 <h6>
@@ -140,7 +140,8 @@ Helper class to create SVG maps.
 <td>
                     <p>
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">svg_mapper</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span> <span class="special">&amp;</span> <span class="identifier">stream</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">width</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">height</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">width_height</span> <span class="special">=</span> <span class="string">"width=\"100%\" height=\"100%\""</span><span class="special">)</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">svg_mapper</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span> <span class="special">&amp;</span> <span class="identifier">stream</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">width</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">height</span><span class="special">,</span>
+            <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">width_height</span> <span class="special">=</span> <span class="string">"width=\"100%\" height=\"100%\""</span><span class="special">)</span></pre>
 <p>
                     </p>
                   </td>
@@ -199,6 +200,7 @@ Helper class to create SVG maps.
 <col>
 <col>
 <col>
+<col>
 </colgroup>
 <thead><tr>
 <th>
@@ -244,6 +246,8 @@ Helper class to create SVG maps.
                       A model of the specified concept
                     </p>
                   </td>
+<td>
+                  </td>
 </tr>
 <tr>
 <td>
@@ -275,13 +279,16 @@ Helper class to create SVG maps.
                       specify linewidth in the SVG style information
                     </p>
                   </td>
+<td>
+                  </td>
 </tr>
 <tr>
 <td>
                     <p>
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">TextPoint</span><span class="special">&gt;</span>
-<span class="keyword">void</span> <span class="identifier">text</span><span class="special">(</span><span class="identifier">TextPoint</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">point</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">s</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">style</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">offset_x</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">offset_y</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">lineheight</span> <span class="special">=</span> <span class="number">10</span><span class="special">)</span></pre>
+<span class="keyword">void</span> <span class="identifier">text</span><span class="special">(</span><span class="identifier">TextPoint</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">point</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">s</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">style</span><span class="special">,</span>
+          <span class="keyword">int</span> <span class="identifier">offset_x</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">offset_y</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">lineheight</span> <span class="special">=</span> <span class="number">10</span><span class="special">)</span></pre>
 <p>
                     </p>
                   </td>
@@ -317,6 +324,8 @@ Helper class to create SVG maps.
                       Line height in SVG pixels, in case the text contains
                     </p>
                   </td>
+<td>
+                  </td>
 </tr>
 </tbody>
 </table></div>
@@ -328,7 +337,7 @@ Helper class to create SVG maps.
             Either
           </p>
 <p>
-            <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
+            <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
           </p>
 <p>
             Or
@@ -407,7 +416,8 @@ Helper class to create SVG maps.
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2014 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam
+      Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

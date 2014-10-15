@@ -1,6 +1,6 @@
 /* Boost.MultiIndex basic example.
  *
- * Copyright 2003-2008 Joaquin M Lopez Munoz.
+ * Copyright 2003-2013 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -69,10 +69,7 @@ typedef multi_index_container<
 > employee_set;
 
 template<typename Tag,typename MultiIndexContainer>
-void print_out_by(
- const MultiIndexContainer& s,
- Tag* =0 /* fixes a MSVC++ 6.0 bug with implicit template function parms */
-)
+void print_out_by(const MultiIndexContainer& s)
 {
   /* obtain a reference to the index tagged by Tag */
 

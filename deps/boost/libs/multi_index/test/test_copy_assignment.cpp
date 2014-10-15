@@ -39,7 +39,7 @@ struct holder
 };
 
 template<typename Sequence>
-static void test_assign(BOOST_EXPLICIT_TEMPLATE_TYPE(Sequence))
+static void test_assign()
 {
   Sequence s;
 
@@ -72,7 +72,7 @@ static void test_assign(BOOST_EXPLICIT_TEMPLATE_TYPE(Sequence))
 #endif
 
 template<typename Sequence>
-static void test_integral_assign(BOOST_EXPLICIT_TEMPLATE_TYPE(Sequence))
+static void test_integral_assign()
 {
   /* Special cases described in 23.1.1/9: integral types must not
    * be taken as iterators in assign(f,l) and insert(p,f,l).
@@ -213,25 +213,17 @@ void test_copy_assignment()
   l.push_back(employee(1,"Rachel",27,9012));
   l.push_back(employee(2,"Agatha",40,1520));
 
-#if BOOST_WORKAROUND(BOOST_MSVC,<1300)
-  employee_set es13;
-  es13.insert(l.begin(),l.end());
-#else
   employee_set es13(l.begin(),l.end());
-#endif
 
   l.sort();
 
   BOOST_TEST(es13.size()==l.size()&&
               std::equal(es13.begin(),es13.end(),l.begin()));
 
-  /* MSVC++ 6.0 chokes on test_assign without this explicit instantiation */
-  multi_index_container<int,indexed_by<sequenced<> > > s1;
   test_assign<multi_index_container<int,indexed_by<sequenced<> > > >();
   test_integral_assign<
     multi_index_container<int,indexed_by<sequenced<> > > >();
 
-  multi_index_container<int,indexed_by<random_access<> > > s2;
   test_assign<multi_index_container<int,indexed_by<random_access<> > > >();
   test_integral_assign<
     multi_index_container<int,indexed_by<random_access<> > > >();

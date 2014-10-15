@@ -23,8 +23,9 @@
 #include <boost/math/tools/test.hpp>
 
 #include <iostream>
-  using std::cout;
-  using std::endl;
+#include <iomanip>
+using std::cout;
+using std::endl;
 
 template <class T>
 T naive_falling_factorial(T x, unsigned n)
@@ -178,6 +179,28 @@ void test_spots(T)
    BOOST_CHECK_CLOSE(
       ::boost::math::rising_factorial(static_cast<T>(-5.25), -13),
       static_cast<T>(-1.38984989447269128946284683518361786049649013886981662962096e-14L), tolerance);
+   //
+   // More cases reported as bugs by Rocco Romeo:
+   //
+   BOOST_CHECK_EQUAL(::boost::math::rising_factorial(static_cast<T>(0), 1), static_cast<T>(0));
+   BOOST_CHECK_EQUAL(::boost::math::rising_factorial(static_cast<T>(0), -1), static_cast<T>(-1));
+   BOOST_CHECK_CLOSE(::boost::math::rising_factorial(static_cast<T>(0.5f), -1), static_cast<T>(-2), tolerance);
+   BOOST_CHECK_CLOSE(::boost::math::rising_factorial(static_cast<T>(40.5), -41), static_cast<T>(-2.75643016796662963097096639854040835565778207128865739e-47L), tolerance);
+   BOOST_CHECK_EQUAL(::boost::math::rising_factorial(static_cast<T>(-2), 3), static_cast<T>(0));
+   BOOST_CHECK_EQUAL(::boost::math::rising_factorial(static_cast<T>(-2), 2), static_cast<T>(2));
+   BOOST_CHECK_EQUAL(::boost::math::rising_factorial(static_cast<T>(-4), 3), static_cast<T>(-24));
+   BOOST_CHECK_CLOSE(::boost::math::rising_factorial(static_cast<T>(-4), -3), static_cast<T>(-0.00476190476190476190476190476190476190476190476190476190476L), tolerance);
+   if(ldexp(T(1), -150) != 0)
+   {
+      BOOST_CHECK_CLOSE(::boost::math::rising_factorial(ldexp(T(1), -150), 0), static_cast<T>(1), tolerance);
+      BOOST_CHECK_CLOSE(::boost::math::rising_factorial(ldexp(T(1), -150), -1), static_cast<T>(-1.00000000000000000000000000000000000000000000070064923216241L), tolerance);
+      BOOST_CHECK_CLOSE(::boost::math::rising_factorial(ldexp(T(1), -150), -2), static_cast<T>(0.500000000000000000000000000000000000000000000525486924121806L), tolerance);
+      BOOST_CHECK_CLOSE(::boost::math::rising_factorial(ldexp(T(1), -150), -25), static_cast<T>(-6.44695028438447339619485321920468720529890442766578870603544e-26L), 15 * tolerance);
+      if(std::numeric_limits<T>::min_exponent10 < -50)
+      {
+         BOOST_CHECK_CLOSE(::boost::math::rising_factorial(ldexp(T(1), -150), -40), static_cast<T>(1.22561743912838584942353998493975692372556196815242899727910e-48L), tolerance);
+      }
+   }
 
    //
    // Falling factorials:
@@ -265,6 +288,25 @@ void test_spots(T)
       ::boost::math::falling_factorial(static_cast<T>(8.25), 12),
       static_cast<T>(naive_falling_factorial(8.25L, 12)),
       tolerance);
+   //
+   // More cases reported as bugs by Rocco Romeo:
+   //
+   BOOST_CHECK_EQUAL(::boost::math::falling_factorial(static_cast<T>(0), 1), static_cast<T>(0));
+   BOOST_CHECK_CLOSE(::boost::math::falling_factorial(static_cast<T>(-2), 3), static_cast<T>(-24), tolerance);
+   BOOST_CHECK_CLOSE(::boost::math::falling_factorial(static_cast<T>(-2), 2), static_cast<T>(6), tolerance);
+   BOOST_CHECK_CLOSE(::boost::math::falling_factorial(static_cast<T>(-4), 3), static_cast<T>(-120), tolerance);
+   if(ldexp(static_cast<T>(1), -100) != 0)
+   {
+      BOOST_CHECK_CLOSE(::boost::math::falling_factorial(ldexp(static_cast<T>(1), -100), 1), static_cast<T>(7.888609052210118054117285652827862296732064351090230047e-31L), tolerance);
+      BOOST_CHECK_CLOSE(::boost::math::falling_factorial(ldexp(static_cast<T>(1), -100), 2), static_cast<T>(-7.88860905221011805411728565282163928145420320938308598e-31L), tolerance);
+      BOOST_CHECK_CLOSE(::boost::math::falling_factorial(ldexp(static_cast<T>(1), -100), 3), static_cast<T>(1.577721810442023610823457130563705554763054527705902790e-30L), tolerance);
+      BOOST_CHECK_CLOSE(::boost::math::falling_factorial(ldexp(static_cast<T>(1), -100), 35), static_cast<T>(2.32897613101315187323300837924676081371219290005311315885e8L), 35 * tolerance);
+   }
+   if((ldexp(static_cast<T>(1), -300) != 0) && (std::numeric_limits<T>::max_exponent10 > 290))
+   {
+      BOOST_CHECK_CLOSE(::boost::math::falling_factorial(ldexp(static_cast<T>(1), -300), 20), static_cast<T>(-5.97167167502482975928590631196751639118233432208390100e-74L), tolerance);
+      BOOST_CHECK_CLOSE(::boost::math::falling_factorial(ldexp(static_cast<T>(1), -300), 200), static_cast<T>(-1.93579759151806711025267355739174942986011285920860098569075e282L), 10 * tolerance);
+   }
 
 
    tolerance = boost::math::tools::epsilon<T>() * 100 * 20;  // 20 eps as a percent.

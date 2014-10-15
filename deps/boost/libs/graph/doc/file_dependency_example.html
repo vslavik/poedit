@@ -233,7 +233,7 @@ it depends on.
       if (in_degree (*i, g) &gt; 0) {
         Graph::in_edge_iterator j, j_end;
         int maxdist = 0;
-        for (tie(j, j_end) = in_edges(*i, g); j != j_end; ++j)
+        for (boost::tie(j, j_end) = in_edges(*i, g); j != j_end; ++j)
           maxdist = std::max(time[source(*j, g)], maxdist);
         time[*i]=maxdist+1;
       }

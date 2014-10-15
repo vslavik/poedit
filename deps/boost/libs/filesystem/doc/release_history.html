@@ -36,15 +36,66 @@
   </tr>
 </table>
 
+<h2>1.56.0</h2>
+<ul>
+  <li>Reorganize <code>recursive_directory_iterator::increment</code>, adding an 
+  invariant that progress is always made, even if an error is reported by 
+  exception or error_code. Add a manually executed test, <code>
+  test/issues/recurse_dir_iter_5403.cpp</code>. Adjust regular regression tests 
+  as needed. Thanks to Claudio Bley for the
+  <a href="https://github.com/boostorg/filesystem/pull/4">pull request</a> - the 
+  change was incorporated into the reorganized code. Fixes
+  <a href="https://svn.boost.org/trac/boost/ticket/5403">#5403</a> and
+  <a href="https://svn.boost.org/trac/boost/ticket/6821">#6821</a>.</li>
+  <li>Fix <code>canonical()</code> to treat parent of root as root. (Christian 
+  Hammerl) Fixes <a href="https://svn.boost.org/trac/boost/ticket/9683">#9683</a> 
+  and <a href="https://svn.boost.org/trac/boost/ticket/10187">#10187</a>.</li>
+  <li>Added missing test for <code>__sun</code> macro which is defined on 
+  Solaris 10. (Chris Stylianou)</li>
+  <li>Minor fixes and code cleanup.</li>
+  <li>Update IDE projects to Visual Studio 2013.</li>
+  <li>Remove unused <code>const char colon</code> to clear clang warning. (Jürgen 
+  Hunold)</li>
+  <li>Add BOOST_NOEXCEPT to <code>class filesystem_error</code>.</li>
+  <li>Change <code>perms::all_all</code> and <code>perms::perms_mask</code> to 
+  absolute values to quiet intellisense warnings, and conform to C++11.</li>
+</ul>
+
+<h2>1.54.0</h2>
+<ul>
+  <li>Reimplement <code>path::codecvt()</code> and <code>path::imbue()</code> 
+  with portable code that is intended to be much more robust and maintainable. A 
+  section on <a href="reference.html#path-Usage">path usage concerns</a> has 
+  been added to the reference documentation describing several concerns that 
+  arise in the context of multithreading and <code>path::codecvt()</code>.</li>
+</ul>
+
+<h2>1.52.0</h2>
+<ul>
+  <li>Fix <a href="http://svn.boost.org/trac/boost/ticket/7239">#7239</a>, Stack 
+  overflow when calling <code>create_directories(&quot;:D&quot;)</code>. The reported 
+  problem was a symptom of an internal bug that caused <code>path::filename()</code> 
+  and <code>path::parent_path()</code> to fail on Windows for <code>path(&quot;:&quot;)</code>, 
+  and that in turn caused other functions that depend on <code>filename()</code> 
+  or <code>parent_path()</code> to fail, such as <code>create_directories()</code>.</li>
+</ul>
+
 <h2>1.51.0</h2>
 <ul>
+  <li>Add begin() and end() non-member functions for directory_iterator and 
+  recursive_directory_iterator so that C++11 range-based for statements  work. 
+  Suggested by feature requests
+  <a href="https://svn.boost.org/trac/boost/ticket/5896">#5896</a> and
+  <a href="https://svn.boost.org/trac/boost/ticket/6521">#6521</a>, using the
+  <a href="https://svn.boost.org/trac/boost/ticket/5896">#5896</a> approach.</li>
+  <li>Add range_begin() and range_end() non-member functions for directory_iterator and 
+  recursive_directory_iterator so that 
+  <a href="http://www.boost.org/libs/foreach/">BOOST_FOREACH</a> works.</li>
   <li>Fix a Linux fchmodat problem affecting symlink permissions reported during 
   discussion of <a href="https://svn.boost.org/trac/boost/ticket/6659">#6659</a>.</li>
   <li>Fix <a href="https://svn.boost.org/trac/boost/ticket/6659">#6659</a> and
   <a href="https://svn.boost.org/trac/boost/ticket/7051">#7051</a>, fchmodat 
   supported only on Solaris 11. Fix for both Sun and GCC compilers. </li>
-  <li>Add missing copy_directory semantics docs. Fixes
-  <a href="https://svn.boost.org/trac/boost/ticket/5879">#5879</a>.</li>
 </ul>
 
 <h2>1.50.0</h2>
@@ -174,7 +225,7 @@
 </ul>
 <hr>
 <p>Revised
-<!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%d %B, %Y" startspan -->13 August, 2012<!--webbot bot="Timestamp" endspan i-checksum="34443" --></p>
+<!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%d %B, %Y" startspan -->22 July, 2014<!--webbot bot="Timestamp" endspan i-checksum="21122" --></p>
 <p>© Copyright Beman Dawes, 2011</p>
 <p> Use, modification, and distribution are subject to the Boost Software 
 License, Version 1.0. See <a href="http://www.boost.org/LICENSE_1_0.txt">

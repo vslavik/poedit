@@ -12,7 +12,7 @@ namespace boost
     // Single Pass Range metafunctions
     //
 
-    template< class T >
+    template< class T, class Enabler=void >
     struct range_iterator;
 
     template< class T >
@@ -73,6 +73,10 @@ namespace boost
     typename range_difference<T>::type
     distance( const T& r );
 
+    template< class T >
+    typename range_size<T>::type
+    size( const T& r );
+
     //
     // Bidirectional Range functions
     //
@@ -92,14 +96,6 @@ namespace boost
     template< class T >
     typename range_reverse_iterator<const T>::type
     rend( const T& r );
-
-    //
-    // Random Access Range functions
-    //
-
-    template< class T >
-    typename range_difference<T>::type
-    size( const T& r );
 
     //
     // Special const Range functions

@@ -14,8 +14,8 @@
 #include "post_process.hpp"
 #include "utils.hpp"
 #include "files.hpp"
-#include "input_path.hpp"
-#include "id_manager.hpp"
+#include "native_text.hpp"
+#include "document_state.hpp"
 #include <boost/program_options.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -40,7 +40,7 @@
 #pragma warning(disable:4355)
 #endif
 
-#define QUICKBOOK_VERSION "Quickbook Version 1.6.0 beta 1"
+#define QUICKBOOK_VERSION "Quickbook Version 1.6.1"
 
 namespace quickbook
 {
@@ -138,12 +138,12 @@ namespace quickbook
       , parse_document_options const& options_)
     {
         string_stream buffer;
-        id_manager ids;
+        document_state output;
 
         int result = 0;
 
         try {
-            quickbook::state state(filein_, options_.xinclude_base, buffer, ids);
+            quickbook::state state(filein_, options_.xinclude_base, buffer, output);
             set_macros(state);
 
             if (state.error_count == 0) {
@@ -184,7 +184,7 @@ namespace quickbook
 
         if (!fileout_.empty() && result == 0)
         {
-            std::string stage2 = ids.replace_placeholders(buffer.str());
+            std::string stage2 = output.replace_placeholders(buffer.str());
 
             fs::ofstream fileout(fileout_);
 
@@ -255,7 +255,7 @@ main(int argc, char* argv[])
         using boost::program_options::notify;
         using boost::program_options::positional_options_description;
         
-        using quickbook::detail::input_string;
+        using quickbook::detail::command_line_string;
 
         // First thing, the filesystem should record the current working directory.
         fs::initial_path<fs::path>();
@@ -283,27 +283,27 @@ main(int argc, char* argv[])
             ("no-self-linked-headers", "stop headers linking to themselves")
             ("indent", PO_VALUE<int>(), "indent spaces")
             ("linewidth", PO_VALUE<int>(), "line width")
-            ("input-file", PO_VALUE<input_string>(), "input file")
-            ("output-file", PO_VALUE<input_string>(), "output file")
-            ("output-deps", PO_VALUE<input_string>(), "output dependency file")
+            ("input-file", PO_VALUE<command_line_string>(), "input file")
+            ("output-file", PO_VALUE<command_line_string>(), "output file")
+            ("output-deps", PO_VALUE<command_line_string>(), "output dependency file")
             ("debug", "debug mode (for developers)")
             ("ms-errors", "use Microsoft Visual Studio style error & warn message format")
-            ("include-path,I", PO_VALUE< std::vector<input_string> >(), "include path")
-            ("define,D", PO_VALUE< std::vector<input_string> >(), "define macro")
-            ("image-location", PO_VALUE<input_string>(), "image location")
+            ("include-path,I", PO_VALUE< std::vector<command_line_string> >(), "include path")
+            ("define,D", PO_VALUE< std::vector<command_line_string> >(), "define macro")
+            ("image-location", PO_VALUE<command_line_string>(), "image location")
         ;
 
         hidden.add_options()
             ("expect-errors",
                 "Succeed if the input file contains a correctly handled "
                 "error, fail otherwise.")
-            ("xinclude-base", PO_VALUE<input_string>(),
+            ("xinclude-base", PO_VALUE<command_line_string>(),
                 "Generate xincludes as if generating for this target "
                 "directory.")
-            ("output-deps-format", PO_VALUE<input_string>(),
+            ("output-deps-format", PO_VALUE<command_line_string>(),
              "Comma separated list of formatting options for output-deps, "
              "options are: escaped, checked")
-            ("output-checked-locations", PO_VALUE<input_string>(),
+            ("output-checked-locations", PO_VALUE<command_line_string>(),
              "Writes a file listing all the file locations that were "
              "checked, starting with '+' if they were found, or '-' "
              "if they weren't.\n"
@@ -421,24 +421,24 @@ main(int argc, char* argv[])
         if (vm.count("include-path"))
         {
             boost::transform(
-                vm["include-path"].as<std::vector<input_string> >(),
+                vm["include-path"].as<std::vector<command_line_string> >(),
                 std::back_inserter(quickbook::include_path),
-                quickbook::detail::input_to_path);
+                quickbook::detail::command_line_to_path);
         }
 
         quickbook::preset_defines.clear();
         if (vm.count("define"))
         {
             boost::transform(
-                vm["define"].as<std::vector<input_string> >(),
+                vm["define"].as<std::vector<command_line_string> >(),
                 std::back_inserter(quickbook::preset_defines),
-                quickbook::detail::input_to_utf8);
+                quickbook::detail::command_line_to_utf8);
         }
 
         if (vm.count("input-file"))
         {
-            fs::path filein = quickbook::detail::input_to_path(
-                vm["input-file"].as<input_string>());
+            fs::path filein = quickbook::detail::command_line_to_path(
+                vm["input-file"].as<command_line_string>());
             fs::path fileout;
 
             bool default_output = true;
@@ -446,16 +446,16 @@ main(int argc, char* argv[])
             if (vm.count("output-deps"))
             {
                 parse_document_options.deps_out =
-                    quickbook::detail::input_to_path(
-                        vm["output-deps"].as<input_string>());
+                    quickbook::detail::command_line_to_path(
+                        vm["output-deps"].as<command_line_string>());
                 default_output = false;
             }
 
             if (vm.count("output-deps-format"))
             {
                 std::string format_flags =
-                    quickbook::detail::input_to_utf8(
-                        vm["output-deps-format"].as<input_string>());
+                    quickbook::detail::command_line_to_utf8(
+                        vm["output-deps-format"].as<command_line_string>());
 
                 std::vector<std::string> flag_names;
                 boost::algorithm::split(flag_names, format_flags,
@@ -488,15 +488,15 @@ main(int argc, char* argv[])
             if (vm.count("output-checked-locations"))
             {
                 parse_document_options.locations_out =
-                    quickbook::detail::input_to_path(
-                        vm["output-checked-locations"].as<input_string>());
+                    quickbook::detail::command_line_to_path(
+                        vm["output-checked-locations"].as<command_line_string>());
                 default_output = false;
             }
 
             if (vm.count("output-file"))
             {
-                fileout = quickbook::detail::input_to_path(
-                    vm["output-file"].as<input_string>());
+                fileout = quickbook::detail::command_line_to_path(
+                    vm["output-file"].as<command_line_string>());
             }
             else if (default_output)
             {
@@ -507,8 +507,8 @@ main(int argc, char* argv[])
             if (vm.count("xinclude-base"))
             {
                 parse_document_options.xinclude_base =
-                    quickbook::detail::input_to_path(
-                        vm["xinclude-base"].as<input_string>());
+                    quickbook::detail::command_line_to_path(
+                        vm["xinclude-base"].as<command_line_string>());
             }
             else
             {
@@ -528,8 +528,8 @@ main(int argc, char* argv[])
 
             if (vm.count("image-location"))
             {
-                quickbook::image_location = quickbook::detail::input_to_path(
-                    vm["image-location"].as<input_string>());
+                quickbook::image_location = quickbook::detail::command_line_to_path(
+                    vm["image-location"].as<command_line_string>());
             }
             else
             {

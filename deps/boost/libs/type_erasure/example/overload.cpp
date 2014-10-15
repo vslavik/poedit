@@ -6,7 +6,7 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-// $Id: overload.cpp 82858 2013-02-13 18:08:57Z steven_watanabe $
+// $Id$
 
 #include <boost/type_erasure/concept_interface.hpp>
 #include <boost/type_erasure/param.hpp>

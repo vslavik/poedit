@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+ / Copyright (c) 2003-2014 Christopher M. Kohlhoff (chris at kohlhoff dot com)
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -3784,7 +3784,7 @@ Start an asynchronous send on a connected socket.
       WriteHandler handler);
 
 
-This function is used to send data on the datagram socket. The function call will block until the data has been sent successfully or an error occurs.
+This function is used to asynchronously send data on the datagram socket. The function call always returns immediately.
 
 
 [heading Parameters]
@@ -43594,14 +43594,9 @@ Appends `n` characters from the start of the output sequence to the input sequen
 Requires a preceding call `prepare(x)` where `x >= n`, and no intervening operations that modify the input or output sequence.
 
 
-[heading Exceptions]
-    
-
-[variablelist
-  
-[[std::length_error][If `n` is greater than the size of the output sequence. ]]
-
-]
+[heading Remarks]
+      
+If `n` is greater than the size of the output sequence, the entire output sequence is moved to the input sequence and no error is issued. 
 
 
 
@@ -43644,14 +43639,9 @@ Remove characters from the input sequence.
 Removes `n` characters from the beginning of the input sequence.
 
 
-[heading Exceptions]
-    
-
-[variablelist
-  
-[[std::length_error][If `n > size()`. ]]
-
-]
+[heading Remarks]
+      
+If `n` is greater than the size of the input sequence, the entire input sequence is consumed and no error is issued. 
 
 
 
@@ -45611,6 +45601,8 @@ In particular, when used with the [link boost_asio.reference.buffer_size `buffer
 
 
 
+Note that [link boost_asio.reference.buffer_copy `buffer_copy`]  is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions.
+
 
 [heading Buffer Invalidation]
   
@@ -46907,7 +46899,9 @@ Both forms return the number of bytes actually copied. The number of bytes copie
 
 * `If` specified, `max_bytes_to_copy`.
 
-This prevents buffer overflow, regardless of the buffer sizes used in the copy operation. 
+This prevents buffer overflow, regardless of the buffer sizes used in the copy operation.
+
+Note that [link boost_asio.reference.buffer_copy `buffer_copy`]  is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 [heading Requirements]
 
@@ -46955,7 +46949,7 @@ The number of bytes copied is the lesser of:
 
 * `buffer_size(source)` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47001,7 +46995,7 @@ The number of bytes copied is the lesser of:
 
 * `buffer_size(source)` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47047,7 +47041,7 @@ The number of bytes copied is the lesser of:
 
 * `buffer_size(source)` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47093,7 +47087,7 @@ The number of bytes copied is the lesser of:
 
 * `buffer_size(source)` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47141,7 +47135,7 @@ The number of bytes copied is the lesser of:
 
 * `buffer_size(source)` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47187,7 +47181,7 @@ The number of bytes copied is the lesser of:
 
 * `buffer_size(source)` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47233,7 +47227,7 @@ The number of bytes copied is the lesser of:
 
 * `buffer_size(source)` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47279,7 +47273,7 @@ The number of bytes copied is the lesser of:
 
 * `buffer_size(source)` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47325,7 +47319,7 @@ The number of bytes copied is the lesser of:
 
 * `buffer_size(source)` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47373,7 +47367,7 @@ The number of bytes copied is the lesser of:
 
 * `buffer_size(source)` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47421,7 +47415,7 @@ The number of bytes copied is the lesser of:
 
 * `buffer_size(source)` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47469,7 +47463,7 @@ The number of bytes copied is the lesser of:
 
 * `buffer_size(source)` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47517,7 +47511,7 @@ The number of bytes copied is the lesser of:
 
 * `buffer_size(source)` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47565,7 +47559,7 @@ The number of bytes copied is the lesser of:
 
 * `buffer_size(source)` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47614,7 +47608,7 @@ The number of bytes copied is the lesser of:
 
 * `buffer_size(source)` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47666,7 +47660,7 @@ The number of bytes copied is the lesser of:
 
 * `max_bytes_to_copy` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47718,7 +47712,7 @@ The number of bytes copied is the lesser of:
 
 * `max_bytes_to_copy` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47770,7 +47764,7 @@ The number of bytes copied is the lesser of:
 
 * `max_bytes_to_copy` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47822,7 +47816,7 @@ The number of bytes copied is the lesser of:
 
 * `max_bytes_to_copy` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47876,7 +47870,7 @@ The number of bytes copied is the lesser of:
 
 * `max_bytes_to_copy` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47928,7 +47922,7 @@ The number of bytes copied is the lesser of:
 
 * `max_bytes_to_copy` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -47980,7 +47974,7 @@ The number of bytes copied is the lesser of:
 
 * `max_bytes_to_copy` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -48032,7 +48026,7 @@ The number of bytes copied is the lesser of:
 
 * `max_bytes_to_copy` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -48084,7 +48078,7 @@ The number of bytes copied is the lesser of:
 
 * `max_bytes_to_copy` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -48138,7 +48132,7 @@ The number of bytes copied is the lesser of:
 
 * `max_bytes_to_copy` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -48192,7 +48186,7 @@ The number of bytes copied is the lesser of:
 
 * `max_bytes_to_copy` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -48246,7 +48240,7 @@ The number of bytes copied is the lesser of:
 
 * `max_bytes_to_copy` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -48300,7 +48294,7 @@ The number of bytes copied is the lesser of:
 
 * `max_bytes_to_copy` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -48354,7 +48348,7 @@ The number of bytes copied is the lesser of:
 
 * `max_bytes_to_copy` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -48409,7 +48403,7 @@ The number of bytes copied is the lesser of:
 
 * `max_bytes_to_copy` 
 
-
+This function is implemented in terms of `memcpy`, and consequently it cannot be used to copy between overlapping memory regions. 
 
 
 [endsect]
@@ -61339,6 +61333,11 @@ Note that in the following case:
 the completion of the first async operation will perform `s.dispatch(a)`, and the second will perform `s.dispatch(b)`, but the order in which those are performed is unspecified. That is, you cannot state whether one happens-before the other. Therefore none of the above conditions are met and no ordering guarantee is made.
 
 
+[heading Remarks]
+      
+The implementation makes no guarantee that handlers posted or dispatched through different `strand` objects will be invoked concurrently.
+
+
 [heading Thread Safety]
   
 ['Distinct] ['objects:] Safe.
@@ -66332,7 +66331,7 @@ Create an iterator from a sequence of endpoints, host and service name.
 
 
   template<
-      typename ``[link boost_asio.reference.EndpointIterator EndpointIterator]``>
+      typename EndpointIterator>
   static basic_resolver_iterator ``[link boost_asio.reference.ip__basic_resolver_iterator.create.overload3 create]``(
       EndpointIterator begin,
       EndpointIterator end,
@@ -66382,7 +66381,7 @@ Create an iterator from a sequence of endpoints, host and service name.
 
 
   template<
-      typename ``[link boost_asio.reference.EndpointIterator EndpointIterator]``>
+      typename EndpointIterator>
   static basic_resolver_iterator create(
       EndpointIterator begin,
       EndpointIterator end,
@@ -88248,7 +88247,7 @@ This function is used to launch a new coroutine.
 [section:overload3 spawn (3 of 4 overloads)]
 
 
-Start a new stackful coroutine that executes in the contex of a strand. 
+Start a new stackful coroutine that executes in the context of a strand. 
 
 
   template<
@@ -93968,6 +93967,11 @@ Note that in the following case:
 
 
 the completion of the first async operation will perform `s.dispatch(a)`, and the second will perform `s.dispatch(b)`, but the order in which those are performed is unspecified. That is, you cannot state whether one happens-before the other. Therefore none of the above conditions are met and no ordering guarantee is made.
+
+
+[heading Remarks]
+      
+The implementation makes no guarantee that handlers posted or dispatched through different `strand` objects will be invoked concurrently.
 
 
 [heading Thread Safety]
@@ -105301,7 +105305,7 @@ The number of bytes written. If an error occurs, returns the total number of byt
 [section:yield_context yield_context]
 
 [indexterm1 yield_context] 
-Context object the represents the currently executing coroutine. 
+Context object that represents the currently executing coroutine. 
 
 
   typedef basic_yield_context< unspecified > yield_context;

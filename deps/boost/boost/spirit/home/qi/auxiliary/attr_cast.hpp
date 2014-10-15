@@ -50,7 +50,7 @@ namespace boost { namespace spirit { namespace qi
         typedef typename mpl::eval_if<
             traits::not_is_unused<Transformed>
           , mpl::identity<Transformed>
-          , traits::attribute_of<subject_type> >::type 
+          , traits::attribute_of<subject_type> >::type
         transformed_attribute_type;
 
         attr_cast_parser(Subject const& subject_)
@@ -87,7 +87,7 @@ namespace boost { namespace spirit { namespace qi
             // do down-stream transformation, provides attribute for embedded
             // parser
             typedef traits::transform_attribute<
-                exposed_attribute_type, transformed_attribute_type, domain> 
+                exposed_attribute_type, transformed_attribute_type, domain>
             transform;
 
             typename transform::type attr_ = transform::pre(attr_param);

@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../thread.html" title="Chapter&#160;30.&#160;Thread 4.2.0">
+<link rel="up" href="../thread.html" title="Chapter&#160;32.&#160;Thread 4.3.0">
 <link rel="prev" href="thread_management.html" title="Thread Management">
 <link rel="next" href="synchronization.html" title="Synchronization">
 </head>
@@ -84,9 +84,10 @@
         do nothing with the owned thread other than the specific action given as
         parameter, while scoped_thread provide the same interface than <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a> and forwards all the operations.
       </p>
-<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">strict_scoped_thread</span><span class="special">&lt;&gt;</span> <span class="identifier">t1</span><span class="special">((</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">(</span><span class="identifier">F</span><span class="special">)));</span>
-<span class="identifier">boost</span><span class="special">::</span><span class="identifier">strict_scoped_thread</span><span class="special">&lt;&gt;</span> <span class="identifier">t2</span><span class="special">((</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">(</span><span class="identifier">F</span><span class="special">)));</span>
-<span class="identifier">t2</span><span class="special">.</span><span class="identifier">interrupt</span><span class="special">();</span>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">strict_scoped_thread</span><span class="special">&lt;&gt;</span> <span class="identifier">t1</span><span class="special">((</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">(</span><span class="identifier">f</span><span class="special">)));</span>
+<span class="comment">//t1.detach(); // compile fails</span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">scoped_thread</span><span class="special">&lt;&gt;</span> <span class="identifier">t2</span><span class="special">((</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">(</span><span class="identifier">f</span><span class="special">)));</span>
+<span class="identifier">t2</span><span class="special">.</span><span class="identifier">detach</span><span class="special">();</span>
 </pre>
 </div>
 <div class="section">
@@ -312,6 +313,8 @@
         function <code class="computeroutput"><span class="identifier">interrupt</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.scoped_thread.hardware_concurrency">Static
         member function <code class="computeroutput"><span class="identifier">hardware_concurrency</span><span class="special">()</span></code></a></span></dt>
+<dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.scoped_thread.physical_concurrency">Static
+        member function <code class="computeroutput"><span class="identifier">physical_concurrency</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.scoped_thread.nativehandle">Member
         function <code class="computeroutput"><span class="identifier">native_handle</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.scoped_thread.swap">Member function
@@ -356,6 +359,7 @@
     <span class="keyword">void</span> <span class="identifier">detach</span><span class="special">();</span>
 
     <span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="identifier">hardware_concurrency</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">;</span>
+    <span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="identifier">physical_concurrency</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">;</span>
 
     <span class="keyword">typedef</span> <span class="identifier">thread</span><span class="special">::</span><span class="identifier">native_handle_type</span> <span class="identifier">native_handle_type</span><span class="special">;</span>
     <span class="identifier">native_handle_type</span> <span class="identifier">native_handle</span><span class="special">();</span>
@@ -712,6 +716,23 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
+<a name="thread.ScopedThreads.scoped_thread.physical_concurrency"></a><a class="link" href="ScopedThreads.html#thread.ScopedThreads.scoped_thread.physical_concurrency" title="Static member function physical_concurrency()">Static
+        member function <code class="computeroutput"><span class="identifier">physical_concurrency</span><span class="special">()</span></code></a>
+</h4></div></div></div>
+<pre class="programlisting"><span class="keyword">unsigned</span> <span class="identifier">physical_concurrency</span><span class="special">()</span> <span class="identifier">noexecpt</span><span class="special">;</span>
+</pre>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl class="variablelist">
+<dt><span class="term">Effects:</span></dt>
+<dd><p>
+                Equivalent to return <code class="computeroutput"><span class="identifier">thread</span><span class="special">::</span><span class="identifier">physical_concurrency</span><span class="special">()</span></code>.
+              </p></dd>
+</dl>
+</div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
 <a name="thread.ScopedThreads.scoped_thread.nativehandle"></a><a class="link" href="ScopedThreads.html#thread.ScopedThreads.scoped_thread.nativehandle" title="Member function native_handle()">Member
         function <code class="computeroutput"><span class="identifier">native_handle</span><span class="special">()</span></code></a>
 </h4></div></div></div>
@@ -768,7 +789,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -11 Anthony Williams<br>Copyright &#169; 2011 -13 Vicente J. Botet Escriba<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -11 Anthony Williams<br>Copyright &#169; 2011 -14 Vicente J. Botet Escriba<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

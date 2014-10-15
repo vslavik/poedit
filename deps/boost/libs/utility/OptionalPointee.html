@@ -57,10 +57,7 @@ aliasing.
   </TR>
   <TR>
     <TD VAlign=top>Validity Test</TD>
-    <TD VAlign=top>&nbsp;<tt>t</tt><br>
-     &nbsp;<tt>t != 0</tt><br>
-     &nbsp;<tt>!!t</tt>
-     </TD>
+    <TD VAlign=top>&nbsp;<tt>bool(t)</tt></TD>
     <TD VAlign=top>&nbsp;bool </TD>
     <TD VAlign=top>If the pointee is valid returns true.<br>
       If the pointee is invalid returns false.</TD>
@@ -68,9 +65,7 @@ aliasing.
   </TR>
   <TR>
     <TD VAlign=top>Invalidity Test</TD>
-    <TD VAlign=top>&nbsp;<tt>t == 0</tt><br>
-                   &nbsp;<tt>!t</tt>
-    </TD>
+    <TD VAlign=top>&nbsp;<tt>!t</tt></TD>
     <TD VAlign=top>&nbsp;bool </TD>
     <TD VAlign=top>If the pointee is valid returns false.<br>
       If the pointee is invalid returns true.</TD>

@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2014.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -9,7 +9,7 @@
 #include <fstream>
 #include <iostream>
 #include <boost/smart_ptr/shared_ptr.hpp>
-#include <boost/utility/empty_deleter.hpp>
+#include <boost/core/null_deleter.hpp>
 #include <boost/log/core.hpp>
 #include <boost/log/sinks/sync_frontend.hpp>
 #include <boost/log/sinks/text_ostream_backend.hpp>
@@ -30,7 +30,7 @@ void init_logging()
     boost::shared_ptr< sinks::text_ostream_backend > backend =
         boost::make_shared< sinks::text_ostream_backend >();
     backend->add_stream(
-        boost::shared_ptr< std::ostream >(&std::clog, boost::empty_deleter()));
+        boost::shared_ptr< std::ostream >(&std::clog, boost::null_deleter()));
     backend->add_stream(
         boost::shared_ptr< std::ostream >(new std::ofstream("sample.log")));
 

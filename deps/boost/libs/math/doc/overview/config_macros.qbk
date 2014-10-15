@@ -9,9 +9,11 @@ For reference, information on Boost.Math macros used internally are described br
 
 [table Boost.Math Macros
 [[MACRO][Notes]]
-[[`BOOST_MATH_NO_REAL_CONCEPT_TESTS`] [Do not try to use real concept tests (hardware or software does not support real_concept type).]]
 [[`BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS`] [Do not produce or use long double functions: this macro gets set when the platform's
 long double or standard library long double support is absent or buggy.]]
+[[`BOOST_MATH_USE_FLOAT128`][When set the numeric constants support the `__float128` data type with constants having the `Q` suffix.]]
+[[`BOOST_MATH_DISABLE_FLOAT128`][When set the numeric constants do not use the `__float128` data type even if the compiler appears to support it.]]
+[[`BOOST_MATH_NO_REAL_CONCEPT_TESTS`] [Do not try to use real concept tests (hardware or software does not support real_concept type).]]
 [[`BOOST_MATH_CONTROL_FP`] [Controls FP hardware exceptions - our tests don't support hardware exceptions on MSVC.
 May get set to something like: ` _control87(MCW_EM,MCW_EM)`.]]
 [[`BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS`] [This macro is used by our test cases, it is set when an assignment of a function template
@@ -19,14 +21,6 @@ to a function pointer requires explicit template arguments to be provided on the
 [[`BOOST_MATH_USE_C99` ] [Use C99 math functions.]] 
 [[`BOOST_NO_NATIVE_LONG_DOUBLE_FP_CLASSIFY`] [define if no native (or buggy) `fpclassify(long double)` 
 even though the other C99 functions are present.]]
-[[`BOOST_MATH_EXPLICIT_TEMPLATE_TYPE`] [Workaround helper macro for broken compilers - composed from
-other Boost.Config macros, do not edit.]] 
-[[`BOOST_MATH_EXPLICIT_TEMPLATE_NON_TYPE`] [Workaround helper macro for broken compilers - composed from
-other Boost.Config macros, do not edit.]]
-[[`BOOST_MATH_APPEND_EXPLICIT_TEMPLATE_TYPE_SPEC`] [Workaround helper macro for broken compilers - composed from
-other Boost.Config macros, do not edit.]]
-[[`BOOST_MATH_APPEND_EXPLICIT_TEMPLATE_NON_TYPE_SPEC`] [Workaround helper macro for broken compilers - composed from
-other Boost.Config macros, do not edit.]]
 [[`BOOST_MATH_SMALL_CONSTANT(x)`] [Helper macro used in our test cases to set underflowing constants set to zero
 if this would cause compiler issues.]]
 [[`BOOST_MATH_BUGGY_LARGE_FLOAT_CONSTANTS`] [Set if constants too large for a float, will cause "bad" values to be stored in the data, 

@@ -1,6 +1,7 @@
 /*
- Copyright 2009-2012 Karsten Ahnert
- Copyright 2009-2012 Mario Mulansky
+ Copyright 2010-2012 Karsten Ahnert
+ Copyright 2011-2013 Mario Mulansky
+ Copyright 2013 Pascal Germroth
 
  Distributed under the Boost Software License, Version 1.0.
  (See accompanying file LICENSE_1_0.txt or
@@ -165,7 +166,7 @@ int main(int /* argc */ , char** /* argv */ )
     //[integrate_adapt_full
     double abs_err = 1.0e-10 , rel_err = 1.0e-6 , a_x = 1.0 , a_dxdt = 1.0;
     controlled_stepper_type controlled_stepper( 
-        default_error_checker< double >( abs_err , rel_err , a_x , a_dxdt ) );
+        default_error_checker< double , range_algebra , default_operations >( abs_err , rel_err , a_x , a_dxdt ) );
     integrate_adaptive( controlled_stepper , harmonic_oscillator , x , 0.0 , 10.0 , 0.01 );
     //]
     }
@@ -186,12 +187,25 @@ int main(int /* argc */ , char** /* argv */ )
 
     #ifdef BOOST_NUMERIC_ODEINT_CXX11
     //[ define_const_stepper_cpp11
+    {
     runge_kutta4< state_type > stepper;
     integrate_const( stepper , []( const state_type &x , state_type &dxdt , double t ) {
             dxdt[0] = x[1]; dxdt[1] = -x[0] - gam*x[1]; }
         , x , 0.0 , 10.0 , 0.01 );
+    }
+    //]
+    
+    
+    
+    //[ harm_iterator_const_step]
+    std::for_each( make_const_step_time_iterator_begin( stepper , harmonic_oscillator, x , 0.0 , 0.1 , 10.0 ) ,
+                   make_const_step_time_iterator_end( stepper , harmonic_oscillator, x ) ,
+                   []( std::pair< const state_type & , const double & > x ) {
+                       cout << x.second << " " << x.first[0] << " " << x.first[1] << "\n"; } );
     //]
     #endif
+    
+    
 
 
 }

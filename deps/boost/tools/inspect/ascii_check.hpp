@@ -35,4 +35,4 @@ namespace boost
   }
 }
 
-#endif // BOOST_TAB_CHECK_HPP
+#endif // BOOST_ASCII_CHECK_HPP

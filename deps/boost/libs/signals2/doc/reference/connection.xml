@@ -53,14 +53,40 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
           <throws><para>Will not throw.</para></throws>
         </constructor>
 
-        <copy-assignment>
+        <constructor>
           <parameter name="other">
+            <paramtype><classname alt="signals2::connection">connection</classname>&amp;&amp;</paramtype>
+          </parameter>
+          <description><para>Move constructor.</para></description>
+          <effects><para><computeroutput>this</computeroutput> references
+          the connection formerly referenced by
+          <computeroutput>other</computeroutput>.  The moved-from <computeroutput>other</computeroutput>
+          no longer references any connection.</para></effects>
+
+          <throws><para>Will not throw.</para></throws>
+        </constructor>
+
+        <copy-assignment>
+          <parameter name="rhs">
             <paramtype>const <classname alt="signals2::connection">connection</classname>&amp;</paramtype>
           </parameter>
 
           <effects><para><computeroutput>this</computeroutput> references
           the connection referenced by
-          <computeroutput>other</computeroutput>.</para></effects>
+          <computeroutput>rhs</computeroutput>.</para></effects>
+
+          <throws><para>Will not throw.</para></throws>
+        </copy-assignment>
+
+        <copy-assignment>
+          <parameter name="rhs">
+            <paramtype><classname alt="signals2::connection">connection</classname>&amp;&amp;</paramtype>
+          </parameter>
+          <description><para>Move assignment.</para></description>
+          <effects><para><computeroutput>this</computeroutput> references
+          the connection formerly referenced by
+          <computeroutput>rhs</computeroutput>.  The moved-from <computeroutput>rhs</computeroutput>
+          no longer references any connection.</para></effects>
 
           <throws><para>Will not throw.</para></throws>
         </copy-assignment>
@@ -210,28 +236,82 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
             <throws><para>Will not throw.</para></throws>
           </constructor>
 
+          <constructor>
+            <parameter name="other">
+              <paramtype><classname alt="signals2::scoped_connection">scoped_connection</classname>&amp;&amp;</paramtype>
+            </parameter>
+            <description><para>Move constructor.</para></description>
+            <effects><para><computeroutput>this</computeroutput> references
+              the connection formerly referenced by
+              <computeroutput>other</computeroutput>.  The moved-from <computeroutput>other</computeroutput>
+              no longer references any connection.</para></effects>
+
+            <throws><para>Will not throw.</para></throws>
+          </constructor>
+
+          <constructor>
+            <parameter name="other">
+              <paramtype><classname alt="signals2::connection">connection</classname>&amp;&amp;</paramtype>
+            </parameter>
+            <description><para>Move constructor.</para></description>
+            <effects><para><computeroutput>this</computeroutput> references
+              the connection formerly referenced by
+              <computeroutput>other</computeroutput>.  The moved-from <computeroutput>other</computeroutput>
+              no longer references any connection.</para></effects>
+
+            <throws><para>Will not throw.</para></throws>
+          </constructor>
+
+          <copy-assignment>
+            <parameter name="rhs">
+              <paramtype>const <classname alt="signals2::connection">connection</classname>&amp;</paramtype>
+            </parameter>
+            <description><para>Copy assignment from unscoped connection.</para></description>
+            <effects><para><computeroutput>this</computeroutput> references
+            the connection referenced by
+            <computeroutput>rhs</computeroutput>.  If <code>this</code> already references another
+                    connection, the old connection will be disconnected first.</para></effects>
+            <postconditions>
+              <para><code><methodname alt="connection::connected">connected</methodname>() == other.connected()</code></para>
+            </postconditions>
+
+            <throws><para>Will not throw.</para></throws>
+          </copy-assignment>
+
+          <copy-assignment>
+            <parameter name="rhs">
+              <paramtype><classname alt="signals2::scoped_connection">scoped_connection</classname>&amp;&amp;</paramtype>
+            </parameter>
+            <description><para>Move assignment.</para></description>
+            <effects><para><computeroutput>this</computeroutput> references
+            the connection formerly referenced by
+            <computeroutput>rhs</computeroutput>.  The moved-from <computeroutput>rhs</computeroutput>
+            no longer references any connection.  If <code>this</code> already references another
+                    connection, the old connection will be disconnected first.</para></effects>
+
+            <throws><para>Will not throw.</para></throws>
+          </copy-assignment>
+
+          <copy-assignment>
+            <parameter name="rhs">
+              <paramtype><classname alt="signals2::connection">connection</classname>&amp;&amp;</paramtype>
+            </parameter>
+            <description><para>Move assignment.</para></description>
+            <effects><para><computeroutput>this</computeroutput> references
+            the connection formerly referenced by
+            <computeroutput>rhs</computeroutput>.  The moved-from <computeroutput>rhs</computeroutput>
+            no longer references any connection.  If <code>this</code> already references another
+                    connection, the old connection will be disconnected first.</para></effects>
+
+            <throws><para>Will not throw.</para></throws>
+          </copy-assignment>
+
           <destructor>
             <effects><para>If
             <computeroutput>this-&gt;<methodname alt="connection::connected">connected</methodname>()</computeroutput>,
             disconnects the signal-slot connection.</para></effects>
           </destructor>
           <method-group name="public methods">
-            <method name="operator=">
-              <type>scoped_connection &amp;</type>
-              <parameter name="rhs">
-                <paramtype>const connection &amp;</paramtype>
-              </parameter>
-              <effects>
-                <para><computeroutput>this</computeroutput> references
-                  the connection referenced by
-                  <computeroutput>rhs</computeroutput>.  If <code>this</code> already references another
-                  connection, the old connection will be disconnected first.
-                </para>
-              </effects>
-              <postconditions>
-                <para><code><methodname alt="connection::connected">connected</methodname>() == rhs.connected()</code></para>
-              </postconditions>
-            </method>
             <method name="release">
               <type><classname alt="signals2::connection">connection</classname></type>
               <effects>
@@ -258,7 +338,8 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
               <paramtype>const <classname alt="signals2::scoped_connection">scoped_connection</classname>&amp;</paramtype>
             </parameter>
             <description>
-              <para>The scoped_connection class is not copyable.  It may only be constructed from a <classname alt="signals2::connection">connection</classname> object.</para>
+              <para>The scoped_connection class is not copyable.  It may only be copy constructed from an unscoped
+                <classname alt="signals2::connection">connection</classname> object.</para>
             </description>
           </constructor>
           <copy-assignment>
@@ -266,7 +347,8 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
               <paramtype>const <classname alt="signals2::scoped_connection">scoped_connection</classname>&amp;</paramtype>
             </parameter>
             <description>
-              <para>The scoped_connection class is not copyable.  It may only be assigned from a <classname alt="signals2::connection">connection</classname> object.</para>
+              <para>The scoped_connection class is not copyable.  It may only be copy assigned from an unscoped 
+                <classname alt="signals2::connection">connection</classname> object.</para>
             </description>
           </copy-assignment>
         </access>

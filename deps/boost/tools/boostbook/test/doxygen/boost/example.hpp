@@ -7,6 +7,12 @@
     \class example::example
     
     \brief Documentation for class example
+
+    Detailed documentation
+
+    \code{.cpp}
+    void class_code_sample();
+    \endcode
  */
 
 /*!
@@ -23,6 +29,16 @@ enum global_enum { enumerator1 = 1, enumerator2 };
 
 namespace example
 {
+    /*!
+
+    \param x Parameter description.
+
+    \code{.cpp}
+    void function_code_sample();
+    \endcode
+     */
+    void free_function(int x);
+
     int namespace_integer;
     static int namespace_static_integer;
     const int namespace_const_integer = 1;
@@ -34,6 +50,39 @@ namespace example
     public:
         example(example const&) = default;
         example& operator=(example const&) = delete;
+        virtual int virtual_method();
+        virtual int virtual_abstract_method() = 0;
+        virtual int virtual_const_method() const;
+        int method_with_default_value(int = default_value);
+
+        int method_with_fp(int (*fp)(), volatile char);
+        int method_with_string_default1(char* = ")", volatile char);
+        int method_with_string_default2(char* = "(", volatile char);
+        int method_with_char_default1(char = '(', volatile char);
+        int method_with_char_default2(char = ')', volatile char);
+
+        int volatile_method_with_fp(int (*fp)(), volatile char) volatile;
+        int volatile_method_with_string_default1(char* = ")", volatile char) volatile;
+        int volatile_method_with_string_default2(char* = "(", volatile char) volatile;
+        int volatile_method_with_char_default1(char = '(', volatile char) volatile;
+        int volatile_method_with_char_default2(char = ')', volatile char) volatile;
+
+        void const_method() const;
+        void volatile_method() volatile;
+
+        void trad_noexcept() noexcept;
+        void trad_noexcept_if() noexcept(a == b && (c || d));
+        void boost_noexcept() BOOST_NOEXCEPT;
+        void boost_noexcept_if() BOOST_NOEXCEPT_IF(a == b && (c || d));
+
+        void trad_constexpr() constexpr;
+        void boost_constexpr() BOOST_CONSTEXPR;
+        void boost_constexpr_or_const() BOOST_CONSTEXPR_OR_CONST;
+
+        void constexpr_noexcept() constexpr noexcept;
+
+        static int static_method();
+        static int static_constexpr() constexpr;
 
         int integer;
         static int static_integer;
@@ -149,7 +198,7 @@ namespace example
         /** A destructor. */
         ~specialization_test();
         /** An assignment operator. */
-        specialization_test& operator=(const specialization_test&);
+        detail::unspecified& operator=(const specialization_test&);
     };
 }
 

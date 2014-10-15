@@ -11,14 +11,6 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/detail/no_exceptions_support.hpp>
 
-// TODO: Disable parts of the unit test that should not run when BOOST_NO_EXCEPTIONS
-// if exceptions are enabled there must be a user defined throw_exception function
-#ifdef BOOST_NO_EXCEPTIONS
-namespace boost {
-   void throw_exception(std::exception const &){}; // user defined
-} // namespace boost
-#endif // BOOST_NO_EXCEPTIONS
-
 #include <vector>
 #include <list>
 
@@ -494,7 +486,7 @@ void test_swap_and_move_nd()
    }
    {
       static_vector<T, N> v1, v2, v3;
-      static_vector<T, N/2> s1, s2;
+      static_vector<T, N/2> s1, s2, s3;
 
       for (size_t i = 0 ; i < N/2 ; ++i )
       {
@@ -509,17 +501,19 @@ void test_swap_and_move_nd()
       }
 
       s1.swap(v1);
+      s3 = v2;
       s2 = boost::move(v2);
-      static_vector<T, N/2> s3(boost::move(v3));
+      static_vector<T, N/2> s4(boost::move(v3));
 
       BOOST_TEST(v1.size() == N/3);
       BOOST_TEST(s1.size() == N/2);
       //iG moving does not imply emptying source
       //BOOST_TEST(v2.size() == 0);
       BOOST_TEST(s2.size() == N/2);
+      BOOST_TEST(s3.size() == N/2);
       //iG moving does not imply emptying source
       //BOOST_TEST(v3.size() == 0);
-      BOOST_TEST(s3.size() == N/2);
+      BOOST_TEST(s4.size() == N/2);
       for (size_t i = 0 ; i < N/3 ; ++i )
           BOOST_TEST(v1[i] == T(100 + i));
       for (size_t i = 0 ; i < N/2 ; ++i )
@@ -527,6 +521,7 @@ void test_swap_and_move_nd()
           BOOST_TEST(s1[i] == T(i));
           BOOST_TEST(s2[i] == T(i));
           BOOST_TEST(s3[i] == T(i));
+          BOOST_TEST(s4[i] == T(i));
       }
    }
    {
@@ -536,6 +531,7 @@ void test_swap_and_move_nd()
       BOOST_TEST_THROWS(s.swap(v), std::bad_alloc);
       v.resize(N, T(0));
       BOOST_TEST_THROWS(s = boost::move(v), std::bad_alloc);
+      BOOST_TEST_THROWS(s = v, std::bad_alloc);
       v.resize(N, T(0));
       BOOST_TEST_THROWS(small_vector_t s2(boost::move(v)), std::bad_alloc);
    }

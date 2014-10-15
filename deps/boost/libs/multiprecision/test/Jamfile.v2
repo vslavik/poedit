@@ -20,11 +20,13 @@ project : requirements
    <include>$(mpfi_path)
    <include>$(mpfi_path)/src
    <include>$(tommath_path)
+   <include>../include
    <include>../../..
    # We set these to make it easier to set up and test GMP and MPFR under Win32:
    <toolset>msvc:<runtime-link>static
    <toolset>msvc:<link>static
    <toolset>msvc:<warnings>all
+   <toolset>msvc:<cxxflags>/fp:precise
    <toolset>intel-win:<runtime-link>static
    <toolset>intel-win:<link>static
    # Speed up compiles:
@@ -59,6 +61,10 @@ run test_arithmetic_backend_concept.cpp ;
 run test_arithmetic_cpp_dec_float_1.cpp ;
 run test_arithmetic_cpp_dec_float_2.cpp ;
 run test_arithmetic_cpp_dec_float_3.cpp ;
+
+run test_arithmetic_cpp_bin_float_1.cpp ;
+run test_arithmetic_cpp_bin_float_2.cpp ;
+run test_arithmetic_cpp_bin_float_3.cpp ;
 
 run test_arithmetic_mpf_50.cpp gmp : : : [ check-target-builds ../config//has_gmp : : <build>no ] ;
 run test_arithmetic_mpf.cpp gmp : : : [ check-target-builds ../config//has_gmp : : <build>no ] ;
@@ -172,6 +178,13 @@ run test_numeric_limits.cpp
 	      <define>TEST_CPP_DEC_FLOAT
         : test_numeric_limits_cpp_dec_float ;
 
+run test_numeric_limits.cpp
+        : # command line
+        : # input files
+        : # requirements
+	      <define>TEST_CPP_BIN_FLOAT
+        : test_numeric_limits_cpp_bin_float ;
+
 run test_numeric_limits.cpp $(TOMMATH)
         : # command line
         : # input files
@@ -240,6 +253,12 @@ for local source in test_exp.cpp test_log.cpp test_pow.cpp test_sinh.cpp test_sq
            : # requirements
             <define>TEST_CPP_DEC_FLOAT
            : $(source:B)_cpp_dec_float ;
+      run $(source)
+           : # command line
+           : # input files
+           : # requirements
+            <define>TEST_CPP_BIN_FLOAT
+           : $(source:B)_cpp_bin_float ;
       run $(source) quadmath
            : # command line
            : # input files
@@ -325,14 +344,43 @@ run test_move.cpp
 
 run test_test.cpp ;
 run test_cpp_int_lit.cpp ;
-compile test_constexpr.cpp : [ check-target-builds ../config//has_float128 : <define>HAVE_FLOAT128 : ] [ check-target-builds ../config//has_intel_quad : <define>HAVE_FLOAT128 : ] ;
+compile test_constexpr.cpp : [ check-target-builds ../config//has_float128 : <define>HAVE_FLOAT128 : ] [ check-target-builds ../config//has_intel_quad : <cxxflags>-Qoption,cpp,--extended_float_type <define>HAVE_FLOAT128 : ] ;
+
+run test_cpp_bin_float_io.cpp /boost/system//boost_system /boost/chrono//boost_chrono
+        : # command line
+        : # input files
+        : # requirements
+	      <define>TEST_CPP_BIN_FLOAT
+         <define>TEST1
+         release # Otherwise runtime is slow
+        : test_cpp_bin_float_io_1
+        ;
+
+run test_cpp_bin_float_io.cpp /boost/system//boost_system /boost/chrono//boost_chrono
+        : # command line
+        : # input files
+        : # requirements
+	      <define>TEST_CPP_BIN_FLOAT
+         <define>TEST2
+         release # Otherwise runtime is slow
+        : test_cpp_bin_float_io_2
+        ;
+
+run test_cpp_bin_float.cpp mpfr gmp /boost/system//boost_system /boost/chrono//boost_chrono
+        : # command line
+        : # input files
+        : # requirements
+	      <define>TEST_MPFR
+         [ check-target-builds ../config//has_mpfr : : <build>no ]
+         release # Otherwise runtime is slow
+        ;
 
 run test_float_io.cpp
         : # command line
         : # input files
         : # requirements
 	      <define>TEST_CPP_DEC_FLOAT
-         #release # Otherwise runtime is slow
+         release # Otherwise runtime is slow
         : test_float_io_cpp_dec_float ;
 
 run test_float_io.cpp gmp
@@ -521,13 +569,14 @@ run ../example/logged_adaptor.cpp mpfi mpfr gmp
 
 run ../example/cpp_dec_float_snips.cpp ;
 run ../example/cpp_int_snips.cpp ;
+run ../example/cpp_bin_float_snips.cpp ;
 
 run ../example/tommath_snips.cpp $(TOMMATH)
         : # command line
         : # input files
         : # requirements
          [ check-target-builds ../config//has_tommath : : <build>no ] ;
-run ../example/floating_point_examples.cpp : : : <toolset>gcc:<cxxflags>-std=gnu++0x ;
+run ../example/floating_point_examples.cpp ;
 run test_cpp_int_conv.cpp ;
 run test_native_integer.cpp ;
 
@@ -551,6 +600,7 @@ compile include_test/tommath_include_test.cpp
                [ check-target-builds ../config//has_tommath : : <build>no ] ;
 compile include_test/cpp_int_include_test.cpp ;
 compile include_test/cpp_dec_float_include_test.cpp ;
+compile include_test/cpp_bin_float_include_test.cpp ;
 
 run ublas_interop/test1.cpp ublas_interop/test11.cpp ublas_interop/test12.cpp ublas_interop/test13.cpp ;
 run ublas_interop/test2.cpp ublas_interop/test21.cpp ublas_interop/test22.cpp ublas_interop/test23.cpp ;
@@ -582,6 +632,8 @@ run test_adapt_serial.cpp ../../serialization/build//boost_serialization : : : r
 run test_cpp_dec_float_serial.cpp ../../serialization/build//boost_serialization : : : release <define>TEST1 : test_cpp_dec_float_serial_1 ;
 run test_cpp_dec_float_serial.cpp ../../serialization/build//boost_serialization : : : release <define>TEST2 : test_cpp_dec_float_serial_2 ;
 run test_float128_serial.cpp ../../serialization/build//boost_serialization quadmath : : : release [ check-target-builds ../config//has_float128 : : <build>no ]  ;
+run test_cpp_bin_float_serial.cpp ../../serialization/build//boost_serialization : : : release <define>TEST1 : test_bin_dec_float_serial_1 ;
+run test_cpp_bin_float_serial.cpp ../../serialization/build//boost_serialization : : : release <define>TEST2 : test_bin_dec_float_serial_2 ;
 
 
 if $(enable-specfun)
@@ -629,6 +681,18 @@ if $(enable-specfun)
             <toolset>msvc:<cxxflags>-bigobj
             release
            : $(source:B)_cpp_dec_float ;
+      run $(source) /boost/test//boost_unit_test_framework/<link>static 
+               /boost/regex//boost_regex/<link>static
+               math/instances//test_instances_cpp_bin_float/<link>static
+           : # command line
+           : # input files
+           : # requirements
+            <define>TEST_CPP_BIN_FLOAT
+            <define>BOOST_ALL_NO_LIB
+            <optimization>speed
+            <toolset>msvc:<cxxflags>-bigobj
+            release
+           : $(source:B)_cpp_bin_float ;
       run $(source) quadmath 
             /boost/test//boost_unit_test_framework/<link>static 
             /boost/regex//boost_regex/<link>static
@@ -657,6 +721,24 @@ if $(enable-specfun)
             <toolset>msvc:<cxxflags>-bigobj
             release
            : $(source:B)_intel_quad ;
+   }
+   #
+   # High precision tests are rather different, as they test only one
+   # multiprecision type and are more a test of Boost.Math:
+   #
+   for local source in [ glob math/high_prec/*.cpp ]
+   {
+      run $(source)
+            /boost/test//boost_unit_test_framework/<link>static 
+            /boost/regex//boost_regex/<link>static 
+           : # command line
+           : # input files
+           : # requirements
+            <optimization>speed
+            <define>BOOST_ALL_NO_LIB
+            <toolset>msvc:<cxxflags>-bigobj
+            [ check-target-builds ../config//has_mpfr : <define>TEST_MPFR <source>gmp <source>mpfr :  ]
+            release ;
    }
 }
 
@@ -722,6 +804,12 @@ if ! $(disable-concepts)
 	            <define>TEST_CPP_DEC_FLOAT
                <debug-symbols>off
               : $(source:B)_cpp_dec_float ;
+
+      compile $(source)
+              : # requirements
+	            <define>TEST_CPP_BIN_FLOAT
+               <debug-symbols>off
+              : $(source:B)_cpp_bin_float ;
 
       compile $(source)
               : # requirements

@@ -51,7 +51,7 @@ void test_inverses(const T& data)
       //
       if(Real(data[i][5]) == 0)
       {
-         BOOST_CHECK_EQUAL(boost::math::ibeta_inva(Real(data[i][1]), Real(data[i][2]), Real(data[i][5])), boost::math::tools::max_value<value_type>());
+         BOOST_CHECK_EQUAL(boost::math::ibeta_inva(Real(data[i][1]), Real(data[i][2]), Real(data[i][5])), std::numeric_limits<value_type>::has_infinity ? std::numeric_limits<value_type>::infinity() : boost::math::tools::max_value<value_type>());
          BOOST_CHECK_EQUAL(boost::math::ibeta_invb(Real(data[i][0]), Real(data[i][2]), Real(data[i][5])), boost::math::tools::min_value<value_type>());
       }
       else if((1 - Real(data[i][5]) > 0.001) 
@@ -66,13 +66,13 @@ void test_inverses(const T& data)
       else if(1 == Real(data[i][5]))
       {
          BOOST_CHECK_EQUAL(boost::math::ibeta_inva(Real(data[i][1]), Real(data[i][2]), Real(data[i][5])), boost::math::tools::min_value<value_type>());
-         BOOST_CHECK_EQUAL(boost::math::ibeta_invb(Real(data[i][0]), Real(data[i][2]), Real(data[i][5])), boost::math::tools::max_value<value_type>());
+         BOOST_CHECK_EQUAL(boost::math::ibeta_invb(Real(data[i][0]), Real(data[i][2]), Real(data[i][5])), std::numeric_limits<value_type>::has_infinity ? std::numeric_limits<value_type>::infinity() : boost::math::tools::max_value<value_type>());
       }
 
       if(Real(data[i][6]) == 0)
       {
          BOOST_CHECK_EQUAL(boost::math::ibetac_inva(Real(data[i][1]), Real(data[i][2]), Real(data[i][6])), boost::math::tools::min_value<value_type>());
-         BOOST_CHECK_EQUAL(boost::math::ibetac_invb(Real(data[i][0]), Real(data[i][2]), Real(data[i][6])), boost::math::tools::max_value<value_type>());
+         BOOST_CHECK_EQUAL(boost::math::ibetac_invb(Real(data[i][0]), Real(data[i][2]), Real(data[i][6])), std::numeric_limits<value_type>::has_infinity ? std::numeric_limits<value_type>::infinity() : boost::math::tools::max_value<value_type>());
       }
       else if((1 - Real(data[i][6]) > 0.001) 
          && (fabs(Real(data[i][6])) > 2 * boost::math::tools::min_value<value_type>()) 
@@ -85,7 +85,7 @@ void test_inverses(const T& data)
       }
       else if(Real(data[i][6]) == 1)
       {
-         BOOST_CHECK_EQUAL(boost::math::ibetac_inva(Real(data[i][1]), Real(data[i][2]), Real(data[i][6])), boost::math::tools::max_value<value_type>());
+         BOOST_CHECK_EQUAL(boost::math::ibetac_inva(Real(data[i][1]), Real(data[i][2]), Real(data[i][6])), std::numeric_limits<value_type>::has_infinity ? std::numeric_limits<value_type>::infinity() : boost::math::tools::max_value<value_type>());
          BOOST_CHECK_EQUAL(boost::math::ibetac_invb(Real(data[i][0]), Real(data[i][2]), Real(data[i][6])), boost::math::tools::min_value<value_type>());
       }
    }

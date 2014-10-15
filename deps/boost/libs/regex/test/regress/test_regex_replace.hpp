@@ -44,7 +44,10 @@ void test(boost::basic_regex<charT, traits>& r, const test_regex_replace_tag&)
 {
    const std::basic_string<charT>& expression = test_info<charT>::expression();
    boost::regex_constants::syntax_option_type syntax_options = test_info<charT>::syntax_options();
-   try{
+#ifndef BOOST_NO_EXCEPTIONS
+   try
+#endif
+   {
       r.assign(expression, syntax_options);
       if(r.status())
       {
@@ -52,6 +55,7 @@ void test(boost::basic_regex<charT, traits>& r, const test_regex_replace_tag&)
       }
       test_regex_replace(r);
    }
+#ifndef BOOST_NO_EXCEPTIONS
    catch(const boost::bad_expression& e)
    {
       BOOST_REGEX_TEST_ERROR("Expression did not compile when it should have done: " << e.what(), charT);
@@ -68,6 +72,7 @@ void test(boost::basic_regex<charT, traits>& r, const test_regex_replace_tag&)
    {
       BOOST_REGEX_TEST_ERROR("Received an unexpected exception of unknown type", charT);
    }
+#endif
 
 }
 

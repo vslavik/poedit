@@ -57,16 +57,16 @@ struct stateful_value_traits
       :  values_(vals),  node_array_(node_array)
    {}
 
-   node_ptr to_node_ptr (value_type &value)
+   node_ptr to_node_ptr (value_type &value) const
    {  return node_array_ + (&value - values_); }
 
    const_node_ptr to_node_ptr (const value_type &value) const
    {  return node_array_ + (&value - values_); }
 
-   pointer to_value_ptr(node_ptr n)
+   pointer to_value_ptr(const node_ptr &n) const
    {  return values_ + (n - node_array_); }
 
-   const_pointer to_value_ptr(const_node_ptr n) const
+   const_pointer to_value_ptr(const const_node_ptr &n) const
    {  return values_ + (n - node_array_); }
 
    pointer  values_;
@@ -123,9 +123,18 @@ int main()
       ; it != itend
       ; ++it){
       my_list.push_front(*it);
+      if(&*my_list.iterator_to(*it) != &my_list.front())
+         return 1;
       my_slist.push_front(*it);
-      my_set.insert(*it);
+      if(&*my_slist.iterator_to(*it) != &my_slist.front())
+         return 1;
+      Set::iterator sit = my_set.insert(*it).first;
+      if(&*my_set.iterator_to(*it) != &*sit)
+         return 1;
+      Uset::iterator uit = my_uset.insert(*it).first;
       my_uset.insert(*it);
+      if(&*my_uset.iterator_to(*it) != &*uit)
+         return 1;
    }
 
    //Now test lists

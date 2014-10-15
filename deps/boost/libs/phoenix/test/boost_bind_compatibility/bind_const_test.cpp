@@ -163,7 +163,7 @@ void function_test()
     BOOST_TEST( tester( bind(f_6, _1, 2, 3, 4, 5, 6), i ) == 654321L );
     BOOST_TEST( tester( bind(f_7, _1, 2, 3, 4, 5, 6, 7), i ) == 7654321L );
     BOOST_TEST( tester( bind(f_8, _1, 2, 3, 4, 5, 6, 7, 8), i ) == 87654321L );
-    //BOOST_TEST( tester( bind(f_9, _1, 2, 3, 4, 5, 6, 7, 8, 9), i ) == 987654321L );
+    BOOST_TEST( tester( bind(f_9, _1, 2, 3, 4, 5, 6, 7, 8, 9), i ) == 987654321L );
 
     BOOST_TEST( testerv( bind(fv_0), i ) == 17041L );
     BOOST_TEST( testerv( bind(fv_1, _1), i ) == 1L );
@@ -174,7 +174,7 @@ void function_test()
     BOOST_TEST( testerv( bind(fv_6, _1, 2, 3, 4, 5, 6), i ) == 654321L );
     BOOST_TEST( testerv( bind(fv_7, _1, 2, 3, 4, 5, 6, 7), i ) == 7654321L );
     BOOST_TEST( testerv( bind(fv_8, _1, 2, 3, 4, 5, 6, 7, 8), i ) == 87654321L );
-    //BOOST_TEST( testerv( bind(fv_9, _1, 2, 3, 4, 5, 6, 7, 8, 9), i ) == 987654321L );
+    BOOST_TEST( testerv( bind(fv_9, _1, 2, 3, 4, 5, 6, 7, 8, 9), i ) == 987654321L );
 }
 
 int main()

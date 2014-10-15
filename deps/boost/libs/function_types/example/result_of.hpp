@@ -26,7 +26,7 @@
 //
 // [Gregor02] Gregor, D. A uniform method for computing function object return
 //            types (revision 1)
-//            http://anubis.dkuug.dk/jtc1/sc22/wg21/docs/papers/2003/n1454.html
+//            http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2003/n1454.html
 
 #include <boost/function_types/result_type.hpp>
 #include <boost/function_types/is_callable_builtin.hpp>

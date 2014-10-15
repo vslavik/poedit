@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2014.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -237,7 +237,6 @@ BOOST_AUTO_TEST_CASE(erasure)
 {
     typedef logging::attribute_set attr_set;
     typedef test_data< char > data;
-    typedef std::basic_string< char > string;
 
     attrs::constant< int > attr1(10);
     attrs::constant< double > attr2(5.5);

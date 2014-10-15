@@ -49,7 +49,8 @@ compilers:
   * gcc 4.2.1 [/reported by Trunk report May 8, 2011]
   * gcc 3.4.6 [/reported by Trunk report March 26, 2011]
 * clang
-  * clang x.x [/reported by Trunk report March 26, 2011]
+  * clang 3.3 [/reported by mloskot on October, 2013]
+  * clang 3.2 [/reported by Trunk report March 26, 2011]
 * darwin
   * darwin 4.0.1 [/reported by Trunk report March 26, 2011]
   * darwin 4.4 [/reported by Trunk report March 26, 2011]
@@ -86,16 +87,23 @@ Another often used header is `geometries.hpp`:
 
     #include <boost/geometry/geometries/geometries.hpp>
 
-This includes definitions of all provided geometry types: point, 
-linestring, polygon, ring, box. The file `geometries.hpp` is not included in 
+This includes definitions of all provided geometry types:
+
+* point, 
+* linestring,
+* polygon,
+* ring,
+* multi_point,
+* multi_linestring,
+* multi_polygon,
+* box,
+* segment.
+
+The file `geometries.hpp` is not included in 
 the `geometry.hpp` headerfile because users should be given the liberty to use 
 their own geometries and not the provided ones. However, for the 
 __boost_geometry__ users who want to use the provided geometries it is useful 
 to include.
-
-For users using multi-geometries:
-
-    #include <boost/geometry/multi/geometries/multi_geometries.hpp>
 
 [heading Advanced Includes]
 

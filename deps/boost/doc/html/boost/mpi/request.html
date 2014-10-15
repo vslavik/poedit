@@ -6,7 +6,7 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../mpi/reference.html#header.boost.mpi.request_hpp" title="Header &lt;boost/mpi/request.hpp&gt;">
-<link rel="prev" href="python/register_skele_idp98167240.html" title="Function template register_skeleton_and_content">
+<link rel="prev" href="python/register_skel_idp226870272.html" title="Function template register_skeleton_and_content">
 <link rel="next" href="skeleton_proxy.html" title="Struct template skeleton_proxy">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="python/register_skele_idp98167240.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/reference.html#header.boost.mpi.request_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="skeleton_proxy.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="python/register_skel_idp226870272.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/reference.html#header.boost.mpi.request_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="skeleton_proxy.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.mpi.request"></a><div class="titlepage"></div>
@@ -35,53 +35,42 @@
 <span class="keyword">class</span> <a class="link" href="request.html" title="Class request">request</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="request.html#boost.mpi.requestconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="request.html#idp98161656-bb"><span class="identifier">request</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="request.html#idp223679696-bb"><span class="identifier">request</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="request.html#idp98153464-bb">public member functions</a></span>
-  <a class="link" href="status.html" title="Class status">status</a> <a class="link" href="request.html#idp98153672-bb"><span class="identifier">wait</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="status.html" title="Class status">status</a> <span class="special">&gt;</span> <a class="link" href="request.html#idp98154744-bb"><span class="identifier">test</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="request.html#idp98157048-bb"><span class="identifier">cancel</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-    <span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="status.html" title="Class status">status</a> <span class="special">&gt;</span> <a class="link" href="request.html#idp98157784-bb"><span class="identifier">handle_serialized_irecv</span></a><span class="special">(</span><a class="link" href="request.html" title="Class request">request</a> <span class="special">*</span><span class="special">,</span> <span class="identifier">request_action</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-    <span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="status.html" title="Class status">status</a> <span class="special">&gt;</span> 
-    <a class="link" href="request.html#idp98159720-bb"><span class="identifier">handle_serialized_array_irecv</span></a><span class="special">(</span><a class="link" href="request.html" title="Class request">request</a> <span class="special">*</span><span class="special">,</span> <span class="identifier">request_action</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="request.html#idp225461888-bb">public member functions</a></span>
+  <a class="link" href="status.html" title="Class status">status</a> <a class="link" href="request.html#idp225462448-bb"><span class="identifier">wait</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="status.html" title="Class status">status</a> <span class="special">&gt;</span> <a class="link" href="request.html#idp223674336-bb"><span class="identifier">test</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="request.html#idp223678304-bb"><span class="identifier">cancel</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp166259160"></a><h2>Description</h2>
+<a name="idp343343648"></a><h2>Description</h2>
 <p>This structure contains information about a non-blocking send or receive and will be returned from <code class="computeroutput">isend</code> or <code class="computeroutput">irecv</code>, respectively. </p>
 <div class="refsect2">
-<a name="idp166260296"></a><h3>
+<a name="idp343345872"></a><h3>
 <a name="boost.mpi.requestconstruct-copy-destruct"></a><code class="computeroutput">request</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp98161656-bb"></a><span class="identifier">request</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp223679696-bb"></a><span class="identifier">request</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Constructs a NULL request. </p>
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp166263352"></a><h3>
-<a name="idp98153464-bb"></a><code class="computeroutput">request</code> public member functions</h3>
+<a name="idp343352048"></a><h3>
+<a name="idp225461888-bb"></a><code class="computeroutput">request</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="status.html" title="Class status">status</a> <a name="idp98153672-bb"></a><span class="identifier">wait</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="status.html" title="Class status">status</a> <a name="idp225462448-bb"></a><span class="identifier">wait</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Wait until the communication associated with this request has completed, then return a <code class="computeroutput">status</code> object describing the communication. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="status.html" title="Class status">status</a> <span class="special">&gt;</span> <a name="idp98154744-bb"></a><span class="identifier">test</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="status.html" title="Class status">status</a> <span class="special">&gt;</span> <a name="idp223674336-bb"></a><span class="identifier">test</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Determine whether the communication associated with this request has completed successfully. If so, returns the <code class="computeroutput">status</code> object describing the communication. Otherwise, returns an empty <code class="computeroutput">optional&lt;&gt;</code> to indicate that the communication has not completed yet. Note that once <code class="computeroutput">test()</code> returns a <code class="computeroutput">status</code> object, the request has completed and <code class="computeroutput">wait()</code> should not be called. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp98157048-bb"></a><span class="identifier">cancel</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp223678304-bb"></a><span class="identifier">cancel</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Cancel a pending communication, assuming it has not already been completed. </p>
 </li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-  <span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="status.html" title="Class status">status</a> <span class="special">&gt;</span> 
-  <a name="idp98157784-bb"></a><span class="identifier">handle_serialized_irecv</span><span class="special">(</span><a class="link" href="request.html" title="Class request">request</a> <span class="special">*</span> self<span class="special">,</span> <span class="identifier">request_action</span> action<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-  <span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="status.html" title="Class status">status</a> <span class="special">&gt;</span> 
-  <a name="idp98159720-bb"></a><span class="identifier">handle_serialized_array_irecv</span><span class="special">(</span><a class="link" href="request.html" title="Class request">request</a> <span class="special">*</span> self<span class="special">,</span> <span class="identifier">request_action</span> action<span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>
@@ -98,7 +87,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="python/register_skele_idp98167240.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/reference.html#header.boost.mpi.request_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="skeleton_proxy.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="python/register_skel_idp226870272.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/reference.html#header.boost.mpi.request_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="skeleton_proxy.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

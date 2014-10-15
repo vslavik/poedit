@@ -9,13 +9,15 @@
 // For more information, see http://www.boost.org/libs/range/
 //
 #include <boost/range/algorithm/unique.hpp>
+#include <boost/range/detail/range_return.hpp>
 
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/assign.hpp>
 #include <boost/bind.hpp>
-#include "../test_driver/range_return_test_driver.hpp"
+#include <boost/config.hpp>
+#include "../test_driver/range_overload_test_driver.hpp"
 #include <algorithm>
 #include <functional>
 #include <list>
@@ -60,6 +62,36 @@ namespace boost_range_test_algorithm_unique
             }
         };
 
+        template<typename Container>
+        struct test_range_overload
+        {
+            BOOST_STATIC_CONSTANT(
+                ::boost::range_return_value,
+                result_type = ::boost::return_begin_found);
+                
+            template<typename Policy>
+            BOOST_DEDUCED_TYPENAME boost::range_return<
+                Container, result_type
+            >::type
+            operator()(Policy& policy, Container& cont)
+            {
+                typedef BOOST_DEDUCED_TYPENAME boost::range_return<
+                                Container,result_type>::type result_t;
+                
+                Container cont2(cont);
+                
+                result_t result = boost::unique(cont);
+                
+                boost::unique(boost::make_iterator_range(cont2));
+                
+                BOOST_CHECK_EQUAL_COLLECTIONS(
+                    cont.begin(), cont.end(),
+                    cont2.begin(), cont2.end());
+                
+                return result;
+            }
+        };
+
         template< class Container >
         BOOST_DEDUCED_TYPENAME boost::range_iterator<Container>::type
         reference(Container& cont)
@@ -67,7 +99,7 @@ namespace boost_range_test_algorithm_unique
             return std::unique(cont.begin(), cont.end());
         }
     };
-
+   
     // test the 'unique' algorithm with a predicate
     template<class Pred>
     class unique_pred_test_policy
@@ -105,6 +137,34 @@ namespace boost_range_test_algorithm_unique
                 return result;
             }
         };
+        
+        template<typename Container>
+        struct test_range_overload
+        {
+            BOOST_STATIC_CONSTANT(
+                ::boost::range_return_value,
+                result_type = ::boost::return_begin_found);
+                
+            template<typename Policy>
+            BOOST_DEDUCED_TYPENAME boost::range_return<Container,result_type>::type
+            operator()(Policy& policy, Container& cont)
+            {
+                typedef BOOST_DEDUCED_TYPENAME boost::range_return<
+                            Container,result_type>::type result_t;
+                
+                Container cont2(cont);
+                
+                result_t result = boost::unique(cont, policy.pred());
+                
+                boost::unique(boost::make_iterator_range(cont2), policy.pred());
+                
+                BOOST_CHECK_EQUAL_COLLECTIONS(
+                    cont.begin(), cont.end(),
+                    cont2.begin(), cont2.end());
+                    
+                return result;
+            }
+        };
 
         template< class Container >
         BOOST_DEDUCED_TYPENAME boost::range_iterator<Container>::type
@@ -121,7 +181,7 @@ namespace boost_range_test_algorithm_unique
 
         typedef BOOST_DEDUCED_TYPENAME Container::value_type value_t;
 
-        boost::range_test::range_return_test_driver test_driver;
+        boost::range_test::range_overload_test_driver test_driver;
 
         Container cont;
 
@@ -145,6 +205,19 @@ namespace boost_range_test_algorithm_unique
 
         test_driver(cont, policy);
     }
+    
+    template<typename T>
+    struct equal_div_2
+    {
+        typedef bool result_type;
+        typedef const T& first_argument_type;
+        typedef const T& second_argument_type;
+        
+        bool operator()(const T& left, const T& right) const
+        {
+            return left / 2 == right / 2;
+        }
+    };
 
     template<class Container>
     void test_unique_impl()
@@ -152,17 +225,22 @@ namespace boost_range_test_algorithm_unique
         test_unique_impl<Container>(
             unique_test_policy(),
             std::less<int>()
-            );
+        );
 
         test_unique_impl<Container>(
-            unique_pred_test_policy<std::less<int> >(),
+            unique_pred_test_policy<std::equal_to<int> >(),
             std::less<int>()
-            );
+        );
 
         test_unique_impl<Container>(
-            unique_pred_test_policy<std::greater<int> >(),
+            unique_pred_test_policy<std::equal_to<int> >(),
             std::greater<int>()
-            );
+        );
+        
+        test_unique_impl<Container>(
+            unique_pred_test_policy<equal_div_2<int> >(),
+            std::less<int>()
+        );
     }
 
     void test_unique()

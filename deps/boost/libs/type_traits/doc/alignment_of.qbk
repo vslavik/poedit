@@ -30,5 +30,26 @@ expression with value `ALIGNOF(double)`.]
 
 [:`alignment_of<T>::value_type` is the type `std::size_t`.]
 
+[important
+Visual C++ users should note that MSVC has varying definitions of "alignment".
+For example consider the following code:
+
+``
+   typedef long long align_t;
+   assert(boost::alignment_of<align_t>::value % 8 == 0);
+   align_t a;
+   assert(((std::uintptr_t)&a % 8) == 0);
+   char c = 0;
+   align_t a1;
+   assert(((std::uintptr_t)&a1 % 8) == 0);
+``
+
+In this code, even though `boost::alignment_of<align_t>` reports that `align_t` has 8-byte
+alignment, the final assert will fail for a 32-bit build because `a1` is not aligned on an
+8 byte boundary.  Note that had we used the MSVC intrinsic `__alignof` in place of `boost::alignment_of`
+we would still get the same result.  In fact for MSVC alignment requirements (and promises) only really 
+apply to dynamic storage, and not the stack.
+]
+
 [endsect]
 

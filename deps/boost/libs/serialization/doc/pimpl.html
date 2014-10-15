@@ -31,7 +31,7 @@ the "Handle Body Idiom". Included in this library is a program called
 <a href="../example/demo_pimpl.cpp" target="demo_impl_cpp">demo_pimpl.cpp</a> 
 which illustrates how this is used. The file 
 <a href="../example/demo_pimpl_A.cpp" target="demo_impl__Acpp">demo_pimpl_A.hpp</a>
-contains the declaration of the a class that hides its implementation
+contains the declaration of the A class that hides its implementation
 by including a pointer to struct B that is only defined as a pointer.
 <pre><code>
 // class whose declaration is hidden by a pointer
@@ -45,8 +45,11 @@ struct A {
     A();
 };
 </code></pre>
-Serialization of A requires access to the definition of B in order so it
-is defined in the separately compiled module:
+Serialization of A requires access to the definition of B. But that doesn't mean
+that it requires the this access from the header file.  Since B is a pointer,
+a declaration of class B is sufficient.  The implemenation of the serialization
+of A includes the definition of class B defined in the separately compiled module:
+
 <a href="../example/demo_pimpl_A.cpp" target="demo_impl_A_cpp">demo_pimpl_A.cpp</a>
 by:
 <pre><code>
@@ -90,7 +93,7 @@ void A::serialize(boost::archive::text_iarchive & ar, const unsigned int file_ve
 </code></pre>
 The problem is that when compiling the above code, 
 there is no instantiation of the <code style="white-space: normal">serialize</code> template.
-There can't be as its not "known" what types of archives
+There can't be as it's not "known" what types of archives
 the serialization is going to be used with.  So these functions are "missing"
 when an attempt to link is made.  The solution is to explicitly instantiate
 serialization code for those archives which are going to be used.  In this

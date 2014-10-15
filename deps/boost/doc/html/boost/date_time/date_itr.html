@@ -38,27 +38,27 @@
   <span class="keyword">typedef</span> <span class="identifier">date_type</span><span class="special">::</span><span class="identifier">duration_type</span> <a name="boost.date_time.date_itr.duration_type"></a><span class="identifier">duration_type</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="date_itr.html#boost.date_time.date_itrconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="date_itr.html#idp46247480-bb"><span class="identifier">date_itr</span></a><span class="special">(</span><span class="identifier">date_type</span><span class="special">,</span> <span class="keyword">int</span> <span class="special">=</span> <span class="number">1</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="date_itr.html#idp93009040-bb"><span class="identifier">date_itr</span></a><span class="special">(</span><span class="identifier">date_type</span><span class="special">,</span> <span class="keyword">int</span> <span class="special">=</span> <span class="number">1</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="date_itr.html#idp25048040-bb">private member functions</a></span>
-  <span class="identifier">duration_type</span> <a class="link" href="date_itr.html#idp25048248-bb"><span class="identifier">get_offset</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">duration_type</span> <a class="link" href="date_itr.html#idp25049048-bb"><span class="identifier">get_neg_offset</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="date_itr.html#idp101892832-bb">private member functions</a></span>
+  <span class="keyword">virtual</span> <span class="identifier">duration_type</span> <a class="link" href="date_itr.html#idp101893408-bb"><span class="identifier">get_offset</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">virtual</span> <span class="identifier">duration_type</span> <a class="link" href="date_itr.html#idp41280160-bb"><span class="identifier">get_neg_offset</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp88449096"></a><h2>Description</h2>
+<a name="idp192415520"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp88449304"></a><h3>
+<a name="idp192415936"></a><h3>
 <a name="boost.date_time.date_itrconstruct-copy-destruct"></a><code class="computeroutput">date_itr</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp46247480-bb"></a><span class="identifier">date_itr</span><span class="special">(</span><span class="identifier">date_type</span> d<span class="special">,</span> <span class="keyword">int</span> factor <span class="special">=</span> <span class="number">1</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp93009040-bb"></a><span class="identifier">date_itr</span><span class="special">(</span><span class="identifier">date_type</span> d<span class="special">,</span> <span class="keyword">int</span> factor <span class="special">=</span> <span class="number">1</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp88453800"></a><h3>
-<a name="idp25048040-bb"></a><code class="computeroutput">date_itr</code> private member functions</h3>
+<a name="idp192425024"></a><h3>
+<a name="idp101892832-bb"></a><code class="computeroutput">date_itr</code> private member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="identifier">duration_type</span> <a name="idp25048248-bb"></a><span class="identifier">get_offset</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span> current<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">duration_type</span> <a name="idp25049048-bb"></a><span class="identifier">get_neg_offset</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span> current<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">duration_type</span> <a name="idp101893408-bb"></a><span class="identifier">get_offset</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span> current<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">duration_type</span> <a name="idp41280160-bb"></a><span class="identifier">get_neg_offset</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span> current<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>

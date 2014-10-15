@@ -76,7 +76,7 @@ class thread_adapter
 template <typename P>
 struct data
 {
-   data(int id, int secs=0)
+   explicit data(int id, int secs=0)
       : m_id(id), m_value(-1), m_secs(secs), m_error(no_error)
    {}
    int            m_id;

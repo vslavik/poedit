@@ -1,7 +1,7 @@
 // Boost.Geometry Index
-// Additional tests
+// OpenGL visualization
 
-// Copyright (c) 2011-2013 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2011-2014 Adam Wulkiewicz, Lodz, Poland.
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -11,13 +11,14 @@
 
 #include <boost/foreach.hpp>
 
+#include <boost/geometry.hpp>
 #include <boost/geometry/index/rtree.hpp>
 
 #include <boost/geometry/geometries/linestring.hpp>
 #include <boost/geometry/geometries/segment.hpp>
 #include <boost/geometry/geometries/ring.hpp>
 #include <boost/geometry/geometries/polygon.hpp>
-#include <boost/geometry/multi/geometries/multi_polygon.hpp>
+#include <boost/geometry/geometries/multi_polygon.hpp>
 
 #include <boost/geometry/index/detail/rtree/utilities/gl_draw.hpp>
 #include <boost/geometry/index/detail/rtree/utilities/print.hpp>
@@ -25,29 +26,172 @@
 #include <boost/geometry/index/detail/rtree/utilities/are_levels_ok.hpp>
 #include <boost/geometry/index/detail/rtree/utilities/statistics.hpp>
 
+#include <boost/variant.hpp>
+
+#define ENABLE_POINTS_AND_SEGMENTS
+
 namespace bg = boost::geometry;
 namespace bgi = bg::index;
 
+// used types
+
 typedef bg::model::point<float, 2, boost::geometry::cs::cartesian> P;
 typedef bg::model::box<P> B;
-//bgi::rtree<B> t(2, 1);
 typedef bg::model::linestring<P> LS;
 typedef bg::model::segment<P> S;
 typedef bg::model::ring<P> R;
 typedef bg::model::polygon<P> Poly;
 typedef bg::model::multi_polygon<Poly> MPoly;
 
-typedef bgi::rtree<
-    B,
-    bgi::rstar<4, 2>
-> RTree;
-RTree t;
-std::vector<B> vect;
+// containers variant
+
+template <typename V>
+struct containers
+{
+    containers & operator=(containers const& c)
+    {
+        tree = c.tree;
+        values = c.values;
+        result = c.result;
+        return *this;
+    }
+
+    bgi::rtree< V, bgi::rstar<4, 2> > tree;
+    std::vector<V> values;
+    std::vector<V> result;
+};
+
+boost::variant<
+    containers<B>
+#ifdef ENABLE_POINTS_AND_SEGMENTS
+  , containers<P>
+  , containers<S>
+#endif
+> cont;
+
+// visitors
+
+template <typename Pred>
+struct query_v : boost::static_visitor<size_t>
+{
+    Pred m_pred;
+    query_v(Pred const& pred) : m_pred(pred) {}
+
+    template <typename C>
+    size_t operator()(C & c) const
+    {
+        c.result.clear();
+        return c.tree.query(m_pred, std::back_inserter(c.result));
+    }
+};
+template <typename Cont, typename Pred>
+inline size_t query(Cont & cont, Pred const& pred)
+{
+    return boost::apply_visitor(query_v<Pred>(pred), cont);
+}
+
+struct print_result_v : boost::static_visitor<>
+{
+    template <typename C>
+    void operator()(C & c) const
+    {
+        for ( size_t i = 0 ; i < c.result.size() ; ++i )
+        {
+            bgi::detail::utilities::print_indexable(std::cout, c.result[i]);
+            std::cout << '\n';
+        }
+    }
+};
+template <typename Cont>
+inline void print_result(Cont const& cont)
+{
+    boost::apply_visitor(print_result_v(), cont);
+}
+
+struct bounds_v : boost::static_visitor<B>
+{
+    template <typename C>
+    B operator()(C & c) const
+    {
+        return c.tree.bounds();
+    }
+};
+template <typename Cont>
+inline B bounds(Cont const& cont)
+{
+    return boost::apply_visitor(bounds_v(), cont);
+}
+
+struct depth_v : boost::static_visitor<size_t>
+{
+    template <typename C>
+    size_t operator()(C & c) const
+    {
+        return get(c.tree);
+    }
+    template <typename RTree>
+    static size_t get(RTree const& t)
+    {
+        return bgi::detail::rtree::utilities::view<RTree>(t).depth();
+    }
+};
+template <typename Cont>
+inline size_t depth(Cont const& cont)
+{
+    return boost::apply_visitor(depth_v(), cont);
+}
+
+struct draw_tree_v : boost::static_visitor<>
+{
+    template <typename C>
+    void operator()(C & c) const
+    {
+        bgi::detail::rtree::utilities::gl_draw(c.tree);
+    }
+};
+template <typename Cont>
+inline void draw_tree(Cont const& cont)
+{
+    return boost::apply_visitor(draw_tree_v(), cont);
+}
+
+struct draw_result_v : boost::static_visitor<>
+{
+    template <typename C>
+    void operator()(C & c) const
+    {
+        for ( size_t i = 0 ; i < c.result.size() ; ++i )
+        {
+            bgi::detail::utilities::gl_draw_indexable(c.result[i], depth_v::get(c.tree));
+        }
+    }
+};
+template <typename Cont>
+inline void draw_result(Cont const& cont)
+{
+    return boost::apply_visitor(draw_result_v(), cont);
+}
+
+struct print_tree_v : boost::static_visitor<>
+{
+    template <typename C>
+    void operator()(C & c) const
+    {
+        bgi::detail::rtree::utilities::print(std::cout, c.tree);        
+    }
+};
+template <typename Cont>
+inline void print_tree(Cont const& cont)
+{
+    return boost::apply_visitor(print_tree_v(), cont);
+}
+
+// globals used in querying
 
 size_t found_count = 0;
-P search_point;
 size_t count = 5;
-std::vector<B> nearest_boxes;
+
+P search_point;
 B search_box;
 R search_ring;
 Poly search_poly;
@@ -57,38 +201,73 @@ LS search_linestring;
 LS search_path;
 
 enum query_mode_type {
-    qm_knn, qm_c, qm_d, qm_i, qm_o, qm_w, qm_nc, qm_nd, qm_ni, qm_no, qm_nw, qm_all, qm_ri, qm_pi, qm_mpi, qm_si, qm_lsi, qm_path
+    qm_knn, qm_knnb, qm_knns, qm_c, qm_d, qm_i, qm_o, qm_w, qm_nc, qm_nd, qm_ni, qm_no, qm_nw, qm_all, qm_ri, qm_pi, qm_mpi, qm_si, qm_lsi, qm_path
 } query_mode = qm_knn;
 
 bool search_valid = false;
+
+// various queries
 
 void query_knn()
 {
     float x = ( rand() % 1000 ) / 10.0f;
     float y = ( rand() % 1000 ) / 10.0f;
 
-    search_point = P(x, y);
-    nearest_boxes.clear();
-    found_count = t.query(
-        bgi::nearest(search_point, count),
-        std::back_inserter(nearest_boxes)
-        );
+    if ( query_mode == qm_knn )
+    {
+        search_point = P(x, y);
+        found_count = query(cont, bgi::nearest(search_point, count));
+    }
+    else if ( query_mode == qm_knnb )
+    {
+        float w = 2 + ( rand() % 1000 ) / 500.0f;
+        float h = 2 + ( rand() % 1000 ) / 500.0f;
+        search_box = B(P(x - w, y - h), P(x + w, y + h));
+        found_count = query(cont, bgi::nearest(search_box, count));
+    }
+    else if ( query_mode == qm_knns )
+    {
+        int signx = rand() % 2 ? 1 : -1;
+        int signy = rand() % 2 ? 1 : -1;
+        float w = (10 + ( rand() % 1000 ) / 100.0f) * signx;
+        float h = (10 + ( rand() % 1000 ) / 100.0f) * signy;
+        search_segment = S(P(x - w, y - h), P(x + w, y + h));
+        found_count = query(cont, bgi::nearest(search_segment, count));
+    }
+    else
+    {
+        BOOST_ASSERT(false);
+    }
 
     if ( found_count > 0 )
     {
-        std::cout << "search point: ";
-        bgi::detail::utilities::print_indexable(std::cout, search_point);
-        std::cout << "\nfound: ";
-        for ( size_t i = 0 ; i < nearest_boxes.size() ; ++i )
+        if ( query_mode == qm_knn )
         {
-            bgi::detail::utilities::print_indexable(std::cout, nearest_boxes[i]);
-            std::cout << '\n';
+            std::cout << "search point: ";
+            bgi::detail::utilities::print_indexable(std::cout, search_point);
         }
+        else if ( query_mode == qm_knnb )
+        {
+            std::cout << "search box: ";
+            bgi::detail::utilities::print_indexable(std::cout, search_box);
+        }
+        else if ( query_mode == qm_knns )
+        {
+            std::cout << "search segment: ";
+            bgi::detail::utilities::print_indexable(std::cout, search_segment);
+        }
+        else
+        {
+            BOOST_ASSERT(false);
+        }
+        std::cout << "\nfound: ";
+        print_result(cont);
     }
     else
         std::cout << "nearest not found\n";
 }
 
+#ifndef ENABLE_POINTS_AND_SEGMENTS
 void query_path()
 {
     float x = ( rand() % 1000 ) / 10.0f;
@@ -104,11 +283,7 @@ void query_path()
         search_path[2 * i + 1] = P(x+w, yy);
     }
         
-    nearest_boxes.clear();
-    found_count = t.query(
-        bgi::detail::path<LS>(search_path, count),
-        std::back_inserter(nearest_boxes)
-        );
+    found_count = query(cont, bgi::detail::path<LS>(search_path, count));
 
     if ( found_count > 0 )
     {
@@ -116,15 +291,12 @@ void query_path()
         BOOST_FOREACH(P const& p, search_path)
             bgi::detail::utilities::print_indexable(std::cout, p);
         std::cout << "\nfound: ";
-        for ( size_t i = 0 ; i < nearest_boxes.size() ; ++i )
-        {
-            bgi::detail::utilities::print_indexable(std::cout, nearest_boxes[i]);
-            std::cout << '\n';
-        }
+        print_result(cont);
     }
     else
         std::cout << "values on path not found\n";
 }
+#endif
 
 template <typename Predicate>
 void query()
@@ -137,26 +309,20 @@ void query()
         float h = 10 + ( rand() % 1000 ) / 100.0f;
 
         search_box = B(P(x - w, y - h), P(x + w, y + h));
-        nearest_boxes.clear();
-        found_count = t.query(Predicate(search_box), std::back_inserter(nearest_boxes) );
     }
     else
     {
-        search_box = t.bounds();
-        nearest_boxes.clear();
-        found_count = t.query(Predicate(search_box), std::back_inserter(nearest_boxes) );
+        search_box = bounds(cont);
     }
+
+    found_count = query(cont, Predicate(search_box));
 
     if ( found_count > 0 )
     {
         std::cout << "search box: ";
         bgi::detail::utilities::print_indexable(std::cout, search_box);
         std::cout << "\nfound: ";
-        for ( size_t i = 0 ; i < nearest_boxes.size() ; ++i )
-        {
-            bgi::detail::utilities::print_indexable(std::cout, nearest_boxes[i]);
-            std::cout << '\n';
-        }
+        print_result(cont);
     }
     else
         std::cout << "boxes not found\n";
@@ -189,8 +355,7 @@ void query_ring()
     search_ring.push_back(P(x - w, y - h/2));
     search_ring.push_back(P(x - w, y - h));
         
-    nearest_boxes.clear();
-    found_count = t.query(Predicate(search_ring), std::back_inserter(nearest_boxes) );
+    found_count = query(cont, Predicate(search_ring));
     
     if ( found_count > 0 )
     {
@@ -201,11 +366,7 @@ void query_ring()
             std::cout << ' ';
         }
         std::cout << "\nfound: ";
-        for ( size_t i = 0 ; i < nearest_boxes.size() ; ++i )
-        {
-            bgi::detail::utilities::print_indexable(std::cout, nearest_boxes[i]);
-            std::cout << '\n';
-        }
+        print_result(cont);
     }
     else
         std::cout << "boxes not found\n";
@@ -245,8 +406,7 @@ void query_poly()
     search_poly.inners()[0].push_back(P(x - w/2, y + h/2));
     search_poly.inners()[0].push_back(P(x - w/2, y - h/2));
 
-    nearest_boxes.clear();
-    found_count = t.query(Predicate(search_poly), std::back_inserter(nearest_boxes) );
+    found_count = query(cont, Predicate(search_poly));
 
     if ( found_count > 0 )
     {
@@ -257,11 +417,7 @@ void query_poly()
             std::cout << ' ';
         }
         std::cout << "\nfound: ";
-        for ( size_t i = 0 ; i < nearest_boxes.size() ; ++i )
-        {
-            bgi::detail::utilities::print_indexable(std::cout, nearest_boxes[i]);
-            std::cout << '\n';
-        }
+        print_result(cont);
     }
     else
         std::cout << "boxes not found\n";
@@ -317,9 +473,8 @@ void query_multi_poly()
     search_multi_poly[2].outer().push_back(P(x + 6*w/5, y + 2*h));
     search_multi_poly[2].outer().push_back(P(x + 6*w/5, y + 6*h/5));
 
-    nearest_boxes.clear();
-    found_count = t.query(Predicate(search_multi_poly), std::back_inserter(nearest_boxes) );
-
+    found_count = query(cont, Predicate(search_multi_poly));
+    
     if ( found_count > 0 )
     {
         std::cout << "search multi_poly[0] outer: ";
@@ -329,11 +484,7 @@ void query_multi_poly()
             std::cout << ' ';
         }
         std::cout << "\nfound: ";
-        for ( size_t i = 0 ; i < nearest_boxes.size() ; ++i )
-        {
-            bgi::detail::utilities::print_indexable(std::cout, nearest_boxes[i]);
-            std::cout << '\n';
-        }
+        print_result(cont);
     }
     else
         std::cout << "boxes not found\n";
@@ -354,9 +505,8 @@ void query_segment()
     boost::geometry::set<1, 0>(search_segment, x + w);
     boost::geometry::set<1, 1>(search_segment, y + h);
 
-    nearest_boxes.clear();
-    found_count = t.query(Predicate(search_segment), std::back_inserter(nearest_boxes) );
-
+    found_count = query(cont, Predicate(search_segment));
+    
     if ( found_count > 0 )
     {
         std::cout << "search segment: ";
@@ -364,11 +514,7 @@ void query_segment()
         bgi::detail::utilities::print_indexable(std::cout, P(x+w, y+h));
 
         std::cout << "\nfound: ";
-        for ( size_t i = 0 ; i < nearest_boxes.size() ; ++i )
-        {
-            bgi::detail::utilities::print_indexable(std::cout, nearest_boxes[i]);
-            std::cout << '\n';
-        }
+        print_result(cont);
     }
     else
         std::cout << "boxes not found\n";
@@ -392,9 +538,8 @@ void query_linestring()
         search_linestring.push_back(P(xx, yy));
     }
 
-    nearest_boxes.clear();
-    found_count = t.query(Predicate(search_linestring), std::back_inserter(nearest_boxes) );
-
+    found_count = query(cont, Predicate(search_linestring));
+    
     if ( found_count > 0 )
     {
         std::cout << "search linestring: ";
@@ -404,44 +549,46 @@ void query_linestring()
             std::cout << ' ';
         }
         std::cout << "\nfound: ";
-        for ( size_t i = 0 ; i < nearest_boxes.size() ; ++i )
-        {
-            bgi::detail::utilities::print_indexable(std::cout, nearest_boxes[i]);
-            std::cout << '\n';
-        }
+        print_result(cont);
     }
     else
         std::cout << "boxes not found\n";
 }
 
+// the function running the correct query based on the query_mode
+
 void search()
 {
     namespace d = bgi::detail;
 
-    if ( query_mode == qm_knn )
+    if ( query_mode == qm_knn || query_mode == qm_knnb || query_mode == qm_knns )
         query_knn();
-    else if ( query_mode == qm_c )
-        query< d::spatial_predicate<B, d::covered_by_tag, false> >();
     else if ( query_mode == qm_d )
         query< d::spatial_predicate<B, d::disjoint_tag, false> >();
     else if ( query_mode == qm_i )
         query< d::spatial_predicate<B, d::intersects_tag, false> >();
+    else if ( query_mode == qm_nd )
+        query< d::spatial_predicate<B, d::disjoint_tag, true> >();
+    else if ( query_mode == qm_ni )
+        query< d::spatial_predicate<B, d::intersects_tag, true> >();
+    else if ( query_mode == qm_all )
+        query< d::spatial_predicate<B, d::intersects_tag, false> >();
+#ifdef ENABLE_POINTS_AND_SEGMENTS
+    else
+        std::cout << "query disabled\n";
+#else
+    else if ( query_mode == qm_c )
+        query< d::spatial_predicate<B, d::covered_by_tag, false> >();
     else if ( query_mode == qm_o )
         query< d::spatial_predicate<B, d::overlaps_tag, false> >();
     else if ( query_mode == qm_w )
         query< d::spatial_predicate<B, d::within_tag, false> >();
     else if ( query_mode == qm_nc )
         query< d::spatial_predicate<B, d::covered_by_tag, true> >();
-    else if ( query_mode == qm_nd )
-        query< d::spatial_predicate<B, d::disjoint_tag, true> >();
-    else if ( query_mode == qm_ni )
-        query< d::spatial_predicate<B, d::intersects_tag, true> >();
     else if ( query_mode == qm_no )
         query< d::spatial_predicate<B, d::overlaps_tag, true> >();
     else if ( query_mode == qm_nw )
         query< d::spatial_predicate<B, d::within_tag, true> >();
-    else if ( query_mode == qm_all )
-        query< d::spatial_predicate<B, d::intersects_tag, false> >();
     else if ( query_mode == qm_ri )
         query_ring< d::spatial_predicate<R, d::intersects_tag, false> >();
     else if ( query_mode == qm_pi )
@@ -454,22 +601,34 @@ void search()
         query_linestring< d::spatial_predicate<LS, d::intersects_tag, false> >();
     else if ( query_mode == qm_path )
         query_path();
+#endif
 
     search_valid = true;
+}
+
+// various drawing functions
+
+void draw_point(P const& p)
+{
+    float x = boost::geometry::get<0>(p);
+    float y = boost::geometry::get<1>(p);
+    float z = depth(cont);
+
+    glBegin(GL_QUADS);
+    glVertex3f(x+1, y, z);
+    glVertex3f(x, y+1, z);
+    glVertex3f(x-1, y, z);
+    glVertex3f(x, y-1, z);
+    glEnd();
 }
 
 void draw_knn_area(float min_distance, float max_distance)
 {
     float x = boost::geometry::get<0>(search_point);
     float y = boost::geometry::get<1>(search_point);
-    float z = bgi::detail::rtree::utilities::view<RTree>(t).depth();
+    float z = depth(cont);
 
-    // search point
-    glBegin(GL_TRIANGLES);
-    glVertex3f(x, y, z);
-    glVertex3f(x + 1, y, z);
-    glVertex3f(x + 1, y + 1, z);
-    glEnd();
+    draw_point(search_point);
 
     // search min circle
 
@@ -494,7 +653,7 @@ void draw_linestring(LS const& ls)
     {
         float x = boost::geometry::get<0>(p);
         float y = boost::geometry::get<1>(p);
-        float z = bgi::detail::rtree::utilities::view<RTree>(t).depth();
+        float z = depth(cont);
         glVertex3f(x, y, z);
     }
 
@@ -507,7 +666,7 @@ void draw_segment(S const& s)
     float y1 = boost::geometry::get<0, 1>(s);
     float x2 = boost::geometry::get<1, 0>(s);
     float y2 = boost::geometry::get<1, 1>(s);
-    float z = bgi::detail::rtree::utilities::view<RTree>(t).depth();
+    float z = depth(cont);
 
     glBegin(GL_LINES);
     glVertex3f(x1, y1, z);
@@ -522,7 +681,7 @@ void draw_box(Box const& box)
     float y1 = boost::geometry::get<bg::min_corner, 1>(box);
     float x2 = boost::geometry::get<bg::max_corner, 0>(box);
     float y2 = boost::geometry::get<bg::max_corner, 1>(box);
-    float z = bgi::detail::rtree::utilities::view<RTree>(t).depth();
+    float z = depth(cont);
 
     // search box
     glBegin(GL_LINE_LOOP);
@@ -536,7 +695,7 @@ void draw_box(Box const& box)
 template <typename Range>
 void draw_ring(Range const& range)
 {
-    float z = bgi::detail::rtree::utilities::view<RTree>(t).depth();
+    float z = depth(cont);
 
     // search box
     glBegin(GL_LINE_LOOP);
@@ -566,18 +725,24 @@ void draw_multi_polygon(MultiPolygon const& multi_polygon)
         draw_polygon(p);
 }
 
+// render the scene -> tree, if searching data available also the query geometry and result
+
 void render_scene(void)
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    bgi::detail::rtree::utilities::gl_draw(t);
+    draw_tree(cont);
 
     if ( search_valid )
     {
-        glColor3f(1.0f, 0.5f, 0.0f);
+        glColor3f(1.0f, 0.25f, 0.0f);
 
         if ( query_mode == qm_knn )
             draw_knn_area(0, 0);
+        else if ( query_mode == qm_knnb )
+            draw_box(search_box);
+        else if ( query_mode == qm_knns )
+            draw_segment(search_segment);
         else if ( query_mode == qm_ri )
             draw_ring(search_ring);
         else if ( query_mode == qm_pi )
@@ -593,10 +758,9 @@ void render_scene(void)
         else
             draw_box(search_box);
 
-        for ( size_t i = 0 ; i < nearest_boxes.size() ; ++i )
-            bgi::detail::utilities::gl_draw_indexable(
-                nearest_boxes[i],
-                bgi::detail::rtree::utilities::view<RTree>(t).depth());
+        glColor3f(1.0f, 0.5f, 0.0f);
+
+        draw_result(cont);
     }
 
     glFlush();
@@ -633,49 +797,100 @@ void resize(int w, int h)
     srand(1);
 }
 
+// randomize various indexables
+
+inline void rand_val(B & b)
+{
+    float x = ( rand() % 100 );
+    float y = ( rand() % 100 );
+    float w = ( rand() % 2 ) + 1;
+    float h = ( rand() % 2 ) + 1;
+    b = B(P(x - w, y - h),P(x + w, y + h));
+}
+inline void rand_val(P & p)
+{
+    float x = ( rand() % 100 );
+    float y = ( rand() % 100 );
+    p = P(x, y);
+}
+inline void rand_val(S & s)
+{
+    float x = ( rand() % 100 );
+    float y = ( rand() % 100 );
+    float w = ( rand() % 2 + 1) * (rand() % 2 ? 1.0f : -1.0f);
+    float h = ( rand() % 2 + 1) * (rand() % 2 ? 1.0f : -1.0f);
+    s = S(P(x - w, y - h),P(x + w, y + h));
+}
+
+// more higher-level visitors
+
+struct insert_random_value_v : boost::static_visitor<>
+{
+    template <typename V>
+    void operator()(containers<V> & c) const
+    {
+        V v;
+        rand_val(v);
+        
+        boost::geometry::index::insert(c.tree, v);
+        c.values.push_back(v);
+
+        std::cout << "inserted: ";
+        bgi::detail::utilities::print_indexable(std::cout, v);
+        std::cout << '\n';
+
+        std::cout << ( bgi::detail::rtree::utilities::are_boxes_ok(c.tree) ? "boxes OK\n" : "WRONG BOXES!\n" );
+        std::cout << ( bgi::detail::rtree::utilities::are_levels_ok(c.tree) ? "levels OK\n" : "WRONG LEVELS!\n" );
+        std::cout << "\n";
+    }
+};
+template <typename Cont>
+inline void insert_random_value(Cont & cont)
+{
+    return boost::apply_visitor(insert_random_value_v(), cont);
+}
+
+struct remove_random_value_v : boost::static_visitor<>
+{
+    template <typename V>
+    void operator()(containers<V> & c) const
+    {
+        if ( c.values.empty() )
+            return;
+
+        size_t i = rand() % c.values.size();
+        V v = c.values[i];
+
+        c.tree.remove(v);
+        c.values.erase(c.values.begin() + i);
+
+        std::cout << "removed: ";
+        bgi::detail::utilities::print_indexable(std::cout, v);
+        std::cout << '\n';
+
+        std::cout << ( bgi::detail::rtree::utilities::are_boxes_ok(c.tree) ? "boxes OK\n" : "WRONG BOXES!\n" );
+        std::cout << ( bgi::detail::rtree::utilities::are_levels_ok(c.tree) ? "levels OK\n" : "WRONG LEVELS!\n" );
+        std::cout << "\n";
+    }
+};
+template <typename Cont>
+inline void remove_random_value(Cont & cont)
+{
+    return boost::apply_visitor(remove_random_value_v(), cont);
+}
+
+// handle mouse input
+
 void mouse(int button, int state, int /*x*/, int /*y*/)
 {
     if ( button == GLUT_LEFT_BUTTON && state == GLUT_DOWN )
     {
-        float x = ( rand() % 100 );
-        float y = ( rand() % 100 );
-        float w = ( rand() % 2 ) + 1;
-        float h = ( rand() % 2 ) + 1;
-
-        B b(P(x - w, y - h),P(x + w, y + h));
-
-        boost::geometry::index::insert(t, b);
-        vect.push_back(b);
-
-        std::cout << "inserted: ";
-        bgi::detail::utilities::print_indexable(std::cout, b);
-        std::cout << '\n';
-
-        std::cout << ( bgi::detail::rtree::utilities::are_boxes_ok(t) ? "boxes OK\n" : "WRONG BOXES!\n" );
-        std::cout << ( bgi::detail::rtree::utilities::are_levels_ok(t) ? "levels OK\n" : "WRONG LEVELS!\n" );
-        std::cout << "\n";
-
+        insert_random_value(cont);
         search_valid = false;
     }
     else if ( button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN )
     {
-        if ( vect.empty() )
-            return;
-
-        size_t i = rand() % vect.size();
-        B b = vect[i];
-
-        bgi::remove(t, b);
-        vect.erase(vect.begin() + i);
-
-        std::cout << "removed: ";
-        bgi::detail::utilities::print_indexable(std::cout, b);
-        std::cout << '\n';
-
-        std::cout << ( bgi::detail::rtree::utilities::are_boxes_ok(t) ? "boxes OK\n" : "WRONG BOXES!\n" );
-        std::cout << ( bgi::detail::rtree::utilities::are_levels_ok(t) ? "levels OK\n" : "WRONG LEVELS!\n" );
-        std::cout << "\n";
-
+        remove_random_value(cont);
         search_valid = false;
     }
     else if ( button == GLUT_MIDDLE_BUTTON && state == GLUT_DOWN )
@@ -686,71 +901,117 @@ void mouse(int button, int state, int /*x*/, int /*y*/)
     glutPostRedisplay();
 }
 
+// more higher-level visitors
+
+struct insert_random_values_v : boost::static_visitor<>
+{
+    template <typename V>
+    void operator()(containers<V> & c) const
+    {
+        for ( size_t i = 0 ; i < 35 ; ++i )
+        {
+            V v;
+            rand_val(v);
+
+            c.tree.insert(v);
+            c.values.push_back(v);
+
+            std::cout << "inserted: ";
+            bgi::detail::utilities::print_indexable(std::cout, v);
+            std::cout << '\n';
+        }
+
+        std::cout << ( bgi::detail::rtree::utilities::are_boxes_ok(c.tree) ? "boxes OK\n" : "WRONG BOXES!\n" );
+        std::cout << ( bgi::detail::rtree::utilities::are_levels_ok(c.tree) ? "levels OK\n" : "WRONG LEVELS!\n" );
+        std::cout << "\n";
+    }
+};
+template <typename Cont>
+inline void insert_random_values(Cont & cont)
+{
+    return boost::apply_visitor(insert_random_values_v(), cont);
+}
+
+struct bulk_insert_random_values_v : boost::static_visitor<>
+{
+    template <typename V>
+    void operator()(containers<V> & c) const
+    {
+        c.values.clear();
+
+        for ( size_t i = 0 ; i < 35 ; ++i )
+        {
+            V v;
+            rand_val(v);
+
+            c.values.push_back(v);
+
+            std::cout << "inserted: ";
+            bgi::detail::utilities::print_indexable(std::cout, v);
+            std::cout << '\n';
+        }
+
+        create(c.tree, c.values);
+
+        std::cout << ( bgi::detail::rtree::utilities::are_boxes_ok(c.tree) ? "boxes OK\n" : "WRONG BOXES!\n" );
+        std::cout << ( bgi::detail::rtree::utilities::are_levels_ok(c.tree) ? "levels OK\n" : "WRONG LEVELS!\n" );
+        std::cout << "\n";
+    }
+
+    template <typename Tree, typename Values>
+    void create(Tree & tree, Values const& values) const
+    {
+        Tree t(values);
+        tree = boost::move(t);
+    }
+};
+template <typename Cont>
+inline void bulk_insert_random_values(Cont & cont)
+{
+    return boost::apply_visitor(bulk_insert_random_values_v(), cont);
+}
+
+// handle keyboard input
+
 std::string current_line;
 
 void keyboard(unsigned char key, int /*x*/, int /*y*/)
 {
     if ( key == '\r' || key == '\n' )
     {
-        if ( current_line == "t" )
+        if ( current_line == "storeb" )
+        {
+            cont = containers<B>();
+            glutPostRedisplay();
+        }
+#ifdef ENABLE_POINTS_AND_SEGMENTS
+        else if ( current_line == "storep" )
+        {
+            cont = containers<P>();
+            glutPostRedisplay();
+        }
+        else if ( current_line == "stores" )
+        {
+            cont = containers<S>();
+            glutPostRedisplay();
+        }
+#endif
+        else if ( current_line == "t" )
         {
             std::cout << "\n";
-            bgi::detail::rtree::utilities::print(std::cout, t);
+            print_tree(cont);
             std::cout << "\n";
         }
         else if ( current_line == "rand" )
         {
-            for ( size_t i = 0 ; i < 35 ; ++i )
-            {
-                float x = ( rand() % 100 );
-                float y = ( rand() % 100 );
-                float w = ( rand() % 2 ) + 1;
-                float h = ( rand() % 2 ) + 1;
-
-                B b(P(x - w, y - h),P(x + w, y + h));
-
-                boost::geometry::index::insert(t, b);
-                vect.push_back(b);
-
-                std::cout << "inserted: ";
-                bgi::detail::utilities::print_indexable(std::cout, b);
-                std::cout << '\n';
-            }
-
-            std::cout << ( bgi::detail::rtree::utilities::are_boxes_ok(t) ? "boxes OK\n" : "WRONG BOXES!\n" );
-            std::cout << ( bgi::detail::rtree::utilities::are_levels_ok(t) ? "levels OK\n" : "WRONG LEVELS!\n" );
-            std::cout << "\n";
-
+            insert_random_values(cont);
             search_valid = false;
 
             glutPostRedisplay();
         }
         else if ( current_line == "bulk" )
         {
-            vect.clear();
-
-            for ( size_t i = 0 ; i < 35 ; ++i )
-            {
-                float x = ( rand() % 100 );
-                float y = ( rand() % 100 );
-                float w = ( rand() % 2 ) + 1;
-                float h = ( rand() % 2 ) + 1;
-
-                B b(P(x - w, y - h),P(x + w, y + h));
-                vect.push_back(b);
-
-                std::cout << "inserted: ";
-                bgi::detail::utilities::print_indexable(std::cout, b);
-                std::cout << '\n';
-            }
-
-            RTree t2(vect);
-            t = boost::move(t2);
-
-            std::cout << ( bgi::detail::rtree::utilities::are_boxes_ok(t) ? "boxes OK\n" : "WRONG BOXES!\n" );
-            std::cout << ( bgi::detail::rtree::utilities::are_levels_ok(t) ? "levels OK\n" : "WRONG LEVELS!\n" );
-            std::cout << "\n";
-
+            bulk_insert_random_values(cont);
             search_valid = false;
 
             glutPostRedisplay();
@@ -759,6 +1020,10 @@ void keyboard(unsigned char key, int /*x*/, int /*y*/)
         {
             if ( current_line == "knn" )
                 query_mode = qm_knn;
+            else if ( current_line == "knnb" )
+                query_mode = qm_knnb;
+            else if ( current_line == "knns" )
+                query_mode = qm_knns;
             else if ( current_line == "c" )
                 query_mode = qm_c;
             else if ( current_line == "d" )
@@ -807,6 +1072,8 @@ void keyboard(unsigned char key, int /*x*/, int /*y*/)
         std::cout << key;
     }
 }
+
+// main function
 
 int main(int argc, char **argv)
 {

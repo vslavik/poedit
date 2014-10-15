@@ -11,7 +11,6 @@
 #include <map>
 #include <boost/foreach.hpp>
 #include <boost/spirit/include/classic_core.hpp>
-#include <boost/spirit/include/classic_actor.hpp>
 #include <boost/spirit/include/classic_loops.hpp>
 #include <boost/spirit/include/classic_symbols.hpp>
 #include <boost/spirit/include/classic_chset.hpp>
@@ -121,6 +120,10 @@ namespace quickbook
         plain_char_action plain_char(state);
         do_macro_action do_macro(state);
         scoped_parser<to_value_scoped_action> to_value(state);
+        member_action_value<quickbook::state, source_mode_type> change_source_mode(
+            state, &state::change_source_mode);
+        member_action_fixed_value<quickbook::state, source_mode_type> default_source_mode(
+            state, &state::change_source_mode, source_mode_tags::cpp);
         
         doc_info_details =
                 cl::eps_p                   [ph::var(local.source_mode_unset) = true]
@@ -149,7 +152,7 @@ namespace quickbook
                 ]
             >>  space
             >>  !(qbk_ver(106u) >> cl::eps_p(ph::var(local.source_mode_unset))
-                                            [cl::assign_a(state.source_mode, "c++")]
+                                            [default_source_mode]
                 )
             >>  (   *(  (  local.doc_info_attribute
                         |  local.doc_info_escaped_attributes
@@ -222,12 +225,8 @@ namespace quickbook
 
         local.attribute_rules[doc_attributes::compatibility_mode] = &local.doc_compatibility_mode;
 
-        local.doc_source_mode =
-                (
-                   cl::str_p("c++")
-                |  "python"
-                |  "teletype"
-                )                           [cl::assign_a(state.source_mode)]
+        local.doc_source_mode = source_modes
+                                            [change_source_mode]
                                             [ph::var(local.source_mode_unset) = false]
             ;
 

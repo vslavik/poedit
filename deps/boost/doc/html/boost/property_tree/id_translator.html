@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../../property_tree/reference.html#header.boost.property_tree.id_translator_hpp" title="Header &lt;boost/property_tree/id_translator.hpp&gt;">
-<link rel="prev" href="ptree_bad_path.html" title="Class ptree_bad_path">
-<link rel="next" href="translator_bet_idp99628792.html" title="Struct template translator_between&lt;T, T&gt;">
+<link rel="up" href="../../property_tree/reference.html#header.boost.property_tree.ptree_fwd_hpp" title="Header &lt;boost/property_tree/ptree_fwd.hpp&gt;">
+<link rel="prev" href="basic_ptree.html" title="Class template basic_ptree">
+<link rel="next" href="string_path.html" title="Class template string_path">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="ptree_bad_path.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../property_tree/reference.html#header.boost.property_tree.id_translator_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="translator_bet_idp99628792.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="basic_ptree.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../property_tree/reference.html#header.boost.property_tree.ptree_fwd_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="string_path.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.property_tree.id_translator"></a><div class="titlepage"></div>
@@ -29,26 +29,23 @@
 <p>boost::property_tree::id_translator &#8212; Simple implementation of the Translator concept. It does no translation. </p>
 </div>
 <h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../property_tree/reference.html#header.boost.property_tree.id_translator_hpp" title="Header &lt;boost/property_tree/id_translator.hpp&gt;">boost/property_tree/id_translator.hpp</a>&gt;
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../property_tree/reference.html#header.boost.property_tree.ptree_fwd_hpp" title="Header &lt;boost/property_tree/ptree_fwd.hpp&gt;">boost/property_tree/ptree_fwd.hpp</a>&gt;
 
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="id_translator.html" title="Struct template id_translator">id_translator</a> <span class="special">{</span>
-  <span class="comment">// types</span>
-  <span class="keyword">typedef</span> <span class="identifier">T</span> <a name="boost.property_tree.id_translator.internal_type"></a><span class="identifier">internal_type</span><span class="special">;</span>
-  <span class="keyword">typedef</span> <span class="identifier">T</span> <a name="boost.property_tree.id_translator.external_type"></a><span class="identifier">external_type</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="id_translator.html#idp99663912-bb">public member functions</a></span>
-  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <a class="link" href="id_translator.html#idp99664088-bb"><span class="identifier">get_value</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <a class="link" href="id_translator.html#idp99664808-bb"><span class="identifier">put_value</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="id_translator.html#idp98891280-bb">public member functions</a></span>
+  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <a class="link" href="id_translator.html#idp98891840-bb"><span class="identifier">get_value</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <a class="link" href="id_translator.html#idp98893376-bb"><span class="identifier">put_value</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp169661320"></a><h2>Description</h2>
+<a name="idp352392032"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp169661528"></a><h3>
-<a name="idp99663912-bb"></a><code class="computeroutput">id_translator</code> public member functions</h3>
+<a name="idp352392448"></a><h3>
+<a name="idp98891280-bb"></a><code class="computeroutput">id_translator</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <a name="idp99664088-bb"></a><span class="identifier">get_value</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> v<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <a name="idp99664808-bb"></a><span class="identifier">put_value</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> v<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <a name="idp98891840-bb"></a><span class="identifier">get_value</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> v<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <a name="idp98893376-bb"></a><span class="identifier">put_value</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> v<span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>
@@ -63,7 +60,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="ptree_bad_path.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../property_tree/reference.html#header.boost.property_tree.id_translator_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="translator_bet_idp99628792.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="basic_ptree.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../property_tree/reference.html#header.boost.property_tree.ptree_fwd_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="string_path.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

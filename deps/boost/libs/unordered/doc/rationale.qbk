@@ -3,7 +3,7 @@
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) ]
 
 [def __wang__
-    [@http://www.concentric.net/~Ttwang/tech/inthash.htm
+    [@http://web.archive.org/web/20121102023700/http://www.concentric.net/~Ttwang/tech/inthash.htm
     Thomas Wang's article on integer hash functions]]
 
 [section:rationale Implementation Rationale]
@@ -85,7 +85,8 @@ of 2.
 
 Using a prime number of buckets, and choosing a bucket by using the modulus
 of the hash function's result will usually give a good result. The downside
-is that the required modulus operation is fairly expensive.
+is that the required modulus operation is fairly expensive. This is what the
+containers do in most cases.
 
 Using a power of 2 allows for much quicker selection of the bucket
 to use, but at the expense of loosing the upper bits of the hash value.
@@ -95,12 +96,16 @@ functions this can't be relied on.
 
 To avoid this a transformation could be applied to the hash function, for an
 example see __wang__.  Unfortunately, a transformation like Wang's requires
-knowledge of the number of bits in the hash value, so it isn't portable enough.
-This leaves more expensive methods, such as Knuth's Multiplicative Method
-(mentioned in Wang's article). These don't tend to work as well as taking the
-modulus of a prime, and the extra computation required might negate
-efficiency advantage of power of 2 hash tables.
+knowledge of the number of bits in the hash value, so it isn't portable enough
+to use as a default. It can applicable in certain cases so the containers
+have a policy based implementation that can use this alternative technique.
 
-So, this implementation uses a prime number for the hash table size.
+Currently this is only done on 64 bit architecures, where prime number
+modulus can be expensive. Although this varies depending on the architecture,
+so I probably should revisit it.
+
+I'm also thinking of introducing a mechanism whereby a hash function can
+indicate that it's safe to be used directly with power of 2 buckets, in
+which case a faster plain power of 2 implementation can be used.
 
 [endsect]

@@ -13,6 +13,9 @@ void nct_tests_6()
 #ifdef TEST_CPP_DEC_FLOAT
    time_proc("cpp_dec_float_100", test_nct<cpp_dec_float_100>);
 #endif
+#ifdef TEST_CPP_BIN_FLOAT
+   time_proc("cpp_bin_float_100", test_nct<cpp_bin_float_100>);
+#endif
 #ifdef TEST_MPFR_CLASS
    time_proc("mpfr_class", test_nct<mpfr_class>);
 #endif

@@ -10,6 +10,10 @@
 #include <iostream>
 #include <string>
 
+// If defined, tests are run without rescaling-to-integer or robustness policy
+// This multi_intersection currently contains no tests for double then failing
+// #define BOOST_GEOMETRY_NO_ROBUSTNESS
+
 // #define BOOST_GEOMETRY_DEBUG_ASSEMBLE
 
 #include <algorithms/test_intersection.hpp>
@@ -93,20 +97,24 @@ void test_areal()
         case_recursive_boxes_2[0], case_recursive_boxes_2[1],
         1, 47, 90.0); // Area from SQL Server
 
-     test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_3",
-         case_recursive_boxes_3[0], case_recursive_boxes_3[1],
-         19, 87, 12.5); // Area from SQL Server
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_3",
+        case_recursive_boxes_3[0], case_recursive_boxes_3[1],
+        19, 87, 12.5); // Area from SQL Server
 
-     test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_4",
-         case_recursive_boxes_4[0], case_recursive_boxes_4[1],
-         13, 157, 67.0); // Area from SQL Server
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_4",
+        case_recursive_boxes_4[0], case_recursive_boxes_4[1],
+        13, 157, 67.0); // Area from SQL Server
 
-     test_one<Polygon, MultiPolygon, MultiPolygon>("ggl_list_20120915_h2_a",
-         ggl_list_20120915_h2[0], ggl_list_20120915_h2[1],
-         2, 10, 6.0); // Area from SQL Server
-     test_one<Polygon, MultiPolygon, MultiPolygon>("ggl_list_20120915_h2_b",
-         ggl_list_20120915_h2[0], ggl_list_20120915_h2[2],
-         2, 10, 6.0); // Area from SQL Server
+    test_one<Polygon, MultiPolygon, MultiPolygon>("ggl_list_20120915_h2_a",
+        ggl_list_20120915_h2[0], ggl_list_20120915_h2[1],
+        2, 10, 6.0); // Area from SQL Server
+    test_one<Polygon, MultiPolygon, MultiPolygon>("ggl_list_20120915_h2_b",
+        ggl_list_20120915_h2[0], ggl_list_20120915_h2[2],
+        2, 10, 6.0); // Area from SQL Server
+
+    test_one<Polygon, MultiPolygon, MultiPolygon>("ticket_9081",
+        ticket_9081[0], ticket_9081[1],
+        2, 10, 0.0019812556);
 }
 
 template <typename Polygon, typename MultiPolygon, typename Box>
@@ -175,7 +183,7 @@ void test_areal_linear()
 template <typename P>
 void test_all()
 {
-    typedef bg::model::box<P> box;
+    //typedef bg::model::box<P> box;
     typedef bg::model::ring<P> ring;
     typedef bg::model::polygon<P> polygon;
     typedef bg::model::multi_polygon<polygon> multi_polygon;

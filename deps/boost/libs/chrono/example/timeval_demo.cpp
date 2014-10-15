@@ -3,6 +3,7 @@
 //  Copyright 2008 Howard Hinnant
 //  Copyright 2008 Beman Dawes
 //  Copyright 2009 Vicente J. Botet Escriba
+//  Copyright (c) Microsoft Corporation 2014
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
@@ -44,8 +45,8 @@ time2_demo contained this comment:
 
 namespace
 {
-  #ifdef UNDER_CE
-  // Windows CE does not define timeval
+  #if defined UNDER_CE || BOOST_PLAT_WINDOWS_RUNTIME
+  // Windows CE and Windows store does not define timeval
   struct timeval {
           long    tv_sec;         /* seconds */
           long    tv_usec;        /* and microseconds */

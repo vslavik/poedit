@@ -35,8 +35,7 @@ class voronoi_predicates {
 
   enum {
     ULPS = 64,
-    ULPSx2 = 128,
-    ULPSx5 = 320
+    ULPSx2 = 128
   };
 
   template <typename Point>
@@ -161,32 +160,21 @@ class voronoi_predicates {
 
     bool operator()(const site_type& lhs, const circle_type& rhs) const {
       typename ulp_cmp_type::Result xCmp =
-          ulp_cmp(to_fpt(lhs.x0()), to_fpt(rhs.lower_x()), ULPSx5);
-      if (xCmp != ulp_cmp_type::EQUAL)
-        return xCmp == ulp_cmp_type::LESS;
-      typename ulp_cmp_type::Result yCmp =
-          ulp_cmp(to_fpt(lhs.y0()), to_fpt(rhs.lower_y()), ULPSx5);
-      return yCmp == ulp_cmp_type::LESS;
+          ulp_cmp(to_fpt(lhs.x0()), to_fpt(rhs.lower_x()), ULPS);
+      return xCmp == ulp_cmp_type::LESS;
     }
 
     bool operator()(const circle_type& lhs, const site_type& rhs) const {
       typename ulp_cmp_type::Result xCmp =
-          ulp_cmp(to_fpt(lhs.lower_x()), to_fpt(rhs.x0()), ULPSx5);
-      if (xCmp != ulp_cmp_type::EQUAL)
-        return xCmp == ulp_cmp_type::LESS;
-      typename ulp_cmp_type::Result yCmp =
-          ulp_cmp(to_fpt(lhs.lower_y()), to_fpt(rhs.y0()), ULPSx5);
-      return yCmp == ulp_cmp_type::LESS;
+          ulp_cmp(to_fpt(lhs.lower_x()), to_fpt(rhs.x0()), ULPS);
+      return xCmp == ulp_cmp_type::LESS;
     }
 
     bool operator()(const circle_type& lhs, const circle_type& rhs) const {
-      typename ulp_cmp_type::Result xCmp =
-          ulp_cmp(to_fpt(lhs.lower_x()), to_fpt(rhs.lower_x()), ULPSx2);
-      if (xCmp != ulp_cmp_type::EQUAL)
-        return xCmp == ulp_cmp_type::LESS;
-      typename ulp_cmp_type::Result yCmp =
-          ulp_cmp(to_fpt(lhs.lower_y()), to_fpt(rhs.lower_y()), ULPSx2);
-      return yCmp == ulp_cmp_type::LESS;
+      if (lhs.lower_x() != rhs.lower_x()) {
+        return lhs.lower_x() < rhs.lower_x();
+      }
+      return lhs.y() < rhs.y();
     }
 
    private:
@@ -650,7 +638,7 @@ class voronoi_predicates {
 
       if (is_zero(denom)) {
         big_int_type numer = teta * teta - sum_AB * sum_AB;
-        big_int_type denom = teta * sum_AB;
+        denom = teta * sum_AB;
         cA[0] = denom * sum_x * 2 + numer * vec_x;
         cB[0] = segm_len;
         cA[1] = denom * sum_AB * 2 + numer * teta;
@@ -1510,10 +1498,29 @@ class voronoi_predicates {
           }
         }
       }
+      if (lies_outside_vertical_segment(circle, site1) ||
+          lies_outside_vertical_segment(circle, site2) ||
+          lies_outside_vertical_segment(circle, site3)) {
+        return false;
+      }
       return true;
     }
 
    private:
+    bool lies_outside_vertical_segment(
+        const circle_type& c, const site_type& s) {
+      if (!s.is_segment() || !is_vertical(s)) {
+        return false;
+      }
+      fpt_type y0 = to_fpt(s.is_inverse() ? s.y1() : s.y0());
+      fpt_type y1 = to_fpt(s.is_inverse() ? s.y0() : s.y1());
+      return ulp_cmp(c.y(), y0, ULPS) == ulp_cmp_type::LESS ||
+             ulp_cmp(c.y(), y1, ULPS) == ulp_cmp_type::MORE;
+    }
+
+   private:
+    to_fpt_converter to_fpt;
+    ulp_cmp_type ulp_cmp;
     circle_existence_predicate_type circle_existence_predicate_;
     circle_formation_functor_type circle_formation_functor_;
   };

@@ -44,25 +44,25 @@
   <span class="keyword">typedef</span> <span class="identifier">date_type</span><span class="special">::</span><span class="identifier">duration_type</span>        <a name="boost.date_time.last_kday_of_month.duration_type"></a><span class="identifier">duration_type</span><span class="special">;</span>   
 
   <span class="comment">// <a class="link" href="last_kday_of_month.html#boost.date_time.last_kday_of_monthconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="last_kday_of_month.html#idp22605464-bb"><span class="identifier">last_kday_of_month</span></a><span class="special">(</span><span class="identifier">day_of_week_type</span><span class="special">,</span> <span class="identifier">month_type</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="last_kday_of_month.html#idp95735872-bb"><span class="identifier">last_kday_of_month</span></a><span class="special">(</span><span class="identifier">day_of_week_type</span><span class="special">,</span> <span class="identifier">month_type</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="last_kday_of_month.html#idp19968680-bb">public member functions</a></span>
-  <span class="identifier">date_type</span> <a class="link" href="last_kday_of_month.html#idp21309256-bb"><span class="identifier">get_date</span></a><span class="special">(</span><span class="identifier">year_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">month_type</span> <a class="link" href="last_kday_of_month.html#idp22603592-bb"><span class="identifier">month</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">day_of_week_type</span> <a class="link" href="last_kday_of_month.html#idp22604056-bb"><span class="identifier">day_of_week</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="last_kday_of_month.html#idp22604536-bb"><span class="identifier">to_string</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="last_kday_of_month.html#idp109755184-bb">public member functions</a></span>
+  <span class="keyword">virtual</span> <span class="identifier">date_type</span> <a class="link" href="last_kday_of_month.html#idp98792496-bb"><span class="identifier">get_date</span></a><span class="special">(</span><span class="identifier">year_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">month_type</span> <a class="link" href="last_kday_of_month.html#idp107456688-bb"><span class="identifier">month</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">day_of_week_type</span> <a class="link" href="last_kday_of_month.html#idp103392848-bb"><span class="identifier">day_of_week</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="last_kday_of_month.html#idp46618640-bb"><span class="identifier">to_string</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp88190408"></a><h2>Description</h2>
+<a name="idp191883584"></a><h2>Description</h2>
 <p>Useful generator functor for finding holidays and daylight savings Get the last day of the month and then calculate the difference to the last previous day. 
 </p>
 <div class="refsect2">
-<a name="idp88190904"></a><h3>
+<a name="idp191884400"></a><h3>
 <a name="boost.date_time.last_kday_of_monthconstruct-copy-destruct"></a><code class="computeroutput">last_kday_of_month</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp22605464-bb"></a><span class="identifier">last_kday_of_month</span><span class="special">(</span><span class="identifier">day_of_week_type</span> dow<span class="special">,</span> <span class="identifier">month_type</span> m<span class="special">)</span><span class="special">;</span></pre>Specify the date spec like last 'Sunday' in 'April' spec. <p>
+<pre class="literallayout"><a name="idp95735872-bb"></a><span class="identifier">last_kday_of_month</span><span class="special">(</span><span class="identifier">day_of_week_type</span> dow<span class="special">,</span> <span class="identifier">month_type</span> m<span class="special">)</span><span class="special">;</span></pre>Specify the date spec like last 'Sunday' in 'April' spec. <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
@@ -92,15 +92,15 @@
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp88197416"></a><h3>
-<a name="idp19968680-bb"></a><code class="computeroutput">last_kday_of_month</code> public member functions</h3>
+<a name="idp191897040"></a><h3>
+<a name="idp109755184-bb"></a><code class="computeroutput">last_kday_of_month</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">date_type</span> <a name="idp21309256-bb"></a><span class="identifier">get_date</span><span class="special">(</span><span class="identifier">year_type</span> year<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return a concrete date when provided with a year specific year. </li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">month_type</span> <a name="idp22603592-bb"></a><span class="identifier">month</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">day_of_week_type</span> <a name="idp22604056-bb"></a><span class="identifier">day_of_week</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">date_type</span> <a name="idp98792496-bb"></a><span class="identifier">get_date</span><span class="special">(</span><span class="identifier">year_type</span> year<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return a concrete date when provided with a year specific year. </li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">month_type</span> <a name="idp107456688-bb"></a><span class="identifier">month</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">day_of_week_type</span> <a name="idp103392848-bb"></a><span class="identifier">day_of_week</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="idp22604536-bb"></a><span class="identifier">to_string</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns string suitable for use in POSIX time zone string. <p>Returns a string formatted as "M4.5.0" ==&gt; last Sunday in April. </p>
+<pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="idp46618640-bb"></a><span class="identifier">to_string</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns string suitable for use in POSIX time zone string. <p>Returns a string formatted as "M4.5.0" ==&gt; last Sunday in April. </p>
 </li>
 </ol></div>
 </div>

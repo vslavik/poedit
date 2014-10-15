@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Chapter&#160;7.&#160;Boost.Container</title>
+<title>Chapter&#160;9.&#160;Boost.Container</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
@@ -25,7 +25,7 @@
 <div class="chapter">
 <div class="titlepage"><div>
 <div><h2 class="title">
-<a name="container"></a>Chapter&#160;7.&#160;Boost.Container</h2></div>
+<a name="container"></a>Chapter&#160;9.&#160;Boost.Container</h2></div>
 <div><div class="author"><h3 class="author">
 <span class="firstname">Ion</span> <span class="surname">Gaztanaga</span>
 </h3></div></div>
@@ -64,8 +64,19 @@
 <dt><span class="section"><a href="container/non_standard_containers.html#container.non_standard_containers.static_vector"><span class="emphasis"><em>static_vector</em></span></a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="container/extended_functionality.html">Extended functionality</a></span></dt>
-<dd><dl><dt><span class="section"><a href="container/extended_functionality.html#container.extended_functionality.default_initialialization">Default
-      initialization for vector-like containers</a></span></dt></dl></dd>
+<dd><dl>
+<dt><span class="section"><a href="container/extended_functionality.html#container.extended_functionality.default_initialialization">Default
+      initialization for vector-like containers</a></span></dt>
+<dt><span class="section"><a href="container/extended_functionality.html#container.extended_functionality.ordered_range_insertion">Ordered
+      range insertion for associative containers (<span class="emphasis"><em>ordered_unique_range</em></span>,
+      <span class="emphasis"><em>ordered_range</em></span>) </a></span></dt>
+<dt><span class="section"><a href="container/extended_functionality.html#container.extended_functionality.configurable_tree_based_associative_containers">Configurable
+      tree-based associative ordered containers</a></span></dt>
+<dt><span class="section"><a href="container/extended_functionality.html#container.extended_functionality.constant_time_range_splice">Constant-time
+      range splice for <code class="computeroutput"><span class="special">(</span><span class="identifier">s</span><span class="special">)</span><span class="identifier">list</span></code></a></span></dt>
+<dt><span class="section"><a href="container/extended_functionality.html#container.extended_functionality.extended_allocators">Extended
+      allocators</a></span></dt>
+</dl></dd>
 <dt><span class="section"><a href="container/Cpp11_conformance.html">C++11 Conformance</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="container/Cpp11_conformance.html#container.Cpp11_conformance.move_emplace">Move and Emplace</a></span></dt>
@@ -76,8 +87,15 @@
 <dt><span class="section"><a href="container/Cpp11_conformance.html#container.Cpp11_conformance.initializer_lists">Initializer
       lists</a></span></dt>
 <dt><span class="section"><a href="container/Cpp11_conformance.html#container.Cpp11_conformance.forward_list"><code class="computeroutput"><span class="identifier">forward_list</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code></a></span></dt>
+<dt><span class="section"><a href="container/Cpp11_conformance.html#container.Cpp11_conformance.vector_exception_guarantees"><code class="computeroutput"><span class="identifier">vector</span></code> vs. <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span></code>
+      exception guarantees</a></span></dt>
 <dt><span class="section"><a href="container/Cpp11_conformance.html#container.Cpp11_conformance.Vector_bool"><code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">&gt;</span></code></a></span></dt>
+<dt><span class="section"><a href="container/Cpp11_conformance.html#container.Cpp11_conformance.non_standard_memset_initialization">Non-standard
+      value initialization using <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">memset</span></code></a></span></dt>
 </dl></dd>
+<dt><span class="section"><a href="container/known_issues.html">Known Issues</a></span></dt>
+<dd><dl><dt><span class="section"><a href="container/known_issues.html#container.known_issues.move_emulation_limitations">Move
+      emulation limitations in C++03 compilers</a></span></dt></dl></dd>
 <dt><span class="section"><a href="container/history_and_reasons.html">History and reasons to use
     Boost.Container</a></span></dt>
 <dd><dl>
@@ -88,12 +106,14 @@
 </dl></dd>
 <dt><span class="section"><a href="container/index.html">Indexes</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="container/index.html#idp72295736">Class Index</a></span></dt>
-<dt><span class="section"><a href="container/index.html#idp72358680">Typedef Index</a></span></dt>
-<dt><span class="section"><a href="container/index.html#idp72431992">Function Index</a></span></dt>
+<dt><span class="section"><a href="container/index.html#idp156140064">Class Index</a></span></dt>
+<dt><span class="section"><a href="container/index.html#idp156265184">Typedef Index</a></span></dt>
+<dt><span class="section"><a href="container/index.html#idp156783472">Function Index</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="boost_container_header_reference.html">Boost.Container Header Reference</a></span></dt>
 <dd><dl>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.adaptive_pool_hpp">Header &lt;boost/container/adaptive_pool.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.allocator_hpp">Header &lt;boost/container/allocator.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.allocator_traits_hpp">Header &lt;boost/container/allocator_traits.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.container_fwd_hpp">Header &lt;boost/container/container_fwd.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.deque_hpp">Header &lt;boost/container/deque.hpp&gt;</a></span></dt>
@@ -101,6 +121,8 @@
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.flat_set_hpp">Header &lt;boost/container/flat_set.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.list_hpp">Header &lt;boost/container/list.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.map_hpp">Header &lt;boost/container/map.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.node_allocator_hpp">Header &lt;boost/container/node_allocator.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.options_hpp">Header &lt;boost/container/options.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.scoped_allocator_hpp">Header &lt;boost/container/scoped_allocator.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.scoped_allocator_fwd_hpp">Header &lt;boost/container/scoped_allocator_fwd.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.set_hpp">Header &lt;boost/container/set.hpp&gt;</a></span></dt>
@@ -115,6 +137,8 @@
     and links</a></span></dt>
 <dt><span class="section"><a href="container/release_notes.html">Release Notes</a></span></dt>
 <dd><dl>
+<dt><span class="section"><a href="container/release_notes.html#container.release_notes.release_notes_boost_1_56_00">Boost
+      1.56 Release</a></span></dt>
 <dt><span class="section"><a href="container/release_notes.html#container.release_notes.release_notes_boost_1_55_00">Boost
       1.55 Release</a></span></dt>
 <dt><span class="section"><a href="container/release_notes.html#container.release_notes.release_notes_boost_1_54_00">Boost
@@ -197,9 +221,17 @@
       Boost.Container</a>
 </h3></div></div></div>
 <p>
-        There is no need to compile <span class="bold"><strong>Boost.Container</strong></span>,
-        since it's a header only library. Just include your Boost header directory
-        in your compiler include path.
+        There is no need to compile <span class="bold"><strong>Boost.Container</strong></span>
+        if you don't use <a class="link" href="container/extended_functionality.html#container.extended_functionality.extended_allocators" title="Extended allocators">Extended
+        Allocators</a> since in that case it's a header-only library. Just include
+        your Boost header directory in your compiler include path.
+      </p>
+<p>
+        <a class="link" href="container/extended_functionality.html#container.extended_functionality.extended_allocators" title="Extended allocators">Extended
+        Allocators</a> are implemented as a separately compiled library, so you
+        must install binaries in a location that can be found by your linker when
+        using these classes. If you followed the <a href="http://www.boost.org/doc/libs/release/more/getting_started/index.html" target="_top">Boost
+        Getting Started</a> instructions, that's already been done for you.
       </p>
 </div>
 <div class="section">
@@ -225,7 +257,7 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: October 02, 2013 at 23:24:56 GMT</small></p></td>
+<td align="left"><p><small>Last revised: July 29, 2014 at 09:04:23 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

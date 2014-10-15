@@ -57,14 +57,14 @@ the following functions
     and operating systems. This makes it unusable for support of portable archives.
   <li>
     Even if the type name string could somehow be made portable, there is no 
-    guarentee that class headers would be included in the same name space accross 
+    guarantee that class headers would be included in the same namespace accross 
     different applications. In fact, including different headers in different
-    name spaces is an accepted method used to avoid name space conflicts.
+    namespaces is an accepted method used to avoid namespace conflicts.
     Thus the namespace::class_name can't be used as a key.
   <li>
     There exists the possibility that different classes use different type id 
-    mechanism.  The class header might include this information. If we want to 
-    import class headers accross applications, its convenient that the type id
+    mechanisms.  The class header might include this information. If we want to 
+    import class headers accross applications, it's convenient that the type id
     mechanism support inter-operability accross different type id systems.
 </ul>
 <h3>Features</h3>
@@ -135,7 +135,7 @@ instance created for each type.  However, this is enforced only at the executabl
 module level.  That is, if a program includes some shared libraries or DLLS,
 there may be more than one instance of this class correponding to a particular type.
 For this reason the comparison functions below can't just compare the addresses of 
-this instance but rather must be programmed to compare the the actual information 
+this instance but rather must be programmed to compare the actual information 
 the instances contain.
 <dl>
 
@@ -193,7 +193,7 @@ bool operator==(const extended_type_info & rhs) const;
 bool operator!=(const extended_type_info & rhs) const;
 </code></pre></h4></dt>
 <dd>
-These functions are used to compare 'wo 
+These functions are used to compare
 <a target="extended_type_info.hpp" href = "../../../boost/serialization/extended_type_info.hpp">
 <code style="white-space: normal">
 extended_type_info
@@ -213,7 +213,7 @@ Construct a new instance of the type to which this
 extended_type_info
 </code>
 </a>
-record corresponds. This function takes variable list of up to 4 arguments
+record corresponds. This function takes a variable list of up to 4 arguments
 of any type.  These arguments are passed to the type's constructor
 at runtime.  In order to use the facility, 
 one must declare a type sequence for the constructor arguments.  
@@ -222,9 +222,9 @@ with those specified when the type was exported.
 This function permits one to create instances of
 any exported type given only the exported <strong>GUID</strong> assigned
 with BOOST_CLASS_EXPORT.  
-If these types are defined in DLLS or shared libraries.  When these modules
-are loaded at runtime, these constructor can be called until the module
-is unloaded.  These modules are referred to as <b>plugin</b>. 
+If these types are defined in DLLS or shared libraries loaded at runtime, 
+these constructors can be called until the module is unloaded.  
+Such modules are referred to as <b>plugins</b>. 
 </code>
 </dd>
 
@@ -245,7 +245,7 @@ object.
 
 </dl>
 
-<h3><a name="requirements">Requirements for and Implementation</a></h3>
+<h3><a name="requirements">Requirements for an Implementation</a></h3>
 In order to be used by the serialization library, an implementation of
 <code style="white-space: normal">extended_type_info</code>, 
 (referred to as ETI here), must be derived from 
@@ -348,7 +348,7 @@ The test program <code style="white-space: normal"><a target="test_no_rtti" href
 implements this function in terms of the <code style="white-space: normal"><a target="extended_type_info_no_rtti.hpp" href="../../../boost/serialization/extended_type_info_no_rtti.hpp">
 extended_type_info</a></code> API above to return the export key associated with the class.  
 This requires that non-abstract types be exported. It also demonstrates the
-inter-operability with between two different implementations of
+inter-operability between two different implementations of
 <code style="white-space: normal">extended_type_info</code>.
 
 <h3><a name="type_requirements">Requirements for Each Type</a></h3>

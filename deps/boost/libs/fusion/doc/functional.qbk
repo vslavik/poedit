@@ -66,9 +66,9 @@ function objects to accept arbitrary calls. In other words, an unary function
 object can be implemented instead of (maybe heavily overloaded) function
 templates or function call operators.
 
-The library provides both a strictly typed and a generic variant for this 
+The library provides both a strictly typed and a generic variant for this
 transformation. The latter should be used in combination with
-__boost_func_forward__ to attack __the_forwarding_problem__. 
+__boost_func_forward__ to attack __the_forwarding_problem__.
 
 Both variants have a corresponding generator function template that returns an
 adapter instance for the given argument.
@@ -546,7 +546,7 @@ Returns the result type of __invoke_function_object__.
 
 [heading Macros]
 
-The following macros can be defined to change the maximum arity. 
+The following macros can be defined to change the maximum arity.
 The default is 6.
 
 * BOOST_FUSION_INVOKE_MAX_ARITY
@@ -1060,7 +1060,7 @@ signature is optimized automatically to avoid by-value parameters.]
 
 [heading Macros]
 
-The following macros can be defined to change the maximum arity. 
+The following macros can be defined to change the maximum arity.
 The value used for these macros must not exceed `FUSION_MAX_VECTOR_SIZE`.
 The default is 6.
 

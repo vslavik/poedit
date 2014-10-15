@@ -25,7 +25,7 @@ int main()
 
     token_def c_comment ("\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/", CCOMMENT);
     token_def cpp_comment ("\\/\\/[^\\n\\r]*(\\n|\\r|\\r\\n)", CPPCOMMENT);
-    token_def ws_tok ("[\\v\\f\\n\\r]*", TOKEN_ID_WS);
+    token_def ws_tok ("[\\v\\f\\n\\r]+", TOKEN_ID_WS);
 
     typedef std::string::iterator base_iterator_type;    
     typedef lex::lexertl::token<base_iterator_type> token_type;
@@ -38,7 +38,7 @@ int main()
     {
         // initialize lexer
         lexer_def lex;
-        token_def ws_tok ("[\\v\\f\\n\\r]*", TOKEN_ID_WS);
+        token_def ws_tok ("[\\v\\f\\n\\r]+", TOKEN_ID_WS);
         lex.self.add
             (c_comment)(cpp_comment) 
             ('1')('2')('3')
@@ -60,7 +60,7 @@ int main()
     {
         // initialize lexer
         lexer_def lex;
-        token_def ws_tok ("[\\v\\f\\n\\r]*", TOKEN_ID_WS);
+        token_def ws_tok ("[\\v\\f\\n\\r]+", TOKEN_ID_WS);
 
         lex.self.add
             (c_comment)(cpp_comment) 

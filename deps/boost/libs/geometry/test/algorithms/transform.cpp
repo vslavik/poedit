@@ -18,57 +18,76 @@
 
 #include <geometry_test_common.hpp>
 
+#include <boost/geometry/algorithms/equals.hpp>
 #include <boost/geometry/algorithms/make.hpp>
 #include <boost/geometry/algorithms/transform.hpp>
-#include <boost/geometry/strategies/strategies.hpp>
 #include <boost/geometry/geometries/geometries.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
-
-#include <boost/geometry/io/dsv/write.hpp>
 #include <boost/geometry/io/wkt/wkt.hpp>
+#include <boost/geometry/strategies/strategies.hpp>
+#include <boost/variant/variant.hpp>
 
 #include <test_common/test_point.hpp>
 
-template <typename P1, typename P2>
-void test_transform_point(
-        typename bg::select_most_precise
-            <
-                typename bg::coordinate_type<P1>::type,
-                double
-            >::type value)
+template <typename Geometry1, typename Geometry2>
+void check_transform(Geometry1 const& geometry1,
+                     Geometry2 const& expected)
+{
+    Geometry2 geometry2;
+    BOOST_CHECK(bg::transform(geometry1, geometry2));
+
+    std::ostringstream result_wkt, expected_wkt;
+    result_wkt << bg::wkt(geometry2);
+    expected_wkt << bg::wkt(expected);
+    BOOST_CHECK_EQUAL(result_wkt.str(), expected_wkt.str());
+}
+
+template <typename P1, typename P2, typename Value>
+void test_transform_point(Value value)
 {
     P1 p1;
     bg::set<0>(p1, 1);
     bg::set<1>(p1, 2);
-    P2 p2;
-    BOOST_CHECK(bg::transform(p1, p2));
+    boost::variant<P1> v(p1);
 
-    BOOST_CHECK_CLOSE(value * bg::get<0>(p1), bg::get<0>(p2), 0.001);
-    BOOST_CHECK_CLOSE(value * bg::get<1>(p1), bg::get<1>(p2), 0.001);
+    P2 expected;
+    bg::assign(expected, p1);
+    bg::multiply_value(expected, value);
+
+    check_transform(p1, expected);
+    check_transform(v, expected);
 }
 
-template <typename P1, typename P2>
-void test_transform_linestring()
+template <typename P1, typename P2, typename Value>
+void test_transform_linestring(Value value)
 {
-    bg::model::linestring<P1> line1;
+    typedef bg::model::linestring<P1> line1_type;
+    typedef bg::model::linestring<P2> line2_type;
+
+    line1_type line1;
     line1.push_back(bg::make<P1>(1, 1));
     line1.push_back(bg::make<P1>(2, 2));
-    bg::model::linestring<P2> line2;
-    BOOST_CHECK(bg::transform(line1, line2));
-    BOOST_CHECK_EQUAL(line1.size(), line2.size());
+    boost::variant<line1_type> v(line1);
 
-    std::ostringstream out1, out2;
-    out1 << bg::wkt(line1);
-    out2 << bg::wkt(line2);
-    BOOST_CHECK_EQUAL(out1.str(), out1.str());
+    line2_type expected;
+    for (BOOST_AUTO(p, line1.begin()); p != line1.end(); ++p)
+    {
+        P2 new_point;
+        bg::assign(new_point, *p);
+        bg::multiply_value(new_point, value);
+        expected.push_back(new_point);
+    }
+
+    check_transform(line1, expected);
+    check_transform(v, expected);
 }
 
 
-template <typename P1, typename P2>
-void test_all(double value = 1.0)
+template <typename P1, typename P2, typename Value>
+void test_all(Value value)
 {
     test_transform_point<P1, P2>(value);
-    test_transform_linestring<P1, P2>();
+    test_transform_linestring<P1, P2>(value);
 }
 
 template <typename T, typename DegreeOrRadian>
@@ -89,9 +108,6 @@ void test_transformations(double phi, double theta, double r)
 
         BOOST_CHECK_CLOSE(bg::get<0>(sph1), bg::get<0>(sph2), 0.001);
         BOOST_CHECK_CLOSE(bg::get<1>(sph1), bg::get<1>(sph2), 0.001);
-
-        //std::cout << dsv(p) << std::endl;
-        //std::cout << dsv(sph2) << std::endl;
     }
 
     // 2: using spherical coordinates on unit sphere
@@ -104,16 +120,14 @@ void test_transformations(double phi, double theta, double r)
 
         BOOST_CHECK_CLOSE(bg::get<0>(sph1), bg::get<0>(sph2), 0.001);
         BOOST_CHECK_CLOSE(bg::get<1>(sph1), bg::get<1>(sph2), 0.001);
-
-        //std::cout << dsv(sph1) << " " << dsv(p) << " " << dsv(sph2) << std::endl;
     }
 }
 
 int test_main(int, char* [])
 {
     typedef bg::model::d2::point_xy<double > P;
-    test_all<P, P>();
-    test_all<bg::model::d2::point_xy<int>, bg::model::d2::point_xy<float> >();
+    test_all<P, P>(1.0);
+    test_all<bg::model::d2::point_xy<int>, bg::model::d2::point_xy<float> >(1.0);
 
     test_all<bg::model::point<double, 2, bg::cs::spherical<bg::degree> >,
         bg::model::point<double, 2, bg::cs::spherical<bg::radian> > >(bg::math::d2r);

@@ -17,14 +17,14 @@
 #include <boost/geometry/geometries/point.hpp>
 #include <boost/geometry/geometries/box.hpp>
 
-//#define GEOMETRY_TEST_DEBUG
+//#define BOOST_GEOMETRY_TEST_DEBUG
 
 template <typename Geometry>
 void test(Geometry const& geometry, bool expected_value)
 {
     bool value = bgi::detail::is_valid(geometry);
 
-#ifdef GEOMETRY_TEST_DEBUG
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
     std::ostringstream out;
     out << typeid(typename bg::coordinate_type<Geometry>::type).name()
         << " "

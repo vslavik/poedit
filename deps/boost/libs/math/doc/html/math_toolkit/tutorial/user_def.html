@@ -2,9 +2,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Use With User-Defined Types</title>
-<link rel="stylesheet" href="../../boostbook.css" type="text/css">
+<link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Math Toolkit">
+<link rel="home" href="../../index.html" title="Math Toolkit 1.9.0">
 <link rel="up" href="../tutorial.html" title="Tutorial">
 <link rel="prev" href="templ.html" title="Use in template code">
 <link rel="next" href="../constants.html" title="The Mathematical Constants">
@@ -254,10 +254,11 @@
       </h6>
 <p>
         In addition, for user-defined types that need special handling, it's possible
-        to [partially-] specialize the internal structure used by each constant.
-        For example, suppose we're using the C++ wrapper around MPFR <code class="computeroutput"><span class="identifier">mpfr_class</span></code>: this has its own representation
-        of Pi which we may well wish to use in place of the above mechanism. We can
-        achieve this by specialising the class template <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">constants</span><span class="special">::</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">constant_pi</span></code>:
+        to partially-specialize the internal structure used by each constant. For
+        example, suppose we're using the C++ wrapper around MPFR <code class="computeroutput"><span class="identifier">mpfr_class</span></code>:
+        this has its own representation of Pi which we may well wish to use in place
+        of the above mechanism. We can achieve this by specialising the class template
+        <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">constants</span><span class="special">::</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">constant_pi</span></code>:
       </p>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">math</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">constants</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">detail</span><span class="special">{</span>
 
@@ -318,9 +319,10 @@ the constant will be constructed from a string on each call.
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012, 2013 Paul A. Bristow, Christopher Kormanyos,
-      Hubert Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin
-      Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012, 2013 Nikhar Agrawal, Anton Bikineev,
+      Paul A. Bristow, Christopher Kormanyos, Hubert Holin, Bruno Lalande, John Maddock,
+      Johan R&#229;de, Gautam Sewani, Benjamin Sobotta, Thijs van den Berg, Daryle Walker
+      and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

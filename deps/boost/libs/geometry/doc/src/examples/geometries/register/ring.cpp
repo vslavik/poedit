@@ -27,13 +27,13 @@ int main()
     ring.push_back(point_2d(1, 1));
     ring.push_back(point_2d(2, 2));
     ring.push_back(point_2d(2, 1));
-    
-    
+
+
     // Usage of Boost.Geometry
     boost::geometry::correct(ring);
     std::cout << "Area: "  << boost::geometry::area(ring) << std::endl;
     std::cout << "WKT: "  << boost::geometry::wkt(ring) << std::endl;
-    
+
     return 0;
 }
 

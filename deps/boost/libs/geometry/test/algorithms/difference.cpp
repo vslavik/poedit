@@ -11,6 +11,10 @@
 #include <string>
 #include <iomanip>
 
+// If defined, tests are run without rescaling-to-integer or robustness policy
+// Test which would fail then are disabled automatically
+// #define BOOST_GEOMETRY_NO_ROBUSTNESS
+
 #include <boost/geometry/algorithms/correct.hpp>
 #include <boost/geometry/algorithms/perimeter.hpp>
 
@@ -44,7 +48,7 @@ void test_areal_linear()
     test_one_lp<LineString, LineString, Polygon>("case4", "LINESTRING(1 1,3 2,1 3)", "POLYGON((0 0,0 4,2 4,2 0,0 0))", 1, 3, sqrt(5.0));
 
     test_one_lp<LineString, LineString, Polygon>("case5", "LINESTRING(0 1,3 4)", poly_simplex, 2, 4, 2.0 * sqrt(2.0));
-    test_one_lp<LineString, LineString, Polygon>("case6", "LINESTRING(1 1,10 3)", "POLYGON((2 0,2 4,3 4,3 1,4 1,4 3,5 3,5 1,6 1,6 3,7 3,7 1,8 1,8 3,9 3,9 0,2 0))", 5, 10, 
+    test_one_lp<LineString, LineString, Polygon>("case6", "LINESTRING(1 1,10 3)", "POLYGON((2 0,2 4,3 4,3 1,4 1,4 3,5 3,5 1,6 1,6 3,7 3,7 1,8 1,8 3,9 3,9 0,2 0))", 5, 10,
             // Pieces are 1 x 2/9:
             5.0 * sqrt(1.0 + 4.0/81.0));
 
@@ -70,7 +74,8 @@ void test_areal_linear()
     test_one_lp<LineString, LineString, Polygon>("case19", "LINESTRING(1 2,1 3,0 3)", poly_9, 1, 2, 1.0);
     test_one_lp<LineString, LineString, Polygon>("case20", "LINESTRING(1 2,1 3,2 3)", poly_9, 0, 0, 0.0);
 
-    test_one_lp<LineString, LineString, Polygon>("case21", "LINESTRING(1 2,1 4,4 4,4 1,2 1,2 2)", poly_9, 0, 0, 0.0);
+    // PROPERTIES CHANGED BY switch_to_integer
+    // TODO test_one_lp<LineString, LineString, Polygon>("case21", "LINESTRING(1 2,1 4,4 4,4 1,2 1,2 2)", poly_9, 0, 0, 0.0);
 
     // More collinear (opposite) cases
     test_one_lp<LineString, LineString, Polygon>("case22", "LINESTRING(4 1,4 4,7 4)", poly_9, 1, 2, 3.0);
@@ -92,7 +97,6 @@ void test_all()
     typedef typename bg::coordinate_type<P>::type ct;
 
     test_areal_linear<polygon, linestring>();
-
 
     test_one<polygon, polygon, polygon>("simplex_normal",
         simplex_normal[0], simplex_normal[1],
@@ -135,12 +139,13 @@ void test_all()
         1, 5, 1.0,
         1, 5, 1.0);
 
+    // The too small one might be discarded (depending on point-type / compiler)
+    // We check area only
     test_one<polygon, polygon, polygon>("distance_zero",
         distance_zero[0], distance_zero[1],
-        2, -1, 8.7048386,
-        if_typed<ct, float>(1, 2), // The too small one is discarded for floating point
-        -1, 0.0098387);
-
+        -1, -1, 8.7048386,
+        -1, -1, 0.0098387,
+        0.001);
 
     test_one<polygon, polygon, polygon>("equal_holes_disjoint",
         equal_holes_disjoint[0], equal_holes_disjoint[1],
@@ -232,17 +237,19 @@ void test_all()
         1, 5, 1,
         1, 5, 1);
 
-    test_one<polygon, polygon, polygon>("buffer_mp1", 
+#if ! defined(BOOST_GEOMETRY_NO_ROBUSTNESS)
+    test_one<polygon, polygon, polygon>("buffer_mp1",
         buffer_mp1[0], buffer_mp1[1],
         1, 61, 10.2717,
         1, 61, 10.2717);
+#endif
 
     if (boost::is_same<ct, double>::value)
     {
-        test_one<polygon, polygon, polygon>("buffer_mp2", 
+        test_one<polygon, polygon, polygon>("buffer_mp2",
             buffer_mp2[0], buffer_mp2[1],
             1, 91, 12.09857,
-            1, 156, 24.19787);
+            1, 155, 24.19714);
     }
 
     /*** TODO: self-tangencies for difference
@@ -257,25 +264,43 @@ void test_all()
         1, 0, 13);
     ***/
 
-#ifdef _MSC_VER
-#ifdef TEST_ISOVIST
+    // Isovist - the # output polygons differ per compiler/pointtype, (very) small
+    // rings might be discarded. We check area only
     test_one<polygon, polygon, polygon>("isovist",
         isovist1[0], isovist1[1],
-        if_typed_tt<ct>(4, 2), 0, 0.279121891701124,
-        if_typed_tt<ct>(4, 3), 0, if_typed_tt<ct>(224.889211358929, 223.777),
-        if_typed_tt<ct>(0.001, 0.2));
-
+        -1, -1, 0.279121,
+        -1, -1, 224.8892,
+        0.001);
     // SQL Server gives: 0.279121891701124 and 224.889211358929
     // PostGIS gives:    0.279121991127244 and 224.889205853156
 
-#endif
+    test_one<polygon, polygon, polygon>("geos_1",
+        geos_1[0], geos_1[1],
+        21, -1, 0.31640625,
+         9, -1, 0.01953125);
+    // SQL Server gives: 0.28937764436705 and 0.000786406897532288 with 44/35 rings
+    // PostGIS gives:    0.30859375       and 0.033203125 with 35/35 rings
+
+    test_one<polygon, polygon, polygon>("geos_2",
+        geos_2[0], geos_2[1],
+        1, -1, 138.6923828,
+        1, -1, 211.859375);
+
+    test_one<polygon, polygon, polygon>("geos_3",
+        geos_3[0], geos_3[1],
+        1, -1, 16211128.5,
+        1, -1, 13180420.0);
+
+    test_one<polygon, polygon, polygon>("geos_4",
+        geos_4[0], geos_4[1],
+        1, -1, 971.9163115,
+        1, -1, 1332.4163115);
 
     test_one<polygon, polygon, polygon>("ggl_list_20110306_javier",
         ggl_list_20110306_javier[0], ggl_list_20110306_javier[1],
         1, -1, 71495.3331,
-        2, -1, 8960.49049); 
-#endif
-        
+        2, -1, 8960.49049);
+
     test_one<polygon, polygon, polygon>("ggl_list_20110307_javier",
         ggl_list_20110307_javier[0], ggl_list_20110307_javier[1],
         1, if_typed<ct, float>(14, 13), 16815.6,
@@ -294,35 +319,59 @@ void test_all()
     test_one<polygon, polygon, polygon>("ggl_list_20110820_christophe",
         ggl_list_20110820_christophe[0], ggl_list_20110820_christophe[1],
         1, -1, 2.8570121719168924,
-        1, -1, 64.498061986388564); 
+        1, -1, 64.498061986388564);
 
     test_one<polygon, polygon, polygon>("ggl_list_20120717_volker",
         ggl_list_20120717_volker[0], ggl_list_20120717_volker[1],
         1, 11, 3370866.2295081965,
-        1, 5, 384.2295081964694, 0.01); 
-             
-#ifdef _MSC_VER
-    // 2011-07-02
+        1, 5, 384.2295081964694, 0.01);
+
+    // 2011-07-02 / 2014-06-19
     // Interesting FP-precision case.
     // sql server gives: 6.62295817619452E-05
     // PostGIS gives: 0.0 (no output)
-    // Boost.Geometry gives results depending on FP-type, and compiler, and operating system.
-    // For double, it is zero (skipped). On gcc/Linux, for float either.
-    // Because we cannot predict this, we only test for MSVC
-    if (boost::is_same<ct, double>::value
-#if defined(HAVE_TTMATH)
-        || boost::is_same<ct, ttmath_big>::value
+    // Boost.Geometry gave results depending on FP-type, and compiler, and operating system.
+    // Since rescaling to integer results are equal w.r.t. compiler/FP type,
+    // however, some long spikes are still generated in the resulting difference
+    test_one<polygon, polygon, polygon>("ggl_list_20110627_phillip",
+        ggl_list_20110627_phillip[0], ggl_list_20110627_phillip[1],
+        1, -1,
+        if_typed_tt<ct>(0.0000000000001105367, 0.00021401892),
+        1, -1, 3577.40960816756,
+        0.01
+        );
+
+    // Ticket 8310, one should be completely subtracted from the other.
+    test_one<polygon, polygon, polygon>("ticket_8310a",
+        ticket_8310a[0], ticket_8310a[1],
+        1, 10, 10.11562724,
+        0, 0, 0);
+    test_one<polygon, polygon, polygon>("ticket_8310b",
+        ticket_8310b[0], ticket_8310b[1],
+        1, 10, 10.12655608,
+        0, 0, 0);
+    test_one<polygon, polygon, polygon>("ticket_8310c",
+        ticket_8310c[0], ticket_8310c[1],
+        1, 10, 10.03103292,
+        0, 0, 0);
+
+#if ! defined(BOOST_GEOMETRY_NO_ROBUSTNESS)
+    test_one<polygon, polygon, polygon>("ticket_9081_15",
+            ticket_9081_15[0], ticket_9081_15[1],
+            1, 10, 0.0334529710902111,
+            0, 0, 0);
 #endif
-        )
-    {
-        test_one<polygon, polygon, polygon>("ggl_list_20110627_phillip",
-            ggl_list_20110627_phillip[0], ggl_list_20110627_phillip[1],
-                if_typed_tt<ct>(1, 0), -1, 
-                if_typed_tt<ct>(0.0000000000001105367, 0.0), 
-            1, -1, 3577.40960816756,
-            0.01
-            );
-    }
+
+    test_one<polygon, polygon, polygon>("ticket_9081_314",
+            ticket_9081_314[0], ticket_9081_314[1],
+            2, 12, 0.0451236449624935,
+            0, 0, 0);
+
+#if ! defined(BOOST_GEOMETRY_NO_ROBUSTNESS)
+    test_one<polygon, polygon, polygon>("ticket_9563",
+            ticket_9563[0], ticket_9563[1],
+            0, 0, 0,
+            6, 24, 20.096189);
 #endif
 
     // Other combi's
@@ -360,8 +409,6 @@ void test_all()
                 5, 22, 1.1901714, 5, 27, 1.6701714);
     }
 
-
-
     // Multi/box (should be moved to multi)
     {
         /* Tested with SQL Geometry:
@@ -369,8 +416,8 @@ void test_all()
                         'MULTIPOLYGON(((0 1,2 5,5 3,0 1)),((1 1,5 2,5 0,1 1)))',0) as  p,
                   geometry::STGeomFromText(
                         'POLYGON((2 2,2 4,4 4,4 2,2 2))',0) as q)
-                  
-                select 
+
+                select
                     p.STDifference(q).STArea(),p.STDifference(q).STNumGeometries(),p.STDifference(q) as p_min_q,
                     q.STDifference(p).STArea(),q.STDifference(p).STNumGeometries(),q.STDifference(p) as q_min_p,
                     p.STSymDifference(q).STArea(),q.STSymDifference(p) as p_xor_q
@@ -480,8 +527,8 @@ void test_specific()
 
     test_one<polygon, polygon, polygon>("ggl_list_20120717_volker",
         ggl_list_20120717_volker[0], ggl_list_20120717_volker[1],
-        1, 11, 3370866.2295081965,
-        1, 5, 384, 0.01); 
+        1, 11, 3371540,
+        0, 0, 0, 0.001); // output is discarded
 }
 
 

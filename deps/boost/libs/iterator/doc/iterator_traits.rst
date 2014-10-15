@@ -9,7 +9,7 @@
 :Author: David Abrahams
 :Contact: dave@boost-consulting.com
 :organization: `Boost Consulting`_
-:date: $Date: 2008-03-22 14:45:55 -0700 (Sat, 22 Mar 2008) $
+:date: $Date$
 :copyright: Copyright David Abrahams 2004. 
 
 .. _`Boost Consulting`: http://www.boost-consulting.com

@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2004-2012. Distributed under the Boost
+// (C) Copyright Ion Gaztanaga 2004-2013. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying file
 // LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
@@ -37,123 +37,6 @@
 namespace boost{
 namespace container {
 namespace test{
-
-//
-template<int Dummy = 0>
-class default_init_allocator_base
-{
-   protected:
-   static unsigned char s_pattern;
-   static bool          s_ascending;
-
-   public:
-   static void reset_pattern(unsigned char value)
-   {  s_pattern = value;   }
-
-   static void set_ascending(bool enable)
-   {  s_ascending = enable;   }
-};
-
-template<int Dummy>
-unsigned char default_init_allocator_base<Dummy>::s_pattern = 0u;
-
-template<int Dummy>
-bool default_init_allocator_base<Dummy>::s_ascending = true;
-
-template<class T>
-class default_init_allocator
-   : public default_init_allocator_base<0>
-{
-   typedef default_init_allocator_base<0> base_t;
-   public:
-   typedef T value_type;
-
-   default_init_allocator()
-   {}
-
-   template <class U>
-   default_init_allocator(default_init_allocator<U>)
-   {}
-
-   T* allocate(std::size_t n)
-   {
-      //Initialize memory to a pattern
-      T *const p = ::new T[n];
-      unsigned char *puc_raw = reinterpret_cast<unsigned char*>(p);
-      std::size_t max = sizeof(T)*n;
-      if(base_t::s_ascending){
-         for(std::size_t i = 0; i != max; ++i){
-            puc_raw[i] = static_cast<unsigned char>(s_pattern++);
-         }
-      }
-      else{
-         for(std::size_t i = 0; i != max; ++i){
-            puc_raw[i] = static_cast<unsigned char>(s_pattern--);
-         }
-      }
-      return p;
-   }
-
-   void deallocate(T *p, std::size_t)
-   {  delete[] p;  }
-};
-
-template<class T>
-inline bool check_ascending_byte_pattern(const T&t)
-{
-   const unsigned char *pch = &reinterpret_cast<const unsigned char &>(t);
-   const std::size_t max = sizeof(T);
-   for(std::size_t i = 1; i != max; ++i){
-      if( (pch[i-1] != ((unsigned char)(pch[i]-1u))) ){
-         return false;
-      }
-   }
-   return true;
-}
-
-template<class T>
-inline bool check_descending_byte_pattern(const T&t)
-{
-   const unsigned char *pch = &reinterpret_cast<const unsigned char &>(t);
-   const std::size_t max = sizeof(T);
-   for(std::size_t i = 1; i != max; ++i){
-      if( (pch[i-1] != ((unsigned char)(pch[i]+1u))) ){
-         return false;
-      }
-   }
-   return true;
-}
-
-template<class IntDefaultInitAllocVector>
-bool default_init_test()//Test for default initialization
-{
-   const std::size_t Capacity = 100;
-
-   {
-      test::default_init_allocator<int>::reset_pattern(0);
-      test::default_init_allocator<int>::set_ascending(true);
-      IntDefaultInitAllocVector v(Capacity, default_init);
-      typename IntDefaultInitAllocVector::iterator it = v.begin();
-      //Compare with the pattern
-      for(std::size_t i = 0; i != Capacity; ++i, ++it){
-         if(!test::check_ascending_byte_pattern(*it))
-            return false;
-      }
-   }
-   {
-      test::default_init_allocator<int>::reset_pattern(100);
-      test::default_init_allocator<int>::set_ascending(false);
-      IntDefaultInitAllocVector v;
-      v.resize(Capacity, default_init);
-      typename IntDefaultInitAllocVector::iterator it = v.begin();
-      //Compare with the pattern
-      for(std::size_t i = 0; i != Capacity; ++i, ++it){
-         if(!test::check_descending_byte_pattern(*it))
-            return false;
-      }
-   }
-   return true;
-}
 
 template<class V1, class V2>
 bool vector_copyable_only(V1 *, V2 *, boost::container::container_detail::false_type)
@@ -231,15 +114,15 @@ int vector_test()
          MyStdVector *stdvector = new MyStdVector;
          boostvector->resize(100);
          stdvector->resize(100);
-         if(!test::CheckEqualContainers(boostvector, stdvector)) return 1;        
+         if(!test::CheckEqualContainers(boostvector, stdvector)) return 1;
 
          boostvector->resize(200);
          stdvector->resize(200);
-         if(!test::CheckEqualContainers(boostvector, stdvector)) return 1;        
+         if(!test::CheckEqualContainers(boostvector, stdvector)) return 1;
 
          boostvector->resize(0);
          stdvector->resize(0);
-         if(!test::CheckEqualContainers(boostvector, stdvector)) return 1;        
+         if(!test::CheckEqualContainers(boostvector, stdvector)) return 1;
 
          for(int i = 0; i < max; ++i){
             IntType new_int(i);

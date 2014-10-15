@@ -6,7 +6,7 @@
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/config for the most recent version.//
-//  Revision $Id: no_cxx11_hdr_regex_fail.cpp 78478 2012-05-15 11:57:21Z johnmaddock $
+//  Revision $Id$
 //
 
 

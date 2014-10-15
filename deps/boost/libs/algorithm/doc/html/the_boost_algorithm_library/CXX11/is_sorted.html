@@ -44,11 +44,11 @@
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">algorithm</span> <span class="special">{</span>
-	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Pred</span><span class="special">&gt;</span>
-	<span class="keyword">bool</span> <span class="identifier">is_sorted</span> <span class="special">(</span> <span class="identifier">Iterator</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">Iterator</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">Pred</span> <span class="identifier">p</span> <span class="special">);</span>
+	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">ForwardIterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Pred</span><span class="special">&gt;</span>
+	<span class="keyword">bool</span> <span class="identifier">is_sorted</span> <span class="special">(</span> <span class="identifier">ForwardIterator</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">ForwardIterator</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">Pred</span> <span class="identifier">p</span> <span class="special">);</span>
 	
-	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
-	<span class="keyword">bool</span> <span class="identifier">is_sorted</span> <span class="special">(</span> <span class="identifier">Iterator</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">Iterator</span> <span class="identifier">last</span> <span class="special">);</span>
+	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">ForwardIterator</span><span class="special">&gt;</span>
+	<span class="keyword">bool</span> <span class="identifier">is_sorted</span> <span class="special">(</span> <span class="identifier">ForwardIterator</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">ForwardIterator</span> <span class="identifier">last</span> <span class="special">);</span>
 	
 	
 	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Range</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Pred</span><span class="special">&gt;</span>
@@ -62,7 +62,7 @@
       </p>
 <p>
         Iterator requirements: The <code class="computeroutput"><span class="identifier">is_sorted</span></code>
-        functions will work on all kinds of iterators (except output iterators).
+        functions will work forward iterators or better.
       </p>
 <h5>
 <a name="the_boost_algorithm_library.CXX11.is_sorted.h1"></a>
@@ -159,8 +159,8 @@
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">algorithm</span> <span class="special">{</span>
-	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
-	<span class="keyword">bool</span> <span class="identifier">is_decreasing</span> <span class="special">(</span> <span class="identifier">Iterator</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">Iterator</span> <span class="identifier">last</span> <span class="special">);</span>
+	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">ForwardIterator</span><span class="special">&gt;</span>
+	<span class="keyword">bool</span> <span class="identifier">is_decreasing</span> <span class="special">(</span> <span class="identifier">ForwardIterator</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">ForwardIterator</span> <span class="identifier">last</span> <span class="special">);</span>
 	
 	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">R</span><span class="special">&gt;</span>
 	<span class="keyword">bool</span> <span class="identifier">is_decreasing</span> <span class="special">(</span> <span class="keyword">const</span> <span class="identifier">R</span> <span class="special">&amp;</span><span class="identifier">range</span> <span class="special">);</span>
@@ -173,8 +173,8 @@
         preceding one):
 </p>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">algorithm</span> <span class="special">{</span>
-	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
-	<span class="keyword">bool</span> <span class="identifier">is_strictly_increasing</span> <span class="special">(</span> <span class="identifier">Iterator</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">Iterator</span> <span class="identifier">last</span> <span class="special">);</span>
+	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">ForwardIterator</span><span class="special">&gt;</span>
+	<span class="keyword">bool</span> <span class="identifier">is_strictly_increasing</span> <span class="special">(</span> <span class="identifier">ForwardIterator</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">ForwardIterator</span> <span class="identifier">last</span> <span class="special">);</span>
 	
 	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">R</span><span class="special">&gt;</span>
 	<span class="keyword">bool</span> <span class="identifier">is_strictly_increasing</span> <span class="special">(</span> <span class="keyword">const</span> <span class="identifier">R</span> <span class="special">&amp;</span><span class="identifier">range</span> <span class="special">);</span>
@@ -187,8 +187,8 @@
         preceding one):
 </p>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">algorithm</span> <span class="special">{</span>
-	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
-	<span class="keyword">bool</span> <span class="identifier">is_strictly_decreasing</span> <span class="special">(</span> <span class="identifier">Iterator</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">Iterator</span> <span class="identifier">last</span> <span class="special">);</span>
+	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">ForwardIterator</span><span class="special">&gt;</span>
+	<span class="keyword">bool</span> <span class="identifier">is_strictly_decreasing</span> <span class="special">(</span> <span class="identifier">ForwardIterator</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">ForwardIterator</span> <span class="identifier">last</span> <span class="special">);</span>
 	
 	<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">R</span><span class="special">&gt;</span>
 	<span class="keyword">bool</span> <span class="identifier">is_strictly_decreasing</span> <span class="special">(</span> <span class="keyword">const</span> <span class="identifier">R</span> <span class="special">&amp;</span><span class="identifier">range</span> <span class="special">);</span>

@@ -1,7 +1,7 @@
 [/==============================================================================
-    Copyright (C) 2001-2011 Joel de Guzman
-    Copyright (C) 2001-2011 Hartmut Kaiser
-    Copyright (C) 2011 Thomas Bernard
+    Copyright (C) 2001-2012 Joel de Guzman
+    Copyright (C) 2001-2012 Hartmut Kaiser
+    Copyright (C) 2011-2012 Thomas Bernard
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -11,7 +11,7 @@
 
 [heading Description]
 
-The `kwd[]` and `ikwd[]` provide a powerful and flexible mechanism for parsing keyword
+The `kwd[]`, `dkwd[]` and `ikwd[]`, `idkwd[]` provide a powerful and flexible mechanism for parsing keyword
 based input. It works in conjuction with the / operator to create an effective
 keyword parsing loop. The keyword parsing loop doesn't require the 
 keywords to appear in a defined order in the input but also provides the possibility
@@ -21,6 +21,17 @@ The kwd directive will parse the keywords respecting case sensitivity whereas th
 direcive is case insensitive. You can mix the kwd and ikwd directives inside a set of 
 keywords, but be aware that this has a small overhead. It should be prefered not to 
 mix the kwd and ikwd directives.
+
+The dkwd and idkwd provide a mechanism to pase distinct keywords. These directives require
+that the skipper successeds parsing input right after the keyword part. 
+
+dkwd("keyword1")['='>>int_]
+
+is equivalent to:
+
+lit("keyword1") >> skipper+ >> '=' >> int_
+
+All the keyword directives can be mixed inside a keyword list.
 
 The kwd directive is very similar to the repeat directive in that it enables to enforce
 keyword occurence constraints but also provides very interesting speed improvement
@@ -42,6 +53,7 @@ over the pure EBNF syntax or the Nabialek-Trick.
 ]
 
 For non case sensitive keywords use the ikwd directive.
+If distinct keyword parsing is required, use the dkwd and idkwd directive instead.
 
 [heading Parameters]
 
@@ -54,8 +66,8 @@ For non case sensitive keywords use the ikwd directive.
     [[`max`]            [Int representing the maximum number of times the keyword must be repeated.]]
 ]
 
-All three parameters can be arbitrarily complex parsers themselves.
-
+The keyword as well as the subject parameters can be any valid spirit parser.
+The parameter n, min and max are integer constants.
 
 [heading Attributes]
 
@@ -81,11 +93,14 @@ a: Unused --> kwd(k1,min, inf)[a]: Unused``]]
 parser. The complexity of the keyword list construct `kwd` itself is O(N), where N is the number
 of repetitions executed.
 
-The complexity of the keyword list itself determined by the complexity of the internal TST contents :
+In the case where all the keywords are strings, the complexity of the keyword list itself determined by the complexity of the internal TST contents :
 
 O(log n+k)
 
 Where k is the length of the string to be searched in a TST with n strings.
+
+When the keywords used are complex parsers, then the complexity is the sum of the sub parser complexities.
+ 
 ]
 
 [heading Example]

@@ -13,11 +13,12 @@
 #define BOOST_MATH_SMALL_CONSTANT(x) x
 
 #if !defined(TEST_MPF_50) && !defined(TEST_BACKEND) && !defined(TEST_CPP_DEC_FLOAT) \
-      && !defined(TEST_MPFR_50) && !defined(TEST_FLOAT128)
+      && !defined(TEST_MPFR_50) && !defined(TEST_FLOAT128) && !defined(TEST_CPP_BIN_FLOAT)
 #  define TEST_MPF_50
 #  define TEST_MPFR_50
 #  define TEST_CPP_DEC_FLOAT
 #  define TEST_FLOAT128
+#  define TEST_CPP_BIN_FLOAT
 
 #ifdef _MSC_VER
 #pragma message("CAUTION!!: No backend type specified so testing everything.... this will take some time!!")
@@ -91,6 +92,19 @@ typedef boost::multiprecision::number<boost::multiprecision::cpp_dec_float<35, l
 
 #endif
 
+#ifdef TEST_CPP_BIN_FLOAT
+#include <boost/multiprecision/cpp_bin_float.hpp>
+
+#define CPP_BIN_FLOAT_TESTS test(cpp_bin_float_quad(), "cpp_bin_float_quad");
+
+typedef boost::multiprecision::cpp_bin_float_quad test_type_1;
+
+#else
+
+#define CPP_BIN_FLOAT_TESTS
+
+#endif
+
 #ifdef TEST_FLOAT128
 #include <boost/multiprecision/float128.hpp>
 
@@ -115,13 +129,15 @@ typedef boost::multiprecision::float128 test_type_1;
  MPF_TESTS\
  MPFR_TESTS\
  CPP_DEC_FLOAT_TESTS\
- FLOAT128_TESTS
+ FLOAT128_TESTS\
+ CPP_BIN_FLOAT_TESTS
 
 #define ALL_SMALL_TESTS\
  MPF_SMALL_TESTS\
  MPFR_TESTS\
  CPP_DEC_FLOAT_TESTS\
- FLOAT128_TESTS
+ FLOAT128_TESTS\
+ CPP_BIN_FLOAT_TESTS
 
 #endif
 

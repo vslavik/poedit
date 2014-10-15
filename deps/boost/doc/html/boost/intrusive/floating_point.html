@@ -35,7 +35,7 @@
 <span class="keyword">struct</span> <a class="link" href="floating_point.html" title="Struct template floating_point">floating_point</a> <span class="special">{</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp138664888"></a><h2>Description</h2>
+<a name="idp291362384"></a><h2>Description</h2>
 <p>This option setter for scapegoat containers specifies if the intrusive scapegoat container should use a non-variable alpha value that does not need floating-point operations.</p>
 <p>If activated, the fixed alpha value is 1/sqrt(2). This option also saves some space in the container since the alpha value and some additional data does not need to be stored in the container.</p>
 <p>If the user only needs an alpha value near 1/sqrt(2), this option also improves performance since avoids logarithm and division operations when rebalancing the tree. </p>

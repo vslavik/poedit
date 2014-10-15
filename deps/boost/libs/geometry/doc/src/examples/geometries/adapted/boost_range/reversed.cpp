@@ -23,9 +23,9 @@ int main()
     boost::geometry::model::linestring<xy> line;
     line.push_back(xy(0, 0));
     line.push_back(xy(1, 1));
-    
-    std::cout 
-        << boost::geometry::dsv(line | boost::adaptors::reversed) 
+
+    std::cout
+        << boost::geometry::dsv(line | boost::adaptors::reversed)
         << std::endl;
 
     return 0;

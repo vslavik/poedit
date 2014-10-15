@@ -192,7 +192,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         }
 
         template <typename Component>
-        bool operator()(Component const& component)
+        bool operator()(Component const& component) const
         {
             // return true if the parser succeeds
             return component.parse(first, last, context, skipper,

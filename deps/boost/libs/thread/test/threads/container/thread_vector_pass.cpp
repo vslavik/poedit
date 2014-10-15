@@ -7,7 +7,7 @@
 
 #include <boost/thread/thread.hpp>
 #include <boost/thread/mutex.hpp>
-#include <boost/container/vector.hpp>
+#include <boost/thread/csbl/vector.hpp>
 #include <iostream>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/static_assert.hpp>
@@ -50,7 +50,7 @@ BOOST_STATIC_ASSERT(::boost::is_function<boost::rv<boost::rv<boost::thread> >&>:
 
 int main()
 {
-  typedef boost::container::vector<boost::thread> thread_vector;
+  typedef boost::csbl::vector<boost::thread> thread_vector;
   {
     thread_vector threads;
     threads.reserve(10);
@@ -92,5 +92,6 @@ int main()
     interrupt_all(threads);
     join_all(threads);
   }
+
   return boost::report_errors();
 }

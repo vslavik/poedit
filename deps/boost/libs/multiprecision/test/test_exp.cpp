@@ -18,13 +18,14 @@
 
 #if !defined(TEST_MPF_50) && !defined(TEST_MPF) && !defined(TEST_BACKEND) \
       && !defined(TEST_CPP_DEC_FLOAT) && !defined(TEST_MPFR) \
-      && !defined(TEST_MPFR_50) && !defined(TEST_MPFI_50) && !defined(TEST_FLOAT128)
+      && !defined(TEST_MPFR_50) && !defined(TEST_MPFI_50) && !defined(TEST_FLOAT128) && !defined(TEST_CPP_BIN_FLOAT)
 #  define TEST_MPF_50
 //#  define TEST_MPF
 #  define TEST_BACKEND
 #  define TEST_CPP_DEC_FLOAT
 #  define TEST_MPFI_50
 #  define TEST_FLOAT128
+#  define TEST_CPP_BIN_FLOAT
 
 #ifdef _MSC_VER
 #pragma message("CAUTION!!: No backend type specified so testing everything.... this will take some time!!")
@@ -52,6 +53,9 @@
 #endif
 #ifdef TEST_FLOAT128
 #include <boost/multiprecision/float128.hpp>
+#endif
+#ifdef TEST_CPP_BIN_FLOAT
+#include <boost/multiprecision/cpp_bin_float.hpp>
 #endif
 
 template <class T>
@@ -136,6 +140,8 @@ void test()
    std::cout << "Max error was: " << max_err << std::endl;
 #if defined(BOOST_INTEL) && defined(TEST_FLOAT128)
    BOOST_TEST(max_err < 40000);
+#elif defined(TEST_CPP_BIN_FLOAT)
+   BOOST_TEST(max_err < 6000);
 #else
    BOOST_TEST(max_err < 5000);
 #endif
@@ -173,7 +179,7 @@ void test()
       }
    }
    std::cout << "Max error was: " << max_err << std::endl;
-   BOOST_TEST(max_err < 10);
+   BOOST_TEST(max_err < 20);
 
    BOOST_TEST(exp(T(0)) == 1);
 }
@@ -216,6 +222,9 @@ int main()
 #endif
 #ifdef TEST_FLOAT128
    test<boost::multiprecision::float128>();
+#endif
+#ifdef TEST_CPP_BIN_FLOAT
+   test<boost::multiprecision::cpp_bin_float_50>();
 #endif
    return boost::report_errors();
 }

@@ -13,6 +13,7 @@
 #define BOOST_INTRUSIVE_SPLAYTREE_HPP
 
 #include <boost/intrusive/detail/config_begin.hpp>
+#include <boost/intrusive/intrusive_fwd.hpp>
 #include <cstddef>
 #include <functional>
 #include <iterator>
@@ -20,8 +21,6 @@
 
 #include <boost/intrusive/detail/assert.hpp>
 #include <boost/static_assert.hpp>
-#include <boost/intrusive/intrusive_fwd.hpp>
-#include <boost/intrusive/splay_set_hook.hpp>
 #include <boost/intrusive/bstree.hpp>
 #include <boost/intrusive/detail/tree_node.hpp>
 #include <boost/intrusive/detail/ebo_functor_holder.hpp>
@@ -45,6 +44,7 @@ struct splaytree_defaults
    static const bool constant_time_size = true;
    typedef std::size_t size_type;
    typedef void compare;
+   typedef void header_holder_type;
 };
 
 /// @endcond
@@ -65,19 +65,19 @@ struct splaytree_defaults
 #if defined(BOOST_INTRUSIVE_DOXYGEN_INVOKED)
 template<class T, class ...Options>
 #else
-template<class ValueTraits, class VoidOrKeyComp, class SizeType, bool ConstantTimeSize>
+template<class ValueTraits, class VoidOrKeyComp, class SizeType, bool ConstantTimeSize, typename HeaderHolder>
 #endif
 class splaytree_impl
    /// @cond
-   :  public bstree_impl<ValueTraits, VoidOrKeyComp, SizeType, ConstantTimeSize, SplayTreeAlgorithms>
+   :  public bstree_impl<ValueTraits, VoidOrKeyComp, SizeType, ConstantTimeSize, SplayTreeAlgorithms, HeaderHolder>
    /// @endcond
 {
    public:
    typedef ValueTraits                                               value_traits;
    /// @cond
    typedef bstree_impl< ValueTraits, VoidOrKeyComp, SizeType
-                      , ConstantTimeSize, SplayTreeAlgorithms>       tree_type;
-   typedef typename tree_type::real_value_traits                     real_value_traits;
+                      , ConstantTimeSize, SplayTreeAlgorithms
+                      , HeaderHolder>                               tree_type;
    typedef tree_type                                                 implementation_defined;
    /// @endcond
 
@@ -267,7 +267,6 @@ class splaytree_impl
 
    //! @copydoc ::boost::intrusive::bstree::erase(const KeyType&,KeyValueCompare)
    template<class KeyType, class KeyValueCompare>
-
    size_type erase(const KeyType& key, KeyValueCompare comp);
 
    //! @copydoc ::boost::intrusive::bstree::erase_and_dispose(const_iterator,Disposer)
@@ -293,59 +292,31 @@ class splaytree_impl
    template<class Disposer>
    void clear_and_dispose(Disposer disposer);
 
-   #endif   //#ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
-
    //! @copydoc ::boost::intrusive::bstree::count(const_reference)const
-   //! Additional note: non-const function, splaying is performed for the first
-   //! element of the equal range of "value"
-   size_type count(const_reference value)
-   {  return this->count(value, this->value_comp());  }
+   //! Additional note: non-const function, splaying is performed.
+   size_type count(const_reference value);
 
    //! @copydoc ::boost::intrusive::bstree::count(const KeyType&,KeyValueCompare)const
-   //! Additional note: non-const function, splaying is performed for the first
-   //! element of the equal range of "key"
+   //! Additional note: non-const function, splaying is performed.
    template<class KeyType, class KeyValueCompare>
-   size_type count(const KeyType &key, KeyValueCompare comp)
-   {
-      std::pair<const_iterator, const_iterator> ret = this->equal_range(key, comp);
-      return std::distance(ret.first, ret.second);
-   }
+   size_type count(const KeyType &key, KeyValueCompare comp);
 
    //! @copydoc ::boost::intrusive::bstree::count(const_reference)const
-   //! Additional note: Deprecated function, use count const overload instead.
-   size_type count(const_reference value) const
-   {  return tree_type::count(value);  }
+   //! Additional note: const function, no splaying is performed
+   size_type count(const_reference value) const;
 
    //! @copydoc ::boost::intrusive::bstree::count(const KeyType&,KeyValueCompare)const
-   //! Additional note: Deprecated function, use count const overload instead.
+   //! Additional note: const function, no splaying is performed
    template<class KeyType, class KeyValueCompare>
-   size_type count(const KeyType &key, KeyValueCompare comp) const
-   {  return tree_type::count(key, comp);  }
+   size_type count(const KeyType &key, KeyValueCompare comp) const;
 
-   //! @copydoc ::boost::intrusive::bstree::count(const_reference)const
-   //! Additional note: Deprecated function, use count const overload instead.
-   size_type count_dont_splay(const_reference value) const
-   {  return tree_type::count(value);  }
-
-   //! @copydoc ::boost::intrusive::bstree::count(const KeyType&,KeyValueCompare)const
-   //! Additional note: Deprecated function, use count const overload instead.
-   template<class KeyType, class KeyValueCompare>
-   size_type count_dont_splay(const KeyType &key, KeyValueCompare comp) const
-   {  return tree_type::count(key, comp);  }
-
-   #ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
    //! @copydoc ::boost::intrusive::bstree::lower_bound(const_reference)
-   //! Additional note: non-const function, splaying is performed for the first
-   //! element of the equal range of "value"
+   //! Additional note: non-const function, splaying is performed.
    iterator lower_bound(const_reference value);
 
    //! @copydoc ::boost::intrusive::bstree::lower_bound(const_reference)const
    //! Additional note: const function, no splaying is performed
    const_iterator lower_bound(const_reference value) const;
-
-   //! @copydoc ::boost::intrusive::bstree::lower_bound(const_reference)const
-   //! Additional note: Deprecated function, use lower_bound const overload instead.
-   const_iterator lower_bound_dont_splay(const_reference value) const;
 
    //! @copydoc ::boost::intrusive::bstree::lower_bound(const KeyType&,KeyValueCompare)
    //! Additional note: non-const function, splaying is performed for the first
@@ -358,11 +329,6 @@ class splaytree_impl
    template<class KeyType, class KeyValueCompare>
    const_iterator lower_bound(const KeyType &key, KeyValueCompare comp) const;
 
-   //! @copydoc ::boost::intrusive::bstree::lower_bound(const KeyType&,KeyValueCompare)
-   //! Additional note: Deprecated function, use lower_bound const overload instead.
-   template<class KeyType, class KeyValueCompare>
-   iterator lower_bound_dont_splay(const KeyType &key, KeyValueCompare comp) const;
-
    //! @copydoc ::boost::intrusive::bstree::upper_bound(const_reference)
    //! Additional note: non-const function, splaying is performed for the first
    //! element of the equal range of "value"
@@ -371,10 +337,6 @@ class splaytree_impl
    //! @copydoc ::boost::intrusive::bstree::upper_bound(const_reference)const
    //! Additional note: const function, no splaying is performed
    const_iterator upper_bound(const_reference value) const;
-
-   //! @copydoc ::boost::intrusive::bstree::upper_bound(const_reference)const
-   //! Additional note: Deprecated function, use upper_bound const overload instead.
-   const_iterator upper_bound_dont_splay(const_reference value) const;
 
    //! @copydoc ::boost::intrusive::bstree::upper_bound(const KeyType&,KeyValueCompare)
    //! Additional note: non-const function, splaying is performed for the first
@@ -387,11 +349,6 @@ class splaytree_impl
    template<class KeyType, class KeyValueCompare>
    const_iterator upper_bound(const KeyType &key, KeyValueCompare comp) const;
 
-   //! @copydoc ::boost::intrusive::bstree::upper_bound(const KeyType&,KeyValueCompare)
-   //! Additional note: Deprecated function, use upper_bound const overload instead.
-   template<class KeyType, class KeyValueCompare>
-   const_iterator upper_bound_dont_splay(const KeyType &key, KeyValueCompare comp) const;
-
    //! @copydoc ::boost::intrusive::bstree::find(const_reference)
    //! Additional note: non-const function, splaying is performed for the first
    //! element of the equal range of "value"
@@ -400,10 +357,6 @@ class splaytree_impl
    //! @copydoc ::boost::intrusive::bstree::find(const_reference)const
    //! Additional note: const function, no splaying is performed
    const_iterator find(const_reference value) const;
-
-   //! @copydoc ::boost::intrusive::bstree::find(const_reference)const
-   //! Additional note: Deprecated function, use find const overload instead.
-   const_iterator find_dont_splay(const_reference value) const;
 
    //! @copydoc ::boost::intrusive::bstree::find(const KeyType&,KeyValueCompare)
    //! Additional note: non-const function, splaying is performed for the first
@@ -416,11 +369,6 @@ class splaytree_impl
    template<class KeyType, class KeyValueCompare>
    const_iterator find(const KeyType &key, KeyValueCompare comp) const;
 
-   //! @copydoc ::boost::intrusive::bstree::find(const KeyType&,KeyValueCompare)const
-   //! Additional note: Deprecated function, use find const overload instead.
-   template<class KeyType, class KeyValueCompare>
-   const_iterator find_dont_splay(const KeyType &key, KeyValueCompare comp) const;
-
    //! @copydoc ::boost::intrusive::bstree::equal_range(const_reference)
    //! Additional note: non-const function, splaying is performed for the first
    //! element of the equal range of "value"
@@ -429,10 +377,6 @@ class splaytree_impl
    //! @copydoc ::boost::intrusive::bstree::equal_range(const_reference)const
    //! Additional note: const function, no splaying is performed
    std::pair<const_iterator, const_iterator> equal_range(const_reference value) const;
-
-   //! @copydoc ::boost::intrusive::bstree::equal_range(const_reference)const
-   //! Additional note: Deprecated function, use equal_range const overload instead.
-   std::pair<const_iterator, const_iterator> equal_range_dont_splay(const_reference value) const;
 
    //! @copydoc ::boost::intrusive::bstree::equal_range(const KeyType&,KeyValueCompare)
    //! Additional note: non-const function, splaying is performed for the first
@@ -444,11 +388,6 @@ class splaytree_impl
    //! Additional note: const function, no splaying is performed
    template<class KeyType, class KeyValueCompare>
    std::pair<const_iterator, const_iterator> equal_range(const KeyType &key, KeyValueCompare comp) const;
-
-   //! @copydoc ::boost::intrusive::bstree::equal_range(const KeyType&,KeyValueCompare)
-   //! Additional note: Deprecated function, use equal_range const overload instead.
-   template<class KeyType, class KeyValueCompare>
-   std::pair<const_iterator, const_iterator> equal_range_dont_splay(const KeyType &key, KeyValueCompare comp) const;
 
    //! @copydoc ::boost::intrusive::bstree::bounded_range(const_reference,const_reference,bool,bool)
    std::pair<iterator,iterator> bounded_range
@@ -467,17 +406,6 @@ class splaytree_impl
    template<class KeyType, class KeyValueCompare>
    std::pair<const_iterator, const_iterator> bounded_range
          (const KeyType& lower_key, const KeyType& upper_key, KeyValueCompare comp, bool left_closed, bool right_closed) const;
-
-   //! @copydoc ::boost::intrusive::bstree::bounded_range(const_reference,const_reference,bool,bool)const
-   //! Additional note: Deprecated function, use bounded_range const overload instead.
-   std::pair<const_iterator, const_iterator> bounded_range_dont_splay
-      (const_reference lower_value, const_reference upper_value, bool left_closed, bool right_closed) const;
-
-   //! @copydoc ::boost::intrusive::bstree::bounded_range(const KeyType&,const KeyType&,KeyValueCompare,bool,bool)const
-   //! Additional note: Deprecated function, use bounded_range const overload instead.
-   template<class KeyType, class KeyValueCompare>
-   std::pair<const_iterator, const_iterator> bounded_range_dont_splay
-      (const KeyType& lower_key, const KeyType& upper_key, KeyValueCompare comp, bool left_closed, bool right_closed) const;
 
    //! @copydoc ::boost::intrusive::bstree::s_iterator_to(reference)
    static iterator s_iterator_to(reference value);
@@ -529,10 +457,10 @@ class splaytree_impl
    template<class KeyType, class KeyValueCompare>
    iterator splay_down(const KeyType &key, KeyValueCompare comp)
    {
-      detail::key_nodeptr_comp<value_compare, real_value_traits>
-         key_node_comp(comp, &this->get_real_value_traits());
+      detail::key_nodeptr_comp<value_compare, value_traits>
+         key_node_comp(comp, &this->get_value_traits());
       node_ptr r = node_algorithms::splay_down(tree_type::header_ptr(), key, key_node_comp);
-      return iterator(r, this->real_value_traits_ptr());
+      return iterator(r, this->priv_value_traits_ptr());
    }
 
    //! <b>Effects</b>: Rearranges the container so that if *this stores an element
@@ -587,7 +515,8 @@ void swap(splaytree_impl<T, Options...> &x, splaytree_impl<T, Options...> &y);
 template<class T, class ...Options>
 #else
 template<class T, class O1 = void, class O2 = void
-                , class O3 = void, class O4 = void>
+                , class O3 = void, class O4 = void
+                , class O5 = void>
 #endif
 struct make_splaytree
 {
@@ -595,7 +524,7 @@ struct make_splaytree
    typedef typename pack_options
       < splaytree_defaults,
       #if !defined(BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-      O1, O2, O3, O4
+      O1, O2, O3, O4, O5
       #else
       Options...
       #endif
@@ -603,12 +532,15 @@ struct make_splaytree
 
    typedef typename detail::get_value_traits
       <T, typename packed_options::proto_value_traits>::type value_traits;
+   typedef typename detail::get_header_holder_type
+      < value_traits, typename packed_options::header_holder_type >::type header_holder_type;
 
    typedef splaytree_impl
          < value_traits
          , typename packed_options::compare
          , typename packed_options::size_type
          , packed_options::constant_time_size
+         , header_holder_type
          > implementation_defined;
    /// @endcond
    typedef implementation_defined type;
@@ -618,14 +550,14 @@ struct make_splaytree
 #ifndef BOOST_INTRUSIVE_DOXYGEN_INVOKED
 
 #if !defined(BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-template<class T, class O1, class O2, class O3, class O4>
+template<class T, class O1, class O2, class O3, class O4, class O5>
 #else
 template<class T, class ...Options>
 #endif
 class splaytree
    :  public make_splaytree<T,
       #if !defined(BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-      O1, O2, O3, O4
+      O1, O2, O3, O4, O5
       #else
       Options...
       #endif
@@ -634,7 +566,7 @@ class splaytree
    typedef typename make_splaytree
       <T,
       #if !defined(BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-      O1, O2, O3, O4
+      O1, O2, O3, O4, O5
       #else
       Options...
       #endif
@@ -644,14 +576,13 @@ class splaytree
    public:
    typedef typename Base::value_compare      value_compare;
    typedef typename Base::value_traits       value_traits;
-   typedef typename Base::real_value_traits  real_value_traits;
    typedef typename Base::iterator           iterator;
    typedef typename Base::const_iterator     const_iterator;
    typedef typename Base::reverse_iterator           reverse_iterator;
    typedef typename Base::const_reverse_iterator     const_reverse_iterator;
 
    //Assert if passed value traits are compatible with the type
-   BOOST_STATIC_ASSERT((detail::is_same<typename real_value_traits::value_type, T>::value));
+   BOOST_STATIC_ASSERT((detail::is_same<typename value_traits::value_type, T>::value));
 
    explicit splaytree( const value_compare &cmp = value_compare()
                      , const value_traits &v_traits = value_traits())

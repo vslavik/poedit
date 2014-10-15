@@ -10,7 +10,7 @@
 // which use wchar_t as 2 byte objects will emit warnings.  These should be
 // ignored.
 
-#include <algorithm>
+#include <algorithm> // std::copy
 #include <fstream>
 #include <iostream>
 #include <iterator>

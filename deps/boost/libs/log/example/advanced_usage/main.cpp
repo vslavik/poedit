@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2014.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -22,7 +22,7 @@
 #include <iostream>
 #include <fstream>
 #include <boost/smart_ptr/shared_ptr.hpp>
-#include <boost/utility/empty_deleter.hpp>
+#include <boost/core/null_deleter.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/log/common.hpp>
 #include <boost/log/expressions.hpp>
@@ -113,7 +113,7 @@ int main(int argc, char* argv[])
         // interference of other threads that might be trying to log.
 
         // Next we add streams to which logging records should be output
-        shared_ptr< std::ostream > pStream(&std::clog, boost::empty_deleter());
+        shared_ptr< std::ostream > pStream(&std::clog, boost::null_deleter());
         pBackend->add_stream(pStream);
 
         // We can add more than one stream to the sink backend

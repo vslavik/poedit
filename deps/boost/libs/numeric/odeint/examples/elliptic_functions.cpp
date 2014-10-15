@@ -1,8 +1,8 @@
 /*
  * elliptic_functions.cpp
  *
- * Copyright 2009-2012 Karsten Ahnert
- * Copyright 2009-2012 Mario Mulansky
+ * Copyright 2011-2013 Mario Mulansky
+ * Copyright 2011-2012 Karsten Ahnert
  *
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or
@@ -76,7 +76,9 @@ int main()
     typedef controlled_runge_kutta< dopri5_type > controlled_dopri5_type;
     typedef dense_output_runge_kutta< controlled_dopri5_type > dense_output_dopri5_type;
 
-    dense_output_dopri5_type dopri5( controlled_dopri5_type( default_error_checker< double >( 1E-9 , 0.0 , 0.0 , 0.0 )  ) );
+
+    dense_output_dopri5_type dopri5 = make_dense_output( 1E-9 , 1E-9 , dopri5_type() );
+    //dense_output_dopri5_type dopri5( controlled_dopri5_type( default_error_checker< double >( 1E-9 , 0.0 , 0.0 , 0.0 )  ) );
 
     state_type x3 = {{ 0.0 , 1.0 , 1.0 }};
 

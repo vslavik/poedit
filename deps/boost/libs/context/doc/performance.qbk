@@ -8,33 +8,26 @@
 [section:performance Performance]
 
 Performance of __boost_context__ was measured on the platforms shown in the
-following table. Performance measurements were taken using `rdtsc`, with
-overhead corrections, on x86 platforms. In each case, stack protection was
-active, cache warm-up was accounted for, and the one running thread was pinned
+following table. Performance measurements were taken using `rdtsc` and
+`boost::chrono::high_resolution_clock`, with
+overhead corrections, on x86 platforms. In each case, cache warm-up was
+accounted for, and the one running thread was pinned
 to a single CPU. The code was compiled using the build options,
 'variant = release cxxflags = -DBOOST_DISABLE_ASSERTS'.
 
-Applying `-DBOOST_USE_UCONTEXT` to cxxflags the performance of `ucontext` will
-be measured too.
-
-The numbers in the table are the number of cycles per iteration, based upon an
-average computed over 10 iterations.
-
 [table Performance of context switch
-    [[Platform] [ucontext_t] [fcontext_t with fpu] [fcontext_t without fpu] [boost::function]]
+    [[Platform] [ucontext_t] [fcontext_t] [windows fibers]]
     [
-        [AMD Athlon 64 DualCore 4400+ (32bit Linux)]
-        [846 cycles]
-        [65 cycles]
-        [43 cycles]
-        [15 cycles]
+        [i386 [footnote AMD Athlon 64 DualCore 4400+]]
+        [708 ns / 754 cycles]
+        [37 ns / 37 cycles]
+        [ ns /  cycles]
     ]
     [
-        [Intel Core2 Q6700 (64bit Linux)]
-        [1481 cycles]
-        [172 cycles]
-        [63 cycles]
-        [25 cycles]
+        [x86_64 [footnote Intel Core2 Q6700]]
+        [547 ns / 1433 cycles]
+        [8 ns / 23 cycles]
+        [ ns /  cycles]
     ]
 ]
 

@@ -17,7 +17,7 @@
 #endif
 
 #include <boost/phoenix/core.hpp>
-#include <boost/phoenix/bind/bind_member_function.hpp>
+#include <boost/phoenix/bind.hpp>
 
 #if defined(BOOST_MSVC) && (BOOST_MSVC < 1300)
 #pragma warning(push, 3)

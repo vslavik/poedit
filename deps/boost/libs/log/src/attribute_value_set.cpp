@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2014.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -267,7 +267,7 @@ public:
     {
         // First try to find an acquired element
         bucket& b = get_bucket(key.id());
-        register node* p = b.first;
+        node* p = b.first;
         if (p)
         {
             // The bucket is not empty, search among the elements
@@ -330,7 +330,7 @@ private:
         typedef node_list::value_traits value_traits;
 
         // All elements within the bucket are sorted to speedup the search.
-        register node* p = b.first;
+        node* p = b.first;
         while (p != b.last && p->m_Value.first.id() < key.id())
         {
             p = value_traits::to_value_ptr(node_traits::get_next(p));
@@ -391,26 +391,33 @@ private:
             p = new node(key, data, true);
         }
 
+        node_list::iterator it;
         if (b.first == NULL)
         {
             // The bucket is empty
             b.first = b.last = p;
-            m_Nodes.push_back(*p);
+            it = m_Nodes.end();
+        }
+        else if (where == b.first)
+        {
+            // The new element should become the first element of the bucket
+            it = m_Nodes.iterator_to(*where);
+            b.first = p;
         }
         else if (where == b.last && key.id() > where->m_Value.first.id())
         {
             // The new element should become the last element of the bucket
-            node_list::iterator it = m_Nodes.iterator_to(*where);
+            it = m_Nodes.iterator_to(*where);
             ++it;
-            m_Nodes.insert(it, *p);
             b.last = p;
         }
         else
         {
             // The new element should be within the bucket
-            node_list::iterator it = m_Nodes.iterator_to(*where);
-            m_Nodes.insert(it, *p);
+            it = m_Nodes.iterator_to(*where);
         }
+
+        m_Nodes.insert(it, *p);
 
         return p;
     }
@@ -423,7 +430,7 @@ private:
         {
             key_type key = it->first;
             bucket& b = get_bucket(key.id());
-            register node* p = b.first;
+            node* p = b.first;
             if (p)
             {
                 p = find_in_bucket(key, b);

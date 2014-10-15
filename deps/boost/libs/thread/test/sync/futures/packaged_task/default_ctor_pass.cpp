@@ -27,7 +27,7 @@
 
 #include <boost/thread/future.hpp>
 #include <boost/detail/lightweight_test.hpp>
-
+#include <string>
 
 int main()
 {

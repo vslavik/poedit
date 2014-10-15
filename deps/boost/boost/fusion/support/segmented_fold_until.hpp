@@ -7,6 +7,7 @@
 #if !defined(BOOST_FUSION_SEGMENTED_FOLD_UNTIL_HPP_INCLUDED)
 #define BOOST_FUSION_SEGMENTED_FOLD_UNTIL_HPP_INCLUDED
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/type_traits/is_const.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/fusion/support/detail/segmented_fold_until_impl.hpp>
@@ -44,6 +45,7 @@ namespace boost { namespace fusion
     }
 
     template <typename Sequence, typename State, typename Fun>
+    BOOST_FUSION_GPU_ENABLED
     typename 
         lazy_disable_if<
             is_const<Sequence>
@@ -59,6 +61,7 @@ namespace boost { namespace fusion
     }
 
     template <typename Sequence, typename State, typename Fun>
+    BOOST_FUSION_GPU_ENABLED
     typename result_of::segmented_fold_until<Sequence const, State, Fun>::type
     segmented_fold_until(Sequence const& seq, State const& state, Fun const& fun)
     {

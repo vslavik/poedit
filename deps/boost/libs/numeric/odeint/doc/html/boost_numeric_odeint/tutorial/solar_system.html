@@ -116,7 +116,7 @@ p<sub>&#8203;i</sub><sup>2</sup> / (2m<sub>&#8203;i</sub>) + H<sub>&#8203;q</sub
 <p>
           To implement this system we define a 3D point type which will represent
           the space as well as the velocity. Therefore, we use the operators from
-          <a href="http://www.boost.org/doc/libs/release/doc/html/operators.html" target="_top">Boost.Operators</a>:
+          <a href="http://www.boost.org/doc/libs/release/libs/utility/operators.htm" target="_top">Boost.Operators</a>:
         </p>
 <p>
 </p>
@@ -262,7 +262,7 @@ p<sub>&#8203;i</sub><sup>2</sup> / (2m<sub>&#8203;i</sub>) + H<sub>&#8203;q</sub
           the state of the symplectic stepper is not <code class="computeroutput"><span class="identifier">container_type</span></code>
           but a pair of <code class="computeroutput"><span class="identifier">container_type</span></code>.
           Hence, we must pass such a pair to the integrate function. Since, we want
-          to pass them as references we can simply pack them into <a href="http://www.boost.org/doc/libs/release/doc/html/ref.html" target="_top">Boost.Ref</a>.
+          to pass them as references we can simply pack them into <a href="http://www.boost.org/doc/libs/release/libs/bind/ref.html" target="_top">Boost.Ref</a>.
           The second point is the observer, which is called with a state type, hence
           a pair of <code class="computeroutput"><span class="identifier">container_type</span></code>.
           The reference wrapper is also passed, but this is not a problem at all:
@@ -297,7 +297,7 @@ p<sub>&#8203;i</sub><sup>2</sup> / (2m<sub>&#8203;i</sub>) + H<sub>&#8203;q</sub
           </p></td></tr>
 </table></div>
 <p>
-          The full example can be found here: <a href="../../../../../../../libs/numeric/odeint/examples/solar_system.cpp" target="_top">solar_system.cpp</a>
+          The full example can be found here: <a href="https://github.com/headmyshoulder/odeint-v2/tree/master/libs/numeric/odeint/examples/solar_system.cpp" target="_top">solar_system.cpp</a>
         </p>
 </div>
 </div>

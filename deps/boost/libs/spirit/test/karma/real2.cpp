@@ -1,7 +1,7 @@
 //  Copyright (c) 2001-2011 Hartmut Kaiser
 //  Copyright (c) 2011      Bryce Lelbach
-// 
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying 
+//
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //#define KARMA_FAIL_COMPILATION
@@ -63,34 +63,36 @@ int main()
 
         ///////////////////////////////////////////////////////////////////////
         // test NaN and Inf
-        BOOST_TEST(test_delimited("nan ", double_, 
+        BOOST_TEST(test_delimited("nan ", double_,
             std::numeric_limits<double>::quiet_NaN(), char_(' ')));
-        BOOST_TEST(test_delimited("-nan ", double_, 
+        BOOST_TEST(test_delimited("-nan ", double_,
             -std::numeric_limits<double>::quiet_NaN(), char_(' ')));
-        BOOST_TEST(test_delimited("inf ", double_, 
+        BOOST_TEST(test_delimited("inf ", double_,
             std::numeric_limits<double>::infinity(), char_(' ')));
-        BOOST_TEST(test_delimited("-inf ", double_, 
+        BOOST_TEST(test_delimited("-inf ", double_,
             -std::numeric_limits<double>::infinity(), char_(' ')));
 
         typedef karma::real_generator<double, signed_policy<double> > signed_type;
         signed_type const signed_ = signed_type();
 
-        BOOST_TEST(test_delimited("+nan ", signed_, 
+        BOOST_TEST(test_delimited("+nan ", signed_,
             std::numeric_limits<double>::quiet_NaN(), char_(' ')));
-        BOOST_TEST(test_delimited("-nan ", signed_, 
+        BOOST_TEST(test_delimited("-nan ", signed_,
             -std::numeric_limits<double>::quiet_NaN(), char_(' ')));
-        BOOST_TEST(test_delimited("+inf ", signed_, 
+        BOOST_TEST(test_delimited("+inf ", signed_,
             std::numeric_limits<double>::infinity(), char_(' ')));
-        BOOST_TEST(test_delimited("-inf ", signed_, 
+        BOOST_TEST(test_delimited("-inf ", signed_,
             -std::numeric_limits<double>::infinity(), char_(' ')));
+#if defined(BOOST_SPIRIT_ZERO_PROBLEM)
         BOOST_TEST(test_delimited(" 0.0 ", signed_, 0.0, char_(' ')));
+#endif
     }
 
     {
         using namespace boost::spirit::ascii;
 
         ///////////////////////////////////////////////////////////////////////
-        typedef karma::real_generator<double, scientific_policy<double> > 
+        typedef karma::real_generator<double, scientific_policy<double> >
             science_type;
         science_type const science = science_type();
 
@@ -145,7 +147,7 @@ int main()
         BOOST_TEST(test("-1.234E04", upper[science], -12342.));
         BOOST_TEST(test("-1.234E05", upper[science], -123420.));
     }
-    
+
     {
         BOOST_TEST(test("1.0", lit(1.0)));
         BOOST_TEST(test("1.0", lit(1.0f)));
@@ -158,7 +160,6 @@ int main()
         BOOST_TEST(!test("", float_(1.0), 2.0f));
         BOOST_TEST(!test("", long_double(1.0), 2.0l));
     }
-    
+
     return boost::report_errors();
 }
-

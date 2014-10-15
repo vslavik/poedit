@@ -18,7 +18,7 @@
 
 typedef boost::geometry::model::d2::point_xy<double> point_2d;
 
-BOOST_GEOMETRY_REGISTER_LINESTRING(std::vector<point_2d>) 
+BOOST_GEOMETRY_REGISTER_LINESTRING(std::vector<point_2d>)
 
 int main()
 {
@@ -27,16 +27,16 @@ int main()
     line.push_back(point_2d(1, 1));
     line.push_back(point_2d(2, 2));
     line.push_back(point_2d(3, 1));
-    
+
     // Usage of Boost.Geometry's length and wkt functions
-    std::cout << "Length: "  
+    std::cout << "Length: "
         << boost::geometry::length(line)
         << std::endl;
-        
-    std::cout << "WKT: "  
+
+    std::cout << "WKT: "
         << boost::geometry::wkt(line)
         << std::endl;
-        
+
     return 0;
 }
 

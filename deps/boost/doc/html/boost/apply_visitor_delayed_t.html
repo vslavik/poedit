@@ -38,15 +38,15 @@
   <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">Visitor</span><span class="special">::</span><span class="identifier">result_type</span> <a name="boost.apply_visitor_delayed_t.result_type"></a><span class="identifier">result_type</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="apply_visitor_delayed_t.html#boost.apply_visitor_delayed_tconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">explicit</span> <a class="link" href="apply_visitor_delayed_t.html#idp104865592-bb"><span class="identifier">apply_visitor_delayed_t</span></a><span class="special">(</span><span class="identifier">Visitor</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="apply_visitor_delayed_t.html#idp303713488-bb"><span class="identifier">apply_visitor_delayed_t</span></a><span class="special">(</span><span class="identifier">Visitor</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="apply_visitor_delayed_t.html#idp163642504-bb">function object interface</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Variant<span class="special">&gt;</span> <span class="identifier">result_type</span> <a class="link" href="apply_visitor_delayed_t.html#idp163642984-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Variant</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="apply_visitor_delayed_t.html#idp303778800-bb">function object interface</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Variant<span class="special">&gt;</span> <span class="identifier">result_type</span> <a class="link" href="apply_visitor_delayed_t.html#idp297677488-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Variant</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Variant1<span class="special">,</span> <span class="keyword">typename</span> Variant2<span class="special">&gt;</span> 
-    <span class="identifier">result_type</span> <a class="link" href="apply_visitor_delayed_t.html#idp163644296-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Variant1</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">Variant2</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <span class="identifier">result_type</span> <a class="link" href="apply_visitor_delayed_t.html#idp298371056-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Variant1</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">Variant2</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp254034728"></a><h2>Description</h2>
+<a name="idp524802272"></a><h2>Description</h2>
 <p>Adapts the function given at construction for use as a
           function object. This is useful, for example, when one needs to
           operate on each element of a sequence of variant objects using a
@@ -56,12 +56,12 @@
           <code class="computeroutput"><a class="link" href="apply_visitor.html" title="Function apply_visitor">apply_visitor</a></code> for a simple
           way to create <code class="computeroutput">apply_visitor_delayed_t</code> objects.</p>
 <div class="refsect2">
-<a name="idp254037080"></a><h3>
+<a name="idp524806576"></a><h3>
 <a name="boost.apply_visitor_delayed_tconstruct-copy-destruct"></a><code class="computeroutput">apply_visitor_delayed_t</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp104865592-bb"></a><span class="identifier">apply_visitor_delayed_t</span><span class="special">(</span><span class="identifier">Visitor</span> <span class="special">&amp;</span> visitor<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp303713488-bb"></a><span class="identifier">apply_visitor_delayed_t</span><span class="special">(</span><span class="identifier">Visitor</span> <span class="special">&amp;</span> visitor<span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -76,12 +76,12 @@
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp254041960"></a><h3>
-<a name="idp163642504-bb"></a><code class="computeroutput">apply_visitor_delayed_t</code> function object interface</h3>
+<a name="idp524816176"></a><h3>
+<a name="idp303778800-bb"></a><code class="computeroutput">apply_visitor_delayed_t</code> function object interface</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp163642744-bb"></a><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Variant<span class="special">&gt;</span> <span class="identifier">result_type</span> <a name="idp163642984-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Variant</span> <span class="special">&amp;</span> operand<span class="special">)</span><span class="special">;</span>
+<pre class="literallayout"><a name="idp303779376-bb"></a><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Variant<span class="special">&gt;</span> <span class="identifier">result_type</span> <a name="idp297677488-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Variant</span> <span class="special">&amp;</span> operand<span class="special">)</span><span class="special">;</span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Variant1<span class="special">,</span> <span class="keyword">typename</span> Variant2<span class="special">&gt;</span> 
-  <span class="identifier">result_type</span> <a name="idp163644296-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Variant1</span> <span class="special">&amp;</span> operand1<span class="special">,</span> <span class="identifier">Variant2</span> <span class="special">&amp;</span> operand2<span class="special">)</span><span class="special">;</span></pre>Function call operator.<p class="simpara">Invokes
+  <span class="identifier">result_type</span> <a name="idp298371056-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Variant1</span> <span class="special">&amp;</span> operand1<span class="special">,</span> <span class="identifier">Variant2</span> <span class="special">&amp;</span> operand2<span class="special">)</span><span class="special">;</span></pre>Function call operator.<p class="simpara">Invokes
             <code class="computeroutput"><a class="link" href="apply_visitor.html" title="Function apply_visitor">apply_visitor</a></code> on the
             stored visitor using the given operands.</p>
 </li></ol></div>

@@ -13,12 +13,9 @@
 #include <iostream>
 
 #include <boost/geometry.hpp>
-#include <boost/geometry/multi/multi.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
 #include <boost/geometry/geometries/polygon.hpp>
-#include <boost/geometry/multi/geometries/multi_polygon.hpp>
-#include <boost/geometry/io/wkt/wkt.hpp>
-#include <boost/geometry/multi/io/wkt/wkt.hpp>
+#include <boost/geometry/geometries/multi_polygon.hpp>
 
 
 int main()

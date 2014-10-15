@@ -20,7 +20,6 @@
 
 using namespace boost::interprocess;
 
-static const std::size_t SemCount      = 1;
 static const std::size_t RecSemCount   = 100;
 static const char *      SemName = test::get_process_id_name();
 

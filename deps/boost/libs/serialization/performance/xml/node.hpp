@@ -11,7 +11,7 @@ http://www.boost.org/LICENSE_1_0.txt)
 #if !defined(BOOST_SERIALIZATION_XML_PERFORMANCE_NODE_HPP)
 #define BOOST_SERIALIZATION_XML_PERFORMANCE_NODE_HPP
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
+#if defined(_MSC_VER)
   #pragma once
 #endif
 

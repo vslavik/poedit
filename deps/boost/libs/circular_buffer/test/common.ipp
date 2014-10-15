@@ -2,6 +2,7 @@
 
 // Copyright (c) 2003-2008 Jan Gaspar
 // Copyright (c) 2013 Antony Polukhin
+// Copyright (c) 2014 Glen Fernandes   // C++11 allocator model support.
 
 // Use, modification, and distribution is subject to the Boost Software
 // License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -11,7 +12,8 @@
 #include <boost/type_traits/is_nothrow_move_assignable.hpp>
 #include <boost/type_traits/has_nothrow_constructor.hpp>
 
-void generic_test(CB_CONTAINER<MyInteger>& cb) {
+template <class Alloc>
+void generic_test(CB_CONTAINER<MyInteger, Alloc>& cb) {
 
     vector<int> v;
     v.push_back(11);
@@ -149,6 +151,97 @@ void size_test() {
     generic_test(cb2);
 }
 
+template<class T>
+class my_allocator {
+    typedef std::allocator<T> base_t;
+    base_t base_;
+public:
+   typedef T                                    value_type;
+
+
+   typedef value_type&         reference;
+   typedef const value_type&   const_reference;
+   typedef typename base_t::size_type               size_type;
+   typedef typename base_t::difference_type         difference_type;
+
+private:
+   template<class U>
+   struct const_pointer_;
+
+   template<class U>
+   struct pointer_ {
+       pointer_(){}
+       pointer_(void* p) : hidden_ptr_((U*)p) {}
+       difference_type operator-(const const_pointer_<U>& rhs) const { return hidden_ptr_ - rhs.hidden_ptr_; }
+       difference_type operator-(pointer_ rhs) const { return hidden_ptr_ - rhs.hidden_ptr_; }
+       pointer_ operator-(size_type rhs) const { return hidden_ptr_ - rhs; }
+       bool operator == (pointer_ rhs) const { return hidden_ptr_ == rhs.hidden_ptr_; }
+       bool operator != (pointer_ rhs) const { return hidden_ptr_ != rhs.hidden_ptr_; }
+       bool operator < (pointer_ rhs) const { return hidden_ptr_ < rhs.hidden_ptr_; }
+       bool operator >= (pointer_ rhs) const { return hidden_ptr_ >= rhs.hidden_ptr_; }
+       pointer_& operator++() { ++hidden_ptr_; return *this; }
+       pointer_& operator--() { --hidden_ptr_; return *this; }
+       pointer_& operator+=(size_type s) { hidden_ptr_ += s; return *this; }
+       pointer_ operator+(size_type s) const { return hidden_ptr_ + s; }
+       pointer_ operator++(int) { pointer_ p = *this; ++hidden_ptr_; return p; }
+       pointer_ operator--(int) { pointer_ p = *this; --hidden_ptr_; return p; }
+       U& operator*() const { return *hidden_ptr_; }
+
+       U* hidden_ptr_;
+   };
+
+   template<class U>
+   struct const_pointer_ {
+       const_pointer_(){}
+       const_pointer_(pointer_<U> p) : hidden_ptr_(p.hidden_ptr_) {}
+       const_pointer_(const void* p) : hidden_ptr_((const U*)p) {}
+       difference_type operator-(pointer_<U> rhs) const { return hidden_ptr_ - rhs.hidden_ptr_; }
+       difference_type operator-(const_pointer_ rhs) const { return hidden_ptr_ - rhs.hidden_ptr_; }
+       const_pointer_ operator-(size_type rhs) const { return hidden_ptr_ - rhs; }
+       bool operator == (const_pointer_ rhs) const { return hidden_ptr_ == rhs.hidden_ptr_; }
+       bool operator != (const_pointer_ rhs) const { return hidden_ptr_ != rhs.hidden_ptr_; }
+       bool operator < (const_pointer_ rhs) const { return hidden_ptr_ < rhs.hidden_ptr_; }
+       bool operator >= (const_pointer_ rhs) const { return hidden_ptr_ >= rhs.hidden_ptr_; }
+       const_pointer_& operator++() { ++hidden_ptr_; return *this; }
+       const_pointer_& operator--() { --hidden_ptr_; return *this; }
+       const_pointer_& operator+=(size_type s) { hidden_ptr_ += s; return hidden_ptr_; }
+       const_pointer_ operator+(size_type s) const { return hidden_ptr_ + s; }
+       const_pointer_ operator++(int) { const_pointer_ p = *this; ++hidden_ptr_; return p; }
+       const_pointer_ operator--(int) { const_pointer_ p = *this; --hidden_ptr_; return p; }
+       const U& operator*() const { return *hidden_ptr_; }
+
+       const U* hidden_ptr_;
+   };
+
+public:
+   typedef pointer_<T> pointer;
+   typedef const_pointer_<T> const_pointer;
+
+   template<class T2>
+   struct rebind
+   {
+      typedef my_allocator<T2>     other;
+   };
+
+   size_type max_size() const
+   {  return base_.max_size();   }
+
+   pointer allocate(size_type count, const void* hint = 0) {
+      return pointer(base_.allocate(count, hint));
+   }
+
+   void deallocate(const pointer &ptr, size_type s)
+   {  base_.deallocate(ptr.hidden_ptr_, s);  }
+
+   template<class P>
+   void construct(const pointer &ptr, BOOST_FWD_REF(P) p)
+   {  ::new(ptr.hidden_ptr_) value_type(::boost::forward<P>(p));  }
+
+   void destroy(const pointer &ptr)
+   {  (*ptr.hidden_ptr_).~value_type();  }
+
+};
+
 void allocator_test() {
 
     CB_CONTAINER<MyInteger> cb1(10, 0);
@@ -159,7 +252,39 @@ void allocator_test() {
     alloc.max_size();
 
     generic_test(cb1);
+
+    
+    CB_CONTAINER<MyInteger, my_allocator<MyInteger> > cb_a(10, 0);
+    generic_test(cb_a);
 }
+
+#if !defined(BOOST_NO_CXX11_ALLOCATOR)
+template<class T>
+class cxx11_allocator {
+public:
+    typedef T value_type;
+
+    cxx11_allocator() {
+    }
+
+    template<class U>
+    cxx11_allocator(const cxx11_allocator<U> &) {
+    }
+
+    T* allocate(std::size_t n) {
+        return static_cast<T*>(::operator new(n * sizeof(T)));
+    }
+
+    void deallocate(T * p, std::size_t n) {
+        ::operator delete( p );
+    }
+};
+
+void cxx11_allocator_test() {
+    CB_CONTAINER<MyInteger, cxx11_allocator<MyInteger> > cb(10, 0);
+    generic_test(cb);
+}
+#endif
 
 void begin_and_end_test() {
 
@@ -2353,5 +2478,8 @@ void add_common_tests(test_suite* tests) {
     tests->add(BOOST_TEST_CASE(&move_container_on_cpp11));
     tests->add(BOOST_TEST_CASE(&move_container_values_noexcept));    
     tests->add(BOOST_TEST_CASE(&check_containers_exception_specifications));
+#if !defined(BOOST_NO_CXX11_ALLOCATOR)
+    tests->add(BOOST_TEST_CASE(&cxx11_allocator_test));
+#endif
 }
 

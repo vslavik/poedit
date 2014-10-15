@@ -14,6 +14,7 @@
 #include <cstdio> // remove
 #include <fstream>
 #include <cmath>
+#include <boost/math/special_functions/next.hpp>
 
 #include <boost/config.hpp>
 
@@ -50,19 +51,8 @@ bool A::check_equal(const A &rhs) const
     BOOST_CHECK_EQUAL(u, rhs.u);
     BOOST_CHECK_EQUAL(v, rhs.v);
     BOOST_CHECK_EQUAL(l, rhs.l);
-    BOOST_CHECK(!(
-        w == 0 
-        && std::fabs(rhs.w) > std::numeric_limits<float>::epsilon()
-    ));
-    BOOST_CHECK(!(
-        std::fabs(rhs.w/w - 1.0) > std::numeric_limits<float>::epsilon()
-    ));
-    BOOST_CHECK(!(
-        x == 0 && std::fabs(rhs.x - x) > std::numeric_limits<float>::epsilon()
-    ));
-    BOOST_CHECK(!(
-        std::fabs(rhs.x/x - 1.0) > std::numeric_limits<float>::epsilon()
-    ));
+    BOOST_CHECK(std::abs( boost::math::float_distance(w, rhs.w)) < 2);
+    BOOST_CHECK(std::abs( boost::math::float_distance(x, rhs.x)) < 2);
     BOOST_CHECK(!(0 != y.compare(rhs.y)));
     #ifndef BOOST_NO_STD_WSTRING
     BOOST_CHECK(!(0 != z.compare(rhs.z)));

@@ -1,6 +1,6 @@
 /*
- Copyright 2009-2012 Karsten Ahnert
- Copyright 2009-2012 Mario Mulansky
+ Copyright 2011-2013 Karsten Ahnert
+ Copyright 2011-2013 Mario Mulansky
 
  Distributed under the Boost Software License, Version 1.0.
  (See accompanying file LICENSE_1_0.txt or
@@ -24,6 +24,7 @@
 
 #include <boost/numeric/odeint.hpp>
 #include <boost/numeric/odeint/algebra/fusion_algebra.hpp>
+#include <boost/numeric/odeint/algebra/fusion_algebra_dispatcher.hpp>
 
 #include <boost/units/systems/si/length.hpp>
 #include <boost/units/systems/si/time.hpp>
@@ -108,11 +109,12 @@ int main( int argc , char**argv )
 //    > stepper_type;
 
     //[ units_define_stepper
-    typedef runge_kutta_dopri5< state_type , double , deriv_type , time_type , fusion_algebra > stepper_type;
+    typedef runge_kutta_dopri5< state_type , double , deriv_type , time_type > stepper_type;
 
     state_type x( 1.0 * si::meter , 0.0 * si::meter_per_second );
 
-    integrate_const( make_dense_output( 1.0e-6 , 1.0e-6 , stepper_type() ) , oscillator( 2.0 * si::hertz ) , x , 0.0 * si::second , 100.0 * si::second , 0.1 * si::second , streaming_observer( cout ) );
+    integrate_const( make_dense_output( 1.0e-6 , 1.0e-6 , stepper_type() ) , oscillator( 2.0 * si::hertz ) ,
+                     x , 0.0 * si::second , 100.0 * si::second , 0.1 * si::second , streaming_observer( cout ) );
     //]
 
     return 0;

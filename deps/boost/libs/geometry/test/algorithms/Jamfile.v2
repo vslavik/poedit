@@ -1,8 +1,13 @@
 # Boost.Geometry (aka GGL, Generic Geometry Library)
 #
-# Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
-# Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
-# Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
+# Copyright (c) 2007-2014 Barend Gehrels, Amsterdam, the Netherlands.
+# Copyright (c) 2008-2014 Bruno Lalande, Paris, France.
+# Copyright (c) 2009-2014 Mateusz Loskot, London, UK.
+#
+# This file was modified by Oracle on 2014.
+# Modifications copyright (c) 2014, Oracle and/or its affiliates.
+#
+# Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 #
 # Use, modification and distribution is subject to the Boost Software License,
 # Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -16,33 +21,64 @@ test-suite boost-geometry-algorithms
     [ run buffer.cpp ]
     [ run centroid.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
     [ run comparable_distance.cpp ]
-    [ run convex_hull.cpp ]
+    [ run convex_hull.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
     [ run correct.cpp ]
     [ run convert.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
     [ run covered_by.cpp ]
+    [ run crosses.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
     [ run difference.cpp : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE <toolset>msvc:<cxxflags>/bigobj ]
-    [ run disjoint.cpp ]
+    [ run difference_linear_linear.cpp ]
+    [ run difference_pl_pl.cpp ]
+    [ run disjoint.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
+    [ run disjoint_coverage.cpp ]
     [ run distance.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
-    [ run envelope.cpp ]
-    [ run equals.cpp ]
+    [ run distance_areal_areal.cpp ]
+    [ run distance_linear_areal.cpp ]
+    [ run distance_linear_linear.cpp ]
+    [ run distance_pointlike_areal.cpp ]
+    [ run distance_pointlike_linear.cpp ]
+    [ run distance_pointlike_pointlike.cpp ]
+    [ run envelope.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
+    [ run equals.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
     [ run expand.cpp ]
     [ run for_each.cpp ]
     [ run intersection.cpp : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE <toolset>msvc:<cxxflags>/bigobj ]
-    [ run intersects.cpp ]
+    [ run intersection_linear_linear.cpp ]
+    [ run intersection_pl_pl.cpp ]
+    [ run intersects.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
+    [ run is_simple.cpp ]
+    [ run is_valid.cpp ]
     [ run length.cpp ]
     [ run make.cpp ]
-    [ run overlaps.cpp ]
+    [ run num_points.cpp ]
+    [ run overlaps.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
     [ run perimeter.cpp ]
+    [ run point_on_surface.cpp ]
+    [ run relate_areal_areal.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
+    [ run relate_linear_areal.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
+    [ run relate_linear_linear.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
+    [ run relate_pointlike_xxx.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
+    [ run remove_spikes.cpp ]
     [ run reverse.cpp ]
     [ run simplify.cpp ]
-    [ run touches.cpp ]
+    [ run sym_difference_linear_linear.cpp ]
+    [ run touches.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
     [ run transform.cpp ]
-    [ run union.cpp : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE ]
+    [ run union.cpp                : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE <toolset>msvc:<cxxflags>/bigobj ]
+    [ run union_linear_linear.cpp ]
+    [ run union_pl_pl.cpp ]
     [ run unique.cpp ]
-    [ run within.cpp ]
+    [ run within.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
+    [ run within_areal_areal.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
+    [ run within_linear_areal.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
+    [ run within_linear_linear.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
+    [ run within_pointlike_xxx.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]    
     ;
 
 build-project overlay 
+    ;
+
+build-project buffer
     ;
     
 build-project detail 

@@ -115,7 +115,8 @@
       </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">bool</span> <span class="identifier">my_filter</span><span class="special">(</span><span class="identifier">logging</span><span class="special">::</span><span class="identifier">value_ref</span><span class="special">&lt;</span> <span class="identifier">severity_level</span> <span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">level</span><span class="special">,</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">value_ref</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">tag</span><span class="special">)</span>
+<pre class="programlisting"><span class="keyword">bool</span> <span class="identifier">my_filter</span><span class="special">(</span><span class="identifier">logging</span><span class="special">::</span><span class="identifier">value_ref</span><span class="special">&lt;</span> <span class="identifier">severity_level</span><span class="special">,</span> <span class="identifier">tag</span><span class="special">::</span><span class="identifier">severity</span> <span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">level</span><span class="special">,</span>
+               <span class="identifier">logging</span><span class="special">::</span><span class="identifier">value_ref</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="identifier">tag</span><span class="special">::</span><span class="identifier">tag_attr</span> <span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">tag</span><span class="special">)</span>
 <span class="special">{</span>
     <span class="keyword">return</span> <span class="identifier">level</span> <span class="special">&gt;=</span> <span class="identifier">warning</span> <span class="special">||</span> <span class="identifier">tag</span> <span class="special">==</span> <span class="string">"IMPORTANT_MESSAGE"</span><span class="special">;</span>
 <span class="special">}</span>
@@ -125,7 +126,7 @@
     <span class="comment">// ...</span>
 
     <span class="keyword">namespace</span> <span class="identifier">phoenix</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">;</span>
-    <span class="identifier">sink</span><span class="special">-&gt;</span><span class="identifier">set_filter</span><span class="special">(</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">bind</span><span class="special">(&amp;</span><span class="identifier">my_filter</span><span class="special">,</span> <span class="identifier">severity</span><span class="special">,</span> <span class="identifier">tag_attr</span><span class="special">));</span>
+    <span class="identifier">sink</span><span class="special">-&gt;</span><span class="identifier">set_filter</span><span class="special">(</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">bind</span><span class="special">(&amp;</span><span class="identifier">my_filter</span><span class="special">,</span> <span class="identifier">severity</span><span class="special">.</span><span class="identifier">or_none</span><span class="special">(),</span> <span class="identifier">tag_attr</span><span class="special">.</span><span class="identifier">or_none</span><span class="special">()));</span>
 
     <span class="comment">// ...</span>
 <span class="special">}</span>
@@ -145,13 +146,29 @@
         and <code class="computeroutput"><span class="identifier">tag_attr</span></code> keywords and
         extract the corresponding values before passing them to <code class="computeroutput"><span class="identifier">my_filter</span></code>.
       </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          Because of limitations related to the integration with <a href="http://www.boost.org/doc/libs/release/libs/phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
+          (see <a href="https://svn.boost.org/trac/boost/ticket/7996" target="_top">#7996</a>), it is required to explicitly specify the fallback policy
+          in case if the attribute value is missing, when attribute keywords are
+          used with <code class="computeroutput"><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">bind</span></code> or <code class="computeroutput"><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">function</span></code>.
+          In the example above, this is done by calling <code class="computeroutput"><span class="identifier">or_none</span></code>,
+          which results in an empty <a class="link" href="../detailed/utilities.html#log.detailed.utilities.value_ref" title="Value reference wrapper"><code class="computeroutput"><span class="identifier">value_ref</span></code></a> if the value is not
+          found. In other contexts this policy is the default. There are <a class="link" href="../detailed/expressions.html#log.detailed.expressions.attr.fallback_policies" title="Customizing fallback policy">other
+          policies</a> that can be used instead.
+        </p></td></tr>
+</table></div>
 <p>
         You can try how this works by compiling and running the <a href="../../../../../../libs/log/example/doc/tutorial_filtering.cpp" target="_top">test</a>.
       </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2013 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2014 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

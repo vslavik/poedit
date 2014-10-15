@@ -34,8 +34,21 @@
 
 </span>BOOST_VARIANT_ENUM_SHIFTED_PARAMS(param)</pre></div>
 <div class="refsect1">
-<a name="idp253346680"></a><h2>Description</h2>
-<p>Expands to a comma-separated sequence of length
+<a name="idp523392320"></a><h2>Description</h2>
+<p> When variadic templates are available and
+        <code class="computeroutput"><a class="link" href="BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES.html" title="Macro BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES">BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES</a></code>
+        is not defined, expands to variadic template list in the following manner:
+        <code class="computeroutput"><pre class="programlisting">
+            <span class="identifier">BOOST_VARIANT_ENUM_SHIFTED_PARAMS</span><span class="special">(</span><span class="identifier">T</span><span class="special">)</span>                    <span class="special">=</span><span class="special">&gt;</span> <span class="identifier">TN</span><span class="special">...</span>
+            <span class="identifier">BOOST_VARIANT_ENUM_SHIFTED_PARAMS</span><span class="special">(</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">)</span>              <span class="special">=</span><span class="special">&gt;</span> <span class="keyword">class</span><span class="special">...</span> <span class="identifier">TN</span>
+            <span class="identifier">BOOST_VARIANT_ENUM_SHIFTED_PARAMS</span><span class="special">(</span><span class="keyword">class</span> <span class="identifier">Something</span><span class="special">)</span>      <span class="special">=</span><span class="special">&gt;</span> <span class="keyword">class</span><span class="special">...</span> <span class="identifier">SomethingN</span>
+            <span class="identifier">BOOST_VARIANT_ENUM_SHIFTED_PARAMS</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">Something</span><span class="special">)</span>   <span class="special">=</span><span class="special">&gt;</span> <span class="keyword">typename</span><span class="special">...</span> <span class="identifier">SomethingN</span>
+            <span class="identifier">BOOST_VARIANT_ENUM_SHIFTED_PARAMS</span><span class="special">(</span><span class="identifier">Something</span><span class="special">)</span>            <span class="special">=</span><span class="special">&gt;</span> <span class="identifier">SomethingN</span><span class="special">...</span>
+            <span class="identifier">BOOST_VARIANT_ENUM_SHIFTED_PARAMS</span><span class="special">(</span><span class="identifier">Something</span><span class="special">)</span>            <span class="special">=</span><span class="special">&gt;</span> <span class="identifier">SomethingN</span><span class="special">...</span>
+        </pre></code>
+      </p>
+<p>
+        Otherwise expands to a comma-separated sequence of length
         <code class="computeroutput"><a class="link" href="BOOST_VARIANT_LIMIT_TYPES.html" title="Macro BOOST_VARIANT_LIMIT_TYPES">BOOST_VARIANT_LIMIT_TYPES</a> - 1</code>,
         where each element in the sequence consists of the concatenation of
         <span class="emphasis"><em>param</em></span> with its one-based index into the sequence.

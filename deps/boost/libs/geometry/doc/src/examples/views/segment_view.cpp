@@ -21,14 +21,14 @@ int main()
         <
             boost::geometry::model::point<double, 2, boost::geometry::cs::cartesian>
         > segment_type;
-        
-    typedef boost::geometry::segment_view<segment_type> segment_view;        
-        
+
+    typedef boost::geometry::segment_view<segment_type> segment_view;
+
     segment_type segment;
     boost::geometry::assign_values(segment, 0, 0, 1, 1);
-    
+
     segment_view view(segment);
-    
+
     // Iterating over the points of this segment
     for (boost::range_iterator<segment_view const>::type it = boost::begin(view);
         it != boost::end(view); ++it)
@@ -36,10 +36,10 @@ int main()
         std::cout << " " << boost::geometry::dsv(*it);
     }
     std::cout << std::endl;
-    
+
     // Note that a segment_view is tagged as a linestring, so supports length etc.
     std::cout << "Length: " << boost::geometry::length(view) << std::endl;
-    
+
     return 0;
 }
 

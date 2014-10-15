@@ -7,7 +7,7 @@
 [library Boost.Move
     [quickbook 1.5]
     [authors [Gaztanaga, Ion]]
-    [copyright 2008-2012 Ion Gaztanaga]
+    [copyright 2008-2014 Ion Gaztanaga]
     [id move]
     [dirname move]
     [purpose Move semantics]
@@ -327,127 +327,92 @@ C++03 compilers. In compilers with rvalue references perfect forwarding is achie
 
 [endsect]
 
-[/[section:perfect_forwarding Perfect Forwarding]
- /
- /Consider writing a generic factory function that returns a std::shared_ptr for a newly
- /constructed generic type. Factory functions such as this are valuable for encapsulating
- /and localizing the allocation of resources. Obviously, the factory function must accept
- /exactly the same sets of arguments as the constructors of the type of objects constructed.
- /Today this might be coded as: 
- /
- /[c++]
- /
- /   template <class T>
- /   std::shared_ptr<T>
- /   factory()   // no argument version
- /   {
- /      return std::shared_ptr<T>(new T);
- /   }
- /
- /   template <class T, class A1>
- /   std::shared_ptr<T>
- /   factory(const A1& a1)   // one argument version
- /   {
- /      return std::shared_ptr<T>(new T(a1));
- /   }
- /
- /   // all the other versions
- /
- /
- /In the interest of brevity, we will focus on just the one-parameter version. For example: 
- /
- / [c++]
- /
- /    std::shared_ptr<A> p = factory<A>(5);
- /
- /
- / [*Question]: What if T's constructor takes a parameter by non-const reference? 
- /
- / In that case, we get a compile-time error as the const-qualifed argument of the factory
- / function will not bind to the non-const parameter of T's constructor. 
- /
- / To solve that problem, we could use non-const parameters in our factory functions: 
- /
- / [c++]
- /
- /    template <class T, class A1>
- /    std::shared_ptr<T>
- /    factory(A1& a1)
- /    {
- /       return std::shared_ptr<T>(new T(a1));
- /    }
- /
- /
- / This is much better. If a const-qualified type is passed to the factory, the const will
- / be deduced into the template parameter (A1 for example) and then properly forwarded to
- / T's constructor. Similarly, if a non-const argument is given to factory, it will be
- / correctly forwarded to T's constructor as a non-const. Indeed, this is precisely how
- /forwarding applications are coded today (e.g. `std::bind`). 
- /
- /However, consider: 
- /
- /[c++]
- /
- /   std::shared_ptr<A> p = factory<A>(5);	// error
- /   A* q = new A(5);	                // ok
- /
- /
- /This example worked with our first version of factory, but now it's broken: The "5"
- /causesthe factory template argument to be deduced as int& and subsequently will not
- /bind to the rvalue "5". Neither solution so far is right. Each breaks reasonable and
- /common code. 
- /
- /[*Question]: What about overloading on every combination of AI& and const AI&? 
- /
- /This would allow use to handle all examples, but at a cost of an exponential explosion:
- /For our two-parameter case, this would require 4 overloads. For a three-parameter factory
- /we would need 8 additional overloads. For a four-parameter factory we would need 16, and
- /so on. This is not a scalable solution. 
- /
- /Rvalue references offer a simple, scalable solution to this problem: 
- /
- /[c++]
- /
- /  template <class T, class A1>
- /  std::shared_ptr<T>
- /  factory(A1&& a1)
- /  {
- /     return std::shared_ptr<T>(new T(std::forward<A1>(a1)));
- /  }
- /
- / Now rvalue arguments can bind to the factory parameters. If the argument is const, that
- / fact gets deduced into the factory template parameter type. 
- /
- / [*Question]: What is that forward function in our solution? 
- /
- / Like move, forward is a simple standard library function used to express our intent
- / directly and explicitly, rather than through potentially cryptic uses of references.
- / We want to forward the argument a1, so we simply say so. 
- /
- / Here, forward preserves the lvalue/rvalue-ness of the argument that was passed to factory.
- / If an rvalue is passed to factory, then an rvalue will be passed to T's constructor with
- / the help of the forward function. Similarly, if an lvalue is passed to factory, it is
- / forwarded to T's constructor as an lvalue. 
- /
- / The definition of forward looks like this: 
- /
- / [c++]
- /
- /    template <class T>
- /   struct identity
- /   {
- /      typedef T type;
- /   };
- /
- /   template <class T>
- /   T&& forward(typename identity<T>::type&& a)
- /   {
- /      return a;
- /   }
- /
- /[endsect]
- /
- /]
+[section:move_return Implicit Move when returning a local object]
+
+The C++ standard specifies situations where an implicit move operation is safe and the
+compiler can use it in cases were the (Named) Return Value Optimization) can't be used.
+The typical use case is when a function returns a named (non-temporary) object by value
+and the following code will perfectly compile in C++11:
+
+[c++]
+
+   //Even if movable can't be copied
+   //the compiler will call the move-constructor
+   //to generate the return value
+   //
+   //The compiler can also optimize out the move
+   //and directly construct the object 'm'
+   movable factory()
+   {
+      movable tmp;
+      m = ...
+      //(1) moved instead of copied
+      return tmp;
+   };
+
+   //Initialize object
+   movable m(factory());
+
+
+In compilers without rvalue references and some non-conforming compilers (such as Visual C++ 2010/2012)
+the line marked with `(1)` would trigger a compilation error because `movable` can't be copied. Using a explicit
+`::boost::move(tmp)` would workaround this limitation but it would code suboptimal in C++11 compilers
+(as the compile could not use (N)RVO to optimize-away the copy/move).
+
+[*Boost.Move] offers an additional macro called [macroref BOOST_MOVE_RET BOOST_MOVE_RET] that can be used to
+alleviate this problem obtaining portable move-on-return semantics. Let's use the previously presented
+movable-only `movable` class with classes `copyable` (copy-only type), `copy_movable` (can be copied and moved) and
+`non_copy_movable` (non-copyable and non-movable):
+
+[import ../example/copymovable.hpp]
+[copy_movable_definition]
+
+and build a generic factory function that returns a newly constructed value or a reference to an already
+constructed object.
+
+[import ../example/doc_move_return.cpp]
+[move_return_example]
+
+[*Caution]: When using this macro in a non-conforming or C++03
+compilers, a move will be performed even if the C++11 standard does not allow it
+(e.g. returning a static variable). The user is responsible for using this macro
+only used to return local objects that met C++11 criteria. E.g.:
+
+[c++]
+
+   struct foo
+   {
+      copy_movable operator()() const
+      {
+         //ERROR! The Standard does not allow implicit move returns when the object to be returned 
+         //does not met the criteria for elision of a copy operation (such as returning a static member data)
+         //In C++03 compilers this will MOVE resources from cm
+         //In C++11 compilers this will COPY resources from cm
+         //so DON'T use use BOOST_MOVE_RET without care.
+         return BOOST_MOVE_RET(copy_movable, cm);
+      }
+
+      static copy_movable cm;
+   };
+
+
+[*Note]: When returning a temporary object `BOOST_MOVE_REF` is not needed as copy ellision rules will work on
+both C++03 and C++11 compilers.
+
+[c++]
+
+   //Note: no BOOST_MOVE_RET
+   movable get_movable()
+   {  return movable();  }
+
+   copy_movable get_copy_movable()
+   {  return copy_movable();  }
+
+   copyable get_copyable()
+   {  return copyable();  }
+
+
+[endsect]
 
 [section:move_iterator Move iterators]
 
@@ -790,6 +755,15 @@ Many thanks to all boosters that have tested, reviewed and improved the library.
 
 [section:release_notes Release Notes]
 
+[section:release_notes_boost_1_56_00 Boost 1.56 Release]
+
+*  Added [macroref BOOST_MOVE_RET BOOST_MOVE_RET].
+*  Fixed bug [@https://svn.boost.org/trac/boost/ticket/9482 #9482: ['"MSVC macros not undefined in boost/move/detail/config_end.hpp"]],
+             [@https://svn.boost.org/trac/boost/ticket/9045 #9045: ['"Wrong macro name on docs"]],
+             [@https://svn.boost.org/trac/boost/ticket/8420 #8420: ['"move's is_convertible does not compile with aligned data"]].
+
+[endsect]
+
 [section:release_notes_boost_1_55_00 Boost 1.55 Release]
 
 *  Fixed bugs  [@https://svn.boost.org/trac/boost/ticket/7952 #7952],
@@ -797,6 +771,7 @@ Many thanks to all boosters that have tested, reviewed and improved the library.
                [@https://svn.boost.org/trac/boost/ticket/8765 #8765],
                [@https://svn.boost.org/trac/boost/ticket/8842 #8842],
                [@https://svn.boost.org/trac/boost/ticket/8979 #8979].
+
 [endsect]
 
 

@@ -37,7 +37,9 @@ boost::copy(boost::unique(boost::sort(vec)),
             std::ostream_iterator<int>(std::cout));
 ``
 
-Algorithms like `boost::unique` usually return the same range: `[boost::begin(rng), found)`. However, this behaviour may be changed by supplying the algorithms with a template argument:
+Algorithms like `boost::unique` usually return the range: `[boost::begin(rng), found)`.
+However, this behaviour may be changed by supplying a `range_return_value`
+as a template parameter to the algorithm:
 
 [table
     [[Expression] [Return]]

@@ -635,7 +635,7 @@ including any Fusion header to change the default. Example:
 [heading Model of]
 
 * __associative_sequence__
-* __forward_sequence__
+* __random_access_sequence__
 
 [variablelist Notation
     [[`M`]              [A `map` type]]
@@ -647,7 +647,7 @@ including any Fusion header to change the default. Example:
 [heading Expression Semantics]
 
 Semantics of an expression is defined only where it differs from, or is not
-defined in __random_access_sequence__ and __associative_sequence__.
+defined in __forward_sequence__ and __associative_sequence__.
 
 [table
     [[Expression]           [Semantics]]
@@ -949,7 +949,7 @@ Create a __map__ from one or more key/data pairs.
       , typename T0, typename T1,... typename TN>
     typename __result_of_make_map__<K0, K0,... KN, T0, T1,... TN>::type
     make_map(T0 const& x0, T1 const& x1... TN const& xN);
-    
+
 The variadic function accepts `0` to `FUSION_MAX_MAP_SIZE` elements,
 where `FUSION_MAX_MAP_SIZE` is a user definable predefined maximum that
 defaults to `10`. You may define the preprocessor constant
@@ -1007,11 +1007,11 @@ Example:
 
     int i; char c; double d;
       ...
-    __vector_tie__(i, c, a);
+    __vector_tie__(i, c, d);
 
 The __vector_tie__ function creates a __vector__ of type
 `__vector__<int&, char&, double&>`. The same result could be achieved with the call
-__make_vector__(__boost_ref_call__(i), __boost_ref_call__(c), __boost_ref_call__(a))
+__make_vector__(__boost_ref_call__(i), __boost_ref_call__(c), __boost_ref_call__(d))
 [footnote see __boost_ref__ for details about `ref`].
 
 A /tie/ can be used to 'unpack' another tuple into variables. E.g.:
@@ -1357,8 +1357,8 @@ rules for __element_conversion__.
 
 [heading Header]
 
-    #include <boost/fusion/container/generation/make_list.hpp>
-    #include <boost/fusion/include/make_list.hpp>
+    #include <boost/fusion/container/generation/make_vector.hpp>
+    #include <boost/fusion/include/make_vector.hpp>
 
 [heading Example]
 

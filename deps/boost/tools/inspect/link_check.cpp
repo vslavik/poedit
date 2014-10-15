@@ -123,7 +123,7 @@ namespace boost
     {
       // keep track of paths already encountered to reduce disk activity
       if ( !fs::is_directory( full_path ) )
-        m_paths[ relative_to( full_path, fs::initial_path() ) ] |= m_present;
+        m_paths[ relative_to( full_path, search_root_path() ) ] |= m_present;
     }
 
 //  inspect ( .htm, .html, .shtml, .css )  -----------------------------------//
@@ -134,7 +134,7 @@ namespace boost
       const string & contents )     // contents of file to be inspected
     {
       if (contents.find( "boostinspect:" "nounlinked" ) != string::npos)
-          m_paths[ relative_to( full_path, fs::initial_path() ) ] |= m_nounlinked_errors;
+          m_paths[ relative_to( full_path, search_root_path() ) ] |= m_nounlinked_errors;
 
       bool no_link_errors =
           (contents.find( "boostinspect:" "nolink" ) != string::npos);
@@ -438,7 +438,7 @@ namespace boost
 
       // create a m_paths entry if necessary
       std::pair< const string, int > entry(
-        relative_to( target_path, fs::initial_path() ), 0 );
+        relative_to( target_path, search_root_path() ), 0 );
       m_path_map::iterator itr( m_paths.find( entry.first ) );
       if ( itr == m_paths.end() )
       {
@@ -476,7 +476,7 @@ namespace boost
          && itr->first.rfind( "index.htm" ) == string::npos )
        {
          ++m_unlinked_errors;
-         path full_path( fs::initial_path() / path(itr->first) );
+         path full_path( search_root_path() / path(itr->first) );
          error( impute_library( full_path ), full_path, "Unlinked file" );
        }
      }

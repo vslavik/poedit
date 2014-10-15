@@ -20,7 +20,10 @@ use-project boost
 # boost_python library from the project whose global ID is
 # /boost/python.
 project
-  : requirements <library>/boost/python//boost_python ;
+  : requirements <library>/boost/python//boost_python 
+                 <implicit-dependency>/boost//headers 
+  : usage-requirements <implicit-dependency>/boost//headers 
+  ;
 
 # Declare the three extension modules.  You can specify multiple
 # source files after the colon separated by spaces.

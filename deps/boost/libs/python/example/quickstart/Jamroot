@@ -12,6 +12,8 @@ use-project boost
 # /boost/python.
 project boost-python-quickstart
   : requirements <library>/boost/python//boost_python 
+    		 <implicit-dependency>/boost//headers 
+  : usage-requirements <implicit-dependency>/boost//headers 	 
     ;
 
 # Make the definition of the python-extension rule available

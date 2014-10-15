@@ -1,7 +1,9 @@
-// Boost.Geometry (aka GGL, Generic Geometry Library) 
+// Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2013 Adam Wulkiewicz, Lodz, Poland.
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -13,6 +15,8 @@
 
 #include <geometry_test_common.hpp>
 
+#include <boost/variant/variant.hpp>
+
 #include <boost/geometry/core/ring_type.hpp>
 #include <boost/geometry/algorithms/covered_by.hpp>
 #include <boost/geometry/strategies/strategies.hpp>
@@ -21,17 +25,17 @@
 
 #include <boost/geometry/io/wkt/read.hpp>
 
+#include <boost/geometry/multi/algorithms/covered_by.hpp>
+#include <boost/geometry/multi/geometries/multi_linestring.hpp>
+#include <boost/geometry/multi/io/wkt/read.hpp>
 
 template <typename Geometry1, typename Geometry2>
-void test_geometry(std::string const& wkt1,
-        std::string const& wkt2, bool expected)
+void check_geometry(Geometry1 const& geometry1,
+                    Geometry2 const& geometry2,
+                    std::string const& wkt1,
+                    std::string const& wkt2,
+                    bool expected)
 {
-    Geometry1 geometry1;
-    Geometry2 geometry2;
-
-    bg::read_wkt(wkt1, geometry1);
-    bg::read_wkt(wkt2, geometry2);
-
     bool detected = bg::covered_by(geometry1, geometry2);
 
     BOOST_CHECK_MESSAGE(detected == expected,
@@ -39,6 +43,23 @@ void test_geometry(std::string const& wkt1,
         << " in " << wkt2
         << " -> Expected: " << expected
         << " detected: " << detected);
+}
+
+template <typename Geometry1, typename Geometry2>
+void test_geometry(std::string const& wkt1,
+        std::string const& wkt2, bool expected)
+{
+    Geometry1 geometry1;
+    Geometry2 geometry2;
+    bg::read_wkt(wkt1, geometry1);
+    bg::read_wkt(wkt2, geometry2);
+    boost::variant<Geometry1> v1(geometry1);
+    boost::variant<Geometry2> v2(geometry2);
+
+    check_geometry(geometry1, geometry2, wkt1, wkt2, expected);
+    check_geometry(v1, geometry2, wkt1, wkt2, expected);
+    check_geometry(geometry1, v2, wkt1, wkt2, expected);
+    check_geometry(v1, v2, wkt1, wkt2, expected);
 }
 
 /*

@@ -146,6 +146,41 @@ BOOST_AUTO_TEST_CASE( spsc_queue_capacity_test )
     BOOST_REQUIRE(!g.push(3));
 }
 
+template <typename QueueType>
+void spsc_queue_avail_test_run(QueueType & q)
+{
+    BOOST_REQUIRE_EQUAL( q.write_available(), 16 );
+    BOOST_REQUIRE_EQUAL( q.read_available(),   0 );
+
+    for (size_t i = 0; i != 8; ++i) {
+        BOOST_REQUIRE_EQUAL( q.write_available(), 16 - i );
+        BOOST_REQUIRE_EQUAL( q.read_available(),       i );
+
+        q.push( 1 );
+    }
+
+    // empty queue
+    int dummy;
+    while (q.pop(dummy))
+    {}
+
+    for (size_t i = 0; i != 16; ++i) {
+        BOOST_REQUIRE_EQUAL( q.write_available(), 16 - i );
+        BOOST_REQUIRE_EQUAL( q.read_available(),       i );
+
+        q.push( 1 );
+    }
+}
+
+BOOST_AUTO_TEST_CASE( spsc_queue_avail_test )
+{
+    spsc_queue<int, capacity<16> > f;
+    spsc_queue_avail_test_run(f);
+
+    spsc_queue<int> g(16);
+    spsc_queue_avail_test_run(g);
+}
+
 
 template <int EnqueueMode>
 void spsc_queue_buffer_push_return_value(void)

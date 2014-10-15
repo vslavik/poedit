@@ -10,7 +10,7 @@ rule test_all
 
    for local fileb in [ glob *.cpp ]
    {
-       all_rules += [ run $(fileb) ../../test/build//boost_unit_test_framework/<link>static
+       all_rules += [ run $(fileb)
       :  # additional args
       :  # test-files
       : <library>/boost/test//boost_unit_test_framework # requirements
