@@ -812,6 +812,15 @@ wrap (const message_ty *mp, ostream_t stream,
                                      _("invalid multibyte sequence"));
                           continue;
                         }
+                      else if (errno == EINVAL)
+                        {
+                          /* This could happen if an incomplete
+                             multibyte sequence at the end of input
+                             bytes.  */
+                          po_xerror (PO_SEVERITY_ERROR, mp, NULL, 0, 0, false,
+                                     _("incomplete multibyte sequence"));
+                          continue;
+                        }
                       else
                         abort ();
                     }

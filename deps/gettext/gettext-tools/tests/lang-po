@@ -21,15 +21,15 @@ msgstr ""
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-po-prog.tmp --omit-header --add-location prog-in.pot || exit 1
-LC_ALL=C tr -d '\r' < l-po-prog.tmp > l-po-prog.pot || exit 1
+${XGETTEXT} -o prog.tmp --omit-header --add-location prog-in.pot || exit 1
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
 
 : ${DIFF=diff}
-${DIFF} prog-in.pot l-po-prog.pot || exit 1
+${DIFF} prog-in.pot prog.pot || exit 1
 
 # Test with PO format.
 
-cat <<\EOF > l-po-prog-in.po
+cat <<\EOF > prog-in.po
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -52,10 +52,10 @@ msgstr "%2$s remplace %1$s."
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-po-prog.tmp.po --omit-header --add-location l-po-prog-in.po || exit 1
-LC_ALL=C tr -d '\r' < l-po-prog.tmp.po > l-po-prog.po || exit 1
+${XGETTEXT} -o prog.tmp.po --omit-header --add-location prog-in.po || exit 1
+LC_ALL=C tr -d '\r' < prog.tmp.po > prog.po || exit 1
 
 : ${DIFF=diff}
-${DIFF} l-po-prog-in.po l-po-prog.po || exit 1
+${DIFF} prog-in.po prog.po || exit 1
 
 exit 0

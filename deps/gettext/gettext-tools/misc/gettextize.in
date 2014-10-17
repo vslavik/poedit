@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Copyright (C) 1995-1998, 2000-2013 Free Software Foundation, Inc.
+# Copyright (C) 1995-1998, 2000-2014 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -143,14 +143,14 @@ fi
 func_trace_autoconf ()
 {
   echo '\
-dnl disable macros which may abort autom4te
-m4_undefine([m4_assert])
-m4_undefine([m4_fatal])
-m4_undefine([m4_warn])
-m4_undefine([m4_errprintn])
-m4_undefine([m4_exit])
-m4_undefine([m4_include])
-m4_undefine([m4_esyscmd])
+dnl replace macros which may abort autom4te with a no-op variant
+m4_pushdef([m4_assert])
+m4_pushdef([m4_fatal])
+m4_pushdef([m4_warn])
+m4_pushdef([m4_errprintn])
+m4_pushdef([m4_exit])
+m4_pushdef([m4_include])
+m4_pushdef([m4_esyscmd])
 ' \
   | "$AUTOM4TE" --no-cache --language=Autoconf-without-aclocal-m4 \
     --trace="$1":\$% - "$2" 2>/dev/null

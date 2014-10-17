@@ -46,7 +46,9 @@
 #endif
 
 /* Get MAXHOSTNAMELEN.  */
-#include <sys/param.h>
+#if HAVE_SYS_PARAM_H
+# include <sys/param.h>
+#endif
 #ifndef MAXHOSTNAMELEN
 # define MAXHOSTNAMELEN 64
 #endif

@@ -334,8 +334,8 @@ void PoeditApp::SetupLanguage()
     #if NEED_CHOOSELANG_UI
     trans->SetLanguage(GetUILanguage());
     #endif
-    trans->AddCatalog("poedit");
     trans->AddStdCatalog();
+    trans->AddCatalog("poedit");
 
     wxString bestTrans = trans->GetBestTranslation("poedit");
     Language uiLang = Language::TryParse(bestTrans.ToStdWstring());

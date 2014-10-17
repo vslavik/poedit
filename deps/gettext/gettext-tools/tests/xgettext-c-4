@@ -4,7 +4,7 @@
 # Test C support: --trigraphs option.
 
 cat <<EOF > xg-c-4.in.c
-main()??<printf(gettext("Hello, " "World!" "??/n")); ??>
+main()??<printf(gettext("Hello, " "World!" "??/n"));return 0 ? a??(0??'1??) : 1??!??-a[0]??#1;????>
 EOF
 
 : ${XGETTEXT=xgettext}

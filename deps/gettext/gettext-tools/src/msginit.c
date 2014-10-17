@@ -26,6 +26,7 @@
 #include <getopt.h>
 #include <limits.h>
 #include <locale.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -1059,7 +1060,7 @@ get_user_pwd ()
   if (userpasswd != NULL)
     return userpasswd;
   if (errno != 0)
-    error (EXIT_FAILURE, errno, "getpwuid(\"%d\")", getuid ());
+    error (EXIT_FAILURE, errno, "getpwuid(%ju)", (uintmax_t) getuid ());
 #endif
 
   return NULL;

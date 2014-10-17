@@ -15,10 +15,9 @@ get_all_langs()
 
 lang_to_osx()
 {
-    echo $1 | sed -e 's/zh_TW/zh-Hant/' \
-            | sed -e 's/zh_CN/zh-Hans/' \
-            | sed -e 's/@latin/-Latn/' \
-            | sed -e 's/_/-/'
+    echo $1 | sed -e 's/zh_TW/zh_Hant/' \
+            | sed -e 's/zh_CN/zh_Hans/' \
+            | sed -e 's/@latin/_Latn/'
 }
 
 try_compile_po()

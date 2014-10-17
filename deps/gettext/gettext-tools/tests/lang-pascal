@@ -20,7 +20,7 @@ resourcestring
   currencies = '%s is replaced by %s.';
 
 begin
-  translateresourcestrings('l-pascal/%s/LC_MESSAGES/pascalprog.mo');
+  translateresourcestrings('%s/LC_MESSAGES/pascalprog.mo');
   writeln(question);
   writeln(format(currencies, ['FF', 'EUR']));
 end.
@@ -34,10 +34,10 @@ EOF
 }
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-pascal-pascalprog.tmp --omit-header --add-location pascalprog.rst || exit 1
-LC_ALL=C tr -d '\r' < l-pascal-pascalprog.tmp > l-pascal-pascalprog.pot || exit 1
+${XGETTEXT} -o pascalprog.tmp --omit-header --add-location pascalprog.rst || exit 1
+LC_ALL=C tr -d '\r' < pascalprog.tmp > pascalprog.pot || exit 1
 
-cat <<EOF > l-pascal-pascalprog.ok
+cat <<EOF > pascalprog.ok
 #: pascalprog.question
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
@@ -49,9 +49,9 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} l-pascal-pascalprog.ok l-pascal-pascalprog.pot || exit 1
+${DIFF} pascalprog.ok pascalprog.pot || exit 1
 
-cat <<\EOF > l-pascal-fr.po
+cat <<\EOF > fr.po
 msgid ""
 msgstr "Content-Type: text/plain; charset=ISO-8859-1\n"
 
@@ -67,25 +67,24 @@ msgstr "%1:s remplace %0:s."
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-pascal-fr.po.tmp l-pascal-fr.po l-pascal-pascalprog.pot || exit 1
-LC_ALL=C tr -d '\r' < l-pascal-fr.po.tmp > l-pascal-fr.po.new || exit 1
+${MSGMERGE} -q -o fr.po.tmp fr.po pascalprog.pot || exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
 
 : ${DIFF=diff}
-${DIFF} l-pascal-fr.po l-pascal-fr.po.new || exit 1
+${DIFF} fr.po fr.po.new || exit 1
 
-test -d l-pascal || mkdir l-pascal
-test -d l-pascal/fr || mkdir l-pascal/fr
-test -d l-pascal/fr/LC_MESSAGES || mkdir l-pascal/fr/LC_MESSAGES
+test -d fr || mkdir fr
+test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o l-pascal/fr/LC_MESSAGES/pascalprog.mo l-pascal-fr.po
+${MSGFMT} -o fr/LC_MESSAGES/pascalprog.mo fr.po
 
 : ${DIFF=diff}
-cat <<\EOF > l-pascal-pascalprog.ok
+cat <<\EOF > pascalprog.ok
 «Votre commande, s'il vous plait», dit le garçon.
 EUR remplace FF.
 EOF
-cat <<\EOF > l-pascal-pascalprog.oku
+cat <<\EOF > pascalprog.oku
 Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
 EUR remplace FF.
 EOF
@@ -93,15 +92,17 @@ EOF
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LANGUAGE= LC_ALL= LC_MESSAGES= LC_CTYPE= LANG=$LOCALE_FR ./pascalprog > l-pascal-pascalprog.out || exit 1
+  prepare_locale_ fr $LOCALE_FR
+  LANGUAGE= LC_ALL= LC_MESSAGES= LC_CTYPE= LANG=$LOCALE_FR ./pascalprog > pascalprog.out || exit 1
   : ${DIFF=diff}
-  ${DIFF} l-pascal-pascalprog.ok l-pascal-pascalprog.out || exit 1
+  ${DIFF} pascalprog.ok pascalprog.out || exit 1
 fi
 if test -z "$UTF8_LOCALE_UNSUPPORTED"; then
   if test $LOCALE_FR_UTF8 != none; then
-    LANGUAGE= LC_ALL= LC_MESSAGES= LC_CTYPE= LANG=$LOCALE_FR_UTF8 ./pascalprog > l-pascal-pascalprog.out || exit 1
+    prepare_locale_ fr $LOCALE_FR_UTF8
+    LANGUAGE= LC_ALL= LC_MESSAGES= LC_CTYPE= LANG=$LOCALE_FR_UTF8 ./pascalprog > pascalprog.out || exit 1
     : ${DIFF=diff}
-    ${DIFF} l-pascal-pascalprog.oku l-pascal-pascalprog.out || exit 1
+    ${DIFF} pascalprog.oku pascalprog.out || exit 1
   fi
   if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
     if test -f /usr/bin/localedef; then

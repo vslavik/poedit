@@ -27,8 +27,8 @@
 #include <string.h>
 #include "xalloc.h"
 
-#define BOLD_START "\e[1m"
-#define BOLD_END "\e[0m"
+#define BOLD_START "\x1b[1m"
+#define BOLD_END "\x1b[0m"
 
 /* This is a direct translation of po/quot.sed and po/boldquot.sed.  */
 static void

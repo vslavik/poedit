@@ -1,3 +1,18 @@
+Version 0.19.3 - October 2014
+
+* Bug fixes:
+  - Fix xgettext mishandling of octal character escapes in C.
+  - Fix autopoint infinite recursion with certain configure.ac.
+
+* The po/Makevars file has a new field MSGINIT_OPTIONS, that can be
+  used to adjust msginit's operation.  This is particularly useful for
+  controlling line wrapping behavior together with MSGMERGE_OPTIONS
+  and XGETTEXT_OPTIONS.
+
+* Portability:
+  - Building on Solaris 10 and 11 with Solaris Studio compiler is now
+    fixed.
+
 Version 0.19.2 - July 2014
 
 * Bug fixes:

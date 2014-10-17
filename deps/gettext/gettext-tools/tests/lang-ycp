@@ -14,10 +14,10 @@ cat <<\EOF > prog.ycp
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-ycp-prog.tmp --omit-header --no-location prog.ycp || exit 1
-LC_ALL=C tr -d '\r' < l-ycp-prog.tmp > l-ycp-prog.pot || exit 1
+${XGETTEXT} -o prog.tmp --omit-header --no-location prog.ycp || exit 1
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
 
-cat <<EOF > l-ycp-prog.ok
+cat <<EOF > prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
 
@@ -33,9 +33,9 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} l-ycp-prog.ok l-ycp-prog.pot || exit 1
+${DIFF} prog.ok prog.pot || exit 1
 
-cat <<\EOF > l-ycp-fr.po
+cat <<\EOF > fr.po
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -58,10 +58,10 @@ msgstr "%2 remplace %1."
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-ycp-fr.po.tmp l-ycp-fr.po l-ycp-prog.pot || exit 1
-LC_ALL=C tr -d '\r' < l-ycp-fr.po.tmp > l-ycp-fr.po.new || exit 1
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
 
 : ${DIFF=diff}
-${DIFF} l-ycp-fr.po l-ycp-fr.po.new || exit 1
+${DIFF} fr.po fr.po.new || exit 1
 
 exit 0

@@ -22,7 +22,7 @@ export gettext_datadir
 # Check if sanity checks are actually working.
 
 # no configure.ac
-$gettext_datadir/autopoint 2>&1 | grep -q 'Missing configure.in or configure.ac' \
+$gettext_datadir/autopoint 2>&1 | grep 'Missing configure.in or configure.ac' 2>&1 >/dev/null \
     || exit 1
 
 test ! -d intl || exit 1
@@ -40,7 +40,7 @@ AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
 EOF
 
-$gettext_datadir/autopoint 2>&1 | grep -q 'Missing version' \
+$gettext_datadir/autopoint 2>&1 | grep 'Missing version' 2>&1 >/dev/null \
     || exit 1
 
 test ! -d intl || exit 1
@@ -61,7 +61,7 @@ EOF
 test -d intl || mkdir intl
 echo bogus-version > intl/VERSION
 
-$gettext_datadir/autopoint 2>&1 | grep -q 'Missing version' \
+$gettext_datadir/autopoint 2>&1 | grep 'Missing version' 2>&1 >/dev/null \
     || exit 1
 
 test ! -d m4 || exit 1
@@ -84,7 +84,7 @@ echo gettext-0.15 > intl/VERSION
 
 # For further investigation, autopoint keeps autopoint.diff in $TMPDIR
 # if there is a mismatch.  Set TMPDIR not to pollute /tmp.
-TMPDIR="$PWD" $gettext_datadir/autopoint 2>&1 | grep -q 'locally modified' || exit 1
+TMPDIR="$PWD" $gettext_datadir/autopoint 2>&1 | grep 'locally modified' 2>&1 >/dev/null || exit 1
 
 test ! -d m4 || exit 1
 test ! -d po || exit 1

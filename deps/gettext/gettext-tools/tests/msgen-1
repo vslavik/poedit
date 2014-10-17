@@ -60,7 +60,7 @@ test $result = 0 || exit $result
 
 # Test --lang option.
 ${MSGEN} --lang=fr -o men-test1.tmp men-test1.po || exit 1
-grep -q "Language: fr" men-test1.tmp || exit 1
+grep "Language: fr" men-test1.tmp 2>&1 >/dev/null || exit 1
 grep -v "Language: fr" men-test1.tmp | LC_ALL=C tr -d '\r' > men-test1.out || exit 1
 
 ${DIFF} men-test1.ok men-test1.out

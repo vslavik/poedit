@@ -1,3 +1,26 @@
+2014-10-15  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.3 released.
+
+2014-10-15  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint.in: Update for 0.19.3.
+
+2014-10-10  Eric Blake  <eblake@redhat.com>
+
+	autopoint: Fix infinite recursion when tracing configure.ac
+	Reported by Andreas Henriksson at:
+	<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=764580>
+	* autopoint.in (func_trace_autoconf): Temporarily redefine
+	built-in macros, instead of undefining.
+	* gettextize.in: Likewise.
+
+2014-09-01  Daiki Ueno  <ueno@gnu.org>
+
+	* convert-archive.in: Don't use non-portable 'if ! COMMAND'.
+	Reported by Stefano Lattarini in:
+	<https://lists.gnu.org/archive/html/bug-gettext/2011-07/msg00002.html>.
+
 2014-07-14  Daiki Ueno  <ueno@gnu.org>
 
 	* gettext 0.19.2 released.

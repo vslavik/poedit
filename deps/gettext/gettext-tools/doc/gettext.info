@@ -55,7 +55,7 @@ GNU ‘gettext’ utilities
 ***********************
 
    This manual documents the GNU gettext tools and the GNU libintl
-library, version 0.19.2.
+library, version 0.19.3.
 
 * Menu:
 
@@ -9623,7 +9623,7 @@ each.
 
    So, here comes a list of files, each one followed by a description of
 all alterations it needs.  Many examples are taken out from the GNU
-‘gettext’ 0.19.2 distribution itself, or from the GNU ‘hello’
+‘gettext’ 0.19.3 distribution itself, or from the GNU ‘hello’
 distribution (<http://www.franken.de/users/gnu/ke/hello> or
 <http://www.gnu.franken.de/ke/hello/>) You may indeed refer to the
 source code of the GNU ‘gettext’ and GNU ‘hello’ packages, as they are
@@ -9780,7 +9780,7 @@ File: gettext.info,  Node: configure.ac,  Next: config.guess,  Prev: po/Rules-*,
      This is done by a set of lines like these:
 
           PACKAGE=gettext
-          VERSION=0.19.2
+          VERSION=0.19.3
           AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE")
           AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
           AC_SUBST(PACKAGE)
@@ -9788,12 +9788,12 @@ File: gettext.info,  Node: configure.ac,  Next: config.guess,  Prev: po/Rules-*,
 
      or, if you are using GNU ‘automake’, by a line like this:
 
-          AM_INIT_AUTOMAKE(gettext, 0.19.2)
+          AM_INIT_AUTOMAKE(gettext, 0.19.3)
 
      Of course, you replace ‘gettext’ with the name of your package, and
-     ‘0.19.2’ by its version numbers, exactly as they should appear in
+     ‘0.19.3’ by its version numbers, exactly as they should appear in
      the packaged ‘tar’ file name of your distribution
-     (‘gettext-0.19.2.tar.gz’, here).
+     (‘gettext-0.19.3.tar.gz’, here).
 
   2. Check for internationalization support.
 
@@ -10562,7 +10562,7 @@ into the repository.
 all the files that ‘gettextize’ mentions as "copy".  Instead, he adds to
 the ‘configure.ac’ or ‘configure.in’ a line of the form
 
-     AM_GNU_GETTEXT_VERSION(0.19.2)
+     AM_GNU_GETTEXT_VERSION(0.19.3)
 
 and adds to the package’s pre-build script an invocation of ‘autopoint’.
 For everyone who checks out the source, this ‘autopoint’ invocation will
@@ -10666,8 +10666,8 @@ package.
      Output version information and exit.
 
    ‘autopoint’ supports the GNU ‘gettext’ versions from 0.10.35 to the
-current one, 0.19.2.  In order to apply ‘autopoint’ to a package using a
-‘gettext’ version newer than 0.19.2, you need to install this same
+current one, 0.19.3.  In order to apply ‘autopoint’ to a package using a
+‘gettext’ version newer than 0.19.3, you need to install this same
 version of GNU ‘gettext’ at least.
 
    In packages using GNU ‘automake’, an invocation of ‘autopoint’ should
