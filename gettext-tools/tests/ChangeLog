@@ -1,3 +1,132 @@
+2014-10-15  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.3 released.
+
+2014-10-15  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint-2 (required_gettext_version): Update to 0.19.3.
+	* autopoint-3 (required_gettext_version): Likewise.
+
+2014-10-12  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Avoid sed error on Mac OS X when dealing with binary input
+	Reported by Ramsey Dow in:
+	<http://lists.gnu.org/archive/html/bug-gettext/2014-07/msg00002.html>.
+	* msgmerge-compendium-6: Run sed with LC_ALL=C, to avoid 'illegal
+	byte sequence' error on Mac OS X.
+	* format-sh-1: Likewise.
+
+2014-10-10  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Add test for Debian bug#764580
+	* autopoint-2: Check if m4_assert is properly redefined while
+	tracing.
+
+2014-10-08  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Improve test coverage of C and Vala scanners
+	* xgettext-c-4: Check more trigraphs.
+	* xgettext-c-2: Check floating point literal.
+	* xgettext-c-19: Check out-of-range Unicode character, "\U"
+	character escape, incomplete "\u" escape, and surrogates.
+	* xgettext-vala-1: Check unterminated regexp literal, floating
+	point literal, string template, "/=" operator, multi-line
+	comments, and backslash-escaped character inside regexp literal.
+
+2014-10-03  Daiki Ueno  <ueno@gnu.org>
+
+	* lang-c++: Check if CXX is "no", not ":".  See commit e854d2c7
+	for the rationale.
+
+2014-10-02  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint-3: Invoke AC_CONFIG_MACRO_DIR after AC_INIT, not
+	before.
+
+2014-10-01  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Adjust textdomain directory for Solaris 11
+	* init.cfg (prepare_locale_): New function.
+	* lang-bash: Call prepare_locale_ before running locale-dependant
+	tests.
+	* lang-c: Likewise.
+	* lang-c++: Likewise.
+	* lang-clisp: Likewise.
+	* lang-csharp: Likewise.
+	* lang-gawk: Likewise.
+	* lang-guile: Likewise.
+	* lang-java: Likewise.
+	* lang-javascript: Likewise.
+	* lang-librep: Likewise.
+	* lang-lua: Likewise.
+	* lang-objc: Likewise.
+	* lang-pascal: Likewise.
+	* lang-perl-1: Likewise.
+	* lang-perl-2: Likewise.
+	* lang-php: Likewise.
+	* lang-python-1: Likewise.
+	* lang-python-2: Likewise.
+	* lang-sh: Likewise.
+	* lang-smalltalk: Likewise.
+	* lang-tcl: Likewise.
+	* lang-vala: Likewise.
+
+2014-10-01  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Stop redundant textdomain directory creation
+	This was introduced by commit 3533f6cc when we didn't use separate
+	test directory for each test.  Now that we switched to init.sh, we
+	don't need to worry about filename conflicts.
+	* lang-c: Stop redundant textdomain directory creation.
+	* lang-c++: Likewise.
+	* lang-objc: Likewise.
+	* lang-sh: Likewise.
+	* lang-bash: Likewise.
+	* lang-python-1: Likewise.
+	* lang-python-2: Likewise.
+	* lang-clisp: Likewise.
+	* lang-elisp: Likewise.
+	* lang-librep: Likewise.
+	* lang-guile: Likewise.
+	* lang-smalltalk: Likewise.
+	* lang-java: Likewise.
+	* lang-csharp: Likewise.
+	* lang-gawk: Likewise.
+	* lang-pascal: Likewise.
+	* lang-ycp: Likewise.
+	* lang-tcl: Likewise.
+	* lang-perl-1: Likewise.
+	* lang-perl-2: Likewise.
+	* lang-php: Likewise.
+	* lang-po: Likewise.
+	* lang-rst: Likewise.
+	* lang-lua: Likewise.
+	* lang-javascript: Likewise.
+	* lang-vala: Likewise.
+
+2014-09-30  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint-1: Don't rely on non-portable "grep -q".
+	* msginit-3: Likewise.
+	* msgen-1: Likewise.
+
+2014-09-30  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext-c-19: Test octal string escape.
+
+2014-09-24  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext-c-19: Use iconv -f/-t instead of non-portable
+	--from/--to.
+
+2014-09-05  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint-3: Use libtool when compiling included libintl.
+
+2014-09-05  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint-2, autopoint-3: Collect error output.
+
 2014-07-14  Daiki Ueno  <ueno@gnu.org>
 
 	* gettext 0.19.2 released.

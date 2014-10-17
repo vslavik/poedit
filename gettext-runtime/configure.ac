@@ -61,6 +61,7 @@ AC_EXEEXT
 
 dnl Make sure we see all GNU and Solaris extensions.
 gl_EARLY
+AM_PROG_CC_C_O
 
 dnl Check for build configuration.
 
@@ -166,7 +167,7 @@ AC_ARG_ENABLE([libasprintf],
      SUBDIR_libasprintf=
    fi
   ], [SUBDIR_libasprintf=libasprintf])
-if test "$CXX" = ":"; then
+if test "$CXX" = "no"; then
   SUBDIR_libasprintf=
 fi
 AM_CONDITIONAL([ENABLE_LIBASPRINTF], [test -n "$SUBDIR_libasprintf"])

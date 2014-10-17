@@ -2403,6 +2403,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-term-ostream-xterm-88color.out
   tests/test-term-ostream-xterm-8bit.out
   tests/test-term-ostream-xterm-aix51.out
+  tests/test-term-ostream-xterm-basic-italic.out
   tests/test-term-ostream-xterm-basic.out
   tests/test-term-ostream-xterm-irix65.out
   tests/test-term-ostream-xterm-linux-debian.out

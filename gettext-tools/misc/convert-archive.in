@@ -64,9 +64,11 @@ func_fatal_error ()
 
 # Command-line option processing.
 
-if ! { { test $# = 2 || test $# = 3 || test $# = 4; } \
+if { { test $# = 2 || test $# = 3 || test $# = 4; } \
        && case "$1" in dir | cvs | git ) true;; *) false;; esac \
        && case "$2" in dir | cvs | git ) true;; *) false;; esac; }; then
+  :
+else
   echo "Usage: convert-archive {dir|cvs|git} {dir|cvs|git} [fromfile [tofile]]"
   exit 1
 fi

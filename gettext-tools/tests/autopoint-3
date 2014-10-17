@@ -3,7 +3,7 @@
 
 # Test the autopoint program, with Automake.
 
-required_gettext_version=0.19.2
+required_gettext_version=0.19.3
 
 : ${AUTOCONF=autoconf}
 ${AUTOCONF} --version >/dev/null 2>/dev/null \
@@ -31,7 +31,8 @@ AC_OUTPUT
 EOF
 
 : ${ACLOCAL=aclocal}
-${ACLOCAL} >/dev/null 2>/dev/null || exit 1
+${ACLOCAL} >/dev/null 2>autopoint.err
+test $? = 0 || { cat autopoint.err; exit 1; }
 
 : > Makefile.am
 
@@ -39,6 +40,10 @@ ${AUTOMAKE} --add-missing >/dev/null 2>/dev/null \
   || { echo "Skipping test: automake version too old"; exit 77; }
 
 rm -f configure.ac Makefile.am
+
+: ${LIBTOOLIZE=libtoolize}
+${LIBTOOLIZE} --version >/dev/null 2>/dev/null \
+  || { echo "Skipping test: libtoolize not found"; exit 77; }
 
 : ${MAKE=make}
 ${MAKE} --version >/dev/null 2>/dev/null \
@@ -48,13 +53,14 @@ gettext_datadir=$top_builddir/misc
 export gettext_datadir
 
 cat <<EOF >configure.ac
-AC_CONFIG_MACRO_DIR([m4])
-
 AC_INIT([hello], [0.0.0], [bug-gnu-gettext@gnu.org])
 AM_INIT_AUTOMAKE([foreign])
+LT_INIT
+
+AC_CONFIG_MACRO_DIR([m4])
 
 AC_PROG_CC
-AM_GNU_GETTEXT
+AM_GNU_GETTEXT([use-libtool])
 AM_GNU_GETTEXT_VERSION([$required_gettext_version])
 
 AC_CONFIG_HEADERS([config.h])
@@ -86,13 +92,14 @@ DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 AM_CPPFLAGS = -I. -I$(srcdir)
 
 # Link time dependencies.
-LDADD = @LIBINTL@
+LDADD = @LTLIBINTL@
 EOF
 
 cp -p "$abs_top_srcdir"/gnulib-lib/gettext.h .
 cp -p "$abs_top_srcdir"/examples/hello-c/hello.c .
 
-$gettext_datadir/autopoint -f >/dev/null 2>/dev/null || exit 1
+$gettext_datadir/autopoint -f >/dev/null 2>autopoint.err
+test $? = 0 || { cat autopoint.err; exit 1; }
 
 test -d intl || exit 1
 test -d m4 || exit 1
@@ -104,16 +111,26 @@ test -f po/Makefile.in.in || exit 1
 cp -p po/Makevars.template po/Makevars
 echo hello.c > po/POTFILES.in
 
-${ACLOCAL} -I m4 >/dev/null 2>/dev/null || exit 1
+${LIBTOOLIZE} -f -i >/dev/null 2>autopoint.err
+test $? = 0 || { cat autopoint.err; exit 1; }
+
+${ACLOCAL} -I m4 >/dev/null 2>autopoint.err
+test $? = 0 || { cat autopoint.err; exit 1; }
+
 : ${AUTOHEADER=autoheader}
-${AUTOHEADER} >/dev/null 2>/dev/null || exit 1
-${AUTOCONF} >/dev/null 2>/dev/null || exit 1
-${AUTOMAKE} -a -c >/dev/null 2>/dev/null || exit 1
+${AUTOHEADER} >/dev/null 2>autopoint.err
+test $? = 0 || { cat autopoint.err; exit 1; }
+
+${AUTOCONF} >/dev/null 2>autopoint.err
+test $? = 0 || { cat autopoint.err; exit 1; }
+
+${AUTOMAKE} -a -c >/dev/null 2>autopoint.err
+test $? = 0 || { cat autopoint.err; exit 1; }
 
 # Check if libintl compiles.
 : ${CONFIG_SHELL=${SHELL-/bin/sh}}
-${CONFIG_SHELL} ./configure --with-included-gettext >/dev/null 2>/dev/null \
-    || exit 1
+${CONFIG_SHELL} ./configure --with-included-gettext >/dev/null 2>autpoint.err
+test $? = 0 || { cat autopoint.err; exit 1; }
 
 # Workaround for 0.18.3 or earlier: Processing intl/plural.y with
 # Bison 3.0.1 or later generates a wrong code.  Use pre-generated
@@ -127,7 +144,10 @@ case "$required_gettext_version" in
     ;;
 esac
 
-${MAKE} >/dev/null 2>/dev/null || exit 1
-${MAKE} dist >/dev/null 2>/dev/null || exit 1
+${MAKE} >/dev/null 2>autopoint.err
+test $? = 0 || { cat autopoint.err; exit 1; }
+
+${MAKE} dist >/dev/null 2>autopoint.err
+test $? = 0 || { cat autopoint.err; exit 1; }
 
 exit 0

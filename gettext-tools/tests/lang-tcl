@@ -15,17 +15,17 @@
 cat <<\EOF > program.tcl
 #!/usr/bin/env tclsh
 package require msgcat
-::msgcat::mcload [file join [file dirname [info script]] l-tcl msgs]
+::msgcat::mcload [file join [file dirname [info script]] . msgs]
 proc _ {s} {return [::msgcat::mc $s]}
 puts [_ "'Your command, please?', asked the waiter."]
 puts [format [::msgcat::mc "%s is replaced by %s."] "FF" "EUR"]
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-tcl-prog.tmp --omit-header -k_ program.tcl || exit 1
-LC_ALL=C tr -d '\r' < l-tcl-prog.tmp > l-tcl-prog.pot || exit 1
+${XGETTEXT} -o prog.tmp --omit-header -k_ program.tcl || exit 1
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
 
-cat <<EOF > l-tcl-prog.ok
+cat <<EOF > prog.ok
 #: program.tcl:5
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
@@ -37,9 +37,9 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} l-tcl-prog.ok l-tcl-prog.pot || exit 1
+${DIFF} prog.ok prog.pot || exit 1
 
-cat <<\EOF > l-tcl-fr.po
+cat <<\EOF > fr.po
 msgid ""
 msgstr "Content-Type: text/plain; charset=ISO-8859-1\n"
 
@@ -55,34 +55,33 @@ msgstr "%2$s remplace %1$s."
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-tcl-fr.po.tmp l-tcl-fr.po l-tcl-prog.pot || exit 1
-LC_ALL=C tr -d '\r' < l-tcl-fr.po.tmp > l-tcl-fr.po.new || exit 1
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
 
 : ${DIFF=diff}
-${DIFF} l-tcl-fr.po l-tcl-fr.po.new || exit 1
+${DIFF} fr.po fr.po.new || exit 1
 
-test -d l-tcl || mkdir l-tcl
-test -d l-tcl/msgs || mkdir l-tcl/msgs
+test -d msgs || mkdir msgs
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} --tcl -d l-tcl/msgs -l fr l-tcl-fr.po || exit 1
+${MSGFMT} --tcl -d msgs -l fr fr.po || exit 1
 
 # Test for presence of tclsh with msgcat extension.
-cat <<\EOF > l-tcl-version.tcl
+cat <<\EOF > version.tcl
 package require msgcat
 puts $tcl_version
 EOF
-(tclsh l-tcl-version.tcl) >/dev/null 2>/dev/null \
+(tclsh version.tcl) >/dev/null 2>/dev/null \
   || { echo "Skipping test: tclsh not found or msgcat extension not present"
        exit 77
      }
 
 : ${DIFF=diff}
-cat <<\EOF > l-tcl-prog.ok
+cat <<\EOF > prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
 EUR remplace FF.
 EOF
-cat <<\EOF > l-tcl-prog.oku
+cat <<\EOF > prog.oku
 Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
 EUR remplace FF.
 EOF
@@ -90,14 +89,16 @@ EOF
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LANGUAGE= LANG=$LOCALE_FR LC_MESSAGES= LC_CTYPE= LC_ALL= tclsh program.tcl > l-tcl-prog.tmp || exit 1
-  LC_ALL=C tr -d '\r' < l-tcl-prog.tmp > l-tcl-prog.out || exit 1
-  ${DIFF} l-tcl-prog.ok l-tcl-prog.out || exit 1
+  prepare_locale_ fr $LOCALE_FR
+  LANGUAGE= LANG=$LOCALE_FR LC_MESSAGES= LC_CTYPE= LC_ALL= tclsh program.tcl > prog.tmp || exit 1
+  LC_ALL=C tr -d '\r' < prog.tmp > prog.out || exit 1
+  ${DIFF} prog.ok prog.out || exit 1
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LANGUAGE= LANG=$LOCALE_FR_UTF8 LC_MESSAGES= LC_CTYPE= LC_ALL= tclsh program.tcl > l-tcl-prog.tmp || exit 1
-  LC_ALL=C tr -d '\r' < l-tcl-prog.tmp > l-tcl-prog.out || exit 1
-  ${DIFF} l-tcl-prog.oku l-tcl-prog.out || exit 1
+  prepare_locale_ fr $LOCALE_FR_UTF8
+  LANGUAGE= LANG=$LOCALE_FR_UTF8 LC_MESSAGES= LC_CTYPE= LC_ALL= tclsh program.tcl > prog.tmp || exit 1
+  LC_ALL=C tr -d '\r' < prog.tmp > prog.out || exit 1
+  ${DIFF} prog.oku prog.out || exit 1
 fi
 if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   if test -f /usr/bin/localedef; then

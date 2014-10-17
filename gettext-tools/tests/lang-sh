@@ -17,7 +17,7 @@ n=$1
 
 TEXTDOMAIN=prog
 export TEXTDOMAIN
-TEXTDOMAINDIR=l-sh
+TEXTDOMAINDIR=.
 export TEXTDOMAINDIR
 
 $echo "`gettext \"'Your command, please?', asked the waiter.\"`"
@@ -26,10 +26,10 @@ $echo "`eval_ngettext \"a piece of cake\" \"\\$n pieces of cake\" $n`"
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-sh-prog.tmp --omit-header --no-location prog.sh || exit 1
-LC_ALL=C tr -d '\r' < l-sh-prog.tmp > l-sh-prog.pot || exit 1
+${XGETTEXT} -o prog.tmp --omit-header --no-location prog.sh || exit 1
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
 
-cat <<\EOF > l-sh-prog.ok
+cat <<\EOF > prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
 
@@ -41,9 +41,9 @@ msgstr[1] ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} l-sh-prog.ok l-sh-prog.pot || exit 1
+${DIFF} prog.ok prog.pot || exit 1
 
-cat <<\EOF > l-sh-fr.po
+cat <<\EOF > fr.po
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -61,18 +61,17 @@ msgstr[1] "$n morceaux de gateau"
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-sh-fr.po.tmp l-sh-fr.po l-sh-prog.pot || exit 1
-LC_ALL=C tr -d '\r' < l-sh-fr.po.tmp > l-sh-fr.po.new || exit 1
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
 
 : ${DIFF=diff}
-${DIFF} l-sh-fr.po l-sh-fr.po.new || exit 1
+${DIFF} fr.po fr.po.new || exit 1
 
-test -d l-sh || mkdir l-sh
-test -d l-sh/fr || mkdir l-sh/fr
-test -d l-sh/fr/LC_MESSAGES || mkdir l-sh/fr/LC_MESSAGES
+test -d fr || mkdir fr
+test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o l-sh/fr/LC_MESSAGES/prog.mo l-sh-fr.po
+${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
 
 # Test which of the fr_FR locales are installed.
 : ${LOCALE_FR=fr_FR}
@@ -103,11 +102,11 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
 fi
 
 : ${DIFF=diff}
-cat <<\EOF > l-sh-prog.ok
+cat <<\EOF > prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
 2 morceaux de gateau
 EOF
-cat <<\EOF > l-sh-prog.oku
+cat <<\EOF > prog.oku
 Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
 2 morceaux de gateau
 EOF
@@ -115,12 +114,14 @@ EOF
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR sh ./prog.sh 2 > l-sh-prog.out || exit 1
-  ${DIFF} l-sh-prog.ok l-sh-prog.out || exit 1
+  prepare_locale_ fr $LOCALE_FR
+  LANGUAGE= LC_ALL=$LOCALE_FR sh ./prog.sh 2 > prog.out || exit 1
+  ${DIFF} prog.ok prog.out || exit 1
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 sh ./prog.sh 2 > l-sh-prog.out || exit 1
-  ${DIFF} l-sh-prog.oku l-sh-prog.out || exit 1
+  prepare_locale_ fr $LOCALE_FR_UTF8
+  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 sh ./prog.sh 2 > prog.out || exit 1
+  ${DIFF} prog.oku prog.out || exit 1
 fi
 
 exit 0

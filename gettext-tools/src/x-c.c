@@ -996,7 +996,8 @@ literalstring_parse (const char *string, lex_pos_ty *pos,
               for (n = 0, j = 0; j < 3; ++j)
                 {
                   n = n * 8 + c - '0';
-                  switch (*++p)
+                  c = *++p;
+                  switch (c)
                     {
                     default:
                       break;

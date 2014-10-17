@@ -40,7 +40,7 @@ EOF
 GETTEXTLIBDIR="$abs_top_srcdir"/src ${MSGINIT} -l ga_IE --no-translator -o mi-test3.tmp 2>mi-test3.err
 test $? = 0 || { cat mi-test3.err 1>&2; exit 1; }
 
-grep -q "Project-Id-Version: gt-msginit " mi-test3.tmp || exit 1
+grep "Project-Id-Version: gt-msginit " mi-test3.tmp 2>&1 >/dev/null || exit 1
 
 # The charset stored in the header entry is the locale encoding of the gl_IE
 # locale, which is system dependent, or ASCII if the locale does not exist.

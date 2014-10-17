@@ -24,7 +24,7 @@ int main (int argc, char *argv[])
     exit (77);
 
   textdomain ("prog");
-  bindtextdomain ("prog", "l-c");
+  bindtextdomain ("prog", ".");
 
   printf (_("'Your command, please?', asked the waiter."));
   printf ("\n");
@@ -47,15 +47,15 @@ ${CC} -I../.. -I"$abs_top_srcdir"/gnulib-lib -I../../intl ${CFLAGS} \
 
 : ${CONFIG_SHELL=${SHELL-/bin/sh}}
 ${CONFIG_SHELL} "$top_builddir"/libtool --quiet --tag=CC --mode=link \
-                ${CC} ${CFLAGS} -o l-c-prog prog.${OBJEXT} \
+                ${CC} ${CFLAGS} -o prog prog.${OBJEXT} \
                 ../../gnulib-lib/libgettextlib.la ${LDFLAGS} ${LTLIBINTL} \
 		|| exit 1
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-c-prog.tmp --omit-header --no-location -k_ prog.c || exit 1
-LC_ALL=C tr -d '\r' < l-c-prog.tmp > l-c-prog.pot || exit 1
+${XGETTEXT} -o prog.tmp --omit-header --no-location -k_ prog.c || exit 1
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
 
-cat <<EOF > l-c-prog.ok
+cat <<EOF > prog.ok
 #, c-format
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
@@ -72,9 +72,9 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} l-c-prog.ok l-c-prog.pot || exit 1
+${DIFF} prog.ok prog.pot || exit 1
 
-cat <<\EOF > l-c-fr.po
+cat <<\EOF > fr.po
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -98,26 +98,25 @@ msgstr "%2$s remplace %1$s."
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-c-fr.po.tmp l-c-fr.po l-c-prog.pot || exit 1
-LC_ALL=C tr -d '\r' < l-c-fr.po.tmp > l-c-fr.po.new || exit 1
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
 
 : ${DIFF=diff}
-${DIFF} l-c-fr.po l-c-fr.po.new || exit 1
+${DIFF} fr.po fr.po.new || exit 1
 
-test -d l-c || mkdir l-c
-test -d l-c/fr || mkdir l-c/fr
-test -d l-c/fr/LC_MESSAGES || mkdir l-c/fr/LC_MESSAGES
+test -d fr || mkdir fr
+test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o l-c/fr/LC_MESSAGES/prog.mo l-c-fr.po
+${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
 
 : ${DIFF=diff}
-cat <<\EOF > l-c-prog.ok
+cat <<\EOF > prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
 2 morceaux de gateau
 EUR remplace FF.
 EOF
-cat <<\EOF > l-c-prog.oku
+cat <<\EOF > prog.oku
 Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
 2 morceaux de gateau
 EUR remplace FF.
@@ -126,17 +125,19 @@ EOF
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LANGUAGE= ./l-c-prog $LOCALE_FR 2 > l-c-prog.out
+  prepare_locale_ fr $LOCALE_FR
+  LANGUAGE= ./prog $LOCALE_FR 2 > prog.out
   case $? in
-    0) ${DIFF} l-c-prog.ok l-c-prog.out || exit 1;;
+    0) ${DIFF} prog.ok prog.out || exit 1;;
     77) LOCALE_FR=none;;
     *) exit 1;;
   esac
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LANGUAGE= ./l-c-prog $LOCALE_FR_UTF8 2 > l-c-prog.out
+  prepare_locale_ fr $LOCALE_FR_UTF8
+  LANGUAGE= ./prog $LOCALE_FR_UTF8 2 > prog.out
   case $? in
-    0) ${DIFF} l-c-prog.oku l-c-prog.out || exit 1;;
+    0) ${DIFF} prog.oku prog.out || exit 1;;
     77) LOCALE_FR_UTF8=none;;
     *) exit 1;;
   esac

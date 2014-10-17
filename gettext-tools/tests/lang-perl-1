@@ -11,7 +11,7 @@ use strict;
 
 use Locale::Messages qw (textdomain bindtextdomain gettext ngettext);
 textdomain "prog";
-bindtextdomain "prog", "./l-perl-1";
+bindtextdomain "prog", "./";
 my $n = 2;
 print gettext "'Your command, please?', asked the waiter.";
 print "\n";
@@ -24,10 +24,10 @@ EOF
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} \
   -k__ --flag=__:1:pass-perl-format --flag=__:1:pass-perl-brace-format \
-  -o l-perl-1-prog.tmp --omit-header --no-location program1.pl || exit 1
-LC_ALL=C tr -d '\r' < l-perl-1-prog.tmp > l-perl-1-prog.pot || exit 1
+  -o prog.tmp --omit-header --no-location program1.pl || exit 1
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
 
-cat <<EOF > l-perl-1-prog.ok
+cat <<EOF > prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
 
@@ -43,9 +43,9 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} l-perl-1-prog.ok l-perl-1-prog.pot || exit 1
+${DIFF} prog.ok prog.pot || exit 1
 
-cat <<\EOF > l-perl-1-fr.po
+cat <<\EOF > fr.po
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -68,26 +68,25 @@ msgstr "%2$s remplace %1$s."
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-perl-1-fr.po.tmp l-perl-1-fr.po l-perl-1-prog.pot || exit 1
-LC_ALL=C tr -d '\r' < l-perl-1-fr.po.tmp > l-perl-1-fr.po.new || exit 1
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
 
 : ${DIFF=diff}
-${DIFF} l-perl-1-fr.po l-perl-1-fr.po.new || exit 1
+${DIFF} fr.po fr.po.new || exit 1
 
-test -d l-perl-1 || mkdir l-perl-1
-test -d l-perl-1/fr || mkdir l-perl-1/fr
-test -d l-perl-1/fr/LC_MESSAGES || mkdir l-perl-1/fr/LC_MESSAGES
+test -d fr || mkdir fr
+test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o l-perl-1/fr/LC_MESSAGES/prog.mo l-perl-1-fr.po
+${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
 
 : ${DIFF=diff}
-cat <<\EOF > l-perl-1-prog.ok
+cat <<\EOF > prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
 2 morceaux de gateau
 EUR remplace FF.
 EOF
-cat <<\EOF > l-perl-1-prog.oku
+cat <<\EOF > prog.oku
 Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
 2 morceaux de gateau
 EUR remplace FF.
@@ -102,12 +101,14 @@ perl -e 'use Locale::Messages;' 2>/dev/null \
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LANGUAGE= LANG=$LOCALE_FR LC_MESSAGES= LC_CTYPE= LC_ALL= perl program1.pl > l-perl-1-prog.out || exit 1
-  ${DIFF} l-perl-1-prog.ok l-perl-1-prog.out || exit 1
+  prepare_locale_ fr $LOCALE_FR
+  LANGUAGE= LANG=$LOCALE_FR LC_MESSAGES= LC_CTYPE= LC_ALL= perl program1.pl > prog.out || exit 1
+  ${DIFF} prog.ok prog.out || exit 1
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LANGUAGE= LANG=$LOCALE_FR_UTF8 LC_MESSAGES= LC_CTYPE= LC_ALL= perl program1.pl > l-perl-1-prog.out || exit 1
-  ${DIFF} l-perl-1-prog.oku l-perl-1-prog.out || exit 1
+  prepare_locale_ fr $LOCALE_FR_UTF8
+  LANGUAGE= LANG=$LOCALE_FR_UTF8 LC_MESSAGES= LC_CTYPE= LC_ALL= perl program1.pl > prog.out || exit 1
+  ${DIFF} prog.oku prog.out || exit 1
 fi
 if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   if test -f /usr/bin/localedef; then

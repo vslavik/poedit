@@ -46,15 +46,14 @@ class Program {
 }
 EOF
 
-test -d l-csharp || mkdir l-csharp
 : ${CSHARPCOMP="/bin/sh ../../csharpcomp.sh"}
-${CSHARPCOMP} -o l-csharp/program.exe -L ../../../gettext-runtime/intl-csharp -l GNU.Gettext program.cs || exit 1
+${CSHARPCOMP} -o program.exe -L ../../../gettext-runtime/intl-csharp -l GNU.Gettext program.cs || exit 1
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-csharp-prog.tmp --omit-header --no-location program.cs || exit 1
-LC_ALL=C tr -d '\r' < l-csharp-prog.tmp > l-csharp-prog.pot || exit 1
+${XGETTEXT} -o prog.tmp --omit-header --no-location program.cs || exit 1
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
 
-cat <<EOF > l-csharp-prog.ok
+cat <<EOF > prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
 
@@ -82,9 +81,9 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} l-csharp-prog.ok l-csharp-prog.pot || exit 1
+${DIFF} prog.ok prog.pot || exit 1
 
-cat <<\EOF > l-csharp-fr.po
+cat <<\EOF > fr.po
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -121,15 +120,15 @@ msgstr "Le nouveau {1} remplace le vieux {0}."
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-csharp-fr.po.tmp l-csharp-fr.po l-csharp-prog.pot || exit 1
-LC_ALL=C tr -d '\r' < l-csharp-fr.po.tmp > l-csharp-fr.po.new || exit 1
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
 
 : ${DIFF=diff}
-${DIFF} l-csharp-fr.po l-csharp-fr.po.new || exit 1
+${DIFF} fr.po fr.po.new || exit 1
 
 : ${MSGFMT=msgfmt}
 GETTEXTCSHARPLIBDIR=../../../gettext-runtime/intl-csharp \
-${MSGFMT} --csharp -d l-csharp -r prog -l fr l-csharp-fr.po || exit 1
+${MSGFMT} --csharp -d . -r prog -l fr fr.po || exit 1
 
 # Test which of the fr_FR locales are installed.
 : ${LOCALE_FR=fr_FR}
@@ -160,14 +159,14 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
 fi
 
 : ${DIFF=diff}
-cat <<\EOF > l-csharp-prog.ok
+cat <<\EOF > prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
 2 morceaux de gateau
 EUR remplace FF.
 2 morceaux de gateau succulent
 Le nouveau EUR remplace le vieux FF.
 EOF
-cat <<\EOF > l-csharp-prog.oku
+cat <<\EOF > prog.oku
 Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
 2 morceaux de gateau
 EUR remplace FF.
@@ -179,12 +178,14 @@ EOF
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 : ${CSHARPEXEC="/bin/sh ../../csharpexec.sh"}
 if test $LOCALE_FR != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR ${CSHARPEXEC} -L ../../../gettext-runtime/intl-csharp l-csharp/program.exe 2 > l-csharp-prog.out || exit 1
-  ${DIFF} l-csharp-prog.ok l-csharp-prog.out || exit 1
+  prepare_locale_ fr $LOCALE_FR
+  LANGUAGE= LC_ALL=$LOCALE_FR ${CSHARPEXEC} -L ../../../gettext-runtime/intl-csharp program.exe 2 > prog.out || exit 1
+  ${DIFF} prog.ok prog.out || exit 1
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 ${CSHARPEXEC} -L ../../../gettext-runtime/intl-csharp l-csharp/program.exe 2 > l-csharp-prog.out || exit 1
-  ${DIFF} l-csharp-prog.oku l-csharp-prog.out || exit 1
+  prepare_locale_ fr $LOCALE_FR_UTF8
+  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 ${CSHARPEXEC} -L ../../../gettext-runtime/intl-csharp program.exe 2 > prog.out || exit 1
+  ${DIFF} prog.oku prog.out || exit 1
 fi
 
 exit 0
