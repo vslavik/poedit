@@ -1501,14 +1501,13 @@ x_python_lex (token_ty *tp)
       for (;;)
         {
           token_ty token2, *tp2 = NULL;
+          token_ty token3;
 
           phase5_get (&token2);
           switch (token2.type)
             {
             case token_type_plus:
               {
-                token_ty token3;
-
                 phase5_get (&token3);
                 if (token3.type == token_type_string)
                   {

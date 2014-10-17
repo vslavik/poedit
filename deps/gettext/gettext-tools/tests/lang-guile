@@ -10,7 +10,7 @@ cat <<\EOF > prog.scm
 
 (setlocale LC_ALL "")
 (textdomain "prog")
-(bindtextdomain "prog" "l-guile")
+(bindtextdomain "prog" ".")
 
 (define n (string->number (list-ref (command-line) 1)))
 
@@ -22,10 +22,10 @@ cat <<\EOF > prog.scm
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-guile-prog.tmp --omit-header --no-location prog.scm || exit 1
-LC_ALL=C tr -d '\r' < l-guile-prog.tmp > l-guile-prog.pot || exit 1
+${XGETTEXT} -o prog.tmp --omit-header --no-location prog.scm || exit 1
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
 
-cat <<EOF > l-guile-prog.ok
+cat <<EOF > prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
 
@@ -41,9 +41,9 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} l-guile-prog.ok l-guile-prog.pot || exit 1
+${DIFF} prog.ok prog.pot || exit 1
 
-cat <<\EOF > l-guile-fr.po
+cat <<\EOF > fr.po
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -66,18 +66,17 @@ msgstr "~1@*~A remplace ~0@*~A."
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-guile-fr.po.tmp l-guile-fr.po l-guile-prog.pot || exit 1
-LC_ALL=C tr -d '\r' < l-guile-fr.po.tmp > l-guile-fr.po.new || exit 1
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
 
 : ${DIFF=diff}
-${DIFF} l-guile-fr.po l-guile-fr.po.new || exit 1
+${DIFF} fr.po fr.po.new || exit 1
 
-test -d l-guile || mkdir l-guile
-test -d l-guile/fr || mkdir l-guile/fr
-test -d l-guile/fr/LC_MESSAGES || mkdir l-guile/fr/LC_MESSAGES
+test -d fr || mkdir fr
+test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o l-guile/fr/LC_MESSAGES/prog.mo l-guile-fr.po
+${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
 
 # Test for presence of guile version 1.7 or newer.
 (guile --version) >/dev/null 2>/dev/null \
@@ -116,12 +115,12 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
 fi
 
 : ${DIFF=diff}
-cat <<\EOF > l-guile-prog.ok
+cat <<\EOF > prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
 2 morceaux de gateau
 EUR remplace FF.
 EOF
-cat <<\EOF > l-guile-prog.oku
+cat <<\EOF > prog.oku
 Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
 2 morceaux de gateau
 EUR remplace FF.
@@ -130,14 +129,16 @@ EOF
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR guile -s prog.scm 2 > l-guile-prog.out 2>l-guile-prog.err || { cat l-guile-prog.err 1>&2; exit 1; }
-  grep -v '^;;;' l-guile-prog.err 1>&2
-  ${DIFF} l-guile-prog.ok l-guile-prog.out || exit 1
+  prepare_locale_ fr $LOCALE_FR
+  LANGUAGE= LC_ALL=$LOCALE_FR guile -s prog.scm 2 > prog.out 2>prog.err || { cat prog.err 1>&2; exit 1; }
+  grep -v '^;;;' prog.err 1>&2
+  ${DIFF} prog.ok prog.out || exit 1
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 guile -s prog.scm 2 > l-guile-prog.out 2>l-guile-prog.err || { cat l-guile-prog.err 1>&2; exit 1; }
-  grep -v '^;;;' l-guile-prog.err 1>&2
-  ${DIFF} l-guile-prog.oku l-guile-prog.out || exit 1
+  prepare_locale_ fr $LOCALE_FR_UTF8
+  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 guile -s prog.scm 2 > prog.out 2>prog.err || { cat prog.err 1>&2; exit 1; }
+  grep -v '^;;;' prog.err 1>&2
+  ${DIFF} prog.oku prog.out || exit 1
 fi
 
 exit 0

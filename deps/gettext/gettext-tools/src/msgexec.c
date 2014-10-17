@@ -434,7 +434,7 @@ process_message (const message_ty *mp)
 
       if (mp->msgid_plural != NULL)
         {
-          char *plural_form_string = xasprintf ("%lu", k);
+          char *plural_form_string = xasprintf ("%zu", k);
 
           xsetenv ("MSGEXEC_PLURAL_FORM", plural_form_string, 1);
           free (plural_form_string);

@@ -4,6 +4,15 @@
 # Test C support: mixing ANSI escapes, Unicode escapes, and bare
 # multibyte characters.
 
+: ${XGETTEXT=xgettext}
+
+cat <<\EOF > err1.c
+/* Out of range */
+gettext ("\U00110000");
+EOF
+
+(LANGUAGE= LC_ALL=C ${XGETTEXT} --no-location --no-wrap -o - err1.c 2>&1; exit) | grep 'invalid Unicode character' || exit 1
+
 cat <<\EOF > xg-c-19.in.c
 /* 最初のコメント */
 "最初の文字列";
@@ -12,20 +21,22 @@ cat <<\EOF > xg-c-19.in.c
 gettext ("二番目の文字列");
 
 /* 三番目のコメント */
-pgettext ("\u30B3\u30F3\u30C6\u30AF\u30B9\u30C8", "\xBB\xB0\xC8\xD6\xCC\xDC\xA4\xCE\xCA\xB8\xBB\xFA\xCE\xF3");
+pgettext ("\u30B3\u30F3\u30C6\u30af\u30B9\u30C8\U0001F600\ud835\udc9ea", "\xBB\xB0\xC8\xD6\xCC\xDC\xA4\xCE\xCA\xB8\xBB\xFA\xCe\363");
+
+gettext ("\"\'\?\\\a\b\f\n\r\t\v\xG\0000");
+gettext ("\u30A");
 EOF
 
 : ${ICONV=iconv}
-iconv --from UTF-8 --to EUC-JP < xg-c-19.in.c > xg-c-19.c \
+iconv -f UTF-8 -t EUC-JP < xg-c-19.in.c > xg-c-19.c \
   || { echo "Skipping test: iconv does not work for EUC-JP"; exit 77; }
 
-: ${XGETTEXT=xgettext}
-${XGETTEXT} --from-code=EUC-JP --add-comments --no-location \
+${XGETTEXT} --from-code=EUC-JP --add-comments --no-location --no-wrap \
 	    -o - xg-c-19.c | grep -v 'POT-Creation-Date' > xg-c-19.tmp.po \
-	    || exit 1
+	    || { cp core* ..; exit 1; }
 LC_ALL=C tr -d '\r' < xg-c-19.tmp.po > xg-c-19.po || exit 1
 
-cat <<EOF > xg-c-19.ok
+cat <<\EOF > xg-c-19.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
@@ -49,8 +60,16 @@ msgid "二番目の文字列"
 msgstr ""
 
 #. 三番目のコメント
-msgctxt "コンテクスト"
+msgctxt "コンテクスト😀𝒞a"
 msgid "三番目の文字列"
+msgstr ""
+
+msgid ""
+"\"'?\\\a\b\f\n"
+"\r\t\v\\xG"
+msgstr ""
+
+msgid "\\u30A"
 msgstr ""
 EOF
 

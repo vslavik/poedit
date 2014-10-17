@@ -259,7 +259,7 @@ libgettextsrc_la_CPPFLAGS += $(GETTEXTLIB_EXPORTS_FLAGS)
 endif
 
 # No need to install libgettextsrc.a, except on AIX.
-install-exec-local: install-libLTLIBRARIES install-exec-clean
+install-exec-hook: install-exec-clean
 install-exec-clean:
 	case "@host_os@" in \
 	  aix*) ;; \

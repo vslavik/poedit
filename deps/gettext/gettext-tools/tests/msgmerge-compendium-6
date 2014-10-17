@@ -66,7 +66,7 @@ LC_ALL=C tr -d '\r' < mm-c-6-UUU.tmp > mm-c-6-UUU.out || exit 1
 
 : ${MSGCONV=msgconv}
 ${MSGCONV} --to-code=UTF-8 mm-c-6-UUU.out | LC_ALL=C tr -d '\r' > mm-c-6-U.ok
-${MSGCONV} --to-code=EUC-KR mm-c-6-UUU.out | sed -e 's,EUC-KR,euc-kr,' | LC_ALL=C tr -d '\r' > mm-c-6-E.ok
+${MSGCONV} --to-code=EUC-KR mm-c-6-UUU.out | LC_ALL=C sed -e 's,EUC-KR,euc-kr,' | LC_ALL=C tr -d '\r' > mm-c-6-E.ok
 
 : ${DIFF=diff}
 ${DIFF} mm-c-6-E.ok mm-c-6-AEE.out || { exit 1; }
