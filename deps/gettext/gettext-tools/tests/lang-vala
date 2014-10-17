@@ -5,11 +5,11 @@
 # Assumes an fr_FR locale is installed.
 # Assumes the following packages are installed: vala.
 
-cat <<\EOF > l-vala-prog.vala
+cat <<\EOF > prog.vala
 int main (string[] args) {
     Intl.setlocale (LocaleCategory.ALL, "");
     Intl.textdomain ("prog");
-    Intl.bindtextdomain ("prog", "l-vala");
+    Intl.bindtextdomain ("prog", ".");
     stdout.printf ("%s\n", _("'Your command, please?', asked the waiter."));
     stdout.printf ("%s\n", _("%s is replaced by %s.").printf ("FF", "EUR"));
     return 0;
@@ -22,14 +22,14 @@ test $? -le 1 \
   || { echo "Skipping test: valac not found"; exit 77; }
 
 : ${VALAC=valac}
-${VALAC} --Xcc=-DGETTEXT_PACKAGE=\"prog\" l-vala-prog.vala 2>l-vala-prog.err \
-  || { cat l-vala-prog.err 1>&2; exit 1; }
+${VALAC} --Xcc=-DGETTEXT_PACKAGE=\"prog\" prog.vala 2>prog.err \
+  || { cat prog.err 1>&2; exit 1; }
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-vala-prog.tmp --omit-header --no-location l-vala-prog.vala || exit 1
-LC_ALL=C tr -d '\r' < l-vala-prog.tmp > l-vala-prog.pot || exit 1
+${XGETTEXT} -o prog.tmp --omit-header --no-location prog.vala || exit 1
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
 
-cat <<EOF > l-vala-prog.ok
+cat <<EOF > prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
 
@@ -39,9 +39,9 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} l-vala-prog.ok l-vala-prog.pot || exit 1
+${DIFF} prog.ok prog.pot || exit 1
 
-cat <<\EOF > l-vala-fr.po
+cat <<\EOF > fr.po
 msgid ""
 msgstr "Content-Type: text/plain; charset=ISO-8859-1\n"
 
@@ -55,25 +55,24 @@ msgstr "%2$s remplace %1$s."
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-vala-fr.po.tmp l-vala-fr.po l-vala-prog.pot || exit 1
-LC_ALL=C tr -d '\r' < l-vala-fr.po.tmp > l-vala-fr.po.new || exit 1
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
 
 : ${DIFF=diff}
-${DIFF} l-vala-fr.po l-vala-fr.po.new || exit 1
+${DIFF} fr.po fr.po.new || exit 1
 
-test -d l-vala || mkdir l-vala
-test -d l-vala/fr || mkdir l-vala/fr
-test -d l-vala/fr/LC_MESSAGES || mkdir l-vala/fr/LC_MESSAGES
+test -d fr || mkdir fr
+test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o l-vala/fr/LC_MESSAGES/prog.mo l-vala-fr.po
+${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
 
 : ${DIFF=diff}
-cat <<\EOF > l-vala-prog.ok
+cat <<\EOF > prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
 EUR remplace FF.
 EOF
-cat <<\EOF > l-vala-prog.oku
+cat <<\EOF > prog.oku
 Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
 EUR remplace FF.
 EOF
@@ -81,17 +80,19 @@ EOF
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR ./l-vala-prog > l-vala-prog.out
+  prepare_locale_ fr $LOCALE_FR
+  LANGUAGE= LC_ALL=$LOCALE_FR ./prog > prog.out
   case $? in
-    0) ${DIFF} l-vala-prog.ok l-vala-prog.out || exit 1;;
+    0) ${DIFF} prog.ok prog.out || exit 1;;
     77) LOCALE_FR=none;;
     *) exit 1;;
   esac
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 ./l-vala-prog > l-vala-prog.out
+  prepare_locale_ fr $LOCALE_FR_UTF8
+  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 ./prog > prog.out
   case $? in
-    0) ${DIFF} l-vala-prog.oku l-vala-prog.out || exit 1;;
+    0) ${DIFF} prog.oku prog.out || exit 1;;
     77) LOCALE_FR_UTF8=none;;
     *) exit 1;;
   esac

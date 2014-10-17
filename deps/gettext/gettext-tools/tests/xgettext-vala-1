@@ -3,6 +3,15 @@
 
 # Test of Vala support.
 
+: ${XGETTEXT=xgettext}
+
+cat <<\EOF > xg-vala-1.err.vala
+int main (string[] args) {
+  var r1 = /a
+EOF
+
+(LANGUAGE= LC_ALL=C ${XGETTEXT} --no-location -o - xg-vala-1.err.vala 2>&1; exit) | grep 'regular expression literal terminated too early' || exit 1
+
 cat <<\EOF > xg-vala-1.vala
 int main (string[] args) {
     var s1 = "Simple string, " + " no gettext needed";
@@ -23,14 +32,25 @@ int main (string[] args) {
 
     var s5 = _("Extract this \u2464th string");
 
-    var s6 = /_("This is a regex literal and must not be extracted!")/i;
+    var s6 = /_("This is a regex literal and must not be extracted!")\|/i;
 
+    var d1 = 10e-1;
+    var d2 = 10E-1;
+
+    /* This is a
+       multiline C style comment */
     var s7 = _("Extract this //sixth string");
+
+    var s8 = _(@"This is a template string, which cannot be extracted!");
+
+    /* /= shouldn't start a regex literal */
+    var i1 = 1000;
+    i1 /= 10;
+
     return 0;
 }
 EOF
 
-: ${XGETTEXT=xgettext}
 ${XGETTEXT} --add-comments --no-location -o xg-vala-1.tmp xg-vala-1.vala 2>xg-vala-1.err
 test $? = 0 || { cat xg-vala-1.err; exit 1; }
 # Don't simplify this to "grep ... < xg-vala-1.tmp", otherwise OpenBSD 4.0 grep
@@ -75,6 +95,8 @@ msgstr ""
 msgid "Extract this ⑤th string"
 msgstr ""
 
+#. This is a
+#. multiline C style comment
 msgid "Extract this //sixth string"
 msgstr ""
 EOF
@@ -138,6 +160,8 @@ msgstr ""
 msgid "Extract this ⑤th string"
 msgstr ""
 
+#. This is a
+#. multiline C style comment
 msgid "Extract this //sixth string"
 msgstr ""
 EOF

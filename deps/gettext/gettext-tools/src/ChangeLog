@@ -1,3 +1,46 @@
+2014-10-15  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.3 released.
+
+2014-10-08  Daiki Ueno  <ueno@gnu.org>
+
+	* write-po.c (wrap): Report error on incomplete multibyte sequence
+	at the end of input bytes.
+	Reported by Jakub Wilk at:
+	<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=763820>.
+
+2014-09-30  Daiki Ueno  <ueno@gnu.org>
+
+	* x-c.c (literalstring_parse): Fix octal character escape handling.
+	Reported by Kjartan Maraas at:
+	<https://bugzilla.redhat.com/show_bug.cgi?id=1147535>.
+
+2014-09-24  Daiki Ueno  <ueno@gnu.org>
+
+	* x-python.c (x_python_lex): Move 'token3' variable declaration
+	out of the internal block.
+
+2014-09-24  Daiki Ueno  <ueno@gnu.org>
+
+	* filter-quote.c (BOLD_START, BOLD_END): Don't use non-portable
+	character escape "\e".
+
+2014-08-28  Jonas 'Sortie' Termansen <sortie@maxsi.org>  (tiny change)
+
+	* msginit.c: Include <stdint.h>.
+	(get_user_pwd): Cast uid_t value into uintmax_t and print it with
+	'%ju' format directive.
+
+2014-08-27  Jonas 'Sortie' Termansen <sortie@maxsi.org>  (tiny change)
+
+	* msgfilter.c (process_message): Use proper format directive for
+	printing size_t.
+	* msgexec.c (process_message): Likewise.
+
+2014-08-27  Jonas 'Sortie' Termansen <sortie@maxsi.org>  (tiny change)
+
+	* hostname.c: Add guard around #include <sys/param.h>.
+
 2014-07-14  Daiki Ueno  <ueno@gnu.org>
 
 	* gettext 0.19.2 released.

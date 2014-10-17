@@ -15,7 +15,7 @@ int main ()
   exit (0);
 }
 EOF
-${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o l-objc-hello hello.m 2>/dev/null \
+${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o hello hello.m 2>/dev/null \
   || { echo "Skipping test: Objective C compiler not found"
        exit 77
      }
@@ -39,7 +39,7 @@ int main (int argc, char *argv[])
     exit (77);
 
   textdomain ("prog");
-  bindtextdomain ("prog", "l-objc");
+  bindtextdomain ("prog", ".");
 
   printf (_("'Your command, please?', asked the waiter."));
   printf ("\n");
@@ -62,15 +62,15 @@ ${CC} -I../.. -I"$abs_top_srcdir"/gnulib-lib -I../../intl ${CFLAGS} \
 
 : ${CONFIG_SHELL=${SHELL-/bin/sh}}
 ${CONFIG_SHELL} "$top_builddir"/libtool --quiet --tag=CC --mode=link \
-                ${CC} ${CFLAGS} -o l-objc-prog prog.${OBJEXT} \
+                ${CC} ${CFLAGS} -o prog prog.${OBJEXT} \
                 ../../gnulib-lib/libgettextlib.la ${LDFLAGS} ${LTLIBINTL} \
 		|| exit 1
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-objc-prog.tmp --omit-header --no-location -k_ prog.m || exit 1
-LC_ALL=C tr -d '\r' < l-objc-prog.tmp > l-objc-prog.pot || exit 1
+${XGETTEXT} -o prog.tmp --omit-header --no-location -k_ prog.m || exit 1
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
 
-cat <<EOF > l-objc-prog.ok
+cat <<EOF > prog.ok
 #, c-format
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
@@ -87,9 +87,9 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} l-objc-prog.ok l-objc-prog.pot || exit 1
+${DIFF} prog.ok prog.pot || exit 1
 
-cat <<\EOF > l-objc-fr.po
+cat <<\EOF > fr.po
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -113,26 +113,25 @@ msgstr "%2$s remplace %1$s."
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-objc-fr.po.tmp l-objc-fr.po l-objc-prog.pot || exit 1
-LC_ALL=C tr -d '\r' < l-objc-fr.po.tmp > l-objc-fr.po.new || exit 1
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
 
 : ${DIFF=diff}
-${DIFF} l-objc-fr.po l-objc-fr.po.new || exit 1
+${DIFF} fr.po fr.po.new || exit 1
 
-test -d l-objc || mkdir l-objc
-test -d l-objc/fr || mkdir l-objc/fr
-test -d l-objc/fr/LC_MESSAGES || mkdir l-objc/fr/LC_MESSAGES
+test -d fr || mkdir fr
+test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o l-objc/fr/LC_MESSAGES/prog.mo l-objc-fr.po
+${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
 
 : ${DIFF=diff}
-cat <<\EOF > l-objc-prog.ok
+cat <<\EOF > prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
 2 morceaux de gateau
 EUR remplace FF.
 EOF
-cat <<\EOF > l-objc-prog.oku
+cat <<\EOF > prog.oku
 Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
 2 morceaux de gateau
 EUR remplace FF.
@@ -141,17 +140,19 @@ EOF
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LANGUAGE= ./l-objc-prog $LOCALE_FR 2 > l-objc-prog.out
+  prepare_locale_ fr $LOCALE_FR
+  LANGUAGE= ./prog $LOCALE_FR 2 > prog.out
   case $? in
-    0) ${DIFF} l-objc-prog.ok l-objc-prog.out || exit 1;;
+    0) ${DIFF} prog.ok prog.out || exit 1;;
     77) LOCALE_FR=none;;
     *) exit 1;;
   esac
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LANGUAGE= ./l-objc-prog $LOCALE_FR_UTF8 2 > l-objc-prog.out
+  prepare_locale_ fr $LOCALE_FR_UTF8
+  LANGUAGE= ./prog $LOCALE_FR_UTF8 2 > prog.out
   case $? in
-    0) ${DIFF} l-objc-prog.oku l-objc-prog.out || exit 1;;
+    0) ${DIFF} prog.oku prog.out || exit 1;;
     77) LOCALE_FR_UTF8=none;;
     *) exit 1;;
   esac

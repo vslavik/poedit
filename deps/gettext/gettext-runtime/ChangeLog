@@ -1,3 +1,20 @@
+2014-10-15  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.3 released.
+
+2014-10-02  Daiki Ueno  <ueno@gnu.org>
+
+	* configure.ac: To automatically disable building libasprintf when
+	no C++ is found, check if CXX is "no", not ":".  This seems to be
+	a left over of commit 09963c23.  Reported by Assaf Gordon in:
+	<https://lists.gnu.org/archive/html/bug-gettext/2014-10/msg00003.html>.
+
+2014-09-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* configure.ac: Invoke AM_PROG_CC_C_O so that the system stdbool.h
+	will be used on Solaris.  Suggested by Paul Eggert in:
+	<https://lists.gnu.org/archive/html/bug-gnulib/2013-11/msg00053.html>.
+
 2014-07-14  Daiki Ueno  <ueno@gnu.org>
 
 	* gettext 0.19.2 released.
