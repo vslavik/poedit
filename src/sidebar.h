@@ -122,7 +122,8 @@ protected:
     virtual void UpdateSuggestionsMenu();
     virtual void ClearSuggestionsMenu();
 
-    void QueryProvider(SuggestionsBackend& backend, CatalogItem *item);
+    virtual void QueryAllProviders(CatalogItem *item);
+    void QueryProvider(SuggestionsBackend& backend, CatalogItem *item, uint64_t queryId);
 
 protected:
     std::unique_ptr<SuggestionsProvider> m_provider;

@@ -607,12 +607,17 @@ void SuggestionsSidebarBlock::Update(CatalogItem *item)
     ClearMessage();
     ClearSuggestions();
 
-    QueryProvider(TranslationMemory::Get(), item);
+    QueryAllProviders(item);
 }
 
-void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, CatalogItem *item)
+void SuggestionsSidebarBlock::QueryAllProviders(CatalogItem *item)
 {
     auto thisQueryId = ++m_latestQueryId;
+    QueryProvider(TranslationMemory::Get(), item, thisQueryId);
+}
+
+void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, CatalogItem *item, uint64_t queryId)
+{
     m_pendingQueries++;
 
     // we need something to talk to GUI thread through that is guaranteed
@@ -629,10 +634,10 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, Catalog
 
         // when receiving data
         [=](const SuggestionsList& hits){
-            app->CallAfter([weakSelf,thisQueryId,hits]{
+            app->CallAfter([weakSelf,queryId,hits]{
                 auto self = weakSelf.lock();
                 // maybe this call is already out of date:
-                if (!self || self->m_latestQueryId != thisQueryId)
+                if (!self || self->m_latestQueryId != queryId)
                     return;
                 self->UpdateSuggestions(hits);
                 if (--self->m_pendingQueries == 0)
@@ -642,10 +647,10 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, Catalog
 
         // on error:
         [=](std::exception_ptr e){
-            app->CallAfter([weakSelf,thisQueryId,e]{
+            app->CallAfter([weakSelf,queryId,e]{
                 auto self = weakSelf.lock();
                 // maybe this call is already out of date:
-                if (!self || self->m_latestQueryId != thisQueryId)
+                if (!self || self->m_latestQueryId != queryId)
                     return;
                 self->SetMessage("SuggestionError", DescribeException(e));
                 if (--self->m_pendingQueries == 0)
