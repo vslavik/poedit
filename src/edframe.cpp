@@ -1431,8 +1431,8 @@ wxString PoeditFrame::GetSaveAsFilename(Catalog *cat, const wxString& current)
     }
 
     name = wxFileSelector(_("Save as..."), path, name, wxEmptyString,
-	                      wxString::Format("%s (*.po)|*.po|%s (*.*)|*.*",
-                              _("PO Translation Files"), _("All Files")),
+	                      wxString::Format("%s (*.po)|*.po",
+                              _("PO Translation Files")),
                           wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);
     if (!name.empty())
     {
