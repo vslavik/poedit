@@ -628,7 +628,7 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, Catalog
     m_provider->SuggestTranslation
     (
         backend,
-        m_parent->GetCurrentLanguage().Code(),
+        m_parent->GetCurrentLanguage(),
         item->GetString().ToStdWstring(),
         SUGGESTIONS_REQUEST_COUNT,
 

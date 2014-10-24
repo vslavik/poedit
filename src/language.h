@@ -39,6 +39,7 @@ public:
 
     bool IsValid() const { return !m_code.empty(); }
     const std::string& Code() const { return m_code; }
+    std::wstring WCode() const { return std::wstring(m_code.begin(), m_code.end()); }
 
     /// Returns language part (cs)
     std::string Lang() const;

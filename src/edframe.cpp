@@ -3081,7 +3081,7 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount)
     wxBusyCursor bcur;
 
     TranslationMemory& tm = TranslationMemory::Get();
-    std::string langcode(m_catalog->GetLanguage().Code());
+    auto lang = m_catalog->GetLanguage();
 
     int cnt = m_catalog->GetCount();
     if (cnt)
@@ -3102,7 +3102,7 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount)
                 continue; // can't handle yet (TODO?)
             if (dt.IsFuzzy() || !dt.IsTranslated())
             {
-                auto results = tm.Search(langcode, dt.GetString().ToStdWstring(), 1);
+                auto results = tm.Search(lang, dt.GetString().ToStdWstring(), 1);
                 if (!results.empty())
                 {
                     dt.SetTranslation(results[0].text);

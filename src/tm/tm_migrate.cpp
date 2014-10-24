@@ -119,7 +119,7 @@ public:
 struct ExpatContext
 {
     wxProgressDialog *progress;
-    wxString lang;
+    Language lang;
     int count;
     std::shared_ptr<TranslationMemory::Writer> tm;
 };
@@ -133,7 +133,7 @@ void XMLCALL OnStartElement(void *data, const char *name, const char **attrs)
         for ( int i = 0; attrs[i]; i += 2 )
         {
             if (strcmp(attrs[i], "lang") == 0)
-                ctxt.lang = wxString::FromUTF8(attrs[i+1]);
+                ctxt.lang = Language::TryParse(wxString::FromUTF8(attrs[i+1]).ToStdWstring());
         }
     }
     if ( strcmp(name, "i") == 0 )
@@ -147,7 +147,7 @@ void XMLCALL OnStartElement(void *data, const char *name, const char **attrs)
                 t = wxString::FromUTF8(attrs[i+1]);
             if (!s.empty() && !t.empty())
             {
-                ctxt.tm->Insert(ctxt.lang.ToStdWstring(), s.ToStdWstring(), t.ToStdWstring());
+                ctxt.tm->Insert(ctxt.lang, s.ToStdWstring(), t.ToStdWstring());
                 if (ctxt.count++ % 47 == 0)
                     ctxt.progress->Pulse(wxString::Format(_("Importing translations: %d"), ctxt.count));
             }

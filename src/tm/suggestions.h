@@ -31,6 +31,8 @@
 #include <string>
 #include <vector>
 
+#include "language.h"
+
 class SuggestionsBackend;
 class SuggestionsProviderImpl;
 
@@ -97,7 +99,7 @@ public:
         @param onError    Called in case of error.
      */
     void SuggestTranslation(SuggestionsBackend& backend,
-                            const std::string& lang,
+                            const Language& lang,
                             const std::wstring& source,
                             int maxHits,
                             success_func_type onSuccess,
@@ -146,7 +148,7 @@ public:
         @param onSuccess  Called with suggestions.
         @param onError    Called in case of error.
      */
-    virtual void SuggestTranslation(const std::string& lang,
+    virtual void SuggestTranslation(const Language& lang,
                                     const std::wstring& source,
                                     int maxHits,
                                     success_func_type onSuccess,

@@ -59,12 +59,12 @@ public:
                        
         @return List of hits that were found, possibly empty.
      */
-    SuggestionsList Search(const std::string& lang,
+    SuggestionsList Search(const Language& lang,
                            const std::wstring& source,
                            int maxHits = -1);
 
     /// SuggestionsBackend API implementation:
-    void SuggestTranslation(const std::string& lang,
+    void SuggestTranslation(const Language& lang,
                             const std::wstring& source,
                             int maxHits,
                             success_func_type onSuccess,
@@ -89,7 +89,7 @@ public:
             @param source  Source text.
             @param trans   Translation text.
          */
-        virtual void Insert(const std::wstring& lang,
+        virtual void Insert(const Language& lang,
                             const std::wstring& source,
                             const std::wstring& trans) = 0;
 

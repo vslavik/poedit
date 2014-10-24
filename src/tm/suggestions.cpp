@@ -34,7 +34,7 @@ public:
     SuggestionsProviderImpl() : m_pool(2) {}
 
     void SuggestTranslation(SuggestionsBackend& backend,
-                            const std::string& lang,
+                            const Language& lang,
                             const std::wstring& source,
                             int maxHits,
                             SuggestionsProvider::success_func_type onSuccess,
@@ -61,7 +61,7 @@ SuggestionsProvider::~SuggestionsProvider()
 }
 
 void SuggestionsProvider::SuggestTranslation(SuggestionsBackend& backend,
-                                             const std::string& lang,
+                                             const Language& lang,
                                              const std::wstring& source,
                                              int maxHits,
                                              success_func_type onSuccess,

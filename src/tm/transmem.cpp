@@ -97,7 +97,7 @@ public:
           m_analyzer(newLucene<StandardAnalyzer>(LuceneVersion::LUCENE_CURRENT))
     {}
 
-    SuggestionsList Search(const std::string& lang,
+    SuggestionsList Search(const Language& lang,
                            const std::wstring& source,
                            int maxHits = -1);
 
@@ -233,13 +233,13 @@ void PerformSearch(IndexSearcherPtr searcher,
 
 } // anonymous namespace
 
-SuggestionsList TranslationMemoryImpl::Search(const std::string& lang,
+SuggestionsList TranslationMemoryImpl::Search(const Language& lang,
                                               const std::wstring& source,
                                               int maxHits)
 {
     try
     {
-        const Lucene::String llang = StringUtils::toUnicode(lang);
+        const Lucene::String llang = lang.WCode(); // FIXME: handle short lang variant too
 
         if (maxHits <= 0)
             maxHits = DEFAULT_MAXHITS;
@@ -352,11 +352,11 @@ public:
         CATCH_AND_RETHROW_EXCEPTION
     }
 
-    virtual void Insert(const std::wstring& lang,
+    virtual void Insert(const Language& lang,
                         const std::wstring& source,
                         const std::wstring& trans)
     {
-        if (lang.empty())
+        if (!lang.IsValid())
             return;
 
         // Compute unique ID for the translation:
@@ -366,7 +366,7 @@ public:
         boost::uuids::name_generator gen(s_namespace);
 
         std::wstring itemId(L"en"); // TODO: srclang
-        itemId += lang;
+        itemId += lang.WCode();
         itemId += source;
         itemId += trans;
 
@@ -383,7 +383,7 @@ public:
                                       Field::STORE_YES, Field::INDEX_NO));
             doc->add(newLucene<Field>(L"srclang", L"en",
                                       Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
-            doc->add(newLucene<Field>(L"lang", lang,
+            doc->add(newLucene<Field>(L"lang", lang.WCode(), // FIXME: handle short lang variant too
                                       Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
             doc->add(newLucene<Field>(L"source", source,
                                       Field::STORE_YES, Field::INDEX_ANALYZED));
@@ -397,10 +397,9 @@ public:
 
     virtual void Insert(const Catalog &cat)
     {
-        const std::string lang = cat.GetLanguage().Code();
-        if (lang.empty())
+        auto lang = cat.GetLanguage();
+        if (!lang.IsValid())
             return;
-        const std::wstring wlang(lang.begin(), lang.end());
 
         int cnt = cat.GetCount();
         for (int i = 0; i < cnt; i++)
@@ -423,7 +422,7 @@ public:
             // want to save old entries in the TM too, so that we harvest as
             // much useful translations as we can.
 
-            Insert(wlang, item.GetString().ToStdWstring(), item.GetTranslation().ToStdWstring());
+            Insert(lang, item.GetString().ToStdWstring(), item.GetTranslation().ToStdWstring());
         }
     }
 
@@ -487,14 +486,14 @@ TranslationMemory::~TranslationMemory() { delete m_impl; }
 // public API
 // ----------------------------------------------------------------
 
-SuggestionsList TranslationMemory::Search(const std::string& lang,
+SuggestionsList TranslationMemory::Search(const Language& lang,
                                           const std::wstring& source,
                                           int maxHits)
 {
     return m_impl->Search(lang, source, maxHits);
 }
 
-void TranslationMemory::SuggestTranslation(const std::string& lang,
+void TranslationMemory::SuggestTranslation(const Language& lang,
                                            const std::wstring& source,
                                            int maxHits,
                                            success_func_type onSuccess,
