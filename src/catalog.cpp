@@ -1475,7 +1475,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
 
     if (save_mo && wxConfig::Get()->Read("compile_mo", (long)true))
     {
-        const wxString mo_file = po_file.BeforeLast('.') + ".mo";
+        const wxString mo_file = wxFileName::StripExtension(po_file) + ".mo";
         TempOutputFileFor mo_file_temp_obj(mo_file);
         const wxString mo_file_temp = mo_file_temp_obj.FileName();
 
