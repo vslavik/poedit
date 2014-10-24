@@ -53,6 +53,7 @@
 #include <Document.h>
 #include <Field.h>
 #include <DateField.h>
+#include <PrefixQuery.h>
 #include <StringUtils.h>
 #include <TermQuery.h>
 #include <BooleanQuery.h>
@@ -170,7 +171,7 @@ bool ContainsResult(const SuggestionsList& all, const std::wstring& r)
 
 template<typename T>
 void PerformSearchWithBlock(IndexSearcherPtr searcher,
-                            const Lucene::String& lang,
+                            QueryPtr lang,
                             const std::wstring& exactSourceText,
                             QueryPtr query,
                             int maxHits,
@@ -178,11 +179,8 @@ void PerformSearchWithBlock(IndexSearcherPtr searcher,
                             double scoreScaling,
                             T callback)
 {
-    // TODO: use short form of the language too (cs vs cs_CZ), boost the
-    //       full form in the query
-    auto langQ = newLucene<TermQuery>(newLucene<Term>(L"lang", lang));
     auto fullQuery = newLucene<BooleanQuery>();
-    fullQuery->add(langQ, BooleanClause::MUST);
+    fullQuery->add(lang, BooleanClause::MUST);
     fullQuery->add(query, BooleanClause::MUST);
 
     auto hits = searcher->search(fullQuery, maxHits);
@@ -206,7 +204,7 @@ void PerformSearchWithBlock(IndexSearcherPtr searcher,
 }
 
 void PerformSearch(IndexSearcherPtr searcher,
-                   const Lucene::String& lang,
+                   QueryPtr lang,
                    const std::wstring& exactSourceText,
                    QueryPtr query,
                    SuggestionsList& results,
@@ -239,7 +237,25 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& lang,
 {
     try
     {
-        const Lucene::String llang = lang.WCode(); // FIXME: handle short lang variant too
+        const Lucene::String fullLang = lang.WCode();
+        const Lucene::String shortLang = StringUtils::toUnicode(lang.Lang());
+
+        QueryPtr langPrimary = newLucene<TermQuery>(newLucene<Term>(L"lang", fullLang));
+        QueryPtr langSecondary;
+        if (fullLang == shortLang)
+        {
+            // for e.g. 'cs', search also 'cs_*' (e.g. 'cs_CZ')
+            langSecondary = newLucene<PrefixQuery>(newLucene<Term>(L"lang", shortLang + L"_"));
+        }
+        else
+        {
+            // search short variants of the language too
+            langSecondary = newLucene<TermQuery>(newLucene<Term>(L"lang", shortLang));
+        }
+        langSecondary->setBoost(0.85);
+        auto langQ = newLucene<BooleanQuery>();
+        langQ->add(langPrimary, BooleanClause::SHOULD);
+        langQ->add(langSecondary, BooleanClause::SHOULD);
 
         if (maxHits <= 0)
             maxHits = DEFAULT_MAXHITS;
@@ -264,14 +280,14 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& lang,
         auto searcher = newLucene<IndexSearcher>(Reader());
 
         // Try exact phrase first:
-        PerformSearch(searcher, llang, source, phraseQ, results, maxHits,
+        PerformSearch(searcher, langQ, source, phraseQ, results, maxHits,
                       /*scoreThreshold=*/1.0, /*scoreScaling=*/1.0);
         if (!results.empty())
             return results;
 
         // Then, if no matches were found, permit being a bit sloppy:
         phraseQ->setSlop(1);
-        PerformSearch(searcher, llang, source, phraseQ, results, maxHits,
+        PerformSearch(searcher, langQ, source, phraseQ, results, maxHits,
                       /*scoreThreshold=*/1.0, /*scoreScaling=*/0.9);
 
         if (!results.empty())
@@ -282,7 +298,7 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& lang,
         boolQ->setMinimumNumberShouldMatch(std::max(1, boolQ->getClauses().size() - MAX_ALLOWED_LENGTH_DIFFERENCE));
         PerformSearchWithBlock
         (
-            searcher, llang, source, boolQ, maxHits,
+            searcher, langQ, source, boolQ, maxHits,
             QUALITY_THRESHOLD, /*scoreScaling=*/0.8,
             [=,&results](DocumentPtr doc, double score)
             {
@@ -383,7 +399,7 @@ public:
                                       Field::STORE_YES, Field::INDEX_NO));
             doc->add(newLucene<Field>(L"srclang", L"en",
                                       Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
-            doc->add(newLucene<Field>(L"lang", lang.WCode(), // FIXME: handle short lang variant too
+            doc->add(newLucene<Field>(L"lang", lang.WCode(),
                                       Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
             doc->add(newLucene<Field>(L"source", source,
                                       Field::STORE_YES, Field::INDEX_ANALYZED));
