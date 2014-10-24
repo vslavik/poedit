@@ -47,6 +47,13 @@ struct Suggestion
     /// Time when the suggestion was stored
     time_t timestamp;
 
+    enum class Source
+    {
+        LocalTM
+    };
+    /// Source of the suggestion
+    Source source;
+
     bool HasScore() const { return score != 0.0; }
     bool IsExactMatch() const { return score == 1.0; }
 };
