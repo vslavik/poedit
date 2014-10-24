@@ -239,6 +239,11 @@ std::string Language::Variant() const
         return m_code.substr(0, pos);
 }
 
+std::string Language::RFC3066() const
+{
+    return Lang() + "-" + Country();
+}
+
 
 Language Language::TryParse(const std::wstring& s)
 {

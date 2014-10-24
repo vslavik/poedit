@@ -50,6 +50,9 @@ public:
     /// Returns optional variant (after @, e.g. 'latin', typically empty)
     std::string Variant() const;
 
+    /// Return code formatted as in RFC 3066, e.g. en-US
+    std::string RFC3066() const;
+
     /// Returns name of the locale suitable for ICU
     std::string IcuLocaleName() const { return LangAndCountry(); }
     /// Returns ICU equivalent of the language info
