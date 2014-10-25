@@ -681,7 +681,7 @@ Sidebar::Sidebar(wxWindow *parent, wxMenu *suggestionsMenu)
     m_topBlocksSizer = new wxBoxSizer(wxVERTICAL);
     m_bottomBlocksSizer = new wxBoxSizer(wxVERTICAL);
 
-    m_blocksSizer->Add(m_topBlocksSizer, wxSizerFlags(1).Expand());
+    m_blocksSizer->Add(m_topBlocksSizer, wxSizerFlags(1).Expand().ReserveSpaceEvenIfHidden());
     m_blocksSizer->Add(m_bottomBlocksSizer, wxSizerFlags().Expand());
 
     AddBlock(new SuggestionsSidebarBlock(this, suggestionsMenu), Top);
