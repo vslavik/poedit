@@ -79,6 +79,7 @@ protected:
     SidebarBlock(Sidebar *parent, const wxString& label, int flags = 0);
 
     Sidebar *m_parent;
+    wxSizer *m_headerSizer;
     wxSizer *m_innerSizer;
 
 private:
