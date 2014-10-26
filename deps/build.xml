@@ -210,6 +210,8 @@
             <fileset dir="gettext" includes="gettext-tools/gnulib-lib/*stream.c"/>
             <fileset dir="gettext" includes="gettext-tools/gnulib-lib/*stream.h"/>
             <fileset dir="gettext" includes="gettext-tools/gnulib-lib/*stream.*.h"/>
+            <!-- Prevent running msgfmt: -->
+            <fileset dir="gettext" includes="gettext-tools/po/*.gmo"/>
         </touch>
         <touch file="gettext/gettext-tools/doc/stamp-vti"/>
         <touch file="gettext/gettext-tools/doc/gettext.info"/>
