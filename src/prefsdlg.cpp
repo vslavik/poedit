@@ -187,7 +187,7 @@ public:
         explainFocus.Replace("Ctrl", "Cmd");
 #endif
         sizer->AddSpacer(5);
-        sizer->Add(new ExplanationLabel(this, explainFocus), wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, ExplanationLabel::CHECKBOX_INDENT));
+        sizer->Add(new ExplanationLabel(this, explainFocus), wxSizerFlags().Expand().Border(wxLEFT, ExplanationLabel::CHECKBOX_INDENT));
 
         sizer->AddSpacer(10);
 
@@ -388,11 +388,11 @@ public:
                             "near-empty, it will not be very effective. The more translations\n"
                             "you edit and the larger the TM grows, the better it gets.");
         auto explain = new ExplanationLabel(this, explainTxt);
-        sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, ExplanationLabel::CHECKBOX_INDENT));
+        sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT, ExplanationLabel::CHECKBOX_INDENT));
 
         auto learnMore = new LearnMoreLink(this, "http://poedit.net/trac/wiki/Doc/TranslationMemory");
         sizer->AddSpacer(5);
-        sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT|wxRIGHT, ExplanationLabel::CHECKBOX_INDENT + LearnMoreLink::EXTRA_INDENT));
+        sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT, ExplanationLabel::CHECKBOX_INDENT + LearnMoreLink::EXTRA_INDENT));
         sizer->AddSpacer(10);
 
 #ifdef __WXOSX__
