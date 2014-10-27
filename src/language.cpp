@@ -241,7 +241,12 @@ std::string Language::Variant() const
 
 std::string Language::RFC3066() const
 {
-    return Lang() + "-" + Country();
+    auto c = Country();
+    auto l = Lang();
+    if (c.empty())
+        return l;
+    else
+        return l + "-" + c;
 }
 
 
