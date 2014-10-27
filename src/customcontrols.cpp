@@ -87,7 +87,7 @@ void AutoWrappingText::SetAndWrapLabel(const wxString& label)
 void AutoWrappingText::OnSize(wxSizeEvent& e)
 {
     e.Skip();
-    int w = e.GetSize().x;
+    int w = e.GetSize().x - 4;
     if (w == m_wrapWidth)
         return;
 
