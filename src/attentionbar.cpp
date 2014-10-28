@@ -194,6 +194,7 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
             GetBestSize().y);
     Layout();
 
+    Refresh();
     Show();
     GetParent()->Layout();
 }
