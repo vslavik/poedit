@@ -36,6 +36,8 @@
 #include <wx/config.h>
 #include <wx/dcclient.h>
 
+#include "customcontrols.h"
+
 #ifdef __WXOSX__
 #include "osx_helpers.h"
 #endif
@@ -70,7 +72,7 @@ AttentionBar::AttentionBar(wxWindow *parent)
 #endif
     m_label = new wxStaticText(this, wxID_ANY, "");
 
-    m_explanation = new wxStaticText(this, wxID_ANY, "");
+    m_explanation = new AutoWrappingText(this, "");
     m_explanation->SetForegroundColour(GetBackgroundColour().ChangeLightness(40));
 
     m_buttons = new wxBoxSizer(wxHORIZONTAL);
@@ -104,8 +106,9 @@ AttentionBar::AttentionBar(wxWindow *parent)
 
     auto labelSizer = new wxBoxSizer(wxVERTICAL);
     labelSizer->Add(m_label, wxSizerFlags().Expand());
-    labelSizer->Add(m_explanation, wxSizerFlags().Expand());
+    labelSizer->Add(m_explanation, wxSizerFlags().Expand().Border(wxTOP|wxRIGHT, 4));
     sizer->Add(labelSizer, wxSizerFlags(1).Center().DoubleBorder(wxALL));
+    sizer->AddSpacer(20);
     sizer->Add(m_buttons, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
     sizer->Add(btnClose, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
 
@@ -173,7 +176,7 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
 #endif
 
     m_label->SetLabelText(msg.m_text);
-    m_explanation->SetLabel(msg.m_explanation);
+    m_explanation->SetAndWrapLabel(msg.m_explanation);
     m_explanation->GetContainingSizer()->Show(m_explanation, !msg.m_explanation.empty());
 
     m_buttons->Clear(true/*delete_windows*/);

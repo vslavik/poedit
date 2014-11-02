@@ -35,6 +35,7 @@
 class WXDLLIMPEXP_FWD_CORE wxStaticText;
 class WXDLLIMPEXP_FWD_CORE wxStaticBitmap;
 class WXDLLIMPEXP_FWD_CORE wxSizer;
+class AutoWrappingText;
 
 /// Message to be displayed in AttentionBar
 class AttentionMessage
@@ -133,7 +134,7 @@ private:
     wxStaticBitmap *m_icon;
 #endif
     wxStaticText *m_label;
-    wxStaticText *m_explanation;
+    AutoWrappingText *m_explanation;
     wxSizer *m_buttons;
     typedef std::map<wxObject*, AttentionMessage::Callback> ActionsMap;
     ActionsMap m_actions;
