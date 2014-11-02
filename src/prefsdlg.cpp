@@ -56,6 +56,7 @@
 #include "errors.h"
 #include "extractor.h"
 #include "spellchecking.h"
+#include "utility.h"
 #include "customcontrols.h"
 
 #ifdef __WXMSW__
@@ -371,7 +372,8 @@ public:
 
         auto buttonsSizer = new wxBoxSizer(wxHORIZONTAL);
 
-        auto import = new wxButton(this, wxID_ANY, _("Learn From Files..."));
+        auto import = new wxButton(this, wxID_ANY,
+                                   MSW_OR_OTHER(_("Learn from files..."), _("Learn From Files...")));
         buttonsSizer->Add(import, wxSizerFlags());
         // TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
         auto clear = new wxButton(this, wxID_ANY, _("Reset"));

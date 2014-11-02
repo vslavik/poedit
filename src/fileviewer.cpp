@@ -70,7 +70,7 @@ FileViewer::FileViewer(wxWindow *parent,
         choice->Append(references[i]);
     choice->SetSelection(startAt);
 
-    wxButton *edit = new wxButton(panel, wxID_ANY, _("Open In Editor"));
+    wxButton *edit = new wxButton(panel, wxID_ANY, MSW_OR_OTHER(_("Open in editor"), _("Open in Editor")));
     barsizer->Add(edit, wxSizerFlags().Center().Border(wxLEFT, 10));
 
     m_text = new wxStyledTextCtrl(panel, wxID_ANY,

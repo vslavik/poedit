@@ -1197,7 +1197,8 @@ void PoeditFrame::InitSpellchecker()
                 lang.DisplayName()
             )
         );
-        msg.AddAction(_("Learn more"), std::bind(ShowSpellcheckerHelp));
+        msg.AddAction(MSW_OR_OTHER(_("Learn more"), _("Learn More")),
+                      std::bind(ShowSpellcheckerHelp));
         msg.AddDontShowAgain();
         m_attentionBar->ShowMessage(msg);
     }
@@ -2501,7 +2502,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
                 AttentionMessage::Info,
                 _("You should set your email address in Preferences so that it can be used for Last-Translator header in GNU gettext files.")
             );
-        msg.AddAction(_("Set email"),
+        msg.AddAction(MSW_OR_OTHER(_("Set email"), _("Set Email")),
                       std::bind(&PoeditApp::EditPreferences, &wxGetApp()));
         msg.AddDontShowAgain();
 
@@ -2516,7 +2517,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
                 AttentionMessage::Error,
                 _("Translation's project name isn't set.")
             );
-        msg.AddAction(_("Set name"),
+        msg.AddAction(MSW_OR_OTHER(_("Set name"), _("Set Name")),
                       std::bind(&PoeditFrame::EditCatalogProperties, this));
 
         m_attentionBar->ShowMessage(msg);
@@ -2531,7 +2532,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
                 AttentionMessage::Error,
                 _("Language of the translation isn't set.")
             );
-        msg.AddAction(_("Set language"),
+        msg.AddAction(MSW_OR_OTHER(_("Set language"), _("Set Language")),
                       std::bind(&PoeditFrame::EditCatalogProperties, this));
 
         m_attentionBar->ShowMessage(msg);
@@ -2578,7 +2579,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
                     AttentionMessage::Error,
                     err
                 );
-            msg.AddAction(_("Fix the header"),
+            msg.AddAction(MSW_OR_OTHER(_("Fix the header"), _("Fix the Header")),
                           std::bind(&PoeditFrame::EditCatalogProperties, this));
 
             m_attentionBar->ShowMessage(msg);

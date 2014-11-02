@@ -25,6 +25,8 @@
 
 #include "attentionbar.h"
 
+#include "utility.h"
+
 #include <wx/sizer.h>
 #include <wx/settings.h>
 #include <wx/artprov.h>
@@ -249,6 +251,6 @@ bool AttentionMessage::IsBlacklisted(const wxString& id)
 
 void AttentionMessage::AddDontShowAgain()
 {
-    AddAction(_("Don't show again"),
+    AddAction(MSW_OR_OTHER(_("Don't show again"), _("Don't Show Again")),
               std::bind(&AttentionMessage::AddToBlacklist, m_id));
 }

@@ -36,7 +36,23 @@
 #include <wx/arrstr.h>
 #include <wx/toplevel.h>
 
+// ----------------------------------------------------------------------
+// Misc platform differences
+// ----------------------------------------------------------------------
+
+#ifdef __WXMSW__
+    #define MSW_OR_OTHER(msw, other) msw
+#else
+    #define MSW_OR_OTHER(msw, other) other
+#endif
+
+
+// ----------------------------------------------------------------------
+// Misc helpers
+// ----------------------------------------------------------------------
+
 wxString EscapeMarkup(const wxString& str);
+
 
 // ----------------------------------------------------------------------
 // TempDirectory
