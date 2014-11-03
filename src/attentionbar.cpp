@@ -59,11 +59,7 @@ AttentionBar::AttentionBar(wxWindow *parent)
     : wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
               wxTAB_TRAVERSAL | wxBORDER_NONE)
 {
-#ifdef __WXMSW__
-    SetBackgroundColour("#FFF499"); // match Visual Studio 2012+'s aesthetics
-#endif
 #ifdef __WXOSX__
-    SetBackgroundColour("#FCDE59");
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
 
@@ -159,6 +155,27 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
             break;
     }
 #else
+
+    switch ( msg.m_kind )
+    {
+        case AttentionMessage::Question:
+            SetBackgroundColour("#ABE887");
+            break;
+        default:
+    #ifdef __WXMSW__
+            SetBackgroundColour("#FFF499"); // match Visual Studio 2012+'s aesthetics
+    #else
+            SetBackgroundColour("#FCDE59");
+    #endif
+            break;
+    }
+
+#ifdef __WXMSW__
+    auto bg = GetBackgroundColour();
+    for (auto w : GetChildren())
+        w->SetBackgroundColour(bg);
+#endif
+
     wxString iconName;
     switch ( msg.m_kind )
     {
