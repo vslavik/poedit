@@ -27,6 +27,7 @@
 
 #include "utility.h"
 
+#include <wx/checkbox.h>
 #include <wx/sizer.h>
 #include <wx/settings.h>
 #include <wx/artprov.h>
@@ -73,6 +74,8 @@ AttentionBar::AttentionBar(wxWindow *parent)
 
     m_buttons = new wxBoxSizer(wxHORIZONTAL);
 
+    m_checkbox = new wxCheckBox(this, wxID_ANY, "");
+
     wxButton *btnClose =
             new wxBitmapButton
                 (
@@ -106,6 +109,7 @@ AttentionBar::AttentionBar(wxWindow *parent)
     sizer->Add(labelSizer, wxSizerFlags(1).Center().DoubleBorder(wxALL));
     sizer->AddSpacer(20);
     sizer->Add(m_buttons, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
+    sizer->Add(m_checkbox, wxSizerFlags().Center().Border(wxRIGHT, BUTTONS_SPACE));
     sizer->Add(btnClose, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
 #ifdef __WXMSW__
     sizer->AddSpacer(4);
@@ -198,6 +202,8 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
     m_label->SetLabelText(msg.m_text);
     m_explanation->SetAndWrapLabel(msg.m_explanation);
     m_explanation->GetContainingSizer()->Show(m_explanation, !msg.m_explanation.empty());
+    m_checkbox->SetLabel(msg.m_checkbox);
+    m_checkbox->GetContainingSizer()->Show(m_checkbox, !msg.m_checkbox.empty());
 
     m_buttons->Clear(true/*delete_windows*/);
     m_actions.clear();
@@ -244,7 +250,9 @@ void AttentionBar::OnAction(wxCommandEvent& event)
     }
 
     // first perform the action...
-    i->second();
+    AttentionMessage::ActionInfo info;
+    info.checkbox = m_checkbox->IsShown() && m_checkbox->IsChecked();
+    i->second(info);
 
     // ...then hide the message
     HideMessage();
