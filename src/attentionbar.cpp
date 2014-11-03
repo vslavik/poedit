@@ -254,6 +254,8 @@ bool AttentionMessage::IsBlacklisted(const wxString& id)
 
 void AttentionMessage::AddDontShowAgain()
 {
-    AddAction(MSW_OR_OTHER(_("Don't show again"), _("Don't Show Again")),
-              std::bind(&AttentionMessage::AddToBlacklist, m_id));
+    AddAction(
+        MSW_OR_OTHER(_("Don't show again"), _("Don't Show Again")), [=]{
+        AddToBlacklist(m_id);
+    });
 }

@@ -1198,7 +1198,7 @@ void PoeditFrame::InitSpellchecker()
             )
         );
         msg.AddAction(MSW_OR_OTHER(_("Learn more"), _("Learn More")),
-                      std::bind(ShowSpellcheckerHelp));
+                      []{ ShowSpellcheckerHelp(); });
         msg.AddDontShowAgain();
         m_attentionBar->ShowMessage(msg);
     }
@@ -2503,7 +2503,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
                 _("You should set your email address in Preferences so that it can be used for Last-Translator header in GNU gettext files.")
             );
         msg.AddAction(MSW_OR_OTHER(_("Set email"), _("Set Email")),
-                      std::bind(&PoeditApp::EditPreferences, &wxGetApp()));
+                      []{ wxGetApp().EditPreferences(); });
         msg.AddDontShowAgain();
 
         m_attentionBar->ShowMessage(msg);
@@ -2518,7 +2518,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
                 _("Translation's project name isn't set.")
             );
         msg.AddAction(MSW_OR_OTHER(_("Set name"), _("Set Name")),
-                      std::bind(&PoeditFrame::EditCatalogProperties, this));
+                      [=]{ EditCatalogProperties(); });
 
         m_attentionBar->ShowMessage(msg);
     }
@@ -2533,7 +2533,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
                 _("Language of the translation isn't set.")
             );
         msg.AddAction(MSW_OR_OTHER(_("Set language"), _("Set Language")),
-                      std::bind(&PoeditFrame::EditCatalogProperties, this));
+                      [=]{ EditCatalogProperties(); });
 
         m_attentionBar->ShowMessage(msg);
     }
@@ -2580,7 +2580,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
                     err
                 );
             msg.AddAction(MSW_OR_OTHER(_("Fix the header"), _("Fix the Header")),
-                          std::bind(&PoeditFrame::EditCatalogProperties, this));
+                          [=]{ EditCatalogProperties(); });
 
             m_attentionBar->ShowMessage(msg);
         }
@@ -2621,8 +2621,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
                                     language.DisplayName()
                                 )
                             );
-                        msg.AddAction(_("Review"),
-                                      std::bind(&PoeditFrame::EditCatalogProperties, this));
+                        msg.AddAction(_("Review"), [=]{ EditCatalogProperties(); });
                         msg.AddDontShowAgain();
 
                         m_attentionBar->ShowMessage(msg);
