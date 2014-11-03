@@ -111,6 +111,9 @@ AttentionBar::AttentionBar(wxWindow *parent)
     sizer->AddSpacer(20);
     sizer->Add(m_buttons, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
     sizer->Add(btnClose, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
+#ifdef __WXMSW__
+    sizer->AddSpacer(4);
+#endif
 
     SetSizer(sizer);
 
@@ -195,8 +198,7 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
 
     // we need to size the control correctly _and_ lay out the controls if this
     // is the first time it's being shown, otherwise we can get garbled look:
-    SetSize(GetParent()->GetClientSize().x,
-            GetBestSize().y);
+    SetSize(GetParent()->GetClientSize().x, GetBestSize().y);
     Layout();
 
     Refresh();
