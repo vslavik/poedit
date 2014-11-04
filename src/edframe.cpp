@@ -2690,44 +2690,27 @@ void PoeditFrame::RefreshControls(int flags)
 
 void PoeditFrame::UpdateStatusBar()
 {
-    int all, fuzzy, untranslated, badtokens, unfinished;
     if (m_catalog)
     {
-        wxString txt;
+        int all, fuzzy, untranslated, errors, unfinished;
+        m_catalog->GetStatistics(&all, &fuzzy, &errors, &untranslated, &unfinished);
 
-        m_catalog->GetStatistics(&all, &fuzzy, &badtokens, &untranslated, &unfinished);
+        int percent = (all == 0) ? 0 : (100 * (all - unfinished) / all);
 
-        int percent = (all == 0 ) ? 0 : (100 * (all - unfinished) / all);
-
-        wxString details;
-        if ( fuzzy > 0 )
+        wxString text;
+        text.Printf(_("Translated: %d of %d (%d %%)"), all - unfinished, all, percent);
+        if (unfinished > 0)
         {
-            details += wxString::Format(wxPLURAL("%i fuzzy", "%i fuzzy", fuzzy), fuzzy);
+            text += L"  •  ";
+            text += wxString::Format(_("Remains: %d"), unfinished);
         }
-        if ( badtokens > 0 )
+        if (errors > 0)
         {
-            if ( !details.empty() )
-                details += ", ";
-            details += wxString::Format(wxPLURAL("%i bad token", "%i bad tokens", badtokens), badtokens);
-        }
-        if ( untranslated > 0 )
-        {
-            if ( !details.empty() )
-                details += ", ";
-            details += wxString::Format(wxPLURAL("%i not translated", "%i not translated", untranslated), untranslated);
-        }
-        if ( details.empty() )
-        {
-            txt.Printf(wxPLURAL("%i %% translated, %i string", "%i %% translated, %i strings", all),
-                       percent, all);
-        }
-        else
-        {
-            txt.Printf(wxPLURAL("%i %% translated, %i string (%s)", "%i %% translated, %i strings (%s)", all),
-                       percent, all, details.c_str());
+            text += L"  •  ";
+            text += wxString::Format(wxPLURAL("%d error", "%d errors", errors), errors);
         }
 
-        GetStatusBar()->SetStatusText(txt);
+        GetStatusBar()->SetStatusText(text);
     }
 }
 

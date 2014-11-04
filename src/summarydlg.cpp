@@ -53,7 +53,7 @@ MergeSummaryDialog::~MergeSummaryDialog()
 void MergeSummaryDialog::TransferTo(const wxArrayString& snew, const wxArrayString& sobsolete)
 {
     wxString sum;
-    sum.Printf(_("(%i new, %i obsolete)"), 
+    sum.Printf(_("(New: %i, obsolete: %i)"),
                (int)snew.GetCount(), (int)sobsolete.GetCount());
     XRCCTRL(*this, "items_count", wxStaticText)->SetLabel(sum);
 
