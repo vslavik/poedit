@@ -393,6 +393,11 @@ SuggestionsSidebarBlock::SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu)
 
     m_innerSizer->AddSpacer(10);
 
+    m_suggestionsSizer = new wxBoxSizer(wxVERTICAL);
+    m_extrasSizer = new wxBoxSizer(wxVERTICAL);
+    m_innerSizer->Add(m_suggestionsSizer, wxSizerFlags().Expand());
+    m_innerSizer->Add(m_extrasSizer, wxSizerFlags().Expand());
+
     m_iGotNothing = new wxStaticText(parent, wxID_ANY,
                                 #ifdef __WXMSW__
                                      // TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
@@ -468,7 +473,7 @@ void SuggestionsSidebarBlock::UpdateSuggestions(const SuggestionsList& hits)
     while (m_suggestions.size() > m_suggestionsWidgets.size())
     {
         auto w = new SuggestionWidget(m_parent);
-        m_innerSizer->Add(w, wxSizerFlags().Expand());
+        m_suggestionsSizer->Add(w, wxSizerFlags().Expand());
         m_suggestionsWidgets.push_back(w);
     }
     m_innerSizer->Layout();
@@ -575,11 +580,11 @@ void SuggestionsSidebarBlock::UpdateVisibility()
         heightRemaining -= m_suggestionsWidgets[w]->GetSize().y;
         if (heightRemaining < 20)
             break;
-        m_innerSizer->Show(m_suggestionsWidgets[w]);
+        m_suggestionsSizer->Show(m_suggestionsWidgets[w]);
     }
 
     for (; w < m_suggestionsWidgets.size(); w++)
-        m_innerSizer->Hide(m_suggestionsWidgets[w]);
+        m_suggestionsSizer->Hide(m_suggestionsWidgets[w]);
 
 }
 

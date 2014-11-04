@@ -107,7 +107,7 @@ protected:
     // How many entries can have shortcuts?
     static const int SUGGESTIONS_MENU_ENTRIES = 9;
 
-    void UpdateVisibility();
+    virtual void UpdateVisibility();
 
     virtual wxBitmap GetIconForSuggestion(const Suggestion& s) const;
     virtual wxString GetTooltipForSuggestion(const Suggestion& s) const;
@@ -136,6 +136,10 @@ protected:
     wxStaticBitmap *m_msgIcon;
     ExplanationLabel *m_msgText;
     wxStaticText *m_iGotNothing;
+
+    wxSizer *m_suggestionsSizer;
+    // Additional sizer for derived classes, shown below suggestions
+    wxSizer *m_extrasSizer;
 
     SuggestionsList m_suggestions;
     std::vector<SuggestionWidget*> m_suggestionsWidgets;
