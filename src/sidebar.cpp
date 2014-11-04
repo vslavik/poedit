@@ -320,7 +320,12 @@ public:
         m_text->SetAlignment(isRTL ? wxALIGN_RIGHT : wxALIGN_LEFT);
         m_text->SetAndWrapLabel(text);
 
+#ifndef __WXOSX__
+        // FIXME: Causes weird issues on OS X: tooltips appearing on the main list control,
+        //        over toolbar, where the mouse just was etc.
         m_icon->SetToolTip(tooltip);
+#endif
+        (void)tooltip;
 
         SetBackgroundColour(m_bg);
         InvalidateBestSize();
