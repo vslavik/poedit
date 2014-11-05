@@ -77,8 +77,24 @@ namespace
 class PrefsPanel : public wxPanel
 {
 public:
-    PrefsPanel(wxWindow *parent) : wxPanel(parent), m_inTransfer(false) {}
-    PrefsPanel() : wxPanel(), m_inTransfer(false) {}
+    PrefsPanel(wxWindow *parent)
+        : wxPanel(parent), m_inTransfer(false)
+    {
+#ifdef __WXOSX__
+        // Refresh the content of prefs panels when re-opening it.
+        // TODO: Use proper config settings notifications or user defaults bindings instead
+        parent->Bind(wxEVT_ACTIVATE, [=](wxActivateEvent& e){
+            e.Skip();
+            if (e.GetActive())
+                TransferDataToWindow();
+        });
+        Bind(wxEVT_SHOW, [=](wxShowEvent& e){
+            e.Skip();
+            if (e.IsShown())
+                TransferDataToWindow();
+        });
+#endif // __WXOSX__
+    }
 
     bool TransferDataToWindow() override
     {
