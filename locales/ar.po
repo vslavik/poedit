@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2014-09-13 09:18+0200\n"
-"PO-Revision-Date: 2014-10-15 13:47-0400\n"
+"POT-Creation-Date: 2014-11-05 13:49+0100\n"
+"PO-Revision-Date: 2014-11-05 07:54-0500\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -14,29 +14,65 @@ msgstr ""
 "\n"
 "X-Generator: crowdin.com\n"
 
-#. TRANSLATORS: Quoted text with leading 4 spaces
-#: ../src/edframe.cpp:3450
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#: ../src/aboutbox.cpp:98 ../src/edapp.cpp:818
 #, c-format
-msgid "    “%s”"
+msgid "About %s"
+msgstr "عنْ %s"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#: ../src/aboutbox.cpp:120 ../src/edapp.cpp:821 ../src/welcomescreen.cpp:233
+#, c-format
+msgid "Version %s"
+msgstr "الإصدار %s"
+
+#: ../src/aboutbox.cpp:121
+msgid "Based on the open source version →"
+msgstr "مبنيّ على إصدار البرنامج مفتوح المصدر ←"
+
+#: ../src/aboutbox.cpp:133 ../src/aboutbox.cpp:145
+msgid "Acknowledgements"
+msgstr "شكرٌ وتقدير"
+
+#: ../src/aboutbox.cpp:135
+msgid "Rate on the App Store"
+msgstr "قيّم في سوق التّطبيقات"
+
+#: ../src/aboutbox.cpp:137 ../src/aboutbox.cpp:146
+msgid "License Agreement"
+msgstr "اتّفاقيّة التّرخيص"
+
+#: ../src/aboutbox.cpp:204
+#, c-format
+msgid "Licensed to %s"
+msgstr "مُرخَّص لِـ %s"
+
+#: ../src/aboutbox.cpp:206 ../src/licensing.cpp:225
+msgid "Purchased on the Mac App Store"
+msgstr "مُشترى من سوق تطبيقات ماك"
+
+#: ../src/aboutbox.cpp:208
+msgid "Free version (please upgrade!)"
+msgstr "إصدار مجّانيّ (فضلًا رقِّ البرنامج!)"
+
+#: ../src/attentionbar.cpp:90
+msgid "Hide this notification message"
+msgstr "أخفِ رسالة الإخطار هذه"
+
+#: ../src/attentionbar.cpp:288
+msgid "Don't Show Again"
 msgstr ""
 
-#: ../src/edframe.cpp:3056
+#: ../src/attentionbar.cpp:288
+msgid "Don't show again"
+msgstr "لا تُظهر مجدّدًا"
+
+#: ../src/catalog.cpp:136
 #, c-format
-msgid " (beta version expires %s)"
-msgstr ""
-
-#: ../src/edframe.cpp:3045
-msgid " (modified)"
-msgstr " (معدلة)"
-
-#: ../src/edframe.cpp:3027
-msgid " (unsaved)"
-msgstr " (غير محفوظ)"
-
-#: ../src/edframe.cpp:3304
-#, c-format
-msgid "%d entry was filled from the translation memory."
-msgid_plural "%d entries were filled from the translation memory."
+msgid "%i line of file '%s' was not loaded correctly."
+msgid_plural "%i lines of file '%s' were not loaded correctly."
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
@@ -44,1358 +80,952 @@ msgstr[3] ""
 msgstr[4] ""
 msgstr[5] ""
 
-#: ../src/edframe.cpp:2143
+#: ../src/catalog.cpp:151
 #, c-format
-msgid "%d issue with the translation found."
-msgid_plural "%d issues with the translation found."
-msgstr[0] "العثور على %d مشكلة في الترجمة"
-msgstr[1] "العثور على %d مشكلة في الترجمة"
-msgstr[2] "العثور على %d مشكلتين في الترجمة"
-msgstr[3] "العثور على %d مشاكل في الترجمة"
-msgstr[4] "العثور على %d مشكلة في الترجمة"
-msgstr[5] "العثور على %d مشكلة في الترجمة"
+msgid "Line %d of file '%s' is corrupted (not valid %s data)."
+msgstr "السطر %d من الملف '%s' فاسد (بيانات %s غير صالحة)."
 
-#: ../src/edframe.cpp:2990 ../src/export_html.cpp:160
+#: ../src/catalog.cpp:226
 #, c-format
-msgid "%i %% translated, %i string"
-msgid_plural "%i %% translated, %i strings"
-msgstr[0] "المترجمة %i %% , عبارة %i"
-msgstr[1] "المترجمة %i %% , عبارة %i"
-msgstr[2] "المترجمة %i %% , من العبارات %i"
-msgstr[3] "المترجمة %i %% , عبارات %i"
-msgstr[4] "المترجمة %i %% , عبارات %i"
-msgstr[5] "المترجمة %i %% , عبارة %i"
+msgid "Malformed header: '%s'"
+msgstr "ترويسة فاسدة: '%s'"
 
-#: ../src/edframe.cpp:2995 ../src/export_html.cpp:165
+#: ../src/catalog.cpp:678
+msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
+msgstr "ملف الكتالوج معطوب: صيغة المفرد msgstr مُستخدَمة مع msgid_plural"
+
+#: ../src/catalog.cpp:727
+msgid "Broken catalog file: plural form msgstr used without msgid_plural"
+msgstr "ملف الكتالوج معطوب: صيغة الجمع msgstr مُستخدَمة دون msgid_plural"
+
+#: ../src/catalog.cpp:1110
+msgid "There were errors when loading the catalog. Some data may be missing or corrupted as the result."
+msgstr "حدثت أخطاء عند تحميل الكتالوج. قد تكون بعض البيانات ناقصة أو تالفة كنتيجة إلى ذلك."
+
+#: ../src/catalog.cpp:1120
 #, c-format
-msgid "%i %% translated, %i string (%s)"
-msgid_plural "%i %% translated, %i strings (%s)"
-msgstr[0] "المترجمة %i %% , %i عبارة (%s)"
-msgstr[1] "المترجمة %i %% , %i عبارة (%s)"
-msgstr[2] "المترجمة %i %% , %i من العبارات (%s)"
-msgstr[3] "المترجمة %i %% , %i عبارات (%s)"
-msgstr[4] "المترجمة %i %% , %i عبارة (%s)"
-msgstr[5] "المترجمة %i %% , %i عبارة (%s)"
+msgid "Couldn't load file %s, it is probably corrupted."
+msgstr "تعذّر تحميل الملف %s، قد يكون فاسدًا."
 
-#: ../src/edframe.cpp:2980 ../src/export_html.cpp:150
+#: ../src/catalog.cpp:1410
 #, c-format
-msgid "%i bad token"
-msgid_plural "%i bad tokens"
-msgstr[0] "%i الرموز الخطأ"
-msgstr[1] "%i الرموز الخطأ"
-msgstr[2] "%i الرموز الخطأ"
-msgstr[3] "%i الرموز الخطأ"
-msgstr[4] "%i الرموز الخطأ"
-msgstr[5] "%i الرموز الخطأ"
+msgid "File '%s' is read-only and cannot be saved.\nPlease save it under different name."
+msgstr "الملف '%s' للقراءة فقط ولا يمكن أن يُحفَظ.\nفضلًا احفظه باسم مختلف."
 
-#: ../src/edframe.cpp:2974 ../src/export_html.cpp:144
+#: ../src/catalog.cpp:1427 ../src/catalog.cpp:1463 ../src/catalog.cpp:1538
+#: ../src/catalog.cpp:1546 ../src/catalog.cpp:1571 ../src/catalog.cpp:1605
+#: ../src/export_html.cpp:260
 #, c-format
-msgid "%i fuzzy"
-msgid_plural "%i fuzzy"
-msgstr[0] "%i غير مؤكدة"
-msgstr[1] "%i غير مؤكدة"
-msgstr[2] "%i غير مؤكدة"
-msgstr[3] "%i غير مؤكدة"
-msgstr[4] "%i غير مؤكدة"
-msgstr[5] "%i غير مؤكدة"
+msgid "Couldn't save file %s."
+msgstr "تعذّر حفظ الملف %s."
 
-#: ../src/catalog.cpp:135
+#: ../src/catalog.cpp:1472
+msgid "There was a problem formatting the file nicely (but it was saved all right)."
+msgstr "حدثت مشكلة أثناء تنسيق الملف تنسيقًا جميلًا (لكنّه حُفِظ حفظًا صحيحًا)."
+
+#: ../src/catalog.cpp:1709
 #, c-format
-msgid "%i lines of file '%s' were not loaded correctly."
-msgstr "يوجد %i سطر في الملف منها '%s' لم تحمل بشكل صحيح"
+msgid "The catalog couldn't be saved in '%s' charset as specified in catalog settings.\n\nIt was saved in UTF-8 instead and the setting was modified accordingly."
+msgstr "تعذّر حفظ الكتالوج بطقم المحارف '%s' كما هو مُحدَّد في إعدادات الكتالوج.\n\nحُفِظ الملف بترميز UTF-8 بدل ذلك وعُدِّل الإعداد وفقًا لذلك."
 
-#: ../src/edframe.cpp:2986 ../src/export_html.cpp:156
+#: ../src/catalog.cpp:1711
+msgid "Error saving catalog"
+msgstr "خطأ عند حفظ الكتالوج"
+
+#: ../src/catalog.cpp:1822
 #, c-format
-msgid "%i not translated"
-msgid_plural "%i not translated"
-msgstr[0] "الغير مترجمة %i"
-msgstr[1] "الغير مترجمة %i"
-msgstr[2] "الغير مترجمة %i"
-msgstr[3] "الغير مترجمة %i"
-msgstr[4] "الغير مترجمة %i"
-msgstr[5] "الغير مترجمة %i"
+msgid "Source code directory '%s' doesn't exist."
+msgstr "دليل الشِفرة المصدريّة '%s' غير موجود."
 
-#: ../src/resources/menus.xrc:275 ../src/resources/menus.xrc:276
-#: ../src/resources/menus.xrc:343 ../src/resources/menus.xrc:344
-msgid "&About"
-msgstr "&حول"
+#: ../src/catalog.cpp:1840
+msgid "Merging differences..."
+msgstr "يدمج الاختلافات..."
 
-#: ../src/resources/menus.xrc:274 ../src/resources/menus.xrc:342
-msgid "&About Poedit"
-msgstr "&حول Poedit"
-
-#: ../src/edframe.cpp:3842
-msgid "&Bookmarks"
-msgstr "&إشارات مفضلة"
-
-#: ../src/resources/manager.xrc:120 ../src/resources/menus.xrc:29
-msgid "&Close"
-msgstr "إ&غلاق"
-
-#: ../src/resources/menus.xrc:225
-msgid "&Comment Window"
-msgstr "&نافذة التعليق"
-
-#: ../src/resources/menus.xrc:224
-msgid "&Comment window"
-msgstr "&نافذة التعليق"
-
-#: ../src/edframe.cpp:753
-msgid "&Copy"
-msgstr "&نسخ"
-
-#: ../src/edframe.cpp:755
-msgid "&Delete"
-msgstr "&حذف"
-
-#: ../src/resources/menus.xrc:179
-msgid "&Done and Next"
-msgstr "&تم, و إلى التالي"
-
-#: ../src/resources/menus.xrc:178
-msgid "&Done and next"
-msgstr "&تم, و إلى التالي"
-
-#: ../src/resources/menus.xrc:70 ../src/resources/menus.xrc:316
-msgid "&Edit"
-msgstr "ت&حرير"
-
-#: ../src/edframe.cpp:921 ../src/resources/manager.xrc:113
-#: ../src/resources/menus.xrc:5 ../src/resources/menus.xrc:285
-msgid "&File"
-msgstr "&ملف"
-
-#: ../src/resources/menus.xrc:107 ../src/resources/menus.xrc:121
-msgid "&Find..."
-msgstr "&بحث..."
-
-#: ../src/resources/menus.xrc:265 ../src/resources/menus.xrc:333
-msgid "&GNU gettext Manual"
-msgstr ""
-
-#: ../src/resources/menus.xrc:264 ../src/resources/menus.xrc:332
-msgid "&GNU gettext manual"
-msgstr ""
-
-#: ../src/edframe.cpp:928 ../src/resources/menus.xrc:175
-msgid "&Go"
-msgstr "ت&نفيذ"
-
-#: ../src/edapp.cpp:308 ../src/resources/menus.xrc:278
-#: ../src/resources/menus.xrc:346
-msgid "&Help"
-msgstr "تعل&يمات"
-
-#: ../src/resources/menus.xrc:50
-msgid "&License..."
-msgstr "&ترخيص..."
-
-#: ../src/resources/menus.xrc:8 ../src/resources/menus.xrc:288
-msgid "&New..."
-msgstr "&جديد..."
-
-#: ../src/resources/find.xrc:102
-msgid "&Next >"
-msgstr "&التالي >"
-
-#: ../src/resources/menus.xrc:191
-msgid "&Next Message"
-msgstr "الرسالة ال&تالية"
-
-#: ../src/resources/menus.xrc:190
-msgid "&Next message"
-msgstr "الرسالة ال&سابقة"
-
-#: ../src/resources/menus.xrc:258 ../src/resources/menus.xrc:326
-msgid "&Online Help"
-msgstr "تعليمات &مباشرة"
-
-#: ../src/resources/menus.xrc:257 ../src/resources/menus.xrc:325
-msgid "&Online help"
-msgstr "تعليمات &مباشرة"
-
-#: ../src/resources/menus.xrc:21 ../src/resources/menus.xrc:301
-msgid "&Open..."
-msgstr "&فتح..."
-
-#: ../src/edframe.cpp:754
-msgid "&Paste"
-msgstr "&لصق"
-
-#: ../src/resources/menus.xrc:135
-msgid "&Preferences"
-msgstr "إ&عدادات"
-
-#: ../src/resources/manager.xrc:116 ../src/resources/menus.xrc:53
-#: ../src/resources/menus.xrc:308
-msgid "&Preferences..."
-msgstr "إ&عدادات..."
-
-#: ../src/resources/menus.xrc:186
-msgid "&Previous Message"
-msgstr "الرسالة ال&سابقة"
-
-#: ../src/resources/menus.xrc:185
-msgid "&Previous message"
-msgstr "الرسالة ال&سابقة"
-
-#: ../src/resources/menus.xrc:168
-msgid "&Properties..."
-msgstr "خص&ائص..."
-
-#: ../src/resources/menus.xrc:156
-msgid "&Purge Deleted Translations"
-msgstr "&التخلص من الترجمات المحذوفة"
-
-#: ../src/resources/menus.xrc:155
-msgid "&Purge deleted translations"
-msgstr "&التخلص من الترجمات المحذوفة"
-
-#: ../src/edframe.cpp:751
-msgid "&Redo"
-msgstr "&استرجاع"
-
-#: ../src/resources/menus.xrc:33
-msgid "&Save"
-msgstr "&حفظ"
-
-#: ../src/resources/menus.xrc:104
-msgid "&Show References"
-msgstr "إ&ظهار مرجعيات الترجمة"
-
-#: ../src/resources/menus.xrc:103
-msgid "&Show references"
-msgstr "إ&ظهار مرجعيات الترجمة"
-
-#: ../src/resources/menus.xrc:164
-msgid "&Statistics"
-msgstr "&إحصائيات"
-
-#: ../src/edframe.cpp:750
-msgid "&Undo"
-msgstr "&إلغاء"
-
-#: ../src/resources/menus.xrc:247
-msgid "&Untranslated Entries First"
-msgstr "المدخلات الغير مترجمة &أولا"
-
-#: ../src/resources/menus.xrc:246
-msgid "&Untranslated entries first"
-msgstr "المدخلات الغير مترجمة &أولا"
-
-#: ../src/resources/menus.xrc:144
-msgid "&Update from Sources"
-msgstr "تحديث من &مصادرِ"
-
-#: ../src/resources/menus.xrc:143
-msgid "&Update from sources"
-msgstr "تحديث من &مصادرِ"
-
-#: ../src/resources/menus.xrc:160
-msgid "&Validate Translations"
-msgstr "ال&تحقق من الترجمة"
-
-#: ../src/resources/menus.xrc:159
-msgid "&Validate translations"
-msgstr "ال&تحقق من الترجمة"
-
-#: ../src/resources/menus.xrc:206
-msgid "&View"
-msgstr "&عرض"
-
-#: ../src/catalog.cpp:1804
+#: ../src/catalog.cpp:1870
 #, c-format
 msgid "'%s' is not a valid POT file."
-msgstr "'%s' ليس ملف POT صالحِ"
-
-#: ../src/summarydlg.cpp:56
-#, c-format
-msgid "(%i new, %i obsolete)"
-msgstr "(الجديدة %i , القديمة %i)"
-
-#: ../src/resources/summary.xrc:62
-msgid "(0 new, 0 obsolete)"
-msgstr "(الجديدة 0 , القديمة 0)"
-
-#: ../src/welcomescreen.cpp:299
-msgid "(Learn more about GNU gettext)"
-msgstr "(اقرأ المزيد حول \"GNU gettext\")"
+msgstr "الملف '%s' ليس ملف POT صالح."
 
 #: ../src/chooselang.cpp:62
 msgid "(Use default language)"
-msgstr "(إستخدام اللغة الإفتراضية)"
-
-#: ../src/resources/find.xrc:94
-msgid "< &Previous"
-msgstr "< &السابق"
-
-#: ../src/manager.cpp:392
-msgid "<unnamed>"
-msgstr "<بدون إسم>"
-
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#: ../src/aboutbox.cpp:98 ../src/edapp.cpp:767
-#, c-format
-msgid "About %s"
-msgstr "حول %s"
-
-#: ../src/aboutbox.cpp:133 ../src/aboutbox.cpp:145
-msgid "Acknowledgements"
-msgstr ""
-
-#: ../src/resources/manager.xrc:79
-msgid "Add directory to the list"
-msgstr "إضافة مجلد إلى القائمة"
-
-#: ../src/propertiesdlg.cpp:65
-msgid "Additional keywords"
-msgstr "كلمات مفتاحية إضافية"
-
-#: ../src/resources/prefs.xrc:112
-msgid "Always change focus to text input field"
-msgstr "دائما اجعل التركيز في حقل إدخال النصوص"
-
-#: ../src/resources/prefs.xrc:399
-msgid "An item in input files list:"
-msgstr "عنصر ما في قائمة الملفات المدخلة:"
-
-#: ../src/resources/prefs.xrc:378
-msgid "An item in keywords list:"
-msgstr "عنصر ما في قائمة الكلمات الرئيسية:"
-
-#: ../src/edframe.cpp:1786 ../src/edframe.cpp:1862
-msgid "Analyzing WordPress code..."
-msgstr ""
-
-#: ../src/export_html.cpp:216
-msgid "Automatic translation"
-msgstr "ترجمة آلية"
-
-#: ../src/resources/prefs.xrc:71
-msgid "Automatically check for new version of Poedit"
-msgstr "التدقيق تلقائيا بحثا عن نسخة جديدة من Poedit"
-
-#: ../src/resources/prefs.xrc:96
-msgid "Automatically compile .mo file on save"
-msgstr "إنشاء ملف .mo نلقائيا عند الحفظ"
-
-#: ../src/manager.cpp:256
-msgid "Bad Tokens"
-msgstr "عناصر سيئة"
-
-#: ../src/resources/properties.xrc:157
-msgid "Base path:"
-msgstr "المسار الجذري:"
-
-#: ../src/aboutbox.cpp:121
-msgid "Based on the open source version →"
-msgstr ""
-
-#: ../src/resources/prefs.xrc:92
-msgid "Behavior"
-msgstr "السلوك"
-
-#: ../src/edapp.cpp:317
-msgid "Beta expired"
-msgstr ""
-
-#: ../src/edapp.cpp:1045
-msgid "Bring All to Front"
-msgstr ""
-
-#: ../src/catalog.cpp:724
-msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr "ملف كتالوج تالف: حيث تم استخدام صيغة الجمع msgstr بدون msgid_plural"
-
-#: ../src/catalog.cpp:675
-msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
-msgstr "ملف الكتالوج تالف: حيث تم استخدام صيغة المفرد msgstr مصاحبة لـ msgid_plural"
-
-#: ../src/resources/manager.xrc:78
-msgid "Browse"
-msgstr "استعراض"
-
-#: ../src/licensing.cpp:114
-msgid "Buy Online..."
-msgstr ""
-
-#: ../src/licensing.cpp:112
-msgid "Buy online..."
-msgstr ""
-
-#: ../src/resources/menus.xrc:140
-msgid "C&atalog"
-msgstr "&كتالوج"
-
-#: ../src/resources/comment.xrc:45
-msgid "C&lear"
-msgstr "&مسح"
-
-#: ../src/resources/prefs.xrc:142
-msgid "CR/LF conversion"
-msgstr "‫تحويل CR/LF"
-
-#: ../src/licensing.cpp:121 ../src/resources/comment.xrc:38
-#: ../src/resources/manager.xrc:101 ../src/resources/prefs.xrc:305
-#: ../src/resources/prefs.xrc:455 ../src/resources/progress.xrc:32
-#: ../src/resources/properties.xrc:241
-msgid "Cancel"
-msgstr "إلغاء الأمر"
-
-#: ../src/utility.cpp:61 ../src/utility.cpp:71
-msgid "Cannot create temporary directory."
-msgstr "لا يمكن إنشاء الدليل المؤقت"
-
-#: ../src/gexecute.cpp:146
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "لا يمكن تشغيل البرنامج : %s"
-
-#: ../src/edapp.cpp:1029
-msgid "Capitalize"
-msgstr ""
-
-#: ../src/resources/find.xrc:36
-msgid "Case sensitive"
-msgstr "راع اختلاف الأحرف الكبيرة/الصغيرة"
-
-#: ../src/manager.cpp:252
-msgid "Catalog"
-msgstr "الكتالوج"
-
-#: ../src/edframe.cpp:1487
-msgid "Catalog modified. Do you want to save changes?"
-msgstr "تم تعديل الكتالوج. هل تريد حفظ التغييرات ؟"
-
-#: ../src/resources/properties.xrc:4
-msgid "Catalog properties"
-msgstr "خصائص الكاتالوج"
-
-#: ../src/resources/menus.xrc:59
-msgid "Catalogs &Manager"
-msgstr "&إدارة الكتالوجات"
-
-#: ../src/resources/menus.xrc:58
-msgid "Catalogs &manager"
-msgstr "&إدارة الكتالوجات"
-
-#: ../src/edapp.cpp:953
-msgid "Catalogs Manager"
-msgstr ""
-
-#: ../src/resources/prefs.xrc:64
-msgid "Change UI language"
-msgstr "تغيير لغة واجهة البرنامج"
-
-#: ../src/export_html.cpp:125 ../src/resources/properties.xrc:116
-msgid "Charset:"
-msgstr "محارف:"
-
-#: ../src/edapp.cpp:1007
-msgid "Check Document Now"
-msgstr ""
-
-#: ../src/edapp.cpp:1010
-msgid "Check Grammar With Spelling"
-msgstr ""
-
-#: ../src/edapp.cpp:1009
-msgid "Check Spelling While Typing"
-msgstr ""
-
-#: ../src/edapp.cpp:962
-msgid "Check for Updates..."
-msgstr "التدقيق بحثا عن تحديثات..."
-
-#: ../src/resources/toolbar.xrc:38
-msgid "Check for errors in the translation"
-msgstr "التدقيق بحثا عن أخطاء في الترجمة"
-
-#: ../src/resources/menus.xrc:47
-msgid "Check for updates..."
-msgstr ""
-
-#: ../src/resources/prefs.xrc:129
-msgid "Check spelling"
-msgstr ""
-
-#: ../src/welcomescreen.cpp:134
-msgid "Check theme or plugin compatibility"
-msgstr ""
-
-#: ../src/edframe.cpp:3409 ../src/resources/menus.xrc:82
-msgid "Clear Translation"
-msgstr "مسح الترجمة"
-
-#: ../src/resources/comment.xrc:46
-msgid "Clear the comment"
-msgstr "احذف التعليق"
-
-#: ../src/edframe.cpp:3407 ../src/resources/menus.xrc:81
-msgid "Clear translation"
-msgstr "مسح الترجمة "
-
-#: ../src/licensing.cpp:195 ../src/resources/find.xrc:87
-msgid "Close"
-msgstr "إغلاق"
-
-#: ../src/resources/toolbar.xrc:56
-msgid "Comment"
-msgstr "تعليق:"
-
-#: ../src/resources/prefs.xrc:121
-msgid "Comment window is editable"
-msgstr "نافذة التعليق قابلة للتحرير"
-
-#: ../src/edframe.cpp:1117 ../src/export_html.cpp:238
-#: ../src/resources/comment.xrc:10
-msgid "Comment:"
-msgstr "التعليق:"
-
-#: ../src/welcomescreen.cpp:322
-msgid "Configure source code extraction in Properties."
-msgstr ""
-
-#: ../src/manager.cpp:424 ../src/manager.cpp:444
-msgid "Confirmation"
-msgstr "تأكيد"
-
-#: ../src/wordpress.cpp:136
-#, c-format
-msgid "Confused by ambiguous values of \"%s\" in %s."
-msgstr ""
-
-#: ../src/wordpress.cpp:371
-msgid "Confused: multiple main plugin files."
-msgstr ""
-
-#: ../src/prefsdlg.cpp:103
-msgid "Consult TM when updating from sources"
-msgstr ""
-
-#: ../src/edframe.cpp:2664
-msgid "Context:"
-msgstr "سياق:"
-
-#: ../src/edframe.cpp:753
-msgid "Copy"
-msgstr ""
-
-#: ../src/edframe.cpp:3402 ../src/resources/menus.xrc:87
-msgid "Copy from Source Text"
-msgstr "نسخ من نص المصدر"
-
-#: ../src/edframe.cpp:3400 ../src/resources/menus.xrc:86
-msgid "Copy from source text"
-msgstr "نسخ من نص المصدر"
-
-#: ../src/edapp.cpp:1011
-msgid "Correct Spelling Automatically"
-msgstr ""
-
-#: ../src/wordpress.cpp:254
-#, c-format
-msgid "Couldn't detect POs location for \"%s\"."
-msgstr ""
-
-#: ../src/wordpress.cpp:405 ../src/wordpress.cpp:417
-#, c-format
-msgid "Couldn't detect translation domain of the \"%s\" plugin."
-msgstr ""
-
-#: ../src/wordpress.cpp:324
-#, c-format
-msgid "Couldn't detect translation setup of the \"%s\" theme."
-msgstr ""
-
-#: ../src/catalog.cpp:1110
-#, c-format
-msgid "Couldn't load file %s, it is probably corrupted."
-msgstr "تعذر تحميل الملف '%s'، هو غالبا معطوب."
-
-#: ../src/catalog.cpp:1417 ../src/catalog.cpp:1453 ../src/catalog.cpp:1528
-#: ../src/catalog.cpp:1536 ../src/export_html.cpp:277
-#, c-format
-msgid "Couldn't save file %s."
-msgstr "تعذر حفظ الملف: %s"
-
-#. TRANSLATORS: Please don't use any form of "automatically" in the translation, it would mislead people.
-#: ../src/welcomescreen.cpp:258
-msgid "Create a new translation. Poedit will set everything up; you can focus on translating."
-msgstr ""
-
-#: ../src/welcomescreen.cpp:250
-msgid "Create new translation"
-msgstr ""
-
-#: ../src/resources/manager.xrc:32
-msgid "Create new translations project"
-msgstr "أنشئ مشروع ترجمات جديد"
-
-#: ../src/edframe.cpp:752
-msgid "Cu&t"
-msgstr ""
-
-#: ../src/edframe.cpp:752
-msgid "Cut"
-msgstr ""
-
-#: ../src/prefsdlg.cpp:171
-msgid "Database size on disk:"
-msgstr ""
-
-#: ../src/edapp.cpp:995 ../src/edframe.cpp:755 ../src/resources/manager.xrc:41
-#: ../src/resources/prefs.xrc:271
-msgid "Delete"
-msgstr "حذف"
-
-#: ../src/resources/manager.xrc:42
-msgid "Delete the project"
-msgstr "احذف المشروع"
-
-#: ../src/manager.cpp:310
-msgid "Directories:"
-msgstr "أدلة:"
-
-#: ../src/resources/menus.xrc:219
-msgid "Display &Notes for Translators"
-msgstr "ملاحظات للمترجمين"
-
-#: ../src/resources/menus.xrc:209
-msgid "Display &Quotes"
-msgstr "عرض علامات الإ&قتباس"
-
-#: ../src/resources/menus.xrc:218
-msgid "Display &notes for translators"
-msgstr "ملاحظات للمترجمين"
-
-#: ../src/resources/menus.xrc:208
-msgid "Display &quotes"
-msgstr "الا&قتباسات"
-
-#: ../src/resources/menus.xrc:214
-msgid "Display Entry &IDs"
-msgstr ""
-
-#: ../src/resources/menus.xrc:213
-msgid "Display entry &IDs"
-msgstr ""
-
-#: ../src/manager.cpp:443
-msgid "Do you really want to do mass update of\nall catalogs in this project?"
-msgstr "هل تريد فعلا عمل تحديث شامل\nلكافة الكتالوجات في هذا المشروع ؟"
-
-#: ../src/manager.cpp:423
-msgid "Do you want to delete the project?"
-msgstr "أتريد حذف المشروع؟"
-
-#: ../src/edframe.cpp:3258
-msgid "Do you want to remove all translations that are no longer used?"
-msgstr "هل تريد التخلص من كافة الترجمات التي لم تعد مستخدمة ؟"
-
-#: ../src/edframe.cpp:1498
-msgid "Don't Save"
-msgstr "عدم الحفظ"
-
-#: ../src/resources/prefs.xrc:171
-msgid "Don't change format of existing catalogs"
-msgstr "عدم تغير تنسيق الكتالوجات الحالية"
-
-#: ../src/edframe.cpp:1496
-msgid "Don't save"
-msgstr "عدم الحفظ"
-
-#: ../src/attentionbar.cpp:240
-msgid "Don't show again"
-msgstr "لا تعرض مرة أخرى"
-
-#: ../src/edapp.cpp:319
-msgid "Download"
-msgstr ""
-
-#: ../src/resources/manager.xrc:124 ../src/resources/menus.xrc:65
-msgid "E&xit"
-msgstr "&خروج"
-
-#: ../src/resources/menus.xrc:42
-msgid "E&xport as HTML..."
-msgstr ""
-
-#: ../src/edapp.cpp:965 ../src/resources/manager.xrc:36
-#: ../src/resources/prefs.xrc:264
-msgid "Edit"
-msgstr "تحرير"
-
-#: ../src/resources/menus.xrc:98
-msgid "Edit &Comment"
-msgstr "ت&حرير التعليق"
-
-#: ../src/resources/menus.xrc:97
-msgid "Edit &comment"
-msgstr "حرر الت&عليق"
-
-#: ../src/edframe.cpp:3416
-msgid "Edit Comment"
-msgstr "حرر التعليق"
-
-#: ../src/welcomescreen.cpp:244
-msgid "Edit a translation"
-msgstr ""
-
-#: ../src/edframe.cpp:3414 ../src/resources/comment.xrc:4
-#: ../src/resources/toolbar.xrc:57
-msgid "Edit comment"
-msgstr "حرر التعليق"
-
-#: ../src/resources/manager.xrc:52
-msgid "Edit project"
-msgstr "حرر المشروع"
-
-#: ../src/resources/manager.xrc:37
-msgid "Edit the project"
-msgstr "حرر المشروع"
-
-#: ../src/resources/prefs.xrc:86
-msgid "Editor"
-msgstr "المحرر"
-
-#: ../src/resources/menus.xrc:270 ../src/resources/menus.xrc:338
-msgid "Email &Support..."
-msgstr ""
-
-#: ../src/resources/menus.xrc:269 ../src/resources/menus.xrc:337
-msgid "Email &support..."
-msgstr ""
-
-#. TRANSLATORS: This is a button that sends an email to support when clicked
-#: ../src/wordpress.cpp:555
-msgid "Email Support"
-msgstr ""
-
-#. TRANSLATORS: This is a button that sends an email to support when clicked
-#: ../src/wordpress.cpp:551
-msgid "Email support"
-msgstr ""
-
-#: ../src/resources/prefs.xrc:130
-msgid "Enables on-the-fly spellchecking"
-msgstr "تمكين التدقيق الاملائي الآني"
-
-#: ../src/edframe.cpp:2049
-msgid "Entries in the catalog are probably incorrect."
-msgstr "ربما تكون المدخلات التي في الكتالوج غير صحيحة"
-
-#: ../src/edframe.cpp:2812
-msgid "Entries in this catalog have different plural forms count from what catalog's Plural-Forms header says"
-msgstr "المدخلات التي في ملف الكتالوج هذا تحتوي على صيغ جمع مختلفة عن التي ذكرت في مقدمة الكاتلوج"
-
-#: ../src/edframe.cpp:2151
-msgid "Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry."
-msgstr "تم تمييز الإدخالات التي فيها أخطاء باللون الأحمر في القائمة. لعرض تفاصيل الخطأ قم بتحديدها"
-
-#: ../src/edframe.cpp:2921
-#, c-format
-msgid "Error loading message catalog file '%s'."
-msgstr "خطأ أثناء تحميل ملف كتالوج الرسالة '%s'"
-
-#: ../src/fileviewer.cpp:302
-#, c-format
-msgid "Error opening file %s!"
-msgstr "عطل أثناء فتح  ملف %s!"
-
-#: ../src/catalog.cpp:1645
-msgid "Error saving catalog"
-msgstr "خطأ في حفظ الكتالوج"
-
-#: ../src/errorbar.cpp:68
-msgid "Error:"
-msgstr "الخطأ:"
-
-#: ../src/edframe.cpp:3763
-msgid "Everything"
-msgstr ""
-
-#: ../src/propertiesdlg.cpp:67
-msgid "Excluded paths"
-msgstr ""
-
-#: ../src/edframe.cpp:1643
-msgid "Export as..."
-msgstr "تص&دير إلى..."
-
-#: ../src/welcomescreen.cpp:321
-msgid "Extract from sources"
-msgstr ""
-
-#: ../src/resources/properties.xrc:148
-msgid "Extract text from source files in the following directories:"
-msgstr "إستخراج النصوص من ملفات المصدر في المجلدات التالية:"
+msgstr "(استخدم اللّغة الافتراضيّة)"
+
+#: ../src/chooselang.cpp:70
+msgid "Select your prefered language"
+msgstr "اختر لغتك المفضّلة"
+
+#: ../src/chooselang.cpp:71
+msgid "Language selection"
+msgstr "حدّد اللّغة"
+
+#: ../src/chooselang.cpp:89
+msgid "You must restart Poedit for this change to take effect."
+msgstr "عليك إعادة تشغيل محرِّر Po لتطبيق التغييرات."
+
+#: ../src/customcontrols.cpp:129 ../src/edframe.cpp:1385
+#: ../src/licensing.cpp:521
+msgid "Learn more"
+msgstr "تعلّم المزيد"
+
+#: ../src/customcontrols.cpp:131 ../src/edframe.cpp:1385
+#: ../src/licensing.cpp:521
+msgid "Learn More"
+msgstr "تعلّم المزيد"
 
 #: ../src/digger.cpp:60
 #, c-format
 msgid "Failed command: %s"
-msgstr "أمر خاطيء: %s"
-
-#: ../src/wordpress.cpp:535
-msgid "Failed to extract WordPress information."
-msgstr ""
-
-#: ../src/digger.cpp:131
-msgid "Failed to load extracted catalog."
-msgstr "فشل في تحميل الكتالوج المستخرج"
+msgstr "فشل الأمر: %s"
 
 #: ../src/digger.cpp:61
 msgid "Failed to merge gettext catalogs."
-msgstr "فشل في دمج كتالوجات gettext"
-
-#: ../src/wordpress.cpp:91 ../src/wordpress.cpp:98
-#, c-format
-msgid "Failed to read file '%s'."
-msgstr ""
-
-#: ../src/edframe.cpp:3174 ../src/edframe.cpp:3178
-#, c-format
-msgid "Failed to update translation memory: %s"
-msgstr ""
-
-#: ../src/edapp.cpp:747 ../src/edframe.cpp:788 ../src/edframe.cpp:1557
-#, c-format
-msgid "File '%s' doesn't exist."
-msgstr "تعذر إيجاد الملف '%s'"
-
-#: ../src/edframe.cpp:781
-#, c-format
-msgid "File '%s' is not a message catalog."
-msgstr "الملف '%s' ليس كتالوج رسالة "
-
-#: ../src/catalog.cpp:1400
-#, c-format
-msgid "File '%s' is read-only and cannot be saved.\nPlease save it under different name."
-msgstr "الملف '%s' للقراءة فقط و لا يمكن حفظه. \nاحفظه باسم مختلف"
-
-#: ../src/resources/menus.xrc:152
-msgid "Fill Missing Translations from &TM"
-msgstr ""
-
-#: ../src/resources/menus.xrc:151
-msgid "Fill missing translations from &TM"
-msgstr ""
-
-#: ../src/edframe.cpp:3321 ../src/edframe.cpp:3350
-msgid "Filling missing translations from TM..."
-msgstr ""
-
-#: ../src/prefsdlg.cpp:209 ../src/tm/tm_migrate.cpp:227
-msgid "Finalizing..."
-msgstr ""
-
-#: ../src/resources/menus.xrc:119
-msgid "Find"
-msgstr ""
-
-#: ../src/resources/menus.xrc:125
-msgid "Find Next"
-msgstr ""
-
-#: ../src/resources/menus.xrc:129
-msgid "Find Previous"
-msgstr ""
-
-#: ../src/resources/find.xrc:78
-msgid "Find in automatic comments"
-msgstr "في التعليقات المولدة آليا"
-
-#: ../src/resources/find.xrc:71
-msgid "Find in comments"
-msgstr "في التعليقات"
-
-#: ../src/resources/find.xrc:57
-msgid "Find in original strings"
-msgstr "في العبارات الأصلية"
-
-#: ../src/resources/find.xrc:64
-msgid "Find in translations"
-msgstr ""
-
-#: ../src/resources/menus.xrc:111
-msgid "Find next"
-msgstr ""
-
-#: ../src/resources/menus.xrc:115
-msgid "Find previous"
-msgstr ""
-
-#: ../src/resources/find.xrc:4
-msgid "Find..."
-msgstr "بحث..."
-
-#: ../src/edframe.cpp:2842
-msgid "Fix the header"
-msgstr "إصلاح المقدمة "
-
-#: ../src/wordpress.cpp:440
-msgid "Folder looks like both a plugin and a theme."
-msgstr ""
-
-#: ../src/resources/prefs.xrc:182
-msgid "Fonts"
-msgstr "خطوط"
-
-#: ../src/edframe.cpp:3765
-#, c-format
-msgid "Form %i"
-msgstr "شكل %i"
-
-#: ../src/wordpress.cpp:442
-msgid "Found neither WordPress theme nor plugin in the folder."
-msgstr ""
-
-#: ../src/aboutbox.cpp:208
-msgid "Free version (please upgrade!)"
-msgstr ""
-
-#: ../src/manager.cpp:255 ../src/resources/toolbar.xrc:50
-msgid "Fuzzy"
-msgstr "غير مؤكدة"
-
-#: ../src/export_html.cpp:222
-msgid "Fuzzy translation"
-msgstr "ترجمة غير مؤكدة"
-
-#: ../src/edapp.cpp:719 ../src/edframe.cpp:1537 ../src/edframe.cpp:1606
-#: ../src/prefsdlg.cpp:182
-msgid "GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
-msgstr "GNU gettext كتالوجات (*.po)|*.po|كافة الملفات (*.*)|*.*"
-
-#: ../src/edframe.cpp:2071
-msgid "GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
-msgstr "GNU gettext قوالب (*.pot)|*.pot|كافة الملفات (*.*)|*.*"
-
-#: ../src/edframe.cpp:1694
-msgid "GNU gettext templates (*.pot)|*.pot|GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
-msgstr ""
-
-#: ../src/edframe.cpp:3854
-#, c-format
-msgid "Go to Bookmark %i\tCtrl+%i"
-msgstr "إنتقال إلى المفضلة %i\tCtrl+%i "
-
-#: ../src/edframe.cpp:3848
-#, c-format
-msgid "Go to Bookmark %i\tCtrl+Alt+%i"
-msgstr "إنتقال إلى المفضلة %i\tCtrl+Alt+%i"
-
-#: ../src/edframe.cpp:3851
-#, c-format
-msgid "Go to bookmark %i\tCtrl+%i"
-msgstr "إنتقال إلى المفضلة %i\tCtrl+%i "
-
-#: ../src/edframe.cpp:1645
-msgid "HTML file (*.html)|*.html"
-msgstr "HTML ملف (*.html)|*.html"
-
-#: ../src/attentionbar.cpp:79
-msgid "Hide this notification message"
-msgstr "إخفاء رسالة التنبيه هذه"
-
-#: ../src/edlistctrl.cpp:338
-msgid "ID"
-msgstr ""
-
-#: ../src/resources/prefs.xrc:17
-msgid "Identity"
-msgstr "الهوية"
-
-#: ../src/resources/prefs.xrc:122
-msgid "If checked, the comment window will be editable."
-msgstr "إذا أُشّر، فسيمكن تحرير نافذة التعليق"
-
-#: ../src/prefsdlg.cpp:106
-msgid "If enabled, Poedit will try to fill in new entries using your previous\ntranslations stored in the translation memory. If the TM is\nnear-empty, it will not be very effective. The more translations\nyou edit and the larger the TM grows, the better it gets."
-msgstr ""
-
-#: ../src/edframe.cpp:3260
-msgid "If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future."
-msgstr "عند إستمرارك مع عملية تطهير الترجمة المحذوفة, فإنه سيتم إزالة كافة الترجمات التي عليها علامة محذوف بشكل دائم. و سيتعين عليك ترجمتها مرة أخرى عند إضافتها مرة أخرى في المستقبل "
-
-#: ../src/prefsdlg.cpp:193
-msgid "Importing translations..."
-msgstr ""
-
-#: ../src/tm/tm_migrate.cpp:154
-#, c-format
-msgid "Importing translations: %d"
-msgstr ""
-
-#: ../src/resources/prefs.xrc:78
-msgid "Include beta versions"
-msgstr ""
-
-#: ../src/edframe.cpp:283 ../src/edframe.cpp:2709
-msgid "Invalid file"
-msgstr ""
-
-#: ../src/edapp.cpp:1157
-msgid "Invalid license data."
-msgstr ""
-
-#: ../src/resources/prefs.xrc:353
-msgid "Invocation:"
-msgstr "استدعاء:"
-
-#: ../src/statistics.cpp:166
-msgid "Items"
-msgstr ""
-
-#: ../src/edframe.cpp:3264
-msgid "Keep"
-msgstr "إبقاء"
-
-#: ../src/languagectrl.cpp:48
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr ""
-
-#: ../src/edframe.cpp:2793
-msgid "Language of the translation isn't set."
-msgstr ""
-
-#: ../src/languagectrl.cpp:133
-msgid "Language of the translation:"
-msgstr ""
-
-#: ../src/chooselang.cpp:71
-msgid "Language selection"
-msgstr "تحديد اللغة"
-
-#: ../src/export_html.cpp:114 ../src/resources/prefs.xrc:321
-#: ../src/resources/prefs.xrc:325 ../src/resources/properties.xrc:34
-msgid "Language:"
-msgstr "اللغة:"
-
-#: ../src/manager.cpp:257
-msgid "Last modified"
-msgstr "آخر تعديل"
-
-#: ../src/prefsdlg.cpp:99
-msgid "Learn From Files..."
-msgstr ""
-
-#: ../src/resources/properties.xrc:210
-msgid "Learn about gettext keywords"
-msgstr ""
-
-#: ../src/resources/properties.xrc:76
-msgid "Learn about plural forms"
-msgstr "معرفة المزيد عن صيغ الجمع"
-
-#: ../src/edframe.cpp:1376 ../src/licensing.cpp:511 ../src/prefsdlg.cpp:113
-msgid "Learn more"
-msgstr "تعلم المزيد"
-
-#: ../src/aboutbox.cpp:137 ../src/aboutbox.cpp:146
-msgid "License Agreement"
-msgstr ""
-
-#: ../src/licensing.cpp:96
-msgid "License Key"
-msgstr ""
-
-#: ../src/edapp.cpp:958
-msgid "License..."
-msgstr ""
-
-#: ../src/aboutbox.cpp:204
-#, c-format
-msgid "Licensed to %s"
-msgstr ""
-
-#: ../src/licensing.cpp:231
-#, c-format
-msgid "Licensed to: %s"
-msgstr ""
-
-#: ../src/catalog.cpp:148
-#, c-format
-msgid "Line %d of file '%s' is corrupted (not valid %s data)."
-msgstr ""
-
-#: ../src/resources/prefs.xrc:150
-msgid "Line endings format:"
-msgstr "صيغة نهايات الأسطر:"
-
-#: ../src/resources/prefs.xrc:337
-msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
-msgstr "قائمة امتدادات تفصلها فاصلة منقوطة (e.g. *.cpp;*.h):"
-
-#: ../src/edapp.cpp:1028
-msgid "Make Lower Case"
-msgstr ""
-
-#: ../src/edapp.cpp:1027
-msgid "Make Upper Case"
-msgstr ""
-
-#: ../src/catalog.cpp:223
-#, c-format
-msgid "Malformed header: '%s'"
-msgstr "ترويسة معطوبة: '%s'"
-
-#: ../src/catalog.cpp:1774
-msgid "Merging differences..."
-msgstr "دمج الإختلافات..."
-
-#: ../src/tm/tm_migrate.cpp:234
-#, c-format
-msgid "Migration exit status: %d"
-msgstr ""
-
-#: ../src/edapp.cpp:1042
-msgid "Minimize"
-msgstr ""
-
-#: ../src/licensing.cpp:91
-msgid "Name"
-msgstr ""
-
-#: ../src/propertiesdlg.cpp:89
-msgid "Name of the project the translation is for"
-msgstr ""
-
-#: ../src/resources/menus.xrc:201
-msgid "Ne&xt Unfinished"
-msgstr "ال&تالية التي لم تنتهي"
-
-#: ../src/resources/menus.xrc:200
-msgid "Ne&xt unfinished"
-msgstr "ال&تالية التي لم تنتهي"
-
-#: ../src/statistics.cpp:177 ../src/statistics.cpp:203
-msgid "Needs review (fuzzy)"
-msgstr ""
-
-#: ../src/resources/prefs.xrc:114
-msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
-msgstr "لا تدع قائمة العبارات تستحوذ على التركيز.\nإن أُشِّر فسيتوجب عليك استخدام أسهم-Ctrl للتحكم من لوحة المفاتيح\nلكن سيظل بوسعك إدخال النصوص بشكل مباشر دون الحاجة لضغط Tab لتغيير التركيز."
-
-#: ../src/resources/manager.xrc:31 ../src/resources/prefs.xrc:259
-msgid "New"
-msgstr "جديد"
-
-#: ../src/resources/menus.xrc:13 ../src/resources/menus.xrc:293
-msgid "New From &POT/PO File..."
-msgstr ""
-
-#: ../src/resources/menus.xrc:17 ../src/resources/menus.xrc:297
-msgid "New WordPress Translation..."
-msgstr ""
-
-#: ../src/resources/menus.xrc:16 ../src/resources/menus.xrc:296
-msgid "New WordPress translation..."
-msgstr ""
-
-#: ../src/resources/menus.xrc:12 ../src/resources/menus.xrc:292
-msgid "New from &POT/PO file..."
-msgstr ""
-
-#: ../src/resources/summary.xrc:29
-msgid "New strings"
-msgstr "عبارات جديدة"
-
-#: ../src/edframe.cpp:3311
-msgid "No entries could be filled from the translation memory."
-msgstr ""
-
-#: ../src/digger.cpp:204
-msgid "No files found in: "
-msgstr "تعذر العثور على ملفات في:"
-
-#: ../src/edframe.cpp:2177
-msgid "No problems with the translation found."
-msgstr "لاتوجد مشاكل مكتشفة في الترجمة"
-
-#: ../src/edframe.cpp:2233
-msgid "No references to this string found."
-msgstr "تعذر العثور على مراجع لهذه العبارة"
-
-#: ../src/licensing.cpp:510
-msgid "No, thanks"
-msgstr ""
-
-#: ../src/statistics.cpp:181 ../src/statistics.cpp:207
-msgid "Not translated"
-msgstr ""
-
-#: ../src/export_html.cpp:183
-msgid "Notes"
-msgstr "ملاحظات"
-
-#: ../src/edframe.cpp:1110 ../src/export_html.cpp:229
-msgid "Notes for translators:"
-msgstr "ملاحظات للمترجمين:"
-
-#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:93
-#: ../src/resources/prefs.xrc:297 ../src/resources/prefs.xrc:447
-#: ../src/resources/properties.xrc:233 ../src/resources/summary.xrc:70
-msgid "OK"
-msgstr "حسنا "
-
-#: ../src/resources/summary.xrc:50
-msgid "Obsolete strings"
-msgstr "العبارات الملغية"
-
-#: ../src/edframe.cpp:3771
-msgid "One"
-msgstr ""
-
-#: ../src/resources/toolbar.xrc:14 ../src/resources/toolbar.xrc:19
-msgid "Open"
-msgstr "فتح"
-
-#: ../src/fileviewer.cpp:74
-msgid "Open In Editor"
-msgstr ""
-
-#: ../src/resources/menus.xrc:25 ../src/resources/menus.xrc:305
-msgid "Open Recent"
-msgstr ""
-
-#: ../src/welcomescreen.cpp:245
-msgid "Open an existing PO file and edit the translation."
-msgstr ""
-
-#: ../src/edapp.cpp:716 ../src/edframe.cpp:1535
-#: ../src/resources/toolbar.xrc:15 ../src/resources/toolbar.xrc:20
-msgid "Open catalog"
-msgstr "فتح كتالوج"
-
-#: ../src/edframe.cpp:1692 ../src/edframe.cpp:2069
-msgid "Open catalog template"
-msgstr "فتح قالب كتالوج"
-
-#: ../src/edframe.cpp:3778
-msgid "Other"
-msgstr ""
-
-#: ../src/resources/menus.xrc:196
-msgid "P&revious Unfinished"
-msgstr "ال&سابقة التي لم تنتهي"
-
-#: ../src/resources/menus.xrc:195
-msgid "P&revious unfinished"
-msgstr "ال&سابقة التي لم تنتهي"
-
-#: ../src/resources/prefs.xrc:357
-msgid "Parser command:"
-msgstr "أوامر برنامج التقسيم:"
-
-#: ../src/resources/prefs.xrc:316
-msgid "Parser setup"
-msgstr "ضبط برنامج التقسيم"
-
-#: ../src/resources/prefs.xrc:234
-msgid "Parsers"
-msgstr "برامج التقسيم"
+msgstr "فشل دمج كتالوجات غِت​تكست."
+
+#: ../src/digger.cpp:93
+msgid "Scanning files..."
+msgstr "يفحص الملفّات..."
 
 #. TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
 #: ../src/digger.cpp:109
 #, c-format
 msgid "Parsing %s files..."
-msgstr "تجزئة %s من الملفات..."
+msgstr "يحلّل ملفّات %s..."
 
-#: ../src/edframe.cpp:754
-msgid "Paste"
-msgstr ""
+#: ../src/digger.cpp:131
+msgid "Failed to load extracted catalog."
+msgstr "فشل تحميل الكتالوج المُستخرَج."
 
-#: ../src/edapp.cpp:992
+#: ../src/digger.cpp:205
+msgid "No files found in: "
+msgstr "لم يُعثر على ملفّات في: "
+
+#: ../src/digger.cpp:225
+msgid "Poedit did not find any files in scanned directories."
+msgstr "لم يعثر محرِّر Po على ملفّات في الأدلّة المفحوصة."
+
+#: ../src/edapp.cpp:314 ../src/resources/menus.xrc:281
+#: ../src/resources/menus.xrc:354
+msgid "&Help"
+msgstr "م&ساعدة"
+
+#: ../src/edapp.cpp:323
+msgid "Beta expired"
+msgstr "انتهت صلاحية إصدار بيتا"
+
+#: ../src/edapp.cpp:323
+msgid "This beta version of Poedit expired."
+msgstr "إصدار بيتا من محرِّر Po هذا انتهت صلاحيّته."
+
+#: ../src/edapp.cpp:324
+msgid "Please download a newer version from the Poedit website at http://poedit.net/download"
+msgstr "فضلًا نزّل إصدارًا أحدث من موقع وِب محرِّر Po على http://poedit.net/download"
+
+#: ../src/edapp.cpp:325
+msgid "Download"
+msgstr "نزّل"
+
+#: ../src/edapp.cpp:325 ../src/resources/manager.xrc:128
+#: ../src/resources/menus.xrc:69 ../src/resources/menus.xrc:320
+#: ../src/tm/tm_migrate.cpp:270
+msgid "Quit"
+msgstr "أنهِ"
+
+#: ../src/edapp.cpp:465
+msgid "MO files can’t be directly edited in Poedit."
+msgstr "لا يمكن تحرير ملفّات MO مباشرةً في محرِّر Po."
+
+#: ../src/edapp.cpp:466
+msgid "Error opening file"
+msgstr "خطأ عند فتح الملفّ"
+
+#: ../src/edapp.cpp:468
+msgid "Please open and edit the corresponding PO file instead. When you save it, the MO file will be updated as well."
+msgstr "فضلًا افتح وحرّر ملفّ PO المقابل بدل ذلك. عندما تحفظه، سيُحدَّث ملفّ MO كذلك."
+
+#: ../src/edapp.cpp:617
+msgid "don't delete temporary files (for debugging)"
+msgstr "لا تحذف الملفّات المؤقّتة (للتنقيح)"
+
+#: ../src/edapp.cpp:661 ../src/edapp.cpp:674 ../src/edapp.cpp:679
+#, c-format
+msgid "Unhandled exception occurred: %s"
+msgstr "حدث خطأ لا يمكن التّعامل معه: %s"
+
+#: ../src/edapp.cpp:684
+msgid "Unhandled exception occurred."
+msgstr "حدث خطأ لا يمكن التّعامل معه."
+
+#: ../src/edapp.cpp:766 ../src/edframe.cpp:1548
+#: ../src/resources/toolbar.xrc:14 ../src/resources/toolbar.xrc:19
+msgid "Open catalog"
+msgstr "افتح كتالوج"
+
+#: ../src/edapp.cpp:770 ../src/edframe.cpp:1551 ../src/edframe.cpp:1751
+#: ../src/edframe.cpp:2140 ../src/prefsdlg.cpp:568
+msgid "All Files"
+msgstr "كلّ الملفّات"
+
+#: ../src/edapp.cpp:770 ../src/edframe.cpp:1551 ../src/edframe.cpp:1621
+#: ../src/edframe.cpp:1750 ../src/edframe.cpp:2139 ../src/prefsdlg.cpp:568
+msgid "PO Translation Files"
+msgstr "ملفّات PO ترجميّة"
+
+#: ../src/edapp.cpp:798 ../src/edframe.cpp:841 ../src/edframe.cpp:1571
+#, c-format
+msgid "File '%s' doesn't exist."
+msgstr "الملفّ '%s' غير موجود."
+
+#: ../src/edapp.cpp:828
+msgid "Poedit is an easy to use translations editor."
+msgstr "محرِّر Po هو محرّر سهل لتحرير التّرجمات."
+
+#: ../src/edapp.cpp:1001
+msgid "Catalogs Manager"
+msgstr "مدير الكتالوجات"
+
+#: ../src/edapp.cpp:1006
+msgid "License..."
+msgstr "الرّخصة..."
+
+#: ../src/edapp.cpp:1010
+msgid "Check for Updates..."
+msgstr "التمس التّحديثات..."
+
+#: ../src/edapp.cpp:1013 ../src/prefsdlg.cpp:684
+#: ../src/resources/manager.xrc:37
+msgid "Edit"
+msgstr "حرّر"
+
+#: ../src/edapp.cpp:1031 ../src/edframe.cpp:803
+#: ../src/resources/summary.xrc:78
+msgid "Undo"
+msgstr "تراجع"
+
+#: ../src/edapp.cpp:1032 ../src/edframe.cpp:804
+msgid "Redo"
+msgstr "أعِد"
+
+#: ../src/edapp.cpp:1040
 msgid "Paste and Match Style"
+msgstr "الصق وطابق النّمط"
+
+#: ../src/edapp.cpp:1043 ../src/edframe.cpp:808 ../src/prefsdlg.cpp:685
+#: ../src/resources/manager.xrc:43
+msgid "Delete"
+msgstr "احذف"
+
+#: ../src/edapp.cpp:1052
+msgid "Spelling and Grammar"
+msgstr "الإملاء والقواعد"
+
+#: ../src/edapp.cpp:1054
+msgid "Show Spelling and Grammar"
+msgstr "أظهر الإملاء والقواعد"
+
+#: ../src/edapp.cpp:1055
+msgid "Check Document Now"
+msgstr "دقّق المستند الآن"
+
+#: ../src/edapp.cpp:1057
+msgid "Check Spelling While Typing"
+msgstr "دقّق الإملاء أثناء الكتابة"
+
+#: ../src/edapp.cpp:1058
+msgid "Check Grammar With Spelling"
+msgstr "دقّق القواعد مع الإملاء"
+
+#: ../src/edapp.cpp:1059
+msgid "Correct Spelling Automatically"
+msgstr "صحّح الإملاء آليًّا"
+
+#: ../src/edapp.cpp:1062
+msgid "Substitutions"
+msgstr "الاستبدالات"
+
+#: ../src/edapp.cpp:1064
+msgid "Show Substitutions"
+msgstr "أظهر الاستبدالات"
+
+#: ../src/edapp.cpp:1066
+msgid "Smart Copy/Paste"
+msgstr "نسخ/لصق ذكيّ"
+
+#: ../src/edapp.cpp:1067
+msgid "Smart Quotes"
+msgstr "علامات اقتباس ذكيّة"
+
+#: ../src/edapp.cpp:1068
+msgid "Smart Dashes"
+msgstr "شُرَط ذكيّة"
+
+#: ../src/edapp.cpp:1069
+msgid "Smart Links"
+msgstr "وصلات ذكيّة"
+
+#: ../src/edapp.cpp:1070
+msgid "Text Replacement"
+msgstr "استبدال النصّ"
+
+#: ../src/edapp.cpp:1073
+msgid "Transformations"
+msgstr "تحويلات"
+
+#: ../src/edapp.cpp:1075
+msgid "Make Upper Case"
 msgstr ""
 
-#: ../src/propertiesdlg.cpp:66
-msgid "Paths"
-msgstr "المسارات"
-
-#: ../src/resources/prefs.xrc:11
-msgid "Personalize"
-msgstr "تطبيع"
-
-#: ../src/edframe.cpp:2241
-msgid "Please choose the reference you want to show:"
-msgstr "اختر المرجع الذي تريد عرضه:"
-
-#: ../src/edapp.cpp:318
-msgid "Please download a newer version from the Poedit website at http://poedit.net/beta/"
+#: ../src/edapp.cpp:1076
+msgid "Make Lower Case"
 msgstr ""
 
-#: ../src/wordpress.cpp:568
-msgid "Please email this log to help@poedit.net. Thank you!"
+#: ../src/edapp.cpp:1077
+msgid "Capitalize"
 msgstr ""
 
-#: ../src/propertiesdlg.cpp:292
-msgid "Please save the file first. This section cannot be edited until then."
+#: ../src/edapp.cpp:1080
+msgid "Speech"
+msgstr "الكلام"
+
+#: ../src/edapp.cpp:1082
+msgid "Start Speaking"
+msgstr "ابدأ الكلام"
+
+#: ../src/edapp.cpp:1083
+msgid "Stop Speaking"
+msgstr "أوقف الكلام"
+
+#: ../src/edapp.cpp:1086
+msgid "View"
 msgstr ""
 
-#: ../src/resources/properties.xrc:46
-msgid "Plural Forms:"
-msgstr "صيغ الجمع:"
+#: ../src/edapp.cpp:1091
+msgid "Enter Full Screen"
+msgstr ""
+
+#: ../src/edapp.cpp:1096 ../src/resources/menus.xrc:256
+msgid "Window"
+msgstr "نافذة"
+
+#: ../src/edapp.cpp:1100
+msgid "Minimize"
+msgstr "صغّر"
+
+#: ../src/edapp.cpp:1101
+msgid "Zoom"
+msgstr "التكبير"
+
+#: ../src/edapp.cpp:1103
+msgid "Bring All to Front"
+msgstr "اجلب الكلّ إلى الأمام"
+
+#: ../src/edapp.cpp:1209
+msgid "PO Translation File"
+msgstr ""
+
+#: ../src/edapp.cpp:1262
+msgid "Invalid license data."
+msgstr "بيانات الرّخصة غير صالحة."
+
+#: ../src/edapp.cpp:1262 ../src/edframe.cpp:909
+msgid "Poedit"
+msgstr "محرِّر Po"
+
+#: ../src/edapp.cpp:1263
+#, c-format
+msgid "The link doesn't contain valid Poedit license. Try entering it manually or contact support at help@poedit.net.\n\n(%s)"
+msgstr "الوصلة لا تحوي رخصة محرِّر Po صالحة. حاول إدخالها يدويًّا أو راسل الدعم على help@poedit.net.\n\n(%s)"
+
+#: ../src/edframe.cpp:280 ../src/edframe.cpp:2863
+msgid "The file cannot be opened."
+msgstr "تعذّر فتح الملفّ."
+
+#: ../src/edframe.cpp:281 ../src/edframe.cpp:2864
+msgid "Invalid file"
+msgstr "ملفّ غير صالح"
+
+#: ../src/edframe.cpp:285 ../src/edframe.cpp:2868
+msgid "The file may be either corrupted or in a format not recognized by Poedit."
+msgstr "قد يكون الملفّ تالفًا أو بنسق لا يتعرّفه محرِّر Po."
+
+#: ../src/edframe.cpp:803
+msgid "&Undo"
+msgstr "ترا&جع"
+
+#: ../src/edframe.cpp:804
+msgid "&Redo"
+msgstr "أ&عِد"
+
+#: ../src/edframe.cpp:805
+msgid "Cu&t"
+msgstr "&قصّ"
+
+#: ../src/edframe.cpp:805
+msgid "Cut"
+msgstr "قصّ"
+
+#: ../src/edframe.cpp:806
+msgid "&Copy"
+msgstr "ا&نسخ"
+
+#: ../src/edframe.cpp:806
+msgid "Copy"
+msgstr "انسخ"
+
+#: ../src/edframe.cpp:807
+msgid "&Paste"
+msgstr "ا&لصق"
+
+#: ../src/edframe.cpp:807
+msgid "Paste"
+msgstr "الصق"
+
+#: ../src/edframe.cpp:808
+msgid "&Delete"
+msgstr "ا&حذف"
+
+#: ../src/edframe.cpp:809
+msgid "Select &All"
+msgstr "حدّد الك&لّ"
+
+#: ../src/edframe.cpp:809
+msgid "Select All"
+msgstr "حدّد الكلّ"
+
+#: ../src/edframe.cpp:826
+msgid "You can't drop more than one file on Poedit window."
+msgstr "لا يمكنك إفلات أكثر من ملفّ واحد في نافذة محرِّر Po."
+
+#: ../src/edframe.cpp:834
+#, c-format
+msgid "File '%s' is not a message catalog."
+msgstr "الملفّ '%s' ليس كتالوج رسائل."
+
+#: ../src/edframe.cpp:966 ../src/resources/manager.xrc:116
+#: ../src/resources/menus.xrc:5 ../src/resources/menus.xrc:288
+msgid "&File"
+msgstr "&ملفّ"
+
+#: ../src/edframe.cpp:973 ../src/resources/menus.xrc:225
+msgid "&Go"
+msgstr "ا&ذهب"
+
+#: ../src/edframe.cpp:1022
+msgid "Upgrade to Poedit Pro to get additional features and support Poedit's development."
+msgstr "حدّث إلى محرِّر Po المحترف واحصل على ميزات إضافيّة وادعم تطوير محرِّر Po."
+
+#: ../src/edframe.cpp:1112
+msgid "Source text:"
+msgstr "النصّ المصدر:"
+
+#: ../src/edframe.cpp:1119
+msgid "Singular:"
+msgstr "المفرد:"
+
+#: ../src/edframe.cpp:1122
+msgid "Plural:"
+msgstr "الجمع:"
+
+#: ../src/edframe.cpp:1126
+msgid "Translation:"
+msgstr "التّرجمة:"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:2880
+#: ../src/edframe.cpp:1381
+#, c-format
+msgid "Spellchecker dictionary for %s isn't available, you need to install it."
+msgstr "قاموس %s للتدقيق الإملائيّ غير متوفّر، عليك تثبيته."
+
+#: ../src/edframe.cpp:1500
+msgid "Catalog modified. Do you want to save changes?"
+msgstr "عُدِّل الكتالوج. أتريد حفظ التّغييرات؟"
+
+#: ../src/edframe.cpp:1501
+msgid "Save changes"
+msgstr "احفظ التّغييرات"
+
+#: ../src/edframe.cpp:1504
+msgid "Your changes will be lost if you don't save them."
+msgstr "ستفقد تغييراتك إن لم تحفظها."
+
+#: ../src/edframe.cpp:1507 ../src/resources/toolbar.xrc:24
+#: ../src/resources/toolbar.xrc:29
+msgid "Save"
+msgstr "احفظ"
+
+#: ../src/edframe.cpp:1509
+msgid "Don't save"
+msgstr "لا تحفظ"
+
+#: ../src/edframe.cpp:1511
+msgid "Don't Save"
+msgstr "لا تحفظ"
+
+#: ../src/edframe.cpp:1619
+msgid "Save as..."
+msgstr "احفظ كـ..."
+
+#: ../src/edframe.cpp:1657
+msgid "Compile to..."
+msgstr ""
+
+#: ../src/edframe.cpp:1659
+msgid "Compiled Translation Files"
+msgstr ""
+
+#: ../src/edframe.cpp:1695
+msgid "Export as..."
+msgstr "صدّر كـ..."
+
+#: ../src/edframe.cpp:1697
+msgid "HTML Files"
+msgstr "ملفّات HTML"
+
+#: ../src/edframe.cpp:1744 ../src/edframe.cpp:2133
+msgid "Open catalog template"
+msgstr "افتح قالب كتالوج"
+
+#: ../src/edframe.cpp:1749 ../src/edframe.cpp:2138
+msgid "POT Translation Templates"
+msgstr "ملفّات POT قالبيّة"
+
+#: ../src/edframe.cpp:1837 ../src/edframe.cpp:1915
+msgid "Select the folder with the WordPress theme or plugin"
+msgstr "اختر مجلّد بِسمة أو ملحقة ووردبرِس"
+
+#: ../src/edframe.cpp:1845 ../src/edframe.cpp:1923 ../src/edframe.cpp:1940
+msgid "WordPress"
+msgstr "ووردبرِس"
+
+#: ../src/edframe.cpp:1846 ../src/edframe.cpp:1924
+msgid "Analyzing WordPress code..."
+msgstr "يحلِّل شِفرة ووردبرِس..."
+
+#. TRANSLATORS: %s is name of a WordPress theme
+#: ../src/edframe.cpp:1935
+#, c-format
+msgid "The “%s” theme is compatible."
+msgstr ""
+
+#. TRANSLATORS: %s is name of a WordPress plugin
+#: ../src/edframe.cpp:1937
+#, c-format
+msgid "The “%s” plugin is compatible."
+msgstr ""
+
+#: ../src/edframe.cpp:1943
+msgid "The theme is translation-ready and compatible with Poedit’s WordPress support."
+msgstr ""
+
+#: ../src/edframe.cpp:1945
+msgid "The plugin is translation-ready and compatible with Poedit’s WordPress support."
+msgstr ""
+
+#: ../src/edframe.cpp:2096 ../src/manager.cpp:452
+msgid "Updating catalog"
+msgstr "يحدّث الكتالوج"
+
+#: ../src/edframe.cpp:2113
+msgid "Entries in the catalog are probably incorrect."
+msgstr "قد تكون المُدخلات في الكتالوج غير صالحة."
+
+#: ../src/edframe.cpp:2115
+msgid "Updating the catalog failed. Click on 'Details >>' for details."
+msgstr "فشل تحديث الكتالوج. انقر 'التّفاصيل >>' للتّفاصيل."
+
+#: ../src/edframe.cpp:2214
+#, c-format
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] "لم يُعثر على مشاكل مع التّرجمات."
+msgstr[1] "عُثر على مشكلة واحدة مع التّرجمات."
+msgstr[2] "عُثر على مشكلتين مع التّرجمات."
+msgstr[3] "عُثر على %d مشاكل مع التّرجمات."
+msgstr[4] "عُثر على %d مشكلة مع التّرجمات."
+msgstr[5] "عُثر على %d مشكلة مع التّرجمات."
+
+#: ../src/edframe.cpp:2219 ../src/edframe.cpp:2265
+msgid "Validation results"
+msgstr "نتائج التّحقّق من السّلامة"
+
+#: ../src/edframe.cpp:2222
+msgid "Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry."
+msgstr "المُدخلات بأخطاء أُشِّرت بالأحمر في القائمة. ستظهر تفاصيل الخطأ عندما تختار مُدخلة ما."
+
+#: ../src/edframe.cpp:2231
+msgid "The file was saved safely."
+msgstr "حُفِظ الملفّ حفظًا آمنًا."
+
+#: ../src/edframe.cpp:2234
+msgid "The file was saved safely and compiled into the MO format, but it will probably not work correctly."
+msgstr "حُفِظ الملفّ حفظًا آمنًا وصُرِّف إلى نسق MO، لكنّه قد لا يعمل عملًا صحيحًا."
+
+#: ../src/edframe.cpp:2237
+msgid "The file was saved safely, but it cannot be compiled into the MO format and used."
+msgstr "حُفِظ الملفّ حفظًا آمنًا، لكن فشل تصريفه إلى نسق MO واستخدامه."
+
+#: ../src/edframe.cpp:2246
+msgid "The file was compiled into the MO format, but it will probably not work correctly."
+msgstr ""
+
+#: ../src/edframe.cpp:2250
+msgid "The file cannot be compiled into the MO format and used."
+msgstr ""
+
+#: ../src/edframe.cpp:2264
+msgid "No problems with the translation found."
+msgstr "لم يُعثر على مشاكل مع التّرجمة."
+
+#: ../src/edframe.cpp:2274
+#, c-format
+msgid "The translation is ready for use, but %d entry is not translated yet."
+msgid_plural "The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] "التّرجمة جاهزة لاستخدامها، ولا توجد مُدخلات بحاجة إلى ترجمة."
+msgstr[1] "التّرجمة جاهزة لاستخدامها، لكن توجد مُدخلة واحدة بحاجة إلى ترجمة."
+msgstr[2] "التّرجمة جاهزة لاستخدامها، لكن توجد مُدخلتين بحاجة إلى الترجمة."
+msgstr[3] "التّرجمة جاهزة لاستخدامها، لكن توجد %d مُدخلات بحاجة إلى ترجمة."
+msgstr[4] "التّرجمة جاهزة لاستخدامها، لكن توجد %d مُدخلة بحاجة إلى ترجمة."
+msgstr[5] "التّرجمة جاهزة لاستخدامها، لكن توجد %d مُدخلة بحاجة إلى ترجمة."
+
+#: ../src/edframe.cpp:2279
+msgid "The translation is ready for use."
+msgstr "التّرجمة جاهزة لاستخدامها."
+
+#: ../src/edframe.cpp:2331
+msgid "No references to this string found."
+msgstr "لم يُعثر على مراجع لهذه السلسلة."
+
+#: ../src/edframe.cpp:2339
+msgid "Please choose the reference you want to show:"
+msgstr "فضلًا اختر المرجع الذي تريد إظهاره:"
+
+#: ../src/edframe.cpp:2339
+msgid "References"
+msgstr "المراجع"
+
+#: ../src/edframe.cpp:2726 ../src/prefsdlg.cpp:473
+msgid "Contributing translations improves the quality of online suggestions for everybody — the more people do it, the better the suggestions can be. Submissions are anonymous and public."
+msgstr ""
+
+#: ../src/edframe.cpp:2731
+msgid "Can Poedit contribute your translations of this file to the online translation memory?"
+msgstr ""
+
+#: ../src/edframe.cpp:2734
+msgid "Apply to all files I edit"
+msgstr ""
+
+#: ../src/edframe.cpp:2735
+msgid "Contribute"
+msgstr ""
+
+#: ../src/edframe.cpp:2741
+msgid "Keep Private"
+msgstr ""
+
+#: ../src/edframe.cpp:2741
+msgid "Keep private"
+msgstr ""
+
+#: ../src/edframe.cpp:2825
+msgid "Context:"
+msgstr "السّياق:"
+
+#: ../src/edframe.cpp:2920
+msgid "You should set your email address in Preferences so that it can be used for Last-Translator header in GNU gettext files."
+msgstr "عليك تعيين عنوان بريدك الإلكترونيّ في التفضيلات ليمكن استخدامه في ترويسة \"آخر مترجِم\" في ملفّات غنو غِت​تكست."
+
+#: ../src/edframe.cpp:2922
+msgid "Set Email"
+msgstr ""
+
+#: ../src/edframe.cpp:2922
+msgid "Set email"
+msgstr "عيّن البريد الإلكترونيّ"
+
+#: ../src/edframe.cpp:2935
+msgid "Translation's project name isn't set."
+msgstr "اسم مشروع التّرجمة لم يُعيَّن."
+
+#: ../src/edframe.cpp:2937
+msgid "Set Name"
+msgstr ""
+
+#: ../src/edframe.cpp:2937
+msgid "Set name"
+msgstr "عيّن الاسم"
+
+#: ../src/edframe.cpp:2950
+msgid "Language of the translation isn't set."
+msgstr "لغة التّرجمة لم تُعيَّن."
+
+#: ../src/edframe.cpp:2952
+msgid "Set Language"
+msgstr ""
+
+#: ../src/edframe.cpp:2952
+msgid "Set language"
+msgstr "عيّن اللّغة"
+
+#: ../src/edframe.cpp:2965
+msgid "This catalog has entries with plural forms, but doesn't have Plural-Forms header configured."
+msgstr "يحوي هذا الكتالوج مُدخلات بصيغ جموع، لكنّه لا يحوي ترويسة مضبوطة."
+
+#: ../src/edframe.cpp:2969
+msgid "Entries in this catalog have different plural forms count from what catalog's Plural-Forms header says"
+msgstr "المُدخلات في هذا الكتالوج لها صيغ جموع مختلفة عمّا تقوله ترويسة صيغ جموع الكتالوج"
+
+#: ../src/edframe.cpp:2980
+msgid "Required header Plural-Forms is missing."
+msgstr "ترويسة صيغ الجموع المطلوبة مفقودة."
+
+#: ../src/edframe.cpp:2985
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr "خطأ صياغيّ في ترويسة صيغ الجموع (\"%s\")."
+
+#: ../src/edframe.cpp:2999
+msgid "Fix the Header"
+msgstr ""
+
+#: ../src/edframe.cpp:2999
+msgid "Fix the header"
+msgstr "أصلح التّرويسة"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#: ../src/edframe.cpp:3037
 #, c-format
 msgid "Plural forms expression used by the catalog is unusual for %s."
-msgstr ""
+msgstr "تعبير صيغ الجموع الذي يستخدمه الكتالوج غير طبيعيّ لِـ %s."
 
-#: ../src/edframe.cpp:1091
-msgid "Plural:"
-msgstr "جمع:"
+#: ../src/edframe.cpp:3041
+msgid "Review"
+msgstr "راجع"
 
-#: ../src/edapp.cpp:1157 ../src/edframe.cpp:856
-msgid "Poedit"
-msgstr "Poedit"
-
-#: ../src/manager.cpp:71
-msgid "Poedit - Catalogs manager"
-msgstr "Poedit - إدارة الكتالوجات"
-
-#: ../src/licensing.cpp:63
-msgid "Poedit Registration"
-msgstr ""
-
-#: ../src/tm/tm_migrate.cpp:173 ../src/tm/tm_migrate.cpp:266
-#: ../src/tm/tm_migrate.cpp:296
-msgid "Poedit Update"
-msgstr ""
-
-#: ../src/wordpress.cpp:545
+#: ../src/edframe.cpp:3075
 #, c-format
-msgid "Poedit couldn’t understand the content of the folder you selected. This may be a problem with the plugin/theme or it may be Poedit being silly. The error is:\n\n • %s\n\nPlease email help@poedit.net and we’ll sort it out."
+msgid "Error loading message catalog file '%s'."
+msgstr "خطأ عند تحميل ملفّ كتالوج الرسائل '%s'."
+
+#: ../src/edframe.cpp:3119 ../src/export_html.cpp:141
+#, c-format
+msgid "Translated: %d of %d (%d %%)"
 msgstr ""
 
-#: ../src/digger.cpp:224
-msgid "Poedit did not find any files in scanned directories."
-msgstr "لم يتمكن Poedit من العثور على ملفات في المجلدات التي تم البحث فيها"
-
-#: ../src/edapp.cpp:777
-msgid "Poedit is an easy to use translations editor."
-msgstr "Poedit يعتبر محرر سهل الاستعمال للترجمة"
-
-#: ../src/tm/tm_migrate.cpp:265
-msgid "Poedit needs to convert your translation memory to a new format."
+#: ../src/edframe.cpp:3123 ../src/export_html.cpp:145
+#, c-format
+msgid "Remains: %d"
 msgstr ""
 
-#: ../src/resources/prefs.xrc:4
-msgid "Preferences"
-msgstr "إعدادات"
+#: ../src/edframe.cpp:3128 ../src/export_html.cpp:150
+#, c-format
+msgid "%d error"
+msgid_plural "%d errors"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
 
-#: ../src/tm/tm_migrate.cpp:173
-msgid "Preparing migration..."
+#: ../src/edframe.cpp:3159
+msgid " (unsaved)"
+msgstr " (غير محفوظ)"
+
+#: ../src/edframe.cpp:3177
+msgid " (modified)"
+msgstr " (مُعدَّل)"
+
+#: ../src/edframe.cpp:3188
+#, c-format
+msgid " (beta version expires %s)"
+msgstr " (إصدار بيتا ينتهي في %s)"
+
+#: ../src/edframe.cpp:3269
+msgid "Go"
 msgstr ""
 
-#: ../src/tm/tm_migrate.cpp:270
-msgid "Proceed"
-msgstr "متابعة"
+#: ../src/edframe.cpp:3304 ../src/edframe.cpp:3308
+#, c-format
+msgid "Failed to update translation memory: %s"
+msgstr "فشل تحديث ذاكرة التّرجمة: %s"
+
+#: ../src/edframe.cpp:3410
+msgid "Purge deleted translations"
+msgstr "نظّف التّرجمات المحذوفة"
+
+#: ../src/edframe.cpp:3412
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr "أتريد إزالة كلّ التّرجمات التي لم تعد تُستخدَم؟"
+
+#: ../src/edframe.cpp:3414
+msgid "If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future."
+msgstr "إن تابعت مع التّنظيف، ستُزال كلّ التّرجمات المُؤشَّرة بِـ\"محذوفة\" نهائيًّا. ستستطيع ترجمتها مجدّدًا إن أُضيفت في المستقبل."
+
+#: ../src/edframe.cpp:3418
+msgid "Keep"
+msgstr "أبقِها"
+
+#: ../src/edframe.cpp:3418
+msgid "Purge"
+msgstr "نظّف"
+
+#: ../src/edframe.cpp:3457
+#, c-format
+msgid "%d entry was filled from the translation memory."
+msgid_plural "%d entries were filled from the translation memory."
+msgstr[0] "لم تُملأ أيّ مُفردات من ذاكرة التّرجمة."
+msgstr[1] "مُلِئَت مُفردة واحدة من ذاكرة التّرجمة."
+msgstr[2] "مُلِئَت مُفردتين من ذاكرة التّرجمة."
+msgstr[3] "مُلِئَت %d مُفردات من ذاكرة التّرجمة."
+msgstr[4] "مُلِئَت %d مُفردة من ذاكرة التّرجمة."
+msgstr[5] "مُلِئَت %d مُفردة من ذاكرة التّرجمة."
+
+#: ../src/edframe.cpp:3460
+msgid "The translations were marked as fuzzy, because they may be inaccurate. You should review them for correctness."
+msgstr "أُشِّرت التّرجمات بـ\"مُبهمة\"، لأنّها قد تكون غير دقيقة. عليك مراجعتها لتصحيحها."
+
+#: ../src/edframe.cpp:3464
+msgid "No entries could be filled from the translation memory."
+msgstr "لم تُملأ أيّ مُفردات من ذاكرة التّرجمة."
+
+#: ../src/edframe.cpp:3465
+msgid "The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually."
+msgstr "لا تحوي TM أيّة سلاسة مشابهة لمحتوى الملفّ. هي فعّالة فقط للتّرجمات شبه الآليّة بعد أن يتعلّم محرِّر Po كفايةً من الملفّات التي تترجمها يدويًّا."
+
+#: ../src/edframe.cpp:3473 ../src/edframe.cpp:3502
+msgid "Filling missing translations from TM..."
+msgstr "يملأ التّرجمات النّاقصة من TM..."
+
+#: ../src/edframe.cpp:3501
+msgid "Translating"
+msgstr "يترجم"
+
+#: ../src/edframe.cpp:3520
+#, c-format
+msgid "Translated %u string"
+msgid_plural "Translated %u strings"
+msgstr[0] "لم تُتَرجم أيّة سلسلة"
+msgstr[1] "تُرجِمت سلسلة واحدة"
+msgstr[2] "تُرجِمت سلستين"
+msgstr[3] "تُرجِمت %u سلاسل"
+msgstr[4] "تُرجِمت %u سلسلة"
+msgstr[5] "تُرجِمت %u سلسلة"
+
+#: ../src/edframe.cpp:3552 ../src/resources/menus.xrc:89
+msgid "Copy from source text"
+msgstr "انسخ من النصّ المصدر"
+
+#: ../src/edframe.cpp:3554 ../src/resources/menus.xrc:90
+msgid "Copy from Source Text"
+msgstr "انسخ من النصّ المصدر"
+
+#: ../src/edframe.cpp:3559 ../src/resources/menus.xrc:84
+msgid "Clear translation"
+msgstr "امحُ التّرجمة"
+
+#: ../src/edframe.cpp:3561 ../src/resources/menus.xrc:85
+msgid "Clear Translation"
+msgstr "امحُ التّرجمة"
+
+#: ../src/edframe.cpp:3566 ../src/resources/comment.xrc:4
+#: ../src/sidebar.cpp:238
+msgid "Edit comment"
+msgstr "حرّر التّعليق"
+
+#: ../src/edframe.cpp:3568 ../src/sidebar.cpp:241
+msgid "Edit Comment"
+msgstr "حرّر التّعليق"
+
+#: ../src/edframe.cpp:3576
+msgid "References:"
+msgstr "المراجع:"
+
+#: ../src/edframe.cpp:3753
+msgid "Everything"
+msgstr "كلّ شيء"
+
+#: ../src/edframe.cpp:3755
+#, c-format
+msgid "Form %i"
+msgstr "الشّكل %i"
+
+#: ../src/edframe.cpp:3759
+msgid "Zero"
+msgstr "صفر"
+
+#: ../src/edframe.cpp:3761
+msgid "One"
+msgstr "واحد"
+
+#: ../src/edframe.cpp:3763
+msgid "Two"
+msgstr "اثنان"
+
+#: ../src/edframe.cpp:3768
+msgid "Other"
+msgstr "أخرى"
+
+#: ../src/edframe.cpp:3847
+msgid "&Bookmarks"
+msgstr "&علامات"
+
+#: ../src/edframe.cpp:3860
+#, c-format
+msgid "Set bookmark %i"
+msgstr ""
+
+#: ../src/edframe.cpp:3861
+#, c-format
+msgid "Go to bookmark %i"
+msgstr ""
+
+#: ../src/edframe.cpp:3863
+#, c-format
+msgid "Set Bookmark %i"
+msgstr ""
+
+#: ../src/edframe.cpp:3864
+#, c-format
+msgid "Go to Bookmark %i"
+msgstr ""
+
+#: ../src/edframe.cpp:3990
+msgid "Hide Sidebar"
+msgstr ""
+
+#: ../src/edframe.cpp:3992 ../src/resources/menus.xrc:183
+msgid "Show Sidebar"
+msgstr ""
+
+#: ../src/edlistctrl.cpp:235
+msgid "Source text"
+msgstr "النصّ المصدر"
+
+#: ../src/edlistctrl.cpp:236 ../src/export_html.cpp:163
+#: ../src/statistics.cpp:164 ../src/statistics.cpp:256
+msgid "Translation"
+msgstr "التّرجمة"
+
+#: ../src/edlistctrl.cpp:238
+msgid "ID"
+msgstr "المعرّف"
+
+#: ../src/edlistctrl.cpp:316
+msgid "unknown language"
+msgstr "لغة مجهولة"
+
+#: ../src/edlistctrl.cpp:319
+#, c-format
+msgid "Translation — %s"
+msgstr "التّرجمة — %s"
+
+#: ../src/errorbar.cpp:68
+msgid "Error:"
+msgstr "خطأ:"
 
 #: ../src/export_html.cpp:107
 msgid "Project info"
@@ -1403,380 +1033,1075 @@ msgstr "معلومات المشروع"
 
 #: ../src/export_html.cpp:111 ../src/resources/properties.xrc:19
 msgid "Project name and version:"
-msgstr "إسم المشروع والإصدار:"
+msgstr "اسم المشروع وإصداره:"
 
-#: ../src/resources/manager.xrc:57
-msgid "Project name:"
-msgstr "إسم المشروع:"
+#: ../src/export_html.cpp:114 ../src/resources/prefs.xrc:9
+#: ../src/resources/prefs.xrc:13 ../src/resources/properties.xrc:34
+msgid "Language:"
+msgstr "اللّغة:"
 
-#: ../src/aboutbox.cpp:206 ../src/licensing.cpp:229
-msgid "Purchased on the Mac App Store"
-msgstr ""
-
-#: ../src/licensing.cpp:475
-msgid "Purchasing the full version will unlock more features\nin this and future versions of Poedit, including:\n\n"
-msgstr ""
-
-#: ../src/edframe.cpp:3264
-msgid "Purge"
-msgstr "تطهير"
-
-#: ../src/edframe.cpp:3256
-msgid "Purge deleted translations"
-msgstr "مسح الترجمات المحذوفة نهائيا"
-
-#: ../src/edapp.cpp:319 ../src/tm/tm_migrate.cpp:270
-#: ../src/resources/manager.xrc:125 ../src/resources/menus.xrc:66
-#: ../src/resources/menus.xrc:312
-msgid "Quit"
-msgstr "إنهاء"
-
-#: ../src/aboutbox.cpp:135
-msgid "Rate on the App Store"
-msgstr ""
-
-#: ../src/edapp.cpp:984 ../src/edframe.cpp:751
-msgid "Redo"
-msgstr ""
-
-#: ../src/edframe.cpp:2241
-msgid "References"
-msgstr "مرجعيات الترجمة"
-
-#: ../src/edframe.cpp:3461
-msgid "References:"
-msgstr "مرجعيات الترجمة:"
-
-#: ../src/licensing.cpp:123 ../src/licensing.cpp:127
-msgid "Register"
-msgstr ""
-
-#: ../src/edframe.cpp:2823
-msgid "Required header Plural-Forms is missing."
-msgstr "المقدمة المطلوبة لصيغ الجموع  مفقودة"
-
-#: ../src/edframe.cpp:2884
-msgid "Review"
-msgstr ""
-
-#: ../src/edframe.cpp:1494 ../src/resources/toolbar.xrc:24
-#: ../src/resources/toolbar.xrc:29
-msgid "Save"
-msgstr "حفظ"
-
-#: ../src/resources/menus.xrc:38
-msgid "Save &As..."
-msgstr "حفظ &باسم..."
-
-#: ../src/resources/menus.xrc:37
-msgid "Save &as..."
-msgstr "حفظ &باسم..."
-
-#: ../src/edframe.cpp:1605
-msgid "Save as..."
-msgstr "حفظ باسم..."
-
-#: ../src/resources/toolbar.xrc:25 ../src/resources/toolbar.xrc:30
-msgid "Save catalog"
-msgstr "حفظ الكتالوج "
-
-#: ../src/edframe.cpp:1488
-msgid "Save changes"
-msgstr "حفظ التغييرات "
-
-#: ../src/digger.cpp:93
-msgid "Scanning files..."
-msgstr "يتم فحص الملفات..."
-
-#: ../src/edframe.cpp:756
-msgid "Select &All"
-msgstr ""
-
-#: ../src/edframe.cpp:756
-msgid "Select All"
-msgstr ""
-
-#: ../src/manager.cpp:288
-msgid "Select directory"
-msgstr "تحديد المجلد"
-
-#: ../src/edframe.cpp:1777 ../src/edframe.cpp:1853
-msgid "Select the folder with the WordPress theme or plugin"
-msgstr ""
-
-#: ../src/prefsdlg.cpp:179
-msgid "Select translation files to import"
-msgstr ""
-
-#: ../src/chooselang.cpp:70
-msgid "Select your prefered language"
-msgstr "تحديد اللعة المفضلة الخاصة بك"
-
-#: ../src/edframe.cpp:3853
-#, c-format
-msgid "Set Bookmark %i\tAlt+%i"
-msgstr "ضع كمفضلة %i\tAlt+%i "
-
-#: ../src/edframe.cpp:3847
-#, c-format
-msgid "Set Bookmark %i\tCtrl+%i"
-msgstr "ضع كمفضلة %i\tCtrl+%i "
-
-#: ../src/edframe.cpp:3850
-#, c-format
-msgid "Set bookmark %i\tAlt+%i"
-msgstr "ضع كمفضلة %i\tAlt+%i "
-
-#: ../src/edframe.cpp:2765
-msgid "Set email"
-msgstr "ضع البريد الإلكتروني"
-
-#: ../src/edframe.cpp:2795
-msgid "Set language"
-msgstr ""
-
-#: ../src/edframe.cpp:2780
-msgid "Set name"
-msgstr ""
-
-#: ../src/edapp.cpp:1006
-msgid "Show Spelling and Grammar"
-msgstr ""
-
-#: ../src/edapp.cpp:1016
-msgid "Show Substitutions"
-msgstr ""
-
-#: ../src/resources/prefs.xrc:105
-msgid "Show summary after catalog update"
-msgstr "عرض ملخص بعد تحديث الكتالوج"
-
-#: ../src/edframe.cpp:1084
-msgid "Singular:"
-msgstr "المفرد:"
-
-#: ../src/edapp.cpp:1018
-msgid "Smart Copy/Paste"
-msgstr ""
-
-#: ../src/edapp.cpp:1020
-msgid "Smart Dashes"
-msgstr ""
-
-#: ../src/edapp.cpp:1021
-msgid "Smart Links"
-msgstr ""
-
-#: ../src/edapp.cpp:1019
-msgid "Smart Quotes"
-msgstr ""
-
-#: ../src/resources/menus.xrc:231
-msgid "Sort by &File Order"
-msgstr "فرز حسب &ترتيب الملفات"
-
-#: ../src/resources/menus.xrc:236
-msgid "Sort by &Source"
-msgstr "فرز حسب ال&مصدر"
-
-#: ../src/resources/menus.xrc:241
-msgid "Sort by &Translation"
-msgstr "فرز حسب ال&ترجمة"
-
-#: ../src/resources/menus.xrc:230
-msgid "Sort by &file order"
-msgstr "فرز حسب &ترتيب الملفات"
-
-#: ../src/resources/menus.xrc:235
-msgid "Sort by &source"
-msgstr "فرز حسب ال&مصدر"
-
-#: ../src/resources/menus.xrc:240
-msgid "Sort by &translation"
-msgstr "فرز حسب ال&ترجمة"
-
-#: ../src/export_html.cpp:177
-msgid "Source"
-msgstr "المصدر"
-
-#: ../src/statistics.cpp:193
-msgid "Source Text"
-msgstr ""
-
-#: ../src/resources/prefs.xrc:420 ../src/resources/properties.xrc:128
-msgid "Source code charset:"
-msgstr "مجموعة رموز التكويد للمصدر:"
-
-#: ../src/catalog.cpp:1756
-#, c-format
-msgid "Source code directory '%s' doesn't exist."
-msgstr ""
-
-#: ../src/resources/prefs.xrc:240
-msgid "Source code parsers:"
-msgstr "برنامج تقسيم كود المصدر:"
-
-#: ../src/fileviewer.cpp:49
-msgid "Source file"
-msgstr "ملف المصدر"
-
-#: ../src/fileviewer.cpp:64
-msgid "Source file occurrence:"
-msgstr "تواجد الملف المصدر:"
-
-#: ../src/edlistctrl.cpp:335
-msgid "Source text"
-msgstr "نص المصدر"
-
-#: ../src/edframe.cpp:1077
-msgid "Source text:"
-msgstr "نص المصدر:"
-
-#: ../src/resources/properties.xrc:222
-msgid "Sources keywords"
-msgstr "كلمات المصادر الرئيسية"
-
-#: ../src/resources/properties.xrc:186
-msgid "Sources paths"
-msgstr "مسارات المصادر"
-
-#: ../src/edapp.cpp:1032
-msgid "Speech"
-msgstr ""
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:1372
-#, c-format
-msgid "Spellchecker dictionary for %s isn't available, you need to install it."
-msgstr "قاموس المدقق الإملائي لـ %s غير متوفر، قد تحتاج إلى تثبيته"
-
-#: ../src/edapp.cpp:1004
-msgid "Spelling and Grammar"
-msgstr ""
-
-#: ../src/edapp.cpp:1034
-msgid "Start Speaking"
-msgstr ""
-
-#: ../src/resources/find.xrc:43
-msgid "Start from the first item"
-msgstr "البدء من المادة الأولى"
-
-#: ../src/statistics.cpp:150
-msgid "Statistics"
-msgstr ""
-
-#: ../src/edapp.cpp:1035
-msgid "Stop Speaking"
-msgstr ""
-
-#: ../src/prefsdlg.cpp:170
-msgid "Stored translations:"
-msgstr ""
-
-#: ../src/resources/find.xrc:21
-msgid "String to find:"
-msgstr "عبارة البحث:"
-
-#: ../src/statistics.cpp:199
-msgid "Strings in source language"
-msgstr ""
-
-#: ../src/edapp.cpp:1014
-msgid "Substitutions"
-msgstr ""
-
-#: ../src/edframe.cpp:2828
-#, c-format
-msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "خطأ لغوي في مقدمة صيغ الجموع (\"%s\")."
-
-#: ../src/welcomescreen.cpp:251
-msgid "Take an existing PO file or POT template and create a new translation from it."
-msgstr ""
-
-#: ../src/welcomescreen.cpp:311
-msgid "Take translatable strings from an existing POT template."
-msgstr ""
-
-#: ../src/export_html.cpp:121 ../src/resources/properties.xrc:102
-msgid "Team's email address:"
-msgstr "بريد الفريق:"
-
-#: ../src/export_html.cpp:117 ../src/resources/properties.xrc:88
+#: ../src/export_html.cpp:117 ../src/resources/properties.xrc:114
 msgid "Team:"
 msgstr "الفريق:"
 
-#: ../src/edapp.cpp:1022
-msgid "Text Replacement"
+#: ../src/export_html.cpp:121 ../src/resources/properties.xrc:128
+msgid "Team's email address:"
+msgstr "بريد الفريق الإلكترونيّ:"
+
+#: ../src/export_html.cpp:125 ../src/resources/properties.xrc:84
+msgid "Charset:"
+msgstr "طقم المحارف:"
+
+#: ../src/export_html.cpp:160
+msgid "Source"
+msgstr "المصدر"
+
+#: ../src/export_html.cpp:166
+msgid "Notes"
+msgstr "ملاحظات"
+
+#: ../src/export_html.cpp:199
+msgid "Automatic translation"
+msgstr "ترجمة آليّة"
+
+#: ../src/export_html.cpp:205
+msgid "Fuzzy translation"
+msgstr "ترجمة مُبهمة"
+
+#: ../src/export_html.cpp:212 ../src/sidebar.cpp:158
+msgid "Notes for translators:"
+msgstr "ملاحظات للمترجمين:"
+
+#: ../src/export_html.cpp:221 ../src/resources/comment.xrc:10
+#: ../src/sidebar.cpp:191
+msgid "Comment:"
+msgstr "تعليق:"
+
+#: ../src/fileviewer.cpp:49
+msgid "Source file"
+msgstr "الملف المصدر"
+
+#: ../src/fileviewer.cpp:64
+msgid "Source file occurrence:"
+msgstr "حدوث الملف المصدر:"
+
+#: ../src/fileviewer.cpp:74
+msgid "Open in Editor"
 msgstr ""
 
-#: ../src/wordpress.cpp:410
+#: ../src/fileviewer.cpp:74
+msgid "Open in editor"
+msgstr ""
+
+#: ../src/fileviewer.cpp:302
 #, c-format
-msgid "The \"%s\" plugin isn't localization-ready."
-msgstr ""
+msgid "Error opening file %s!"
+msgstr "خطأ عند فتح الملفّ %s!"
 
-#: ../src/wordpress.cpp:329
+#: ../src/gexecute.cpp:146
 #, c-format
-msgid "The \"%s\" theme isn't localization-ready."
-msgstr ""
+msgid "Cannot execute program: %s"
+msgstr "تعذّر تنفيذ البرنامج: %s"
 
-#: ../src/edframe.cpp:3312
-msgid "The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually."
-msgstr ""
+#: ../src/languagectrl.cpp:48
+msgid "Language Code or Name (e.g. en_GB)"
+msgstr "رمز اللّغة أو اسمها (مثلًا en_GB)"
 
-#: ../src/catalog.cpp:1643
-#, c-format
-msgid "The catalog couldn't be saved in '%s' charset as specified in catalog settings.\n\nIt was saved in UTF-8 instead and the setting was modified accordingly."
-msgstr ""
+#: ../src/languagectrl.cpp:123
+msgid "Translation Language"
+msgstr "لغة التّرجمة"
 
-#: ../src/edframe.cpp:282 ../src/edframe.cpp:2708
-msgid "The file cannot be opened."
-msgstr ""
+#: ../src/languagectrl.cpp:133
+msgid "Language of the translation:"
+msgstr "لغة التّرجمة:"
 
-#: ../src/edframe.cpp:287 ../src/edframe.cpp:2713
-msgid "The file may be either corrupted or in a format not recognized by Poedit."
-msgstr ""
+#: ../src/licensing.cpp:71
+msgid "Poedit Registration"
+msgstr "تسجيل محرِّر Po"
 
-#: ../src/edframe.cpp:2161
-msgid "The file was saved safely and compiled into the MO format, but it will probably not work correctly."
-msgstr ""
+#: ../src/licensing.cpp:99
+msgid "Name"
+msgstr "الاسم"
 
-#: ../src/edframe.cpp:2164
-msgid "The file was saved safely, but it cannot be compiled into the MO format and used."
-msgstr "mo تم حفظ الملف بأمان، لكن لا يمكن إستعماله و لا تحويله إلى صيغة"
+#: ../src/licensing.cpp:104
+msgid "License Key"
+msgstr "مفتاح التّرخيص"
 
-#: ../src/edframe.cpp:2158
-msgid "The file was saved safely."
-msgstr ""
-
-#: ../src/edapp.cpp:1158
-#, c-format
-msgid "The link doesn't contain valid Poedit license. Try entering it manually or contact support at help@poedit.net.\n\n(%s)"
-msgstr ""
-
-#: ../src/edframe.cpp:1883
-msgid "The plugin is translation-ready and compatible with Poedit’s WordPress support."
-msgstr ""
-
-#: ../src/licensing.cpp:101
+#: ../src/licensing.cpp:109
 msgid "The registration key can be used on multiple computers you use personally or for multiple\naccounts on a single computer."
-msgstr ""
+msgstr "يمكن استخدام مفتاح التّسجيل على عدّة حواسيب تستخدمها شخصيًّا أو لعدّة حسابات في حاسوب واحد."
 
-#: ../src/welcomescreen.cpp:303
-msgid "The simplest way to fill this catalog is to update it from a POT:"
-msgstr ""
+#: ../src/licensing.cpp:118
+msgid "Buy Online..."
+msgstr "اشترِ على الإنترنت..."
 
-#: ../src/edframe.cpp:1881
-msgid "The theme is translation-ready and compatible with Poedit’s WordPress support."
-msgstr ""
+#: ../src/licensing.cpp:118
+msgid "Buy online..."
+msgstr "اشترِ على الإنترنت..."
 
-#: ../src/edframe.cpp:2187
+#: ../src/licensing.cpp:123 ../src/prefsdlg.cpp:609
+#: ../src/resources/comment.xrc:38 ../src/resources/manager.xrc:104
+#: ../src/resources/prefs.xrc:143 ../src/resources/progress.xrc:32
+#: ../src/resources/properties.xrc:239
+msgid "Cancel"
+msgstr "ألغِ"
+
+#: ../src/licensing.cpp:125 ../src/licensing.cpp:129
+msgid "Register"
+msgstr "سجّل"
+
+#: ../src/licensing.cpp:167
+msgid "Your copy is upgraded to Poedit Pro."
+msgstr "رُقِّيت نسختك إلى محرِّر Po المحترف."
+
+#: ../src/licensing.cpp:181
+msgid "You’re awesome! Thank you so much\nfor purchasing Poedit Pro."
+msgstr "أنت رائع! شكرًا جزيلًا لك لشرائك\nمحرِّر Po المحترف."
+
+#: ../src/licensing.cpp:190
+msgid "View License Key"
+msgstr "اعرض مفتاح الإصدار"
+
+#: ../src/licensing.cpp:190
+msgid "View license key"
+msgstr "اعرض مفتاح الإصدار"
+
+#: ../src/licensing.cpp:191 ../src/resources/find.xrc:87
+msgid "Close"
+msgstr "أغلق"
+
+#: ../src/licensing.cpp:227
 #, c-format
-msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural "The translation is ready for use, but %d entries are not translated yet."
+msgid "Licensed to: %s"
+msgstr "مُرخَّص لِـ: %s"
+
+#: ../src/licensing.cpp:484
+msgid "Purchasing the full version will unlock more features\nin this and future versions of Poedit, including:\n\n"
+msgstr ""
+
+#: ../src/licensing.cpp:519
+msgid "Upgrade..."
+msgstr "رقِّ..."
+
+#: ../src/licensing.cpp:520
+msgid "No, thanks"
+msgstr "لا شكرًا"
+
+#: ../src/manager.cpp:71
+msgid "Poedit - Catalogs manager"
+msgstr "محرّر Po - مدير الكتالوجات"
+
+#: ../src/manager.cpp:252
+msgid "Catalog"
+msgstr "الكتالوج"
+
+#: ../src/manager.cpp:253
+msgid "Total"
+msgstr "المجموع"
+
+#: ../src/manager.cpp:254
+msgid "Untrans"
+msgstr "غير المترجَمة"
+
+#: ../src/manager.cpp:255 ../src/resources/toolbar.xrc:64
+msgid "Fuzzy"
+msgstr "غير مؤكدة"
+
+#: ../src/manager.cpp:256
+msgid "Bad Tokens"
+msgstr "عناصر سيئة"
+
+#: ../src/manager.cpp:257
+msgid "Last modified"
+msgstr "آخر تعديل"
+
+#: ../src/manager.cpp:288
+msgid "Select directory"
+msgstr "حدّد دليلًا"
+
+#: ../src/manager.cpp:310
+msgid "Directories:"
+msgstr "الأدلّة:"
+
+#: ../src/manager.cpp:392
+msgid "<unnamed>"
+msgstr "<غير معنون>"
+
+#: ../src/manager.cpp:423
+msgid "Do you want to delete the project?"
+msgstr "أتريد حذف المشروع؟"
+
+#: ../src/manager.cpp:424 ../src/manager.cpp:444
+msgid "Confirmation"
+msgstr "أكّد"
+
+#: ../src/manager.cpp:443
+msgid "Do you really want to do mass update of\nall catalogs in this project?"
+msgstr "أتريد حقًّا عمل تحديث شامل لكلّ الكتالوجات في هذا المشروع؟"
+
+#: ../src/prefsdlg.cpp:164
+msgid "Information about the translator"
+msgstr "معلومات عن المترجم"
+
+#: ../src/prefsdlg.cpp:171
+msgid "Name:"
+msgstr "الاسم:"
+
+#: ../src/prefsdlg.cpp:174
+msgid "Your Name"
+msgstr "اسمك"
+
+#: ../src/prefsdlg.cpp:176
+msgid "Email:"
+msgstr "البريد الإلكترونيّ:"
+
+#: ../src/prefsdlg.cpp:179
+msgid "your_email@example.com"
+msgstr "your_email@example.com"
+
+#: ../src/prefsdlg.cpp:182
+msgid "Your name and email address are only used to set the Last-Translator header of GNU gettext files."
+msgstr "اسمك وبريدك الإلكترونيّ يُستخدَمان فقط لتعيين ترويسة \"آخر مترجِم\" لملفّات غنو غِت​تكست."
+
+#: ../src/prefsdlg.cpp:191
+msgid "Editing"
+msgstr "التّحرير"
+
+#: ../src/prefsdlg.cpp:194
+msgid "Automatically compile MO file when saving"
+msgstr "صرّف آليًّا ملف ‎.mo عند الحفظ"
+
+#: ../src/prefsdlg.cpp:196
+msgid "Show summary after catalog update"
+msgstr "أظهر ملخّصًا بعد تحديث الكتالوج"
+
+#: ../src/prefsdlg.cpp:201
+msgid "Check spelling"
+msgstr "دقّق الإملاء"
+
+#: ../src/prefsdlg.cpp:203
+msgid "Always change focus to text input field"
+msgstr "غيّر دائمًا التّركيز إلى حقل إدخال النصّ"
+
+#: ../src/prefsdlg.cpp:205
+msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
+msgstr "لا تدع قائمة السلاسل تأخذ التّركيز أبدًا. إن مُكِّن، عليك استخدام مفتاح Ctrl مع الأسهم للتّنقّل عبر لوحة المفاتيح. يمكنك هكذا طباعة النصّ مباشرةً دون الحاجة إلى ضغط مفتاح Tab لتغيير التّركيز."
+
+#: ../src/prefsdlg.cpp:217
+msgid "Line endings:"
+msgstr "نهايات الأسطر:"
+
+#: ../src/prefsdlg.cpp:219
+msgid "Unix (recommended)"
+msgstr "يُنِكس (مستحسن)"
+
+#: ../src/prefsdlg.cpp:220
+msgid "Windows"
+msgstr "وِندوز"
+
+#: ../src/prefsdlg.cpp:222
+msgid "Preserve line endings of existing files"
+msgstr "حافظ على نهايات أسطر الملفّات الموجودة"
+
+#: ../src/prefsdlg.cpp:227
+msgid "Appearance"
+msgstr "المظهر"
+
+#: ../src/prefsdlg.cpp:234
+msgid "Use custom list font:"
+msgstr "استخدم خطّ قوائم مخصّص:"
+
+#: ../src/prefsdlg.cpp:237
+msgid "Use custom text fields font:"
+msgstr "استخدم خطّ حقول النّصوص مخصّص:"
+
+#: ../src/prefsdlg.cpp:247
+msgid "Change UI language"
+msgstr "غيّر لغة الواجهة"
+
+#. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
+#: ../src/prefsdlg.cpp:257
+msgid "(requires Windows 8 or newer)"
+msgstr "(يتطلّب وِندوز 8 وأحدث)"
+
+#: ../src/prefsdlg.cpp:362
+msgid "General"
+msgstr "عامّ"
+
+#: ../src/prefsdlg.cpp:384
+msgid "Use translation memory"
+msgstr "استخدم ذاكرة التّرجمة"
+
+#: ../src/prefsdlg.cpp:395
+msgid "Learn From Files..."
+msgstr "تعلّم من الملفّات..."
+
+#: ../src/prefsdlg.cpp:395
+msgid "Learn from files..."
+msgstr ""
+
+#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+#: ../src/prefsdlg.cpp:398 ../src/prefsdlg.cpp:609
+msgid "Reset"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:404
+msgid "Consult TM when updating from sources"
+msgstr "استشر TM عند التّحديث من المصادر"
+
+#: ../src/prefsdlg.cpp:407
+msgid "If enabled, Poedit will try to fill in new entries using your previous\ntranslations stored in the translation memory. If the TM is\nnear-empty, it will not be very effective. The more translations\nyou edit and the larger the TM grows, the better it gets."
+msgstr "إن مُكِّن، سيحاول محرِّر Po ملأ المُدخلات الجديدة باستخدام ترجماتك السّابقة المُخزَّنة في ذاكرة التّرجمة. إن كانت ذاكرة الترجمة (TM) شبه فارغة، لن تكون فعّالة جدًّا. كلّما حرّرت ترجمات أكثر، يزداد نموّ TM، وتصبح أفضل مما كانت."
+
+#: ../src/prefsdlg.cpp:447
+msgid "Use suggestions from online collaborative TM"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:458
+msgid "Poedit uses a large online translation memory that includes both contributed human translations and state-of-the-art machine translations."
+msgstr ""
+
+#: ../src/prefsdlg.cpp:461
+msgid "Contribute my translations to the online TM"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:462
+msgid "Keep my translations private"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:463
+msgid "Ask me every time I edit a file"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:480
+msgid "Terms of Service"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:481
+msgid "powered by"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:555
+msgid "Stored translations:"
+msgstr "الترجمات المخزَّنة:"
+
+#: ../src/prefsdlg.cpp:556
+msgid "Database size on disk:"
+msgstr "حجم قاعدة البيانات في القرص:"
+
+#: ../src/prefsdlg.cpp:564
+msgid "Select translation files to import"
+msgstr "اختر ملفات التّرجمة لاستيرادها"
+
+#: ../src/prefsdlg.cpp:578 ../src/prefsdlg.cpp:649
+msgid "Translation Memory"
+msgstr "ذاكرة التّرجمة"
+
+#: ../src/prefsdlg.cpp:579
+msgid "Importing translations..."
+msgstr "يستورد التّرجمات..."
+
+#: ../src/prefsdlg.cpp:595 ../src/tm/tm_migrate.cpp:227
+msgid "Finalizing..."
+msgstr "ينهي..."
+
+#: ../src/prefsdlg.cpp:603
+msgid "Reset translation memory"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:604
+msgid "Are you sure you want to reset the translation memory?"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:605
+msgid "Resetting the translation memory will irrevocably delete all stored translations from it. You can’t undo this operation."
+msgstr ""
+
+#. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on OS X.
+#. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
+#. length there.
+#: ../src/prefsdlg.cpp:647
+msgid "TM"
+msgstr "TM"
+
+#: ../src/prefsdlg.cpp:669
+msgid "Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated."
+msgstr "مستخرجات الشِفرة المصدريّة مُستخدَمة للعثور على السلاسل القابلة للتّرجمة في ملفات الشِفرة المصدريّة واستخراجها ليمكن ترجمتها."
+
+#: ../src/prefsdlg.cpp:683 ../src/resources/manager.xrc:31
+msgid "New"
+msgstr "جديد"
+
+#: ../src/prefsdlg.cpp:826
+msgid "Extractors"
+msgstr "المستخرجات"
+
+#: ../src/prefsdlg.cpp:847
+msgid "Automatically check for updates"
+msgstr "التمس آليًّا عن التّحديثات"
+
+#: ../src/prefsdlg.cpp:850
+msgid "Include beta versions"
+msgstr "ضمّن إصدارات بيتا"
+
+#: ../src/prefsdlg.cpp:853
+msgid "Beta versions contain the latest new features and improvements, but may be a bit less stable."
+msgstr "إصدارات بيتا تحوي المزايا الجديدة الأخيرة مع التّحسينات، لكن قد تكون أقلّ استقرارًا."
+
+#: ../src/prefsdlg.cpp:896
+msgid "Updates"
+msgstr "التّحديثات"
+
+#: ../src/propertiesdlg.cpp:69
+msgid "Additional keywords"
+msgstr "الكلمات المفتاحيّة الإضافيّة"
+
+#: ../src/propertiesdlg.cpp:70
+msgid "Paths"
+msgstr "المسارات"
+
+#: ../src/propertiesdlg.cpp:71
+msgid "Excluded paths"
+msgstr "المسارات المستثناة"
+
+#: ../src/propertiesdlg.cpp:93
+msgid "Name of the project the translation is for"
+msgstr "اسم المشروع الذي تكون التّرجمات إليه"
+
+#: ../src/propertiesdlg.cpp:94
+msgid "e.g. nplurals=2; plural=(n > 1);"
+msgstr "مثلًا nplurals=2; plural=(n > 1);‎"
+
+#: ../src/propertiesdlg.cpp:128
+msgid "UTF-8 (recommended)"
+msgstr "UTF-8 (مستحسن)"
+
+#: ../src/propertiesdlg.cpp:296
+msgid "Please save the file first. This section cannot be edited until then."
+msgstr "فضلًا احفظ الملفّ أوّلًا. لا يمكن تحرير هذا القسم حتّى ذلك الحين."
+
+#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:96
+#: ../src/resources/prefs.xrc:135 ../src/resources/properties.xrc:231
+#: ../src/resources/summary.xrc:70
+msgid "OK"
+msgstr "حسنًا"
+
+#: ../src/resources/comment.xrc:45
+msgid "C&lear"
+msgstr "ام&حُ"
+
+#: ../src/resources/comment.xrc:46
+msgid "Clear the comment"
+msgstr "امحُ التّعليق"
+
+#: ../src/resources/find.xrc:4
+msgid "Find..."
+msgstr "اعثر..."
+
+#: ../src/resources/find.xrc:21
+msgid "String to find:"
+msgstr "السلسلة للعثور عليها:"
+
+#: ../src/resources/find.xrc:36
+msgid "Case sensitive"
+msgstr "حسّاس للحالة"
+
+#: ../src/resources/find.xrc:43
+msgid "Start from the first item"
+msgstr "ابدأ من أوّل عنصر"
+
+#: ../src/resources/find.xrc:50
+msgid "Whole words only"
+msgstr "كلمات كاملة فقط"
+
+#: ../src/resources/find.xrc:57
+msgid "Find in original strings"
+msgstr "اعثر في السلاسل الأصلية"
+
+#: ../src/resources/find.xrc:64
+msgid "Find in translations"
+msgstr "اعثر في التّرجمات"
+
+#: ../src/resources/find.xrc:71
+msgid "Find in comments"
+msgstr "اعثر في التّعليقات"
+
+#: ../src/resources/find.xrc:78
+msgid "Find in automatic comments"
+msgstr "اعثر في التّعليقات الآليّة"
+
+#: ../src/resources/find.xrc:94
+msgid "< &Previous"
+msgstr "< ال&سّابقة"
+
+#: ../src/resources/find.xrc:102
+msgid "&Next >"
+msgstr "ال&تّالية >"
+
+#: ../src/resources/manager.xrc:32
+msgid "Create new translations project"
+msgstr "أنشئ مشروع ترجمات جديد"
+
+#: ../src/resources/manager.xrc:38
+msgid "Edit the project"
+msgstr "حرّر المشروع"
+
+#: ../src/resources/manager.xrc:44
+msgid "Delete the project"
+msgstr "احذف المشروع"
+
+#: ../src/resources/manager.xrc:50
+msgid "Update all"
+msgstr "حدّث الكلّ"
+
+#: ../src/resources/manager.xrc:51
+msgid "Update all catalogs in the project"
+msgstr "حدّث كلّ الكتالوجات في المشروع"
+
+#: ../src/resources/manager.xrc:55
+msgid "Edit project"
+msgstr "حرّر المشروع"
+
+#: ../src/resources/manager.xrc:60
+msgid "Project name:"
+msgstr "اسم المشروع:"
+
+#: ../src/resources/manager.xrc:81
+msgid "Browse"
+msgstr "تصفّح"
+
+#: ../src/resources/manager.xrc:82
+msgid "Add directory to the list"
+msgstr "أضف الدّليل إلى القائمة"
+
+#: ../src/resources/manager.xrc:119 ../src/resources/menus.xrc:56
+#: ../src/resources/menus.xrc:316
+msgid "&Preferences..."
+msgstr "ت&فضيلات..."
+
+#: ../src/resources/manager.xrc:123 ../src/resources/menus.xrc:29
+#: ../src/resources/menus.xrc:312
+msgid "&Close"
+msgstr "أ&غلق"
+
+#: ../src/resources/manager.xrc:127 ../src/resources/menus.xrc:68
+msgid "E&xit"
+msgstr "أ&نهِ"
+
+#: ../src/resources/menus.xrc:8 ../src/resources/menus.xrc:291
+msgid "&New..."
+msgstr "&جديد..."
+
+#: ../src/resources/menus.xrc:12 ../src/resources/menus.xrc:295
+msgid "New from &POT/PO file..."
+msgstr "جديد من &ملف POT/PO..."
+
+#: ../src/resources/menus.xrc:13 ../src/resources/menus.xrc:296
+msgid "New From &POT/PO File..."
+msgstr "جديد من &ملف POT/PO..."
+
+#: ../src/resources/menus.xrc:16 ../src/resources/menus.xrc:299
+msgid "New WordPress translation..."
+msgstr "ترجمة ووردبرِس جديدة..."
+
+#: ../src/resources/menus.xrc:17 ../src/resources/menus.xrc:300
+msgid "New WordPress Translation..."
+msgstr "ترجمة ووردبرِس جديدة..."
+
+#: ../src/resources/menus.xrc:21 ../src/resources/menus.xrc:304
+msgid "&Open..."
+msgstr "ا&فتح..."
+
+#: ../src/resources/menus.xrc:25 ../src/resources/menus.xrc:308
+msgid "Open Recent"
+msgstr "افتح الأخيرة"
+
+#: ../src/resources/menus.xrc:33
+msgid "&Save"
+msgstr "ا&حفظ"
+
+#: ../src/resources/menus.xrc:37
+msgid "Save &as..."
+msgstr "احفظ &كـ..."
+
+#: ../src/resources/menus.xrc:38
+msgid "Save &As..."
+msgstr "احفظ &كـ..."
+
+#: ../src/resources/menus.xrc:42
+msgid "Compile to MO..."
+msgstr ""
+
+#: ../src/resources/menus.xrc:45
+msgid "E&xport as HTML..."
+msgstr "&صدّر كـ HTML..."
+
+#: ../src/resources/menus.xrc:50
+msgid "Check for updates..."
+msgstr "التمس التّحديثات..."
+
+#: ../src/resources/menus.xrc:53
+msgid "&License..."
+msgstr "ال&رّخصة..."
+
+#: ../src/resources/menus.xrc:61
+msgid "Catalogs &manager"
+msgstr "م&دير الكتالوجات"
+
+#: ../src/resources/menus.xrc:62
+msgid "Catalogs &Manager"
+msgstr "م&دير الكتالوجات"
+
+#: ../src/resources/menus.xrc:73 ../src/resources/menus.xrc:324
+msgid "&Edit"
+msgstr "&حرّر"
+
+#: ../src/resources/menus.xrc:94
+msgid "Translation is &fuzzy"
+msgstr "الترجمة مُب&همة"
+
+#: ../src/resources/menus.xrc:95
+msgid "Translation Is &Fuzzy"
+msgstr "الترجمة مُب&همة"
+
+#: ../src/resources/menus.xrc:100
+msgid "Edit &comment"
+msgstr "حرّر التّ&عليق"
+
+#: ../src/resources/menus.xrc:101
+msgid "Edit &Comment"
+msgstr "حرّر التّ&عليق"
+
+#: ../src/resources/menus.xrc:106
+msgid "Suggestions"
+msgstr ""
+
+#: ../src/resources/menus.xrc:109
+msgid "&Show references"
+msgstr "أ&ظهر المراجع"
+
+#: ../src/resources/menus.xrc:110
+msgid "&Show References"
+msgstr "أ&ظهر المراجع"
+
+#: ../src/resources/menus.xrc:114 ../src/resources/menus.xrc:128
+msgid "&Find..."
+msgstr "ا&عثر..."
+
+#: ../src/resources/menus.xrc:118
+msgid "Find next"
+msgstr "اعثر على التّالي"
+
+#: ../src/resources/menus.xrc:122
+msgid "Find previous"
+msgstr "اعثر على السّابق"
+
+#: ../src/resources/menus.xrc:126
+msgid "Find"
+msgstr "اعثر"
+
+#: ../src/resources/menus.xrc:132
+msgid "Find Next"
+msgstr "اعثر على التّالي"
+
+#: ../src/resources/menus.xrc:136
+msgid "Find Previous"
+msgstr "اعثر على السّابق"
+
+#: ../src/resources/menus.xrc:142
+msgid "&Preferences"
+msgstr "ت&فضيلات"
+
+#: ../src/resources/menus.xrc:147
+msgid "&View"
+msgstr "من&ظور"
+
+#: ../src/resources/menus.xrc:149
+msgid "Display entry &IDs"
+msgstr "اعرض م&عرّفات المُدخلات"
+
+#: ../src/resources/menus.xrc:150
+msgid "Display Entry &IDs"
+msgstr "اعرض م&عرّفات المُدخلات"
+
+#: ../src/resources/menus.xrc:155
+msgid "Sort by &file order"
+msgstr "افرز بترتيب ال&ملفّ"
+
+#: ../src/resources/menus.xrc:156
+msgid "Sort by &File Order"
+msgstr "افرز بترتيب ال&ملفّ"
+
+#: ../src/resources/menus.xrc:160
+msgid "Sort by &source"
+msgstr "افرز بالم&صدر"
+
+#: ../src/resources/menus.xrc:161
+msgid "Sort by &Source"
+msgstr "افرز بالم&صدر"
+
+#: ../src/resources/menus.xrc:165
+msgid "Sort by &translation"
+msgstr "افرز بال&تّرجمة"
+
+#: ../src/resources/menus.xrc:166
+msgid "Sort by &Translation"
+msgstr "افرز بال&تّرجمة"
+
+#: ../src/resources/menus.xrc:171
+msgid "&Group by context"
+msgstr "&جمّع بالسّياق"
+
+#: ../src/resources/menus.xrc:172
+msgid "&Group By Context"
+msgstr "&جمّع بالسّياق"
+
+#: ../src/resources/menus.xrc:176
+msgid "&Untranslated entries first"
+msgstr "المُدخلات &غير المُترجَمة أوّلًا"
+
+#: ../src/resources/menus.xrc:177
+msgid "&Untranslated Entries First"
+msgstr "المُدخلات &غير المُترجَمة أوّلًا"
+
+#: ../src/resources/menus.xrc:182
+msgid "Show sidebar"
+msgstr ""
+
+#: ../src/resources/menus.xrc:190
+msgid "C&atalog"
+msgstr "&كتالوج"
+
+#: ../src/resources/menus.xrc:193
+msgid "&Update from sources"
+msgstr "&حدّث من المصادر"
+
+#: ../src/resources/menus.xrc:194
+msgid "&Update from Sources"
+msgstr "&حدّث من المصادر"
+
+#: ../src/resources/menus.xrc:197
+msgid "Update from &POT file..."
+msgstr "حدّث من &ملف POT..."
+
+#: ../src/resources/menus.xrc:198
+msgid "Update from &POT File..."
+msgstr "حدّث من &ملف POT..."
+
+#: ../src/resources/menus.xrc:201
+msgid "Fill missing translations from &TM"
+msgstr "املأ التّ&رجمات الناقصة من TM"
+
+#: ../src/resources/menus.xrc:202
+msgid "Fill Missing Translations from &TM"
+msgstr "املأ التّ&رجمات الناقصة من TM"
+
+#: ../src/resources/menus.xrc:205
+msgid "&Purge deleted translations"
+msgstr "ن&ظّف التّرجمات المحذوفة"
+
+#: ../src/resources/menus.xrc:206
+msgid "&Purge Deleted Translations"
+msgstr "ن&ظّف التّرجمات المحذوفة"
+
+#: ../src/resources/menus.xrc:209
+msgid "&Validate translations"
+msgstr "ت&حقّق من سلامة التّرجمات"
+
+#: ../src/resources/menus.xrc:210
+msgid "&Validate Translations"
+msgstr "ت&حقّق من سلامة التّرجمات"
+
+#: ../src/resources/menus.xrc:214
+msgid "&Statistics"
+msgstr "الإح&صائيات"
+
+#: ../src/resources/menus.xrc:218
+msgid "&Properties..."
+msgstr "خ&صائص..."
+
+#: ../src/resources/menus.xrc:228
+msgid "&Done and next"
+msgstr "&تمّت وإلى التّالية"
+
+#: ../src/resources/menus.xrc:229
+msgid "&Done and Next"
+msgstr "&تمّت وإلى التّالية"
+
+#: ../src/resources/menus.xrc:235
+msgid "&Previous translation"
+msgstr "التّرجمة ال&سّابقة"
+
+#: ../src/resources/menus.xrc:236
+msgid "&Previous Translation"
+msgstr "التّرجمة ال&سّابقة"
+
+#: ../src/resources/menus.xrc:240
+msgid "&Next translation"
+msgstr "التّرجمة ال&تّالية"
+
+#: ../src/resources/menus.xrc:241
+msgid "&Next Translation"
+msgstr "التّرجمة ال&تّالية"
+
+#: ../src/resources/menus.xrc:245
+msgid "P&revious unfinished"
+msgstr "غير المُنتهية ال&سّابقة"
+
+#: ../src/resources/menus.xrc:246
+msgid "P&revious Unfinished"
+msgstr "غير المُنتهية ال&سّابقة"
+
+#: ../src/resources/menus.xrc:250
+msgid "Ne&xt unfinished"
+msgstr "غير المُنتهية ال&تّالية"
+
+#: ../src/resources/menus.xrc:251
+msgid "Ne&xt Unfinished"
+msgstr "غير المُنتهية ال&تّالية"
+
+#: ../src/resources/menus.xrc:260 ../src/resources/menus.xrc:333
+msgid "&Online help"
+msgstr "مساعدة على الإ&نترنت"
+
+#: ../src/resources/menus.xrc:261 ../src/resources/menus.xrc:334
+msgid "&Online Help"
+msgstr "مساعدة على الإ&نترنت"
+
+#: ../src/resources/menus.xrc:267 ../src/resources/menus.xrc:340
+msgid "&GNU gettext manual"
+msgstr "كُتيِّب &غنو غِت​تكست"
+
+#: ../src/resources/menus.xrc:268 ../src/resources/menus.xrc:341
+msgid "&GNU gettext Manual"
+msgstr "كُتيِّب &غنو غِت​تكست"
+
+#: ../src/resources/menus.xrc:272 ../src/resources/menus.xrc:345
+msgid "Email &support..."
+msgstr "راسل ال&دّعم..."
+
+#: ../src/resources/menus.xrc:273 ../src/resources/menus.xrc:346
+msgid "Email &Support..."
+msgstr "راسل ال&دّعم..."
+
+#: ../src/resources/menus.xrc:277 ../src/resources/menus.xrc:350
+msgid "&About Poedit"
+msgstr "&عنْ محرِّر Po"
+
+#: ../src/resources/menus.xrc:278 ../src/resources/menus.xrc:279
+#: ../src/resources/menus.xrc:351 ../src/resources/menus.xrc:352
+msgid "&About"
+msgstr "&عنْ"
+
+#: ../src/resources/prefs.xrc:4
+msgid "Extractor setup"
+msgstr "إعداد المستخرج"
+
+#: ../src/resources/prefs.xrc:25
+msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
+msgstr "قائمة الامتدادات مفصولة بفواصل منقوطة (مثلًا ‎*.cpp;*.h):"
+
+#: ../src/resources/prefs.xrc:41
+msgid "Invocation:"
+msgstr "الاستدعاء:"
+
+#: ../src/resources/prefs.xrc:45
+msgid "Command to extract translations:"
+msgstr "أمر استخراج التّرجمات:"
+
+#: ../src/resources/prefs.xrc:57
+msgid "This is the command used to launch the extractor.\n%o expands to the name of output file, %K to list\nof keywords, %F to list of input files,\n%C to charset flag (see below)."
+msgstr "يُستخدَم هذا الأمر لإطلاق المستخرج.\n%o يُوسَّع إلى اسم ملفّ الخَرْج، %K إلى\nقائمة الكلمات المفتاحيّة، %F إلى قائمة ملفّات الدَخْل،\n%C إلى راية طقم المحارف (طالع أدناه)."
+
+#: ../src/resources/prefs.xrc:66
+msgid "An item in keywords list:"
+msgstr "عنصر في قائمة الكلمات المفتاحيّة:"
+
+#: ../src/resources/prefs.xrc:78
+msgid "This will be attached to the command line once\nfor each keyword. %k expands to the keyword."
+msgstr "هذا سيُرفَق بسطر الأمر مرّة لكلّ ملفّ دَخْل. %k يُوسَّع إلى الكلمة المفتاحيّة."
+
+#: ../src/resources/prefs.xrc:87
+msgid "An item in input files list:"
+msgstr "عنصر في قائمة ملفّات الدَخْل:"
+
+#: ../src/resources/prefs.xrc:99
+#, c-format
+msgid "This will be attached to the command line once\nfor each input file. %f expands to the filename."
+msgstr "هذا سيُرفَق بسطر الأمر مرّة لكل ملف دَخْل. %f يُوسَّع إلى اسم الملفّ."
+
+#: ../src/resources/prefs.xrc:108 ../src/resources/properties.xrc:96
+msgid "Source code charset:"
+msgstr "طقم محارف الشِفرة المصدريّة:"
+
+#: ../src/resources/prefs.xrc:120
+#, c-format
+msgid "This will be attached to the command line\nonly if source codecharset was given. %c expands to charset value."
+msgstr "هذا سيُرفَق بسطر الأمر فقط إذا أُعطي طقم محارف الشِفرة المصدرية. %c يُوسَّع إلى قيمة طقم المحارف."
+
+#: ../src/resources/properties.xrc:4
+msgid "Catalog properties"
+msgstr "خصائص الكتالوج"
+
+#: ../src/resources/properties.xrc:46
+msgid "Plural Forms:"
+msgstr "صيغ الجموع:"
+
+#: ../src/resources/properties.xrc:53
+msgid "Use default rules for this language"
+msgstr "استخدم قواعد اللّغة الافتراضيّة"
+
+#: ../src/resources/properties.xrc:62
+msgid "Use custom expression"
+msgstr "استخدم تعبيرًا مخصّصًا"
+
+#: ../src/resources/properties.xrc:76
+msgid "Learn about plural forms"
+msgstr "تعلّم حول صيغ الجموع"
+
+#: ../src/resources/properties.xrc:142
+msgid "Translation properties"
+msgstr "خصائص التّرجمة"
+
+#: ../src/resources/properties.xrc:150
+msgid "Extract text from source files in the following directories:"
+msgstr "استخرج النّصوص من الملفات المصدريّة في الأدلّة التّالية:"
+
+#: ../src/resources/properties.xrc:159
+msgid "Base path:"
+msgstr "المسار الأساس:"
+
+#: ../src/resources/properties.xrc:188
+msgid "Sources paths"
+msgstr "مسارات المصادر"
+
+#: ../src/resources/properties.xrc:196
+msgid "Use these keywords (function names) to recognize translatable strings\nin source files:"
+msgstr "استخدم الكلمات المفتاحيّة هذه (أسماء الدّوال) للتعرّف على السلاسل القابلة للتّرجمة في الملفات المصدريّة:"
+
+#: ../src/resources/properties.xrc:212
+msgid "Learn about gettext keywords"
+msgstr "تعلّم حول كلمات غِت​تكست المفتاحيّة"
+
+#: ../src/resources/properties.xrc:220
+msgid "Sources keywords"
+msgstr "كلمات المصادر المفتاحيّة"
+
+#: ../src/resources/summary.xrc:4
+msgid "Update summary"
+msgstr "حدّث الملخّص"
+
+#: ../src/resources/summary.xrc:16
+msgid "These strings were found in the sources but were not in the catalog.\nPoedit will add them to the catalog now."
+msgstr "وُجِدَت هذه السلاسل في المصادر لكنّها غير موجودة في الكتالوج.\nمحرِّر Po سيُضيفها الآن إلى الكتالوج."
+
+#: ../src/resources/summary.xrc:29
+msgid "New strings"
+msgstr "سلاسل جديدة"
+
+#: ../src/resources/summary.xrc:37
+msgid "These strings are no longer in the sources.\nPoedit will remove them from the catalog now."
+msgstr "السلاسل لم تعد موجودة في المصادر.\nمحرِّر Po سيحذفها من الكتالوج الآن."
+
+#: ../src/resources/summary.xrc:50
+msgid "Obsolete strings"
+msgstr "السلاسل البائدة"
+
+#: ../src/resources/summary.xrc:62
+msgid "(0 new, 0 obsolete)"
+msgstr "(لا جديدة، لا بائدة)"
+
+#: ../src/resources/toolbar.xrc:13 ../src/resources/toolbar.xrc:18
+msgid "Open"
+msgstr "افتح"
+
+#: ../src/resources/toolbar.xrc:25 ../src/resources/toolbar.xrc:30
+msgid "Save catalog"
+msgstr "احفظ الكتالوج"
+
+#: ../src/resources/toolbar.xrc:39
+msgid "Validate"
+msgstr "تحقّق من السّلامة"
+
+#: ../src/resources/toolbar.xrc:40
+msgid "Check for errors in the translation"
+msgstr "تحقّق الأخطاء في التّرجمة"
+
+#: ../src/resources/toolbar.xrc:47 ../src/statistics.cpp:151
+msgid "Statistics"
+msgstr "الإحصائيّات"
+
+#: ../src/resources/toolbar.xrc:48
+msgid "Show translation statistics"
+msgstr ""
+
+#: ../src/resources/toolbar.xrc:55
+msgid "Update"
+msgstr "حدّث"
+
+#: ../src/resources/toolbar.xrc:56
+msgid "Update catalog - synchronize it with sources"
+msgstr "تحديث الكتالوج - زامِنه مع المصادر"
+
+#: ../src/resources/toolbar.xrc:65
+msgid "Toggled if selected string has fuzzy translation"
+msgstr "يُبدَّل إن كانت للسلسلة المحدّدة ترجمة مُبهمة"
+
+#: ../src/resources/toolbar.xrc:75
+msgid "Sidebar"
+msgstr ""
+
+#: ../src/resources/toolbar.xrc:76
+msgid "Show or hide the sidebar."
+msgstr ""
+
+#. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
+#: ../src/sidebar.cpp:128
+msgid "Previous source text:"
+msgstr ""
+
+#: ../src/sidebar.cpp:131
+msgid "The old source text (before it changed during an update) that the fuzzy translation corresponds to."
+msgstr ""
+
+#: ../src/sidebar.cpp:221 ../src/sidebar.cpp:237
+msgid "Add comment"
+msgstr ""
+
+#: ../src/sidebar.cpp:223 ../src/sidebar.cpp:225 ../src/sidebar.cpp:240
+msgid "Add Comment"
+msgstr ""
+
+#: ../src/sidebar.cpp:385
+msgid "Translation suggestions:"
+msgstr "اقتراحات التّرجمة:"
+
+#. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
+#: ../src/sidebar.cpp:410
+msgid "No matches found"
+msgstr ""
+
+#. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (OS X, Linux).
+#: ../src/sidebar.cpp:413
+msgid "No Matches Found"
+msgstr ""
+
+#: ../src/sidebar.cpp:437 ../src/sidebar_suggestions.cpp:105
+msgid "This string was found in Poedit’s translation memory."
+msgstr ""
+
+#: ../src/sidebar_suggestions.cpp:101
+msgid "This suggestion was contributed by another translator to the online TM."
+msgstr ""
+
+#: ../src/sidebar_suggestions.cpp:103
+msgid "This suggestion was machine-translated online."
+msgstr ""
+
+#: ../src/sidebar_suggestions.cpp:199
+#, c-format
+msgid "%d out of %d online suggestion left."
+msgid_plural "%d out of %d online suggestions left."
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
@@ -1784,398 +2109,270 @@ msgstr[3] ""
 msgstr[4] ""
 msgstr[5] ""
 
-#: ../src/edframe.cpp:2192
-msgid "The translation is ready for use."
-msgstr "الترجمة جاهزة للإستخدام"
-
-#: ../src/edframe.cpp:3307
-msgid "The translations were marked as fuzzy, because they may be inaccurate. You should review them for correctness."
+#: ../src/sidebar_suggestions.cpp:202
+msgid "Remove this limitation"
 msgstr ""
 
-#. TRANSLATORS: %s is name of a WordPress plugin
-#: ../src/edframe.cpp:1875
+#: ../src/sidebar_suggestions.cpp:206
+msgid "Not showing additional online suggestions."
+msgstr ""
+
+#: ../src/sidebar_suggestions.cpp:207
+msgid "Unlock online suggestions"
+msgstr ""
+
+#: ../src/statistics.cpp:167 ../src/statistics.cpp:256
+msgid "Items"
+msgstr "العناصر"
+
+#: ../src/statistics.cpp:168 ../src/statistics.cpp:256
+msgid "Words"
+msgstr "الكلمات"
+
+#: ../src/statistics.cpp:174 ../src/statistics.cpp:257
+msgid "Translated"
+msgstr "المُترجَمة"
+
+#: ../src/statistics.cpp:178 ../src/statistics.cpp:204
+#: ../src/statistics.cpp:258 ../src/statistics.cpp:263
+msgid "Needs review (fuzzy)"
+msgstr "تحتاج للمراجعة (مُبهمة)"
+
+#: ../src/statistics.cpp:182 ../src/statistics.cpp:208
+#: ../src/statistics.cpp:259 ../src/statistics.cpp:264
+msgid "Not translated"
+msgstr "غير المُترجَمة"
+
+#: ../src/statistics.cpp:186 ../src/statistics.cpp:260
+msgid "Translations with errors"
+msgstr "ترجمات بأخطاء"
+
+#: ../src/statistics.cpp:194 ../src/statistics.cpp:261
+msgid "Source Text"
+msgstr "النصّ المصدر"
+
+#: ../src/statistics.cpp:200 ../src/statistics.cpp:262
+msgid "Strings in source language"
+msgstr "السلاسل في اللّغة المصدر"
+
+#: ../src/statistics.cpp:217
+msgid "Copy to clipboard"
+msgstr "انسخ إلى الحافظة"
+
+#: ../src/statistics.cpp:219
+msgid "Copy to Clipboard"
+msgstr "انسخ إلى الحافظة"
+
+#: ../src/summarydlg.cpp:56
 #, c-format
-msgid "The “%s” plugin is compatible."
+msgid "(New: %i, obsolete: %i)"
 msgstr ""
 
-#. TRANSLATORS: %s is name of a WordPress theme
-#: ../src/edframe.cpp:1873
+#: ../src/tm/tm_migrate.cpp:154
 #, c-format
-msgid "The “%s” theme is compatible."
-msgstr ""
+msgid "Importing translations: %d"
+msgstr "يستورد التّرجمات: %d"
 
-#: ../src/welcomescreen.cpp:289
-msgid "There are no translations. That’s unusual."
-msgstr ""
+#: ../src/tm/tm_migrate.cpp:173 ../src/tm/tm_migrate.cpp:266
+#: ../src/tm/tm_migrate.cpp:296
+msgid "Poedit Update"
+msgstr "تحديث محرِّر Po"
 
-#: ../src/catalog.cpp:1462
-msgid "There was a problem formatting the file nicely (but it was saved all right)."
-msgstr "توجد مشكلة في تنسيق الملف بشكل مقبول (مع ذلك تم حفظه بدون مشكلة) ـ"
+#: ../src/tm/tm_migrate.cpp:173
+msgid "Preparing migration..."
+msgstr "يحضّر التّرحيل..."
 
-#: ../src/catalog.cpp:1100
-msgid "There were errors when loading the catalog. Some data may be missing or corrupted as the result."
-msgstr "حدثت أعطال أثناء تحميل الكتالوج.قد تُعطب أو تُفقد بيانات نتيجة لهذا"
+#: ../src/tm/tm_migrate.cpp:234
+#, c-format
+msgid "Migration exit status: %d"
+msgstr "حالة إغلاق التّرحيل: %d"
 
-#: ../src/resources/summary.xrc:37
-msgid "These strings are no longer in the sources.\nPoedit will remove them from the catalog now."
-msgstr "هذه العبارات لم تعد موجودة في المصدر.\nسيحذفها Poedit من الكتالوج الآن."
-
-#: ../src/resources/summary.xrc:16
-msgid "These strings were found in the sources but were not in the catalog.\nPoedit will add them to the catalog now."
-msgstr "هذه العبارات موجودة في المصدر لكن ليس في الكتالوج.\nسيضيفها Poedit إلى الكتالوج الآن"
-
-#: ../src/edapp.cpp:317
-msgid "This beta version of Poedit expired."
-msgstr ""
-
-#: ../src/edframe.cpp:2808
-msgid "This catalog has entries with plural forms, but doesn't have Plural-Forms header configured."
-msgstr "ملف الترجمة هذا يحتوي على مدخلات فيها صيغ الجموع، لكن لم يتم تكوين رؤوس صبغ الجموع تلك"
-
-#: ../src/resources/prefs.xrc:369
-msgid "This is the command used to launch the parser.\n%o expands to the name of output file, %K to list\nof keywords, %F to list of input files,\n%C to charset flag (see below)."
-msgstr "هذا هو الأمر المستخدم لتشغيل برنامج التقسيم.\n‪%o‬ يعوض عنها باسم ملف الناتج، و ‪%K‬ بقائمة الكلمات المفتاحية\nو ‪%F‬ بقائمة الملفات المدخلة، و ‪%C‬ بعلامة مجموعة الترميز (انظر أدناه)"
+#: ../src/tm/tm_migrate.cpp:265
+msgid "Poedit needs to convert your translation memory to a new format."
+msgstr "محرِّر Po يحتاج إلى تحويل ذاكرة التّرجمة إلى نسق جديد."
 
 #: ../src/tm/tm_migrate.cpp:269
 msgid "This must be done before Poedit can start. It may take a few minutes if you have lots of translations stored, but should normally be much faster."
-msgstr ""
+msgstr "يجب فعل هذا قبل بدأ محرِّر Po. قد يأخذ ذلك بضع دقائق إن كان لديك الكثير من التّرجمات المخزَّنة، لكن يفترض أن يكون أسرع بكثير."
 
-#: ../src/resources/prefs.xrc:432
-#, c-format
-msgid "This will be attached to the command line\nonly if source codecharset was given. %c expands to charset value."
-msgstr "سيلحق هذا بسطر الأوامر إن كانت المحارف قد عُينت.\n‪%c‬ يعوض عنها بقيمة المحارف"
-
-#: ../src/resources/prefs.xrc:411
-#, c-format
-msgid "This will be attached to the command line once\nfor each input file. %f expands to the filename."
-msgstr "سيلحق هذا بسطر الأوامر مرة لكل ملف مدخلات. ‪%f‬ يعوض عنها باسم الملف"
-
-#: ../src/resources/prefs.xrc:390
-msgid "This will be attached to the command line once\nfor each keyword. %k expands to the keyword."
-msgstr "سيلحق هذا بسطر الأوامر مرة لكل كلمة مفتاحية. ‪%k‬ يعوض عنها بالكلمة المفتاحية"
-
-#: ../src/resources/toolbar.xrc:51
-msgid "Toggled if selected string has fuzzy translation"
-msgstr "وضع علامة على العبارة المحددة بأنها غير مؤكدة"
-
-#: ../src/manager.cpp:253
-msgid "Total"
-msgstr "المجموع"
-
-#: ../src/edapp.cpp:1025
-msgid "Transformations"
-msgstr ""
-
-#: ../src/welcomescreen.cpp:294
-msgid "Translatable entries aren't added manually in the Gettext system, but are automatically extracted\nfrom source code. This way, they stay up to date and accurate.\nTranslators typically use PO template files (POTs) prepared for them by the developer."
-msgstr ""
-
-#: ../src/welcomescreen.cpp:256
-msgid "Translate WordPress theme or plugin"
-msgstr ""
-
-#: ../src/statistics.cpp:173
-msgid "Translated"
-msgstr ""
-
-#: ../src/edframe.cpp:3368
-#, c-format
-msgid "Translated %u strings"
-msgstr ""
-
-#: ../src/edframe.cpp:3349
-msgid "Translating"
-msgstr ""
-
-#: ../src/edlistctrl.cpp:336 ../src/export_html.cpp:180
-#: ../src/statistics.cpp:163
-msgid "Translation"
-msgstr "ترجمة"
-
-#: ../src/resources/menus.xrc:92
-msgid "Translation Is &Fuzzy"
-msgstr "الترجمة &غير مؤكدة"
-
-#: ../src/languagectrl.cpp:123
-msgid "Translation Language"
-msgstr ""
-
-#: ../src/prefsdlg.cpp:192 ../src/prefsdlg.cpp:233
-msgid "Translation Memory"
-msgstr "ذاكرة الترجمة"
-
-#: ../src/edframe.cpp:3435
-msgid "Translation Suggestions:"
-msgstr ""
-
-#: ../src/resources/menus.xrc:91
-msgid "Translation is &fuzzy"
-msgstr "الترجمة ت&غير مؤكدة"
+#: ../src/tm/tm_migrate.cpp:270
+msgid "Proceed"
+msgstr "متابعة"
 
 #: ../src/tm/tm_migrate.cpp:295
 msgid "Translation memory migration failed."
-msgstr ""
-
-#: ../src/resources/properties.xrc:140
-msgid "Translation properties"
-msgstr ""
-
-#: ../src/edframe.cpp:3433
-msgid "Translation suggestions:"
-msgstr ""
-
-#: ../src/edlistctrl.cpp:410
-#, c-format
-msgid "Translation — %s"
-msgstr ""
-
-#: ../src/edframe.cpp:2778
-msgid "Translation's project name isn't set."
-msgstr ""
-
-#: ../src/edframe.cpp:1099
-msgid "Translation:"
-msgstr "الترجمة:"
-
-#: ../src/wordpress.cpp:460
-#, c-format
-msgid "Translations folder (%s) doesn't exist."
-msgstr ""
-
-#: ../src/statistics.cpp:185
-msgid "Translations with errors"
-msgstr ""
-
-#: ../src/edframe.cpp:3773
-msgid "Two"
-msgstr ""
-
-#: ../src/propertiesdlg.cpp:124
-msgid "UTF-8 (recommended)"
-msgstr "UTF-8 (المستحسن)"
-
-#: ../src/edapp.cpp:983 ../src/edframe.cpp:750 ../src/resources/summary.xrc:78
-msgid "Undo"
-msgstr "تراجع"
-
-#: ../src/edapp.cpp:635
-msgid "Unhandled exception occurred."
-msgstr ""
-
-#: ../src/edapp.cpp:621 ../src/edapp.cpp:625 ../src/edapp.cpp:630
-#, c-format
-msgid "Unhandled exception occurred: %s"
-msgstr ""
-
-#: ../src/resources/prefs.xrc:158
-msgid "Unix (recommended)"
-msgstr "Unix (المستحسن)"
-
-#: ../src/manager.cpp:254
-msgid "Untrans"
-msgstr "لم يترجم"
-
-#: ../src/resources/toolbar.xrc:43
-msgid "Update"
-msgstr "تحديث"
-
-#: ../src/resources/manager.xrc:47
-msgid "Update all"
-msgstr "تحديث الكل"
-
-#: ../src/resources/manager.xrc:48
-msgid "Update all catalogs in the project"
-msgstr "تحديث كل الكتالوجات في المشروع"
-
-#: ../src/resources/toolbar.xrc:44
-msgid "Update catalog - synchronize it with sources"
-msgstr "تحديث الكتالوج - مزامنته مع المصدر"
-
-#: ../src/resources/menus.xrc:148
-msgid "Update from &POT File..."
-msgstr "تحديث من ملف &POT..."
-
-#: ../src/resources/menus.xrc:147
-msgid "Update from &POT file..."
-msgstr "تحديث من &ملف POT..."
-
-#: ../src/welcomescreen.cpp:310
-msgid "Update from POT"
-msgstr ""
-
-#: ../src/resources/summary.xrc:4
-msgid "Update summary"
-msgstr "ملخص التحديث"
-
-#: ../src/edframe.cpp:2032 ../src/manager.cpp:452
-msgid "Updating catalog"
-msgstr "تحديث الكتالوج"
-
-#: ../src/edframe.cpp:2051
-msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr "فشل تحديث النشرة. انقر على \"تفاصيل >> ' لمزيد من المعلومات"
-
-#: ../src/edframe.cpp:980
-msgid "Upgrade to Poedit Pro to get additional features and support Poedit's development."
-msgstr ""
-
-#: ../src/welcomescreen.cpp:227
-msgid "Upgrade to the Pro version of Poedit with more features."
-msgstr ""
-
-#: ../src/licensing.cpp:509
-msgid "Upgrade..."
-msgstr ""
-
-#: ../src/resources/properties.xrc:62
-msgid "Use custom expression"
-msgstr ""
-
-#: ../src/resources/prefs.xrc:208
-msgid "Use custom font for text fields"
-msgstr "استخدم خط محدد في حقول النصوص"
-
-#: ../src/resources/prefs.xrc:188
-msgid "Use custom font for translations list"
-msgstr "استخدم خط محدد في قائمة الترجمات"
-
-#: ../src/resources/properties.xrc:53
-msgid "Use default rules for this language"
-msgstr ""
-
-#: ../src/resources/properties.xrc:194
-msgid "Use these keywords (function names) to recognize translatable strings\nin source files:"
-msgstr "استخدام هذه الكلمات (أسماء وظيفية) للتعرف على العبارات القابلة للترجمة\nفي ملفات المصدر:"
-
-#: ../src/prefsdlg.cpp:91
-msgid "Use translation memory"
-msgstr ""
-
-#: ../src/resources/toolbar.xrc:37
-msgid "Validate"
-msgstr "تحقق"
-
-#: ../src/edframe.cpp:2148 ../src/edframe.cpp:2178
-msgid "Validation results"
-msgstr "نتائج الفحص"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#: ../src/aboutbox.cpp:120 ../src/edapp.cpp:770 ../src/welcomescreen.cpp:213
-#, c-format
-msgid "Version %s"
-msgstr "الإصدار %s"
-
-#: ../src/licensing.cpp:192
-msgid "View License Key"
-msgstr ""
-
-#: ../src/wordpress.cpp:556
-msgid "View Log"
-msgstr ""
-
-#: ../src/licensing.cpp:190
-msgid "View license key"
-msgstr ""
-
-#: ../src/wordpress.cpp:552
-msgid "View log"
-msgstr ""
-
-#: ../src/welcomescreen.cpp:208
-msgid "Welcome to Poedit"
-msgstr ""
-
-#: ../src/resources/find.xrc:50
-msgid "Whole words only"
-msgstr "كلمات كاملة فقط"
-
-#: ../src/edapp.cpp:1038 ../src/resources/menus.xrc:253
-msgid "Window"
-msgstr ""
-
-#: ../src/resources/prefs.xrc:159
-msgid "Windows"
-msgstr "Windows"
-
-#: ../src/edframe.cpp:1785 ../src/edframe.cpp:1861 ../src/edframe.cpp:1878
-msgid "WordPress"
-msgstr ""
-
-#: ../src/wordpress.cpp:567
-msgid "WordPress Errors Log"
-msgstr ""
-
-#: ../src/wordpress.cpp:536
-msgid "WordPress error"
-msgstr ""
-
-#: ../src/statistics.cpp:167
-msgid "Words"
-msgstr ""
-
-#: ../src/welcomescreen.cpp:314
-msgid "You can also extract translatable strings directly from the source code:"
-msgstr ""
-
-#: ../src/edframe.cpp:773
-msgid "You can't drop more than one file on Poedit window."
-msgstr "Poedit لا يمكنك اسقاط أكثر من ملف واحد على نافذة"
-
-#: ../src/chooselang.cpp:89
-msgid "You must restart Poedit for this change to take effect."
-msgstr "ينبغي إعادة تشغيله Poedit ليسري هذا التغيير."
-
-#: ../src/edframe.cpp:2763
-msgid "You should set your email address in Preferences so that it can be used for Last-Translator header in GNU gettext files."
-msgstr "GNU gettext يجب عليك تعيين عنوان بريدك الإلكتروني في التفضيلات بحيث يمكن استخدامه في آخر المقدمة عن المترجم في ملفات "
-
-#: ../src/edframe.cpp:1491
-msgid "Your changes will be lost if you don't save them."
-msgstr "ستفقد ما قمت به من تغييرات إذا لم تعمل حفظ لها"
-
-#: ../src/licensing.cpp:165
-msgid "Your copy is upgraded to Poedit Pro."
-msgstr ""
-
-#: ../src/resources/prefs.xrc:35
-msgid "Your email address:"
-msgstr "عنوان بريدك الإلكتروني:"
-
-#: ../src/resources/prefs.xrc:47
-msgid "Your name and email set below are only used\nto set the Last-Translator header of GNU gettext files."
-msgstr "اسمك و بريدك الإلكتروني أدناه\nفقط سيتم استخدامها لوضع مقدمة آخر\nمترجم لملفات GNU gettext\n\nمنتديات عميد التعريب\nالمصدر الأول لتعريب البرامج في الوطن العربي\nترجمة الأستاذ عوض الغامدي و الأستاذ عبد الجبار\nwww.alghaamdi.com"
-
-#: ../src/resources/prefs.xrc:21
-msgid "Your name:"
-msgstr "إسمك:"
+msgstr "فشل ترحيل ذاكرة التّرجمة."
 
 #: ../src/tm/tm_migrate.cpp:300
 #, c-format
 msgid "Your translation memory data couldn't be migrated. The error was:\n\n%s\nPlease email help@poedit.net and we’ll get it fixed."
+msgstr "تعذّر ترحيل بيانات ذاكرة التّرجمة. الخطأ كان:\n\n%s\nفضلًا راسل help@poedit.net وسنُصلح الأمر."
+
+#: ../src/utility.cpp:61 ../src/utility.cpp:71
+msgid "Cannot create temporary directory."
+msgstr "تعذّر إنشاء الدّليل المؤقّت."
+
+#: ../src/welcomescreen.cpp:170
+msgid "Check theme or plugin compatibility"
 msgstr ""
 
-#: ../src/licensing.cpp:179
-msgid "You’re awesome! Thank you so much\nfor purchasing Poedit Pro."
+#: ../src/welcomescreen.cpp:228
+msgid "Welcome to Poedit"
+msgstr "مرحبًا في محرِّر Po"
+
+#: ../src/welcomescreen.cpp:247
+msgid "Upgrade to the Pro version of Poedit with more features."
+msgstr "رقِّ إلى الإصدار المحترف من محرِّر Po مع مزايا أكثر."
+
+#: ../src/welcomescreen.cpp:264
+msgid "Edit a translation"
+msgstr "حرّر ترجمة"
+
+#: ../src/welcomescreen.cpp:265
+msgid "Open an existing PO file and edit the translation."
+msgstr "افتح ملف PO موجود وحرّر التّرجمة."
+
+#: ../src/welcomescreen.cpp:270
+msgid "Create new translation"
+msgstr "أنشئ ترجمة جديدة"
+
+#: ../src/welcomescreen.cpp:271
+msgid "Take an existing PO file or POT template and create a new translation from it."
+msgstr "خُذ ملف PO أو قالب POT موجودين وأنشئ ترجمة منهما."
+
+#: ../src/welcomescreen.cpp:276
+msgid "Translate WordPress theme or plugin"
+msgstr "ترجم سمة أو ملحقة ووردبرِس"
+
+#. TRANSLATORS: Please don't use any form of "automatically" in the translation, it would mislead people.
+#: ../src/welcomescreen.cpp:278
+msgid "Create a new translation. Poedit will set everything up; you can focus on translating."
+msgstr "أنشئ ترجمة جديدة. محرِّر Po سيضبط كلّ شيء؛ بذلك تركّز على التّرجمة."
+
+#: ../src/welcomescreen.cpp:309
+msgid "There are no translations. That’s unusual."
+msgstr "ليست هناك ترجمات. هذا غير طبيعي."
+
+#: ../src/welcomescreen.cpp:314
+msgid "Translatable entries aren't added manually in the Gettext system, but are automatically extracted\nfrom source code. This way, they stay up to date and accurate.\nTranslators typically use PO template files (POTs) prepared for them by the developer."
+msgstr "لا تُضاف المُدخلات القابلة للتّرجمة إلى نظام غِت​تكست يدويًّا، بل تُستخرَج آليًّا من الشِفرة المصدرية. بهذه الطريقة تبقى المُدخلات محدّثة وصحيحة. يستخدم المترجمون عادةً ملفات قوالب PO ‏(POT) يجّهزها المطوّر لهم."
+
+#: ../src/welcomescreen.cpp:319
+msgid "(Learn more about GNU gettext)"
+msgstr "(تعلّم المزيد عن غنو غِت​تكست)"
+
+#: ../src/welcomescreen.cpp:323
+msgid "The simplest way to fill this catalog is to update it from a POT:"
+msgstr "الطريقة الأسهل لملئ هذا الكتالوج هي بتحديثه من POT:"
+
+#: ../src/welcomescreen.cpp:330
+msgid "Update from POT"
+msgstr "حدّث من POT"
+
+#: ../src/welcomescreen.cpp:331
+msgid "Take translatable strings from an existing POT template."
+msgstr "خُذ سلاسل قابلة للتّرجمة من قالب POT موجود."
+
+#: ../src/welcomescreen.cpp:334
+msgid "You can also extract translatable strings directly from the source code:"
+msgstr "يمكنك أيضًا استخراج السلاسل القابلة للتّرجمة مباشرةً من الشِفرة المصدريّة:"
+
+#: ../src/welcomescreen.cpp:341
+msgid "Extract from sources"
+msgstr "استخرج من المصادر"
+
+#: ../src/welcomescreen.cpp:342
+msgid "Configure source code extraction in Properties."
+msgstr "اضبط استخراج الشِفرة المصدريّة في الخصائص."
+
+#: ../src/wordpress.cpp:91 ../src/wordpress.cpp:98
+#, c-format
+msgid "Failed to read file '%s'."
+msgstr "فشلت قراءة الملفّ '%s'."
+
+#: ../src/wordpress.cpp:136
+#, c-format
+msgid "Confused by ambiguous values of \"%s\" in %s."
 msgstr ""
 
-#: ../src/edframe.cpp:3769
-msgid "Zero"
+#: ../src/wordpress.cpp:254
+#, c-format
+msgid "Couldn't detect POs location for \"%s\"."
+msgstr "تعذّر اكتشاف موقع ملفّات PO لِـ \"%s\"."
+
+#: ../src/wordpress.cpp:324
+#, c-format
+msgid "Couldn't detect translation setup of the \"%s\" theme."
+msgstr "تعذّر اكتشاف ترجمة إعداد السمة \"%s\"."
+
+#: ../src/wordpress.cpp:329
+#, c-format
+msgid "The \"%s\" theme isn't localization-ready."
+msgstr "السمة \"%s\" ليست جاهزة للتّوطين بعد."
+
+#: ../src/wordpress.cpp:371
+msgid "Confused: multiple main plugin files."
 msgstr ""
 
-#: ../src/edapp.cpp:1043
-msgid "Zoom"
-msgstr ""
+#: ../src/wordpress.cpp:405 ../src/wordpress.cpp:417
+#, c-format
+msgid "Couldn't detect translation domain of the \"%s\" plugin."
+msgstr "تعذّر اكتشاف نطاق التّرجمة للملحقة \"%s\"."
 
-#: ../src/edapp.cpp:577
-msgid "don't delete temporary files (for debugging)"
-msgstr "لا تقم بحذف الملفات المؤقتة (من أجل التصحيح) ـ"
+#: ../src/wordpress.cpp:410
+#, c-format
+msgid "The \"%s\" plugin isn't localization-ready."
+msgstr "الملحقة \"%s\" ليست جاهزة للتّوطين بعد."
 
-#: ../src/propertiesdlg.cpp:90
-msgid "e.g. nplurals=2; plural=(n > 1);"
-msgstr ""
+#: ../src/wordpress.cpp:454
+msgid "Found neither WordPress theme nor plugin in the folder."
+msgstr "لم يُعثر في المجلّد على سمة ووردبرِس ولا على ملحقة أيضًا."
 
-#: ../src/edlistctrl.cpp:407
-msgid "unknown language"
-msgstr ""
+#: ../src/wordpress.cpp:457
+msgid "Folder looks like both a plugin and a theme."
+msgstr "يبدو المجلّد كأنه ملحقة وَسِمة معًا."
+
+#: ../src/wordpress.cpp:475
+#, c-format
+msgid "Translations folder (%s) doesn't exist."
+msgstr "مجلّد التّرجمات (%s) غير موجود."
+
+#: ../src/wordpress.cpp:552
+msgid "Failed to extract WordPress information."
+msgstr "فشل استخراج معلومات ووردبرِس."
+
+#: ../src/wordpress.cpp:553
+msgid "WordPress error"
+msgstr "خطأ ووردبرِس"
+
+#: ../src/wordpress.cpp:562
+#, c-format
+msgid "Poedit couldn’t understand the content of the folder you selected. This may be a problem with the plugin/theme or it may be Poedit being silly. The error is:\n\n • %s\n\nPlease email help@poedit.net and we’ll sort it out."
+msgstr "تعذّر على محرِّر Po فهم محتوى المجلّد الذي حدّدته. قد تكون هذه مشكلة مع الملحقة/السمة أو قد يكون محرِّر Po سخيفًا. الخطأ هو:\n\n • %s\n\nفضلًا راسل help@poedit.net وسنرتّب هذا الأمر."
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: ../src/wordpress.cpp:568
+msgid "Email support"
+msgstr "راسل الدعم"
+
+#: ../src/wordpress.cpp:569
+msgid "View log"
+msgstr "اعرض السجلّ"
+
+#. TRANSLATORS: This is a button that sends an email to support when clicked
+#: ../src/wordpress.cpp:572
+msgid "Email Support"
+msgstr "راسل الدعم"
+
+#: ../src/wordpress.cpp:573
+msgid "View Log"
+msgstr "اعرض السجلّ"
+
+#: ../src/wordpress.cpp:584
+msgid "WordPress Errors Log"
+msgstr "سجلّ أخطاء ووردبرِس"
+
+#: ../src/wordpress.cpp:585
+msgid "Please email this log to help@poedit.net. Thank you!"
+msgstr "فضلًا أرسل هذا السجلّ إلى help@poedit.net. شكرًا لك!"
 
