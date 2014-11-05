@@ -132,42 +132,25 @@ bool Catalog::ExportToHTML(const wxString& filename)
     int all = 0;
     int fuzzy = 0;
     int untranslated = 0;
-    int badtokens = 0;
+    int errors = 0;
     int unfinished = 0;
-    GetStatistics(&all, &fuzzy, &badtokens, &untranslated, &unfinished);
+    GetStatistics(&all, &fuzzy, &errors, &untranslated, &unfinished);
 
     int percent = (all == 0 ) ? 0 : (100 * (all - unfinished) / all);
 
-    wxString details;
-    if ( fuzzy > 0 )
+    line.Printf(_("Translated: %d of %d (%d %%)"), all - unfinished, all, percent);
+    if (unfinished > 0)
     {
-        details += wxString::Format(wxPLURAL("%i fuzzy", "%i fuzzy", fuzzy), fuzzy);
+        line += L"  •  ";
+        line += wxString::Format(_("Remains: %d"), unfinished);
     }
-    if ( badtokens > 0 )
+    if (errors > 0)
     {
-        if ( !details.empty() )
-            details += ", ";
-        details += wxString::Format(wxPLURAL("%i bad token", "%i bad tokens", badtokens), badtokens);
-    }
-    if ( untranslated > 0 )
-    {
-        if ( !details.empty() )
-            details += ", ";
-        details += wxString::Format(wxPLURAL("%i not translated", "%i not translated", untranslated), untranslated);
-    }
-    if ( details.empty() )
-    {
-        line.Printf(wxPLURAL("%i %% translated, %i string", "%i %% translated, %i strings", all),
-                    percent, all);
-    }
-    else
-    {
-        line.Printf(wxPLURAL("%i %% translated, %i string (%s)", "%i %% translated, %i strings (%s)", all),
-                    percent, all, details.c_str());
+        line += L"  •  ";
+        line += wxString::Format(wxPLURAL("%d error", "%d errors", errors), errors);
     }
 
     f.AddLine(line);
-
 
     // data printed in a table :
     f.AddLine("<table border=1 cellspacing=2 cellpadding=4>");
