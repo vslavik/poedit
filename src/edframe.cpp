@@ -359,16 +359,12 @@ class CustomizedTextCtrl : public wxTextCtrl
 public:
     CustomizedTextCtrl(wxWindow *parent,
                        wxWindowID winid,
-                       const wxString &value = wxEmptyString,
-                       const wxPoint &pos = wxDefaultPosition,
-                       const wxSize &size = wxDefaultSize,
-                       long style = 0,
-                       const wxValidator& validator = wxDefaultValidator,
-                       const wxString &name = wxTextCtrlNameStr)
-       : wxTextCtrl(parent, winid, value, pos, size, style, validator, name)
+                       long style = 0)
+       : wxTextCtrl(parent, winid, "", wxDefaultPosition, wxDefaultSize, style)
     {
         NSTextView *text = TextView();
 
+        [text setTextContainerInset:NSMakeSize(1,3)];
         [text setRichText:NO];
 
         [text setAutomaticQuoteSubstitutionEnabled:NO];
@@ -421,20 +417,32 @@ protected:
         return [scroll documentView];
     }
 };
+
 #else // !__WXOSX__
-typedef wxTextCtrl CustomizedTextCtrl;
-#endif
 
+class CustomizedTextCtrl : public wxTextCtrl
+{
+public:
+    CustomizedTextCtrl(wxWindow *parent,
+                       wxWindowID winid,
+                       long style = 0)
+       : wxTextCtrl(parent, winid, "", wxDefaultPosition, wxDefaultSize, style)
+    {
+        wxTextAttr padding;
+        padding.SetLeftIndent(5);
+        padding.SetRightIndent(5);
+        SetDefaultStyle(padding);
+    }
+};
 
+#endif // !__WXOSX__
 
 
 class AnyTranslatableTextCtrl : public CustomizedTextCtrl
 {
     public:
         AnyTranslatableTextCtrl(wxWindow *parent, wxWindowID winid, int style = 0)
-           : CustomizedTextCtrl(parent, winid, wxEmptyString,
-                                wxDefaultPosition, wxDefaultSize,
-                                wxTE_MULTILINE | wxTE_RICH2 | style)
+           : CustomizedTextCtrl(parent, winid, wxTE_MULTILINE | wxTE_RICH2 | style)
         {
             InitColors();
             Bind(wxEVT_TEXT, [=](wxCommandEvent& e){
