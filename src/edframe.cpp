@@ -425,23 +425,7 @@ protected:
 typedef wxTextCtrl CustomizedTextCtrl;
 #endif
 
-class UnfocusableTextCtrl : public CustomizedTextCtrl
-{
-    public:
-        UnfocusableTextCtrl(wxWindow *parent,
-                            wxWindowID winid,
-                            const wxString &value = wxEmptyString,
-                            const wxPoint &pos = wxDefaultPosition,
-                            const wxSize &size = wxDefaultSize,
-                            long style = 0,
-                            const wxValidator& validator = wxDefaultValidator,
-                            const wxString &name = wxTextCtrlNameStr)
-           : CustomizedTextCtrl(parent, winid, value, pos, size, style, validator, name)
-        {
-        }
 
-        virtual bool AcceptsFocus() const { return false; }
-};
 
 
 class AnyTranslatableTextCtrl : public CustomizedTextCtrl
@@ -593,6 +577,8 @@ class SourceTextCtrl : public AnyTranslatableTextCtrl
         {
             SetLanguageRTL(false); // English is LTR
         }
+
+        virtual bool AcceptsFocus() const { return false; }
 };
 
 
