@@ -1878,11 +1878,18 @@ bool Catalog::Merge(Catalog *refcat)
     refcat->DoSaveOnly(tmp1);
     DoSaveOnly(tmp2);
 
+    wxString flags("-q --force-po");
+    if (wxConfig::Get()->ReadBool("use_tm_when_updating", false) == false)
+    {
+        flags += " --no-fuzzy-matching";
+    }
+
     bool succ = ExecuteGettext
                 (
                     wxString::Format
                     (
-                        "msgmerge -q --force-po -o %s %s %s",
+                        "msgmerge %s -o %s %s %s",
+                        flags,
                         QuoteCmdlineArg(tmp3),
                         QuoteCmdlineArg(tmp2),
                         QuoteCmdlineArg(tmp1)
