@@ -281,8 +281,9 @@ bool AttentionMessage::IsBlacklisted(const wxString& id)
 
 void AttentionMessage::AddDontShowAgain()
 {
+    auto id = m_id;
     AddAction(
-        MSW_OR_OTHER(_("Don't show again"), _("Don't Show Again")), [=]{
-        AddToBlacklist(m_id);
+        MSW_OR_OTHER(_("Don't show again"), _("Don't Show Again")), [id]{
+        AddToBlacklist(id);
     });
 }
