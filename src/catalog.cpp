@@ -1492,10 +1492,14 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
     int msgcat_ok = false;
     {
         wxString wrappingFlag;
-        if (m_fileWrappingWidth == NO_WRAPPING)
-            wrappingFlag = " --no-wrap";
-        else if (m_fileWrappingWidth != DEFAULT_WRAPPING)
-            wrappingFlag.Printf(" --width=%d", m_fileWrappingWidth);
+        if (wxConfigBase::Get()->ReadBool("keep_crlf", true))
+        {
+            if (m_fileWrappingWidth == NO_WRAPPING)
+                wrappingFlag = " --no-wrap";
+            else if (m_fileWrappingWidth != DEFAULT_WRAPPING)
+                wrappingFlag.Printf(" --width=%d", m_fileWrappingWidth);
+        }
+        // else: reformat from scratch using default settings
 
         auto msgcatCmd = wxString::Format("msgcat --force-po%s -o %s %s",
                                           wrappingFlag,

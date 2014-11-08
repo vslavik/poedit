@@ -216,9 +216,9 @@ public:
         m_crlf->Append(_("Unix (recommended)"));
         m_crlf->Append(_("Windows"));
         crlfbox->Add(m_crlf, wxSizerFlags(1).Center().Expand().BORDER_OSX(wxLEFT, 3));
-        m_keepCrlf = new wxCheckBox(this, wxID_ANY, _("Preserve line endings of existing files"));
+        m_keepFmt = new wxCheckBox(this, wxID_ANY, _("Preserve formatting of existing files"));
         crlfbox->AddSpacer(1);
-        crlfbox->Add(m_keepCrlf);
+        crlfbox->Add(m_keepFmt);
 
         sizer->AddSpacer(10);
         sizer->Add(new HeadingLabel(this, _("Appearance")));
@@ -287,7 +287,7 @@ public:
         m_compileMo->SetValue(cfg.ReadBool("compile_mo", true));
         m_showSummary->SetValue(cfg.ReadBool("show_summary", false));
         m_focusToText->SetValue(cfg.ReadBool("focus_to_text", false));
-        m_keepCrlf->SetValue(cfg.ReadBool("keep_crlf", true));
+        m_keepFmt->SetValue(cfg.ReadBool("keep_crlf", true));
 
         if (IsSpellcheckingAvailable())
         {
@@ -313,7 +313,7 @@ public:
         cfg.Write("compile_mo", m_compileMo->GetValue());
         cfg.Write("show_summary", m_showSummary->GetValue());
         cfg.Write("focus_to_text", m_focusToText->GetValue());
-        cfg.Write("keep_crlf", m_keepCrlf->GetValue());
+        cfg.Write("keep_crlf", m_keepFmt->GetValue());
 
         if (IsSpellcheckingAvailable())
         {
@@ -345,7 +345,7 @@ private:
     wxTextCtrl *m_userName, *m_userEmail;
     wxCheckBox *m_compileMo, *m_showSummary, *m_focusToText, *m_spellchecking;
     wxChoice *m_crlf;
-    wxCheckBox *m_keepCrlf;
+    wxCheckBox *m_keepFmt;
     wxCheckBox *m_useFontList, *m_useFontText;
     wxFontPickerCtrl *m_fontList, *m_fontText;
 #if NEED_CHOOSELANG_UI
