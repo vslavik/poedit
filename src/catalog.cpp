@@ -56,30 +56,15 @@
 // Textfile processing utilities:
 // ----------------------------------------------------------------------
 
-
-// Read one line from file, remove all \r and \n characters, ignore empty lines
-static wxString ReadTextLine(wxTextFile* f)
+namespace
 {
-    wxString s;
-
-    while (s.empty())
-    {
-        if (f->Eof()) return wxEmptyString;
-
-        // read next line and strip insignificant whitespace from it:
-        s = f->GetNextLine().Strip(wxString::both);
-    }
-
-    return s;
-}
-
 
 // If input begins with pattern, fill output with end of input (without
 // pattern; strips trailing spaces) and return true.  Return false otherwise
 // and don't touch output. Is permissive about whitespace in the input:
 // a space (' ') in pattern will match any number of any whitespace characters
 // on that position in input.
-static bool ReadParam(const wxString& input, const wxString& pattern, wxString& output)
+bool ReadParam(const wxString& input, const wxString& pattern, wxString& output)
 {
     if (input.size() < pattern.size())
         return false;
@@ -159,7 +144,7 @@ bool VerifyFileCharset(const wxTextFile& f, const wxString& filename,
 
 
 // converts \n into newline character and \\ into \:
-static wxString UnescapeCEscapes(const wxString& str)
+wxString UnescapeCEscapes(const wxString& str)
 {
     wxString out;
     size_t len = str.size();
@@ -202,6 +187,42 @@ static wxString UnescapeCEscapes(const wxString& str)
 
     return out;
 }
+
+
+wxTextFileType GetFileCRLFFormat(wxTextFile& po_file)
+{
+    wxLogNull null;
+    auto crlf = po_file.GuessType();
+
+    // Discard any unsupported setting. In particular, we ignore "Mac"
+    // line endings, because the ancient OS 9 systems aren't used anymore,
+    // OSX uses Unix ending *and* "Mac" endings break gettext tools. So if
+    // we encounter a catalog with "Mac" line endings, we silently convert
+    // it into Unix endings (i.e. the modern Mac).
+    if (crlf == wxTextFileType_Mac)
+        crlf = wxTextFileType_Unix;
+    if (crlf != wxTextFileType_Dos && crlf != wxTextFileType_Unix)
+        crlf = wxTextFileType_None;
+    return crlf;
+}
+
+wxTextFileType GetDesiredCRLFFormat(wxTextFileType existingCRLF)
+{
+    if (existingCRLF != wxTextFileType_None && wxConfigBase::Get()->ReadBool("keep_crlf", true))
+    {
+        return existingCRLF;
+    }
+    else
+    {
+        wxString format = wxConfigBase::Get()->Read("crlf_format", "unix");
+        if (format == "win")
+            return wxTextFileType_Dos;
+        else /* "unix" or obsolete settings */
+            return wxTextFileType_Unix;
+    }
+}
+
+} // anonymous namespace
 
 
 // ----------------------------------------------------------------------
@@ -581,28 +602,28 @@ bool CatalogParser::Parse()
     unsigned mlinenum = 0;
 
     line = m_textFile->GetFirstLine();
-    if (line.empty()) line = ReadTextLine(m_textFile);
+    if (line.empty()) line = ReadTextLine();
 
     while (!line.empty())
     {
         // ignore empty special tags (except for automatic comments which we
         // DO want to preserve):
         while (line == "#," || line == "#:" || line == "#|")
-            line = ReadTextLine(m_textFile);
+            line = ReadTextLine();
 
         // flags:
         // Can't we have more than one flag, now only the last is kept ...
         if (ReadParam(line, "#, ", dummy))
         {
             mflags = "#, " + dummy;
-            line = ReadTextLine(m_textFile);
+            line = ReadTextLine();
         }
 
         // auto comments:
         if (ReadParam(line, "#. ", dummy) || ReadParam(line, "#.", dummy)) // second one to account for empty auto comments
         {
             mautocomments.Add(dummy);
-            line = ReadTextLine(m_textFile);
+            line = ReadTextLine();
         }
 
         // references:
@@ -611,14 +632,14 @@ bool CatalogParser::Parse()
             // Just store the references unmodified, we don't modify this
             // data anywhere.
             mrefs.push_back(dummy);
-            line = ReadTextLine(m_textFile);
+            line = ReadTextLine();
         }
 
         // previous msgid value:
         else if (ReadParam(line, "#| ", dummy))
         {
             msgid_old.Add(dummy);
-            line = ReadTextLine(m_textFile);
+            line = ReadTextLine();
         }
 
         // msgctxt:
@@ -626,12 +647,15 @@ bool CatalogParser::Parse()
         {
             has_context = true;
             msgctxt = dummy.RemoveLast();
-            while (!(line = ReadTextLine(m_textFile)).empty())
+            while (!(line = ReadTextLine()).empty())
             {
                 if (line[0u] == _T('\t'))
                     line.Remove(0, 1);
                 if (line[0u] == _T('"') && line.Last() == _T('"'))
+                {
                     msgctxt += line.Mid(1, line.Length() - 2);
+                    PossibleWrappedLine();
+                }
                 else
                     break;
             }
@@ -642,12 +666,15 @@ bool CatalogParser::Parse()
         {
             mstr = dummy.RemoveLast();
             mlinenum = unsigned(m_textFile->GetCurrentLine() + 1);
-            while (!(line = ReadTextLine(m_textFile)).empty())
+            while (!(line = ReadTextLine()).empty())
             {
                 if (line[0u] == _T('\t'))
                     line.Remove(0, 1);
                 if (line[0u] == _T('"') && line.Last() == _T('"'))
+                {
                     mstr += line.Mid(1, line.Length() - 2);
+                    PossibleWrappedLine();
+                }
                 else
                     break;
             }
@@ -659,12 +686,15 @@ bool CatalogParser::Parse()
             msgid_plural = dummy.RemoveLast();
             has_plural = true;
             mlinenum = unsigned(m_textFile->GetCurrentLine() + 1);
-            while (!(line = ReadTextLine(m_textFile)).empty())
+            while (!(line = ReadTextLine()).empty())
             {
                 if (line[0u] == _T('\t'))
                     line.Remove(0, 1);
                 if (line[0u] == _T('"') && line.Last() == _T('"'))
+                {
                     msgid_plural += line.Mid(1, line.Length() - 2);
+                    PossibleWrappedLine();
+                }
                 else
                     break;
             }
@@ -680,12 +710,15 @@ bool CatalogParser::Parse()
             }
 
             wxString str = dummy.RemoveLast();
-            while (!(line = ReadTextLine(m_textFile)).empty())
+            while (!(line = ReadTextLine()).empty())
             {
                 if (line[0u] == _T('\t'))
                     line.Remove(0, 1);
                 if (line[0u] == _T('"') && line.Last() == _T('"'))
+                {
                     str += line.Mid(1, line.Length() - 2);
+                    PossibleWrappedLine();
+                }
                 else
                     break;
             }
@@ -735,11 +768,14 @@ bool CatalogParser::Parse()
             {
                 wxString str = dummy.RemoveLast();
 
-                while (!(line=ReadTextLine(m_textFile)).empty())
+                while (!(line=ReadTextLine()).empty())
                 {
                     line.Trim(/*fromRight=*/false);
                     if (line[0u] == _T('"') && line.Last() == _T('"'))
+                    {
                         str += line.Mid(1, line.Length() - 2);
+                        PossibleWrappedLine();
+                    }
                     else
                     {
                         if (ReadParam(line, "msgstr[", dummy))
@@ -776,7 +812,7 @@ bool CatalogParser::Parse()
             wxArrayString deletedLines;
             deletedLines.Add(line);
             mlinenum = unsigned(m_textFile->GetCurrentLine() + 1);
-            while (!(line = ReadTextLine(m_textFile)).empty())
+            while (!(line = ReadTextLine()).empty())
             {
                 // if line does not start with "#~" anymore, stop reading
                 if (!ReadParam(line, "#~", dummy))
@@ -813,20 +849,70 @@ bool CatalogParser::Parse()
             {
                 mcomment << line << _T('\n');
                 readNewLine = true;
-                line = ReadTextLine(m_textFile);
+                line = ReadTextLine();
             }
 
             if (!readNewLine)
-                line = ReadTextLine(m_textFile);
+                line = ReadTextLine();
         }
 
         else
         {
-            line = ReadTextLine(m_textFile);
+            line = ReadTextLine();
         }
     }
 
     return true;
+}
+
+
+wxString CatalogParser::ReadTextLine()
+{
+    m_previousLineHardWrapped = m_lastLineHardWrapped;
+    m_lastLineHardWrapped = false;
+
+    wxString s;
+
+    while (s.empty())
+    {
+        if (m_textFile->Eof())
+            return wxEmptyString;
+
+        // read next line and strip insignificant whitespace from it:
+        auto ln = m_textFile->GetNextLine();
+
+        // gettext tools don't include automatic comments in wrapping, so they can't
+        // be reliably used to detect file's wrapping either; just skip them.
+        if (!ln.StartsWith(wxS("#. ")))
+        {
+            if (ln.EndsWith(wxS("\\n\"")))
+            {
+                // Similarly, lines ending with \n are always wrapped, so skip that too.
+                m_lastLineHardWrapped = true;
+            }
+            else if (ln == "msgid \"\"" || ln == "msgstr \"\"")
+            {
+                // The header is always indented like this
+                m_lastLineHardWrapped = true;
+            }
+            else
+            {
+                m_detectedLineWidth = std::max(m_detectedLineWidth, (int)ln.size());
+            }
+        }
+
+        s = ln.Strip(wxString::both);
+    }
+
+    return s;
+}
+
+int CatalogParser::GetWrappingWidth() const
+{
+    if (!m_detectedWrappedLines)
+        return Catalog::NO_WRAPPING;
+
+    return m_detectedLineWidth;
 }
 
 
@@ -1002,6 +1088,9 @@ bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
 
 Catalog::Catalog()
 {
+    m_fileCRLF = wxTextFileType_None;
+    m_fileWrappingWidth = DEFAULT_WRAPPING;
+
     m_isOk = true;
     m_header.BasePath = wxEmptyString;
     for(int i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
@@ -1019,6 +1108,9 @@ Catalog::~Catalog()
 
 Catalog::Catalog(const wxString& po_file, int flags)
 {
+    m_fileCRLF = wxTextFileType_None;
+    m_fileWrappingWidth = DEFAULT_WRAPPING;
+
     m_isOk = Load(po_file, flags);
 }
 
@@ -1132,6 +1224,10 @@ bool Catalog::Load(const wxString& po_file, int flags)
                     static_cast<Bookmark>(i));
         }
     }
+
+    m_fileCRLF = GetFileCRLFFormat(f);
+    m_fileWrappingWidth = parser.GetWrappingWidth();
+    wxLogTrace("poedit", "detect line wrapping: %d", m_fileWrappingWidth);
 
     // If we didn't find any entries, the file must be invalid:
     if (!parser.FileIsValid)
@@ -1292,51 +1388,6 @@ bool CanEncodeToCharset(const wxTextFile& f, const wxString& charset)
 }
 
 
-void GetCRLFBehaviour(wxTextFileType& type, bool& preserve)
-{
-    wxString format = wxConfigBase::Get()->Read("crlf_format", "unix");
-
-    if (format == "win") type = wxTextFileType_Dos;
-    else /* "unix" or obsolete settings */ type = wxTextFileType_Unix;
-
-    preserve = wxConfigBase::Get()->ReadBool("keep_crlf", true);
-}
-
-
-wxTextFileType GetDesiredCRLFFormat(const wxString& po_file)
-{
-    wxTextFileType crlfDefault, crlf;
-    bool crlfPreserve;
-    GetCRLFBehaviour(crlfDefault, crlfPreserve);
-
-    wxTextFile f;
-    if ( crlfPreserve && wxFileExists(po_file) &&
-         f.Open(po_file, wxConvISO8859_1) )
-    {
-        wxLogNull null;
-        crlf = f.GuessType();
-
-        // Discard any unsupported setting. In particular, we ignore "Mac"
-        // line endings, because the ancient OS 9 systems aren't used anymore,
-        // OSX uses Unix ending *and* "Mac" endings break gettext tools. So if
-        // we encounter a catalog with "Mac" line endings, we silently convert
-        // it into Unix endings (i.e. the modern Mac).
-        if (crlf == wxTextFileType_Mac)
-            crlf = wxTextFileType_Unix;
-        if (crlf != wxTextFileType_Dos && crlf != wxTextFileType_Unix)
-            crlf = crlfDefault;
-
-        f.Close();
-    }
-    else
-    {
-        crlf = crlfDefault;
-    }
-
-    return crlf;
-}
-
-
 void SaveMultiLines(wxTextFile &f, const wxString& text)
 {
     wxStringTokenizer tkn(text, _T('\n'));
@@ -1436,20 +1487,41 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
 
     int msgcat_ok = false;
     {
+        int wrapping = DEFAULT_WRAPPING;
+        if (wxConfig::Get()->ReadBool("keep_crlf", true))
+            wrapping = m_fileWrappingWidth;
+
+        wxString wrappingFlag;
+        if (wrapping == DEFAULT_WRAPPING)
+        {
+            if (wxConfig::Get()->ReadBool("wrap_po_files", true))
+            {
+                wrapping = (int)wxConfig::Get()->ReadLong("wrap_po_files_width", 79);
+            }
+            else
+            {
+                wrapping = NO_WRAPPING;
+            }
+        }
+
+        if (wrapping == NO_WRAPPING)
+            wrappingFlag = " --no-wrap";
+        else if (wrapping != DEFAULT_WRAPPING)
+            wrappingFlag.Printf(" --width=%d", wrapping);
+
+        auto msgcatCmd = wxString::Format("msgcat --force-po%s -o %s %s",
+                                          wrappingFlag,
+                                          QuoteCmdlineArg(po_file),
+                                          QuoteCmdlineArg(po_file_temp));
+        wxLogTrace("poedit", "formatting file with %s", msgcatCmd);
+
         // Ignore msgcat errors output (but not exit code), because it
         //   a) complains about things DoValidate() already complained above
         //   b) issues warnings about source-extraction things (e.g. using non-ASCII
         //      msgids) that, while correct, are not something a *translator* can
         //      do anything about.
         wxLogNull null;
-        msgcat_ok =
-              ExecuteGettext
-              (
-                  wxString::Format("msgcat --force-po -o %s %s",
-                                   QuoteCmdlineArg(po_file),
-                                   QuoteCmdlineArg(po_file_temp))
-              )
-              && wxFileExists(po_file);
+        msgcat_ok = ExecuteGettext(msgcatCmd) && wxFileExists(po_file);
     }
 
     if ( msgcat_ok )
@@ -1517,29 +1589,32 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
         if (mo_compilation_status == CompilationStatus::Success)
         {
 #ifdef __WXOSX__
-            CompiledMOFilePresenter *presenter = [CompiledMOFilePresenter new];
-            NSURL *mofileUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String: mo_file.utf8_str()]];
-            NSURL *mofiletempUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String: mo_file_temp.utf8_str()]];
-            presenter.presentedItemURL = mofileUrl;
-            presenter.primaryPresentedItemURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String: po_file.utf8_str()]];
-            [NSFileCoordinator addFilePresenter:presenter];
-            [NSFileCoordinator filePresenters];
-            NSFileCoordinator *coo = [[NSFileCoordinator alloc] initWithFilePresenter:presenter];
-            [coo coordinateWritingItemAtURL:mofileUrl options:NSFileCoordinatorWritingForReplacing error:nil byAccessor:^(NSURL *newURL) {
-                NSURL *resultingUrl;
-                BOOL ok = [[NSFileManager defaultManager] replaceItemAtURL:newURL
-                                                             withItemAtURL:mofiletempUrl
-                                                            backupItemName:nil
-                                                                   options:0
-                                                          resultingItemURL:&resultingUrl
-                                                                     error:nil];
-                if (!ok)
-                {
-                    wxLogError(_("Couldn't save file %s."), mo_file.c_str());
-                    mo_compilation_status = CompilationStatus::Error;
-                }
-            }];
-            [NSFileCoordinator removeFilePresenter:presenter];
+            if (getenv("APP_SANDBOX_CONTAINER_ID") != NULL)
+            {
+                CompiledMOFilePresenter *presenter = [CompiledMOFilePresenter new];
+                NSURL *mofileUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String: mo_file.utf8_str()]];
+                NSURL *mofiletempUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String: mo_file_temp.utf8_str()]];
+                presenter.presentedItemURL = mofileUrl;
+                presenter.primaryPresentedItemURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String: po_file.utf8_str()]];
+                [NSFileCoordinator addFilePresenter:presenter];
+                [NSFileCoordinator filePresenters];
+                NSFileCoordinator *coo = [[NSFileCoordinator alloc] initWithFilePresenter:presenter];
+                [coo coordinateWritingItemAtURL:mofileUrl options:NSFileCoordinatorWritingForReplacing error:nil byAccessor:^(NSURL *newURL) {
+                    NSURL *resultingUrl;
+                    BOOL ok = [[NSFileManager defaultManager] replaceItemAtURL:newURL
+                                                                 withItemAtURL:mofiletempUrl
+                                                                backupItemName:nil
+                                                                       options:0
+                                                              resultingItemURL:&resultingUrl
+                                                                         error:nil];
+                    if (!ok)
+                    {
+                        wxLogError(_("Couldn't save file %s."), mo_file.c_str());
+                        mo_compilation_status = CompilationStatus::Error;
+                    }
+                }];
+                [NSFileCoordinator removeFilePresenter:presenter];
+            }
 #else // !__WXOSX__
             if ( !wxRenameFile(mo_file_temp, mo_file, /*overwrite=*/true) )
             {
@@ -1614,7 +1689,7 @@ bool Catalog::CompileToMO(const wxString& mo_file,
 
 bool Catalog::DoSaveOnly(const wxString& po_file)
 {
-    wxTextFileType crlf = GetDesiredCRLFFormat(po_file);
+    wxTextFileType crlf = GetDesiredCRLFFormat(m_fileCRLF);
 
     wxTextFile f;
     if (!f.Create(po_file))

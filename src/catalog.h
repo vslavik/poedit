@@ -484,6 +484,10 @@ class Catalog
             Error
         };
 
+        // Common wrapping values
+        static const int NO_WRAPPING = -1;
+        static const int DEFAULT_WRAPPING = -2;
+
         /// Default ctor. Creates empty catalog, you have to call Load.
         Catalog();
 
@@ -670,6 +674,8 @@ class Catalog
         bool m_isOk;
         wxString m_fileName;
         HeaderData m_header;
+        wxTextFileType m_fileCRLF;
+        int m_fileWrappingWidth;
 
         friend class LoadParser;
 };
@@ -681,6 +687,9 @@ class CatalogParser
     public:
         CatalogParser(wxTextFile *f)
             : m_textFile(f),
+              m_detectedLineWidth(0),
+              m_detectedWrappedLines(false),
+              m_lastLineHardWrapped(true), m_previousLineHardWrapped(true),
               m_ignoreHeader(false),
               m_ignoreTranslations(false)
         {}
@@ -700,7 +709,18 @@ class CatalogParser
          */
         bool Parse();
 
+        int GetWrappingWidth() const;
+
     protected:
+        // Read one line from file, remove all \r and \n characters, ignore empty linesed:
+        wxString ReadTextLine();
+
+        void PossibleWrappedLine()
+        {
+            if (!m_previousLineHardWrapped)
+                m_detectedWrappedLines = true;
+        }
+
         /** Called when new entry was parsed. Parsing continues
             if returned value is true and is cancelled if it
             is false.
@@ -736,6 +756,9 @@ class CatalogParser
 
         /// Textfile being parsed.
         wxTextFile *m_textFile;
+        int m_detectedLineWidth;
+        bool m_detectedWrappedLines;
+        bool m_lastLineHardWrapped, m_previousLineHardWrapped;
 
         /// Whether the header should be parsed or not
         bool m_ignoreHeader;

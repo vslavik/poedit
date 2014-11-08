@@ -42,6 +42,7 @@
 #include <wx/windowptr.h>
 #include <wx/sizer.h>
 #include <wx/settings.h>
+#include <wx/spinctrl.h>
 #include <wx/textwrapper.h>
 #include <wx/progdlg.h>
 #include <wx/xrc/xmlres.h>
@@ -208,17 +209,24 @@ public:
 
         sizer->AddSpacer(10);
 
-        auto crlfbox = new wxFlexGridSizer(2, wxSize(5,5));
-        crlfbox->AddGrowableCol(1);
+        auto crlfbox = new wxBoxSizer(wxHORIZONTAL);
         sizer->Add(crlfbox, wxSizerFlags().Expand().Border(wxTOP));
         crlfbox->Add(new wxStaticText(this, wxID_ANY, _("Line endings:")), wxSizerFlags().Center().BORDER_WIN(wxTOP, 1));
         m_crlf = new wxChoice(this, wxID_ANY);
         m_crlf->Append(_("Unix (recommended)"));
         m_crlf->Append(_("Windows"));
-        crlfbox->Add(m_crlf, wxSizerFlags(1).Center().Expand().BORDER_OSX(wxLEFT, 3));
-        m_keepCrlf = new wxCheckBox(this, wxID_ANY, _("Preserve line endings of existing files"));
-        crlfbox->AddSpacer(1);
-        crlfbox->Add(m_keepCrlf);
+        crlfbox->Add(m_crlf, wxSizerFlags(1).Center().BORDER_OSX(wxLEFT, 3).BORDER_WIN(wxLEFT, 5));
+
+        /// TRANSLATORS: Followed by text control for entering number; wraps text at given width
+        m_wrap = new wxCheckBox(this, wxID_ANY, _("Wrap at:"));
+        crlfbox->AddSpacer(10);
+        crlfbox->Add(m_wrap, wxSizerFlags().Center().BORDER_WIN(wxTOP, 1));
+        m_wrapWidth = new wxSpinCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(50,-1));
+        m_wrapWidth->SetRange(10, 1000);
+        crlfbox->Add(m_wrapWidth, wxSizerFlags().Center().BORDER_OSX(wxLEFT, 3));
+
+        m_keepFmt = new wxCheckBox(this, wxID_ANY, _("Preserve formatting of existing files"));
+        sizer->Add(m_keepFmt, wxSizerFlags().Border(wxTOP));
 
         sizer->AddSpacer(10);
         sizer->Add(new HeadingLabel(this, _("Appearance")));
@@ -272,6 +280,7 @@ public:
         }
 
         // handle UI updates:
+        m_wrapWidth->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable(m_wrap->GetValue()); });
         m_fontList->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable(m_useFontList->GetValue()); });
         m_fontText->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable(m_useFontText->GetValue()); });
 
@@ -287,7 +296,7 @@ public:
         m_compileMo->SetValue(cfg.ReadBool("compile_mo", true));
         m_showSummary->SetValue(cfg.ReadBool("show_summary", false));
         m_focusToText->SetValue(cfg.ReadBool("focus_to_text", false));
-        m_keepCrlf->SetValue(cfg.ReadBool("keep_crlf", true));
+        m_keepFmt->SetValue(cfg.ReadBool("keep_crlf", true));
 
         if (IsSpellcheckingAvailable())
         {
@@ -304,6 +313,9 @@ public:
         if (format == "win") sel = 1;
         else /* "unix" or obsolete settings */ sel = 0;
         m_crlf->SetSelection(sel);
+
+        m_wrap->SetValue(cfg.ReadBool("wrap_po_files", true));
+        m_wrapWidth->SetValue((int)cfg.ReadLong("wrap_po_files_width", 79));
     }
 
     void SaveValues(wxConfigBase& cfg) override
@@ -313,7 +325,7 @@ public:
         cfg.Write("compile_mo", m_compileMo->GetValue());
         cfg.Write("show_summary", m_showSummary->GetValue());
         cfg.Write("focus_to_text", m_focusToText->GetValue());
-        cfg.Write("keep_crlf", m_keepCrlf->GetValue());
+        cfg.Write("keep_crlf", m_keepFmt->GetValue());
 
         if (IsSpellcheckingAvailable())
         {
@@ -333,6 +345,9 @@ public:
         static const char *formats[] = { "unix", "win" };
         cfg.Write("crlf_format", formats[m_crlf->GetSelection()]);
 
+        cfg.Write("wrap_po_files", m_wrap->GetValue());
+        cfg.Write("wrap_po_files_width", m_wrapWidth->GetValue());
+
         // On Windows, we must update the UI here; on other platforms, it was done
         // via TransferDataFromWindowAndUpdateUI immediately:
         if (!wxPreferencesEditor::ShouldApplyChangesImmediately())
@@ -345,7 +360,9 @@ private:
     wxTextCtrl *m_userName, *m_userEmail;
     wxCheckBox *m_compileMo, *m_showSummary, *m_focusToText, *m_spellchecking;
     wxChoice *m_crlf;
-    wxCheckBox *m_keepCrlf;
+    wxCheckBox *m_wrap;
+    wxSpinCtrl *m_wrapWidth;
+    wxCheckBox *m_keepFmt;
     wxCheckBox *m_useFontList, *m_useFontText;
     wxFontPickerCtrl *m_fontList, *m_fontText;
 #if NEED_CHOOSELANG_UI
