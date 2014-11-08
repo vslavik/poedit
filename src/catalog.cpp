@@ -56,13 +56,15 @@
 // Textfile processing utilities:
 // ----------------------------------------------------------------------
 
+namespace
+{
 
 // If input begins with pattern, fill output with end of input (without
 // pattern; strips trailing spaces) and return true.  Return false otherwise
 // and don't touch output. Is permissive about whitespace in the input:
 // a space (' ') in pattern will match any number of any whitespace characters
 // on that position in input.
-static bool ReadParam(const wxString& input, const wxString& pattern, wxString& output)
+bool ReadParam(const wxString& input, const wxString& pattern, wxString& output)
 {
     if (input.size() < pattern.size())
         return false;
@@ -142,7 +144,7 @@ bool VerifyFileCharset(const wxTextFile& f, const wxString& filename,
 
 
 // converts \n into newline character and \\ into \:
-static wxString UnescapeCEscapes(const wxString& str)
+wxString UnescapeCEscapes(const wxString& str)
 {
     wxString out;
     size_t len = str.size();
@@ -185,6 +187,42 @@ static wxString UnescapeCEscapes(const wxString& str)
 
     return out;
 }
+
+
+wxTextFileType GetFileCRLFFormat(wxTextFile& po_file)
+{
+    wxLogNull null;
+    auto crlf = po_file.GuessType();
+
+    // Discard any unsupported setting. In particular, we ignore "Mac"
+    // line endings, because the ancient OS 9 systems aren't used anymore,
+    // OSX uses Unix ending *and* "Mac" endings break gettext tools. So if
+    // we encounter a catalog with "Mac" line endings, we silently convert
+    // it into Unix endings (i.e. the modern Mac).
+    if (crlf == wxTextFileType_Mac)
+        crlf = wxTextFileType_Unix;
+    if (crlf != wxTextFileType_Dos && crlf != wxTextFileType_Unix)
+        crlf = wxTextFileType_None;
+    return crlf;
+}
+
+wxTextFileType GetDesiredCRLFFormat(wxTextFileType existingCRLF)
+{
+    if (existingCRLF != wxTextFileType_None && wxConfigBase::Get()->ReadBool("keep_crlf", true))
+    {
+        return existingCRLF;
+    }
+    else
+    {
+        wxString format = wxConfigBase::Get()->Read("crlf_format", "unix");
+        if (format == "win")
+            return wxTextFileType_Dos;
+        else /* "unix" or obsolete settings */
+            return wxTextFileType_Unix;
+    }
+}
+
+} // anonymous namespace
 
 
 // ----------------------------------------------------------------------
@@ -1050,6 +1088,7 @@ bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
 
 Catalog::Catalog()
 {
+    m_fileCRLF = wxTextFileType_None;
     m_fileWrappingWidth = DEFAULT_WRAPPING;
 
     m_isOk = true;
@@ -1069,6 +1108,7 @@ Catalog::~Catalog()
 
 Catalog::Catalog(const wxString& po_file, int flags)
 {
+    m_fileCRLF = wxTextFileType_None;
     m_fileWrappingWidth = DEFAULT_WRAPPING;
 
     m_isOk = Load(po_file, flags);
@@ -1185,6 +1225,7 @@ bool Catalog::Load(const wxString& po_file, int flags)
         }
     }
 
+    m_fileCRLF = GetFileCRLFFormat(f);
     m_fileWrappingWidth = parser.GetWrappingWidth();
     wxLogTrace("poedit", "detect line wrapping: %d", m_fileWrappingWidth);
 
@@ -1344,51 +1385,6 @@ bool CanEncodeToCharset(const wxTextFile& f, const wxString& charset)
     }
 
     return true;
-}
-
-
-void GetCRLFBehaviour(wxTextFileType& type, bool& preserve)
-{
-    wxString format = wxConfigBase::Get()->Read("crlf_format", "unix");
-
-    if (format == "win") type = wxTextFileType_Dos;
-    else /* "unix" or obsolete settings */ type = wxTextFileType_Unix;
-
-    preserve = wxConfigBase::Get()->ReadBool("keep_crlf", true);
-}
-
-
-wxTextFileType GetDesiredCRLFFormat(const wxString& po_file)
-{
-    wxTextFileType crlfDefault, crlf;
-    bool crlfPreserve;
-    GetCRLFBehaviour(crlfDefault, crlfPreserve);
-
-    wxTextFile f;
-    if ( crlfPreserve && wxFileExists(po_file) &&
-         f.Open(po_file, wxConvISO8859_1) )
-    {
-        wxLogNull null;
-        crlf = f.GuessType();
-
-        // Discard any unsupported setting. In particular, we ignore "Mac"
-        // line endings, because the ancient OS 9 systems aren't used anymore,
-        // OSX uses Unix ending *and* "Mac" endings break gettext tools. So if
-        // we encounter a catalog with "Mac" line endings, we silently convert
-        // it into Unix endings (i.e. the modern Mac).
-        if (crlf == wxTextFileType_Mac)
-            crlf = wxTextFileType_Unix;
-        if (crlf != wxTextFileType_Dos && crlf != wxTextFileType_Unix)
-            crlf = crlfDefault;
-
-        f.Close();
-    }
-    else
-    {
-        crlf = crlfDefault;
-    }
-
-    return crlf;
 }
 
 
@@ -1681,7 +1677,7 @@ bool Catalog::CompileToMO(const wxString& mo_file,
 
 bool Catalog::DoSaveOnly(const wxString& po_file)
 {
-    wxTextFileType crlf = GetDesiredCRLFFormat(po_file);
+    wxTextFileType crlf = GetDesiredCRLFFormat(m_fileCRLF);
 
     wxTextFile f;
     if (!f.Create(po_file))

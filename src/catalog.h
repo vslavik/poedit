@@ -674,6 +674,7 @@ class Catalog
         bool m_isOk;
         wxString m_fileName;
         HeaderData m_header;
+        wxTextFileType m_fileCRLF;
         int m_fileWrappingWidth;
 
         friend class LoadParser;
