@@ -638,7 +638,7 @@ class Catalog
         void FixupCommonIssues();
 
         int DoValidate(const wxString& po_file);
-        bool DoSaveOnly(const wxString& po_file);
+        bool DoSaveOnly(const wxString& po_file, wxTextFileType crlf);
         bool DoSaveOnly(wxTextFile& f, wxTextFileType crlf);
 
         /** Merges the catalog with reference catalog

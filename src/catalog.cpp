@@ -1473,7 +1473,12 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
     TempOutputFileFor po_file_temp_obj(po_file);
     const wxString po_file_temp = po_file_temp_obj.FileName();
 
-    if ( !DoSaveOnly(po_file_temp) )
+    wxTextFileType outputCrlf = GetDesiredCRLFFormat(m_fileCRLF);
+    // Save into Unix line endings first and only if Windows is required,
+    // reformat the file later. This is because msgcat cannot handle DOS
+    // input particularly well.
+
+    if ( !DoSaveOnly(po_file_temp, wxTextFileType_Unix) )
     {
         wxLogError(_("Couldn't save file %s."), po_file.c_str());
         return false;
@@ -1545,6 +1550,16 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
             }
         }
     }
+
+    
+    // msgcat always outputs Unix line endings, so we need to reformat the file
+    if (outputCrlf == wxTextFileType_Dos)
+    {
+        wxTextFile finalFile(po_file);
+        if (finalFile.Open())
+            finalFile.Write(outputCrlf);
+    }
+
 
     /* If the user wants it, compile .mo file right now: */
 
@@ -1641,7 +1656,7 @@ bool Catalog::CompileToMO(const wxString& mo_file,
         return false;
     wxString po_file_temp = tmpdir.CreateFileName("output.po");
 
-    if ( !DoSaveOnly(po_file_temp) )
+    if ( !DoSaveOnly(po_file_temp, wxTextFileType_Unix) )
     {
         wxLogError(_("Couldn't save file %s."), po_file_temp.c_str());
         return false;
@@ -1687,10 +1702,8 @@ bool Catalog::CompileToMO(const wxString& mo_file,
 
 
 
-bool Catalog::DoSaveOnly(const wxString& po_file)
+bool Catalog::DoSaveOnly(const wxString& po_file, wxTextFileType crlf)
 {
-    wxTextFileType crlf = GetDesiredCRLFFormat(m_fileCRLF);
-
     wxTextFile f;
     if (!f.Create(po_file))
         return false;
@@ -1804,7 +1817,7 @@ int Catalog::Validate()
         return 0;
 
     wxString tmp_po = tmpdir.CreateFileName("validated.po");
-    if ( !DoSaveOnly(tmp_po) )
+    if ( !DoSaveOnly(tmp_po, wxTextFileType_Unix) )
         return 0;
 
     return DoValidate(tmp_po);
@@ -1950,8 +1963,8 @@ bool Catalog::Merge(Catalog *refcat)
     wxString tmp2 = tmpdir.CreateFileName("input.po");
     wxString tmp3 = tmpdir.CreateFileName("output.po");
 
-    refcat->DoSaveOnly(tmp1);
-    DoSaveOnly(tmp2);
+    refcat->DoSaveOnly(tmp1, wxTextFileType_Unix);
+    DoSaveOnly(tmp2, wxTextFileType_Unix);
 
     wxString flags("-q --force-po");
     if (wxConfig::Get()->ReadBool("use_tm_when_updating", false) == false)
