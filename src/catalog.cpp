@@ -1487,15 +1487,27 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
 
     int msgcat_ok = false;
     {
+        int wrapping = DEFAULT_WRAPPING;
+        if (wxConfig::Get()->ReadBool("keep_crlf", true))
+            wrapping = m_fileWrappingWidth;
+
         wxString wrappingFlag;
-        if (wxConfigBase::Get()->ReadBool("keep_crlf", true))
+        if (wrapping == DEFAULT_WRAPPING)
         {
-            if (m_fileWrappingWidth == NO_WRAPPING)
-                wrappingFlag = " --no-wrap";
-            else if (m_fileWrappingWidth != DEFAULT_WRAPPING)
-                wrappingFlag.Printf(" --width=%d", m_fileWrappingWidth);
+            if (wxConfig::Get()->ReadBool("wrap_po_files", true))
+            {
+                wrapping = (int)wxConfig::Get()->ReadLong("wrap_po_files_width", 79);
+            }
+            else
+            {
+                wrapping = NO_WRAPPING;
+            }
         }
-        // else: reformat from scratch using default settings
+
+        if (wrapping == NO_WRAPPING)
+            wrappingFlag = " --no-wrap";
+        else if (wrapping != DEFAULT_WRAPPING)
+            wrappingFlag.Printf(" --width=%d", wrapping);
 
         auto msgcatCmd = wxString::Format("msgcat --force-po%s -o %s %s",
                                           wrappingFlag,
