@@ -23,6 +23,11 @@ AC_ARG_ENABLE(debug,
               AS_HELP_STRING([--enable-debug],
                              [Enable debug build]),
               USE_DEBUG="$enableval", USE_DEBUG="no")
+AC_ARG_ENABLE(legacy-tm,
+              AS_HELP_STRING([--enable-legacy-tm],
+                             [Enable support for conversion of legacy translation memory format (default: yes)]),
+              USE_LEGACY_TM="$enableval", USE_LEGACY_TM="yes") 
+AM_CONDITIONAL([USE_LEGACY_TM], [test "x$USE_LEGACY_TM" = xyes])
 
 AC_MSG_CHECKING(for install location)
 case "$prefix" in
@@ -149,13 +154,16 @@ PKG_CHECK_MODULES([GTKSPELL], [$gtkspell_packages],
     ])
 
 
-AX_BERKELEY_DB_CXX(4.7,
-[
-    AC_DEFINE_UNQUOTED(DB_HEADER, ["$DB_HEADER"])
-    AC_SUBST(DB_LIBS)
-],
-[
-  AC_MSG_ERROR([cannot find required Berkeley DB >= 4.7])
+AS_IF([test "x$USE_LEGACY_TM" != "xno"], [
+    AX_BERKELEY_DB_CXX(4.7,
+    [
+        AC_DEFINE_UNQUOTED(DB_HEADER, ["$DB_HEADER"])
+        AC_SUBST(DB_LIBS)
+        AC_DEFINE(USE_LEGACY_TM)
+    ],
+    [
+      AC_MSG_ERROR([cannot find required Berkeley DB >= 4.7])
+    ])
 ])
 
 PKG_CHECK_MODULES([LUCENE], [liblucene++ >= 3.0.5],
@@ -212,5 +220,6 @@ AC_OUTPUT
 echo "
 Configured $PACKAGE-$VERSION for $host
 
-    Debug build:      $USE_DEBUG
+    Debug build:       $USE_DEBUG
+    Legacy TM support: $USE_LEGACY_TM
 "
