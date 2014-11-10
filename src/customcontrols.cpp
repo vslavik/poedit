@@ -108,13 +108,18 @@ ExplanationLabel::ExplanationLabel(wxWindow *parent, const wxString& label)
 #if defined(__WXOSX__) || defined(__WXGTK__)
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
+
+#ifndef __WXGTK__
     SetForegroundColour(GetTextColor());
+#endif
 }
 
 wxColour ExplanationLabel::GetTextColor()
 {
 #if defined(__WXOSX__)
     return wxColour("#777777");
+#elif defined(__WXGTK__)
+    return wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT);
 #else
     return wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT);
 #endif
