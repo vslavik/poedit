@@ -305,8 +305,22 @@ public:
 
         m_useFontList->SetValue(cfg.ReadBool("custom_font_list_use", false));
         m_useFontText->SetValue(cfg.ReadBool("custom_font_text_use", false));
-        m_fontList->SetSelectedFont(wxFont(cfg.Read("custom_font_list_name", wxEmptyString)));
-        m_fontText->SetSelectedFont(wxFont(cfg.Read("custom_font_text_name", wxEmptyString)));
+
+        #if defined(__WXOSX__)
+            #define DEFAULT_FONT "Helvetica"
+        #elif defined(__WXMSW__)
+            #define DEFAULT_FONT "Arial"
+        #elif defined(__WXGTK__)
+            #define DEFAULT_FONT "sans serif"
+        #endif
+        auto listFont = wxFont(cfg.Read("custom_font_list_name", ""));
+        if (!listFont.IsOk())
+            listFont = wxFont(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, DEFAULT_FONT);
+        auto textFont = wxFont(cfg.Read("custom_font_text_name", ""));
+        if (!textFont.IsOk())
+            textFont = wxFont(11, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, DEFAULT_FONT);
+        m_fontList->SetSelectedFont(listFont);
+        m_fontText->SetSelectedFont(textFont);
 
         wxString format = cfg.Read("crlf_format", "unix");
         int sel;
@@ -335,8 +349,8 @@ public:
         wxFont listFont = m_fontList->GetSelectedFont();
         wxFont textFont = m_fontText->GetSelectedFont();
 
-        cfg.Write("custom_font_list_use", listFont.IsOk() && m_useFontList->GetValue());
-        cfg.Write("custom_font_text_use", textFont.IsOk() && m_useFontText->GetValue());
+        cfg.Write("custom_font_list_use", m_useFontList->GetValue());
+        cfg.Write("custom_font_text_use", m_useFontText->GetValue());
         if ( listFont.IsOk() )
             cfg.Write("custom_font_list_name", listFont.GetNativeFontInfoDesc());
         if ( textFont.IsOk() )
