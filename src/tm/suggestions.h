@@ -47,7 +47,7 @@ struct Suggestion
     };
 
     /// Ctor
-    Suggestion() =default;
+    Suggestion() : score(0.), timestamp(0), source(Source::LocalTM) {}
     Suggestion(const std::wstring& text_,
                double score_,
                time_t timestamp_ = 0,
