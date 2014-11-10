@@ -61,6 +61,9 @@ public:
     /// Returns name of this language suitable for display to the user in current UI language
     wxString DisplayName() const;
 
+    /// Like DisplayName(), but shorted (no country/variant).
+    wxString LanguageDisplayName() const;
+
     /// Returns name of this language in itself
     wxString DisplayNameInItself() const;
 

@@ -1192,12 +1192,11 @@ void PoeditFrame::InitSpellchecker()
                 // TRANSLATORS: %s is language name in its basic form (as you
                 // would see e.g. in a list of supported languages). You may need
                 // to rephrase it, e.g. to an equivalent of "for language %s".
-                _("Spellchecker dictionary for %s isn't available, you need to install it."),
-                lang.DisplayName()
+                _(L"Spellchecking is disabled, because the dictionary for %s isn’t installed."),
+                lang.LanguageDisplayName()
             )
         );
-        msg.AddAction(MSW_OR_OTHER(_("Learn more"), _("Learn More")),
-                      []{ ShowSpellcheckerHelp(); });
+        msg.AddAction(_("Install"), []{ ShowSpellcheckerHelp(); });
         msg.AddDontShowAgain();
         m_attentionBar->ShowMessage(msg);
     }

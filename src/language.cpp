@@ -384,6 +384,13 @@ wxString Language::DisplayName() const
     return FromIcuStr(s);
 }
 
+wxString Language::LanguageDisplayName() const
+{
+    icu::UnicodeString s;
+    ToIcu().getDisplayLanguage(s);
+    return FromIcuStr(s);
+}
+
 wxString Language::DisplayNameInItself() const
 {
     auto loc = ToIcu();
