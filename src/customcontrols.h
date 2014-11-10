@@ -49,14 +49,6 @@ class AutoWrappingText : public wxStaticText
 public:
     AutoWrappingText(wxWindow *parent, const wxString& label);
 
-#if defined(__WXOSX__)
-    static const int CHECKBOX_INDENT = 19;
-#elif defined(__WXMSW__)
-    static const int CHECKBOX_INDENT = 17;
-#elif defined(__WXGTK__)
-    static const int CHECKBOX_INDENT = 25;
-#endif
-
     void SetAlignment(int align);
     void SetAndWrapLabel(const wxString& label);
 
