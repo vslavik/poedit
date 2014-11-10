@@ -42,6 +42,13 @@ public:
     {
         auto bck = &backend;
         m_pool.enqueue([=](){
+            // don't bother asking the backend if the language is invalid:
+            if (!lang.IsValid())
+            {
+                onSuccess(SuggestionsList());
+                return;
+            }
+            // query the backend:
             bck->SuggestTranslation(lang, source, maxHits, onSuccess, onError);
         });
     }
