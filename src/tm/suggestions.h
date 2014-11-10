@@ -40,6 +40,21 @@ class SuggestionsProviderImpl;
 /// A single translation suggestion
 struct Suggestion
 {
+    /// Possible types of suggestion sources
+    enum class Source
+    {
+        LocalTM
+    };
+
+    /// Ctor
+    Suggestion() =default;
+    Suggestion(const std::wstring& text_,
+               double score_,
+               time_t timestamp_ = 0,
+               Source source_ = Source::LocalTM)
+        : text(text_), score(score_), timestamp(timestamp_), source(source_)
+    {}
+
     /// Text of the suggested translation
     std::wstring text;
 
@@ -49,10 +64,6 @@ struct Suggestion
     /// Time when the suggestion was stored
     time_t timestamp;
 
-    enum class Source
-    {
-        LocalTM
-    };
     /// Source of the suggestion
     Source source;
 
