@@ -115,6 +115,7 @@ protected:
     void ClearMessage();
     void SetMessage(const wxString& icon, const wxString& text);
 
+    virtual void ReportError(SuggestionsBackend *backend, std::exception_ptr e);
     virtual void ClearSuggestions();
     virtual void UpdateSuggestions(const SuggestionsList& hits);
     virtual void OnQueriesFinished();

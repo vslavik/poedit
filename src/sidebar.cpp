@@ -453,6 +453,11 @@ void SuggestionsSidebarBlock::SetMessage(const wxString& icon, const wxString& t
     m_parent->Layout();
 }
 
+void SuggestionsSidebarBlock::ReportError(SuggestionsBackend*, std::exception_ptr e)
+{
+    SetMessage("SuggestionError", DescribeException(e));
+}
+
 void SuggestionsSidebarBlock::ClearSuggestions()
 {
     m_pendingQueries = 0;
@@ -634,6 +639,7 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, Catalog
     // we need something to talk to GUI thread through that is guaranteed
     // to exist, and the app object is a good choice:
     wxApp *app = wxTheApp;
+    auto backendPtr = &backend;
     std::weak_ptr<SuggestionsSidebarBlock> weakSelf = std::dynamic_pointer_cast<SuggestionsSidebarBlock>(shared_from_this());
 
     m_provider->SuggestTranslation
@@ -658,12 +664,12 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, Catalog
 
         // on error:
         [=](std::exception_ptr e){
-            app->CallAfter([weakSelf,queryId,e]{
+            app->CallAfter([weakSelf,queryId,backendPtr,e]{
                 auto self = weakSelf.lock();
                 // maybe this call is already out of date:
                 if (!self || self->m_latestQueryId != queryId)
                     return;
-                self->SetMessage("SuggestionError", DescribeException(e));
+                self->ReportError(backendPtr, e);
                 if (--self->m_pendingQueries == 0)
                     self->OnQueriesFinished();
             });
