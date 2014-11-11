@@ -638,10 +638,11 @@ public:
     void InitValues(const wxConfigBase& cfg) override
     {
         m_extractors.Read(const_cast<wxConfigBase*>(&cfg));
-        
+
+        m_list->Clear();
         for (const auto& item: m_extractors.Data)
             m_list->Append(item.Name);
-        
+
         if (m_extractors.Data.empty())
         {
             m_edit->Enable(false);
