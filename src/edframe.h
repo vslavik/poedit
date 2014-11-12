@@ -269,6 +269,8 @@ private:
         void OnSuggestion(wxCommandEvent& event);
         void OnAutoTranslateAll(wxCommandEvent& event);
         bool AutoTranslateCatalog(int *matchesCount = nullptr);
+        template<typename T>
+        bool AutoTranslateCatalog(int *matchesCount, const T& range);
 
         void OnPurgeDeleted(wxCommandEvent& event);
 

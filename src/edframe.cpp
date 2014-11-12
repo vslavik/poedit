@@ -63,6 +63,7 @@
 #include <map>
 #include <algorithm>
 #include <future>
+#include <boost/range/counting_range.hpp>
 
 #include "catalog.h"
 #include "edapp.h"
@@ -3020,8 +3021,17 @@ void PoeditFrame::OnSuggestion(wxCommandEvent& event)
 void PoeditFrame::OnAutoTranslateAll(wxCommandEvent&)
 {
     int matches = 0;
-    if (!AutoTranslateCatalog(&matches))
-        return;
+
+    if (m_list->HasMultipleSelection())
+    {
+        if (!AutoTranslateCatalog(&matches, m_list->GetSelectedCatalogItems()))
+            return;
+    }
+    else
+    {
+        if (!AutoTranslateCatalog(&matches))
+            return;
+    }
 
     wxString msg, details;
 
@@ -3053,8 +3063,17 @@ void PoeditFrame::OnAutoTranslateAll(wxCommandEvent&)
 
 bool PoeditFrame::AutoTranslateCatalog(int *matchesCount)
 {
+    return AutoTranslateCatalog(matchesCount, boost::counting_range(0, (int)m_catalog->GetCount()));
+}
+
+template<typename T>
+bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, const T& range)
+{
     if (matchesCount)
         *matchesCount = 0;
+
+    if (range.empty())
+        return false;
 
     if (!wxConfig::Get()->ReadBool("use_tm", true))
         return false;
@@ -3064,47 +3083,43 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount)
     TranslationMemory& tm = TranslationMemory::Get();
     auto lang = m_catalog->GetLanguage();
 
-    int cnt = m_catalog->GetCount();
-    if (cnt)
+    int matches = 0;
+    wxString msg;
+
+    // TODO: make this window-modal
+    ProgressInfo progress(this, _("Translating"));
+    progress.UpdateMessage(_("Filling missing translations from TM..."));
+    progress.SetGaugeMax((int)range.size());
+    for (int i: range)
     {
-        int matches = 0;
-        wxString msg;
+        progress.UpdateGauge();
 
-        // TODO: make this window-modal
-        ProgressInfo progress(this, _("Translating"));
-        progress.UpdateMessage(_("Filling missing translations from TM..."));
-        progress.SetGaugeMax(cnt);
-        for (int i = 0; i < cnt; i++)
+        CatalogItem& dt = (*m_catalog)[i];
+        if (dt.HasPlural())
+            continue; // can't handle yet (TODO?)
+        if (dt.IsFuzzy() || !dt.IsTranslated())
         {
-            progress.UpdateGauge();
-
-            CatalogItem& dt = (*m_catalog)[i];
-            if (dt.HasPlural())
-                continue; // can't handle yet (TODO?)
-            if (dt.IsFuzzy() || !dt.IsTranslated())
+            auto results = tm.Search(lang, dt.GetString().ToStdWstring(), 1);
+            if (!results.empty())
             {
-                auto results = tm.Search(lang, dt.GetString().ToStdWstring(), 1);
-                if (!results.empty())
-                {
-                    dt.SetTranslation(results[0].text);
-                    dt.SetAutomatic(true);
-                    dt.SetFuzzy(true);
-                    matches++;
-                    msg.Printf(wxPLURAL("Translated %u string", "Translated %u strings", matches), matches);
-                    progress.UpdateMessage(msg);
+                dt.SetTranslation(results[0].text);
+                dt.SetAutomatic(true);
+                dt.SetFuzzy(true);
+                matches++;
+                msg.Printf(wxPLURAL("Translated %u string", "Translated %u strings", matches), matches);
+                progress.UpdateMessage(msg);
 
-                    if (m_modified == false)
-                    {
-                        m_modified = true;
-                        UpdateTitle();
-                    }
+                if (m_modified == false)
+                {
+                    m_modified = true;
+                    UpdateTitle();
                 }
             }
         }
-
-        if (matchesCount)
-            *matchesCount = matches;
     }
+
+    if (matchesCount)
+        *matchesCount = matches;
 
     RefreshControls();
 
