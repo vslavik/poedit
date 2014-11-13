@@ -110,7 +110,9 @@ public:
         // into the window affected its size. And, currently more importantly, to reflect
         // ExplanationLabel instances' rewrapping.
         Fit();
-
+#ifndef __WXOSX__
+        GetParent()->GetParent()->Fit();
+#endif
         return true;
     }
 
