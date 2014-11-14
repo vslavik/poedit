@@ -86,7 +86,6 @@ enum
     IMG_NOTHING,
     IMG_AUTOMATIC,
     IMG_COMMENT,
-    IMG_MODIFIED,
     IMG_BOOKMARK
 };
 
@@ -123,7 +122,6 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     list->Add(wxArtProvider::GetBitmap("poedit-status-nothing"));
     list->Add(wxArtProvider::GetBitmap("poedit-status-automatic"));
     list->Add(wxArtProvider::GetBitmap("poedit-status-comment"));
-    list->Add(wxArtProvider::GetBitmap("poedit-status-modified"));
     list->Add(wxArtProvider::GetBitmap("poedit-status-bookmark"));
 
     AssignImageList(list, wxIMAGE_LIST_SMALL);
@@ -469,8 +467,6 @@ int PoeditListCtrl::OnGetItemImage(long item) const
         return IMG_COMMENT;
     else if (d.IsAutomatic())
         return IMG_AUTOMATIC;
-    else if (d.IsModified())
-        return IMG_MODIFIED;
     else
         return IMG_NOTHING;
 }
