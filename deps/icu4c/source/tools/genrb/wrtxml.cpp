@@ -1,7 +1,7 @@
 /*
 *******************************************************************************
 *
-*   Copyright (C) 2002-2012, International Business Machines
+*   Copyright (C) 2002-2014, International Business Machines
 *   Corporation and others.  All Rights Reserved.
 *
 *******************************************************************************
@@ -16,6 +16,17 @@
 *
 *******************************************************************************
 */
+
+// Safer use of UnicodeString.
+#ifndef UNISTR_FROM_CHAR_EXPLICIT
+#   define UNISTR_FROM_CHAR_EXPLICIT explicit
+#endif
+
+// Less important, but still a good idea.
+#ifndef UNISTR_FROM_STRING_EXPLICIT
+#   define UNISTR_FROM_STRING_EXPLICIT explicit
+#endif
+
 #include "reslist.h"
 #include "unewdata.h"
 #include "unicode/ures.h"
@@ -25,7 +36,6 @@
 #include "unicode/ucnv.h"
 #include "genrb.h"
 #include "rle.h"
-#include "ucol_tok.h"
 #include "uhash.h"
 #include "uresimp.h"
 #include "unicode/ustring.h"
