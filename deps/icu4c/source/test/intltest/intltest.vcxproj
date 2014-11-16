@@ -228,7 +228,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bytestrietest.cpp" />
-    <ClCompile Include="colldata.cpp" />
+    <ClCompile Include="collationtest.cpp">
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+    </ClCompile>
+    <ClCompile Include="colldata.cpp">
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+    </ClCompile>
+    <ClCompile Include="numfmtspectest.cpp" />
     <ClCompile Include="regiontst.cpp" />
     <ClCompile Include="ucharstrietest.cpp" />
     <ClCompile Include="itrbbi.cpp" />
@@ -240,9 +246,7 @@
     <ClCompile Include="allcoll.cpp" />
     <ClCompile Include="alphaindextst.cpp" />
     <ClCompile Include="apicoll.cpp" />
-    <ClCompile Include="cntabcol.cpp" />
     <ClCompile Include="currcoll.cpp" />
-    <ClCompile Include="dadrcoll.cpp" />
     <ClCompile Include="decoll.cpp" />
     <ClCompile Include="encoll.cpp" />
     <ClCompile Include="escoll.cpp" />
@@ -309,6 +313,7 @@
     <ClCompile Include="itrbnfp.cpp" />
     <ClCompile Include="itrbnfrt.cpp" />
     <ClCompile Include="locnmtst.cpp" />
+    <ClCompile Include="measfmttest.cpp" />
     <ClCompile Include="miscdtfm.cpp" />
     <ClCompile Include="msfmrgts.cpp" />
     <ClCompile Include="nmfmapts.cpp" />
@@ -318,9 +323,15 @@
     <ClCompile Include="plurfmts.cpp" />
     <ClCompile Include="plurults.cpp" />
     <ClCompile Include="pptest.cpp" />
+    <ClCompile Include="quantityformattertest.cpp" />
+    <ClCompile Include="reldatefmttest.cpp">
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+    </ClCompile>
+    <ClCompile Include="scientificformathelpertest.cpp" />
     <ClCompile Include="sdtfmtts.cpp" />
     <ClCompile Include="selfmts.cpp" />
     <ClCompile Include="tchcfmt.cpp" />
+    <ClCompile Include="simplepatternformattertest.cpp" />
     <ClCompile Include="tfsmalls.cpp" />
     <ClCompile Include="tmsgfmt.cpp" />
     <ClCompile Include="tsdate.cpp" />
@@ -336,6 +347,9 @@
     <ClCompile Include="tzregts.cpp" />
     <ClCompile Include="tzrulets.cpp" />
     <ClCompile Include="tztest.cpp">
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+    </ClCompile>
+    <ClCompile Include="unifiedcachetest.cpp">
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="windttst.cpp">
@@ -426,9 +440,7 @@
     <ClInclude Include="allcoll.h" />
     <ClInclude Include="alphaindextst.h" />
     <ClInclude Include="apicoll.h" />
-    <ClInclude Include="cntabcol.h" />
     <ClInclude Include="currcoll.h" />
-    <ClInclude Include="dadrcoll.h" />
     <ClInclude Include="decoll.h" />
     <ClInclude Include="encoll.h" />
     <ClInclude Include="escoll.h" />
