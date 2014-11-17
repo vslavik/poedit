@@ -55,6 +55,14 @@ typedef enum
     BOOKMARK_LAST
 } Bookmark;
 
+/// Result of Catalog::Update()
+enum class UpdateResultReason
+{
+    Unspecified,
+    CancelledByUser,
+    NoSourcesFound
+};
+
 /** This class holds information about one particular string.
     This includes source string and its occurrences in source code
     (so-called references), translation and translation's status
@@ -543,14 +551,14 @@ class Catalog
         /** Updates the catalog from sources.
             \see SourceDigger, Parser, UpdateFromPOT.
          */
-        bool Update(ProgressInfo *progress, bool summary, bool *cancelledByUser);
+        bool Update(ProgressInfo *progress, bool summary, UpdateResultReason& reason);
 
         /** Updates the catalog from POT file.
             \see Update
          */
         bool UpdateFromPOT(const wxString& pot_file,
                            bool summary,
-                           bool *cancelledByUser,
+                           UpdateResultReason& reason,
                            bool replace_header = false);
 
         /// Returns the number of strings/translations in the catalog.

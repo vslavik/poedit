@@ -31,7 +31,6 @@
 
 #include "digger.h"
 #include "extractor.h"
-#include "catalog.h"
 #include "progressinfo.h"
 #include "gexecute.h"
 #include "utility.h"
@@ -96,7 +95,8 @@ bool FilenameMatchesPathsList(const wxString& fn, const wxArrayString& paths)
 Catalog *SourceDigger::Dig(const wxArrayString& paths,
                            const wxArrayString& excludePaths,
                            const wxArrayString& keywords,
-                           const wxString& charset)
+                           const wxString& charset,
+                           UpdateResultReason& reason)
 {
     ExtractorsDB db;
     db.Read(wxConfig::Get());
@@ -105,7 +105,10 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
 
     wxArrayString *all_files = FindFiles(paths, excludePaths, db);
     if (all_files == NULL)
+    {
+        reason = UpdateResultReason::NoSourcesFound;
         return NULL;
+    }
 
     TempDirectory tmpdir;
     wxArrayString partials;
@@ -206,7 +209,7 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
     {
         if ( !FindInDir(paths[i], excludePaths, files) )
         {
-            wxLogWarning(_("No files found in: ") + paths[i]);
+            wxLogTrace("poedit", "no files found in '%s'", paths[i]);
         }
     }
 
@@ -225,9 +228,7 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
     m_progressInfo->SetGaugeMax((int)filescnt);
     
     if (filescnt == 0)
-    {
-        wxLogError(_("Poedit did not find any files in scanned directories."));
-    }
+        return nullptr;
 
     return p_files;
 }

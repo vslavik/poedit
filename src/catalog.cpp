@@ -1858,9 +1858,12 @@ int Catalog::DoValidate(const wxString& po_file)
 }
 
 
-bool Catalog::Update(ProgressInfo *progress, bool summary, bool *cancelledByUser)
+bool Catalog::Update(ProgressInfo *progress, bool summary, UpdateResultReason& reason)
 {
-    if (!m_isOk) return false;
+    reason = UpdateResultReason::Unspecified;
+
+    if (!m_isOk)
+        return false;
 
     wxString cwd = wxGetCwd();
     if (m_fileName != wxEmptyString)
@@ -1884,7 +1887,7 @@ bool Catalog::Update(ProgressInfo *progress, bool summary, bool *cancelledByUser
 
         if (!wxFileName::DirExists(path))
         {
-            wxLogError(_("Source code directory '%s' doesn't exist."), path.c_str());
+            reason = UpdateResultReason::NoSourcesFound;
             return false;
         }
 
@@ -1896,7 +1899,11 @@ bool Catalog::Update(ProgressInfo *progress, bool summary, bool *cancelledByUser
     Catalog *newcat = dig.Dig(m_header.SearchPaths,
                               m_header.SearchPathsExcluded,
                               m_header.Keywords,
-                              m_header.SourceCodeCharset);
+                              m_header.SourceCodeCharset,
+                              reason);
+
+    if (progress->Cancelled())
+        reason = UpdateResultReason::CancelledByUser;
 
     if (newcat != NULL)
     {
@@ -1904,13 +1911,16 @@ bool Catalog::Update(ProgressInfo *progress, bool summary, bool *cancelledByUser
         if ( progress )
             progress->UpdateMessage(_("Merging differences..."));
 
-        if (!summary || ShowMergeSummary(newcat, cancelledByUser))
+        bool cancelledByUser = false;
+        if (!summary || ShowMergeSummary(newcat, &cancelledByUser))
             succ = Merge(newcat);
         if (!succ)
         {
             delete newcat;
             newcat = NULL;
         }
+        if (cancelledByUser)
+            reason = UpdateResultReason::CancelledByUser;
     }
 
     wxSetWorkingDirectory(cwd);
@@ -1923,9 +1933,11 @@ bool Catalog::Update(ProgressInfo *progress, bool summary, bool *cancelledByUser
 
 
 bool Catalog::UpdateFromPOT(const wxString& pot_file,
-                            bool summary, bool *cancelledByUser,
+                            bool summary,
+                            UpdateResultReason& reason,
                             bool replace_header)
 {
+    reason = UpdateResultReason::Unspecified;
     if (!m_isOk) return false;
 
     Catalog newcat(pot_file, CreationFlag_IgnoreTranslations);
@@ -1936,7 +1948,8 @@ bool Catalog::UpdateFromPOT(const wxString& pot_file,
         return false;
     }
 
-    if (!summary || ShowMergeSummary(&newcat, cancelledByUser))
+    bool cancelledByUser = false;
+    if (!summary || ShowMergeSummary(&newcat, &cancelledByUser))
     {
         if ( !Merge(&newcat) )
             return false;
@@ -1946,6 +1959,8 @@ bool Catalog::UpdateFromPOT(const wxString& pot_file,
     }
     else
     {
+        if (cancelledByUser)
+            reason = UpdateResultReason::CancelledByUser;
         return false;
     }
 }

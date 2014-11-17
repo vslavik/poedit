@@ -1568,9 +1568,10 @@ void PoeditFrame::NewFromPOT()
     if (!pot_file.empty())
     {
         wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
+        UpdateResultReason reason;
         ok = catalog->UpdateFromPOT(pot_file,
                                     /*summary=*/false,
-                                    /*cancelledByUser=*/nullptr,
+                                    reason,
                                     /*replace_header=*/true);
     }
     if (!ok)
@@ -1769,24 +1770,50 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
     if (m_list)
         locker.reset(new wxWindowUpdateLocker(m_list));
 
-    ProgressInfo progress(this, _("Updating catalog"));
 
-    bool cancelledByUser;
+    UpdateResultReason reason = UpdateResultReason::Unspecified;
     bool succ;
-    if (pot_file.empty())
-        succ = m_catalog->Update(&progress, true, &cancelledByUser);
-    else
-        succ = m_catalog->UpdateFromPOT(pot_file, true, &cancelledByUser);
+
+    {
+        ProgressInfo progress(this, _("Updating catalog"));
+        if (pot_file.empty())
+            succ = m_catalog->Update(&progress, true, reason);
+        else
+            succ = m_catalog->UpdateFromPOT(pot_file, true, reason);
+    }
 
     EnsureContentView(Content::PO);
     m_list->CatalogChanged(m_catalog);
 
     m_modified = succ || m_modified;
-    if (!succ && !cancelledByUser)
+
+    if (!succ)
     {
-        wxLogWarning(_("Entries in the catalog are probably incorrect."));
-        wxLogError(
-           _("Updating the catalog failed. Click on 'Details >>' for details."));
+        switch (reason)
+        {
+            case UpdateResultReason::NoSourcesFound:
+            {
+                wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog
+                    (
+                        this,
+                        _("Source code not available."),
+                        _("Updating failed"),
+                        wxOK | wxICON_ERROR
+                    ));
+                dlg->SetExtendedMessage(_(L"Translations couldn’t be updated from the source code, because no code was found in the location specified in the catalog’s Properties."));
+                dlg->ShowWindowModalThenDo([dlg](int){});
+                break;
+            }
+            case UpdateResultReason::Unspecified:
+            {
+                wxLogWarning(_("Entries in the catalog are probably incorrect."));
+                wxLogError(
+                   _("Updating the catalog failed. Click on 'Details >>' for details."));
+                break;
+            }
+            case UpdateResultReason::CancelledByUser:
+                break;
+        }
     }
 
     return succ;

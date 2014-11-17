@@ -29,6 +29,7 @@
 #include <wx/hash.h>
 #include <wx/dynarray.h>
 
+#include "catalog.h"
 
 class Catalog;
 class wxArrayString;
@@ -62,7 +63,8 @@ class SourceDigger
         Catalog *Dig(const wxArrayString& paths,
                      const wxArrayString& excludePaths,
                      const wxArrayString& keywords,
-                     const wxString& charset);
+                     const wxString& charset,
+                     UpdateResultReason& reason);
 
     private:
         /** Finds all parsable files. Returned value is a new[]-allocated
