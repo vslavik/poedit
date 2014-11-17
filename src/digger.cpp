@@ -40,8 +40,19 @@ namespace
 {
 
 // concatenates catalogs using msgcat
-bool ConcatCatalogs(const wxArrayString& files, const wxString& outfile)
+bool ConcatCatalogs(const wxArrayString& files, TempDirectory& tmpdir, wxString *outfile)
 {
+    if (files.empty())
+        return false;
+
+    if (files.size() == 1)
+    {
+        *outfile = files.front();
+        return true;
+    }
+
+    *outfile = tmpdir.CreateFileName("merged.pot");
+
     wxString list;
     for ( wxArrayString::const_iterator i = files.begin();
           i != files.end(); ++i )
@@ -51,7 +62,7 @@ bool ConcatCatalogs(const wxArrayString& files, const wxString& outfile)
 
     wxString cmd =
         wxString::Format("msgcat --force-po -o %s %s",
-                         QuoteCmdlineArg(outfile),
+                         QuoteCmdlineArg(*outfile),
                          list.c_str());
     bool succ = ExecuteGettext(cmd);
 
@@ -116,13 +127,9 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
 
     delete[] all_files;
 
-    if ( partials.empty() )
+    wxString mergedFile;
+    if ( !ConcatCatalogs(partials, tmpdir, &mergedFile) )
         return NULL; // couldn't parse any source files
-
-    wxString mergedFile = tmpdir.CreateFileName("merged.pot");
-
-    if ( !ConcatCatalogs(partials, mergedFile) )
-        return NULL;
 
     Catalog *c = new Catalog(mergedFile, Catalog::CreationFlag_IgnoreHeader);
 
@@ -174,12 +181,9 @@ bool SourceDigger::DigFiles(TempDirectory& tmpdir,
             return false;
     }
 
-    if ( tempfiles.empty() )
+    wxString outfile;
+    if ( !ConcatCatalogs(tempfiles, tmpdir, &outfile) )
         return false; // failed to parse any source files
-
-    wxString outfile = tmpdir.CreateFileName("merged_chunks.pot");
-    if ( !ConcatCatalogs(tempfiles, outfile) )
-        return false;
 
     outFiles.push_back(outfile);
     return true;
