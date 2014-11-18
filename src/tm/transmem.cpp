@@ -195,9 +195,22 @@ void PerformSearchWithBlock(IndexSearcherPtr searcher,
         auto doc = searcher->doc(scoreDoc->doc);
         auto src = doc->get(L"source");
         if (src == exactSourceText)
+        {
             score = 1.0;
-        else if (score == 1.0)
-            score = 0.95; // can't score non-exact thing as 100%
+        }
+        else
+        {
+            if (score == 1.0)
+            {
+                score = 0.95; // can't score non-exact thing as 100%:
+
+                // Check against too small queries having perfect hit in a large stored text.
+                // Do this by penalizing too large difference in lengths of the source strings.
+                double len1 = exactSourceText.size();
+                double len2 = src.size();
+                score *= 1.0 - 0.4 * (std::abs(len1 - len2) / std::max(len1, len2));
+            }
+        }
 
         callback(doc, score * scoreScaling);
     }
