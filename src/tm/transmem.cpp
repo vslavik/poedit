@@ -294,14 +294,14 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& lang,
 
         // Try exact phrase first:
         PerformSearch(searcher, langQ, source, phraseQ, results, maxHits,
-                      /*scoreThreshold=*/1.0, /*scoreScaling=*/1.0);
+                      QUALITY_THRESHOLD, /*scoreScaling=*/1.0);
         if (!results.empty())
             return results;
 
         // Then, if no matches were found, permit being a bit sloppy:
         phraseQ->setSlop(1);
         PerformSearch(searcher, langQ, source, phraseQ, results, maxHits,
-                      /*scoreThreshold=*/1.0, /*scoreScaling=*/0.9);
+                      QUALITY_THRESHOLD, /*scoreScaling=*/0.9);
 
         if (!results.empty())
             return results;
