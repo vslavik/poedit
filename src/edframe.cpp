@@ -23,7 +23,10 @@
  *
  */
 
+#include "edframe.h"
+
 #include <wx/wx.h>
+#include <wx/checkbox.h>
 #include <wx/config.h>
 #include <wx/html/htmlwin.h>
 #include <wx/statline.h>
@@ -66,8 +69,8 @@
 #include <boost/range/counting_range.hpp>
 
 #include "catalog.h"
+#include "customcontrols.h"
 #include "edapp.h"
-#include "edframe.h"
 #include "propertiesdlg.h"
 #include "prefsdlg.h"
 #include "fileviewer.h"
@@ -3055,54 +3058,101 @@ void PoeditFrame::OnSuggestion(wxCommandEvent& event)
 
 void PoeditFrame::OnAutoTranslateAll(wxCommandEvent&)
 {
-    int matches = 0;
+    wxWindowPtr<wxDialog> dlg(new wxDialog(this, wxID_ANY, _("Fill missing translations from TM")));
+    auto topsizer = new wxBoxSizer(wxVERTICAL);
+    auto sizer = new wxBoxSizer(wxVERTICAL);
+    auto onlyExact = new wxCheckBox(dlg.get(), wxID_ANY, _("Only fill in exact matches"));
+    auto onlyExactE = new ExplanationLabel(dlg.get(), _("By default, inaccurate results are filled in as well and marked as fuzzy. Check this option to only include accurate matches."));
+    auto noFuzzy = new wxCheckBox(dlg.get(), wxID_ANY, _(L"Don’t mark exact matches as fuzzy"));
+    auto noFuzzyE = new ExplanationLabel(dlg.get(), _("Only enable if you trust the quality of your TM. By default, all matches from the TM are marked as fuzzy and should be reviewed."));
 
-    if (m_list->HasMultipleSelection())
+#ifdef __WXOSX__
+    sizer->AddSpacer(5);
+    sizer->Add(new HeadingLabel(dlg.get(), _("Fill missing translations from TM")), wxSizerFlags().Expand().DoubleBorder(wxBOTTOM));
+#endif
+    sizer->Add(onlyExact, wxSizerFlags().Border(wxTOP));
+    sizer->Add(onlyExactE, wxSizerFlags().Expand().Border(wxLEFT, ExplanationLabel::CHECKBOX_INDENT));
+    sizer->Add(noFuzzy, wxSizerFlags().DoubleBorder(wxTOP));
+    sizer->Add(noFuzzyE, wxSizerFlags().Expand().Border(wxLEFT, ExplanationLabel::CHECKBOX_INDENT));
+    topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
+
+    auto buttons = dlg->CreateButtonSizer(wxOK | wxCANCEL);
+    auto ok = static_cast<wxButton*>(dlg->FindWindow(wxID_OK));
+    ok->SetLabel(_("Fill"));
+    ok->SetDefault();
+#ifdef __WXOSX__
+    topsizer->Add(buttons, wxSizerFlags().Expand());
+#else
+    topsizer->Add(buttons, wxSizerFlags().Expand().Border());
+    topsizer->AddSpacer(5);
+#endif
+
+    dlg->SetSizer(topsizer);
+    dlg->SetMinSize(wxSize(400, -1));
+    dlg->Layout();
+    dlg->Fit();
+    dlg->CenterOnParent();
+
+    dlg->ShowWindowModalThenDo([this,onlyExact,noFuzzy,dlg](int retcode)
     {
-        if (!AutoTranslateCatalog(&matches, m_list->GetSelectedCatalogItems()))
+        if (retcode != wxID_OK)
             return;
-    }
-    else
-    {
-        if (!AutoTranslateCatalog(&matches))
-            return;
-    }
 
-    wxString msg, details;
+        int matches = 0;
 
-    if (matches)
-    {
-        msg = wxString::Format(wxPLURAL("%d entry was filled from the translation memory.",
-                                        "%d entries were filled from the translation memory.",
-                                        matches), matches);
-        details = _("The translations were marked as fuzzy, because they may be inaccurate. You should review them for correctness.");
-    }
-    else
-    {
-        msg = _("No entries could be filled from the translation memory.");
-        details = _(L"The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually.");
-    }
+        int flags = 0;
+        if (onlyExact->GetValue())
+            flags |= AutoTranslate_OnlyExact;
+        if (noFuzzy->GetValue())
+            flags |= AutoTranslate_ExactNotFuzzy;
 
-    wxWindowPtr<wxMessageDialog> dlg(
-        new wxMessageDialog
-            (
-                this,
-                msg,
-                _("Filling missing translations from TM..."),
-                wxOK | wxICON_INFORMATION
-            )
-    );
-    dlg->SetExtendedMessage(details);
-    dlg->ShowWindowModalThenDo([dlg](int){});
+        if (m_list->HasMultipleSelection())
+        {
+            if (!AutoTranslateCatalog(&matches, m_list->GetSelectedCatalogItems(), flags))
+                return;
+        }
+        else
+        {
+            if (!AutoTranslateCatalog(&matches, flags))
+                return;
+        }
+
+        wxString msg, details;
+
+        if (matches)
+        {
+            msg = wxString::Format(wxPLURAL("%d entry was filled from the translation memory.",
+                                            "%d entries were filled from the translation memory.",
+                                            matches), matches);
+            details = _("The translations were marked as fuzzy, because they may be inaccurate. You should review them for correctness.");
+        }
+        else
+        {
+            msg = _("No entries could be filled from the translation memory.");
+            details = _(L"The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually.");
+        }
+
+        wxWindowPtr<wxMessageDialog> resultsDlg(
+            new wxMessageDialog
+                (
+                    this,
+                    msg,
+                    _("Fill missing translations from TM"),
+                    wxOK | wxICON_INFORMATION
+                )
+        );
+        resultsDlg->SetExtendedMessage(details);
+        resultsDlg->ShowWindowModalThenDo([resultsDlg](int){});
+    });
 }
 
-bool PoeditFrame::AutoTranslateCatalog(int *matchesCount)
+bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, int flags)
 {
-    return AutoTranslateCatalog(matchesCount, boost::counting_range(0, (int)m_catalog->GetCount()));
+    return AutoTranslateCatalog(matchesCount, boost::counting_range(0, (int)m_catalog->GetCount()), flags);
 }
 
 template<typename T>
-bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, const T& range)
+bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, const T& range, int flags)
 {
     if (matchesCount)
         *matchesCount = 0;
@@ -3135,20 +3185,25 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, const T& range)
         if (dt.IsFuzzy() || !dt.IsTranslated())
         {
             auto results = tm.Search(lang, dt.GetString().ToStdWstring());
-            if (!results.empty())
-            {
-                dt.SetTranslation(results[0].text);
-                dt.SetAutomatic(true);
-                dt.SetFuzzy(true);
-                matches++;
-                msg.Printf(wxPLURAL("Translated %u string", "Translated %u strings", matches), matches);
-                progress.UpdateMessage(msg);
+            if (results.empty())
+                continue;
 
-                if (m_modified == false)
-                {
-                    m_modified = true;
-                    UpdateTitle();
-                }
+            auto& res = results.front();
+            if ((flags & AutoTranslate_OnlyExact) && !res.IsExactMatch())
+                continue;
+
+            dt.SetTranslation(res.text);
+            dt.SetAutomatic(true);
+            dt.SetFuzzy(!res.IsExactMatch() || (flags & AutoTranslate_ExactNotFuzzy) == 0);
+
+            matches++;
+            msg.Printf(wxPLURAL("Translated %u string", "Translated %u strings", matches), matches);
+            progress.UpdateMessage(msg);
+
+            if (m_modified == false)
+            {
+                m_modified = true;
+                UpdateTitle();
             }
         }
     }

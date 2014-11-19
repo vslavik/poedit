@@ -268,9 +268,15 @@ private:
 
         void OnSuggestion(wxCommandEvent& event);
         void OnAutoTranslateAll(wxCommandEvent& event);
-        bool AutoTranslateCatalog(int *matchesCount = nullptr);
+
+        enum AutoTranslateFlags
+        {
+            AutoTranslate_OnlyExact     = 0x01,
+            AutoTranslate_ExactNotFuzzy = 0x02,
+        };
+        bool AutoTranslateCatalog(int *matchesCount = nullptr, int flags = 0);
         template<typename T>
-        bool AutoTranslateCatalog(int *matchesCount, const T& range);
+        bool AutoTranslateCatalog(int *matchesCount, const T& range, int flags = 0);
 
         void OnPurgeDeleted(wxCommandEvent& event);
 
