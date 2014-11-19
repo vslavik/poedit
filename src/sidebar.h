@@ -102,8 +102,6 @@ public:
     void Update(CatalogItem *item) override;
 
 protected:
-    // How many entries to request from a single provider?
-    static const int SUGGESTIONS_REQUEST_COUNT = 9;
     // How many entries can have shortcuts?
     static const int SUGGESTIONS_MENU_ENTRIES = 9;
 

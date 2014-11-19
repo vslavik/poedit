@@ -644,7 +644,6 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, Catalog
         backend,
         m_parent->GetCurrentLanguage(),
         item->GetString().ToStdWstring(),
-        SUGGESTIONS_REQUEST_COUNT,
 
         // when receiving data
         [=](const SuggestionsList& hits){

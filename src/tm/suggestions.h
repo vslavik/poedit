@@ -114,14 +114,12 @@ public:
                           TranslationMemory::Get().
         @param lang       Language of the desired translation.
         @param source     Source text.
-        @param maxHits    Maximum number of requested hits.
         @param onSuccess  Called with suggestions.
         @param onError    Called in case of error.
      */
     void SuggestTranslation(SuggestionsBackend& backend,
                             const Language& lang,
                             const std::wstring& source,
-                            int maxHits,
                             success_func_type onSuccess,
                             error_func_type onError);
 
@@ -164,13 +162,11 @@ public:
         
         @param lang       Language of the desired translation.
         @param source     Source text.
-        @param maxHits    Maximum number of requested hits.
         @param onSuccess  Called with suggestions.
         @param onError    Called in case of error.
      */
     virtual void SuggestTranslation(const Language& lang,
                                     const std::wstring& source,
-                                    int maxHits,
                                     success_func_type onSuccess,
                                     error_func_type onError) = 0;
 };

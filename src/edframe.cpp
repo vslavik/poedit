@@ -3134,7 +3134,7 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, const T& range)
             continue; // can't handle yet (TODO?)
         if (dt.IsFuzzy() || !dt.IsTranslated())
         {
-            auto results = tm.Search(lang, dt.GetString().ToStdWstring(), 1);
+            auto results = tm.Search(lang, dt.GetString().ToStdWstring());
             if (!results.empty())
             {
                 dt.SetTranslation(results[0].text);

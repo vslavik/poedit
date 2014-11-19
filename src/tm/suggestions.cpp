@@ -36,7 +36,6 @@ public:
     void SuggestTranslation(SuggestionsBackend& backend,
                             const Language& lang,
                             const std::wstring& source,
-                            int maxHits,
                             SuggestionsProvider::success_func_type onSuccess,
                             SuggestionsProvider::error_func_type onError)
     {
@@ -49,7 +48,7 @@ public:
                 return;
             }
             // query the backend:
-            bck->SuggestTranslation(lang, source, maxHits, onSuccess, onError);
+            bck->SuggestTranslation(lang, source, onSuccess, onError);
         });
     }
 
@@ -70,9 +69,8 @@ SuggestionsProvider::~SuggestionsProvider()
 void SuggestionsProvider::SuggestTranslation(SuggestionsBackend& backend,
                                              const Language& lang,
                                              const std::wstring& source,
-                                             int maxHits,
                                              success_func_type onSuccess,
                                              error_func_type onError)
 {
-    m_impl->SuggestTranslation(backend, lang, source, maxHits, onSuccess, onError);
+    m_impl->SuggestTranslation(backend, lang, source, onSuccess, onError);
 }

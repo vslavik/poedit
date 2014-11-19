@@ -85,8 +85,6 @@ using namespace Lucene;
 class TranslationMemoryImpl
 {
 public:
-    static const int DEFAULT_MAXHITS = 10;
-
 #ifdef __WXMSW__
     typedef SimpleFSDirectory DirectoryType;
 #else
@@ -99,8 +97,7 @@ public:
     {}
 
     SuggestionsList Search(const Language& lang,
-                           const std::wstring& source,
-                           int maxHits = -1);
+                           const std::wstring& source);
 
     std::shared_ptr<TranslationMemory::Writer> CreateWriter();
 
@@ -154,6 +151,8 @@ IndexReaderPtr TranslationMemoryImpl::Reader()
 namespace
 {
 
+static const int DEFAULT_MAXHITS = 10;
+
 // Normalized score that must be met for a suggestion to be shown. This is
 // an empirical guess of what constitues good matches.
 static const double QUALITY_THRESHOLD = 0.6;
@@ -174,7 +173,6 @@ void PerformSearchWithBlock(IndexSearcherPtr searcher,
                             QueryPtr lang,
                             const std::wstring& exactSourceText,
                             QueryPtr query,
-                            int maxHits,
                             double scoreThreshold,
                             double scoreScaling,
                             T callback)
@@ -183,7 +181,7 @@ void PerformSearchWithBlock(IndexSearcherPtr searcher,
     fullQuery->add(lang, BooleanClause::MUST);
     fullQuery->add(query, BooleanClause::MUST);
 
-    auto hits = searcher->search(fullQuery, maxHits);
+    auto hits = searcher->search(fullQuery, DEFAULT_MAXHITS);
 
     for (int i = 0; i < hits->scoreDocs.size(); i++)
     {
@@ -223,13 +221,12 @@ void PerformSearch(IndexSearcherPtr searcher,
                    const std::wstring& exactSourceText,
                    QueryPtr query,
                    SuggestionsList& results,
-                   int maxHits,
                    double scoreThreshold,
                    double scoreScaling)
 {
     PerformSearchWithBlock
     (
-        searcher, lang, exactSourceText, query, maxHits,
+        searcher, lang, exactSourceText, query,
         scoreThreshold, scoreScaling,
         [&results](DocumentPtr doc, double score)
         {
@@ -249,8 +246,7 @@ void PerformSearch(IndexSearcherPtr searcher,
 } // anonymous namespace
 
 SuggestionsList TranslationMemoryImpl::Search(const Language& lang,
-                                              const std::wstring& source,
-                                              int maxHits)
+                                              const std::wstring& source)
 {
     try
     {
@@ -274,9 +270,6 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& lang,
         langQ->add(langPrimary, BooleanClause::SHOULD);
         langQ->add(langSecondary, BooleanClause::SHOULD);
 
-        if (maxHits <= 0)
-            maxHits = DEFAULT_MAXHITS;
-
         SuggestionsList results;
 
         const Lucene::String sourceField(L"source");
@@ -297,14 +290,14 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& lang,
         auto searcher = newLucene<IndexSearcher>(Reader());
 
         // Try exact phrase first:
-        PerformSearch(searcher, langQ, source, phraseQ, results, maxHits,
+        PerformSearch(searcher, langQ, source, phraseQ, results,
                       QUALITY_THRESHOLD, /*scoreScaling=*/1.0);
         if (!results.empty())
             return results;
 
         // Then, if no matches were found, permit being a bit sloppy:
         phraseQ->setSlop(1);
-        PerformSearch(searcher, langQ, source, phraseQ, results, maxHits,
+        PerformSearch(searcher, langQ, source, phraseQ, results,
                       QUALITY_THRESHOLD, /*scoreScaling=*/0.9);
 
         if (!results.empty())
@@ -315,7 +308,7 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& lang,
         boolQ->setMinimumNumberShouldMatch(std::max(1, boolQ->getClauses().size() - MAX_ALLOWED_LENGTH_DIFFERENCE));
         PerformSearchWithBlock
         (
-            searcher, langQ, source, boolQ, maxHits,
+            searcher, langQ, source, boolQ,
             QUALITY_THRESHOLD, /*scoreScaling=*/0.8,
             [=,&results](DocumentPtr doc, double score)
             {
@@ -521,21 +514,19 @@ TranslationMemory::~TranslationMemory() { delete m_impl; }
 // ----------------------------------------------------------------
 
 SuggestionsList TranslationMemory::Search(const Language& lang,
-                                          const std::wstring& source,
-                                          int maxHits)
+                                          const std::wstring& source)
 {
-    return m_impl->Search(lang, source, maxHits);
+    return m_impl->Search(lang, source);
 }
 
 void TranslationMemory::SuggestTranslation(const Language& lang,
                                            const std::wstring& source,
-                                           int maxHits,
                                            success_func_type onSuccess,
                                            error_func_type onError)
 {
     try
     {
-        onSuccess(Search(lang, source, maxHits));
+        onSuccess(Search(lang, source));
     }
     catch (...)
     {
