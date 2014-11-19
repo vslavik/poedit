@@ -3190,7 +3190,10 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
                  #else
                  wxString(_("Edit Comment"))
                  #endif
-                   + "\tCtrl+M");
+                 #ifndef __WXOSX__
+                   + "\tCtrl+M"
+                 #endif
+                 );
 
     if ( !refs.empty() )
     {
