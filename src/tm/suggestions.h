@@ -26,6 +26,7 @@
 #ifndef Poedit_suggestions_h
 #define Poedit_suggestions_h
 
+#include <cmath>
 #include <functional>
 #include <memory>
 #include <string>
@@ -70,6 +71,14 @@ struct Suggestion
     bool HasScore() const { return score != 0.0; }
     bool IsExactMatch() const { return score == 1.0; }
 };
+
+inline bool operator<(const Suggestion& a, const Suggestion& b)
+{
+    if (std::fabs(a.score - b.score) <= std::numeric_limits<double>::epsilon())
+        return a.timestamp > b.timestamp;
+    else
+        return a.score > b.score;
+}
 
 typedef std::vector<Suggestion> SuggestionsList;
 

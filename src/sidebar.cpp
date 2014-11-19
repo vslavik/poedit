@@ -474,13 +474,7 @@ void SuggestionsSidebarBlock::UpdateSuggestions(const SuggestionsList& hits)
     wxWindowUpdateLocker lock(m_parent);
 
     m_suggestions.insert(m_suggestions.end(), hits.begin(), hits.end());
-    std::stable_sort(m_suggestions.begin(), m_suggestions.end(),
-                     [](const Suggestion& a, const Suggestion& b){
-                        if (std::fabs(a.score - b.score) <= std::numeric_limits<double>::epsilon())
-                            return a.timestamp > b.timestamp;
-                        else
-                            return a.score > b.score;
-                     });
+    std::stable_sort(m_suggestions.begin(), m_suggestions.end());
 
     // create any necessary controls:
     while (m_suggestions.size() > m_suggestionsWidgets.size())

@@ -242,6 +242,8 @@ void PerformSearch(IndexSearcherPtr searcher,
             }
         }
     );
+
+    std::stable_sort(results.begin(), results.end());
 }
 
 } // anonymous namespace
@@ -334,6 +336,7 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& lang,
             }
         );
 
+        std::stable_sort(results.begin(), results.end());
         return results;
     }
     catch (LuceneException&)
