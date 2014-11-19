@@ -210,9 +210,11 @@ void PerformSearchWithBlock(IndexSearcherPtr searcher,
                 double len2 = src.size();
                 score *= 1.0 - 0.4 * (std::abs(len1 - len2) / std::max(len1, len2));
             }
+
+            score *= scoreScaling;
         }
 
-        callback(doc, score * scoreScaling);
+        callback(doc, score);
     }
 }
 
