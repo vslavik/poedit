@@ -1604,13 +1604,18 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
         if (mo_compilation_status == CompilationStatus::Success)
         {
 #ifdef __WXOSX__
-            CompiledMOFilePresenter *presenter = [CompiledMOFilePresenter new];
             NSURL *mofileUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String: mo_file.utf8_str()]];
             NSURL *mofiletempUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String: mo_file_temp.utf8_str()]];
-            presenter.presentedItemURL = mofileUrl;
-            presenter.primaryPresentedItemURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String: po_file.utf8_str()]];
-            [NSFileCoordinator addFilePresenter:presenter];
-            [NSFileCoordinator filePresenters];
+            bool sandboxed = (getenv("APP_SANDBOX_CONTAINER_ID") != NULL);
+            CompiledMOFilePresenter *presenter = nil;
+            if (sandboxed)
+            {
+                presenter = [CompiledMOFilePresenter new];
+                presenter.presentedItemURL = mofileUrl;
+                presenter.primaryPresentedItemURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String: po_file.utf8_str()]];
+                [NSFileCoordinator addFilePresenter:presenter];
+                [NSFileCoordinator filePresenters];
+            }
             NSFileCoordinator *coo = [[NSFileCoordinator alloc] initWithFilePresenter:presenter];
             [coo coordinateWritingItemAtURL:mofileUrl options:NSFileCoordinatorWritingForReplacing error:nil byAccessor:^(NSURL *newURL) {
                 NSURL *resultingUrl;
@@ -1626,7 +1631,10 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
                     mo_compilation_status = CompilationStatus::Error;
                 }
             }];
-            [NSFileCoordinator removeFilePresenter:presenter];
+            if (sandboxed)
+            {
+                [NSFileCoordinator removeFilePresenter:presenter];
+            }
 #else // !__WXOSX__
             if ( !wxRenameFile(mo_file_temp, mo_file, /*overwrite=*/true) )
             {
