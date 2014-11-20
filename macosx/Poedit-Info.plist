@@ -7,42 +7,89 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>po</string>
-			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>GenericTranslation</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/x-po</string>
-				<string>application/x-gettext</string>
-				<string>text/x-gettext-translation</string>
-				<string>text/x-po</string>
-			</array>
 			<key>CFBundleTypeName</key>
 			<string>PO Translation File</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.poedit.po</string>
+			</array>
 		</dict>
 		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>mo</string>
-				<string>gmo</string>
-			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>GenericTranslation</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>application/x-gettext-translation</string>
-			</array>
 			<key>CFBundleTypeName</key>
 			<string>Compiled Translation File</string>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
 			<key>NSIsRelatedItemType</key>
 			<true/>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.poedit.mo</string>
+			</array>
+		</dict>
+	</array>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>net.poedit.po</string>
+			<key>UTTypeDescription</key>
+			<string>PO Translation File</string>
+			<key>UTTypeIconFile</key>
+			<string>GenericTranslation</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.content</string>
+                <string>public.data</string>
+			</array>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>po</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>application/x-po</string>
+					<string>application/x-gettext</string>
+					<string>text/x-gettext-translation</string>
+					<string>text/x-po</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>net.poedit.mo</string>
+			<key>UTTypeDescription</key>
+			<string>Compiled Translation File</string>
+			<key>UTTypeIconFile</key>
+			<string>GenericTranslation</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.content</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mo</string>
+					<string>gmo</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>application/x-gettext-translation</string>
+				</array>
+			</dict>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
