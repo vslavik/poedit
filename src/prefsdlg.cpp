@@ -79,7 +79,7 @@ class PrefsPanel : public wxPanel
 {
 public:
     PrefsPanel(wxWindow *parent)
-        : wxPanel(parent), m_inTransfer(false)
+        : wxPanel(parent), m_supressDataTransfer(0)
     {
 #ifdef __WXOSX__
         // Refresh the content of prefs panels when re-opening it.
@@ -99,11 +99,11 @@ public:
 
     bool TransferDataToWindow() override
     {
-        if (m_inTransfer)
+        if (m_supressDataTransfer)
             return false;
-        m_inTransfer = true;
+        m_supressDataTransfer++;
         InitValues(*wxConfig::Get());
-        m_inTransfer = false;
+        m_supressDataTransfer--;
 
         // This is a "bit" of a hack: we take advantage of being in the last point before
         // showing the window and re-layout it on the off chance that some data transfered
@@ -118,11 +118,11 @@ public:
 
     bool TransferDataFromWindow() override
     {
-        if (m_inTransfer)
+        if (m_supressDataTransfer)
             return false;
-        m_inTransfer = true;
+        m_supressDataTransfer++;
         SaveValues(*wxConfig::Get());
-        m_inTransfer = false;
+        m_supressDataTransfer--;
         return true;
     }
 
@@ -136,8 +136,7 @@ protected:
     virtual void InitValues(const wxConfigBase& cfg) = 0;
     virtual void SaveValues(wxConfigBase& cfg) = 0;
 
-private:
-    bool m_inTransfer;
+    int m_supressDataTransfer;
 };
 
 
@@ -653,7 +652,9 @@ private:
             wxID_OK
         );
 
+        m_supressDataTransfer++;
         dlg->ShowWindowModalThenDo([=](int retcode){
+            m_supressDataTransfer--;
             (void)dlg; // force use
             if (retcode == wxID_OK)
             {
@@ -672,6 +673,8 @@ private:
 
     void OnNewExtractor(wxCommandEvent&)
     {
+        m_supressDataTransfer++;
+
         Extractor info;
         m_extractors.Data.push_back(info);
         m_list->Append(wxEmptyString);
@@ -687,6 +690,8 @@ private:
                 m_list->Delete(index);
                 m_extractors.Data.erase(m_extractors.Data.begin() + index);
             }
+
+            m_supressDataTransfer--;
 
             if (wxPreferencesEditor::ShouldApplyChangesImmediately())
                 TransferDataFromWindow();
