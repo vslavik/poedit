@@ -31,6 +31,8 @@ remove_empty_lproj_string_files()
 remove_unchanged_po_files
 remove_empty_lproj_string_files
 
+(cd locales && ./update-translation-lists.sh)
+
 git status
 echo ""
 exit_code=0
