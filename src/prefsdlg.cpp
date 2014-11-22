@@ -155,6 +155,7 @@ public:
     GeneralPageWindow(wxWindow *parent) : PrefsPanel(parent)
     {
         wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
+        topsizer->SetMinSize(400, -1);
 
         wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
         topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
@@ -218,10 +219,10 @@ public:
 
         m_useFontList = new wxCheckBox(this, wxID_ANY, _("Use custom list font:"));
         m_fontList = new wxFontPickerCtrl(this, wxID_ANY);
-        m_fontList->SetMinSize(wxSize(210, -1));
+        m_fontList->SetMinSize(wxSize(120, -1));
         m_useFontText = new wxCheckBox(this, wxID_ANY, _("Use custom text fields font:"));
         m_fontText = new wxFontPickerCtrl(this, wxID_ANY);
-        m_fontText->SetMinSize(wxSize(210, -1));
+        m_fontText->SetMinSize(wxSize(120, -1));
 
         appearance->Add(m_useFontList, wxSizerFlags().Center().Left());
         appearance->Add(m_fontList, wxSizerFlags().Center().Expand());
