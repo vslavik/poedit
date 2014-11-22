@@ -260,6 +260,9 @@ private:
 
         void OnSelectionUpdate(wxUpdateUIEvent& event);
         void OnSingleSelectionUpdate(wxUpdateUIEvent& event);
+        void OnHasCatalogUpdate(wxUpdateUIEvent& event);
+        void OnIsEditableUpdate(wxUpdateUIEvent& event);
+        void OnUpdateFromSourcesUpdate(wxUpdateUIEvent& event);
 
 #if defined(__WXMSW__) || defined(__WXGTK__)
         void OnTextEditingCommand(wxCommandEvent& event);

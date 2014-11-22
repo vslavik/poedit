@@ -675,10 +675,18 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_UPDATE_UI(XRCID("go_prev_unfinished"), PoeditFrame::OnSingleSelectionUpdate)
    EVT_UPDATE_UI(XRCID("go_next_unfinished"), PoeditFrame::OnSingleSelectionUpdate)
 
-   EVT_UPDATE_UI(XRCID("menu_fuzzy"), PoeditFrame::OnSelectionUpdate)
+   EVT_UPDATE_UI(XRCID("menu_fuzzy"),         PoeditFrame::OnSelectionUpdate)
    EVT_UPDATE_UI(XRCID("menu_copy_from_src"), PoeditFrame::OnSelectionUpdate)
-   EVT_UPDATE_UI(XRCID("menu_clear"), PoeditFrame::OnSelectionUpdate)
-   EVT_UPDATE_UI(XRCID("menu_comment"), PoeditFrame::OnSelectionUpdate)
+   EVT_UPDATE_UI(XRCID("menu_clear"),         PoeditFrame::OnSelectionUpdate)
+   EVT_UPDATE_UI(XRCID("menu_comment"),       PoeditFrame::OnSelectionUpdate)
+
+   // handling of open files:
+   EVT_UPDATE_UI(wxID_SAVE,                   PoeditFrame::OnHasCatalogUpdate)
+   EVT_UPDATE_UI(wxID_SAVEAS,                 PoeditFrame::OnHasCatalogUpdate)
+   EVT_UPDATE_UI(XRCID("menu_statistics"),    PoeditFrame::OnHasCatalogUpdate)
+   EVT_UPDATE_UI(XRCID("menu_validate"),      PoeditFrame::OnIsEditableUpdate)
+   EVT_UPDATE_UI(XRCID("menu_update"),        PoeditFrame::OnUpdateFromSourcesUpdate)
+   EVT_UPDATE_UI(XRCID("menu_update_from_pot"), PoeditFrame::OnHasCatalogUpdate)
 
 #if defined(__WXMSW__) || defined(__WXGTK__)
    EVT_MENU(wxID_UNDO,      PoeditFrame::OnTextEditingCommand)
@@ -2808,26 +2816,13 @@ void PoeditFrame::UpdateTitle()
 void PoeditFrame::UpdateMenu()
 {
     wxMenuBar *menubar = GetMenuBar();
-    wxToolBar *toolbar = GetToolBar();
 
     const bool hasCatalog = m_catalog != nullptr;
     const bool editable = hasCatalog && !m_catalog->empty();
 
-    menubar->Enable(wxID_SAVE, hasCatalog);
-    menubar->Enable(wxID_SAVEAS, hasCatalog);
     menubar->Enable(XRCID("menu_compile_mo"), hasCatalog);
     menubar->Enable(XRCID("menu_export"), hasCatalog);
 
-#ifndef __WXOSX__
-    toolbar->EnableTool(wxID_SAVE, hasCatalog);
-#endif
-    toolbar->EnableTool(XRCID("menu_update"), editable);
-    toolbar->EnableTool(XRCID("menu_validate"), editable);
-    toolbar->EnableTool(XRCID("menu_fuzzy"), editable);
-
-    menubar->Enable(XRCID("menu_update"), editable);
-    menubar->Enable(XRCID("menu_validate"), editable);
-    menubar->Enable(XRCID("menu_fuzzy"), editable);
     menubar->Enable(XRCID("menu_comment"), editable);
     menubar->Enable(XRCID("menu_copy_from_src"), editable);
     menubar->Enable(XRCID("menu_clear"), editable);
@@ -2836,8 +2831,6 @@ void PoeditFrame::UpdateMenu()
     menubar->Enable(XRCID("menu_find_next"), editable);
     menubar->Enable(XRCID("menu_find_prev"), editable);
 
-    menubar->Enable(XRCID("menu_update"), editable);
-    menubar->Enable(XRCID("menu_update_from_pot"), hasCatalog);
     menubar->Enable(XRCID("menu_auto_translate"), editable);
     menubar->Enable(XRCID("menu_purge_deleted"), editable);
     menubar->Enable(XRCID("menu_validate"), editable);
@@ -2858,11 +2851,6 @@ void PoeditFrame::UpdateMenu()
 
     menubar->Enable(XRCID("menu_purge_deleted"),
                     editable && m_catalog->HasDeletedItems());
-
-    const bool doupdate = hasCatalog &&
-                          !m_catalog->Header().SearchPaths.empty();
-    toolbar->EnableTool(XRCID("menu_update"), doupdate);
-    menubar->Enable(XRCID("menu_update"), doupdate);
 
 #ifdef __WXGTK__
     if (!editable)
@@ -3677,12 +3665,27 @@ void PoeditFrame::OnUpdateShowHideSidebar(wxUpdateUIEvent& event)
 
 void PoeditFrame::OnSelectionUpdate(wxUpdateUIEvent& event)
 {
-    event.Enable(m_list && m_list->HasSelection());
+    event.Enable(m_catalog && m_list && m_list->HasSelection());
 }
 
 void PoeditFrame::OnSingleSelectionUpdate(wxUpdateUIEvent& event)
 {
-    event.Enable(m_list && m_list->HasSingleSelection());
+    event.Enable(m_catalog && m_list && m_list->HasSingleSelection());
+}
+
+void PoeditFrame::OnHasCatalogUpdate(wxUpdateUIEvent& event)
+{
+    event.Enable(m_catalog);
+}
+
+void PoeditFrame::OnIsEditableUpdate(wxUpdateUIEvent& event)
+{
+    event.Enable(m_catalog && !m_catalog->empty());
+}
+
+void PoeditFrame::OnUpdateFromSourcesUpdate(wxUpdateUIEvent& event)
+{
+    event.Enable(m_catalog && !m_catalog->Header().SearchPaths.empty());
 }
 
 #if defined(__WXMSW__) || defined(__WXGTK__)
