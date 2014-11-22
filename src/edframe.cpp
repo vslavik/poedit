@@ -807,9 +807,7 @@ PoeditFrame::PoeditFrame() :
     if (MenuBar)
     {
 #ifndef __WXOSX__
-        wxString menuName(_("&File"));
-        menuName.Replace(wxT("&"), wxEmptyString);
-        m_menuForHistory = MenuBar->GetMenu(MenuBar->FindMenu(menuName));
+        m_menuForHistory = MenuBar->GetMenu(MenuBar->FindMenu(_("&File")));
         FileHistory().UseMenu(m_menuForHistory);
         FileHistory().AddFilesToMenu(m_menuForHistory);
 #endif

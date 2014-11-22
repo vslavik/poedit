@@ -804,7 +804,7 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
     Sparkle_AddMenuItem(apple->GetHMenu(), _("Check for Updates...").utf8_str());
 #endif
 
-    int editMenuPos = bar->FindMenu(_("Edit"));
+    int editMenuPos = bar->FindMenu(_("&Edit"));
     if (editMenuPos == wxNOT_FOUND)
         editMenuPos = 1;
     wxMenu *edit = bar->GetMenu(editMenuPos);
@@ -877,7 +877,7 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
     AddNativeItem(speech, -1, _("Stop Speaking"), @selector(stopSpeaking:), @"");
     [editNS setSubmenu:speech forItem:item];
 
-    int viewMenuPos = bar->FindMenu(_("View"));
+    int viewMenuPos = bar->FindMenu(_("&View"));
     if (viewMenuPos != wxNOT_FOUND)
     {
         NSMenu *viewNS = bar->GetMenu(viewMenuPos)->GetHMenu();
