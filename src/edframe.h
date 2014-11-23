@@ -26,6 +26,7 @@
 #ifndef _EDFRAME_H_
 #define _EDFRAME_H_
 
+#include <memory>
 #include <set>
 
 #include <wx/frame.h>
@@ -54,6 +55,7 @@ class TranslationTextCtrl;
 class PoeditFrame;
 class AttentionBar;
 class ErrorBar;
+class MainToolbar;
 class Sidebar;
 
 /** This class provides main editing frame. It handles user's input
@@ -314,6 +316,8 @@ private:
         Catalog *m_catalog;
         wxString m_fileName;
         bool m_fileExistsOnDisk;
+
+        std::unique_ptr<MainToolbar> m_toolbar;
 
         wxPanel *m_bottomPanel;
         wxSplitterWindow *m_splitter;

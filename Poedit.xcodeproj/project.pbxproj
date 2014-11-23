@@ -36,6 +36,7 @@
 		B24ACD6916F6201F00399242 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B24ACD6716F6201F00399242 /* InfoPlist.strings */; };
 		B24ACD8416F6263900399242 /* Poedit.iconset in Resources */ = {isa = PBXBuildFile; fileRef = B24ACD8316F6263900399242 /* Poedit.iconset */; };
 		B251159119DEC7E50053255C /* Sparkle.framework in Copy Private Frameworks */ = {isa = PBXBuildFile; fileRef = B256797417075E6000C52BC5 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B25504A81A2201E800EE2CEE /* main_toolbar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B25504A71A2201E800EE2CEE /* main_toolbar.cpp */; };
 		B256797517075E6000C52BC5 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B256797417075E6000C52BC5 /* Sparkle.framework */; };
 		B2567977170763B700C52BC5 /* libwx_osx_cocoa_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2567976170763B700C52BC5 /* libwx_osx_cocoa_static.a */; };
 		B2579C7F1920BFA000BEBC31 /* NSObject+REResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = B2579C7E1920BFA000BEBC31 /* NSObject+REResponder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -248,6 +249,8 @@
 		B24ACD6816F6201F00399242 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B24ACD6C16F6201F00399242 /* Poedit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Poedit-Prefix.pch"; path = "src/Poedit-Prefix.pch"; sourceTree = "<group>"; };
 		B24ACD8316F6263900399242 /* Poedit.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = Poedit.iconset; path = osx/Poedit.iconset; sourceTree = "<group>"; };
+		B25504A61A2201DC00EE2CEE /* main_toolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main_toolbar.h; sourceTree = "<group>"; };
+		B25504A71A2201E800EE2CEE /* main_toolbar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main_toolbar.cpp; path = wx/main_toolbar.cpp; sourceTree = "<group>"; };
 		B256797417075E6000C52BC5 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2567976170763B700C52BC5 /* libwx_osx_cocoa_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwx_osx_cocoa_static.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2579C7D1920BFA000BEBC31 /* NSObject+REResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+REResponder.h"; path = "deps/rekit/REKit/NSObject+REResponder.h"; sourceTree = "<group>"; };
@@ -514,6 +517,7 @@
 		B23D1F5C1814283200E6B212 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				B25504A51A2201CC00EE2CEE /* Native */,
 				B28F1CB116F629D30018AF7E /* attentionbar.cpp */,
 				B28F1CB216F629D30018AF7E /* attentionbar.h */,
 				B28F1CB316F629D30018AF7E /* cat_sorting.cpp */,
@@ -693,6 +697,15 @@
 				B2EC60A31812D9D40059756A /* icudt54l.dat */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		B25504A51A2201CC00EE2CEE /* Native */ = {
+			isa = PBXGroup;
+			children = (
+				B25504A71A2201E800EE2CEE /* main_toolbar.cpp */,
+				B25504A61A2201DC00EE2CEE /* main_toolbar.h */,
+			);
+			name = Native;
 			sourceTree = "<group>";
 		};
 		B27EB05C1709DA2B009C1328 /* XRC Resources */ = {
@@ -1051,6 +1064,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B25504A81A2201E800EE2CEE /* main_toolbar.cpp in Sources */,
 				B2F14DD4181E510100E212B5 /* tm_migrate.cpp in Sources */,
 				B28F1CE616F629D30018AF7E /* catalog.cpp in Sources */,
 				B28F1CE716F629D30018AF7E /* edapp.cpp in Sources */,

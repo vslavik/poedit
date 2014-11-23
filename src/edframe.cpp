@@ -79,6 +79,7 @@
 #include "language.h"
 #include "progressinfo.h"
 #include "commentdlg.h"
+#include "main_toolbar.h"
 #include "manager.h"
 #include "pluralforms/pl_evaluate.h"
 #include "attentionbar.h"
@@ -832,7 +833,7 @@ PoeditFrame::PoeditFrame() :
         return;
     }
 
-    wxXmlResource::Get()->LoadToolBar(this, "toolbar");
+    m_toolbar = MainToolbar::Create(this);
 
     GetMenuBar()->Check(XRCID("menu_ids"), m_displayIDs);
 
@@ -2091,18 +2092,19 @@ void PoeditFrame::ShowReference(int num)
 
 void PoeditFrame::OnFuzzyFlag(wxCommandEvent& event)
 {
-    if (event.GetEventObject() == GetToolBar())
+    bool setFuzzy = false;
+
+    auto source = event.GetEventObject();
+    if (source && dynamic_cast<wxMenu*>(source))
     {
-        GetMenuBar()->Check(XRCID("menu_fuzzy"),
-                            GetToolBar()->GetToolState(XRCID("menu_fuzzy")));
+        setFuzzy = GetMenuBar()->IsChecked(XRCID("menu_fuzzy"));
+        m_toolbar->SetFuzzy(setFuzzy);
     }
     else
     {
-        GetToolBar()->ToggleTool(XRCID("menu_fuzzy"),
-                                 GetMenuBar()->IsChecked(XRCID("menu_fuzzy")));
+        setFuzzy = m_toolbar->IsFuzzy();
+        GetMenuBar()->Check(XRCID("menu_fuzzy"), setFuzzy);
     }
-
-    bool setFuzzy = !GetCurrentItem()->IsFuzzy();
 
     bool modified = false;
 
@@ -2297,7 +2299,7 @@ void PoeditFrame::UpdateFromTextCtrl()
         return;
 
     wxString key = entry->GetString();
-    bool newfuzzy = GetToolBar()->GetToolState(XRCID("menu_fuzzy"));
+    bool newfuzzy = m_toolbar->IsFuzzy();
 
     const bool oldIsTranslated = entry->IsTranslated();
     bool allTranslated = true; // will be updated later
@@ -2346,8 +2348,7 @@ void PoeditFrame::UpdateFromTextCtrl()
     if (newfuzzy == entry->IsFuzzy() && !m_dontAutoclearFuzzyStatus)
         newfuzzy = false;
 
-
-    GetToolBar()->ToggleTool(XRCID("menu_fuzzy"), newfuzzy);
+    m_toolbar->SetFuzzy(newfuzzy);
     GetMenuBar()->Check(XRCID("menu_fuzzy"), newfuzzy);
 
     if ( entry->IsFuzzy() != newfuzzy )
@@ -2465,7 +2466,7 @@ void PoeditFrame::UpdateToTextCtrl()
     // by default, editing fuzzy item unfuzzies it
     m_dontAutoclearFuzzyStatus = false;
 
-    GetToolBar()->ToggleTool(XRCID("menu_fuzzy"), entry->IsFuzzy());
+    m_toolbar->SetFuzzy(entry->IsFuzzy());
     GetMenuBar()->Check(XRCID("menu_fuzzy"), entry->IsFuzzy());
 
     ShowPluralFormUI(entry->HasPlural());
