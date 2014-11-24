@@ -2862,7 +2862,7 @@ void PoeditFrame::UpdateMenu()
                     editable && m_catalog->HasDeletedItems());
 
     const bool doupdate = hasCatalog &&
-                          !m_catalog->Header().SearchPaths.empty();
+                          (!m_catalog->Header().SearchPaths.empty() || !m_catalog->Header().PotFile.empty());
     toolbar->EnableTool(XRCID("menu_update"), doupdate);
     menubar->Enable(XRCID("menu_update"), doupdate);
 

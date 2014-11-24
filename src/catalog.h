@@ -470,6 +470,7 @@ class Catalog
             wxArrayString SearchPaths, SearchPathsExcluded, Keywords;
             int Bookmarks[BOOKMARK_LAST];
             wxString BasePath;
+            wxString PotFile;
 
             wxString Comment;
 
