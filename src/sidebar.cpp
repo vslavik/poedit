@@ -324,10 +324,8 @@ public:
 #ifndef __WXOSX__
         // FIXME: Causes weird issues on OS X: tooltips appearing on the main list control,
         //        over toolbar, where the mouse just was etc.
-        SetToolTip(tooltip);
         m_icon->SetToolTip(tooltip);
         m_text->SetToolTip(tooltip);
-        m_info->SetToolTip(tooltip);
 #endif
         (void)tooltip;
 
