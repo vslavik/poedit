@@ -37,7 +37,7 @@
 
     wxString by = wxConfig::Get()->Read("/sort_by", "file-order");
     long ctxt = wxConfig::Get()->Read("/sort_group_by_context", 0L);
-    long untrans = wxConfig::Get()->Read("/sort_untrans_first", 1L);
+    long untrans = wxConfig::Get()->Read("/sort_untrans_first", 0L);
 
     if ( by == "source" )
         order.by = By_Source;

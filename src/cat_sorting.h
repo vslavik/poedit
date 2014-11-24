@@ -41,7 +41,7 @@ struct SortOrder
         By_Translation
     };
 
-    SortOrder() : by(By_FileOrder), groupByContext(false), untransFirst(true) {}
+    SortOrder() : by(By_FileOrder), groupByContext(false), untransFirst(false) {}
 
     /// Loads default sort order from config settings
     static SortOrder Default();
