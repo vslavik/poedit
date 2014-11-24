@@ -3218,14 +3218,14 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
                  #else
                  wxString(_("Copy from Source Text"))
                  #endif
-                   + "\tCtrl+B");
+                   + "\t" + _("Ctrl+") + "B");
     menu->Append(XRCID("menu_clear"),
                  #ifdef __WXMSW__
                  wxString(_("Clear translation"))
                  #else
                  wxString(_("Clear Translation"))
                  #endif
-                   + "\tCtrl+K");
+                   + "\t" + _("Ctrl+") + "K");
    menu->Append(XRCID("menu_comment"),
                  #ifdef __WXMSW__
                  wxString(_("Edit comment"))
@@ -3233,7 +3233,7 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
                  wxString(_("Edit Comment"))
                  #endif
                  #ifndef __WXOSX__
-                   + "\tCtrl+M"
+                   + "\t" + _("Ctrl+") + "M"
                  #endif
                  );
 
@@ -3520,8 +3520,10 @@ void PoeditFrame::AddBookmarksMenu(wxMenu *parent)
     #define BK_ACCEL_SET  "Ctrl+rawctrl+%i"
     #define BK_ACCEL_GO   "Ctrl+Alt+%i"
 #else
-    #define BK_ACCEL_SET  "Alt+%i"
-    #define BK_ACCEL_GO   "Ctrl+Alt+%i"
+    // TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+    #define BK_ACCEL_SET  _("Alt+") + "%i"
+    // TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+    #define BK_ACCEL_GO   _("Ctrl+") + _("Alt+") + "%i"
 #endif
 
 #ifdef __WXMSW__
