@@ -852,7 +852,7 @@
 				B2E836D81709EB0700F31559 /* Copy Private Frameworks */,
 				B23D1F72181446EF00E6B212 /* Copy Auxiliary Binaries */,
 				B2B7D470170DD91C00ED0AFE /* Copy Gettext bundle */,
-				B2E83707170C96DB00F31559 /* Install translations */,
+				B2E83707170C96DB00F31559 /* Copy PO Translations */,
 			);
 			buildRules = (
 			);
@@ -1012,7 +1012,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "BUILD_NUMBER=`git rev-list HEAD | wc -l`\necho setting bn to $BUILD_NUMBER\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"";
+			shellScript = "BUILD_NUMBER=`git rev-list HEAD | wc -l`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"";
 		};
 		B2CC62E217DB7F670097461B /* Set bundle versions from deps/gettext */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1028,14 +1028,14 @@
 			shellPath = /bin/sh;
 			shellScript = "VERSION_NUMBER=`cat deps/gettext/.version`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"";
 		};
-		B2E83707170C96DB00F31559 /* Install translations */ = {
+		B2E83707170C96DB00F31559 /* Copy PO Translations */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Install translations";
+			name = "Copy PO Translations";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;

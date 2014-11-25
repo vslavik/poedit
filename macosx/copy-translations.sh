@@ -29,12 +29,12 @@ try_compile_po()
 
     if [ -f "$podir/$lang.po" ] ; then
         if [ '!' "$outfile" -nt "$podir/$lang.po" ] ; then
-            echo "    $podir/$lang.po"
+            echo "Compiling $podir/$lang.po"
             $MSGFMT -o "$outfile" "$podir/$lang.po"
         fi
     elif [ -f "$podir/$shortlang.po" ] ; then
         if [ '!' "$outfile" -nt "$podir/$shortlang.po" ] ; then
-            echo "    $podir/$shortlang.po"
+            echo "Compiling $podir/$shortlang.po"
             $MSGFMT -o "$outfile" "$podir/$shortlang.po"
         fi
     fi
@@ -42,7 +42,7 @@ try_compile_po()
 
 for lang in `get_all_langs`; do
     lproj="$DESTDIR/`lang_to_osx $lang`.lproj"
-    echo "creating $lproj ($lang)..."
+
     mkdir -p "$lproj"
 
     try_compile_po $lang "$lproj/poedit.mo"           locales
