@@ -405,13 +405,28 @@ void PoeditApp::SetDefaultExtractors(wxConfigBase *cfg)
         const char *name;
         const char *exts;
     } s_gettextLangs[] = {
-        { "C/C++",    "*.c;*.cpp;*.h;*.hpp;*.cc;*.C;*.cxx;*.hxx" },
-        { "C#",       "*.cs" },
-        { "Java",     "*.java" },
-        { "Perl",     "*.pl" },
-        { "PHP",      "*.php;*.phtml" },
-        { "Python",   "*.py" },
-        { "TCL",      "*.tcl" },
+        { "C/C++",      "*.c;*.cpp;*.cc;*.C;*.c++;*.cxx;*.h;*.hpp;*.hxx;*.hh" },
+        { "C#",         "*.cs" },
+        { "EmacsLisp",  "*.el" },
+        { "GSettings",  "gschema.xml" },
+        { "Glade",      "*.glade;*.glade2;*.ui" },
+        { "Java",       "*.java" },
+        { "JavaScript", "*.js" },
+        { "Lisp",       "*.lisp" },
+        { "Lua",        "*.lua" },
+        { "ObjectiveC", "*.m" },
+        { "PHP",        "*.php;*.php3;*.php4;*.phtml" },
+        { "Perl",       "*.pl;*.PL;*.pm;*.perl" },
+        { "Python",     "*.py" },
+        { "RST",        "*.rst" },
+        { "Scheme",     "*.scm" },
+        { "Shell",      "*.sh;*.bash" },
+        { "Smalltalk",  "*.st" },
+        { "TCL",        "*.tcl" },
+        { "Vala",       "*.vala" },
+        { "YCP",        "*.ycp" },
+        { "awk",        "*.awk" },
+        { "librep",     "*.jl" },
         { NULL, NULL }
     };
 
