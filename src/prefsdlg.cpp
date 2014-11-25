@@ -576,6 +576,9 @@ public:
 
         m_list = new wxListBox(this, wxID_ANY);
         m_list->SetMinSize(wxSize(250,300));
+#ifdef __WXOSX__
+        m_list->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
         horizontal->Add(m_list, wxSizerFlags(1).Expand().Border(wxRIGHT));
 
         auto buttons = new wxBoxSizer(wxVERTICAL);
