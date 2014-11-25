@@ -180,6 +180,12 @@ TempOutputFileFor::~TempOutputFileFor()
 
 void SaveWindowState(const wxTopLevelWindow *win, int flags)
 {
+#ifdef __WXOSX__
+    // Don't remember dimensions of a fullscreen window:
+    if ([[NSApplication sharedApplication] currentSystemPresentationOptions] & NSApplicationPresentationFullScreen)
+        return;
+#endif
+
     wxConfigBase *cfg = wxConfig::Get();
     const wxString path = WindowStatePath(win);
 
