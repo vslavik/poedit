@@ -704,7 +704,10 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_UPDATE_UI(wxID_PASTE,     PoeditFrame::OnTextEditingCommandUpdate)
    EVT_UPDATE_UI(wxID_DELETE,    PoeditFrame::OnTextEditingCommandUpdate)
    EVT_UPDATE_UI(wxID_SELECTALL, PoeditFrame::OnTextEditingCommandUpdate)
-  #if 0
+#endif
+END_EVENT_TABLE()
+
+#if 0
     // These translations are provided by wxWidgets. Force the strings here,
     // even though unused, because Poedit is translated into many more languages
     // than wx is.
@@ -715,9 +718,20 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
     _("&Paste"),              _("Paste")
     _("&Delete"),             _("Delete")
     _("Select &All"),         _("Select All")
-  #endif
+
+    /// TRANSLATORS: Keyboard shortcut for display in Windows menus
+    _("Ctrl+"),
+    /// TRANSLATORS: Keyboard shortcut for display in Windows menus
+    _("Alt+"),
+    /// TRANSLATORS: Keyboard shortcut for display in Windows menus
+    _("Shift+"),
+    /// TRANSLATORS: Keyboard shortcut for display in Windows menus
+    _("Enter"),
+    /// TRANSLATORS: Keyboard shortcut for display in Windows menus
+    _("Up"),
+    /// TRANSLATORS: Keyboard shortcut for display in Windows menus
+    _("Down"),
 #endif
-END_EVENT_TABLE()
 
 
 
