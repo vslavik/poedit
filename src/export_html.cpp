@@ -206,13 +206,13 @@ bool Catalog::ExportToHTML(const wxString& filename)
             notes += "<BR>";
         }
 
-        if (data.HasAutoComments())
+        if (data.HasExtractedComments())
         {
             notes += "<font color='#888'>";
             notes += _("Notes for translators:");
             notes += "</font>";
             notes += "<br>";
-            for (auto n: data.GetAutoComments())
+            for (auto n: data.GetExtractedComments())
                 notes += EscapeMarkup(n) + "<br>";
         }
         if (data.HasComment())

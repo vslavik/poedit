@@ -236,7 +236,7 @@ enum FoundState
     Found_InOrig,
     Found_InTrans,
     Found_InComments,
-    Found_InAutoComments
+    Found_InExtractedComments
 };
 
 bool TextInString(const wxString& str, const wxString& text, bool wholeWords)
@@ -276,7 +276,7 @@ bool FindFrame::DoFind(int dir)
     bool inStr = XRCCTRL(*this, "in_orig", wxCheckBox)->GetValue();
     bool inTrans = XRCCTRL(*this, "in_trans", wxCheckBox)->GetValue();
     bool inComments = XRCCTRL(*this, "in_comments", wxCheckBox)->GetValue();
-    bool inAutoComments = XRCCTRL(*this, "in_auto_comments", wxCheckBox)->GetValue();
+    bool inExtractedComments = XRCCTRL(*this, "in_auto_comments", wxCheckBox)->GetValue();
     bool caseSens = XRCCTRL(*this, "case_sensitive", wxCheckBox)->GetValue();
     bool wholeWords = XRCCTRL(*this, "whole_words", wxCheckBox)->GetValue();
     int posOrig = m_position;
@@ -342,17 +342,17 @@ bool FindFrame::DoFind(int dir)
 
             if (TextInString(textc, text, wholeWords)) { found = Found_InComments; break; }
         }
-        if (inAutoComments)
+        if (inExtractedComments)
         {
-            wxArrayString autoComments = dt.GetAutoComments();
+            wxArrayString extractedComments = dt.GetExtractedComments();
             textc = wxEmptyString;
-            for (unsigned i = 0; i < autoComments.GetCount(); i++)
-                textc += autoComments[i];
+            for (unsigned i = 0; i < extractedComments.GetCount(); i++)
+                textc += extractedComments[i];
 
             if (!caseSens)
                 textc.MakeLower();
 
-            if (TextInString(textc, text, wholeWords)) { found = Found_InAutoComments; break; }
+            if (TextInString(textc, text, wholeWords)) { found = Found_InExtractedComments; break; }
         }
 
         m_position += dir;
@@ -378,7 +378,7 @@ bool FindFrame::DoFind(int dir)
               txt = m_textCtrlTrans;
               break;
             case Found_InComments:
-            case Found_InAutoComments:
+            case Found_InExtractedComments:
             case Found_Not:
               break;
         }

@@ -96,7 +96,7 @@ class CatalogItem
                   m_context(dt.m_context),
                   m_translations(dt.m_translations),
                   m_references(dt.m_references),
-                  m_autocomments(dt.m_autocomments),
+                  m_extractedComments(dt.m_extractedComments),
                   m_oldMsgid(dt.m_oldMsgid),
                   m_isFuzzy(dt.m_isFuzzy),
                   m_isTranslated(dt.m_isTranslated),
@@ -156,13 +156,13 @@ class CatalogItem
         const wxString& GetComment() const { return m_comment; }
 
         /// Returns array of all auto comments.
-        const wxArrayString& GetAutoComments() const { return m_autocomments; }
+        const wxArrayString& GetExtractedComments() const { return m_extractedComments; }
 
         /// Convenience function: does this entry has a comment?
         bool HasComment() const { return !m_comment.empty(); }
 
         /// Convenience function: does this entry has auto comments?
-        bool HasAutoComments() const { return !m_autocomments.empty(); }
+        bool HasExtractedComments() const { return !m_extractedComments.empty(); }
 
         /// Adds new reference to the entry (used by SourceDigger).
         void AddReference(const wxString& ref)
@@ -248,16 +248,16 @@ class CatalogItem
             flag when called with "foo" as argument. */
         bool IsInFormat(const wxString& format);
 
-        /// Adds new autocomments (#. )
-        void AddAutoComments(const wxString& com)
+        /// Adds new extracted comments (#. )
+        void AddExtractedComments(const wxString& com)
         {
-            m_autocomments.Add(com);
+            m_extractedComments.Add(com);
         }
 
-        /// Clears autocomments.
-        void ClearAutoComments()
+        /// Clears extracted comments.
+        void ClearExtractedComments()
         {
-            m_autocomments.Clear();
+            m_extractedComments.Clear();
         }
 
         void SetOldMsgid(const wxArrayString& data) { m_oldMsgid = data; }
@@ -298,7 +298,7 @@ class CatalogItem
 
         wxArrayString m_translations;
 
-        wxArrayString m_references, m_autocomments;
+        wxArrayString m_references, m_extractedComments;
         wxArrayString m_oldMsgid;
         bool m_isFuzzy, m_isTranslated, m_isModified, m_isAutomatic;
         bool m_hasBadTokens;
@@ -330,7 +330,7 @@ class CatalogDeletedData
         CatalogDeletedData(const CatalogDeletedData& dt)
                 : m_deletedLines(dt.m_deletedLines),
                   m_references(dt.m_references),
-                  m_autocomments(dt.m_autocomments),
+                  m_extractedComments(dt.m_extractedComments),
                   m_flags(dt.m_flags),
                   m_comment(dt.m_comment),
                   m_lineNum(dt.m_lineNum) {}
@@ -345,7 +345,7 @@ class CatalogDeletedData
         const wxString& GetComment() const { return m_comment; }
 
         /// Returns array of all auto comments.
-        const wxArrayString& GetAutoComments() const { return m_autocomments; }
+        const wxArrayString& GetExtractedComments() const { return m_extractedComments; }
 
         /// Convenience function: does this entry has a comment?
         bool HasComment() const { return !m_comment.empty(); }
@@ -383,22 +383,22 @@ class CatalogDeletedData
         /// Get line number of this entry.
         int GetLineNumber() const { return m_lineNum; }
 
-        /// Adds new autocomments (#. )
-        void AddAutoComments(const wxString& com)
+        /// Adds new extracted comments (#. )
+        void AddExtractedComments(const wxString& com)
         {
-            m_autocomments.Add(com);
+            m_extractedComments.Add(com);
         }
 
-        /// Clears autocomments.
-        void ClearAutoComments()
+        /// Clears extracted comments.
+        void ClearExtractedComments()
         {
-            m_autocomments.Clear();
+            m_extractedComments.Clear();
         }
 
     private:
         wxArrayString m_deletedLines;
 
-        wxArrayString m_references, m_autocomments;
+        wxArrayString m_references, m_extractedComments;
         wxString m_flags;
         wxString m_comment;
         int m_lineNum;
@@ -742,7 +742,7 @@ class CatalogParser
                              const wxString& flags,
                              const wxArrayString& references,
                              const wxString& comment,
-                             const wxArrayString& autocomments,
+                             const wxArrayString& extractedComments,
                              const wxArrayString& msgid_old,
                              unsigned lineNumber) = 0;
 
@@ -754,7 +754,7 @@ class CatalogParser
                                     const wxString& /*flags*/,
                                     const wxArrayString& /*references*/,
                                     const wxString& /*comment*/,
-                                    const wxArrayString& /*autocomments*/,
+                                    const wxArrayString& /*extractedComments*/,
                                     unsigned /*lineNumber*/)
         {
             return true;

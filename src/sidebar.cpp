@@ -150,10 +150,10 @@ private:
 };
 
 
-class AutoCommentSidebarBlock : public SidebarBlock
+class ExtractedCommentSidebarBlock : public SidebarBlock
 {
 public:
-    AutoCommentSidebarBlock(Sidebar *parent)
+    ExtractedCommentSidebarBlock(Sidebar *parent)
         : SidebarBlock(parent, _("Notes for translators:"))
     {
         m_innerSizer->AddSpacer(5);
@@ -163,12 +163,12 @@ public:
 
     bool ShouldShowForItem(CatalogItem *item) const override
     {
-        return item->HasAutoComments();
+        return item->HasExtractedComments();
     }
 
     void Update(CatalogItem *item) override
     {
-        auto comment = wxJoin(item->GetAutoComments(), ' ', '\0');
+        auto comment = wxJoin(item->GetExtractedComments(), ' ', '\0');
         if (comment.StartsWith("TRANSLATORS:") || comment.StartsWith("translators:"))
         {
             comment.Remove(0, 12);
@@ -698,7 +698,7 @@ Sidebar::Sidebar(wxWindow *parent, wxMenu *suggestionsMenu)
 
     AddBlock(new SuggestionsSidebarBlock(this, suggestionsMenu), Top);
     AddBlock(new OldMsgidSidebarBlock(this), Bottom);
-    AddBlock(new AutoCommentSidebarBlock(this), Bottom);
+    AddBlock(new ExtractedCommentSidebarBlock(this), Bottom);
     AddBlock(new CommentSidebarBlock(this), Bottom);
     AddBlock(new AddCommentSidebarBlock(this), Bottom);
 

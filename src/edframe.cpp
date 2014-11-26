@@ -2429,8 +2429,8 @@ void PoeditFrame::UpdateToTextCtrl()
     t_c = entry->GetComment();
     t_c.Replace("\\n", "\\n\n");
 
-    for (unsigned i=0; i < entry->GetAutoComments().GetCount(); i++)
-      t_ac += entry->GetAutoComments()[i] + "\n";
+    for (unsigned i=0; i < entry->GetExtractedComments().GetCount(); i++)
+      t_ac += entry->GetExtractedComments()[i] + "\n";
     t_ac.Replace("\\n", "\\n\n");
 
     // remove "# " in front of every comment line

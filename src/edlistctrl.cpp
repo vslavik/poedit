@@ -463,7 +463,7 @@ int PoeditListCtrl::OnGetItemImage(long item) const
 
     if (d.GetBookmark() != NO_BOOKMARK)
         return IMG_BOOKMARK;
-    else if (d.HasComment() || d.HasAutoComments())
+    else if (d.HasComment() || d.HasExtractedComments())
         return IMG_COMMENT;
     else if (d.IsAutomatic())
         return IMG_AUTOMATIC;

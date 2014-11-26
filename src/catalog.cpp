@@ -594,7 +594,7 @@ bool CatalogParser::Parse()
 
     wxString line, dummy;
     wxString mflags, mstr, msgid_plural, mcomment;
-    wxArrayString mrefs, mautocomments, mtranslations;
+    wxArrayString mrefs, mextractedcomments, mtranslations;
     wxArrayString msgid_old;
     bool has_plural = false;
     bool has_context = false;
@@ -606,7 +606,7 @@ bool CatalogParser::Parse()
 
     while (!line.empty())
     {
-        // ignore empty special tags (except for automatic comments which we
+        // ignore empty special tags (except for extracted comments which we
         // DO want to preserve):
         while (line == "#," || line == "#:" || line == "#|")
             line = ReadTextLine();
@@ -622,7 +622,7 @@ bool CatalogParser::Parse()
         // auto comments:
         if (ReadParam(line, "#. ", dummy) || ReadParam(line, "#.", dummy)) // second one to account for empty auto comments
         {
-            mautocomments.Add(dummy);
+            mextractedcomments.Add(dummy);
             line = ReadTextLine();
         }
 
@@ -737,7 +737,7 @@ bool CatalogParser::Parse()
                 if (!OnEntry(mstr, wxEmptyString, false,
                              has_context, msgctxt,
                              mtranslations,
-                             mflags, mrefs, mcomment, mautocomments, msgid_old,
+                             mflags, mrefs, mcomment, mextractedcomments, msgid_old,
                              mlinenum))
                 {
                     return false;
@@ -747,7 +747,7 @@ bool CatalogParser::Parse()
             mcomment = mstr = msgid_plural = msgctxt = mflags = wxEmptyString;
             has_plural = has_context = false;
             mrefs.Clear();
-            mautocomments.Clear();
+            mextractedcomments.Clear();
             mtranslations.Clear();
             msgid_old.Clear();
         }
@@ -792,7 +792,7 @@ bool CatalogParser::Parse()
             if (!OnEntry(mstr, msgid_plural, true,
                          has_context, msgctxt,
                          mtranslations,
-                         mflags, mrefs, mcomment, mautocomments, msgid_old,
+                         mflags, mrefs, mcomment, mextractedcomments, msgid_old,
                          mlinenum))
             {
                 return false;
@@ -801,7 +801,7 @@ bool CatalogParser::Parse()
             mcomment = mstr = msgid_plural = msgctxt = mflags = wxEmptyString;
             has_plural = has_context = false;
             mrefs.Clear();
-            mautocomments.Clear();
+            mextractedcomments.Clear();
             mtranslations.Clear();
             msgid_old.Clear();
         }
@@ -825,7 +825,7 @@ bool CatalogParser::Parse()
                 deletedLines.Add(line);
             }
             if (!OnDeletedEntry(deletedLines,
-                                mflags, mrefs, mcomment, mautocomments, mlinenum))
+                                mflags, mrefs, mcomment, mextractedcomments, mlinenum))
             {
                 return false;
             }
@@ -833,7 +833,7 @@ bool CatalogParser::Parse()
             mcomment = mstr = msgid_plural = mflags = wxEmptyString;
             has_plural = false;
             mrefs.Clear();
-            mautocomments.Clear();
+            mextractedcomments.Clear();
             mtranslations.Clear();
             msgid_old.Clear();
         }
@@ -881,7 +881,7 @@ wxString CatalogParser::ReadTextLine()
         // read next line and strip insignificant whitespace from it:
         auto ln = m_textFile->GetNextLine();
 
-        // gettext tools don't include automatic comments in wrapping, so they can't
+        // gettext tools don't include extracted comments in wrapping, so they can't
         // be reliably used to detect file's wrapping either; just skip them.
         if (!ln.StartsWith(wxS("#. ")))
         {
@@ -936,7 +936,7 @@ class CharsetInfoFinder : public CatalogParser
                              const wxString& /*flags*/,
                              const wxArrayString& /*references*/,
                              const wxString& /*comment*/,
-                             const wxArrayString& /*autocomments*/,
+                             const wxArrayString& /*extractedComments*/,
                              const wxArrayString& /*msgid_old*/,
                              unsigned /*lineNumber*/)
         {
@@ -979,7 +979,7 @@ class LoadParser : public CatalogParser
                              const wxString& flags,
                              const wxArrayString& references,
                              const wxString& comment,
-                             const wxArrayString& autocomments,
+                             const wxArrayString& extractedComments,
                              const wxArrayString& msgid_old,
                              unsigned lineNumber);
 
@@ -987,7 +987,7 @@ class LoadParser : public CatalogParser
                                     const wxString& flags,
                                     const wxArrayString& references,
                                     const wxString& comment,
-                                    const wxArrayString& autocomments,
+                                    const wxArrayString& extractedComments,
                                     unsigned lineNumber);
 
         virtual void OnIgnoredEntry() { FileIsValid = true; }
@@ -1007,7 +1007,7 @@ bool LoadParser::OnEntry(const wxString& msgid,
                          const wxString& flags,
                          const wxArrayString& references,
                          const wxString& comment,
-                         const wxArrayString& autocomments,
+                         const wxArrayString& extractedComments,
                          const wxArrayString& msgid_old,
                          unsigned lineNumber)
 {
@@ -1043,15 +1043,15 @@ bool LoadParser::OnEntry(const wxString& msgid,
         for (size_t i = 0; i < references.GetCount(); i++)
             d.AddReference(references[i]);
 
-        for (auto i: autocomments)
+        for (auto i: extractedComments)
         {
-            // Sometimes, msgcat produces conflicts in automatic comments; see the gory details:
+            // Sometimes, msgcat produces conflicts in extracted comments; see the gory details:
             // https://groups.google.com/d/topic/poedit/j41KuvXtVUU/discussion
             // As a workaround, just filter them out.
             // FIXME: Fix this properly... but not using msgcat in the first place
             if (i.StartsWith(MSGCAT_CONFLICT_MARKER) && i.EndsWith(MSGCAT_CONFLICT_MARKER))
                 continue;
-            d.AddAutoComments(i);
+            d.AddExtractedComments(i);
         }
         d.SetOldMsgid(msgid_old);
         m_catalog->AddItem(d);
@@ -1063,7 +1063,7 @@ bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
                                 const wxString& flags,
                                 const wxArrayString& /*references*/,
                                 const wxString& comment,
-                                const wxArrayString& autocomments,
+                                const wxArrayString& extractedComments,
                                 unsigned lineNumber)
 {
     FileIsValid = true;
@@ -1073,8 +1073,8 @@ bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
     d.SetDeletedLines(deletedLines);
     d.SetComment(comment);
     d.SetLineNumber(lineNumber);
-    for (size_t i = 0; i < autocomments.GetCount(); i++)
-      d.AddAutoComments(autocomments[i]);
+    for (size_t i = 0; i < extractedComments.GetCount(); i++)
+      d.AddExtractedComments(extractedComments[i]);
     m_catalog->AddDeletedItem(d);
 
     return true;
@@ -1735,12 +1735,12 @@ bool Catalog::DoSaveOnly(wxTextFile& f, wxTextFileType crlf)
         CatalogItem& data = m_items[itemIdx];
         data.SetLineNumber(int(f.GetLineCount()+1));
         SaveMultiLines(f, data.GetComment());
-        for (unsigned i = 0; i < data.GetAutoComments().GetCount(); i++)
+        for (unsigned i = 0; i < data.GetExtractedComments().GetCount(); i++)
         {
-            if (data.GetAutoComments()[i].empty())
+            if (data.GetExtractedComments()[i].empty())
               f.AddLine("#.");
             else
-              f.AddLine("#. " + data.GetAutoComments()[i]);
+              f.AddLine("#. " + data.GetExtractedComments()[i]);
         }
         for (unsigned i = 0; i < data.GetRawReferences().GetCount(); i++)
             f.AddLine("#: " + data.GetRawReferences()[i]);
@@ -1784,8 +1784,8 @@ bool Catalog::DoSaveOnly(wxTextFile& f, wxTextFileType crlf)
         CatalogDeletedData& deletedItem = m_deletedItems[itemIdx];
         deletedItem.SetLineNumber(int(f.GetLineCount()+1));
         SaveMultiLines(f, deletedItem.GetComment());
-        for (unsigned i = 0; i < deletedItem.GetAutoComments().GetCount(); i++)
-            f.AddLine("#. " + deletedItem.GetAutoComments()[i]);
+        for (unsigned i = 0; i < deletedItem.GetExtractedComments().GetCount(); i++)
+            f.AddLine("#. " + deletedItem.GetExtractedComments()[i]);
         for (unsigned i = 0; i < deletedItem.GetRawReferences().GetCount(); i++)
             f.AddLine("#: " + deletedItem.GetRawReferences()[i]);
         wxString dummy = deletedItem.GetFlags();
