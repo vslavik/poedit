@@ -168,7 +168,7 @@ public:
 
     void Update(CatalogItem *item) override
     {
-        auto comment = wxJoin(item->GetExtractedComments(), ' ', '\0');
+        auto comment = wxJoin(item->GetExtractedComments(), '\n', '\0');
         if (comment.StartsWith("TRANSLATORS:") || comment.StartsWith("translators:"))
         {
             comment.Remove(0, 12);
