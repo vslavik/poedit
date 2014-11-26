@@ -110,19 +110,19 @@ Type: filesandordirs; Name: "{app}\doc"
 Type: filesandordirs; Name: "{app}\share"
 
 [Registry]
-Root: HKCR; SubKey: .po; ValueType: string; ValueData: GettextFile; Flags: uninsdeletekey noerror
-Root: HKCR; SubKey: GettextFile; ValueType: string; ValueData: PO translation file; Flags: uninsdeletekey noerror
-Root: HKCR; SubKey: GettextFile\Shell\Open\Command; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
-Root: HKCR; Subkey: GettextFile\DefaultIcon; ValueType: string; ValueData: {app}\Resources\poedit-translation-generic.ico; Flags: uninsdeletekey noerror
+Root: "HKCR"; Subkey: ".po"; ValueType: string; ValueData: "Poedit.PO"; Flags: noerror
+Root: "HKCR"; Subkey: "Poedit.PO"; ValueType: string; ValueData: "PO translation file"; Flags: uninsdeletekey noerror
+Root: "HKCR"; Subkey: "Poedit.PO\Shell\Open\Command"; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
+Root: "HKCR"; Subkey: "Poedit.PO\DefaultIcon"; ValueType: string; ValueData: "{app}\Resources\poedit-translation-generic.ico"; Flags: uninsdeletekey noerror
 
-Root: HKCR; SubKey: .mo; ValueType: string; ValueData: CompiledGettextFile; Flags: uninsdeletekey noerror
-Root: HKCR; SubKey: .gmo; ValueType: string; ValueData: CompiledGettextFile; Flags: uninsdeletekey noerror
-Root: HKCR; SubKey: CompiledGettextFile; ValueType: string; ValueData: Compiled translation file; Flags: uninsdeletekey noerror
-Root: HKCR; SubKey: CompiledGettextFile\Shell\Open\Command; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
-Root: HKCR; Subkey: CompiledGettextFile\DefaultIcon; ValueType: string; ValueData: {app}\Resources\poedit-translation-generic.ico; Flags: uninsdeletekey noerror
+Root: "HKCR"; Subkey: ".mo"; ValueType: string; ValueData: "Poedit.MO"; Flags: noerror
+Root: "HKCR"; Subkey: ".gmo"; ValueType: string; ValueData: "Poedit.MO"; Flags: noerror
+Root: "HKCR"; Subkey: "Poedit.MO"; ValueType: string; ValueData: "Compiled translation file"; Flags: uninsdeletekey noerror
+Root: "HKCR"; Subkey: "Poedit.MO\Shell\Open\Command"; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
+Root: "HKCR"; Subkey: "Poedit.MO\DefaultIcon"; ValueType: string; ValueData: "{app}\Resources\poedit-translation-generic.ico"; Flags: uninsdeletekey noerror
 
-Root: HKCU; Subkey: Software\Vaclav Slavik; Flags: uninsdeletekeyifempty dontcreatekey
-Root: HKCU; Subkey: Software\Vaclav Slavik\poedit; Flags: uninsdeletekey dontcreatekey
+Root: "HKCU"; Subkey: "Software\Vaclav Slavik"; Flags: uninsdeletekeyifempty dontcreatekey
+Root: "HKCU"; Subkey: "Software\Vaclav Slavik\Poedit"; Flags: uninsdeletekey dontcreatekey
 
 [Icons]
 Name: {commonprograms}\Poedit; Filename: {app}\Poedit.exe; WorkingDir: {app}; IconIndex: 0; Comment: Translations editor.

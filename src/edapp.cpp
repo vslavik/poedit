@@ -1012,14 +1012,14 @@ void PoeditApp::AssociateFileTypeIfNeeded()
     auto poIcon = wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\poedit-translation-generic.ico";
     wxRegKey key1(wxRegKey::HKCU, "Software\\Classes\\.po");
     key1.Create();
-    key1.SetValue("", "GettextFile");
-    wxRegKey key2(wxRegKey::HKCU, "Software\\Classes\\GettextFile");
+    key1.SetValue("", "Poedit.PO");
+    wxRegKey key2(wxRegKey::HKCU, "Software\\Classes\\Poedit.PO");
     key2.Create();
-    key2.SetValue("", _("PO Translation File"));
-    wxRegKey key3(wxRegKey::HKCU, "Software\\Classes\\GettextFile\\Shell\\Open\\Command");
+    key2.SetValue("", _("PO Translation"));
+    wxRegKey key3(wxRegKey::HKCU, "Software\\Classes\\Poedit.PO\\Shell\\Open\\Command");
     key3.Create();
     key3.SetValue("", poCmd);
-    wxRegKey key4(wxRegKey::HKCU, "Software\\Classes\\GettextFile\\DefaultIcon");
+    wxRegKey key4(wxRegKey::HKCU, "Software\\Classes\\Poedit.PO\\DefaultIcon");
     key4.Create();
     key4.SetValue("", poIcon);
 }
