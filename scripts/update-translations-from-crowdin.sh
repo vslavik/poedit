@@ -24,8 +24,10 @@ remove_unchanged_po_files()
 # that don't exist:
 remove_empty_lproj_string_files()
 {
-    find macosx -type f -name '*.strings' -empty -delete
-    find macosx -type d -name '*.lproj' -empty -delete
+    for dir in locales/osx src ; do
+        find $dir -type f -name '*.strings' -empty -delete
+        find $dir -type d -name '*.lproj' -empty -delete
+    done
 }
 
 # Massage RC files from Crowdin to be actually usable:
