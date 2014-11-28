@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2014-11-19 18:56+0100\n"
+"POT-Creation-Date: 2014-11-28 18:23+0100\n"
 "PO-Revision-Date: 2014-11-23 13:05-0500\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Turkish\n"
@@ -14,2377 +14,1674 @@ msgstr ""
 "\n"
 "X-Generator: crowdin.com\n"
 
+msgid "Hide this notification message"
+msgstr "Bu uyarı iletisini gizle"
+
+msgid "Don't Show Again"
+msgstr "Tekrar Gösterme"
+
+msgid "Don't show again"
+msgstr "Tekrar gösterme"
+
+#, c-format
+msgid "%i line of file '%s' was not loaded correctly."
+msgid_plural "%i lines of file '%s' were not loaded correctly."
+msgstr[0] "%i satır '%s' dosyasından doğru olarak yüklenmedi."
+
+#, c-format
+msgid "Line %d of file '%s' is corrupted (not valid %s data)."
+msgstr "%d satırı, '%s' dosyasında bozulmuş (%s verisi geçerli değil)."
+
+#, c-format
+msgid "Malformed header: '%s'"
+msgstr "Hatalı oluşturulmuş başlık: '%s'"
+
+msgid ""
+"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgstr ""
+"Bozuk katalog dosyası: tekil biçim msgstr, msgid_plural ile birlikte "
+"kullanılmış"
+
+msgid "Broken catalog file: plural form msgstr used without msgid_plural"
+msgstr ""
+"Bozuk katalog dosyası: çoğul biçim msgstr, msgid_plural olmadan kullanılmış"
+
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
+"Katalog yüklenirken hatalar oldu. Bazı veriler sonuçta kayıp veya bozuk "
+"olabilir."
+
+#, c-format
+msgid "Couldn't load file %s, it is probably corrupted."
+msgstr "%s dosyası yüklenemedi, muhtemelen bozuk."
+
+#, c-format
+msgid ""
+"File '%s' is read-only and cannot be saved.\n"
+"Please save it under different name."
+msgstr ""
+"'%s' dosyası salt-okunur ve kaydedilemez.\n"
+"Lütfen farklı bir isim altında kaydedin."
+
+#, c-format
+msgid "Couldn't save file %s."
+msgstr "%s dosyası kaydedilemedi."
+
+msgid ""
+"There was a problem formatting the file nicely (but it was saved all right)."
+msgstr ""
+"Dosyayı güzelce biçimlendirmede bir sorun oldu (ama sorunsuz kaydedildi)."
+
+#, c-format
+msgid ""
+"The catalog couldn't be saved in '%s' charset as specified in catalog "
+"settings.\n"
+"\n"
+"It was saved in UTF-8 instead and the setting was modified accordingly."
+msgstr ""
+"Katalog, katalog ayarlarında belirtildiği gibi '%s' karakter kümesine "
+"kaydedilemedi.\n"
+"\n"
+"Bunun yerine UTF-8 olarak kaydedildi ve ayar buna göre değiştirildi."
+
+msgid "Error saving catalog"
+msgstr "Katalog kaydedilirken hata"
+
+msgid "Merging differences..."
+msgstr "Farklılıklar birleştiriliyor..."
+
+#, c-format
+msgid "'%s' is not a valid POT file."
+msgstr "'%s' geçerli bir POT dosyası değil."
+
+msgid "(Use default language)"
+msgstr "(Varsayılan dili kullan)"
+
+msgid "Select your prefered language"
+msgstr "Tercih ettiğiniz dili seçin"
+
+msgid "Language selection"
+msgstr "Dil seçimi"
+
+msgid "You must restart Poedit for this change to take effect."
+msgstr ""
+"Bu değişikliğin etkili olması için Poedit'i yeniden başlatmak zorundasınız."
+
+msgid "Learn more"
+msgstr "Daha fazla bilgi edinin"
+
+msgid "Learn More"
+msgstr "Daha Fazla Bilgi Edinin"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "Başarısız komut: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "Gettext kataloglarını birleştirme başarısız."
+
+msgid "Scanning files..."
+msgstr "Dosyalar taranıyor..."
+
+#. TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
+#, c-format
+msgid "Parsing %s files..."
+msgstr "%s dosya ayrıştırılıyor..."
+
+msgid "Failed to load extracted catalog."
+msgstr "Çıkartılan kataloğu yükleme başarısız."
+
+msgid "&Help"
+msgstr "&Yardım"
+
+msgid "MO files can’t be directly edited in Poedit."
+msgstr "MO dosyaları doğrudan Poedit içinde düzenlenemez."
+
+msgid "Error opening file"
+msgstr "Dosya açılırken hata oldu"
+
+msgid ""
+"Please open and edit the corresponding PO file instead. When you save it, "
+"the MO file will be updated as well."
+msgstr ""
+"Lütfen bunun yerine ilgili PO dosyasını açın ve düzenleyin. Kaydettiğiniz "
+"zaman, MO dosyası da güncellenecektir."
+
+msgid "don't delete temporary files (for debugging)"
+msgstr "geçici dosyaları silme (hata ayıklama için)"
+
+#, c-format
+msgid "Unhandled exception occurred: %s"
+msgstr "Beklenmeyen bir hata oluştu: %s"
+
+msgid "Unhandled exception occurred."
+msgstr "Beklenmeyen bir hata oluştu."
+
+msgid "Open catalog"
+msgstr "Kataloğu aç"
+
+msgid "All Files"
+msgstr "Tüm Dosyalar"
+
+msgid "PO Translation Files"
+msgstr "PO Çeviri Dosyaları"
+
+#, c-format
+msgid "File '%s' doesn't exist."
+msgstr "'%s' dosyası yok."
+
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
-#: ../src/aboutbox.cpp:98 ../src/edapp.cpp:818
 #, c-format
 msgid "About %s"
 msgstr "%s Hakkında"
 
 #. TRANSLATORS: This is version information in about dialog, "%s" will be
 #. version number when used
-#: ../src/aboutbox.cpp:124 ../src/edapp.cpp:821 ../src/welcomescreen.cpp:233
 #, c-format
 msgid "Version %s"
 msgstr "Sürüm %s"
 
-#: ../src/aboutbox.cpp:125
-msgid "Based on the open source version →"
-msgstr "Açık kaynaklı sürüme dayanır →"
-
-#: ../src/aboutbox.cpp:137 ../src/aboutbox.cpp:149
-msgid "Acknowledgements"
-msgstr "Teşekkürler"
-
-#: ../src/aboutbox.cpp:139
-msgid "Rate on the App Store"
-msgstr "App Store üzerinde değerlendirin"
-
-#: ../src/aboutbox.cpp:141 ../src/aboutbox.cpp:150
-msgid "License Agreement"
-msgstr "Lisans Sözleşmesi"
-
-#: ../src/aboutbox.cpp:208
-#, c-format
-msgid "Licensed to %s"
-msgstr "Lisans sahibi: %s"
-
-#: ../src/aboutbox.cpp:210 ../src/licensing.cpp:227
-msgid "Purchased on the Mac App Store"
-msgstr "Mac App Store üzerinden satın alındı"
-
-#: ../src/aboutbox.cpp:212
-msgid "Free version (please upgrade!)"
-msgstr "Ücretsiz sürüm (lütfen yükseltin!)"
-
-#: ../src/attentionbar.cpp:90
-msgid "Hide this notification message"
-msgstr "Bu uyarı iletisini gizle"
-
-#: ../src/attentionbar.cpp:289
-msgid "Don't Show Again"
-msgstr "Tekrar Gösterme"
-
-#: ../src/attentionbar.cpp:289
-msgid "Don't show again"
-msgstr "Tekrar gösterme"
-
-#: ../src/catalog.cpp:121
-#, c-format
-msgid "%i line of file '%s' was not loaded correctly."
-msgid_plural "%i lines of file '%s' were not loaded correctly."
-msgstr[0] "%i satır '%s' dosyasından doğru olarak yüklenmedi."
-
-#: ../src/catalog.cpp:136
-#, c-format
-msgid "Line %d of file '%s' is corrupted (not valid %s data)."
-msgstr "%d satırı, '%s' dosyasında bozulmuş (%s verisi geçerli değil)."
-
-#: ../src/catalog.cpp:247
-#, c-format
-msgid "Malformed header: '%s'"
-msgstr "Hatalı oluşturulmuş başlık: '%s'"
-
-#: ../src/catalog.cpp:708
-msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
-msgstr "Bozuk katalog dosyası: tekil biçim msgstr, msgid_plural ile birlikte kullanılmış"
-
-#: ../src/catalog.cpp:760
-msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr "Bozuk katalog dosyası: çoğul biçim msgstr, msgid_plural olmadan kullanılmış"
-
-#: ../src/catalog.cpp:1202
-msgid "There were errors when loading the catalog. Some data may be missing or corrupted as the result."
-msgstr "Katalog yüklenirken hatalar oldu. Bazı veriler sonuçta kayıp veya bozuk olabilir."
-
-#: ../src/catalog.cpp:1212
-#, c-format
-msgid "Couldn't load file %s, it is probably corrupted."
-msgstr "%s dosyası yüklenemedi, muhtemelen bozuk."
-
-#: ../src/catalog.cpp:1461
-#, c-format
-msgid "File '%s' is read-only and cannot be saved.\nPlease save it under different name."
-msgstr "'%s' dosyası salt-okunur ve kaydedilemez.\nLütfen farklı bir isim altında kaydedin."
-
-#: ../src/catalog.cpp:1483 ../src/catalog.cpp:1540 ../src/catalog.cpp:1627
-#: ../src/catalog.cpp:1636 ../src/catalog.cpp:1661 ../src/catalog.cpp:1695
-#: ../src/export_html.cpp:260
-#, c-format
-msgid "Couldn't save file %s."
-msgstr "%s dosyası kaydedilemedi."
-
-#: ../src/catalog.cpp:1549
-msgid "There was a problem formatting the file nicely (but it was saved all right)."
-msgstr "Dosyayı güzelce biçimlendirmede bir sorun oldu (ama sorunsuz kaydedildi)."
-
-#: ../src/catalog.cpp:1797
-#, c-format
-msgid "The catalog couldn't be saved in '%s' charset as specified in catalog settings.\n\nIt was saved in UTF-8 instead and the setting was modified accordingly."
-msgstr "Katalog, katalog ayarlarında belirtildiği gibi '%s' karakter kümesine kaydedilemedi.\n\nBunun yerine UTF-8 olarak kaydedildi ve ayar buna göre değiştirildi."
-
-#: ../src/catalog.cpp:1799
-msgid "Error saving catalog"
-msgstr "Katalog kaydedilirken hata"
-
-#: ../src/catalog.cpp:1935
-msgid "Merging differences..."
-msgstr "Farklılıklar birleştiriliyor..."
-
-#: ../src/catalog.cpp:1970
-#, c-format
-msgid "'%s' is not a valid POT file."
-msgstr "'%s' geçerli bir POT dosyası değil."
-
-#: ../src/chooselang.cpp:62
-msgid "(Use default language)"
-msgstr "(Varsayılan dili kullan)"
-
-#: ../src/chooselang.cpp:70
-msgid "Select your prefered language"
-msgstr "Tercih ettiğiniz dili seçin"
-
-#: ../src/chooselang.cpp:71
-msgid "Language selection"
-msgstr "Dil seçimi"
-
-#: ../src/chooselang.cpp:89
-msgid "You must restart Poedit for this change to take effect."
-msgstr "Bu değişikliğin etkili olması için Poedit'i yeniden başlatmak zorundasınız."
-
-#: ../src/customcontrols.cpp:134 ../src/licensing.cpp:525
-msgid "Learn more"
-msgstr "Daha fazla bilgi edinin"
-
-#: ../src/customcontrols.cpp:136 ../src/licensing.cpp:525
-msgid "Learn More"
-msgstr "Daha Fazla Bilgi Edinin"
-
-#: ../src/digger.cpp:70
-#, c-format
-msgid "Failed command: %s"
-msgstr "Başarısız komut: %s"
-
-#: ../src/digger.cpp:71
-msgid "Failed to merge gettext catalogs."
-msgstr "Gettext kataloglarını birleştirme başarısız."
-
-#: ../src/digger.cpp:104
-msgid "Scanning files..."
-msgstr "Dosyalar taranıyor..."
-
-#. TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
-#: ../src/digger.cpp:123
-#, c-format
-msgid "Parsing %s files..."
-msgstr "%s dosya ayrıştırılıyor..."
-
-#: ../src/digger.cpp:141
-msgid "Failed to load extracted catalog."
-msgstr "Çıkartılan kataloğu yükleme başarısız."
-
-#: ../src/edapp.cpp:314 ../src/resources/menus.xrc:281
-#: ../src/resources/menus.xrc:354
-msgid "&Help"
-msgstr "&Yardım"
-
-#: ../src/edapp.cpp:323
-msgid "Beta expired"
-msgstr "Beta süresi doldu"
-
-#: ../src/edapp.cpp:323
-msgid "This beta version of Poedit expired."
-msgstr "Poedit'in bu beta sürümü süresi doldu."
-
-#: ../src/edapp.cpp:324
-msgid "Please download a newer version from the Poedit website at http://poedit.net/download"
-msgstr "Lütfen http://poedit.net/download adresindeki Poedit web sitesinden daha yeni bir sürümü indirin"
-
-#: ../src/edapp.cpp:325
-msgid "Download"
-msgstr "İndir"
-
-#: ../src/edapp.cpp:325 ../src/resources/manager.xrc:128
-#: ../src/resources/menus.xrc:69 ../src/resources/menus.xrc:320
-#: ../src/tm/tm_migrate.cpp:270
-msgid "Quit"
-msgstr "Çık"
-
-#: ../src/edapp.cpp:465
-msgid "MO files can’t be directly edited in Poedit."
-msgstr "MO dosyaları doğrudan Poedit içinde düzenlenemez."
-
-#: ../src/edapp.cpp:466
-msgid "Error opening file"
-msgstr "Dosya açılırken hata oldu"
-
-#: ../src/edapp.cpp:468
-msgid "Please open and edit the corresponding PO file instead. When you save it, the MO file will be updated as well."
-msgstr "Lütfen bunun yerine ilgili PO dosyasını açın ve düzenleyin. Kaydettiğiniz zaman, MO dosyası da güncellenecektir."
-
-#: ../src/edapp.cpp:617
-msgid "don't delete temporary files (for debugging)"
-msgstr "geçici dosyaları silme (hata ayıklama için)"
-
-#: ../src/edapp.cpp:661 ../src/edapp.cpp:674 ../src/edapp.cpp:679
-#, c-format
-msgid "Unhandled exception occurred: %s"
-msgstr "Beklenmeyen bir hata oluştu: %s"
-
-#: ../src/edapp.cpp:684
-msgid "Unhandled exception occurred."
-msgstr "Beklenmeyen bir hata oluştu."
-
-#: ../src/edapp.cpp:766 ../src/edframe.cpp:1558
-#: ../src/resources/toolbar.xrc:14 ../src/resources/toolbar.xrc:19
-msgid "Open catalog"
-msgstr "Kataloğu aç"
-
-#: ../src/edapp.cpp:770 ../src/edframe.cpp:1561 ../src/edframe.cpp:1761
-#: ../src/edframe.cpp:2174 ../src/prefsdlg.cpp:559
-msgid "All Files"
-msgstr "Tüm Dosyalar"
-
-#: ../src/edapp.cpp:770 ../src/edframe.cpp:1561 ../src/edframe.cpp:1631
-#: ../src/edframe.cpp:1760 ../src/edframe.cpp:2173 ../src/prefsdlg.cpp:559
-msgid "PO Translation Files"
-msgstr "PO Çeviri Dosyaları"
-
-#: ../src/edapp.cpp:798 ../src/edframe.cpp:847 ../src/edframe.cpp:1581
-#, c-format
-msgid "File '%s' doesn't exist."
-msgstr "'%s' dosyası yok."
-
-#: ../src/edapp.cpp:828
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit kollanımı kolay bir çeviri düzenleyicisidir."
 
-#: ../src/edapp.cpp:1001
 msgid "Catalogs Manager"
 msgstr "Katalog Yöneticisi"
 
-#: ../src/edapp.cpp:1006
-msgid "License..."
-msgstr "Lisans..."
-
-#: ../src/edapp.cpp:1010
 msgid "Check for Updates..."
 msgstr "Güncellemeleri Kontrol Et..."
 
-#: ../src/edapp.cpp:1013 ../src/prefsdlg.cpp:675
-#: ../src/resources/manager.xrc:37
-msgid "Edit"
-msgstr "Düzenle"
+msgid "&Edit"
+msgstr "Düz&enleyin"
 
-#: ../src/edapp.cpp:1031 ../src/edframe.cpp:809
-#: ../src/resources/summary.xrc:78
 msgid "Undo"
 msgstr "Geri al"
 
-#: ../src/edapp.cpp:1032 ../src/edframe.cpp:810
 msgid "Redo"
 msgstr "Yinele"
 
-#: ../src/edapp.cpp:1040
 msgid "Paste and Match Style"
 msgstr "Stili Yapıştır ve Eşleştir"
 
-#: ../src/edapp.cpp:1043 ../src/edframe.cpp:814 ../src/prefsdlg.cpp:676
-#: ../src/resources/manager.xrc:43
 msgid "Delete"
 msgstr "Sil"
 
-#: ../src/edapp.cpp:1052
 msgid "Spelling and Grammar"
 msgstr "Yazım ve Dilbilgisi"
 
-#: ../src/edapp.cpp:1054
 msgid "Show Spelling and Grammar"
 msgstr "Yazım ve Dilbilgisini Göster"
 
-#: ../src/edapp.cpp:1055
 msgid "Check Document Now"
 msgstr "Belgeyi Şimdi Kontrol Et"
 
-#: ../src/edapp.cpp:1057
 msgid "Check Spelling While Typing"
 msgstr "Yazarken Yazım Denetimi Yap"
 
-#: ../src/edapp.cpp:1058
 msgid "Check Grammar With Spelling"
 msgstr "Yazım Denetimi ile Dilbilgisini Kontrol Et"
 
-#: ../src/edapp.cpp:1059
 msgid "Correct Spelling Automatically"
 msgstr "Otomatik Olarak Yazımı Düzelt"
 
-#: ../src/edapp.cpp:1062
 msgid "Substitutions"
 msgstr "Değişiklikler"
 
-#: ../src/edapp.cpp:1064
 msgid "Show Substitutions"
 msgstr "Değişiklikleri Göster"
 
-#: ../src/edapp.cpp:1066
 msgid "Smart Copy/Paste"
 msgstr "Akıllı Kopyala/Yapıştır"
 
-#: ../src/edapp.cpp:1067
 msgid "Smart Quotes"
 msgstr "Akıllı Tırnaklar"
 
-#: ../src/edapp.cpp:1068
 msgid "Smart Dashes"
 msgstr "Akıllı Tireler"
 
-#: ../src/edapp.cpp:1069
 msgid "Smart Links"
 msgstr "Akıllı Bağlantılar"
 
-#: ../src/edapp.cpp:1070
 msgid "Text Replacement"
 msgstr "Metin Değiştirme"
 
-#: ../src/edapp.cpp:1073
 msgid "Transformations"
 msgstr "Dönüşümler"
 
-#: ../src/edapp.cpp:1075
 msgid "Make Upper Case"
 msgstr "Büyük Harfe Çevir"
 
-#: ../src/edapp.cpp:1076
 msgid "Make Lower Case"
 msgstr "Küçük Harfe Çevir"
 
-#: ../src/edapp.cpp:1077
 msgid "Capitalize"
 msgstr "Büyük Harfle"
 
-#: ../src/edapp.cpp:1080
 msgid "Speech"
 msgstr "Konuşun"
 
-#: ../src/edapp.cpp:1082
 msgid "Start Speaking"
 msgstr "Konuşmaya Başlayın"
 
-#: ../src/edapp.cpp:1083
 msgid "Stop Speaking"
 msgstr "Konuşmayı Bırakın"
 
-#: ../src/edapp.cpp:1086
-msgid "View"
-msgstr "Görünüm"
+msgid "&View"
+msgstr "&Görünüm"
 
-#: ../src/edapp.cpp:1091
 msgid "Enter Full Screen"
 msgstr "Tam Ekran Girin"
 
-#: ../src/edapp.cpp:1096 ../src/resources/menus.xrc:256
 msgid "Window"
 msgstr "Pencere"
 
-#: ../src/edapp.cpp:1100
 msgid "Minimize"
 msgstr "Simge Durumuna Küçült"
 
-#: ../src/edapp.cpp:1101
 msgid "Zoom"
 msgstr "Yakınlaştır"
 
-#: ../src/edapp.cpp:1103
 msgid "Bring All to Front"
 msgstr "Tümünü Öne Getir"
 
-#: ../src/edapp.cpp:1209
-msgid "PO Translation File"
-msgstr "PO Çeviri Dosyası"
+#, fuzzy
+msgid "PO Translation"
+msgstr "Çeviri"
 
-#: ../src/edapp.cpp:1262
-msgid "Invalid license data."
-msgstr "Geçersiz lisans verisi."
-
-#: ../src/edapp.cpp:1262 ../src/edframe.cpp:915
-msgid "Poedit"
-msgstr "Poedit"
-
-#: ../src/edapp.cpp:1263
-#, c-format
-msgid "The link doesn't contain valid Poedit license. Try entering it manually or contact support at help@poedit.net.\n\n(%s)"
-msgstr "Bağlantı geçerli bir Poedit lisansı içermiyor. Lütfen el ile girin ya da help@poedit.net adresinden destekle irtibata geçin.\n\n(%s)"
-
-#: ../src/edframe.cpp:284 ../src/edframe.cpp:2897
 msgid "The file cannot be opened."
 msgstr "Dosya açılamaz."
 
-#: ../src/edframe.cpp:285 ../src/edframe.cpp:2898
 msgid "Invalid file"
 msgstr "Geçersiz dosya"
 
-#: ../src/edframe.cpp:289 ../src/edframe.cpp:2902
-msgid "The file may be either corrupted or in a format not recognized by Poedit."
+msgid ""
+"The file may be either corrupted or in a format not recognized by Poedit."
 msgstr "Dosya ya bozulmuş ya da biçimi Poedit tarafından tanınamıyor."
 
-#: ../src/edframe.cpp:809
 msgid "&Undo"
 msgstr "&Geri Al"
 
-#: ../src/edframe.cpp:810
 msgid "&Redo"
 msgstr "&Yinele"
 
-#: ../src/edframe.cpp:811
 msgid "Cu&t"
 msgstr "&Kes"
 
-#: ../src/edframe.cpp:811
 msgid "Cut"
 msgstr "Kes"
 
-#: ../src/edframe.cpp:812
 msgid "&Copy"
 msgstr "K&opyala"
 
-#: ../src/edframe.cpp:812
 msgid "Copy"
 msgstr "Kopyala"
 
-#: ../src/edframe.cpp:813
 msgid "&Paste"
 msgstr "Ya&pıştır"
 
-#: ../src/edframe.cpp:813
 msgid "Paste"
 msgstr "Yapıştır"
 
-#: ../src/edframe.cpp:814
 msgid "&Delete"
 msgstr "&Sil"
 
-#: ../src/edframe.cpp:815
 msgid "Select &All"
 msgstr "&Tümünü Seç"
 
-#: ../src/edframe.cpp:815
 msgid "Select All"
 msgstr "Tümünü Seç"
 
-#: ../src/edframe.cpp:832
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+msgid "Ctrl+"
+msgstr ""
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+msgid "Alt+"
+msgstr ""
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Shift+"
+msgstr ""
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Enter"
+msgstr ""
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Up"
+msgstr ""
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#, fuzzy
+msgid "Down"
+msgstr "İndir"
+
 msgid "You can't drop more than one file on Poedit window."
 msgstr "Poedit penceresine birden fazla dosyayı sürükleyip bırakamazsınız."
 
-#: ../src/edframe.cpp:840
 #, c-format
 msgid "File '%s' is not a message catalog."
 msgstr "'%s' dosyası bir ileti kataloğu değil."
 
-#: ../src/edframe.cpp:972 ../src/resources/manager.xrc:116
-#: ../src/resources/menus.xrc:5 ../src/resources/menus.xrc:288
+msgid "Poedit"
+msgstr "Poedit"
+
 msgid "&File"
 msgstr "&Dosya"
 
-#: ../src/edframe.cpp:979 ../src/resources/menus.xrc:225
 msgid "&Go"
 msgstr "&Git"
 
-#: ../src/edframe.cpp:1028
-msgid "Upgrade to Poedit Pro to get additional features and support Poedit's development."
-msgstr "Poedit'in geliştirilmesini desteklemek ve ek özellikler almak için Poedit Pro sürümüne yükseltin."
-
-#: ../src/edframe.cpp:1118
 msgid "Source text:"
 msgstr "Kaynak metin:"
 
-#: ../src/edframe.cpp:1125
 msgid "Singular:"
 msgstr "Tekil:"
 
-#: ../src/edframe.cpp:1128
 msgid "Plural:"
 msgstr "Çoğul:"
 
-#: ../src/edframe.cpp:1132
 msgid "Translation:"
 msgstr "Çeviri:"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:1392
 #, c-format
-msgid "Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgid ""
+"Spellchecking is disabled, because the dictionary for %s isn’t installed."
 msgstr "Yazım denetimi etkisizleştirildi, çünkü %s için sözlük yüklü değil."
 
-#: ../src/edframe.cpp:1396
 msgid "Install"
 msgstr "Yükle"
 
-#: ../src/edframe.cpp:1510
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Katalog değiştirildi. Değişiklikleri kaydetmek istiyor musunuz?"
 
-#: ../src/edframe.cpp:1511
 msgid "Save changes"
 msgstr "Değişiklikleri kaydet"
 
-#: ../src/edframe.cpp:1514
 msgid "Your changes will be lost if you don't save them."
 msgstr "Eğer kaydetmezseniz yaptığınız değişiklikler kaybolacaktır."
 
-#: ../src/edframe.cpp:1517 ../src/resources/toolbar.xrc:24
-#: ../src/resources/toolbar.xrc:29
 msgid "Save"
 msgstr "Kaydet"
 
-#: ../src/edframe.cpp:1519
 msgid "Don't save"
 msgstr "Kaydetme"
 
-#: ../src/edframe.cpp:1521
 msgid "Don't Save"
 msgstr "Kaydetme"
 
-#: ../src/edframe.cpp:1629
 msgid "Save as..."
 msgstr "Farklı kaydet..."
 
-#: ../src/edframe.cpp:1667
 msgid "Compile to..."
 msgstr "Şuna derle..."
 
-#: ../src/edframe.cpp:1669
 msgid "Compiled Translation Files"
 msgstr "Derlenmiş Çeviri Dosyaları"
 
-#: ../src/edframe.cpp:1705
 msgid "Export as..."
 msgstr "Dışa farklı aktar..."
 
-#: ../src/edframe.cpp:1707
 msgid "HTML Files"
 msgstr "HTML Dosyaları"
 
-#: ../src/edframe.cpp:1754 ../src/edframe.cpp:2167
 msgid "Open catalog template"
 msgstr "Katalog şablonu aç"
 
-#: ../src/edframe.cpp:1759 ../src/edframe.cpp:2172
 msgid "POT Translation Templates"
 msgstr "POT Çeviri Şablonları"
 
-#: ../src/edframe.cpp:1848 ../src/edframe.cpp:1926
-msgid "Select the folder with the WordPress theme or plugin"
-msgstr "WordPress temaası ya da eklentisinin bulunduğu klasörü seçin"
-
-#: ../src/edframe.cpp:1856 ../src/edframe.cpp:1934 ../src/edframe.cpp:1951
-msgid "WordPress"
-msgstr "WordPress"
-
-#: ../src/edframe.cpp:1857 ../src/edframe.cpp:1935
-msgid "Analyzing WordPress code..."
-msgstr "WordPress kodu inceleniyor..."
-
-#. TRANSLATORS: %s is name of a WordPress theme
-#: ../src/edframe.cpp:1946
-#, c-format
-msgid "The “%s” theme is compatible."
-msgstr "\"%s\" teması uyumlu."
-
-#. TRANSLATORS: %s is name of a WordPress plugin
-#: ../src/edframe.cpp:1948
-#, c-format
-msgid "The “%s” plugin is compatible."
-msgstr "\"%s\" eklentisi uyumlu."
-
-#: ../src/edframe.cpp:1954
-msgid "The theme is translation-ready and compatible with Poedit’s WordPress support."
-msgstr "Tema çevirisi hazır ve Poedit’in WordPress desteği ile uyumlu."
-
-#: ../src/edframe.cpp:1956
-msgid "The plugin is translation-ready and compatible with Poedit’s WordPress support."
-msgstr "Eklenti çevirisi hazır ve Poedit’in WordPress desteği ile uyumlu."
-
-#: ../src/edframe.cpp:2107 ../src/manager.cpp:452
 msgid "Updating catalog"
 msgstr "Katalog güncelleniyor"
 
-#: ../src/edframe.cpp:2132
 msgid "Source code not available."
 msgstr "Kaynak kodu mevcut değil."
 
-#: ../src/edframe.cpp:2133
 msgid "Updating failed"
 msgstr "Güncelleme başarısız oldu"
 
-#: ../src/edframe.cpp:2136
-msgid "Translations couldn’t be updated from the source code, because no code was found in the location specified in the catalog’s Properties."
-msgstr "Çeviriler kaynak kodundan güncellenemedi, çünkü kataloğun Özelliklerinde belirtilen konumda hiç kod bulunamadı."
+msgid ""
+"Translations couldn’t be updated from the source code, because no code was "
+"found in the location specified in the catalog’s Properties."
+msgstr ""
+"Çeviriler kaynak kodundan güncellenemedi, çünkü kataloğun Özelliklerinde "
+"belirtilen konumda hiç kod bulunamadı."
 
-#: ../src/edframe.cpp:2142
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Katalogdaki girişler muhtemelen yanlış."
 
-#: ../src/edframe.cpp:2144
 msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr "Kataloğu güncelleme başarısız. Ayrıntılar için 'Ayrıntılar >>' düğmesine tıklayın."
+msgstr ""
+"Kataloğu güncelleme başarısız. Ayrıntılar için 'Ayrıntılar >>' düğmesine "
+"tıklayın."
 
-#: ../src/edframe.cpp:2248
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "Çeviride %d sorun bulundu."
 
-#: ../src/edframe.cpp:2253 ../src/edframe.cpp:2299
 msgid "Validation results"
 msgstr "Doğrulama sonuçları"
 
-#: ../src/edframe.cpp:2256
-msgid "Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry."
-msgstr "Hatalı girişler listede kırmızı renkle işaretlendi. Hatanın ayrıntıları böyle bir girişi seçtiğinizde gösterilecektir."
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+"Hatalı girişler listede kırmızı renkle işaretlendi. Hatanın ayrıntıları "
+"böyle bir girişi seçtiğinizde gösterilecektir."
 
-#: ../src/edframe.cpp:2265
 msgid "The file was saved safely."
 msgstr "Dosya güvenli bir şekilde kaydedildi."
 
-#: ../src/edframe.cpp:2268
-msgid "The file was saved safely and compiled into the MO format, but it will probably not work correctly."
-msgstr "Dosya güvenli bir şekilde kaydedildi ve MO biçiminde derlendi, ancak büyük olasılıkla doğru olarak çalışmayacak."
+msgid ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
+msgstr ""
+"Dosya güvenli bir şekilde kaydedildi ve MO biçiminde derlendi, ancak büyük "
+"olasılıkla doğru olarak çalışmayacak."
 
-#: ../src/edframe.cpp:2271
-msgid "The file was saved safely, but it cannot be compiled into the MO format and used."
-msgstr "Dosya güvenli bir şekilde kaydedildi, ancak MO biçiminde derlenemez ve kullanılamaz."
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr ""
+"Dosya güvenli bir şekilde kaydedildi, ancak MO biçiminde derlenemez ve "
+"kullanılamaz."
 
-#: ../src/edframe.cpp:2280
-msgid "The file was compiled into the MO format, but it will probably not work correctly."
-msgstr "Dosya, MO biçiminde derlendi, ancak muhtemelen doğru olarak çalışmayacak."
+msgid ""
+"The file was compiled into the MO format, but it will probably not work "
+"correctly."
+msgstr ""
+"Dosya, MO biçiminde derlendi, ancak muhtemelen doğru olarak çalışmayacak."
 
-#: ../src/edframe.cpp:2284
 msgid "The file cannot be compiled into the MO format and used."
 msgstr "Dosya, MO biçiminde derlenemez ve kullanılamaz."
 
-#: ../src/edframe.cpp:2298
 msgid "No problems with the translation found."
 msgstr "Çeviri ile ilgili hiç sorun bulunmadı."
 
-#: ../src/edframe.cpp:2308
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural "The translation is ready for use, but %d entries are not translated yet."
+msgid_plural ""
+"The translation is ready for use, but %d entries are not translated yet."
 msgstr[0] "Çeviri kullanıma hazır, ancak henüz %d giriş çevrilmemiş."
 
-#: ../src/edframe.cpp:2313
 msgid "The translation is ready for use."
 msgstr "Çeviri kullanıma hazır."
 
-#: ../src/edframe.cpp:2365
 msgid "No references to this string found."
 msgstr "Bu dizge için kaynaklar bulunamadı."
 
-#: ../src/edframe.cpp:2373
 msgid "Please choose the reference you want to show:"
 msgstr "Lütfen görüntülenmesini istediğiniz kaynağı seçin:"
 
-#: ../src/edframe.cpp:2373
 msgid "References"
 msgstr "Kaynaklar"
 
-#: ../src/edframe.cpp:2760 ../src/prefsdlg.cpp:463
-msgid "Contributing translations improves the quality of online suggestions for everybody — the more people do it, the better the suggestions can be. Your translations are submitted anonymously and are available to other translators using Poedit or other CAT tools."
-msgstr "Çevirilere katkıda bulunmak herkes için çevrimiçi öneri kalitesini artırır — bunu daha fazla insanın yapması, önerileri daha iyi yapabilir. Çevirileriniz isimsiz olarak gönderilir ve Poedit ya da diğer CAT araçlarını kullanmak diğer çevirmenler için mevcuttur."
-
-#: ../src/edframe.cpp:2765
-msgid "Can Poedit contribute your translations of this file to the online translation memory?"
-msgstr "Poedit bu dosyanın çevirilerini çevrimiçi çeviri belleğine katabilir mi?"
-
-#: ../src/edframe.cpp:2768
-msgid "Apply to all files I edit"
-msgstr "Düzenlediğim tüm dosyalara uygula"
-
-#: ../src/edframe.cpp:2769
-msgid "Contribute"
-msgstr "Katkıda bulun"
-
-#: ../src/edframe.cpp:2775
-msgid "Keep Private"
-msgstr "Gizli Tut"
-
-#: ../src/edframe.cpp:2775
-msgid "Keep private"
-msgstr "Gizli tut"
-
-#: ../src/edframe.cpp:2859
 msgid "Context:"
 msgstr "Bağlam:"
 
-#: ../src/edframe.cpp:2954
-msgid "You should set your email address in Preferences so that it can be used for Last-Translator header in GNU gettext files."
-msgstr "Tercihlerde e-posta adresinizi ayarlamalısınız böylece GNU gettext dosyalarındaki Son Çevirmen (Last-Translator) başlığında kullanılabilir."
+msgid ""
+"You should set your email address in Preferences so that it can be used for "
+"Last-Translator header in GNU gettext files."
+msgstr ""
+"Tercihlerde e-posta adresinizi ayarlamalısınız böylece GNU gettext "
+"dosyalarındaki Son Çevirmen (Last-Translator) başlığında kullanılabilir."
 
-#: ../src/edframe.cpp:2956
 msgid "Set Email"
 msgstr "E-posta ayarla"
 
-#: ../src/edframe.cpp:2956
 msgid "Set email"
 msgstr "E-postayı yazın"
 
-#: ../src/edframe.cpp:2969
 msgid "Translation's project name isn't set."
 msgstr "Çevirinin proje adı ayarlı değil."
 
-#: ../src/edframe.cpp:2971
 msgid "Set Name"
 msgstr "Adı ayarla"
 
-#: ../src/edframe.cpp:2971
 msgid "Set name"
 msgstr "Adı ayarla"
 
-#: ../src/edframe.cpp:2984
 msgid "Language of the translation isn't set."
 msgstr "Çeviri dili ayarlanmamış."
 
-#: ../src/edframe.cpp:2986
 msgid "Set Language"
 msgstr "Dili ayarla"
 
-#: ../src/edframe.cpp:2986
 msgid "Set language"
 msgstr "Dili ayarla"
 
-#: ../src/edframe.cpp:2999
-msgid "This catalog has entries with plural forms, but doesn't have Plural-Forms header configured."
-msgstr "Bu katalogda çoğul biçimleri olan girişler var, ancak Çoğul-Biçimli başlık yapılandırılmamış."
+msgid ""
+"This catalog has entries with plural forms, but doesn't have Plural-Forms "
+"header configured."
+msgstr ""
+"Bu katalogda çoğul biçimleri olan girişler var, ancak Çoğul-Biçimli başlık "
+"yapılandırılmamış."
 
-#: ../src/edframe.cpp:3003
-msgid "Entries in this catalog have different plural forms count from what catalog's Plural-Forms header says"
-msgstr "Bu katalogdaki girişlerde, kataloğun Çoğul-Biçim başlığında belirtilen sayıdan farklı çoğul biçimler var"
+msgid ""
+"Entries in this catalog have different plural forms count from what "
+"catalog's Plural-Forms header says"
+msgstr ""
+"Bu katalogdaki girişlerde, kataloğun Çoğul-Biçim başlığında belirtilen "
+"sayıdan farklı çoğul biçimler var"
 
-#: ../src/edframe.cpp:3014
 msgid "Required header Plural-Forms is missing."
 msgstr "Gereken Çoğul-Biçin başlık bilgisi eksik."
 
-#: ../src/edframe.cpp:3019
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Çoğul-Biçim başlığında sözdizimi hatası (\"%s\")."
 
-#: ../src/edframe.cpp:3033
 msgid "Fix the Header"
 msgstr "Başlığı Düzelt"
 
-#: ../src/edframe.cpp:3033
 msgid "Fix the header"
 msgstr "Başlığı düzelt"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:3071
 #, c-format
 msgid "Plural forms expression used by the catalog is unusual for %s."
 msgstr "Katalog tarafından %s için kullanılan çoğul biçim ifadesi alışılmadık."
 
-#: ../src/edframe.cpp:3075
 msgid "Review"
 msgstr "Gözden Geçir"
 
-#: ../src/edframe.cpp:3109
 #, c-format
 msgid "Error loading message catalog file '%s'."
 msgstr "İleti katalog dosyası '%s' yüklenirken bir hata oluştu."
 
-#: ../src/edframe.cpp:3153 ../src/export_html.cpp:141
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
 msgstr "Çevrilen: %d / %d (%% %d)"
 
-#: ../src/edframe.cpp:3157 ../src/export_html.cpp:145
 #, c-format
 msgid "Remains: %d"
 msgstr "Kalan: %d"
 
-#: ../src/edframe.cpp:3162 ../src/export_html.cpp:150
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d hata"
 
-#: ../src/edframe.cpp:3193
 msgid " (unsaved)"
 msgstr " (kaydedilmedi)"
 
-#: ../src/edframe.cpp:3211
 msgid " (modified)"
 msgstr " (değiştirildi)"
 
-#: ../src/edframe.cpp:3222
-#, c-format
-msgid " (beta version expires %s)"
-msgstr " (beta sürümün sona erme süresi %s)"
-
-#: ../src/edframe.cpp:3303
 msgid "Go"
 msgstr "Git"
 
-#: ../src/edframe.cpp:3338 ../src/edframe.cpp:3342
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "Başarısız çeviri belleği güncellemesi: %s"
 
-#: ../src/edframe.cpp:3444
 msgid "Purge deleted translations"
 msgstr "Silinmiş çevirileri temizle"
 
-#: ../src/edframe.cpp:3446
 msgid "Do you want to remove all translations that are no longer used?"
-msgstr "Artık kullanılmayan tüm çevirileri kaldırmak istediğinize emin misiniz?"
+msgstr ""
+"Artık kullanılmayan tüm çevirileri kaldırmak istediğinize emin misiniz?"
 
-#: ../src/edframe.cpp:3448
-msgid "If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future."
-msgstr "Temizleyerek devam ederseniz, silinmek üzere işaretlenmiş tüm çeviriler kalıcı olarak kaldırılacaktır. Gelecekte bunlar geri eklenirse, tekrar çevirmek zorunda kalacaksınız."
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"Temizleyerek devam ederseniz, silinmek üzere işaretlenmiş tüm çeviriler "
+"kalıcı olarak kaldırılacaktır. Gelecekte bunlar geri eklenirse, tekrar "
+"çevirmek zorunda kalacaksınız."
 
-#: ../src/edframe.cpp:3452
 msgid "Keep"
 msgstr "Tut"
 
-#: ../src/edframe.cpp:3452
 msgid "Purge"
 msgstr "Temizle"
 
-#: ../src/edframe.cpp:3483 ../src/edframe.cpp:3493 ../src/edframe.cpp:3562
 msgid "Fill missing translations from TM"
 msgstr "Eksik çevirileri Çeviri Belleğinden doldur"
 
-#: ../src/edframe.cpp:3486
 msgid "Only fill in exact matches"
 msgstr "Sadece tam eşleşmeleri doldur"
 
-#: ../src/edframe.cpp:3487
-msgid "By default, inaccurate results are filled in as well and marked as fuzzy. Check this option to only include accurate matches."
-msgstr "Varsayılan olarak, doğru olmayan sonuçlar da doldurulur ve belirsiz olarak işaretlenir. Sadece doğru eşleşmeleri dahil etmek için bu seçeneği işaretleyin."
+msgid ""
+"By default, inaccurate results are filled in as well and marked as fuzzy. "
+"Check this option to only include accurate matches."
+msgstr ""
+"Varsayılan olarak, doğru olmayan sonuçlar da doldurulur ve belirsiz olarak "
+"işaretlenir. Sadece doğru eşleşmeleri dahil etmek için bu seçeneği "
+"işaretleyin."
 
-#: ../src/edframe.cpp:3488
 msgid "Don’t mark exact matches as fuzzy"
 msgstr "Tam eşleşmeleri belirsiz olarak işaretleme"
 
-#: ../src/edframe.cpp:3489
-msgid "Only enable if you trust the quality of your TM. By default, all matches from the TM are marked as fuzzy and should be reviewed."
-msgstr "Sadece ÇB'nizin kalitesine güveniyorsanız etkinleştirin. Varsayılan olarak, ÇB'den olan tüm eşleşmeler belirsiz olarak işaretlenir ve gözden geçirilmelidir."
+msgid ""
+"Only enable if you trust the quality of your TM. By default, all matches "
+"from the TM are marked as fuzzy and should be reviewed."
+msgstr ""
+"Sadece ÇB'nizin kalitesine güveniyorsanız etkinleştirin. Varsayılan olarak, "
+"ÇB'den olan tüm eşleşmeler belirsiz olarak işaretlenir ve gözden "
+"geçirilmelidir."
 
-#: ../src/edframe.cpp:3503
 msgid "Fill"
 msgstr "Doldur"
 
-#: ../src/edframe.cpp:3546
 #, c-format
 msgid "%d entry was filled from the translation memory."
 msgid_plural "%d entries were filled from the translation memory."
 msgstr[0] "Çeviri belleği kullanılarak %d giriş dolduruldu."
 
-#: ../src/edframe.cpp:3549
-msgid "The translations were marked as fuzzy, because they may be inaccurate. You should review them for correctness."
-msgstr "Çeviriler belirsiz olarak işaretlendi çünkü yanlış olabilirler. Doğruluğu için gözden geçirmelisiniz."
+msgid ""
+"The translations were marked as fuzzy, because they may be inaccurate. You "
+"should review them for correctness."
+msgstr ""
+"Çeviriler belirsiz olarak işaretlendi çünkü yanlış olabilirler. Doğruluğu "
+"için gözden geçirmelisiniz."
 
-#: ../src/edframe.cpp:3553
 msgid "No entries could be filled from the translation memory."
 msgstr "Çeviri belleği kullanılarak hiç giriş doldurulamadı."
 
-#: ../src/edframe.cpp:3554
-msgid "The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually."
-msgstr "Çeviri belleği bu dosyanın içeriğine uygun herhangi bir dizge içermiyor. El ile yaptığınız çeviriler Poedit tarafından yeterince öğrenildikten sonra yarı otomatik çeviriler etkili olur."
+msgid ""
+"The TM doesn’t contain any strings similar to the content of this file. It "
+"is only effective for semi-automatic translations after Poedit learns enough "
+"from files that you translated manually."
+msgstr ""
+"Çeviri belleği bu dosyanın içeriğine uygun herhangi bir dizge içermiyor. El "
+"ile yaptığınız çeviriler Poedit tarafından yeterince öğrenildikten sonra "
+"yarı otomatik çeviriler etkili olur."
 
-#: ../src/edframe.cpp:3597
 msgid "Translating"
 msgstr "Çevriliyor"
 
-#: ../src/edframe.cpp:3598
 msgid "Filling missing translations from TM..."
 msgstr "Eksik çeviriler çeviri belleğinden dolduruluyor..."
 
-#: ../src/edframe.cpp:3622
 #, c-format
 msgid "Translated %u string"
 msgid_plural "Translated %u strings"
 msgstr[0] "%u dizge çevrildi"
 
-#: ../src/edframe.cpp:3652 ../src/resources/menus.xrc:89
 msgid "Copy from source text"
 msgstr "Kaynak metinden kopyala"
 
-#: ../src/edframe.cpp:3654 ../src/resources/menus.xrc:90
 msgid "Copy from Source Text"
 msgstr "Kaynak Metinden Kopyala"
 
-#: ../src/edframe.cpp:3659 ../src/resources/menus.xrc:84
 msgid "Clear translation"
 msgstr "Çeviriyi temizle"
 
-#: ../src/edframe.cpp:3661 ../src/resources/menus.xrc:85
 msgid "Clear Translation"
 msgstr "Çeviriyi Temizle"
 
-#: ../src/edframe.cpp:3666 ../src/resources/comment.xrc:4
-#: ../src/sidebar.cpp:238
 msgid "Edit comment"
 msgstr "Açıklamayı düzenle"
 
-#: ../src/edframe.cpp:3668 ../src/sidebar.cpp:241
 msgid "Edit Comment"
 msgstr "Açıklamayı Düzenle"
 
-#: ../src/edframe.cpp:3679
 msgid "References:"
 msgstr "Kaynaklar:"
 
-#: ../src/edframe.cpp:3856
 msgid "Everything"
 msgstr "Herşey"
 
-#: ../src/edframe.cpp:3858
 #, c-format
 msgid "Form %i"
 msgstr "Biçim %i"
 
-#: ../src/edframe.cpp:3862
 msgid "Zero"
 msgstr "Sıfır"
 
-#: ../src/edframe.cpp:3864
 msgid "One"
 msgstr "Bir"
 
-#: ../src/edframe.cpp:3866
 msgid "Two"
 msgstr "İki"
 
-#: ../src/edframe.cpp:3871
 msgid "Other"
 msgstr "Diğer"
 
-#: ../src/edframe.cpp:3950
 msgid "&Bookmarks"
 msgstr "Ye&r İmleri"
 
-#: ../src/edframe.cpp:3963
 #, c-format
 msgid "Set bookmark %i"
 msgstr "%i yer imini ayarla"
 
-#: ../src/edframe.cpp:3964
 #, c-format
 msgid "Go to bookmark %i"
 msgstr "%i yer imine git"
 
-#: ../src/edframe.cpp:3966
 #, c-format
 msgid "Set Bookmark %i"
 msgstr "%i Yer İmini Ayarla"
 
-#: ../src/edframe.cpp:3967
 #, c-format
 msgid "Go to Bookmark %i"
 msgstr "%i Yer İmine Git"
 
-#: ../src/edframe.cpp:4093
 msgid "Hide Sidebar"
 msgstr "Kenar çubuğunu gizle"
 
-#: ../src/edframe.cpp:4095 ../src/resources/menus.xrc:183
 msgid "Show Sidebar"
 msgstr "Kenar çubuğunu göster"
 
-#: ../src/edlistctrl.cpp:233
 msgid "Source text"
 msgstr "Kaynak metin"
 
-#: ../src/edlistctrl.cpp:234 ../src/export_html.cpp:163
-#: ../src/statistics.cpp:164 ../src/statistics.cpp:256
 msgid "Translation"
 msgstr "Çeviri"
 
-#: ../src/edlistctrl.cpp:236
 msgid "ID"
 msgstr "KİMLİK"
 
-#: ../src/edlistctrl.cpp:314
 msgid "unknown language"
 msgstr "bilinmeyen dil"
 
-#: ../src/edlistctrl.cpp:317
 #, c-format
 msgid "Translation — %s"
 msgstr "Çeviri — %s"
 
-#: ../src/errorbar.cpp:68
 msgid "Error:"
 msgstr "Hata:"
 
-#: ../src/export_html.cpp:107
 msgid "Project info"
 msgstr "Proje bilgisi"
 
-#: ../src/export_html.cpp:111 ../src/resources/properties.xrc:19
 msgid "Project name and version:"
 msgstr "Proje adı ve sürümü:"
 
-#: ../src/export_html.cpp:114 ../src/resources/prefs.xrc:9
-#: ../src/resources/prefs.xrc:13 ../src/resources/properties.xrc:34
 msgid "Language:"
 msgstr "Dil:"
 
-#: ../src/export_html.cpp:117 ../src/resources/properties.xrc:114
 msgid "Team:"
 msgstr "Ekip:"
 
-#: ../src/export_html.cpp:121 ../src/resources/properties.xrc:128
 msgid "Team's email address:"
 msgstr "Ekibin e-posta adresi:"
 
-#: ../src/export_html.cpp:125 ../src/resources/properties.xrc:84
 msgid "Charset:"
 msgstr "Karakter kümesi:"
 
-#: ../src/export_html.cpp:160
 msgid "Source"
 msgstr "Kaynak"
 
-#: ../src/export_html.cpp:166
 msgid "Notes"
 msgstr "Notlar"
 
-#: ../src/export_html.cpp:199
 msgid "Automatic translation"
 msgstr "Otomatik çeviri"
 
-#: ../src/export_html.cpp:205
 msgid "Fuzzy translation"
 msgstr "Belirsiz çeviri"
 
-#: ../src/export_html.cpp:212 ../src/sidebar.cpp:158
 msgid "Notes for translators:"
 msgstr "Çevirmenler için notlar:"
 
-#: ../src/export_html.cpp:221 ../src/resources/comment.xrc:10
-#: ../src/sidebar.cpp:191
 msgid "Comment:"
 msgstr "Açıklama:"
 
-#: ../src/fileviewer.cpp:49
 msgid "Source file"
 msgstr "Kaynak dosyası"
 
-#: ../src/fileviewer.cpp:64
 msgid "Source file occurrence:"
 msgstr "Kaynak dosya oluşumu:"
 
-#: ../src/fileviewer.cpp:74
 msgid "Open in Editor"
 msgstr "Düzenleyicide Aç"
 
-#: ../src/fileviewer.cpp:74
 msgid "Open in editor"
 msgstr "Düzenleyicide aç"
 
-#: ../src/fileviewer.cpp:302
 #, c-format
 msgid "Error opening file %s!"
 msgstr "%s dosyası açılırken hata!"
 
-#: ../src/gexecute.cpp:146
 #, c-format
 msgid "Cannot execute program: %s"
 msgstr "Program çalıştırılamıyor: %s"
 
-#: ../src/languagectrl.cpp:48
 msgid "Language Code or Name (e.g. en_GB)"
 msgstr "Dil Kodu ya da Adı (örn. tr_TR)"
 
-#: ../src/languagectrl.cpp:123
 msgid "Translation Language"
 msgstr "Çeviri Dili"
 
-#: ../src/languagectrl.cpp:133
 msgid "Language of the translation:"
 msgstr "Çeviri dili:"
 
-#: ../src/licensing.cpp:71
-msgid "Poedit Registration"
-msgstr "Poedit Kaydı"
-
-#: ../src/licensing.cpp:99
-msgid "Name"
-msgstr "Ad"
-
-#: ../src/licensing.cpp:104
-msgid "License Key"
-msgstr "Lisans Anahtarı"
-
-#: ../src/licensing.cpp:109
-msgid "The registration key can be used on multiple computers you use personally or for multiple\naccounts on a single computer."
-msgstr "Kayıt anahtarı kişisel olarak kullandığınız bir kaç bilgisayarda ya da\nbir bilgisayar üzerindeki bir kaç farklı hesapta kullanılabilir."
-
-#: ../src/licensing.cpp:118
-msgid "Buy Online..."
-msgstr "Çevrimiçi Satın Al..."
-
-#: ../src/licensing.cpp:118
-msgid "Buy online..."
-msgstr "Çevrimiçi satın al..."
-
-#: ../src/licensing.cpp:123 ../src/prefsdlg.cpp:600
-#: ../src/resources/comment.xrc:41 ../src/resources/manager.xrc:104
-#: ../src/resources/prefs.xrc:143 ../src/resources/progress.xrc:27
-#: ../src/resources/properties.xrc:239
-msgid "Cancel"
-msgstr "İptal"
-
-#: ../src/licensing.cpp:125 ../src/licensing.cpp:129
-msgid "Register"
-msgstr "Kayıt edin"
-
-#: ../src/licensing.cpp:169
-msgid "Your copy is upgraded to Poedit Pro."
-msgstr "Yazılımınız Poedit Pro sürümüne yükseltildi."
-
-#: ../src/licensing.cpp:183
-msgid "You’re awesome! Thank you so much\nfor purchasing Poedit Pro."
-msgstr "Harikasınız! Poedit Pro'yu satın aldığınız\niçin çok teşekkür ederiz."
-
-#: ../src/licensing.cpp:192
-msgid "View License Key"
-msgstr "Lisans Anahtarını Göster"
-
-#: ../src/licensing.cpp:192
-msgid "View license key"
-msgstr "Lisans anahtarına göster"
-
-#: ../src/licensing.cpp:193 ../src/resources/find.xrc:87
-msgid "Close"
-msgstr "Kapat"
-
-#: ../src/licensing.cpp:229
-#, c-format
-msgid "Licensed to: %s"
-msgstr "Lisans sahibi: %s"
-
-#: ../src/licensing.cpp:488
-msgid "Purchasing the full version will unlock more features\nin this and future versions of Poedit, including:\n\n"
-msgstr "Tam sürümü satın almak Poedit'in şimdiki ve gelecekteki sürümlerinde\nşunlar gibi daha fazla özelliğin kilidini açacak:\n\n"
-
-#: ../src/licensing.cpp:523
-msgid "Upgrade..."
-msgstr "Yükselt..."
-
-#: ../src/licensing.cpp:524
-msgid "No, thanks"
-msgstr "Hayır, teşekkürler"
-
-#: ../src/manager.cpp:71
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Katalog yöneticisi"
 
-#: ../src/manager.cpp:252
 msgid "Catalog"
 msgstr "Katalog"
 
-#: ../src/manager.cpp:253
 msgid "Total"
 msgstr "Toplam"
 
-#: ../src/manager.cpp:254
 msgid "Untrans"
 msgstr "Çevrilmemiş"
 
-#: ../src/manager.cpp:255 ../src/resources/toolbar.xrc:64
 msgid "Fuzzy"
 msgstr "Belirsiz"
 
-#: ../src/manager.cpp:256
 msgid "Bad Tokens"
 msgstr "Geçersiz Belirteçler"
 
-#: ../src/manager.cpp:257
 msgid "Last modified"
 msgstr "Son değiştirme"
 
-#: ../src/manager.cpp:288
 msgid "Select directory"
 msgstr "Dizin seçin"
 
-#: ../src/manager.cpp:310
 msgid "Directories:"
 msgstr "Dizinler:"
 
-#: ../src/manager.cpp:392
 msgid "<unnamed>"
 msgstr "<adsız>"
 
-#: ../src/manager.cpp:423
 msgid "Do you want to delete the project?"
 msgstr "Projeyi silmek istiyor musunuz?"
 
-#: ../src/manager.cpp:424 ../src/manager.cpp:444
 msgid "Confirmation"
 msgstr "Onaylama"
 
-#: ../src/manager.cpp:443
-msgid "Do you really want to do mass update of\nall catalogs in this project?"
-msgstr "Bu projedeki tüm katalogları toplu güncellemeyi\ngerçekten istiyor musunuz?"
+msgid ""
+"Do you really want to do mass update of\n"
+"all catalogs in this project?"
+msgstr ""
+"Bu projedeki tüm katalogları toplu güncellemeyi\n"
+"gerçekten istiyor musunuz?"
 
-#: ../src/prefsdlg.cpp:167
 msgid "Information about the translator"
 msgstr "Çevirmen hakkında bilgi"
 
-#: ../src/prefsdlg.cpp:174
 msgid "Name:"
 msgstr "Adı:"
 
-#: ../src/prefsdlg.cpp:177
 msgid "Your Name"
 msgstr "Adınız"
 
-#: ../src/prefsdlg.cpp:179
 msgid "Email:"
 msgstr "E-posta:"
 
-#: ../src/prefsdlg.cpp:182
 msgid "your_email@example.com"
 msgstr "epostaniz@ornek.com"
 
-#: ../src/prefsdlg.cpp:185
-msgid "Your name and email address are only used to set the Last-Translator header of GNU gettext files."
-msgstr "Adınız ve e-postanız sadece GNU gettext dosyalarının Last-Translator\nüstbilgisini ayarlamak için kullanılır."
+msgid ""
+"Your name and email address are only used to set the Last-Translator header "
+"of GNU gettext files."
+msgstr ""
+"Adınız ve e-postanız sadece GNU gettext dosyalarının Last-Translator\n"
+"üstbilgisini ayarlamak için kullanılır."
 
-#: ../src/prefsdlg.cpp:194
 msgid "Editing"
 msgstr "Düzenleme"
 
-#: ../src/prefsdlg.cpp:197
 msgid "Automatically compile MO file when saving"
 msgstr "Kaydederken MO dosyasını otomatik olarak derle"
 
-#: ../src/prefsdlg.cpp:199
 msgid "Show summary after catalog update"
 msgstr "Katalog güncellemesinden sonra özeti göster"
 
-#: ../src/prefsdlg.cpp:204
 msgid "Check spelling"
 msgstr "Yazım denetimi yap"
 
-#: ../src/prefsdlg.cpp:206
 msgid "Always change focus to text input field"
 msgstr "İmleç hep çeviri alanına odaklansın"
 
-#: ../src/prefsdlg.cpp:208
-msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
-msgstr "Bu seçenek etkinleştirildiğinde, imleç asla dizge listesine odaklanmaz. Böylece odağı değiştirmek için sekme (Tab) tuşuna basmadan çeviriyi hemen yazabilirsiniz. Gezinmek için Ctrl-Aşağı/Yukarı ok tuşlarını kullanmalısınız. "
+msgid ""
+"Never let the list of strings take focus. If enabled, you must use Ctrl-"
+"arrows for keyboard navigation but you can also type text immediately, "
+"without having to press Tab to change focus."
+msgstr ""
+"Bu seçenek etkinleştirildiğinde, imleç asla dizge listesine odaklanmaz. "
+"Böylece odağı değiştirmek için sekme (Tab) tuşuna basmadan çeviriyi hemen "
+"yazabilirsiniz. Gezinmek için Ctrl-Aşağı/Yukarı ok tuşlarını "
+"kullanmalısınız. "
 
-#: ../src/prefsdlg.cpp:216
 msgid "Appearance"
 msgstr "Görünüm"
 
-#: ../src/prefsdlg.cpp:223
 msgid "Use custom list font:"
 msgstr "Özel liste yazı tipini kullan:"
 
-#: ../src/prefsdlg.cpp:226
 msgid "Use custom text fields font:"
 msgstr "Özel metin alanları yazı tipini kullan:"
 
-#: ../src/prefsdlg.cpp:237
 msgid "Change UI language"
 msgstr "Arayüz dilini değiştir"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
-#: ../src/prefsdlg.cpp:247
 msgid "(requires Windows 8 or newer)"
 msgstr "(Windows 8 veya daha yenisi gerekir)"
 
-#: ../src/prefsdlg.cpp:352
 msgid "General"
 msgstr "Genel"
 
-#: ../src/prefsdlg.cpp:374
 msgid "Use translation memory"
 msgstr "Çeviri belleğini kullan"
 
-#: ../src/prefsdlg.cpp:385
 msgid "Learn From Files..."
 msgstr "Dosyalardan Öğrenilsin..."
 
-#: ../src/prefsdlg.cpp:385
 msgid "Learn from files..."
 msgstr "Dosyalardan öğren..."
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-#: ../src/prefsdlg.cpp:388 ../src/prefsdlg.cpp:600
 msgid "Reset"
 msgstr "Sıfırla"
 
-#: ../src/prefsdlg.cpp:394
 msgid "Consult TM when updating from sources"
 msgstr "Kaynaklardan güncellerken ÇB'ye başvur"
 
-#: ../src/prefsdlg.cpp:397
-msgid "If enabled, Poedit will try to fill in new entries using your previous\ntranslations stored in the translation memory. If the TM is\nnear-empty, it will not be very effective. The more translations\nyou edit and the larger the TM grows, the better it gets."
-msgstr "Bu seçenek etkinleştirildiğinde, Yeni kayıtlar, çeviri belleğinde\nbulunan önceki çeviriler kullanılarak doldurulmaya çalışılır.\nÇeviri belleği neredeyse boş ise bu özellik pek etkili olmaz.\nÇeviri yaptıkça bu özelliğin etkisi de artar."
+msgid ""
+"If enabled, Poedit will try to fill in new entries using your previous\n"
+"translations stored in the translation memory. If the TM is\n"
+"near-empty, it will not be very effective. The more translations\n"
+"you edit and the larger the TM grows, the better it gets."
+msgstr ""
+"Bu seçenek etkinleştirildiğinde, Yeni kayıtlar, çeviri belleğinde\n"
+"bulunan önceki çeviriler kullanılarak doldurulmaya çalışılır.\n"
+"Çeviri belleği neredeyse boş ise bu özellik pek etkili olmaz.\n"
+"Çeviri yaptıkça bu özelliğin etkisi de artar."
 
-#: ../src/prefsdlg.cpp:437
-msgid "Use suggestions from online collaborative TM"
-msgstr "Çevrimiçi işbirliğine dayalı ÇB'den önerileri kullan"
-
-#: ../src/prefsdlg.cpp:448
-msgid "Poedit uses a large online translation memory that includes both contributed human translations and state-of-the-art machine translations."
-msgstr "Poedit, insanlardan gelen çeviri önerilerinin yanısıra çok gelişmiş makina çevirilerini içeren büyük bir çevrimiçi çeviri belleği kullanır."
-
-#: ../src/prefsdlg.cpp:451
-msgid "Contribute my translations to the online TM"
-msgstr "Çevirilerimi çevrimiçi ÇB'ye kat"
-
-#: ../src/prefsdlg.cpp:452
-msgid "Keep my translations private"
-msgstr "Çevirilerimi gizli tut"
-
-#: ../src/prefsdlg.cpp:453
-msgid "Ask me every time I edit a file"
-msgstr "Dosyayı her düzenlediğimde bana sor"
-
-#: ../src/prefsdlg.cpp:470
-msgid "Terms of Service"
-msgstr "Hizmet Koşulları"
-
-#. TRANSLATORS: This is part of footer that says in full "powered by MyMemory", with the MyMemory part being a logo
-#: ../src/prefsdlg.cpp:472
-msgid "powered by"
-msgstr "destekleyen"
-
-#: ../src/prefsdlg.cpp:546
 msgid "Stored translations:"
 msgstr "Saklanan çeviriler:"
 
-#: ../src/prefsdlg.cpp:547
 msgid "Database size on disk:"
 msgstr "Diskteki veritabanı boyutu:"
 
-#: ../src/prefsdlg.cpp:555
 msgid "Select translation files to import"
 msgstr "İçe aktarmak için çeviri dosyalarını seçin"
 
-#: ../src/prefsdlg.cpp:569 ../src/prefsdlg.cpp:640
 msgid "Translation Memory"
 msgstr "Çeviri Belleği"
 
-#: ../src/prefsdlg.cpp:570
 msgid "Importing translations..."
 msgstr "Çeviriler içe aktarılıyor..."
 
-#: ../src/prefsdlg.cpp:586 ../src/tm/tm_migrate.cpp:227
 msgid "Finalizing..."
 msgstr "Tamamlanıyor..."
 
-#: ../src/prefsdlg.cpp:594
 msgid "Reset translation memory"
 msgstr "Çeviri belleğini sıfırla"
 
-#: ../src/prefsdlg.cpp:595
 msgid "Are you sure you want to reset the translation memory?"
 msgstr "Çeviri belleğini sıfırlamak istediğinize emin misiniz?"
 
-#: ../src/prefsdlg.cpp:596
-msgid "Resetting the translation memory will irrevocably delete all stored translations from it. You can’t undo this operation."
-msgstr "Çeviri belleğini sıfırlama tüm saklanan çevirileri geri dönülmez bir şekilde bundan silecek. Bu işlemi geri alamazsınız."
+msgid ""
+"Resetting the translation memory will irrevocably delete all stored "
+"translations from it. You can’t undo this operation."
+msgstr ""
+"Çeviri belleğini sıfırlama tüm saklanan çevirileri geri dönülmez bir şekilde "
+"bundan silecek. Bu işlemi geri alamazsınız."
+
+msgid "Cancel"
+msgstr "İptal"
 
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on OS X.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
-#: ../src/prefsdlg.cpp:638
 msgid "TM"
 msgstr "ÇBelleği"
 
-#: ../src/prefsdlg.cpp:660
-msgid "Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated."
-msgstr "Kaynak kodu çıkarıcıları kaynak kodu dosyalarında çevrilebilir dizgeleri bulmak ve onları çıkarmak için kullanılır böylece çevrilebilirler."
+msgid ""
+"Source code extractors are used to find translatable strings in the source "
+"code files and extract them so that they can be translated."
+msgstr ""
+"Kaynak kodu çıkarıcıları kaynak kodu dosyalarında çevrilebilir dizgeleri "
+"bulmak ve onları çıkarmak için kullanılır böylece çevrilebilirler."
 
-#: ../src/prefsdlg.cpp:674 ../src/resources/manager.xrc:31
 msgid "New"
 msgstr "Yeni"
 
-#: ../src/prefsdlg.cpp:818
+msgid "Edit"
+msgstr "Düzenle"
+
 msgid "Extractors"
 msgstr "Çıkarıcılar"
 
-#: ../src/prefsdlg.cpp:839
 msgid "Automatically check for updates"
 msgstr "Güncellemeleri otomatik olarak kontrol et"
 
-#: ../src/prefsdlg.cpp:842
 msgid "Include beta versions"
 msgstr "Beta sürümleri dahil et"
 
-#: ../src/prefsdlg.cpp:845
-msgid "Beta versions contain the latest new features and improvements, but may be a bit less stable."
-msgstr "Beta sürümleri en son yeni özellikleri ve geliştirmeleri içerir, ancak daha az istikrarlı olabilirler."
+msgid ""
+"Beta versions contain the latest new features and improvements, but may be a "
+"bit less stable."
+msgstr ""
+"Beta sürümleri en son yeni özellikleri ve geliştirmeleri içerir, ancak daha "
+"az istikrarlı olabilirler."
 
-#: ../src/prefsdlg.cpp:888
 msgid "Updates"
 msgstr "Güncellemeler"
 
-#: ../src/prefsdlg.cpp:906
-msgid "These settings affect internal formatting of PO files. Adjust them if you have specific requirements e.g. because of version control."
-msgstr "Bu ayarlar, PO dosyalarının iç biçimlendirmesini etkiler. Örneğin sürüm denetimi nedeniyle özel gereksinimleriniz varsa, bunları ayarlayın."
+msgid ""
+"These settings affect internal formatting of PO files. Adjust them if you "
+"have specific requirements e.g. because of version control."
+msgstr ""
+"Bu ayarlar, PO dosyalarının iç biçimlendirmesini etkiler. Örneğin sürüm "
+"denetimi nedeniyle özel gereksinimleriniz varsa, bunları ayarlayın."
 
-#: ../src/prefsdlg.cpp:910
 msgid "Line endings:"
 msgstr "Satır sonları:"
 
-#: ../src/prefsdlg.cpp:912
 msgid "Unix (recommended)"
 msgstr "Unix (önerilir)"
 
-#: ../src/prefsdlg.cpp:913
 msgid "Windows"
 msgstr "Windows"
 
 #. TRANSLATORS: Followed by text control for entering number; wraps text at given width
-#: ../src/prefsdlg.cpp:917
 msgid "Wrap at:"
 msgstr "Kaydırma yönü:"
 
-#: ../src/prefsdlg.cpp:924
 msgid "Preserve formatting of existing files"
 msgstr "Varolan dosyaların biçimini koru"
 
-#: ../src/prefsdlg.cpp:976
 msgid "Advanced"
 msgstr "Gelişmiş"
 
-#: ../src/propertiesdlg.cpp:69
 msgid "Additional keywords"
 msgstr "Ek anahtar kelimeler"
 
-#: ../src/propertiesdlg.cpp:70
 msgid "Paths"
 msgstr "Yollar"
 
-#: ../src/propertiesdlg.cpp:71
 msgid "Excluded paths"
 msgstr "Katılmayacak yollar"
 
-#: ../src/propertiesdlg.cpp:93
 msgid "Name of the project the translation is for"
 msgstr "Çevirisi yapılan projenin adı:"
 
-#: ../src/propertiesdlg.cpp:94
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr "örn. nplurals=2; plural=(n > 1);"
 
-#: ../src/propertiesdlg.cpp:128
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (önerilir)"
 
-#: ../src/propertiesdlg.cpp:296
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr "Lütfen önce dosyayı kaydedin. O zamana kadar bu bölüm düzenlenemez."
 
-#: ../src/resources/comment.xrc:33 ../src/resources/manager.xrc:96
-#: ../src/resources/prefs.xrc:135 ../src/resources/properties.xrc:231
-#: ../src/resources/summary.xrc:70
 msgid "OK"
 msgstr "TAMAM"
 
-#: ../src/resources/comment.xrc:48
 msgid "C&lear"
 msgstr "&Temizle"
 
-#: ../src/resources/comment.xrc:49
 msgid "Clear the comment"
 msgstr "Açıklamayı temizle"
 
-#: ../src/resources/find.xrc:4
 msgid "Find..."
 msgstr "Bul..."
 
-#: ../src/resources/find.xrc:21
 msgid "String to find:"
 msgstr "Bulunacak dizge:"
 
-#: ../src/resources/find.xrc:36
 msgid "Case sensitive"
 msgstr "BÜYÜK/küçük harfe duyarlı"
 
-#: ../src/resources/find.xrc:43
 msgid "Start from the first item"
 msgstr "İlk öğeden başlat"
 
-#: ../src/resources/find.xrc:50
 msgid "Whole words only"
 msgstr "Sadece bütün kelime"
 
-#: ../src/resources/find.xrc:57
 msgid "Find in original strings"
 msgstr "Özgün dizgelerde bul"
 
-#: ../src/resources/find.xrc:64
 msgid "Find in translations"
 msgstr "Çevirilerde bul"
 
-#: ../src/resources/find.xrc:71
 msgid "Find in comments"
 msgstr "Açıklamalarda bul"
 
-#: ../src/resources/find.xrc:78
 msgid "Find in automatic comments"
 msgstr "Otomatik açıklamalarda bul"
 
-#: ../src/resources/find.xrc:94
+msgid "Close"
+msgstr "Kapat"
+
 msgid "< &Previous"
 msgstr "< Ön&ceki"
 
-#: ../src/resources/find.xrc:102
 msgid "&Next >"
 msgstr "So&nraki >"
 
-#: ../src/resources/manager.xrc:32
 msgid "Create new translations project"
 msgstr "Yeni çeviri projesi oluştur"
 
-#: ../src/resources/manager.xrc:38
 msgid "Edit the project"
 msgstr "Projeyi düzenle"
 
-#: ../src/resources/manager.xrc:44
 msgid "Delete the project"
 msgstr "Projeyi sil"
 
-#: ../src/resources/manager.xrc:50
 msgid "Update all"
 msgstr "Tümünü güncelle"
 
-#: ../src/resources/manager.xrc:51
 msgid "Update all catalogs in the project"
 msgstr "Projedeki tüm katalogları güncelle"
 
-#: ../src/resources/manager.xrc:55
 msgid "Edit project"
 msgstr "Projeyi düzenle"
 
-#: ../src/resources/manager.xrc:60
 msgid "Project name:"
 msgstr "Proje adı:"
 
-#: ../src/resources/manager.xrc:81
 msgid "Browse"
 msgstr "Gözat"
 
-#: ../src/resources/manager.xrc:82
 msgid "Add directory to the list"
 msgstr "Klasörü listeye ekle"
 
-#: ../src/resources/manager.xrc:119 ../src/resources/menus.xrc:56
-#: ../src/resources/menus.xrc:316
 msgid "&Preferences..."
 msgstr "&Tercihler..."
 
-#: ../src/resources/manager.xrc:123 ../src/resources/menus.xrc:29
-#: ../src/resources/menus.xrc:312
 msgid "&Close"
 msgstr "&Kapat"
 
-#: ../src/resources/manager.xrc:127 ../src/resources/menus.xrc:68
 msgid "E&xit"
 msgstr "Çı&kış"
 
-#: ../src/resources/menus.xrc:8 ../src/resources/menus.xrc:291
+msgid "Quit"
+msgstr "Çık"
+
 msgid "&New..."
 msgstr "&Yeni..."
 
-#: ../src/resources/menus.xrc:12 ../src/resources/menus.xrc:295
 msgid "New from &POT/PO file..."
 msgstr "&POT/PO dosyasından oluştur..."
 
-#: ../src/resources/menus.xrc:13 ../src/resources/menus.xrc:296
 msgid "New From &POT/PO File..."
 msgstr "&POT/PO Dosyasından Oluştur..."
 
-#: ../src/resources/menus.xrc:16 ../src/resources/menus.xrc:299
-msgid "New WordPress translation..."
-msgstr "Yeni WordPress çevirisi..."
-
-#: ../src/resources/menus.xrc:17 ../src/resources/menus.xrc:300
-msgid "New WordPress Translation..."
-msgstr "Yeni WordPress Çevirisi..."
-
-#: ../src/resources/menus.xrc:21 ../src/resources/menus.xrc:304
 msgid "&Open..."
 msgstr "&Aç..."
 
-#: ../src/resources/menus.xrc:25 ../src/resources/menus.xrc:308
 msgid "Open Recent"
 msgstr "Son Kullanılanları Açın"
 
-#: ../src/resources/menus.xrc:33
 msgid "&Save"
 msgstr "Kay&det"
 
-#: ../src/resources/menus.xrc:37
 msgid "Save &as..."
 msgstr "&Farklı kaydet..."
 
-#: ../src/resources/menus.xrc:38
 msgid "Save &As..."
 msgstr "F&arklı Kaydet..."
 
-#: ../src/resources/menus.xrc:42
 msgid "Compile to MO..."
 msgstr "MO olarak derle..."
 
-#: ../src/resources/menus.xrc:45
 msgid "E&xport as HTML..."
 msgstr "HTML olarak &verin..."
 
-#: ../src/resources/menus.xrc:50
 msgid "Check for updates..."
 msgstr "Güncellemeleri denetleyin..."
 
-#: ../src/resources/menus.xrc:53
-msgid "&License..."
-msgstr "&Lisans..."
-
-#: ../src/resources/menus.xrc:61
 msgid "Catalogs &manager"
 msgstr "&Katalog yöneticisi"
 
-#: ../src/resources/menus.xrc:62
 msgid "Catalogs &Manager"
 msgstr "&Katalog Yöneticisi"
 
-#: ../src/resources/menus.xrc:73 ../src/resources/menus.xrc:324
-msgid "&Edit"
-msgstr "Düz&enleyin"
-
-#: ../src/resources/menus.xrc:94
 msgid "Translation is &fuzzy"
 msgstr "Çeviri &belirsiz"
 
-#: ../src/resources/menus.xrc:95
 msgid "Translation Is &Fuzzy"
 msgstr "Çeviri &Belirsiz"
 
-#: ../src/resources/menus.xrc:100
 msgid "Edit &comment"
 msgstr "Açıklamayı dü&zenle"
 
-#: ../src/resources/menus.xrc:101
 msgid "Edit &Comment"
 msgstr "Açıklamayı Dü&zenle"
 
-#: ../src/resources/menus.xrc:106
 msgid "Suggestions"
 msgstr "Öneriler"
 
-#: ../src/resources/menus.xrc:109
 msgid "&Show references"
 msgstr "Referansları gö&ster"
 
-#: ../src/resources/menus.xrc:110
 msgid "&Show References"
 msgstr "Referansları Gö&ster"
 
-#: ../src/resources/menus.xrc:114 ../src/resources/menus.xrc:128
 msgid "&Find..."
 msgstr "B&ul..."
 
-#: ../src/resources/menus.xrc:118
 msgid "Find next"
 msgstr "Sonrakini bul"
 
-#: ../src/resources/menus.xrc:122
 msgid "Find previous"
 msgstr "Öncekini bul"
 
-#: ../src/resources/menus.xrc:126
 msgid "Find"
 msgstr "Bul"
 
-#: ../src/resources/menus.xrc:132
 msgid "Find Next"
 msgstr "Sonrakini Bul"
 
-#: ../src/resources/menus.xrc:136
 msgid "Find Previous"
 msgstr "Öncekini Bul"
 
-#: ../src/resources/menus.xrc:142
 msgid "&Preferences"
 msgstr "&Tercihler"
 
-#: ../src/resources/menus.xrc:147
-msgid "&View"
-msgstr "&Görünüm"
-
-#: ../src/resources/menus.xrc:149
 msgid "Display entry &IDs"
 msgstr "Giriş &kimliklerini görüntüle"
 
-#: ../src/resources/menus.xrc:150
 msgid "Display Entry &IDs"
 msgstr "Giriş &Kimliklerini Görüntüle"
 
-#: ../src/resources/menus.xrc:155
 msgid "Sort by &file order"
 msgstr "&Dosya düzenine göre sırala"
 
-#: ../src/resources/menus.xrc:156
 msgid "Sort by &File Order"
 msgstr "&Dosya Düzenine göre Sırala"
 
-#: ../src/resources/menus.xrc:160
 msgid "Sort by &source"
 msgstr "&Kaynağa göre sırala"
 
-#: ../src/resources/menus.xrc:161
 msgid "Sort by &Source"
 msgstr "&Kaynağa göre Sırala"
 
-#: ../src/resources/menus.xrc:165
 msgid "Sort by &translation"
 msgstr "Çeviriye &göre sırala"
 
-#: ../src/resources/menus.xrc:166
 msgid "Sort by &Translation"
 msgstr "Çeviriye &göre Sırala"
 
-#: ../src/resources/menus.xrc:171
 msgid "&Group by context"
 msgstr "Bağlama göre &grupla"
 
-#: ../src/resources/menus.xrc:172
 msgid "&Group By Context"
 msgstr "Bağlama Göre &Grupla"
 
-#: ../src/resources/menus.xrc:176
 msgid "&Untranslated entries first"
 msgstr "Ç&evrilmemiş dizgeler en üstte görüntülensin"
 
-#: ../src/resources/menus.xrc:177
 msgid "&Untranslated Entries First"
 msgstr "Ç&evrilmemiş Dizgeler En Üstte Görüntülensin"
 
-#: ../src/resources/menus.xrc:182
 msgid "Show sidebar"
 msgstr "Kenar çubuğunu göster"
 
-#: ../src/resources/menus.xrc:190
 msgid "C&atalog"
 msgstr "&Katalog"
 
-#: ../src/resources/menus.xrc:193
 msgid "&Update from sources"
 msgstr "Kaynaklardan gü&ncelle"
 
-#: ../src/resources/menus.xrc:194
 msgid "&Update from Sources"
 msgstr "Kaynaklardan Gü&ncelle"
 
-#: ../src/resources/menus.xrc:197
 msgid "Update from &POT file..."
 msgstr "&POT dosyasından güncelle..."
 
-#: ../src/resources/menus.xrc:198
 msgid "Update from &POT File..."
 msgstr "&POT Dosyasından Güncelle..."
 
-#: ../src/resources/menus.xrc:201
 msgid "Fill missing translations from &TM..."
 msgstr "Eksik çevirileri çeviri belleğinden &doldur..."
 
-#: ../src/resources/menus.xrc:202
 msgid "Fill Missing Translations from &TM..."
 msgstr "Eksik Çevirileri Çeviri Belleğinden &Doldur..."
 
-#: ../src/resources/menus.xrc:205
 msgid "&Purge deleted translations"
 msgstr "Silin&miş çevirileri temizle"
 
-#: ../src/resources/menus.xrc:206
 msgid "&Purge Deleted Translations"
 msgstr "Silin&miş Çevirileri Temizle"
 
-#: ../src/resources/menus.xrc:209
 msgid "&Validate translations"
 msgstr "Çevirileri &doğrula"
 
-#: ../src/resources/menus.xrc:210
 msgid "&Validate Translations"
 msgstr "Çevirileri &Doğrula"
 
-#: ../src/resources/menus.xrc:214
-msgid "&Statistics"
-msgstr "İ&statistikler"
-
-#: ../src/resources/menus.xrc:218
 msgid "&Properties..."
 msgstr "Ö&zellikler..."
 
-#: ../src/resources/menus.xrc:228
 msgid "&Done and next"
 msgstr "&Tamamla ve sonrakine geç"
 
-#: ../src/resources/menus.xrc:229
 msgid "&Done and Next"
 msgstr "&Tamamla ve Sonrakine Geç"
 
-#: ../src/resources/menus.xrc:235
 msgid "&Previous translation"
 msgstr "Ö&nceki çeviri"
 
-#: ../src/resources/menus.xrc:236
 msgid "&Previous Translation"
 msgstr "Ö&nceki Çeviri"
 
-#: ../src/resources/menus.xrc:240
 msgid "&Next translation"
 msgstr "&Sonraki çeviri"
 
-#: ../src/resources/menus.xrc:241
 msgid "&Next Translation"
 msgstr "&Sonraki Çeviri"
 
-#: ../src/resources/menus.xrc:245
 msgid "P&revious unfinished"
 msgstr "Ö&nceki tamamlanmamış"
 
-#: ../src/resources/menus.xrc:246
 msgid "P&revious Unfinished"
 msgstr "Ö&nceki Tamamlanmamış"
 
-#: ../src/resources/menus.xrc:250
 msgid "Ne&xt unfinished"
 msgstr "S&onraki tamamlanmamış"
 
-#: ../src/resources/menus.xrc:251
 msgid "Ne&xt Unfinished"
 msgstr "S&onraki Tamamlanmamış"
 
-#: ../src/resources/menus.xrc:260 ../src/resources/menus.xrc:333
 msgid "&Online help"
 msgstr "Çe&vrimiçi yardım"
 
-#: ../src/resources/menus.xrc:261 ../src/resources/menus.xrc:334
 msgid "&Online Help"
 msgstr "Çe&vrimiçi Yardım"
 
-#: ../src/resources/menus.xrc:267 ../src/resources/menus.xrc:340
 msgid "&GNU gettext manual"
 msgstr "&GNU gettext kılavuzu"
 
-#: ../src/resources/menus.xrc:268 ../src/resources/menus.xrc:341
 msgid "&GNU gettext Manual"
 msgstr "&GNU gettext Kılavuzu"
 
-#: ../src/resources/menus.xrc:272 ../src/resources/menus.xrc:345
-msgid "Email &support..."
-msgstr "E-po&sta desteği..."
-
-#: ../src/resources/menus.xrc:273 ../src/resources/menus.xrc:346
-msgid "Email &Support..."
-msgstr "E-po&sta Desteği..."
-
-#: ../src/resources/menus.xrc:277 ../src/resources/menus.xrc:350
 msgid "&About Poedit"
 msgstr "PoEdit H&akkında"
 
-#: ../src/resources/menus.xrc:278 ../src/resources/menus.xrc:279
-#: ../src/resources/menus.xrc:351 ../src/resources/menus.xrc:352
 msgid "&About"
 msgstr "H&akkında"
 
-#: ../src/resources/prefs.xrc:4
 msgid "Extractor setup"
 msgstr "Çıkarıcı kur"
 
-#: ../src/resources/prefs.xrc:25
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Noktalı virgülle ayrılmış uzantılar listesi (örn. *.cpp;*.h):"
 
-#: ../src/resources/prefs.xrc:41
 msgid "Invocation:"
 msgstr "Çağrı:"
 
-#: ../src/resources/prefs.xrc:45
 msgid "Command to extract translations:"
 msgstr "Çevirileri çıkarmak için komut:"
 
-#: ../src/resources/prefs.xrc:57
-msgid "This is the command used to launch the extractor.\n%o expands to the name of output file, %K to list\nof keywords, %F to list of input files,\n%C to charset flag (see below)."
-msgstr "Bu, çıkarıcıyı çalıştırmak için kullanılan komuttur.\n%o çıktı dosyası adına, %K anahtar kelimelerin listesine,\n%F girdi dosyalarının listesine, %C karakter kümesi\nişaretine dönüşür (aşağıya bakınız)."
+msgid ""
+"This is the command used to launch the extractor.\n"
+"%o expands to the name of output file, %K to list\n"
+"of keywords, %F to list of input files,\n"
+"%C to charset flag (see below)."
+msgstr ""
+"Bu, çıkarıcıyı çalıştırmak için kullanılan komuttur.\n"
+"%o çıktı dosyası adına, %K anahtar kelimelerin listesine,\n"
+"%F girdi dosyalarının listesine, %C karakter kümesi\n"
+"işaretine dönüşür (aşağıya bakınız)."
 
-#: ../src/resources/prefs.xrc:66
 msgid "An item in keywords list:"
 msgstr "Anahtar kelimeleri listesindeki bir öğe:"
 
-#: ../src/resources/prefs.xrc:78
-msgid "This will be attached to the command line once\nfor each keyword. %k expands to the keyword."
-msgstr "Bu, her anahtar kelime için bir kez komut satırına\neklenecektir. %k anahtar kelimeyi yazar."
+msgid ""
+"This will be attached to the command line once\n"
+"for each keyword. %k expands to the keyword."
+msgstr ""
+"Bu, her anahtar kelime için bir kez komut satırına\n"
+"eklenecektir. %k anahtar kelimeyi yazar."
 
-#: ../src/resources/prefs.xrc:87
 msgid "An item in input files list:"
 msgstr "Girdi dosyaları listesindeki bir öğe:"
 
-#: ../src/resources/prefs.xrc:99
 #, c-format
-msgid "This will be attached to the command line once\nfor each input file. %f expands to the filename."
-msgstr "Bu, her girdi dosyası için bir kez komut satırına\neklenecektir. %f dosya adını yazar."
+msgid ""
+"This will be attached to the command line once\n"
+"for each input file. %f expands to the filename."
+msgstr ""
+"Bu, her girdi dosyası için bir kez komut satırına\n"
+"eklenecektir. %f dosya adını yazar."
 
-#: ../src/resources/prefs.xrc:108 ../src/resources/properties.xrc:96
 msgid "Source code charset:"
 msgstr "Kaynak kod karakter kümesi:"
 
-#: ../src/resources/prefs.xrc:120
 #, c-format
-msgid "This will be attached to the command line\nonly if source codecharset was given. %c expands to charset value."
-msgstr "Kaynak kodu karakter kümesi verildiyse,\nbu komut satırına eklenecektir.\n%c karakter kümesi değerini yazar."
+msgid ""
+"This will be attached to the command line\n"
+"only if source codecharset was given. %c expands to charset value."
+msgstr ""
+"Kaynak kodu karakter kümesi verildiyse,\n"
+"bu komut satırına eklenecektir.\n"
+"%c karakter kümesi değerini yazar."
 
-#: ../src/resources/properties.xrc:4
 msgid "Catalog properties"
 msgstr "Katalog özellikleri"
 
-#: ../src/resources/properties.xrc:46
 msgid "Plural Forms:"
 msgstr "Çoğul Biçimler:"
 
-#: ../src/resources/properties.xrc:53
 msgid "Use default rules for this language"
 msgstr "Bu dil için varsayılan kuralları kullan"
 
-#: ../src/resources/properties.xrc:62
 msgid "Use custom expression"
 msgstr "Özel ifade kullan"
 
-#: ../src/resources/properties.xrc:76
 msgid "Learn about plural forms"
 msgstr "Çoğul biçimler hakkında bilgi edinin"
 
-#: ../src/resources/properties.xrc:142
 msgid "Translation properties"
 msgstr "Çeviri özellikleri"
 
-#: ../src/resources/properties.xrc:150
 msgid "Extract text from source files in the following directories:"
 msgstr "Kaynak dosyalardan metinleri şurada belirtilen dizinlere çıkart:"
 
-#: ../src/resources/properties.xrc:159
 msgid "Base path:"
 msgstr "Temel yol:"
 
-#: ../src/resources/properties.xrc:188
 msgid "Sources paths"
 msgstr "Kaynak yolları"
 
-#: ../src/resources/properties.xrc:196
-msgid "Use these keywords (function names) to recognize translatable strings\nin source files:"
-msgstr "Kaynak dosyalardaki çevrilebilir dizgeleri tanımak için,\nşu anahtar kelimeleri (işlev adları) kullan:"
+msgid ""
+"Use these keywords (function names) to recognize translatable strings\n"
+"in source files:"
+msgstr ""
+"Kaynak dosyalardaki çevrilebilir dizgeleri tanımak için,\n"
+"şu anahtar kelimeleri (işlev adları) kullan:"
 
-#: ../src/resources/properties.xrc:212
 msgid "Learn about gettext keywords"
 msgstr "Gettext anahtar kelimeleri hakkında bilgi edinin"
 
-#: ../src/resources/properties.xrc:220
 msgid "Sources keywords"
 msgstr "Kaynak anahtar kelimeleri"
 
-#: ../src/resources/summary.xrc:4
 msgid "Update summary"
 msgstr "Güncelleme özeti"
 
-#: ../src/resources/summary.xrc:16
-msgid "These strings were found in the sources but were not in the catalog.\nPoedit will add them to the catalog now."
-msgstr "Bu dizgeler kaynaklarda bulundu ancak katalogda bulunamadı.\nPoedit bunları şimdi kataloğa ekleyecek."
+msgid ""
+"These strings were found in the sources but were not in the catalog.\n"
+"Poedit will add them to the catalog now."
+msgstr ""
+"Bu dizgeler kaynaklarda bulundu ancak katalogda bulunamadı.\n"
+"Poedit bunları şimdi kataloğa ekleyecek."
 
-#: ../src/resources/summary.xrc:29
 msgid "New strings"
 msgstr "Yeni dizgeler"
 
-#: ../src/resources/summary.xrc:37
-msgid "These strings are no longer in the sources.\nPoedit will remove them from the catalog now."
-msgstr "Bu dizgeler artık kaynaklarda yok.\nPoedit bunları şimdi katalogdan kaldıracak."
+msgid ""
+"These strings are no longer in the sources.\n"
+"Poedit will remove them from the catalog now."
+msgstr ""
+"Bu dizgeler artık kaynaklarda yok.\n"
+"Poedit bunları şimdi katalogdan kaldıracak."
 
-#: ../src/resources/summary.xrc:50
 msgid "Obsolete strings"
 msgstr "Eski dizgeler"
 
-#: ../src/resources/summary.xrc:62
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 yeni, 0 eski)"
 
-#: ../src/resources/toolbar.xrc:13 ../src/resources/toolbar.xrc:18
 msgid "Open"
 msgstr "Aç"
 
-#: ../src/resources/toolbar.xrc:25 ../src/resources/toolbar.xrc:30
 msgid "Save catalog"
 msgstr "Kataloğu kaydet"
 
-#: ../src/resources/toolbar.xrc:39
 msgid "Validate"
 msgstr "Doğrula"
 
-#: ../src/resources/toolbar.xrc:40
 msgid "Check for errors in the translation"
 msgstr "Çeviri içindeki hataları kontrol et"
 
-#: ../src/resources/toolbar.xrc:47 ../src/statistics.cpp:151
-msgid "Statistics"
-msgstr "İstatistikler"
-
-#: ../src/resources/toolbar.xrc:48
-msgid "Show translation statistics"
-msgstr "Çeviri istatistiklerini göster"
-
-#: ../src/resources/toolbar.xrc:55
 msgid "Update"
 msgstr "Güncelle"
 
-#: ../src/resources/toolbar.xrc:56
 msgid "Update catalog - synchronize it with sources"
 msgstr "Kataloğu güncelleyin - kaynak dosyalarla eşitleyin"
 
-#: ../src/resources/toolbar.xrc:65
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Seçilen satır eğer belirsiz çeviri ise değiştirilir"
 
-#: ../src/resources/toolbar.xrc:75
-msgid "Sidebar"
-msgstr "Kenar çubuğu"
-
-#: ../src/resources/toolbar.xrc:76
 msgid "Show or hide the sidebar."
 msgstr "Kenar çubuğunu göster veya gizle."
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
-#: ../src/sidebar.cpp:128
 msgid "Previous source text:"
 msgstr "Önceki kaynak metin:"
 
-#: ../src/sidebar.cpp:131
-msgid "The old source text (before it changed during an update) that the fuzzy translation corresponds to."
-msgstr "Belirsiz çevirinin karşılık geldiği eski kaynak metin (bir güncelleme sırasında değiştirilmeden önceki hali)."
+msgid ""
+"The old source text (before it changed during an update) that the fuzzy "
+"translation corresponds to."
+msgstr ""
+"Belirsiz çevirinin karşılık geldiği eski kaynak metin (bir güncelleme "
+"sırasında değiştirilmeden önceki hali)."
 
-#: ../src/sidebar.cpp:221 ../src/sidebar.cpp:237
 msgid "Add comment"
 msgstr "Yorum ekle"
 
-#: ../src/sidebar.cpp:223 ../src/sidebar.cpp:225 ../src/sidebar.cpp:240
 msgid "Add Comment"
 msgstr "Yorum Ekle"
 
-#: ../src/sidebar.cpp:388
 msgid "Translation suggestions:"
 msgstr "Çeviri önerileri:"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
-#: ../src/sidebar.cpp:413
 msgid "No matches found"
 msgstr "Bulunan eşleşmeler yok"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (OS X, Linux).
-#: ../src/sidebar.cpp:416
 msgid "No Matches Found"
 msgstr "Bulunan Eşleşmeler Yok"
 
-#: ../src/sidebar.cpp:440 ../src/sidebar_suggestions.cpp:106
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Bu dizge Poedit'in çeviri belleğinde bulundu."
 
-#: ../src/sidebar_suggestions.cpp:102
-msgid "This suggestion was contributed by another translator to the online TM."
-msgstr "Bu öneri başka bir çevirmen tarafından çevrimiçi ÇB'ye katıldı."
-
-#: ../src/sidebar_suggestions.cpp:104
-msgid "This suggestion was machine-translated online."
-msgstr "Bu öneriyi çevrimiçi makine çevirdi."
-
-#: ../src/sidebar_suggestions.cpp:221
-#, c-format
-msgid "%d out of %d online suggestion left."
-msgid_plural "%d out of %d online suggestions left."
-msgstr[0] "%d / %d çevrimiçi öneri kaldı."
-
-#: ../src/sidebar_suggestions.cpp:224
-msgid "Remove this limitation"
-msgstr "Bu sınırlamayı kaldır"
-
-#: ../src/sidebar_suggestions.cpp:228
-msgid "Not showing additional online suggestions."
-msgstr "Ek çevrimiçi öneriler gösterilemiyor."
-
-#: ../src/sidebar_suggestions.cpp:229
-msgid "Unlock online suggestions"
-msgstr "Çevrimiçi önerilerin kilidini aç"
-
-#: ../src/sidebar_suggestions.cpp:252
-msgid "Exceeded online TM daily limit."
-msgstr "Çevrimiçi Çeveiri Belleği günlük sınırı aşıldı."
-
-#: ../src/sidebar_suggestions.cpp:277
-msgid "Connect to the Internet to get additional suggestions."
-msgstr "Ek öneriler almak için Internet'e bağlanın."
-
-#: ../src/statistics.cpp:167 ../src/statistics.cpp:256
-msgid "Items"
-msgstr "Öge"
-
-#: ../src/statistics.cpp:168 ../src/statistics.cpp:256
-msgid "Words"
-msgstr "Kelime"
-
-#: ../src/statistics.cpp:174 ../src/statistics.cpp:257
-msgid "Translated"
-msgstr "Çevrilmiş"
-
-#: ../src/statistics.cpp:178 ../src/statistics.cpp:204
-#: ../src/statistics.cpp:258 ../src/statistics.cpp:263
-msgid "Needs review (fuzzy)"
-msgstr "Gözden geçirilmesi gerekir (belirsiz)"
-
-#: ../src/statistics.cpp:182 ../src/statistics.cpp:208
-#: ../src/statistics.cpp:259 ../src/statistics.cpp:264
-msgid "Not translated"
-msgstr "Çevrilmemiş"
-
-#: ../src/statistics.cpp:186 ../src/statistics.cpp:260
-msgid "Translations with errors"
-msgstr "Hatalı çeviriler"
-
-#: ../src/statistics.cpp:194 ../src/statistics.cpp:261
-msgid "Source Text"
-msgstr "Kaynak Metin"
-
-#: ../src/statistics.cpp:200 ../src/statistics.cpp:262
-msgid "Strings in source language"
-msgstr "Kaynak dildeki dizgeler"
-
-#: ../src/statistics.cpp:217
-msgid "Copy to clipboard"
-msgstr "Panoya kopyala"
-
-#: ../src/statistics.cpp:219
-msgid "Copy to Clipboard"
-msgstr "Panoya Kopyala"
-
-#: ../src/summarydlg.cpp:56
 #, c-format
 msgid "(New: %i, obsolete: %i)"
 msgstr "(Yeni: %i, eski: %i)"
 
-#: ../src/tm/tm_migrate.cpp:154
 #, c-format
 msgid "Importing translations: %d"
 msgstr "İçe aktarılan çeviri: %d"
 
-#: ../src/tm/tm_migrate.cpp:173 ../src/tm/tm_migrate.cpp:266
-#: ../src/tm/tm_migrate.cpp:296
 msgid "Poedit Update"
 msgstr "Poedit Güncellemesi"
 
-#: ../src/tm/tm_migrate.cpp:173
 msgid "Preparing migration..."
 msgstr "Geçişe hazırlanıyor..."
 
-#: ../src/tm/tm_migrate.cpp:234
 #, c-format
 msgid "Migration exit status: %d"
 msgstr "Geçiş çıkış durumu: %d"
 
-#: ../src/tm/tm_migrate.cpp:265
 msgid "Poedit needs to convert your translation memory to a new format."
 msgstr "Poedit'in çeviri belleğinizi yeni bir biçime dönüştürmesi gerekiyor."
 
-#: ../src/tm/tm_migrate.cpp:269
-msgid "This must be done before Poedit can start. It may take a few minutes if you have lots of translations stored, but should normally be much faster."
-msgstr "Bu işlem Poedit başlatılmadan önce yapılmalıdır. Çok fazla sayıda çeviri kaydedilmiş ise bu işlem bir kaç dakika sürebilir, ancak genellikle daha kısa sürede tamamlanır."
+msgid ""
+"This must be done before Poedit can start. It may take a few minutes if you "
+"have lots of translations stored, but should normally be much faster."
+msgstr ""
+"Bu işlem Poedit başlatılmadan önce yapılmalıdır. Çok fazla sayıda çeviri "
+"kaydedilmiş ise bu işlem bir kaç dakika sürebilir, ancak genellikle daha "
+"kısa sürede tamamlanır."
 
-#: ../src/tm/tm_migrate.cpp:270
 msgid "Proceed"
 msgstr "Devam edin"
 
-#: ../src/tm/tm_migrate.cpp:295
 msgid "Translation memory migration failed."
 msgstr "Çeviri belleği geçişi başarısız oldu."
 
-#: ../src/tm/tm_migrate.cpp:300
 #, c-format
-msgid "Your translation memory data couldn't be migrated. The error was:\n\n%s\nPlease email help@poedit.net and we’ll get it fixed."
-msgstr "Çeviri belleği verileriniz geçirilemedi. Hata:\n\n%s\nLütfen help@poedit.net adresine eposta gönderin ve bu sorunu düzeltelim."
+msgid ""
+"Your translation memory data couldn't be migrated. The error was:\n"
+"\n"
+"%s\n"
+"Please email help@poedit.net and we’ll get it fixed."
+msgstr ""
+"Çeviri belleği verileriniz geçirilemedi. Hata:\n"
+"\n"
+"%s\n"
+"Lütfen help@poedit.net adresine eposta gönderin ve bu sorunu düzeltelim."
 
-#: ../src/utility.cpp:61 ../src/utility.cpp:71
 msgid "Cannot create temporary directory."
 msgstr "Geçici dizin oluşturulamıyor."
 
-#: ../src/welcomescreen.cpp:170
-msgid "Check theme or plugin compatibility"
-msgstr "Tema veya eklenti uyumluluğunu kontrol et"
-
-#: ../src/welcomescreen.cpp:228
 msgid "Welcome to Poedit"
 msgstr "Poedit'e Hoş Geldiniz"
 
-#: ../src/welcomescreen.cpp:247
-msgid "Upgrade to the Pro version of Poedit with more features."
-msgstr "Daha fazla özellikli Poedit'in Pro sürümüne yükseltin."
-
-#: ../src/welcomescreen.cpp:264
 msgid "Edit a translation"
 msgstr "Çeviriyi düzenle"
 
-#: ../src/welcomescreen.cpp:265
 msgid "Open an existing PO file and edit the translation."
 msgstr "Varolan bir PO dosyasını açın ve çeviriyi düzenleyin."
 
-#: ../src/welcomescreen.cpp:270
 msgid "Create new translation"
 msgstr "Yeni çeviri oluştur"
 
-#: ../src/welcomescreen.cpp:271
-msgid "Take an existing PO file or POT template and create a new translation from it."
-msgstr "Varolan bir PO dosyası ya da POT şablonu alın ve bundan yeni bir çeviri oluşturun."
+msgid ""
+"Take an existing PO file or POT template and create a new translation from "
+"it."
+msgstr ""
+"Varolan bir PO dosyası ya da POT şablonu alın ve bundan yeni bir çeviri "
+"oluşturun."
 
-#: ../src/welcomescreen.cpp:276
-msgid "Translate WordPress theme or plugin"
-msgstr "WordPress teması ya da eklentisini çevirin"
-
-#. TRANSLATORS: Please don't use any form of "automatically" in the translation, it would mislead people.
-#: ../src/welcomescreen.cpp:278
-msgid "Create a new translation. Poedit will set everything up; you can focus on translating."
-msgstr "Yeni bir çeviri oluşturun. Poedit herşeyi kendiliğinden ayarlayacak ve çeviriye odaklanabileceksiniz."
-
-#: ../src/welcomescreen.cpp:309
 msgid "There are no translations. That’s unusual."
 msgstr "Çeviriler yok. Bu olağandışı bir durum."
 
-#: ../src/welcomescreen.cpp:314
-msgid "Translatable entries aren't added manually in the Gettext system, but are automatically extracted\nfrom source code. This way, they stay up to date and accurate.\nTranslators typically use PO template files (POTs) prepared for them by the developer."
-msgstr "Çevrilebilir girişler Gettext sistemine el ile eklenemedi ancak kaynak kodundan otomatik olarak\nçıkartıldı. Bu yolla, güncel ve doğru kalırlar. Çevirmenler genellikle\ngeliştirici tarafından hazırlanan PO şablon dosyalarını (POT) kullanırlar."
+msgid ""
+"Translatable entries aren't added manually in the Gettext system, but are "
+"automatically extracted\n"
+"from source code. This way, they stay up to date and accurate.\n"
+"Translators typically use PO template files (POTs) prepared for them by the "
+"developer."
+msgstr ""
+"Çevrilebilir girişler Gettext sistemine el ile eklenemedi ancak kaynak "
+"kodundan otomatik olarak\n"
+"çıkartıldı. Bu yolla, güncel ve doğru kalırlar. Çevirmenler genellikle\n"
+"geliştirici tarafından hazırlanan PO şablon dosyalarını (POT) kullanırlar."
 
-#: ../src/welcomescreen.cpp:319
 msgid "(Learn more about GNU gettext)"
 msgstr "(GNU gettext hakkında bildi edinin)"
 
-#: ../src/welcomescreen.cpp:323
 msgid "The simplest way to fill this catalog is to update it from a POT:"
-msgstr "Bu kataloğu doldurmanın en kolay yolu bir POT dosyasından güncellemektir:"
+msgstr ""
+"Bu kataloğu doldurmanın en kolay yolu bir POT dosyasından güncellemektir:"
 
-#: ../src/welcomescreen.cpp:330
 msgid "Update from POT"
 msgstr "POT dosyasından güncelle"
 
-#: ../src/welcomescreen.cpp:331
 msgid "Take translatable strings from an existing POT template."
 msgstr "Çevrilebilir dizgeleri varolan bir POT şablonundan alın."
 
-#: ../src/welcomescreen.cpp:334
-msgid "You can also extract translatable strings directly from the source code:"
+msgid ""
+"You can also extract translatable strings directly from the source code:"
 msgstr "Çevrilebilir dizgeleri doğrudan kaynak kodundan çıkartabilirsiniz:"
 
-#: ../src/welcomescreen.cpp:341
 msgid "Extract from sources"
 msgstr "Kaynaklardan aktar"
 
-#: ../src/welcomescreen.cpp:342
 msgid "Configure source code extraction in Properties."
 msgstr "Özellikler'de kaynak kod çıkartmayı yapılandırın."
-
-#: ../src/wordpress.cpp:91 ../src/wordpress.cpp:98
-#, c-format
-msgid "Failed to read file '%s'."
-msgstr "'%s' dosyasını okuma başarısız."
-
-#: ../src/wordpress.cpp:136
-#, c-format
-msgid "Confused by ambiguous values of \"%s\" in %s."
-msgstr "Anlaşılması güç \"%s\" değerleri %s içinde karıştırıldı."
-
-#: ../src/wordpress.cpp:254
-#, c-format
-msgid "Couldn't detect POs location for \"%s\"."
-msgstr "\"%s\" için PO konumu algılanamadı."
-
-#: ../src/wordpress.cpp:324
-#, c-format
-msgid "Couldn't detect translation setup of the \"%s\" theme."
-msgstr "\"%s\" temasının çeviri ayarı algılanamadı."
-
-#: ../src/wordpress.cpp:329
-#, c-format
-msgid "The \"%s\" theme isn't localization-ready."
-msgstr "\"%s\" teması yerelleştirmeye hazır değil."
-
-#: ../src/wordpress.cpp:371
-msgid "Confused: multiple main plugin files."
-msgstr "Karıştı: birden çok ana eklenti dosyaları."
-
-#: ../src/wordpress.cpp:405 ../src/wordpress.cpp:417
-#, c-format
-msgid "Couldn't detect translation domain of the \"%s\" plugin."
-msgstr "\"%s\" eklentisinin çeviri etki alanı algılanamadı."
-
-#: ../src/wordpress.cpp:410
-#, c-format
-msgid "The \"%s\" plugin isn't localization-ready."
-msgstr "\"%s\" eklentisi yerelleştirmeye hazır değil."
-
-#: ../src/wordpress.cpp:454
-msgid "Found neither WordPress theme nor plugin in the folder."
-msgstr "Klasörde ne bir WordPress teması ne de eklenti bulundu."
-
-#: ../src/wordpress.cpp:457
-msgid "Folder looks like both a plugin and a theme."
-msgstr "Klasörde hem eklenti hem de tema var gibi görünüyor."
-
-#: ../src/wordpress.cpp:475
-#, c-format
-msgid "Translations folder (%s) doesn't exist."
-msgstr "Çeviri klasörü (%s) mevcut değil."
-
-#: ../src/wordpress.cpp:552
-msgid "Failed to extract WordPress information."
-msgstr "WordPress bilgilerinı çıkartma başarısız."
-
-#: ../src/wordpress.cpp:553
-msgid "WordPress error"
-msgstr "WordPress hatası"
-
-#: ../src/wordpress.cpp:562
-#, c-format
-msgid "Poedit couldn’t understand the content of the folder you selected. This may be a problem with the plugin/theme or it may be Poedit being silly. The error is:\n\n • %s\n\nPlease email help@poedit.net and we’ll sort it out."
-msgstr "Poedit seçtiğiniz klasörün içeriğini anlayamadı. Bu bir eklenti/tema ile ilgili bir sorun olabilir ya da Poedit'in saçmalamasına neden olabilir. Hata:\n\n• %s\n\nBu sorunu help@poedit.net adresine bildirin ve bizde halledelim."
-
-#. TRANSLATORS: This is a button that sends an email to support when clicked
-#: ../src/wordpress.cpp:568
-msgid "Email support"
-msgstr "E-posta desteği"
-
-#: ../src/wordpress.cpp:569
-msgid "View log"
-msgstr "Günlüğü göster"
-
-#. TRANSLATORS: This is a button that sends an email to support when clicked
-#: ../src/wordpress.cpp:572
-msgid "Email Support"
-msgstr "E-posta Desteği"
-
-#: ../src/wordpress.cpp:573
-msgid "View Log"
-msgstr "Günlüğe Göster"
-
-#: ../src/wordpress.cpp:584
-msgid "WordPress Errors Log"
-msgstr "WordPress Hata Günlüğü"
-
-#: ../src/wordpress.cpp:585
-msgid "Please email this log to help@poedit.net. Thank you!"
-msgstr "Lütfen bu günlüğü help@poedit.net adresine gönderin. Teşekkür ederiz!"
-

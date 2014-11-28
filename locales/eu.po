@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2014-11-19 18:56+0100\n"
+"POT-Creation-Date: 2014-11-28 18:23+0100\n"
 "PO-Revision-Date: 2014-11-23 13:27-0500\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Basque\n"
@@ -14,2384 +14,1679 @@ msgstr ""
 "\n"
 "X-Generator: crowdin.com\n"
 
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#: ../src/aboutbox.cpp:98 ../src/edapp.cpp:818
-#, c-format
-msgid "About %s"
-msgstr "Honi buruz %s"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#: ../src/aboutbox.cpp:124 ../src/edapp.cpp:821 ../src/welcomescreen.cpp:233
-#, c-format
-msgid "Version %s"
-msgstr "Bertsioa %s"
-
-#: ../src/aboutbox.cpp:125
-msgid "Based on the open source version →"
-msgstr "Iturburu irekiko bertsioan ohinarritua →"
-
-#: ../src/aboutbox.cpp:137 ../src/aboutbox.cpp:149
-msgid "Acknowledgements"
-msgstr "Eskerrak"
-
-#: ../src/aboutbox.cpp:139
-msgid "Rate on the App Store"
-msgstr "Mailatu App Storen"
-
-#: ../src/aboutbox.cpp:141 ../src/aboutbox.cpp:150
-msgid "License Agreement"
-msgstr "Baimen Ituna"
-
-#: ../src/aboutbox.cpp:208
-#, c-format
-msgid "Licensed to %s"
-msgstr "Baimenduta %s"
-
-#: ../src/aboutbox.cpp:210 ../src/licensing.cpp:227
-msgid "Purchased on the Mac App Store"
-msgstr "Erosi Mac App Store-an"
-
-#: ../src/aboutbox.cpp:212
-msgid "Free version (please upgrade!)"
-msgstr "Dohaineko bertsioa (mesedez goratu!)"
-
-#: ../src/attentionbar.cpp:90
 msgid "Hide this notification message"
 msgstr "Ezkutatu jakinarazpen mezu hau"
 
-#: ../src/attentionbar.cpp:289
 msgid "Don't Show Again"
 msgstr "Ez Erakutsi Berriro"
 
-#: ../src/attentionbar.cpp:289
 msgid "Don't show again"
 msgstr "Ez erakutsi berriro"
 
-#: ../src/catalog.cpp:121
 #, c-format
 msgid "%i line of file '%s' was not loaded correctly."
 msgid_plural "%i lines of file '%s' were not loaded correctly."
 msgstr[0] ""
 msgstr[1] "%i lerro '%s' agiritik ez dira zuzen gertatu."
 
-#: ../src/catalog.cpp:136
 #, c-format
 msgid "Line %d of file '%s' is corrupted (not valid %s data)."
 msgstr "%d lerroa hondaturik dago '%s' agirian (%s datu baliogabea)."
 
-#: ../src/catalog.cpp:247
 #, c-format
 msgid "Malformed header: '%s'"
 msgstr "Idazburu akastuna: '%s'"
 
-#: ../src/catalog.cpp:708
-msgid "Broken catalog file: singular form msgstr used together with msgid_plural"
-msgstr "Katalogo agiria hautsita: msgstr forma bakuna msgid_anitzarekin batera erabili da"
+msgid ""
+"Broken catalog file: singular form msgstr used together with msgid_plural"
+msgstr ""
+"Katalogo agiria hautsita: msgstr forma bakuna msgid_anitzarekin batera "
+"erabili da"
 
-#: ../src/catalog.cpp:760
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr "Katalogo agiria hautsita: msgstr forma anitza msgid_anitza gabe erabili da"
+msgstr ""
+"Katalogo agiria hautsita: msgstr forma anitza msgid_anitza gabe erabili da"
 
-#: ../src/catalog.cpp:1202
-msgid "There were errors when loading the catalog. Some data may be missing or corrupted as the result."
-msgstr "Katalogoa gertatzerakoan akatsak egon dira. Ondorioz, datu batzuk ez dira egongo edo okerrak izango dira."
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
+"Katalogoa gertatzerakoan akatsak egon dira. Ondorioz, datu batzuk ez dira "
+"egongo edo okerrak izango dira."
 
-#: ../src/catalog.cpp:1212
 #, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
 msgstr "Ezinezkoa %s agiria gertatzea, zihurrenik hondatuta dago."
 
-#: ../src/catalog.cpp:1461
 #, c-format
-msgid "File '%s' is read-only and cannot be saved.\nPlease save it under different name."
-msgstr "'%s' agiria irakurtzekoa bakarrik da eta ezin da gorde.\nMesedez, gorde izen ezberdin batekin."
+msgid ""
+"File '%s' is read-only and cannot be saved.\n"
+"Please save it under different name."
+msgstr ""
+"'%s' agiria irakurtzekoa bakarrik da eta ezin da gorde.\n"
+"Mesedez, gorde izen ezberdin batekin."
 
-#: ../src/catalog.cpp:1483 ../src/catalog.cpp:1540 ../src/catalog.cpp:1627
-#: ../src/catalog.cpp:1636 ../src/catalog.cpp:1661 ../src/catalog.cpp:1695
-#: ../src/export_html.cpp:260
 #, c-format
 msgid "Couldn't save file %s."
 msgstr "Ezinezkoa %s agiria gordetzea."
 
-#: ../src/catalog.cpp:1549
-msgid "There was a problem formatting the file nicely (but it was saved all right)."
+msgid ""
+"There was a problem formatting the file nicely (but it was saved all right)."
 msgstr "Arazo bat egon da agiria ongi formateatzerakoan (baina ongi gorde da)."
 
-#: ../src/catalog.cpp:1797
 #, c-format
-msgid "The catalog couldn't be saved in '%s' charset as specified in catalog settings.\n\nIt was saved in UTF-8 instead and the setting was modified accordingly."
-msgstr "Katalogoa ezin izan da '%s'  hizki-kodean gorde katalogo ezarpenetan adierazi bezala.\n\nUTF-8 kodeaketan gorde da ordez eta ezarpenak ere era berean aldatu dira."
+msgid ""
+"The catalog couldn't be saved in '%s' charset as specified in catalog "
+"settings.\n"
+"\n"
+"It was saved in UTF-8 instead and the setting was modified accordingly."
+msgstr ""
+"Katalogoa ezin izan da '%s'  hizki-kodean gorde katalogo ezarpenetan "
+"adierazi bezala.\n"
+"\n"
+"UTF-8 kodeaketan gorde da ordez eta ezarpenak ere era berean aldatu dira."
 
-#: ../src/catalog.cpp:1799
 msgid "Error saving catalog"
 msgstr "Akatsa katalogoa gordetzerakoan"
 
-#: ../src/catalog.cpp:1935
 msgid "Merging differences..."
 msgstr "Ezberdintasunak batzen..."
 
-#: ../src/catalog.cpp:1970
 #, c-format
 msgid "'%s' is not a valid POT file."
 msgstr "'%s' ez da baliozko POT agiria."
 
-#: ../src/chooselang.cpp:62
 msgid "(Use default language)"
 msgstr "(Erabili berezko hizkuntza)"
 
-#: ../src/chooselang.cpp:70
 msgid "Select your prefered language"
 msgstr "Hautatu zure gogoko hizkuntza "
 
-#: ../src/chooselang.cpp:71
 msgid "Language selection"
 msgstr "Hizkuntza hautapena"
 
-#: ../src/chooselang.cpp:89
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Poedit berrabiarazi behar duzu aldaketa honek eragina izateko."
 
-#: ../src/customcontrols.cpp:134 ../src/licensing.cpp:525
 msgid "Learn more"
 msgstr "Jakin gehiago"
 
-#: ../src/customcontrols.cpp:136 ../src/licensing.cpp:525
 msgid "Learn More"
 msgstr "Jakin gehiago"
 
-#: ../src/digger.cpp:70
 #, c-format
 msgid "Failed command: %s"
 msgstr "Komando hutsegitea: %s"
 
-#: ../src/digger.cpp:71
 msgid "Failed to merge gettext catalogs."
 msgstr "Hutsegitea gettext katalogoak batzerakoan."
 
-#: ../src/digger.cpp:104
 msgid "Scanning files..."
 msgstr "Agiriak mihatzen..."
 
 #. TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
-#: ../src/digger.cpp:123
 #, c-format
 msgid "Parsing %s files..."
 msgstr "%s agiri aztertzen..."
 
-#: ../src/digger.cpp:141
 msgid "Failed to load extracted catalog."
 msgstr "Hutsegitea ateratako katalogoa gertatzerakoan."
 
-#: ../src/edapp.cpp:314 ../src/resources/menus.xrc:281
-#: ../src/resources/menus.xrc:354
 msgid "&Help"
 msgstr "&Laguntza"
 
-#: ../src/edapp.cpp:323
-msgid "Beta expired"
-msgstr "Beta epezkanpo"
-
-#: ../src/edapp.cpp:323
-msgid "This beta version of Poedit expired."
-msgstr "Poedit beta bertsio hau epezkanpo dago."
-
-#: ../src/edapp.cpp:324
-msgid "Please download a newer version from the Poedit website at http://poedit.net/download"
-msgstr "Mesedez jeitsi bertsio berriago bat Poedit webgunetik: http://poedit.net/download"
-
-#: ../src/edapp.cpp:325
-msgid "Download"
-msgstr "Jeitsi"
-
-#: ../src/edapp.cpp:325 ../src/resources/manager.xrc:128
-#: ../src/resources/menus.xrc:69 ../src/resources/menus.xrc:320
-#: ../src/tm/tm_migrate.cpp:270
-msgid "Quit"
-msgstr "Utzi"
-
-#: ../src/edapp.cpp:465
 msgid "MO files can’t be directly edited in Poedit."
 msgstr "MO agiriak ezin dira zuzenean editatu Poedit-en."
 
-#: ../src/edapp.cpp:466
 msgid "Error opening file"
 msgstr "Akatsa agiria irekitzerakoan"
 
-#: ../src/edapp.cpp:468
-msgid "Please open and edit the corresponding PO file instead. When you save it, the MO file will be updated as well."
-msgstr "Mesedez ireki eta editatu dagokion PO agiria ordez. Gordetzen duzunean, MO agiria ere eguneratuko da."
+msgid ""
+"Please open and edit the corresponding PO file instead. When you save it, "
+"the MO file will be updated as well."
+msgstr ""
+"Mesedez ireki eta editatu dagokion PO agiria ordez. Gordetzen duzunean, MO "
+"agiria ere eguneratuko da."
 
-#: ../src/edapp.cpp:617
 msgid "don't delete temporary files (for debugging)"
 msgstr "ez ezabatu aldibaterako agiriak (garbiketarako)"
 
-#: ../src/edapp.cpp:661 ../src/edapp.cpp:674 ../src/edapp.cpp:679
 #, c-format
 msgid "Unhandled exception occurred: %s"
 msgstr "Kudeatu ezinezko salbuespen bat gertatu da: %s"
 
-#: ../src/edapp.cpp:684
 msgid "Unhandled exception occurred."
 msgstr "Kudeatu ezinezko salbuespen bat gertatu da."
 
-#: ../src/edapp.cpp:766 ../src/edframe.cpp:1558
-#: ../src/resources/toolbar.xrc:14 ../src/resources/toolbar.xrc:19
 msgid "Open catalog"
 msgstr "Ireki"
 
-#: ../src/edapp.cpp:770 ../src/edframe.cpp:1561 ../src/edframe.cpp:1761
-#: ../src/edframe.cpp:2174 ../src/prefsdlg.cpp:559
 msgid "All Files"
 msgstr "Agiri Guztiak"
 
-#: ../src/edapp.cpp:770 ../src/edframe.cpp:1561 ../src/edframe.cpp:1631
-#: ../src/edframe.cpp:1760 ../src/edframe.cpp:2173 ../src/prefsdlg.cpp:559
 msgid "PO Translation Files"
 msgstr "PO Itzulpen Agiriak"
 
-#: ../src/edapp.cpp:798 ../src/edframe.cpp:847 ../src/edframe.cpp:1581
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "'%s' agiria ez dago."
 
-#: ../src/edapp.cpp:828
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#, c-format
+msgid "About %s"
+msgstr "Honi buruz %s"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "Bertsioa %s"
+
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit itzulpen editatzaile erabilterraz bat da."
 
-#: ../src/edapp.cpp:1001
 msgid "Catalogs Manager"
 msgstr "Katalogoen Kudeatzailea"
 
-#: ../src/edapp.cpp:1006
-msgid "License..."
-msgstr "Baimena..."
-
-#: ../src/edapp.cpp:1010
 msgid "Check for Updates..."
 msgstr "Egiaztatu Eguneraketarik dagoen..."
 
-#: ../src/edapp.cpp:1013 ../src/prefsdlg.cpp:675
-#: ../src/resources/manager.xrc:37
-msgid "Edit"
-msgstr "Editatu"
+msgid "&Edit"
+msgstr "&Editatu"
 
-#: ../src/edapp.cpp:1031 ../src/edframe.cpp:809
-#: ../src/resources/summary.xrc:78
 msgid "Undo"
 msgstr "Desegin"
 
-#: ../src/edapp.cpp:1032 ../src/edframe.cpp:810
 msgid "Redo"
 msgstr "Berregin"
 
-#: ../src/edapp.cpp:1040
 msgid "Paste and Match Style"
 msgstr "Itsatsi eta Berdindu Estiloa"
 
-#: ../src/edapp.cpp:1043 ../src/edframe.cpp:814 ../src/prefsdlg.cpp:676
-#: ../src/resources/manager.xrc:43
 msgid "Delete"
 msgstr "Ezabatu"
 
-#: ../src/edapp.cpp:1052
 msgid "Spelling and Grammar"
 msgstr "Idazketa eta Gramatika"
 
-#: ../src/edapp.cpp:1054
 msgid "Show Spelling and Grammar"
 msgstr "Erakutsi Idazketa eta Gramatika"
 
-#: ../src/edapp.cpp:1055
 msgid "Check Document Now"
 msgstr "Egiaztau Agiria &Orain"
 
-#: ../src/edapp.cpp:1057
 msgid "Check Spelling While Typing"
 msgstr "Egin Idaz Egiaztapena Idazterakoan"
 
-#: ../src/edapp.cpp:1058
 msgid "Check Grammar With Spelling"
 msgstr "Egin Idaz Egiaztapena"
 
-#: ../src/edapp.cpp:1059
 msgid "Correct Spelling Automatically"
 msgstr "Zuzendu Idazketa Berezgaitasunez"
 
-#: ../src/edapp.cpp:1062
 msgid "Substitutions"
 msgstr "Ordezpenak"
 
-#: ../src/edapp.cpp:1064
 msgid "Show Substitutions"
 msgstr "Erakutsi Ordezpenak"
 
-#: ../src/edapp.cpp:1066
 msgid "Smart Copy/Paste"
 msgstr "Itsatsi/Kopiatu Adimentsua"
 
-#: ../src/edapp.cpp:1067
 msgid "Smart Quotes"
 msgstr "Adartxoak Adimentsuak"
 
-#: ../src/edapp.cpp:1068
 msgid "Smart Dashes"
 msgstr "Elkarmarra Adimentsuak"
 
-#: ../src/edapp.cpp:1069
 msgid "Smart Links"
 msgstr "Loturak Adimentsuak"
 
-#: ../src/edapp.cpp:1070
 msgid "Text Replacement"
 msgstr "Idazki Ordezpena"
 
-#: ../src/edapp.cpp:1073
 msgid "Transformations"
 msgstr "Eraldaketa"
 
-#: ../src/edapp.cpp:1075
 msgid "Make Upper Case"
 msgstr "Egin Hizkiak Larriak"
 
-#: ../src/edapp.cpp:1076
 msgid "Make Lower Case"
 msgstr "Egin Hizkiak xeheak"
 
-#: ../src/edapp.cpp:1077
 msgid "Capitalize"
 msgstr "Larri"
 
-#: ../src/edapp.cpp:1080
 msgid "Speech"
 msgstr "Hizketa"
 
-#: ../src/edapp.cpp:1082
 msgid "Start Speaking"
 msgstr "Hasi Hizketa"
 
-#: ../src/edapp.cpp:1083
 msgid "Stop Speaking"
 msgstr "Gelditu Hizketa"
 
-#: ../src/edapp.cpp:1086
-msgid "View"
-msgstr "Ikusi"
+msgid "&View"
+msgstr "&Ikusi"
 
-#: ../src/edapp.cpp:1091
 msgid "Enter Full Screen"
 msgstr "Sartu Ikusleiho Osoan"
 
-#: ../src/edapp.cpp:1096 ../src/resources/menus.xrc:256
 msgid "Window"
 msgstr "Leihoa"
 
-#: ../src/edapp.cpp:1100
 msgid "Minimize"
 msgstr "Txikiendu"
 
-#: ../src/edapp.cpp:1101
 msgid "Zoom"
 msgstr "Zooma"
 
-#: ../src/edapp.cpp:1103
 msgid "Bring All to Front"
 msgstr "Ekarri Denak Aurrera"
 
-#: ../src/edapp.cpp:1209
-msgid "PO Translation File"
-msgstr "PO Itzulpen Agiria"
+#, fuzzy
+msgid "PO Translation"
+msgstr "Itzulpena"
 
-#: ../src/edapp.cpp:1262
-msgid "Invalid license data."
-msgstr "Baimen datu baliogabea."
-
-#: ../src/edapp.cpp:1262 ../src/edframe.cpp:915
-msgid "Poedit"
-msgstr "aPoedit"
-
-#: ../src/edapp.cpp:1263
-#, c-format
-msgid "The link doesn't contain valid Poedit license. Try entering it manually or contact support at help@poedit.net.\n\n(%s)"
-msgstr "Loturak ez du baliozko Poedit baimena. Saiatu hura eskuz sartzen edo jarri harremanetan sostenguarekin hemen, help@poedit.net.\n\n(%s)"
-
-#: ../src/edframe.cpp:284 ../src/edframe.cpp:2897
 msgid "The file cannot be opened."
 msgstr "Agiria ezin da ireki."
 
-#: ../src/edframe.cpp:285 ../src/edframe.cpp:2898
 msgid "Invalid file"
 msgstr "Agiri baliogabea"
 
-#: ../src/edframe.cpp:289 ../src/edframe.cpp:2902
-msgid "The file may be either corrupted or in a format not recognized by Poedit."
-msgstr "Agiria hondatuta edo Poedit-ek ezagutzen ez duen heuskarri batean dagoela dirudi."
+msgid ""
+"The file may be either corrupted or in a format not recognized by Poedit."
+msgstr ""
+"Agiria hondatuta edo Poedit-ek ezagutzen ez duen heuskarri batean dagoela "
+"dirudi."
 
-#: ../src/edframe.cpp:809
 msgid "&Undo"
 msgstr "&Desegin"
 
-#: ../src/edframe.cpp:810
 msgid "&Redo"
 msgstr "&Berregin"
 
-#: ../src/edframe.cpp:811
 msgid "Cu&t"
 msgstr "&Ebaki"
 
-#: ../src/edframe.cpp:811
 msgid "Cut"
 msgstr "Ebaki"
 
-#: ../src/edframe.cpp:812
 msgid "&Copy"
 msgstr "&Kopiatu"
 
-#: ../src/edframe.cpp:812
 msgid "Copy"
 msgstr "Kopiatu"
 
-#: ../src/edframe.cpp:813
 msgid "&Paste"
 msgstr "&Itsatsi"
 
-#: ../src/edframe.cpp:813
 msgid "Paste"
 msgstr "Itsatsi"
 
-#: ../src/edframe.cpp:814
 msgid "&Delete"
 msgstr "E&zabatu"
 
-#: ../src/edframe.cpp:815
 msgid "Select &All"
 msgstr "Hautatu &Denak"
 
-#: ../src/edframe.cpp:815
 msgid "Select All"
 msgstr "Hautatu Denak"
 
-#: ../src/edframe.cpp:832
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+msgid "Ctrl+"
+msgstr ""
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+msgid "Alt+"
+msgstr ""
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Shift+"
+msgstr ""
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Enter"
+msgstr ""
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Up"
+msgstr ""
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#, fuzzy
+msgid "Down"
+msgstr "Jeitsi"
+
 msgid "You can't drop more than one file on Poedit window."
 msgstr "Ezin duzu agiri bat baino gehiago askatu Poedit-en leihoan."
 
-#: ../src/edframe.cpp:840
 #, c-format
 msgid "File '%s' is not a message catalog."
 msgstr "'%s' agiria ez da mezu katalogo bat."
 
-#: ../src/edframe.cpp:972 ../src/resources/manager.xrc:116
-#: ../src/resources/menus.xrc:5 ../src/resources/menus.xrc:288
+msgid "Poedit"
+msgstr "aPoedit"
+
 msgid "&File"
 msgstr "&Agiria"
 
-#: ../src/edframe.cpp:979 ../src/resources/menus.xrc:225
 msgid "&Go"
 msgstr "&Joan"
 
-#: ../src/edframe.cpp:1028
-msgid "Upgrade to Poedit Pro to get additional features and support Poedit's development."
-msgstr "Goratu Poedit Pro-ra ezaugarri gehigarriak eta Poedit-ren garapen sostengua lortzeko."
-
-#: ../src/edframe.cpp:1118
 msgid "Source text:"
 msgstr "Iturburu idazkia:"
 
-#: ../src/edframe.cpp:1125
 msgid "Singular:"
 msgstr "Bakuna:"
 
-#: ../src/edframe.cpp:1128
 msgid "Plural:"
 msgstr "Anitza:"
 
-#: ../src/edframe.cpp:1132
 msgid "Translation:"
 msgstr "Itzulpena:"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:1392
 #, c-format
-msgid "Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgid ""
+"Spellchecking is disabled, because the dictionary for %s isn’t installed."
 msgstr "Idaz-egiaztapena ezgaituta, %s-rako hiztegia ez dagoelako ezarrita."
 
-#: ../src/edframe.cpp:1396
 msgid "Install"
 msgstr "Ezarri"
 
-#: ../src/edframe.cpp:1510
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "Katalogoa aldatu egin da. Aldaketak gordetzea nahi duzu?"
 
-#: ../src/edframe.cpp:1511
 msgid "Save changes"
 msgstr "Gorde aldaketak"
 
-#: ../src/edframe.cpp:1514
 msgid "Your changes will be lost if you don't save them."
 msgstr "Zure aldaketak galdu egingo dira ez badituzu gordetzen."
 
-#: ../src/edframe.cpp:1517 ../src/resources/toolbar.xrc:24
-#: ../src/resources/toolbar.xrc:29
 msgid "Save"
 msgstr "Gorde"
 
-#: ../src/edframe.cpp:1519
 msgid "Don't save"
 msgstr "Ez gorde"
 
-#: ../src/edframe.cpp:1521
 msgid "Don't Save"
 msgstr "Ez Gorde"
 
-#: ../src/edframe.cpp:1629
 msgid "Save as..."
 msgstr "Gorde honela..."
 
-#: ../src/edframe.cpp:1667
 msgid "Compile to..."
 msgstr "Bildu hona..."
 
-#: ../src/edframe.cpp:1669
 msgid "Compiled Translation Files"
 msgstr "Bildutako Itzulpen Agiriak"
 
-#: ../src/edframe.cpp:1705
 msgid "Export as..."
 msgstr "Esportatu honela..."
 
-#: ../src/edframe.cpp:1707
 msgid "HTML Files"
 msgstr "HTML Agiriak"
 
-#: ../src/edframe.cpp:1754 ../src/edframe.cpp:2167
 msgid "Open catalog template"
 msgstr "Ireki katalogo eredua"
 
-#: ../src/edframe.cpp:1759 ../src/edframe.cpp:2172
 msgid "POT Translation Templates"
 msgstr "POT Itzulpen Ereduak"
 
-#: ../src/edframe.cpp:1848 ../src/edframe.cpp:1926
-msgid "Select the folder with the WordPress theme or plugin"
-msgstr "Hautatu WordPress azalgaia edo plugina duen agiritegia"
-
-#: ../src/edframe.cpp:1856 ../src/edframe.cpp:1934 ../src/edframe.cpp:1951
-msgid "WordPress"
-msgstr "WordPress"
-
-#: ../src/edframe.cpp:1857 ../src/edframe.cpp:1935
-msgid "Analyzing WordPress code..."
-msgstr "WordPress kodea aztertzen..."
-
-#. TRANSLATORS: %s is name of a WordPress theme
-#: ../src/edframe.cpp:1946
-#, c-format
-msgid "The “%s” theme is compatible."
-msgstr "“%s” azalgaia bateragarria da."
-
-#. TRANSLATORS: %s is name of a WordPress plugin
-#: ../src/edframe.cpp:1948
-#, c-format
-msgid "The “%s” plugin is compatible."
-msgstr "“%s” plugina bateragarria da."
-
-#: ../src/edframe.cpp:1954
-msgid "The theme is translation-ready and compatible with Poedit’s WordPress support."
-msgstr "Azalgaia itzulpena-gertu eta bateragarria da Poedit-en WordPress sostenguarekin."
-
-#: ../src/edframe.cpp:1956
-msgid "The plugin is translation-ready and compatible with Poedit’s WordPress support."
-msgstr "Plugina itzulpena-gertu eta bateragarria da Poedit-en WordPress sostenguarekin."
-
-#: ../src/edframe.cpp:2107 ../src/manager.cpp:452
 msgid "Updating catalog"
 msgstr "Katalogoa eguneratzen"
 
-#: ../src/edframe.cpp:2132
 msgid "Source code not available."
 msgstr "Iturburu kodea ez dago eskuragarri."
 
-#: ../src/edframe.cpp:2133
 msgid "Updating failed"
 msgstr "Eguneraketa hutsegitea"
 
-#: ../src/edframe.cpp:2136
-msgid "Translations couldn’t be updated from the source code, because no code was found in the location specified in the catalog’s Properties."
-msgstr "Itzulpenak ezin dira eguneratu iturburu kodetik, ez delako koderik aurkitu katalogoaren Ezaugarrietan adierazitako kokalekuan."
+msgid ""
+"Translations couldn’t be updated from the source code, because no code was "
+"found in the location specified in the catalog’s Properties."
+msgstr ""
+"Itzulpenak ezin dira eguneratu iturburu kodetik, ez delako koderik aurkitu "
+"katalogoaren Ezaugarrietan adierazitako kokalekuan."
 
-#: ../src/edframe.cpp:2142
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Katalogoko sarrerak zihurrenik oker egongo dira."
 
-#: ../src/edframe.cpp:2144
 msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr "Hutsegitea katalogoa eguneratzerakoan. Klikatu 'Xehetasunak' >>' xehetasunak ikusteko."
+msgstr ""
+"Hutsegitea katalogoa eguneratzerakoan. Klikatu 'Xehetasunak' >>' xehetasunak "
+"ikusteko."
 
-#: ../src/edframe.cpp:2248
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "%d arazo aurkitu da itzulpenarekin. "
 msgstr[1] "%d arazo aurkitu dira itzulpenarekin."
 
-#: ../src/edframe.cpp:2253 ../src/edframe.cpp:2299
 msgid "Validation results"
 msgstr "Balioztapen emaitzak"
 
-#: ../src/edframe.cpp:2256
-msgid "Entries with errors were marked in red in the list. Details of the error will be shown when you select such an entry."
-msgstr "Akatsa duten sarrerak gorriz markatzen dira zerrendan. Akats xehetasunak erakutsiko dira sarrera bat hautatzen duzunean."
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+"Akatsa duten sarrerak gorriz markatzen dira zerrendan. Akats xehetasunak "
+"erakutsiko dira sarrera bat hautatzen duzunean."
 
-#: ../src/edframe.cpp:2265
 msgid "The file was saved safely."
 msgstr "Agiria seguru gorde da."
 
-#: ../src/edframe.cpp:2268
-msgid "The file was saved safely and compiled into the MO format, but it will probably not work correctly."
-msgstr "Agiria seguru gorde eta MO heuskarrian bildu da, baina zihurrenik ez du ongi lan egingo."
+msgid ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
+msgstr ""
+"Agiria seguru gorde eta MO heuskarrian bildu da, baina zihurrenik ez du ongi "
+"lan egingo."
 
-#: ../src/edframe.cpp:2271
-msgid "The file was saved safely, but it cannot be compiled into the MO format and used."
-msgstr "Agiria seguru gorde da, baina ezin da MO heuskarrian bildu eta erabili."
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr ""
+"Agiria seguru gorde da, baina ezin da MO heuskarrian bildu eta erabili."
 
-#: ../src/edframe.cpp:2280
-msgid "The file was compiled into the MO format, but it will probably not work correctly."
-msgstr "Agiria MO heuskarrian bildu da, baina zihurrenik ez du ongi lan egingo."
+msgid ""
+"The file was compiled into the MO format, but it will probably not work "
+"correctly."
+msgstr ""
+"Agiria MO heuskarrian bildu da, baina zihurrenik ez du ongi lan egingo."
 
-#: ../src/edframe.cpp:2284
 msgid "The file cannot be compiled into the MO format and used."
 msgstr "Agiai ezin da MO heuskarrian bildu eta erabili."
 
-#: ../src/edframe.cpp:2298
 msgid "No problems with the translation found."
 msgstr "Ez da itzulpen arazorik aurkitu."
 
-#: ../src/edframe.cpp:2308
 #, c-format
 msgid "The translation is ready for use, but %d entry is not translated yet."
-msgid_plural "The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] "Itzulpena erabiltzeko gertu dago, baina %d sarrera ez dago itzulita oraindik."
-msgstr[1] "Itzulpena erabiltzeko gertu dago, baina %d sarrerak ez daude itzulita oraindik."
+msgid_plural ""
+"The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] ""
+"Itzulpena erabiltzeko gertu dago, baina %d sarrera ez dago itzulita oraindik."
+msgstr[1] ""
+"Itzulpena erabiltzeko gertu dago, baina %d sarrerak ez daude itzulita "
+"oraindik."
 
-#: ../src/edframe.cpp:2313
 msgid "The translation is ready for use."
 msgstr "Itzulpena erabiltzeko gertu dago."
 
-#: ../src/edframe.cpp:2365
 msgid "No references to this string found."
 msgstr "Ez da kate honentzako xehetasunik aurkitu."
 
-#: ../src/edframe.cpp:2373
 msgid "Please choose the reference you want to show:"
 msgstr "Mesedez hautatu ager dadin nahi duzun xehetasuna:"
 
-#: ../src/edframe.cpp:2373
 msgid "References"
 msgstr "Xehetasunak"
 
-#: ../src/edframe.cpp:2760 ../src/prefsdlg.cpp:463
-msgid "Contributing translations improves the quality of online suggestions for everybody — the more people do it, the better the suggestions can be. Your translations are submitted anonymously and are available to other translators using Poedit or other CAT tools."
-msgstr "Itzulpen ekarpenek onlineko iradokizunen ontasuna hobetzen dute ororentzat — zenbat eta jende gehiagok egin, iradokizunak hobeak izango dira. Zure itzulpenak izengabe aurkezten dira eta eskuragarri daude Poedit edo beste CAT tresnak erabiltzen dituzten beste itzultzaileentzat."
-
-#: ../src/edframe.cpp:2765
-msgid "Can Poedit contribute your translations of this file to the online translation memory?"
-msgstr "Ahal du Poedit-ek agiri honen zure itzulpenen ekarpena egin onlineko itzulpen oroimenean?"
-
-#: ../src/edframe.cpp:2768
-msgid "Apply to all files I edit"
-msgstr "Ezarri editatzen ditudan agiri guztieri"
-
-#: ../src/edframe.cpp:2769
-msgid "Contribute"
-msgstr "Lagundu"
-
-#: ../src/edframe.cpp:2775
-msgid "Keep Private"
-msgstr "Eduki Pribatuan"
-
-#: ../src/edframe.cpp:2775
-msgid "Keep private"
-msgstr "Eduki Pribatuan"
-
-#: ../src/edframe.cpp:2859
 msgid "Context:"
 msgstr "Hitzingurua:"
 
-#: ../src/edframe.cpp:2954
-msgid "You should set your email address in Preferences so that it can be used for Last-Translator header in GNU gettext files."
-msgstr "Zure post@ helbidea ezarri dezakezu Hobespenetan GNU gettext agirietan Azken-Itzultzaile idazburu bezala erabiltzeko bezala."
+msgid ""
+"You should set your email address in Preferences so that it can be used for "
+"Last-Translator header in GNU gettext files."
+msgstr ""
+"Zure post@ helbidea ezarri dezakezu Hobespenetan GNU gettext agirietan Azken-"
+"Itzultzaile idazburu bezala erabiltzeko bezala."
 
-#: ../src/edframe.cpp:2956
 msgid "Set Email"
 msgstr "Bidali Post@"
 
-#: ../src/edframe.cpp:2956
 msgid "Set email"
 msgstr "Ezarri post@"
 
-#: ../src/edframe.cpp:2969
 msgid "Translation's project name isn't set."
 msgstr "Itzulpenaren egitasmo izena ez dago ezarrita."
 
-#: ../src/edframe.cpp:2971
 msgid "Set Name"
 msgstr "Ezarri Izena"
 
-#: ../src/edframe.cpp:2971
 msgid "Set name"
 msgstr "Ezarri izena"
 
-#: ../src/edframe.cpp:2984
 msgid "Language of the translation isn't set."
 msgstr "Itzulpenaren hizkuntza ez dago ezarrita."
 
-#: ../src/edframe.cpp:2986
 msgid "Set Language"
 msgstr "Ezarri Hizkuntza"
 
-#: ../src/edframe.cpp:2986
 msgid "Set language"
 msgstr "Ezarri hizkuntza "
 
-#: ../src/edframe.cpp:2999
-msgid "This catalog has entries with plural forms, but doesn't have Plural-Forms header configured."
-msgstr "Katalogo honek aniz formako sarrerak ditu, baina ez du Anitz-Forma idazbururik itxuraturik."
+msgid ""
+"This catalog has entries with plural forms, but doesn't have Plural-Forms "
+"header configured."
+msgstr ""
+"Katalogo honek aniz formako sarrerak ditu, baina ez du Anitz-Forma "
+"idazbururik itxuraturik."
 
-#: ../src/edframe.cpp:3003
-msgid "Entries in this catalog have different plural forms count from what catalog's Plural-Forms header says"
-msgstr "Sarrerek katalogo honetan anitz forma eskaera ezberdinak dituzte katalogoaren Anitz-Forma idazburuak dioenarekiko"
+msgid ""
+"Entries in this catalog have different plural forms count from what "
+"catalog's Plural-Forms header says"
+msgstr ""
+"Sarrerek katalogo honetan anitz forma eskaera ezberdinak dituzte "
+"katalogoaren Anitz-Forma idazburuak dioenarekiko"
 
-#: ../src/edframe.cpp:3014
 msgid "Required header Plural-Forms is missing."
 msgstr "Beharrezko idazburu Anitz-Forma ez dago."
 
-#: ../src/edframe.cpp:3019
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
 msgstr "Joskera akatsa Anitz-Forma idazburuan (\"%s\")."
 
-#: ../src/edframe.cpp:3033
 msgid "Fix the Header"
 msgstr "Zuzendu Idazburua"
 
-#: ../src/edframe.cpp:3033
 msgid "Fix the header"
 msgstr "Zuzendu idazburua"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:3071
 #, c-format
 msgid "Plural forms expression used by the catalog is unusual for %s."
 msgstr "Katalogoak erabiltzen dituen anitz formak ezohikoak dira %s-rako."
 
-#: ../src/edframe.cpp:3075
 msgid "Review"
 msgstr "Berrikusi"
 
-#: ../src/edframe.cpp:3109
 #, c-format
 msgid "Error loading message catalog file '%s'."
 msgstr "Akatsa mezu katalogo agiria gertatzerakoan '%s '."
 
-#: ../src/edframe.cpp:3153 ../src/export_html.cpp:141
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
 msgstr "Itzulita: %d of %d (%d %%)"
 
-#: ../src/edframe.cpp:3157 ../src/export_html.cpp:145
 #, c-format
 msgid "Remains: %d"
 msgstr "Gelditzen dira: %d"
 
-#: ../src/edframe.cpp:3162 ../src/export_html.cpp:150
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] ""
 msgstr[1] "%d akats"
 
-#: ../src/edframe.cpp:3193
 msgid " (unsaved)"
 msgstr " (gordegabe)"
 
-#: ../src/edframe.cpp:3211
 msgid " (modified)"
 msgstr "(aldatuta)"
 
-#: ../src/edframe.cpp:3222
-#, c-format
-msgid " (beta version expires %s)"
-msgstr " (beta bertsioaren epemuga %s)"
-
-#: ../src/edframe.cpp:3303
 msgid "Go"
 msgstr "Joan"
 
-#: ../src/edframe.cpp:3338 ../src/edframe.cpp:3342
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "Hutsegitea itzulpen oroimena eguneratzerakoan: %s"
 
-#: ../src/edframe.cpp:3444
 msgid "Purge deleted translations"
 msgstr "Garbitu ezabatutako itzulpenak"
 
-#: ../src/edframe.cpp:3446
 msgid "Do you want to remove all translations that are no longer used?"
 msgstr "Luzaroan erabili ez diren itzulpen guztiak kentzea nahi dituzu?"
 
-#: ../src/edframe.cpp:3448
-msgid "If you continue with purging, all translations marked as deleted will be permanently removed. You will have to translate them again if they are added back in the future."
-msgstr "Garbiketarekin jarraitzen baduzu, ezabaturik bezala markaturiko itzulpen guztiak betirako kenduko dira. Berriro itzuli beharko dituzu atzera gehitzen badira."
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"Garbiketarekin jarraitzen baduzu, ezabaturik bezala markaturiko itzulpen "
+"guztiak betirako kenduko dira. Berriro itzuli beharko dituzu atzera gehitzen "
+"badira."
 
-#: ../src/edframe.cpp:3452
 msgid "Keep"
 msgstr "Heutsi"
 
-#: ../src/edframe.cpp:3452
 msgid "Purge"
 msgstr "Garbitu"
 
-#: ../src/edframe.cpp:3483 ../src/edframe.cpp:3493 ../src/edframe.cpp:3562
 msgid "Fill missing translations from TM"
 msgstr "Bete ez dauden itzulpenak IO-tik"
 
-#: ../src/edframe.cpp:3486
 msgid "Only fill in exact matches"
 msgstr "Bete zehatz bat datozenak bakarrik"
 
-#: ../src/edframe.cpp:3487
-msgid "By default, inaccurate results are filled in as well and marked as fuzzy. Check this option to only include accurate matches."
-msgstr "Berez, zehatzak ez diren emaitzak bete egiten dira eta zalantzazko bezala markatu. Hautatu aukera hau zehatz bat datozenak bakarrik barneratzeko."
+msgid ""
+"By default, inaccurate results are filled in as well and marked as fuzzy. "
+"Check this option to only include accurate matches."
+msgstr ""
+"Berez, zehatzak ez diren emaitzak bete egiten dira eta zalantzazko bezala "
+"markatu. Hautatu aukera hau zehatz bat datozenak bakarrik barneratzeko."
 
-#: ../src/edframe.cpp:3488
 msgid "Don’t mark exact matches as fuzzy"
 msgstr "Ez markatu zehatz bat datozenak zalantzazko bezala"
 
-#: ../src/edframe.cpp:3489
-msgid "Only enable if you trust the quality of your TM. By default, all matches from the TM are marked as fuzzy and should be reviewed."
-msgstr "Gaitu bakarrik zure IO-ren ontasunaz fidatzen bazara. Berez, IO-tiko bat datozen guztiak zalantzazko bezala markatzen dira eta berrikusi egin behar dira."
+msgid ""
+"Only enable if you trust the quality of your TM. By default, all matches "
+"from the TM are marked as fuzzy and should be reviewed."
+msgstr ""
+"Gaitu bakarrik zure IO-ren ontasunaz fidatzen bazara. Berez, IO-tiko bat "
+"datozen guztiak zalantzazko bezala markatzen dira eta berrikusi egin behar "
+"dira."
 
-#: ../src/edframe.cpp:3503
 msgid "Fill"
 msgstr "Bete"
 
-#: ../src/edframe.cpp:3546
 #, c-format
 msgid "%d entry was filled from the translation memory."
 msgid_plural "%d entries were filled from the translation memory."
 msgstr[0] "%d sarrera itzulpen oroimenetik bete da."
 msgstr[1] "%d sarrerak itzulpen oroimenetik bete dira."
 
-#: ../src/edframe.cpp:3549
-msgid "The translations were marked as fuzzy, because they may be inaccurate. You should review them for correctness."
-msgstr "Itzulpenak zalantzazkoak bezala markatu dira, ez zehatzak izan daitezkeelako. Berrikusi egin behar dituzu zuzentzeko."
+msgid ""
+"The translations were marked as fuzzy, because they may be inaccurate. You "
+"should review them for correctness."
+msgstr ""
+"Itzulpenak zalantzazkoak bezala markatu dira, ez zehatzak izan "
+"daitezkeelako. Berrikusi egin behar dituzu zuzentzeko."
 
-#: ../src/edframe.cpp:3553
 msgid "No entries could be filled from the translation memory."
 msgstr "Ez dago itzulpen oroimenetik bete daitekeen sarrerarik."
 
-#: ../src/edframe.cpp:3554
-msgid "The TM doesn’t contain any strings similar to the content of this file. It is only effective for semi-automatic translations after Poedit learns enough from files that you translated manually."
-msgstr "IO-k ez agiri honen edukiaren antzekoa den katerik. Eraginkorra da bakarrik erdi-berezgaitasunezko itzulpenetarako Poedit-ek eskuz itzuli dituzun agirietatik nahikoa ikasi ondoren."
+msgid ""
+"The TM doesn’t contain any strings similar to the content of this file. It "
+"is only effective for semi-automatic translations after Poedit learns enough "
+"from files that you translated manually."
+msgstr ""
+"IO-k ez agiri honen edukiaren antzekoa den katerik. Eraginkorra da bakarrik "
+"erdi-berezgaitasunezko itzulpenetarako Poedit-ek eskuz itzuli dituzun "
+"agirietatik nahikoa ikasi ondoren."
 
-#: ../src/edframe.cpp:3597
 msgid "Translating"
 msgstr "Itzultzen"
 
-#: ../src/edframe.cpp:3598
 msgid "Filling missing translations from TM..."
 msgstr "Ez Dauden Itzulpenak IO-etik betetzen"
 
-#: ../src/edframe.cpp:3622
 #, c-format
 msgid "Translated %u string"
 msgid_plural "Translated %u strings"
 msgstr[0] "%u kate itzulita"
 msgstr[1] "%u kate itzulita"
 
-#: ../src/edframe.cpp:3652 ../src/resources/menus.xrc:89
 msgid "Copy from source text"
 msgstr "Kopiatu iturburu idazkitik"
 
-#: ../src/edframe.cpp:3654 ../src/resources/menus.xrc:90
 msgid "Copy from Source Text"
 msgstr "Kopiatu Iturburu Idazkitik"
 
-#: ../src/edframe.cpp:3659 ../src/resources/menus.xrc:84
 msgid "Clear translation"
 msgstr "Garbitu itzulpena"
 
-#: ../src/edframe.cpp:3661 ../src/resources/menus.xrc:85
 msgid "Clear Translation"
 msgstr "Garbitu Itzulpena"
 
-#: ../src/edframe.cpp:3666 ../src/resources/comment.xrc:4
-#: ../src/sidebar.cpp:238
 msgid "Edit comment"
 msgstr "Editatu aipamena"
 
-#: ../src/edframe.cpp:3668 ../src/sidebar.cpp:241
 msgid "Edit Comment"
 msgstr "Editatu Aipamena"
 
-#: ../src/edframe.cpp:3679
 msgid "References:"
 msgstr "Xehetasunak:"
 
-#: ../src/edframe.cpp:3856
 msgid "Everything"
 msgstr "Dena"
 
-#: ../src/edframe.cpp:3858
 #, c-format
 msgid "Form %i"
 msgstr "Forma %i"
 
-#: ../src/edframe.cpp:3862
 msgid "Zero"
 msgstr "Zero"
 
-#: ../src/edframe.cpp:3864
 msgid "One"
 msgstr "Bat"
 
-#: ../src/edframe.cpp:3866
 msgid "Two"
 msgstr "Bi"
 
-#: ../src/edframe.cpp:3871
 msgid "Other"
 msgstr "Beste"
 
-#: ../src/edframe.cpp:3950
 msgid "&Bookmarks"
 msgstr "&Lastermarkak"
 
-#: ../src/edframe.cpp:3963
 #, c-format
 msgid "Set bookmark %i"
 msgstr "Ezarri lastermarka %i"
 
-#: ../src/edframe.cpp:3964
 #, c-format
 msgid "Go to bookmark %i"
 msgstr "Joan %i lastermarkara"
 
-#: ../src/edframe.cpp:3966
 #, c-format
 msgid "Set Bookmark %i"
 msgstr "Ezarri Lastermarka %i"
 
-#: ../src/edframe.cpp:3967
 #, c-format
 msgid "Go to Bookmark %i"
 msgstr "Joan %i Lastermarkara"
 
-#: ../src/edframe.cpp:4093
 msgid "Hide Sidebar"
 msgstr "Ezkutatu Albobarra"
 
-#: ../src/edframe.cpp:4095 ../src/resources/menus.xrc:183
 msgid "Show Sidebar"
 msgstr "Erakutsi Albobarra"
 
-#: ../src/edlistctrl.cpp:233
 msgid "Source text"
 msgstr "Iturburu idazkia"
 
-#: ../src/edlistctrl.cpp:234 ../src/export_html.cpp:163
-#: ../src/statistics.cpp:164 ../src/statistics.cpp:256
 msgid "Translation"
 msgstr "Itzulpena"
 
-#: ../src/edlistctrl.cpp:236
 msgid "ID"
 msgstr "ID-a"
 
-#: ../src/edlistctrl.cpp:314
 msgid "unknown language"
 msgstr "hizkuntza ezezaguna"
 
-#: ../src/edlistctrl.cpp:317
 #, c-format
 msgid "Translation — %s"
 msgstr "Itzulpena — %s"
 
-#: ../src/errorbar.cpp:68
 msgid "Error:"
 msgstr "Akatsa:"
 
-#: ../src/export_html.cpp:107
 msgid "Project info"
 msgstr "Egitasmo argibideak"
 
-#: ../src/export_html.cpp:111 ../src/resources/properties.xrc:19
 msgid "Project name and version:"
 msgstr "Egitasmoaren izena eta bertsioa:"
 
-#: ../src/export_html.cpp:114 ../src/resources/prefs.xrc:9
-#: ../src/resources/prefs.xrc:13 ../src/resources/properties.xrc:34
 msgid "Language:"
 msgstr "Hizkuntza:"
 
-#: ../src/export_html.cpp:117 ../src/resources/properties.xrc:114
 msgid "Team:"
 msgstr "Taldea:"
 
-#: ../src/export_html.cpp:121 ../src/resources/properties.xrc:128
 msgid "Team's email address:"
 msgstr "Taldearen post@ helbidea:"
 
-#: ../src/export_html.cpp:125 ../src/resources/properties.xrc:84
 msgid "Charset:"
 msgstr "Hizkikodea:"
 
-#: ../src/export_html.cpp:160
 msgid "Source"
 msgstr "Iturburua "
 
-#: ../src/export_html.cpp:166
 msgid "Notes"
 msgstr "Oharrak"
 
-#: ../src/export_html.cpp:199
 msgid "Automatic translation"
 msgstr "Berezgaitasunezko itzulpena"
 
-#: ../src/export_html.cpp:205
 msgid "Fuzzy translation"
 msgstr "Zalantzazko itzulpena"
 
-#: ../src/export_html.cpp:212 ../src/sidebar.cpp:158
 msgid "Notes for translators:"
 msgstr "Itzultzaileentzako oharrak:"
 
-#: ../src/export_html.cpp:221 ../src/resources/comment.xrc:10
-#: ../src/sidebar.cpp:191
 msgid "Comment:"
 msgstr "Aipamena:"
 
-#: ../src/fileviewer.cpp:49
 msgid "Source file"
 msgstr "Iturburu agiria"
 
-#: ../src/fileviewer.cpp:64
 msgid "Source file occurrence:"
 msgstr "Iturburu agiri gertaera:"
 
-#: ../src/fileviewer.cpp:74
 msgid "Open in Editor"
 msgstr "Ireki Editatzailean"
 
-#: ../src/fileviewer.cpp:74
 msgid "Open in editor"
 msgstr "Ireki editatzailean"
 
-#: ../src/fileviewer.cpp:302
 #, c-format
 msgid "Error opening file %s!"
 msgstr "Akatsa %s agiria irekitzerakoan!"
 
-#: ../src/gexecute.cpp:146
 #, c-format
 msgid "Cannot execute program: %s"
 msgstr "Ezin da programa abiarazi: %s"
 
-#: ../src/languagectrl.cpp:48
 msgid "Language Code or Name (e.g. en_GB)"
 msgstr "Hizkuntza Kodea edo Izena (adib. en_GB)"
 
-#: ../src/languagectrl.cpp:123
 msgid "Translation Language"
 msgstr "Itzulpen Hizkuntza"
 
-#: ../src/languagectrl.cpp:133
 msgid "Language of the translation:"
 msgstr "Itzulpenaren hizkuntza:"
 
-#: ../src/licensing.cpp:71
-msgid "Poedit Registration"
-msgstr "Poedit Erregistrapena"
-
-#: ../src/licensing.cpp:99
-msgid "Name"
-msgstr "Izena"
-
-#: ../src/licensing.cpp:104
-msgid "License Key"
-msgstr "Baimen Giltza"
-
-#: ../src/licensing.cpp:109
-msgid "The registration key can be used on multiple computers you use personally or for multiple\naccounts on a single computer."
-msgstr "Erregistrazio giltza erabiltzen dituzun ordenagailu anitzetan edo ordenagailu bakarreko\nkontu anitzetan erabili daiteke."
-
-#: ../src/licensing.cpp:118
-msgid "Buy Online..."
-msgstr "Erosi Agiriak..."
-
-#: ../src/licensing.cpp:118
-msgid "Buy online..."
-msgstr "Erosi online..."
-
-#: ../src/licensing.cpp:123 ../src/prefsdlg.cpp:600
-#: ../src/resources/comment.xrc:41 ../src/resources/manager.xrc:104
-#: ../src/resources/prefs.xrc:143 ../src/resources/progress.xrc:27
-#: ../src/resources/properties.xrc:239
-msgid "Cancel"
-msgstr "Ezeztatu"
-
-#: ../src/licensing.cpp:125 ../src/licensing.cpp:129
-msgid "Register"
-msgstr "Erregistratu"
-
-#: ../src/licensing.cpp:169
-msgid "Your copy is upgraded to Poedit Pro."
-msgstr "Zure kopia Poedit Pro-ra goratu da."
-
-#: ../src/licensing.cpp:183
-msgid "You’re awesome! Thank you so much\nfor purchasing Poedit Pro."
-msgstr "Txundigarria zara! Mila esker\nPoedit Pro erosteagaitik."
-
-#: ../src/licensing.cpp:192
-msgid "View License Key"
-msgstr "Ikusi Baimen Giltza"
-
-#: ../src/licensing.cpp:192
-msgid "View license key"
-msgstr "Ikusi baimen giltza"
-
-#: ../src/licensing.cpp:193 ../src/resources/find.xrc:87
-msgid "Close"
-msgstr "Itxi"
-
-#: ../src/licensing.cpp:229
-#, c-format
-msgid "Licensed to: %s"
-msgstr "Baimenduta: %s"
-
-#: ../src/licensing.cpp:488
-msgid "Purchasing the full version will unlock more features\nin this and future versions of Poedit, including:\n\n"
-msgstr "Bertsio osoa erosteak ezaugarri gehiago desblokeatuko ditu\nPoedit-en bertsio honetan eta hurrengoetan, barne:\n\n"
-
-#: ../src/licensing.cpp:523
-msgid "Upgrade..."
-msgstr "Goratu..."
-
-#: ../src/licensing.cpp:524
-msgid "No, thanks"
-msgstr "Ez, mila esker"
-
-#: ../src/manager.cpp:71
 msgid "Poedit - Catalogs manager"
 msgstr "Poedit - Katalogoen kudeatzailea"
 
-#: ../src/manager.cpp:252
 msgid "Catalog"
 msgstr "Katalogoa"
 
-#: ../src/manager.cpp:253
 msgid "Total"
 msgstr "Guztira"
 
-#: ../src/manager.cpp:254
 msgid "Untrans"
 msgstr "Itzuligabeak"
 
-#: ../src/manager.cpp:255 ../src/resources/toolbar.xrc:64
 msgid "Fuzzy"
 msgstr "Zalantzazkoak"
 
-#: ../src/manager.cpp:256
 msgid "Bad Tokens"
 msgstr "Okerrak"
 
-#: ../src/manager.cpp:257
 msgid "Last modified"
 msgstr "Azken aldaketa"
 
-#: ../src/manager.cpp:288
 msgid "Select directory"
 msgstr "Hautatu zuzenbidea"
 
-#: ../src/manager.cpp:310
 msgid "Directories:"
 msgstr "Zuzenbideak:"
 
-#: ../src/manager.cpp:392
 msgid "<unnamed>"
 msgstr "<izengabea>"
 
-#: ../src/manager.cpp:423
 msgid "Do you want to delete the project?"
 msgstr "Egitasmoa ezabatu nahi duzu?"
 
-#: ../src/manager.cpp:424 ../src/manager.cpp:444
 msgid "Confirmation"
 msgstr "Baieztapena"
 
-#: ../src/manager.cpp:443
-msgid "Do you really want to do mass update of\nall catalogs in this project?"
-msgstr "Egitan nahi duzu egitasmo honetako\nkatalogo guztien eguneraketa egitea?"
+msgid ""
+"Do you really want to do mass update of\n"
+"all catalogs in this project?"
+msgstr ""
+"Egitan nahi duzu egitasmo honetako\n"
+"katalogo guztien eguneraketa egitea?"
 
-#: ../src/prefsdlg.cpp:167
 msgid "Information about the translator"
 msgstr "Itzultzaileari buruzko argibideak"
 
-#: ../src/prefsdlg.cpp:174
 msgid "Name:"
 msgstr "Izena:"
 
-#: ../src/prefsdlg.cpp:177
 msgid "Your Name"
 msgstr "Zure Izena"
 
-#: ../src/prefsdlg.cpp:179
 msgid "Email:"
 msgstr "Post@:"
 
-#: ../src/prefsdlg.cpp:182
 msgid "your_email@example.com"
 msgstr "zure-posta@adibidea.com"
 
-#: ../src/prefsdlg.cpp:185
-msgid "Your name and email address are only used to set the Last-Translator header of GNU gettext files."
-msgstr "Zure izena eta post@ helbidea GNU gettext agirieta Azken-Itzultzailea idazburua jartzeko besterik ez dira erabiliko."
+msgid ""
+"Your name and email address are only used to set the Last-Translator header "
+"of GNU gettext files."
+msgstr ""
+"Zure izena eta post@ helbidea GNU gettext agirieta Azken-Itzultzailea "
+"idazburua jartzeko besterik ez dira erabiliko."
 
-#: ../src/prefsdlg.cpp:194
 msgid "Editing"
 msgstr "Editatzen"
 
-#: ../src/prefsdlg.cpp:197
 msgid "Automatically compile MO file when saving"
 msgstr "Berezgaitasunez bildu MO agiria gordetzerakoan"
 
-#: ../src/prefsdlg.cpp:199
 msgid "Show summary after catalog update"
 msgstr "Erakutsi laburpena katalogoa eguneratu ondoren"
 
-#: ../src/prefsdlg.cpp:204
 msgid "Check spelling"
 msgstr "Idaz egiaztapena"
 
-#: ../src/prefsdlg.cpp:206
 msgid "Always change focus to text input field"
 msgstr "Betik aldatu fokua idazki sarrera eremura"
 
-#: ../src/prefsdlg.cpp:208
-msgid "Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."
-msgstr "Kate zerrendei fokutzea eragozten die. Gaitua badago, Ktrl-geziak erabili behar dituzu nabigatzeko baina horrela berehala idatzi dezakezu, Tab sakatu behar izan gabe fokua aldatzeko."
+msgid ""
+"Never let the list of strings take focus. If enabled, you must use Ctrl-"
+"arrows for keyboard navigation but you can also type text immediately, "
+"without having to press Tab to change focus."
+msgstr ""
+"Kate zerrendei fokutzea eragozten die. Gaitua badago, Ktrl-geziak erabili "
+"behar dituzu nabigatzeko baina horrela berehala idatzi dezakezu, Tab sakatu "
+"behar izan gabe fokua aldatzeko."
 
-#: ../src/prefsdlg.cpp:216
 msgid "Appearance"
 msgstr "Itxura"
 
-#: ../src/prefsdlg.cpp:223
 msgid "Use custom list font:"
 msgstr "Erabili norbere zerrendako hizkia:"
 
-#: ../src/prefsdlg.cpp:226
 msgid "Use custom text fields font:"
 msgstr "Erabili norbere idazki eremu hizkia:"
 
-#: ../src/prefsdlg.cpp:237
 msgid "Change UI language"
 msgstr "Aldatu EI hizkuntza"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
-#: ../src/prefsdlg.cpp:247
 msgid "(requires Windows 8 or newer)"
 msgstr "(Windows 8 edo berriagoa behar du)"
 
-#: ../src/prefsdlg.cpp:352
 msgid "General"
 msgstr "Orokorra"
 
-#: ../src/prefsdlg.cpp:374
 msgid "Use translation memory"
 msgstr "Erabili itzulpen oroimena"
 
-#: ../src/prefsdlg.cpp:385
 msgid "Learn From Files..."
 msgstr "Irakurri Agirietatik..."
 
-#: ../src/prefsdlg.cpp:385
 msgid "Learn from files..."
 msgstr "Hartu agirietatik..."
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-#: ../src/prefsdlg.cpp:388 ../src/prefsdlg.cpp:600
 msgid "Reset"
 msgstr "Berrezarri"
 
-#: ../src/prefsdlg.cpp:394
 msgid "Consult TM when updating from sources"
 msgstr "Begiratu IO iturburuetatik eguneratzerakoan"
 
-#: ../src/prefsdlg.cpp:397
-msgid "If enabled, Poedit will try to fill in new entries using your previous\ntranslations stored in the translation memory. If the TM is\nnear-empty, it will not be very effective. The more translations\nyou edit and the larger the TM grows, the better it gets."
-msgstr "Gaituta badago, Poedit saiatuko da sarrera berriak betetzen\nitzulpen oroimenean biltegiratutako zure aurreko itzulpenak erabiliz.\nIO erdi-hutsik badago, ez da oso eraginkorra izango. Zenbat eta\nitzulpen gehiago editatu eta IO handiagoa izan, lorpenak hobeak dira."
+msgid ""
+"If enabled, Poedit will try to fill in new entries using your previous\n"
+"translations stored in the translation memory. If the TM is\n"
+"near-empty, it will not be very effective. The more translations\n"
+"you edit and the larger the TM grows, the better it gets."
+msgstr ""
+"Gaituta badago, Poedit saiatuko da sarrera berriak betetzen\n"
+"itzulpen oroimenean biltegiratutako zure aurreko itzulpenak erabiliz.\n"
+"IO erdi-hutsik badago, ez da oso eraginkorra izango. Zenbat eta\n"
+"itzulpen gehiago editatu eta IO handiagoa izan, lorpenak hobeak dira."
 
-#: ../src/prefsdlg.cpp:437
-msgid "Use suggestions from online collaborative TM"
-msgstr "Erabili iradokizunak onlineko elkarlaguntza IO-tik"
-
-#: ../src/prefsdlg.cpp:448
-msgid "Poedit uses a large online translation memory that includes both contributed human translations and state-of-the-art machine translations."
-msgstr "Poedit-ek onlineko itzulpen oroimen handi bat erabiltzen du biak giza itzulpen ekarpenak eta makina itzulpenak erabiltzen dituena."
-
-#: ../src/prefsdlg.cpp:451
-msgid "Contribute my translations to the online TM"
-msgstr "Egin nire itzulpenen ekarpena onlineko IO-an"
-
-#: ../src/prefsdlg.cpp:452
-msgid "Keep my translations private"
-msgstr "Eduki nire itzulpenak pribatuan"
-
-#: ../src/prefsdlg.cpp:453
-msgid "Ask me every time I edit a file"
-msgstr "Galdetu agiri bat editatzen dudan bakoitzean"
-
-#: ../src/prefsdlg.cpp:470
-msgid "Terms of Service"
-msgstr "Zerbitzuaren Baldintzak"
-
-#. TRANSLATORS: This is part of footer that says in full "powered by MyMemory", with the MyMemory part being a logo
-#: ../src/prefsdlg.cpp:472
-msgid "powered by"
-msgstr "Garatzailea:"
-
-#: ../src/prefsdlg.cpp:546
 msgid "Stored translations:"
 msgstr "Biltegiratutako Itzulpenak:"
 
-#: ../src/prefsdlg.cpp:547
 msgid "Database size on disk:"
 msgstr "Datubasearen neurria diskan:"
 
-#: ../src/prefsdlg.cpp:555
 msgid "Select translation files to import"
 msgstr "Hautatu inportatzeko itzulpen agiriak"
 
-#: ../src/prefsdlg.cpp:569 ../src/prefsdlg.cpp:640
 msgid "Translation Memory"
 msgstr "Itzulpen Oroimena"
 
-#: ../src/prefsdlg.cpp:570
 msgid "Importing translations..."
 msgstr "Itzulpenak inportatzen..."
 
-#: ../src/prefsdlg.cpp:586 ../src/tm/tm_migrate.cpp:227
 msgid "Finalizing..."
 msgstr "Amaitzen..."
 
-#: ../src/prefsdlg.cpp:594
 msgid "Reset translation memory"
 msgstr "Berrezarri itzulpen oroimena"
 
-#: ../src/prefsdlg.cpp:595
 msgid "Are you sure you want to reset the translation memory?"
 msgstr "Zihur zaude itzulpen oraimena berrezartzea nahi duzula?"
 
-#: ../src/prefsdlg.cpp:596
-msgid "Resetting the translation memory will irrevocably delete all stored translations from it. You can’t undo this operation."
-msgstr "Itzulpen oroimena berrezartzeak atzerabiderik gabe ezabatuko ditu bertan biltegiratutako itzulpen guztiak. Ezin duzu eragiketa hau desegin."
+msgid ""
+"Resetting the translation memory will irrevocably delete all stored "
+"translations from it. You can’t undo this operation."
+msgstr ""
+"Itzulpen oroimena berrezartzeak atzerabiderik gabe ezabatuko ditu bertan "
+"biltegiratutako itzulpen guztiak. Ezin duzu eragiketa hau desegin."
+
+msgid "Cancel"
+msgstr "Ezeztatu"
 
 #. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on OS X.
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
-#: ../src/prefsdlg.cpp:638
 msgid "TM"
 msgstr "IO"
 
-#: ../src/prefsdlg.cpp:660
-msgid "Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated."
-msgstr "Iturburu kode atzeratzaileak iturburu kode agirietan kate itzulgarriak bilatzeko eta hauek ateratzeko erabiltzen dira, horrela itzuli ahal izateko."
+msgid ""
+"Source code extractors are used to find translatable strings in the source "
+"code files and extract them so that they can be translated."
+msgstr ""
+"Iturburu kode atzeratzaileak iturburu kode agirietan kate itzulgarriak "
+"bilatzeko eta hauek ateratzeko erabiltzen dira, horrela itzuli ahal izateko."
 
-#: ../src/prefsdlg.cpp:674 ../src/resources/manager.xrc:31
 msgid "New"
 msgstr "Berria"
 
-#: ../src/prefsdlg.cpp:818
+msgid "Edit"
+msgstr "Editatu"
+
 msgid "Extractors"
 msgstr "Ateratzaileak"
 
-#: ../src/prefsdlg.cpp:839
 msgid "Automatically check for updates"
 msgstr "Berezgaitasunez egiaztatu eguneraketak"
 
-#: ../src/prefsdlg.cpp:842
 msgid "Include beta versions"
 msgstr "Beta bertsioak barne"
 
-#: ../src/prefsdlg.cpp:845
-msgid "Beta versions contain the latest new features and improvements, but may be a bit less stable."
-msgstr "Beta bertsioek azken ezaugarriak eta hobekuntzak dituzte, baina apur bat ezegonkorrak izan daitezke."
+msgid ""
+"Beta versions contain the latest new features and improvements, but may be a "
+"bit less stable."
+msgstr ""
+"Beta bertsioek azken ezaugarriak eta hobekuntzak dituzte, baina apur bat "
+"ezegonkorrak izan daitezke."
 
-#: ../src/prefsdlg.cpp:888
 msgid "Updates"
 msgstr "Eguneraketak"
 
-#: ../src/prefsdlg.cpp:906
-msgid "These settings affect internal formatting of PO files. Adjust them if you have specific requirements e.g. because of version control."
-msgstr "Ezarpen hauek PO agirien barneko heuskarriari eragiten diote. Zehaztu betebehar bereiziren bat baduzu, adib. bertsio kontrola."
+msgid ""
+"These settings affect internal formatting of PO files. Adjust them if you "
+"have specific requirements e.g. because of version control."
+msgstr ""
+"Ezarpen hauek PO agirien barneko heuskarriari eragiten diote. Zehaztu "
+"betebehar bereiziren bat baduzu, adib. bertsio kontrola."
 
-#: ../src/prefsdlg.cpp:910
 msgid "Line endings:"
 msgstr "Lerro amaierak:"
 
-#: ../src/prefsdlg.cpp:912
 msgid "Unix (recommended)"
 msgstr "Unix (gomendatua)"
 
-#: ../src/prefsdlg.cpp:913
 msgid "Windows"
 msgstr "Windows"
 
 #. TRANSLATORS: Followed by text control for entering number; wraps text at given width
-#: ../src/prefsdlg.cpp:917
 msgid "Wrap at:"
 msgstr "Inguratu:"
 
-#: ../src/prefsdlg.cpp:924
 msgid "Preserve formatting of existing files"
 msgstr "Heutsi dauden agirien heuskarriari"
 
-#: ../src/prefsdlg.cpp:976
 msgid "Advanced"
 msgstr "Aurreratua"
 
-#: ../src/propertiesdlg.cpp:69
 msgid "Additional keywords"
 msgstr "Giltza-hitz gehigarriak:"
 
-#: ../src/propertiesdlg.cpp:70
 msgid "Paths"
 msgstr "Helburuak"
 
-#: ../src/propertiesdlg.cpp:71
 msgid "Excluded paths"
 msgstr "Baztertutako helburuak"
 
-#: ../src/propertiesdlg.cpp:93
 msgid "Name of the project the translation is for"
 msgstr "Itzulpen egitasmo honetarako izena"
 
-#: ../src/propertiesdlg.cpp:94
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr "Adib. nplurals=2; plural=(n > 1);"
 
-#: ../src/propertiesdlg.cpp:128
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (gomendatua)"
 
-#: ../src/propertiesdlg.cpp:296
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr "Mesedez gorde agiria lehenik. Atal hau ezin ordura arte editatu."
 
-#: ../src/resources/comment.xrc:33 ../src/resources/manager.xrc:96
-#: ../src/resources/prefs.xrc:135 ../src/resources/properties.xrc:231
-#: ../src/resources/summary.xrc:70
 msgid "OK"
 msgstr "Ongi"
 
-#: ../src/resources/comment.xrc:48
 msgid "C&lear"
 msgstr "&Garbitu"
 
-#: ../src/resources/comment.xrc:49
 msgid "Clear the comment"
 msgstr "Garbitu aipamena "
 
-#: ../src/resources/find.xrc:4
 msgid "Find..."
 msgstr "Bilatu..."
 
-#: ../src/resources/find.xrc:21
 msgid "String to find:"
 msgstr "Bilatu beharreko katea:"
 
-#: ../src/resources/find.xrc:36
 msgid "Case sensitive"
 msgstr "Bereizi hizki larri-xeheak"
 
-#: ../src/resources/find.xrc:43
 msgid "Start from the first item"
 msgstr "Hasi lehen gaitik"
 
-#: ../src/resources/find.xrc:50
 msgid "Whole words only"
 msgstr "Hitz osoak bakarrik"
 
-#: ../src/resources/find.xrc:57
 msgid "Find in original strings"
 msgstr "Bilatu jatorrizko kateetan"
 
-#: ../src/resources/find.xrc:64
 msgid "Find in translations"
 msgstr "Bilatu itzulpenetan"
 
-#: ../src/resources/find.xrc:71
 msgid "Find in comments"
 msgstr "Bilatu aipamenetan"
 
-#: ../src/resources/find.xrc:78
 msgid "Find in automatic comments"
 msgstr "Bilatu berezgaitasunezko aipamenetan"
 
-#: ../src/resources/find.xrc:94
+msgid "Close"
+msgstr "Itxi"
+
 msgid "< &Previous"
 msgstr "< &Aurrekoa"
 
-#: ../src/resources/find.xrc:102
 msgid "&Next >"
 msgstr "&Hurrengoa >"
 
-#: ../src/resources/manager.xrc:32
 msgid "Create new translations project"
 msgstr "Sortu itzulpen egitasmo berria"
 
-#: ../src/resources/manager.xrc:38
 msgid "Edit the project"
 msgstr "Editatu egitasmoa"
 
-#: ../src/resources/manager.xrc:44
 msgid "Delete the project"
 msgstr "Ezabatu egitasmoa"
 
-#: ../src/resources/manager.xrc:50
 msgid "Update all"
 msgstr "Eguneratu denak"
 
-#: ../src/resources/manager.xrc:51
 msgid "Update all catalogs in the project"
 msgstr "Eguneratu egitasmoko katalogo guztiak "
 
-#: ../src/resources/manager.xrc:55
 msgid "Edit project"
 msgstr "Editatu egitasmoa"
 
-#: ../src/resources/manager.xrc:60
 msgid "Project name:"
 msgstr "Egitasmoaren izena:"
 
-#: ../src/resources/manager.xrc:81
 msgid "Browse"
 msgstr "Bilatu"
 
-#: ../src/resources/manager.xrc:82
 msgid "Add directory to the list"
 msgstr "Gehitu zuzenbidea zerrendara"
 
-#: ../src/resources/manager.xrc:119 ../src/resources/menus.xrc:56
-#: ../src/resources/menus.xrc:316
 msgid "&Preferences..."
 msgstr "&Hobespenak..."
 
-#: ../src/resources/manager.xrc:123 ../src/resources/menus.xrc:29
-#: ../src/resources/menus.xrc:312
 msgid "&Close"
 msgstr "&Itxi"
 
-#: ../src/resources/manager.xrc:127 ../src/resources/menus.xrc:68
 msgid "E&xit"
 msgstr "I&rten"
 
-#: ../src/resources/menus.xrc:8 ../src/resources/menus.xrc:291
+msgid "Quit"
+msgstr "Utzi"
+
 msgid "&New..."
 msgstr "&Berria..."
 
-#: ../src/resources/menus.xrc:12 ../src/resources/menus.xrc:295
 msgid "New from &POT/PO file..."
 msgstr "Berria &POT/PO agiritik..."
 
-#: ../src/resources/menus.xrc:13 ../src/resources/menus.xrc:296
 msgid "New From &POT/PO File..."
 msgstr "Berria  &POT/PO Agiritik..."
 
-#: ../src/resources/menus.xrc:16 ../src/resources/menus.xrc:299
-msgid "New WordPress translation..."
-msgstr "WordPress itzulpen berria..."
-
-#: ../src/resources/menus.xrc:17 ../src/resources/menus.xrc:300
-msgid "New WordPress Translation..."
-msgstr "WordPress Itzulpen Berria..."
-
-#: ../src/resources/menus.xrc:21 ../src/resources/menus.xrc:304
 msgid "&Open..."
 msgstr "&Ireki..."
 
-#: ../src/resources/menus.xrc:25 ../src/resources/menus.xrc:308
 msgid "Open Recent"
 msgstr "Ireki Berrikia"
 
-#: ../src/resources/menus.xrc:33
 msgid "&Save"
 msgstr "&Gorde"
 
-#: ../src/resources/menus.xrc:37
 msgid "Save &as..."
 msgstr "G&orde honela..."
 
-#: ../src/resources/menus.xrc:38
 msgid "Save &As..."
 msgstr "G&orde Honela..."
 
-#: ../src/resources/menus.xrc:42
 msgid "Compile to MO..."
 msgstr "Bildu MO-ra..."
 
-#: ../src/resources/menus.xrc:45
 msgid "E&xport as HTML..."
 msgstr "E&sportatu HTML bezala..."
 
-#: ../src/resources/menus.xrc:50
 msgid "Check for updates..."
 msgstr "Egiaztatu egunerakerik dagoen..."
 
-#: ../src/resources/menus.xrc:53
-msgid "&License..."
-msgstr "&Baimena..."
-
-#: ../src/resources/menus.xrc:61
 msgid "Catalogs &manager"
 msgstr "&Katalogo kudeatzailea"
 
-#: ../src/resources/menus.xrc:62
 msgid "Catalogs &Manager"
 msgstr "Katalogo &Kudeatzailea"
 
-#: ../src/resources/menus.xrc:73 ../src/resources/menus.xrc:324
-msgid "&Edit"
-msgstr "&Editatu"
-
-#: ../src/resources/menus.xrc:94
 msgid "Translation is &fuzzy"
 msgstr "Itzulpena zalantzazkoa da"
 
-#: ../src/resources/menus.xrc:95
 msgid "Translation Is &Fuzzy"
 msgstr "&Itzulpena Zalantzazkoa da"
 
-#: ../src/resources/menus.xrc:100
 msgid "Edit &comment"
 msgstr "Editatu &Aipamena"
 
-#: ../src/resources/menus.xrc:101
 msgid "Edit &Comment"
 msgstr "Editatu &Aipamena"
 
-#: ../src/resources/menus.xrc:106
 msgid "Suggestions"
 msgstr "Iradokizunak"
 
-#: ../src/resources/menus.xrc:109
 msgid "&Show references"
 msgstr "&Erakutsi xehetasunak"
 
-#: ../src/resources/menus.xrc:110
 msgid "&Show References"
 msgstr "Erakutsi Xehetasunak"
 
-#: ../src/resources/menus.xrc:114 ../src/resources/menus.xrc:128
 msgid "&Find..."
 msgstr "Bilatu..."
 
-#: ../src/resources/menus.xrc:118
 msgid "Find next"
 msgstr "Bilatu &hurrengoa"
 
-#: ../src/resources/menus.xrc:122
 msgid "Find previous"
 msgstr "Bilatu a&urrekoa"
 
-#: ../src/resources/menus.xrc:126
 msgid "Find"
 msgstr "Bilatu"
 
-#: ../src/resources/menus.xrc:132
 msgid "Find Next"
 msgstr "Bilatu Hurrengoa"
 
-#: ../src/resources/menus.xrc:136
 msgid "Find Previous"
 msgstr "Bilatu Aurrekoa"
 
-#: ../src/resources/menus.xrc:142
 msgid "&Preferences"
 msgstr "&Hobespenak"
 
-#: ../src/resources/menus.xrc:147
-msgid "&View"
-msgstr "&Ikusi"
-
-#: ../src/resources/menus.xrc:149
 msgid "Display entry &IDs"
 msgstr "Erakutsi sarrera &ID-ak"
 
-#: ../src/resources/menus.xrc:150
 msgid "Display Entry &IDs"
 msgstr "Erakutsi Sarrera &ID-ak"
 
-#: ../src/resources/menus.xrc:155
 msgid "Sort by &file order"
 msgstr "Antolatu a&giriz"
 
-#: ../src/resources/menus.xrc:156
 msgid "Sort by &File Order"
 msgstr "Antolatu A&giriz"
 
-#: ../src/resources/menus.xrc:160
 msgid "Sort by &source"
 msgstr "Antolatu i&turburuz"
 
-#: ../src/resources/menus.xrc:161
 msgid "Sort by &Source"
 msgstr "Antolatu I&turburuz"
 
-#: ../src/resources/menus.xrc:165
 msgid "Sort by &translation"
 msgstr "Antolatu itz&ulpenez"
 
-#: ../src/resources/menus.xrc:166
 msgid "Sort by &Translation"
 msgstr "Antolatu Itz&ulpenez"
 
-#: ../src/resources/menus.xrc:171
 msgid "&Group by context"
 msgstr "&Multzokatu hitzinguruz"
 
-#: ../src/resources/menus.xrc:172
 msgid "&Group By Context"
 msgstr "&Multzokatu Hitzinguruz"
 
-#: ../src/resources/menus.xrc:176
 msgid "&Untranslated entries first"
 msgstr "Itzuligabeko &Sarrerak Lehenik"
 
-#: ../src/resources/menus.xrc:177
 msgid "&Untranslated Entries First"
 msgstr "Itzuligabeko &Sarrerak Lehenik"
 
-#: ../src/resources/menus.xrc:182
 msgid "Show sidebar"
 msgstr "Erakutsi albobarra"
 
-#: ../src/resources/menus.xrc:190
 msgid "C&atalog"
 msgstr "&Katalogoa"
 
-#: ../src/resources/menus.xrc:193
 msgid "&Update from sources"
 msgstr "Eguneratu &Iturburuetatik"
 
-#: ../src/resources/menus.xrc:194
 msgid "&Update from Sources"
 msgstr "Eguneratu &Iturburuetatik"
 
-#: ../src/resources/menus.xrc:197
 msgid "Update from &POT file..."
 msgstr "Eguneratu &POT agiritik"
 
-#: ../src/resources/menus.xrc:198
 msgid "Update from &POT File..."
 msgstr "Eguneratu &POT Agiritik..."
 
-#: ../src/resources/menus.xrc:201
 msgid "Fill missing translations from &TM..."
 msgstr "Bete ez dauden itzulpenak &IO-tik..."
 
-#: ../src/resources/menus.xrc:202
 msgid "Fill Missing Translations from &TM..."
 msgstr "Bete Ez dauden Itzulpenak &IO-etik..."
 
-#: ../src/resources/menus.xrc:205
 msgid "&Purge deleted translations"
 msgstr "&Garbitu ezabaturiko itzulpenak"
 
-#: ../src/resources/menus.xrc:206
 msgid "&Purge Deleted Translations"
 msgstr "&Garbitu Ezabaturiko Itzulpenak"
 
-#: ../src/resources/menus.xrc:209
 msgid "&Validate translations"
 msgstr "&Balioztatu itzulpenak"
 
-#: ../src/resources/menus.xrc:210
 msgid "&Validate Translations"
 msgstr "&Balioztatu Itzulpenak"
 
-#: ../src/resources/menus.xrc:214
-msgid "&Statistics"
-msgstr "&Estatistikak"
-
-#: ../src/resources/menus.xrc:218
 msgid "&Properties..."
 msgstr "E&zaugarriak..."
 
-#: ../src/resources/menus.xrc:228
 msgid "&Done and next"
 msgstr "&Eginda eta hurrengoa"
 
-#: ../src/resources/menus.xrc:229
 msgid "&Done and Next"
 msgstr "&Eginda eta Hurrengoa"
 
-#: ../src/resources/menus.xrc:235
 msgid "&Previous translation"
 msgstr "A&urreko itzulpena"
 
-#: ../src/resources/menus.xrc:236
 msgid "&Previous Translation"
 msgstr "A&urreko Itzulpena"
 
-#: ../src/resources/menus.xrc:240
 msgid "&Next translation"
 msgstr "&Hurrengo itzulpena"
 
-#: ../src/resources/menus.xrc:241
 msgid "&Next Translation"
 msgstr "&Hurrengo Itzulpena"
 
-#: ../src/resources/menus.xrc:245
 msgid "P&revious unfinished"
 msgstr "A&urreko amaitugabea"
 
-#: ../src/resources/menus.xrc:246
 msgid "P&revious Unfinished"
 msgstr "A&urreko Amaitugabea"
 
-#: ../src/resources/menus.xrc:250
 msgid "Ne&xt unfinished"
 msgstr "Hu&rrengo amaitugabea"
 
-#: ../src/resources/menus.xrc:251
 msgid "Ne&xt Unfinished"
 msgstr "Hu&rrengo Amaitugabea"
 
-#: ../src/resources/menus.xrc:260 ../src/resources/menus.xrc:333
 msgid "&Online help"
 msgstr "&Online laguntza"
 
-#: ../src/resources/menus.xrc:261 ../src/resources/menus.xrc:334
 msgid "&Online Help"
 msgstr "&Online Laguntza"
 
-#: ../src/resources/menus.xrc:267 ../src/resources/menus.xrc:340
 msgid "&GNU gettext manual"
 msgstr "&GNU gettext eskuliburua"
 
-#: ../src/resources/menus.xrc:268 ../src/resources/menus.xrc:341
 msgid "&GNU gettext Manual"
 msgstr "&GNU gettext Eskuliburua"
 
-#: ../src/resources/menus.xrc:272 ../src/resources/menus.xrc:345
-msgid "Email &support..."
-msgstr "&Post@ sostengua..."
-
-#: ../src/resources/menus.xrc:273 ../src/resources/menus.xrc:346
-msgid "Email &Support..."
-msgstr "&Post@ Sostengua..."
-
-#: ../src/resources/menus.xrc:277 ../src/resources/menus.xrc:350
 msgid "&About Poedit"
 msgstr "&Poedit buruz"
 
-#: ../src/resources/menus.xrc:278 ../src/resources/menus.xrc:279
-#: ../src/resources/menus.xrc:351 ../src/resources/menus.xrc:352
 msgid "&About"
 msgstr "&Honi buruz"
 
-#: ../src/resources/prefs.xrc:4
 msgid "Extractor setup"
 msgstr "Ateratzaile ezarpena"
 
-#: ../src/resources/prefs.xrc:25
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "Luzapenen zerrenda puntu eta kakotxaz bananduta (adib. *.cpp;*.h):"
 
-#: ../src/resources/prefs.xrc:41
 msgid "Invocation:"
 msgstr "Deiak:"
 
-#: ../src/resources/prefs.xrc:45
 msgid "Command to extract translations:"
 msgstr "Itzulpenak ateratzeko agindua:"
 
-#: ../src/resources/prefs.xrc:57
-msgid "This is the command used to launch the extractor.\n%o expands to the name of output file, %K to list\nof keywords, %F to list of input files,\n%C to charset flag (see below)."
-msgstr "Hau ateratzailea abiarazteko agindua da.\n%o-k irteerako agiri izenetara hedatzen du, %K-k hitz\ngarrantzitsuen zerrendara, %F-k sarrerako agirietara,\n%C-k hizki-kode ikurretara (ikusi behean)."
+msgid ""
+"This is the command used to launch the extractor.\n"
+"%o expands to the name of output file, %K to list\n"
+"of keywords, %F to list of input files,\n"
+"%C to charset flag (see below)."
+msgstr ""
+"Hau ateratzailea abiarazteko agindua da.\n"
+"%o-k irteerako agiri izenetara hedatzen du, %K-k hitz\n"
+"garrantzitsuen zerrendara, %F-k sarrerako agirietara,\n"
+"%C-k hizki-kode ikurretara (ikusi behean)."
 
-#: ../src/resources/prefs.xrc:66
 msgid "An item in keywords list:"
 msgstr "Gai bat giltza-hitzen zerrendan:"
 
-#: ../src/resources/prefs.xrc:78
-msgid "This will be attached to the command line once\nfor each keyword. %k expands to the keyword."
-msgstr "Hau giltza-hitz bakoitzerako behin erantsiko da\nagindu lerrora. %k gako-hitza da. "
+msgid ""
+"This will be attached to the command line once\n"
+"for each keyword. %k expands to the keyword."
+msgstr ""
+"Hau giltza-hitz bakoitzerako behin erantsiko da\n"
+"agindu lerrora. %k gako-hitza da. "
 
-#: ../src/resources/prefs.xrc:87
 msgid "An item in input files list:"
 msgstr "Gai bat sarrera agirien zerrendan:"
 
-#: ../src/resources/prefs.xrc:99
 #, c-format
-msgid "This will be attached to the command line once\nfor each input file. %f expands to the filename."
-msgstr "Hau sarrera agiri bakoitzerako behin erantsiko da agindu lerrora. %f agiri izena da. "
+msgid ""
+"This will be attached to the command line once\n"
+"for each input file. %f expands to the filename."
+msgstr ""
+"Hau sarrera agiri bakoitzerako behin erantsiko da agindu lerrora. %f agiri "
+"izena da. "
 
-#: ../src/resources/prefs.xrc:108 ../src/resources/properties.xrc:96
 msgid "Source code charset:"
 msgstr "Iturburu kode hizkia:"
 
-#: ../src/resources/prefs.xrc:120
 #, c-format
-msgid "This will be attached to the command line\nonly if source codecharset was given. %c expands to charset value."
-msgstr "Hau iturburu hizki-kodea eman bada bakarrik\nerantsiko da agindu lerrora. %c-k hizki-kode balioa hedatzen du."
+msgid ""
+"This will be attached to the command line\n"
+"only if source codecharset was given. %c expands to charset value."
+msgstr ""
+"Hau iturburu hizki-kodea eman bada bakarrik\n"
+"erantsiko da agindu lerrora. %c-k hizki-kode balioa hedatzen du."
 
-#: ../src/resources/properties.xrc:4
 msgid "Catalog properties"
 msgstr "Katalogoaren ezaugarriak"
 
-#: ../src/resources/properties.xrc:46
 msgid "Plural Forms:"
 msgstr "Anitz Formak:"
 
-#: ../src/resources/properties.xrc:53
 msgid "Use default rules for this language"
 msgstr "Erabili berezko arauak hizkuntza honetarako"
 
-#: ../src/resources/properties.xrc:62
 msgid "Use custom expression"
 msgstr "Erabili norbere adierazpena"
 
-#: ../src/resources/properties.xrc:76
 msgid "Learn about plural forms"
 msgstr "Jakin gehiago anitz formetaz"
 
-#: ../src/resources/properties.xrc:142
 msgid "Translation properties"
 msgstr "Itzulpenaren ezaugarriak"
 
-#: ../src/resources/properties.xrc:150
 msgid "Extract text from source files in the following directories:"
 msgstr "Atera idazkia iturburu agirietatik hurrengo zuzenbideetan:"
 
-#: ../src/resources/properties.xrc:159
 msgid "Base path:"
 msgstr "Ohinarri helburua:"
 
-#: ../src/resources/properties.xrc:188
 msgid "Sources paths"
 msgstr "Iturburuen helburuak"
 
-#: ../src/resources/properties.xrc:196
-msgid "Use these keywords (function names) to recognize translatable strings\nin source files:"
-msgstr "Erabili giltza-hitz hauek (eginkizun izenak) iturburu agirietan\nkate itzulgarriak ezagutzeko:"
+msgid ""
+"Use these keywords (function names) to recognize translatable strings\n"
+"in source files:"
+msgstr ""
+"Erabili giltza-hitz hauek (eginkizun izenak) iturburu agirietan\n"
+"kate itzulgarriak ezagutzeko:"
 
-#: ../src/resources/properties.xrc:212
 msgid "Learn about gettext keywords"
 msgstr "Jakin gehiago gettext giltza-hitzetaz"
 
-#: ../src/resources/properties.xrc:220
 msgid "Sources keywords"
 msgstr "Iturburuetako giltza-hitzak"
 
-#: ../src/resources/summary.xrc:4
 msgid "Update summary"
 msgstr "Eguneratu laburpena"
 
-#: ../src/resources/summary.xrc:16
-msgid "These strings were found in the sources but were not in the catalog.\nPoedit will add them to the catalog now."
-msgstr "Kate hauek iturburuan aurkitu dira, baina katalogoan ez.\nPoedit-ek orain katalogora gehituko ditu."
+msgid ""
+"These strings were found in the sources but were not in the catalog.\n"
+"Poedit will add them to the catalog now."
+msgstr ""
+"Kate hauek iturburuan aurkitu dira, baina katalogoan ez.\n"
+"Poedit-ek orain katalogora gehituko ditu."
 
-#: ../src/resources/summary.xrc:29
 msgid "New strings"
 msgstr "Kate berriak"
 
-#: ../src/resources/summary.xrc:37
-msgid "These strings are no longer in the sources.\nPoedit will remove them from the catalog now."
-msgstr "Kate hauek jadanik ez daude iturburuetan.\nPoedit-ek orain katalogotik ezabatuko ditu."
+msgid ""
+"These strings are no longer in the sources.\n"
+"Poedit will remove them from the catalog now."
+msgstr ""
+"Kate hauek jadanik ez daude iturburuetan.\n"
+"Poedit-ek orain katalogotik ezabatuko ditu."
 
-#: ../src/resources/summary.xrc:50
 msgid "Obsolete strings"
 msgstr "Kate zaharkituak"
 
-#: ../src/resources/summary.xrc:62
 msgid "(0 new, 0 obsolete)"
 msgstr "(0 berri, 0 zaharkitu)"
 
-#: ../src/resources/toolbar.xrc:13 ../src/resources/toolbar.xrc:18
 msgid "Open"
 msgstr "Ireki"
 
-#: ../src/resources/toolbar.xrc:25 ../src/resources/toolbar.xrc:30
 msgid "Save catalog"
 msgstr "Gorde katalogoa"
 
-#: ../src/resources/toolbar.xrc:39
 msgid "Validate"
 msgstr "Balioztatu"
 
-#: ../src/resources/toolbar.xrc:40
 msgid "Check for errors in the translation"
 msgstr "Egiaztatu itzulpenean akatsik dagoen"
 
-#: ../src/resources/toolbar.xrc:47 ../src/statistics.cpp:151
-msgid "Statistics"
-msgstr "Estatistikak"
-
-#: ../src/resources/toolbar.xrc:48
-msgid "Show translation statistics"
-msgstr "Erakutsi itzulpen estatistikak"
-
-#: ../src/resources/toolbar.xrc:55
 msgid "Update"
 msgstr "Eguneratu"
 
-#: ../src/resources/toolbar.xrc:56
 msgid "Update catalog - synchronize it with sources"
 msgstr "Eguneratu katalogoa - aldiberetu iturburuekin "
 
-#: ../src/resources/toolbar.xrc:65
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "Sakatuta hautaturiko katea zalantzazko itzulpena bada"
 
-#: ../src/resources/toolbar.xrc:75
-msgid "Sidebar"
-msgstr "Albobarra"
-
-#: ../src/resources/toolbar.xrc:76
 msgid "Show or hide the sidebar."
 msgstr "Erakutsi edo ezkutatu albobarra."
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
-#: ../src/sidebar.cpp:128
 msgid "Previous source text:"
 msgstr "Aurreko iturburu idazkia:"
 
-#: ../src/sidebar.cpp:131
-msgid "The old source text (before it changed during an update) that the fuzzy translation corresponds to."
-msgstr "Zalantzazko itzulpena dagokion iturburu idazki zaharra (eguneraketa batean aldatu aurrekoa)."
+msgid ""
+"The old source text (before it changed during an update) that the fuzzy "
+"translation corresponds to."
+msgstr ""
+"Zalantzazko itzulpena dagokion iturburu idazki zaharra (eguneraketa batean "
+"aldatu aurrekoa)."
 
-#: ../src/sidebar.cpp:221 ../src/sidebar.cpp:237
 msgid "Add comment"
 msgstr "Gehitu aipamena"
 
-#: ../src/sidebar.cpp:223 ../src/sidebar.cpp:225 ../src/sidebar.cpp:240
 msgid "Add Comment"
 msgstr "Gehitu Aipamena"
 
-#: ../src/sidebar.cpp:388
 msgid "Translation suggestions:"
 msgstr "Itzulpen iradokizunak:"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
-#: ../src/sidebar.cpp:413
 msgid "No matches found"
 msgstr "Ez da bat datorrenik aurkitu"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (OS X, Linux).
-#: ../src/sidebar.cpp:416
 msgid "No Matches Found"
 msgstr "Ez Da Bat Datorrenik Aurkitu"
 
-#: ../src/sidebar.cpp:440 ../src/sidebar_suggestions.cpp:106
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Kate hau Poedit-en itzulpen oroimenean aurkitu da."
 
-#: ../src/sidebar_suggestions.cpp:102
-msgid "This suggestion was contributed by another translator to the online TM."
-msgstr "Iradokizun hau beste itzultzaile baten ekarpena da onlineko IO-n."
-
-#: ../src/sidebar_suggestions.cpp:104
-msgid "This suggestion was machine-translated online."
-msgstr "Iradokizun hau makinaz-itzuli zen online."
-
-#: ../src/sidebar_suggestions.cpp:221
-#, c-format
-msgid "%d out of %d online suggestion left."
-msgid_plural "%d out of %d online suggestions left."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../src/sidebar_suggestions.cpp:224
-msgid "Remove this limitation"
-msgstr "Kendu muga hau"
-
-#: ../src/sidebar_suggestions.cpp:228
-msgid "Not showing additional online suggestions."
-msgstr "Ez erakutsi onlineko iradokizun gehigarriak."
-
-#: ../src/sidebar_suggestions.cpp:229
-msgid "Unlock online suggestions"
-msgstr "Desblokeatu onlineko iradokizunak"
-
-#: ../src/sidebar_suggestions.cpp:252
-msgid "Exceeded online TM daily limit."
-msgstr "Gaindituta eguneko online IO muga."
-
-#: ../src/sidebar_suggestions.cpp:277
-msgid "Connect to the Internet to get additional suggestions."
-msgstr "Elkartu internetera iradokizun gehigarriak ikusteko."
-
-#: ../src/statistics.cpp:167 ../src/statistics.cpp:256
-msgid "Items"
-msgstr "Gaiak"
-
-#: ../src/statistics.cpp:168 ../src/statistics.cpp:256
-msgid "Words"
-msgstr "Hitzak"
-
-#: ../src/statistics.cpp:174 ../src/statistics.cpp:257
-msgid "Translated"
-msgstr "Itzulita"
-
-#: ../src/statistics.cpp:178 ../src/statistics.cpp:204
-#: ../src/statistics.cpp:258 ../src/statistics.cpp:263
-msgid "Needs review (fuzzy)"
-msgstr "Berrikuspena behar du (zalantzazkoa)"
-
-#: ../src/statistics.cpp:182 ../src/statistics.cpp:208
-#: ../src/statistics.cpp:259 ../src/statistics.cpp:264
-msgid "Not translated"
-msgstr "Itzuligabe"
-
-#: ../src/statistics.cpp:186 ../src/statistics.cpp:260
-msgid "Translations with errors"
-msgstr "Itzulpen akastuna"
-
-#: ../src/statistics.cpp:194 ../src/statistics.cpp:261
-msgid "Source Text"
-msgstr "Iturburu Idazkia"
-
-#: ../src/statistics.cpp:200 ../src/statistics.cpp:262
-msgid "Strings in source language"
-msgstr "Iturburu hizkuntzako kateak"
-
-#: ../src/statistics.cpp:217
-msgid "Copy to clipboard"
-msgstr "Kopiatu gakora"
-
-#: ../src/statistics.cpp:219
-msgid "Copy to Clipboard"
-msgstr "Kopiatu Gakora"
-
-#: ../src/summarydlg.cpp:56
 #, c-format
 msgid "(New: %i, obsolete: %i)"
 msgstr "(Berria: %i, zaharkitua: %i)"
 
-#: ../src/tm/tm_migrate.cpp:154
 #, c-format
 msgid "Importing translations: %d"
 msgstr "Itzulpenak inportatzen: %d"
 
-#: ../src/tm/tm_migrate.cpp:173 ../src/tm/tm_migrate.cpp:266
-#: ../src/tm/tm_migrate.cpp:296
 msgid "Poedit Update"
 msgstr "Poedit Eguneraketa"
 
-#: ../src/tm/tm_migrate.cpp:173
 msgid "Preparing migration..."
 msgstr "Migrazioa gertatzen..."
 
-#: ../src/tm/tm_migrate.cpp:234
 #, c-format
 msgid "Migration exit status: %d"
 msgstr "Migrazioa irteera egoera: %d"
 
-#: ../src/tm/tm_migrate.cpp:265
 msgid "Poedit needs to convert your translation memory to a new format."
-msgstr "Poedit-ek zure itzulpen oroimena heuskarri berri batera bihurtu beharra du"
+msgstr ""
+"Poedit-ek zure itzulpen oroimena heuskarri berri batera bihurtu beharra du"
 
-#: ../src/tm/tm_migrate.cpp:269
-msgid "This must be done before Poedit can start. It may take a few minutes if you have lots of translations stored, but should normally be much faster."
-msgstr "Hau Poedit abiarazi ahal aurretik egin behar da. Minutu gutxi batzuk hartu ditzake itzulpen asko badituzu biltegiratuta, baina arrunt askoz azkarragoa izan behar da."
+msgid ""
+"This must be done before Poedit can start. It may take a few minutes if you "
+"have lots of translations stored, but should normally be much faster."
+msgstr ""
+"Hau Poedit abiarazi ahal aurretik egin behar da. Minutu gutxi batzuk hartu "
+"ditzake itzulpen asko badituzu biltegiratuta, baina arrunt askoz azkarragoa "
+"izan behar da."
 
-#: ../src/tm/tm_migrate.cpp:270
 msgid "Proceed"
 msgstr "Ekin"
 
-#: ../src/tm/tm_migrate.cpp:295
 msgid "Translation memory migration failed."
 msgstr "Itzulpen oroimen migrazio hutsegitea."
 
-#: ../src/tm/tm_migrate.cpp:300
 #, c-format
-msgid "Your translation memory data couldn't be migrated. The error was:\n\n%s\nPlease email help@poedit.net and we’ll get it fixed."
-msgstr "Zure itzulpen oroimen datuak ezin dira migratu. Akatsa izan da:\n\n%s\nMesedez bidali post@ bat hona: help@poedit.net eta zuzentzen saiatuko gara."
+msgid ""
+"Your translation memory data couldn't be migrated. The error was:\n"
+"\n"
+"%s\n"
+"Please email help@poedit.net and we’ll get it fixed."
+msgstr ""
+"Zure itzulpen oroimen datuak ezin dira migratu. Akatsa izan da:\n"
+"\n"
+"%s\n"
+"Mesedez bidali post@ bat hona: help@poedit.net eta zuzentzen saiatuko gara."
 
-#: ../src/utility.cpp:61 ../src/utility.cpp:71
 msgid "Cannot create temporary directory."
 msgstr "Ezin da aldibaterako zuzenbiderik sortu"
 
-#: ../src/welcomescreen.cpp:170
-msgid "Check theme or plugin compatibility"
-msgstr "Egiaztatu azalgai edo plugin bateragarritasuna"
-
-#: ../src/welcomescreen.cpp:228
 msgid "Welcome to Poedit"
 msgstr "Ongi etorri Poedit-era"
 
-#: ../src/welcomescreen.cpp:247
-msgid "Upgrade to the Pro version of Poedit with more features."
-msgstr "Goratu Poedit Pro bertsiora ezaugarri gehiagoz gozatzeko."
-
-#: ../src/welcomescreen.cpp:264
 msgid "Edit a translation"
 msgstr "Editatu itzulpen bat"
 
-#: ../src/welcomescreen.cpp:265
 msgid "Open an existing PO file and edit the translation."
 msgstr "Ireki badagoen PO agiri bat eta editatu itzulpena."
 
-#: ../src/welcomescreen.cpp:270
 msgid "Create new translation"
 msgstr "Sortu itzulpen berria"
 
-#: ../src/welcomescreen.cpp:271
-msgid "Take an existing PO file or POT template and create a new translation from it."
-msgstr "Hartu badagoen PO agiri bat edo POT eredu bat eta sortu itzulpen berri bat bertatik."
+msgid ""
+"Take an existing PO file or POT template and create a new translation from "
+"it."
+msgstr ""
+"Hartu badagoen PO agiri bat edo POT eredu bat eta sortu itzulpen berri bat "
+"bertatik."
 
-#: ../src/welcomescreen.cpp:276
-msgid "Translate WordPress theme or plugin"
-msgstr "Itzuli WordPress azalgaia edo plugina"
-
-#. TRANSLATORS: Please don't use any form of "automatically" in the translation, it would mislead people.
-#: ../src/welcomescreen.cpp:278
-msgid "Create a new translation. Poedit will set everything up; you can focus on translating."
-msgstr "Sortu itzulpen berri bat. Poedit-ek ezarriko du dena; itzulpenean fokutu zaitezke."
-
-#: ../src/welcomescreen.cpp:309
 msgid "There are no translations. That’s unusual."
 msgstr "Ez dago itzulpenik. Hori ezohikoa da."
 
-#: ../src/welcomescreen.cpp:314
-msgid "Translatable entries aren't added manually in the Gettext system, but are automatically extracted\nfrom source code. This way, they stay up to date and accurate.\nTranslators typically use PO template files (POTs) prepared for them by the developer."
-msgstr "Sarrera itzulgarriak ez dira eskuz gehitzen Gettext sisteman, baina berezgaitasunez ateratzen dira\niturburu kodetik. Honela, eguneratuta eta zehatz daude.\nItzultzaileek arrunt garatzaileek beraientzat gertaturiko PO eredu agiriak (POT-ak) erabiltzen dituzte."
+msgid ""
+"Translatable entries aren't added manually in the Gettext system, but are "
+"automatically extracted\n"
+"from source code. This way, they stay up to date and accurate.\n"
+"Translators typically use PO template files (POTs) prepared for them by the "
+"developer."
+msgstr ""
+"Sarrera itzulgarriak ez dira eskuz gehitzen Gettext sisteman, baina "
+"berezgaitasunez ateratzen dira\n"
+"iturburu kodetik. Honela, eguneratuta eta zehatz daude.\n"
+"Itzultzaileek arrunt garatzaileek beraientzat gertaturiko PO eredu agiriak "
+"(POT-ak) erabiltzen dituzte."
 
-#: ../src/welcomescreen.cpp:319
 msgid "(Learn more about GNU gettext)"
 msgstr "(Jakin gehiago GNU gettext buruz)"
 
-#: ../src/welcomescreen.cpp:323
 msgid "The simplest way to fill this catalog is to update it from a POT:"
 msgstr "Katalogo hau betetzeko bide arruntena POT batetik eguneratzea da:"
 
-#: ../src/welcomescreen.cpp:330
 msgid "Update from POT"
 msgstr "Eguneratu POT-etik"
 
-#: ../src/welcomescreen.cpp:331
 msgid "Take translatable strings from an existing POT template."
 msgstr "Hartu kate itzulgarriak badagoen POT eredu batetik."
 
-#: ../src/welcomescreen.cpp:334
-msgid "You can also extract translatable strings directly from the source code:"
+msgid ""
+"You can also extract translatable strings directly from the source code:"
 msgstr "Kate itzulgarriak zuzenean atera ditzakezu iturburu kodetik"
 
-#: ../src/welcomescreen.cpp:341
 msgid "Extract from sources"
 msgstr "&Atera iturburuetatik"
 
-#: ../src/welcomescreen.cpp:342
 msgid "Configure source code extraction in Properties."
 msgstr "Itxuratu iturburu kode aterapena Ezaugarriak-en"
-
-#: ../src/wordpress.cpp:91 ../src/wordpress.cpp:98
-#, c-format
-msgid "Failed to read file '%s'."
-msgstr "Hutsegitea '%s' agiria irakurtzerakoan."
-
-#: ../src/wordpress.cpp:136
-#, c-format
-msgid "Confused by ambiguous values of \"%s\" in %s."
-msgstr "Nahastuta \"%s\"-ren balioa zehazgabeengaitik hemen: %s."
-
-#: ../src/wordpress.cpp:254
-#, c-format
-msgid "Couldn't detect POs location for \"%s\"."
-msgstr "Ezin da \"%s\"-rako PO kokapena atzeman."
-
-#: ../src/wordpress.cpp:324
-#, c-format
-msgid "Couldn't detect translation setup of the \"%s\" theme."
-msgstr "Ezin da \"%s\" azalgaiaren itzulpen ezarpena atzeman."
-
-#: ../src/wordpress.cpp:329
-#, c-format
-msgid "The \"%s\" theme isn't localization-ready."
-msgstr "\"%s\" azalgaia ez dago lokolizaziorako-gertu."
-
-#: ../src/wordpress.cpp:371
-msgid "Confused: multiple main plugin files."
-msgstr "Nahasia: plugin nagusi agiri ugari."
-
-#: ../src/wordpress.cpp:405 ../src/wordpress.cpp:417
-#, c-format
-msgid "Couldn't detect translation domain of the \"%s\" plugin."
-msgstr "Ezin da \"%s\" pluginaren itzulpen domeinua atzeman."
-
-#: ../src/wordpress.cpp:410
-#, c-format
-msgid "The \"%s\" plugin isn't localization-ready."
-msgstr "\"%s\" plugina ez dago lokolizaziorako-gertu."
-
-#: ../src/wordpress.cpp:454
-msgid "Found neither WordPress theme nor plugin in the folder."
-msgstr "Agiritegian ez da aurkitu ez WordPress azalgaia ez plugina."
-
-#: ../src/wordpress.cpp:457
-msgid "Folder looks like both a plugin and a theme."
-msgstr "Agiritegiak bi gauzak dirudi plugin bat eta azalgai bat."
-
-#: ../src/wordpress.cpp:475
-#, c-format
-msgid "Translations folder (%s) doesn't exist."
-msgstr "(%s) itzulpen agiritegia ez dago."
-
-#: ../src/wordpress.cpp:552
-msgid "Failed to extract WordPress information."
-msgstr "Hutsegitea WordPress argibideak ateratzerakoan."
-
-#: ../src/wordpress.cpp:553
-msgid "WordPress error"
-msgstr "WordPress akatsa"
-
-#: ../src/wordpress.cpp:562
-#, c-format
-msgid "Poedit couldn’t understand the content of the folder you selected. This may be a problem with the plugin/theme or it may be Poedit being silly. The error is:\n\n • %s\n\nPlease email help@poedit.net and we’ll sort it out."
-msgstr "Poedit-ek ezin du hautatu duzun agiritegiaren edukia ulertu. Hau plugin/azalgaiarekin arazo bat dagoelako edo Poedit apur bat inozotzen hasi delako izan daiteke. Akatsa da:\n\n • %s\n\nMesedez bidali post@ bat hona: help@poedit.net eta arazoa konponduko dugu."
-
-#. TRANSLATORS: This is a button that sends an email to support when clicked
-#: ../src/wordpress.cpp:568
-msgid "Email support"
-msgstr "Post@ sostengua"
-
-#: ../src/wordpress.cpp:569
-msgid "View log"
-msgstr "Ikusi oharra"
-
-#. TRANSLATORS: This is a button that sends an email to support when clicked
-#: ../src/wordpress.cpp:572
-msgid "Email Support"
-msgstr "Post@ Sostengua"
-
-#: ../src/wordpress.cpp:573
-msgid "View Log"
-msgstr "Ikusi Oharra"
-
-#: ../src/wordpress.cpp:584
-msgid "WordPress Errors Log"
-msgstr "WordPress Akats Oharra"
-
-#: ../src/wordpress.cpp:585
-msgid "Please email this log to help@poedit.net. Thank you!"
-msgstr "Mesedez bidali post@z ohar hau hona: help@poedit.net. Mila esker!"
-
