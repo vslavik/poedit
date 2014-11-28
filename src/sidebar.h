@@ -171,6 +171,10 @@ public:
     /// Refreshes displayed content
     void RefreshContent();
 
+    /// Call when catalog changes/is invalidated
+    /// TODO: use shared_ptr<CatalogItem> instead to be safe
+    void ResetCatalog() { SetSelectedItem(nullptr, nullptr); }
+
     /// Set max height of the upper (not input-aligned) part.
     void SetUpperHeight(int size);
 

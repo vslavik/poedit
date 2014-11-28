@@ -1804,10 +1804,12 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
             succ = m_catalog->Update(&progress, true, reason);
         else
             succ = m_catalog->UpdateFromPOT(pot_file, true, reason);
-    }
 
-    EnsureContentView(Content::PO);
-    m_list->CatalogChanged(m_catalog);
+        EnsureContentView(Content::PO);
+        if (m_sidebar)
+            m_sidebar->ResetCatalog();
+        m_list->CatalogChanged(m_catalog);
+    }
 
     m_modified = succ || m_modified;
 
