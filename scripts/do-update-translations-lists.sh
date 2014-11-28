@@ -5,7 +5,7 @@
 # $Id$
 #
 
-LANGS_POEDIT=`ls *.po 2>/dev/null | sed -n 's,\.po,,p'`
+LANGS_POEDIT=`cd locales && ls *.po 2>/dev/null | sed -n 's,\.po,,p'`
 LANGS_POEDIT=`echo $LANGS_POEDIT`
 
 replace_str()
@@ -32,8 +32,7 @@ for i in list:
 
 update_makefile_am()
 {
-    echo "updating Makefile.am..."
-    replace_str Makefile.am \
+    replace_str locales/Makefile.am \
             '\(POEDIT_LINGUAS = \).*' "\1$LANGS_POEDIT"
 }
 
