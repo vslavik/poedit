@@ -77,6 +77,4 @@ stats:
 dist-hook: allmo
 	cp -a $(srcdir)/*.pot $(srcdir)/*.po $(srcdir)/*.mo $(distdir)
 
-EXTRA_DIST = update-translation-lists.sh
-
 .PHONY: allpo allmo force-update stats FORCE
