@@ -86,6 +86,7 @@ VersionInfoCopyright=Copyright © 1999-2014 Vaclav Slavik
 VersionInfoProductName=Poedit
 VersionInfoProductVersion={#VERSION}
 VersionInfoProductTextVersion={#VERSION_FULL}
+DisableDirPage=auto
 
 [Files]
 Source: {#CONFIG}\Poedit.exe; DestDir: {app}; Flags: ignoreversion
