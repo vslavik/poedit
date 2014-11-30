@@ -52,8 +52,8 @@ void Sparkle_Initialize(bool checkForBeta)
 
         /* TODO: Use feedParametersForUpdater delegate method and append ?beta=1 instead.
                  This code puts SUFeedURL into user defaults! */
-        NSString *url = checkForBeta ? @"http://releases.poedit.net/appcast-osx/beta"
-                                     : @"http://releases.poedit.net/appcast-osx";
+        NSString *url = checkForBeta ? @"https://poedit.net/updates/osx/appcast/beta"
+                                     : @"https://poedit.net/updates/osx/appcast";
         [updater setFeedURL:[NSURL URLWithString:url]];
     }
 }

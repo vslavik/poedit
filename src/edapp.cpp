@@ -272,15 +272,16 @@ bool PoeditApp::OnInit()
 #endif // USE_SPARKLE
 
 #ifdef __WXMSW__
-    const char *appcast = "http://releases.poedit.net/appcast-win";
-
+    wxString appcast = "https://poedit.net/updates/win/appcast";
     if ( CheckForBetaUpdates() )
     {
         // Beta versions use unstable feed.
-        appcast = "http://releases.poedit.net/appcast-win/beta";
+        appcast = "https://poedit.net/updates/win/appcast/beta";
     }
+    if (!wxPlatformInfo().CheckOSVersion(6,0)) // XP doesn't support SNI
+        appcast.Replace("https://", "http://");
 
-    win_sparkle_set_appcast_url(appcast);
+    win_sparkle_set_appcast_url(appcast.utf8_str());
     win_sparkle_set_can_shutdown_callback(&PoeditApp::WinSparkle_CanShutdown);
     win_sparkle_set_shutdown_request_callback(&PoeditApp::WinSparkle_Shutdown);
     win_sparkle_init();
