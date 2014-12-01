@@ -35,6 +35,7 @@
 #endif
 
 #ifdef __WXMSW__
+  #include <windows.h>
   #include <richedit.h>
   #ifndef BOE_UNICODEBIDI
     #define BOE_UNICODEBIDI 0x0080
@@ -42,6 +43,10 @@
   #ifndef BOM_UNICODEBIDI
     #define BOM_UNICODEBIDI 0x0080
   #endif
+
+  #include <comdef.h>
+  #include <tom.h>
+  _COM_SMARTPTR_TYPEDEF(ITextDocument, __uuidof(ITextDocument));
 #endif
 
 #include "spellchecking.h"
@@ -51,14 +56,49 @@ namespace
 {
 
 #ifdef __WXOSX__
-
 inline NSTextView *TextView(const wxTextCtrl *ctrl)
 {
     NSScrollView *scroll = (NSScrollView*)ctrl->GetHandle();
     return [scroll documentView];
 }
-
 #endif // __WXOSX__
+
+
+#ifdef __WXMSW__
+
+inline ITextDocumentPtr TextDocument(wxTextCtrl *ctrl)
+{
+    IUnknown *ole_raw;
+    ::SendMessage((HWND) ctrl->GetHWND(), EM_GETOLEINTERFACE, 0, (LPARAM) &ole_raw);
+    IUnknownPtr ole(ole_raw, /*addRef=*/false);
+    ITextDocumentPtr doc;
+    if (ole)
+        ole->QueryInterface<ITextDocument>(&doc);
+    return doc;
+}
+
+// Temporarily supresses recording of changes for Undo/Redo functionality
+// See http://stackoverflow.com/questions/4138981/temporaily-disabling-the-c-sharp-rich-edit-undo-buffer-while-performing-syntax-h
+// and http://forums.codeguru.com/showthread.php?325068-Realizing-Undo-Redo-functionality-for-RichEdit-Syntax-Highlighter
+class UndoSupressor
+{
+public:
+    UndoSupressor(CustomizedTextCtrl *ctrl) : m_doc(TextDocument(ctrl))
+    {
+        if (m_doc)
+            m_doc->Undo(tomSuspend, NULL);
+    }
+
+    ~UndoSupressor()
+    {
+        if (m_doc)
+            m_doc->Undo(tomResume, NULL);
+    }
+
+private:
+    ITextDocumentPtr m_doc;
+};
+#endif
 
 } // anonymous namespace
 
@@ -292,6 +332,7 @@ void AnyTranslatableTextCtrl::DoSetValue(const wxString& value, int flags)
 void AnyTranslatableTextCtrl::UpdateRTLStyle()
 {
     wxEventBlocker block(this, wxEVT_TEXT);
+    UndoSupressor blockUndo(this);
 
     PARAFORMAT2 pf;
     ::ZeroMemory(&pf, sizeof(pf));
@@ -335,6 +376,10 @@ void AnyTranslatableTextCtrl::HighlightText()
 
     wxWindowUpdateLocker noupd(this);
     wxEventBlocker block(this, wxEVT_TEXT);
+  #ifdef __WXMSW__
+    UndoSupressor blockUndo(this);
+  #endif
+
     SetStyle(0, text.length(), m_attrs->Default());
 
     m_syntax.Highlight(text, [=](int a, int b, SyntaxHighlighter::TextKind kind){
