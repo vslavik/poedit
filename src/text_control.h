@@ -104,6 +104,9 @@ class TranslationTextCtrl : public AnyTranslatableTextCtrl
 public:
     TranslationTextCtrl(wxWindow *parent, wxWindowID winid);
 
+    /// Sets the value to something the user wrote
+    void SetValueUserWritten(const wxString& value);
+
 protected:
 #ifdef __WXOSX__
     void DoSetValue(const wxString& value, int flags) override;

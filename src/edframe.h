@@ -185,7 +185,7 @@ class PoeditFrame : public wxFrame
         /// Puts text from textctrls to catalog & listctrl.
         void UpdateFromTextCtrl();
         /// Puts text from catalog & listctrl to textctrls.
-        void UpdateToTextCtrl();
+        void UpdateToTextCtrl(int flags);
 
         /// Updates statistics in statusbar.
         void UpdateStatusBar();

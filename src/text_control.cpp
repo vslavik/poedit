@@ -100,6 +100,60 @@ private:
 };
 #endif
 
+
+#if defined(__WXOSX__)
+
+// Group undo operations into a single group
+class UndoGroup
+{
+public:
+    UndoGroup(TranslationTextCtrl *ctrl)
+    {
+        m_undo = [TextView(ctrl) undoManager];
+        [m_undo beginUndoGrouping];
+    }
+
+    ~UndoGroup()
+    {
+        [m_undo endUndoGrouping];
+    }
+
+private:
+    NSUndoManager *m_undo;
+};
+
+#elif defined(__WXMSW__)
+
+class UndoGroup
+{
+public:
+    UndoGroup(TranslationTextCtrl *ctrl) : m_doc(TextDocument(ctrl))
+    {
+        if (m_doc)
+            m_doc->BeginEditCollection();
+    }
+
+    ~UndoGroup()
+    {
+        if (m_doc)
+            m_doc->EndEditCollection();
+    }
+
+private:
+    ITextDocumentPtr m_doc;
+};
+
+#else
+
+class UndoGroup
+{
+public:
+    UndoGroup(TranslationTextCtrl*) {}
+};
+
+#endif
+
+
 } // anonymous namespace
 
 
@@ -414,3 +468,11 @@ void TranslationTextCtrl::DoSetValue(const wxString& value, int flags)
     [undo removeAllActions];
 }
 #endif
+
+void TranslationTextCtrl::SetValueUserWritten(const wxString& value)
+{
+    UndoGroup undo(this);
+    SelectAll();
+    WriteText(value);
+    SetInsertionPointEnd();
+}
