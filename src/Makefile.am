@@ -33,6 +33,7 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  welcomescreen.cpp welcomescreen.h \
                  syntaxhighlighter.cpp syntaxhighlighter.h \
                  sidebar.cpp sidebar.h \
+                 text_control.h text_control.cpp \
                  customcontrols.cpp customcontrols.h \
                  main_toolbar.h wx/main_toolbar.cpp
 nodist_poedit_SOURCES = compiled_xrc.cpp

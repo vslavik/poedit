@@ -44,23 +44,12 @@
 #include <wx/textfile.h>
 #include <wx/wupdlock.h>
 #include <wx/iconbndl.h>
-#include <wx/clipbrd.h>
 #include <wx/dnd.h>
 #include <wx/windowptr.h>
 
 #ifdef __WXOSX__
 #include <wx/cocoa/string.h>
 #import <AppKit/NSDocumentController.h>
-#endif
-
-#ifdef __WXMSW__
-  #include <richedit.h>
-  #ifndef BOE_UNICODEBIDI
-    #define BOE_UNICODEBIDI 0x0080
-  #endif
-  #ifndef BOM_UNICODEBIDI
-    #define BOM_UNICODEBIDI 0x0080
-  #endif
 #endif
 
 #include <map>
@@ -91,6 +80,7 @@
 #include "sidebar.h"
 #include "spellchecking.h"
 #include "syntaxhighlighter.h"
+#include "text_control.h"
 
 
 // this should be high enough to not conflict with any wxNewId-allocated value,
@@ -222,96 +212,12 @@ bool g_focusToText = false;
 }
 
 
-class ListHandler;
-class TextctrlHandler : public wxEvtHandler
-{
-    public:
-        TextctrlHandler(PoeditFrame*) {}
-
-    private:
-#ifdef __WXMSW__
-        // We use wxTE_RICH2 style, which allows for pasting rich-formatted
-        // text into the control. We want to allow only plain text (all the
-        // formatting done is Poedit's syntax highlighting), so we need to
-        // override copy/cut/paste command.s Plus, the richedit control
-        // (or wx's use of it) has a bug in it that causes it to copy wrong
-        // data when copying from the same text control to itself after its
-        // content was programatically changed:
-        // https://sourceforge.net/tracker/index.php?func=detail&aid=1910234&group_id=27043&atid=389153
-
-        bool DoCopy(wxTextCtrl *textctrl)
-        {
-            long from, to;
-            textctrl->GetSelection(&from, &to);
-            if ( from == to )
-                return false;
-
-            const wxString sel = textctrl->GetRange(from, to);
-
-            wxClipboardLocker lock;
-            wxCHECK_MSG( !!lock, false, "failed to lock clipboard" );
-
-            wxClipboard::Get()->SetData(new wxTextDataObject(sel));
-            return true;
-        }
-
-        void OnCopy(wxClipboardTextEvent& event)
-        {
-            wxTextCtrl *textctrl = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
-            wxCHECK_RET( textctrl, "wrong use of event handler" );
-
-            DoCopy(textctrl);
-        }
-
-        void OnCut(wxClipboardTextEvent& event)
-        {
-            wxTextCtrl *textctrl = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
-            wxCHECK_RET( textctrl, "wrong use of event handler" );
-
-            if ( !DoCopy(textctrl) )
-                return;
-
-            long from, to;
-            textctrl->GetSelection(&from, &to);
-            textctrl->Remove(from, to);
-        }
-
-        void OnPaste(wxClipboardTextEvent& event)
-        {
-            wxTextCtrl *textctrl = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
-            wxCHECK_RET( textctrl, "wrong use of event handler" );
-
-            wxClipboardLocker lock;
-            wxCHECK_RET( !!lock, "failed to lock clipboard" );
-
-            wxTextDataObject d;
-            wxClipboard::Get()->GetData(d);
-
-            long from, to;
-            textctrl->GetSelection(&from, &to);
-            textctrl->Replace(from, to, d.GetText());
-        }
-#endif // __WXMSW__
-
-        DECLARE_EVENT_TABLE()
-
-        friend class ListHandler;
-};
-
-BEGIN_EVENT_TABLE(TextctrlHandler, wxEvtHandler)
-#ifdef __WXMSW__
-    EVT_TEXT_COPY(-1, TextctrlHandler::OnCopy)
-    EVT_TEXT_CUT(-1, TextctrlHandler::OnCut)
-    EVT_TEXT_PASTE(-1, TextctrlHandler::OnPaste)
-#endif
-END_EVENT_TABLE()
-
 
 class TransTextctrlHandler : public TextctrlHandler
 {
     public:
         TransTextctrlHandler(PoeditFrame* frame)
-            : TextctrlHandler(frame), m_frame(frame) {}
+            : TextctrlHandler(), m_frame(frame) {}
 
     private:
         void OnText(wxCommandEvent& event)
@@ -352,260 +258,6 @@ BEGIN_EVENT_TABLE(ListHandler, wxEvtHandler)
    EVT_RIGHT_DOWN          (          ListHandler::OnRightClick)
    EVT_SET_FOCUS           (          ListHandler::OnFocus)
 END_EVENT_TABLE()
-
-#ifdef __WXOSX__
-// wxTextCtrl implementation on OS X uses insertText:, which is intended for
-// user input and performs some user input processing, such as autocorrections.
-// We need to avoid this, because Poedit's text control is filled with data
-// when moving in the list control: https://github.com/vslavik/poedit/issues/81
-// Solve this by using a customized control with overridden DoSetValue().
-class CustomizedTextCtrl : public wxTextCtrl
-{
-public:
-    CustomizedTextCtrl(wxWindow *parent,
-                       wxWindowID winid,
-                       long style = 0)
-       : wxTextCtrl(parent, winid, "", wxDefaultPosition, wxDefaultSize, style)
-    {
-        NSTextView *text = TextView();
-
-        [text setTextContainerInset:NSMakeSize(1,3)];
-        [text setRichText:NO];
-
-        [text setAutomaticQuoteSubstitutionEnabled:NO];
-        [text setAutomaticDashSubstitutionEnabled:NO];
-
-        [text setAllowsUndo:YES];
-    }
-
-protected:
-    void DoSetValue(const wxString& value, int flags) override
-    {
-        wxEventBlocker block(this, (flags & SetValue_SendEvent) ? 0 : wxEVT_ANY);
-
-        NSTextView *text = TextView();
-        [text setString:wxNSStringWithWxString(value)];
-        NSUndoManager *undo = [text undoManager];
-        [undo removeAllActions];
-
-        SendTextUpdatedEventIfAllowed();
-    }
-
-    wxString DoGetValue() const override
-    {
-        // wx's implementation is not sufficient and neither is [NSTextView string]
-        // (which wx uses): they ignore formatting, which would be desirable, but
-        // they also include embedded Unicode marks such as U+202A (Left-to-Right Embedding)
-        // or U+202C (Pop Directional Format) that are essential for correct
-        // handling of BiDi text.
-        //
-        // Instead, export the internal storage into plain-text, UTF-8 data and
-        // load that into wxString. That shouldn't be too inefficient (wx does
-        // UTF-8 roundtrip anyway) and preserves the marks; it is what TextEdit.app
-        // does when saving text files.
-        NSTextView *ctrl = TextView();
-        NSTextStorage *text = [ctrl textStorage];
-        NSDictionary *attrs = @{
-                                 NSDocumentTypeDocumentAttribute: NSPlainTextDocumentType,
-                                 NSCharacterEncodingDocumentAttribute: @(NSUTF8StringEncoding)
-                               };
-        NSData *data = [text dataFromRange:NSMakeRange(0, [text length]) documentAttributes:attrs error:nil];
-        if (data && [data length] > 0)
-            return wxString::FromUTF8((const char*)[data bytes], [data length]);
-        else
-            return wxTextCtrl::DoGetValue();
-    }
-
-    NSTextView *TextView() const
-    {
-        NSScrollView *scroll = (NSScrollView*)GetHandle();
-        return [scroll documentView];
-    }
-};
-
-#else // !__WXOSX__
-
-class CustomizedTextCtrl : public wxTextCtrl
-{
-public:
-    CustomizedTextCtrl(wxWindow *parent,
-                       wxWindowID winid,
-                       long style = 0)
-       : wxTextCtrl(parent, winid, "", wxDefaultPosition, wxDefaultSize, style)
-    {
-        wxTextAttr padding;
-        padding.SetLeftIndent(5);
-        padding.SetRightIndent(5);
-        SetDefaultStyle(padding);
-    }
-};
-
-#endif // !__WXOSX__
-
-
-class AnyTranslatableTextCtrl : public CustomizedTextCtrl
-{
-    public:
-        AnyTranslatableTextCtrl(wxWindow *parent, wxWindowID winid, int style = 0)
-           : CustomizedTextCtrl(parent, winid, wxTE_MULTILINE | wxTE_RICH2 | style)
-        {
-            InitColors();
-            Bind(wxEVT_TEXT, [=](wxCommandEvent& e){
-                e.Skip();
-                HighlightText();
-            });
-
-        #ifdef __WXMSW__
-            m_isRTL = false;
-        #endif
-        }
-
-        void SetLanguageRTL(bool isRTL)
-        {
-        #ifdef __WXOSX__
-            NSTextView *text = TextView();
-            [text setBaseWritingDirection:isRTL ? NSWritingDirectionRightToLeft : NSWritingDirectionLeftToRight];
-        #endif
-        #ifdef __WXMSW__
-            m_isRTL = isRTL;
-
-            BIDIOPTIONS bidi;
-            ::ZeroMemory(&bidi, sizeof(bidi));
-            bidi.cbSize = sizeof(bidi);
-            bidi.wMask = BOM_UNICODEBIDI;
-            bidi.wEffects = isRTL ? BOE_UNICODEBIDI : 0;
-            ::SendMessage((HWND)GetHWND(), EM_SETBIDIOPTIONS, 0, (LPARAM) &bidi);
-
-            ::SendMessage((HWND)GetHWND(), EM_SETEDITSTYLE, isRTL ? SES_BIDI : 0, SES_BIDI);
-
-            UpdateRTLStyle();
-        #endif
-        }
-
-#ifdef __WXMSW__
-    protected:
-        virtual void DoSetValue(const wxString& value, int flags) override
-        {
-            wxWindowUpdateLocker dis(this);
-            CustomizedTextCtrl::DoSetValue(value, flags);
-            UpdateRTLStyle();
-        }
-
-        void UpdateRTLStyle()
-        {
-            wxEventBlocker block(this, wxEVT_TEXT);
-
-            PARAFORMAT2 pf;
-            ::ZeroMemory(&pf, sizeof(pf));
-            pf.cbSize = sizeof(pf);
-            pf.dwMask |= PFM_RTLPARA;
-            if (m_isRTL)
-                pf.wEffects |= PFE_RTLPARA;
-
-            long start, end;
-            GetSelection(&start, &end);
-            SetSelection(-1, -1);
-            ::SendMessage((HWND) GetHWND(), EM_SETPARAFORMAT, 0, (LPARAM) &pf);
-            SetSelection(start, end);
-        }
-
-        bool m_isRTL;
-#endif // __WXMSW__
-
-    private:
-#ifdef __WXOSX__
-        void InitColors()
-        {
-            m_attrSpace  = @{NSBackgroundColorAttributeName: [NSColor colorWithSRGBRed:0.89 green:0.96 blue:0.68 alpha:1]};
-            m_attrEscape = @{NSBackgroundColorAttributeName: [NSColor colorWithSRGBRed:1 green:0.95 blue:1 alpha:1],
-                             NSForegroundColorAttributeName: [NSColor colorWithSRGBRed:0.46 green:0 blue:0.01 alpha:1]};
-        }
-
-        void HighlightText()
-        {
-            auto text = GetValue().ToStdWstring();
-
-            NSRange fullRange = NSMakeRange(0, text.length());
-            NSLayoutManager *layout = [TextView() layoutManager];
-            [layout removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:fullRange];
-            [layout removeTemporaryAttribute:NSBackgroundColorAttributeName forCharacterRange:fullRange];
-
-            m_syntax.Highlight(text, [=](int a, int b, SyntaxHighlighter::TextKind kind){
-                [layout addTemporaryAttributes:AttrFor(kind) forCharacterRange:NSMakeRange(a, b-a)];
-            });
-        }
-
-        typedef NSDictionary* AttrType;
-        NSDictionary *m_attrSpace, *m_attrEscape;
-
-#else // !__WXOSX__
-
-        void InitColors()
-        {
-            m_attrDefault.SetBackgroundColour(*wxWHITE);
-            m_attrDefault.SetTextColour(*wxBLACK);
-
-            m_attrSpace.SetBackgroundColour("#E4F6AE");
-
-            m_attrEscape.SetBackgroundColour("#FFF1FF");
-            m_attrEscape.SetTextColour("#760003");
-        }
-
-        void HighlightText()
-        {
-            auto text = GetValue().ToStdWstring();
-
-            wxWindowUpdateLocker noupd(this);
-            wxEventBlocker block(this, wxEVT_TEXT);
-            SetStyle(0, text.length(), m_attrDefault);
-
-            m_syntax.Highlight(text, [=](int a, int b, SyntaxHighlighter::TextKind kind){
-                SetStyle(a, b, AttrFor(kind));
-            });
-        }
-
-        typedef wxTextAttr AttrType;
-        wxTextAttr m_attrDefault, m_attrSpace, m_attrEscape;
-#endif // __WXOSX__/!__WXOSX__
-
-        const AttrType& AttrFor(SyntaxHighlighter::TextKind kind) const
-        {
-            switch (kind)
-            {
-                case SyntaxHighlighter::LeadingWhitespace:  return m_attrSpace;
-                case SyntaxHighlighter::Escape:             return m_attrEscape;
-            }
-            return m_attrSpace; // silence bogus warning
-        }
-
-        SyntaxHighlighter m_syntax;
-};
-
-
-class SourceTextCtrl : public AnyTranslatableTextCtrl
-{
-    public:
-        SourceTextCtrl(wxWindow *parent, wxWindowID winid)
-            : AnyTranslatableTextCtrl(parent, winid, wxTE_READONLY)
-        {
-            SetLanguageRTL(false); // English is LTR
-        }
-
-        virtual bool AcceptsFocus() const { return false; }
-};
-
-
-class TranslationTextCtrl : public AnyTranslatableTextCtrl
-{
-    public:
-        TranslationTextCtrl(wxWindow *parent, wxWindowID winid)
-            : AnyTranslatableTextCtrl(parent, winid)
-        {
-#ifdef __WXMSW__
-            PrepareTextCtrlForSpellchecker(this);
-#endif
-        }
-};
 
 
 BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
