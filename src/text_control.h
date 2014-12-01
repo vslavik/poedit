@@ -87,6 +87,10 @@ protected:
     bool m_isRTL;
 #endif // __WXMSW__
 
+#ifdef __WXGTK__
+    void DoSetValue(const wxString& value, int flags) override;
+#endif
+
 private:
     void HighlightText();
 

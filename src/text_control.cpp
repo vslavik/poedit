@@ -320,6 +320,14 @@ void AnyTranslatableTextCtrl::UpdateRTLStyle()
 }
 #endif // __WXMSW__
 
+#ifdef __WXGTK__
+void AnyTranslatableTextCtrl::DoSetValue(const wxString& value, int flags)
+{
+    CustomizedTextCtrl::DoSetValue(value, flags);
+    HighlightText();
+}
+#endif
+
 void AnyTranslatableTextCtrl::HighlightText()
 {
     auto text = GetValue().ToStdWstring();
