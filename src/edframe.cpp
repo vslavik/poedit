@@ -213,11 +213,10 @@ bool g_focusToText = false;
 
 
 
-class TransTextctrlHandler : public TextctrlHandler
+class TransTextctrlHandler : public wxEvtHandler
 {
     public:
-        TransTextctrlHandler(PoeditFrame* frame)
-            : TextctrlHandler(), m_frame(frame) {}
+        TransTextctrlHandler(PoeditFrame* frame) : m_frame(frame) {}
 
     private:
         void OnText(wxCommandEvent& event)
@@ -231,7 +230,7 @@ class TransTextctrlHandler : public TextctrlHandler
         DECLARE_EVENT_TABLE()
 };
 
-BEGIN_EVENT_TABLE(TransTextctrlHandler, TextctrlHandler)
+BEGIN_EVENT_TABLE(TransTextctrlHandler, wxEvtHandler)
     EVT_TEXT(-1, TransTextctrlHandler::OnText)
 END_EVENT_TABLE()
 

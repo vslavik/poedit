@@ -63,80 +63,6 @@ inline NSTextView *TextView(const wxTextCtrl *ctrl)
 } // anonymous namespace
 
 
-#ifdef __WXMSW__
-
-// We use wxTE_RICH2 style, which allows for pasting rich-formatted
-// text into the control. We want to allow only plain text (all the
-// formatting done is Poedit's syntax highlighting), so we need to
-// override copy/cut/paste command.s Plus, the richedit control
-// (or wx's use of it) has a bug in it that causes it to copy wrong
-// data when copying from the same text control to itself after its
-// content was programatically changed:
-// https://sourceforge.net/tracker/index.php?func=detail&aid=1910234&group_id=27043&atid=389153
-
-bool TextctrlHandler::DoCopy(wxTextCtrl *textctrl)
-{
-    long from, to;
-    textctrl->GetSelection(&from, &to);
-    if ( from == to )
-        return false;
-
-    const wxString sel = textctrl->GetRange(from, to);
-
-    wxClipboardLocker lock;
-    wxCHECK_MSG( !!lock, false, "failed to lock clipboard" );
-
-    wxClipboard::Get()->SetData(new wxTextDataObject(sel));
-    return true;
-}
-
-void TextctrlHandler::OnCopy(wxClipboardTextEvent& event)
-{
-    wxTextCtrl *textctrl = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
-    wxCHECK_RET( textctrl, "wrong use of event handler" );
-
-    DoCopy(textctrl);
-}
-
-void TextctrlHandler::OnCut(wxClipboardTextEvent& event)
-{
-    wxTextCtrl *textctrl = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
-    wxCHECK_RET( textctrl, "wrong use of event handler" );
-
-    if ( !DoCopy(textctrl) )
-        return;
-
-    long from, to;
-    textctrl->GetSelection(&from, &to);
-    textctrl->Remove(from, to);
-}
-
-void TextctrlHandler::OnPaste(wxClipboardTextEvent& event)
-{
-    wxTextCtrl *textctrl = dynamic_cast<wxTextCtrl*>(event.GetEventObject());
-    wxCHECK_RET( textctrl, "wrong use of event handler" );
-
-    wxClipboardLocker lock;
-    wxCHECK_RET( !!lock, "failed to lock clipboard" );
-
-    wxTextDataObject d;
-    wxClipboard::Get()->GetData(d);
-
-    long from, to;
-    textctrl->GetSelection(&from, &to);
-    textctrl->Replace(from, to, d.GetText());
-}
-
-BEGIN_EVENT_TABLE(TextctrlHandler, wxEvtHandler)
-    EVT_TEXT_COPY(-1, TextctrlHandler::OnCopy)
-    EVT_TEXT_CUT(-1, TextctrlHandler::OnCut)
-    EVT_TEXT_PASTE(-1, TextctrlHandler::OnPaste)
-END_EVENT_TABLE()
-
-#endif // __WXMSW__
-
-
-
 #ifdef __WXOSX__
 
 // wxTextCtrl implementation on OS X uses insertText:, which is intended for
@@ -205,9 +131,71 @@ CustomizedTextCtrl::CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long 
     padding.SetLeftIndent(5);
     padding.SetRightIndent(5);
     SetDefaultStyle(padding);
+
+#ifdef __WXMSW__
+    Bind(wxEVT_TEXT_COPY, &CustomizedTextCtrl::OnCopy, this);
+    Bind(wxEVT_TEXT_CUT, &CustomizedTextCtrl::OnCut, this);
+    Bind(wxEVT_TEXT_PASTE, &CustomizedTextCtrl::OnPaste, this);
+#endif
 }
 
 #endif // !__WXOSX__
+
+#ifdef __WXMSW__
+// We use wxTE_RICH2 style, which allows for pasting rich-formatted
+// text into the control. We want to allow only plain text (all the
+// formatting done is Poedit's syntax highlighting), so we need to
+// override copy/cut/paste command.s Plus, the richedit control
+// (or wx's use of it) has a bug in it that causes it to copy wrong
+// data when copying from the same text control to itself after its
+// content was programatically changed:
+// https://sourceforge.net/tracker/index.php?func=detail&aid=1910234&group_id=27043&atid=389153
+
+bool CustomizedTextCtrl::DoCopy()
+{
+    long from, to;
+    GetSelection(&from, &to);
+    if ( from == to )
+        return false;
+
+    const wxString sel = GetRange(from, to);
+
+    wxClipboardLocker lock;
+    wxCHECK_MSG( !!lock, false, "failed to lock clipboard" );
+
+    wxClipboard::Get()->SetData(new wxTextDataObject(sel));
+    return true;
+}
+
+void CustomizedTextCtrl::OnCopy(wxClipboardTextEvent& event)
+{
+    DoCopy();
+}
+
+void CustomizedTextCtrl::OnCut(wxClipboardTextEvent& event)
+{
+    if ( !DoCopy() )
+        return;
+
+    long from, to;
+    GetSelection(&from, &to);
+    Remove(from, to);
+}
+
+void CustomizedTextCtrl::OnPaste(wxClipboardTextEvent& event)
+{
+    wxClipboardLocker lock;
+    wxCHECK_RET( !!lock, "failed to lock clipboard" );
+
+    wxTextDataObject d;
+    wxClipboard::Get()->GetData(d);
+
+    long from, to;
+    GetSelection(&from, &to);
+    Replace(from, to, d.GetText());
+}
+#endif // __WXMSW__
+
 
 
 class AnyTranslatableTextCtrl::Attributes

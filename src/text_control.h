@@ -32,23 +32,6 @@
 #include "syntaxhighlighter.h"
 
 
-/// Custom text handler for use with translation-editing wxTextCtrl
-class TextctrlHandler : public wxEvtHandler
-{
-public:
-    TextctrlHandler() {}
-
-private:
-#ifdef __WXMSW__
-    bool DoCopy(wxTextCtrl *textctrl);
-    void OnCopy(wxClipboardTextEvent& event);
-    void OnCut(wxClipboardTextEvent& event);
-    void OnPaste(wxClipboardTextEvent& event);
-    DECLARE_EVENT_TABLE()
-#endif // __WXMSW__
-};
-
-
 /**
     Text control with some Poedit-specific customizations:
     
@@ -68,6 +51,13 @@ protected:
     void DoSetValue(const wxString& value, int flags) override;
     wxString DoGetValue() const override;
 #endif
+
+#ifdef __WXMSW__
+    bool DoCopy();
+    void OnCopy(wxClipboardTextEvent& event);
+    void OnCut(wxClipboardTextEvent& event);
+    void OnPaste(wxClipboardTextEvent& event);
+#endif // __WXMSW__
 };
 
 
