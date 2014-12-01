@@ -103,6 +103,11 @@ class TranslationTextCtrl : public AnyTranslatableTextCtrl
 {
 public:
     TranslationTextCtrl(wxWindow *parent, wxWindowID winid);
+
+protected:
+#ifdef __WXOSX__
+    void DoSetValue(const wxString& value, int flags) override;
+#endif
 };
 
 #endif // Poedit_text_control_h

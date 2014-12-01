@@ -121,18 +121,13 @@ CustomizedTextCtrl::CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long 
 
     [text setAutomaticQuoteSubstitutionEnabled:NO];
     [text setAutomaticDashSubstitutionEnabled:NO];
-
-    [text setAllowsUndo:YES];
 }
 
 void CustomizedTextCtrl::DoSetValue(const wxString& value, int flags)
 {
     wxEventBlocker block(this, (flags & SetValue_SendEvent) ? 0 : wxEVT_ANY);
 
-    auto text = TextView(this);
-    [text setString:wxNSStringWithWxString(value)];
-    NSUndoManager *undo = [text undoManager];
-    [undo removeAllActions];
+    [TextView(this) setString:wxNSStringWithWxString(value)];
 
     SendTextUpdatedEventIfAllowed();
 }
@@ -404,4 +399,18 @@ TranslationTextCtrl::TranslationTextCtrl(wxWindow *parent, wxWindowID winid)
 #ifdef __WXMSW__
     PrepareTextCtrlForSpellchecker(this);
 #endif
+
+#ifdef __WXOSX__
+    [TextView(this) setAllowsUndo:YES];
+#endif
 }
+
+#ifdef __WXOSX__
+void TranslationTextCtrl::DoSetValue(const wxString& value, int flags)
+{
+    AnyTranslatableTextCtrl::DoSetValue(value, flags);
+
+    NSUndoManager *undo = [TextView(this) undoManager];
+    [undo removeAllActions];
+}
+#endif
