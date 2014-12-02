@@ -29,67 +29,12 @@
 			<string>Viewer</string>
 			<key>LSHandlerRank</key>
 			<string>Owner</string>
-			<key>NSIsRelatedItemType</key>
-			<true/>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.poedit.mo</string>
 			</array>
-		</dict>
-	</array>
-	<key>UTExportedTypeDeclarations</key>
-	<array>
-		<dict>
-			<key>UTTypeIdentifier</key>
-			<string>net.poedit.po</string>
-			<key>UTTypeDescription</key>
-			<string>PO Translation</string>
-			<key>UTTypeIconFile</key>
-			<string>GenericTranslation</string>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.content</string>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>po</string>
-				</array>
-				<key>public.mime-type</key>
-				<array>
-					<string>application/x-po</string>
-					<string>application/x-gettext</string>
-					<string>text/x-gettext-translation</string>
-					<string>text/x-po</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeIdentifier</key>
-			<string>net.poedit.mo</string>
-			<key>UTTypeDescription</key>
-			<string>Compiled Translation</string>
-			<key>UTTypeIconFile</key>
-			<string>GenericTranslation</string>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.content</string>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>mo</string>
-					<string>gmo</string>
-				</array>
-				<key>public.mime-type</key>
-				<array>
-					<string>application/x-gettext-translation</string>
-				</array>
-			</dict>
+			<key>NSIsRelatedItemType</key>
+			<true/>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
@@ -112,6 +57,11 @@
 	<string>1</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.developer-tools</string>
+	<key>LSEnvironment</key>
+	<dict>
+		<key>PATH</key>
+		<string>/usr/local/bin:/opt/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+	</dict>
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>NSHumanReadableCopyright</key>
@@ -124,10 +74,60 @@
 	<string>https://poedit.net/updates/osx/appcast</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
-	<key>LSEnvironment</key>
-	<dict>
-		<key>PATH</key>
-		<string>/usr/local/bin:/opt/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
-	</dict>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.content</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PO Translation</string>
+			<key>UTTypeIconFile</key>
+			<string>GenericTranslation</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.poedit.po</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>po</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>application/x-po</string>
+					<string>application/x-gettext</string>
+					<string>text/x-gettext-translation</string>
+					<string>text/x-po</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.content</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Compiled Translation</string>
+			<key>UTTypeIconFile</key>
+			<string>GenericTranslation</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.poedit.mo</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mo</string>
+					<string>gmo</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>application/x-gettext-translation</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
 </dict>
 </plist>
