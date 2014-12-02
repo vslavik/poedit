@@ -520,7 +520,11 @@ PoeditFrame::PoeditFrame() :
     m_contentWrappingSizer->Add(m_attentionBar, wxSizerFlags().Expand());
 
     SetAccelerators();
-    RestoreWindowState(this, wxSize(980, 700), WinState_Size | WinState_Pos);
+
+    wxSize defaultSize(1100, 750);
+    if (!wxRect(wxGetDisplaySize()).Contains(wxSize(1400,850)))
+        defaultSize = wxSize(980, 700);
+    RestoreWindowState(this, defaultSize, WinState_Size | WinState_Pos);
 
     UpdateMenu();
 
