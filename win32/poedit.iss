@@ -182,4 +182,12 @@ Name: "ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl"
 
 [CustomMessages]
 OpenAfterInstall=Open Poedit after installation
+brazilianportuguese.OpenAfterInstall=Abrir o Poedit após a instalação
+catalan.OpenAfterInstall=Obre el Poedit després de la instal·lació
 czech.OpenAfterInstall=Po instalaci otevřít Poedit
+dutch.OpenAfterInstall=Poedit starten na insallatie
+french.OpenAfterInstall=Ouvrir Poedit après l'installation
+hungarian.OpenAfterInstall=Poedit megnyitása telepítés után
+polish.OpenAfterInstall=Otwórz program Poedit po zakończeniu instalacji
+spanish.OpenAfterInstall=Abrir Poedit tras la instalación
+turkish.OpenAfterInstall=Kurulumdan sonra Poedit'i aç
