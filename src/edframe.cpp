@@ -391,6 +391,13 @@ END_EVENT_TABLE()
     _("Up"),
     /// TRANSLATORS: Keyboard shortcut for display in Windows menus
     _("Down"),
+
+    /// TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+    _("ctrl"),
+    /// TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+    _("alt"),
+    /// TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+    _("shift"),
 #endif
 
 
