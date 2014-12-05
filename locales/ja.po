@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2014-11-28 18:23+0100\n"
-"PO-Revision-Date: 2014-12-02 06:26-0500\n"
+"POT-Creation-Date: 2014-12-04 18:53+0100\n"
+"PO-Revision-Date: 2014-12-05 11:01-0500\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -18,7 +18,7 @@ msgid "Hide this notification message"
 msgstr "この通知メッセージを表示しない"
 
 msgid "Don't Show Again"
-msgstr ""
+msgstr "今後表示しない"
 
 msgid "Don't show again"
 msgstr "今後表示しない"
@@ -26,11 +26,11 @@ msgstr "今後表示しない"
 #, c-format
 msgid "%i line of file '%s' was not loaded correctly."
 msgid_plural "%i lines of file '%s' were not loaded correctly."
-msgstr[0] ""
+msgstr[0] "%i行目 (ファイル '%s') が正しく読み込めませんでした。"
 
 #, c-format
 msgid "Line %d of file '%s' is corrupted (not valid %s data)."
-msgstr ""
+msgstr "%d行目 (ファイル '%s') が破損しています。無効な%sデータです。"
 
 #, c-format
 msgid "Malformed header: '%s'"
@@ -111,7 +111,7 @@ msgid "Learn more"
 msgstr "更に詳しく"
 
 msgid "Learn More"
-msgstr ""
+msgstr "さらに詳しく"
 
 #, c-format
 msgid "Failed command: %s"
@@ -135,34 +135,36 @@ msgid "&Help"
 msgstr "ヘルプ (&H)"
 
 msgid "MO files can’t be directly edited in Poedit."
-msgstr ""
+msgstr "MO ファイルは Poedit で直接編集できません。"
 
 msgid "Error opening file"
-msgstr ""
+msgstr "ファイルを開く際にエラーが発生しました"
 
 msgid ""
 "Please open and edit the corresponding PO file instead. When you save it, "
 "the MO file will be updated as well."
 msgstr ""
+"代わりに、対応する PO ファイルを開いてください。そちらを保存する際に MO ファ"
+"イルも更新されます。"
 
 msgid "don't delete temporary files (for debugging)"
 msgstr "一時ファイルを削除しない (デバッグ向け)"
 
 #, c-format
 msgid "Unhandled exception occurred: %s"
-msgstr ""
+msgstr "未処理例外が発生しました: %s"
 
 msgid "Unhandled exception occurred."
-msgstr ""
+msgstr "未処理例外が発生しました。"
 
 msgid "Open catalog"
 msgstr "カタログを開く"
 
 msgid "All Files"
-msgstr ""
+msgstr "すべてのファイル"
 
 msgid "PO Translation Files"
-msgstr ""
+msgstr "PO 翻訳ファイル"
 
 #, c-format
 msgid "File '%s' doesn't exist."
@@ -268,22 +270,22 @@ msgid "&View"
 msgstr "表示 (&V)"
 
 msgid "Enter Full Screen"
-msgstr ""
+msgstr "全画面表示"
 
 msgid "Window"
-msgstr ""
+msgstr "ウィンドウ"
 
 msgid "Minimize"
-msgstr ""
+msgstr "最小化"
 
 msgid "Zoom"
-msgstr ""
+msgstr "ズーム"
 
 msgid "Bring All to Front"
-msgstr ""
+msgstr "すべてを手前に移動"
 
 msgid "PO Translation"
-msgstr ""
+msgstr "PO 翻訳"
 
 msgid "The file cannot be opened."
 msgstr "このファイルを開くことができません。"
@@ -296,63 +298,75 @@ msgid ""
 msgstr "ファイルが破損しているか、Poedit が認識できない形式のようです。"
 
 msgid "&Undo"
-msgstr ""
+msgstr "取り消し (&U)"
 
 msgid "&Redo"
-msgstr ""
+msgstr "やり直し (&R)"
 
 msgid "Cu&t"
-msgstr ""
+msgstr "切り抜き (&t)"
 
 msgid "Cut"
-msgstr ""
+msgstr "切り抜き"
 
 msgid "&Copy"
-msgstr ""
+msgstr "コピー (&C)"
 
 msgid "Copy"
-msgstr ""
+msgstr "コピー"
 
 msgid "&Paste"
-msgstr ""
+msgstr "ペースト (&P)"
 
 msgid "Paste"
-msgstr ""
+msgstr "ペースト"
 
 msgid "&Delete"
-msgstr ""
+msgstr "削除 (&D)"
 
 msgid "Select &All"
-msgstr ""
+msgstr "すべてを選択 (&A)"
 
 msgid "Select All"
-msgstr ""
+msgstr "全選択"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 msgid "Ctrl+"
-msgstr ""
+msgstr "Ctrl+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 msgid "Alt+"
-msgstr ""
+msgstr "Alt+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"
-msgstr ""
+msgstr "Shift+"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Enter"
-msgstr ""
+msgstr "Enter"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Up"
-msgstr ""
+msgstr "上へ"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Down"
-msgstr ""
+msgstr "下へ"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+msgid "ctrl"
+msgstr "ctrl"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+msgid "alt"
+msgstr "alt"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+msgid "shift"
+msgstr "shift"
 
 msgid "You can't drop more than one file on Poedit window."
 msgstr "Poedit へドロップできるのは1回につき1ファイルのみです。"
@@ -389,9 +403,10 @@ msgstr "翻訳:"
 msgid ""
 "Spellchecking is disabled, because the dictionary for %s isn’t installed."
 msgstr ""
+"%sの辞書がインストールされていないためスペルチェックは無効化されています。"
 
 msgid "Install"
-msgstr ""
+msgstr "インストール"
 
 msgid "Catalog modified. Do you want to save changes?"
 msgstr "カタログの変更を保存しますか？"
@@ -415,49 +430,51 @@ msgid "Save as..."
 msgstr "名前を付けて保存..."
 
 msgid "Compile to..."
-msgstr ""
+msgstr "形式を指定してコンパイル…"
 
 msgid "Compiled Translation Files"
-msgstr ""
+msgstr "翻訳ファイルをコンパイルしました"
 
 msgid "Export as..."
 msgstr "書式を指定してエクスポート…"
 
 msgid "HTML Files"
-msgstr ""
+msgstr "HTML ファイル"
 
 msgid "Open catalog template"
 msgstr "カタログの雛形を開く"
 
 msgid "POT Translation Templates"
-msgstr ""
+msgstr "POT 翻訳テンプレート"
 
 msgid "Updating catalog"
 msgstr "カタログを更新中"
 
 msgid "Source code not available."
-msgstr ""
+msgstr "ソースコードが存在しません。"
 
 msgid "Updating failed"
-msgstr ""
+msgstr "更新に失敗しました"
 
 msgid ""
 "Translations couldn’t be updated from the source code, because no code was "
 "found in the location specified in the catalog’s Properties."
 msgstr ""
+"カタログの属性で指定された位置にコードが見つからなかったため、翻訳をソース"
+"コードから更新できませんでした。"
 
 msgid "Entries in the catalog are probably incorrect."
 msgstr "カタログ中の項目が正しくない可能性があります。"
 
 msgid "Updating the catalog failed. Click on 'Details >>' for details."
 msgstr ""
-"カタログの更新に失敗しました。詳細を見るには ‘Details >>’ をクリックしてくだ"
-"さい。"
+"カタログの更新に失敗しました。詳細を見るには ‘詳細 >>’ をクリックしてくださ"
+"い。"
 
 #, c-format
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
-msgstr[0] "翻訳に %d 個の問題が見つかりました。"
+msgstr[0] "翻訳に%d件の問題が見つかりました。"
 
 msgid "Validation results"
 msgstr "検査の結果"
@@ -470,12 +487,14 @@ msgstr ""
 "を選択すると表示されます。"
 
 msgid "The file was saved safely."
-msgstr ""
+msgstr "ファイルを安全に保存しました。"
 
 msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
 msgstr ""
+"ファイルを安全に保存し MO 形式にコンパイルしましたが、恐らく正常に動作しない"
+"でしょう。"
 
 msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
@@ -488,9 +507,10 @@ msgid ""
 "The file was compiled into the MO format, but it will probably not work "
 "correctly."
 msgstr ""
+"ファイルを MO 形式にコンパイルしましたが、恐らく正常に動作しないでしょう。"
 
 msgid "The file cannot be compiled into the MO format and used."
-msgstr ""
+msgstr "ファイルを MO 形式にコンパイルして使用することができません。"
 
 msgid "No problems with the translation found."
 msgstr "翻訳に問題は見つかりませんでした。"
@@ -499,7 +519,7 @@ msgstr "翻訳に問題は見つかりませんでした。"
 msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
 "The translation is ready for use, but %d entries are not translated yet."
-msgstr[0] ""
+msgstr[0] "この翻訳を利用できますが、%d件の項目がまだ翻訳されていません。"
 
 msgid "The translation is ready for use."
 msgstr "この翻訳は使用できます。"
@@ -524,7 +544,7 @@ msgstr ""
 "Last-Translator ヘッダで用いられます。"
 
 msgid "Set Email"
-msgstr ""
+msgstr "メールアドレスを設定"
 
 msgid "Set email"
 msgstr "メールアドレスを設定"
@@ -533,7 +553,7 @@ msgid "Translation's project name isn't set."
 msgstr "翻訳プロジェクト名が設定されていません。"
 
 msgid "Set Name"
-msgstr ""
+msgstr "名前を設定"
 
 msgid "Set name"
 msgstr "名前を設定"
@@ -542,7 +562,7 @@ msgid "Language of the translation isn't set."
 msgstr "翻訳の言語が設定されていません。"
 
 msgid "Set Language"
-msgstr ""
+msgstr "言語を設定"
 
 msgid "Set language"
 msgstr "言語を設定"
@@ -566,10 +586,10 @@ msgstr "必要なヘッダ Plural-Forms がありません。"
 
 #, c-format
 msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "PluralForms ヘッダに文法エラーがあります。(\"%s\")"
+msgstr "Plural-Forms ヘッダに文法エラーがあります。(\"%s\")"
 
 msgid "Fix the Header"
-msgstr ""
+msgstr "ヘッダーを修正"
 
 msgid "Fix the header"
 msgstr "ヘッダを修正する"
@@ -591,16 +611,16 @@ msgstr "メッセージカタログ ‘%s’ の読み込みエラーです。"
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
-msgstr ""
+msgstr "翻訳済み: %d/%d件中 (%d %%)"
 
 #, c-format
 msgid "Remains: %d"
-msgstr ""
+msgstr "未翻訳: %d"
 
 #, c-format
 msgid "%d error"
 msgid_plural "%d errors"
-msgstr[0] ""
+msgstr[0] "%d件のエラー"
 
 msgid " (unsaved)"
 msgstr " (未保存)"
@@ -609,7 +629,7 @@ msgid " (modified)"
 msgstr " (変更済)"
 
 msgid "Go"
-msgstr ""
+msgstr "Go"
 
 #, c-format
 msgid "Failed to update translation memory: %s"
@@ -636,56 +656,64 @@ msgid "Purge"
 msgstr "使わない翻訳の整理"
 
 msgid "Fill missing translations from TM"
-msgstr ""
+msgstr "翻訳メモリを使って未翻訳項目を埋める"
 
 msgid "Only fill in exact matches"
-msgstr ""
+msgstr "完全な一致のみ採用する"
 
 msgid ""
 "By default, inaccurate results are filled in as well and marked as fuzzy. "
 "Check this option to only include accurate matches."
 msgstr ""
+"デフォルトでは正確ではない一致結果も使われ、未翻訳としてマークされます。正確"
+"な一致のみを含めたい場合、このオプションにチェックを入れてください。"
 
 msgid "Don’t mark exact matches as fuzzy"
-msgstr ""
+msgstr "完全な一致を未確定としてマークしない"
 
 msgid ""
 "Only enable if you trust the quality of your TM. By default, all matches "
 "from the TM are marked as fuzzy and should be reviewed."
 msgstr ""
+"翻訳メモリの品質を信頼できる場合のみ有効化してください。デフォルトでは翻訳メ"
+"モリからの一致は未確定にマークされ、レビューが必要となります。"
 
 msgid "Fill"
-msgstr ""
+msgstr "埋める"
 
 #, c-format
 msgid "%d entry was filled from the translation memory."
 msgid_plural "%d entries were filled from the translation memory."
-msgstr[0] ""
+msgstr[0] "翻訳メモリを使って%d件の項目を埋めました。"
 
 msgid ""
 "The translations were marked as fuzzy, because they may be inaccurate. You "
 "should review them for correctness."
 msgstr ""
+"翻訳は正確でない可能性があるため、未確定にマークされています。間違っていない"
+"かどうかレビューしてください。"
 
 msgid "No entries could be filled from the translation memory."
-msgstr ""
+msgstr "翻訳メモリを使って埋められる項目はありませんでした。"
 
 msgid ""
 "The TM doesn’t contain any strings similar to the content of this file. It "
 "is only effective for semi-automatic translations after Poedit learns enough "
 "from files that you translated manually."
 msgstr ""
+"このファイルに含まれるコンテンツに似た文字列が翻訳メモリには含まれていませ"
+"ん。"
 
 msgid "Translating"
-msgstr ""
+msgstr "翻訳中"
 
 msgid "Filling missing translations from TM..."
-msgstr ""
+msgstr "翻訳メモリを使って未翻訳項目を埋めています…"
 
 #, c-format
 msgid "Translated %u string"
 msgid_plural "Translated %u strings"
-msgstr[0] ""
+msgstr[0] "%u件の文字列を翻訳済み"
 
 msgid "Copy from source text"
 msgstr "ソースからコピー"
@@ -716,7 +744,7 @@ msgid "Form %i"
 msgstr "形式 %i"
 
 msgid "Zero"
-msgstr ""
+msgstr "ゼロ"
 
 msgid "One"
 msgstr "1"
@@ -732,25 +760,25 @@ msgstr "しおり (&B)"
 
 #, c-format
 msgid "Set bookmark %i"
-msgstr ""
+msgstr "ブックマーク %i を設定"
 
 #, c-format
 msgid "Go to bookmark %i"
-msgstr ""
+msgstr "ブックマーク %i へ移動"
 
 #, c-format
 msgid "Set Bookmark %i"
-msgstr ""
+msgstr "ブックマーク %i を設定"
 
 #, c-format
 msgid "Go to Bookmark %i"
-msgstr ""
+msgstr "ブックマーク %i へ移動"
 
 msgid "Hide Sidebar"
-msgstr ""
+msgstr "サイドバーを隠す"
 
 msgid "Show Sidebar"
-msgstr ""
+msgstr "サイドバーを表示"
 
 msgid "Source text"
 msgstr "ソーステキスト"
@@ -814,10 +842,10 @@ msgid "Source file occurrence:"
 msgstr "ソースファイルでの出現:"
 
 msgid "Open in Editor"
-msgstr ""
+msgstr "エディターで開く"
 
 msgid "Open in editor"
-msgstr ""
+msgstr "エディターで開く"
 
 #, c-format
 msgid "Error opening file %s!"
@@ -878,30 +906,32 @@ msgid ""
 msgstr "このプロジェクトのすべてのカタログを更新してもよろしいですか？"
 
 msgid "Information about the translator"
-msgstr ""
+msgstr "翻訳者に関する情報"
 
 msgid "Name:"
-msgstr ""
+msgstr "名前:"
 
 msgid "Your Name"
-msgstr ""
+msgstr "あなたの名前:"
 
 msgid "Email:"
-msgstr ""
+msgstr "メール:"
 
 msgid "your_email@example.com"
-msgstr ""
+msgstr "your_email@example.com"
 
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
 "of GNU gettext files."
 msgstr ""
+"お名前とメールアドレスは GNU gettext ファイルの Last-Translator ヘッダーを設"
+"定するためにのみ使われます。"
 
 msgid "Editing"
-msgstr ""
+msgstr "編集中"
 
 msgid "Automatically compile MO file when saving"
-msgstr ""
+msgstr "保存する際に MO ファイルを自動コンパイル"
 
 msgid "Show summary after catalog update"
 msgstr "カタログ更新後に要約を表示"
@@ -921,23 +951,23 @@ msgstr ""
 "動は Ctrl + 矢印キー のみとなります。"
 
 msgid "Appearance"
-msgstr ""
+msgstr "外観"
 
 msgid "Use custom list font:"
-msgstr ""
+msgstr "カスタムリストフォントを使う:"
 
 msgid "Use custom text fields font:"
-msgstr ""
+msgstr "カスタムテキストフィールドフォントを使う:"
 
 msgid "Change UI language"
 msgstr "Poedit の UI 言語を変更"
 
 #. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
 msgid "(requires Windows 8 or newer)"
-msgstr ""
+msgstr "(Window 8 以降が必要)"
 
 msgid "General"
-msgstr ""
+msgstr "一般"
 
 msgid "Use translation memory"
 msgstr "翻訳メモリを使う"
@@ -946,11 +976,11 @@ msgid "Learn From Files..."
 msgstr "ファイルから学習…"
 
 msgid "Learn from files..."
-msgstr ""
+msgstr "ファイルから学習…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
 msgid "Reset"
-msgstr ""
+msgstr "リセット"
 
 msgid "Consult TM when updating from sources"
 msgstr "ソースからの更新の際に翻訳メモリを調べる"
@@ -961,6 +991,10 @@ msgid ""
 "near-empty, it will not be very effective. The more translations\n"
 "you edit and the larger the TM grows, the better it gets."
 msgstr ""
+"有効化すると、Poedit は翻訳メモリに保存されている以前の翻訳を使って\n"
+"新しい項目を埋めるよう試みます。もし翻訳メモリが空に近い場合、あまり\n"
+"効率的には動作しないでしょう。より多くの翻訳を編集すればするほど、\n"
+"翻訳メモリが大きくなり結果も改善されます。"
 
 msgid "Stored translations:"
 msgstr "保存された翻訳:"
@@ -981,15 +1015,17 @@ msgid "Finalizing..."
 msgstr "完了処理中…"
 
 msgid "Reset translation memory"
-msgstr ""
+msgstr "翻訳メモリをリセット"
 
 msgid "Are you sure you want to reset the translation memory?"
-msgstr ""
+msgstr "本当に翻訳メモリをリセットしてよいですか ?"
 
 msgid ""
 "Resetting the translation memory will irrevocably delete all stored "
 "translations from it. You can’t undo this operation."
 msgstr ""
+"翻訳メモリをリセットすると、保存された翻訳がすべて削除されます。元に戻すこと"
+"はできません。"
 
 msgid "Cancel"
 msgstr "キャンセル"
@@ -998,12 +1034,14 @@ msgstr "キャンセル"
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
 msgid "TM"
-msgstr ""
+msgstr "翻訳メモリ"
 
 msgid ""
 "Source code extractors are used to find translatable strings in the source "
 "code files and extract them so that they can be translated."
 msgstr ""
+"ソースコード抽出ツールは、ソースコードファイル内にある翻訳可能な文字列を見つ"
+"けて抽出するために使われます。"
 
 msgid "New"
 msgstr "新規"
@@ -1012,10 +1050,10 @@ msgid "Edit"
 msgstr "編集"
 
 msgid "Extractors"
-msgstr ""
+msgstr "抽出ツール"
 
 msgid "Automatically check for updates"
-msgstr ""
+msgstr "自動的に更新を確認"
 
 msgid "Include beta versions"
 msgstr "ベータ版を含める"
@@ -1024,17 +1062,21 @@ msgid ""
 "Beta versions contain the latest new features and improvements, but may be a "
 "bit less stable."
 msgstr ""
+"ベータバージョンは最新の機能や改善を含みますが、安定性が低い可能性がありま"
+"す。"
 
 msgid "Updates"
-msgstr ""
+msgstr "更新"
 
 msgid ""
 "These settings affect internal formatting of PO files. Adjust them if you "
 "have specific requirements e.g. because of version control."
 msgstr ""
+"これらの設定は PO ファイルの内部フォーマットに影響します。例えばバージョンコ"
+"ントロールのような特別な要件がある場合は調整してください。"
 
 msgid "Line endings:"
-msgstr ""
+msgstr "行の最後:"
 
 msgid "Unix (recommended)"
 msgstr "Unix (推奨)"
@@ -1044,13 +1086,13 @@ msgstr "Windows"
 
 #. TRANSLATORS: Followed by text control for entering number; wraps text at given width
 msgid "Wrap at:"
-msgstr ""
+msgstr "折り返し:"
 
 msgid "Preserve formatting of existing files"
-msgstr ""
+msgstr "既存ファイルのフォーマットを保護する"
 
 msgid "Advanced"
-msgstr ""
+msgstr "上級者モード"
 
 msgid "Additional keywords"
 msgstr "追加キーワード"
@@ -1059,7 +1101,7 @@ msgid "Paths"
 msgstr "パス"
 
 msgid "Excluded paths"
-msgstr ""
+msgstr "除外するパス"
 
 msgid "Name of the project the translation is for"
 msgstr "翻訳するプロジェクトの名称"
@@ -1090,7 +1132,7 @@ msgid "String to find:"
 msgstr "検索する文字列:"
 
 msgid "Case sensitive"
-msgstr "あいまい検索"
+msgstr "大小文字を区別する"
 
 msgid "Start from the first item"
 msgstr "最初の項目から順に検索する"
@@ -1171,7 +1213,7 @@ msgid "&Open..."
 msgstr "開く… (&O)"
 
 msgid "Open Recent"
-msgstr ""
+msgstr "最近のファイルを開く"
 
 msgid "&Save"
 msgstr "保存 (&S)"
@@ -1183,7 +1225,7 @@ msgid "Save &As..."
 msgstr "名前を付けて保存 (&A)..."
 
 msgid "Compile to MO..."
-msgstr ""
+msgstr "MO にコンパイル…"
 
 msgid "E&xport as HTML..."
 msgstr "HTML としてエクスポート… (&E)"
@@ -1210,7 +1252,7 @@ msgid "Edit &Comment"
 msgstr "コメントを編集 (&C)"
 
 msgid "Suggestions"
-msgstr ""
+msgstr "提案"
 
 msgid "&Show references"
 msgstr "参照画面の表示 (&S)"
@@ -1264,10 +1306,10 @@ msgid "Sort by &Translation"
 msgstr "翻訳順でソート (&T)"
 
 msgid "&Group by context"
-msgstr ""
+msgstr "コンテクストでグループ化 (&G)"
 
 msgid "&Group By Context"
-msgstr ""
+msgstr "コンテクストでグループ化 (&G)"
 
 msgid "&Untranslated entries first"
 msgstr "未訳の項目を先頭に (&U)"
@@ -1276,7 +1318,7 @@ msgid "&Untranslated Entries First"
 msgstr "未訳の項目を先頭に (&U)"
 
 msgid "Show sidebar"
-msgstr ""
+msgstr "サイドバーを表示"
 
 msgid "C&atalog"
 msgstr "カタログ(&A)"
@@ -1294,10 +1336,10 @@ msgid "Update from &POT File..."
 msgstr "POT ファイルから更新… (&P)"
 
 msgid "Fill missing translations from &TM..."
-msgstr ""
+msgstr "翻訳メモリを使って未翻訳項目を埋める… (&T)"
 
 msgid "Fill Missing Translations from &TM..."
-msgstr ""
+msgstr "翻訳メモリを使って未翻訳項目を埋める… (&T)"
 
 msgid "&Purge deleted translations"
 msgstr "削除された翻訳を一掃する (&P)"
@@ -1321,16 +1363,16 @@ msgid "&Done and Next"
 msgstr "翻訳済みとし、次へ (&D)"
 
 msgid "&Previous translation"
-msgstr ""
+msgstr "前の翻訳 (&P)"
 
 msgid "&Previous Translation"
-msgstr ""
+msgstr "前の翻訳 (&P)"
 
 msgid "&Next translation"
-msgstr ""
+msgstr "次の翻訳 (&N)"
 
 msgid "&Next Translation"
-msgstr ""
+msgstr "次の翻訳 (&N)"
 
 msgid "P&revious unfinished"
 msgstr "前の未訳または未確定 (&R)"
@@ -1363,7 +1405,7 @@ msgid "&About"
 msgstr "このプログラムについて (&A)"
 
 msgid "Extractor setup"
-msgstr ""
+msgstr "抽出ツール設定"
 
 msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
 msgstr "対象拡張子をセミコロンで区切って指定してください (例. *.cpp;*h):"
@@ -1372,7 +1414,7 @@ msgid "Invocation:"
 msgstr "実行オプション:"
 
 msgid "Command to extract translations:"
-msgstr ""
+msgstr "翻訳を抽出するコマンド:"
 
 msgid ""
 "This is the command used to launch the extractor.\n"
@@ -1380,6 +1422,10 @@ msgid ""
 "of keywords, %F to list of input files,\n"
 "%C to charset flag (see below)."
 msgstr ""
+"これは抽出ツールを立ち上げるためのコマンドです。\n"
+"%o は出力ファイルの名前として展開され、%K は\n"
+"キーワードのリスト、%F は入力ファイルのリスト、\n"
+"%C は文字集合フラグ (以下を参照) です。"
 
 msgid "An item in keywords list:"
 msgstr "キーワード一覧の各項目:"
@@ -1426,7 +1472,7 @@ msgid "Use custom expression"
 msgstr "カスタム表現を使用"
 
 msgid "Learn about plural forms"
-msgstr "Plural-Form (複数形) とは"
+msgstr "複数形とは"
 
 msgid "Translation properties"
 msgstr "翻訳の設定"
@@ -1448,7 +1494,7 @@ msgstr ""
 "翻訳対象文字列の認識に使います:"
 
 msgid "Learn about gettext keywords"
-msgstr "Plural-Form (複数形) とは"
+msgstr "gettext キーワードとは"
 
 msgid "Sources keywords"
 msgstr "ソース中のキーワード"
@@ -1502,40 +1548,40 @@ msgid "Toggled if selected string has fuzzy translation"
 msgstr "現在の項目を未確定翻訳に設定"
 
 msgid "Show or hide the sidebar."
-msgstr ""
+msgstr "サイドバーを表示・非表示にする。"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
 msgid "Previous source text:"
-msgstr ""
+msgstr "以前のソーステキスト:"
 
 msgid ""
 "The old source text (before it changed during an update) that the fuzzy "
 "translation corresponds to."
-msgstr ""
+msgstr "未確定翻訳が対応する、更新で変更される前の旧ソーステキスト。"
 
 msgid "Add comment"
-msgstr ""
+msgstr "コメントを追加"
 
 msgid "Add Comment"
-msgstr ""
+msgstr "コメントを追加"
 
 msgid "Translation suggestions:"
-msgstr ""
+msgstr "翻訳の提案:"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
 msgid "No matches found"
-msgstr ""
+msgstr "一致するものが見つかりませんでした"
 
 #. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (OS X, Linux).
 msgid "No Matches Found"
-msgstr ""
+msgstr "一致するものが見つかりませんでした"
 
 msgid "This string was found in Poedit’s translation memory."
-msgstr ""
+msgstr "Poedit の翻訳メモリにこの文字列が見つかりました。"
 
 #, c-format
 msgid "(New: %i, obsolete: %i)"
-msgstr ""
+msgstr "(新規 %i、使用しないように変更 %i)"
 
 #, c-format
 msgid "Importing translations: %d"
@@ -1549,7 +1595,7 @@ msgstr "移行準備中…"
 
 #, c-format
 msgid "Migration exit status: %d"
-msgstr ""
+msgstr "移行終了ステータス: %d"
 
 msgid "Poedit needs to convert your translation memory to a new format."
 msgstr "Poedit は既存の翻訳メモリを新しい形式に変換する必要があります。"
@@ -1574,6 +1620,10 @@ msgid ""
 "%s\n"
 "Please email help@poedit.net and we’ll get it fixed."
 msgstr ""
+"翻訳メモリのデータを移行できませんでした。エラーは以下のとおりです。\n"
+"\n"
+"%s\n"
+"help@poedit.net にメールしてください。お手伝いさせていただきます。"
 
 msgid "Cannot create temporary directory."
 msgstr "一時ディレクトリを作成できません！"
