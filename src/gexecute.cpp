@@ -40,10 +40,12 @@
 #if (defined(__GNUC__) && !defined(__clang__) && !wxCHECK_GCC_VERSION(4,9))
     #include <boost/regex.hpp>
     using boost::wregex;
+    using boost::wsmatch;
     using boost::regex_match;
 #else
     #include <regex>
     using std::wregex;
+    using std::wsmatch;
     using std::regex_match;
 #endif
 
@@ -181,8 +183,8 @@ bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors
 
         GettextError rec;
 
-        std::wsmatch match;
-        if (std::regex_match(e, match, RE_ERROR))
+        wsmatch match;
+        if (regex_match(e, match, RE_ERROR))
         {
             rec.line = std::stoi(match.str(1));
             rec.text = match.str(3);
