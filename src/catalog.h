@@ -29,7 +29,6 @@
 #include "language.h"
 
 #include <wx/encconv.h>
-#include <wx/regex.h>
 #include <wx/arrstr.h>
 #include <wx/textfile.h>
 

@@ -29,13 +29,23 @@
 #include <wx/txtstrm.h>
 #include <wx/string.h>
 #include <wx/intl.h>
-#include <wx/regex.h>
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
 
 #include "gexecute.h"
 #include "errors.h"
 #include "chooselang.h"
+
+// GCC's libstdc++ didn't have functional std::regex implementation until 4.9
+#if (defined(__GNUC__) && !defined(__clang__) && !wxCHECK_GCC_VERSION(4,9))
+    #include <boost/regex.hpp>
+    using boost::wregex;
+    using boost::regex_match;
+#else
+    #include <regex>
+    using std::wregex;
+    using std::regex_match;
+#endif
 
 namespace
 {
@@ -160,23 +170,22 @@ bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors
     wxArrayString gstderr;
     long retcode = DoExecuteGettext(cmdline, gstderr);
 
-    wxRegEx reError(".*\\.po:([0-9]+)(:[0-9]+)?: (.*)");
+    static const wregex RE_ERROR(L".*\\.po:([0-9]+)(:[0-9]+)?: (.*)");
 
-    for ( size_t i = 0; i < gstderr.size(); i++ )
+    for (const auto& ewx: gstderr)
     {
-        const wxString e = gstderr[i];
-        wxLogTrace("poedit.execute", "  stderr: %s", e.c_str());
+        const auto e = ewx.ToStdWstring();
+        wxLogTrace("poedit", "  stderr: %s", e.c_str());
         if ( e.empty() )
             continue;
 
         GettextError rec;
 
-        if ( reError.Matches(e) )
+        std::wsmatch match;
+        if (std::regex_match(e, match, RE_ERROR))
         {
-            long num = -1;
-            reError.GetMatch(e, 1).ToLong(&num);
-            rec.line = (int)num;
-            rec.text = reError.GetMatch(e, 3);
+            rec.line = std::stoi(match.str(1));
+            rec.text = match.str(3);
             errors.push_back(rec);
             wxLogTrace("poedit.execute",
                        _T("        => parsed error = \"%s\" at %d"),
