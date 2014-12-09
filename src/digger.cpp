@@ -207,7 +207,16 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
     
     for (i = 0; i < paths.GetCount(); i++)
     {
-        if ( !FindInDir(paths[i], excludePaths, files) )
+        if (wxFileName::FileExists(paths[i]))
+        {
+            if ( FilenameMatchesPathsList(paths[i], excludePaths) )
+            {
+                wxLogTrace("poedit", "no files found in '%s'", paths[i]);
+                continue;
+            }
+            files.Add(paths[i]);
+        }
+        else if ( !FindInDir(paths[i], excludePaths, files) )
         {
             wxLogTrace("poedit", "no files found in '%s'", paths[i]);
         }
