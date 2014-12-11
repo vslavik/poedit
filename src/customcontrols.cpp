@@ -25,9 +25,15 @@
 
 #include "customcontrols.h"
 
+#include <wx/clipbrd.h>
+#include <wx/menu.h>
 #include <wx/textwrapper.h>
 #include <wx/settings.h>
 #include <wx/wupdlock.h>
+
+#ifdef __WXGTK__
+#include <gtk/gtk.h>
+#endif
 
 namespace
 {
@@ -99,6 +105,31 @@ void AutoWrappingText::OnSize(wxSizeEvent& e)
     InvalidateBestSize();
     SetMinSize(wxDefaultSize);
     SetMinSize(GetBestSize());
+}
+
+
+SelectableAutoWrappingText::SelectableAutoWrappingText(wxWindow *parent, const wxString& label)
+    : AutoWrappingText(parent, label)
+{
+#if defined(__WXOSX__)
+    NSTextField *view = (NSTextField*)GetHandle();
+    [view setSelectable:YES];
+#elif defined(__WXGTK__)
+    GtkLabel *view = GTK_LABEL(GetHandle());
+    gtk_label_set_selectable(view, TRUE);
+#else
+    // at least allow copying
+    static wxWindowID idCopy = wxNewId();
+    Bind(wxEVT_CONTEXT_MENU, [=](wxContextMenuEvent&){
+        wxMenu *menu = new wxMenu();
+        menu->Append(idCopy, _("&Copy"));
+        PopupMenu(menu);
+    });
+    Bind(wxEVT_MENU, [=](wxCommandEvent&){
+        wxClipboardLocker lock;
+        wxClipboard::Get()->SetData(new wxTextDataObject(m_text));
+    }, idCopy);
+#endif
 }
 
 

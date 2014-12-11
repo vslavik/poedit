@@ -59,6 +59,14 @@ protected:
     int m_wrapWidth;
 };
 
+/// Like AutoWrappingText, but allows selecting (OS X) or at least copying (Windows)
+/// the text too.
+class SelectableAutoWrappingText : public AutoWrappingText
+{
+public:
+    SelectableAutoWrappingText(wxWindow *parent, const wxString& label);
+};
+
 
 // Longer, often multiline, explanation label used to provide more information
 // about the effects of some less obvious settings. Typeset using smaller font
