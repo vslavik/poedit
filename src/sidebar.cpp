@@ -472,7 +472,13 @@ void SuggestionsSidebarBlock::UpdateSuggestions(const SuggestionsList& hits)
 {
     wxWindowUpdateLocker lock(m_parent);
 
-    m_suggestions.insert(m_suggestions.end(), hits.begin(), hits.end());
+    for (auto& h: hits)
+    {
+        // empty entries screw up menus (treated as stock items), don't use them:
+        if (!h.text.empty())
+            m_suggestions.push_back(h);
+    }
+
     std::stable_sort(m_suggestions.begin(), m_suggestions.end());
 
     // create any necessary controls:
