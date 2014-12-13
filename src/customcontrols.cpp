@@ -25,36 +25,89 @@
 
 #include "customcontrols.h"
 
+#include "icuhelpers.h"
+
 #include <wx/clipbrd.h>
 #include <wx/menu.h>
-#include <wx/textwrapper.h>
 #include <wx/settings.h>
 #include <wx/wupdlock.h>
 
+#include <unicode/brkiter.h>
 #ifdef __WXGTK__
 #include <gtk/gtk.h>
 #endif
 
+#include <memory>
+
 namespace
 {
 
-class LabelWrapper : public wxTextWrapper
+wxString WrapTextAtWidth(const wxString& text_, int width, wxWindow *wnd)
 {
-public:
-    void WrapAndSetLabel(wxWindow *window, const wxString& text, int widthMax)
+    if (text_.empty())
+        return text_;
+    auto text = ToIcuStr(text_);
+
+    static std::unique_ptr<icu::BreakIterator> iter;
+    if (!iter)
     {
-        m_text.clear();
-        Wrap(window, text, widthMax);
-        window->SetLabel(m_text);
+        UErrorCode err = U_ZERO_ERROR;
+        iter.reset(icu::BreakIterator::createLineInstance(icu::Locale(), err));
     }
 
-    void OnOutputLine(const wxString& line) override
-        { m_text += line; }
-    void OnNewLine() override
-        { m_text += '\n'; }
+    iter->setText(text);
 
-    wxString m_text;
-};
+    wxString out;
+    out.reserve(text_.length() + 10);
+
+    int32_t lineStart = 0;
+    wxString previousSubstr;
+
+    for (int32_t pos = iter->next(); pos != icu::BreakIterator::DONE; pos = iter->next())
+    {
+        auto substr = FromIcuStr(text.tempSubStringBetween(lineStart, pos));
+
+        if (wnd->GetTextExtent(substr).x > width)
+        {
+            auto previousPos = iter->previous();
+            if (previousPos == lineStart || previousPos == icu::BreakIterator::DONE)
+            {
+                // line is too large but we can't break it, so have no choice but not to wrap
+                out += substr;
+                lineStart = pos;
+            }
+            else
+            {
+                // need to wrap at previous linebreak position
+                out += previousSubstr;
+                lineStart = previousPos;
+            }
+            out += '\n';
+            previousSubstr.clear();
+        }
+        else if (pos > 0 && text[pos-1] == '\n') // forced line feed
+        {
+            out += substr;
+            lineStart = pos;
+            previousSubstr.clear();
+        }
+        else
+        {
+            previousSubstr = substr;
+        }
+    }
+
+    if (!previousSubstr.empty())
+    {
+        out += previousSubstr;
+    }
+
+    if (out.Last() == '\n')
+        out.RemoveLast();
+
+    return out;
+}
+
 
 } // anonymous namespace
 
@@ -65,7 +118,6 @@ AutoWrappingText::AutoWrappingText(wxWindow *parent, const wxString& label)
       m_wrapWidth(-1)
 {
     m_text.Replace("\n", " ");
-    SetLabel(m_text);
 
     SetInitialSize(wxSize(10,10));
     Bind(wxEVT_SIZE, &ExplanationLabel::OnSize, this);
@@ -83,7 +135,7 @@ void AutoWrappingText::SetAndWrapLabel(const wxString& label)
     wxWindowUpdateLocker lock(this);
     m_text = label;
     m_wrapWidth = GetSize().x;
-    LabelWrapper().WrapAndSetLabel(this, label, m_wrapWidth);
+    SetLabel(WrapTextAtWidth(label, m_wrapWidth, this));
 
     InvalidateBestSize();
     SetMinSize(wxDefaultSize);
@@ -100,7 +152,7 @@ void AutoWrappingText::OnSize(wxSizeEvent& e)
     wxWindowUpdateLocker lock(this);
 
     m_wrapWidth = w;
-    LabelWrapper().WrapAndSetLabel(this, m_text, w);
+    SetLabel(WrapTextAtWidth(m_text, w, this));
 
     InvalidateBestSize();
     SetMinSize(wxDefaultSize);
