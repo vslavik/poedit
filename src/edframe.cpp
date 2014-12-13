@@ -2227,23 +2227,6 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
     UpdateTitle();
     UpdateTextLanguage();
 
-    // FIXME: do this for Gettext PO files only
-    if (wxConfig::Get()->Read("translator_name", "").empty() ||
-        wxConfig::Get()->Read("translator_email", "").empty())
-    {
-        AttentionMessage msg
-            (
-                "no-translator-info",
-                AttentionMessage::Info,
-                _("You should set your email address in Preferences so that it can be used for Last-Translator header in GNU gettext files.")
-            );
-        msg.AddAction(MSW_OR_OTHER(_("Set email"), _("Set Email")),
-                      []{ wxGetApp().EditPreferences(); });
-        msg.AddDontShowAgain();
-
-        m_attentionBar->ShowMessage(msg);
-    }
-
     if (m_catalog->Header().Project.empty())
     {
         AttentionMessage msg
