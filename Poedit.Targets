@@ -79,21 +79,21 @@
           Inputs="@(TranslationFiles)"
           Outputs="@(TranslationFiles->'$(TranslationsOutDir)%(Filename)\poedit.mo')">
     <MakeDir Directories="@(TranslationFiles->'$(TranslationsOutDir)\%(Filename)')" />
-    <Exec Command="$(Msgfmt) -o $(TranslationsOutDir)%(TranslationFiles.Filename)\poedit.mo @(TranslationFiles)" />
+    <Exec Command='$(Msgfmt) -o "$(TranslationsOutDir)%(TranslationFiles.Filename)\poedit.mo" @(TranslationFiles)' />
   </Target>
 
   <Target Name="CopyTranslations_WX" AfterTargets="Link"
         Inputs="@(TranslationFilesWX)"
         Outputs="@(TranslationFilesWX->'$(TranslationsOutDir)%(Filename)\wxstd.mo')">
     <MakeDir Directories="@(TranslationFilesWX->'$(TranslationsOutDir)\%(Filename)')" />
-    <Exec Command="$(Msgfmt) -o $(TranslationsOutDir)%(TranslationFilesWX.Filename)\wxstd.mo @(TranslationFilesWX)" />
+    <Exec Command='$(Msgfmt) -o "$(TranslationsOutDir)%(TranslationFilesWX.Filename)\wxstd.mo" @(TranslationFilesWX)' />
   </Target>
 
   <Target Name="CopyTranslations_WXMSW" AfterTargets="Link"
         Inputs="@(TranslationFilesWXMSW)"
         Outputs="@(TranslationFilesWXMSW->'$(TranslationsOutDir)%(Filename)\wxmsw.mo')">
     <MakeDir Directories="@(TranslationFilesWXMSW->'$(TranslationsOutDir)\%(Filename)')" />
-    <Exec Command="$(Msgfmt) -o $(TranslationsOutDir)%(TranslationFilesWXMSW.Filename)\wxmsw.mo @(TranslationFilesWXMSW)" />
+    <Exec Command='$(Msgfmt) -o "$(TranslationsOutDir)%(TranslationFilesWXMSW.Filename)\wxmsw.mo" @(TranslationFilesWXMSW)' />
   </Target>
 
 
