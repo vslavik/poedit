@@ -284,10 +284,18 @@ void Catalog::HeaderData::UpdateDict()
     SetHeader("PO-Revision-Date", RevisionDate);
 
     if (TranslatorEmail.empty())
-        SetHeader("Last-Translator", Translator);
+    {
+        if (!Translator.empty() || !HasHeader("Last-Translator"))
+            SetHeader("Last-Translator", Translator);
+        // else: don't modify the header, leave as-is
+    }
     else
-        SetHeader("Last-Translator",
-                  Translator + " <" + TranslatorEmail + ">");
+    {
+        if (Translator.empty())
+            SetHeader("Last-Translator", TranslatorEmail);
+        else
+            SetHeader("Last-Translator", Translator + " <" + TranslatorEmail + ">");
+    }
 
     if (TeamEmail.empty())
         SetHeader("Language-Team", Team);
