@@ -594,6 +594,9 @@ public:
         m_new->Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnNewExtractor, this);
         m_edit->Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnEditExtractor, this);
         m_delete->Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnDeleteExtractor, this);
+
+        m_edit->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e) { e.Enable(m_list->GetSelection() != wxNOT_FOUND); });
+        m_delete->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e) { e.Enable(m_list->GetSelection() != wxNOT_FOUND); });
     }
 
     void InitValues(const wxConfigBase& cfg) override
@@ -604,13 +607,10 @@ public:
         for (const auto& item: m_extractors.Data)
             m_list->Append(item.Name);
 
-        if (m_extractors.Data.empty())
+        if (!m_extractors.Data.empty())
         {
-            m_edit->Enable(false);
-            m_delete->Enable(false);
-        }
-        else
             m_list->SetSelection(0);
+        }
     }
 
     void SaveValues(wxConfigBase& cfg) override
