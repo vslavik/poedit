@@ -716,11 +716,6 @@ private:
         int index = m_list->GetSelection();
         m_extractors.Data.erase(m_extractors.Data.begin() + index);
         m_list->Delete(index);
-        if (m_extractors.Data.empty())
-        {
-            m_list->Enable(false);
-            m_list->Enable(false);
-        }
 
         if (wxPreferencesEditor::ShouldApplyChangesImmediately())
             TransferDataFromWindow();
