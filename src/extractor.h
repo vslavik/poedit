@@ -43,6 +43,10 @@ class Extractor
     public:
         /// User-oriented name of the extractor (e.g. "C/C++").
         wxString Name;
+
+        /// Whether the extractor is currently enabled.
+        bool Enabled;
+
         /** Semicolon-separated list of wildcards. The extractor is capable
             of parsing files matching these wildcards. Example: "*.cpp;*.h"
          */

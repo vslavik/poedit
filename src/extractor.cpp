@@ -49,6 +49,7 @@ void ExtractorsDB::Read(wxConfigBase *cfg)
         info.Name = tkn.GetNextToken();
         key = info.Name; key.Replace("/", "_");
         cfg->SetPath("Parsers/" + key);
+        info.Enabled = cfg->ReadBool("Enabled", true);
         info.Extensions = cfg->Read("Extensions", wxEmptyString);
         info.Command = cfg->Read("Command", wxEmptyString);
         info.KeywordItem = cfg->Read("KeywordItem", wxEmptyString);
@@ -86,6 +87,7 @@ void ExtractorsDB::Write(wxConfigBase *cfg)
     {
         key = item.Name; key.Replace("/", "_");
         cfg->SetPath("Parsers/" + key);
+        cfg->Write("Enabled", item.Enabled);
         cfg->Write("Extensions", item.Extensions);
         cfg->Write("Command", item.Command);
         cfg->Write("KeywordItem", item.KeywordItem);
