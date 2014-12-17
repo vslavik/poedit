@@ -610,6 +610,7 @@ public:
         if (!m_extractors.Data.empty())
         {
             m_list->SetSelection(0);
+            m_list->EnsureVisible(0);
         }
     }
 
