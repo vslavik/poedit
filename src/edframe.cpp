@@ -3474,6 +3474,8 @@ void PoeditFrame::OnNextUnfinished(wxCommandEvent&)
 void PoeditFrame::OnDoneAndNext(wxCommandEvent&)
 {
     auto item = GetCurrentItem();
+    if (!item)
+        return;
 
     // If the user is "done" with an item, it should be in its final approved state:
     if (item->IsFuzzy())
