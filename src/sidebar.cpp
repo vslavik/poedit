@@ -682,6 +682,7 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, Catalog
 
 Sidebar::Sidebar(wxWindow *parent, wxMenu *suggestionsMenu)
     : wxPanel(parent, wxID_ANY),
+      m_catalog(nullptr),
       m_selectedItem(nullptr)
 {
     SetBackgroundColour(SIDEBAR_BACKGROUND);
