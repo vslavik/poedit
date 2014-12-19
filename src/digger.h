@@ -67,20 +67,60 @@ class SourceDigger
                      UpdateResultReason& reason);
 
     private:
+        // Path matching with support for wildcards
+        struct PathToMatch
+        {
+            wxString path;
+            bool isWildcard;
+
+            bool MatchesFile(const wxString& fn) const
+            {
+                if (isWildcard)
+                    return wxMatchWild(path, fn);
+                else
+                    return fn == path || fn.StartsWith(path + "/");
+            }
+        };
+
+        class PathsToMatch
+        {
+        public:
+            PathsToMatch() {}
+            explicit PathsToMatch(const wxArrayString& a)
+            {
+                paths.reserve(a.size());
+                for (auto& p: a)
+                    paths.push_back({p, wxIsWild(p)});
+            }
+
+            bool MatchesFile(const wxString& fn) const
+            {
+                for (auto& p: paths)
+                {
+                    if (p.MatchesFile(fn))
+                        return true;
+                }
+                return false;
+            }
+
+        private:
+            std::vector<PathToMatch> paths;
+        };
+
         /** Finds all parsable files. Returned value is a new[]-allocated
             array of wxArrayString objects. n-th string array in returned
             array holds list of files that can be parsed by n-th extractor
             in \a pdb database.
          */
         wxArrayString *FindFiles(const wxArrayString& paths,
-                                 const wxArrayString& excludePaths,
+                                 const PathsToMatch& excludePaths,
                                  ExtractorsDB& pdb);
 
         /** Finds all files in given directory.
             \return false if an error occured.
          */
         int FindInDir(const wxString& dirname,
-                      const wxArrayString& excludePaths,
+                      const PathsToMatch& excludePaths,
                       wxArrayString& files);
 
         /** Digs translatable strings from given files.
