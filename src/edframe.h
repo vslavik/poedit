@@ -277,12 +277,13 @@ private:
 
         enum AutoTranslateFlags
         {
-            AutoTranslate_OnlyExact     = 0x01,
-            AutoTranslate_ExactNotFuzzy = 0x02,
+            AutoTranslate_OnlyExact       = 0x01,
+            AutoTranslate_ExactNotFuzzy   = 0x02,
+            AutoTranslate_OnlyGoodQuality = 0x04
         };
-        bool AutoTranslateCatalog(int *matchesCount = nullptr, int flags = 0);
+        bool AutoTranslateCatalog(int *matchesCount, int flags);
         template<typename T>
-        bool AutoTranslateCatalog(int *matchesCount, const T& range, int flags = 0);
+        bool AutoTranslateCatalog(int *matchesCount, const T& range, int flags);
 
         void OnPurgeDeleted(wxCommandEvent& event);
 

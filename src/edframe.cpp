@@ -1544,7 +1544,7 @@ void PoeditFrame::OnUpdate(wxCommandEvent& event)
                 if (wxConfig::Get()->ReadBool("use_tm", true) &&
                     wxConfig::Get()->ReadBool("use_tm_when_updating", false))
                 {
-                    AutoTranslateCatalog();
+                    AutoTranslateCatalog(nullptr, AutoTranslate_OnlyGoodQuality);
                 }
             }
         }
@@ -2852,6 +2852,9 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, const T& range, int fl
 
             auto& res = results.front();
             if ((flags & AutoTranslate_OnlyExact) && !res.IsExactMatch())
+                continue;
+
+            if ((flags & AutoTranslate_OnlyGoodQuality) && res.score < 0.75)
                 continue;
 
             dt.SetTranslation(res.text);
