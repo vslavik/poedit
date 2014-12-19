@@ -165,6 +165,7 @@ class PoeditFrame : public wxFrame
         /// Refreshes controls.
         enum { Refresh_NoCatalogChanged = 1 };
         void RefreshControls(int flags = 0);
+        void NotifyCatalogChanged(Catalog *cat);
 
         /// Sets controls custom fonts.
         void SetCustomFonts();
