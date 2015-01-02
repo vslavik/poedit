@@ -566,22 +566,9 @@ bool PoeditApp::OnExceptionInMainLoop()
     {
         throw;
     }
-    catch ( Exception& e )
+    catch ( std::exception& )
     {
-        wxLogError(_("Unhandled exception occurred: %s"), e.What());
-    }
-    catch ( std::exception& e )
-    {
-        const char *msg = e.what();
-        // try interpreting as UTF-8 first as the most likely one (from external sources)
-        wxString s = wxString::FromUTF8(msg);
-        if (s.empty())
-        {
-            s = wxString(msg);
-            if (s.empty()) // not in current locale either, fall back to Latin1
-                s = wxString(msg, wxConvISO8859_1);
-        }
-        wxLogError(_("Unhandled exception occurred: %s"), s);
+        wxLogError(_("Unhandled exception occurred: %s"), DescribeCurrentException());
     }
 #ifdef __WXOSX__
     catch ( NSException *e )

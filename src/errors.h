@@ -63,12 +63,26 @@ inline wxString DescribeException(std::exception_ptr e)
     }
     catch (const std::exception& e)
     {
-        return e.what();
+        const char *msg = e.what();
+        // try interpreting as UTF-8 first as the most likely one (from external sources)
+        wxString s = wxString::FromUTF8(msg);
+        if (s.empty())
+        {
+            s = wxString(msg);
+            if (s.empty()) // not in current locale either, fall back to Latin1
+                s = wxString(msg, wxConvISO8859_1);
+        }
+        return s;
     }
     catch (...)
     {
         return "unknown error";
     }
+}
+
+inline wxString DescribeCurrentException()
+{
+    return DescribeException(std::current_exception());
 }
 
 #endif // _ERRORS_H_
