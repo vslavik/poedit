@@ -51,6 +51,9 @@
 #include "version.h"
 #include "language.h"
 
+#ifdef __WXOSX__
+#import <Foundation/foundation.h>
+#endif
 
 // ----------------------------------------------------------------------
 // Textfile processing utilities:
