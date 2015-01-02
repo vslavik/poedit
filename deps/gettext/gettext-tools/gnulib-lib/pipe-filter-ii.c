@@ -309,7 +309,7 @@ pipe_filter_ii_execute (const char *progname,
     for (;;)
       {
 # if HAVE_SELECT
-        int n;
+        int n, retval;
 
         FD_SET (fd[0], &readfds);
         n = fd[0] + 1;
@@ -320,8 +320,15 @@ pipe_filter_ii_execute (const char *progname,
               n = fd[1] + 1;
           }
 
-        n = select (n, &readfds, (!done_writing ? &writefds : NULL), NULL,
-                    NULL);
+        /* Do EINTR handling here instead of in pipe-filter-aux.h,
+           because select() cannot be referred to from an inline
+           function on AIX 7.1.  */
+        do
+          retval = select (n, &readfds, (!done_writing ? &writefds : NULL),
+                           NULL, NULL);
+        while (retval < 0 && errno == EINTR);
+        n = retval;
+
         if (n < 0)
           {
             if (exit_on_error)

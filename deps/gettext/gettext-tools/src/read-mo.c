@@ -38,6 +38,7 @@
 #include "message.h"
 #include "format.h"
 #include "gettext.h"
+#include "xsize.h"
 
 #define _(str) gettext (str)
 
@@ -100,8 +101,9 @@ static nls_uint32
 get_uint32 (const struct binary_mo_file *bfp, size_t offset)
 {
   nls_uint32 b0, b1, b2, b3;
+  size_t end = xsum (offset, 4);
 
-  if (offset + 4 > bfp->size)
+  if (size_overflow_p (end) || end > bfp->size)
     error (EXIT_FAILURE, 0, _("file \"%s\" is truncated"), bfp->filename);
 
   b0 = *(unsigned char *) (bfp->data + offset + 0);
@@ -121,8 +123,9 @@ get_string (const struct binary_mo_file *bfp, size_t offset, size_t *lengthp)
   /* See 'struct string_desc'.  */
   nls_uint32 s_length = get_uint32 (bfp, offset);
   nls_uint32 s_offset = get_uint32 (bfp, offset + 4);
+  size_t s_end = xsum3 (s_offset, s_length, 1);
 
-  if (s_offset + s_length + 1 > bfp->size)
+  if (size_overflow_p (s_end) || s_end > bfp->size)
     error (EXIT_FAILURE, 0, _("file \"%s\" is truncated"), bfp->filename);
   if (bfp->data[s_offset + s_length] != '\0')
     error (EXIT_FAILURE, 0,
@@ -154,6 +157,7 @@ get_sysdep_string (const struct binary_mo_file *bfp, size_t offset,
       nls_uint32 sysdep_segment_offset;
       nls_uint32 ss_length;
       nls_uint32 ss_offset;
+      size_t ss_end;
       size_t n;
 
       length += segsize;
@@ -168,7 +172,8 @@ get_sysdep_string (const struct binary_mo_file *bfp, size_t offset,
       sysdep_segment_offset = header->sysdep_segments_offset + sysdepref * 8;
       ss_length = get_uint32 (bfp, sysdep_segment_offset);
       ss_offset = get_uint32 (bfp, sysdep_segment_offset + 4);
-      if (ss_offset + ss_length > bfp->size)
+      ss_end = xsum (ss_offset, ss_length);
+      if (size_overflow_p (ss_end) || ss_end > bfp->size)
         error (EXIT_FAILURE, 0, _("file \"%s\" is truncated"), bfp->filename);
       if (!(ss_length > 0 && bfp->data[ss_offset + ss_length - 1] == '\0'))
         {
@@ -193,9 +198,10 @@ get_sysdep_string (const struct binary_mo_file *bfp, size_t offset,
       nls_uint32 sysdep_segment_offset;
       nls_uint32 ss_length;
       nls_uint32 ss_offset;
+      size_t s_end = xsum (s_offset, segsize);
       size_t n;
 
-      if (s_offset + segsize > bfp->size)
+      if (size_overflow_p (s_end) || s_end > bfp->size)
         error (EXIT_FAILURE, 0, _("file \"%s\" is truncated"), bfp->filename);
       memcpy (p, bfp->data + s_offset, segsize);
       p += segsize;

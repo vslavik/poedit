@@ -29,7 +29,7 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	msgattrib-properties-1 \
 	msgcat-1 msgcat-2 msgcat-3 msgcat-4 msgcat-5 msgcat-6 msgcat-7 \
 	msgcat-8 msgcat-9 msgcat-10 msgcat-11 msgcat-12 msgcat-13 msgcat-14 \
-	msgcat-15 msgcat-16 msgcat-17 msgcat-18 msgcat-19 \
+	msgcat-15 msgcat-16 msgcat-17 msgcat-18 msgcat-19 msgcat-20 \
 	msgcat-properties-1 msgcat-properties-2 \
 	msgcat-stringtable-1 \
 	msgcmp-1 msgcmp-2 msgcmp-3 msgcmp-4 \
@@ -42,7 +42,7 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	msgen-1 msgen-2 msgen-3 msgen-4 \
 	msgexec-1 msgexec-2 msgexec-3 msgexec-4 msgexec-5 \
 	msgfilter-1 msgfilter-2 msgfilter-3 msgfilter-4 msgfilter-5 \
-	msgfilter-6 \
+	msgfilter-6 msgfilter-7 \
 	msgfilter-sr-latin-1 msgfilter-quote-1 \
 	msgfmt-1 msgfmt-2 msgfmt-3 msgfmt-4 msgfmt-5 msgfmt-6 msgfmt-7 \
 	msgfmt-8 msgfmt-9 msgfmt-10 msgfmt-11 msgfmt-12 msgfmt-13 msgfmt-14 \
@@ -63,7 +63,7 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	msgmerge-properties-1 msgmerge-properties-2 \
 	msgmerge-update-1 msgmerge-update-2 msgmerge-update-3 \
 	msgmerge-update-4 \
-	msgunfmt-1 msgunfmt-2 \
+	msgunfmt-1 msgunfmt-2 msgunfmt-3 \
 	msgunfmt-csharp-1 \
 	msgunfmt-java-1 \
 	msgunfmt-properties-1 \
@@ -71,15 +71,15 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	msguniq-1 msguniq-2 msguniq-3 msguniq-4 msguniq-5 msguniq-6 msguniq-7 \
 	recode-sr-latin-1 recode-sr-latin-2 \
 	xgettext-2 xgettext-3 xgettext-4 xgettext-5 xgettext-6 \
-	xgettext-7 xgettext-8 xgettext-9 xgettext-10 xgettext-11 \
+	xgettext-7 xgettext-8 xgettext-9 xgettext-10 xgettext-11 xgettext-12 \
 	xgettext-awk-1 xgettext-awk-2 \
 	xgettext-c-2 xgettext-c-3 xgettext-c-4 xgettext-c-5 \
 	xgettext-c-6 xgettext-c-7 xgettext-c-8 xgettext-c-9 xgettext-c-10 \
 	xgettext-c-11 xgettext-c-12 xgettext-c-13 xgettext-c-14 xgettext-c-15 \
-	xgettext-c-16 xgettext-c-17 xgettext-c-18 xgettext-c-19 \
+	xgettext-c-16 xgettext-c-17 xgettext-c-18 xgettext-c-19 xgettext-c-20 \
 	xgettext-csharp-1 xgettext-csharp-2 xgettext-csharp-3 \
 	xgettext-csharp-4 xgettext-csharp-5 xgettext-csharp-6 \
-	xgettext-csharp-7 \
+	xgettext-csharp-7 xgettext-csharp-8 \
 	xgettext-elisp-1 xgettext-elisp-2 \
 	xgettext-glade-1 xgettext-glade-2 xgettext-glade-3 xgettext-glade-4 \
 	xgettext-glade-5 xgettext-glade-6 xgettext-glade-7 \
@@ -145,7 +145,8 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	autopoint-1 autopoint-2 autopoint-3
 
 EXTRA_DIST += init.sh init.cfg $(TESTS) \
-	test.mo xg-c-1.ok.po mex-test2.ok \
+	test.mo overflow-1.mo overflow-2.mo overflow-3.mo overflow-4.mo \
+	overflow-5.mo overflow-6.mo xg-c-1.ok.po mex-test2.ok \
 	mm-ko.ascii.pot mm-ko.euc-kr.po mm-ko-comp.euc-kr.po \
 	mm-viet.comp.po mm-viet.pot mm-viet.out \
 	msguniq-a.in msguniq-a.inp msguniq-a.out \

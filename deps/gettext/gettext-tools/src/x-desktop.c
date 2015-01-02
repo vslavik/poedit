@@ -39,6 +39,7 @@
 #include "gettext.h"
 #include "read-desktop.h"
 #include "po-charset.h"
+#include "c-ctype.h"
 
 #define _(s) gettext(s)
 
@@ -132,14 +133,29 @@ extract_desktop_handle_pair (struct desktop_reader_ty *reader,
 
 static void
 extract_desktop_handle_comment (struct desktop_reader_ty *reader,
-                                const char *s)
+                                const char *buffer)
 {
-  savable_comment_add (s);
+  size_t buflen = strlen (buffer);
+  size_t bufpos = 0;
+
+  while (bufpos < buflen
+         && c_isspace (buffer[bufpos]))
+    ++bufpos;
+  while (buflen >= bufpos
+         && c_isspace (buffer[buflen - 1]))
+    --buflen;
+  if (bufpos < buflen)
+    {
+      char *comment = xstrdup (buffer);
+      comment[buflen] = 0;
+      savable_comment_add (&comment[bufpos]);
+      free (comment);
+    }
 }
 
 static void
-extract_desktop_handle_text (struct desktop_reader_ty *reader,
-                             const char *s)
+extract_desktop_handle_blank (struct desktop_reader_ty *reader,
+                              const char *s)
 {
   savable_comment_reset ();
 }
@@ -152,7 +168,7 @@ desktop_reader_class_ty extract_methods =
     extract_desktop_handle_group,
     extract_desktop_handle_pair,
     extract_desktop_handle_comment,
-    extract_desktop_handle_text
+    extract_desktop_handle_blank
   };
 
 void

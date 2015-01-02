@@ -34,6 +34,39 @@ int main (string[] args) {
 
     var s6 = /_("This is a regex literal and must not be extracted!")\|/i;
 
+    var i1 = 1000;
+    i1 = 1 + /_("Regex literal after '+'")/.get_capture_count ();
+    i1 = 1 - /_("Regex literal after '-'")/.get_capture_count ();
+    i1 = 1 & /_("Regex literal after '-'")/.get_capture_count ();
+    i1 = 1 ^ /_("Regex literal after '^'")/.get_capture_count ();
+    if (1 < /_("Regex literal after '<'")/.get_capture_count ())
+      return 1;
+    if (1 <= /_("Regex literal after '<='")/.get_capture_count ())
+      return 1;
+    if (1 != /_("Regex literal after '!='")/.get_capture_count ())
+      return 1;
+    if (! /_("Regex literal after '!'")/.match(s1))
+      return 1;
+    if (true && /_("Regex literal after '&&'")/.match(s1))
+      return 1;
+    if (false || /_("Regex literal after '||'")/.match(s1))
+      return 1;
+
+    var r1 = true ? /_("Regex literal after '?'")/ :
+        /_("Regex literal after ':'")/;
+    var r2 = true ?? /_("Regex literal after '??'")/;
+    i1 += 1 << /_("Regex literal after '+='")/.get_capture_count ();
+    i1 *= /_("Regex literal after '*='")/.get_capture_count ();
+    i1 /= /_("Regex literal after '/='")/.get_capture_count ();
+    i1 %= /_("Regex literal after '%='")/.get_capture_count ();
+    i1 <<= /_("Regex literal after '<<='")/.get_capture_count ();
+    i1 |= /_("Regex literal after '|='")/.get_capture_count ();
+
+    i1++;
+    i1--;
+    i1 = i1 / i1;
+    GLib.Timeout.add (10, () => { return false; });
+
     var d1 = 10e-1;
     var d2 = 10E-1;
 
@@ -44,10 +77,17 @@ int main (string[] args) {
     var s8 = _(@"This is a template string, which cannot be extracted!");
 
     /* /= shouldn't start a regex literal */
-    var i1 = 1000;
-    i1 /= 10;
-
+    var i5 = 1000;
+    i5 /= 10;
+    
     return 0;
+}
+
+class Foo : Object {
+  // @ isn't always followed by a template string.
+  public static Foo @new (void) {
+    return null;
+  }
 }
 EOF
 

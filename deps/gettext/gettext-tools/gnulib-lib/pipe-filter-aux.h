@@ -87,25 +87,6 @@ nonintr_write (int fd, const void *buf, size_t count)
 #undef write /* avoid warning on VMS */
 #define write nonintr_write
 
-# if HAVE_SELECT
-
-PIPE_FILTER_AUX_INLINE int
-nonintr_select (int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
-                struct timeval *timeout)
-{
-  int retval;
-
-  do
-    retval = select (n, readfds, writefds, exceptfds, timeout);
-  while (retval < 0 && errno == EINTR);
-
-  return retval;
-}
-#  undef select /* avoid warning on VMS */
-#  define select nonintr_select
-
-# endif
-
 #endif
 
 /* Non-blocking I/O.  */

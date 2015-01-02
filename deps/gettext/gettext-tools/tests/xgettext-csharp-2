@@ -18,6 +18,10 @@ class TestCase {
     Console.WriteLine(GetString("Script: \U0001d49e"));
     // And now a comment with Русский and 日本語 and Unicode escapes: B\u00f6se B\u00fcbchen
     Console.WriteLine(GetString("This string has a multilingual comment"));
+    // Unicode identifiers.
+    String あ = "";
+    String 𐀀 = "";
+    int \u65e5\u672c\u8a9e = 1;
   }
 }
 EOF

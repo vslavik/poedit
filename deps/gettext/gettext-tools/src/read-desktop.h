@@ -63,8 +63,8 @@ struct desktop_reader_class_ty
   /* what to do with a comment */
   void (*handle_comment) (struct desktop_reader_ty *pop, const char *s);
 
-  /* what to do with other lines */
-  void (*handle_text) (struct desktop_reader_ty *pop, const char *s);
+  /* what to do with a blank line */
+  void (*handle_blank) (struct desktop_reader_ty *pop, const char *s);
 };
 
 /* This next structure defines the base class passed to the methods.
@@ -99,8 +99,8 @@ void desktop_reader_handle_pair (desktop_reader_ty *reader,
 void desktop_reader_handle_comment (desktop_reader_ty *reader,
                                     const char *s);
 
-void desktop_reader_handle_text (desktop_reader_ty *reader,
-                                 const char *s);
+void desktop_reader_handle_blank (desktop_reader_ty *reader,
+                                  const char *s);
 
 
 void desktop_parse (desktop_reader_ty *reader, FILE *file,

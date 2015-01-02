@@ -42,6 +42,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module absolute-header:
   # Code from module acl:
   # Code from module acl-tests:
+  # Code from module alignof:
+  # Code from module alignof-tests:
   # Code from module alloca-opt:
   # Code from module alloca-opt-tests:
   # Code from module allocator:
@@ -1042,7 +1044,7 @@ AC_DEFUN([gl_INIT],
   gt_TMPDIR
   gl_LIBUNISTRING_LIBHEADER([0.9], [uniconv.h])
   gl_LIBUNISTRING_MODULE([0.9], [uniconv/u8-conv-from-enc])
-  gl_LIBUNISTRING_LIBHEADER([0.9], [unilbrk.h])
+  gl_LIBUNISTRING_LIBHEADER([0.9.4], [unilbrk.h])
   AC_REQUIRE([AC_C_INLINE])
   gl_LIBUNISTRING_MODULE([0.9.4], [unilbrk/u8-possible-linebreaks])
   gl_LIBUNISTRING_MODULE([0.9.4], [unilbrk/u8-width-linebreaks])
@@ -1420,6 +1422,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/acl.h
   lib/acl_entries.c
   lib/addext.c
+  lib/alignof.h
   lib/alloca.in.h
   lib/allocator.c
   lib/allocator.h
@@ -2098,6 +2101,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/nls.m4
   m4/no-c++.m4
   m4/nocrash.m4
+  m4/obstack.m4
   m4/off_t.m4
   m4/open.m4
   m4/opendir.m4
@@ -2201,6 +2205,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/init.sh
   tests/macros.h
   tests/signature.h
+  tests/test-alignof.c
   tests/test-alloca-opt.c
   tests/test-areadlink.c
   tests/test-areadlink.h

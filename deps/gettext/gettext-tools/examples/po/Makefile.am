@@ -198,6 +198,7 @@ $(DOMAIN).pot-update: $(POTFILES_DEPS) $(SMALLPOTS) remove-potcdate.sed
 	  --add-comments=TRANSLATORS: $(XGETTEXT_OPTIONS) \
 	  --copyright-holder='$(COPYRIGHT_HOLDER)' \
 	  --msgid-bugs-address="$$msgid_bugs_address" \
+	  --directory='$(srcdir)' \
 	  $(SMALLPOTS)
 	test ! -f $(DOMAIN).po || { \
 	  if test -f $(srcdir)/$(DOMAIN).pot; then \
@@ -329,9 +330,7 @@ MOSTLYCLEANFILES += stamp-poT
 MOSTLYCLEANFILES += core core.* *.stackdump $(DOMAIN).po $(DOMAIN).1po $(DOMAIN).2po *.new.po
 MOSTLYCLEANFILES += *.o
 
-DISTCLEANFILES = $(SMALLPOTS)
-
-MAINTAINERCLEANFILES = stamp-po
+MAINTAINERCLEANFILES = stamp-po $(SMALLPOTS)
 
 EXTRA_DIST = remove-potcdate.sin xsmallpot.sh mmsmallpo.sh LINGUAS \
   $(POFILES)
@@ -339,9 +338,8 @@ EXTRA_DIST = remove-potcdate.sin xsmallpot.sh mmsmallpo.sh LINGUAS \
 # Hidden from automake, but really activated. Works around an automake-1.5 bug.
 #distdir: distdir1
 distdir1:
-	$(MAKE) update-po
 	if test -f $(srcdir)/$(DOMAIN).pot; then \
-	  for file in $(DOMAIN).pot stamp-po; do \
+	  for file in $(DOMAIN).pot stamp-po $(SMALLPOTS); do \
 	    if test -f $$file; then d=.; else d=$(srcdir); fi; \
 	    cp -p $$d/$$file $(distdir)/$$file || exit 1; \
 	  done; \

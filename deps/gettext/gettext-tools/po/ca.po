@@ -50,10 +50,10 @@
 # options).  Also strings used in multiline error and warning messages.  ivb
 msgid ""
 msgstr ""
-"Project-Id-Version: gettext-tools 0.19-rc1\n"
+"Project-Id-Version: gettext-tools 0.19.4-rc1\n"
 "Report-Msgid-Bugs-To: bug-gnu-gettext@gnu.org\n"
-"POT-Creation-Date: 2014-10-16 15:04+0900\n"
-"PO-Revision-Date: 2014-05-11 21:36+0200\n"
+"POT-Creation-Date: 2014-12-24 16:27+0900\n"
+"PO-Revision-Date: 2014-12-12 13:33+0100\n"
 "Last-Translator: Ivan Vilata i Balaguer <ivan@selidor.net>\n"
 "Language-Team: Catalan <ca@dodds.net>\n"
 "Language: ca\n"
@@ -273,7 +273,7 @@ msgstr ""
 msgid "%s subprocess I/O error"
 msgstr "error d’E/S amb el subprocés «%s»"
 
-#: gnulib-lib/obstack.c:416 gnulib-lib/obstack.c:418 gnulib-lib/xmalloc.c:37
+#: gnulib-lib/obstack.c:338 gnulib-lib/obstack.c:340 gnulib-lib/xmalloc.c:37
 #: gnulib-lib/xsetenv.c:37 src/msgl-check.c:559 src/po-lex.c:83
 #: src/po-lex.c:102 src/x-glade.c:548 libgettextpo/gettext-po.c:1326
 #, c-format
@@ -285,13 +285,13 @@ msgstr "la memòria s’ha exhaurit"
 msgid "creation of threads failed"
 msgstr "la creació de fils ha fallat"
 
-#: gnulib-lib/pipe-filter-ii.c:224 gnulib-lib/pipe-filter-ii.c:374
+#: gnulib-lib/pipe-filter-ii.c:224 gnulib-lib/pipe-filter-ii.c:381
 #: src/msgexec.c:405
 #, c-format
 msgid "write to %s subprocess failed"
 msgstr "no s’ha pogut escriure al subprocés «%s»"
 
-#: gnulib-lib/pipe-filter-ii.c:245 gnulib-lib/pipe-filter-ii.c:417
+#: gnulib-lib/pipe-filter-ii.c:245 gnulib-lib/pipe-filter-ii.c:424
 #, c-format
 msgid "read from %s subprocess failed"
 msgstr "no s’ha pogut llegir del subprocés «%s»"
@@ -301,12 +301,12 @@ msgstr "no s’ha pogut llegir del subprocés «%s»"
 msgid "cannot set up nonblocking I/O to %s subprocess"
 msgstr "no s’ha pogut establir una E/S no blocadora amb el subprocés «%s»"
 
-#: gnulib-lib/pipe-filter-ii.c:329
+#: gnulib-lib/pipe-filter-ii.c:336
 #, c-format
 msgid "communication with %s subprocess failed"
 msgstr "la comunicació amb el subprocés «%s» ha fallat"
 
-#: gnulib-lib/pipe-filter-ii.c:449
+#: gnulib-lib/pipe-filter-ii.c:456
 #, c-format
 msgid "%s subprocess terminated with exit code %d"
 msgstr "el subprocés «%s» ha terminat amb codi d’eixida %d"
@@ -374,7 +374,7 @@ msgid "%s subprocess got fatal signal %d"
 msgstr "el subprocés «%s» ha rebut el senyal fatal %d"
 
 #: src/file-list.c:53 src/msggrep.c:247 src/open-catalog.c:122
-#: src/read-mo.c:252 src/read-tcl.c:125 src/urlget.c:216 src/xgettext.c:1974
+#: src/read-mo.c:258 src/read-tcl.c:125 src/urlget.c:216 src/xgettext.c:1974
 #: src/xgettext.c:1987 src/xgettext.c:1997
 #, c-format
 msgid "error while opening \"%s\" for reading"
@@ -682,8 +682,8 @@ msgstr ""
 "les especificacions de format de l’argument {%3$u} en «%1$s» i «%2$s» no són "
 "les mateixes"
 
-#: src/format-lisp.c:2337 src/format-lisp.c:2349 src/format-scheme.c:2363
-#: src/format-scheme.c:2375
+#: src/format-lisp.c:2339 src/format-lisp.c:2351 src/format-scheme.c:2365
+#: src/format-scheme.c:2377
 #, c-format
 msgid ""
 "In the directive number %u, parameter %u is of type '%s' but a parameter of "
@@ -692,7 +692,7 @@ msgstr ""
 "A la directiva número %u, el paràmetre %u és de tipus «%s», però se "
 "n’esperava un de tipus «%s»."
 
-#: src/format-lisp.c:2372 src/format-scheme.c:2398
+#: src/format-lisp.c:2374 src/format-scheme.c:2400
 #, c-format
 msgid ""
 "In the directive number %u, too many parameters are given; expected at most "
@@ -707,36 +707,36 @@ msgstr[1] ""
 "A la directiva número %u, s’han especificat massa paràmetres; se n’esperaven "
 "%u com a molt."
 
-#: src/format-lisp.c:2496 src/format-scheme.c:2499
+#: src/format-lisp.c:2498 src/format-scheme.c:2501
 #, c-format
 msgid "In the directive number %u, '%c' is not followed by a digit."
 msgstr "A la directiva número %u, «%c» no està seguit d’un dígit."
 
-#: src/format-lisp.c:2736 src/format-scheme.c:2754
+#: src/format-lisp.c:2738 src/format-scheme.c:2756
 #, c-format
 msgid "In the directive number %u, the argument %d is negative."
 msgstr "A la directiva número %u, l’argument %d és negatiu."
 
-#: src/format-lisp.c:2805
+#: src/format-lisp.c:2807
 msgid "The string ends in the middle of a ~/.../ directive."
 msgstr "La cadena acaba emmig d’una directiva «~/…/»."
 
 # Són parèntesis.  ivb
-#: src/format-lisp.c:2843 src/format-lisp.c:3108 src/format-lisp.c:3225
-#: src/format-lisp.c:3285 src/format-lisp.c:3397 src/format-scheme.c:2840
-#: src/format-scheme.c:3105 src/format-scheme.c:3222 src/format-scheme.c:3320
+#: src/format-lisp.c:2845 src/format-lisp.c:3110 src/format-lisp.c:3227
+#: src/format-lisp.c:3287 src/format-lisp.c:3399 src/format-scheme.c:2842
+#: src/format-scheme.c:3107 src/format-scheme.c:3224 src/format-scheme.c:3322
 #, c-format
 msgid "Found '~%c' without matching '~%c'."
 msgstr "S’ha trobat «~%c» sense el «~%c» corresponent."
 
-#: src/format-lisp.c:2863 src/format-scheme.c:2860
+#: src/format-lisp.c:2865 src/format-scheme.c:2862
 #, c-format
 msgid "In the directive number %u, both the @ and the : modifiers are given."
 msgstr ""
 "A la directiva número %u, s’han especificat tant el modificador «@» com el "
 "«:»."
 
-#: src/format-lisp.c:2976 src/format-scheme.c:2973
+#: src/format-lisp.c:2978 src/format-scheme.c:2975
 #, c-format
 msgid ""
 "In the directive number %u, '~:[' is not followed by two clauses, separated "
@@ -745,21 +745,21 @@ msgstr ""
 "A la directiva número %u, «~[» no està seguit de dues clàusules separades "
 "per «~;»."
 
-#: src/format-lisp.c:3326 src/format-scheme.c:3263
+#: src/format-lisp.c:3328 src/format-scheme.c:3265
 #, c-format
 msgid "In the directive number %u, '~;' is used in an invalid position."
 msgstr "A la directiva número %u, «~;» s’empra en una posició no vàlida."
 
-#: src/format-lisp.c:3432 src/format-scheme.c:3355
+#: src/format-lisp.c:3434 src/format-scheme.c:3357
 msgid "The string refers to some argument in incompatible ways."
 msgstr "La cadena es refereix a algun argument de formes incompatibles."
 
-#: src/format-lisp.c:3474 src/format-scheme.c:3397
+#: src/format-lisp.c:3476 src/format-scheme.c:3399
 #, c-format
 msgid "format specifications in '%s' and '%s' are not equivalent"
 msgstr "les especificacions de format en «%s» i «%s» no són equivalents"
 
-#: src/format-lisp.c:3490 src/format-scheme.c:3413
+#: src/format-lisp.c:3492 src/format-scheme.c:3415
 #, c-format
 msgid "format specifications in '%s' are not a subset of those in '%s'"
 msgstr ""
@@ -1675,7 +1675,7 @@ msgstr "aquest missatge s’empra però no s’ha definit en «%s»"
 msgid "warning: this message is not used"
 msgstr "avís: aquest missatge no s’empra"
 
-#: src/msgcmp.c:553 src/msgfmt.c:652 src/msgfmt.c:1446
+#: src/msgcmp.c:553 src/msgfmt.c:652 src/msgfmt.c:1443
 #, c-format
 msgid "found %d fatal error"
 msgid_plural "found %d fatal errors"
@@ -2427,10 +2427,10 @@ msgstr "«%s» no existeix"
 msgid "%s exists but cannot read"
 msgstr "«%s» existeix però no s’ha pogut llegir"
 
-#: src/msggrep.c:258 src/po-lex.c:657 src/read-mo.c:86
+#: src/msggrep.c:258 src/po-lex.c:657 src/read-mo.c:87
 #: src/read-properties.c:89 src/read-stringtable.c:98 src/x-awk.c:139
 #: src/x-c.c:486 src/x-csharp.c:163 src/x-elisp.c:145 src/x-glade.c:565
-#: src/x-java.c:181 src/x-javascript.c:172 src/x-librep.c:147 src/x-lisp.c:212
+#: src/x-java.c:181 src/x-javascript.c:171 src/x-librep.c:147 src/x-lisp.c:212
 #: src/x-lua.c:173 src/x-perl.c:227 src/x-perl.c:302 src/x-perl.c:395
 #: src/x-php.c:163 src/x-python.c:176 src/x-rst.c:233 src/x-scheme.c:171
 #: src/x-sh.c:155 src/x-smalltalk.c:91 src/x-tcl.c:150 src/x-vala.c:176
@@ -2734,7 +2734,7 @@ msgstr ""
 
 #: src/msgl-cat.c:442 src/msgl-cat.c:448 src/msgl-charset.c:92
 #: src/msgl-charset.c:127 src/po-xerror.c:122 src/po-xerror.c:147
-#: src/xgettext.c:544 src/xgettext.c:3418
+#: src/xgettext.c:544 src/xgettext.c:3426
 #, c-format
 msgid "warning: "
 msgstr "avís: "
@@ -3494,24 +3494,24 @@ msgstr "la definició del missatge és duplicada"
 msgid "this is the location of the first definition"
 msgstr "aquesta és la ubicació de la primera definició"
 
-#: src/read-mo.c:105 src/read-mo.c:126 src/read-mo.c:172 src/read-mo.c:199
+#: src/read-mo.c:107 src/read-mo.c:129 src/read-mo.c:177 src/read-mo.c:205
 #, c-format
 msgid "file \"%s\" is truncated"
 msgstr "el fitxer «%s» és truncat"
 
-#: src/read-mo.c:129
+#: src/read-mo.c:132
 #, c-format
 msgid "file \"%s\" contains a not NUL terminated string"
 msgstr "el fitxer «%s» conté una cadena no acabada en nul"
 
-#: src/read-mo.c:165 src/read-mo.c:274
+#: src/read-mo.c:169 src/read-mo.c:280
 #, c-format
 msgid "file \"%s\" is not in GNU .mo format"
 msgstr "el fitxer «%s» no és en el format MO de GNU"
 
 # ivb (2002/08/08)
 # ivb  «%s» és una cadena amb forma «sysdep_string[%u]»
-#: src/read-mo.c:178
+#: src/read-mo.c:183
 #, c-format
 msgid "file \"%s\" contains a not NUL terminated string, at %s"
 msgstr "el fitxer «%s» conté una cadena no acabada en nul, en «%s»"
@@ -3719,9 +3719,8 @@ msgid "error while opening \"%s\" for writing"
 msgstr "error en obrir «%s» per a escriure"
 
 #: src/write-po.c:821
-#, fuzzy
 msgid "incomplete multibyte sequence"
-msgstr "la seqüència multioctet no és vàlida"
+msgstr "la seqüència multioctet no és completa"
 
 #: src/write-po.c:884
 #, c-format
@@ -3850,12 +3849,12 @@ msgstr "%s:%d: avís: l’expressió regular no està terminada"
 msgid "warning: invalid Unicode character"
 msgstr "avís: el caràcter Unicode no és vàlid"
 
-#: src/x-c.c:1297 src/x-csharp.c:1509 src/x-java.c:872 src/x-vala.c:630
+#: src/x-c.c:1344 src/x-csharp.c:1509 src/x-java.c:872 src/x-vala.c:619
 #, c-format
 msgid "%s:%d: warning: unterminated character constant"
 msgstr "%s:%d: avís: la constant caràcter no està terminada"
 
-#: src/x-c.c:1348 src/x-vala.c:755
+#: src/x-c.c:1390 src/x-c.c:1430 src/x-vala.c:729
 #, c-format
 msgid "%s:%d: warning: unterminated string literal"
 msgstr "%s:%d: avís: el literal cadena no està terminat"
@@ -3932,12 +3931,12 @@ msgstr "%s:%d: avís: el caràcter Unicode no és vàlid"
 msgid "%s:%d: warning: unterminated string constant"
 msgstr "%s:%d: avís: la constant cadena no està terminada"
 
-#: src/x-csharp.c:2020 src/x-java.c:1369
+#: src/x-csharp.c:2018 src/x-java.c:1369
 #, c-format
 msgid "%s:%d: warning: ')' found where '}' was expected"
 msgstr "%s:%d: avís: s’ha trobat «)» on s’esperava «}»"
 
-#: src/x-csharp.c:2054 src/x-java.c:1403
+#: src/x-csharp.c:2052 src/x-java.c:1403
 #, c-format
 msgid "%s:%d: warning: '}' found where ')' was expected"
 msgstr "%s:%d: avís: s’ha trobat «}» on s’esperava «)»"
@@ -4185,7 +4184,7 @@ msgid "%s:%d: invalid string expression"
 msgstr "%s:%d: l’expressió de cadena no és vàlida"
 
 # És una funció d’intèrpret.  ivb
-#: src/x-sh.c:1074
+#: src/x-sh.c:1075
 #, c-format
 msgid ""
 "%s:%lu: warning: the syntax $\"...\" is deprecated due to security reasons; "
@@ -4194,7 +4193,7 @@ msgstr ""
 "%s:%lu: avís: la sintaxi «$\"…\"» està desaprovada per motius de seguretat; "
 "useu «eval_gettext» al seu lloc"
 
-#: src/x-vala.c:413
+#: src/x-vala.c:414
 #, c-format
 msgid "%s:%d: warning: regular expression literal terminated too early"
 msgstr "%s:%d: avís: el literal expressió regular termina massa aviat"
@@ -4639,7 +4638,7 @@ msgid "context mismatch between singular and plural form"
 msgstr "els contexts de les formes singular i plural no corcorden"
 
 # Multilínia.  ivb
-#: src/xgettext.c:3419
+#: src/xgettext.c:3427
 msgid ""
 "The option --msgid-bugs-address was not specified.\n"
 "If you are using a 'Makevars' file, please specify\n"
@@ -4652,7 +4651,7 @@ msgstr ""
 "d’ordres.\n"
 
 # Llenguatge de programació.  ivb
-#: src/xgettext.c:3638
+#: src/xgettext.c:3646
 #, c-format
 msgid "language '%s' unknown"
 msgstr "el llenguatge «%s» no és conegut"

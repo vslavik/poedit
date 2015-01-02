@@ -3099,9 +3099,9 @@ arglist_parser_done (struct arglist_parser *ap, int argnum)
                 char *msgid = parser->parse (best_cp->msgid,
                                              &best_cp->msgid_pos,
                                              best_cp->msgid_escape);
-                free (best_cp->msgid);
                 if (best_cp->msgid_plural == best_cp->msgid)
                   best_cp->msgid_plural = msgid;
+                free (best_cp->msgid);
                 best_cp->msgid = msgid;
               }
             else
@@ -3110,26 +3110,7 @@ arglist_parser_done (struct arglist_parser *ap, int argnum)
                 CONVERT_STRING (best_cp->msgid, lc_string);
               }
 
-            if (best_cp->msgid_comment != NULL)
-              {
-                refcounted_string_list_ty *msgid_comment =
-                  savable_comment_convert_encoding (best_cp->msgid_comment,
-                                                    &best_cp->msgid_pos);
-                drop_reference (best_cp->msgid_comment);
-                best_cp->msgid_comment = msgid_comment;
-              }
-
-            /* best_cp->msgctxt and best_cp->msgid are already in
-               UTF-8.  Prevent further conversion in remember_a_message.  */
-            encoding = xgettext_current_source_encoding;
-            xgettext_current_source_encoding = po_charset_utf8;
-            mp = remember_a_message (ap->mlp, best_cp->msgctxt, best_cp->msgid,
-                                     msgid_context,
-                                     &best_cp->msgid_pos,
-                                     NULL, best_cp->msgid_comment);
-            xgettext_current_source_encoding = encoding;
-
-            if (mp != NULL && best_cp->msgid_plural != NULL)
+            if (best_cp->msgid_plural)
               {
                 /* best_cp->msgid_plural may point to best_cp->msgid.
                    In that case, it is already interpreted and converted.  */
@@ -3152,14 +3133,41 @@ arglist_parser_done (struct arglist_parser *ap, int argnum)
                       }
                   }
 
-                encoding = xgettext_current_source_encoding;
-                xgettext_current_source_encoding = po_charset_utf8;
-                remember_a_message_plural (mp, best_cp->msgid_plural,
-                                           msgid_plural_context,
-                                           &best_cp->msgid_plural_pos,
-                                           NULL);
-                xgettext_current_source_encoding = encoding;
+                /* If best_cp->msgid_plural equals to best_cp->msgid,
+                   the ownership will be transferred to
+                   remember_a_message before it is passed to
+                   remember_a_message_plural.
+
+                   Make a copy of the string in that case.  */
+                if (best_cp->msgid_plural == best_cp->msgid)
+                  best_cp->msgid_plural = xstrdup (best_cp->msgid);
               }
+
+            if (best_cp->msgid_comment != NULL)
+              {
+                refcounted_string_list_ty *msgid_comment =
+                  savable_comment_convert_encoding (best_cp->msgid_comment,
+                                                    &best_cp->msgid_pos);
+                drop_reference (best_cp->msgid_comment);
+                best_cp->msgid_comment = msgid_comment;
+              }
+
+            /* best_cp->msgctxt, best_cp->msgid, and best_cp->msgid_plural
+               are already in UTF-8.  Prevent further conversion in
+               remember_a_message.  */
+            encoding = xgettext_current_source_encoding;
+            xgettext_current_source_encoding = po_charset_utf8;
+            mp = remember_a_message (ap->mlp, best_cp->msgctxt, best_cp->msgid,
+                                     msgid_context,
+                                     &best_cp->msgid_pos,
+                                     NULL, best_cp->msgid_comment);
+            if (mp != NULL && best_cp->msgid_plural != NULL)
+              remember_a_message_plural (mp,
+                                         best_cp->msgid_plural,
+                                         msgid_plural_context,
+                                         &best_cp->msgid_plural_pos,
+                                         NULL);
+            xgettext_current_source_encoding = encoding;
           }
 
           if (best_cp->xcomments.nitems > 0)
@@ -3173,7 +3181,7 @@ arglist_parser_done (struct arglist_parser *ap, int argnum)
                   const char *xcomment = best_cp->xcomments.item[i];
                   bool found = false;
 
-                  if (mp->comment_dot != NULL)
+                  if (mp != NULL && mp->comment_dot != NULL)
                     {
                       size_t j;
 

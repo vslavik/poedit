@@ -74,6 +74,15 @@ EXTRA_DIST += test-file-has-acl.sh test-file-has-acl-1.sh test-file-has-acl-2.sh
 
 ## end   gnulib module acl-tests
 
+## begin gnulib module alignof-tests
+
+TESTS += test-alignof
+check_PROGRAMS += test-alignof
+
+EXTRA_DIST += test-alignof.c
+
+## end   gnulib module alignof-tests
+
 ## begin gnulib module alloca-opt-tests
 
 TESTS += test-alloca-opt
@@ -1404,10 +1413,12 @@ EXTRA_DIST += unilbrk/test-u8-width-linebreaks.c macros.h
 
 ## begin gnulib module uniname/uniname-tests
 
+if LIBUNISTRING_COMPILE_UNINAME_UNINAME
 TESTS += uniname/test-uninames.sh
 check_PROGRAMS += test-uninames
 test_uninames_SOURCES = uniname/test-uninames.c
 test_uninames_LDADD = $(LDADD) $(LIBUNISTRING) @LIBINTL@
+endif
 
 EXTRA_DIST += uniname/test-uninames.sh uniname/test-uninames.c uniname/UnicodeDataNames.txt
 

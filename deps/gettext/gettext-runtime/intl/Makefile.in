@@ -112,6 +112,10 @@ LIBS = @LIBS@
 
 COMPILE = $(CC) -c $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CFLAGS) $(XCFLAGS)
 
+# This line will be replaced with pluralx.$lo, when this file is used
+# in gettext-tools/intl/.  See the pluralx.lo rule below for the rationale.
+PLURAL_OBJECT = plural.$lo
+
 HEADERS = \
   gmo.h \
   gettextP.h \
@@ -179,7 +183,7 @@ OBJECTS = \
   dcngettext.$lo \
   dngettext.$lo \
   ngettext.$lo \
-  plural.$lo \
+  $(PLURAL_OBJECT) \
   plural-exp.$lo \
   localcharset.$lo \
   threadlib.$lo \
@@ -234,7 +238,7 @@ libintl.la libgnuintl.la: $(OBJECTS) $(OBJECTS_RES_@WOE32@)
 # Maintainers of other packages that include the intl directory must *not*
 # change these values.
 LTV_CURRENT=9
-LTV_REVISION=2
+LTV_REVISION=3
 LTV_AGE=1
 
 .SUFFIXES:
@@ -279,6 +283,13 @@ ngettext.lo: $(srcdir)/ngettext.c
 	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC --mode=compile $(COMPILE) $(srcdir)/ngettext.c
 plural.lo: $(srcdir)/plural.c
 	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC --mode=compile $(COMPILE) $(srcdir)/plural.c
+# $(srcdir)/plural.c contains a relative file name of the Bison source.
+# That could mess up LCOV when the C source file is referred to from a
+# different base directory.
+pluralx.c: $(srcdir)/plural.c
+	$(AM_V_GEN)sed -e 's|^#line \([0-9]*\) "\(plural\.[cy]\)"|#line \1 "$(srcdir)/\2"|' < $(srcdir)/plural.c > $@
+pluralx.lo: pluralx.c
+	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC --mode=compile $(COMPILE) pluralx.c
 plural-exp.lo: $(srcdir)/plural-exp.c
 	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC --mode=compile $(COMPILE) $(srcdir)/plural-exp.c
 localcharset.lo: $(srcdir)/localcharset.c
@@ -585,7 +596,7 @@ bindtextdom.$lo dcgettext.$lo dcigettext.$lo dcngettext.$lo dgettext.$lo dngette
 localename.$lo: $(srcdir)/gettextP.h
 hash-string.$lo dcigettext.$lo loadmsgcat.$lo: $(srcdir)/hash-string.h
 explodename.$lo l10nflist.$lo: $(srcdir)/loadinfo.h
-dcigettext.$lo loadmsgcat.$lo plural.$lo plural-exp.$lo: $(srcdir)/plural-exp.h
+dcigettext.$lo loadmsgcat.$lo $(PLURAL_OBJECT) plural-exp.$lo: $(srcdir)/plural-exp.h
 dcigettext.$lo: $(srcdir)/eval-plural.h
 localcharset.$lo: $(srcdir)/localcharset.h
 bindtextdom.$lo dcigettext.$lo finddomain.$lo loadmsgcat.$lo localealias.$lo lock.$lo log.$lo: $(srcdir)/lock.h
@@ -617,6 +628,7 @@ mostlyclean:
 	rm -f *.a *.la *.o *.obj *.lo core core.*
 	rm -f libgnuintl.h libintl.h charset.alias ref-add.sed ref-del.sed
 	rm -f -r .libs _libs
+	rm -f pluralx.c
 
 clean: mostlyclean
 

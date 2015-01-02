@@ -1,3 +1,112 @@
+2014-12-24  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.4 released.
+
+2014-12-17  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext-sh-3: Test Bash ANSI-C quoting.
+
+2014-12-12  Daiki Ueno  <ueno@gnu.org>
+
+	* format-lisp-2, format-scheme-2: Test type compatibility with
+	non-strict checking mode.
+
+2014-12-09  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext-8-prg.c: Include <assert.h>.
+	(main): Check return value of 'gettext'.
+
+2014-12-09  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext-8-prg.c (main): Release allocated memory.  Spotted by
+	clang-analyzer.
+
+2014-12-09  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Test msgcat --sort-by-file option
+	* msgcat-20: New file.
+	* Makefile.am (TESTS): Add new test.
+
+2014-12-09  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Improve test coverage of Lua scanner
+	* xgettext-lua-1: Test nested and unmatched brackets.
+
+2014-12-09  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext-vala-1: Don't copy the test program out of the test
+	directory.  Fix commit 2ff7a105.
+
+2014-12-09  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Improve test coverage of Desktop scanner
+	* xgettext-desktop-1: Test invalid input and blank lines.
+
+2014-12-07  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Improve test coverage of Vala scanner
+	* xgettext-vala-1: Test regex literal right after arithmetic
+	assignment operators, and the case '@' is not followed by a
+	template string.
+
+2014-12-05  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Add more tests for integer overflow when reading MO file
+	* msgunfmt-3: Check overflow-[1-6].mo.
+	* Makefile.am (EXTRA_DIST): Add more test data for msgunfmt
+	integer overflow.
+
+2014-12-04  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Improve test coverage of GSettings scanner
+	* xgettext-gsettings-1: Check empty string and multiline comment.
+
+2014-12-03  Daiki Ueno  <ueno@gnu.org>
+
+	* msgunfmt-3: Locate overflow.mo in $abs_srcdir instead of '..'.
+
+2014-12-02  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Add test for C++11 string literals
+	* xgettext-c-20: New file.
+	* Makefile.am (TESTS): Add new test.
+
+2014-12-01  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Add more tests for C# Unicode handling
+	* xgettext-csharp-1: Test verbatim string.
+	* xgettext-csharp-2: Test Unicode identifiers.
+
+2014-12-01  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Add test for Unicode surrogate characters in C#
+	* xgettext-csharp-8: New file.
+	* Makefile.am (TESTS): Add new test.
+
+2014-11-28  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Add test for empty msgstr passed to msgfilter
+	* msgfilter-7: New file.
+	* Makefile.am (TESTS): Add new test.
+
+2014-11-18  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Add test for integer overflow when reading MO file
+	* msgunfmt-3: New file.
+	* Makefile.am (TESTS): Add new test.
+	(EXTRA_DIST): Add data file for msgunfmt-3.
+
+2014-10-28  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: Allow plural extraction from a single argument function
+	* xgettext-12: Test a single argument function.
+
+2014-10-28  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Add test for same ARGNUM1/ARGNUM2 given to xgettext -k
+	* xgettext-12: New file.
+	* Makefile.am (TESTS): Add new test.
+
 2014-10-15  Daiki Ueno  <ueno@gnu.org>
 
 	* gettext 0.19.3 released.
