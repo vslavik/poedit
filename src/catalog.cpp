@@ -35,10 +35,6 @@
 #include <wx/msgdlg.h>
 #include <wx/filename.h>
 
-#ifdef __WXOSX__
-#include <wx/cocoa/string.h>
-#endif
-
 #include <set>
 #include <algorithm>
 
@@ -52,7 +48,8 @@
 #include "language.h"
 
 #ifdef __WXOSX__
-#import <Foundation/foundation.h>
+#import <Foundation/Foundation.h>
+#include "osx_helpers.h"
 #endif
 
 // ----------------------------------------------------------------------
@@ -1615,15 +1612,15 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
         if (mo_compilation_status == CompilationStatus::Success)
         {
 #ifdef __WXOSX__
-            NSURL *mofileUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String: mo_file.utf8_str()]];
-            NSURL *mofiletempUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String: mo_file_temp.utf8_str()]];
+            NSURL *mofileUrl = [NSURL fileURLWithPath:wxStringToNS(mo_file)];
+            NSURL *mofiletempUrl = [NSURL fileURLWithPath:wxStringToNS(mo_file_temp)];
             bool sandboxed = (getenv("APP_SANDBOX_CONTAINER_ID") != NULL);
             CompiledMOFilePresenter *presenter = nil;
             if (sandboxed)
             {
                 presenter = [CompiledMOFilePresenter new];
                 presenter.presentedItemURL = mofileUrl;
-                presenter.primaryPresentedItemURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String: po_file.utf8_str()]];
+                presenter.primaryPresentedItemURL = [NSURL fileURLWithPath:wxStringToNS(po_file)];
                 [NSFileCoordinator addFilePresenter:presenter];
                 [NSFileCoordinator filePresenters];
             }

@@ -48,8 +48,8 @@
 #include <wx/windowptr.h>
 
 #ifdef __WXOSX__
-#include <wx/cocoa/string.h>
 #import <AppKit/NSDocumentController.h>
+#include "osx_helpers.h"
 #endif
 
 #include <map>
@@ -2352,7 +2352,7 @@ void PoeditFrame::NoteAsRecentFile()
     wxFileName fn(m_fileName);
     fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
 #ifdef __WXOSX__
-    [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:[NSString stringWithUTF8String: fn.GetFullPath().utf8_str()]]];
+    [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:wxStringToNS(fn.GetFullPath())]];
 #else
     FileHistory().AddFileToHistory(fn.GetFullPath());
 #endif

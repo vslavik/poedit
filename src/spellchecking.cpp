@@ -33,7 +33,7 @@
 #endif
 
 #ifdef __WXOSX__
-    #include <wx/cocoa/string.h>
+    #include "osx_helpers.h"
 #endif
 
 #ifdef __WXMSW__
@@ -136,7 +136,7 @@ bool InitTextCtrlSpellchecker(wxTextCtrl *text, bool enable, const Language& lan
 #ifdef __WXOSX__
 bool SetSpellcheckerLang(const wxString& lang)
 {
-    NSString *nslang = wxNSStringWithWxString(lang);
+    NSString *nslang = wxStringToNS(lang);
     NSSpellChecker *sc = [NSSpellChecker sharedSpellChecker];
     [sc setAutomaticallyIdentifiesLanguages:NO];
     return [sc setLanguage: nslang];

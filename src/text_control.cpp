@@ -29,9 +29,9 @@
 #include <wx/wupdlock.h>
 
 #ifdef __WXOSX__
-  #include <wx/cocoa/string.h>
   #import <AppKit/NSTextView.h>
   #import <Foundation/NSUndoManager.h>
+  #include "osx_helpers.h"
 #endif
 
 #ifdef __WXMSW__
@@ -181,7 +181,7 @@ void CustomizedTextCtrl::DoSetValue(const wxString& value, int flags)
 {
     wxEventBlocker block(this, (flags & SetValue_SendEvent) ? 0 : wxEVT_ANY);
 
-    [TextView(this) setString:wxNSStringWithWxString(value)];
+    [TextView(this) setString:wxStringToNS(value)];
 
     SendTextUpdatedEventIfAllowed();
 }

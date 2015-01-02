@@ -40,7 +40,7 @@
 #include <wx/xrc/xmlres.h>
 
 #ifdef __WXOSX__
-#include <wx/cocoa/string.h>
+#include "osx_helpers.h"
 #else
 #include <wx/commandlinkbutton.h>
 #endif
@@ -63,7 +63,7 @@ public:
 
         NSButton *btn = (NSButton*)m_button->GetHandle();
 
-        NSString *str = wxNSStringWithWxString(label + "\n" + note);
+        NSString *str = wxStringToNS(label + "\n" + note);
         NSRange topLine = NSMakeRange(0, label.length() + 1);
         NSRange bottomLine = NSMakeRange(label.length() + 1, note.length());
 
