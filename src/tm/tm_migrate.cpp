@@ -296,7 +296,7 @@ bool MigrateLegacyTranslationMemory()
         );
         dlg.SetExtendedMessage(wxString::Format(
             _(L"Your translation memory data couldn't be migrated. The error was:\n\n%s\nPlease email help@poedit.net and we’ll get it fixed."),
-            e.what()));
+            e.What()));
         dlg.ShowModal();
     }
 

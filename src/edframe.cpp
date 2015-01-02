@@ -1104,7 +1104,7 @@ void PoeditFrame::OnSave(wxCommandEvent& event)
     }
     catch (Exception& e)
     {
-        wxLogError("%s", e.what());
+        wxLogError("%s", e.What());
     }
 }
 
@@ -1550,7 +1550,7 @@ void PoeditFrame::OnUpdate(wxCommandEvent& event)
         }
         catch (Exception& e)
         {
-            wxLogError("%s", e.what());
+            wxLogError("%s", e.What());
         }
 
         RefreshControls();
@@ -1570,7 +1570,7 @@ void PoeditFrame::OnValidate(wxCommandEvent&)
     }
     catch (Exception& e)
     {
-        wxLogError("%s", e.what());
+        wxLogError("%s", e.What());
     }
 }
 
@@ -2575,7 +2575,7 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
             }
             catch ( const Exception& e )
             {
-                wxLogWarning(_("Failed to update translation memory: %s"), e.what());
+                wxLogWarning(_("Failed to update translation memory: %s"), e.What());
             }
             catch ( ... )
             {

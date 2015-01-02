@@ -28,15 +28,21 @@
 
 #include <wx/string.h>
 #include <exception>
+#include <stdexcept>
 
 /// Any exception error.
 /// Pretty much the same as std::runtime_error, except using Unicode strings.
-class Exception
+class Exception : public std::runtime_error
 {
 public:
-    Exception(const wxString& what) : m_what(what) {}
+    Exception(const wxString& what)
+        : std::runtime_error(std::string(what.utf8_str())), m_what(what) {}
 
-    const wxString& what() const { return m_what; }
+    const wxString& What() const { return m_what; }
+
+    // prevent use of std::exception::what() on Exception-casted instances:
+private:
+    const char* what() const noexcept override { return std::runtime_error::what(); }
 
 private:
     wxString m_what;
@@ -53,7 +59,7 @@ inline wxString DescribeException(std::exception_ptr e)
     }
     catch (const Exception& e)
     {
-        return e.what();
+        return e.What();
     }
     catch (const std::exception& e)
     {
