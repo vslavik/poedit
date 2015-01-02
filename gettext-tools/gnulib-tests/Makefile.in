@@ -108,11 +108,11 @@ DIST_COMMON = $(srcdir)/Makefile.gnulib $(srcdir)/Makefile.in \
 TESTS = test-file-has-acl.sh test-file-has-acl-1.sh \
 	test-file-has-acl-2.sh test-set-mode-acl.sh \
 	test-set-mode-acl-1.sh test-set-mode-acl-2.sh test-copy-acl.sh \
-	test-copy-acl-1.sh test-copy-acl-2.sh test-alloca-opt$(EXEEXT) \
-	test-areadlink$(EXEEXT) test-argmatch$(EXEEXT) \
-	test-array_list$(EXEEXT) test-atexit.sh test-binary-io.sh \
-	test-btowc1.sh test-btowc2.sh test-byteswap$(EXEEXT) \
-	test-c-ctype$(EXEEXT) test-c-strcase.sh \
+	test-copy-acl-1.sh test-copy-acl-2.sh test-alignof$(EXEEXT) \
+	test-alloca-opt$(EXEEXT) test-areadlink$(EXEEXT) \
+	test-argmatch$(EXEEXT) test-array_list$(EXEEXT) test-atexit.sh \
+	test-binary-io.sh test-btowc1.sh test-btowc2.sh \
+	test-byteswap$(EXEEXT) test-c-ctype$(EXEEXT) test-c-strcase.sh \
 	test-c-strcasestr$(EXEEXT) test-c-strstr$(EXEEXT) \
 	test-canonicalize-lgpl$(EXEEXT) test-cloexec$(EXEEXT) \
 	test-close$(EXEEXT) test-copy-file.sh test-copy-file-1.sh \
@@ -166,7 +166,7 @@ TESTS = test-file-has-acl.sh test-file-has-acl-1.sh \
 	test-term-ostream-xterm test-init.sh test-thread_self$(EXEEXT) \
 	test-thread_create$(EXEEXT) test-time$(EXEEXT) \
 	test-tls$(EXEEXT) test-u8-conv-from-enc$(EXEEXT) \
-	test-u8-width-linebreaks$(EXEEXT) uniname/test-uninames.sh \
+	test-u8-width-linebreaks$(EXEEXT) $(am__append_5) \
 	test-dup-safer$(EXEEXT) test-unistd$(EXEEXT) \
 	test-u16-mbtouc$(EXEEXT) test-u8-check$(EXEEXT) \
 	test-u8-cmp$(EXEEXT) test-u8-mblen$(EXEEXT) \
@@ -184,16 +184,17 @@ XFAIL_TESTS =
 noinst_PROGRAMS =
 check_PROGRAMS = test-file-has-acl$(EXEEXT) test-set-mode-acl$(EXEEXT) \
 	test-copy-acl$(EXEEXT) test-sameacls$(EXEEXT) \
-	test-alloca-opt$(EXEEXT) test-areadlink$(EXEEXT) \
-	test-argmatch$(EXEEXT) test-array_list$(EXEEXT) \
-	test-atexit$(EXEEXT) test-binary-io$(EXEEXT) \
-	test-btowc$(EXEEXT) test-byteswap$(EXEEXT) \
-	test-c-ctype$(EXEEXT) test-c-strcasecmp$(EXEEXT) \
-	test-c-strncasecmp$(EXEEXT) test-c-strcasestr$(EXEEXT) \
-	test-c-strstr$(EXEEXT) test-canonicalize-lgpl$(EXEEXT) \
-	test-cloexec$(EXEEXT) test-close$(EXEEXT) \
-	test-copy-file$(EXEEXT) test-dirent$(EXEEXT) test-dup$(EXEEXT) \
-	test-dup2$(EXEEXT) test-environ$(EXEEXT) test-errno$(EXEEXT) \
+	test-alignof$(EXEEXT) test-alloca-opt$(EXEEXT) \
+	test-areadlink$(EXEEXT) test-argmatch$(EXEEXT) \
+	test-array_list$(EXEEXT) test-atexit$(EXEEXT) \
+	test-binary-io$(EXEEXT) test-btowc$(EXEEXT) \
+	test-byteswap$(EXEEXT) test-c-ctype$(EXEEXT) \
+	test-c-strcasecmp$(EXEEXT) test-c-strncasecmp$(EXEEXT) \
+	test-c-strcasestr$(EXEEXT) test-c-strstr$(EXEEXT) \
+	test-canonicalize-lgpl$(EXEEXT) test-cloexec$(EXEEXT) \
+	test-close$(EXEEXT) test-copy-file$(EXEEXT) \
+	test-dirent$(EXEEXT) test-dup$(EXEEXT) test-dup2$(EXEEXT) \
+	test-environ$(EXEEXT) test-errno$(EXEEXT) \
 	test-fcntl-h$(EXEEXT) test-fcntl$(EXEEXT) test-fdopen$(EXEEXT) \
 	test-fgetc$(EXEEXT) test-float$(EXEEXT) test-fnmatch$(EXEEXT) \
 	test-fopen$(EXEEXT) test-fputc$(EXEEXT) test-fread$(EXEEXT) \
@@ -243,7 +244,7 @@ check_PROGRAMS = test-file-has-acl$(EXEEXT) test-set-mode-acl$(EXEEXT) \
 	test-term-ostream$(EXEEXT) test-thread_self$(EXEEXT) \
 	test-thread_create$(EXEEXT) test-time$(EXEEXT) \
 	test-tls$(EXEEXT) test-u8-conv-from-enc$(EXEEXT) \
-	test-u8-width-linebreaks$(EXEEXT) test-uninames$(EXEEXT) \
+	test-u8-width-linebreaks$(EXEEXT) $(am__EXEEXT_2) \
 	test-dup-safer$(EXEEXT) test-unistd$(EXEEXT) \
 	test-u16-mbtouc$(EXEEXT) test-u8-check$(EXEEXT) \
 	test-u8-cmp$(EXEEXT) test-u8-mblen$(EXEEXT) \
@@ -264,8 +265,10 @@ check_PROGRAMS = test-file-has-acl$(EXEEXT) test-set-mode-acl$(EXEEXT) \
 @POSIX_SPAWN_PORTED_TRUE@	test-posix_spawn1.sh-t \
 @POSIX_SPAWN_PORTED_TRUE@	test-posix_spawn2.sh \
 @POSIX_SPAWN_PORTED_TRUE@	test-posix_spawn2.sh-t
-@LIBUNISTRING_COMPILE_UNISTR_U8_CMP_TRUE@am__append_5 = unistr/u8-cmp.c
-@LIBUNISTRING_COMPILE_UNISTR_U8_STRLEN_TRUE@am__append_6 = unistr/u8-strlen.c
+@LIBUNISTRING_COMPILE_UNINAME_UNINAME_TRUE@am__append_5 = uniname/test-uninames.sh
+@LIBUNISTRING_COMPILE_UNINAME_UNINAME_TRUE@am__append_6 = test-uninames
+@LIBUNISTRING_COMPILE_UNISTR_U8_CMP_TRUE@am__append_7 = unistr/u8-cmp.c
+@LIBUNISTRING_COMPILE_UNISTR_U8_STRLEN_TRUE@am__append_8 = unistr/u8-strlen.c
 subdir = gnulib-tests
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps =  \
@@ -383,6 +386,7 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/multiarch.m4 \
 	$(top_srcdir)/gnulib-m4/no-c++.m4 \
 	$(top_srcdir)/gnulib-m4/nocrash.m4 \
+	$(top_srcdir)/gnulib-m4/obstack.m4 \
 	$(top_srcdir)/gnulib-m4/off_t.m4 \
 	$(top_srcdir)/gnulib-m4/open.m4 \
 	$(top_srcdir)/gnulib-m4/opendir.m4 \
@@ -533,17 +537,23 @@ am_libtests_a_OBJECTS = read-file.$(OBJEXT) glthread/thread.$(OBJEXT) \
 libtests_a_OBJECTS = $(am_libtests_a_OBJECTS)
 @POSIX_SPAWN_PORTED_TRUE@am__EXEEXT_1 = test-posix_spawn1$(EXEEXT) \
 @POSIX_SPAWN_PORTED_TRUE@	test-posix_spawn2$(EXEEXT)
+@LIBUNISTRING_COMPILE_UNINAME_UNINAME_TRUE@am__EXEEXT_2 = test-uninames$(EXEEXT)
 PROGRAMS = $(noinst_PROGRAMS)
+test_alignof_SOURCES = test-alignof.c
+test_alignof_OBJECTS = test-alignof.$(OBJEXT)
+test_alignof_LDADD = $(LDADD)
+test_alignof_DEPENDENCIES = libtests.a ../gnulib-lib/libgettextlib.la \
+	libtests.a $(am__DEPENDENCIES_1)
+AM_V_lt = $(am__v_lt_@AM_V@)
+am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
+am__v_lt_0 = --silent
+am__v_lt_1 = 
 test_alloca_opt_SOURCES = test-alloca-opt.c
 test_alloca_opt_OBJECTS = test-alloca-opt.$(OBJEXT)
 test_alloca_opt_LDADD = $(LDADD)
 test_alloca_opt_DEPENDENCIES = libtests.a \
 	../gnulib-lib/libgettextlib.la libtests.a \
 	$(am__DEPENDENCIES_1)
-AM_V_lt = $(am__v_lt_@AM_V@)
-am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
-am__v_lt_0 = --silent
-am__v_lt_1 = 
 test_areadlink_SOURCES = test-areadlink.c
 test_areadlink_OBJECTS = test-areadlink.$(OBJEXT)
 test_areadlink_LDADD = $(LDADD)
@@ -1226,10 +1236,11 @@ test_u8_width_linebreaks_OBJECTS =  \
 	$(am_test_u8_width_linebreaks_OBJECTS)
 test_u8_width_linebreaks_DEPENDENCIES = $(am__DEPENDENCIES_2) \
 	$(am__DEPENDENCIES_1)
-am_test_uninames_OBJECTS = uniname/test-uninames.$(OBJEXT)
+am__test_uninames_SOURCES_DIST = uniname/test-uninames.c
+@LIBUNISTRING_COMPILE_UNINAME_UNINAME_TRUE@am_test_uninames_OBJECTS = uniname/test-uninames.$(OBJEXT)
 test_uninames_OBJECTS = $(am_test_uninames_OBJECTS)
-test_uninames_DEPENDENCIES = $(am__DEPENDENCIES_2) \
-	$(am__DEPENDENCIES_1)
+@LIBUNISTRING_COMPILE_UNINAME_UNINAME_TRUE@test_uninames_DEPENDENCIES = $(am__DEPENDENCIES_2) \
+@LIBUNISTRING_COMPILE_UNINAME_UNINAME_TRUE@	$(am__DEPENDENCIES_1)
 test_unistd_SOURCES = test-unistd.c
 test_unistd_OBJECTS = test-unistd.$(OBJEXT)
 test_unistd_LDADD = $(LDADD)
@@ -1335,58 +1346,7 @@ am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
 SOURCES = $(libtests_a_SOURCES) $(EXTRA_libtests_a_SOURCES) \
-	test-alloca-opt.c test-areadlink.c test-argmatch.c \
-	test-array_list.c test-atexit.c test-binary-io.c test-btowc.c \
-	test-byteswap.c test-c-ctype.c test-c-strcasecmp.c \
-	test-c-strcasestr.c test-c-strncasecmp.c test-c-strstr.c \
-	test-canonicalize-lgpl.c test-cloexec.c test-close.c \
-	test-copy-acl.c test-copy-file.c test-dirent.c test-dup.c \
-	test-dup-safer.c test-dup2.c test-environ.c test-errno.c \
-	test-fcntl.c test-fcntl-h.c test-fdopen.c test-fgetc.c \
-	test-file-has-acl.c test-float.c test-fnmatch.c test-fopen.c \
-	test-fputc.c test-fread.c test-fstat.c test-fstrcmp.c \
-	test-ftell.c test-ftell3.c test-ftello.c test-ftello3.c \
-	test-ftello4.c test-fwrite.c test-getcwd-lgpl.c \
-	test-getdelim.c test-getdtablesize.c test-getline.c \
-	test-getopt.c test-gettimeofday.c test-iconv.c test-iconv-h.c \
-	test-ignore-value.c test-intprops.c test-inttypes.c \
-	test-iswblank.c test-linkedhash_list.c test-locale.c \
-	test-localename.c test-lock.c test-lseek.c test-lstat.c \
-	test-malloca.c test-mbrtowc.c test-mbrtowc-w32.c \
-	test-mbsinit.c test-mbsrtowcs.c test-mbsstr1.c test-mbsstr2.c \
-	test-mbsstr3.c test-memchr.c test-open.c test-pathmax.c \
-	test-pipe-filter-ii1.c test-pipe-filter-ii2-child.c \
-	test-pipe-filter-ii2-main.c test-pipe2.c test-posix_spawn1.c \
-	test-posix_spawn2.c test-posix_spawn_file_actions_addclose.c \
-	test-posix_spawn_file_actions_adddup2.c \
-	test-posix_spawn_file_actions_addopen.c test-quotearg-simple.c \
-	test-raise.c test-rawmemchr.c test-read.c test-read-file.c \
-	test-readlink.c test-rmdir.c test-sameacls.c test-sched.c \
-	test-set-mode-acl.c test-setenv.c test-setlocale1.c \
-	test-setlocale2.c test-sh-quote.c test-sigaction.c \
-	test-signal-h.c test-sigpipe.c test-sigprocmask.c test-sleep.c \
-	test-snprintf.c test-spawn.c test-spawn-pipe-child.c \
-	test-spawn-pipe-main.c test-stat.c test-stdbool.c \
-	test-stddef.c test-stdint.c test-stdio.c test-stdlib.c \
-	test-strchrnul.c test-strerror.c test-striconv.c \
-	test-striconveh.c test-striconveha.c test-string.c \
-	test-strnlen.c test-strstr.c test-strtol.c test-strtoul.c \
-	test-symlink.c test-sys_select.c test-sys_stat.c \
-	test-sys_time.c test-sys_types.c test-sys_wait.c \
-	test-term-ostream.c test-thread_create.c test-thread_self.c \
-	test-time.c test-tls.c $(test_u16_mbtouc_SOURCES) \
-	$(test_u8_check_SOURCES) $(test_u8_cmp_SOURCES) \
-	$(test_u8_conv_from_enc_SOURCES) $(test_u8_mblen_SOURCES) \
-	$(test_u8_mbtoucr_SOURCES) $(test_u8_prev_SOURCES) \
-	$(test_u8_strlen_SOURCES) $(test_u8_uctomb_SOURCES) \
-	$(test_u8_width_linebreaks_SOURCES) $(test_uninames_SOURCES) \
-	test-unistd.c test-unsetenv.c test-vasnprintf.c \
-	test-vasprintf.c test-verify.c test-vsnprintf.c test-wchar.c \
-	test-wcrtomb.c test-wcrtomb-w32.c test-wctype-h.c \
-	test-wcwidth.c test-write.c test-xalloc-die.c \
-	test-xvasprintf.c
-DIST_SOURCES = $(am__libtests_a_SOURCES_DIST) \
-	$(EXTRA_libtests_a_SOURCES) test-alloca-opt.c test-areadlink.c \
+	test-alignof.c test-alloca-opt.c test-areadlink.c \
 	test-argmatch.c test-array_list.c test-atexit.c \
 	test-binary-io.c test-btowc.c test-byteswap.c test-c-ctype.c \
 	test-c-strcasecmp.c test-c-strcasestr.c test-c-strncasecmp.c \
@@ -1436,6 +1396,57 @@ DIST_SOURCES = $(am__libtests_a_SOURCES_DIST) \
 	test-wcrtomb.c test-wcrtomb-w32.c test-wctype-h.c \
 	test-wcwidth.c test-write.c test-xalloc-die.c \
 	test-xvasprintf.c
+DIST_SOURCES = $(am__libtests_a_SOURCES_DIST) \
+	$(EXTRA_libtests_a_SOURCES) test-alignof.c test-alloca-opt.c \
+	test-areadlink.c test-argmatch.c test-array_list.c \
+	test-atexit.c test-binary-io.c test-btowc.c test-byteswap.c \
+	test-c-ctype.c test-c-strcasecmp.c test-c-strcasestr.c \
+	test-c-strncasecmp.c test-c-strstr.c test-canonicalize-lgpl.c \
+	test-cloexec.c test-close.c test-copy-acl.c test-copy-file.c \
+	test-dirent.c test-dup.c test-dup-safer.c test-dup2.c \
+	test-environ.c test-errno.c test-fcntl.c test-fcntl-h.c \
+	test-fdopen.c test-fgetc.c test-file-has-acl.c test-float.c \
+	test-fnmatch.c test-fopen.c test-fputc.c test-fread.c \
+	test-fstat.c test-fstrcmp.c test-ftell.c test-ftell3.c \
+	test-ftello.c test-ftello3.c test-ftello4.c test-fwrite.c \
+	test-getcwd-lgpl.c test-getdelim.c test-getdtablesize.c \
+	test-getline.c test-getopt.c test-gettimeofday.c test-iconv.c \
+	test-iconv-h.c test-ignore-value.c test-intprops.c \
+	test-inttypes.c test-iswblank.c test-linkedhash_list.c \
+	test-locale.c test-localename.c test-lock.c test-lseek.c \
+	test-lstat.c test-malloca.c test-mbrtowc.c test-mbrtowc-w32.c \
+	test-mbsinit.c test-mbsrtowcs.c test-mbsstr1.c test-mbsstr2.c \
+	test-mbsstr3.c test-memchr.c test-open.c test-pathmax.c \
+	test-pipe-filter-ii1.c test-pipe-filter-ii2-child.c \
+	test-pipe-filter-ii2-main.c test-pipe2.c test-posix_spawn1.c \
+	test-posix_spawn2.c test-posix_spawn_file_actions_addclose.c \
+	test-posix_spawn_file_actions_adddup2.c \
+	test-posix_spawn_file_actions_addopen.c test-quotearg-simple.c \
+	test-raise.c test-rawmemchr.c test-read.c test-read-file.c \
+	test-readlink.c test-rmdir.c test-sameacls.c test-sched.c \
+	test-set-mode-acl.c test-setenv.c test-setlocale1.c \
+	test-setlocale2.c test-sh-quote.c test-sigaction.c \
+	test-signal-h.c test-sigpipe.c test-sigprocmask.c test-sleep.c \
+	test-snprintf.c test-spawn.c test-spawn-pipe-child.c \
+	test-spawn-pipe-main.c test-stat.c test-stdbool.c \
+	test-stddef.c test-stdint.c test-stdio.c test-stdlib.c \
+	test-strchrnul.c test-strerror.c test-striconv.c \
+	test-striconveh.c test-striconveha.c test-string.c \
+	test-strnlen.c test-strstr.c test-strtol.c test-strtoul.c \
+	test-symlink.c test-sys_select.c test-sys_stat.c \
+	test-sys_time.c test-sys_types.c test-sys_wait.c \
+	test-term-ostream.c test-thread_create.c test-thread_self.c \
+	test-time.c test-tls.c $(test_u16_mbtouc_SOURCES) \
+	$(test_u8_check_SOURCES) $(test_u8_cmp_SOURCES) \
+	$(test_u8_conv_from_enc_SOURCES) $(test_u8_mblen_SOURCES) \
+	$(test_u8_mbtoucr_SOURCES) $(test_u8_prev_SOURCES) \
+	$(test_u8_strlen_SOURCES) $(test_u8_uctomb_SOURCES) \
+	$(test_u8_width_linebreaks_SOURCES) \
+	$(am__test_uninames_SOURCES_DIST) test-unistd.c \
+	test-unsetenv.c test-vasnprintf.c test-vasprintf.c \
+	test-verify.c test-vsnprintf.c test-wchar.c test-wcrtomb.c \
+	test-wcrtomb-w32.c test-wctype-h.c test-wcwidth.c test-write.c \
+	test-xalloc-die.c test-xvasprintf.c
 RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
 	ctags-recursive dvi-recursive html-recursive info-recursive \
 	install-data-recursive install-dvi-recursive \
@@ -2614,6 +2625,7 @@ REPLACE_RAISE = @REPLACE_RAISE@
 REPLACE_RANDOM_R = @REPLACE_RANDOM_R@
 REPLACE_READ = @REPLACE_READ@
 REPLACE_READLINK = @REPLACE_READLINK@
+REPLACE_READLINKAT = @REPLACE_READLINKAT@
 REPLACE_REALLOC = @REPLACE_REALLOC@
 REPLACE_REALPATH = @REPLACE_REALPATH@
 REPLACE_REMOVE = @REPLACE_REMOVE@
@@ -2647,6 +2659,7 @@ REPLACE_STRTOUMAX = @REPLACE_STRTOUMAX@
 REPLACE_STRUCT_LCONV = @REPLACE_STRUCT_LCONV@
 REPLACE_STRUCT_TIMEVAL = @REPLACE_STRUCT_TIMEVAL@
 REPLACE_SYMLINK = @REPLACE_SYMLINK@
+REPLACE_SYMLINKAT = @REPLACE_SYMLINKAT@
 REPLACE_TIMEGM = @REPLACE_TIMEGM@
 REPLACE_TMPFILE = @REPLACE_TMPFILE@
 REPLACE_TOWLOWER = @REPLACE_TOWLOWER@
@@ -2809,12 +2822,12 @@ EXTRA_DIST = test-file-has-acl.sh test-file-has-acl-1.sh \
 	test-set-mode-acl-1.sh test-set-mode-acl-2.sh test-copy-acl.sh \
 	test-copy-acl-1.sh test-copy-acl-2.sh test-file-has-acl.c \
 	test-set-mode-acl.c test-copy-acl.c test-sameacls.c macros.h \
-	test-alloca-opt.c test-areadlink.h test-areadlink.c macros.h \
-	test-argmatch.c macros.h test-array_list.c macros.h \
-	signature.h test-atexit.sh test-atexit.c test-binary-io.sh \
-	test-binary-io.c macros.h btowc.c test-btowc1.sh \
-	test-btowc2.sh test-btowc.c signature.h macros.h \
-	test-byteswap.c macros.h test-c-ctype.c macros.h \
+	test-alignof.c test-alloca-opt.c test-areadlink.h \
+	test-areadlink.c macros.h test-argmatch.c macros.h \
+	test-array_list.c macros.h signature.h test-atexit.sh \
+	test-atexit.c test-binary-io.sh test-binary-io.c macros.h \
+	btowc.c test-btowc1.sh test-btowc2.sh test-btowc.c signature.h \
+	macros.h test-byteswap.c macros.h test-c-ctype.c macros.h \
 	test-c-strcase.sh test-c-strcasecmp.c test-c-strncasecmp.c \
 	macros.h test-c-strcasestr.c macros.h test-c-strstr.c macros.h \
 	test-canonicalize-lgpl.c signature.h macros.h test-cloexec.c \
@@ -2970,7 +2983,7 @@ AM_CPPFLAGS = -D@gltests_WITNESS@=1 -I. -I$(srcdir) -I.. \
 	-I../intl
 LDADD = libtests.a ../gnulib-lib/libgettextlib.la libtests.a $(LIBTESTS_LIBDEPS)
 libtests_a_SOURCES = read-file.c glthread/thread.h glthread/thread.c \
-	$(am__append_5) $(am__append_6) glthread/yield.h
+	$(am__append_7) $(am__append_8) glthread/yield.h
 libtests_a_LIBADD = $(gltests_LIBOBJS)
 libtests_a_DEPENDENCIES = $(gltests_LIBOBJS)
 EXTRA_libtests_a_SOURCES = btowc.c dup.c fdopen.c ftell.c ftello.c \
@@ -3020,8 +3033,8 @@ test_u8_conv_from_enc_SOURCES = uniconv/test-u8-conv-from-enc.c
 test_u8_conv_from_enc_LDADD = $(LDADD) $(LIBUNISTRING) @LIBICONV@
 test_u8_width_linebreaks_SOURCES = unilbrk/test-u8-width-linebreaks.c
 test_u8_width_linebreaks_LDADD = $(LDADD) $(LIBUNISTRING)
-test_uninames_SOURCES = uniname/test-uninames.c
-test_uninames_LDADD = $(LDADD) $(LIBUNISTRING) @LIBINTL@
+@LIBUNISTRING_COMPILE_UNINAME_UNINAME_TRUE@test_uninames_SOURCES = uniname/test-uninames.c
+@LIBUNISTRING_COMPILE_UNINAME_UNINAME_TRUE@test_uninames_LDADD = $(LDADD) $(LIBUNISTRING) @LIBINTL@
 test_u16_mbtouc_SOURCES = unistr/test-u16-mbtouc.c
 test_u16_mbtouc_LDADD = $(LDADD) $(LIBUNISTRING)
 test_u8_check_SOURCES = unistr/test-u8-check.c
@@ -3123,6 +3136,10 @@ clean-noinstPROGRAMS:
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
+
+test-alignof$(EXEEXT): $(test_alignof_OBJECTS) $(test_alignof_DEPENDENCIES) $(EXTRA_test_alignof_DEPENDENCIES) 
+	@rm -f test-alignof$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(test_alignof_OBJECTS) $(test_alignof_LDADD) $(LIBS)
 
 test-alloca-opt$(EXEEXT): $(test_alloca_opt_OBJECTS) $(test_alloca_opt_DEPENDENCIES) $(EXTRA_test_alloca_opt_DEPENDENCIES) 
 	@rm -f test-alloca-opt$(EXEEXT)
@@ -3808,6 +3825,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/read-file.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sleep.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/symlink.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-alignof.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-alloca-opt.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-areadlink.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-argmatch.Po@am__quote@
@@ -4299,6 +4317,13 @@ test-copy-acl-1.sh.log: test-copy-acl-1.sh
 test-copy-acl-2.sh.log: test-copy-acl-2.sh
 	@p='test-copy-acl-2.sh'; \
 	b='test-copy-acl-2.sh'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+test-alignof.log: test-alignof$(EXEEXT)
+	@p='test-alignof$(EXEEXT)'; \
+	b='test-alignof'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \

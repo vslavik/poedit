@@ -771,17 +771,17 @@ check_header_entry (const message_ty *mp, const char *msgstr_string)
     ""
   };
   const size_t nfields = SIZEOF (required_fields);
+  /* FIXME: We could check if a required header field is missing and
+     report it as error.  However, it's could be too rigorous and
+     break backward compatibility.  */
+#if 0
   const size_t nrequiredfields = nfields - 1;
+#endif
   int seen_errors = 0;
   int cnt;
 
   for (cnt = 0; cnt < nfields; ++cnt)
     {
-      /* 0.19 change: It would better report error if a required
-         header field is missing.  However, traditionally we didn't
-         treat it as error.  Let's wait for one or two cycles until we
-         can assume the required header fields are always
-         available in practical PO files.  */
 #if 0
       int severity =
         (cnt < nrequiredfields ? PO_SEVERITY_ERROR : PO_SEVERITY_WARNING);

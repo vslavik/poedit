@@ -1097,6 +1097,7 @@ phase5_get (token_ty *tp)
   int bufpos;
   int c;
   int last_was_backslash;
+  bool raw_expected = false;
 
   if (phase5_pushback_length)
     {
@@ -1176,6 +1177,52 @@ phase5_get (token_ty *tp)
               continue;
 
             default:
+              /* Recognize C++ string literals prefixed by R, u8, u8R,
+                 u, uR, U, UR, L, or LR.  It is defined in ISO/IEC
+                 9899:2011 2.14.5.  Since gettext's argument is a byte
+                 sequence, we are only interested in u8, R, and u8R.  */
+              if (c == '"')
+                {
+                  bool is_prefix = false;
+
+                  switch (buffer[0])
+                    {
+                    case 'R':
+                      if (bufpos == 1)
+                        is_prefix = true;
+                      break;
+                    case 'u':
+                      if (bufpos == 1)
+                        is_prefix = true;
+                      else
+                        switch (buffer[1])
+                          {
+                          case 'R':
+                            if (bufpos == 2)
+                              is_prefix = true;
+                            break;
+                          case '8':
+                            if (bufpos == 2
+                                || (bufpos == 3 && buffer[2] == 'R'))
+                              is_prefix = true;
+                            break;
+                          }
+                      break;
+                    case 'U':
+                    case 'L':
+                      if (bufpos == 1
+                          || (bufpos == 2 && buffer[1] == 'R'))
+                        is_prefix = true;
+                      break;
+                    }
+
+                  if (is_prefix)
+                    {
+                      raw_expected = buffer[bufpos - 1] == 'R';
+                      bufpos = 0;
+                      goto string;
+                    }
+                }
               phase4_ungetc (c);
               break;
             }
@@ -1309,6 +1356,7 @@ phase5_get (token_ty *tp)
 
     case '"':
       {
+      string:
         /* We could worry about the 'L' before wide string constants,
            but since gettext's argument is not a wide character string,
            let the compiler complain about the argument not matching the
@@ -1335,21 +1383,27 @@ phase5_get (token_ty *tp)
                 last_was_backslash = true;
                 /* FALLTHROUGH */
               default:
-                if (bufpos >= bufmax)
+                if (c == '\n' && !raw_expected)
                   {
-                    bufmax = 2 * bufmax + 10;
-                    buffer = xrealloc (buffer, bufmax);
+                    error_with_progname = false;
+                    error (0, 0,
+                           _("%s:%d: warning: unterminated string literal"),
+                           logical_file_name, line_number - 1);
+                    error_with_progname = true;
+                    phase3_ungetc ('\n');
+                    break;
                   }
-                buffer[bufpos++] = c;
-                continue;
+                else
+                  {
+                    if (bufpos >= bufmax)
+                      {
+                        bufmax = 2 * bufmax + 10;
+                        buffer = xrealloc (buffer, bufmax);
+                      }
+                    buffer[bufpos++] = c;
+                    continue;
+                  }
 
-              case '\n':
-                error_with_progname = false;
-                error (0, 0, _("%s:%d: warning: unterminated string literal"),
-                       logical_file_name, line_number - 1);
-                error_with_progname = true;
-                phase3_ungetc ('\n');
-                break;
               case EOF: case '"':
                 break;
               }
@@ -1361,6 +1415,31 @@ phase5_get (token_ty *tp)
             buffer = xrealloc (buffer, bufmax);
           }
         buffer[bufpos] = 0;
+
+        if (raw_expected)
+          {
+            char *delimiter_left_end;
+            char *delimiter_right_start;
+
+            if (!(delimiter_left_end = strchr (buffer, '('))
+                || !(delimiter_right_start = strrchr (buffer, ')'))
+                || strncmp (buffer, delimiter_right_start + 1,
+                            (delimiter_left_end - buffer)) != 0)
+              {
+                error_with_progname = false;
+                error (0, 0, _("%s:%d: warning: unterminated string literal"),
+                       logical_file_name, line_number - 1);
+                error_with_progname = true;
+              }
+            else
+              {
+                *delimiter_right_start = '\0';
+                tp->type = token_type_string_literal;
+                tp->string = xstrdup (delimiter_left_end + 1);
+                tp->comment = add_reference (savable_comment);
+                return;
+              }
+          }
         tp->type = token_type_string_literal;
         tp->string = xstrdup (buffer);
         tp->comment = add_reference (savable_comment);

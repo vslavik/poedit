@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNU gettext-tools 0.18\n"
 "Report-Msgid-Bugs-To: bug-gnu-gettext@gnu.org\n"
-"POT-Creation-Date: 2014-10-16 15:04+0900\n"
+"POT-Creation-Date: 2014-12-24 16:27+0900\n"
 "PO-Revision-Date: 2010-07-23 01:47+0100\n"
 "Last-Translator: Christophe Combelles <ccomb@free.fr>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -220,7 +220,7 @@ msgstr ""
 msgid "%s subprocess I/O error"
 msgstr "Erreur d'E/S du sous-processus %s"
 
-#: gnulib-lib/obstack.c:416 gnulib-lib/obstack.c:418 gnulib-lib/xmalloc.c:37
+#: gnulib-lib/obstack.c:338 gnulib-lib/obstack.c:340 gnulib-lib/xmalloc.c:37
 #: gnulib-lib/xsetenv.c:37 src/msgl-check.c:559 src/po-lex.c:83
 #: src/po-lex.c:102 src/x-glade.c:548 libgettextpo/gettext-po.c:1326
 #, c-format
@@ -232,13 +232,13 @@ msgstr "Mémoire épuisée"
 msgid "creation of threads failed"
 msgstr "Échec de compilation de la classe C#"
 
-#: gnulib-lib/pipe-filter-ii.c:224 gnulib-lib/pipe-filter-ii.c:374
+#: gnulib-lib/pipe-filter-ii.c:224 gnulib-lib/pipe-filter-ii.c:381
 #: src/msgexec.c:405
 #, c-format
 msgid "write to %s subprocess failed"
 msgstr "Échec d'écriture sur le sous-processus %s"
 
-#: gnulib-lib/pipe-filter-ii.c:245 gnulib-lib/pipe-filter-ii.c:417
+#: gnulib-lib/pipe-filter-ii.c:245 gnulib-lib/pipe-filter-ii.c:424
 #, c-format
 msgid "read from %s subprocess failed"
 msgstr "Échec de lecture depuis le sous-processus %s"
@@ -250,12 +250,12 @@ msgstr ""
 "Impossible d'établir des entrées/sorties non bloquantes pour le sous-"
 "processus %s"
 
-#: gnulib-lib/pipe-filter-ii.c:329
+#: gnulib-lib/pipe-filter-ii.c:336
 #, c-format
 msgid "communication with %s subprocess failed"
 msgstr "Échec de communication avec le sous-processus %s"
 
-#: gnulib-lib/pipe-filter-ii.c:449
+#: gnulib-lib/pipe-filter-ii.c:456
 #, c-format
 msgid "%s subprocess terminated with exit code %d"
 msgstr "Sous-processus %s terminé avec le code de sortie %d"
@@ -322,7 +322,7 @@ msgid "%s subprocess got fatal signal %d"
 msgstr "Le sous-processus %s a reçu le signal fatal %d"
 
 #: src/file-list.c:53 src/msggrep.c:247 src/open-catalog.c:122
-#: src/read-mo.c:252 src/read-tcl.c:125 src/urlget.c:216 src/xgettext.c:1974
+#: src/read-mo.c:258 src/read-tcl.c:125 src/urlget.c:216 src/xgettext.c:1974
 #: src/xgettext.c:1987 src/xgettext.c:1997
 #, c-format
 msgid "error while opening \"%s\" for reading"
@@ -641,8 +641,8 @@ msgstr ""
 "Les spécifications de format dans « %s » et « %s » pour l'argument {%u} ne "
 "sont pas les mêmes"
 
-#: src/format-lisp.c:2337 src/format-lisp.c:2349 src/format-scheme.c:2363
-#: src/format-scheme.c:2375
+#: src/format-lisp.c:2339 src/format-lisp.c:2351 src/format-scheme.c:2365
+#: src/format-scheme.c:2377
 #, c-format
 msgid ""
 "In the directive number %u, parameter %u is of type '%s' but a parameter of "
@@ -651,7 +651,7 @@ msgstr ""
 "Dans la directive numéro %u, le paramètre %u est de type « %s » mais il "
 "manque un paramètre pour le type « %s »."
 
-#: src/format-lisp.c:2372 src/format-scheme.c:2398
+#: src/format-lisp.c:2374 src/format-scheme.c:2400
 #, c-format
 msgid ""
 "In the directive number %u, too many parameters are given; expected at most "
@@ -666,35 +666,35 @@ msgstr[1] ""
 "Dans la directive numéro %u, trop de paramètres sont fournis (il en faut %u "
 "au maximum)."
 
-#: src/format-lisp.c:2496 src/format-scheme.c:2499
+#: src/format-lisp.c:2498 src/format-scheme.c:2501
 #, c-format
 msgid "In the directive number %u, '%c' is not followed by a digit."
 msgstr "Dans la directive numéro %u, « %c » n'est pas suivi par un chiffre."
 
-#: src/format-lisp.c:2736 src/format-scheme.c:2754
+#: src/format-lisp.c:2738 src/format-scheme.c:2756
 #, c-format
 msgid "In the directive number %u, the argument %d is negative."
 msgstr "Dans la directive numéro %u, l'argument %d est négatif."
 
-#: src/format-lisp.c:2805
+#: src/format-lisp.c:2807
 msgid "The string ends in the middle of a ~/.../ directive."
 msgstr "La chaîne se termine au milieu d'une directive « ~/.../ »."
 
-#: src/format-lisp.c:2843 src/format-lisp.c:3108 src/format-lisp.c:3225
-#: src/format-lisp.c:3285 src/format-lisp.c:3397 src/format-scheme.c:2840
-#: src/format-scheme.c:3105 src/format-scheme.c:3222 src/format-scheme.c:3320
+#: src/format-lisp.c:2845 src/format-lisp.c:3110 src/format-lisp.c:3227
+#: src/format-lisp.c:3287 src/format-lisp.c:3399 src/format-scheme.c:2842
+#: src/format-scheme.c:3107 src/format-scheme.c:3224 src/format-scheme.c:3322
 #, c-format
 msgid "Found '~%c' without matching '~%c'."
 msgstr "« ~%c » a été trouvé sans « ~%c » correspondant."
 
-#: src/format-lisp.c:2863 src/format-scheme.c:2860
+#: src/format-lisp.c:2865 src/format-scheme.c:2862
 #, c-format
 msgid "In the directive number %u, both the @ and the : modifiers are given."
 msgstr ""
 "Dans la directive numéro %u, les deux modificateurs « @ » et « : » sont "
 "fournis."
 
-#: src/format-lisp.c:2976 src/format-scheme.c:2973
+#: src/format-lisp.c:2978 src/format-scheme.c:2975
 #, c-format
 msgid ""
 "In the directive number %u, '~:[' is not followed by two clauses, separated "
@@ -703,23 +703,23 @@ msgstr ""
 "Dans la directive numéro %u, « ~:[ » n'est pas suivi par deux clauses, "
 "séparées par « ~; »."
 
-#: src/format-lisp.c:3326 src/format-scheme.c:3263
+#: src/format-lisp.c:3328 src/format-scheme.c:3265
 #, c-format
 msgid "In the directive number %u, '~;' is used in an invalid position."
 msgstr ""
 "Dans la directive numéro %u, « ~; » est utilisé à une place incorrecte."
 
-#: src/format-lisp.c:3432 src/format-scheme.c:3355
+#: src/format-lisp.c:3434 src/format-scheme.c:3357
 msgid "The string refers to some argument in incompatible ways."
 msgstr "La chaîne fait référence à un argument de manière incompatible."
 
-#: src/format-lisp.c:3474 src/format-scheme.c:3397
+#: src/format-lisp.c:3476 src/format-scheme.c:3399
 #, c-format
 msgid "format specifications in '%s' and '%s' are not equivalent"
 msgstr ""
 "Les spécifications de format dans « %s » et « %s » ne sont pas équivalentes"
 
-#: src/format-lisp.c:3490 src/format-scheme.c:3413
+#: src/format-lisp.c:3492 src/format-scheme.c:3415
 #, c-format
 msgid "format specifications in '%s' are not a subset of those in '%s'"
 msgstr ""
@@ -1634,7 +1634,7 @@ msgstr "Ce message est utilisé mais non défini dans « %s »"
 msgid "warning: this message is not used"
 msgstr "AVERTISSEMENT : ce message n'est pas utilisé"
 
-#: src/msgcmp.c:553 src/msgfmt.c:652 src/msgfmt.c:1446
+#: src/msgcmp.c:553 src/msgfmt.c:652 src/msgfmt.c:1443
 #, c-format
 msgid "found %d fatal error"
 msgid_plural "found %d fatal errors"
@@ -2382,10 +2382,10 @@ msgstr ""
 msgid "%s exists but cannot read"
 msgstr ""
 
-#: src/msggrep.c:258 src/po-lex.c:657 src/read-mo.c:86
+#: src/msggrep.c:258 src/po-lex.c:657 src/read-mo.c:87
 #: src/read-properties.c:89 src/read-stringtable.c:98 src/x-awk.c:139
 #: src/x-c.c:486 src/x-csharp.c:163 src/x-elisp.c:145 src/x-glade.c:565
-#: src/x-java.c:181 src/x-javascript.c:172 src/x-librep.c:147 src/x-lisp.c:212
+#: src/x-java.c:181 src/x-javascript.c:171 src/x-librep.c:147 src/x-lisp.c:212
 #: src/x-lua.c:173 src/x-perl.c:227 src/x-perl.c:302 src/x-perl.c:395
 #: src/x-php.c:163 src/x-python.c:176 src/x-rst.c:233 src/x-scheme.c:171
 #: src/x-sh.c:155 src/x-smalltalk.c:91 src/x-tcl.c:150 src/x-vala.c:176
@@ -2679,7 +2679,7 @@ msgstr ""
 
 #: src/msgl-cat.c:442 src/msgl-cat.c:448 src/msgl-charset.c:92
 #: src/msgl-charset.c:127 src/po-xerror.c:122 src/po-xerror.c:147
-#: src/xgettext.c:544 src/xgettext.c:3418
+#: src/xgettext.c:544 src/xgettext.c:3426
 #, c-format
 msgid "warning: "
 msgstr "AVERTISSEMENT : "
@@ -3434,22 +3434,22 @@ msgstr "Double définition de message"
 msgid "this is the location of the first definition"
 msgstr "voici l'endroit de la première occurence"
 
-#: src/read-mo.c:105 src/read-mo.c:126 src/read-mo.c:172 src/read-mo.c:199
+#: src/read-mo.c:107 src/read-mo.c:129 src/read-mo.c:177 src/read-mo.c:205
 #, c-format
 msgid "file \"%s\" is truncated"
 msgstr "Le fichier « %s » est tronqué"
 
-#: src/read-mo.c:129
+#: src/read-mo.c:132
 #, c-format
 msgid "file \"%s\" contains a not NUL terminated string"
 msgstr "Le fichier « %s » contient une chaîne non terminée par un octet nul"
 
-#: src/read-mo.c:165 src/read-mo.c:274
+#: src/read-mo.c:169 src/read-mo.c:280
 #, c-format
 msgid "file \"%s\" is not in GNU .mo format"
 msgstr "Le fichier « %s » n'est pas au format GNU « .mo »"
 
-#: src/read-mo.c:178
+#: src/read-mo.c:183
 #, c-format
 msgid "file \"%s\" contains a not NUL terminated string, at %s"
 msgstr ""
@@ -3782,12 +3782,12 @@ msgstr "%s:%d : AVERTISSEMENT : expression rationnelle non terminée"
 msgid "warning: invalid Unicode character"
 msgstr "%s:%d : AVERTISSEMENT : caractère Unicode invalide"
 
-#: src/x-c.c:1297 src/x-csharp.c:1509 src/x-java.c:872 src/x-vala.c:630
+#: src/x-c.c:1344 src/x-csharp.c:1509 src/x-java.c:872 src/x-vala.c:619
 #, c-format
 msgid "%s:%d: warning: unterminated character constant"
 msgstr "%s:%d : AVERTISSEMENT : constante caractère sans terminaison"
 
-#: src/x-c.c:1348 src/x-vala.c:755
+#: src/x-c.c:1390 src/x-c.c:1430 src/x-vala.c:729
 #, c-format
 msgid "%s:%d: warning: unterminated string literal"
 msgstr "%s:%d : AVERTISSEMENT : chaîne sans terminaison"
@@ -3857,12 +3857,12 @@ msgstr "%s:%d : AVERTISSEMENT : caractère Unicode invalide"
 msgid "%s:%d: warning: unterminated string constant"
 msgstr "%s:%d : AVERTISSEMENT : constante chaîne de caractères non terminée"
 
-#: src/x-csharp.c:2020 src/x-java.c:1369
+#: src/x-csharp.c:2018 src/x-java.c:1369
 #, c-format
 msgid "%s:%d: warning: ')' found where '}' was expected"
 msgstr "%s:%d : AVERTISSEMENT : caractère « ) » trouvé à la place de « } »"
 
-#: src/x-csharp.c:2054 src/x-java.c:1403
+#: src/x-csharp.c:2052 src/x-java.c:1403
 #, c-format
 msgid "%s:%d: warning: '}' found where ')' was expected"
 msgstr "%s:%d : AVERTISSEMENT : caractère « } » trouvé à la place de « ) »"
@@ -4092,7 +4092,7 @@ msgstr "%s:%d : nombre manquant après « # »"
 msgid "%s:%d: invalid string expression"
 msgstr "%s:%d : expression chaîne invalide"
 
-#: src/x-sh.c:1074
+#: src/x-sh.c:1075
 #, c-format
 msgid ""
 "%s:%lu: warning: the syntax $\"...\" is deprecated due to security reasons; "
@@ -4101,7 +4101,7 @@ msgstr ""
 "%s:%lu : AVERTISSEMENT : la syntaxe « $\"...\" » ne doit pas être utilisée "
 "pour des raisons de sécurité. Utilisez plutôt « eval_gettext »"
 
-#: src/x-vala.c:413
+#: src/x-vala.c:414
 #, fuzzy, c-format
 msgid "%s:%d: warning: regular expression literal terminated too early"
 msgstr "%s:%d : AVERTISSEMENT : chaîne sans terminaison"
@@ -4508,7 +4508,7 @@ msgid "context mismatch between singular and plural form"
 msgstr ""
 "incohérence de contexte entre la forme du singulier et celle du pluriel"
 
-#: src/xgettext.c:3419
+#: src/xgettext.c:3427
 #, fuzzy
 msgid ""
 "The option --msgid-bugs-address was not specified.\n"
@@ -4521,7 +4521,7 @@ msgstr ""
 "la variable MSGID_BUGS_ADDRESS à cet endroit. Sinon, veuillez\n"
 "utiliser l'option « --msgid-bugs-address » en ligne de commande.\n"
 
-#: src/xgettext.c:3638
+#: src/xgettext.c:3646
 #, fuzzy, c-format
 msgid "language '%s' unknown"
 msgstr "langage « %s » inconnu"

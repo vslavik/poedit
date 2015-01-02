@@ -1,6 +1,8 @@
---- unistd.in.h.orig	2013-02-25 18:40:16.000000000 +0900
-+++ unistd.in.h	2013-02-25 18:49:26.754601400 +0900
-@@ -109,7 +109,11 @@
+diff --git a/unistd.in.h b/unistd.in.h
+index b4a3f5b..dd0d2c2 100644
+--- a/unistd.in.h
++++ b/unistd.in.h
+@@ -125,7 +125,11 @@
  
  /* Get getopt(), optarg, optind, opterr, optopt.
     But avoid namespace pollution on glibc systems.  */
@@ -13,3 +15,12 @@
  # define __need_getopt
  # include <getopt.h>
  #endif
+@@ -402,7 +406,7 @@ _GL_WARN_ON_USE (dup3, "dup3 is unportable - "
+    "VARIABLE=VALUE", terminated with a NULL.  */
+ #  if defined __APPLE__ && defined __MACH__
+ #   include <TargetConditionals.h>
+-#   if !defined TARGET_OS_IPHONE && !defined TARGET_IPHONE_SIMULATOR
++#   if !TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR
+ #    define _GL_USE_CRT_EXTERNS
+ #   endif
+ #  endif

@@ -1392,10 +1392,7 @@ msgfmt_desktop_bulk (const char *directory,
 
   languages = get_languages (directory);
   if (!languages)
-    {
-      retval = EXIT_FAILURE;
-      goto out;
-    }
+    return EXIT_FAILURE;
 
   /* Reset the directory search list so only .po files under DIRECTORY
      will be read.  */

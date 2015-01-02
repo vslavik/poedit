@@ -1,3 +1,24 @@
+Version 0.19.4 - December 2014
+
+* The --keyword option of xgettext now accepts same argument number
+  for both singular and plural forms.
+
+* Programming languages support:
+  - C#: xgettext now properly handles Unicode characters encoded with
+    surrogate pairs.
+  - C/C++: xgettext now recognizes ISO/IEC 9899:2011 string literals
+    prefixed by R, u8, u8R, u, uR, U, UR, L, or LR.
+  - Shell: xgettext now properly recognizes Bash ANSI-C quoting ($'...').
+
+* Bug fixes:
+  - Fix integer overflow when reading certain MO files with msgunfmt.
+  - Avoid invalid memory access in various cases.  In particular, when
+    the same argument number is specified for singular/plural
+    arguments, and when checking Lisp and Scheme format strings.
+
+* Portability:
+  - Building on Mac OS X 10.10 and AIX 7.1 is now supported.
+
 Version 0.19.3 - October 2014
 
 * Bug fixes:

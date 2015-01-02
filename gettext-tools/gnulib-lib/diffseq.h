@@ -186,7 +186,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
   for (c = 1;; ++c)
     {
       OFFSET d;                 /* Active diagonal. */
-      bool big_snake = false;
+      bool big_snake _GL_UNUSED = false;
 
       /* Extend the top-down search by an edit step in each diagonal. */
       if (fmin > dmin)

@@ -1,3 +1,50 @@
+2014-12-24  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.4 released.
+
+2014-12-24  Daiki Ueno  <ueno@gnu.org>
+
+	* po/bg.po: Update from Roumen Petrov <transl@roumenpetrov.info>.
+	* po/ca.po: Update from Ivan Vilata i Balaguer <ivan@selidor.net>.
+	* po/es.po: Update from Antonio Ceballos <aceballos@gmail.com>.
+	* po/ja.po: Update from Masahito Yamaga <ma@yama-ga.com>.
+	* po/pl.po: Update from Rafał Maszkowski <rzm@icm.edu.pl>.
+	* po/pt_BR.po: Update from Rafael Ferreira <rafael.f.f1@gmail.com>.
+	* po/ru.po: Update from Yuri Kozlov <yuray@komyakino.ru>.
+	* po/sk.po: Update from Marcel Telka <marcel@telka.sk>.
+	* po/sl.po: Update from Primož Peterlin <primozz.peterlin@gmail.com>.
+	* po/sv.po: Update from Jan Djärv <jan.h.d@swipnet.se>.
+	* po/uk.po: Update from Yuri Chornoivan <yurchor@ukr.net>.
+	* po/vi.po: Update from Trần Ngọc Quân <vnwildman@gmail.com>.
+
+2014-12-05  Daiki Ueno  <ueno@gnu.org>
+
+	examples: Regenerate stamp-po after POT has changed
+	* Makefile.am (distdir1): Invoke 'all' target in po/Makefile,
+	after 'update-po'.
+
+2014-12-05  Daiki Ueno  <ueno@gnu.org>
+
+	examples: Include hello-*.pot in the distribution
+	Partially revert 2c3d71ce, as it broke "make dist".  Instead,
+	include all the generated POT files in the distribution to prevent
+	re-generation of those files.
+	* Makefile.am (distdir1): Call update-po in po/Makefile.
+	* po/Makefile.am ($(DOMAIN).pot-update): Specify --directory for
+	xgettext invocation.
+	(DISTCLEANFILES): Move $(SMALLPOTS)...
+	(MAINTAINERCLEANFILES): ...here.
+	(distdir1): Include $(SMALLPOTS) in the distribution.
+
+2014-12-04  Daiki Ueno  <ueno@gnu.org>
+
+	examples: Don't forcibly regenerate POT files on 'make dist'
+	Previously we generated POT files on 'make dist'.  However, it
+	take some time to complete and require autotools bootstrap for
+	each project.
+	* Makefile.am (distdir1): Don't invoke update-po rule in po/Makefile.
+	* po/Makefile.am (distdir1): Don't invoke update-po rule.
+
 2014-10-15  Daiki Ueno  <ueno@gnu.org>
 
 	* gettext 0.19.3 released.

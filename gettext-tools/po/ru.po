@@ -4,13 +4,14 @@
 #
 # Oleg S. Tihonov <ost@tatnipi.ru>, 1998, 2001-2007.
 # Yuri Kozlov <yuray@komyakino.ru>, 2014.
+# Pavel Maryanov <acid@jack.kiev.ua>, 2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: gettext-tools 0.19-rc1\n"
+"Project-Id-Version: gettext-tools 0.19.3\n"
 "Report-Msgid-Bugs-To: bug-gnu-gettext@gnu.org\n"
-"POT-Creation-Date: 2014-10-16 15:04+0900\n"
-"PO-Revision-Date: 2014-05-11 13:59+0400\n"
-"Last-Translator: Yuri Kozlov <yuray@komyakino.ru>\n"
+"POT-Creation-Date: 2014-12-24 16:27+0900\n"
+"PO-Revision-Date: 2014-11-19 09:30+0200\n"
+"Last-Translator: Pavel Maryanov <acid@jack.kiev.ua>\n"
 "Language-Team: Russian <gnu@mx.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Poedit 1.6.9\n"
 
 #: gnulib-lib/argmatch.c:133
 #, c-format
@@ -216,7 +217,7 @@ msgstr ""
 msgid "%s subprocess I/O error"
 msgstr "ошибка ввода/вывода в дочернем процессе %s"
 
-#: gnulib-lib/obstack.c:416 gnulib-lib/obstack.c:418 gnulib-lib/xmalloc.c:37
+#: gnulib-lib/obstack.c:338 gnulib-lib/obstack.c:340 gnulib-lib/xmalloc.c:37
 #: gnulib-lib/xsetenv.c:37 src/msgl-check.c:559 src/po-lex.c:83
 #: src/po-lex.c:102 src/x-glade.c:548 libgettextpo/gettext-po.c:1326
 #, c-format
@@ -228,13 +229,13 @@ msgstr "память исчерпана"
 msgid "creation of threads failed"
 msgstr "ошибка при создании нитей"
 
-#: gnulib-lib/pipe-filter-ii.c:224 gnulib-lib/pipe-filter-ii.c:374
+#: gnulib-lib/pipe-filter-ii.c:224 gnulib-lib/pipe-filter-ii.c:381
 #: src/msgexec.c:405
 #, c-format
 msgid "write to %s subprocess failed"
 msgstr "ошибка при записи в дочерний процесс %s"
 
-#: gnulib-lib/pipe-filter-ii.c:245 gnulib-lib/pipe-filter-ii.c:417
+#: gnulib-lib/pipe-filter-ii.c:245 gnulib-lib/pipe-filter-ii.c:424
 #, c-format
 msgid "read from %s subprocess failed"
 msgstr "ошибка при чтении из дочернего процесса %s"
@@ -245,12 +246,12 @@ msgid "cannot set up nonblocking I/O to %s subprocess"
 msgstr ""
 "невозможно организовать неблокирующий ввод/вывод для дочернего процесса %s"
 
-#: gnulib-lib/pipe-filter-ii.c:329
+#: gnulib-lib/pipe-filter-ii.c:336
 #, c-format
 msgid "communication with %s subprocess failed"
 msgstr "ошибка при попытке связи с дочерним процессом %s"
 
-#: gnulib-lib/pipe-filter-ii.c:449
+#: gnulib-lib/pipe-filter-ii.c:456
 #, c-format
 msgid "%s subprocess terminated with exit code %d"
 msgstr "дочерний процесс %s завершился с выходным кодом %d"
@@ -317,7 +318,7 @@ msgid "%s subprocess got fatal signal %d"
 msgstr "дочерний процесс %s получил фатальный сигнал %d"
 
 #: src/file-list.c:53 src/msggrep.c:247 src/open-catalog.c:122
-#: src/read-mo.c:252 src/read-tcl.c:125 src/urlget.c:216 src/xgettext.c:1974
+#: src/read-mo.c:258 src/read-tcl.c:125 src/urlget.c:216 src/xgettext.c:1974
 #: src/xgettext.c:1987 src/xgettext.c:1997
 #, c-format
 msgid "error while opening \"%s\" for reading"
@@ -606,8 +607,8 @@ msgid ""
 "format specifications in '%s' and '%s' for argument {%u} are not the same"
 msgstr "в «%s» и «%s» не совпадают спецификации формата для аргумента {%u}"
 
-#: src/format-lisp.c:2337 src/format-lisp.c:2349 src/format-scheme.c:2363
-#: src/format-scheme.c:2375
+#: src/format-lisp.c:2339 src/format-lisp.c:2351 src/format-scheme.c:2365
+#: src/format-scheme.c:2377
 #, c-format
 msgid ""
 "In the directive number %u, parameter %u is of type '%s' but a parameter of "
@@ -616,7 +617,7 @@ msgstr ""
 "В директиве номер %u параметр %u принадлежит типу «%s», но ожидается "
 "параметр типа «%s»."
 
-#: src/format-lisp.c:2372 src/format-scheme.c:2398
+#: src/format-lisp.c:2374 src/format-scheme.c:2400
 #, c-format
 msgid ""
 "In the directive number %u, too many parameters are given; expected at most "
@@ -634,33 +635,33 @@ msgstr[2] ""
 "В директиве номер %u указано слишком много параметров; ожидалось не более %u "
 "параметров"
 
-#: src/format-lisp.c:2496 src/format-scheme.c:2499
+#: src/format-lisp.c:2498 src/format-scheme.c:2501
 #, c-format
 msgid "In the directive number %u, '%c' is not followed by a digit."
 msgstr "В директиве номер %u после «%c» не стоит цифра."
 
-#: src/format-lisp.c:2736 src/format-scheme.c:2754
+#: src/format-lisp.c:2738 src/format-scheme.c:2756
 #, c-format
 msgid "In the directive number %u, the argument %d is negative."
 msgstr "В директиве номер %u аргумент %d отрицателен."
 
-#: src/format-lisp.c:2805
+#: src/format-lisp.c:2807
 msgid "The string ends in the middle of a ~/.../ directive."
 msgstr "Строка обрывается посреди директивы ~/.../."
 
-#: src/format-lisp.c:2843 src/format-lisp.c:3108 src/format-lisp.c:3225
-#: src/format-lisp.c:3285 src/format-lisp.c:3397 src/format-scheme.c:2840
-#: src/format-scheme.c:3105 src/format-scheme.c:3222 src/format-scheme.c:3320
+#: src/format-lisp.c:2845 src/format-lisp.c:3110 src/format-lisp.c:3227
+#: src/format-lisp.c:3287 src/format-lisp.c:3399 src/format-scheme.c:2842
+#: src/format-scheme.c:3107 src/format-scheme.c:3224 src/format-scheme.c:3322
 #, c-format
 msgid "Found '~%c' without matching '~%c'."
 msgstr "Встречено «~%c» без соответствующего «~%c»."
 
-#: src/format-lisp.c:2863 src/format-scheme.c:2860
+#: src/format-lisp.c:2865 src/format-scheme.c:2862
 #, c-format
 msgid "In the directive number %u, both the @ and the : modifiers are given."
 msgstr "В директиве номер %u одновременно заданы модификаторы @ и :."
 
-#: src/format-lisp.c:2976 src/format-scheme.c:2973
+#: src/format-lisp.c:2978 src/format-scheme.c:2975
 #, c-format
 msgid ""
 "In the directive number %u, '~:[' is not followed by two clauses, separated "
@@ -668,21 +669,21 @@ msgid ""
 msgstr ""
 "В директиве номер %u после «~:[» не стоят два предложения, разделенные «~;»."
 
-#: src/format-lisp.c:3326 src/format-scheme.c:3263
+#: src/format-lisp.c:3328 src/format-scheme.c:3265
 #, c-format
 msgid "In the directive number %u, '~;' is used in an invalid position."
 msgstr "В директиве номер %u «~;» использована в неверном месте."
 
-#: src/format-lisp.c:3432 src/format-scheme.c:3355
+#: src/format-lisp.c:3434 src/format-scheme.c:3357
 msgid "The string refers to some argument in incompatible ways."
 msgstr "Строка ссылается на какой-то аргумент несовместимым образом."
 
-#: src/format-lisp.c:3474 src/format-scheme.c:3397
+#: src/format-lisp.c:3476 src/format-scheme.c:3399
 #, c-format
 msgid "format specifications in '%s' and '%s' are not equivalent"
 msgstr "спецификации формата в «%s» и «%s» не эквивалентны"
 
-#: src/format-lisp.c:3490 src/format-scheme.c:3413
+#: src/format-lisp.c:3492 src/format-scheme.c:3415
 #, c-format
 msgid "format specifications in '%s' are not a subset of those in '%s'"
 msgstr ""
@@ -1555,7 +1556,7 @@ msgstr "это сообщение не было определено в %s"
 msgid "warning: this message is not used"
 msgstr "предупреждение: это сообщение не используется"
 
-#: src/msgcmp.c:553 src/msgfmt.c:652 src/msgfmt.c:1446
+#: src/msgcmp.c:553 src/msgfmt.c:652 src/msgfmt.c:1443
 #, c-format
 msgid "found %d fatal error"
 msgid_plural "found %d fatal errors"
@@ -2277,10 +2278,10 @@ msgstr "%s не существует"
 msgid "%s exists but cannot read"
 msgstr "%s существует, но недоступен для чтения"
 
-#: src/msggrep.c:258 src/po-lex.c:657 src/read-mo.c:86
+#: src/msggrep.c:258 src/po-lex.c:657 src/read-mo.c:87
 #: src/read-properties.c:89 src/read-stringtable.c:98 src/x-awk.c:139
 #: src/x-c.c:486 src/x-csharp.c:163 src/x-elisp.c:145 src/x-glade.c:565
-#: src/x-java.c:181 src/x-javascript.c:172 src/x-librep.c:147 src/x-lisp.c:212
+#: src/x-java.c:181 src/x-javascript.c:171 src/x-librep.c:147 src/x-lisp.c:212
 #: src/x-lua.c:173 src/x-perl.c:227 src/x-perl.c:302 src/x-perl.c:395
 #: src/x-php.c:163 src/x-python.c:176 src/x-rst.c:233 src/x-scheme.c:171
 #: src/x-sh.c:155 src/x-smalltalk.c:91 src/x-tcl.c:150 src/x-vala.c:176
@@ -2516,7 +2517,7 @@ msgstr ""
 #: src/read-tcl.c:127 src/write-resources.c:104
 #, c-format
 msgid "%s subprocess failed with exit code %d"
-msgstr "дочерний процесс %s завершился неуспехом с выходным кодом %d"
+msgstr "дочерний процесс %s завершился аварийно с кодом выхода %d"
 
 #: src/msginit.c:1119
 msgid ""
@@ -2526,10 +2527,10 @@ msgid ""
 "contact\n"
 "you in case of unexpected technical problems.\n"
 msgstr ""
-"Новый каталог сообщений должен содержать ваш адрес электронной почты,\n"
-"чтобы пользователи могли присылать свои замечания по поводу ваших\n"
-"передов, а также чтобы сопроводители программ могли связаться с вами в\n"
-"том случае, если возникнут непредвиденные технические проблемы.\n"
+"В новом каталоге сообщений должен быть указан адрес вашей электронной\n"
+"почты, чтобы пользователи могли присылать свои замечания по поводу ваших\n"
+"переводов, а также чтобы сопроводители программ могли связаться с вами\n"
+"на случай, если возникнут непредвиденные технические проблемы.\n"
 
 #. TRANSLATORS: "English" needs to be replaced by your language.
 #. For example in it.po write "Traduzioni italiani ...",
@@ -2571,7 +2572,7 @@ msgstr "целевая кодировка «%s» не является пере�
 
 #: src/msgl-cat.c:442 src/msgl-cat.c:448 src/msgl-charset.c:92
 #: src/msgl-charset.c:127 src/po-xerror.c:122 src/po-xerror.c:147
-#: src/xgettext.c:544 src/xgettext.c:3418
+#: src/xgettext.c:544 src/xgettext.c:3426
 #, c-format
 msgid "warning: "
 msgstr "предупреждение: "
@@ -3284,22 +3285,22 @@ msgstr "повторное определение сообщения"
 msgid "this is the location of the first definition"
 msgstr "место появления первого определения"
 
-#: src/read-mo.c:105 src/read-mo.c:126 src/read-mo.c:172 src/read-mo.c:199
+#: src/read-mo.c:107 src/read-mo.c:129 src/read-mo.c:177 src/read-mo.c:205
 #, c-format
 msgid "file \"%s\" is truncated"
 msgstr "файл «%s» усечён"
 
-#: src/read-mo.c:129
+#: src/read-mo.c:132
 #, c-format
 msgid "file \"%s\" contains a not NUL terminated string"
 msgstr "файл «%s» содержит строку, не завершённую нулем"
 
-#: src/read-mo.c:165 src/read-mo.c:274
+#: src/read-mo.c:169 src/read-mo.c:280
 #, c-format
 msgid "file \"%s\" is not in GNU .mo format"
 msgstr "файл «%s» не в соответствует формату GNU .mo"
 
-#: src/read-mo.c:178
+#: src/read-mo.c:183
 #, c-format
 msgid "file \"%s\" contains a not NUL terminated string, at %s"
 msgstr "файл «%s» содержит строку, не завершённую нулем, в позиции %s"
@@ -3505,9 +3506,8 @@ msgid "error while opening \"%s\" for writing"
 msgstr "ошибка открытия «%s» для записи"
 
 #: src/write-po.c:821
-#, fuzzy
 msgid "incomplete multibyte sequence"
-msgstr "неверная многобайтовая последовательность"
+msgstr "неполная многобайтовая последовательность"
 
 #: src/write-po.c:884
 #, c-format
@@ -3626,12 +3626,12 @@ msgstr "%s:%d: предупреждение: незавершенное регу
 msgid "warning: invalid Unicode character"
 msgstr "предупреждение: неверный символ Unicode"
 
-#: src/x-c.c:1297 src/x-csharp.c:1509 src/x-java.c:872 src/x-vala.c:630
+#: src/x-c.c:1344 src/x-csharp.c:1509 src/x-java.c:872 src/x-vala.c:619
 #, c-format
 msgid "%s:%d: warning: unterminated character constant"
 msgstr "%s:%d: предупреждение: незавершенная символьная константа"
 
-#: src/x-c.c:1348 src/x-vala.c:755
+#: src/x-c.c:1390 src/x-c.c:1430 src/x-vala.c:729
 #, c-format
 msgid "%s:%d: warning: unterminated string literal"
 msgstr "%s:%d: предупреждение: незавершенная строка"
@@ -3646,7 +3646,7 @@ msgid ""
 "%s:%d: Invalid multibyte sequence.\n"
 "Please specify the correct source encoding through --from-code.\n"
 msgstr ""
-"%s:%d: Неверная мультибайтная последовательность.\n"
+"%s:%d: Неверная многобайтовая последовательность.\n"
 "Укажите входную кодировку с помощью параметра --from-code.\n"
 
 #: src/x-csharp.c:285
@@ -3655,7 +3655,7 @@ msgid ""
 "%s:%d: Long incomplete multibyte sequence.\n"
 "Please specify the correct source encoding through --from-code.\n"
 msgstr ""
-"%s:%d: Длинная неполная мультибайтная последовательность.\n"
+"%s:%d: Длинная неполная многобайтовая последовательность.\n"
 "Укажите входную кодировку с помощью параметра --from-code.\n"
 
 #: src/x-csharp.c:297
@@ -3664,7 +3664,7 @@ msgid ""
 "%s:%d: Incomplete multibyte sequence at end of file.\n"
 "Please specify the correct source encoding through --from-code.\n"
 msgstr ""
-"%s:%d: Неполная мультибайтная последовательность в конце файла.\n"
+"%s:%d: Неполная многобайтовая последовательность в конце файла.\n"
 "Укажите входную кодировку с помощью параметра --from-code.\n"
 
 #: src/x-csharp.c:306
@@ -3673,7 +3673,7 @@ msgid ""
 "%s:%d: Incomplete multibyte sequence at end of line.\n"
 "Please specify the correct source encoding through --from-code.\n"
 msgstr ""
-"%s:%d: Неполная мультибайтная последовательность в конце строки.\n"
+"%s:%d: Неполная многобайтовая последовательность в конце строки.\n"
 "Укажите входную кодировку с помощью параметра --from-code.\n"
 
 #: src/x-csharp.c:315 src/x-javascript.c:321 src/x-python.c:374
@@ -3687,7 +3687,7 @@ msgid ""
 "%s:%d: Invalid multibyte sequence.\n"
 "Please specify the source encoding through --from-code.\n"
 msgstr ""
-"%s:%d: Неверная мультибайтная последовательность.\n"
+"%s:%d: Неверная многобайтовая последовательность.\n"
 "Укажите входную кодировку с помощью параметра --from-code.\n"
 
 #: src/x-csharp.c:1390 src/x-python.c:1138
@@ -3700,12 +3700,12 @@ msgstr "%s:%d: предупреждение: неверный символ Unico
 msgid "%s:%d: warning: unterminated string constant"
 msgstr "%s:%d: предупреждение: незавершенная строковая константа"
 
-#: src/x-csharp.c:2020 src/x-java.c:1369
+#: src/x-csharp.c:2018 src/x-java.c:1369
 #, c-format
 msgid "%s:%d: warning: ')' found where '}' was expected"
 msgstr "%s:%d: предупреждение: встречена «)», где ожидается «}»"
 
-#: src/x-csharp.c:2054 src/x-java.c:1403
+#: src/x-csharp.c:2052 src/x-java.c:1403
 #, c-format
 msgid "%s:%d: warning: '}' found where ')' was expected"
 msgstr "%s:%d: предупреждение: встречена «}», где ожидается «)»"
@@ -3749,7 +3749,7 @@ msgid ""
 "%s:%d: Invalid multibyte sequence.\n"
 "Please specify the correct source encoding through --from-code\n"
 msgstr ""
-"%s:%d: Неверная мультибайтная последовательность.\n"
+"%s:%d: Неверная многобайтовая последовательность.\n"
 "Укажите входную кодировку с помощью параметра --from-code\n"
 
 #: src/x-javascript.c:291
@@ -3758,7 +3758,7 @@ msgid ""
 "%s:%d: Long incomplete multibyte sequence.\n"
 "Please specify the correct source encoding through --from-code\n"
 msgstr ""
-"%s:%d: Длинная неполная мультибайтная последовательность.\n"
+"%s:%d: Длинная неполная многобайтовая последовательность.\n"
 "Укажите входную кодировку с помощью параметра --from-code\n"
 
 #: src/x-javascript.c:303
@@ -3767,7 +3767,7 @@ msgid ""
 "%s:%d: Incomplete multibyte sequence at end of file.\n"
 "Please specify the correct source encoding through --from-code\n"
 msgstr ""
-"%s:%d: Неполная мультибайтная последовательность в конце файла.\n"
+"%s:%d: Неполная многобайтовая последовательность в конце файла.\n"
 "Укажите входную кодировку с помощью параметра --from-code\n"
 
 #: src/x-javascript.c:312
@@ -3776,7 +3776,7 @@ msgid ""
 "%s:%d: Incomplete multibyte sequence at end of line.\n"
 "Please specify the correct source encoding through --from-code\n"
 msgstr ""
-"%s:%d: Неполная мультибайтная последовательность в конце строки.\n"
+"%s:%d: Неполная многобайтовая последовательность в конце строки.\n"
 "Укажите входную кодировку с помощью параметра --from-code\n"
 
 #: src/x-javascript.c:344
@@ -3785,7 +3785,7 @@ msgid ""
 "%s:%d: Invalid multibyte sequence.\n"
 "Please specify the source encoding through --from-code\n"
 msgstr ""
-"%s:%d: Неверная мультибайтная последовательность.\n"
+"%s:%d: Неверная многобайтовая последовательность.\n"
 "Укажите входную кодировку с помощью параметра --from-code\n"
 
 #: src/x-javascript.c:954
@@ -3853,7 +3853,7 @@ msgid ""
 "Please specify the correct source encoding through --from-code or through a\n"
 "comment as specified in http://www.python.org/peps/pep-0263.html.\n"
 msgstr ""
-"%s:%d: Неверная мультибайтная последовательность.\n"
+"%s:%d: Неверная многобайтовая последовательность.\n"
 "Укажите входную кодировку с помощью параметра --from-code или с помощью\n"
 "комментария, как описано на http://www.python.org/peps/pep-0263.html.\n"
 
@@ -3864,7 +3864,7 @@ msgid ""
 "Please specify the correct source encoding through --from-code or through a\n"
 "comment as specified in http://www.python.org/peps/pep-0263.html.\n"
 msgstr ""
-"%s:%d: Длинная неполная мультибайтная последовательность.\n"
+"%s:%d: Длинная неполная многобайтовая последовательность.\n"
 "Укажите входную кодировку с помощью параметра --from-code или с помощью\n"
 "комментария, как описано на http://www.python.org/peps/pep-0263.html.\n"
 
@@ -3875,7 +3875,7 @@ msgid ""
 "Please specify the correct source encoding through --from-code or through a\n"
 "comment as specified in http://www.python.org/peps/pep-0263.html.\n"
 msgstr ""
-"%s:%d: Неполная мультибайтная последовательность в конце файла.\n"
+"%s:%d: Неполная многобайтовая последовательность в конце файла.\n"
 "Укажите входную кодировку с помощью параметра --from-code или с помощью\n"
 "комментария, как описано на http://www.python.org/peps/pep-0263.html.\n"
 
@@ -3886,7 +3886,7 @@ msgid ""
 "Please specify the correct source encoding through --from-code or through a\n"
 "comment as specified in http://www.python.org/peps/pep-0263.html.\n"
 msgstr ""
-"%s:%d: Неполная мультибайтная последовательность в конце строки.\n"
+"%s:%d: Неполная многобайтовая последовательность в конце строки.\n"
 "Укажите входную кодировку с помощью параметра --from-code или с помощью\n"
 "комментария, как описано на http://www.python.org/peps/pep-0263.html.\n"
 
@@ -3897,7 +3897,7 @@ msgid ""
 "Please specify the source encoding through --from-code or through a comment\n"
 "as specified in http://www.python.org/peps/pep-0263.html.\n"
 msgstr ""
-"%s:%d: Неверная мультибайтная последовательность.\n"
+"%s:%d: Неверная многобайтовая последовательность.\n"
 "Укажите входную кодировку с помощью параметра --from-code или с помощью\n"
 "комментария, как описано на http://www.python.org/peps/pep-0263.html.\n"
 
@@ -3921,7 +3921,7 @@ msgstr "%s:%d: пропущено число после #"
 msgid "%s:%d: invalid string expression"
 msgstr "%s:%d: неверное строковое выражение"
 
-#: src/x-sh.c:1074
+#: src/x-sh.c:1075
 #, c-format
 msgid ""
 "%s:%lu: warning: the syntax $\"...\" is deprecated due to security reasons; "
@@ -3930,7 +3930,7 @@ msgstr ""
 "%s:%lu: предупреждение: синтаксис $\"...\" запрещен по соображениям "
 "безопасности; используйте eval_gettext"
 
-#: src/x-vala.c:413
+#: src/x-vala.c:414
 #, c-format
 msgid "%s:%d: warning: regular expression literal terminated too early"
 msgstr ""
@@ -4321,7 +4321,7 @@ msgstr ""
 msgid "context mismatch between singular and plural form"
 msgstr "не совпадают контексты у форм в единственном и множественном числе"
 
-#: src/xgettext.c:3419
+#: src/xgettext.c:3427
 msgid ""
 "The option --msgid-bugs-address was not specified.\n"
 "If you are using a 'Makevars' file, please specify\n"
@@ -4332,7 +4332,7 @@ msgstr ""
 "«Makevars», установите в нём переменную MSGID_BUGS_ADDRESS, в\n"
 "противном случае задайте в командной строке параметр --msgid-bugs-address.\n"
 
-#: src/xgettext.c:3638
+#: src/xgettext.c:3646
 #, c-format
 msgid "language '%s' unknown"
 msgstr "язык «%s» неизвестен"

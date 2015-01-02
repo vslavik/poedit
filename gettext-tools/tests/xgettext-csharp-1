@@ -22,6 +22,10 @@ class TestCase {
     // commented out through #if
     String test5 = rm.GetString("Test String 5");
 #endif
+    // verbatim string
+    String test5 = rm.GetString(@"first line
+second line
+third line");
   }
 }
 EOF
@@ -49,6 +53,13 @@ msgstr ""
 
 #. commented out through #if
 msgid "Test String 5"
+msgstr ""
+
+#. verbatim string
+msgid ""
+"first line\n"
+"second line\n"
+"third line"
 msgstr ""
 EOF
 
