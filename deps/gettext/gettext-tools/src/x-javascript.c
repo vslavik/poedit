@@ -43,7 +43,6 @@
 #include "c-strstr.h"
 #include "c-ctype.h"
 #include "po-charset.h"
-#include "uniname.h"
 #include "unistr.h"
 #include "gettext.h"
 
@@ -205,7 +204,8 @@ phase1_ungetc (int c)
 
 static lexical_context_ty lexical_context;
 
-static int phase2_pushback[max (9, UNINAME_MAX + 3)];
+/* Maximum used, length of "<![CDATA[" tag minus one.  */
+static int phase2_pushback[8];
 static int phase2_pushback_length;
 
 /* Read the next Unicode UCS-4 character from the input file.  */

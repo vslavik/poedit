@@ -42,6 +42,8 @@
 
 #define _(str) gettext (str)
 
+#define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
+
 /* The syntax of a Desktop Entry file is defined at
    http://standards.freedesktop.org/desktop-entry-spec/latest/index.html.  */
 
@@ -91,10 +93,10 @@ desktop_reader_handle_comment (desktop_reader_ty *reader, const char *s)
 }
 
 void
-desktop_reader_handle_text (desktop_reader_ty *reader, const char *s)
+desktop_reader_handle_blank (desktop_reader_ty *reader, const char *s)
 {
-  if (reader->methods->handle_text)
-    reader->methods->handle_text (reader, s);
+  if (reader->methods->handle_blank)
+    reader->methods->handle_blank (reader, s);
 }
 
 /* Real filename, used in error messages about the input file.  */
@@ -178,124 +180,303 @@ phase2_ungetc (int c)
     phase2_pushback[phase2_pushback_length++] = c;
 }
 
-static char *
-read_until_newline (void)
+enum token_type_ty
 {
-  char *buffer = NULL;
-  size_t bufmax = 0;
-  size_t buflen;
+  token_type_eof,
+  token_type_group,
+  token_type_pair,
+  /* Unlike other scanners, preserve comments and blank lines for
+     merging translations back into a desktop file, with msgfmt.  */
+  token_type_comment,
+  token_type_blank,
+  token_type_other
+};
+typedef enum token_type_ty token_type_ty;
 
-  buflen = 0;
-  for (;;)
-    {
-      int c;
+typedef struct token_ty token_ty;
+struct token_ty
+{
+  token_type_ty type;
+  char *string;
+  const char *value;
+  const char *locale;
+};
 
-      c = phase2_getc ();
-
-      if (buflen >= bufmax)
-        {
-          bufmax += 100;
-          buffer = xrealloc (buffer, bufmax);
-        }
-
-      if (c == EOF || c == '\n')
-        break;
-
-      buffer[buflen++] = c;
-    }
-  buffer[buflen] = '\0';
-  return buffer;
+/* Free the memory pointed to by a 'struct token_ty'.  */
+static inline void
+free_token (token_ty *tp)
+{
+  if (tp->type == token_type_group || tp->type == token_type_pair
+      || tp->type == token_type_comment || tp->type == token_type_blank)
+    free (tp->string);
 }
 
-static char *
-read_group_name (void)
+static void
+desktop_lex (token_ty *tp)
 {
-  char *buffer = NULL;
-  size_t bufmax = 0;
-  size_t buflen;
+  static char *buffer;
+  static size_t bufmax;
+  size_t bufpos;
 
-  buflen = 0;
+#undef APPEND
+#define APPEND(c)                               \
+  do                                            \
+    {                                           \
+      if (bufpos >= bufmax)                     \
+        {                                       \
+          bufmax += 100;                        \
+          buffer = xrealloc (buffer, bufmax);   \
+        }                                       \
+      buffer[bufpos++] = c;                     \
+    }                                           \
+  while (0)
+
+  bufpos = 0;
   for (;;)
     {
       int c;
 
       c = phase2_getc ();
 
-      if (buflen >= bufmax)
+      switch (c)
         {
-          bufmax += 100;
-          buffer = xrealloc (buffer, bufmax);
+        case EOF:
+          tp->type = token_type_eof;
+          return;
+
+        case '[':
+          {
+            bool non_blank = false;
+
+            for (;;)
+              {
+                c = phase2_getc ();
+                switch (c)
+                  {
+                  default:
+                    /* Group names may contain all ASCII characters
+                       except for '[' and ']' and control characters.  */
+                    if (!(c_isascii (c) && c != '[') && !c_iscntrl (c))
+                      break;
+                    APPEND (c);
+                    continue;
+                  case '\n':
+                    po_xerror (PO_SEVERITY_WARNING, NULL,
+                               real_file_name, gram_pos.line_number, 0, false,
+                               _("unterminated group name"));
+                    break;
+                  case EOF: case ']':
+                    break;
+                  }
+                break;
+              }
+            /* Skip until newline.  */
+            if (c != '\n')
+              {
+                for (;;)
+                  {
+                    if (c == '\n' || c == EOF)
+                      break;
+                    if (!c_isspace (c))
+                      non_blank = true;
+                    c = phase2_getc ();
+                  }
+              }
+            if (non_blank)
+              po_xerror (PO_SEVERITY_WARNING, NULL,
+                         real_file_name, gram_pos.line_number, 0, false,
+                         _("invalid non-blank character"));
+            APPEND (0);
+            tp->type = token_type_group;
+            tp->string = xstrdup (buffer);
+            return;
+          }
+
+        case '#':
+          {
+            /* Read until newline.  */
+            for (;;)
+              {
+                c = phase2_getc ();
+                switch (c)
+                  {
+                  default:
+                    APPEND (c);
+                    continue;
+                  case EOF: case '\n':
+                    break;
+                  }
+                break;
+              }
+            APPEND (0);
+            tp->type = token_type_comment;
+            tp->string = xstrdup (buffer);
+            return;
+          }
+
+        case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
+        case 'G': case 'H': case 'I': case 'J': case 'K': case 'L':
+        case 'M': case 'N': case 'O': case 'P': case 'Q': case 'R':
+        case 'S': case 'T': case 'U': case 'V': case 'W': case 'X':
+        case 'Y': case 'Z':
+        case '-':
+        case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
+        case 'g': case 'h': case 'i': case 'j': case 'k': case 'l':
+        case 'm': case 'n': case 'o': case 'p': case 'q': case 'r':
+        case 's': case 't': case 'u': case 'v': case 'w': case 'x':
+        case 'y': case 'z':
+        case '0': case '1': case '2': case '3': case '4':
+        case '5': case '6': case '7': case '8': case '9':
+          {
+            const char *locale = NULL;
+            const char *value = NULL;
+            for (;;)
+              {
+                APPEND (c);
+
+                c = phase2_getc ();
+                switch (c)
+                  {
+                  case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
+                  case 'G': case 'H': case 'I': case 'J': case 'K': case 'L':
+                  case 'M': case 'N': case 'O': case 'P': case 'Q': case 'R':
+                  case 'S': case 'T': case 'U': case 'V': case 'W': case 'X':
+                  case 'Y': case 'Z':
+                  case '-':
+                  case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
+                  case 'g': case 'h': case 'i': case 'j': case 'k': case 'l':
+                  case 'm': case 'n': case 'o': case 'p': case 'q': case 'r':
+                  case 's': case 't': case 'u': case 'v': case 'w': case 'x':
+                  case 'y': case 'z':
+                  case '0': case '1': case '2': case '3': case '4':
+                  case '5': case '6': case '7': case '8': case '9':
+                    continue;
+
+                  case '[':
+                    /* Finish the key part and start the locale part.  */
+                    APPEND (0);
+                    locale = &buffer[bufpos];
+
+                    for (;;)
+                      {
+                        int c2 = phase2_getc ();
+                        switch (c2)
+                          {
+                          default:
+                            APPEND (c2);
+                            continue;
+                          case EOF: case ']':
+                            break;
+                          }
+                        break;
+                      }
+                    break;
+
+                  default:
+                    phase2_ungetc (c);
+                    break;
+                  }
+                break;
+              }
+            APPEND (0);
+
+            /* Skip any whitespace before '='.  */
+            for (;;)
+              {
+                c = phase2_getc ();
+                switch (c)
+                  {
+                  default:
+                    if (c_isspace (c))
+                      continue;
+                    phase2_ungetc (c);
+                    break;
+                  case EOF: case '\n':
+                    break;
+                  }
+                break;
+              }
+
+            c = phase2_getc ();
+            if (c != '=')
+              {
+                po_xerror (PO_SEVERITY_WARNING, NULL,
+                           real_file_name, gram_pos.line_number, 0, false,
+                           xasprintf (_("missing '=' after \"%s\""), buffer));
+                for (;;)
+                  {
+                    c = phase2_getc ();
+                    if (c == EOF || c == '\n')
+                      break;
+                  }
+                tp->type = token_type_other;
+                return;
+              }
+
+            /* Skip any whitespace after '='.  */
+            for (;;)
+              {
+                c = phase2_getc ();
+                switch (c)
+                  {
+                  default:
+                    if (c_isspace (c))
+                      continue;
+                    phase2_ungetc (c);
+                    break;
+                  case EOF: case '\n':
+                    break;
+                  }
+                break;
+              }
+
+            value = &buffer[bufpos];
+            for (;;)
+              {
+                c = phase2_getc ();
+                if (c == EOF || c == '\n')
+                  break;
+                APPEND (c);
+              }
+            APPEND (0);
+            tp->type = token_type_pair;
+            tp->string = xmemdup (buffer, bufpos);
+            tp->locale = locale;
+            tp->value = value;
+            return;
+          }
+        default:
+          {
+            bool non_blank = false;
+
+            for (;;)
+              {
+                if (c == '\n' || c == EOF)
+                  break;
+
+                if (!c_isspace (c))
+                  non_blank = true;
+                else
+                  APPEND (c);
+
+                c = phase2_getc ();
+              }
+            if (non_blank)
+              {
+                po_xerror (PO_SEVERITY_WARNING, NULL,
+                           real_file_name, gram_pos.line_number, 0, false,
+                           _("invalid non-blank line"));
+                tp->type = token_type_other;
+                return;
+              }
+            APPEND (0);
+            tp->type = token_type_blank;
+            tp->string = xstrdup (buffer);
+            return;
+          }
         }
-
-      if (c == EOF || c == '\n' || c == ']')
-        break;
-
-      buffer[buflen++] = c;
     }
-  buffer[buflen] = '\0';
-  return buffer;
-}
-
-static char *
-read_key_name (const char **locale)
-{
-  char *buffer = NULL;
-  size_t bufmax = 0;
-  size_t buflen;
-  const char *locale_start = NULL;
-
-  buflen = 0;
-  for (;;)
-    {
-      int c;
-
-      c = phase2_getc ();
-
-      if (buflen >= bufmax)
-        {
-          bufmax += 100;
-          buffer = xrealloc (buffer, bufmax);
-        }
-
-      if (c == EOF || c == '\n')
-        break;
-
-      if (!locale_start)
-        {
-          if (c == '[')
-            {
-              buffer[buflen++] = '\0';
-              locale_start = &buffer[buflen];
-              continue;
-            }
-          else if (!c_isalnum (c) && c != '-')
-            {
-              phase2_ungetc (c);
-              break;
-            }
-        }
-      else
-        {
-          if (c == ']')
-            {
-              buffer[buflen++] = '\0';
-              break;
-            }
-          else if (!c_isascii (c))
-            {
-              phase2_ungetc (c);
-              break;
-            }
-        }
-
-      buffer[buflen++] = c;
-    }
-  buffer[buflen] = '\0';
-
-  if (locale_start)
-    *locale = locale_start;
-
-  return buffer;
+#undef APPEND
 }
 
 void
@@ -309,96 +490,32 @@ desktop_parse (desktop_reader_ty *reader, FILE *file,
 
   for (;;)
     {
-      int c;
-
-      c = phase2_getc ();
-
-      if (c == EOF)
-        break;
-
-      if (c == '[')
+      struct token_ty token;
+      desktop_lex (&token);
+      switch (token.type)
         {
-          /* A group header.  */
-          char *group_name;
-
-          group_name = read_group_name ();
-
-          do
-            c = phase2_getc ();
-          while (c == ' ' || c == '\t' || c == '\r' || c == '\n' || c == '\f');
-
-          if (c == EOF)
-            break;
-
-          phase2_ungetc (c);
-
-          desktop_reader_handle_group (reader, group_name);
-          free (group_name);
+        case token_type_eof:
+          goto out;
+        case token_type_group:
+          desktop_reader_handle_group (reader, token.string);
+          break;
+        case token_type_comment:
+          desktop_reader_handle_comment (reader, token.string);
+          break;
+        case token_type_pair:
+          desktop_reader_handle_pair (reader, &gram_pos,
+                                      token.string, token.locale, token.value);
+          break;
+        case token_type_blank:
+          desktop_reader_handle_blank (reader, token.string);
+          break;
+        case token_type_other:
+          break;
         }
-      else if (c == '#')
-        {
-          /* A comment line.  */
-          char *comment;
-
-          comment = read_until_newline ();
-          desktop_reader_handle_comment (reader, comment);
-          free (comment);
-        }
-      else if (c_isalnum (c) || c == '-')
-        {
-          /* A key/value pair.  */
-          char *key_name;
-          const char *locale;
-
-          phase2_ungetc (c);
-
-          locale = NULL;
-          key_name = read_key_name (&locale);
-          do
-            c = phase2_getc ();
-          while (c == ' ' || c == '\t' || c == '\r' || c == '\f');
-
-          if (c == EOF)
-            break;
-
-          if (c != '=')
-            {
-              po_xerror (PO_SEVERITY_FATAL_ERROR, NULL,
-                         real_filename, gram_pos.line_number, 0, false,
-                         xasprintf (_("missing '=' after \"%s\""), key_name));
-            }
-          else
-            {
-              char *value;
-
-              do
-                c = phase2_getc ();
-              while (c == ' ' || c == '\t' || c == '\r' || c == '\f');
-
-              if (c == EOF)
-                break;
-
-              phase2_ungetc (c);
-
-              value = read_until_newline ();
-              desktop_reader_handle_pair (reader, &gram_pos,
-                                          key_name, locale, value);
-              free (value);
-            }
-          free (key_name);
-        }
-      else
-        {
-          char *text;
-
-          phase2_ungetc (c);
-
-          text = read_until_newline ();
-          desktop_reader_handle_text (reader, text);
-          free (text);
-        }
+      free_token (&token);
     }
 
+ out:
   fp = NULL;
   real_file_name = NULL;
   gram_pos.line_number = 0;

@@ -1,3 +1,184 @@
+2014-12-24  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.4 released.
+
+2014-12-18  Daiki Ueno  <ueno@gnu.org>
+
+	* x-sh.c (read_word): Use phase1 instead of phase2 for Bash ANSI-C
+	escape sequences.  Also handle '\"' and '\E'.
+
+2014-12-17  Daiki Ueno  <ueno@gnu.org>
+
+	* x-sh.c (phase2_getc): Fix typo: debackslahificication ->
+	debackslashification.
+
+2014-12-12  Daiki Ueno  <ueno@gnu.org>
+
+	* read-desktop.c (desktop_parse): Check and ignore
+	token_type_other.
+
+2014-12-12  Daiki Ueno  <ueno@gnu.org>
+
+	* format-lisp.c (make_intersected_list): Don't dereference
+	potentially released memory.  'append_repeated_to_initial' may
+	release the LIST->element.  Spotted by clang-analyzer.
+	* format-scheme.c (make_intersected_list): Likewise.
+
+2014-12-10  Daiki Ueno  <ueno@gnu.org>
+
+	* msgl-check.c (check_header_entry): Don't declare unused variable
+	'nrequiredfields'.
+
+2014-12-09  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext.c (arglist_parser_done): Avoid potential
+	null-dereference.  Spotted by clang-analyzer.
+
+2014-12-09  Daiki Ueno  <ueno@gnu.org>
+
+	* msgfmt.c (msgfmt_desktop_bulk): Don't dereference potentially
+	uninitialized value.  Spotted by clang-analyzer.
+
+2014-12-09  Daiki Ueno  <ueno@gnu.org>
+
+	* x-vala.c (phase3_get): Factor out the buffer allocation as a
+	macro.
+
+2014-12-09  Daiki Ueno  <ueno@gnu.org>
+
+	* read-desktop.c (desktop_lex): Undef the APPEND macro before
+	defining.
+
+2014-12-09  Daiki Ueno  <ueno@gnu.org>
+
+	desktop: Simplify the parsing logic
+	* read-desktop.h (desktop_reader_class_ty): Rename 'handle_text'
+	to 'handle_blank'.
+	(desktop_reader_handle_blank): Rename from
+	'desktop_reader_handle_text'.
+	* read-desktop.c (SIZEOF): New macro.
+	(desktop_reader_handle_blank): Rename from
+	'desktop_reader_handle_blank'.
+	(read_until_newline, read_group_name, read_key_name): Remove.
+	Merge into...
+	(desktop_lex): ...here.
+	(desktop_parse): Call 'desktop_lex' instead of read_*.  Don't
+	normalize whitespaces.
+	(enum token_type_ty): New enum.
+	(struct token_ty): New struct.
+	(free_token): New function.
+	* write-desktop.c (msgfmt_desktop_handle_blank): Rename from
+	'msgfmt_desktop_handle_text'.
+	* x-desktop.c: Include "c-ctype.h".
+	(extract_desktop_handle_comment): Normalize whitespaces here.
+	(extract_desktop_handle_blank): Rename from
+	'extract_desktop_handle_text'.
+
+2014-12-07  Daiki Ueno  <ueno@gnu.org>
+
+	vala: Make regex literal handling robuster
+	* x-vala.c (token_type_ty): New enumeration values
+	'token_type_arithmetic_operator' and 'token_type_question'.
+	Remove 'token_type_minus'.
+	(phase3_get): Rewrite regex literal handling right after
+	arithmetic assignment operators.
+
+2014-12-05  Daiki Ueno  <ueno@gnu.org>
+
+	msgunfmt: Avoid integer overflow using xsize
+	* read-mo.c (get_uint32, get_sysdep_string): Use xsum to avoid
+	integer overflow, when checking length and offset fields.
+	Reported by Jakub Wilk at:
+	<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=772088>.
+
+2014-12-04  Daiki Ueno  <ueno@gnu.org>
+
+	libgettextsrc: Follow plural.c -> pluralx.c file name change
+	* plural-exp.c: Include "../intl/pluralx.c" instead of
+	"../intl/plural.c".  Adjust to commit d2d04ba9.
+
+2014-12-03  Daiki Ueno  <ueno@gnu.org>
+
+	intl: Work around LCOV relative base directory resolution
+	* plural-exp.c: Include "../intl/plural.c" instead of
+	"../../gettext-runtime/intl/plural.c".
+
+2014-12-02  Daiki Ueno  <ueno@gnu.org>
+
+	c: Minor cleanup of the previous commit
+	* x-c.c (phase5_get): Remove redundant check of is_prefix; fit
+	lines to 80 column.
+
+2014-12-02  Daiki Ueno  <ueno@gnu.org>
+
+	c: Support C++11 string literals
+	* x-c.c (phase5_get): Recognize C++ string literals, defined in
+	ISO/IEC 9899:2011.  Reported at:
+	<https://savannah.gnu.org/bugs/?39499>.
+
+2014-12-01  Daiki Ueno  <ueno@gnu.org>
+
+	c#: Recognize Unicode surrogate character pair
+	* x-csharp.c (accumulate_escaped): Change the first argument type
+	from 'struct string_buffer *' to 'struct mixed_string_buffer *',
+	for Unicode surrogate character pair handling; all callers
+	changed.  Reported by Petr Kadlec at:
+	<https://savannah.gnu.org/bugs/?32505>.
+
+2014-11-28  Daiki Ueno  <ueno@gnu.org>
+
+	* msgfilter.c (prepare_read): Simplify the last commit 06e206f5,
+	by always adding 1 to the buffer size.
+
+2014-11-28  Daiki Ueno  <ueno@gnu.org>
+
+	msgfilter: Fix read buffer allocation for empty input
+	* msgfilter.c (prepare_read): Increase allocated buffer size even
+	if the original size is < 2.
+	Reported by Robin McCorkell at:
+	<https://savannah.gnu.org/bugs/?43720>.
+
+2014-11-27  Daiki Ueno  <ueno@gnu.org>
+
+	javascript: Simplify Unicode character escape handling
+	ECMA-262 only supports "\uXXXX" style Unicode character escape and
+	we don't need extra space for character names.
+	* x-javascript.c: Don't include "uniname.h".
+	(phase2_pushback): Decrease to 5.  Don't refer to UNINAME_MAX.
+
+2014-11-18  Daiki Ueno  <ueno@gnu.org>
+
+	* read-mo.c: Include "xsize.h".
+	(get_string): Use xsum3 to avoid overflow, when checking length
+	and offset fields.
+	Reported by Jakub Wilk at:
+	<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=769901>.
+
+2014-10-28  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: Allow plural extraction from a single argument function
+	The commit 8137d2b4 was a wrong fix since both singular/plural msgids
+	may point to the same address for Qt4 plural forms.  This reverts
+	the commit and fix the original double-free problem in the right
+	way.  Thanks to Jesper Fehrlund for suggestions.
+	* xgettext.c (arglist_parser_remember_literal): Don't ignore
+	plural argument even if ARGNUM1 equals to ARGNUM2.
+	(arglist_parser_done): Make a copy of best_cp->msgid_plural when
+	passing it to remember_a_message_plural, if it equals to
+	best_cp->msgid.  Also move code conversion logic earlier taking
+	into account of the ownership transfer of best_cp->msgid.
+
+2014-10-28  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: Fix double-free in singular/plural argument extraction
+	After commit 6aa7b7ed in 2009, xgettext assumed that ARGNUM1 and
+	ARGNUM2 of -k are different.  That could cause an double-free in
+	exceptional cases.
+	Reported by Johan Liljegren in:
+	<https://lists.gnu.org/archive/html/bug-gettext/2014-10/msg00028.html>.
+	* xgettext.c (arglist_parser_remember_literal): Don't assume that
+	ARGNUM1 and ARGNUM2 are different.
+
 2014-10-15  Daiki Ueno  <ueno@gnu.org>
 
 	* gettext 0.19.3 released.

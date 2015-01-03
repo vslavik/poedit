@@ -17,5 +17,5 @@
 
 /* Include the expression parsing code from libintl, with different function
    names.  */
-#include "../../gettext-runtime/intl/plural.c"
+#include "../intl/pluralx.c"
 #include "../../gettext-runtime/intl/plural-exp.c"

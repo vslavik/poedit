@@ -240,6 +240,7 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/multiarch.m4 \
 	$(top_srcdir)/gnulib-m4/no-c++.m4 \
 	$(top_srcdir)/gnulib-m4/nocrash.m4 \
+	$(top_srcdir)/gnulib-m4/obstack.m4 \
 	$(top_srcdir)/gnulib-m4/off_t.m4 \
 	$(top_srcdir)/gnulib-m4/open.m4 \
 	$(top_srcdir)/gnulib-m4/opendir.m4 \
@@ -1488,6 +1489,7 @@ REPLACE_RAISE = @REPLACE_RAISE@
 REPLACE_RANDOM_R = @REPLACE_RANDOM_R@
 REPLACE_READ = @REPLACE_READ@
 REPLACE_READLINK = @REPLACE_READLINK@
+REPLACE_READLINKAT = @REPLACE_READLINKAT@
 REPLACE_REALLOC = @REPLACE_REALLOC@
 REPLACE_REALPATH = @REPLACE_REALPATH@
 REPLACE_REMOVE = @REPLACE_REMOVE@
@@ -1521,6 +1523,7 @@ REPLACE_STRTOUMAX = @REPLACE_STRTOUMAX@
 REPLACE_STRUCT_LCONV = @REPLACE_STRUCT_LCONV@
 REPLACE_STRUCT_TIMEVAL = @REPLACE_STRUCT_TIMEVAL@
 REPLACE_SYMLINK = @REPLACE_SYMLINK@
+REPLACE_SYMLINKAT = @REPLACE_SYMLINKAT@
 REPLACE_TIMEGM = @REPLACE_TIMEGM@
 REPLACE_TMPFILE = @REPLACE_TMPFILE@
 REPLACE_TOWLOWER = @REPLACE_TOWLOWER@
@@ -1663,9 +1666,9 @@ AUTOMAKE_OPTIONS = 1.5 gnits no-dependencies subdir-objects
 
 # Allow users to use "gnulib-tool --update".
 EXTRA_DIST = libgettextpo.rc gettext-po.in.h gnulib-m4/gnulib-cache.m4 \
-	alloca.in.h c-strcaseeq.h close.c concat-filename.h dosname.h \
-	errno.in.h error.c error.h exitfail.h fcntl.in.h fd-hook.h \
-	file-ostream.h file-ostream.c file_ostream.priv.h \
+	alignof.h alloca.in.h c-strcaseeq.h close.c concat-filename.h \
+	dosname.h errno.in.h error.c error.h exitfail.h fcntl.in.h \
+	fd-hook.h file-ostream.h file-ostream.c file_ostream.priv.h \
 	file_ostream.vt.h file-ostream.oo.c file-ostream.oo.h \
 	filename.h float.c float.in.h itold.c fopen.c fstat.c \
 	getdelim.c getline.c gettimeofday.c \
@@ -1821,7 +1824,7 @@ libgettextpo_la_AUXSOURCES = \
 # Libtool's library version information for libgettextpo.
 # See the libtool documentation, section "Library interface versions".
 LTV_CURRENT = 5
-LTV_REVISION = 2
+LTV_REVISION = 3
 LTV_AGE = 5
 
 # How to build libgettextpo.la.
@@ -3373,9 +3376,11 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's|@''REPLACE_PWRITE''@|$(REPLACE_PWRITE)|g' \
 	      -e 's|@''REPLACE_READ''@|$(REPLACE_READ)|g' \
 	      -e 's|@''REPLACE_READLINK''@|$(REPLACE_READLINK)|g' \
+	      -e 's|@''REPLACE_READLINKAT''@|$(REPLACE_READLINKAT)|g' \
 	      -e 's|@''REPLACE_RMDIR''@|$(REPLACE_RMDIR)|g' \
 	      -e 's|@''REPLACE_SLEEP''@|$(REPLACE_SLEEP)|g' \
 	      -e 's|@''REPLACE_SYMLINK''@|$(REPLACE_SYMLINK)|g' \
+	      -e 's|@''REPLACE_SYMLINKAT''@|$(REPLACE_SYMLINKAT)|g' \
 	      -e 's|@''REPLACE_TTYNAME_R''@|$(REPLACE_TTYNAME_R)|g' \
 	      -e 's|@''REPLACE_UNLINK''@|$(REPLACE_UNLINK)|g' \
 	      -e 's|@''REPLACE_UNLINKAT''@|$(REPLACE_UNLINKAT)|g' \

@@ -125,6 +125,25 @@ Place comment blocks starting with @var{tag} and preceding keyword lines
 in the output file.  Without a @var{tag}, the option means to put @emph{all}
 comment blocks preceding keyword lines in the output file.
 
+Note that comment blocks supposed to be extracted must be adjacent to
+keyword lines.  For example, in the following C source code:
+
+@example
+/* This is the first comment.  */
+gettext ("foo");
+
+/* This is the second comment: not extracted  */
+gettext (
+  "bar");
+
+gettext (
+  /* This is the third comment.  */
+  "baz");
+@end example
+
+The second comment line will not be extracted, because there is one
+blank line between the comment line and the keyword.
+
 @end table
 
 @subsection Language specific options

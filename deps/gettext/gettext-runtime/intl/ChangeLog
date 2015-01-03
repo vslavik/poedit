@@ -1,3 +1,27 @@
+2014-12-24  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.4 released.
+
+2014-12-24  Daiki Ueno  <ueno@gnu.org>
+
+	* libgnuintl.in.h (LIBINTL_VERSION): Bump to 0.19.4.
+	* Makefile.in (LTV_CURRENT, LTV_REVISION, LTV_AGE): Bump to 9:3:1.
+
+2014-12-04  Daiki Ueno  <ueno@gnu.org>
+
+	intl: Make the LCOV workaround non-intrusive
+	* Makefile.in (PLURAL_OBJECT): New variable.
+	(OBJECTS): Refer to $(PLURAL_OBJECT) instead of plural.$lo.
+	(pluralx.c, pluralx.lo): New rule.
+	(mostlyclean): Remove pluralx.c.
+
+2014-12-03  Daiki Ueno  <ueno@gnu.org>
+
+	intl: Work around LCOV relative base directory resolution
+	* Makefile.in (plural.lo): Resolve relative source file name given
+	with '#line' directive, when $(srcdir) != $(builddir).
+	(mostlyclean): Remove plural.c generated in the 'plural.lo' rule.
+
 2014-10-15  Daiki Ueno  <ueno@gnu.org>
 
 	* gettext 0.19.3 released.

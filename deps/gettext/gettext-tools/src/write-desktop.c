@@ -117,7 +117,7 @@ msgfmt_desktop_handle_comment (struct desktop_reader_ty *reader, const char *s)
 }
 
 static void
-msgfmt_desktop_handle_text (struct desktop_reader_ty *reader, const char *s)
+msgfmt_desktop_handle_blank (struct desktop_reader_ty *reader, const char *s)
 {
   msgfmt_desktop_reader_ty *msgfmt_reader = (msgfmt_desktop_reader_ty *) reader;
 
@@ -133,7 +133,7 @@ desktop_reader_class_ty msgfmt_methods =
     msgfmt_desktop_handle_group,
     msgfmt_desktop_handle_pair,
     msgfmt_desktop_handle_comment,
-    msgfmt_desktop_handle_text
+    msgfmt_desktop_handle_blank
   };
 
 int

@@ -193,9 +193,9 @@ am__relativize = \
     dir1=`echo "$$dir1" | sed -e "$$sed_rest"`; \
   done; \
   reldir="$$dir2"
-DIST_ARCHIVES = $(distdir).tar.gz $(distdir).tar.xz
+DIST_ARCHIVES = $(distdir).tar.gz $(distdir).tar.lz $(distdir).tar.xz
 GZIP_ENV = --best
-DIST_TARGETS = dist-xz dist-gzip
+DIST_TARGETS = dist-lzip dist-xz dist-gzip
 distuninstallcheck_listfiles = find . -type f -print
 am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
@@ -308,15 +308,16 @@ SUBDIRS = gnulib-local gettext-runtime gettext-tools
 
 # Versioning based on Git release tags.
 EXTRA_DIST = DEPENDENCIES PACKAGING HACKING ChangeLog.0 autogen.sh \
-	build-aux/ac-help.sed build-aux/moopp m4/fixautomake.m4 \
-	m4/woe32-dll.m4 m4/libtool.m4 djgpp/COPYING.DJ \
-	djgpp/Makefile.maint djgpp/README.DJ djgpp/README.in \
-	djgpp/README djgpp/config.bat djgpp/config.in djgpp/config.sed \
-	djgpp/config.site djgpp/djpwd.h djgpp/edtests.bat \
-	djgpp/fnchange.in djgpp/fnchange.lst djgpp/getpwnam.c \
-	djgpp/msginit.sed djgpp/tscript.sed djgpp/unsetenv.c \
-	os2/README.OS2 os2/Makefile os2/backward.def os2/configure.awk \
-	README.woe32 windows/windres-options windows/gettext.rc \
+	build-aux/ac-help.sed build-aux/moopp \
+	build-aux/git-version-gen m4/fixautomake.m4 m4/woe32-dll.m4 \
+	m4/libtool.m4 djgpp/COPYING.DJ djgpp/Makefile.maint \
+	djgpp/README.DJ djgpp/README.in djgpp/README djgpp/config.bat \
+	djgpp/config.in djgpp/config.sed djgpp/config.site \
+	djgpp/djpwd.h djgpp/edtests.bat djgpp/fnchange.in \
+	djgpp/fnchange.lst djgpp/getpwnam.c djgpp/msginit.sed \
+	djgpp/tscript.sed djgpp/unsetenv.c os2/README.OS2 os2/Makefile \
+	os2/backward.def os2/configure.awk README.woe32 \
+	windows/windres-options windows/gettext.rc \
 	$(top_srcdir)/.version
 BUILT_SOURCES = $(top_srcdir)/.version
 all: $(BUILT_SOURCES)
@@ -539,7 +540,6 @@ dist-gzip: distdir
 dist-bzip2: distdir
 	tardir=$(distdir) && $(am__tar) | BZIP2=$${BZIP2--9} bzip2 -c >$(distdir).tar.bz2
 	$(am__post_remove_distdir)
-
 dist-lzip: distdir
 	tardir=$(distdir) && $(am__tar) | lzip -c $${LZIP_OPT--9} >$(distdir).tar.lz
 	$(am__post_remove_distdir)

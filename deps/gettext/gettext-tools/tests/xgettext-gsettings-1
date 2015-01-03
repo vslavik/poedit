@@ -21,18 +21,21 @@ cat <<EOF > xg-gs-1.gschema.xml
   <schema id="org.gnome.example" path="/org/gnome/example/">
     <key name="foo" type="i">
       <default>0</default>
-      <summary context="Foo">Example Integer Key</summary>
+      <!-- This is the first line.
+           This is the second line. -->
+      <summary>Example Integer Key</summary>
       <description>
         The example integer key to test that the default value is not
         translated.
       </description>
     </key>
     <key name="bar" type="s">
-      <default l10n="messages">
+      <default l10n="messages" context="Foo">
         ' foo   bar   baz'
       </default>
     </key>
     <key name="baz" type="s">
+      <default l10n="messages" context="Baz"></default>
       <summary context="Baz"></summary>
     </key>
   </schema>
@@ -61,16 +64,19 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: xg-gs-1.gschema.xml:6
+#. This is the first line.
+#. This is the second line.
+#: xg-gs-1.gschema.xml:8
 msgid "Example Integer Key"
 msgstr ""
 
-#: xg-gs-1.gschema.xml:7
+#: xg-gs-1.gschema.xml:9
 msgid ""
 "The example integer key to test that the default value is not translated."
 msgstr ""
 
-#: xg-gs-1.gschema.xml:13
+#: xg-gs-1.gschema.xml:15
+msgctxt "Foo"
 msgid "' foo   bar   baz'"
 msgstr ""
 EOF

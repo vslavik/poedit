@@ -3,16 +3,43 @@
 
 # Test of Desktop Entry support.
 
-cat <<EOF > xg.desktop
+: ${XGETTEXT=xgettext}
+
+cat <<\EOF >err1.desktop
+[Desktop Entry]
+This is an invalid line
+Name =Foo
+EOF
+
+(LANGUAGE= LC_ALL=C ${XGETTEXT} --add-comments -o - err1.desktop 2>&1; exit) | grep "missing '=' after" || exit 1
+
+cat <<\EOF >err2.desktop
+[Desktop Entry
+EOF
+
+(LANGUAGE= LC_ALL=C ${XGETTEXT} --add-comments -o - err2.desktop 2>&1; exit) | grep "unterminated group name" || exit 1
+
+cat <<\EOF >err3.desktop
+[Desktop Entry]
+  Not a blank line!
+EOF
+
+(LANGUAGE= LC_ALL=C ${XGETTEXT} --add-comments -o - err3.desktop 2>&1; exit) | grep "invalid non-blank line" || exit 1
+
+cat <<\EOF > xg.desktop
 [Desktop Entry]
 Type=Application
 Name =Foo
+# This is a comment for comment
+#   This is a comment for comment  
 Comment= \sThis is a \nmultiline\t comment; for testing
 Comment[foo]=Already translated comment
+X-Foo = bar
+# This is a comment before a blank line
+
 Keywords=Keyword1;Keyword2;Key\;word3;
 EOF
 
-: ${XGETTEXT=xgettext}
 ${XGETTEXT} --add-comments -o - xg.desktop | grep -v 'POT-Creation-Date' > xg-desktop.pot || exit 1
 
 cat <<\EOF > xg-desktop.ok
@@ -38,13 +65,15 @@ msgstr ""
 msgid "Foo"
 msgstr ""
 
-#: xg.desktop:5
+#. This is a comment for comment
+#. This is a comment for comment
+#: xg.desktop:7
 msgid ""
 " This is a \n"
 "multiline\t comment; for testing"
 msgstr ""
 
-#: xg.desktop:7
+#: xg.desktop:12
 msgid "Keyword1;Keyword2;Key\\;word3;"
 msgstr ""
 EOF

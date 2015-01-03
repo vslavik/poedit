@@ -261,6 +261,7 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/multiarch.m4 \
 	$(top_srcdir)/gnulib-m4/no-c++.m4 \
 	$(top_srcdir)/gnulib-m4/nocrash.m4 \
+	$(top_srcdir)/gnulib-m4/obstack.m4 \
 	$(top_srcdir)/gnulib-m4/off_t.m4 \
 	$(top_srcdir)/gnulib-m4/open.m4 \
 	$(top_srcdir)/gnulib-m4/opendir.m4 \
@@ -1606,6 +1607,7 @@ REPLACE_RAISE = @REPLACE_RAISE@
 REPLACE_RANDOM_R = @REPLACE_RANDOM_R@
 REPLACE_READ = @REPLACE_READ@
 REPLACE_READLINK = @REPLACE_READLINK@
+REPLACE_READLINKAT = @REPLACE_READLINKAT@
 REPLACE_REALLOC = @REPLACE_REALLOC@
 REPLACE_REALPATH = @REPLACE_REALPATH@
 REPLACE_REMOVE = @REPLACE_REMOVE@
@@ -1639,6 +1641,7 @@ REPLACE_STRTOUMAX = @REPLACE_STRTOUMAX@
 REPLACE_STRUCT_LCONV = @REPLACE_STRUCT_LCONV@
 REPLACE_STRUCT_TIMEVAL = @REPLACE_STRUCT_TIMEVAL@
 REPLACE_SYMLINK = @REPLACE_SYMLINK@
+REPLACE_SYMLINKAT = @REPLACE_SYMLINKAT@
 REPLACE_TIMEGM = @REPLACE_TIMEGM@
 REPLACE_TMPFILE = @REPLACE_TMPFILE@
 REPLACE_TOWLOWER = @REPLACE_TOWLOWER@
@@ -1785,15 +1788,15 @@ AUTOMAKE_OPTIONS = 1.5 gnits subdir-objects no-dependencies
 # enabled by default because the intl directory might not exist if
 # your project does not use "gettext --intl", and some compilers
 # complain about -I options applied to nonexistent directories.
-EXTRA_DIST = alloca.in.h allocator.h areadlink.h argmatch.h atexit.c \
-	byteswap.in.h c-strcaseeq.h str-two-way.h canonicalize-lgpl.c \
-	careadlinkat.h cloexec.h close.c closedir.c dirent-private.h \
-	concat-filename.h $(top_srcdir)/../build-aux/csharpcomp.sh.in \
-	classpath.c classpath.h \
-	$(top_srcdir)/../build-aux/csharpexec.sh.in dirent.in.h \
-	dosname.h dup2.c errno.in.h error.c error.h exitfail.h fcntl.c \
-	fcntl.in.h fd-hook.h fd-ostream.h fd-ostream.c \
-	fd_ostream.priv.h fd_ostream.vt.h fd-ostream.oo.c \
+EXTRA_DIST = alignof.h alloca.in.h allocator.h areadlink.h argmatch.h \
+	atexit.c byteswap.in.h c-strcaseeq.h str-two-way.h \
+	canonicalize-lgpl.c careadlinkat.h cloexec.h close.c \
+	closedir.c dirent-private.h concat-filename.h \
+	$(top_srcdir)/../build-aux/csharpcomp.sh.in classpath.c \
+	classpath.h $(top_srcdir)/../build-aux/csharpexec.sh.in \
+	dirent.in.h dosname.h dup2.c errno.in.h error.c error.h \
+	exitfail.h fcntl.c fcntl.in.h fd-hook.h fd-ostream.h \
+	fd-ostream.c fd_ostream.priv.h fd_ostream.vt.h fd-ostream.oo.c \
 	fd-ostream.oo.h file-ostream.h file-ostream.c \
 	file_ostream.priv.h file_ostream.vt.h file-ostream.oo.c \
 	file-ostream.oo.h filename.h float.c float.in.h itold.c \
@@ -4816,9 +4819,11 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's|@''REPLACE_PWRITE''@|$(REPLACE_PWRITE)|g' \
 	      -e 's|@''REPLACE_READ''@|$(REPLACE_READ)|g' \
 	      -e 's|@''REPLACE_READLINK''@|$(REPLACE_READLINK)|g' \
+	      -e 's|@''REPLACE_READLINKAT''@|$(REPLACE_READLINKAT)|g' \
 	      -e 's|@''REPLACE_RMDIR''@|$(REPLACE_RMDIR)|g' \
 	      -e 's|@''REPLACE_SLEEP''@|$(REPLACE_SLEEP)|g' \
 	      -e 's|@''REPLACE_SYMLINK''@|$(REPLACE_SYMLINK)|g' \
+	      -e 's|@''REPLACE_SYMLINKAT''@|$(REPLACE_SYMLINKAT)|g' \
 	      -e 's|@''REPLACE_TTYNAME_R''@|$(REPLACE_TTYNAME_R)|g' \
 	      -e 's|@''REPLACE_UNLINK''@|$(REPLACE_UNLINK)|g' \
 	      -e 's|@''REPLACE_UNLINKAT''@|$(REPLACE_UNLINKAT)|g' \

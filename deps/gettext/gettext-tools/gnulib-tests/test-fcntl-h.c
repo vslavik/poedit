@@ -111,7 +111,7 @@ main (void)
 #if O_RSYNC && O_RSYNC != O_DSYNC
     case O_RSYNC:
 #endif
-#if O_SYNC && O_SYNC != O_RSYNC
+#if O_SYNC && O_SYNC != O_DSYNC && O_SYNC != O_RSYNC
     case O_SYNC:
 #endif
 #if O_TTY_INIT

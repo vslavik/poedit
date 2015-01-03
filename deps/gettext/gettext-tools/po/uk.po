@@ -6,10 +6,10 @@
 # Yuri Chornoivan <yurchor@ukr.net>, 2011, 2013, 2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: gettext-tools 0.19-rc1\n"
+"Project-Id-Version: gettext-tools 0.19.3\n"
 "Report-Msgid-Bugs-To: bug-gnu-gettext@gnu.org\n"
-"POT-Creation-Date: 2014-10-16 15:04+0900\n"
-"PO-Revision-Date: 2014-05-10 17:41+0300\n"
+"POT-Creation-Date: 2014-12-24 16:27+0900\n"
+"PO-Revision-Date: 2014-10-17 22:18+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation-team-uk@lists.sourceforge.net>\n"
 "Language: uk\n"
@@ -216,7 +216,7 @@ msgstr ""
 msgid "%s subprocess I/O error"
 msgstr "помилка вводу-виводу у дочірньому процесі %s"
 
-#: gnulib-lib/obstack.c:416 gnulib-lib/obstack.c:418 gnulib-lib/xmalloc.c:37
+#: gnulib-lib/obstack.c:338 gnulib-lib/obstack.c:340 gnulib-lib/xmalloc.c:37
 #: gnulib-lib/xsetenv.c:37 src/msgl-check.c:559 src/po-lex.c:83
 #: src/po-lex.c:102 src/x-glade.c:548 libgettextpo/gettext-po.c:1326
 #, c-format
@@ -228,13 +228,13 @@ msgstr "пам'ять вичерпано"
 msgid "creation of threads failed"
 msgstr "спроба створення потоків обробки зазнала невдачі"
 
-#: gnulib-lib/pipe-filter-ii.c:224 gnulib-lib/pipe-filter-ii.c:374
+#: gnulib-lib/pipe-filter-ii.c:224 gnulib-lib/pipe-filter-ii.c:381
 #: src/msgexec.c:405
 #, c-format
 msgid "write to %s subprocess failed"
 msgstr "не вдається записати у дочірній процес %s"
 
-#: gnulib-lib/pipe-filter-ii.c:245 gnulib-lib/pipe-filter-ii.c:417
+#: gnulib-lib/pipe-filter-ii.c:245 gnulib-lib/pipe-filter-ii.c:424
 #, c-format
 msgid "read from %s subprocess failed"
 msgstr "помилка читання з дочірнього процесу %s"
@@ -245,12 +245,12 @@ msgid "cannot set up nonblocking I/O to %s subprocess"
 msgstr ""
 "не вдається встановити неблокуючий режим вводу/виводу дочірнього процесу %s"
 
-#: gnulib-lib/pipe-filter-ii.c:329
+#: gnulib-lib/pipe-filter-ii.c:336
 #, c-format
 msgid "communication with %s subprocess failed"
 msgstr "помилка зв'язку з дочірнім процесом %s"
 
-#: gnulib-lib/pipe-filter-ii.c:449
+#: gnulib-lib/pipe-filter-ii.c:456
 #, c-format
 msgid "%s subprocess terminated with exit code %d"
 msgstr "дочірній процес %s завершився з кодом %d"
@@ -317,7 +317,7 @@ msgid "%s subprocess got fatal signal %d"
 msgstr "дочірній процес %s отримав фатальний сигнал %d"
 
 #: src/file-list.c:53 src/msggrep.c:247 src/open-catalog.c:122
-#: src/read-mo.c:252 src/read-tcl.c:125 src/urlget.c:216 src/xgettext.c:1974
+#: src/read-mo.c:258 src/read-tcl.c:125 src/urlget.c:216 src/xgettext.c:1974
 #: src/xgettext.c:1987 src/xgettext.c:1997
 #, c-format
 msgid "error while opening \"%s\" for reading"
@@ -607,8 +607,8 @@ msgid ""
 "format specifications in '%s' and '%s' for argument {%u} are not the same"
 msgstr "специфікації форматів у «%s» і «%s» для аргументу {%u} не збігаються"
 
-#: src/format-lisp.c:2337 src/format-lisp.c:2349 src/format-scheme.c:2363
-#: src/format-scheme.c:2375
+#: src/format-lisp.c:2339 src/format-lisp.c:2351 src/format-scheme.c:2365
+#: src/format-scheme.c:2377
 #, c-format
 msgid ""
 "In the directive number %u, parameter %u is of type '%s' but a parameter of "
@@ -617,7 +617,7 @@ msgstr ""
 "У директиві з номером %u, параметр %u має тип «%s», але очікувався параметр "
 "типу «%s»."
 
-#: src/format-lisp.c:2372 src/format-scheme.c:2398
+#: src/format-lisp.c:2374 src/format-scheme.c:2400
 #, c-format
 msgid ""
 "In the directive number %u, too many parameters are given; expected at most "
@@ -635,33 +635,33 @@ msgstr[2] ""
 "У директиві з номером %u, вказано надто багато параметрів; очікувалось не "
 "більше ніж %u параметрів."
 
-#: src/format-lisp.c:2496 src/format-scheme.c:2499
+#: src/format-lisp.c:2498 src/format-scheme.c:2501
 #, c-format
 msgid "In the directive number %u, '%c' is not followed by a digit."
 msgstr "У директиві з номером %u, «%c» не завершується цифрою."
 
-#: src/format-lisp.c:2736 src/format-scheme.c:2754
+#: src/format-lisp.c:2738 src/format-scheme.c:2756
 #, c-format
 msgid "In the directive number %u, the argument %d is negative."
 msgstr "У директиві з номером %u, аргумент %d - від'ємний."
 
-#: src/format-lisp.c:2805
+#: src/format-lisp.c:2807
 msgid "The string ends in the middle of a ~/.../ directive."
 msgstr "Рядок закінчується у середині директиви ~/.../"
 
-#: src/format-lisp.c:2843 src/format-lisp.c:3108 src/format-lisp.c:3225
-#: src/format-lisp.c:3285 src/format-lisp.c:3397 src/format-scheme.c:2840
-#: src/format-scheme.c:3105 src/format-scheme.c:3222 src/format-scheme.c:3320
+#: src/format-lisp.c:2845 src/format-lisp.c:3110 src/format-lisp.c:3227
+#: src/format-lisp.c:3287 src/format-lisp.c:3399 src/format-scheme.c:2842
+#: src/format-scheme.c:3107 src/format-scheme.c:3224 src/format-scheme.c:3322
 #, c-format
 msgid "Found '~%c' without matching '~%c'."
 msgstr "Знайдено «~%c» без відповідного «~%c»."
 
-#: src/format-lisp.c:2863 src/format-scheme.c:2860
+#: src/format-lisp.c:2865 src/format-scheme.c:2862
 #, c-format
 msgid "In the directive number %u, both the @ and the : modifiers are given."
 msgstr "У директиві з номером %u, вказано обидва модифікатори, як @, так і :"
 
-#: src/format-lisp.c:2976 src/format-scheme.c:2973
+#: src/format-lisp.c:2978 src/format-scheme.c:2975
 #, c-format
 msgid ""
 "In the directive number %u, '~:[' is not followed by two clauses, separated "
@@ -670,22 +670,22 @@ msgstr ""
 "У директиві з номером %u, '~:[' не завершується двома реченнями, "
 "розділеними  '~;'."
 
-#: src/format-lisp.c:3326 src/format-scheme.c:3263
+#: src/format-lisp.c:3328 src/format-scheme.c:3265
 #, c-format
 msgid "In the directive number %u, '~;' is used in an invalid position."
 msgstr ""
 "У директиві з номером %u, '~;' використовується у неправильній позиції."
 
-#: src/format-lisp.c:3432 src/format-scheme.c:3355
+#: src/format-lisp.c:3434 src/format-scheme.c:3357
 msgid "The string refers to some argument in incompatible ways."
 msgstr "Рядок посилається на деякий аргумент несумісним способом."
 
-#: src/format-lisp.c:3474 src/format-scheme.c:3397
+#: src/format-lisp.c:3476 src/format-scheme.c:3399
 #, c-format
 msgid "format specifications in '%s' and '%s' are not equivalent"
 msgstr "специфікації формату у «%s» та «%s» не є еквівалентними"
 
-#: src/format-lisp.c:3490 src/format-scheme.c:3413
+#: src/format-lisp.c:3492 src/format-scheme.c:3415
 #, c-format
 msgid "format specifications in '%s' are not a subset of those in '%s'"
 msgstr "специфікації формату у «%s» не є підмножиною специфікацій у «%s»"
@@ -1567,7 +1567,7 @@ msgstr "це повідомлення використовується, але �
 msgid "warning: this message is not used"
 msgstr "попередження: це повідомлення не використовується"
 
-#: src/msgcmp.c:553 src/msgfmt.c:652 src/msgfmt.c:1446
+#: src/msgcmp.c:553 src/msgfmt.c:652 src/msgfmt.c:1443
 #, c-format
 msgid "found %d fatal error"
 msgid_plural "found %d fatal errors"
@@ -2283,10 +2283,10 @@ msgstr "%s не існує"
 msgid "%s exists but cannot read"
 msgstr "%s існує, але непридатний до читання"
 
-#: src/msggrep.c:258 src/po-lex.c:657 src/read-mo.c:86
+#: src/msggrep.c:258 src/po-lex.c:657 src/read-mo.c:87
 #: src/read-properties.c:89 src/read-stringtable.c:98 src/x-awk.c:139
 #: src/x-c.c:486 src/x-csharp.c:163 src/x-elisp.c:145 src/x-glade.c:565
-#: src/x-java.c:181 src/x-javascript.c:172 src/x-librep.c:147 src/x-lisp.c:212
+#: src/x-java.c:181 src/x-javascript.c:171 src/x-librep.c:147 src/x-lisp.c:212
 #: src/x-lua.c:173 src/x-perl.c:227 src/x-perl.c:302 src/x-perl.c:395
 #: src/x-php.c:163 src/x-python.c:176 src/x-rst.c:233 src/x-scheme.c:171
 #: src/x-sh.c:155 src/x-smalltalk.c:91 src/x-tcl.c:150 src/x-vala.c:176
@@ -2563,7 +2563,7 @@ msgstr "цільове кодування «%s» не є переносною н
 
 #: src/msgl-cat.c:442 src/msgl-cat.c:448 src/msgl-charset.c:92
 #: src/msgl-charset.c:127 src/po-xerror.c:122 src/po-xerror.c:147
-#: src/xgettext.c:544 src/xgettext.c:3418
+#: src/xgettext.c:544 src/xgettext.c:3426
 #, c-format
 msgid "warning: "
 msgstr "попередження: "
@@ -3274,22 +3274,22 @@ msgstr "дублікат визначення повідомлення"
 msgid "this is the location of the first definition"
 msgstr "це місце першого визначення"
 
-#: src/read-mo.c:105 src/read-mo.c:126 src/read-mo.c:172 src/read-mo.c:199
+#: src/read-mo.c:107 src/read-mo.c:129 src/read-mo.c:177 src/read-mo.c:205
 #, c-format
 msgid "file \"%s\" is truncated"
 msgstr "файл «%s» обрізаний"
 
-#: src/read-mo.c:129
+#: src/read-mo.c:132
 #, c-format
 msgid "file \"%s\" contains a not NUL terminated string"
 msgstr "файл «%s» містить рядок з не-NUL завершенням"
 
-#: src/read-mo.c:165 src/read-mo.c:274
+#: src/read-mo.c:169 src/read-mo.c:280
 #, c-format
 msgid "file \"%s\" is not in GNU .mo format"
 msgstr "файл «%s» не у GNU .mo форматі"
 
-#: src/read-mo.c:178
+#: src/read-mo.c:183
 #, c-format
 msgid "file \"%s\" contains a not NUL terminated string, at %s"
 msgstr "файл «%s» містить рядок з не-NUL завершенням, у %s"
@@ -3493,9 +3493,8 @@ msgid "error while opening \"%s\" for writing"
 msgstr "помилка при відкриванні «%s» для запису"
 
 #: src/write-po.c:821
-#, fuzzy
 msgid "incomplete multibyte sequence"
-msgstr "неправильна мультибайтна послідовність"
+msgstr "незавершена мультибайтна послідовність"
 
 #: src/write-po.c:884
 #, c-format
@@ -3615,12 +3614,12 @@ msgstr "%s:%d: попередження: незавершений регуляр
 msgid "warning: invalid Unicode character"
 msgstr "попередження: некоректний символ Unicode"
 
-#: src/x-c.c:1297 src/x-csharp.c:1509 src/x-java.c:872 src/x-vala.c:630
+#: src/x-c.c:1344 src/x-csharp.c:1509 src/x-java.c:872 src/x-vala.c:619
 #, c-format
 msgid "%s:%d: warning: unterminated character constant"
 msgstr "%s:%d: попередження: незавершена символьна константа"
 
-#: src/x-c.c:1348 src/x-vala.c:755
+#: src/x-c.c:1390 src/x-c.c:1430 src/x-vala.c:729
 #, c-format
 msgid "%s:%d: warning: unterminated string literal"
 msgstr "%s:%d: попередження: незавершений символьний літерал"
@@ -3689,12 +3688,12 @@ msgstr "%s:%d: попередження: неправильний символ �
 msgid "%s:%d: warning: unterminated string constant"
 msgstr "%s:%d: попередження: незавершена символьна константа"
 
-#: src/x-csharp.c:2020 src/x-java.c:1369
+#: src/x-csharp.c:2018 src/x-java.c:1369
 #, c-format
 msgid "%s:%d: warning: ')' found where '}' was expected"
 msgstr "%s:%d: попередження: знайдено ')' там де очікувалась «}»"
 
-#: src/x-csharp.c:2054 src/x-java.c:1403
+#: src/x-csharp.c:2052 src/x-java.c:1403
 #, c-format
 msgid "%s:%d: warning: '}' found where ')' was expected"
 msgstr "%s:%d: попередження: знайдено «}» там де очікувалась ')'"
@@ -3911,7 +3910,7 @@ msgstr "%s:%d: після знаку # відсутнє число"
 msgid "%s:%d: invalid string expression"
 msgstr "%s:%d: неправильний символьний вираз"
 
-#: src/x-sh.c:1074
+#: src/x-sh.c:1075
 #, c-format
 msgid ""
 "%s:%lu: warning: the syntax $\"...\" is deprecated due to security reasons; "
@@ -3920,7 +3919,7 @@ msgstr ""
 "%s:%lu: попередження: синтаксис $\"...\" є забороненим з міркувань безпеки; "
 "натомість використовуйте eval_gettext"
 
-#: src/x-vala.c:413
+#: src/x-vala.c:414
 #, c-format
 msgid "%s:%d: warning: regular expression literal terminated too early"
 msgstr "%s:%d: попередження: літерал формального виразу завершено передчасно"
@@ -4318,7 +4317,7 @@ msgstr ""
 msgid "context mismatch between singular and plural form"
 msgstr "невідповідність контексту між формою однини та множини"
 
-#: src/xgettext.c:3419
+#: src/xgettext.c:3427
 msgid ""
 "The option --msgid-bugs-address was not specified.\n"
 "If you are using a 'Makevars' file, please specify\n"
@@ -4330,7 +4329,7 @@ msgstr ""
 "тут змінну MSGID_BUGS_ADDRESS; у іншому випадку\n"
 "вкажіть --msgid-bugs-address аргумент командного рядка.\n"
 
-#: src/xgettext.c:3638
+#: src/xgettext.c:3646
 #, c-format
 msgid "language '%s' unknown"
 msgstr "невідома мова «%s»"

@@ -554,7 +554,7 @@ prepare_read (size_t *num_bytes_p, void *private_data)
 
   if (l->length == l->allocated)
     {
-      l->allocated = l->allocated + (l->allocated >> 1);
+      l->allocated = l->allocated + (l->allocated >> 1) + 1;
       l->result = (char *) xrealloc (l->result, l->allocated);
     }
   *num_bytes_p = l->allocated - l->length;

@@ -40,6 +40,7 @@ AC_DEFUN([gtpo_EARLY],
   AC_REQUIRE([gl_PROG_AR_RANLIB])
   AC_REQUIRE([AM_PROG_CC_C_O])
   # Code from module absolute-header:
+  # Code from module alignof:
   # Code from module alloca-opt:
   # Code from module basename:
   # Code from module c-ctype:
@@ -431,7 +432,7 @@ AC_DEFUN([gtpo_INIT],
   gl_TLS
   gl_LIBUNISTRING_LIBHEADER([0.9], [uniconv.h])
   gl_LIBUNISTRING_MODULE([0.9], [uniconv/u8-conv-from-enc])
-  gl_LIBUNISTRING_LIBHEADER([0.9], [unilbrk.h])
+  gl_LIBUNISTRING_LIBHEADER([0.9.4], [unilbrk.h])
   AC_REQUIRE([AC_C_INLINE])
   gl_LIBUNISTRING_MODULE([0.9.4], [unilbrk/u8-possible-linebreaks])
   gl_LIBUNISTRING_MODULE([0.9.4], [unilbrk/u8-width-linebreaks])
@@ -616,6 +617,7 @@ AC_DEFUN([gtpo_FILE_LIST], [
   build-aux/snippet/unused-parameter.h
   build-aux/snippet/warn-on-use.h
   doc/relocatable.texi
+  lib/alignof.h
   lib/alloca.in.h
   lib/asnprintf.c
   lib/asprintf.c
@@ -865,6 +867,7 @@ AC_DEFUN([gtpo_FILE_LIST], [
   m4/msvc-inval.m4
   m4/msvc-nothrow.m4
   m4/multiarch.m4
+  m4/obstack.m4
   m4/off_t.m4
   m4/open.m4
   m4/pathmax.m4

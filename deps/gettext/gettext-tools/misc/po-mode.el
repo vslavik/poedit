@@ -62,7 +62,7 @@
 
 ;;; Code:
 
-(defconst po-mode-version-string "2.22" "\
+(defconst po-mode-version-string "2.23" "\
 Version number of this version of po-mode.el.")
 
 ;;; Emacs portability matters - part I.

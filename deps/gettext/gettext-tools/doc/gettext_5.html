@@ -1,7 +1,7 @@
 <HTML>
 <HEAD>
 <!-- This HTML file has been created by texi2html 1.52b
-     from gettext.texi on 16 October 2014 -->
+     from gettext.texi on 24 December 2014 -->
 
 <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=UTF-8">
 <TITLE>GNU gettext utilities - 5  Making the PO Template File</TITLE>
@@ -210,6 +210,26 @@ POT file.
 Place comment blocks starting with <VAR>tag</VAR> and preceding keyword lines
 in the output file.  Without a <VAR>tag</VAR>, the option means to put <EM>all</EM>
 comment blocks preceding keyword lines in the output file.
+
+Note that comment blocks supposed to be extracted must be adjacent to
+keyword lines.  For example, in the following C source code:
+
+
+<PRE>
+/* This is the first comment.  */
+gettext ("foo");
+
+/* This is the second comment: not extracted  */
+gettext (
+  "bar");
+
+gettext (
+  /* This is the third comment.  */
+  "baz");
+</PRE>
+
+The second comment line will not be extracted, because there is one
+blank line between the comment line and the keyword.
 
 </DL>
 
