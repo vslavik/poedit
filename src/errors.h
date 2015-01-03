@@ -40,9 +40,13 @@ public:
 
     const wxString& What() const { return m_what; }
 
-    // prevent use of std::exception::what() on Exception-casted instances:
+    // prevent use of std::exception::what() on Exception-cast instances:
 private:
+#ifdef _MSC_VER
+    const char* what() const override { return std::runtime_error::what(); }
+#else
     const char* what() const noexcept override { return std::runtime_error::what(); }
+#endif
 
 private:
     wxString m_what;
