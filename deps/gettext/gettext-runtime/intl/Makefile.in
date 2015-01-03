@@ -606,7 +606,7 @@ printf.$lo: $(srcdir)/printf-args.h $(srcdir)/printf-args.c $(srcdir)/printf-par
 # A bison-2.1 generated plural.c includes <libintl.h> if ENABLE_NLS.
 PLURAL_DEPS_yes = libintl.h
 PLURAL_DEPS_no =
-plural.$lo: $(PLURAL_DEPS_@USE_INCLUDED_LIBINTL@)
+$(PLURAL_OBJECT): $(PLURAL_DEPS_@USE_INCLUDED_LIBINTL@)
 
 tags: TAGS
 
