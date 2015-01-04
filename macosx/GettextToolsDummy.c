@@ -1,7 +1,7 @@
 /*
  *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2014 Vaclav Slavik
+ *  Copyright (C) 2014-2015 Vaclav Slavik
  *
  *  All rights reserved.
  *

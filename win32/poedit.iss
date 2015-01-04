@@ -1,7 +1,7 @@
 ﻿;
 ;   This file is part of Poedit (http://poedit.net)
 ;
-;   Copyright (C) 1999-2014 Vaclav Slavik
+;   Copyright (C) 1999-2015 Vaclav Slavik
 ;
 ;   Permission is hereby granted, free of charge, to any person obtaining a
 ;   copy of this software and associated Docsumentation files (the "Software"),
@@ -64,7 +64,7 @@ InternalCompressLevel=ultra
 AppID={{68EB2C37-083A-4303-B5D8-41FA67E50B8F}
 VersionInfoVersion={#VERSION}
 VersionInfoTextVersion={#VERSION_FULL}
-AppCopyright=Copyright © 1999-2014 Vaclav Slavik
+AppCopyright=Copyright © 1999-2015 Vaclav Slavik
 AppPublisher=Vaclav Slavik
 AppSupportURL=http://poedit.net/support.php
 AppUpdatesURL=http://poedit.net/download.php
@@ -82,7 +82,7 @@ SignTool={#SIGNTOOL}
 #endif
 VersionInfoCompany=Vaclav Slavik
 VersionInfoDescription=Poedit Installer
-VersionInfoCopyright=Copyright © 1999-2014 Vaclav Slavik
+VersionInfoCopyright=Copyright © 1999-2015 Vaclav Slavik
 VersionInfoProductName=Poedit
 VersionInfoProductVersion={#VERSION}
 VersionInfoProductTextVersion={#VERSION_FULL}
