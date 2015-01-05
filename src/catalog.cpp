@@ -905,7 +905,14 @@ wxString CatalogParser::ReadTextLine()
             }
             else
             {
-                m_detectedLineWidth = std::max(m_detectedLineWidth, (int)ln.size());
+                // Watch out for lines with too long words that couldn't be wrapped.
+                // That "2" is to account for unwrappable comment lines: "#: somethinglong"
+                // See https://github.com/vslavik/poedit/issues/135
+                auto space = ln.find_last_of(' ');
+                if (space != wxString::npos && space > 2)
+                {
+                    m_detectedLineWidth = std::max(m_detectedLineWidth, (int)ln.size());
+                }
             }
         }
 
