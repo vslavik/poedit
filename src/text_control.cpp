@@ -429,7 +429,9 @@ void AnyTranslatableTextCtrl::HighlightText()
     UndoSupressor blockUndo(this);
   #endif
 
-    SetStyle(0, text.length(), m_attrs->Default());
+    auto deflt = m_attrs->Default();
+    deflt.SetFont(GetFont());
+    SetStyle(0, text.length(), deflt);
 
     m_syntax.Highlight(text, [=](int a, int b, SyntaxHighlighter::TextKind kind){
         SetStyle(a, b, m_attrs->For(kind));
