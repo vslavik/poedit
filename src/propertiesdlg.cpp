@@ -372,6 +372,5 @@ bool PropertiesDialog::Validate()
     }
 
     return m_validatedLang == 1 &&
-           m_validatedPlural == 1 &&
-           !m_project->GetValue().empty();
+           m_validatedPlural == 1;
 }
