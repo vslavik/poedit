@@ -2221,20 +2221,6 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
     UpdateTitle();
     UpdateTextLanguage();
 
-    if (m_catalog->Header().Project.empty())
-    {
-        AttentionMessage msg
-            (
-                "missing-project-id",
-                AttentionMessage::Error,
-                _("Translation's project name isn't set.")
-            );
-        msg.AddAction(MSW_OR_OTHER(_("Set name"), _("Set Name")),
-                      [=]{ EditCatalogProperties(); });
-
-        m_attentionBar->ShowMessage(msg);
-    }
-
     Language language = m_catalog->GetLanguage();
     if (!language.IsValid())
     {
