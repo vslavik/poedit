@@ -8,6 +8,16 @@ crowdin-cli download
 
 # Now work around deficiencies in Crowdin's CLI tools and remove bogus files:
 
+# Remove platform-specific language files where the platform doesn't know that
+# language:
+remove_unsupported_languages()
+{
+    rm -f locales/win/windows_strings-Aragonese.rc
+    rm -rf */osx/an.lproj
+
+    rm -f locales/win/windows_strings-Esperanto.rc
+}
+
 # Crowdin tools create empty .strings files for all translations, even the ones
 # that don't exist:
 remove_empty_lproj_string_files()
@@ -53,6 +63,8 @@ fixup_windows_rc_files()
         echo "#include \"$incl\"" >>$master
     done
 }
+
+remove_unsupported_languages
 
 remove_empty_lproj_string_files
 fixup_windows_rc_files
