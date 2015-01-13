@@ -41,6 +41,8 @@ class WXDLLIMPEXP_FWD_BASE wxConfigBase;
 class Extractor
 {
     public:
+        Extractor() : Enabled(true) {}
+
         /// User-oriented name of the extractor (e.g. "C/C++").
         wxString Name;
 
