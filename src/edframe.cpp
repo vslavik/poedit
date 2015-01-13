@@ -3361,7 +3361,7 @@ void PoeditFrame::OnUpdateFromSourcesUpdate(wxUpdateUIEvent& event)
 void PoeditFrame::OnTextEditingCommand(wxCommandEvent& event)
 {
 #ifdef __WXGTK__
-    wxEventBlocker block(this);
+    wxEventBlocker block(this, wxEVT_MENU);
 #endif
     wxWindow *w = wxWindow::FindFocus();
     if (!w || w == this || !w->ProcessWindowEventLocally(event))
@@ -3371,7 +3371,7 @@ void PoeditFrame::OnTextEditingCommand(wxCommandEvent& event)
 void PoeditFrame::OnTextEditingCommandUpdate(wxUpdateUIEvent& event)
 {
 #ifdef __WXGTK__
-    wxEventBlocker block(this);
+    wxEventBlocker block(this, wxEVT_UPDATE_UI);
 #endif
     wxWindow *w = wxWindow::FindFocus();
     if (!w || w == this || !w->ProcessWindowEventLocally(event))
