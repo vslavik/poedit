@@ -2699,6 +2699,7 @@ void PoeditFrame::OnSuggestion(wxCommandEvent& event)
     // FIXME: instead of this mess, use notifications of catalog change
     m_modified = true;
     UpdateTitle();
+    UpdateStatusBar();
 
     UpdateToTextCtrl(UndoableEdit);
     m_list->RefreshSelectedItems();
