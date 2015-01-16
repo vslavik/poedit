@@ -71,7 +71,7 @@ class PoeditListCtrl : public wxListView
         int CatalogIndexToList(int index) const
         {
             if ( index < 0 || index >= (int)m_mapCatalogToList.size() )
-                return index;
+                return -1;
             else
                 return m_mapCatalogToList[index];
         }
@@ -80,7 +80,7 @@ class PoeditListCtrl : public wxListView
         int ListIndexToCatalog(long index) const
         {
             if ( index < 0 || index >= (int)m_mapListToCatalog.size() )
-                return int(index);
+                return -1;
             else
                 return m_mapListToCatalog[index];
         }
@@ -113,7 +113,11 @@ class PoeditListCtrl : public wxListView
         {
             ClearSelection();
             for (auto i: selection)
-                Select(CatalogIndexToList(i));
+            {
+                auto idx = CatalogIndexToList(i);
+                if (idx != -1)
+                    Select(idx);
+            }
         }
 
         // Perform given function for all selected items. The function takes
