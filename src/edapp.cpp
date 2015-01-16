@@ -446,7 +446,7 @@ void PoeditApp::SetDefaultExtractors(wxConfigBase *cfg)
         Extractor ex;
         ex.Name = s_gettextLangs[i].name;
         ex.Extensions = s_gettextLangs[i].exts;
-        ex.Command = wxString("xgettext") + langflag + " --add-comments=TRANSLATORS: --add-comments=translators: --force-po -o %o %C %K %F";
+        ex.Command = wxString("xgettext") + langflag + " --add-comments=TRANSLATORS: --force-po -o %o %C %K %F";
         ex.KeywordItem = "-k%k";
         ex.FileItem = "%f";
         ex.CharsetItem = "--from-code=%c";
