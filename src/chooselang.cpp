@@ -67,7 +67,7 @@ static bool ChooseLanguage(wxString *value)
         }
     }
     int choice = wxGetSingleChoiceIndex(
-            _("Select your prefered language"),
+            _("Select your preferred language"),
             _("Language selection"),
             arr);
     if ( choice == -1 )

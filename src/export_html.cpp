@@ -142,7 +142,7 @@ bool Catalog::ExportToHTML(const wxString& filename)
     if (unfinished > 0)
     {
         line += L"  •  ";
-        line += wxString::Format(_("Remains: %d"), unfinished);
+        line += wxString::Format(_("Remaining: %d"), unfinished);
     }
     if (errors > 0)
     {

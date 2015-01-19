@@ -2407,7 +2407,7 @@ void PoeditFrame::UpdateStatusBar()
         if (unfinished > 0)
         {
             text += L"  •  ";
-            text += wxString::Format(_("Remains: %d"), unfinished);
+            text += wxString::Format(_("Remaining: %d"), unfinished);
         }
         if (errors > 0)
         {
