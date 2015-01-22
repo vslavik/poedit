@@ -2236,8 +2236,9 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
         m_attentionBar->ShowMessage(msg);
     }
 
-    // check if plural forms header is correct:
-    if ( m_catalog->HasPluralItems() )
+    // check if plural forms header is correct (only if the language is set,
+    // otherwise setting the language will fix this issue too):
+    if ( language.IsValid() && m_catalog->HasPluralItems() )
     {
         wxString err;
 
