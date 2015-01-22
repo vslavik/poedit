@@ -1478,13 +1478,6 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
         return false;
     }
 
-    // Update information about last modification time. But if the header
-    // was empty previously, the author apparently doesn't want this header
-    // set, so don't mess with it. See https://sourceforge.net/tracker/?func=detail&atid=389156&aid=1900298&group_id=27043
-    // for motivation:
-    if ( !m_header.RevisionDate.empty() )
-        m_header.RevisionDate = GetCurrentTimeRFC822();
-
     TempOutputFileFor po_file_temp_obj(po_file);
     const wxString po_file_temp = po_file_temp_obj.FileName();
 
@@ -1736,6 +1729,13 @@ bool Catalog::DoSaveOnly(wxTextFile& f, wxTextFileType crlf)
     /* Save .po file: */
     if (!m_header.Charset || m_header.Charset == "CHARSET")
         m_header.Charset = "UTF-8";
+
+    // Update information about last modification time. But if the header
+    // was empty previously, the author apparently doesn't want this header
+    // set, so don't mess with it. See https://sourceforge.net/tracker/?func=detail&atid=389156&aid=1900298&group_id=27043
+    // for motivation:
+    if ( !m_header.RevisionDate.empty() )
+        m_header.RevisionDate = GetCurrentTimeRFC822();
 
     SaveMultiLines(f, m_header.Comment);
     f.AddLine(_T("msgid \"\""));
