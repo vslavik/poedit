@@ -1275,7 +1275,21 @@ void Catalog::FixupCommonIssues()
     wxLogTrace("poedit", "catalog lang is '%s'", GetLanguage().Code());
 
     if (m_header.Project == "PACKAGE VERSION")
-        m_header.Project = "";
+        m_header.Project.clear();
+
+    if (m_header.GetHeader("Language-Team") == "LANGUAGE <LL@li.org>")
+    {
+        m_header.DeleteHeader("Language-Team");
+        m_header.Team.clear();
+        m_header.TeamEmail.clear();
+    }
+
+    if (m_header.GetHeader("Last-Translator") == "FULL NAME <EMAIL@ADDRESS>")
+    {
+        m_header.DeleteHeader("Last-Translator");
+        m_header.Translator.clear();
+        m_header.TranslatorEmail.clear();
+    }
 
     wxString pluralForms = m_header.GetHeader("Plural-Forms");
 
