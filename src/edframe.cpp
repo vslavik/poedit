@@ -60,6 +60,7 @@
 #include "catalog.h"
 #include "customcontrols.h"
 #include "edapp.h"
+#include "hidpi.h"
 #include "propertiesdlg.h"
 #include "prefsdlg.h"
 #include "fileviewer.h"
@@ -528,9 +529,9 @@ PoeditFrame::PoeditFrame() :
 
     SetAccelerators();
 
-    wxSize defaultSize(1100, 750);
-    if (!wxRect(wxGetDisplaySize()).Contains(wxSize(1400,850)))
-        defaultSize = wxSize(980, 700);
+    wxSize defaultSize(PX(1100), PX(750));
+    if (!wxRect(wxGetDisplaySize()).Contains(wxSize(PX(1400),PX(850))))
+        defaultSize = wxSize(PX(980), PX(700));
     RestoreWindowState(this, defaultSize, WinState_Size | WinState_Pos);
 
     UpdateMenu();
@@ -676,8 +677,8 @@ wxWindow* PoeditFrame::CreateContentViewPO()
     m_bottomPanel->SetAutoLayout(true);
     m_bottomPanel->SetSizer(panelSizer);
 
-    m_splitter->SetMinimumPaneSize(200);
-    m_sidebarSplitter->SetMinimumPaneSize(200);
+    m_splitter->SetMinimumPaneSize(PX(200));
+    m_sidebarSplitter->SetMinimumPaneSize(PX(200));
 
     m_list->PushEventHandler(new ListHandler(this));
 
@@ -713,7 +714,7 @@ wxWindow* PoeditFrame::CreateContentViewPO()
         if ( wxConfigBase::Get()->Read(WindowStatePath(this) + "maximized", long(0)) )
             m_setSashPositionsWhenMaximized = true;
 
-        m_splitter->SplitHorizontally(m_list, m_bottomPanel, (int)wxConfigBase::Get()->Read("/splitter", -250L));
+        m_splitter->SplitHorizontally(m_list, m_bottomPanel, (int)wxConfigBase::Get()->ReadLong("/splitter", -PX(250)));
 
         if (wxConfigBase::Get()->ReadBool("/sidebar_shown", true))
         {
@@ -2717,7 +2718,7 @@ void PoeditFrame::OnAutoTranslateAll(wxCommandEvent&)
     auto noFuzzyE = new ExplanationLabel(dlg.get(), _("Only enable if you trust the quality of your TM. By default, all matches from the TM are marked as fuzzy and should be reviewed."));
 
 #ifdef __WXOSX__
-    sizer->AddSpacer(5);
+    sizer->AddSpacer(PX(5));
     sizer->Add(new HeadingLabel(dlg.get(), _("Fill missing translations from TM")), wxSizerFlags().Expand().DoubleBorder(wxBOTTOM));
 #endif
     sizer->Add(onlyExact, wxSizerFlags().Border(wxTOP));
@@ -2734,11 +2735,11 @@ void PoeditFrame::OnAutoTranslateAll(wxCommandEvent&)
     topsizer->Add(buttons, wxSizerFlags().Expand());
 #else
     topsizer->Add(buttons, wxSizerFlags().Expand().Border());
-    topsizer->AddSpacer(5);
+    topsizer->AddSpacer(PX(5));
 #endif
 
     dlg->SetSizer(topsizer);
-    dlg->SetMinSize(wxSize(400, -1));
+    dlg->SetMinSize(wxSize(PX(400), -1));
     dlg->Layout();
     dlg->Fit();
     dlg->CenterOnParent();
@@ -3010,7 +3011,7 @@ void PoeditFrame::OnSize(wxSizeEvent& event)
 
         // then set sash positions
         if (m_splitter)
-            m_splitter->SetSashPosition((int)wxConfig::Get()->Read("/splitter", 240L));
+            m_splitter->SetSashPosition((int)wxConfig::Get()->ReadLong("/splitter", PX(250)));
     }
 
     if (m_sidebarSplitter)

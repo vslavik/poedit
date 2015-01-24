@@ -39,6 +39,7 @@
 #include <wx/stc/stc.h>
 
 #include "fileviewer.h"
+#include "hidpi.h"
 #include "utility.h"
 
 FileViewer::FileViewer(wxWindow *parent,
@@ -71,7 +72,7 @@ FileViewer::FileViewer(wxWindow *parent,
     choice->SetSelection(startAt);
 
     wxButton *edit = new wxButton(panel, wxID_ANY, MSW_OR_OTHER(_("Open in editor"), _("Open in Editor")));
-    barsizer->Add(edit, wxSizerFlags().Center().Border(wxLEFT, 10));
+    barsizer->Add(edit, wxSizerFlags().Center().Border(wxLEFT, PX(10)));
 
     m_text = new wxStyledTextCtrl(panel, wxID_ANY,
                                   wxDefaultPosition, wxDefaultSize,
@@ -79,7 +80,7 @@ FileViewer::FileViewer(wxWindow *parent,
     SetupTextCtrl();
     sizer->Add(m_text, 1, wxEXPAND);
 
-    RestoreWindowState(this, wxSize(600, 400));
+    RestoreWindowState(this, wxSize(PX(600), PX(400)));
 
     wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
     topsizer->Add(panel, wxSizerFlags(1).Expand());

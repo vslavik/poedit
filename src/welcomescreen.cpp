@@ -27,6 +27,7 @@
 
 #include "edapp.h"
 #include "edframe.h"
+#include "hidpi.h"
 
 #include <wx/dcbuffer.h>
 #include <wx/statbmp.h>
@@ -195,7 +196,7 @@ WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)
     auto sizer = new wxBoxSizer(wxVERTICAL);
     auto uberSizer = new wxBoxSizer(wxHORIZONTAL);
     uberSizer->AddStretchSpacer();
-    uberSizer->Add(sizer, wxSizerFlags().Center().Border(wxALL, 50));
+    uberSizer->Add(sizer, wxSizerFlags().Center().Border(wxALL, PX(50)));
     uberSizer->AddStretchSpacer();
     SetSizer(uberSizer);
 
@@ -205,14 +206,14 @@ WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)
     auto header = new HeaderStaticText(this, wxID_ANY, _("Welcome to Poedit"));
     header->SetFont(m_fntHeader);
     header->SetForegroundColour(m_clrHeader);
-    sizer->Add(header, wxSizerFlags().Center().Border(wxTOP, 10));
+    sizer->Add(header, wxSizerFlags().Center().Border(wxTOP, PX(10)));
 
     auto version = new wxStaticText(this, wxID_ANY, wxString::Format(_("Version %s"), wxGetApp().GetAppVersion()));
     version->SetFont(m_fntSub);
     version->SetForegroundColour(m_clrSub);
     sizer->Add(version, wxSizerFlags().Center());
 
-    sizer->AddSpacer(20);
+    sizer->AddSpacer(PX(20));
 
     sizer->Add(new ActionButton(
                        this, wxID_OPEN,
@@ -226,7 +227,7 @@ WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)
                        _("Take an existing PO file or POT template and create a new translation from it.")),
                wxSizerFlags().Border().Expand());
 
-    sizer->AddSpacer(50);
+    sizer->AddSpacer(PX(50));
 }
 
 
@@ -238,7 +239,7 @@ EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent)
     auto sizer = new wxBoxSizer(wxVERTICAL);
     auto uberSizer = new wxBoxSizer(wxHORIZONTAL);
     uberSizer->AddStretchSpacer();
-    uberSizer->Add(sizer, wxSizerFlags().Center().Border(wxALL, 100));
+    uberSizer->Add(sizer, wxSizerFlags().Center().Border(wxALL, PX(100)));
     uberSizer->AddStretchSpacer();
     SetSizer(uberSizer);
 

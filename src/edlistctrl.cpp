@@ -26,6 +26,7 @@
 
 #include "edlistctrl.h"
 
+#include "hidpi.h"
 #include "language.h"
 #include "digits.h"
 #include "cat_sorting.h"
@@ -116,7 +117,7 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
 
     CreateColumns();
 
-    wxImageList *list = new wxImageList(16, 16);
+    wxImageList *list = new wxImageList(PX(16), PX(16));
 
     // IMG_XXX:
     list->Add(wxArtProvider::GetBitmap("poedit-status-nothing"));
@@ -250,7 +251,7 @@ void PoeditListCtrl::CreateColumns()
 
 void PoeditListCtrl::SizeColumns()
 {
-    const int LINE_COL_SIZE = m_displayIDs ? 50 : 0;
+    const int LINE_COL_SIZE = m_displayIDs ? PX(50) : 0;
 
     int w = GetSize().x
             - wxSystemSettings::GetMetric(wxSYS_VSCROLL_X) - 10

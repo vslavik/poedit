@@ -49,6 +49,7 @@
 #include "catalog.h"
 #include "edapp.h"
 #include "edframe.h"
+#include "hidpi.h"
 #include "manager.h"
 #include "progressinfo.h"
 #include "utility.h"
@@ -93,7 +94,7 @@ ManagerFrame::ManagerFrame() :
     m_listCat = XRCCTRL(*panel, "prj_files", wxListCtrl);
     m_splitter = XRCCTRL(*panel, "manager_splitter", wxSplitterWindow);
 
-    wxImageList *list = new wxImageList(16, 16);
+    wxImageList *list = new wxImageList(PX(16), PX(16));
     list->Add(wxArtProvider::GetBitmap("poedit-status-cat-no"));
     list->Add(wxArtProvider::GetBitmap("poedit-status-cat-mid"));
     list->Add(wxArtProvider::GetBitmap("poedit-status-cat-ok"));
@@ -108,9 +109,9 @@ ManagerFrame::ManagerFrame() :
     if (m_listPrj->GetCount() > 0)
         UpdateListCat(last);
 
-    RestoreWindowState(this, wxSize(400, 300));
+    RestoreWindowState(this, wxSize(PX(400), PX(300)));
 
-    m_splitter->SetSashPosition((int)wxConfig::Get()->Read("manager_splitter", 200));
+    m_splitter->SetSashPosition((int)wxConfig::Get()->Read("manager_splitter", PX(200)));
 }
 
 

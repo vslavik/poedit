@@ -29,6 +29,7 @@
 
 #include "icons.h"
 #include "edapp.h"
+#include "hidpi.h"
 
 #ifndef __WXOSX__
 
@@ -93,13 +94,9 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
     }
 
     wxString icon;
-    icon.Printf("%s/%s.png", iconsdir.c_str(), id.c_str());
-    if ( !wxFileExists(icon) )
-        return wxNullBitmap;
-
+    icon.Printf("%s/%s", iconsdir.c_str(), id.c_str());
     wxLogTrace("poedit.icons", "loading from %s", icon.c_str());
-    wxBitmap bmp(wxImage(icon, wxBITMAP_TYPE_ANY));
-    return bmp;
+    return LoadScaledBitmap(icon);
 }
 
 #endif // !__WXOSX__

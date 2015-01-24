@@ -38,17 +38,18 @@
 #include <wx/dcclient.h>
 
 #include "customcontrols.h"
+#include "hidpi.h"
 
 #ifdef __WXOSX__
 #include "osx_helpers.h"
 #endif
 
 #ifdef __WXOSX__
-    #define SMALL_BORDER   7
-    #define BUTTONS_SPACE 10
+    #define SMALL_BORDER   PX(7)
+    #define BUTTONS_SPACE PX(10)
 #else
-    #define SMALL_BORDER   3
-    #define BUTTONS_SPACE  5
+    #define SMALL_BORDER   PX(3)
+    #define BUTTONS_SPACE  PX(5)
 #endif
 
 BEGIN_EVENT_TABLE(AttentionBar, wxPanel)
@@ -105,14 +106,14 @@ AttentionBar::AttentionBar(wxWindow *parent)
 
     auto labelSizer = new wxBoxSizer(wxVERTICAL);
     labelSizer->Add(m_label, wxSizerFlags().Expand());
-    labelSizer->Add(m_explanation, wxSizerFlags().Expand().Border(wxTOP|wxRIGHT, 4));
+    labelSizer->Add(m_explanation, wxSizerFlags().Expand().Border(wxTOP|wxRIGHT, PX(4)));
     sizer->Add(labelSizer, wxSizerFlags(1).Center().DoubleBorder(wxALL));
-    sizer->AddSpacer(20);
+    sizer->AddSpacer(PX(20));
     sizer->Add(m_buttons, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
     sizer->Add(m_checkbox, wxSizerFlags().Center().Border(wxRIGHT, BUTTONS_SPACE));
     sizer->Add(btnClose, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
 #ifdef __WXMSW__
-    sizer->AddSpacer(4);
+    sizer->AddSpacer(PX(4));
 #endif
 
     SetSizer(sizer);
@@ -196,7 +197,7 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
             iconName = wxART_ERROR;
             break;
     }
-    m_icon->SetBitmap(wxArtProvider::GetBitmap(iconName, wxART_MENU, wxSize(16, 16)));
+    m_icon->SetBitmap(wxArtProvider::GetBitmap(iconName, wxART_MENU, wxSize(PX(16), PX(16))));
 #endif
 
     m_label->SetLabelText(msg.m_text);
