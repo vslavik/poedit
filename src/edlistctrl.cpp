@@ -82,9 +82,16 @@ const wxColour gs_FuzzyForBlack("#a9861b");
 
 const wxColour gs_TranspColor(254, 0, 253); // FIXME: get rid of this
 
+// wxMSW doesn't need a dummy image to align columns properly, unlike wxOSX
+#ifdef __WXMSW__
+#define IMG_NOTHING -1
+#endif
+
 enum
 {
+#ifndef __WXMSW__
     IMG_NOTHING,
+#endif
     IMG_AUTOMATIC,
     IMG_COMMENT,
     IMG_BOOKMARK
@@ -120,7 +127,9 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     wxImageList *list = new wxImageList(PX(16), PX(16));
 
     // IMG_XXX:
+#ifndef __WXMSW__
     list->Add(wxArtProvider::GetBitmap("poedit-status-nothing"));
+#endif
     list->Add(wxArtProvider::GetBitmap("poedit-status-automatic"));
     list->Add(wxArtProvider::GetBitmap("poedit-status-comment"));
     list->Add(wxArtProvider::GetBitmap("poedit-status-bookmark"));
