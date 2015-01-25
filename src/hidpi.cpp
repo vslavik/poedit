@@ -85,7 +85,7 @@ wxBitmap LoadScaledBitmap(const wxString& name)
         }
 
         img.Rescale(img.GetWidth() * imgScale, img.GetHeight() * imgScale,
-                    imgScale == 2.0 ? wxIMAGE_QUALITY_NEAREST : wxIMAGE_QUALITY_HIGH);
+                    imgScale == 2.0 ? wxIMAGE_QUALITY_NEAREST : wxIMAGE_QUALITY_BICUBIC);
         return wxBitmap(img);
     }
     // else: load normally
