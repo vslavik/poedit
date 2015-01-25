@@ -51,6 +51,9 @@ inline double HiDPIScalingFactor() { return g_pxScalingFactor; }
 #define PXBorder(dir) Border(dir, PX(wxSizerFlags::GetDefaultBorder()))
 #define PXDoubleBorder(dir) Border(dir, PX(2 * wxSizerFlags::GetDefaultBorder()))
 
+/// Tweak notebook tab label to look good
+inline wxString PXNotebookTab(const wxString& label) { return HiDPIScalingFactor() < 1.5 ? label : " " + label + " "; }
+
 /// Initializes HiDPI code, should be called early in OnInit.
 void InitHiDPIHandling();
 
@@ -59,6 +62,7 @@ void InitHiDPIHandling();
 #define PXDefaultBorder wxSizerFlags::GetDefaultBorder()
 #define PXBorder(dir) Border(dir)
 #define PXDoubleBorder(dir) DoubleBorder(dir)
+#define PXNotebookTab(label) (label)
 inline void InitHiDPIHandling() {}
 inline double HiDPIScalingFactor() { return 1.0; }
 #endif
