@@ -40,7 +40,23 @@ void InitHiDPIHandling()
     g_pxScalingFactor = dpi.y / 96.0;
 }
 
-#endif //  !NEEDS_MANUAL_HIDPI
+namespace
+{
+void LoadPNGImage(wxImage& img, const wxString& filename)
+{
+    img.LoadFile(filename, wxBITMAP_TYPE_PNG);
+    // wxImage doesn't load alpha from PNG if it could be expressed as a mask.
+    // Too bad this breaks a) scaling and b) wxToolbar's disabled bitmaps.
+    // Beat some sense into it:
+    if (img.IsOk() && img.HasMask())
+    {
+        img.InitAlpha();
+    }
+}
+
+} // anonymous namespace
+
+#endif // NEEDS_MANUAL_HIDPI
 
 
 wxBitmap LoadScaledBitmap(const wxString& name)
@@ -57,7 +73,7 @@ wxBitmap LoadScaledBitmap(const wxString& name)
         const wxString filename_2x(name + "@2x.png");
         if (wxFileExists(filename_2x))
         {
-            img.LoadFile(filename_2x, wxBITMAP_TYPE_PNG);
+            LoadPNGImage(img, filename_2x);
             if (HiDPIScalingFactor() == 2.0)
                 return wxBitmap(img);
             else
@@ -65,7 +81,7 @@ wxBitmap LoadScaledBitmap(const wxString& name)
         }
         else
         {
-            img.LoadFile(filename, wxBITMAP_TYPE_PNG);
+            LoadPNGImage(img, filename);
         }
 
         img.Rescale(img.GetWidth() * imgScale, img.GetHeight() * imgScale,
