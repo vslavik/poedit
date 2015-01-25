@@ -159,7 +159,7 @@ public:
         topsizer->SetMinSize(PX(400), -1);
 
         wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
+        topsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
         SetSizer(topsizer);
 
         sizer->Add(new HeadingLabel(this, _("Information about the translator")));
@@ -180,7 +180,7 @@ public:
         m_userEmail->SetHint(_("your_email@example.com"));
         translator->Add(m_userEmail, wxSizerFlags(1).Expand().Center());
         translator->AddSpacer(PX(1));
-        translator->Add(new ExplanationLabel(this, _("Your name and email address are only used to set the Last-Translator header of GNU gettext files.")), wxSizerFlags(1).Expand().Border(wxRIGHT));
+        translator->Add(new ExplanationLabel(this, _("Your name and email address are only used to set the Last-Translator header of GNU gettext files.")), wxSizerFlags(1).Expand().PXBorder(wxRIGHT));
 #ifdef __WXOSX__
         nameLabel->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
         emailLabel->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
@@ -195,14 +195,14 @@ public:
         m_compileMo = new wxCheckBox(this, wxID_ANY, _("Automatically compile MO file when saving"));
         sizer->Add(m_compileMo);
         m_showSummary = new wxCheckBox(this, wxID_ANY, _("Show summary after catalog update"));
-        sizer->Add(m_showSummary, wxSizerFlags().Border(wxTOP));
+        sizer->Add(m_showSummary, wxSizerFlags().PXBorder(wxTOP));
 
         sizer->AddSpacer(PX(10));
 
         m_spellchecking = new wxCheckBox(this, wxID_ANY, _("Check spelling"));
-        sizer->Add(m_spellchecking, wxSizerFlags().Border(wxTOP));
+        sizer->Add(m_spellchecking, wxSizerFlags().PXBorder(wxTOP));
         m_focusToText = new wxCheckBox(this, wxID_ANY, _("Always change focus to text input field"));
-        sizer->Add(m_focusToText, wxSizerFlags().Border(wxTOP));
+        sizer->Add(m_focusToText, wxSizerFlags().PXBorder(wxTOP));
         wxString explainFocus(_("Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."));
 #ifdef __WXOSX__
         explainFocus.Replace("Ctrl", "Cmd");
@@ -232,7 +232,7 @@ public:
 
 #if NEED_CHOOSELANG_UI 
         m_uiLanguage = new wxButton(this, wxID_ANY, _("Change UI language"));
-        sizer->Add(m_uiLanguage, wxSizerFlags().Border(wxTOP));
+        sizer->Add(m_uiLanguage, wxSizerFlags().PXBorder(wxTOP));
 #endif
 
 #ifdef __WXMSW__
@@ -364,7 +364,7 @@ public:
 #endif
 
         wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
+        topsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
         SetSizer(topsizer);
 
         sizer->AddSpacer(PX(5));
@@ -389,7 +389,7 @@ public:
         sizer->AddSpacer(PX(10));
 
         m_useTMWhenUpdating = new wxCheckBox(this, wxID_ANY, _("Consult TM when updating from sources"));
-        sizer->Add(m_useTMWhenUpdating, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM));
+        sizer->Add(m_useTMWhenUpdating, wxSizerFlags().Expand().PXBorder(wxTOP|wxBOTTOM));
 
         auto explainTxt = _("If enabled, Poedit will try to fill in new entries using your previous\n"
                             "translations stored in the translation memory. If the TM is\n"
@@ -565,11 +565,11 @@ public:
         wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 
         wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
+        topsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
         SetSizer(topsizer);
 
         sizer->Add(new ExplanationLabel(this, _("Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated.")),
-                   wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM));
+                   wxSizerFlags().Expand().PXBorder(wxTOP|wxBOTTOM));
         sizer->AddSpacer(PX(10));
 
         auto horizontal = new wxBoxSizer(wxHORIZONTAL);
@@ -580,7 +580,7 @@ public:
 #ifdef __WXOSX__
         m_list->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
-        horizontal->Add(m_list, wxSizerFlags(1).Expand().Border(wxRIGHT));
+        horizontal->Add(m_list, wxSizerFlags(1).Expand().PXBorder(wxRIGHT));
 
         auto buttons = new wxBoxSizer(wxVERTICAL);
         horizontal->Add(buttons, wxSizerFlags().Expand());
@@ -588,9 +588,9 @@ public:
         m_new = new wxButton(this, wxID_ANY, _("New"));
         m_edit = new wxButton(this, wxID_ANY, _("Edit"));
         m_delete = new wxButton(this, wxID_ANY, _("Delete"));
-        buttons->Add(m_new, wxSizerFlags().Border(wxBOTTOM));
-        buttons->Add(m_edit, wxSizerFlags().Border(wxBOTTOM));
-        buttons->Add(m_delete, wxSizerFlags().Border(wxBOTTOM));
+        buttons->Add(m_new, wxSizerFlags().PXBorder(wxBOTTOM));
+        buttons->Add(m_edit, wxSizerFlags().PXBorder(wxBOTTOM));
+        buttons->Add(m_delete, wxSizerFlags().PXBorder(wxBOTTOM));
 
         m_new->Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnNewExtractor, this);
         m_edit->Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnEditExtractor, this);
@@ -763,14 +763,14 @@ public:
         topsizer->SetMinSize(PX(350), -1); // for OS X look, wouldn't fit the toolbar otherwise
 
         wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->Add(sizer, wxSizerFlags().Expand().DoubleBorder());
+        topsizer->Add(sizer, wxSizerFlags().Expand().PXDoubleBorderAll());
         SetSizer(topsizer);
 
         m_updates = new wxCheckBox(this, wxID_ANY, _("Automatically check for updates"));
-        sizer->Add(m_updates, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM));
+        sizer->Add(m_updates, wxSizerFlags().Expand().PXBorder(wxTOP|wxBOTTOM));
 
         m_beta = new wxCheckBox(this, wxID_ANY, _("Include beta versions"));
-        sizer->Add(m_beta, wxSizerFlags().Expand().Border(wxBOTTOM));
+        sizer->Add(m_beta, wxSizerFlags().Expand().PXBorder(wxBOTTOM));
 
         sizer->Add(new ExplanationLabel(this, _("Beta versions contain the latest new features and improvements, but may be a bit less stable.")),
                    wxSizerFlags().Expand().Border(wxLEFT, PX(ExplanationLabel::CHECKBOX_INDENT)));
@@ -830,13 +830,13 @@ public:
         wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 
         wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
+        topsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
         SetSizer(topsizer);
 
-        sizer->Add(new ExplanationLabel(this, _("These settings affect internal formatting of PO files. Adjust them if you have specific requirements e.g. because of version control.")), wxSizerFlags().Expand().Border(wxBOTTOM));
+        sizer->Add(new ExplanationLabel(this, _("These settings affect internal formatting of PO files. Adjust them if you have specific requirements e.g. because of version control.")), wxSizerFlags().Expand().PXBorder(wxBOTTOM));
 
         auto crlfbox = new wxBoxSizer(wxHORIZONTAL);
-        sizer->Add(crlfbox, wxSizerFlags().Expand().Border(wxTOP));
+        sizer->Add(crlfbox, wxSizerFlags().Expand().PXBorder(wxTOP));
         crlfbox->Add(new wxStaticText(this, wxID_ANY, _("Line endings:")), wxSizerFlags().Center().BORDER_WIN(wxTOP, PX(1)));
         m_crlf = new wxChoice(this, wxID_ANY);
         m_crlf->Append(_("Unix (recommended)"));
@@ -852,7 +852,7 @@ public:
         crlfbox->Add(m_wrapWidth, wxSizerFlags().Center().BORDER_OSX(wxLEFT, PX(3)));
 
         m_keepFmt = new wxCheckBox(this, wxID_ANY, _("Preserve formatting of existing files"));
-        sizer->Add(m_keepFmt, wxSizerFlags().Border(wxTOP));
+        sizer->Add(m_keepFmt, wxSizerFlags().PXBorder(wxTOP));
 
         Fit();
 

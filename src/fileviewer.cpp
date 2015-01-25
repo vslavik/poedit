@@ -58,11 +58,11 @@ FileViewer::FileViewer(wxWindow *parent,
     panel->SetSizer(sizer);
 
     wxSizer *barsizer = new wxBoxSizer(wxHORIZONTAL);
-    sizer->Add(barsizer, wxSizerFlags().Expand().Border());
+    sizer->Add(barsizer, wxSizerFlags().Expand().PXBorderAll());
 
     barsizer->Add(new wxStaticText(panel, wxID_ANY,
                                    _("Source file occurrence:")),
-                  wxSizerFlags().Center().Border(wxRIGHT));
+                  wxSizerFlags().Center().PXBorder(wxRIGHT));
 
     wxChoice *choice = new wxChoice(panel, wxID_ANY);
     barsizer->Add(choice, wxSizerFlags(1).Center());

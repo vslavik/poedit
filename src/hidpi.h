@@ -47,15 +47,25 @@ inline double HiDPIScalingFactor() { return g_pxScalingFactor; }
     current DPI setting.
  */
 #define PX(x) (int(((x) * g_pxScalingFactor) + 0.5))
+#define PXDefaultBorder PX(wxSizerFlags::GetDefaultBorder())
+#define PXBorder(dir) Border(dir, PX(wxSizerFlags::GetDefaultBorder()))
+#define PXDoubleBorder(dir) Border(dir, PX(2 * wxSizerFlags::GetDefaultBorder()))
 
 /// Initializes HiDPI code, should be called early in OnInit.
 void InitHiDPIHandling();
 
 #else // ! NEEDS_MANUAL_HIDPI
 #define PX(x) (x)
+#define PXDefaultBorder wxSizerFlags::GetDefaultBorder()
+#define PXBorder(dir) Border(dir)
+#define PXDoubleBorder(dir) DoubleBorder(dir)
 inline void InitHiDPIHandling() {}
 inline double HiDPIScalingFactor() { return 1.0; }
 #endif
+
+#define PXBorderAll() PXBorder(wxALL)
+#define PXDoubleBorderAll() PXDoubleBorder(wxALL)
+
 
 /**
     Load image from given PNG file.

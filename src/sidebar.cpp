@@ -29,6 +29,8 @@
 #include "customcontrols.h"
 #include "commentdlg.h"
 #include "errors.h"
+#include "hidpi.h"
+
 #include "tm/suggestions.h"
 #include "tm/transmem.h"
 
@@ -89,14 +91,14 @@ SidebarBlock::SidebarBlock(Sidebar *parent, const wxString& label, int flags)
         if (!(flags & NoUpperMargin))
         {
             m_sizer->Add(new SidebarSeparator(parent),
-                         wxSizerFlags().Expand().Border(wxBOTTOM|wxLEFT, 2));
+                         wxSizerFlags().Expand().Border(wxBOTTOM|wxLEFT, PX(2)));
         }
         m_headerSizer = new wxBoxSizer(wxHORIZONTAL);
         m_headerSizer->Add(new HeadingLabel(parent, label), wxSizerFlags().Expand().Center());
-        m_sizer->Add(m_headerSizer, wxSizerFlags().Expand().DoubleBorder(wxLEFT|wxRIGHT));
+        m_sizer->Add(m_headerSizer, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
     }
     m_innerSizer = new wxBoxSizer(wxVERTICAL);
-    m_sizer->Add(m_innerSizer, wxSizerFlags(1).Expand().DoubleBorder(wxLEFT|wxRIGHT));
+    m_sizer->Add(m_innerSizer, wxSizerFlags(1).Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
 }
 
 void SidebarBlock::Show(bool show)
@@ -263,8 +265,8 @@ public:
         auto top = new wxBoxSizer(wxHORIZONTAL);
         auto right = new wxBoxSizer(wxVERTICAL);
         top->AddSpacer(PX(2));
-        top->Add(m_icon, wxSizerFlags().Top().Border(wxTOP|wxBOTTOM));
-        top->Add(right, wxSizerFlags(1).Expand().Border(wxLEFT));
+        top->Add(m_icon, wxSizerFlags().Top().PXBorder(wxTOP|wxBOTTOM));
+        top->Add(right, wxSizerFlags(1).Expand().PXBorder(wxLEFT));
         right->Add(m_text, wxSizerFlags().Expand().Border(wxTOP, PX(4)));
         right->Add(m_info, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(2)));
         SetSizerAndFit(top);
@@ -394,8 +396,8 @@ SuggestionsSidebarBlock::SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu)
     m_msgSizer = new wxBoxSizer(wxHORIZONTAL);
     m_msgIcon = new wxStaticBitmap(parent, wxID_ANY, wxNullBitmap);
     m_msgText = new ExplanationLabel(parent, "");
-    m_msgSizer->Add(m_msgIcon, wxSizerFlags().Center().Border());
-    m_msgSizer->Add(m_msgText, wxSizerFlags(1).Center().Border(wxTOP|wxBOTTOM));
+    m_msgSizer->Add(m_msgIcon, wxSizerFlags().Center().PXBorderAll());
+    m_msgSizer->Add(m_msgText, wxSizerFlags(1).Center().PXBorder(wxTOP|wxBOTTOM));
     m_innerSizer->Add(m_msgSizer, wxSizerFlags().Expand());
 
     m_innerSizer->AddSpacer(PX(10));
@@ -419,7 +421,7 @@ SuggestionsSidebarBlock::SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu)
 #ifdef __WXMSW__
     m_iGotNothing->SetFont(m_iGotNothing->GetFont().Larger());
 #endif
-    m_innerSizer->Add(m_iGotNothing, wxSizerFlags().Center().Border(wxTOP|wxBOTTOM, 100));
+    m_innerSizer->Add(m_iGotNothing, wxSizerFlags().Center().Border(wxTOP|wxBOTTOM, PX(100)));
 
     BuildSuggestionsMenu();
 }
@@ -695,7 +697,7 @@ Sidebar::Sidebar(wxWindow *parent, wxMenu *suggestionsMenu)
     topSizer->SetMinSize(wxSize(PX(300), -1));
 
     m_blocksSizer = new wxBoxSizer(wxVERTICAL);
-    topSizer->Add(m_blocksSizer, wxSizerFlags(1).Expand().DoubleBorder(wxTOP|wxBOTTOM));
+    topSizer->Add(m_blocksSizer, wxSizerFlags(1).Expand().PXDoubleBorder(wxTOP|wxBOTTOM));
 
     m_topBlocksSizer = new wxBoxSizer(wxVERTICAL);
     m_bottomBlocksSizer = new wxBoxSizer(wxVERTICAL);

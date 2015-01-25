@@ -139,14 +139,14 @@ LanguageDialog::LanguageDialog(wxWindow *parent)
 
 #ifdef __WXOSX__
     sizer->AddSpacer(PX(10));
-    sizer->Add(label, wxSizerFlags().Border());
-    sizer->Add(m_language, wxSizerFlags().Expand().DoubleBorder(wxLEFT|wxRIGHT));
+    sizer->Add(label, wxSizerFlags().PXBorderAll());
+    sizer->Add(m_language, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
     sizer->Add(buttons, wxSizerFlags().Expand());
 #else
     sizer->AddSpacer(PX(10));
-    sizer->Add(label, wxSizerFlags().DoubleBorder(wxLEFT|wxRIGHT));
-    sizer->Add(m_language, wxSizerFlags().Expand().DoubleBorder(wxLEFT|wxRIGHT));
-    sizer->Add(buttons, wxSizerFlags().Expand().Border());
+    sizer->Add(label, wxSizerFlags().PXDoubleBorder(wxLEFT|wxRIGHT));
+    sizer->Add(m_language, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
+    sizer->Add(buttons, wxSizerFlags().Expand().PXBorderAll());
 #endif
 
     m_language->Bind(wxEVT_TEXT,     [=](wxCommandEvent& e){ m_validatedLang = -1; e.Skip(); });

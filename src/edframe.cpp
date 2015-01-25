@@ -2719,13 +2719,13 @@ void PoeditFrame::OnAutoTranslateAll(wxCommandEvent&)
 
 #ifdef __WXOSX__
     sizer->AddSpacer(PX(5));
-    sizer->Add(new HeadingLabel(dlg.get(), _("Fill missing translations from TM")), wxSizerFlags().Expand().DoubleBorder(wxBOTTOM));
+    sizer->Add(new HeadingLabel(dlg.get(), _("Fill missing translations from TM")), wxSizerFlags().Expand().PXDoubleBorder(wxBOTTOM));
 #endif
-    sizer->Add(onlyExact, wxSizerFlags().Border(wxTOP));
+    sizer->Add(onlyExact, wxSizerFlags().PXBorder(wxTOP));
     sizer->Add(onlyExactE, wxSizerFlags().Expand().Border(wxLEFT, ExplanationLabel::CHECKBOX_INDENT));
-    sizer->Add(noFuzzy, wxSizerFlags().DoubleBorder(wxTOP));
+    sizer->Add(noFuzzy, wxSizerFlags().PXDoubleBorder(wxTOP));
     sizer->Add(noFuzzyE, wxSizerFlags().Expand().Border(wxLEFT, ExplanationLabel::CHECKBOX_INDENT));
-    topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
+    topsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
 
     auto buttons = dlg->CreateButtonSizer(wxOK | wxCANCEL);
     auto ok = static_cast<wxButton*>(dlg->FindWindow(wxID_OK));
@@ -2734,7 +2734,7 @@ void PoeditFrame::OnAutoTranslateAll(wxCommandEvent&)
 #ifdef __WXOSX__
     topsizer->Add(buttons, wxSizerFlags().Expand());
 #else
-    topsizer->Add(buttons, wxSizerFlags().Expand().Border());
+    topsizer->Add(buttons, wxSizerFlags().Expand().PXBorderAll());
     topsizer->AddSpacer(PX(5));
 #endif
 

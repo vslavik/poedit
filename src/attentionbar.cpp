@@ -99,7 +99,7 @@ AttentionBar::AttentionBar(wxWindow *parent)
     Bind(wxEVT_PAINT, &AttentionBar::OnPaint, this);
 
     wxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
-    sizer->AddSpacer(wxSizerFlags::GetDefaultBorder());
+    sizer->AddSpacer(PXDefaultBorder);
 #ifndef __WXGTK__
     sizer->Add(m_icon, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
 #endif
@@ -107,7 +107,7 @@ AttentionBar::AttentionBar(wxWindow *parent)
     auto labelSizer = new wxBoxSizer(wxVERTICAL);
     labelSizer->Add(m_label, wxSizerFlags().Expand());
     labelSizer->Add(m_explanation, wxSizerFlags().Expand().Border(wxTOP|wxRIGHT, PX(4)));
-    sizer->Add(labelSizer, wxSizerFlags(1).Center().DoubleBorder(wxALL));
+    sizer->Add(labelSizer, wxSizerFlags(1).Center().PXDoubleBorder(wxALL));
     sizer->AddSpacer(PX(20));
     sizer->Add(m_buttons, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
     sizer->Add(m_checkbox, wxSizerFlags().Center().Border(wxRIGHT, BUTTONS_SPACE));
