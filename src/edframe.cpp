@@ -714,8 +714,6 @@ wxWindow* PoeditFrame::CreateContentViewPO()
         if ( wxConfigBase::Get()->Read(WindowStatePath(this) + "maximized", long(0)) )
             m_setSashPositionsWhenMaximized = true;
 
-        m_splitter->SplitHorizontally(m_list, m_bottomPanel, (int)wxConfigBase::Get()->ReadLong("/splitter", -PX(250)));
-
         if (wxConfigBase::Get()->ReadBool("/sidebar_shown", true))
         {
             auto split = GetSize().x * wxConfigBase::Get()->ReadDouble("/sidebar_splitter", 0.75);
@@ -727,6 +725,8 @@ wxWindow* PoeditFrame::CreateContentViewPO()
             m_sidebarSplitter->Initialize(m_splitter);
             Layout();
         }
+
+        m_splitter->SplitHorizontally(m_list, m_bottomPanel, (int)wxConfigBase::Get()->ReadLong("/splitter", -PX(250)));
 
         if (m_sidebar)
             m_sidebar->SetUpperHeight(m_splitter->GetSashPosition());
