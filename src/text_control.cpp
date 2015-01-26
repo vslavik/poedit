@@ -234,7 +234,7 @@ CustomizedTextCtrl::CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long 
 // We use wxTE_RICH2 style, which allows for pasting rich-formatted
 // text into the control. We want to allow only plain text (all the
 // formatting done is Poedit's syntax highlighting), so we need to
-// override copy/cut/paste command.s Plus, the richedit control
+// override copy/cut/paste commands. Plus, the richedit control
 // (or wx's use of it) has a bug in it that causes it to copy wrong
 // data when copying from the same text control to itself after its
 // content was programatically changed:
