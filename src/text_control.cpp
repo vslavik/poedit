@@ -423,7 +423,13 @@ void AnyTranslatableTextCtrl::HighlightText()
 
 #else // !__WXOSX__
 
+#ifndef __WXGTK__
+    // Freezing (and more to the point, thawing) the window from inside wxEVT_TEXT
+    // handler breaks pasting under GTK+ (selection is not replaced).
+    // See https://github.com/vslavik/poedit/issues/139
     wxWindowUpdateLocker noupd(this);
+#endif
+
     wxEventBlocker block(this, wxEVT_TEXT);
   #ifdef __WXMSW__
     UndoSupressor blockUndo(this);
