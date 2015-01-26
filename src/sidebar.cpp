@@ -29,6 +29,8 @@
 #include "customcontrols.h"
 #include "commentdlg.h"
 #include "errors.h"
+#include "hidpi.h"
+
 #include "tm/suggestions.h"
 #include "tm/transmem.h"
 
@@ -70,8 +72,8 @@ private:
     {
         wxPaintDC dc(this);
         auto w = dc.GetSize().x;
-        dc.GradientFillLinear(wxRect(0,0,15,1), m_sides, m_center);
-        dc.GradientFillLinear(wxRect(15,0,w,1), m_center, m_sides);
+        dc.GradientFillLinear(wxRect(0,0,PX(15),PX(1)), m_sides, m_center);
+        dc.GradientFillLinear(wxRect(PX(15),0,w,PX(1)), m_center, m_sides);
     }
 
     wxColour m_sides, m_center;
@@ -83,20 +85,20 @@ SidebarBlock::SidebarBlock(Sidebar *parent, const wxString& label, int flags)
     m_parent = parent;
     m_sizer = new wxBoxSizer(wxVERTICAL);
     if (!(flags & NoUpperMargin))
-        m_sizer->AddSpacer(15);
+        m_sizer->AddSpacer(PX(15));
     if (!label.empty())
     {
         if (!(flags & NoUpperMargin))
         {
             m_sizer->Add(new SidebarSeparator(parent),
-                         wxSizerFlags().Expand().Border(wxBOTTOM|wxLEFT, 2));
+                         wxSizerFlags().Expand().Border(wxBOTTOM|wxLEFT, PX(2)));
         }
         m_headerSizer = new wxBoxSizer(wxHORIZONTAL);
         m_headerSizer->Add(new HeadingLabel(parent, label), wxSizerFlags().Expand().Center());
-        m_sizer->Add(m_headerSizer, wxSizerFlags().Expand().DoubleBorder(wxLEFT|wxRIGHT));
+        m_sizer->Add(m_headerSizer, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
     }
     m_innerSizer = new wxBoxSizer(wxVERTICAL);
-    m_sizer->Add(m_innerSizer, wxSizerFlags(1).Expand().DoubleBorder(wxLEFT|wxRIGHT));
+    m_sizer->Add(m_innerSizer, wxSizerFlags(1).Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
 }
 
 void SidebarBlock::Show(bool show)
@@ -126,10 +128,10 @@ public:
           /// TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
         : SidebarBlock(parent, _("Previous source text:"))
     {
-        m_innerSizer->AddSpacer(2);
+        m_innerSizer->AddSpacer(PX(2));
         m_innerSizer->Add(new ExplanationLabel(parent, _("The old source text (before it changed during an update) that the fuzzy translation corresponds to.")),
                      wxSizerFlags().Expand());
-        m_innerSizer->AddSpacer(5);
+        m_innerSizer->AddSpacer(PX(5));
         m_text = new SelectableAutoWrappingText(parent, "");
         m_innerSizer->Add(m_text, wxSizerFlags().Expand());
     }
@@ -156,7 +158,7 @@ public:
     ExtractedCommentSidebarBlock(Sidebar *parent)
         : SidebarBlock(parent, _("Notes for translators:"))
     {
-        m_innerSizer->AddSpacer(5);
+        m_innerSizer->AddSpacer(PX(5));
         m_comment = new SelectableAutoWrappingText(parent, "");
         m_innerSizer->Add(m_comment, wxSizerFlags().Expand());
     }
@@ -189,7 +191,7 @@ public:
     CommentSidebarBlock(Sidebar *parent)
         : SidebarBlock(parent, _("Comment:"))
     {
-        m_innerSizer->AddSpacer(5);
+        m_innerSizer->AddSpacer(PX(5));
         m_comment = new SelectableAutoWrappingText(parent, "");
         m_innerSizer->Add(m_comment, wxSizerFlags().Expand());
     }
@@ -262,11 +264,11 @@ public:
 
         auto top = new wxBoxSizer(wxHORIZONTAL);
         auto right = new wxBoxSizer(wxVERTICAL);
-        top->AddSpacer(2);
-        top->Add(m_icon, wxSizerFlags().Top().Border(wxTOP|wxBOTTOM));
-        top->Add(right, wxSizerFlags(1).Expand().Border(wxLEFT));
-        right->Add(m_text, wxSizerFlags().Expand().Border(wxTOP, 4));
-        right->Add(m_info, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, 2));
+        top->AddSpacer(PX(2));
+        top->Add(m_icon, wxSizerFlags().Top().PXBorder(wxTOP|wxBOTTOM));
+        top->Add(right, wxSizerFlags(1).Expand().PXBorder(wxLEFT));
+        right->Add(m_text, wxSizerFlags().Expand().Border(wxTOP, PX(4)));
+        right->Add(m_info, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(2)));
         SetSizerAndFit(top);
 
         // setup mouse hover highlighting:
@@ -394,11 +396,11 @@ SuggestionsSidebarBlock::SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu)
     m_msgSizer = new wxBoxSizer(wxHORIZONTAL);
     m_msgIcon = new wxStaticBitmap(parent, wxID_ANY, wxNullBitmap);
     m_msgText = new ExplanationLabel(parent, "");
-    m_msgSizer->Add(m_msgIcon, wxSizerFlags().Center().Border());
-    m_msgSizer->Add(m_msgText, wxSizerFlags(1).Center().Border(wxTOP|wxBOTTOM));
+    m_msgSizer->Add(m_msgIcon, wxSizerFlags().Center().PXBorderAll());
+    m_msgSizer->Add(m_msgText, wxSizerFlags(1).Center().PXBorder(wxTOP|wxBOTTOM));
     m_innerSizer->Add(m_msgSizer, wxSizerFlags().Expand());
 
-    m_innerSizer->AddSpacer(10);
+    m_innerSizer->AddSpacer(PX(10));
 
     m_suggestionsSizer = new wxBoxSizer(wxVERTICAL);
     m_extrasSizer = new wxBoxSizer(wxVERTICAL);
@@ -419,7 +421,7 @@ SuggestionsSidebarBlock::SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu)
 #ifdef __WXMSW__
     m_iGotNothing->SetFont(m_iGotNothing->GetFont().Larger());
 #endif
-    m_innerSizer->Add(m_iGotNothing, wxSizerFlags().Center().Border(wxTOP|wxBOTTOM, 100));
+    m_innerSizer->Add(m_iGotNothing, wxSizerFlags().Center().Border(wxTOP|wxBOTTOM, PX(100)));
 
     BuildSuggestionsMenu();
 }
@@ -692,10 +694,10 @@ Sidebar::Sidebar(wxWindow *parent, wxMenu *suggestionsMenu)
 #endif
 
     auto *topSizer = new wxBoxSizer(wxVERTICAL);
-    topSizer->SetMinSize(wxSize(300, -1));
+    topSizer->SetMinSize(wxSize(PX(300), -1));
 
     m_blocksSizer = new wxBoxSizer(wxVERTICAL);
-    topSizer->Add(m_blocksSizer, wxSizerFlags(1).Expand().DoubleBorder(wxTOP|wxBOTTOM));
+    topSizer->Add(m_blocksSizer, wxSizerFlags(1).Expand().PXDoubleBorder(wxTOP|wxBOTTOM));
 
     m_topBlocksSizer = new wxBoxSizer(wxVERTICAL);
     m_bottomBlocksSizer = new wxBoxSizer(wxVERTICAL);

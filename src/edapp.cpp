@@ -67,6 +67,7 @@
 #include "extractor.h"
 #include "chooselang.h"
 #include "customcontrols.h"
+#include "hidpi.h"
 #include "icons.h"
 #include "version.h"
 #include "tm/transmem.h"
@@ -125,6 +126,8 @@ bool PoeditApp::OnInit()
 {
     if (!wxApp::OnInit())
         return false;
+
+    InitHiDPIHandling();
 
 #ifdef __WXOSX__
     MoveToApplicationsFolderIfNecessary();

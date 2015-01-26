@@ -39,6 +39,7 @@
 #include <memory>
 
 #include "propertiesdlg.h"
+#include "hidpi.h"
 #include "language.h"
 #include "pluralforms/pl_evaluate.h"
 
@@ -70,8 +71,8 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, bool fileExistsOnDisk, int 
     m_paths = new wxEditableListBox(this, -1, _("Paths"));
     m_excludedPaths = new wxEditableListBox(this, -1, _("Excluded paths"));
 
-    m_paths->SetMinSize(wxSize(-1, 90));
-    m_excludedPaths->SetMinSize(wxSize(-1, 90));
+    m_paths->SetMinSize(wxSize(-1, PX(90)));
+    m_excludedPaths->SetMinSize(wxSize(-1, PX(90)));
 
 #ifdef __WXOSX__
     for (auto l: {m_keywords, m_paths, m_excludedPaths})

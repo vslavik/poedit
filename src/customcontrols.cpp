@@ -25,6 +25,7 @@
 
 #include "customcontrols.h"
 
+#include "hidpi.h"
 #include "icuhelpers.h"
 
 #include <wx/clipbrd.h>
@@ -145,7 +146,7 @@ void AutoWrappingText::SetAndWrapLabel(const wxString& label)
 void AutoWrappingText::OnSize(wxSizeEvent& e)
 {
     e.Skip();
-    int w = e.GetSize().x - 4;
+    int w = e.GetSize().x - PX(4);
     if (w == m_wrapWidth)
         return;
 

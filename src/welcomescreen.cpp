@@ -27,6 +27,7 @@
 
 #include "edapp.h"
 #include "edframe.h"
+#include "hidpi.h"
 
 #include <wx/dcbuffer.h>
 #include <wx/statbmp.h>
@@ -195,7 +196,7 @@ WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)
     auto sizer = new wxBoxSizer(wxVERTICAL);
     auto uberSizer = new wxBoxSizer(wxHORIZONTAL);
     uberSizer->AddStretchSpacer();
-    uberSizer->Add(sizer, wxSizerFlags().Center().Border(wxALL, 50));
+    uberSizer->Add(sizer, wxSizerFlags().Center().Border(wxALL, PX(50)));
     uberSizer->AddStretchSpacer();
     SetSizer(uberSizer);
 
@@ -205,28 +206,28 @@ WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)
     auto header = new HeaderStaticText(this, wxID_ANY, _("Welcome to Poedit"));
     header->SetFont(m_fntHeader);
     header->SetForegroundColour(m_clrHeader);
-    sizer->Add(header, wxSizerFlags().Center().Border(wxTOP, 10));
+    sizer->Add(header, wxSizerFlags().Center().Border(wxTOP, PX(10)));
 
     auto version = new wxStaticText(this, wxID_ANY, wxString::Format(_("Version %s"), wxGetApp().GetAppVersion()));
     version->SetFont(m_fntSub);
     version->SetForegroundColour(m_clrSub);
     sizer->Add(version, wxSizerFlags().Center());
 
-    sizer->AddSpacer(20);
+    sizer->AddSpacer(PX(20));
 
     sizer->Add(new ActionButton(
                        this, wxID_OPEN,
                        _("Edit a translation"),
                        _("Open an existing PO file and edit the translation.")),
-               wxSizerFlags().Border().Expand());
+               wxSizerFlags().PXBorderAll().Expand());
 
     sizer->Add(new ActionButton(
                        this, XRCID("menu_new_from_pot"),
                        _("Create new translation"),
                        _("Take an existing PO file or POT template and create a new translation from it.")),
-               wxSizerFlags().Border().Expand());
+               wxSizerFlags().PXBorderAll().Expand());
 
-    sizer->AddSpacer(50);
+    sizer->AddSpacer(PX(50));
 }
 
 
@@ -238,14 +239,14 @@ EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent)
     auto sizer = new wxBoxSizer(wxVERTICAL);
     auto uberSizer = new wxBoxSizer(wxHORIZONTAL);
     uberSizer->AddStretchSpacer();
-    uberSizer->Add(sizer, wxSizerFlags().Center().Border(wxALL, 100));
+    uberSizer->Add(sizer, wxSizerFlags().Center().Border(wxALL, PX(100)));
     uberSizer->AddStretchSpacer();
     SetSizer(uberSizer);
 
     auto header = new HeaderStaticText(this, wxID_ANY, _(L"There are no translations. That’s unusual."));
     header->SetFont(m_fntHeader);
     header->SetForegroundColour(m_clrHeader);
-    sizer->Add(header, wxSizerFlags().Center().Border());
+    sizer->Add(header, wxSizerFlags().Center().PXBorderAll());
 
     auto explain = new wxStaticText(this, wxID_ANY, _("Translatable entries aren't added manually in the Gettext system, but are automatically extracted\nfrom source code. This way, they stay up to date and accurate.\nTranslators typically use PO template files (POTs) prepared for them by the developer."));
     explain->SetFont(m_fntNorm);
@@ -254,29 +255,29 @@ EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent)
 
     auto learnMore = new wxHyperlinkCtrl(this, wxID_ANY, _("(Learn more about GNU gettext)"), "http://www.gnu.org/software/gettext/manual/");
     learnMore->SetFont(m_fntNorm);
-    sizer->Add(learnMore, wxSizerFlags().Border(wxTOP|wxBOTTOM).Align(wxALIGN_RIGHT));
+    sizer->Add(learnMore, wxSizerFlags().PXBorder(wxTOP|wxBOTTOM).Align(wxALIGN_RIGHT));
 
     auto explain2 = new wxStaticText(this, wxID_ANY, _("The simplest way to fill this catalog is to update it from a POT:"));
     explain2->SetFont(m_fntNorm);
     explain2->SetForegroundColour(m_clrNorm);
-    sizer->Add(explain2, wxSizerFlags().DoubleBorder(wxTOP));
+    sizer->Add(explain2, wxSizerFlags().PXDoubleBorder(wxTOP));
 
     sizer->Add(new ActionButton(
                        this, XRCID("menu_update_from_pot"),
                        _("Update from POT"),
                        _("Take translatable strings from an existing POT template.")),
-               wxSizerFlags().Border().Expand());
+               wxSizerFlags().PXBorderAll().Expand());
 
     auto explain3 = new wxStaticText(this, wxID_ANY, _("You can also extract translatable strings directly from the source code:"));
     explain3->SetFont(m_fntNorm);
     explain3->SetForegroundColour(m_clrNorm);
-    sizer->Add(explain3, wxSizerFlags().DoubleBorder(wxTOP));
+    sizer->Add(explain3, wxSizerFlags().PXDoubleBorder(wxTOP));
 
     auto btnSources = new ActionButton(
                        this, wxID_ANY,
                        _("Extract from sources"),
                        _("Configure source code extraction in Properties."));
-    sizer->Add(btnSources, wxSizerFlags().Border().Expand());
+    sizer->Add(btnSources, wxSizerFlags().PXBorderAll().Expand());
 
     btnSources->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){
         parent->EditCatalogPropertiesAndUpdateFromSources();

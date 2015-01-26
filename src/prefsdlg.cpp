@@ -52,6 +52,7 @@
 #include "edapp.h"
 #include "edframe.h"
 #include "catalog.h"
+#include "hidpi.h"
 #include "tm/transmem.h"
 #include "chooselang.h"
 #include "errors.h"
@@ -155,14 +156,14 @@ public:
     GeneralPageWindow(wxWindow *parent) : PrefsPanel(parent)
     {
         wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->SetMinSize(400, -1);
+        topsizer->SetMinSize(PX(400), -1);
 
         wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
+        topsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
         SetSizer(topsizer);
 
         sizer->Add(new HeadingLabel(this, _("Information about the translator")));
-        sizer->AddSpacer(10);
+        sizer->AddSpacer(PX(10));
 
         auto translator = new wxFlexGridSizer(2, wxSize(5,6));
         translator->AddGrowableCol(1);
@@ -178,8 +179,8 @@ public:
         m_userEmail = new wxTextCtrl(this, wxID_ANY);
         m_userEmail->SetHint(_("your_email@example.com"));
         translator->Add(m_userEmail, wxSizerFlags(1).Expand().Center());
-        translator->AddSpacer(1);
-        translator->Add(new ExplanationLabel(this, _("Your name and email address are only used to set the Last-Translator header of GNU gettext files.")), wxSizerFlags(1).Expand().Border(wxRIGHT));
+        translator->AddSpacer(PX(1));
+        translator->Add(new ExplanationLabel(this, _("Your name and email address are only used to set the Last-Translator header of GNU gettext files.")), wxSizerFlags(1).Expand().PXBorder(wxRIGHT));
 #ifdef __WXOSX__
         nameLabel->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
         emailLabel->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
@@ -187,31 +188,31 @@ public:
         m_userEmail->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
 
-        sizer->AddSpacer(10);
+        sizer->AddSpacer(PX(10));
         sizer->Add(new HeadingLabel(this, _("Editing")));
-        sizer->AddSpacer(10);
+        sizer->AddSpacer(PX(10));
 
         m_compileMo = new wxCheckBox(this, wxID_ANY, _("Automatically compile MO file when saving"));
         sizer->Add(m_compileMo);
         m_showSummary = new wxCheckBox(this, wxID_ANY, _("Show summary after catalog update"));
-        sizer->Add(m_showSummary, wxSizerFlags().Border(wxTOP));
+        sizer->Add(m_showSummary, wxSizerFlags().PXBorder(wxTOP));
 
-        sizer->AddSpacer(10);
+        sizer->AddSpacer(PX(10));
 
         m_spellchecking = new wxCheckBox(this, wxID_ANY, _("Check spelling"));
-        sizer->Add(m_spellchecking, wxSizerFlags().Border(wxTOP));
+        sizer->Add(m_spellchecking, wxSizerFlags().PXBorder(wxTOP));
         m_focusToText = new wxCheckBox(this, wxID_ANY, _("Always change focus to text input field"));
-        sizer->Add(m_focusToText, wxSizerFlags().Border(wxTOP));
+        sizer->Add(m_focusToText, wxSizerFlags().PXBorder(wxTOP));
         wxString explainFocus(_("Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus."));
 #ifdef __WXOSX__
         explainFocus.Replace("Ctrl", "Cmd");
 #endif
-        sizer->AddSpacer(5);
-        sizer->Add(new ExplanationLabel(this, explainFocus), wxSizerFlags().Expand().Border(wxLEFT, ExplanationLabel::CHECKBOX_INDENT));
+        sizer->AddSpacer(PX(5));
+        sizer->Add(new ExplanationLabel(this, explainFocus), wxSizerFlags().Expand().Border(wxLEFT, PX(ExplanationLabel::CHECKBOX_INDENT)));
 
-        sizer->AddSpacer(10);
+        sizer->AddSpacer(PX(10));
         sizer->Add(new HeadingLabel(this, _("Appearance")));
-        sizer->AddSpacer(4);
+        sizer->AddSpacer(PX(4));
 
         auto appearance = new wxFlexGridSizer(2, wxSize(5,1));
         appearance->AddGrowableCol(1);
@@ -219,10 +220,10 @@ public:
 
         m_useFontList = new wxCheckBox(this, wxID_ANY, _("Use custom list font:"));
         m_fontList = new wxFontPickerCtrl(this, wxID_ANY);
-        m_fontList->SetMinSize(wxSize(120, -1));
+        m_fontList->SetMinSize(wxSize(PX(120), -1));
         m_useFontText = new wxCheckBox(this, wxID_ANY, _("Use custom text fields font:"));
         m_fontText = new wxFontPickerCtrl(this, wxID_ANY);
-        m_fontText->SetMinSize(wxSize(120, -1));
+        m_fontText->SetMinSize(wxSize(PX(120), -1));
 
         appearance->Add(m_useFontList, wxSizerFlags().Center().Left());
         appearance->Add(m_fontList, wxSizerFlags().Center().Expand());
@@ -231,7 +232,7 @@ public:
 
 #if NEED_CHOOSELANG_UI 
         m_uiLanguage = new wxButton(this, wxID_ANY, _("Change UI language"));
-        sizer->Add(m_uiLanguage, wxSizerFlags().Border(wxTOP));
+        sizer->Add(m_uiLanguage, wxSizerFlags().PXBorder(wxTOP));
 #endif
 
 #ifdef __WXMSW__
@@ -345,7 +346,7 @@ private:
 class GeneralPage : public wxPreferencesPage
 {
 public:
-    wxString GetName() const override { return _("General"); }
+    wxString GetName() const override { return PXNotebookTab(_("General")); }
     wxBitmap GetLargeIcon() const override { return wxArtProvider::GetBitmap("Prefs-General"); }
     wxWindow *CreateWindow(wxWindow *parent) override { return new GeneralPageWindow(parent); }
 };
@@ -359,21 +360,21 @@ public:
     {
         wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 #ifdef __WXOSX__
-        topsizer->SetMinSize(410, -1); // for OS X look
+        topsizer->SetMinSize(PX(430), -1); // for OS X look
 #endif
 
         wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
+        topsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
         SetSizer(topsizer);
 
-        sizer->AddSpacer(5);
+        sizer->AddSpacer(PX(5));
         m_useTM = new wxCheckBox(this, wxID_ANY, _("Use translation memory"));
         sizer->Add(m_useTM, wxSizerFlags().Expand());
 
         m_stats = new wxStaticText(this, wxID_ANY, "--\n--", wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE);
-        sizer->AddSpacer(10);
-        sizer->Add(m_stats, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 30));
-        sizer->AddSpacer(10);
+        sizer->AddSpacer(PX(10));
+        sizer->Add(m_stats, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, PX(30)));
+        sizer->AddSpacer(PX(10));
 
         auto buttonsSizer = new wxBoxSizer(wxHORIZONTAL);
 
@@ -384,23 +385,23 @@ public:
         auto clear = new wxButton(this, wxID_ANY, _("Reset"));
         buttonsSizer->Add(clear, wxSizerFlags().Border(wxLEFT, 5));
 
-        sizer->Add(buttonsSizer, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, 30));
-        sizer->AddSpacer(10);
+        sizer->Add(buttonsSizer, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, PX(30)));
+        sizer->AddSpacer(PX(10));
 
         m_useTMWhenUpdating = new wxCheckBox(this, wxID_ANY, _("Consult TM when updating from sources"));
-        sizer->Add(m_useTMWhenUpdating, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM));
+        sizer->Add(m_useTMWhenUpdating, wxSizerFlags().Expand().PXBorder(wxTOP|wxBOTTOM));
 
         auto explainTxt = _("If enabled, Poedit will try to fill in new entries using your previous\n"
                             "translations stored in the translation memory. If the TM is\n"
                             "near-empty, it will not be very effective. The more translations\n"
                             "you edit and the larger the TM grows, the better it gets.");
         auto explain = new ExplanationLabel(this, explainTxt);
-        sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT, ExplanationLabel::CHECKBOX_INDENT));
+        sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT, PX(ExplanationLabel::CHECKBOX_INDENT)));
 
         auto learnMore = new LearnMoreLink(this, "http://poedit.net/trac/wiki/Doc/TranslationMemory");
-        sizer->AddSpacer(5);
-        sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT, ExplanationLabel::CHECKBOX_INDENT + LearnMoreLink::EXTRA_INDENT));
-        sizer->AddSpacer(10);
+        sizer->AddSpacer(PX(5));
+        sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT, PX(ExplanationLabel::CHECKBOX_INDENT + LearnMoreLink::EXTRA_INDENT)));
+        sizer->AddSpacer(PX(10));
 
 #ifdef __WXOSX__
         m_stats->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
@@ -547,7 +548,7 @@ public:
         // length there.
         return _("TM");
 #else
-        return _("Translation Memory");
+        return PXNotebookTab(_("Translation Memory"));
 #endif
     }
     wxBitmap GetLargeIcon() const override { return wxArtProvider::GetBitmap("Prefs-TM"); }
@@ -564,22 +565,22 @@ public:
         wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 
         wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
+        topsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
         SetSizer(topsizer);
 
         sizer->Add(new ExplanationLabel(this, _("Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated.")),
-                   wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM));
-        sizer->AddSpacer(10);
+                   wxSizerFlags().Expand().PXBorder(wxTOP|wxBOTTOM));
+        sizer->AddSpacer(PX(10));
 
         auto horizontal = new wxBoxSizer(wxHORIZONTAL);
         sizer->Add(horizontal, wxSizerFlags(1).Expand());
 
         m_list = new wxCheckListBox(this, wxID_ANY);
-        m_list->SetMinSize(wxSize(250,300));
+        m_list->SetMinSize(wxSize(PX(250),PX(300)));
 #ifdef __WXOSX__
         m_list->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
-        horizontal->Add(m_list, wxSizerFlags(1).Expand().Border(wxRIGHT));
+        horizontal->Add(m_list, wxSizerFlags(1).Expand().PXBorder(wxRIGHT));
 
         auto buttons = new wxBoxSizer(wxVERTICAL);
         horizontal->Add(buttons, wxSizerFlags().Expand());
@@ -587,9 +588,9 @@ public:
         m_new = new wxButton(this, wxID_ANY, _("New"));
         m_edit = new wxButton(this, wxID_ANY, _("Edit"));
         m_delete = new wxButton(this, wxID_ANY, _("Delete"));
-        buttons->Add(m_new, wxSizerFlags().Border(wxBOTTOM));
-        buttons->Add(m_edit, wxSizerFlags().Border(wxBOTTOM));
-        buttons->Add(m_delete, wxSizerFlags().Border(wxBOTTOM));
+        buttons->Add(m_new, wxSizerFlags().PXBorder(wxBOTTOM));
+        buttons->Add(m_edit, wxSizerFlags().PXBorder(wxBOTTOM));
+        buttons->Add(m_delete, wxSizerFlags().PXBorder(wxBOTTOM));
 
         m_new->Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnNewExtractor, this);
         m_edit->Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnEditExtractor, this);
@@ -744,7 +745,7 @@ private:
 class ExtractorsPage : public wxPreferencesPage
 {
 public:
-    wxString GetName() const override { return _("Extractors"); }
+    wxString GetName() const override { return PXNotebookTab(_("Extractors")); }
     wxBitmap GetLargeIcon() const override { return wxArtProvider::GetBitmap("Prefs-Extractors"); }
     wxWindow *CreateWindow(wxWindow *parent) override { return new ExtractorsPageWindow(parent); }
 };
@@ -759,21 +760,21 @@ public:
     UpdatesPageWindow(wxWindow *parent) : PrefsPanel(parent)
     {
         wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->SetMinSize(350, -1); // for OS X look, wouldn't fit the toolbar otherwise
+        topsizer->SetMinSize(PX(350), -1); // for OS X look, wouldn't fit the toolbar otherwise
 
         wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->Add(sizer, wxSizerFlags().Expand().DoubleBorder());
+        topsizer->Add(sizer, wxSizerFlags().Expand().PXDoubleBorderAll());
         SetSizer(topsizer);
 
         m_updates = new wxCheckBox(this, wxID_ANY, _("Automatically check for updates"));
-        sizer->Add(m_updates, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM));
+        sizer->Add(m_updates, wxSizerFlags().Expand().PXBorder(wxTOP|wxBOTTOM));
 
         m_beta = new wxCheckBox(this, wxID_ANY, _("Include beta versions"));
-        sizer->Add(m_beta, wxSizerFlags().Expand().Border(wxBOTTOM));
-        
+        sizer->Add(m_beta, wxSizerFlags().Expand().PXBorder(wxBOTTOM));
+
         sizer->Add(new ExplanationLabel(this, _("Beta versions contain the latest new features and improvements, but may be a bit less stable.")),
-                   wxSizerFlags().Expand().Border(wxLEFT, ExplanationLabel::CHECKBOX_INDENT));
-        sizer->AddSpacer(5);
+                   wxSizerFlags().Expand().Border(wxLEFT, PX(ExplanationLabel::CHECKBOX_INDENT)));
+        sizer->AddSpacer(PX(5));
 
         if (wxPreferencesEditor::ShouldApplyChangesImmediately())
             Bind(wxEVT_CHECKBOX, [=](wxCommandEvent&){ TransferDataFromWindow(); });
@@ -814,7 +815,7 @@ private:
 class UpdatesPage : public wxPreferencesPage
 {
 public:
-    wxString GetName() const override { return _("Updates"); }
+    wxString GetName() const override { return PXNotebookTab(_("Updates")); }
     wxBitmap GetLargeIcon() const override { return wxArtProvider::GetBitmap("Prefs-Updates"); }
     wxWindow *CreateWindow(wxWindow *parent) override { return new UpdatesPageWindow(parent); }
 };
@@ -829,29 +830,29 @@ public:
         wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 
         wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->Add(sizer, wxSizerFlags(1).Expand().DoubleBorder());
+        topsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
         SetSizer(topsizer);
 
-        sizer->Add(new ExplanationLabel(this, _("These settings affect internal formatting of PO files. Adjust them if you have specific requirements e.g. because of version control.")), wxSizerFlags().Expand().Border(wxBOTTOM));
+        sizer->Add(new ExplanationLabel(this, _("These settings affect internal formatting of PO files. Adjust them if you have specific requirements e.g. because of version control.")), wxSizerFlags().Expand().PXBorder(wxBOTTOM));
 
         auto crlfbox = new wxBoxSizer(wxHORIZONTAL);
-        sizer->Add(crlfbox, wxSizerFlags().Expand().Border(wxTOP));
-        crlfbox->Add(new wxStaticText(this, wxID_ANY, _("Line endings:")), wxSizerFlags().Center().BORDER_WIN(wxTOP, 1));
+        sizer->Add(crlfbox, wxSizerFlags().Expand().PXBorder(wxTOP));
+        crlfbox->Add(new wxStaticText(this, wxID_ANY, _("Line endings:")), wxSizerFlags().Center().BORDER_WIN(wxTOP, PX(1)));
         m_crlf = new wxChoice(this, wxID_ANY);
         m_crlf->Append(_("Unix (recommended)"));
         m_crlf->Append(_("Windows"));
-        crlfbox->Add(m_crlf, wxSizerFlags(1).Center().BORDER_OSX(wxLEFT, 3).BORDER_WIN(wxLEFT, 5));
+        crlfbox->Add(m_crlf, wxSizerFlags(1).Center().BORDER_OSX(wxLEFT, PX(3)).BORDER_WIN(wxLEFT, PX(5)));
 
         /// TRANSLATORS: Followed by text control for entering number; wraps text at given width
         m_wrap = new wxCheckBox(this, wxID_ANY, _("Wrap at:"));
-        crlfbox->AddSpacer(10);
-        crlfbox->Add(m_wrap, wxSizerFlags().Center().BORDER_WIN(wxTOP, 1));
-        m_wrapWidth = new wxSpinCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(50,-1));
+        crlfbox->AddSpacer(PX(10));
+        crlfbox->Add(m_wrap, wxSizerFlags().Center().BORDER_WIN(wxTOP, PX(1)));
+        m_wrapWidth = new wxSpinCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(PX(50),-1));
         m_wrapWidth->SetRange(10, 1000);
-        crlfbox->Add(m_wrapWidth, wxSizerFlags().Center().BORDER_OSX(wxLEFT, 3));
+        crlfbox->Add(m_wrapWidth, wxSizerFlags().Center().BORDER_OSX(wxLEFT, PX(3)));
 
         m_keepFmt = new wxCheckBox(this, wxID_ANY, _("Preserve formatting of existing files"));
-        sizer->Add(m_keepFmt, wxSizerFlags().Border(wxTOP));
+        sizer->Add(m_keepFmt, wxSizerFlags().PXBorder(wxTOP));
 
         Fit();
 
@@ -902,7 +903,7 @@ class AdvancedPage : public wxStockPreferencesPage
 {
 public:
     AdvancedPage() : wxStockPreferencesPage(Kind_Advanced) {}
-    wxString GetName() const override { return _("Advanced"); }
+    wxString GetName() const override { return PXNotebookTab(_("Advanced")); }
     wxWindow *CreateWindow(wxWindow *parent) override { return new AdvancedPageWindow(parent); }
 };
 

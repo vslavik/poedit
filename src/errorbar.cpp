@@ -25,6 +25,7 @@
 
 #include "errorbar.h"
 
+#include "hidpi.h"
 #include "utility.h"
 
 #include <wx/sizer.h>
@@ -53,7 +54,7 @@ ErrorBar::ErrorBar(wxWindow *parent)
     m_label->SetBackgroundColour(gs_ErrorColor);
 
     wxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
-    sizer->AddSpacer(wxSizerFlags::GetDefaultBorder());
+    sizer->AddSpacer(PXDefaultBorder);
     sizer->Add(m_label, wxSizerFlags(1).Center().Border(wxTOP | wxBOTTOM | wxRIGHT, 3));
 
     SetSizer(sizer);

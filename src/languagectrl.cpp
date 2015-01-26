@@ -25,6 +25,8 @@
 
 #include "languagectrl.h"
 
+#include "hidpi.h"
+
 #include <wx/config.h>
 #include <wx/sizer.h>
 #include <wx/stattext.h>
@@ -132,19 +134,19 @@ LanguageDialog::LanguageDialog(wxWindow *parent)
 
     auto label = new wxStaticText(this, wxID_ANY, _("Language of the translation:"));
     m_language = new LanguageCtrl(this, wxID_ANY, lang);
-    m_language->SetMinSize(wxSize(300,-1));
+    m_language->SetMinSize(wxSize(PX(300),-1));
     auto buttons = CreateButtonSizer(wxOK | wxCANCEL);
 
 #ifdef __WXOSX__
-    sizer->AddSpacer(10);
-    sizer->Add(label, wxSizerFlags().Border());
-    sizer->Add(m_language, wxSizerFlags().Expand().DoubleBorder(wxLEFT|wxRIGHT));
+    sizer->AddSpacer(PX(10));
+    sizer->Add(label, wxSizerFlags().PXBorderAll());
+    sizer->Add(m_language, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
     sizer->Add(buttons, wxSizerFlags().Expand());
 #else
-    sizer->AddSpacer(10);
-    sizer->Add(label, wxSizerFlags().DoubleBorder(wxLEFT|wxRIGHT));
-    sizer->Add(m_language, wxSizerFlags().Expand().DoubleBorder(wxLEFT|wxRIGHT));
-    sizer->Add(buttons, wxSizerFlags().Expand().Border());
+    sizer->AddSpacer(PX(10));
+    sizer->Add(label, wxSizerFlags().PXDoubleBorder(wxLEFT|wxRIGHT));
+    sizer->Add(m_language, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
+    sizer->Add(buttons, wxSizerFlags().Expand().PXBorderAll());
 #endif
 
     m_language->Bind(wxEVT_TEXT,     [=](wxCommandEvent& e){ m_validatedLang = -1; e.Skip(); });
