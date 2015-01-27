@@ -720,11 +720,26 @@ private:
     void OnDeleteExtractor(wxCommandEvent&)
     {
         int index = m_list->GetSelection();
-        m_extractors.Data.erase(m_extractors.Data.begin() + index);
-        m_list->Delete(index);
 
-        if (wxPreferencesEditor::ShouldApplyChangesImmediately())
-            TransferDataFromWindow();
+        auto title = _("Delete extractor");
+        auto main = wxString::Format(_(L"Are you sure you want to delete the “%s” extractor?"), m_extractors.Data[index].Name);
+
+        wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog(this, main, title, wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION));
+        #ifdef __WXOSX__
+        dlg->SetExtendedMessage(" "); // prevent wx from using the title stupidly
+        #endif
+        dlg->SetYesNoLabels(_("Delete"), _("Cancel"));
+
+        dlg->ShowWindowModalThenDo([this,index,dlg](int retcode){
+            if (retcode == wxID_YES)
+            {
+                m_extractors.Data.erase(m_extractors.Data.begin() + index);
+                m_list->Delete(index);
+
+                if (wxPreferencesEditor::ShouldApplyChangesImmediately())
+                    TransferDataFromWindow();
+            }
+        });
     }
 
     void OnEnableExtractor(wxCommandEvent& e)
