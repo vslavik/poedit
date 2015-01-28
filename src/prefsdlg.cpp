@@ -80,7 +80,7 @@ class PrefsPanel : public wxPanel
 {
 public:
     PrefsPanel(wxWindow *parent)
-        : wxPanel(parent), m_supressDataTransfer(0)
+        : wxPanel(parent), m_suppressDataTransfer(0)
     {
 #ifdef __WXOSX__
         // Refresh the content of prefs panels when re-opening it.
@@ -100,11 +100,11 @@ public:
 
     bool TransferDataToWindow() override
     {
-        if (m_supressDataTransfer)
+        if (m_suppressDataTransfer)
             return false;
-        m_supressDataTransfer++;
+        m_suppressDataTransfer++;
         InitValues(*wxConfig::Get());
-        m_supressDataTransfer--;
+        m_suppressDataTransfer--;
 
         // This is a "bit" of a hack: we take advantage of being in the last point before
         // showing the window and re-layout it on the off chance that some data transfered
@@ -119,11 +119,11 @@ public:
 
     bool TransferDataFromWindow() override
     {
-        if (m_supressDataTransfer)
+        if (m_suppressDataTransfer)
             return false;
-        m_supressDataTransfer++;
+        m_suppressDataTransfer++;
         SaveValues(*wxConfig::Get());
-        m_supressDataTransfer--;
+        m_suppressDataTransfer--;
         return true;
     }
 
@@ -137,7 +137,7 @@ protected:
     virtual void InitValues(const wxConfigBase& cfg) = 0;
     virtual void SaveValues(wxConfigBase& cfg) = 0;
 
-    int m_supressDataTransfer;
+    int m_suppressDataTransfer;
 };
 
 
@@ -663,9 +663,9 @@ private:
             wxID_OK
         );
 
-        m_supressDataTransfer++;
+        m_suppressDataTransfer++;
         dlg->ShowWindowModalThenDo([=](int retcode){
-            m_supressDataTransfer--;
+            m_suppressDataTransfer--;
             (void)dlg; // force use
             if (retcode == wxID_OK)
             {
@@ -684,7 +684,7 @@ private:
 
     void OnNewExtractor(wxCommandEvent&)
     {
-        m_supressDataTransfer++;
+        m_suppressDataTransfer++;
 
         Extractor info;
         m_extractors.Data.push_back(info);
@@ -702,7 +702,7 @@ private:
                 m_extractors.Data.erase(m_extractors.Data.begin() + index);
             }
 
-            m_supressDataTransfer--;
+            m_suppressDataTransfer--;
 
             if (wxPreferencesEditor::ShouldApplyChangesImmediately())
                 TransferDataFromWindow();

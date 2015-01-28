@@ -188,7 +188,7 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
     }
     else
     {
-        // supress error messages, we don't mind if the catalog is corrupted
+        // suppress error messages, we don't mind if the catalog is corrupted
         // FIXME: *do* indicate error somehow
         wxLogNull nullLog;
 
