@@ -77,19 +77,19 @@ inline ITextDocumentPtr TextDocument(wxTextCtrl *ctrl)
     return doc;
 }
 
-// Temporarily supresses recording of changes for Undo/Redo functionality
+// Temporarily suppresses recording of changes for Undo/Redo functionality
 // See http://stackoverflow.com/questions/4138981/temporaily-disabling-the-c-sharp-rich-edit-undo-buffer-while-performing-syntax-h
 // and http://forums.codeguru.com/showthread.php?325068-Realizing-Undo-Redo-functionality-for-RichEdit-Syntax-Highlighter
-class UndoSupressor
+class UndoSuppressor
 {
 public:
-    UndoSupressor(CustomizedTextCtrl *ctrl) : m_doc(TextDocument(ctrl))
+    UndoSuppressor(CustomizedTextCtrl *ctrl) : m_doc(TextDocument(ctrl))
     {
         if (m_doc)
             m_doc->Undo(tomSuspend, NULL);
     }
 
-    ~UndoSupressor()
+    ~UndoSuppressor()
     {
         if (m_doc)
             m_doc->Undo(tomResume, NULL);
@@ -381,7 +381,7 @@ void AnyTranslatableTextCtrl::DoSetValue(const wxString& value, int flags)
 void AnyTranslatableTextCtrl::UpdateRTLStyle()
 {
     wxEventBlocker block(this, wxEVT_TEXT);
-    UndoSupressor blockUndo(this);
+    UndoSuppressor blockUndo(this);
 
     PARAFORMAT2 pf;
     ::ZeroMemory(&pf, sizeof(pf));
@@ -432,7 +432,7 @@ void AnyTranslatableTextCtrl::HighlightText()
 
     wxEventBlocker block(this, wxEVT_TEXT);
   #ifdef __WXMSW__
-    UndoSupressor blockUndo(this);
+    UndoSuppressor blockUndo(this);
   #endif
 
     auto deflt = m_attrs->Default();

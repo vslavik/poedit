@@ -29,7 +29,7 @@
 #include <wx/string.h>
 #include <wx/log.h>
 
-// Capture all wx log output into a text buffer and supress normal output:
+// Capture all wx log output into a text buffer and suppress normal output:
 class LogCapture : public wxLogInterposer
 {
 public:
