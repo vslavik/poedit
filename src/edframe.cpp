@@ -807,6 +807,7 @@ PoeditFrame::~PoeditFrame()
 
     delete m_catalog;
     m_catalog = NULL;
+    m_pendingHumanEditedItem = nullptr;
 
     // shutdown the spellchecker:
     InitSpellchecker();
@@ -1277,6 +1278,7 @@ void PoeditFrame::NewFromPOT()
 
     delete m_catalog;
     m_catalog = catalog;
+    m_pendingHumanEditedItem = nullptr;
 
     m_fileName.clear();
     m_fileExistsOnDisk = false;
@@ -1342,6 +1344,7 @@ void PoeditFrame::NewFromScratch()
 
     delete m_catalog;
     m_catalog = catalog;
+    m_pendingHumanEditedItem = nullptr;
 
     m_fileName.clear();
     m_fileExistsOnDisk = false;
@@ -1678,6 +1681,12 @@ void PoeditFrame::OnListSel(wxListEvent& event)
                     (focus && focus->GetParent() == m_pluralNotebook);
 
     event.Skip();
+
+    if (m_pendingHumanEditedItem)
+    {
+        OnNewTranslationEntered(m_pendingHumanEditedItem);
+        m_pendingHumanEditedItem = nullptr;
+    }
 
     UpdateToTextCtrl(ItemChanged);
 
@@ -2046,6 +2055,8 @@ void PoeditFrame::UpdateFromTextCtrl()
     entry->SetModified(true);
     entry->SetAutomatic(false);
 
+    m_pendingHumanEditedItem = entry;
+
     m_list->RefreshSelectedItems();
 
     if ( statisticsChanged )
@@ -2060,6 +2071,13 @@ void PoeditFrame::UpdateFromTextCtrl()
         UpdateTitle();
     }
 }
+
+
+void PoeditFrame::OnNewTranslationEntered(CatalogItem *item)
+{
+    (void)item;
+}
+
 
 namespace
 {
@@ -2091,6 +2109,7 @@ void SetTranslationValue(TranslationTextCtrl *txt, const wxString& value, int fl
 
 void PoeditFrame::UpdateToTextCtrl(int flags)
 {
+    m_pendingHumanEditedItem = nullptr;
     CatalogItem *entry = GetCurrentItem();
     if ( !entry )
         return;
@@ -2198,6 +2217,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
 
     delete m_catalog;
     m_catalog = cat;
+    m_pendingHumanEditedItem = nullptr;
 
     if (m_catalog->empty())
     {
@@ -2362,6 +2382,7 @@ void PoeditFrame::RefreshControls(int flags)
         UpdateTitle();
         delete m_catalog;
         m_catalog = nullptr;
+        m_pendingHumanEditedItem = nullptr;
         NotifyCatalogChanged(nullptr);
         return;
     }
@@ -3481,6 +3502,9 @@ void PoeditFrame::OnDoneAndNext(wxCommandEvent&)
             UpdateTitle();
             UpdateStatusBar();
         }
+
+        // do additional processing of finished translations, such as adding it to the TM:
+        m_pendingHumanEditedItem = item;
     }
 
     // like "next unfinished", but wraps

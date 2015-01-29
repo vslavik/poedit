@@ -312,6 +312,8 @@ private:
 #endif
         void NoteAsRecentFile();
 
+        void OnNewTranslationEntered(CatalogItem *item);
+
         DECLARE_EVENT_TABLE()
 
     private:
@@ -320,6 +322,8 @@ private:
         bool m_fileExistsOnDisk;
 
         std::unique_ptr<MainToolbar> m_toolbar;
+
+        CatalogItem *m_pendingHumanEditedItem;
 
         wxPanel *m_bottomPanel;
         wxSplitterWindow *m_splitter;
