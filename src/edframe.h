@@ -257,6 +257,7 @@ private:
         void OnSortByTranslation(wxCommandEvent&);
         void OnSortGroupByContext(wxCommandEvent&);
         void OnSortUntranslatedFirst(wxCommandEvent&);
+        void OnSortErrorsFirst(wxCommandEvent&);
 
         void OnShowHideSidebar(wxCommandEvent& event);
         void OnUpdateShowHideSidebar(wxUpdateUIEvent& event);

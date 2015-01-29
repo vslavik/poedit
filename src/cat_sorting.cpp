@@ -38,6 +38,7 @@
     wxString by = wxConfig::Get()->Read("/sort_by", "file-order");
     long ctxt = wxConfig::Get()->Read("/sort_group_by_context", 0L);
     long untrans = wxConfig::Get()->Read("/sort_untrans_first", 0L);
+    long errors = wxConfig::Get()->Read("/sort_errors_first", 1L);
 
     if ( by == "source" )
         order.by = By_Source;
@@ -48,6 +49,7 @@
 
     order.groupByContext = (ctxt != 0);
     order.untransFirst = (untrans != 0);
+    order.errorsFirst = (errors != 0);
 
     return order;
 }
@@ -72,6 +74,7 @@ void SortOrder::Save()
     wxConfig::Get()->Write("/sort_by", bystr);
     wxConfig::Get()->Write("/sort_group_by_context", groupByContext);
     wxConfig::Get()->Write("/sort_untrans_first", untransFirst);
+    wxConfig::Get()->Write("/sort_errors_first", errorsFirst);
 }
 
 
@@ -113,13 +116,16 @@ bool CatalogItemsComparator::operator()(int i, int j) const
     const CatalogItem& a = Item(i);
     const CatalogItem& b = Item(j);
 
-    if ( m_order.untransFirst )
+    if ( m_order.errorsFirst )
     {
         if ( a.GetValidity() == CatalogItem::Val_Invalid && b.GetValidity() != CatalogItem::Val_Invalid )
             return true;
         else if ( a.GetValidity() != CatalogItem::Val_Invalid && b.GetValidity() == CatalogItem::Val_Invalid )
             return false;
+    }
 
+    if ( m_order.untransFirst )
+    {
         if ( !a.IsTranslated() && b.IsTranslated() )
             return true;
         else if ( a.IsTranslated() && !b.IsTranslated() )

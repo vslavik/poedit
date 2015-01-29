@@ -298,6 +298,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("sort_by_translation"), PoeditFrame::OnSortByTranslation)
    EVT_MENU           (XRCID("sort_group_by_context"), PoeditFrame::OnSortGroupByContext)
    EVT_MENU           (XRCID("sort_untrans_first"), PoeditFrame::OnSortUntranslatedFirst)
+   EVT_MENU           (XRCID("sort_errors_first"), PoeditFrame::OnSortErrorsFirst)
    EVT_MENU           (XRCID("show_sidebar"),      PoeditFrame::OnShowHideSidebar)
    EVT_UPDATE_UI      (XRCID("show_sidebar"),      PoeditFrame::OnUpdateShowHideSidebar)
    EVT_MENU           (XRCID("menu_copy_from_src"), PoeditFrame::OnCopyFromSource)
@@ -704,6 +705,7 @@ wxWindow* PoeditFrame::CreateContentViewPO()
     }
     GetMenuBar()->Check(XRCID("sort_group_by_context"), m_list->sortOrder.groupByContext);
     GetMenuBar()->Check(XRCID("sort_untrans_first"), m_list->sortOrder.untransFirst);
+    GetMenuBar()->Check(XRCID("sort_errors_first"), m_list->sortOrder.errorsFirst);
 
     // Call splitter splitting later, when the window is layed out, otherwise
     // the sizes would get truncated immediately:
@@ -2507,6 +2509,7 @@ void PoeditFrame::UpdateMenu()
     menubar->Enable(XRCID("sort_by_translation"), editable);
     menubar->Enable(XRCID("sort_group_by_context"), editable);
     menubar->Enable(XRCID("sort_untrans_first"), editable);
+    menubar->Enable(XRCID("sort_errors_first"), editable);
 
     if (m_textTrans)
         m_textTrans->Enable(editable);
@@ -3292,6 +3295,12 @@ void PoeditFrame::OnSortGroupByContext(wxCommandEvent& event)
 void PoeditFrame::OnSortUntranslatedFirst(wxCommandEvent& event)
 {
     m_list->sortOrder.untransFirst = event.IsChecked();
+    m_list->Sort();
+}
+
+void PoeditFrame::OnSortErrorsFirst(wxCommandEvent& event)
+{
+    m_list->sortOrder.errorsFirst = event.IsChecked();
     m_list->Sort();
 }
 

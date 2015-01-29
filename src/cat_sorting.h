@@ -41,7 +41,7 @@ struct SortOrder
         By_Translation
     };
 
-    SortOrder() : by(By_FileOrder), groupByContext(false), untransFirst(false) {}
+    SortOrder() : by(By_FileOrder), groupByContext(false), untransFirst(false), errorsFirst(true) {}
 
     /// Loads default sort order from config settings
     static SortOrder Default();
@@ -57,6 +57,9 @@ struct SortOrder
 
     /// Do untranslated entries go first?
     bool untransFirst;
+
+    /// Do entries with errors go first?
+    bool errorsFirst;
 };
 
 /**
