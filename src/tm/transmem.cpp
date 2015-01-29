@@ -96,6 +96,12 @@ public:
           m_analyzer(newLucene<StandardAnalyzer>(LuceneVersion::LUCENE_CURRENT))
     {}
 
+    ~TranslationMemoryImpl()
+    {
+        if (m_reader)
+            m_reader->close();
+    }
+
     SuggestionsList Search(const Language& lang,
                            const std::wstring& source);
 
@@ -140,10 +146,20 @@ std::wstring TranslationMemoryImpl::GetDatabaseDir()
 IndexReaderPtr TranslationMemoryImpl::Reader()
 {
     std::lock_guard<std::mutex> guard(m_readerMutex);
-    if ( m_reader )
-        m_reader = m_reader->reopen();
+
+    if (m_reader)
+    {
+        auto newReader = m_reader->reopen();
+        if (m_reader != newReader)
+        {
+            m_reader->close();
+            m_reader = newReader;
+        }
+    }
     else
+    {
         m_reader = IndexReader::open(newLucene<DirectoryType>(m_dir), true);
+    }
     return m_reader;
 }
 
