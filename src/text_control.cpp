@@ -143,12 +143,20 @@ private:
     ITextDocumentPtr m_doc;
 };
 
-#else
+#elif defined(__WXGTK__)
 
 class UndoGroup
 {
 public:
-    UndoGroup(TranslationTextCtrl*) {}
+    UndoGroup(TranslationTextCtrl *ctrl) : m_ctrl(ctrl) {}
+
+    ~UndoGroup()
+    {
+        m_ctrl->SaveSnapshot();
+    }
+
+private:
+    TranslationTextCtrl *m_ctrl;
 };
 
 #endif
@@ -221,16 +229,21 @@ CustomizedTextCtrl::CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long 
     padding.SetRightIndent(5);
     SetDefaultStyle(padding);
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__) || defined(__WXGTK__)
     Bind(wxEVT_TEXT_COPY, &CustomizedTextCtrl::OnCopy, this);
     Bind(wxEVT_TEXT_CUT, &CustomizedTextCtrl::OnCut, this);
     Bind(wxEVT_TEXT_PASTE, &CustomizedTextCtrl::OnPaste, this);
+#endif
+
+#ifdef __WXGTK__
+    if (!(style & wxTE_READONLY))
+        Bind(wxEVT_TEXT, &CustomizedTextCtrl::OnText, this);
 #endif
 }
 
 #endif // !__WXOSX__
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__) || defined(__WXGTK__)
 // We use wxTE_RICH2 style, which allows for pasting rich-formatted
 // text into the control. We want to allow only plain text (all the
 // formatting done is Poedit's syntax highlighting), so we need to
@@ -239,6 +252,9 @@ CustomizedTextCtrl::CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long 
 // data when copying from the same text control to itself after its
 // content was programatically changed:
 // https://sourceforge.net/tracker/index.php?func=detail&aid=1910234&group_id=27043&atid=389153
+
+// Note that GTK has a very similar problem with pasting rich text,
+// which is why this code is enabled for GTK too.
 
 bool CustomizedTextCtrl::DoCopy()
 {
@@ -283,8 +299,78 @@ void CustomizedTextCtrl::OnPaste(wxClipboardTextEvent& event)
     GetSelection(&from, &to);
     Replace(from, to, d.GetText());
 }
-#endif // __WXMSW__
+#endif // __WXMSW__/__WXGTK__
 
+
+#ifdef __WXGTK__
+void CustomizedTextCtrl::SaveSnapshot()
+{
+    // if we saved the snapshot in DoSetValue, OnText might still call this function again
+    // therefore, we make sure to filter out duplicate entries
+    if (m_historyIndex && m_history[m_historyIndex - 1].text == GetValue())
+        return;
+
+    m_history.resize(m_historyIndex); // truncate the list
+    m_history.push_back({GetValue(), GetInsertionPoint()});
+    m_historyIndex++;
+}
+
+void CustomizedTextCtrl::DoSetValue(const wxString& value, int flags)
+{
+    // SetValue_SendEvent is set if this function was called from SetValue
+    // SetValue_SendEvent is NOT set if this function was called from ChangeValue
+    if (flags & SetValue_SendEvent)
+    {
+        // clear the history
+        // m_history itself will be cleared when SaveSnapshot is called
+        m_historyIndex = 0;
+
+        // set the new value
+        wxTextCtrl::DoSetValue(value, flags);
+
+        // make sure to save a snapshot even if EVT_TEXT is blocked
+        SaveSnapshot();
+    }
+    else
+    {
+        // just set the new value, don't save a snapshot
+        // this is what happens when you click Undo or Redo
+        wxTextCtrl::DoSetValue(value, flags);
+    }
+}
+
+void CustomizedTextCtrl::OnText(wxCommandEvent& event)
+{
+    SaveSnapshot();
+    event.Skip();
+}
+
+bool CustomizedTextCtrl::CanUndo() const
+{
+    return (m_historyIndex > 1);
+}
+
+bool CustomizedTextCtrl::CanRedo() const
+{
+    return (m_historyIndex < m_history.size());
+}
+
+void CustomizedTextCtrl::Undo()
+{
+    // ChangeValue calls AnyTranslatableTextCtrl::DoSetValue, which calls CustomizedTextCtrl::DoSetValue
+    ChangeValue(m_history[m_historyIndex - 2].text);
+    SetInsertionPoint(m_history[m_historyIndex - 2].insertionPoint);
+    m_historyIndex--;
+}
+
+void CustomizedTextCtrl::Redo()
+{
+    // ChangeValue calls AnyTranslatableTextCtrl::DoSetValue, which calls CustomizedTextCtrl::DoSetValue
+    ChangeValue(m_history[m_historyIndex].text);
+    SetInsertionPoint(m_history[m_historyIndex].insertionPoint);
+    m_historyIndex++;
+}
+#endif // __WXGTK__
 
 
 class AnyTranslatableTextCtrl::Attributes
