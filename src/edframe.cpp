@@ -2075,7 +2075,24 @@ void PoeditFrame::UpdateFromTextCtrl()
 
 void PoeditFrame::OnNewTranslationEntered(CatalogItem *item)
 {
-    (void)item;
+    if (wxConfig::Get()->ReadBool("use_tm", true))
+    {
+        // TODO: do this on secondary thread from a pool:
+        try
+        {
+            auto tm = TranslationMemory::Get().GetWriter();
+            tm->Insert(m_catalog->GetLanguage(), *item);
+            // Note: do *not* call tm->Commit() here, because Lucene commit is
+            // expensive. Instead, wait until the file is saved with committing
+            // the changes. This way TM updates are available immediately for use
+            // in futher translations within the file, but per-item updates
+            // remain inexpensive.
+        }
+        catch (const Exception&)
+        {
+            // ignore failures here, they'll become apparent when saving the file
+        }
+    }
 }
 
 

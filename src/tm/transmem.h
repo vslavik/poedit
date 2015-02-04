@@ -33,6 +33,7 @@
 #include "suggestions.h"
 
 class Catalog;
+class CatalogItem;
 class TranslationMemoryImpl;
 
 /** 
@@ -96,6 +97,14 @@ public:
         virtual void Insert(const Language& lang,
                             const std::wstring& source,
                             const std::wstring& trans) = 0;
+
+        /**
+            Inserts a single catalog item.
+
+            @note
+            Not everything is included: fuzzy or untranslated entries are skipped.
+         */
+        virtual void Insert(const Language& lang, const CatalogItem& item) = 0;
 
         /**
             Inserts entire content of the catalog.

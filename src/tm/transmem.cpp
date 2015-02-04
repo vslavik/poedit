@@ -433,6 +433,26 @@ public:
         CATCH_AND_RETHROW_EXCEPTION
     }
 
+    virtual void Insert(const Language& lang, const CatalogItem& item)
+    {
+        if (!lang.IsValid())
+            return;
+
+        // ignore translations with errors in them
+        if (item.GetValidity() == CatalogItem::Val_Invalid)
+            return;
+
+        // can't handle plurals yet (TODO?)
+        if (item.HasPlural())
+            return;
+
+        // ignore untranslated or unfinished translations
+        if (item.IsFuzzy() || !item.IsTranslated())
+            return;
+
+        Insert(lang, item.GetString().ToStdWstring(), item.GetTranslation().ToStdWstring());
+    }
+
     virtual void Insert(const Catalog &cat)
     {
         auto lang = cat.GetLanguage();
@@ -442,25 +462,12 @@ public:
         int cnt = cat.GetCount();
         for (int i = 0; i < cnt; i++)
         {
-            const CatalogItem& item = cat[i];
-
-            // ignore translations with errors in them
-            if (item.GetValidity() == CatalogItem::Val_Invalid)
-                continue;
-
-            // can't handle plurals yet (TODO?)
-            if (item.HasPlural())
-                continue;
-
-            // ignore untranslated or unfinished translations
-            if (item.IsFuzzy() || !item.IsTranslated())
-                continue;
-
             // Note that dt.IsModified() is intentionally not checked - we
             // want to save old entries in the TM too, so that we harvest as
             // much useful translations as we can.
 
-            Insert(lang, item.GetString().ToStdWstring(), item.GetTranslation().ToStdWstring());
+            const CatalogItem& item = cat[i];
+            Insert(lang, item);
         }
     }
 
