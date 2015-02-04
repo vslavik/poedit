@@ -187,7 +187,7 @@ void DoMigrate(const wxString& path, const wxString& languages)
     ExpatContext ctxt;
     ctxt.progress = &progress;
     ctxt.count = 0;
-    ctxt.tm = TranslationMemory::Get().CreateWriter();
+    ctxt.tm = TranslationMemory::Get().GetWriter();
 
     XML_Parser parser = XML_ParserCreate(NULL);
     XML_SetUserData(parser, &ctxt);

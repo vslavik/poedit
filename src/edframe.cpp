@@ -2578,7 +2578,7 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
         tmUpdateThread = std::async(std::launch::async, [=](){
             try
             {
-                auto tm = TranslationMemory::Get().CreateWriter();
+                auto tm = TranslationMemory::Get().GetWriter();
                 tm->Insert(*m_catalog);
                 tm->Commit();
             }

@@ -69,8 +69,16 @@ public:
     /**
         Performs updates to the translation memory.
         
-        You must call Commit() for them to be written.
-    
+        Call Commit() to commit changes since the last commit to disk.
+        Call Rollback() to undo all changes since the last commit.
+        
+        Committing shouldn't be done too often, as it is expensive.
+        The writer is shared and can be used by multiple threads.
+        
+        Note that closing the writer on shutdown, if it has uncommitted
+        changes, will result in them being committed. You must to explicitly
+        Rollback() them if you don't want that behavior.
+
         All methods may throw Exception.
       */
     class Writer
@@ -103,10 +111,13 @@ public:
 
         /// Commits changes written so far.
         virtual void Commit() = 0;
+
+        /// Rolls back changes written so far.
+        virtual void Rollback() = 0;
     };
 
-    /// Creates a writer for updating the TM
-    std::shared_ptr<Writer> CreateWriter();
+    /// Returns the shared writer instance
+    std::shared_ptr<Writer> GetWriter();
 
     /// Returns statistics about the TM
     void GetStats(long& numDocs, long& fileSize);
