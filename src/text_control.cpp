@@ -148,11 +148,14 @@ private:
 class UndoGroup
 {
 public:
-    UndoGroup(TranslationTextCtrl *ctrl) : m_ctrl(ctrl) {}
+    UndoGroup(TranslationTextCtrl *ctrl) : m_ctrl(ctrl)
+    {
+        m_ctrl->BeginUndoGrouping();
+    }
 
     ~UndoGroup()
     {
-        m_ctrl->SaveSnapshot();
+        m_ctrl->EndUndoGrouping();
     }
 
 private:
@@ -236,6 +239,7 @@ CustomizedTextCtrl::CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long 
 #endif
 
 #ifdef __WXGTK__
+    m_historyLocks = 0;
     if (!(style & wxTE_READONLY))
         Bind(wxEVT_TEXT, &CustomizedTextCtrl::OnText, this);
 #endif
@@ -303,6 +307,17 @@ void CustomizedTextCtrl::OnPaste(wxClipboardTextEvent& event)
 
 
 #ifdef __WXGTK__
+void CustomizedTextCtrl::BeginUndoGrouping()
+{
+    m_historyLocks++;
+}
+
+void CustomizedTextCtrl::EndUndoGrouping()
+{
+    if (--m_historyLocks == 0)
+        SaveSnapshot();
+}
+
 void CustomizedTextCtrl::SaveSnapshot()
 {
     // if we saved the snapshot in DoSetValue, OnText might still call this function again

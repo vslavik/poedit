@@ -49,6 +49,9 @@ public:
     CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long style = 0);
 
 #ifdef __WXGTK__
+    // Undo/redo implementation:
+    void BeginUndoGrouping();
+    void EndUndoGrouping();
     void SaveSnapshot();
 #endif
 
@@ -81,6 +84,7 @@ protected:
 
     std::vector<Snapshot> m_history;
     size_t m_historyIndex; // where in the vector to insert the next snapshot
+    int m_historyLocks;
 #endif // __WXGTK__
 };
 
