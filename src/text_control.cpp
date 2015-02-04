@@ -276,12 +276,12 @@ bool CustomizedTextCtrl::DoCopy()
     return true;
 }
 
-void CustomizedTextCtrl::OnCopy(wxClipboardTextEvent& event)
+void CustomizedTextCtrl::OnCopy(wxClipboardTextEvent&)
 {
     DoCopy();
 }
 
-void CustomizedTextCtrl::OnCut(wxClipboardTextEvent& event)
+void CustomizedTextCtrl::OnCut(wxClipboardTextEvent&)
 {
     if ( !DoCopy() )
         return;
@@ -291,7 +291,7 @@ void CustomizedTextCtrl::OnCut(wxClipboardTextEvent& event)
     Remove(from, to);
 }
 
-void CustomizedTextCtrl::OnPaste(wxClipboardTextEvent& event)
+void CustomizedTextCtrl::OnPaste(wxClipboardTextEvent&)
 {
     wxClipboardLocker lock;
     wxCHECK_RET( !!lock, "failed to lock clipboard" );
