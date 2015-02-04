@@ -134,6 +134,8 @@ class PoeditApp : public wxApp
 #endif
 
         std::unique_ptr<PoeditPreferencesEditor> m_preferences;
+
+        std::unique_ptr<wxLocale> m_locale;
 };
 
 DECLARE_APP(PoeditApp);

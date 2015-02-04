@@ -3443,7 +3443,9 @@ bool Pred_AnyItem(const CatalogItem&)
 
 bool Pred_UnfinishedItem(const CatalogItem& item)
 {
-    return !item.IsTranslated() || item.IsFuzzy();
+    return !item.IsTranslated() ||
+           item.IsFuzzy() ||
+           item.GetValidity() == CatalogItem::Val_Invalid;
 }
 
 } // anonymous namespace
