@@ -489,7 +489,7 @@ private:
                                       (int)paths.size() * 2 + 1,
                                       this,
                                       wxPD_APP_MODAL|wxPD_AUTO_HIDE|wxPD_CAN_ABORT);
-            auto tm = TranslationMemory::Get().CreateWriter();
+            auto tm = TranslationMemory::Get().GetWriter();
             int step = 0;
             for (size_t i = 0; i < paths.size(); i++)
             {
@@ -520,7 +520,7 @@ private:
         dlg->ShowWindowModalThenDo([this,dlg](int retcode){
             if (retcode == wxID_YES) {
                 wxBusyCursor bcur;
-                auto tm = TranslationMemory::Get().CreateWriter();
+                auto tm = TranslationMemory::Get().GetWriter();
                 tm->DeleteAll();
                 tm->Commit();
                 UpdateStats();

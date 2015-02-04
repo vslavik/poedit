@@ -91,28 +91,35 @@ public:
     typedef MMapDirectory DirectoryType;
 #endif
 
-    TranslationMemoryImpl()
-        : m_dir(GetDatabaseDir()),
-          m_analyzer(newLucene<StandardAnalyzer>(LuceneVersion::LUCENE_CURRENT))
-    {}
+    TranslationMemoryImpl() { Init(); }
+
+    ~TranslationMemoryImpl()
+    {
+        m_reader->close();
+        m_writer->close();
+    }
 
     SuggestionsList Search(const Language& lang,
                            const std::wstring& source);
 
-    std::shared_ptr<TranslationMemory::Writer> CreateWriter();
+    std::shared_ptr<TranslationMemory::Writer> GetWriter() { return m_writerAPI; }
 
     void GetStats(long& numDocs, long& fileSize);
 
 private:
+    void Init();
+
     static std::wstring GetDatabaseDir();
     IndexReaderPtr Reader();
     SearcherPtr Searcher();
 
 private:
-    std::wstring     m_dir;
     AnalyzerPtr      m_analyzer;
+    IndexWriterPtr   m_writer;
     IndexReaderPtr   m_reader;
     std::mutex       m_readerMutex;
+
+    std::shared_ptr<TranslationMemory::Writer> m_writerAPI;
 };
 
 
@@ -140,10 +147,14 @@ std::wstring TranslationMemoryImpl::GetDatabaseDir()
 IndexReaderPtr TranslationMemoryImpl::Reader()
 {
     std::lock_guard<std::mutex> guard(m_readerMutex);
-    if ( m_reader )
-        m_reader = m_reader->reopen();
-    else
-        m_reader = IndexReader::open(newLucene<DirectoryType>(m_dir), true);
+
+    auto newReader = m_reader->reopen();
+    if (m_reader != newReader)
+    {
+        m_reader->close();
+        m_reader = newReader;
+    }
+
     return m_reader;
 }
 
@@ -357,24 +368,24 @@ void TranslationMemoryImpl::GetStats(long& numDocs, long& fileSize)
 class TranslationMemoryWriterImpl : public TranslationMemory::Writer
 {
 public:
-    TranslationMemoryWriterImpl(DirectoryPtr dir, AnalyzerPtr analyzer)
-    {
-        m_writer = newLucene<IndexWriter>(dir, analyzer, IndexWriter::MaxFieldLengthLIMITED);
-        m_writer->setMergeScheduler(newLucene<SerialMergeScheduler>());
-    }
+    TranslationMemoryWriterImpl(IndexWriterPtr writer) : m_writer(writer) {}
 
-    ~TranslationMemoryWriterImpl()
-    {
-        if (m_writer)
-            m_writer->rollback();
-    }
+    ~TranslationMemoryWriterImpl() {}
 
     virtual void Commit()
     {
         try
         {
-            m_writer->close();
-            m_writer.reset();
+            m_writer->commit();
+        }
+        CATCH_AND_RETHROW_EXCEPTION
+    }
+
+    virtual void Rollback()
+    {
+        try
+        {
+            m_writer->rollback();
         }
         CATCH_AND_RETHROW_EXCEPTION
     }
@@ -422,6 +433,26 @@ public:
         CATCH_AND_RETHROW_EXCEPTION
     }
 
+    virtual void Insert(const Language& lang, const CatalogItem& item)
+    {
+        if (!lang.IsValid())
+            return;
+
+        // ignore translations with errors in them
+        if (item.GetValidity() == CatalogItem::Val_Invalid)
+            return;
+
+        // can't handle plurals yet (TODO?)
+        if (item.HasPlural())
+            return;
+
+        // ignore untranslated or unfinished translations
+        if (item.IsFuzzy() || !item.IsTranslated())
+            return;
+
+        Insert(lang, item.GetString().ToStdWstring(), item.GetTranslation().ToStdWstring());
+    }
+
     virtual void Insert(const Catalog &cat)
     {
         auto lang = cat.GetLanguage();
@@ -431,25 +462,12 @@ public:
         int cnt = cat.GetCount();
         for (int i = 0; i < cnt; i++)
         {
-            const CatalogItem& item = cat[i];
-
-            // ignore translations with errors in them
-            if (item.GetValidity() == CatalogItem::Val_Invalid)
-                continue;
-
-            // can't handle plurals yet (TODO?)
-            if (item.HasPlural())
-                continue;
-
-            // ignore untranslated or unfinished translations
-            if (item.IsFuzzy() || !item.IsTranslated())
-                continue;
-
             // Note that dt.IsModified() is intentionally not checked - we
             // want to save old entries in the TM too, so that we harvest as
             // much useful translations as we can.
 
-            Insert(lang, item.GetString().ToStdWstring(), item.GetTranslation().ToStdWstring());
+            const CatalogItem& item = cat[i];
+            Insert(lang, item);
         }
     }
 
@@ -466,11 +484,21 @@ private:
     IndexWriterPtr m_writer;
 };
 
-std::shared_ptr<TranslationMemory::Writer> TranslationMemoryImpl::CreateWriter()
+
+void TranslationMemoryImpl::Init()
 {
     try
     {
-        return std::make_shared<TranslationMemoryWriterImpl>(newLucene<DirectoryType>(m_dir), m_analyzer);
+        auto dir = newLucene<DirectoryType>(GetDatabaseDir());
+        m_analyzer = newLucene<StandardAnalyzer>(LuceneVersion::LUCENE_CURRENT);
+
+        m_writer = newLucene<IndexWriter>(dir, m_analyzer, IndexWriter::MaxFieldLengthLIMITED);
+        m_writer->setMergeScheduler(newLucene<SerialMergeScheduler>());
+
+        // get the associated realtime reader:
+        m_reader = m_writer->getReader();
+
+        m_writerAPI = std::make_shared<TranslationMemoryWriterImpl>(m_writer);
     }
     CATCH_AND_RETHROW_EXCEPTION
 }
@@ -534,9 +562,9 @@ void TranslationMemory::SuggestTranslation(const Language& lang,
     }
 }
 
-std::shared_ptr<TranslationMemory::Writer> TranslationMemory::CreateWriter()
+std::shared_ptr<TranslationMemory::Writer> TranslationMemory::GetWriter()
 {
-    return m_impl->CreateWriter();
+    return m_impl->GetWriter();
 }
 
 void TranslationMemory::GetStats(long& numDocs, long& fileSize)

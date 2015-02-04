@@ -809,6 +809,7 @@ PoeditFrame::~PoeditFrame()
 
     delete m_catalog;
     m_catalog = NULL;
+    m_pendingHumanEditedItem = nullptr;
 
     // shutdown the spellchecker:
     InitSpellchecker();
@@ -1279,6 +1280,7 @@ void PoeditFrame::NewFromPOT()
 
     delete m_catalog;
     m_catalog = catalog;
+    m_pendingHumanEditedItem = nullptr;
 
     m_fileName.clear();
     m_fileExistsOnDisk = false;
@@ -1344,6 +1346,7 @@ void PoeditFrame::NewFromScratch()
 
     delete m_catalog;
     m_catalog = catalog;
+    m_pendingHumanEditedItem = nullptr;
 
     m_fileName.clear();
     m_fileExistsOnDisk = false;
@@ -1680,6 +1683,12 @@ void PoeditFrame::OnListSel(wxListEvent& event)
                     (focus && focus->GetParent() == m_pluralNotebook);
 
     event.Skip();
+
+    if (m_pendingHumanEditedItem)
+    {
+        OnNewTranslationEntered(m_pendingHumanEditedItem);
+        m_pendingHumanEditedItem = nullptr;
+    }
 
     UpdateToTextCtrl(ItemChanged);
 
@@ -2048,6 +2057,8 @@ void PoeditFrame::UpdateFromTextCtrl()
     entry->SetModified(true);
     entry->SetAutomatic(false);
 
+    m_pendingHumanEditedItem = entry;
+
     m_list->RefreshSelectedItems();
 
     if ( statisticsChanged )
@@ -2062,6 +2073,30 @@ void PoeditFrame::UpdateFromTextCtrl()
         UpdateTitle();
     }
 }
+
+
+void PoeditFrame::OnNewTranslationEntered(CatalogItem *item)
+{
+    if (wxConfig::Get()->ReadBool("use_tm", true))
+    {
+        // TODO: do this on secondary thread from a pool:
+        try
+        {
+            auto tm = TranslationMemory::Get().GetWriter();
+            tm->Insert(m_catalog->GetLanguage(), *item);
+            // Note: do *not* call tm->Commit() here, because Lucene commit is
+            // expensive. Instead, wait until the file is saved with committing
+            // the changes. This way TM updates are available immediately for use
+            // in futher translations within the file, but per-item updates
+            // remain inexpensive.
+        }
+        catch (const Exception&)
+        {
+            // ignore failures here, they'll become apparent when saving the file
+        }
+    }
+}
+
 
 namespace
 {
@@ -2093,6 +2128,7 @@ void SetTranslationValue(TranslationTextCtrl *txt, const wxString& value, int fl
 
 void PoeditFrame::UpdateToTextCtrl(int flags)
 {
+    m_pendingHumanEditedItem = nullptr;
     CatalogItem *entry = GetCurrentItem();
     if ( !entry )
         return;
@@ -2200,6 +2236,7 @@ void PoeditFrame::ReadCatalog(Catalog *cat)
 
     delete m_catalog;
     m_catalog = cat;
+    m_pendingHumanEditedItem = nullptr;
 
     if (m_catalog->empty())
     {
@@ -2364,6 +2401,7 @@ void PoeditFrame::RefreshControls(int flags)
         UpdateTitle();
         delete m_catalog;
         m_catalog = nullptr;
+        m_pendingHumanEditedItem = nullptr;
         NotifyCatalogChanged(nullptr);
         return;
     }
@@ -2560,7 +2598,7 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
         tmUpdateThread = std::async(std::launch::async, [=](){
             try
             {
-                auto tm = TranslationMemory::Get().CreateWriter();
+                auto tm = TranslationMemory::Get().GetWriter();
                 tm->Insert(*m_catalog);
                 tm->Commit();
             }
@@ -3490,6 +3528,9 @@ void PoeditFrame::OnDoneAndNext(wxCommandEvent&)
             UpdateTitle();
             UpdateStatusBar();
         }
+
+        // do additional processing of finished translations, such as adding it to the TM:
+        m_pendingHumanEditedItem = item;
     }
 
     // like "next unfinished", but wraps
