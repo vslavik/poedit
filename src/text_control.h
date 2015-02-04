@@ -28,6 +28,7 @@
 
 #include <wx/textctrl.h>
 #include <memory>
+#include <vector>
 
 #include "syntaxhighlighter.h"
 
@@ -38,6 +39,7 @@
     - Allow setting text programatically, without user-input processing (OS X)
     - Disable user-usable rich text support
     - Stylistic tweaks (padding and such)
+    - Generic undo/redo implementation for GTK
  */
 class CustomizedTextCtrl : public wxTextCtrl
 {
@@ -46,18 +48,44 @@ public:
 
     CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long style = 0);
 
+#ifdef __WXGTK__
+    // Undo/redo implementation:
+    void BeginUndoGrouping();
+    void EndUndoGrouping();
+    void SaveSnapshot();
+#endif
+
 protected:
 #ifdef __WXOSX__
     void DoSetValue(const wxString& value, int flags) override;
     wxString DoGetValue() const override;
 #endif
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__) || defined(__WXGTK__)
     bool DoCopy();
     void OnCopy(wxClipboardTextEvent& event);
     void OnCut(wxClipboardTextEvent& event);
     void OnPaste(wxClipboardTextEvent& event);
-#endif // __WXMSW__
+#endif // __WXMSW__/__WXGTK__
+
+#ifdef __WXGTK__
+    struct Snapshot
+    {
+        wxString text;
+        long insertionPoint;
+    };
+
+    void DoSetValue(const wxString& value, int flags) override;
+    void OnText(wxCommandEvent& event);
+    bool CanUndo() const override;
+    bool CanRedo() const override;
+    void Undo() override;
+    void Redo() override;
+
+    std::vector<Snapshot> m_history;
+    size_t m_historyIndex; // where in the vector to insert the next snapshot
+    int m_historyLocks;
+#endif // __WXGTK__
 };
 
 
