@@ -130,6 +130,8 @@ public:
      */
     static Language TryGuessFromFilename(const wxString& filename);
 
+    /// Returns object for English language
+    static Language English() { return Language("en"); }
 
     /**
         Checks if @a s has the form of language code.

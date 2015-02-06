@@ -612,7 +612,10 @@ class Catalog
          */
         bool IsOk() const { return m_isOk; }
 
-        /** Returns catalog's language (may be invalid). */
+        /// Returns catalog's source language (may be invalid, but usually English).
+        Language GetSourceLanguage() const { return m_sourceLanguage; }
+
+        /// Returns catalog's language (may be invalid).
         Language GetLanguage() const { return m_header.Lang; }
 
         /// Adds entry to the catalog (the catalog will take ownership of
@@ -691,6 +694,7 @@ class Catalog
         bool m_isOk;
         wxString m_fileName;
         HeaderData m_header;
+        Language m_sourceLanguage;
         wxTextFileType m_fileCRLF;
         int m_fileWrappingWidth;
 

@@ -1103,6 +1103,7 @@ bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
 
 Catalog::Catalog()
 {
+    m_sourceLanguage = Language::English();
     m_fileCRLF = wxTextFileType_None;
     m_fileWrappingWidth = DEFAULT_WRAPPING;
 
@@ -1192,6 +1193,7 @@ bool Catalog::Load(const wxString& po_file, int flags)
 
     Clear();
     m_isOk = false;
+    m_sourceLanguage = Language::English();
     m_fileName = po_file;
     m_header.BasePath = wxEmptyString;
 
