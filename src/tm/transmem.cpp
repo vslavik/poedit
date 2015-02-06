@@ -398,7 +398,7 @@ public:
     void Insert(const Language& srclang, const Language& lang,
                 const std::wstring& source, const std::wstring& trans) override
     {
-        if (!lang.IsValid() || !srclang.IsValid())
+        if (!lang.IsValid() || !srclang.IsValid() || lang == srclang)
             return;
 
         // Compute unique ID for the translation:

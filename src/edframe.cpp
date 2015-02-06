@@ -2252,8 +2252,10 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
     UpdateTitle();
     UpdateTextLanguage();
 
-    Language language = m_catalog->GetLanguage();
-    if (!language.IsValid())
+    Language srclang = m_catalog->GetSourceLanguage();
+    Language lang = m_catalog->GetLanguage();
+
+    if (!lang.IsValid())
     {
         AttentionMessage msg
             (
@@ -2263,13 +2265,29 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
             );
         msg.AddAction(MSW_OR_OTHER(_("Set language"), _("Set Language")),
                       [=]{ EditCatalogProperties(); });
+        // TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
+        msg.SetExplanation(_("Suggestions are not available if the translation language is not set correctly. Other features, such as plural forms, may be affected as well."));
+        m_attentionBar->ShowMessage(msg);
+    }
+
+    if (lang.IsValid() && srclang.IsValid() && lang == srclang)
+    {
+        AttentionMessage msg
+            (
+                "same-language-as-source",
+                AttentionMessage::Warning,
+                _("Language of the translation is the same as source language.")
+            );
+        msg.SetExplanation(_("Suggestions are not available if the translation language is not set correctly. Other features, such as plural forms, may be affected as well."));
+        msg.AddAction(MSW_OR_OTHER(_("Fix language"), _("Fix Language")),
+                      [=]{ EditCatalogProperties(); });
 
         m_attentionBar->ShowMessage(msg);
     }
 
     // check if plural forms header is correct (only if the language is set,
     // otherwise setting the language will fix this issue too):
-    if ( language.IsValid() && m_catalog->HasPluralItems() )
+    if ( lang.IsValid() && m_catalog->HasPluralItems() )
     {
         wxString err;
 
@@ -2316,12 +2334,12 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
         }
         else // no error, check for warning-worthy stuff
         {
-            if ( language.IsValid() )
+            if ( lang.IsValid() )
             {
                 // Check for unusual plural forms. Do some normalization to avoid unnecessary
                 // complains when the only differences are in whitespace for example.
                 wxString pl1 = plForms;
-                wxString pl2 = language.DefaultPluralFormsExpr();
+                wxString pl2 = lang.DefaultPluralFormsExpr();
                 if (!pl2.empty())
                 {
                     pl1.Replace(" ", "");
@@ -2348,7 +2366,7 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
                                     // would see e.g. in a list of supported languages). You may need
                                     // to rephrase it, e.g. to an equivalent of "for language %s".
                                     _("Plural forms expression used by the catalog is unusual for %s."),
-                                    language.DisplayName()
+                                    lang.DisplayName()
                                 )
                             );
                         msg.AddAction(_("Review"), [=]{ EditCatalogProperties(); });

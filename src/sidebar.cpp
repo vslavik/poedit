@@ -627,6 +627,12 @@ void SuggestionsSidebarBlock::Update(const CatalogItemPtr& item)
     ClearMessage();
     ClearSuggestions();
 
+    if (m_parent->GetCurrentSourceLanguage() == m_parent->GetCurrentLanguage())
+    {
+        OnQueriesFinished();
+        return;
+    }
+
     QueryAllProviders(item);
 }
 
