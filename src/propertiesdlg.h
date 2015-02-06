@@ -44,10 +44,10 @@ class PropertiesDialog : public wxDialog
         PropertiesDialog(wxWindow *parent, bool fileExistsOnDisk, int initialPage = 0);
 
         /// Reads data from the catalog and fill dialog's controls.
-        void TransferTo(Catalog *cat);
+        void TransferTo(const CatalogPtr& cat);
 
         /// Saves data from the dialog to the catalog.
-        void TransferFrom(Catalog *cat);
+        void TransferFrom(const CatalogPtr& cat);
 
         virtual bool Validate();
             

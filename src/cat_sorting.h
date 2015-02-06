@@ -79,7 +79,7 @@ public:
     bool operator()(int i, int j) const;
 
 protected:
-    const CatalogItem& Item(int i) const { return m_catalog[i]; }
+    const CatalogItem& Item(int i) const { return *m_catalog[i]; }
     int CompareStrings(wxString a, wxString b) const;
 
 private:

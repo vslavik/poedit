@@ -106,7 +106,7 @@ void SidebarBlock::Show(bool show)
     m_sizer->ShowItems(show);
 }
 
-void SidebarBlock::SetItem(CatalogItem *item)
+void SidebarBlock::SetItem(const CatalogItemPtr& item)
 {
     if (!item)
     {
@@ -136,12 +136,12 @@ public:
         m_innerSizer->Add(m_text, wxSizerFlags().Expand());
     }
 
-    bool ShouldShowForItem(CatalogItem *item) const override
+    bool ShouldShowForItem(const CatalogItemPtr& item) const override
     {
         return item->HasOldMsgid();
     }
 
-    void Update(CatalogItem *item) override
+    void Update(const CatalogItemPtr& item) override
     {
         auto txt = wxJoin(item->GetOldMsgid(), ' ', '\0');
         m_text->SetAndWrapLabel(txt);
@@ -163,12 +163,12 @@ public:
         m_innerSizer->Add(m_comment, wxSizerFlags().Expand());
     }
 
-    bool ShouldShowForItem(CatalogItem *item) const override
+    bool ShouldShowForItem(const CatalogItemPtr& item) const override
     {
         return item->HasExtractedComments();
     }
 
-    void Update(CatalogItem *item) override
+    void Update(const CatalogItemPtr& item) override
     {
         auto comment = wxJoin(item->GetExtractedComments(), '\n', '\0');
         if (comment.StartsWith("TRANSLATORS:") || comment.StartsWith("translators:"))
@@ -196,12 +196,12 @@ public:
         m_innerSizer->Add(m_comment, wxSizerFlags().Expand());
     }
 
-    bool ShouldShowForItem(CatalogItem *item) const override
+    bool ShouldShowForItem(const CatalogItemPtr& item) const override
     {
         return item->HasComment();
     }
 
-    void Update(CatalogItem *item) override
+    void Update(const CatalogItemPtr& item) override
     {
         auto text = CommentDialog::RemoveStartHash(item->GetComment());
         text.Trim();
@@ -230,9 +230,9 @@ public:
 
     bool IsGrowable() const override { return true; }
 
-    bool ShouldShowForItem(CatalogItem*) const override { return true; }
+    bool ShouldShowForItem(const CatalogItemPtr&) const override { return true; }
 
-    void Update(CatalogItem *item) override
+    void Update(const CatalogItemPtr& item) override
     {
     #ifdef __WXMSW__
         auto add = _("Add comment");
@@ -615,12 +615,12 @@ void SuggestionsSidebarBlock::Show(bool show)
     }
 }
 
-bool SuggestionsSidebarBlock::ShouldShowForItem(CatalogItem*) const
+bool SuggestionsSidebarBlock::ShouldShowForItem(const CatalogItemPtr&) const
 {
     return wxConfig::Get()->ReadBool("use_tm", true);
 }
 
-void SuggestionsSidebarBlock::Update(CatalogItem *item)
+void SuggestionsSidebarBlock::Update(const CatalogItemPtr& item)
 {
     // FIXME: Cancel previous pending async operation if any
 
@@ -630,13 +630,13 @@ void SuggestionsSidebarBlock::Update(CatalogItem *item)
     QueryAllProviders(item);
 }
 
-void SuggestionsSidebarBlock::QueryAllProviders(CatalogItem *item)
+void SuggestionsSidebarBlock::QueryAllProviders(const CatalogItemPtr& item)
 {
     auto thisQueryId = ++m_latestQueryId;
     QueryProvider(TranslationMemory::Get(), item, thisQueryId);
 }
 
-void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, CatalogItem *item, uint64_t queryId)
+void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, const CatalogItemPtr& item, uint64_t queryId)
 {
     m_pendingQueries++;
 
@@ -732,7 +732,7 @@ Sidebar::~Sidebar()
 }
 
 
-void Sidebar::SetSelectedItem(Catalog *catalog, CatalogItem *item)
+void Sidebar::SetSelectedItem(const CatalogPtr& catalog, const CatalogItemPtr& item)
 {
     m_catalog = catalog;
     m_selectedItem = item;

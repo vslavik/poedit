@@ -493,11 +493,11 @@ private:
             int step = 0;
             for (size_t i = 0; i < paths.size(); i++)
             {
-                std::unique_ptr<Catalog> cat(new Catalog(paths[i]));
+                CatalogPtr cat = std::make_shared<Catalog>(paths[i]);
                 if (!progress.Update(++step))
                     break;
                 if (cat->IsOk())
-                    tm->Insert(*cat);
+                    tm->Insert(cat);
                 if (!progress.Update(++step))
                     break;
             }

@@ -974,7 +974,7 @@ class CharsetInfoFinder : public CatalogParser
 class LoadParser : public CatalogParser
 {
     public:
-        LoadParser(Catalog *c, wxTextFile *f)
+        LoadParser(Catalog& c, wxTextFile *f)
               : CatalogParser(f),
                 FileIsValid(false),
                 m_catalog(c), m_nextId(1), m_seenHeaderAlready(false) {}
@@ -983,7 +983,7 @@ class LoadParser : public CatalogParser
         bool FileIsValid;
 
     protected:
-        Catalog *m_catalog;
+        Catalog& m_catalog;
 
         virtual bool OnEntry(const wxString& msgid,
                              const wxString& msgid_plural,
@@ -1035,28 +1035,28 @@ bool LoadParser::OnEntry(const wxString& msgid,
         if (!m_seenHeaderAlready)
         {
             // gettext header:
-            m_catalog->m_header.FromString(mtranslations[0]);
-            m_catalog->m_header.Comment = comment;
+            m_catalog.m_header.FromString(mtranslations[0]);
+            m_catalog.m_header.Comment = comment;
             m_seenHeaderAlready = true;
         }
         // else: ignore duplicate header in malformed files
     }
     else
     {
-        CatalogItem d;
-        d.SetId(m_nextId++);
+        CatalogItemPtr d = std::make_shared<CatalogItem>();
+        d->SetId(m_nextId++);
         if (!flags.empty())
-            d.SetFlags(flags);
-        d.SetString(msgid);
+            d->SetFlags(flags);
+        d->SetString(msgid);
         if (has_plural)
-            d.SetPluralString(msgid_plural);
+            d->SetPluralString(msgid_plural);
         if (has_context)
-            d.SetContext(context);
-        d.SetTranslations(mtranslations);
-        d.SetComment(comment);
-        d.SetLineNumber(lineNumber);
+            d->SetContext(context);
+        d->SetTranslations(mtranslations);
+        d->SetComment(comment);
+        d->SetLineNumber(lineNumber);
         for (size_t i = 0; i < references.GetCount(); i++)
-            d.AddReference(references[i]);
+            d->AddReference(references[i]);
 
         for (auto i: extractedComments)
         {
@@ -1066,10 +1066,10 @@ bool LoadParser::OnEntry(const wxString& msgid,
             // FIXME: Fix this properly... but not using msgcat in the first place
             if (i.StartsWith(MSGCAT_CONFLICT_MARKER) && i.EndsWith(MSGCAT_CONFLICT_MARKER))
                 continue;
-            d.AddExtractedComments(i);
+            d->AddExtractedComments(i);
         }
-        d.SetOldMsgid(msgid_old);
-        m_catalog->AddItem(d);
+        d->SetOldMsgid(msgid_old);
+        m_catalog.AddItem(d);
     }
     return true;
 }
@@ -1090,7 +1090,7 @@ bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
     d.SetLineNumber(lineNumber);
     for (size_t i = 0; i < extractedComments.GetCount(); i++)
       d.AddExtractedComments(extractedComments[i]);
-    m_catalog->AddDeletedItem(d);
+    m_catalog.AddDeletedItem(d);
 
     return true;
 }
@@ -1217,7 +1217,7 @@ bool Catalog::Load(const wxString& po_file, int flags)
         wxLogError(_("There were errors when loading the catalog. Some data may be missing or corrupted as the result."));
     }
 
-    LoadParser parser(this, &f);
+    LoadParser parser(*this, &f);
     parser.IgnoreHeader(flags & CreationFlag_IgnoreHeader);
     parser.IgnoreTranslations(flags & CreationFlag_IgnoreTranslations);
     if (!parser.Parse())
@@ -1235,7 +1235,7 @@ bool Catalog::Load(const wxString& po_file, int flags)
         if (m_header.Bookmarks[i] != -1 &&
             m_header.Bookmarks[i] < (int)m_items.size())
         {
-            m_items[m_header.Bookmarks[i]].SetBookmark(
+            m_items[m_header.Bookmarks[i]]->SetBookmark(
                     static_cast<Bookmark>(i));
         }
     }
@@ -1318,7 +1318,7 @@ void Catalog::FixupCommonIssues()
     // TODO: mark catalog as modified if any changes were made
 }
 
-void Catalog::AddItem(const CatalogItem& data)
+void Catalog::AddItem(const CatalogItemPtr& data)
 {
     m_items.push_back(data);
 }
@@ -1338,16 +1338,15 @@ void Catalog::RemoveDeletedItems()
     m_deletedItems.clear();
 }
 
-CatalogItem *Catalog::FindItemByLine(int lineno)
+CatalogItemPtr Catalog::FindItemByLine(int lineno)
 {
-    CatalogItem *last = NULL;
+    CatalogItemPtr last;
 
-    for ( CatalogItemArray::iterator i = m_items.begin();
-          i != m_items.end(); ++i )
+    for (auto& i: m_items)
     {
         if ( i->GetLineNumber() > lineno )
             return last;
-        last = &(*i);
+        last = i;
     }
 
     return last;
@@ -1369,14 +1368,14 @@ int Catalog::SetBookmark(int id, Bookmark bookmark)
     int result = (bookmark==NO_BOOKMARK)?-1:m_header.Bookmarks[bookmark];
 
     // unset previous bookmarks, if any
-    Bookmark bk = m_items[id].GetBookmark();
+    Bookmark bk = m_items[id]->GetBookmark();
     if (bk != NO_BOOKMARK)
         m_header.Bookmarks[bk] = -1;
     if (result > -1)
-        m_items[result].SetBookmark(NO_BOOKMARK);
+        m_items[result]->SetBookmark(NO_BOOKMARK);
 
     // set new bookmark
-    m_items[id].SetBookmark(bookmark);
+    m_items[id]->SetBookmark(bookmark);
     if (bookmark != NO_BOOKMARK)
         m_header.Bookmarks[bookmark] = id;
 
@@ -1759,46 +1758,45 @@ bool Catalog::DoSaveOnly(wxTextFile& f, wxTextFileType crlf)
     SaveMultiLines(f, pohdr);
     f.AddLine(wxEmptyString);
 
-    for (unsigned itemIdx = 0; itemIdx < m_items.size(); itemIdx++)
+    for (auto& data: m_items)
     {
-        CatalogItem& data = m_items[itemIdx];
-        data.SetLineNumber(int(f.GetLineCount()+1));
-        SaveMultiLines(f, data.GetComment());
-        for (unsigned i = 0; i < data.GetExtractedComments().GetCount(); i++)
+        data->SetLineNumber(int(f.GetLineCount()+1));
+        SaveMultiLines(f, data->GetComment());
+        for (unsigned i = 0; i < data->GetExtractedComments().GetCount(); i++)
         {
-            if (data.GetExtractedComments()[i].empty())
+            if (data->GetExtractedComments()[i].empty())
               f.AddLine("#.");
             else
-              f.AddLine("#. " + data.GetExtractedComments()[i]);
+              f.AddLine("#. " + data->GetExtractedComments()[i]);
         }
-        for (unsigned i = 0; i < data.GetRawReferences().GetCount(); i++)
-            f.AddLine("#: " + data.GetRawReferences()[i]);
-        wxString dummy = data.GetFlags();
+        for (unsigned i = 0; i < data->GetRawReferences().GetCount(); i++)
+            f.AddLine("#: " + data->GetRawReferences()[i]);
+        wxString dummy = data->GetFlags();
         if (!dummy.empty())
             f.AddLine(dummy);
-        for (unsigned i = 0; i < data.GetOldMsgid().GetCount(); i++)
-            f.AddLine("#| " + data.GetOldMsgid()[i]);
-        if ( data.HasContext() )
+        for (unsigned i = 0; i < data->GetOldMsgid().GetCount(); i++)
+            f.AddLine("#| " + data->GetOldMsgid()[i]);
+        if ( data->HasContext() )
         {
-            SaveMultiLines(f, _T("msgctxt \"") + FormatStringForFile(data.GetContext()) + _T("\""));
+            SaveMultiLines(f, _T("msgctxt \"") + FormatStringForFile(data->GetContext()) + _T("\""));
         }
-        dummy = FormatStringForFile(data.GetString());
+        dummy = FormatStringForFile(data->GetString());
         SaveMultiLines(f, _T("msgid \"") + dummy + _T("\""));
-        if (data.HasPlural())
+        if (data->HasPlural())
         {
-            dummy = FormatStringForFile(data.GetPluralString());
+            dummy = FormatStringForFile(data->GetPluralString());
             SaveMultiLines(f, _T("msgid_plural \"") + dummy + _T("\""));
 
-            for (unsigned i = 0; i < data.GetNumberOfTranslations(); i++)
+            for (unsigned i = 0; i < data->GetNumberOfTranslations(); i++)
             {
-                dummy = FormatStringForFile(data.GetTranslation(i));
+                dummy = FormatStringForFile(data->GetTranslation(i));
                 wxString hdr = wxString::Format(_T("msgstr[%u] \""), i);
                 SaveMultiLines(f, hdr + dummy + _T("\""));
             }
         }
         else
         {
-            dummy = FormatStringForFile(data.GetTranslation());
+            dummy = FormatStringForFile(data->GetTranslation());
             SaveMultiLines(f, _T("msgstr \"") + dummy + _T("\""));
         }
         f.AddLine(wxEmptyString);
@@ -1866,8 +1864,7 @@ int Catalog::DoValidate(const wxString& po_file)
         err
     );
 
-    for ( CatalogItemArray::iterator i = m_items.begin();
-          i != m_items.end(); ++i )
+    for (auto& i: m_items)
     {
         i->SetValidity(CatalogItem::Val_Valid);
     }
@@ -1876,7 +1873,7 @@ int Catalog::DoValidate(const wxString& po_file)
     {
         if ( i->line != -1 )
         {
-            CatalogItem *item = FindItemByLine(i->line);
+            auto item = FindItemByLine(i->line);
             if ( item )
             {
                 item->SetValidity(CatalogItem::Val_Invalid);
@@ -1930,11 +1927,11 @@ bool Catalog::Update(ProgressInfo *progress, bool summary, UpdateResultReason& r
 
     SourceDigger dig(progress);
 
-    Catalog *newcat = dig.Dig(m_header.SearchPaths,
-                              m_header.SearchPathsExcluded,
-                              m_header.Keywords,
-                              m_header.SourceCodeCharset,
-                              reason);
+    auto newcat = dig.Dig(m_header.SearchPaths,
+                          m_header.SearchPathsExcluded,
+                          m_header.Keywords,
+                          m_header.SourceCodeCharset,
+                          reason);
 
     if (progress->Cancelled())
         reason = UpdateResultReason::CancelledByUser;
@@ -1950,8 +1947,7 @@ bool Catalog::Update(ProgressInfo *progress, bool summary, UpdateResultReason& r
             succ = Merge(newcat);
         if (!succ)
         {
-            delete newcat;
-            newcat = NULL;
+            newcat.reset();
         }
         if (cancelledByUser)
             reason = UpdateResultReason::CancelledByUser;
@@ -1959,10 +1955,7 @@ bool Catalog::Update(ProgressInfo *progress, bool summary, UpdateResultReason& r
 
     wxSetWorkingDirectory(cwd);
 
-    if (newcat == NULL) return false;
-
-    delete newcat;
-    return true;
+    return newcat != nullptr;
 }
 
 
@@ -1974,21 +1967,21 @@ bool Catalog::UpdateFromPOT(const wxString& pot_file,
     reason = UpdateResultReason::Unspecified;
     if (!m_isOk) return false;
 
-    Catalog newcat(pot_file, CreationFlag_IgnoreTranslations);
+    CatalogPtr newcat = std::make_shared<Catalog>(pot_file, CreationFlag_IgnoreTranslations);
 
-    if (!newcat.IsOk())
+    if (!newcat->IsOk())
     {
         wxLogError(_("'%s' is not a valid POT file."), pot_file.c_str());
         return false;
     }
 
     bool cancelledByUser = false;
-    if (!summary || ShowMergeSummary(&newcat, &cancelledByUser))
+    if (!summary || ShowMergeSummary(newcat, &cancelledByUser))
     {
-        if ( !Merge(&newcat) )
+        if ( !Merge(newcat) )
             return false;
         if ( replace_header )
-            CreateNewHeader(newcat.Header());
+            CreateNewHeader(newcat->Header());
         return true;
     }
     else
@@ -2000,7 +1993,7 @@ bool Catalog::UpdateFromPOT(const wxString& pot_file,
 }
 
 
-bool Catalog::Merge(Catalog *refcat)
+bool Catalog::Merge(const CatalogPtr& refcat)
 {
     wxString oldname = m_fileName;
 
@@ -2051,18 +2044,18 @@ bool Catalog::Merge(Catalog *refcat)
 }
 
 
-static inline wxString ItemMergeSummary(const CatalogItem& item)
+static inline wxString ItemMergeSummary(const CatalogItemPtr& item)
 {
-    wxString s = item.GetString();
-    if ( item.HasPlural() )
-        s += "|" + item.GetPluralString();
-    if ( item.HasContext() )
-        s += wxString::Format(" [%s]", item.GetContext());
+    wxString s = item->GetString();
+    if ( item->HasPlural() )
+        s += "|" + item->GetPluralString();
+    if ( item->HasContext() )
+        s += wxString::Format(" [%s]", item->GetContext());
 
     return s;
 }
 
-void Catalog::GetMergeSummary(Catalog *refcat,
+void Catalog::GetMergeSummary(const CatalogPtr& refcat,
                               wxArrayString& snew, wxArrayString& sobsolete)
 {
     wxASSERT( snew.empty() );
@@ -2070,25 +2063,25 @@ void Catalog::GetMergeSummary(Catalog *refcat,
 
     std::set<wxString> strsThis, strsRef;
 
-    for ( unsigned i = 0; i < GetCount(); i++ )
-        strsThis.insert(ItemMergeSummary((*this)[i]));
-    for ( unsigned i = 0; i < refcat->GetCount(); i++ )
-        strsRef.insert(ItemMergeSummary((*refcat)[i]));
+    for (auto& i: m_items)
+        strsThis.insert(ItemMergeSummary(i));
+    for (auto& i: refcat->m_items)
+        strsRef.insert(ItemMergeSummary(i));
 
-    for ( std::set<wxString>::const_iterator i = strsThis.begin(); i != strsThis.end(); ++i )
+    for (auto& i: strsThis)
     {
-        if (strsRef.find(*i) == strsRef.end())
-            sobsolete.Add(*i);
+        if (strsRef.find(i) == strsRef.end())
+            sobsolete.Add(i);
     }
 
-    for ( std::set<wxString>::const_iterator i = strsRef.begin(); i != strsRef.end(); ++i )
+    for (auto& i: strsRef)
     {
-        if (strsThis.find(*i) == strsThis.end())
-            snew.Add(*i);
+        if (strsThis.find(i) == strsThis.end())
+            snew.Add(i);
     }
 }
 
-bool Catalog::ShowMergeSummary(Catalog *refcat, bool *cancelledByUser)
+bool Catalog::ShowMergeSummary(const CatalogPtr& refcat, bool *cancelledByUser)
 {
     if (cancelledByUser)
         *cancelledByUser = false;
@@ -2131,8 +2124,7 @@ unsigned Catalog::GetPluralFormsCount() const
 {
     unsigned count = GetCountFromPluralFormsHeader(m_header);
 
-    for ( CatalogItemArray::const_iterator i = m_items.begin();
-          i != m_items.end(); ++i )
+    for (auto& i: m_items)
     {
         count = std::max(count, i->GetPluralFormsCount());
     }
@@ -2144,8 +2136,7 @@ bool Catalog::HasWrongPluralFormsCount() const
 {
     unsigned count = 0;
 
-    for ( CatalogItemArray::const_iterator i = m_items.begin();
-          i != m_items.end(); ++i )
+    for (auto& i: m_items)
     {
         count = std::max(count, i->GetPluralFormsCount());
     }
@@ -2163,13 +2154,11 @@ bool Catalog::HasWrongPluralFormsCount() const
 
 bool Catalog::HasPluralItems() const
 {
-    for ( CatalogItemArray::const_iterator i = m_items.begin();
-          i != m_items.end(); ++i )
+    for (auto& i: m_items)
     {
         if ( i->HasPlural() )
             return true;
     }
-
     return false;
 }
 
@@ -2183,27 +2172,26 @@ void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens,
     if (untranslated) *untranslated = 0;
     if (unfinished) *unfinished = 0;
 
-    int cnt = GetCount();
-    for (int i = 0; i < cnt; i++)
+    for (auto& i: m_items)
     {
         bool ok = true;
 
         if (all)
             (*all)++;
 
-        if ((*this)[i].IsFuzzy())
+        if (i->IsFuzzy())
         {
             if (fuzzy)
                 (*fuzzy)++;
             ok = false;
         }
-        if ((*this)[i].GetValidity() == CatalogItem::Val_Invalid)
+        if (i->GetValidity() == CatalogItem::Val_Invalid)
         {
             if (badtokens)
                 (*badtokens)++;
             ok = false;
         }
-        if (!(*this)[i].IsTranslated())
+        if (!i->IsTranslated())
         {
             if (untranslated)
                 (*untranslated)++;

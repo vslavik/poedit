@@ -107,7 +107,7 @@ class PoeditFrame : public wxFrame
         /// Reads catalog, refreshes controls, takes ownership of catalog.
         void ReadCatalog(const wxString& catalog);
         /// Reads catalog, refreshes controls, takes ownership of catalog.
-        void ReadCatalog(Catalog *cat);
+        void ReadCatalog(const CatalogPtr& cat);
         /// Writes catalog.
         void WriteCatalog(const wxString& catalog);
 
@@ -165,13 +165,13 @@ class PoeditFrame : public wxFrame
         /// Refreshes controls.
         enum { Refresh_NoCatalogChanged = 1 };
         void RefreshControls(int flags = 0);
-        void NotifyCatalogChanged(Catalog *cat);
+        void NotifyCatalogChanged(const CatalogPtr& cat);
 
         /// Sets controls custom fonts.
         void SetCustomFonts();
         void SetAccelerators();
 
-        CatalogItem *GetCurrentItem() const;
+        CatalogItemPtr GetCurrentItem() const;
 
         // if there's modified catalog, ask user to save it; return true
         // if it's save to discard m_catalog and load new data
@@ -205,7 +205,7 @@ class PoeditFrame : public wxFrame
         void InitSpellchecker();
 
         // navigation to another item in the list
-        typedef bool (*NavigatePredicate)(const CatalogItem& item);
+        typedef bool (*NavigatePredicate)(const CatalogItemPtr& item);
         void Navigate(int step, NavigatePredicate predicate, bool wrap);
         void OnDoneAndNext(wxCommandEvent&);
         void OnPrev(wxCommandEvent&);
@@ -229,7 +229,7 @@ public: // for PoeditApp
 private:
         void OnSave(wxCommandEvent& event);
         void OnSaveAs(wxCommandEvent& event);
-        wxString GetSaveAsFilename(Catalog *cat, const wxString& current);
+        wxString GetSaveAsFilename(const CatalogPtr& cat, const wxString& current);
         void DoSaveAs(const wxString& filename);
         void OnProperties(wxCommandEvent& event);
         void OnUpdate(wxCommandEvent& event);
@@ -313,18 +313,18 @@ private:
 #endif
         void NoteAsRecentFile();
 
-        void OnNewTranslationEntered(CatalogItem *item);
+        void OnNewTranslationEntered(const CatalogItemPtr& item);
 
         DECLARE_EVENT_TABLE()
 
     private:
-        Catalog *m_catalog;
+        CatalogPtr m_catalog;
         wxString m_fileName;
         bool m_fileExistsOnDisk;
 
         std::unique_ptr<MainToolbar> m_toolbar;
 
-        CatalogItem *m_pendingHumanEditedItem;
+        CatalogItemPtr m_pendingHumanEditedItem;
 
         wxPanel *m_bottomPanel;
         wxSplitterWindow *m_splitter;

@@ -210,7 +210,7 @@ void GetPathsFromControl(wxEditableListBox *box, wxArrayString& output)
 } // anonymous namespace
 
 
-void PropertiesDialog::TransferTo(Catalog *cat)
+void PropertiesDialog::TransferTo(const CatalogPtr& cat)
 {
     SetCharsetToCombobox(m_charset, cat->Header().Charset);
     SetCharsetToCombobox(m_sourceCodeCharset, cat->Header().SourceCodeCharset);
@@ -242,7 +242,7 @@ void PropertiesDialog::TransferTo(Catalog *cat)
 }
 
 
-void PropertiesDialog::TransferFrom(Catalog *cat)
+void PropertiesDialog::TransferFrom(const CatalogPtr& cat)
 {
     cat->Header().Charset = GetCharsetFromCombobox(m_charset);
     cat->Header().SourceCodeCharset = GetCharsetFromCombobox(m_sourceCodeCharset);

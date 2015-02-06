@@ -31,7 +31,6 @@
 
 #include "catalog.h"
 
-class Catalog;
 class wxArrayString;
 class ExtractorsDB;
 class Extractor;
@@ -60,11 +59,11 @@ class SourceDigger
                             prefixes for translatable strings in sources
             \param charset  source code charset (may be empty)
          */
-        Catalog *Dig(const wxArrayString& paths,
-                     const wxArrayString& excludePaths,
-                     const wxArrayString& keywords,
-                     const wxString& charset,
-                     UpdateResultReason& reason);
+        CatalogPtr Dig(const wxArrayString& paths,
+                       const wxArrayString& excludePaths,
+                       const wxArrayString& keywords,
+                       const wxString& charset,
+                       UpdateResultReason& reason);
 
     private:
         // Path matching with support for wildcards

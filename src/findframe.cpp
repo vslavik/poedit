@@ -52,7 +52,7 @@ END_EVENT_TABLE()
 
 FindFrame::FindFrame(wxWindow *parent,
                      PoeditListCtrl *list,
-                     Catalog *c,
+                     const CatalogPtr& c,
                      wxTextCtrl *textCtrlOrig,
                      wxTextCtrl *textCtrlTrans)
         : m_listCtrl(list),
@@ -129,7 +129,7 @@ FindFrame::~FindFrame()
                 XRCCTRL(*this, "whole_words", wxCheckBox)->GetValue());
 }
 
-FindFrame *FindFrame::Get(PoeditListCtrl *list, Catalog *forCatalog)
+FindFrame *FindFrame::Get(PoeditListCtrl *list, const CatalogPtr& forCatalog)
 {
     if (!ms_singleton)
         return nullptr;
@@ -142,7 +142,7 @@ FindFrame *FindFrame::Get(PoeditListCtrl *list, Catalog *forCatalog)
 }
 
 
-void FindFrame::NotifyParentDestroyed(PoeditListCtrl *list, Catalog *forCatalog)
+void FindFrame::NotifyParentDestroyed(PoeditListCtrl *list, const CatalogPtr& forCatalog)
 {
     if (!ms_singleton)
         return;
@@ -155,7 +155,7 @@ void FindFrame::NotifyParentDestroyed(PoeditListCtrl *list, Catalog *forCatalog)
 
 
 
-void FindFrame::Reset(Catalog *c)
+void FindFrame::Reset(const CatalogPtr& c)
 {
     if (!m_listCtrl)
         return;
@@ -298,11 +298,11 @@ bool FindFrame::DoFind(int dir)
     m_position += dir;
     while (m_position >= 0 && m_position < cnt)
     {
-        CatalogItem &dt = (*m_catalog)[m_listCtrl->ListIndexToCatalog(m_position)];
+        CatalogItemPtr dt = (*m_catalog)[m_listCtrl->ListIndexToCatalog(m_position)];
 
         if (inStr)
         {
-            textc = dt.GetString();
+            textc = dt->GetString();
             if (!caseSens)
                 textc.MakeLower();
             if (ignoreMnemonicsAmp)
@@ -318,11 +318,11 @@ bool FindFrame::DoFind(int dir)
         if (inTrans)
         {
             // concatenate all translations:
-            unsigned cntTrans = dt.GetNumberOfTranslations();
+            unsigned cntTrans = dt->GetNumberOfTranslations();
             textc = wxEmptyString;
             for (unsigned i = 0; i < cntTrans; i++)
             {
-                textc += dt.GetTranslation(i);
+                textc += dt->GetTranslation(i);
             }
             // and search for the substring in them:
             if (!caseSens)
@@ -336,7 +336,7 @@ bool FindFrame::DoFind(int dir)
         }
         if (inComments)
         {
-            textc = dt.GetComment();
+            textc = dt->GetComment();
             if (!caseSens)
                 textc.MakeLower();
 
@@ -344,7 +344,7 @@ bool FindFrame::DoFind(int dir)
         }
         if (inExtractedComments)
         {
-            wxArrayString extractedComments = dt.GetExtractedComments();
+            wxArrayString extractedComments = dt->GetExtractedComments();
             textc = wxEmptyString;
             for (unsigned i = 0; i < extractedComments.GetCount(); i++)
                 textc += extractedComments[i];

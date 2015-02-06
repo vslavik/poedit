@@ -30,10 +30,9 @@
 #include <vector>
 #include <memory>
 
+#include "catalog.h"
 #include "suggestions.h"
 
-class Catalog;
-class CatalogItem;
 class TranslationMemoryImpl;
 
 /** 
@@ -104,7 +103,7 @@ public:
             @note
             Not everything is included: fuzzy or untranslated entries are skipped.
          */
-        virtual void Insert(const Language& lang, const CatalogItem& item) = 0;
+        virtual void Insert(const Language& lang, const CatalogItemPtr& item) = 0;
 
         /**
             Inserts entire content of the catalog.
@@ -113,7 +112,7 @@ public:
             Not everything is included: fuzzy or untranslated entries are omitted.
             If the catalog doesn't have language header, it is not included either.
          */
-        virtual void Insert(const Catalog& cat) = 0;
+        virtual void Insert(const CatalogPtr& cat) = 0;
 
         /// Deletes everything from the TM.
         virtual void DeleteAll() = 0;

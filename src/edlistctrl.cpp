@@ -114,7 +114,6 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
                const wxString &name)
      : wxListView(parent, id, pos, size, style | wxLC_VIRTUAL, validator, name)
 {
-    m_catalog = NULL;
     m_displayIDs = dispIDs;
 
     m_isRTL = false;
@@ -274,7 +273,7 @@ void PoeditListCtrl::SizeColumns()
 }
 
 
-void PoeditListCtrl::CatalogChanged(Catalog* catalog)
+void PoeditListCtrl::CatalogChanged(const CatalogPtr& catalog)
 {
     wxWindowUpdateLocker no_updates(this);
 
@@ -286,7 +285,7 @@ void PoeditListCtrl::CatalogChanged(Catalog* catalog)
 
     // this is to prevent crashes (wxMac at least) when shortening virtual
     // listctrl when its scrolled to the bottom:
-    m_catalog = nullptr;
+    m_catalog.reset();
     SetItemCount(0);
 
     // now read the new catalog:
@@ -306,7 +305,7 @@ void PoeditListCtrl::ReadCatalog()
     m_mapListToCatalog.clear();
     m_mapCatalogToList.clear();
 
-    if (m_catalog == NULL)
+    if (!m_catalog)
     {
         Refresh();
         return;
@@ -395,21 +394,21 @@ void PoeditListCtrl::CreateSortMap()
 
 wxString PoeditListCtrl::OnGetItemText(long item, long column) const
 {
-    if (m_catalog == NULL)
+    if (!m_catalog)
         return wxEmptyString;
 
-    const CatalogItem& d = ListIndexToCatalogItem((int)item);
+    auto d = ListIndexToCatalogItem((int)item);
 
     switch (column)
     {
         case 0:
         {
             wxString orig;
-            if ( d.HasContext() )
+            if ( d->HasContext() )
                 orig.Printf("%s  [ %s ]",
-                            d.GetString().c_str(), d.GetContext().c_str());
+                            d->GetString().c_str(), d->GetContext().c_str());
             else
-                orig = d.GetString();
+                orig = d->GetString();
 
             // Add RTL Unicode mark to render bidi texts correctly
             if (m_appIsRTL)
@@ -421,12 +420,12 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
         {
             // Add RTL Unicode mark to render bidi texts correctly
             if (m_isRTL && !m_appIsRTL)
-                return L"\u202b" + d.GetTranslation();
+                return L"\u202b" + d->GetTranslation();
             else
-                return d.GetTranslation();
+                return d->GetTranslation();
         }
         case 2:
-            return wxString() << d.GetId();
+            return wxString() << d->GetId();
 
         default:
             return wxEmptyString;
@@ -437,16 +436,16 @@ wxListItemAttr *PoeditListCtrl::OnGetItemAttr(long item) const
 {
     long idx = item % 2;
 
-    if (m_catalog == NULL)
+    if (!m_catalog)
         return (wxListItemAttr*)&m_attrNormal[idx];
 
-    const CatalogItem& d = ListIndexToCatalogItem((int)item);
+    auto d = ListIndexToCatalogItem((int)item);
 
-    if (d.GetValidity() == CatalogItem::Val_Invalid)
+    if (d->GetValidity() == CatalogItem::Val_Invalid)
         return (wxListItemAttr*)&m_attrInvalid[idx];
-    else if (!d.IsTranslated())
+    else if (!d->IsTranslated())
         return (wxListItemAttr*)&m_attrUntranslated[idx];
-    else if (d.IsFuzzy())
+    else if (d->IsFuzzy())
         return (wxListItemAttr*)&m_attrFuzzy[idx];
     else
         return (wxListItemAttr*)&m_attrNormal[idx];
@@ -466,16 +465,16 @@ wxListItemAttr *PoeditListCtrl::OnGetItemColumnAttr(long item, long column) cons
 
 int PoeditListCtrl::OnGetItemImage(long item) const
 {
-    if (m_catalog == NULL)
+    if (!m_catalog)
         return IMG_NOTHING;
 
-    const CatalogItem& d = ListIndexToCatalogItem((int)item);
+    auto d = ListIndexToCatalogItem((int)item);
 
-    if (d.GetBookmark() != NO_BOOKMARK)
+    if (d->GetBookmark() != NO_BOOKMARK)
         return IMG_BOOKMARK;
-    else if (d.HasComment() || d.HasExtractedComments())
+    else if (d->HasComment() || d->HasExtractedComments())
         return IMG_COMMENT;
-    else if (d.IsAutomatic())
+    else if (d->IsAutomatic())
         return IMG_AUTOMATIC;
     else
         return IMG_NOTHING;

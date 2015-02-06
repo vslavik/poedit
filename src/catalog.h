@@ -34,8 +34,15 @@
 
 #include <vector>
 #include <map>
+#include <memory>
 
 class ProgressInfo;
+
+class Catalog;
+class CatalogItem;
+typedef std::shared_ptr<CatalogItem> CatalogItemPtr;
+typedef std::shared_ptr<Catalog> CatalogPtr;
+
 
 /// The possible bookmarks for a given item
 typedef enum
@@ -309,6 +316,7 @@ class CatalogItem
         Bookmark m_bookmark;
 };
 
+
 /** This class holds information about one particular deleted item.
     This includes deleted lines, references, translation's status
     (fuzzy, non translated, translated) and optional comment(s).
@@ -404,7 +412,7 @@ class CatalogDeletedData
 };
 
 
-typedef std::vector<CatalogItem> CatalogItemArray;
+typedef std::vector<CatalogItemPtr> CatalogItemArray;
 typedef std::vector<CatalogDeletedData> CatalogDeletedDataArray;
 typedef std::map<wxString, unsigned> CatalogItemIndex;
 
@@ -563,6 +571,8 @@ class Catalog
         /// Returns the number of strings/translations in the catalog.
         unsigned GetCount() const { return (unsigned)m_items.size(); }
 
+        const CatalogItemArray& items() const { return m_items; }
+
         /// Is the catalog empty?
         bool empty() const { return m_items.empty(); }
 
@@ -577,10 +587,10 @@ class Catalog
                            int *untranslated, int *unfinished);
 
         /// Gets n-th item in the catalog (read-write access).
-        CatalogItem& operator[](unsigned n) { return m_items[n]; }
+        CatalogItemPtr operator[](unsigned n) { return m_items[n]; }
 
         /// Gets n-th item in the catalog (read-only access).
-        const CatalogItem& operator[](unsigned n) const { return m_items[n]; }
+        const CatalogItemPtr operator[](unsigned n) const { return m_items[n]; }
 
         /// Gets catalog header (read-write access).
         HeaderData& Header() { return m_header; }
@@ -607,7 +617,7 @@ class Catalog
 
         /// Adds entry to the catalog (the catalog will take ownership of
         /// the object).
-        void AddItem(const CatalogItem& data);
+        void AddItem(const CatalogItemPtr& data);
 
         /// Adds entry to the catalog (the catalog will take ownership of
         /// the object).
@@ -620,7 +630,7 @@ class Catalog
         void RemoveDeletedItems();
 
         /// Finds item by line number
-        CatalogItem *FindItemByLine(int lineno);
+        CatalogItemPtr FindItemByLine(int lineno);
 
         /// Sets the given item to have the given bookmark and returns the index
         /// of the item that previously had this bookmark (or -1)
@@ -656,7 +666,7 @@ class Catalog
                     Note that if it returns false, the catalog was
                     \em not modified!
          */
-        bool Merge(Catalog *refcat);
+        bool Merge(const CatalogPtr& refcat);
 
         /** Returns list of strings that are new in reference catalog
             (compared to this one) and that are not present in \a refcat
@@ -664,7 +674,7 @@ class Catalog
 
             \see ShowMergeSummary
          */
-        void GetMergeSummary(Catalog *refcat,
+        void GetMergeSummary(const CatalogPtr& refcat,
                              wxArrayString& snew, wxArrayString& sobsolete);
 
         /** Shows a dialog with merge summary.
@@ -672,7 +682,7 @@ class Catalog
 
             \return true if the merge was OK'ed by the user, false otherwise
          */
-        bool ShowMergeSummary(Catalog *refcat, bool *cancelledByUser);
+        bool ShowMergeSummary(const CatalogPtr& refcat, bool *cancelledByUser);
 
     private:
         CatalogItemArray m_items;

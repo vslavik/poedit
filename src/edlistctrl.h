@@ -60,7 +60,7 @@ class PoeditListCtrl : public wxListView
 
         void SetDisplayLines(bool dl);
 
-        void CatalogChanged(Catalog* catalog);
+        void CatalogChanged(const CatalogPtr& catalog);
 
         virtual wxString OnGetItemText(long item, long column) const;
         virtual wxListItemAttr *OnGetItemAttr(long item) const;
@@ -86,11 +86,11 @@ class PoeditListCtrl : public wxListView
         }
 
         /// Returns item from the catalog based on list index
-        const CatalogItem& ListIndexToCatalogItem(long index) const
+        CatalogItemPtr ListIndexToCatalogItem(long index) const
         {
             return (*m_catalog)[ListIndexToCatalog(index)];
         }
-        CatalogItem& ListIndexToCatalogItem(long index)
+        CatalogItemPtr ListIndexToCatalogItem(long index)
         {
             return (*m_catalog)[ListIndexToCatalog(index)];
         }
@@ -128,7 +128,7 @@ class PoeditListCtrl : public wxListView
         {
             for (auto i = GetFirstSelected(); i != -1; i = GetNextSelected(i))
             {
-                func(ListIndexToCatalogItem(i));
+                func(*ListIndexToCatalogItem(i));
                 RefreshItem(i);
             }
         }
@@ -188,7 +188,7 @@ class PoeditListCtrl : public wxListView
         unsigned m_colWidth;
         bool m_isRTL, m_appIsRTL;
 
-        Catalog* m_catalog;
+        CatalogPtr m_catalog;
 
         std::vector<int> m_mapListToCatalog;
         std::vector<int> m_mapCatalogToList;

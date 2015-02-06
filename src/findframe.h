@@ -50,21 +50,21 @@ class FindFrame : public wxDialog
             \param list    List control to search in
             \param catalog Catalog to search in
          */
-        FindFrame(wxWindow *parent, PoeditListCtrl *list, Catalog *c,
+        FindFrame(wxWindow *parent, PoeditListCtrl *list, const CatalogPtr& c,
                   wxTextCtrl *textCtrlOrig, wxTextCtrl *textCtrlTrans);
         ~FindFrame();
 
         /// Returns singleton instance if it exists. Updates the catalog
         /// if it differs from the current one.
-        static FindFrame *Get(PoeditListCtrl *list, Catalog *forCatalog);
+        static FindFrame *Get(PoeditListCtrl *list, const CatalogPtr& forCatalog);
 
-        static void NotifyParentDestroyed(PoeditListCtrl *list, Catalog *forCatalog);
+        static void NotifyParentDestroyed(PoeditListCtrl *list, const CatalogPtr& forCatalog);
 
         /** Resets the search to starting position and changes
             the catalog in use. Called by EditorFrame when the user
             reloads catalog.
          */
-        void Reset(Catalog *c);
+        void Reset(const CatalogPtr& c);
 
         void FocusSearchField();
 
@@ -83,7 +83,7 @@ class FindFrame : public wxDialog
         wxTextCtrl *m_textField;
 
         wxWeakRef<PoeditListCtrl> m_listCtrl;
-        Catalog *m_catalog;
+        CatalogPtr m_catalog;
         int m_position;
         wxButton *m_btnPrev, *m_btnNext;
         wxTextCtrl *m_textCtrlOrig, *m_textCtrlTrans;

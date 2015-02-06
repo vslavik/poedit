@@ -33,6 +33,7 @@
 #include <wx/event.h>
 #include <wx/panel.h>
 
+#include "catalog.h"
 #include "language.h"
 #include "tm/suggestions.h"
 
@@ -42,8 +43,6 @@ class WXDLLIMPEXP_FWD_CORE wxSizer;
 class WXDLLIMPEXP_FWD_CORE wxStaticText;
 class WXDLLIMPEXP_FWD_CORE wxStaticBitmap;
 
-class Catalog;
-class CatalogItem;
 class ExplanationLabel;
 
 struct Suggestion;
@@ -62,11 +61,11 @@ public:
 
     virtual void Show(bool show);
 
-    void SetItem(CatalogItem *item);
+    void SetItem(const CatalogItemPtr& item);
 
-    virtual bool ShouldShowForItem(CatalogItem *item) const = 0;
+    virtual bool ShouldShowForItem(const CatalogItemPtr& item) const = 0;
 
-    virtual void Update(CatalogItem *item) = 0;
+    virtual void Update(const CatalogItemPtr& item) = 0;
 
     virtual bool IsGrowable() const { return false; }
 
@@ -98,8 +97,8 @@ public:
 
     void Show(bool show) override;
     bool IsGrowable() const override { return true; }
-    bool ShouldShowForItem(CatalogItem *item) const override;
-    void Update(CatalogItem *item) override;
+    bool ShouldShowForItem(const CatalogItemPtr& item) const override;
+    void Update(const CatalogItemPtr& item) override;
 
 protected:
     // How many entries can have shortcuts?
@@ -122,8 +121,8 @@ protected:
     virtual void UpdateSuggestionsMenu();
     virtual void ClearSuggestionsMenu();
 
-    virtual void QueryAllProviders(CatalogItem *item);
-    void QueryProvider(SuggestionsBackend& backend, CatalogItem *item, uint64_t queryId);
+    virtual void QueryAllProviders(const CatalogItemPtr& item);
+    void QueryProvider(SuggestionsBackend& backend, const CatalogItemPtr& item, uint64_t queryId);
 
 protected:
     std::unique_ptr<SuggestionsProvider> m_provider;
@@ -159,20 +158,19 @@ public:
     ~Sidebar();
 
     /// Update selected item, if there's a single one. May be nullptr.
-    void SetSelectedItem(Catalog *catalog, CatalogItem *item);
+    void SetSelectedItem(const CatalogPtr& catalog, const CatalogItemPtr& item);
 
     /// Tell the sidebar there's multiple selection.
     void SetMultipleSelection();
 
     /// Returns currently selected item
-    CatalogItem *GetSelectedItem() const { return m_selectedItem; }
+    CatalogItemPtr GetSelectedItem() const { return m_selectedItem; }
     Language GetCurrentLanguage() const;
 
     /// Refreshes displayed content
     void RefreshContent();
 
     /// Call when catalog changes/is invalidated
-    /// TODO: use shared_ptr<CatalogItem> instead to be safe
     void ResetCatalog() { SetSelectedItem(nullptr, nullptr); }
 
     /// Set max height of the upper (not input-aligned) part.
@@ -188,8 +186,8 @@ private:
     void OnPaint(wxPaintEvent&);
 
 private:
-    Catalog *m_catalog;
-    CatalogItem *m_selectedItem;
+    CatalogPtr m_catalog;
+    CatalogItemPtr m_selectedItem;
 
     std::vector<std::shared_ptr<SidebarBlock>> m_blocks;
 

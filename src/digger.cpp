@@ -77,11 +77,11 @@ bool ConcatCatalogs(const wxArrayString& files, TempDirectory& tmpdir, wxString 
 
 } // anonymous namespace
 
-Catalog *SourceDigger::Dig(const wxArrayString& paths,
-                           const wxArrayString& excludePaths,
-                           const wxArrayString& keywords,
-                           const wxString& charset,
-                           UpdateResultReason& reason)
+CatalogPtr SourceDigger::Dig(const wxArrayString& paths,
+                             const wxArrayString& excludePaths,
+                             const wxArrayString& keywords,
+                             const wxString& charset,
+                             UpdateResultReason& reason)
 {
     ExtractorsDB db;
     db.Read(wxConfig::Get());
@@ -89,10 +89,10 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
     m_progressInfo->UpdateMessage(_("Scanning files..."));
 
     wxArrayString *all_files = FindFiles(paths, PathsToMatch(excludePaths), db);
-    if (all_files == NULL)
+    if (all_files == nullptr)
     {
         reason = UpdateResultReason::NoSourcesFound;
-        return NULL;
+        return nullptr;
     }
 
     TempDirectory tmpdir;
@@ -109,7 +109,7 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
         if (!DigFiles(tmpdir, partials, all_files[i], db.Data[i], keywords, charset))
         {
             delete[] all_files;
-            return NULL;
+            return nullptr;
         }
     }
 
@@ -117,15 +117,14 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
 
     wxString mergedFile;
     if ( !ConcatCatalogs(partials, tmpdir, &mergedFile) )
-        return NULL; // couldn't parse any source files
+        return nullptr; // couldn't parse any source files
 
-    Catalog *c = new Catalog(mergedFile, Catalog::CreationFlag_IgnoreHeader);
+    CatalogPtr c = std::make_shared<Catalog>(mergedFile, Catalog::CreationFlag_IgnoreHeader);
 
     if ( !c->IsOk() )
     {
         wxLogError(_("Failed to load extracted catalog."));
-        delete c;
-        return NULL;
+        return nullptr;
     }
 
     return c;
