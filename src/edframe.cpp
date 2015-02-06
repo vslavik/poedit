@@ -2076,7 +2076,7 @@ void PoeditFrame::OnNewTranslationEntered(const CatalogItemPtr& item)
         try
         {
             auto tm = TranslationMemory::Get().GetWriter();
-            tm->Insert(m_catalog->GetLanguage(), item);
+            tm->Insert(m_catalog->GetSourceLanguage(), m_catalog->GetLanguage(), item);
             // Note: do *not* call tm->Commit() here, because Lucene commit is
             // expensive. Instead, wait until the file is saved with committing
             // the changes. This way TM updates are available immediately for use
@@ -2848,6 +2848,7 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, const T& range, int fl
     wxBusyCursor bcur;
 
     TranslationMemory& tm = TranslationMemory::Get();
+    auto srclang = m_catalog->GetSourceLanguage();
     auto lang = m_catalog->GetLanguage();
 
     int matches = 0;
@@ -2866,7 +2867,7 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, const T& range, int fl
             continue; // can't handle yet (TODO?)
         if (dt->IsFuzzy() || !dt->IsTranslated())
         {
-            auto results = tm.Search(lang, dt->GetString().ToStdWstring());
+            auto results = tm.Search(srclang, lang, dt->GetString().ToStdWstring());
             if (results.empty())
                 continue;
 

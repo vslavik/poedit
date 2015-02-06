@@ -147,7 +147,8 @@ void XMLCALL OnStartElement(void *data, const char *name, const char **attrs)
                 t = wxString::FromUTF8(attrs[i+1]);
             if (!s.empty() && !t.empty())
             {
-                ctxt.tm->Insert(ctxt.lang, s.ToStdWstring(), t.ToStdWstring());
+                static const auto srclang = Language::English();
+                ctxt.tm->Insert(srclang, ctxt.lang, s.ToStdWstring(), t.ToStdWstring());
                 if (ctxt.count++ % 47 == 0)
                     ctxt.progress->Pulse(wxString::Format(_("Importing translations: %d"), ctxt.count));
             }

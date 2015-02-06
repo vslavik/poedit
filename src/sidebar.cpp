@@ -649,6 +649,7 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, const C
     m_provider->SuggestTranslation
     (
         backend,
+        m_parent->GetCurrentSourceLanguage(),
         m_parent->GetCurrentLanguage(),
         item->GetString().ToStdWstring(),
 
@@ -749,6 +750,13 @@ Language Sidebar::GetCurrentLanguage() const
     if (!m_catalog)
         return Language();
     return m_catalog->GetLanguage();
+}
+
+Language Sidebar::GetCurrentSourceLanguage() const
+{
+    if (!m_catalog)
+        return Language::English();
+    return m_catalog->GetSourceLanguage();
 }
 
 void Sidebar::RefreshContent()

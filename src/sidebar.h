@@ -165,6 +165,7 @@ public:
 
     /// Returns currently selected item
     CatalogItemPtr GetSelectedItem() const { return m_selectedItem; }
+    Language GetCurrentSourceLanguage() const;
     Language GetCurrentLanguage() const;
 
     /// Refreshes displayed content
