@@ -2351,6 +2351,7 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
                                     language.DisplayName()
                                 )
                             );
+                        // TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
                         msg.AddAction(_("Review"), [=]{ EditCatalogProperties(); });
                         msg.AddDontShowAgain();
 
