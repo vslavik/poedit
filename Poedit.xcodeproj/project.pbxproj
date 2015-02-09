@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B2083D131A87D17D00150BBF /* libcld2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2083D121A87D17D00150BBF /* libcld2.a */; };
 		B209005E19CAD64400D6382E /* SuggestionTM.png in Resources */ = {isa = PBXBuildFile; fileRef = B209005D19CAD64400D6382E /* SuggestionTM.png */; };
 		B209006019CAD64A00D6382E /* SuggestionError.png in Resources */ = {isa = PBXBuildFile; fileRef = B209005F19CAD64A00D6382E /* SuggestionError.png */; };
 		B20960F319928C8500A2EB13 /* GettextToolsDummy.c in Sources */ = {isa = PBXBuildFile; fileRef = B20960F219928C8500A2EB13 /* GettextToolsDummy.c */; };
@@ -196,6 +197,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B2083D121A87D17D00150BBF /* libcld2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcld2.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B209005D19CAD64400D6382E /* SuggestionTM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SuggestionTM.png; sourceTree = "<group>"; };
 		B209005F19CAD64A00D6382E /* SuggestionError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SuggestionError.png; sourceTree = "<group>"; };
 		B20960F219928C8500A2EB13 /* GettextToolsDummy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = GettextToolsDummy.c; path = macosx/GettextToolsDummy.c; sourceTree = SOURCE_ROOT; };
@@ -476,6 +478,7 @@
 				B2D76A4F181D028B0083C9D9 /* libboost_regex.a in Frameworks */,
 				B2D76A50181D028B0083C9D9 /* libboost_system.a in Frameworks */,
 				B2D76A51181D028B0083C9D9 /* libboost_thread.a in Frameworks */,
+				B2083D131A87D17D00150BBF /* libcld2.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -665,6 +668,7 @@
 		B24ACD5D16F6201F00399242 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B2083D121A87D17D00150BBF /* libcld2.a */,
 				B2284A54183BE68200E097C7 /* Security.framework */,
 				B2D76A46181D028B0083C9D9 /* libboost_date_time.a */,
 				B2D76A47181D028B0083C9D9 /* libboost_filesystem.a */,
@@ -1404,6 +1408,7 @@
 					deps/boost,
 					deps/lucene,
 					deps/lucene/LucenePlusPlus/include,
+					deps/cld2,
 					"$(DEPS_BUILD_DIR)/icu/include",
 				);
 				LIBRARY_SEARCH_PATHS = "";
@@ -1455,6 +1460,7 @@
 					deps/boost,
 					deps/lucene,
 					deps/lucene/LucenePlusPlus/include,
+					deps/cld2,
 					"$(DEPS_BUILD_DIR)/icu/include",
 				);
 				LIBRARY_SEARCH_PATHS = "";
@@ -1485,7 +1491,7 @@
 					"-licui18n",
 					"-ldb_cxx",
 				);
-				POEDIT_FEATURES = USE_SPARKLE;
+				POEDIT_FEATURES = "USE_SPARKLE HAVE_CLD2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1510,7 +1516,7 @@
 					"-licui18n",
 					"-ldb_cxx",
 				);
-				POEDIT_FEATURES = USE_SPARKLE;
+				POEDIT_FEATURES = "USE_SPARKLE HAVE_CLD2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
