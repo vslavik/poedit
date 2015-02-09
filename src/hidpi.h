@@ -27,8 +27,8 @@
 #define Poedit_hidpi_h
 
 #include <wx/defs.h>
-class WXDLLIMPEXP_BASE wxString;
-class WXDLLIMPEXP_CORE wxBitmap;
+class WXDLLIMPEXP_FWD_BASE wxString;
+class WXDLLIMPEXP_FWD_CORE wxBitmap;
 
 #ifdef __WXMSW__
     #define NEEDS_MANUAL_HIDPI 1
