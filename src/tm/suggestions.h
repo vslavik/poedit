@@ -113,12 +113,14 @@ public:
 
         @param backend    Suggestions backend to use, e.g.
                           TranslationMemory::Get().
+        @param srclang    Language of the source text.
         @param lang       Language of the desired translation.
         @param source     Source text.
         @param onSuccess  Called with suggestions.
         @param onError    Called in case of error.
      */
     void SuggestTranslation(SuggestionsBackend& backend,
+                            const Language& srclang,
                             const Language& lang,
                             const std::wstring& source,
                             success_func_type onSuccess,
@@ -161,12 +163,14 @@ public:
         If no suggestions are found, @a onSuccess is called with an empty
         list as its argument.
         
+        @param srclang    Language of the source text.
         @param lang       Language of the desired translation.
         @param source     Source text.
         @param onSuccess  Called with suggestions.
         @param onError    Called in case of error.
      */
-    virtual void SuggestTranslation(const Language& lang,
+    virtual void SuggestTranslation(const Language& srclang,
+                                    const Language& lang,
                                     const std::wstring& source,
                                     success_func_type onSuccess,
                                     error_func_type onError) = 0;

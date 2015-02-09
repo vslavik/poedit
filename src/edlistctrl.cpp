@@ -311,6 +311,7 @@ void PoeditListCtrl::ReadCatalog()
         return;
     }
 
+    auto srclang = m_catalog->GetSourceLanguage();
     auto lang = m_catalog->GetLanguage();
     auto isRTL = lang.IsRTL();
 #ifdef __WXMSW__
@@ -320,9 +321,16 @@ void PoeditListCtrl::ReadCatalog()
 #endif
     m_isRTL = isRTL;
 
-    wxString langname = lang.IsValid() ? lang.DisplayName() : _("unknown language");
     wxListItem colInfo;
     colInfo.SetMask(wxLIST_MASK_TEXT);
+
+    if (srclang.IsValid())
+        colInfo.SetText(wxString::Format(_(L"Source text — %s"), srclang.DisplayName()));
+    else
+        colInfo.SetText(_("Source text"));
+    SetColumn(0, colInfo);
+
+    wxString langname = lang.IsValid() ? lang.DisplayName() : _("unknown language");
     colInfo.SetText(wxString::Format(_(L"Translation — %s"), langname));
     colInfo.SetAlign(isRTL ? wxLIST_FORMAT_RIGHT : wxLIST_FORMAT_LEFT);
     SetColumn(1, colInfo);

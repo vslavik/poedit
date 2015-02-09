@@ -111,6 +111,8 @@ public:
         if you are not sure.
      */
     static Language TryParse(const std::wstring& s);
+    static Language TryParse(const std::string& s)
+        { return TryParse(std::wstring(s.begin(), s.end())); }
 
     /**
         Like TryParse(), but only accepts language codes if they are known
@@ -130,6 +132,17 @@ public:
      */
     static Language TryGuessFromFilename(const wxString& filename);
 
+    /**
+        Try to detect the language from UTF-8 text.
+        
+        Pass @a probableLanguage if the result is likely known, e.g. English
+        for source texts.
+     */
+    static Language TryDetectFromText(const char *buffer, size_t len,
+                                      Language probableLanguage = Language());
+
+    /// Returns object for English language
+    static Language English() { return Language("en"); }
 
     /**
         Checks if @a s has the form of language code.

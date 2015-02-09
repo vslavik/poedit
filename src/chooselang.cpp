@@ -62,7 +62,7 @@ static bool ChooseLanguage(wxString *value)
         arr.push_back(_("(Use default language)"));
         for (auto i : langs)
         {
-            auto lang = Language::TryParse(i);
+            auto lang = Language::TryParse(i.ToStdWstring());
             arr.push_back(lang.DisplayNameInItself() + L"  —  " + lang.DisplayName());
         }
     }

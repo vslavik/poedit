@@ -40,6 +40,16 @@
 
 #include <wx/filename.h>
 
+#ifdef HAVE_CLD2
+    #ifdef HAVE_CLD2_PUBLIC_COMPACT_LANG_DET_H
+        #include <cld2/public/compact_lang_det.h>
+        #include <cld2/public/encodings.h>
+    #else
+        #include "public/compact_lang_det.h"
+        #include "public/encodings.h"
+    #endif
+#endif
+
 // GCC's libstdc++ didn't have functional std::regex implementation until 4.9
 #if (defined(__GNUC__) && !defined(__clang__) && !wxCHECK_GCC_VERSION(4,9))
     #include <boost/regex.hpp>
@@ -464,4 +474,47 @@ Language Language::TryGuessFromFilename(const wxString& filename)
     }
 
     return Language(); // failed to match
+}
+
+
+Language Language::TryDetectFromText(const char *buffer, size_t len, Language probableLanguage)
+{
+#ifdef HAVE_CLD2
+    using namespace CLD2;
+
+    CLDHints hints = {NULL, NULL, UNKNOWN_ENCODING, UNKNOWN_LANGUAGE};
+    if (probableLanguage.IsValid())
+    {
+        if (probableLanguage.Lang() == "en")
+            hints.language_hint = ENGLISH;
+        else
+            hints.language_hint = GetLanguageFromName(probableLanguage.RFC3066().c_str());
+    }
+
+    // three best guesses; we don't care, but they must be passed in
+    CLD2::Language language3[3];
+    int percent3[3];
+    double normalized_score3[3];
+    // more result info:
+    int text_bytes;
+    bool is_reliable;
+
+    auto lang = CLD2::ExtDetectLanguageSummary(
+                        buffer, (int)len,
+                        /*is_plain_text=*/false, // may have embedded HTML markup
+                        &hints,
+                        /*flags=*/0,
+                        language3, percent3, normalized_score3,
+                        /*resultchunkvector=*/nullptr,
+                        &text_bytes,
+                        &is_reliable);
+    if (lang != UNKNOWN_LANGUAGE && is_reliable)
+        return Language::TryParse(LanguageCode(lang));
+    else
+        return Language();
+#else
+    (void)buffer;
+    (void)len;
+    return probableLanguage;
+#endif
 }

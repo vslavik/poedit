@@ -982,6 +982,12 @@ class LoadParser : public CatalogParser
         // true if the file is valid, i.e. has at least some data
         bool FileIsValid;
 
+        Language GetMsgidLanguage()
+        {
+            auto utf8 = m_allMsgidText.utf8_str();
+            return Language::TryDetectFromText(utf8.data(), utf8.length(), Language::English());
+        }
+
     protected:
         Catalog& m_catalog;
 
@@ -1010,6 +1016,9 @@ class LoadParser : public CatalogParser
     private:
         int m_nextId;
         bool m_seenHeaderAlready;
+
+        // collected text of msgids, with newlines, for language detection
+        wxString m_allMsgidText;
 };
 
 
@@ -1070,6 +1079,15 @@ bool LoadParser::OnEntry(const wxString& msgid,
         }
         d->SetOldMsgid(msgid_old);
         m_catalog.AddItem(d);
+
+        // collect text for language detection:
+        m_allMsgidText.append(msgid);
+        m_allMsgidText.append('\n');
+        if (!msgid_plural.empty())
+        {
+            m_allMsgidText.append(msgid_plural);
+            m_allMsgidText.append('\n');
+        }
     }
     return true;
 }
@@ -1103,6 +1121,7 @@ bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
 
 Catalog::Catalog()
 {
+    m_sourceLanguage = Language::English();
     m_fileCRLF = wxTextFileType_None;
     m_fileWrappingWidth = DEFAULT_WRAPPING;
 
@@ -1229,6 +1248,8 @@ bool Catalog::Load(const wxString& po_file, int flags)
         return false;
     }
 
+    m_sourceLanguage = parser.GetMsgidLanguage();
+
     // now that the catalog is loaded, update its items with the bookmarks
     for (unsigned i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
     {
@@ -1269,6 +1290,27 @@ void Catalog::FixupCommonIssues()
         {
             m_header.Lang = Language::TryGuessFromFilename(m_fileName);
             wxLogTrace("poedit", "guessed language from filename '%s': %s", m_fileName, m_header.Lang.Code());
+        }
+
+        if (!m_header.Lang.IsValid())
+        {
+            // If all else fails, try to detect the language from content
+            wxString allText;
+            for (auto& i: items())
+            {
+                for (auto& s: i->GetTranslations())
+                {
+                    if (s.empty())
+                        continue;
+                    allText.append(s);
+                    allText.append('\n');
+                }
+            }
+            if (!allText.empty())
+            {
+                auto utf8 = allText.utf8_str();
+                m_header.Lang = Language::TryDetectFromText(utf8.data(), utf8.length());
+            }
         }
     }
 

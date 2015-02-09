@@ -99,7 +99,7 @@ public:
         m_writer->close();
     }
 
-    SuggestionsList Search(const Language& lang,
+    SuggestionsList Search(const Language& srclang, const Language& lang,
                            const std::wstring& source);
 
     std::shared_ptr<TranslationMemory::Writer> GetWriter() { return m_writerAPI; }
@@ -181,7 +181,7 @@ bool ContainsResult(const SuggestionsList& all, const std::wstring& r)
 
 template<typename T>
 void PerformSearchWithBlock(IndexSearcherPtr searcher,
-                            QueryPtr lang,
+                            QueryPtr srclang, QueryPtr lang,
                             const std::wstring& exactSourceText,
                             QueryPtr query,
                             double scoreThreshold,
@@ -189,6 +189,7 @@ void PerformSearchWithBlock(IndexSearcherPtr searcher,
                             T callback)
 {
     auto fullQuery = newLucene<BooleanQuery>();
+    fullQuery->add(srclang, BooleanClause::MUST);
     fullQuery->add(lang, BooleanClause::MUST);
     fullQuery->add(query, BooleanClause::MUST);
 
@@ -228,7 +229,7 @@ void PerformSearchWithBlock(IndexSearcherPtr searcher,
 }
 
 void PerformSearch(IndexSearcherPtr searcher,
-                   QueryPtr lang,
+                   QueryPtr srclang, QueryPtr lang,
                    const std::wstring& exactSourceText,
                    QueryPtr query,
                    SuggestionsList& results,
@@ -237,7 +238,7 @@ void PerformSearch(IndexSearcherPtr searcher,
 {
     PerformSearchWithBlock
     (
-        searcher, lang, exactSourceText, query,
+        searcher, srclang, lang, exactSourceText, query,
         scoreThreshold, scoreScaling,
         [&results](DocumentPtr doc, double score)
         {
@@ -256,11 +257,15 @@ void PerformSearch(IndexSearcherPtr searcher,
 
 } // anonymous namespace
 
-SuggestionsList TranslationMemoryImpl::Search(const Language& lang,
+SuggestionsList TranslationMemoryImpl::Search(const Language& srclang,
+                                              const Language& lang,
                                               const std::wstring& source)
 {
     try
     {
+        // TODO: query by srclang too!
+        auto srclangQ = newLucene<TermQuery>(newLucene<Term>(L"srclang", srclang.WCode()));
+
         const Lucene::String fullLang = lang.WCode();
         const Lucene::String shortLang = StringUtils::toUnicode(lang.Lang());
 
@@ -301,14 +306,14 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& lang,
         auto searcher = newLucene<IndexSearcher>(Reader());
 
         // Try exact phrase first:
-        PerformSearch(searcher, langQ, source, phraseQ, results,
+        PerformSearch(searcher, srclangQ, langQ, source, phraseQ, results,
                       QUALITY_THRESHOLD, /*scoreScaling=*/1.0);
         if (!results.empty())
             return results;
 
         // Then, if no matches were found, permit being a bit sloppy:
         phraseQ->setSlop(1);
-        PerformSearch(searcher, langQ, source, phraseQ, results,
+        PerformSearch(searcher, srclangQ, langQ, source, phraseQ, results,
                       QUALITY_THRESHOLD, /*scoreScaling=*/0.9);
 
         if (!results.empty())
@@ -319,7 +324,7 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& lang,
         boolQ->setMinimumNumberShouldMatch(std::max(1, boolQ->getClauses().size() - MAX_ALLOWED_LENGTH_DIFFERENCE));
         PerformSearchWithBlock
         (
-            searcher, langQ, source, boolQ,
+            searcher, srclangQ, langQ, source, boolQ,
             QUALITY_THRESHOLD, /*scoreScaling=*/0.8,
             [=,&results](DocumentPtr doc, double score)
             {
@@ -372,7 +377,7 @@ public:
 
     ~TranslationMemoryWriterImpl() {}
 
-    virtual void Commit()
+    void Commit() override
     {
         try
         {
@@ -381,7 +386,7 @@ public:
         CATCH_AND_RETHROW_EXCEPTION
     }
 
-    virtual void Rollback()
+    void Rollback() override
     {
         try
         {
@@ -390,11 +395,10 @@ public:
         CATCH_AND_RETHROW_EXCEPTION
     }
 
-    virtual void Insert(const Language& lang,
-                        const std::wstring& source,
-                        const std::wstring& trans)
+    void Insert(const Language& srclang, const Language& lang,
+                const std::wstring& source, const std::wstring& trans) override
     {
-        if (!lang.IsValid())
+        if (!lang.IsValid() || !srclang.IsValid() || lang == srclang)
             return;
 
         // Compute unique ID for the translation:
@@ -403,7 +407,7 @@ public:
           boost::uuids::string_generator()("6e3f73c5-333f-4171-9d43-954c372a8a02");
         boost::uuids::name_generator gen(s_namespace);
 
-        std::wstring itemId(L"en"); // TODO: srclang
+        std::wstring itemId(srclang.WCode());
         itemId += lang.WCode();
         itemId += source;
         itemId += trans;
@@ -419,7 +423,7 @@ public:
                                       Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
             doc->add(newLucene<Field>(L"created", DateField::timeToString(time(NULL)),
                                       Field::STORE_YES, Field::INDEX_NO));
-            doc->add(newLucene<Field>(L"srclang", L"en",
+            doc->add(newLucene<Field>(L"srclang", srclang.WCode(),
                                       Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
             doc->add(newLucene<Field>(L"lang", lang.WCode(),
                                       Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
@@ -433,9 +437,9 @@ public:
         CATCH_AND_RETHROW_EXCEPTION
     }
 
-    virtual void Insert(const Language& lang, const CatalogItemPtr& item)
+    void Insert(const Language& srclang, const Language& lang, const CatalogItemPtr& item) override
     {
-        if (!lang.IsValid())
+        if (!lang.IsValid() || !srclang.IsValid())
             return;
 
         // ignore translations with errors in them
@@ -450,13 +454,14 @@ public:
         if (item->IsFuzzy() || !item->IsTranslated())
             return;
 
-        Insert(lang, item->GetString().ToStdWstring(), item->GetTranslation().ToStdWstring());
+        Insert(srclang, lang, item->GetString().ToStdWstring(), item->GetTranslation().ToStdWstring());
     }
 
-    virtual void Insert(const CatalogPtr& cat)
+    void Insert(const CatalogPtr& cat) override
     {
+        auto srclang = cat->GetSourceLanguage();
         auto lang = cat->GetLanguage();
-        if (!lang.IsValid())
+        if (!lang.IsValid() || !srclang.IsValid())
             return;
 
         for (auto& item: cat->items())
@@ -464,11 +469,11 @@ public:
             // Note that dt.IsModified() is intentionally not checked - we
             // want to save old entries in the TM too, so that we harvest as
             // much useful translations as we can.
-            Insert(lang, item);
+            Insert(srclang, lang, item);
         }
     }
 
-    virtual void DeleteAll()
+    void DeleteAll() override
     {
         try
         {
@@ -538,20 +543,22 @@ TranslationMemory::~TranslationMemory() { delete m_impl; }
 // public API
 // ----------------------------------------------------------------
 
-SuggestionsList TranslationMemory::Search(const Language& lang,
+SuggestionsList TranslationMemory::Search(const Language& srclang,
+                                          const Language& lang,
                                           const std::wstring& source)
 {
-    return m_impl->Search(lang, source);
+    return m_impl->Search(srclang, lang, source);
 }
 
-void TranslationMemory::SuggestTranslation(const Language& lang,
+void TranslationMemory::SuggestTranslation(const Language& srclang,
+                                           const Language& lang,
                                            const std::wstring& source,
                                            success_func_type onSuccess,
                                            error_func_type onError)
 {
     try
     {
-        onSuccess(Search(lang, source));
+        onSuccess(Search(srclang, lang, source));
     }
     catch (...)
     {

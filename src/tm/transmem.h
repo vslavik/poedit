@@ -52,16 +52,19 @@ public:
     /**
         Search translation memory for similar strings.
         
+        @param srclang Language of the source text.
         @param lang    Language of the desired translation.
         @param source  Source text.
 
         @return List of hits that were found, possibly empty.
      */
-    SuggestionsList Search(const Language& lang,
+    SuggestionsList Search(const Language& srclang,
+                           const Language& lang,
                            const std::wstring& source);
 
     /// SuggestionsBackend API implementation:
-    void SuggestTranslation(const Language& lang,
+    void SuggestTranslation(const Language& srclang,
+                            const Language& lang,
                             const std::wstring& source,
                             success_func_type onSuccess,
                             error_func_type onError) override;
@@ -88,12 +91,14 @@ public:
 
         /**
             Insert translation into the TM.
-            
-            @param lang    Language code (e.g. pt_BR or cs).
+
+            @param srclang Source text language.
+            @param lang    Translation language.
             @param source  Source text.
             @param trans   Translation text.
          */
-        virtual void Insert(const Language& lang,
+        virtual void Insert(const Language& srclang,
+                            const Language& lang,
                             const std::wstring& source,
                             const std::wstring& trans) = 0;
 
@@ -103,7 +108,9 @@ public:
             @note
             Not everything is included: fuzzy or untranslated entries are skipped.
          */
-        virtual void Insert(const Language& lang, const CatalogItemPtr& item) = 0;
+        virtual void Insert(const Language& srclang,
+                            const Language& lang,
+                            const CatalogItemPtr& item) = 0;
 
         /**
             Inserts entire content of the catalog.

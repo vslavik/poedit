@@ -177,6 +177,49 @@ PKG_CHECK_MODULES([EXPAT], [expat],
         ])
 
 
+
+dnl Check for Compact Language Detector 2
+dnl (used for better language detection and for non-English source languages)
+AC_ARG_WITH([cld2],
+    AS_HELP_STRING([--without-cld2], [Ignore presence of cld2 and disable it]))
+
+AS_IF([test "x$with_cld2" != "xno"],
+      [
+          have_cld2=no
+          AC_CHECK_HEADERS([cld2/public/compact_lang_det.h],
+              [
+                  AC_MSG_CHECKING([for libcld2])
+                  old_LIBS="$LIBS"
+                  LIBS="-lcld2 $LIBS"
+                  AC_LINK_IFELSE([AC_LANG_PROGRAM(
+                      [
+                          #include <stdio.h>
+                          #include <cld2/public/compact_lang_det.h>
+                      ],
+                      [
+                          CLD2::isDataDynamic();
+                      ])],
+                      [have_cld2=yes])
+                  LIBS="$old_LIBS"
+                  AC_MSG_RESULT([$have_cld2])
+              ])
+      ],
+      [have_cld2=no])
+
+AS_IF([test "x$have_cld2" = "xyes"],
+      [
+          AC_DEFINE([HAVE_CLD2])
+          CLD2_LIBS="-lcld2"
+          AC_SUBST(CLD2_LIBS)
+      ],
+      [
+          AS_IF([test "x$with_cld2" = "xyes"],
+                [AC_MSG_ERROR([cld2 requested but not found])])
+      ])
+
+
+
+
 APPCAST_SUFFIX=""
 if echo "$VERSION" | grep -q '\(beta\|rc\)' ; then
     APPCAST_SUFFIX="/beta"
@@ -212,5 +255,8 @@ AC_OUTPUT
 echo "
 Configured $PACKAGE-$VERSION for $host
 
-    Debug build:      $USE_DEBUG
+Enabled features:
+
+    * debug build:         $USE_DEBUG
+    * language detection:  $have_cld2
 "

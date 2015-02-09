@@ -34,6 +34,7 @@ public:
     SuggestionsProviderImpl() : m_pool(2) {}
 
     void SuggestTranslation(SuggestionsBackend& backend,
+                            const Language& srclang,
                             const Language& lang,
                             const std::wstring& source,
                             SuggestionsProvider::success_func_type onSuccess,
@@ -48,7 +49,7 @@ public:
                 return;
             }
             // query the backend:
-            bck->SuggestTranslation(lang, source, onSuccess, onError);
+            bck->SuggestTranslation(srclang, lang, source, onSuccess, onError);
         });
     }
 
@@ -67,10 +68,11 @@ SuggestionsProvider::~SuggestionsProvider()
 }
 
 void SuggestionsProvider::SuggestTranslation(SuggestionsBackend& backend,
+                                             const Language& srclang,
                                              const Language& lang,
                                              const std::wstring& source,
                                              success_func_type onSuccess,
                                              error_func_type onError)
 {
-    m_impl->SuggestTranslation(backend, lang, source, onSuccess, onError);
+    m_impl->SuggestTranslation(backend, srclang, lang, source, onSuccess, onError);
 }
