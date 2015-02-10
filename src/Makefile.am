@@ -4,7 +4,12 @@ LUCENE_LIBS = @LUCENE_LIBS@
 WX_LIBS = @WX_LIBS@
 
 bin_PROGRAMS = poedit
+
+if MIGRATE_LEGACY_TM
 libexec_PROGRAMS = poedit-dump-legacy-tm
+poedit_dump_legacy_tm_SOURCES = tm/dump_legacy_tm.cpp
+poedit_dump_legacy_tm_LDADD = $(DB_LIBS)
+endif
 
 poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  errorbar.cpp errorbar.h \
@@ -39,9 +44,6 @@ nodist_poedit_SOURCES = compiled_xrc.cpp
 
 poedit_LDADD = $(WX_LIBS) $(LUCENE_LIBS) $(EXPAT_LIBS) $(CLD2_LIBS) \
                -lboost_regex -lboost_system
-
-poedit_dump_legacy_tm_SOURCES = tm/dump_legacy_tm.cpp
-poedit_dump_legacy_tm_LDADD = $(DB_LIBS)
 
 XRC_RESOURCES = \
 		$(srcdir)/resources/menus.xrc \

@@ -23,6 +23,8 @@
  *
  */
 
+#ifndef DONT_MIGRATE_LEGACY_TM
+
 #include "transmem.h"
 
 #include "logcapture.h"
@@ -303,3 +305,5 @@ bool MigrateLegacyTranslationMemory()
 
     return true;
 }
+
+#endif // !DONT_MIGRATE_LEGACY_TM

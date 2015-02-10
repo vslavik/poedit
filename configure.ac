@@ -149,15 +149,6 @@ PKG_CHECK_MODULES([GTKSPELL], [$gtkspell_packages],
     ])
 
 
-AX_BERKELEY_DB_CXX(4.7,
-[
-    AC_DEFINE_UNQUOTED(DB_HEADER, ["$DB_HEADER"])
-    AC_SUBST(DB_LIBS)
-],
-[
-  AC_MSG_ERROR([cannot find required Berkeley DB >= 4.7])
-])
-
 PKG_CHECK_MODULES([LUCENE], [liblucene++ >= 3.0.5],
         [
             CXXFLAGS="$CXXFLAGS $LUCENE_CFLAGS"
@@ -167,16 +158,37 @@ PKG_CHECK_MODULES([LUCENE], [liblucene++ >= 3.0.5],
             AC_MSG_ERROR([missing Lucene++ library])
         ])
 
-PKG_CHECK_MODULES([EXPAT], [expat],
+
+dnl Check for legacy TM support
+AC_ARG_ENABLE([legacytm],
+    AS_HELP_STRING([--disable-legacytm], [disable code to migrate pre-1.6 TM to the new format]))
+
+AS_IF([test "x$enable_legacytm" != "xno"],
+    [
+        enable_legacytm=yes
+        AX_BERKELEY_DB_CXX(4.7,
         [
-            CXXFLAGS="$CXXFLAGS $EXPAT_CFLAGS"
-            AC_SUBST(EXPAT_LIBS)
+            AC_DEFINE_UNQUOTED(DB_HEADER, ["$DB_HEADER"])
+            AC_SUBST(DB_LIBS)
         ],
         [
-            AC_MSG_ERROR([missing Expat library])
+          AC_MSG_ERROR([cannot find required Berkeley DB >= 4.7 (req. for legacy TM)])
         ])
 
+        PKG_CHECK_MODULES([EXPAT], [expat],
+            [
+                CXXFLAGS="$CXXFLAGS $EXPAT_CFLAGS"
+                AC_SUBST(EXPAT_LIBS)
+            ],
+            [
+                AC_MSG_ERROR([missing Expat library (req. for legacy TM)])
+            ])
+    ],
+    [
+        AC_DEFINE(DONT_MIGRATE_LEGACY_TM)
+    ])
 
+AM_CONDITIONAL([MIGRATE_LEGACY_TM], [test "x$enable_legacytm" != "xno"])
 
 dnl Check for Compact Language Detector 2
 dnl (used for better language detection and for non-English source languages)
@@ -250,6 +262,7 @@ Configured $PACKAGE-$VERSION for $host
 
 Enabled features:
 
-    * debug build:         $USE_DEBUG
-    * language detection:  $have_cld2
+    * debug build:                    $USE_DEBUG
+    * legacy (pre-1.6) TM migration:  $enable_legacytm
+    * language detection:             $have_cld2
 "
