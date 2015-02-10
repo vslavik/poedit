@@ -30,6 +30,8 @@ replace_ver configure.ac \
             '\(AC_INIT(\[poedit\], \[\)[^]]*\(\],.*\)' "\1$VER_FULL\2"
 replace_ver configure.ac \
             '\(PACKAGE_SHORT_VERSION=\).*' "\1$VER_SHORT"
+replace_ver scripts/refresh-pot.sh \
+            '\(PACKAGE_SHORT_VERSION=\).*' "\1$VER_SHORT"
 replace_ver src/version.h \
             '\(POEDIT_VERSION.*"\).*\("\)' "\1$VER_FULL\2"
 replace_ver src/version.h \
