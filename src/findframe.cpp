@@ -83,13 +83,17 @@ FindFrame::FindFrame(wxWindow *parent,
     m_findInTrans = new wxCheckBox(collPane, wxID_ANY, _("Find in translations"));
     m_findInComments = new wxCheckBox(collPane, wxID_ANY, _("Find in comments"));
 
-    wxBoxSizer *options = new wxBoxSizer(wxVERTICAL);
-    options->Add(m_caseSensitive, wxSizerFlags().Expand());
-    options->Add(m_fromFirst, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
-    options->Add(m_wholeWords, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
-    options->Add(m_findInOrig, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
-    options->Add(m_findInTrans, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
-    options->Add(m_findInComments, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+    wxBoxSizer *options = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer *optionsL = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer *optionsR = new wxBoxSizer(wxVERTICAL);
+    options->Add(optionsL, wxSizerFlags(1).Expand().PXBorder(wxRIGHT));
+    options->Add(optionsR, wxSizerFlags(1).Expand());
+    optionsL->Add(m_caseSensitive, wxSizerFlags().Expand());
+    optionsL->Add(m_fromFirst, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+    optionsL->Add(m_wholeWords, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+    optionsR->Add(m_findInOrig, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+    optionsR->Add(m_findInTrans, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+    optionsR->Add(m_findInComments, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
 
 #ifdef __WXMSW__
     sizer->Add(options, wxSizerFlags().Expand().PXBorderAll());
