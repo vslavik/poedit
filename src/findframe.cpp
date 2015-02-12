@@ -71,7 +71,7 @@ FindFrame::FindFrame(wxWindow *parent,
     m_caseSensitive = new wxCheckBox(this, wxID_ANY, _("Case sensitive"));
     m_fromFirst = new wxCheckBox(this, wxID_ANY, _("Start from the first item"));
     m_wholeWords = new wxCheckBox(this, wxID_ANY, _("Whole words only"));
-    m_findInOrig = new wxCheckBox(this, wxID_ANY, _("Find in original strings"));
+    m_findInOrig = new wxCheckBox(this, wxID_ANY, _("Find in source texts"));
     m_findInTrans = new wxCheckBox(this, wxID_ANY, _("Find in translations"));
     m_findInComments = new wxCheckBox(this, wxID_ANY, _("Find in comments"));
     m_findInAutoComments = new wxCheckBox(this, wxID_ANY, _("Find in automatic comments"));
