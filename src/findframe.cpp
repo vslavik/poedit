@@ -24,6 +24,7 @@
  */
 
 #include <wx/accel.h>
+#include <wx/collpane.h>
 #include <wx/config.h>
 #include <wx/button.h>
 #include <wx/sizer.h>
@@ -67,13 +68,20 @@ FindFrame::FindFrame(wxWindow *parent,
     m_textField = new wxTextCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(PX(400), -1));
     sizer->Add(m_textField, wxSizerFlags().Expand().PXBorderAll());
 
+#ifdef __WXMSW__
+    #define collPane this
+#else
+    // TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+    auto coll = new wxCollapsiblePane(this, wxID_ANY, _("Options"));
+    auto collPane = coll->GetPane();
+#endif
 
-    m_caseSensitive = new wxCheckBox(this, wxID_ANY, _("Case sensitive"));
-    m_fromFirst = new wxCheckBox(this, wxID_ANY, _("Start from the first item"));
-    m_wholeWords = new wxCheckBox(this, wxID_ANY, _("Whole words only"));
-    m_findInOrig = new wxCheckBox(this, wxID_ANY, _("Find in source texts"));
-    m_findInTrans = new wxCheckBox(this, wxID_ANY, _("Find in translations"));
-    m_findInComments = new wxCheckBox(this, wxID_ANY, _("Find in comments"));
+    m_caseSensitive = new wxCheckBox(collPane, wxID_ANY, _("Case sensitive"));
+    m_fromFirst = new wxCheckBox(collPane, wxID_ANY, _("Start from the first item"));
+    m_wholeWords = new wxCheckBox(collPane, wxID_ANY, _("Whole words only"));
+    m_findInOrig = new wxCheckBox(collPane, wxID_ANY, _("Find in source texts"));
+    m_findInTrans = new wxCheckBox(collPane, wxID_ANY, _("Find in translations"));
+    m_findInComments = new wxCheckBox(collPane, wxID_ANY, _("Find in comments"));
 
     wxBoxSizer *options = new wxBoxSizer(wxVERTICAL);
     options->Add(m_caseSensitive, wxSizerFlags().Expand());
@@ -82,7 +90,13 @@ FindFrame::FindFrame(wxWindow *parent,
     options->Add(m_findInOrig, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
     options->Add(m_findInTrans, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
     options->Add(m_findInComments, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+
+#ifdef __WXMSW__
     sizer->Add(options, wxSizerFlags().Expand().PXBorderAll());
+#else
+    collPane->SetSizer(options);
+    sizer->Add(coll, wxSizerFlags().Expand().PXBorderAll());
+#endif
 
     m_btnClose = new wxButton(this, wxID_CLOSE, _("Close"));
     m_btnPrev = new wxButton(this, wxID_ANY, _("< &Previous"));
