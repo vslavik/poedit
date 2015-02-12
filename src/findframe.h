@@ -83,8 +83,7 @@ class FindFrame : public wxDialog
 
         wxTextCtrl *m_textField;
         wxCheckBox *m_caseSensitive, *m_fromFirst, *m_wholeWords,
-                   *m_findInOrig, *m_findInTrans, *m_findInComments,
-                   *m_findInAutoComments;
+                   *m_findInOrig, *m_findInTrans, *m_findInComments;
 
         wxWeakRef<PoeditListCtrl> m_listCtrl;
         CatalogPtr m_catalog;

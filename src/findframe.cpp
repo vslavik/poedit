@@ -74,7 +74,6 @@ FindFrame::FindFrame(wxWindow *parent,
     m_findInOrig = new wxCheckBox(this, wxID_ANY, _("Find in source texts"));
     m_findInTrans = new wxCheckBox(this, wxID_ANY, _("Find in translations"));
     m_findInComments = new wxCheckBox(this, wxID_ANY, _("Find in comments"));
-    m_findInAutoComments = new wxCheckBox(this, wxID_ANY, _("Find in automatic comments"));
 
     wxBoxSizer *options = new wxBoxSizer(wxVERTICAL);
     options->Add(m_caseSensitive, wxSizerFlags().Expand());
@@ -83,7 +82,6 @@ FindFrame::FindFrame(wxWindow *parent,
     options->Add(m_findInOrig, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
     options->Add(m_findInTrans, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
     options->Add(m_findInComments, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
-    options->Add(m_findInAutoComments, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
     sizer->Add(options, wxSizerFlags().Expand().PXBorderAll());
 
     m_btnClose = new wxButton(this, wxID_CLOSE, _("Close"));
@@ -115,7 +113,6 @@ FindFrame::FindFrame(wxWindow *parent,
     m_findInOrig->SetValue(wxConfig::Get()->ReadBool("find_in_orig", true));
     m_findInTrans->SetValue(wxConfig::Get()->ReadBool("find_in_trans", true));
     m_findInComments->SetValue(wxConfig::Get()->ReadBool("find_in_comments", true));
-    m_findInAutoComments->SetValue(wxConfig::Get()->ReadBool("find_in_auto_comments", true));
     m_caseSensitive->SetValue(wxConfig::Get()->ReadBool("find_case_sensitive", false));
     m_fromFirst->SetValue(wxConfig::Get()->ReadBool("find_from_first", true));
     m_wholeWords->SetValue(wxConfig::Get()->ReadBool("whole_words", false));
@@ -145,7 +142,6 @@ FindFrame::~FindFrame()
     wxConfig::Get()->Write("find_in_orig", m_findInOrig->GetValue());
     wxConfig::Get()->Write("find_in_trans", m_findInTrans->GetValue());
     wxConfig::Get()->Write("find_in_comments", m_findInComments->GetValue());
-    wxConfig::Get()->Write("find_in_auto_comments", m_findInAutoComments->GetValue());
     wxConfig::Get()->Write("find_case_sensitive", m_caseSensitive->GetValue());
     wxConfig::Get()->Write("find_from_first", m_fromFirst->GetValue());
     wxConfig::Get()->Write("whole_words", m_wholeWords->GetValue());
@@ -298,7 +294,6 @@ bool FindFrame::DoFind(int dir)
     bool inStr = m_findInOrig->GetValue();
     bool inTrans = m_findInTrans->GetValue();
     bool inComments = m_findInComments->GetValue();
-    bool inExtractedComments = m_findInAutoComments->GetValue();
     bool caseSens = m_caseSensitive->GetValue();
     bool wholeWords = m_wholeWords->GetValue();
     int posOrig = m_position;
@@ -363,9 +358,7 @@ bool FindFrame::DoFind(int dir)
                 textc.MakeLower();
 
             if (TextInString(textc, text, wholeWords)) { found = Found_InComments; break; }
-        }
-        if (inExtractedComments)
-        {
+
             wxArrayString extractedComments = dt->GetExtractedComments();
             textc = wxEmptyString;
             for (unsigned i = 0; i < extractedComments.GetCount(); i++)
