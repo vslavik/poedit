@@ -138,13 +138,6 @@ FindFrame::~FindFrame()
     ms_singleton = nullptr;
 
     SaveWindowState(this, WinState_Pos);
-
-    wxConfig::Get()->Write("find_in_orig", m_findInOrig->GetValue());
-    wxConfig::Get()->Write("find_in_trans", m_findInTrans->GetValue());
-    wxConfig::Get()->Write("find_in_comments", m_findInComments->GetValue());
-    wxConfig::Get()->Write("find_case_sensitive", m_caseSensitive->GetValue());
-    wxConfig::Get()->Write("find_from_first", m_fromFirst->GetValue());
-    wxConfig::Get()->Write("whole_words", m_wholeWords->GetValue());
 }
 
 FindFrame *FindFrame::Get(PoeditListCtrl *list, const CatalogPtr& forCatalog)
@@ -216,6 +209,13 @@ void FindFrame::OnTextChange(wxCommandEvent&)
 
 void FindFrame::OnCheckbox(wxCommandEvent&)
 {
+    wxConfig::Get()->Write("find_in_orig", m_findInOrig->GetValue());
+    wxConfig::Get()->Write("find_in_trans", m_findInTrans->GetValue());
+    wxConfig::Get()->Write("find_in_comments", m_findInComments->GetValue());
+    wxConfig::Get()->Write("find_case_sensitive", m_caseSensitive->GetValue());
+    wxConfig::Get()->Write("find_from_first", m_fromFirst->GetValue());
+    wxConfig::Get()->Write("whole_words", m_wholeWords->GetValue());
+
     Reset(m_catalog);
 }
 
