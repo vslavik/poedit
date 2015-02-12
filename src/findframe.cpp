@@ -76,7 +76,7 @@ FindFrame::FindFrame(wxWindow *parent,
     auto collPane = coll->GetPane();
 #endif
 
-    m_caseSensitive = new wxCheckBox(collPane, wxID_ANY, _("Case sensitive"));
+    m_ignoreCase = new wxCheckBox(collPane, wxID_ANY, _("Ignore case"));
     m_fromFirst = new wxCheckBox(collPane, wxID_ANY, _("Start from the first item"));
     m_wholeWords = new wxCheckBox(collPane, wxID_ANY, _("Whole words only"));
     m_findInOrig = new wxCheckBox(collPane, wxID_ANY, _("Find in source texts"));
@@ -88,7 +88,7 @@ FindFrame::FindFrame(wxWindow *parent,
     wxBoxSizer *optionsR = new wxBoxSizer(wxVERTICAL);
     options->Add(optionsL, wxSizerFlags(1).Expand().PXBorder(wxRIGHT));
     options->Add(optionsR, wxSizerFlags(1).Expand());
-    optionsL->Add(m_caseSensitive, wxSizerFlags().Expand());
+    optionsL->Add(m_ignoreCase, wxSizerFlags().Expand());
     optionsL->Add(m_fromFirst, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
     optionsL->Add(m_wholeWords, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
     optionsR->Add(m_findInOrig, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
@@ -131,7 +131,7 @@ FindFrame::FindFrame(wxWindow *parent,
     m_findInOrig->SetValue(wxConfig::Get()->ReadBool("find_in_orig", true));
     m_findInTrans->SetValue(wxConfig::Get()->ReadBool("find_in_trans", true));
     m_findInComments->SetValue(wxConfig::Get()->ReadBool("find_in_comments", true));
-    m_caseSensitive->SetValue(wxConfig::Get()->ReadBool("find_case_sensitive", false));
+    m_ignoreCase->SetValue(!wxConfig::Get()->ReadBool("find_case_sensitive", false));
     m_fromFirst->SetValue(wxConfig::Get()->ReadBool("find_from_first", true));
     m_wholeWords->SetValue(wxConfig::Get()->ReadBool("whole_words", false));
 
@@ -230,7 +230,7 @@ void FindFrame::OnCheckbox(wxCommandEvent&)
     wxConfig::Get()->Write("find_in_orig", m_findInOrig->GetValue());
     wxConfig::Get()->Write("find_in_trans", m_findInTrans->GetValue());
     wxConfig::Get()->Write("find_in_comments", m_findInComments->GetValue());
-    wxConfig::Get()->Write("find_case_sensitive", m_caseSensitive->GetValue());
+    wxConfig::Get()->Write("find_case_sensitive", !m_ignoreCase->GetValue());
     wxConfig::Get()->Write("find_from_first", m_fromFirst->GetValue());
     wxConfig::Get()->Write("whole_words", m_wholeWords->GetValue());
 
@@ -312,7 +312,7 @@ bool FindFrame::DoFind(int dir)
     bool inStr = m_findInOrig->GetValue();
     bool inTrans = m_findInTrans->GetValue();
     bool inComments = m_findInComments->GetValue();
-    bool caseSens = m_caseSensitive->GetValue();
+    bool ignoreCase = m_ignoreCase->GetValue();
     bool wholeWords = m_wholeWords->GetValue();
     int posOrig = m_position;
 
@@ -320,7 +320,7 @@ bool FindFrame::DoFind(int dir)
     wxString textc;
     wxString text(ms_text);
 
-    if (!caseSens)
+    if (ignoreCase)
         text.MakeLower();
 
     // Only ignore mnemonics when searching if the text being searched for
@@ -338,7 +338,7 @@ bool FindFrame::DoFind(int dir)
         if (inStr)
         {
             textc = dt->GetString();
-            if (!caseSens)
+            if (ignoreCase)
                 textc.MakeLower();
             if (ignoreMnemonicsAmp)
                 textc.Replace("&", "");
@@ -360,7 +360,7 @@ bool FindFrame::DoFind(int dir)
                 textc += dt->GetTranslation(i);
             }
             // and search for the substring in them:
-            if (!caseSens)
+            if (ignoreCase)
                 textc.MakeLower();
             if (ignoreMnemonicsAmp)
                 textc.Replace("&", "");
@@ -372,7 +372,7 @@ bool FindFrame::DoFind(int dir)
         if (inComments)
         {
             textc = dt->GetComment();
-            if (!caseSens)
+            if (ignoreCase)
                 textc.MakeLower();
 
             if (TextInString(textc, text, wholeWords)) { found = Found_InComments; break; }
@@ -382,7 +382,7 @@ bool FindFrame::DoFind(int dir)
             for (unsigned i = 0; i < extractedComments.GetCount(); i++)
                 textc += extractedComments[i];
 
-            if (!caseSens)
+            if (ignoreCase)
                 textc.MakeLower();
 
             if (TextInString(textc, text, wholeWords)) { found = Found_InExtractedComments; break; }
@@ -419,7 +419,7 @@ bool FindFrame::DoFind(int dir)
         if (txt)
         {
             textc = txt->GetValue();
-            if (!caseSens)
+            if (ignoreCase)
                 textc.MakeLower();
             int pos = textc.Find(text);
             if (pos != wxNOT_FOUND)
