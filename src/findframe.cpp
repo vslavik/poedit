@@ -227,8 +227,6 @@ void FindFrame::OnCheckbox(wxCommandEvent&)
     wxConfig::Get()->Write("find_case_sensitive", !m_ignoreCase->GetValue());
     wxConfig::Get()->Write("find_wrap_around", m_wrapAround->GetValue());
     wxConfig::Get()->Write("whole_words", m_wholeWords->GetValue());
-
-    Reset(m_catalog);
 }
 
 
