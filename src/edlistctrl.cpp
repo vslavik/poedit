@@ -97,6 +97,39 @@ enum
     IMG_BOOKMARK
 };
 
+
+class SelectionPreserver
+{
+public:
+    SelectionPreserver(PoeditListCtrl *list_) : list(list_), focus(-1)
+    {
+        if (!list)
+            return;
+        selection = list->GetSelectedCatalogItems();
+        focus = list->ListIndexToCatalog(list->GetFocusedItem());
+    }
+
+    ~SelectionPreserver()
+    {
+        if (!list)
+            return;
+        if (!selection.empty())
+            list->SetSelectedCatalogItems(selection);
+        if (focus != -1)
+        {
+            int idx = list->CatalogIndexToList(focus);
+            list->EnsureVisible(idx);
+            list->Focus(idx);
+        }
+    }
+
+private:
+    PoeditListCtrl *list;
+    std::vector<int> selection;
+    int focus;
+};
+
+
 } // anonymous namespace
 
 
@@ -279,30 +312,30 @@ void PoeditListCtrl::CatalogChanged(Catalog* catalog)
     wxWindowUpdateLocker no_updates(this);
 
     const bool isSameCatalog = (catalog == m_catalog);
+    const bool sizeChanged = (catalog && catalog->GetCount() != GetItemCount());
 
-    std::vector<int> selection;
-    if (isSameCatalog)
-        selection = GetSelectedCatalogItems();
+    SelectionPreserver preserve(isSameCatalog ? this : nullptr);
 
     // this is to prevent crashes (wxMac at least) when shortening virtual
     // listctrl when its scrolled to the bottom:
-    m_catalog = nullptr;
-    SetItemCount(0);
+    if (sizeChanged)
+    {
+        m_catalog = nullptr;
+        SetItemCount(0);
+    }
 
     // now read the new catalog:
     m_catalog = catalog;
-    ReadCatalog();
-
-    if (isSameCatalog && !selection.empty())
-        SetSelectedCatalogItems(selection);
+    ReadCatalog(/*resetSizeAndSelection=*/sizeChanged);
 }
 
-void PoeditListCtrl::ReadCatalog()
+void PoeditListCtrl::ReadCatalog(bool resetSizeAndSelection)
 {
     wxWindowUpdateLocker no_updates(this);
 
     // clear the list and its sort order too:
-    SetItemCount(0);
+    if (resetSizeAndSelection)
+        SetItemCount(0);
     m_mapListToCatalog.clear();
     m_mapCatalogToList.clear();
 
@@ -332,12 +365,14 @@ void PoeditListCtrl::ReadCatalog()
     CreateSortMap();
 
     // now that everything is prepared, we may set the item count
-    SetItemCount(m_catalog->GetCount());
+    if (resetSizeAndSelection)
+        SetItemCount(m_catalog->GetCount());
 
     // scroll to the top and refresh everything:
     if ( m_catalog->GetCount() )
     {
-        SelectOnly(0);
+        if (resetSizeAndSelection)
+            SelectOnly(0);
         RefreshItems(0, m_catalog->GetCount()-1);
     }
     else
@@ -351,12 +386,10 @@ void PoeditListCtrl::Sort()
 {
     if ( m_catalog && m_catalog->GetCount() )
     {
-        auto sel = GetSelectedCatalogItems();
+        SelectionPreserver preserve(this);
 
         CreateSortMap();
         RefreshItems(0, m_catalog->GetCount()-1);
-
-        SetSelectedCatalogItems(sel);
     }
     else
     {
