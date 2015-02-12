@@ -64,7 +64,7 @@ FindFrame::FindFrame(wxWindow *parent,
     topsizer->Add(sizer, wxSizerFlags(1).Expand().PXBorderAll());
 
     sizer->Add(new wxStaticText(this, wxID_ANY, _("String to find:")), wxSizerFlags().Expand().PXBorder(wxLEFT|wxRIGHT|wxTOP));
-    m_textField = new wxTextCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(PX(220), -1));
+    m_textField = new wxTextCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(PX(400), -1));
     sizer->Add(m_textField, wxSizerFlags().Expand().PXBorderAll());
 
 
