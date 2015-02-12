@@ -23,16 +23,18 @@
  *
  */
 
-#include <wx/xrc/xmlres.h>
 #include <wx/accel.h>
 #include <wx/config.h>
 #include <wx/button.h>
+#include <wx/sizer.h>
+#include <wx/stattext.h>
 #include <wx/textctrl.h>
 #include <wx/checkbox.h>
 
 #include "catalog.h"
-#include "findframe.h"
 #include "edlistctrl.h"
+#include "findframe.h"
+#include "hidpi.h"
 #include "utility.h"
 
 // The word separators used when doing a "Whole words only" search
@@ -42,35 +44,65 @@ static const wxString SEPARATORS = wxT(" \t\r\n\\/:;.,?!\"'_|-+=(){}[]<>&#@");
 wxString FindFrame::ms_text;
 FindFrame *FindFrame::ms_singleton = nullptr;
 
-BEGIN_EVENT_TABLE(FindFrame, wxDialog)
-   EVT_BUTTON(XRCID("find_next"), FindFrame::OnNext)
-   EVT_BUTTON(XRCID("find_prev"), FindFrame::OnPrev)
-   EVT_BUTTON(wxID_CLOSE, FindFrame::OnClose)
-   EVT_TEXT(XRCID("string_to_find"), FindFrame::OnTextChange)
-   EVT_CHECKBOX(-1, FindFrame::OnCheckbox)
-END_EVENT_TABLE()
-
 FindFrame::FindFrame(wxWindow *parent,
                      PoeditListCtrl *list,
                      const CatalogPtr& c,
                      wxTextCtrl *textCtrlOrig,
                      wxTextCtrl *textCtrlTrans)
-        : m_listCtrl(list),
+        : wxDialog(parent, wxID_ANY, _("Find")),
+          m_listCtrl(list),
           m_catalog(c),
           m_position(-1),
           m_textCtrlOrig(textCtrlOrig),
           m_textCtrlTrans(textCtrlTrans)
 {
-    wxXmlResource::Get()->LoadDialog(this, parent, "find_frame");
+    ms_singleton = this;
 
-    m_textField = XRCCTRL(*this, "string_to_find", wxTextCtrl);
+    wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
+
+    wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+    topsizer->Add(sizer, wxSizerFlags(1).Expand().PXBorderAll());
+
+    sizer->Add(new wxStaticText(this, wxID_ANY, _("String to find:")), wxSizerFlags().Expand().PXBorder(wxLEFT|wxRIGHT|wxTOP));
+    m_textField = new wxTextCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(PX(220), -1));
+    sizer->Add(m_textField, wxSizerFlags().Expand().PXBorderAll());
+
+
+    m_caseSensitive = new wxCheckBox(this, wxID_ANY, _("Case sensitive"));
+    m_fromFirst = new wxCheckBox(this, wxID_ANY, _("Start from the first item"));
+    m_wholeWords = new wxCheckBox(this, wxID_ANY, _("Whole words only"));
+    m_findInOrig = new wxCheckBox(this, wxID_ANY, _("Find in original strings"));
+    m_findInTrans = new wxCheckBox(this, wxID_ANY, _("Find in translations"));
+    m_findInComments = new wxCheckBox(this, wxID_ANY, _("Find in comments"));
+    m_findInAutoComments = new wxCheckBox(this, wxID_ANY, _("Find in automatic comments"));
+
+    wxBoxSizer *options = new wxBoxSizer(wxVERTICAL);
+    options->Add(m_caseSensitive, wxSizerFlags().Expand());
+    options->Add(m_fromFirst, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+    options->Add(m_wholeWords, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+    options->Add(m_findInOrig, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+    options->Add(m_findInTrans, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+    options->Add(m_findInComments, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+    options->Add(m_findInAutoComments, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+    sizer->Add(options, wxSizerFlags().Expand().PXBorderAll());
+
+    m_btnClose = new wxButton(this, wxID_CLOSE, _("Close"));
+    m_btnPrev = new wxButton(this, wxID_ANY, _("< &Previous"));
+    m_btnNext = new wxButton(this, wxID_ANY, _("&Next >"));
+    m_btnNext->SetDefault();
+
+    wxBoxSizer *buttons = new wxBoxSizer(wxHORIZONTAL);
+    sizer->Add(buttons, wxSizerFlags().Expand().PXBorderAll());
+    buttons->Add(m_btnClose, wxSizerFlags().PXBorder(wxRIGHT));
+    buttons->AddStretchSpacer();
+    buttons->Add(m_btnPrev, wxSizerFlags().PXBorder(wxRIGHT));
+    buttons->Add(m_btnNext, wxSizerFlags());
+
+    SetSizerAndFit(topsizer);
 
     SetEscapeId(wxID_CLOSE);
 
     RestoreWindowState(this, wxDefaultSize, WinState_Pos);
-
-    m_btnNext = XRCCTRL(*this, "find_next", wxButton);
-    m_btnPrev = XRCCTRL(*this, "find_prev", wxButton);
 
     if ( !ms_text.empty() )
     {
@@ -80,20 +112,13 @@ FindFrame::FindFrame(wxWindow *parent,
 
     Reset(c);
 
-    XRCCTRL(*this, "in_orig", wxCheckBox)->SetValue(
-        wxConfig::Get()->ReadBool("find_in_orig", true));
-    XRCCTRL(*this, "in_trans", wxCheckBox)->SetValue(
-        wxConfig::Get()->ReadBool("find_in_trans", true));
-    XRCCTRL(*this, "in_comments", wxCheckBox)->SetValue(
-        wxConfig::Get()->ReadBool("find_in_comments", true));
-    XRCCTRL(*this, "in_auto_comments", wxCheckBox)->SetValue(
-        wxConfig::Get()->ReadBool("find_in_auto_comments", true));
-    XRCCTRL(*this, "case_sensitive", wxCheckBox)->SetValue(
-        wxConfig::Get()->ReadBool("find_case_sensitive", false));
-    XRCCTRL(*this, "from_first", wxCheckBox)->SetValue(
-        wxConfig::Get()->ReadBool("find_from_first", true));
-    XRCCTRL(*this, "whole_words", wxCheckBox)->SetValue(
-        wxConfig::Get()->ReadBool("whole_words", false));
+    m_findInOrig->SetValue(wxConfig::Get()->ReadBool("find_in_orig", true));
+    m_findInTrans->SetValue(wxConfig::Get()->ReadBool("find_in_trans", true));
+    m_findInComments->SetValue(wxConfig::Get()->ReadBool("find_in_comments", true));
+    m_findInAutoComments->SetValue(wxConfig::Get()->ReadBool("find_in_auto_comments", true));
+    m_caseSensitive->SetValue(wxConfig::Get()->ReadBool("find_case_sensitive", false));
+    m_fromFirst->SetValue(wxConfig::Get()->ReadBool("find_from_first", true));
+    m_wholeWords->SetValue(wxConfig::Get()->ReadBool("whole_words", false));
 
 #ifdef __WXOSX__
     wxAcceleratorEntry entries[] = {
@@ -103,7 +128,11 @@ FindFrame::FindFrame(wxWindow *parent,
     SetAcceleratorTable(accel);
 #endif
 
-    ms_singleton = this;
+    m_textField->Bind(wxEVT_TEXT, &FindFrame::OnTextChange, this);
+    m_btnPrev->Bind(wxEVT_BUTTON, &FindFrame::OnPrev, this);
+    m_btnNext->Bind(wxEVT_BUTTON, &FindFrame::OnNext, this);
+    Bind(wxEVT_BUTTON, &FindFrame::OnClose, this, wxID_CLOSE);
+    Bind(wxEVT_CHECKBOX, &FindFrame::OnCheckbox, this);
 }
 
 
@@ -113,20 +142,13 @@ FindFrame::~FindFrame()
 
     SaveWindowState(this, WinState_Pos);
 
-    wxConfig::Get()->Write("find_in_orig",
-            XRCCTRL(*this, "in_orig", wxCheckBox)->GetValue());
-    wxConfig::Get()->Write("find_in_trans",
-                XRCCTRL(*this, "in_trans", wxCheckBox)->GetValue());
-    wxConfig::Get()->Write("find_in_comments",
-                XRCCTRL(*this, "in_comments", wxCheckBox)->GetValue());
-    wxConfig::Get()->Write("find_in_auto_comments",
-                XRCCTRL(*this, "in_auto_comments", wxCheckBox)->GetValue());
-    wxConfig::Get()->Write("find_case_sensitive",
-                XRCCTRL(*this, "case_sensitive", wxCheckBox)->GetValue());
-    wxConfig::Get()->Write("find_from_first",
-                XRCCTRL(*this, "from_first", wxCheckBox)->GetValue());
-    wxConfig::Get()->Write("whole_words",
-                XRCCTRL(*this, "whole_words", wxCheckBox)->GetValue());
+    wxConfig::Get()->Write("find_in_orig", m_findInOrig->GetValue());
+    wxConfig::Get()->Write("find_in_trans", m_findInTrans->GetValue());
+    wxConfig::Get()->Write("find_in_comments", m_findInComments->GetValue());
+    wxConfig::Get()->Write("find_in_auto_comments", m_findInAutoComments->GetValue());
+    wxConfig::Get()->Write("find_case_sensitive", m_caseSensitive->GetValue());
+    wxConfig::Get()->Write("find_from_first", m_fromFirst->GetValue());
+    wxConfig::Get()->Write("whole_words", m_wholeWords->GetValue());
 }
 
 FindFrame *FindFrame::Get(PoeditListCtrl *list, const CatalogPtr& forCatalog)
@@ -160,7 +182,7 @@ void FindFrame::Reset(const CatalogPtr& c)
     if (!m_listCtrl)
         return;
 
-    bool fromFirst = XRCCTRL(*this, "from_first", wxCheckBox)->GetValue();
+    bool fromFirst = m_fromFirst->GetValue();
 
     m_catalog = c;
     m_position = -1;
@@ -273,12 +295,12 @@ bool FindFrame::DoFind(int dir)
         return false;
 
     int cnt = m_listCtrl->GetItemCount();
-    bool inStr = XRCCTRL(*this, "in_orig", wxCheckBox)->GetValue();
-    bool inTrans = XRCCTRL(*this, "in_trans", wxCheckBox)->GetValue();
-    bool inComments = XRCCTRL(*this, "in_comments", wxCheckBox)->GetValue();
-    bool inExtractedComments = XRCCTRL(*this, "in_auto_comments", wxCheckBox)->GetValue();
-    bool caseSens = XRCCTRL(*this, "case_sensitive", wxCheckBox)->GetValue();
-    bool wholeWords = XRCCTRL(*this, "whole_words", wxCheckBox)->GetValue();
+    bool inStr = m_findInOrig->GetValue();
+    bool inTrans = m_findInTrans->GetValue();
+    bool inComments = m_findInComments->GetValue();
+    bool inExtractedComments = m_findInAutoComments->GetValue();
+    bool caseSens = m_caseSensitive->GetValue();
+    bool wholeWords = m_wholeWords->GetValue();
     int posOrig = m_position;
 
     FoundState found = Found_Not;

@@ -52,7 +52,6 @@ XRC_RESOURCES = \
 		$(srcdir)/resources/properties.xrc \
         $(srcdir)/resources/summary.xrc \
 		$(srcdir)/resources/toolbar.xrc \
-		$(srcdir)/resources/find.xrc \
 		$(srcdir)/resources/comment.xrc \
         $(srcdir)/resources/manager.xrc
 

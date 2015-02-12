@@ -32,6 +32,8 @@
 #include <wx/weakref.h>
 
 class WXDLLIMPEXP_FWD_CORE wxButton;
+class WXDLLIMPEXP_FWD_CORE wxCheckBox;
+class WXDLLIMPEXP_FWD_CORE wxTextCtrl;
 
 class Catalog;
 
@@ -78,14 +80,16 @@ class FindFrame : public wxDialog
         void OnTextChange(wxCommandEvent &event);
         void OnCheckbox(wxCommandEvent &event);
         bool DoFind(int dir);
-        DECLARE_EVENT_TABLE()
 
         wxTextCtrl *m_textField;
+        wxCheckBox *m_caseSensitive, *m_fromFirst, *m_wholeWords,
+                   *m_findInOrig, *m_findInTrans, *m_findInComments,
+                   *m_findInAutoComments;
 
         wxWeakRef<PoeditListCtrl> m_listCtrl;
         CatalogPtr m_catalog;
         int m_position;
-        wxButton *m_btnPrev, *m_btnNext;
+        wxButton *m_btnClose, *m_btnPrev, *m_btnNext;
         wxTextCtrl *m_textCtrlOrig, *m_textCtrlTrans;
 
         // NB: this is static so that last search term is remembered
