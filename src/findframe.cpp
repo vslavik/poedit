@@ -77,7 +77,7 @@ FindFrame::FindFrame(wxWindow *parent,
 #endif
 
     m_ignoreCase = new wxCheckBox(collPane, wxID_ANY, _("Ignore case"));
-    m_fromFirst = new wxCheckBox(collPane, wxID_ANY, _("Start from the first item"));
+    m_wrapAround = new wxCheckBox(collPane, wxID_ANY, _("Wrap around"));
     m_wholeWords = new wxCheckBox(collPane, wxID_ANY, _("Whole words only"));
     m_findInOrig = new wxCheckBox(collPane, wxID_ANY, _("Find in source texts"));
     m_findInTrans = new wxCheckBox(collPane, wxID_ANY, _("Find in translations"));
@@ -89,7 +89,7 @@ FindFrame::FindFrame(wxWindow *parent,
     options->Add(optionsL, wxSizerFlags(1).Expand().PXBorder(wxRIGHT));
     options->Add(optionsR, wxSizerFlags(1).Expand());
     optionsL->Add(m_ignoreCase, wxSizerFlags().Expand());
-    optionsL->Add(m_fromFirst, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+    optionsL->Add(m_wrapAround, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
     optionsL->Add(m_wholeWords, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
     optionsR->Add(m_findInOrig, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
     optionsR->Add(m_findInTrans, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
@@ -132,7 +132,7 @@ FindFrame::FindFrame(wxWindow *parent,
     m_findInTrans->SetValue(wxConfig::Get()->ReadBool("find_in_trans", true));
     m_findInComments->SetValue(wxConfig::Get()->ReadBool("find_in_comments", true));
     m_ignoreCase->SetValue(!wxConfig::Get()->ReadBool("find_case_sensitive", false));
-    m_fromFirst->SetValue(wxConfig::Get()->ReadBool("find_from_first", true));
+    m_wrapAround->SetValue(wxConfig::Get()->ReadBool("find_wrap_around", true));
     m_wholeWords->SetValue(wxConfig::Get()->ReadBool("whole_words", false));
 
 #ifdef __WXOSX__
@@ -189,14 +189,8 @@ void FindFrame::Reset(const CatalogPtr& c)
     if (!m_listCtrl)
         return;
 
-    bool fromFirst = m_fromFirst->GetValue();
-
     m_catalog = c;
     m_position = -1;
-    if (!fromFirst)
-        m_position = (int)m_listCtrl->GetNextItem(-1,
-                                                  wxLIST_NEXT_ALL,
-                                                  wxLIST_STATE_SELECTED);
 
     m_btnPrev->Enable(!ms_text.empty());
     m_btnNext->Enable(!ms_text.empty());
@@ -231,7 +225,7 @@ void FindFrame::OnCheckbox(wxCommandEvent&)
     wxConfig::Get()->Write("find_in_trans", m_findInTrans->GetValue());
     wxConfig::Get()->Write("find_in_comments", m_findInComments->GetValue());
     wxConfig::Get()->Write("find_case_sensitive", !m_ignoreCase->GetValue());
-    wxConfig::Get()->Write("find_from_first", m_fromFirst->GetValue());
+    wxConfig::Get()->Write("find_wrap_around", m_wrapAround->GetValue());
     wxConfig::Get()->Write("whole_words", m_wholeWords->GetValue());
 
     Reset(m_catalog);
@@ -305,6 +299,8 @@ bool TextInString(const wxString& str, const wxString& text, bool wholeWords)
 
 bool FindFrame::DoFind(int dir)
 {
+    wxASSERT( dir == +1 || dir == -1 );
+
     if (!m_listCtrl)
         return false;
 
@@ -314,6 +310,7 @@ bool FindFrame::DoFind(int dir)
     bool inComments = m_findInComments->GetValue();
     bool ignoreCase = m_ignoreCase->GetValue();
     bool wholeWords = m_wholeWords->GetValue();
+    bool wrapAround = m_wrapAround->GetValue();
     int posOrig = m_position;
 
     FoundState found = Found_Not;
@@ -330,9 +327,25 @@ bool FindFrame::DoFind(int dir)
     const bool ignoreMnemonicsAmp = (text.Find(_T('&')) == wxNOT_FOUND);
     const bool ignoreMnemonicsUnderscore = (text.Find(_T('_')) == wxNOT_FOUND);
 
-    m_position += dir;
-    while (m_position >= 0 && m_position < cnt)
+    int oldPosition = m_position;
+    m_position = oldPosition + dir;
+    for (int tested = 0; tested < cnt; ++tested, m_position += dir)
     {
+        if (m_position < 0)
+        {
+            if (wrapAround)
+                m_position += cnt;
+            else
+                break;
+        }
+        else if (m_position >= cnt)
+        {
+            if (wrapAround)
+                m_position -= cnt;
+            else
+                break;
+        }
+
         CatalogItemPtr dt = (*m_catalog)[m_listCtrl->ListIndexToCatalog(m_position)];
 
         if (inStr)
@@ -387,8 +400,6 @@ bool FindFrame::DoFind(int dir)
 
             if (TextInString(textc, text, wholeWords)) { found = Found_InExtractedComments; break; }
         }
-
-        m_position += dir;
     }
 
     if (found != Found_Not)

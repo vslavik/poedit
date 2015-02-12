@@ -82,7 +82,7 @@ class FindFrame : public wxDialog
         bool DoFind(int dir);
 
         wxTextCtrl *m_textField;
-        wxCheckBox *m_ignoreCase, *m_fromFirst, *m_wholeWords,
+        wxCheckBox *m_ignoreCase, *m_wrapAround, *m_wholeWords,
                    *m_findInOrig, *m_findInTrans, *m_findInComments;
 
         wxWeakRef<PoeditListCtrl> m_listCtrl;
