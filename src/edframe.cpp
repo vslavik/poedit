@@ -780,14 +780,18 @@ void PoeditFrame::DestroyContentView()
     m_splitter = nullptr;
     m_sidebarSplitter = nullptr;
     m_sidebar = nullptr;
+
+    if (m_findWindow)
+    {
+        m_findWindow->Destroy();
+        m_findWindow.Release();
+    }
 }
 
 
 PoeditFrame::~PoeditFrame()
 {
     ms_instances.erase(this);
-
-    FindFrame::NotifyParentDestroyed(m_list, m_catalog);
 
     DestroyContentView();
 
@@ -1875,27 +1879,24 @@ void PoeditFrame::OnClearTranslation(wxCommandEvent&)
 
 void PoeditFrame::OnFind(wxCommandEvent&)
 {
-    FindFrame *f = FindFrame::Get(m_list, m_catalog);
+    if (!m_findWindow)
+        m_findWindow = new FindFrame(this, m_list, m_catalog, m_textOrig, m_textTrans);
 
-    if (!f)
-        f = new FindFrame(this, m_list, m_catalog, m_textOrig, m_textTrans);
-    f->Show(true);
-    f->Raise();
-    f->FocusSearchField();
+    m_findWindow->Show(true);
+    m_findWindow->Raise();
+    m_findWindow->FocusSearchField();
 }
 
 void PoeditFrame::OnFindNext(wxCommandEvent&)
 {
-    FindFrame *f = FindFrame::Get(m_list, m_catalog);
-    if ( f )
-        f->FindNext();
+    if (m_findWindow)
+        m_findWindow->FindNext();
 }
 
 void PoeditFrame::OnFindPrev(wxCommandEvent&)
 {
-    FindFrame *f = FindFrame::Get(m_list, m_catalog);
-    if ( f )
-        f->FindPrev();
+    if (m_findWindow)
+        m_findWindow->FindPrev();
 }
 
 
@@ -2424,9 +2425,8 @@ void PoeditFrame::RefreshControls(int flags)
         if (!(flags & Refresh_NoCatalogChanged))
             m_list->CatalogChanged(m_catalog);
 
-        FindFrame *f = FindFrame::Get(m_list, m_catalog);
-        if (f)
-            f->Reset(m_catalog);
+        if (m_findWindow)
+            m_findWindow->Reset(m_catalog);
     }
 
     UpdateTitle();

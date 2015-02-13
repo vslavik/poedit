@@ -43,7 +43,6 @@
 static const wxString SEPARATORS = wxT(" \t\r\n\\/:;.,?!\"'_|-+=(){}[]<>&#@");
 
 wxString FindFrame::ms_text;
-FindFrame *FindFrame::ms_singleton = nullptr;
 
 FindFrame::FindFrame(wxWindow *parent,
                      PoeditListCtrl *list,
@@ -57,8 +56,6 @@ FindFrame::FindFrame(wxWindow *parent,
           m_textCtrlOrig(textCtrlOrig),
           m_textCtrlTrans(textCtrlTrans)
 {
-    ms_singleton = this;
-
     wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 
     wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
@@ -153,35 +150,8 @@ FindFrame::FindFrame(wxWindow *parent,
 
 FindFrame::~FindFrame()
 {
-    ms_singleton = nullptr;
-
     SaveWindowState(this, WinState_Pos);
 }
-
-FindFrame *FindFrame::Get(PoeditListCtrl *list, const CatalogPtr& forCatalog)
-{
-    if (!ms_singleton)
-        return nullptr;
-    if (ms_singleton->m_catalog != forCatalog)
-    {
-        ms_singleton->m_listCtrl = list;
-        ms_singleton->Reset(forCatalog);
-    }
-    return ms_singleton;
-}
-
-
-void FindFrame::NotifyParentDestroyed(PoeditListCtrl *list, const CatalogPtr& forCatalog)
-{
-    if (!ms_singleton)
-        return;
-    if (ms_singleton->m_catalog == forCatalog || ms_singleton->m_listCtrl == list)
-    {
-        ms_singleton->Destroy();
-        ms_singleton = nullptr;
-    }
-}
-
 
 
 void FindFrame::Reset(const CatalogPtr& c)
@@ -207,7 +177,6 @@ void FindFrame::FocusSearchField()
 void FindFrame::OnClose(wxCommandEvent&)
 {
     Destroy();
-    ms_singleton = nullptr;
 }
 
 

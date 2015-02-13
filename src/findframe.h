@@ -56,12 +56,6 @@ class FindFrame : public wxDialog
                   wxTextCtrl *textCtrlOrig, wxTextCtrl *textCtrlTrans);
         ~FindFrame();
 
-        /// Returns singleton instance if it exists. Updates the catalog
-        /// if it differs from the current one.
-        static FindFrame *Get(PoeditListCtrl *list, const CatalogPtr& forCatalog);
-
-        static void NotifyParentDestroyed(PoeditListCtrl *list, const CatalogPtr& forCatalog);
-
         /** Resets the search to starting position and changes
             the catalog in use. Called by EditorFrame when the user
             reloads catalog.
@@ -93,8 +87,6 @@ class FindFrame : public wxDialog
 
         // NB: this is static so that last search term is remembered
         static wxString ms_text;
-
-        static FindFrame *ms_singleton;
 };
 
 
