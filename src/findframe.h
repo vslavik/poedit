@@ -36,6 +36,7 @@ class WXDLLIMPEXP_FWD_CORE wxCheckBox;
 class WXDLLIMPEXP_FWD_CORE wxTextCtrl;
 
 class Catalog;
+class CustomizedTextCtrl;
 
 /** FindFrame is small dialog frame that contains controls for searching
     in content of EditorFrame's wxListCtrl object and associated Catalog
@@ -53,7 +54,7 @@ class FindFrame : public wxDialog
             \param catalog Catalog to search in
          */
         FindFrame(wxWindow *parent, PoeditListCtrl *list, const CatalogPtr& c,
-                  wxTextCtrl *textCtrlOrig, wxTextCtrl *textCtrlTrans);
+                  CustomizedTextCtrl *textCtrlOrig, CustomizedTextCtrl *textCtrlTrans);
         ~FindFrame();
 
         /** Resets the search to starting position and changes
@@ -83,7 +84,7 @@ class FindFrame : public wxDialog
         CatalogPtr m_catalog;
         int m_position;
         wxButton *m_btnClose, *m_btnPrev, *m_btnNext;
-        wxTextCtrl *m_textCtrlOrig, *m_textCtrlTrans;
+        CustomizedTextCtrl *m_textCtrlOrig, *m_textCtrlTrans;
 
         // NB: this is static so that last search term is remembered
         static wxString ms_text;

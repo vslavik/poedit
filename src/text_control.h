@@ -40,6 +40,7 @@
     - Disable user-usable rich text support
     - Stylistic tweaks (padding and such)
     - Generic undo/redo implementation for GTK
+    - Search highlighting
  */
 class CustomizedTextCtrl : public wxTextCtrl
 {
@@ -47,6 +48,9 @@ public:
     static const int ALWAYS_USED_STYLE = wxTE_MULTILINE | wxTE_RICH2;
 
     CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long style = 0);
+
+    /// Show find result indicator at given part of the text
+    void ShowFindIndicator(int from, int length);
 
 #ifdef __WXGTK__
     // Undo/redo implementation:

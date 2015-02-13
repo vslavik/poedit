@@ -33,6 +33,7 @@
 #include <wx/checkbox.h>
 
 #include "catalog.h"
+#include "text_control.h"
 #include "edlistctrl.h"
 #include "findframe.h"
 #include "hidpi.h"
@@ -47,8 +48,8 @@ wxString FindFrame::ms_text;
 FindFrame::FindFrame(wxWindow *parent,
                      PoeditListCtrl *list,
                      const CatalogPtr& c,
-                     wxTextCtrl *textCtrlOrig,
-                     wxTextCtrl *textCtrlTrans)
+                     CustomizedTextCtrl *textCtrlOrig,
+                     CustomizedTextCtrl *textCtrlTrans)
         : wxDialog(parent, wxID_ANY, _("Find")),
           m_listCtrl(list),
           m_catalog(c),
@@ -376,7 +377,7 @@ bool FindFrame::DoFind(int dir)
 
         // find the text on the control and select it:
 
-        wxTextCtrl* txt = NULL;
+        CustomizedTextCtrl* txt = nullptr;
         switch (found)
         {
             case Found_InOrig:
@@ -398,7 +399,7 @@ bool FindFrame::DoFind(int dir)
                 textc.MakeLower();
             int pos = textc.Find(text);
             if (pos != wxNOT_FOUND)
-                txt->SetSelection(pos, pos + text.length());
+                txt->ShowFindIndicator(pos, (int)text.length());
         }
 
         return true;
