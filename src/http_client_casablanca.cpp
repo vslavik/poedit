@@ -107,7 +107,7 @@ void json_dict::iterate_array(const char *name, std::function<void(const json_di
 class http_client::impl
 {
 public:
-    impl(const std::string& url_prefix) : m_native(sanitize_url(url_prefix))
+    impl(const std::string& url_prefix, int flags) : m_native(sanitize_url(url_prefix, flags))
     {
         #define make_wide_str(x) make_wide_str_(x)
         #define make_wide_str_(x) L ## x
@@ -170,21 +170,25 @@ public:
 
 private:
     // convert to wstring and make WinXP ready
-    static std::wstring sanitize_url(const std::string& url)
+    static std::wstring sanitize_url(const std::string& url, int flags)
     {
+        (void)flags;
     #ifdef _WIN32
-        // Windows XP doesn't support SNI and so can't connect over SSL to
-        // hosts that use it. The use of SNI is increasingly common and some
-        // APIs Poedit needs to connect to use it. To keep things simple, just
-        // disable SSL on Windows XP.
-        OSVERSIONINFOEX info;
-        ZeroMemory(&info, sizeof(info));
-        info.dwOSVersionInfoSize = sizeof(info);
-        GetVersionEx(reinterpret_cast<OSVERSIONINFO*>(&info));
-        if (info.dwMajorVersion < 6) // XP
+        if (flags & http_client::uses_sni)
         {
-            if (boost::starts_with(url, "https://"))
-                return L"http://" + std::wstring(url.begin() + 8, url.end());
+            // Windows XP doesn't support SNI and so can't connect over SSL to
+            // hosts that use it. The use of SNI is increasingly common and some
+            // APIs Poedit needs to connect to use it. To keep things simple, just
+            // disable SSL on Windows XP.
+            OSVERSIONINFOEX info;
+            ZeroMemory(&info, sizeof(info));
+            info.dwOSVersionInfoSize = sizeof(info);
+            GetVersionEx(reinterpret_cast<OSVERSIONINFO*>(&info));
+            if (info.dwMajorVersion < 6) // XP
+            {
+                if (boost::starts_with(url, "https://"))
+                    return L"http://" + std::wstring(url.begin() + 8, url.end());
+            }
         }
     #endif
         return std::wstring(url.begin(), url.end());
@@ -197,8 +201,8 @@ private:
 
 
 
-http_client::http_client(const std::string& url_prefix)
-    : m_impl(new impl(url_prefix))
+http_client::http_client(const std::string& url_prefix, int flags)
+    : m_impl(new impl(url_prefix, flags))
 {
 }
 

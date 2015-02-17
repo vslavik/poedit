@@ -118,7 +118,7 @@ void json_dict::iterate_array(const char *name, std::function<void(const json_di
 class http_client::impl
 {
 public:
-    impl(const std::string& url_prefix)
+    impl(const std::string& url_prefix, int /*flags*/)
     {
         NSString *str = [[NSString alloc] initWithUTF8String:url_prefix.c_str()];
         m_native = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:str]];
@@ -164,8 +164,8 @@ private:
 };
 
 
-http_client::http_client(const std::string& url_prefix)
-    : m_impl(new impl(url_prefix))
+http_client::http_client(const std::string& url_prefix, int flags)
+    : m_impl(new impl(url_prefix, flags))
 {
 }
 
