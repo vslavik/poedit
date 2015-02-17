@@ -543,6 +543,7 @@ void PoeditApp::SetDefaultCfg(wxConfigBase *cfg)
 namespace
 {
 const char *CL_KEEP_TEMP_FILES = "keep-temp-files";
+const char *CL_HANDLE_POEDIT_URI = "handle-poedit-uri";
 }
 
 void PoeditApp::OnInitCmdLine(wxCmdLineParser& parser)
@@ -551,8 +552,9 @@ void PoeditApp::OnInitCmdLine(wxCmdLineParser& parser)
 
     parser.AddSwitch("", CL_KEEP_TEMP_FILES,
                      _("don't delete temporary files (for debugging)"));
-
-    parser.AddParam("catalog.po", wxCMD_LINE_VAL_STRING, 
+    parser.AddLongOption(CL_HANDLE_POEDIT_URI,
+                     _("handle a poedit:// URI"), wxCMD_LINE_VAL_STRING);
+    parser.AddParam("catalog.po", wxCMD_LINE_VAL_STRING,
                     wxCMD_LINE_PARAM_OPTIONAL | wxCMD_LINE_PARAM_MULTIPLE);
 }
 
@@ -564,10 +566,26 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
     if ( parser.Found(CL_KEEP_TEMP_FILES) )
         TempDirectory::KeepFiles();
 
+    wxString poeditURI;
+    if (parser.Found(CL_HANDLE_POEDIT_URI, &poeditURI))
+    {
+        // handling the URI shows UI, so do it after OnInit() initialization:
+        CallAfter([=]{ HandleCustomURI(poeditURI); });
+    }
+
     for (size_t i = 0; i < parser.GetParamCount(); i++)
         gs_filesToOpen.Add(parser.GetParam(i));
 
     return true;
+}
+
+
+void PoeditApp::HandleCustomURI(const wxString& uri)
+{
+    if (!uri.StartsWith("poedit://"))
+        return;
+
+    // nothing to do yet
 }
 
 
