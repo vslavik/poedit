@@ -142,6 +142,7 @@ public:
         http::http_request req(http::methods::GET);
         req.headers().add(http::header_names::accept,     L"application/json");
         req.headers().add(http::header_names::user_agent, m_userAgent);
+        req.headers().add(http::header_names::authorization, m_auth);
         req.set_request_uri(std::wstring(url.begin(), url.end()));
 
         m_native.request(req).then([=](http::http_response response)
@@ -166,6 +167,11 @@ public:
                 handler(std::current_exception());
             }
         });
+    }
+
+    void set_authorization(const std::string& auth)
+    {
+        m_auth = std::wstring(auth.begin(), auth.end());
     }
 
 private:
@@ -197,6 +203,7 @@ private:
 private:
     http::client::http_client m_native;
     std::wstring m_userAgent;
+    std::wstring m_auth;
 };
 
 
@@ -221,3 +228,7 @@ void http_client::request(const std::string& url,
     m_impl->request(url, handler);
 }
 
+void http_client::set_authorization(const std::string& auth)
+{
+    m_impl->set_authorization(auth);
+}

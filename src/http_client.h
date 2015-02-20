@@ -97,6 +97,9 @@ public:
     void request(const std::string& url,
                  std::function<void(const http_response&)> handler);
 
+    /// Sets Authorization header to be used in all requests
+    void set_authorization(const std::string& auth);
+
     /// Perform a request at the given URL and ignore the response.
     void request(const std::string& url)
     {

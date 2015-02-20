@@ -120,7 +120,7 @@ class http_client::impl
 public:
     impl(const std::string& url_prefix, int /*flags*/)
     {
-        NSString *str = [[NSString alloc] initWithUTF8String:url_prefix.c_str()];
+        NSString *str = [NSString stringWithUTF8String:url_prefix.c_str()];
         m_native = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:str]];
 
         [m_native registerHTTPOperationClass:[AFJSONRequestOperation class]];
@@ -138,6 +138,14 @@ public:
     bool is_reachable() const
     {
         return m_native.networkReachabilityStatus != AFNetworkReachabilityStatusNotReachable;
+    }
+
+    void set_authorization(const std::string& auth)
+    {
+        if (!auth.empty())
+            [m_native setDefaultHeader:@"Authorization" value:[NSString stringWithUTF8String:auth.c_str()]];
+        else
+            [m_native clearAuthorizationHeader];
     }
 
     void request(const std::string& url,
@@ -176,6 +184,11 @@ http_client::~http_client()
 bool http_client::is_reachable() const
 {
     return m_impl->is_reachable();
+}
+
+void http_client::set_authorization(const std::string& auth)
+{
+    m_impl->set_authorization(auth);
 }
 
 void http_client::request(const std::string& url,
