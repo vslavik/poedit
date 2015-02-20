@@ -52,6 +52,7 @@
 #include "edapp.h"
 #include "edframe.h"
 #include "catalog.h"
+#include "crowdin_client.h"
 #include "hidpi.h"
 #include "tm/transmem.h"
 #include "chooselang.h"
@@ -767,6 +768,36 @@ public:
 
 
 
+class AccountsPageWindow : public PrefsPanel
+{
+public:
+    AccountsPageWindow(wxWindow *parent) : PrefsPanel(parent)
+    {
+        wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
+        auto acct = new CrowdinLoginPanel(this);
+        topsizer->Add(acct, wxSizerFlags(1).Expand().Border(wxALL, PX(15)));
+        SetSizer(topsizer);
+
+    }
+
+    void InitValues(const wxConfigBase&) override
+    {
+    }
+
+    void SaveValues(wxConfigBase&) override
+    {
+    }
+};
+
+class AccountsPage : public wxPreferencesPage
+{
+public:
+    wxString GetName() const override { return PXNotebookTab(_("Accounts")); }
+    wxBitmap GetLargeIcon() const override { return wxArtProvider::GetBitmap("Prefs-Accounts"); }
+    wxWindow *CreateWindow(wxWindow *parent) override { return new AccountsPageWindow(parent); }
+};
+
+
 
 #ifdef HAS_UPDATES_CHECK
 class UpdatesPageWindow : public PrefsPanel
@@ -933,6 +964,7 @@ std::unique_ptr<PoeditPreferencesEditor> PoeditPreferencesEditor::Create()
     p->AddPage(new GeneralPage);
     p->AddPage(new TMPage);
     p->AddPage(new ExtractorsPage);
+    p->AddPage(new AccountsPage);
 #ifdef HAS_UPDATES_CHECK
     p->AddPage(new UpdatesPage);
 #endif

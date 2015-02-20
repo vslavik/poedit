@@ -93,6 +93,11 @@
 		B2BF84BE170847220030AA22 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84BD170847220030AA22 /* libz.dylib */; };
 		B2BF84C1170847E60030AA22 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84C0170847E60030AA22 /* IOKit.framework */; };
 		B2BF84C4170849D00030AA22 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84BB170846940030AA22 /* Carbon.framework */; };
+		B2CE2FEB1A94EBDE0020A620 /* CrowdinLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = B2CE2FE91A94EBDE0020A620 /* CrowdinLogo.png */; };
+		B2CE2FEC1A94EBDE0020A620 /* CrowdinLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2CE2FEA1A94EBDE0020A620 /* CrowdinLogo@2x.png */; };
+		B2CE2FEF1A94EBF50020A620 /* crowdin_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2CE2FED1A94EBF50020A620 /* crowdin_client.cpp */; };
+		B2CE2FF21A94F19D0020A620 /* Prefs-Accounts.png in Resources */ = {isa = PBXBuildFile; fileRef = B2CE2FF01A94F19D0020A620 /* Prefs-Accounts.png */; };
+		B2CE2FF31A94F19D0020A620 /* Prefs-Accounts@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2CE2FF11A94F19D0020A620 /* Prefs-Accounts@2x.png */; };
 		B2D76A45181D027F0083C9D9 /* libLucenePlusPlus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A44181D027F0083C9D9 /* libLucenePlusPlus.a */; };
 		B2D76A4C181D028B0083C9D9 /* libboost_date_time.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A46181D028B0083C9D9 /* libboost_date_time.a */; };
 		B2D76A4D181D028B0083C9D9 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A47181D028B0083C9D9 /* libboost_filesystem.a */; };
@@ -401,6 +406,12 @@
 		B2CDAA1E1A61867600261248 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B2CDAA1F1A61868600261248 /* eo */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = eo; path = eo.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B2CDAA211A6187F400261248 /* eo */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = eo; path = eo.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2CE2FE91A94EBDE0020A620 /* CrowdinLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CrowdinLogo.png; sourceTree = "<group>"; };
+		B2CE2FEA1A94EBDE0020A620 /* CrowdinLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CrowdinLogo@2x.png"; sourceTree = "<group>"; };
+		B2CE2FED1A94EBF50020A620 /* crowdin_client.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = crowdin_client.cpp; sourceTree = "<group>"; };
+		B2CE2FEE1A94EBF50020A620 /* crowdin_client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crowdin_client.h; sourceTree = "<group>"; };
+		B2CE2FF01A94F19D0020A620 /* Prefs-Accounts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Prefs-Accounts.png"; sourceTree = "<group>"; };
+		B2CE2FF11A94F19D0020A620 /* Prefs-Accounts@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Prefs-Accounts@2x.png"; sourceTree = "<group>"; };
 		B2D04DFB197A831D00D24B42 /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B2D76A44181D027F0083C9D9 /* libLucenePlusPlus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libLucenePlusPlus.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D76A46181D028B0083C9D9 /* libboost_date_time.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_date_time.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -506,6 +517,8 @@
 		B2166F4019AE4024000A6AA0 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
+				B2CE2FF01A94F19D0020A620 /* Prefs-Accounts.png */,
+				B2CE2FF11A94F19D0020A620 /* Prefs-Accounts@2x.png */,
 				B2166F4119AE4045000A6AA0 /* Prefs-Extractors.png */,
 				B2166F4219AE4045000A6AA0 /* Prefs-Extractors@2x.png */,
 				B2166F4319AE4045000A6AA0 /* Prefs-General.png */,
@@ -568,6 +581,8 @@
 				B28F1CAD16F629D30018AF7E /* chooselang.h */,
 				B28F1CB716F629D30018AF7E /* commentdlg.cpp */,
 				B28F1CB816F629D30018AF7E /* commentdlg.h */,
+				B2CE2FED1A94EBF50020A620 /* crowdin_client.cpp */,
+				B2CE2FEE1A94EBF50020A620 /* crowdin_client.h */,
 				B2132FD819B3672000326B16 /* customcontrols.cpp */,
 				B2132FD919B3672000326B16 /* customcontrols.h */,
 				B28F1CB916F629D30018AF7E /* digger.cpp */,
@@ -817,6 +832,8 @@
 				B209005F19CAD64A00D6382E /* SuggestionError.png */,
 				B209005D19CAD64400D6382E /* SuggestionTM.png */,
 				B2E836E01709ED2A00F31559 /* window-close.png */,
+				B2CE2FE91A94EBDE0020A620 /* CrowdinLogo.png */,
+				B2CE2FEA1A94EBDE0020A620 /* CrowdinLogo@2x.png */,
 			);
 			name = Artwork;
 			path = artwork;
@@ -994,6 +1011,7 @@
 				B24ACD8416F6263900399242 /* Poedit.iconset in Resources */,
 				B28F1CAA16F627170018AF7E /* GenericTranslation.iconset in Resources */,
 				B2E836DE1709ECD600F31559 /* dsa_pub.pem in Resources */,
+				B2CE2FF31A94F19D0020A620 /* Prefs-Accounts@2x.png in Resources */,
 				B29B282019D2E87600D27DC8 /* sidebar.png in Resources */,
 				B2E836E91709ED2A00F31559 /* window-close.png in Resources */,
 				B2E836EA1709ED2A00F31559 /* poedit-status-automatic.png in Resources */,
@@ -1013,8 +1031,10 @@
 				B2E837031709ED6300F31559 /* poedit-validate.png in Resources */,
 				B29AE89017103992008D1F8A /* comment.xrc in Resources */,
 				B22A5C83184E4B870034BEFD /* edit-delete@2x.png in Resources */,
+				B2CE2FEB1A94EBDE0020A620 /* CrowdinLogo.png in Resources */,
 				B22A5C88184E4B870034BEFD /* poedit-fuzzy@2x.png in Resources */,
 				B29AE89117103992008D1F8A /* find.xrc in Resources */,
+				B2CE2FF21A94F19D0020A620 /* Prefs-Accounts.png in Resources */,
 				B29B282119D2E87600D27DC8 /* sidebar@2x.png in Resources */,
 				B29AE89217103992008D1F8A /* manager.xrc in Resources */,
 				B29AE89317103992008D1F8A /* menus.xrc in Resources */,
@@ -1024,6 +1044,7 @@
 				B29AE89617103992008D1F8A /* properties.xrc in Resources */,
 				B29AE89717103992008D1F8A /* summary.xrc in Resources */,
 				B29AE89A17103992008D1F8A /* toolbar.xrc in Resources */,
+				B2CE2FEC1A94EBDE0020A620 /* CrowdinLogo@2x.png in Resources */,
 				B2EC60A41812D9D40059756A /* icudt54l.dat in Resources */,
 				B26D06581826A22C0069C378 /* PoeditWelcome.png in Resources */,
 				B26D06591826A22C0069C378 /* PoeditWelcome@2x.png in Resources */,
@@ -1152,6 +1173,7 @@
 				B26D0655182697200069C378 /* welcomescreen.cpp in Sources */,
 				B2E11F121A2C66FB00E4E42C /* text_control.cpp in Sources */,
 				B28F1CFB16F629D30018AF7E /* summarydlg.cpp in Sources */,
+				B2CE2FEF1A94EBF50020A620 /* crowdin_client.cpp in Sources */,
 				B28F1CFC16F629D30018AF7E /* transmem.cpp in Sources */,
 				B28F1CFF16F629D30018AF7E /* utility.cpp in Sources */,
 				B28F1D0016F629D30018AF7E /* export_html.cpp in Sources */,

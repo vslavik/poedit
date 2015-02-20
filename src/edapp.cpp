@@ -75,6 +75,7 @@
 #include "prefsdlg.h"
 #include "errors.h"
 #include "language.h"
+#include "crowdin_client.h"
 
 #ifdef __WXOSX__
 struct PoeditApp::RecentMenuData
@@ -312,6 +313,7 @@ int PoeditApp::OnExit()
     DeletePendingObjects();
 
     TranslationMemory::CleanUp();
+    CrowdinClient::CleanUp();
 
 #ifdef USE_SPARKLE
     Sparkle_Cleanup();
@@ -586,6 +588,11 @@ void PoeditApp::HandleCustomURI(const wxString& uri)
         return;
 
     // nothing to do yet
+    if (CrowdinClient::Get().IsOAuthCallback(uri.ToStdString()))
+    {
+        CrowdinClient::Get().HandleOAuthCallback(uri.ToStdString());
+        return;
+    }
 }
 
 
