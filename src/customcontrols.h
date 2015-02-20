@@ -68,10 +68,12 @@ public:
 };
 
 
-// Longer, often multiline, explanation label used to provide more information
-// about the effects of some less obvious settings. Typeset using smaller font
-// on OS X and grey appearence. Auto-wraps itself to fit surrounding control's
-// width.
+/** 
+    Longer, often multiline, explanation label used to provide more information
+    about the effects of some less obvious settings. Typeset using smaller font
+    on OS X and grey appearence. Auto-wraps itself to fit surrounding control's
+    width.
+ */
 class ExplanationLabel : public AutoWrappingText
 {
 public:
@@ -88,8 +90,17 @@ public:
     static wxColour GetTextColor();
 };
 
+/// Like ExplanationLabel, but nonwrapping
+class SecondaryLabel : public wxStaticText
+{
+public:
+    SecondaryLabel(wxWindow *parent, const wxString& label);
 
-// "Learn more" hyperlink for dialogs.
+    static wxColour GetTextColor() { return ExplanationLabel::GetTextColor(); }
+};
+
+
+/// "Learn more" hyperlink for dialogs.
 class LearnMoreLink : public wxHyperlinkCtrl
 {
 public:

@@ -192,7 +192,6 @@ ExplanationLabel::ExplanationLabel(wxWindow *parent, const wxString& label)
 #if defined(__WXOSX__) || defined(__WXGTK__)
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
-
 #ifndef __WXGTK__
     SetForegroundColour(GetTextColor());
 #endif
@@ -206,6 +205,17 @@ wxColour ExplanationLabel::GetTextColor()
     return wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT);
 #else
     return wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT);
+#endif
+}
+
+SecondaryLabel::SecondaryLabel(wxWindow *parent, const wxString& label)
+    : wxStaticText(parent, wxID_ANY, label)
+{
+#if defined(__WXOSX__) || defined(__WXGTK__)
+    SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+#ifndef __WXGTK__
+    SetForegroundColour(GetTextColor());
 #endif
 }
 
