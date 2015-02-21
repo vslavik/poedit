@@ -323,8 +323,7 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent)
     m_signOut= new wxButton(this, wxID_ANY, MSW_OR_OTHER(_("Sign out"), _("Sign Out")));
     m_signOut->Bind(wxEVT_BUTTON, &CrowdinLoginPanel::OnSignOut, this);
 
-    auto learnMore = new LearnMoreLink(this, WrapCrowdinLink("/"),
-        MSW_OR_OTHER(_("Learn more about Crowdin"), _("Learn More About Crowdin")));
+    auto learnMore = new LearnAboutCrowdinLink(this);
 
     auto buttons = new wxBoxSizer(wxHORIZONTAL);
     sizer->Add(buttons, wxSizerFlags().Expand().Border(wxBOTTOM, 1));
@@ -437,4 +436,12 @@ void CrowdinLoginPanel::OnSignOut(wxCommandEvent&)
 {
     CrowdinClient::Get().SignOut();
     ChangeState(State::SignedOut);
+}
+
+
+LearnAboutCrowdinLink::LearnAboutCrowdinLink(wxWindow *parent, const wxString& text)
+    : LearnMoreLink(parent,
+                    WrapCrowdinLink("/"),
+                    text.empty() ? (MSW_OR_OTHER(_("Learn more about Crowdin"), _("Learn More About Crowdin"))) : text)
+{
 }

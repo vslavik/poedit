@@ -29,6 +29,8 @@
 #include <functional>
 #include <memory>
 
+#include "customcontrols.h"
+
 #include <wx/panel.h>
 
 class WXDLLIMPEXP_FWD_CORE wxBoxSizer;
@@ -113,4 +115,11 @@ protected:
     wxString m_userName, m_userLogin;
 };
 
+
+/// Link to learn about Crowdin
+class LearnAboutCrowdinLink : public LearnMoreLink
+{
+public:
+    LearnAboutCrowdinLink(wxWindow *parent, const wxString& text = "");
+};
 #endif // Poedit_crowdin_client_h
