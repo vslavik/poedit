@@ -59,7 +59,7 @@ public:
 
     int number(const char *name) const;
     double double_number(const char *name) const;
-    void iterate_array(const char *name, std::function<void(const json_dict&)> on_item);
+    void iterate_array(const char *name, std::function<void(const json_dict&)> on_item) const;
 
 private:
     std::shared_ptr<native> m_native;

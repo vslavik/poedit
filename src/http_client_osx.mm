@@ -104,7 +104,7 @@ double json_dict::double_number(const char *name) const
     return [n doubleValue];
 }
 
-void json_dict::iterate_array(const char *name, std::function<void(const json_dict&)> on_item)
+void json_dict::iterate_array(const char *name, std::function<void(const json_dict&)> on_item) const
 {
     NSArray *array = m_native->get(name, [NSArray class]);
     for (NSDictionary *item in array)
