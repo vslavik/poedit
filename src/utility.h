@@ -157,6 +157,13 @@ void call_on_main_thread(F&& func)
     #define MSW_OR_OTHER(msw, other) other
 #endif
 
+#ifdef __WXOSX__
+    #define BORDER_WIN(dir, n) Border(dir, 0)
+    #define BORDER_OSX(dir, n) Border(dir, n)
+#else
+    #define BORDER_WIN(dir, n) Border(dir, n)
+    #define BORDER_OSX(dir, n) Border(dir, 0)
+#endif
 
 // ----------------------------------------------------------------------
 // Misc helpers

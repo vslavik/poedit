@@ -29,6 +29,8 @@
 #include <functional>
 #include <memory>
 
+#include "language.h"
+
 #include "customcontrols.h"
 
 #include <wx/panel.h>
@@ -50,6 +52,8 @@ public:
 
     /// Is the user currently signed into Crowdin?
     bool IsSignedIn() const;
+
+    typedef std::function<void(std::exception_ptr)> error_func_t;
 
     /**
         Authenticate with Crowdin.
@@ -74,6 +78,32 @@ public:
 
     /// Retrieve information about the current user asynchronously
     void GetUserInfo(std::function<void(UserInfo)> callback);
+
+    /// Project listing info
+    struct ProjectListing
+    {
+        std::wstring name;
+        std::string identifier;
+        bool downloadable;
+    };
+
+    /// Retrieve listing of projects accessible to the user
+    void GetUserProjects(std::function<void(std::vector<ProjectListing>)> onResult,
+                         error_func_t onError);
+
+    /// Project detailed information
+    struct ProjectInfo
+    {
+        std::wstring name;
+        std::string identifier;
+        std::vector<Language> languages;
+        std::vector<std::wstring> po_files;
+    };
+
+    /// Retrieve listing of projects accessible to the user
+    void GetProjectInfo(const std::string& project_id,
+                        std::function<void(ProjectInfo)> onResult,
+                        error_func_t onError);
 
 private:
     CrowdinClient();
@@ -122,4 +152,14 @@ class LearnAboutCrowdinLink : public LearnMoreLink
 public:
     LearnAboutCrowdinLink(wxWindow *parent, const wxString& text = "");
 };
+
+
+/**
+    Let the user choose a Crowdin file, download it and open in Poedit.
+    
+    @param parent    PoeditFrame the UI should be shown under.
+    @param onLoaded  Called with the name of loaded PO file.
+ */
+void CrowdinOpenFile(wxWindow *parent, std::function<void(wxString)> onLoaded);
+
 #endif // Poedit_crowdin_client_h

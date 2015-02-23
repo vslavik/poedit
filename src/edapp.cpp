@@ -635,6 +635,7 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
    EVT_MENU           (wxID_NEW,                  PoeditApp::OnNew)
    EVT_MENU           (XRCID("menu_new_from_pot"),PoeditApp::OnNew)
    EVT_MENU           (wxID_OPEN,                 PoeditApp::OnOpen)
+   EVT_MENU           (XRCID("menu_open_crowdin"),PoeditApp::OnOpenFromCrowdin)
  #ifndef __WXOSX__
    EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    PoeditApp::OnOpenHist)
  #endif
@@ -707,6 +708,15 @@ void PoeditApp::OnOpen(wxCommandEvent&)
 
         OpenFiles(paths);
     }
+}
+
+
+void PoeditApp::OnOpenFromCrowdin(wxCommandEvent& event)
+{
+    TRY_FORWARD_TO_ACTIVE_WINDOW( OnOpenFromCrowdin(event) );
+
+    PoeditFrame *f = PoeditFrame::CreateEmpty();
+    f->OnOpenFromCrowdin(event);
 }
 
 

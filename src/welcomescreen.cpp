@@ -25,6 +25,7 @@
 
 #include "welcomescreen.h"
 
+#include "crowdin_client.h"
 #include "edapp.h"
 #include "edframe.h"
 #include "hidpi.h"
@@ -226,6 +227,13 @@ WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)
                        _("Create new translation"),
                        _("Take an existing PO file or POT template and create a new translation from it.")),
                wxSizerFlags().PXBorderAll().Expand());
+
+    sizer->Add(new ActionButton(
+                       this, XRCID("menu_open_crowdin"),
+                       _("Collaborate on a translation with Crowdin"),
+                       _("Download a file from Crowdin project, translate and sync your changes back.")),
+               wxSizerFlags().PXBorderAll().Expand());
+    sizer->Add(new LearnAboutCrowdinLink(this, _("What is Crowdin?")), wxSizerFlags().Right().Border(wxRIGHT, PX(8)));
 
     sizer->AddSpacer(PX(50));
 }

@@ -58,6 +58,7 @@
 #include <boost/range/counting_range.hpp>
 
 #include "catalog.h"
+#include "crowdin_client.h"
 #include "customcontrols.h"
 #include "edapp.h"
 #include "hidpi.h"
@@ -276,6 +277,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (wxID_NEW,                  PoeditFrame::OnNew)
    EVT_MENU           (XRCID("menu_new_from_pot"),PoeditFrame::OnNew)
    EVT_MENU           (wxID_OPEN,                 PoeditFrame::OnOpen)
+   EVT_MENU           (XRCID("menu_open_crowdin"),PoeditFrame::OnOpenFromCrowdin)
 #endif // __WXMSW__
 #ifndef __WXOSX__
    EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    PoeditFrame::OnOpenHist)
@@ -1078,6 +1080,15 @@ void PoeditFrame::OnOpen(wxCommandEvent&)
     });
 }
 
+
+void PoeditFrame::OnOpenFromCrowdin(wxCommandEvent&)
+{
+    DoIfCanDiscardCurrentDoc([=]{
+        CrowdinOpenFile(this, [=](wxString name){
+            DoOpenFile(name);
+        });
+    });
+}
 
 
 #ifndef __WXOSX__

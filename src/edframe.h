@@ -222,6 +222,7 @@ public: // for PoeditApp
         void NewFromPOT();
 
         void OnOpen(wxCommandEvent& event);
+        void OnOpenFromCrowdin(wxCommandEvent& event);
 #ifndef __WXOSX__
         void OnOpenHist(wxCommandEvent& event);
         void OnCloseCmd(wxCommandEvent& event);

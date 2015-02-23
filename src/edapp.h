@@ -110,6 +110,7 @@ class PoeditApp : public wxApp
         // App-global menu commands:
         void OnNew(wxCommandEvent& event);
         void OnOpen(wxCommandEvent& event);
+        void OnOpenFromCrowdin(wxCommandEvent& event);
 #ifndef __WXOSX__
         void OnOpenHist(wxCommandEvent& event);
 #endif
