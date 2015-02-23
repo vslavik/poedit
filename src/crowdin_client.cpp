@@ -59,18 +59,12 @@
 // Implementation
 // ----------------------------------------------------------------
 
+namespace
+{
+
 #define OAUTH_CLIENT_ID     "poedit-y1aBMmDbm3s164dtJ4Ur150e2"
 #define OAUTH_AUTHORIZE_URL "/oauth2/authorize?response_type=token&client_id=" OAUTH_CLIENT_ID
 #define OAUTH_URI_PREFIX    "poedit://auth/crowdin/"
-
-std::string CrowdinClient::WrapLink(const std::string& page)
-{
-    return "https://secure.payproglobal.com/r.ashx?s=12569&a=62761&u=" +
-            http_client::url_encode("https://crowdin.com" + page);
-}
-
-namespace
-{
 
 // Recursive extract files from /api/project/*/info response
 void ExtractFilesFromInfo(std::vector<std::wstring>& out, const json_dict& r, const std::wstring& prefix)
@@ -90,177 +84,25 @@ void ExtractFilesFromInfo(std::vector<std::wstring>& out, const json_dict& r, co
     });
 }
 
-
 } // anonymous namespace
 
 
-class CrowdinClient::impl
+std::string CrowdinClient::WrapLink(const std::string& page)
+{
+    return "https://secure.payproglobal.com/r.ashx?s=12569&a=62761&u=" +
+            http_client::url_encode("https://crowdin.com" + page);
+}
+
+
+class CrowdinClient::crowdin_http_client : public http_client
 {
 public:
-    impl() : m_api("https://api.crowdin.com")
-    {
-        SignInIfAuthorized();
-    }
+    crowdin_http_client() : http_client("https://api.crowdin.com") {}
 
-    void Authenticate(std::function<void()> callback)
-    {
-        auto url = CrowdinClient::WrapLink(OAUTH_AUTHORIZE_URL);
-        m_authCallback = callback;
-
-#ifdef NEEDS_IN_APP_BROWSER
-        auto win = new wxDialog(nullptr, wxID_ANY, _("Sign in"), wxDefaultPosition, wxSize(PX(800), PX(600)), wxDIALOG_NO_PARENT | wxDEFAULT_DIALOG_STYLE);
-        auto web = wxWebView::New(win, wxID_ANY);
-
-        // Protocol handler that simply calls a callback and doesn't return any data.
-        // We have to use this hack, because wxEVT_WEBVIEW_NAVIGATING is unreliable
-        // with IE on Windows 8 and is not sent at all or sent one navigation event too
-        // late, possibly due to the custom protocol used, possibly not.
-        class PoeditURIHandler : public wxWebViewHandler
-        {
-        public:
-            PoeditURIHandler(std::function<void(std::string)> cb) : wxWebViewHandler("poedit"), m_cb(cb) {}
-            wxFSFile* GetFile(const wxString &uri) override
-            {
-                m_cb(uri.ToStdString());
-                return nullptr;
-            }
-            std::function<void(std::string)> m_cb;
-        };
-
-        web->RegisterHandler(wxSharedPtr<wxWebViewHandler>(new PoeditURIHandler([=](std::string uri){
-            if (!this->IsOAuthCallback(uri))
-                return;
-            win->CallAfter([=]{
-                win->EndModal(wxID_OK);
-                this->HandleOAuthCallback(uri);
-            });
-        })));
-
-        win->CallAfter([=]{ web->LoadURL(url); });
-        win->ShowModal();
-        win->Destroy();
-#else
-        wxLaunchDefaultBrowser(url);
-#endif
-    }
-
-    void HandleOAuthCallback(const std::string& uri)
-    {
-        if (!m_authCallback)
-            return;
-
-        const regex re("access_token=([^&]+)&");
-        smatch m;
-        if (!regex_search(uri, m, re))
-            return;
-
-        SaveAndSetToken(m.str(1));
-
-        m_authCallback();
-        m_authCallback = nullptr;
-    }
-
-    bool IsOAuthCallback(const std::string& uri)
-    {
-        return boost::starts_with(uri, OAUTH_URI_PREFIX);
-    }
-
-    void GetUserInfo(std::function<void(UserInfo)> callback)
-    {
-        request("/api/account/profile?json=",
-                // OK:
-                [callback](const json_dict& r){
-                    auto profile = r.subdict("profile");
-                    UserInfo u;
-                    u.name = profile.wstring("name");
-                    u.login = profile.wstring("login");
-                    callback(u);
-                },
-                // error:
-                [](std::exception_ptr) {}
-        );
-    }
-
-    void GetUserProjects(std::function<void(std::vector<ProjectListing>)> onResult,
-                         CrowdinClient::error_func_t onError)
-    {
-        request("/api/account/get-projects?json=&role=all",
-                // OK:
-                [onResult](const json_dict& r){
-                    std::vector<CrowdinClient::ProjectListing> all;
-                    r.iterate_array("projects",[&all](const json_dict& i){
-                        all.push_back({i.wstring("name"),
-                                       i.utf8_string("identifier"),
-                                       (bool)i.number("downloadable")});
-                    });
-                    onResult(all);
-                },
-                onError
-        );
-    }
-
-    void GetProjectInfo(const std::string& project_id,
-                        std::function<void(CrowdinClient::ProjectInfo)> onResult,
-                        CrowdinClient::error_func_t onError)
-    {
-        auto url = "/api/project/" + project_id + "/info?json=&project-identifier=" + project_id;
-        request(url,
-                // OK:
-                [onResult](const json_dict& r){
-                    CrowdinClient::ProjectInfo prj;
-                    auto details = r.subdict("details");
-                    prj.name = details.wstring("name");
-                    prj.identifier = details.utf8_string("identifier");
-                    r.iterate_array("languages",[&prj](const json_dict& i){
-                        if (i.number("can_translate") != 0)
-                            prj.languages.push_back(Language::TryParse(i.wstring("code")));
-                    });
-                    ExtractFilesFromInfo(prj.po_files, r, L"/");
-                    onResult(prj);
-                },
-                onError
-        );
-    }
-
-    bool IsSignedIn() const
-    {
-        return wxConfig::Get()->ReadBool("/crowdin/signed_in", false);
-    }
-
-    void SignInIfAuthorized()
-    {
-        if (IsSignedIn())
-        {
-            // TODO: move to secure storage
-            SetToken(wxConfig::Get()->Read("/crowdin/oauth_token").ToStdString());
-        }
-    }
-
-    void SetToken(const std::string& token)
-    {
-        m_api.set_authorization(!token.empty() ? "Bearer " + token : "");
-    }
-
-    void SaveAndSetToken(const std::string& token)
-    {
-        SetToken(token);
-        auto *cfg = wxConfig::Get();
-        cfg->Write("/crowdin/signed_in", true);
-        cfg->Write("/crowdin/oauth_token", wxString(token));
-        cfg->Flush();
-    }
-
-    void SignOut()
-    {
-        m_api.set_authorization("");
-        wxConfig::Get()->DeleteGroup("/crowdin");
-    }
-
-private:
     template <typename T1, typename T2>
     void request(const std::string& url, const T1& onResult, const T2& onError)
     {
-        m_api.request(url, [onResult,onError](const http_response& r){
+        http_client::request(url, [onResult,onError](const http_response& r){
             try
             {
                 onResult(r.json());
@@ -271,11 +113,179 @@ private:
             }
         });
     }
-
-    http_client m_api;
-    std::function<void()> m_authCallback;
 };
 
+
+CrowdinClient::CrowdinClient() : m_api(new crowdin_http_client())
+{
+    SignInIfAuthorized();
+}
+
+CrowdinClient::~CrowdinClient() {}
+
+
+void CrowdinClient::Authenticate(std::function<void()> callback)
+{
+    auto url = WrapLink(OAUTH_AUTHORIZE_URL);
+    m_authCallback = callback;
+
+#ifdef NEEDS_IN_APP_BROWSER
+    auto win = new wxDialog(nullptr, wxID_ANY, _("Sign in"), wxDefaultPosition, wxSize(PX(800), PX(600)), wxDIALOG_NO_PARENT | wxDEFAULT_DIALOG_STYLE);
+    auto web = wxWebView::New(win, wxID_ANY);
+
+    // Protocol handler that simply calls a callback and doesn't return any data.
+    // We have to use this hack, because wxEVT_WEBVIEW_NAVIGATING is unreliable
+    // with IE on Windows 8 and is not sent at all or sent one navigation event too
+    // late, possibly due to the custom protocol used, possibly not.
+    class PoeditURIHandler : public wxWebViewHandler
+    {
+    public:
+        PoeditURIHandler(std::function<void(std::string)> cb) : wxWebViewHandler("poedit"), m_cb(cb) {}
+        wxFSFile* GetFile(const wxString &uri) override
+        {
+            m_cb(uri.ToStdString());
+            return nullptr;
+        }
+        std::function<void(std::string)> m_cb;
+    };
+
+    web->RegisterHandler(wxSharedPtr<wxWebViewHandler>(new PoeditURIHandler([=](std::string uri){
+        if (!this->IsOAuthCallback(uri))
+            return;
+        win->CallAfter([=]{
+            win->EndModal(wxID_OK);
+            this->HandleOAuthCallback(uri);
+        });
+    })));
+
+    win->CallAfter([=]{ web->LoadURL(url); });
+    win->ShowModal();
+    win->Destroy();
+#else
+    wxLaunchDefaultBrowser(url);
+#endif
+}
+
+
+void CrowdinClient::HandleOAuthCallback(const std::string& uri)
+{
+    if (!m_authCallback)
+        return;
+
+    const regex re("access_token=([^&]+)&");
+    smatch m;
+    if (!regex_search(uri, m, re))
+        return;
+
+    SaveAndSetToken(m.str(1));
+
+    m_authCallback();
+    m_authCallback = nullptr;
+}
+
+
+bool CrowdinClient::IsOAuthCallback(const std::string& uri)
+{
+    return boost::starts_with(uri, OAUTH_URI_PREFIX);
+}
+
+
+void CrowdinClient::GetUserInfo(std::function<void(UserInfo)> callback)
+{
+    m_api->request("/api/account/profile?json=",
+            // OK:
+            [callback](const json_dict& r){
+                auto profile = r.subdict("profile");
+                UserInfo u;
+                u.name = profile.wstring("name");
+                u.login = profile.wstring("login");
+                callback(u);
+            },
+            // error:
+            [](std::exception_ptr) {}
+    );
+}
+
+
+void CrowdinClient::GetUserProjects(std::function<void(std::vector<ProjectListing>)> onResult,
+                                    error_func_t onError)
+{
+    m_api->request("/api/account/get-projects?json=&role=all",
+            // OK:
+            [onResult](const json_dict& r){
+                std::vector<ProjectListing> all;
+                r.iterate_array("projects",[&all](const json_dict& i){
+                    all.push_back({i.wstring("name"),
+                                   i.utf8_string("identifier"),
+                                   (bool)i.number("downloadable")});
+                });
+                onResult(all);
+            },
+            onError
+    );
+}
+
+
+void CrowdinClient::GetProjectInfo(const std::string& project_id,
+                                   std::function<void(ProjectInfo)> onResult,
+                                   error_func_t onError)
+{
+    auto url = "/api/project/" + project_id + "/info?json=&project-identifier=" + project_id;
+    m_api->request(url,
+            // OK:
+            [onResult](const json_dict& r){
+                ProjectInfo prj;
+                auto details = r.subdict("details");
+                prj.name = details.wstring("name");
+                prj.identifier = details.utf8_string("identifier");
+                r.iterate_array("languages",[&prj](const json_dict& i){
+                    if (i.number("can_translate") != 0)
+                        prj.languages.push_back(Language::TryParse(i.wstring("code")));
+                });
+                ExtractFilesFromInfo(prj.po_files, r, L"/");
+                onResult(prj);
+            },
+            onError
+    );
+}
+
+bool CrowdinClient::IsSignedIn() const
+{
+    return wxConfig::Get()->ReadBool("/crowdin/signed_in", false);
+}
+
+
+void CrowdinClient::SignInIfAuthorized()
+{
+    if (IsSignedIn())
+    {
+        // TODO: move to secure storage
+        SetToken(wxConfig::Get()->Read("/crowdin/oauth_token").ToStdString());
+    }
+}
+
+
+void CrowdinClient::SetToken(const std::string& token)
+{
+    m_api->set_authorization(!token.empty() ? "Bearer " + token : "");
+}
+
+
+void CrowdinClient::SaveAndSetToken(const std::string& token)
+{
+    SetToken(token);
+    auto *cfg = wxConfig::Get();
+    cfg->Write("/crowdin/signed_in", true);
+    cfg->Write("/crowdin/oauth_token", wxString(token));
+    cfg->Flush();
+}
+
+
+void CrowdinClient::SignOut()
+{
+    m_api->set_authorization("");
+    wxConfig::Get()->DeleteGroup("/crowdin");
+}
 
 
 // ----------------------------------------------------------------
@@ -302,53 +312,3 @@ void CrowdinClient::CleanUp()
     }
 }
 
-CrowdinClient::CrowdinClient() : m_impl(new impl) {}
-CrowdinClient::~CrowdinClient() {}
-
-
-// ----------------------------------------------------------------
-// Public API
-// ----------------------------------------------------------------
-
-bool CrowdinClient::IsSignedIn() const
-{
-    return m_impl->IsSignedIn();
-}
-
-void CrowdinClient::Authenticate(std::function<void()> callback)
-{
-    return m_impl->Authenticate(callback);
-}
-
-void CrowdinClient::HandleOAuthCallback(const std::string& uri)
-{
-    return m_impl->HandleOAuthCallback(uri);
-}
-
-bool CrowdinClient::IsOAuthCallback(const std::string& uri)
-{
-    return m_impl->IsOAuthCallback(uri);
-}
-
-void CrowdinClient::SignOut()
-{
-    m_impl->SignOut();
-}
-
-void CrowdinClient::GetUserInfo(std::function<void(UserInfo)> callback)
-{
-    m_impl->GetUserInfo(callback);
-}
-
-void CrowdinClient::GetUserProjects(std::function<void(std::vector<ProjectListing>)> onResult,
-                                    error_func_t onError)
-{
-    m_impl->GetUserProjects(onResult, onError);
-}
-
-void CrowdinClient::GetProjectInfo(const std::string& project_id,
-                                   std::function<void(ProjectInfo)> onResult,
-                                   error_func_t onError)
-{
-    m_impl->GetProjectInfo(project_id, onResult, onError);
-}

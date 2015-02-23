@@ -106,8 +106,15 @@ private:
     CrowdinClient();
     ~CrowdinClient();
 
-    class impl;
-    std::unique_ptr<impl> m_impl;
+    void SignInIfAuthorized();
+    void SetToken(const std::string& token);
+    void SaveAndSetToken(const std::string& token);
+
+    class crowdin_http_client;
+    std::unique_ptr<crowdin_http_client> m_api;
+
+    std::function<void()> m_authCallback;
+
     static CrowdinClient *ms_instance;
 };
 
