@@ -32,9 +32,120 @@
     #endif
 #endif
 
+#include <wx/app.h>
 #include <wx/string.h>
 #include <wx/arrstr.h>
 #include <wx/toplevel.h>
+
+#include <functional>
+
+// ----------------------------------------------------------------------
+// Multithreading helpers
+// ----------------------------------------------------------------------
+
+#ifndef _MSC_VER
+template<typename... Args>
+auto on_main_thread_impl(std::function<void(Args...)> func) -> std::function<void(Args...)>
+{
+    return [func](Args... args){
+        wxTheApp->CallAfter([func,args...]{
+            func(args...);
+        });
+    };
+}
+
+#else
+
+// Visual Studio 2013 is broken and won't parse the above; 2015 fixes it.
+inline auto on_main_thread_impl(std::function<void()> func) -> std::function<void()>
+{
+    return [func](){ wxTheApp->CallAfter([=]{ func(); }); };
+}
+template<typename A1>
+auto on_main_thread_impl(std::function<void(A1)> func) -> std::function<void(A1)>
+{
+    return [func](A1 a1){ wxTheApp->CallAfter([=]{ func(a1); }); };
+}
+template<typename A1, typename A2>
+auto on_main_thread_impl(std::function<void(A1,A2)> func) -> std::function<void(A1,A2)>
+{
+    return [func](A1 a1, A2 a2){ wxTheApp->CallAfter([=]{ func(a1,a2); }); };
+}
+template<typename A1, typename A2, typename A3>
+auto on_main_thread_impl(std::function<void(A1, A2, A3)> func) -> std::function<void(A1, A2, A3)>
+{
+    return [func](A1 a1, A2 a2, A3 a3){ wxTheApp->CallAfter([=]{ func(a1, a2, a3); }); };
+}
+
+#endif
+
+/**
+    Wraps a callable into std::function called on the main thread.
+    
+    Returned function takes the same arguments as @a func and is called on the
+    main thread. I.e. the returned object may be called from any thread, but
+    @a func is guaranteed to execute on the main one.
+    
+    Notice that it is necessary to specify template parameters because they
+    cannot be deduced.
+    
+    Example usage:
+    
+        on_main_thread<int,std::string>(this, [=](int i, std::string s){
+            ...
+        })
+ */
+template<typename... Args, typename F>
+auto on_main_thread(F&& func) -> std::function<void(Args...)>
+{
+    return on_main_thread_impl(std::function<void(Args...)>(func));
+}
+
+/**
+    Like on_main_thread<> but is only called if @a window is still valid
+    (using a wxWeakRef<> to check).
+ */
+template<typename Class, typename... Args, typename F>
+auto on_main_thread_for_window(Class *self, F&& func) -> std::function<void(Args...)>
+{
+    wxWeakRef<Class> weak(self);
+    return on_main_thread<Args...>([=](Args... args){
+        if (weak)
+            func(args...);
+    });
+}
+
+
+/**
+    Wraps a method into function called on the main thread.
+    
+    Returned function takes the same arguments as the provided method @a func
+    and is called on the main thread. I.e. the returned object may be called
+    from any thread, but @a func is guaranteed to execute on the main one.
+    
+    Example usage:
+    
+        on_main_thread(this, &CrowdinOpenDialog::OnFetchedProjects)
+ */
+template<typename Class, typename... Args>
+auto on_main_thread(Class *self, void (Class::*func)(Args...)) -> std::function<void(Args...)>
+{
+    wxWeakRef<Class> weak(self);
+    return on_main_thread<Args...>([=](Args... args){
+        if (weak)
+            ((*weak.get()).*func)(args...);
+    });
+}
+
+/**
+    This version doesn't return anything and simply calls the callable @a func
+    on the main thread.
+ */
+template<typename F>
+void call_on_main_thread(F&& func)
+{
+    wxTheApp->CallAfter(func);
+}
 
 // ----------------------------------------------------------------------
 // Misc platform differences
