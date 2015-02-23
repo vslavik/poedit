@@ -58,7 +58,7 @@
 #include <boost/range/counting_range.hpp>
 
 #include "catalog.h"
-#include "crowdin_client.h"
+#include "crowdin_gui.h"
 #include "customcontrols.h"
 #include "edapp.h"
 #include "hidpi.h"

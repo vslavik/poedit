@@ -28,29 +28,18 @@
 
 #include "http_client.h"
 
-#include "customcontrols.h"
-#include "hidpi.h"
-#include "utility.h"
-
 #include <functional>
 #include <mutex>
 #include <boost/algorithm/string.hpp>
 
-#include <wx/app.h>
-#include <wx/artprov.h>
-#include <wx/button.h>
-#include <wx/choice.h>
 #include <wx/config.h>
-#include <wx/dialog.h>
-#include <wx/sizer.h>
-#include <wx/statbmp.h>
-#include <wx/weakref.h>
-#include <wx/windowptr.h>
+#include <wx/utils.h>
 
 #ifndef __WXOSX__
     #define NEEDS_IN_APP_BROWSER
     #include <wx/frame.h>
     #include <wx/webview.h>
+    #include "hidpi.h"
 #endif
 
 // GCC's libstdc++ didn't have functional std::regex implementation until 4.9
@@ -74,15 +63,14 @@
 #define OAUTH_AUTHORIZE_URL "/oauth2/authorize?response_type=token&client_id=" OAUTH_CLIENT_ID
 #define OAUTH_URI_PREFIX    "poedit://auth/crowdin/"
 
-namespace
-{
-
-std::string WrapCrowdinLink(const std::string& page)
+std::string CrowdinClient::WrapLink(const std::string& page)
 {
     return "https://secure.payproglobal.com/r.ashx?s=12569&a=62761&u=" +
             http_client::url_encode("https://crowdin.com" + page);
 }
 
+namespace
+{
 
 // Recursive extract files from /api/project/*/info response
 void ExtractFilesFromInfo(std::vector<std::wstring>& out, const json_dict& r, const std::wstring& prefix)
@@ -116,7 +104,7 @@ public:
 
     void Authenticate(std::function<void()> callback)
     {
-        auto url = WrapCrowdinLink(OAUTH_AUTHORIZE_URL);
+        auto url = CrowdinClient::WrapLink(OAUTH_AUTHORIZE_URL);
         m_authCallback = callback;
 
 #ifdef NEEDS_IN_APP_BROWSER
@@ -363,324 +351,4 @@ void CrowdinClient::GetProjectInfo(const std::string& project_id,
                                    error_func_t onError)
 {
     m_impl->GetProjectInfo(project_id, onResult, onError);
-}
-
-
-// ----------------------------------------------------------------
-// GUI Components
-// ----------------------------------------------------------------
-
-
-CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent)
-    : wxPanel(parent, wxID_ANY),
-      m_state(State::SignedOut)
-{
-    wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-    sizer->SetMinSize(PX(400), -1);
-    SetSizer(sizer);
-
-    sizer->AddSpacer(PX(10));
-    auto logo = new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("CrowdinLogo"));
-    logo->SetCursor(wxCURSOR_HAND);
-    logo->Bind(wxEVT_LEFT_UP, [](wxMouseEvent&){ wxLaunchDefaultBrowser(WrapCrowdinLink("/")); });
-    sizer->Add(logo, wxSizerFlags().PXDoubleBorder(wxBOTTOM));
-    auto explain = new ExplanationLabel(this, _("Crowdin is an online localization management platform and collaborative translation tool. Poedit can seamlessly sync PO files managed at Crowdin."));
-    sizer->Add(explain, wxSizerFlags().Expand());
-
-    m_loginInfo = new wxBoxSizer(wxHORIZONTAL);
-    auto loginInfoContainer = new wxBoxSizer(wxVERTICAL);
-    loginInfoContainer->SetMinSize(-1, PX(50));
-    loginInfoContainer->AddStretchSpacer();
-    loginInfoContainer->Add(m_loginInfo, wxSizerFlags().Center());
-    loginInfoContainer->AddStretchSpacer();
-
-    sizer->Add(loginInfoContainer, wxSizerFlags().Expand().ReserveSpaceEvenIfHidden().Border(wxTOP|wxBOTTOM, PX(10)));
-
-    m_signIn = new wxButton(this, wxID_ANY, MSW_OR_OTHER(_("Sign in"), _("Sign In")));
-    m_signIn->Bind(wxEVT_BUTTON, &CrowdinLoginPanel::OnSignIn, this);
-    m_signOut= new wxButton(this, wxID_ANY, MSW_OR_OTHER(_("Sign out"), _("Sign Out")));
-    m_signOut->Bind(wxEVT_BUTTON, &CrowdinLoginPanel::OnSignOut, this);
-
-    auto learnMore = new LearnAboutCrowdinLink(this);
-
-    auto buttons = new wxBoxSizer(wxHORIZONTAL);
-    sizer->Add(buttons, wxSizerFlags().Expand().Border(wxBOTTOM, 1));
-    buttons->Add(learnMore, wxSizerFlags().Center().Border(wxLEFT, PX(LearnMoreLink::EXTRA_INDENT)));
-    buttons->AddStretchSpacer();
-    buttons->Add(m_signIn, wxSizerFlags().Right());
-    buttons->Add(m_signOut, wxSizerFlags().Right());
-
-    if (CrowdinClient::Get().IsSignedIn())
-        UpdateUserInfo();
-    else
-        ChangeState(State::SignedOut);
-}
-
-void CrowdinLoginPanel::ChangeState(State state)
-{
-    m_state = state;
-
-    bool canSignIn = (state == State::SignedOut || state == State::Authenticating);
-    auto sizer = m_signIn->GetContainingSizer();
-    m_signIn->GetContainingSizer()->Show(m_signIn, canSignIn);
-    if (m_signOut)
-        m_signOut->GetContainingSizer()->Show(m_signOut, !canSignIn);
-    sizer->Layout();
-
-    CreateLoginInfoControls(state);
-}
-
-void CrowdinLoginPanel::CreateLoginInfoControls(State state)
-{
-    auto sizer = m_loginInfo;
-    sizer->Clear(/*delete_windows=*/true);
-
-    switch (state)
-    {
-        case State::Authenticating:
-        case State::UpdatingInfo:
-        {
-            auto text = (state == State::Authenticating)
-                      ? _(L"Waiting for authentication…")
-                      : _(L"Updating user information…");
-            auto waitingLabel = new ActivityIndicator(this);
-            sizer->Add(waitingLabel, wxSizerFlags().Center());
-            waitingLabel->Start(text);
-            break;
-        }
-
-        case State::SignedOut:
-        {
-            // nothing to show in the UI except for "sign in" button
-            break;
-        };
-
-        case State::SignedIn:
-        {
-            auto account = new wxStaticText(this, wxID_ANY, _("Signed in as:"));
-            account->SetForegroundColour(SecondaryLabel::GetTextColor());
-            auto name = new wxStaticText(this, wxID_ANY, m_userName);
-            name->SetFont(name->GetFont().Bold());
-            auto username = new SecondaryLabel(this, m_userLogin);
-
-            sizer->Add(account, wxSizerFlags().PXBorder(wxRIGHT));
-            auto box = new wxBoxSizer(wxVERTICAL);
-            box->Add(name, wxSizerFlags().Left());
-            box->Add(username, wxSizerFlags().Left());
-            sizer->Add(box);
-            break;
-        }
-    }
-
-    Layout();
-}
-
-void CrowdinLoginPanel::UpdateUserInfo()
-{
-    ChangeState(State::UpdatingInfo);
-
-    wxWeakRef<CrowdinLoginPanel> self(this);
-    CrowdinClient::Get().GetUserInfo([self](CrowdinClient::UserInfo u){
-        wxTheApp->CallAfter([self,u]{
-            if (self)
-            {
-                self->m_userName = u.name;
-                self->m_userLogin = u.login;
-                self->ChangeState(State::SignedIn);
-            }
-        });
-    });
-}
-
-void CrowdinLoginPanel::OnSignIn(wxCommandEvent&)
-{
-    ChangeState(State::Authenticating);
-
-    wxWeakRef<CrowdinLoginPanel> self(this);
-    CrowdinClient::Get().Authenticate([self]{
-        wxTheApp->CallAfter([self]{
-            if (self)
-            {
-                self->UpdateUserInfo();
-                self->Raise();
-            }
-        });
-    });
-}
-
-void CrowdinLoginPanel::OnSignOut(wxCommandEvent&)
-{
-    CrowdinClient::Get().SignOut();
-    ChangeState(State::SignedOut);
-}
-
-
-LearnAboutCrowdinLink::LearnAboutCrowdinLink(wxWindow *parent, const wxString& text)
-    : LearnMoreLink(parent,
-                    WrapCrowdinLink("/"),
-                    text.empty() ? (MSW_OR_OTHER(_("Learn more about Crowdin"), _("Learn More About Crowdin"))) : text)
-{
-}
-
-
-
-namespace
-{
-
-class CrowdinOpenDialog : public wxDialog
-{
-public:
-    CrowdinOpenDialog(wxWindow *parent) : wxDialog(parent, wxID_ANY, _("Open Crowdin translation"))
-    {
-        auto topsizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->SetMinSize(PX(400), -1);
-
-        topsizer->AddSpacer(PX(10));
-
-        auto pickers = new wxFlexGridSizer(2, wxSize(PX(5),PX(6)));
-        pickers->AddGrowableCol(1);
-        topsizer->Add(pickers, wxSizerFlags().Expand().PXDoubleBorderAll());
-
-        pickers->Add(new wxStaticText(this, wxID_ANY, _("Project:")),
-                     wxSizerFlags().Center().Right().BORDER_OSX(wxTOP, 1));
-        m_project = new wxChoice(this, wxID_ANY);
-        pickers->Add(m_project, wxSizerFlags().Expand().Center());
-
-        pickers->Add(new wxStaticText(this, wxID_ANY, _("Language:")),
-                     wxSizerFlags().Center().Right().BORDER_OSX(wxTOP, 1));
-        m_language = new wxChoice(this, wxID_ANY);
-        pickers->Add(m_language, wxSizerFlags().Expand().Center());
-
-        pickers->AddSpacer(PX(5));
-        pickers->AddSpacer(PX(5));
-
-        pickers->Add(new wxStaticText(this, wxID_ANY, _("File:")),
-                     wxSizerFlags().Center().Right().BORDER_OSX(wxTOP, 1));
-        m_file = new wxChoice(this, wxID_ANY);
-        pickers->Add(m_file, wxSizerFlags().Expand().Center());
-
-        m_activity = new ActivityIndicator(this);
-        topsizer->Add(m_activity, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT|wxTOP));
-
-        auto buttons = CreateButtonSizer(wxOK | wxCANCEL);
-        auto ok = static_cast<wxButton*>(FindWindow(wxID_OK));
-        ok->SetDefault();
-    #ifdef __WXOSX__
-        topsizer->Add(buttons, wxSizerFlags().Expand());
-    #else
-        topsizer->Add(buttons, wxSizerFlags().Expand().PXBorderAll());
-        topsizer->AddSpacer(PX(5));
-    #endif
-
-        SetSizerAndFit(topsizer);
-
-        m_project->Bind(wxEVT_CHOICE, [=](wxCommandEvent&){ OnProjectSelected(); });
-        ok->Bind(wxEVT_UPDATE_UI, &CrowdinOpenDialog::OnUpdateOK, this);
-
-        ok->Disable();
-        EnableAllChoices(false);
-
-        FetchProjects();
-    }
-
-private:
-    void EnableAllChoices(bool enable = true)
-    {
-        m_project->Enable(enable);
-        m_file->Enable(enable);
-        m_language->Enable(enable);
-    }
-
-    void FetchProjects()
-    {
-        m_activity->Start();
-        CrowdinClient::Get().GetUserProjects(
-            on_main_thread(this, &CrowdinOpenDialog::OnFetchedProjects),
-            m_activity->HandleError
-        );
-    }
-
-    void OnFetchedProjects(const std::vector<CrowdinClient::ProjectListing>& prjs)
-    {
-        m_projects = prjs;
-        m_project->Append("");
-        for (auto& p: prjs)
-            m_project->Append(p.name);
-        m_project->Enable();
-        m_activity->Stop();
-
-        if (prjs.size() == 1)
-        {
-            m_project->SetSelection(1);
-            OnProjectSelected();
-        }
-    }
-
-    void OnProjectSelected()
-    {
-        auto sel = m_project->GetSelection();
-        if (sel > 0)
-        {
-            m_activity->Start();
-            EnableAllChoices(false);
-            CrowdinClient::Get().GetProjectInfo(
-                m_projects[sel-1].identifier,
-                on_main_thread(this, &CrowdinOpenDialog::OnFetchedProjectInfo),
-                m_activity->HandleError
-            );
-        }
-    }
-
-    void OnFetchedProjectInfo(const CrowdinClient::ProjectInfo& prj)
-    {
-        m_info = prj;
-
-        m_language->Clear();
-        m_language->Append("");
-        for (auto& i: prj.languages)
-            m_language->Append(i.DisplayName());
-
-        m_file->Clear();
-        m_file->Append("");
-        for (auto& i: prj.po_files)
-            m_file->Append(i);
-
-        EnableAllChoices();
-        m_activity->Stop();
-
-        if (prj.languages.size() == 1)
-            m_language->SetSelection(1);
-        if (prj.po_files.size() == 1)
-            m_file->SetSelection(1);
-    }
-
-    void OnUpdateOK(wxUpdateUIEvent& e)
-    {
-        e.Enable(m_project->GetSelection() > 0 &&
-                 m_file->GetSelection() > 0 &&
-                 m_language->GetSelection() > 0);
-    }
-
-private:
-    wxChoice *m_project, *m_file, *m_language;
-    ActivityIndicator *m_activity;
-
-    std::vector<CrowdinClient::ProjectListing> m_projects;
-    CrowdinClient::ProjectInfo m_info;
-};
-
-} // anonymous namespace
-
-
-void CrowdinOpenFile(wxWindow *parent, std::function<void(wxString)> onLoaded)
-{
-    wxWindowPtr<CrowdinOpenDialog> dlg(new CrowdinOpenDialog(parent));
-    dlg->CenterOnParent();
-
-    dlg->ShowWindowModalThenDo([dlg,onLoaded](int retval) {
-        dlg->Hide();
-
-        // TODO: download the file
-        // TODO: call onLoaded() on it
-    });
 }

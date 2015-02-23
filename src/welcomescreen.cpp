@@ -25,7 +25,7 @@
 
 #include "welcomescreen.h"
 
-#include "crowdin_client.h"
+#include "crowdin_gui.h"
 #include "edapp.h"
 #include "edframe.h"
 #include "hidpi.h"

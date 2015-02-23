@@ -52,7 +52,7 @@
 #include "edapp.h"
 #include "edframe.h"
 #include "catalog.h"
-#include "crowdin_client.h"
+#include "crowdin_gui.h"
 #include "hidpi.h"
 #include "tm/transmem.h"
 #include "chooselang.h"

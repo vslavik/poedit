@@ -31,12 +31,6 @@
 
 #include "language.h"
 
-#include "customcontrols.h"
-
-#include <wx/panel.h>
-
-class WXDLLIMPEXP_FWD_CORE wxBoxSizer;
-class WXDLLIMPEXP_FWD_CORE wxButton;
 
 /**
     Client to the Crowdin platform.
@@ -52,6 +46,9 @@ public:
 
     /// Is the user currently signed into Crowdin?
     bool IsSignedIn() const;
+
+    /// Wrap relative Crowdin link to absolute URL
+    static std::string WrapLink(const std::string& page);
 
     typedef std::function<void(std::exception_ptr)> error_func_t;
 
@@ -113,53 +110,5 @@ private:
     std::unique_ptr<impl> m_impl;
     static CrowdinClient *ms_instance;
 };
-
-
-/**
-    Panel used to sign in into Crowdin.
- */
-class CrowdinLoginPanel : public wxPanel
-{
-public:
-    CrowdinLoginPanel(wxWindow *parent);
-
-protected:
-    enum class State
-    {
-        Authenticating,
-        SignedIn,
-        SignedOut,
-        UpdatingInfo
-    };
-
-    void ChangeState(State state);
-    void CreateLoginInfoControls(State state);
-    void UpdateUserInfo();
-
-    void OnSignIn(wxCommandEvent&);
-    void OnSignOut(wxCommandEvent&);
-
-    State m_state;
-    wxBoxSizer *m_loginInfo;
-    wxButton *m_signIn, *m_signOut;
-    wxString m_userName, m_userLogin;
-};
-
-
-/// Link to learn about Crowdin
-class LearnAboutCrowdinLink : public LearnMoreLink
-{
-public:
-    LearnAboutCrowdinLink(wxWindow *parent, const wxString& text = "");
-};
-
-
-/**
-    Let the user choose a Crowdin file, download it and open in Poedit.
-    
-    @param parent    PoeditFrame the UI should be shown under.
-    @param onLoaded  Called with the name of loaded PO file.
- */
-void CrowdinOpenFile(wxWindow *parent, std::function<void(wxString)> onLoaded);
 
 #endif // Poedit_crowdin_client_h
