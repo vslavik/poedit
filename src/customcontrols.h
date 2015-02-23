@@ -30,6 +30,9 @@
 #include <wx/hyperlink.h>
 #include <wx/xrc/xmlres.h>
 
+#include <exception>
+#include <functional>
+
 
 // Label marking a subsection of a dialog:
 class HeadingLabel : public wxStaticText
@@ -113,13 +116,35 @@ public:
 #endif
 };
 
-
 class LearnMoreLinkXmlHandler : public wxXmlResourceHandler
 {
 public:
     LearnMoreLinkXmlHandler() {}
     wxObject *DoCreateResource() override;
     bool CanHandle(wxXmlNode *node) override;
+};
+
+
+/// Indicator of background activity, using spinners where appropriate.
+class ActivityIndicator : public wxWindow
+{
+public:
+    ActivityIndicator(wxWindow *parent);
+
+    /// Start indicating, with optional progress label.
+    void Start(const wxString& msg = "");
+
+    /// Stop the indicator.
+    void Stop();
+
+    /// Stop the indicator and report error in its place.
+    void StopWithError(const wxString& msg);
+
+    /// Convenience function for showing error message in the indicator
+    std::function<void(std::exception_ptr)> HandleError;
+
+private:
+    wxStaticText *m_label, *m_error;
 };
 
 #endif // Poedit_customcontrols_h

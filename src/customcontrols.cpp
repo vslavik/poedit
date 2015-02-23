@@ -25,12 +25,16 @@
 
 #include "customcontrols.h"
 
+#include "errors.h"
 #include "hidpi.h"
 #include "icuhelpers.h"
 
+#include <wx/app.h>
 #include <wx/clipbrd.h>
 #include <wx/menu.h>
 #include <wx/settings.h>
+#include <wx/sizer.h>
+#include <wx/weakref.h>
 #include <wx/wupdlock.h>
 
 #include <unicode/brkiter.h>
@@ -253,4 +257,52 @@ wxObject *LearnMoreLinkXmlHandler::DoCreateResource()
 bool LearnMoreLinkXmlHandler::CanHandle(wxXmlNode *node)
 {
     return IsOfClass(node, "LearnMoreLink");
+}
+
+
+ActivityIndicator::ActivityIndicator(wxWindow *parent) : wxWindow(parent, wxID_ANY)
+{
+    // TODO: add spinner!
+
+    auto sizer = new wxBoxSizer(wxHORIZONTAL);
+    SetSizer(sizer);
+    m_label = new wxStaticText(this, wxID_ANY, "");
+#ifdef __WXOSX__
+    m_label->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+
+    sizer->Add(m_label, wxSizerFlags(1).Center());
+
+    wxWeakRef<ActivityIndicator> self(this);
+    HandleError = [self](std::exception_ptr e){
+        wxTheApp->CallAfter([self,e]{
+            if (self)
+                self->StopWithError(DescribeException(e));
+        });
+    };
+}
+
+void ActivityIndicator::Start(const wxString& msg)
+{
+    m_label->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT));
+
+    if (!msg.empty())
+        m_label->SetLabel(msg);
+    else
+        m_label->SetLabel(_("Working...")); // seriously, add spinner
+
+    m_label->Show();
+}
+
+void ActivityIndicator::Stop()
+{
+    m_label->Hide();
+    m_label->SetLabel("");
+}
+
+void ActivityIndicator::StopWithError(const wxString& msg)
+{
+    m_label->SetForegroundColour(*wxRED);
+    m_label->SetLabel(msg);
+    m_label->Show();
 }

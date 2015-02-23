@@ -365,11 +365,9 @@ void CrowdinLoginPanel::CreateLoginInfoControls(State state)
             auto text = (state == State::Authenticating)
                       ? _(L"Waiting for authentication…")
                       : _(L"Updating user information…");
-            auto waitingLabel = new wxStaticText(this, wxID_ANY, text);
-        #ifdef __WXOSX__
-            waitingLabel->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-        #endif
+            auto waitingLabel = new ActivityIndicator(this);
             sizer->Add(waitingLabel, wxSizerFlags().Center());
+            waitingLabel->Start(text);
             break;
         }
 
