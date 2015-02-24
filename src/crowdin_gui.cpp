@@ -44,7 +44,7 @@
 #include <wx/windowptr.h>
 
 
-CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent)
+CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     : wxPanel(parent, wxID_ANY),
       m_state(State::SignedOut)
 {
@@ -82,6 +82,18 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent)
     buttons->AddStretchSpacer();
     buttons->Add(m_signIn, wxSizerFlags().Right());
     buttons->Add(m_signOut, wxSizerFlags().Right());
+
+    if (flags & DialogButtons)
+    {
+        auto cancel = new wxButton(this, wxID_CANCEL);
+#ifdef __WXMSW__
+        buttons->Add(cancel, wxSizerFlags().Right().Border(wxLEFT, PX(3)));
+#else
+        buttons->Insert(2, cancel, wxSizerFlags().Right().Border(wxRIGHT, PX(6)));
+#endif
+        m_signIn->SetDefault();
+        m_signIn->SetFocus();
+    }
 
     if (CrowdinClient::Get().IsSignedIn())
         UpdateUserInfo();
@@ -168,17 +180,13 @@ void CrowdinLoginPanel::UpdateUserInfo()
 void CrowdinLoginPanel::OnSignIn(wxCommandEvent&)
 {
     ChangeState(State::Authenticating);
+    CrowdinClient::Get().Authenticate(on_main_thread(this, &CrowdinLoginPanel::OnUserSignedIn));
+}
 
-    wxWeakRef<CrowdinLoginPanel> self(this);
-    CrowdinClient::Get().Authenticate([self]{
-        wxTheApp->CallAfter([self]{
-            if (self)
-            {
-                self->UpdateUserInfo();
-                self->Raise();
-            }
-        });
-    });
+void CrowdinLoginPanel::OnUserSignedIn()
+{
+    UpdateUserInfo();
+    Raise();
 }
 
 void CrowdinLoginPanel::OnSignOut(wxCommandEvent&)
@@ -199,6 +207,37 @@ LearnAboutCrowdinLink::LearnAboutCrowdinLink(wxWindow *parent, const wxString& t
 
 namespace
 {
+
+class CrowdinLoginDialog : public wxDialog
+{
+public:
+    CrowdinLoginDialog(wxWindow *parent) : wxDialog(parent, wxID_ANY, _("Sign in to Crowdin"))
+    {
+        auto topsizer = new wxBoxSizer(wxHORIZONTAL);
+        auto panel = new Panel(this);
+        panel->SetClientSize(panel->GetBestSize());
+        topsizer->Add(panel, wxSizerFlags(1).Expand().Border(wxALL, PX(15)));
+        SetSizerAndFit(topsizer);
+        CenterOnParent();
+    }
+
+private:
+    class Panel : public CrowdinLoginPanel
+    {
+    public:
+        Panel(CrowdinLoginDialog *parent) : CrowdinLoginPanel(parent, DialogButtons), m_owner(parent) {}
+
+    protected:
+        void OnUserSignedIn() override
+        {
+            m_owner->Raise();
+            m_owner->EndModal(wxID_OK);
+        }
+
+        CrowdinLoginDialog *m_owner;
+    };
+};
+
 
 class CrowdinOpenDialog : public wxDialog
 {
@@ -246,6 +285,7 @@ public:
     #endif
 
         SetSizerAndFit(topsizer);
+        CenterOnParent();
 
         m_project->Bind(wxEVT_CHOICE, [=](wxCommandEvent&){ OnProjectSelected(); });
         ok->Bind(wxEVT_UPDATE_UI, &CrowdinOpenDialog::OnUpdateOK, this);
@@ -342,13 +382,24 @@ private:
     CrowdinClient::ProjectInfo m_info;
 };
 
+
+
 } // anonymous namespace
 
 
 void CrowdinOpenFile(wxWindow *parent, std::function<void(wxString)> onLoaded)
 {
+    if (!CrowdinClient::Get().IsSignedIn())
+    {
+        wxWindowPtr<CrowdinLoginDialog> login(new CrowdinLoginDialog(parent));
+        login->ShowWindowModalThenDo([login,parent,onLoaded](int retval){
+            if (retval == wxID_OK)
+                CrowdinOpenFile(parent, onLoaded);
+        });
+        return;
+    }
+
     wxWindowPtr<CrowdinOpenDialog> dlg(new CrowdinOpenDialog(parent));
-    dlg->CenterOnParent();
 
     dlg->ShowWindowModalThenDo([dlg,onLoaded](int retval) {
         dlg->Hide();

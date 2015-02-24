@@ -40,7 +40,12 @@ class WXDLLIMPEXP_FWD_CORE wxButton;
 class CrowdinLoginPanel : public wxPanel
 {
 public:
-    CrowdinLoginPanel(wxWindow *parent);
+    enum Flags
+    {
+        DialogButtons = 1
+    };
+
+    CrowdinLoginPanel(wxWindow *parent, int flags = 0);
 
 protected:
     enum class State
@@ -57,6 +62,7 @@ protected:
 
     void OnSignIn(wxCommandEvent&);
     void OnSignOut(wxCommandEvent&);
+    virtual void OnUserSignedIn();
 
     State m_state;
     wxBoxSizer *m_loginInfo;
