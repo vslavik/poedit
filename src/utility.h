@@ -201,19 +201,26 @@ private:
     static bool ms_keepFiles;
 };
 
-// Holder of temporary file for creating the output.
+/// Holder of temporary file for creating the output.
+/// Use Commit() to move the written file to its final location.
+/// Destructor deletes the temp file if it still exists.
 class TempOutputFileFor
 {
 public:
     explicit TempOutputFileFor(const wxString& filename);
     ~TempOutputFileFor();
 
+    /// Name of the temporary placeholder
     const wxString& FileName() const { return m_filenameTmp; }
+
+    /// Renames temp file to the final one (passed to ctor).
+    bool Commit();
 
 #ifdef __WXOSX__
     wxString m_tempDir;
 #endif
     wxString m_filenameTmp;
+    wxString m_filenameFinal;
 };
 
 // Helper for writing files

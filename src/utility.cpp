@@ -130,7 +130,7 @@ wxString TempDirectory::CreateFileName(const wxString& suffix)
 // TempOutputFile
 // ----------------------------------------------------------------------
 
-TempOutputFileFor::TempOutputFileFor(const wxString& filename)
+TempOutputFileFor::TempOutputFileFor(const wxString& filename) : m_filenameFinal(filename)
 {
     wxString path, name, ext;
     wxFileName::SplitPath(filename, &path, &name, &ext);
@@ -162,12 +162,19 @@ TempOutputFileFor::TempOutputFileFor(const wxString& filename)
         wxRemoveFile(m_filenameTmp);
 }
 
+bool TempOutputFileFor::Commit()
+{
+    return wxRenameFile(m_filenameTmp, m_filenameFinal, /*overwrite=*/true);
+}
 
 TempOutputFileFor::~TempOutputFileFor()
 {
 #ifdef __WXOSX__
     if (!m_tempDir.empty())
         wxFileName::Rmdir(m_tempDir, wxPATH_RMDIR_RECURSIVE);
+#else
+    if (wxFileExists(m_filenameTmp))
+        wxRemoveFile(m_filenameTmp);
 #endif
 }
 
