@@ -31,9 +31,7 @@
 #include <wx/config.h>
 #include <wx/display.h>
 
-#ifdef __WXOSX__
-#include "osx_helpers.h"
-#endif
+#include "str_helpers.h"
 
 wxString EscapeMarkup(const wxString& str)
 {
@@ -138,7 +136,7 @@ TempOutputFileFor::TempOutputFileFor(const wxString& filename)
     wxFileName::SplitPath(filename, &path, &name, &ext);
 
 #ifdef __WXOSX__
-    NSURL *fileUrl = [NSURL fileURLWithPath:wxStringToNS(filename)];
+    NSURL *fileUrl = [NSURL fileURLWithPath:str::to_NS(filename)];
     NSURL *tempdirUrl =
         [[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory
                                                inDomain:NSUserDomainMask
@@ -149,8 +147,8 @@ TempOutputFileFor::TempOutputFileFor(const wxString& filename)
     {
         NSURL *newFileUrl = [tempdirUrl URLByAppendingPathComponent:[fileUrl lastPathComponent]];
         NSString *newFilePath = [newFileUrl path];
-        m_filenameTmp = wxStringFromNS(newFilePath);
-        m_tempDir = wxStringFromNS([tempdirUrl path]);
+        m_filenameTmp = str::to_wx(newFilePath);
+        m_tempDir = str::to_wx([tempdirUrl path]);
     }
     // else: fall through to the generic code
 #endif // __WXOSX__

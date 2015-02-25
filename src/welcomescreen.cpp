@@ -29,6 +29,7 @@
 #include "edapp.h"
 #include "edframe.h"
 #include "hidpi.h"
+#include "str_helpers.h"
 
 #include <wx/dcbuffer.h>
 #include <wx/statbmp.h>
@@ -41,9 +42,7 @@
 #include <wx/hyperlink.h>
 #include <wx/xrc/xmlres.h>
 
-#ifdef __WXOSX__
-#include "osx_helpers.h"
-#else
+#ifndef __WXOSX__
 #include <wx/commandlinkbutton.h>
 #endif
 
@@ -65,7 +64,7 @@ public:
 
         NSButton *btn = (NSButton*)m_button->GetHandle();
 
-        NSString *str = wxStringToNS(label + "\n" + note);
+        NSString *str = str::to_NS(label + "\n" + note);
         NSRange topLine = NSMakeRange(0, label.length() + 1);
         NSRange bottomLine = NSMakeRange(label.length() + 1, note.length());
 

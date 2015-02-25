@@ -27,7 +27,6 @@
 
 #include "errors.h"
 #include "hidpi.h"
-#include "icuhelpers.h"
 
 #include <wx/app.h>
 #include <wx/clipbrd.h>
@@ -42,6 +41,8 @@
 #include <gtk/gtk.h>
 #endif
 
+#include "str_helpers.h"
+
 #include <memory>
 
 namespace
@@ -51,7 +52,7 @@ wxString WrapTextAtWidth(const wxString& text_, int width, wxWindow *wnd)
 {
     if (text_.empty())
         return text_;
-    auto text = ToIcuStr(text_);
+    auto text = str::to_icu(text_);
 
     static std::unique_ptr<icu::BreakIterator> iter;
     if (!iter)
@@ -70,7 +71,7 @@ wxString WrapTextAtWidth(const wxString& text_, int width, wxWindow *wnd)
 
     for (int32_t pos = iter->next(); pos != icu::BreakIterator::DONE; pos = iter->next())
     {
-        auto substr = FromIcuStr(text.tempSubStringBetween(lineStart, pos));
+        auto substr = str::to_wx(text.tempSubStringBetween(lineStart, pos));
 
         if (wnd->GetTextExtent(substr).x > width)
         {

@@ -25,8 +25,6 @@
 
 #include "language.h"
 
-#include "icuhelpers.h"
-
 #include <cctype>
 #include <algorithm>
 #include <unordered_map>
@@ -39,6 +37,8 @@
 #include <unicode/utypes.h>
 
 #include <wx/filename.h>
+
+#include "str_helpers.h"
 
 #ifdef HAVE_CLD2
     #ifdef HAVE_CLD2_PUBLIC_COMPACT_LANG_DET_H
@@ -179,11 +179,11 @@ const DisplayNamesData& GetDisplayNamesData()
             }
             
             s.foldCase();
-            data.names[StdFromIcuStr(s)] = code;
+            data.names[str::to_wx(s)] = code;
 
             loc->getDisplayName(locEng, s);
             s.foldCase();
-            data.namesEng[StdFromIcuStr(s)] = code;
+            data.namesEng[str::to_wx(s)] = code;
         }
 
         // sort the names alphabetically for data.sortedNames:
@@ -207,7 +207,7 @@ const DisplayNamesData& GetDisplayNamesData()
         // convert into std::wstring
         data.sortedNames.reserve(names.size());
         for (auto s: names)
-            data.sortedNames.push_back(StdFromIcuStr(s));
+            data.sortedNames.push_back(str::to_wstring(s));
     });
 
     return data;
@@ -276,9 +276,9 @@ Language Language::TryParse(const std::wstring& s)
 
     // If not, perhaps it's a human-readable name (perhaps coming from the language control)?
     auto names = GetDisplayNamesData();
-    icu::UnicodeString s_icu = ToIcuStr(s);
+    icu::UnicodeString s_icu = str::to_icu(s);
     s_icu.foldCase();
-    std::wstring folded = StdFromIcuStr(s_icu);
+    std::wstring folded = str::to_wstring(s_icu);
     auto i = names.names.find(folded);
     if (i != names.names.end())
         return Language(i->second);
@@ -391,14 +391,14 @@ wxString Language::DisplayName() const
 {
     icu::UnicodeString s;
     ToIcu().getDisplayName(s);
-    return FromIcuStr(s);
+    return str::to_wx(s);
 }
 
 wxString Language::LanguageDisplayName() const
 {
     icu::UnicodeString s;
     ToIcu().getDisplayLanguage(s);
-    return FromIcuStr(s);
+    return str::to_wx(s);
 }
 
 wxString Language::DisplayNameInItself() const
@@ -406,7 +406,7 @@ wxString Language::DisplayNameInItself() const
     auto loc = ToIcu();
     icu::UnicodeString s;
     loc.getDisplayName(loc, s);
-    return FromIcuStr(s);
+    return str::to_wx(s);
 }
 
 wxString Language::FormatForRoundtrip() const

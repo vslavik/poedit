@@ -81,6 +81,7 @@
 #include "errors.h"
 #include "sidebar.h"
 #include "spellchecking.h"
+#include "str_helpers.h"
 #include "syntaxhighlighter.h"
 #include "text_control.h"
 
@@ -2400,7 +2401,7 @@ void PoeditFrame::NoteAsRecentFile()
     wxFileName fn(m_fileName);
     fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
 #ifdef __WXOSX__
-    [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:wxStringToNS(fn.GetFullPath())]];
+    [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:str::to_NS(fn.GetFullPath())]];
 #else
     FileHistory().AddFileToHistory(fn.GetFullPath());
 #endif

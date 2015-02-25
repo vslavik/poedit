@@ -26,7 +26,8 @@
 
 #include "cat_sorting.h"
 
-#include "icuhelpers.h"
+#include <unicode/unistr.h>
+#include "str_helpers.h"
 
 #include <wx/config.h>
 #include <wx/log.h>
@@ -198,7 +199,7 @@ int CatalogItemsComparator::CompareStrings(wxString a, wxString b) const
 #elif SIZEOF_WCHAR_T == 2
         return m_collator->compare(a.wx_str(), a.length(), b.wx_str(), b.length(), err);
 #else
-        return m_collator->compare(ToIcuStr(a), ToIcuStr(b), err);
+        return m_collator->compare(str::to_icu(a), str::to_icu(b), err);
 #endif
     }
     else

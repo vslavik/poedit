@@ -30,7 +30,7 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  cat_sorting.cpp cat_sorting.h \
                  utility.cpp utility.h \
                  version.h errors.h \
-                 icuhelpers.h logcapture.h \
+                 str_helpers.h logcapture.h \
                  language.cpp language.h language_impl_legacy.h language_impl_plurals.h \
                  languagectrl.cpp languagectrl.h \
                  welcomescreen.cpp welcomescreen.h \

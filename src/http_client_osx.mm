@@ -25,6 +25,8 @@
 
 #include "http_client.h"
 
+#include "str_helpers.h"
+
 #import "AFHTTPClient.h"
 #import "AFJSONRequestOperation.h"
 
@@ -72,15 +74,13 @@ json_dict json_dict::subdict(const char *name) const
 std::string json_dict::utf8_string(const char *name) const
 {
     NSString *s = m_native->get(name, [NSString class]);
-	return std::string([s cStringUsingEncoding:NSUTF8StringEncoding]);
+    return str::to_utf8(s);
 }
 
 std::wstring json_dict::wstring(const char *name) const
 {
     NSString *s = m_native->get(name, [NSString class]);
-
-    std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> convert;
-    return convert.from_bytes([s UTF8String]);
+    return str::to_wstring(s);
 }
 
 int json_dict::number(const char *name) const
@@ -120,7 +120,7 @@ class http_client::impl
 public:
     impl(const std::string& url_prefix, int /*flags*/)
     {
-        NSString *str = [NSString stringWithUTF8String:url_prefix.c_str()];
+        NSString *str = str::to_NS(url_prefix);
         m_native = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:str]];
 
         [m_native registerHTTPOperationClass:[AFJSONRequestOperation class]];
@@ -143,7 +143,7 @@ public:
     void set_authorization(const std::string& auth)
     {
         if (!auth.empty())
-            [m_native setDefaultHeader:@"Authorization" value:[NSString stringWithUTF8String:auth.c_str()]];
+            [m_native setDefaultHeader:@"Authorization" value:str::to_NS(auth)];
         else
             [m_native clearAuthorizationHeader];
     }
@@ -151,7 +151,7 @@ public:
     void request(const std::string& url,
                  std::function<void(const http_response&)> handler)
     {
-        [m_native getPath:[NSString stringWithUTF8String:url.c_str()]
+        [m_native getPath:str::to_NS(url)
                parameters:nil
                   success:^(AFHTTPRequestOperation *op, NSDictionary *responseObject)
         {
@@ -163,7 +163,7 @@ public:
         failure:^(AFHTTPRequestOperation*, NSError *e)
         {
             NSString *desc = [e localizedDescription];
-            handler(std::make_exception_ptr(http_exception([desc cStringUsingEncoding:NSUTF8StringEncoding])));
+            handler(std::make_exception_ptr(http_exception(str::to_utf8(desc))));
         }];
     }
 

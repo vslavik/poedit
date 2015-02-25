@@ -70,6 +70,7 @@
 #include "hidpi.h"
 #include "icons.h"
 #include "version.h"
+#include "str_helpers.h"
 #include "tm/transmem.h"
 #include "utility.h"
 #include "prefsdlg.h"
@@ -613,7 +614,7 @@ bool PoeditApp::OnExceptionInMainLoop()
 #ifdef __WXOSX__
     catch ( NSException *e )
     {
-        wxLogError(_("Unhandled exception occurred: %s"), wxStringFromNS([e reason]));
+        wxLogError(_("Unhandled exception occurred: %s"), str::to_wx([e reason]));
     }
 #endif
     catch ( ... )
@@ -837,7 +838,7 @@ void PoeditApp::OpenPoeditWeb(const wxString& path)
 
 static NSMenuItem *AddNativeItem(NSMenu *menu, int pos, const wxString&text, SEL ac, NSString *key)
 {
-    NSString *str = wxStringToNS(text);
+    NSString *str = str::to_NS(text);
     if (pos == -1)
         return [menu addItemWithTitle:str action:ac keyEquivalent:key];
     else
@@ -989,7 +990,7 @@ void PoeditApp::InstallOpenRecentMenu(wxMenuBar *bar)
         return;
 
     NSMenu *native = fileMenu->GetHMenu();
-    NSMenuItem *nativeItem = [native itemWithTitle:wxStringToNS(item->GetItemLabelText())];
+    NSMenuItem *nativeItem = [native itemWithTitle:str::to_NS(item->GetItemLabelText())];
     if (!nativeItem)
         return;
 

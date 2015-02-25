@@ -25,15 +25,13 @@
 
 #include "spellchecking.h"
 
+#include "str_helpers.h"
+
 #ifdef __WXGTK__
     #include <gtk/gtk.h>
     extern "C" {
     #include <gtkspell/gtkspell.h>
     }
-#endif
-
-#ifdef __WXOSX__
-    #include "osx_helpers.h"
 #endif
 
 #ifdef __WXMSW__
@@ -136,7 +134,7 @@ bool InitTextCtrlSpellchecker(wxTextCtrl *text, bool enable, const Language& lan
 #ifdef __WXOSX__
 bool SetSpellcheckerLang(const wxString& lang)
 {
-    NSString *nslang = wxStringToNS(lang);
+    NSString *nslang = str::to_NS(lang);
     NSSpellChecker *sc = [NSSpellChecker sharedSpellChecker];
     [sc setAutomaticallyIdentifiesLanguages:NO];
     return [sc setLanguage: nslang];

@@ -42,6 +42,7 @@
 #include "digger.h"
 #include "gexecute.h"
 #include "progressinfo.h"
+#include "str_helpers.h"
 #include "summarydlg.h"
 #include "utility.h"
 #include "version.h"
@@ -49,7 +50,6 @@
 
 #ifdef __WXOSX__
 #import <Foundation/Foundation.h>
-#include "osx_helpers.h"
 #endif
 
 // ----------------------------------------------------------------------
@@ -1667,15 +1667,15 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
         if (mo_compilation_status == CompilationStatus::Success)
         {
 #ifdef __WXOSX__
-            NSURL *mofileUrl = [NSURL fileURLWithPath:wxStringToNS(mo_file)];
-            NSURL *mofiletempUrl = [NSURL fileURLWithPath:wxStringToNS(mo_file_temp)];
+            NSURL *mofileUrl = [NSURL fileURLWithPath:str::to_NS(mo_file)];
+            NSURL *mofiletempUrl = [NSURL fileURLWithPath:str::to_NS(mo_file_temp)];
             bool sandboxed = (getenv("APP_SANDBOX_CONTAINER_ID") != NULL);
             CompiledMOFilePresenter *presenter = nil;
             if (sandboxed)
             {
                 presenter = [CompiledMOFilePresenter new];
                 presenter.presentedItemURL = mofileUrl;
-                presenter.primaryPresentedItemURL = [NSURL fileURLWithPath:wxStringToNS(po_file)];
+                presenter.primaryPresentedItemURL = [NSURL fileURLWithPath:str::to_NS(po_file)];
                 [NSFileCoordinator addFilePresenter:presenter];
                 [NSFileCoordinator filePresenters];
             }
