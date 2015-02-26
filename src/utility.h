@@ -43,12 +43,31 @@
 // Multithreading helpers
 // ----------------------------------------------------------------------
 
+#if defined(__WXOSX__) && defined(__clang__)
+    #define HAVE_DISPATCH
+    extern void call_on_main_thread_impl(std::function<void()> func);
+#endif
+
+/**
+    Simply calls the callable @a func on the main thread, asynchronously.
+ */
+template<typename F>
+void call_on_main_thread(F&& func)
+{
+#ifdef HAVE_DISPATCH
+    call_on_main_thread_impl(func);
+#else
+    wxTheApp->CallAfter(func);
+#endif
+}
+
 #ifndef _MSC_VER
+
 template<typename... Args>
 auto on_main_thread_impl(std::function<void(Args...)> func) -> std::function<void(Args...)>
 {
     return [func](Args... args){
-        wxTheApp->CallAfter([func,args...]{
+        call_on_main_thread([func,args...]{
             func(args...);
         });
     };
@@ -59,22 +78,22 @@ auto on_main_thread_impl(std::function<void(Args...)> func) -> std::function<voi
 // Visual Studio 2013 is broken and won't parse the above; 2015 fixes it.
 inline auto on_main_thread_impl(std::function<void()> func) -> std::function<void()>
 {
-    return [func](){ wxTheApp->CallAfter([=]{ func(); }); };
+    return [func](){ call_on_main_thread([=]{ func(); }); };
 }
 template<typename A1>
 auto on_main_thread_impl(std::function<void(A1)> func) -> std::function<void(A1)>
 {
-    return [func](A1 a1){ wxTheApp->CallAfter([=]{ func(a1); }); };
+    return [func](A1 a1){ call_on_main_thread([=]{ func(a1); }); };
 }
 template<typename A1, typename A2>
 auto on_main_thread_impl(std::function<void(A1,A2)> func) -> std::function<void(A1,A2)>
 {
-    return [func](A1 a1, A2 a2){ wxTheApp->CallAfter([=]{ func(a1,a2); }); };
+    return [func](A1 a1, A2 a2){ call_on_main_thread([=]{ func(a1,a2); }); };
 }
 template<typename A1, typename A2, typename A3>
 auto on_main_thread_impl(std::function<void(A1, A2, A3)> func) -> std::function<void(A1, A2, A3)>
 {
-    return [func](A1 a1, A2 a2, A3 a3){ wxTheApp->CallAfter([=]{ func(a1, a2, a3); }); };
+    return [func](A1 a1, A2 a2, A3 a3){ call_on_main_thread([=]{ func(a1, a2, a3); }); };
 }
 
 #endif
@@ -137,15 +156,6 @@ auto on_main_thread(Class *self, void (Class::*func)(Args...)) -> std::function<
     });
 }
 
-/**
-    This version doesn't return anything and simply calls the callable @a func
-    on the main thread.
- */
-template<typename F>
-void call_on_main_thread(F&& func)
-{
-    wxTheApp->CallAfter(func);
-}
 
 // ----------------------------------------------------------------------
 // Misc platform differences

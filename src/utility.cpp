@@ -31,6 +31,10 @@
 #include <wx/config.h>
 #include <wx/display.h>
 
+#if defined(__WXOSX__) && defined(__clang__)
+    #include <dispatch/dispatch.h>
+#endif
+
 #include "str_helpers.h"
 
 wxString EscapeMarkup(const wxString& str)
@@ -41,6 +45,17 @@ wxString EscapeMarkup(const wxString& str)
     s.Replace(">", "&gt;");
     return s;
 }
+
+// ----------------------------------------------------------------------
+// Multithreading helpers
+// ----------------------------------------------------------------------
+
+#if defined(__WXOSX__) && defined(__clang__)
+void call_on_main_thread_impl(std::function<void()> func)
+{
+    dispatch_async(dispatch_get_main_queue(), [=]{ func(); });
+}
+#endif
 
 // ----------------------------------------------------------------------
 // TempDirectory
