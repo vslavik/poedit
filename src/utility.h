@@ -124,7 +124,7 @@ auto on_main_thread(F&& func) -> std::function<void(Args...)>
     Like on_main_thread<> but is only called if @a window is still valid
     (using a wxWeakRef<> to check).
  */
-template<typename Class, typename... Args, typename F>
+template<typename... Args, typename F, typename Class>
 auto on_main_thread_for_window(Class *self, F&& func) -> std::function<void(Args...)>
 {
     wxWeakRef<Class> weak(self);

@@ -164,17 +164,13 @@ void CrowdinLoginPanel::UpdateUserInfo()
 {
     ChangeState(State::UpdatingInfo);
 
-    wxWeakRef<CrowdinLoginPanel> self(this);
-    CrowdinClient::Get().GetUserInfo([self](CrowdinClient::UserInfo u){
-        wxTheApp->CallAfter([self,u]{
-            if (self)
-            {
-                self->m_userName = u.name;
-                self->m_userLogin = u.login;
-                self->ChangeState(State::SignedIn);
-            }
-        });
-    });
+    CrowdinClient::Get().GetUserInfo(on_main_thread_for_window<CrowdinClient::UserInfo>(
+        this,
+        [=](CrowdinClient::UserInfo u) {
+            m_userName = u.name;
+            m_userLogin = u.login;
+            ChangeState(State::SignedIn);
+    }));
 }
 
 void CrowdinLoginPanel::OnSignIn(wxCommandEvent&)
