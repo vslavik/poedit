@@ -29,6 +29,8 @@
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <cpprest/http_client.h>
+#include <cpprest/http_msg.h>
+#include <cpprest/filestream.h>
 
 #ifdef _WIN32
     #include <windows.h>
@@ -136,16 +138,23 @@ public:
     #endif
     }
 
+    void set_authorization(const std::string& auth)
+    {
+        m_auth = std::wstring(auth.begin(), auth.end());
+    }
+
     void request(const std::string& url,
                  std::function<void(const http_response&)> handler)
     {
         http::http_request req(http::methods::GET);
         req.headers().add(http::header_names::accept,     L"application/json");
         req.headers().add(http::header_names::user_agent, m_userAgent);
-        req.headers().add(http::header_names::authorization, m_auth);
+        if (!m_auth.empty())
+            req.headers().add(http::header_names::authorization, m_auth);
         req.set_request_uri(std::wstring(url.begin(), url.end()));
 
-        m_native.request(req).then([=](http::http_response response)
+        m_native.request(req)
+        .then([=](http::http_response response)
         {
             try
             {
@@ -169,9 +178,43 @@ public:
         });
     }
 
-    void set_authorization(const std::string& auth)
+    void download(const std::string& url, const std::wstring& output_file, response_func_t handler)
     {
-        m_auth = std::wstring(auth.begin(), auth.end());
+        using namespace concurrency::streams;
+        auto fileStream = std::make_shared<ostream>();
+
+        fstream::open_ostream(output_file).then([=](ostream outFile)
+        {
+            *fileStream = outFile;
+            http::http_request req(http::methods::GET);
+            req.headers().add(http::header_names::user_agent, m_userAgent);
+            if (!m_auth.empty())
+                req.headers().add(http::header_names::authorization, m_auth);
+            req.set_request_uri(std::wstring(url.begin(), url.end()));
+            return m_native.request(req);
+        })
+        .then([=](http::http_response response)
+        {
+            if (response.status_code() != http::status_codes::OK)
+                throw http::http_exception(response.status_code(), response.reason_phrase());
+            return response.body().read_to_end(fileStream->streambuf());
+        })
+        .then([=](size_t)
+        {
+            return fileStream->close();
+        })
+        .then([=](pplx::task<void> t)
+        {
+            try
+            {
+                t.get();
+                handler(http_response());
+            }
+            catch (...)
+            {
+                handler(std::current_exception());
+            }
+        });
     }
 
 private:
@@ -222,13 +265,18 @@ bool http_client::is_reachable() const
     return m_impl->is_reachable();
 }
 
+void http_client::set_authorization(const std::string& auth)
+{
+    m_impl->set_authorization(auth);
+}
+
 void http_client::request(const std::string& url,
                                std::function<void(const http_response&)> handler)
 {
     m_impl->request(url, handler);
 }
 
-void http_client::set_authorization(const std::string& auth)
+void http_client::download(const std::string& url, const std::wstring& output_file, response_func_t handler)
 {
-    m_impl->set_authorization(auth);
+    m_impl->download(url, output_file, handler);
 }

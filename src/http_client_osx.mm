@@ -118,6 +118,8 @@ void json_dict::iterate_array(const char *name, std::function<void(const json_di
 class http_client::impl
 {
 public:
+    typedef http_client::response_func_t response_funct_t;
+
     impl(const std::string& url_prefix, int /*flags*/)
     {
         NSString *str = str::to_NS(url_prefix);
@@ -148,8 +150,7 @@ public:
             [m_native clearAuthorizationHeader];
     }
 
-    void request(const std::string& url,
-                 std::function<void(const http_response&)> handler)
+    void request(const std::string& url, response_func_t handler)
     {
         [m_native getPath:str::to_NS(url)
                parameters:nil
@@ -165,6 +166,30 @@ public:
             NSString *desc = [e localizedDescription];
             handler(std::make_exception_ptr(http_exception(str::to_utf8(desc))));
         }];
+    }
+
+    void download(const std::string& url, const std::wstring& output_file, response_func_t handler)
+    {
+    	NSURLRequest *request = [m_native requestWithMethod:@"GET"
+                                                       path:str::to_NS(url)
+                                                 parameters:nil];
+        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+        operation.outputStream = [NSOutputStream outputStreamToFileAtPath:str::to_NS(output_file) append:NO];
+
+        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *op, id responseObject)
+        {
+            #pragma unused(responseObject)
+            http_response r;
+            r.m_ok = [op hasAcceptableStatusCode] && [op hasAcceptableContentType];
+            handler(r);
+        }
+        failure:^(AFHTTPRequestOperation*, NSError *e)
+        {
+            NSString *desc = [e localizedDescription];
+            handler(std::make_exception_ptr(http_exception(str::to_utf8(desc))));
+        }];
+
+        [m_native enqueueHTTPRequestOperation:operation];
     }
 
 private:
@@ -191,9 +216,12 @@ void http_client::set_authorization(const std::string& auth)
     m_impl->set_authorization(auth);
 }
 
-void http_client::request(const std::string& url,
-                               std::function<void(const http_response&)> handler)
+void http_client::request(const std::string& url, response_func_t handler)
 {
     m_impl->request(url, handler);
 }
 
+void http_client::download(const std::string& url, const std::wstring& output_file, response_func_t handler)
+{
+    m_impl->download(url, output_file, handler);
+}

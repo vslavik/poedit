@@ -93,18 +93,26 @@ public:
     /// Return true if the server is reachable, i.e. client is online
     bool is_reachable() const;
 
-    /// Perform a request at the given URL and call function to handle the result
-    void request(const std::string& url,
-                 std::function<void(const http_response&)> handler);
-
     /// Sets Authorization header to be used in all requests
     void set_authorization(const std::string& auth);
+
+    typedef std::function<void(const http_response&)> response_func_t;
+
+    /// Perform a request at the given URL and call function to handle the result
+    void request(const std::string& url, response_func_t handler);
 
     /// Perform a request at the given URL and ignore the response.
     void request(const std::string& url)
     {
         request(url, [](const http_response&){});
     }
+
+    /**
+        Perform a GET request and store the body in a file.
+        
+        Returned response's body won't be accessible in any way from @a handler.
+     */
+    void download(const std::string& url, const std::wstring& output_file, response_func_t handler);
 
     // Helper for encoding text as URL-encoded UTF-8
     static std::string url_encode(const std::string& s)
@@ -162,6 +170,9 @@ public:
             std::rethrow_exception(m_error);
         return m_data;
     }
+
+    /// Returns the stored exception, if any
+    std::exception_ptr exception() const { return m_error; }
 
 private:
     bool m_ok;
