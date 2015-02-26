@@ -40,6 +40,7 @@
 #include <wx/dialog.h>
 #include <wx/sizer.h>
 #include <wx/statbmp.h>
+#include <wx/stdpaths.h>
 #include <wx/weakref.h>
 #include <wx/windowptr.h>
 
@@ -285,12 +286,15 @@ public:
 
         m_project->Bind(wxEVT_CHOICE, [=](wxCommandEvent&){ OnProjectSelected(); });
         ok->Bind(wxEVT_UPDATE_UI, &CrowdinOpenDialog::OnUpdateOK, this);
+        ok->Bind(wxEVT_BUTTON, &CrowdinOpenDialog::OnOK, this);
 
         ok->Disable();
         EnableAllChoices(false);
 
         FetchProjects();
     }
+
+    wxString OutLocalFilename;
 
 private:
     void EnableAllChoices(bool enable = true)
@@ -365,12 +369,59 @@ private:
 
     void OnUpdateOK(wxUpdateUIEvent& e)
     {
-        e.Enable(m_project->GetSelection() > 0 &&
+        e.Enable(!m_activity->IsRunning() &&
+                 m_project->GetSelection() > 0 &&
                  m_file->GetSelection() > 0 &&
                  m_language->GetSelection() > 0);
     }
 
+    void OnOK(wxCommandEvent&)
+    {
+        auto crowdin_prj = m_info.identifier;
+        auto crowdin_file = m_info.po_files[m_file->GetSelection() - 1];
+        auto crowdin_lang = m_info.languages[m_language->GetSelection() - 1];
+        OutLocalFilename = CreateLocalFilename(crowdin_file, crowdin_lang);
+
+        m_activity->Start(_(L"Downloading latest translations…"));
+
+        auto outfile = std::make_shared<TempOutputFileFor>(OutLocalFilename);
+        CrowdinClient::Get().DownloadFile(
+            crowdin_prj, crowdin_file, crowdin_lang,
+            outfile->FileName().ToStdWstring(),
+            on_main_thread_for_window<>(this, [=]{
+                outfile->Commit();
+                AcceptAndClose();
+            }),
+            m_activity->HandleError
+        );
+    }
+
+    wxString CreateLocalFilename(const wxString& name, const Language& lang)
+    {
+        wxString cache;
+    #if defined(__WXOSX__)
+        cache = wxGetHomeDir() + "/Library/Caches/net.poedit.Poedit";
+    #elif defined(__UNIX__)
+        if (!wxGetEnv("XDG_CACHE_HOME", &cache))
+            cache = wxGetHomeDir() + "/.cache";
+        cache += "/poedit";
+    #else
+        cache = wxStandardPaths::Get().GetUserDataDir() + wxFILE_SEP_PATH + "Cache";
+    #endif
+
+        cache += wxFILE_SEP_PATH;
+        cache += "Crowdin";
+
+        if (!wxFileName::DirExists(cache))
+            wxFileName::Mkdir(cache, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
+
+        auto basename = name.AfterLast('/').BeforeLast('.');
+
+        return wxString::Format("%s%c%s_%s_%s.po", cache, wxFILE_SEP_PATH, m_info.name, basename, lang.Code());
+    }
+
 private:
+    wxButton *m_ok;
     wxChoice *m_project, *m_file, *m_language;
     ActivityIndicator *m_activity;
 
@@ -399,8 +450,7 @@ void CrowdinOpenFile(wxWindow *parent, std::function<void(wxString)> onLoaded)
 
     dlg->ShowWindowModalThenDo([dlg,onLoaded](int retval) {
         dlg->Hide();
-
-        // TODO: download the file
-        // TODO: call onLoaded() on it
+        if (retval == wxID_OK)
+            onLoaded(dlg->OutLocalFilename);
     });
 }

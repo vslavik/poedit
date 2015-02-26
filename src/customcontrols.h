@@ -140,10 +140,14 @@ public:
     /// Stop the indicator and report error in its place.
     void StopWithError(const wxString& msg);
 
+    /// Is between Start() and Stop() calls?
+    bool IsRunning() const { return m_running; }
+
     /// Convenience function for showing error message in the indicator
     std::function<void(std::exception_ptr)> HandleError;
 
 private:
+    bool m_running;
     wxStaticText *m_label, *m_error;
 };
 

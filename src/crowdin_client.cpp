@@ -113,6 +113,17 @@ public:
             }
         });
     }
+
+    template <typename T1, typename T2>
+    void download(const std::string& url, const std::wstring& output_file, const T1& onSuccess, const T2& onError)
+    {
+        http_client::download(url, output_file, [onSuccess,onError](const http_response& r){
+            if (r.ok())
+                onSuccess();
+            else
+                onError(r.exception());
+        });
+    }
 };
 
 
@@ -249,6 +260,23 @@ void CrowdinClient::GetProjectInfo(const std::string& project_id,
             onError
     );
 }
+
+
+void CrowdinClient::DownloadFile(const std::string& project_id, const std::wstring& file, const Language& lang,
+                                 const std::wstring& output_file,
+                                 std::function<void()> onSuccess,
+                                 error_func_t onError)
+{
+    // NB: "export_translated_only" means the translation is not filled with the source string
+    //     if there's no translation, i.e. what Poedit wants.
+    auto url = "/api/project/" + project_id + "/export-file"
+                   "?json="
+                   "&export_translated_only=1"
+                   "&language=" + lang.RFC3066() +
+                   "&file=" + http_client::url_encode(file);
+    m_api->download(url, output_file, onSuccess, onError);
+}
+
 
 bool CrowdinClient::IsSignedIn() const
 {

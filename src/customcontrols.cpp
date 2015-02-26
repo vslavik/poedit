@@ -26,6 +26,7 @@
 #include "customcontrols.h"
 
 #include "errors.h"
+#include "utility.h"
 #include "hidpi.h"
 
 #include <wx/app.h>
@@ -261,7 +262,8 @@ bool LearnMoreLinkXmlHandler::CanHandle(wxXmlNode *node)
 }
 
 
-ActivityIndicator::ActivityIndicator(wxWindow *parent) : wxWindow(parent, wxID_ANY)
+ActivityIndicator::ActivityIndicator(wxWindow *parent)
+    : wxWindow(parent, wxID_ANY), m_running(false)
 {
     // TODO: add spinner!
 
@@ -281,6 +283,7 @@ ActivityIndicator::ActivityIndicator(wxWindow *parent) : wxWindow(parent, wxID_A
 
 void ActivityIndicator::Start(const wxString& msg)
 {
+    m_running = true;
     m_label->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT));
 
     if (!msg.empty())
@@ -293,12 +296,14 @@ void ActivityIndicator::Start(const wxString& msg)
 
 void ActivityIndicator::Stop()
 {
+    m_running = false;
     m_label->Hide();
     m_label->SetLabel("");
 }
 
 void ActivityIndicator::StopWithError(const wxString& msg)
 {
+    m_running = false;
     m_label->SetForegroundColour(*wxRED);
     m_label->SetLabel(msg);
     m_label->Show();

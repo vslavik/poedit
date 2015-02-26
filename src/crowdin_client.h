@@ -102,6 +102,12 @@ public:
                         std::function<void(ProjectInfo)> onResult,
                         error_func_t onError);
 
+    /// Asynchronously download specific Crowdin file into @a output_file.
+    void DownloadFile(const std::string& project_id, const std::wstring& file, const Language& lang,
+                      const std::wstring& output_file,
+                      std::function<void()> onSuccess,
+                      error_func_t onError);
+
 private:
     CrowdinClient();
     ~CrowdinClient();
