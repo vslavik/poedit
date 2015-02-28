@@ -216,6 +216,8 @@ wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
     size_t filescnt = 0;
     for (i = 0; i < db.Data.size(); i++)
     {
+        if (!db.Data[i].Enabled)
+            continue;
         p_files[i] = db.Data[i].SelectParsable(files);
         filescnt += p_files[i].GetCount();
     }
