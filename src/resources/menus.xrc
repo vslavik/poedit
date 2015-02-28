@@ -191,7 +191,7 @@
     <object class="wxMenu" name="menu_catalog">
       <label>C_atalog</label>
       <style>wxMENU_TEAROFF</style>
-      <object class="wxMenuItem" name="menu_update">
+      <object class="wxMenuItem" name="menu_update_from_src">
         <label platform="win">_Update from sources</label>
         <label platform="unix|mac">_Update from Sources</label>
       </object>
@@ -199,6 +199,10 @@
         <label platform="win">Update from _POT file...</label>
         <label platform="unix|mac">Update from _POT File...</label>
       </object>
+      <object class="wxMenuItem" name="menu_update_from_crowdin">
+        <label>Sync with Crowdin</label>
+      </object>
+      <object class="separator"/>
       <object class="wxMenuItem" name="menu_auto_translate">
         <label platform="win">Fill missing translations from _TM...</label>
         <label platform="unix|mac">Fill Missing Translations from _TM...</label>

@@ -233,7 +233,16 @@ private:
         wxString GetSaveAsFilename(const CatalogPtr& cat, const wxString& current);
         void DoSaveAs(const wxString& filename);
         void OnProperties(wxCommandEvent& event);
-        void OnUpdate(wxCommandEvent& event);
+
+        void OnUpdateFromSources(wxCommandEvent& event);
+        void OnUpdateFromSourcesUpdate(wxUpdateUIEvent& event);
+        void OnUpdateFromPOT(wxCommandEvent& event);
+        void OnUpdateFromPOTUpdate(wxUpdateUIEvent& event);
+        void OnUpdateFromCrowdin(wxCommandEvent& event);
+        void OnUpdateFromCrowdinUpdate(wxUpdateUIEvent& event);
+        void OnUpdateSmart(wxCommandEvent& event);
+        void OnUpdateSmartUpdate(wxUpdateUIEvent& event);
+
         void OnValidate(wxCommandEvent& event);
         void OnListSel(wxListEvent& event);
         void OnListRightClick(wxMouseEvent& event);
@@ -267,7 +276,6 @@ private:
         void OnSingleSelectionUpdate(wxUpdateUIEvent& event);
         void OnHasCatalogUpdate(wxUpdateUIEvent& event);
         void OnIsEditableUpdate(wxUpdateUIEvent& event);
-        void OnUpdateFromSourcesUpdate(wxUpdateUIEvent& event);
 
 #if defined(__WXMSW__) || defined(__WXGTK__)
         void OnTextEditingCommand(wxCommandEvent& event);

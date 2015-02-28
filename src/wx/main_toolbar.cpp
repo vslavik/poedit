@@ -25,6 +25,7 @@
 
 #include "main_toolbar.h"
 
+#include <wx/intl.h>
 #include <wx/toolbar.h>
 #include <wx/xrc/xmlres.h>
 
@@ -36,6 +37,7 @@ public:
     {
         m_tb = wxXmlResource::Get()->LoadToolBar(parent, "toolbar");
         m_idFuzzy = XRCID("menu_fuzzy");
+        m_idUpdate = XRCID("toolbar_update");
     }
 
     bool IsFuzzy() const override
@@ -48,9 +50,27 @@ public:
         m_tb->ToggleTool(m_idFuzzy, on);
     }
 
+    void EnableSyncWithCrowdin(bool on) override
+    {
+        auto tool = m_tb->FindById(m_idUpdate);
+
+        if (on)
+        {
+            tool->SetLabel(_("Sync"));
+            tool->SetShortHelp(_("Synchronize the translation with Crowdin."));
+            m_tb->SetToolNormalBitmap(m_idUpdate, wxArtProvider::GetBitmap("poedit-sync"));
+        }
+        else
+        {
+            tool->SetLabel(_("Update"));
+            tool->SetShortHelp(_("Update catalog - synchronize it with sources"));
+            m_tb->SetToolNormalBitmap(m_idUpdate, wxArtProvider::GetBitmap("poedit-update"));
+        }
+    }
+
 private:
     wxToolBar *m_tb;
-    int m_idFuzzy;
+    int m_idFuzzy, m_idUpdate;
 };
 
 
