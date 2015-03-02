@@ -292,7 +292,7 @@ bool MigrateLegacyTranslationMemory()
             nullptr,
             _("Translation memory migration failed."),
             _("Poedit Update"),
-            wxOK | wxICON_WARNING
+            wxOK | wxICON_ERROR
         );
         dlg.SetExtendedMessage(wxString::Format(
             _(L"Your translation memory data couldn't be migrated. The error was:\n\n%s\nPlease email help@poedit.net and we’ll get it fixed."),
