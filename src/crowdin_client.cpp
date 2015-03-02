@@ -27,6 +27,7 @@
 #include "crowdin_client.h"
 
 #include "http_client.h"
+#include "str_helpers.h"
 
 #include <functional>
 #include <mutex>
@@ -118,6 +119,17 @@ public:
     void download(const std::string& url, const std::wstring& output_file, const T1& onSuccess, const T2& onError)
     {
         http_client::download(url, output_file, [onSuccess,onError](const http_response& r){
+            if (r.ok())
+                onSuccess();
+            else
+                onError(r.exception());
+        });
+    }
+
+    template <typename T1, typename T2>
+    void post(const std::string& url, const multipart_form_data& data, const T1& onSuccess, const T2& onError)
+    {
+        http_client::post(url, data, [onSuccess,onError](const http_response& r){
             if (r.ok())
                 onSuccess();
             else
@@ -275,6 +287,24 @@ void CrowdinClient::DownloadFile(const std::string& project_id, const std::wstri
                    "&language=" + lang.RFC3066() +
                    "&file=" + http_client::url_encode(file);
     m_api->download(url, output_file, onSuccess, onError);
+}
+
+
+void CrowdinClient::UploadFile(const std::string& project_id, const std::wstring& file, const Language& lang,
+                                 const std::string& file_content,
+                                 std::function<void()> onSuccess,
+                                 error_func_t onError)
+{
+    auto url = "/api/project/" + project_id + "/upload-translation";
+
+    multipart_form_data data;
+    data.add_value("json", "");
+    data.add_value("language", lang.RFC3066());
+    data.add_value("import_duplicates", "0");
+    data.add_value("import_eq_suggestions", "0");
+    data.add_file("files[" + str::to_utf8(file) + "]", "upload.po", file_content);
+
+    m_api->post(url, data, onSuccess, onError);
 }
 
 

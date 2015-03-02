@@ -32,6 +32,7 @@
 #include <wx/config.h>
 #include <wx/textfile.h>
 #include <wx/strconv.h>
+#include <wx/memtext.h>
 #include <wx/msgdlg.h>
 #include <wx/filename.h>
 
@@ -1440,7 +1441,7 @@ inline bool CanEncodeStringToCharset(const wxString& s, wxMBConv& conv)
     return true;
 }
 
-bool CanEncodeToCharset(const wxTextFile& f, const wxString& charset)
+bool CanEncodeToCharset(const wxTextBuffer& f, const wxString& charset)
 {
     if (charset.Lower() == "utf-8" || charset.Lower() == "utf8")
         return true;
@@ -1458,7 +1459,7 @@ bool CanEncodeToCharset(const wxTextFile& f, const wxString& charset)
 }
 
 
-void SaveMultiLines(wxTextFile &f, const wxString& text)
+void SaveMultiLines(wxTextBuffer &f, const wxString& text)
 {
     wxStringTokenizer tkn(text, _T('\n'));
     while (tkn.HasMoreTokens())
@@ -1713,6 +1714,36 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
     return true;
 }
 
+
+std::string Catalog::SaveToBuffer()
+{
+    class StringSerializer : public wxMemoryText
+    {
+    public:
+        bool OnWrite(wxTextFileType typeNew, const wxMBConv& conv) override
+        {
+            size_t cnt = GetLineCount();
+            for (size_t n = 0; n < cnt; n++)
+            {
+                auto ln = GetLine(n) +
+                          GetEOL(typeNew == wxTextFileType_None ? GetLineType(n) : typeNew);
+                auto buf = ln.mb_str(conv);
+                buffer.append(buf.data(), buf.length());
+            }
+            return true;
+        }
+
+        std::string buffer;
+    };
+
+    StringSerializer f;
+
+    if (!DoSaveOnly(f, wxTextFileType_Unix))
+        return std::string();
+    return f.buffer;
+}
+
+
 bool Catalog::CompileToMO(const wxString& mo_file,
                           int& validation_errors,
                           CompilationStatus& mo_compilation_status)
@@ -1779,7 +1810,7 @@ bool Catalog::DoSaveOnly(const wxString& po_file, wxTextFileType crlf)
     return DoSaveOnly(f, crlf);
 }
 
-bool Catalog::DoSaveOnly(wxTextFile& f, wxTextFileType crlf)
+bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
 {
     /* Save .po file: */
     if (!m_header.Charset || m_header.Charset == "CHARSET")

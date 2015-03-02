@@ -547,6 +547,14 @@ class Catalog
                   int& validation_errors,
                   CompilationStatus& mo_compilation_status);
 
+        /**
+            "Saves" the PO file into a memory buffer with content identical
+            to what Save() would save into a file.
+            
+            Returns empty string in case of failure.
+         */
+        std::string SaveToBuffer();
+
         /// Compiles the catalog into binary MO file.
         bool CompileToMO(const wxString& mo_file,
                          int& validation_errors,
@@ -663,7 +671,7 @@ class Catalog
 
         int DoValidate(const wxString& po_file);
         bool DoSaveOnly(const wxString& po_file, wxTextFileType crlf);
-        bool DoSaveOnly(wxTextFile& f, wxTextFileType crlf);
+        bool DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf);
 
         /** Merges the catalog with reference catalog
             (in the sense of msgmerge -- this catalog is old one with

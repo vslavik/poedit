@@ -1603,7 +1603,14 @@ void PoeditFrame::OnUpdateFromPOTUpdate(wxUpdateUIEvent& event)
 
 void PoeditFrame::OnUpdateFromCrowdin(wxCommandEvent&)
 {
-    // TODO
+    DoIfCanDiscardCurrentDoc([=]{
+        CrowdinSyncFile(this, m_catalog, [=](std::shared_ptr<Catalog> cat){
+            m_catalog = cat;
+            EnsureContentView(Content::PO);
+            NotifyCatalogChanged(m_catalog);
+            RefreshControls();
+        });
+    });
 }
 
 void PoeditFrame::OnUpdateFromCrowdinUpdate(wxUpdateUIEvent& event)

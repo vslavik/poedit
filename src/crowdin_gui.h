@@ -26,6 +26,7 @@
 #ifndef Poedit_crowdin_gui_h
 #define Poedit_crowdin_gui_h
 
+#include "catalog.h"
 #include "customcontrols.h"
 
 #include <wx/panel.h>
@@ -86,5 +87,15 @@ public:
     @param onLoaded  Called with the name of loaded PO file.
  */
 void CrowdinOpenFile(wxWindow *parent, std::function<void(wxString)> onLoaded);
+
+/**
+    Synces the catalog with Crowdin, uploading and downloading translations.
+
+    @param parent    PoeditFrame the UI should be shown under.
+    @param catalog   Catalog to sync.
+    @param onDone    Called with the (new) updated catalog instance.
+ */
+void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
+                     std::function<void(std::shared_ptr<Catalog>)> onDone);
 
 #endif // Poedit_crowdin_gui_h

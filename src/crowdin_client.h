@@ -108,6 +108,12 @@ public:
                       std::function<void()> onSuccess,
                       error_func_t onError);
 
+    /// Asynchronously upload specific Crowdin file data.
+    void UploadFile(const std::string& project_id, const std::wstring& file, const Language& lang,
+                    const std::string& file_content,
+                    std::function<void()> onSuccess,
+                    error_func_t onError);
+
 private:
     CrowdinClient();
     ~CrowdinClient();

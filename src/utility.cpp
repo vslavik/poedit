@@ -109,6 +109,14 @@ TempDirectory::~TempDirectory()
     if ( m_dir.empty() )
         return;
 
+    Clear();
+
+    wxLogTrace("poedit.tmp", "removing temp dir %s", m_dir.c_str());
+    wxFileName::Rmdir(m_dir);
+}
+
+void TempDirectory::Clear()
+{
     if ( ms_keepFiles )
     {
         wxLogTrace("poedit.tmp", "keeping temp files in %s", m_dir.c_str());
@@ -123,11 +131,7 @@ TempDirectory::~TempDirectory()
             wxRemoveFile(*i);
         }
     }
-
-    wxLogTrace("poedit.tmp", "removing temp dir %s", m_dir.c_str());
-    wxFileName::Rmdir(m_dir);
 }
-
 
 wxString TempDirectory::CreateFileName(const wxString& suffix)
 {

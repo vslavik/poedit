@@ -200,6 +200,9 @@ public:
     // creates new file name in that directory
     wxString CreateFileName(const wxString& suffix);
 
+    /// Clears the temp directory (only safe if none of the files are open). Called by dtor.
+    void Clear();
+
     // whether to keep temporary files
     static void KeepFiles(bool keep = true) { ms_keepFiles = keep; }
 

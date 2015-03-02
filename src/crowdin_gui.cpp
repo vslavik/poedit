@@ -28,7 +28,9 @@
 
 #include "crowdin_client.h"
 
+#include "catalog.h"
 #include "customcontrols.h"
+#include "errors.h"
 #include "hidpi.h"
 #include "utility.h"
 
@@ -38,6 +40,7 @@
 #include <wx/choice.h>
 #include <wx/config.h>
 #include <wx/dialog.h>
+#include <wx/msgdlg.h>
 #include <wx/sizer.h>
 #include <wx/statbmp.h>
 #include <wx/stdpaths.h>
@@ -430,6 +433,25 @@ private:
 };
 
 
+class SyncProgressDialog : public wxDialog
+{
+public:
+    SyncProgressDialog(wxWindow *parent)
+        : wxDialog(parent, wxID_ANY, _("Syncing with Crowdin"), wxDefaultPosition, wxDefaultSize, wxCAPTION | wxSYSTEM_MENU)
+    {
+        auto sizer = new wxBoxSizer(wxVERTICAL);
+        sizer->SetMinSize(PX(300), -1);
+        Activity = new ActivityIndicator(this);
+        sizer->AddStretchSpacer();
+        sizer->Add(Activity, wxSizerFlags().Expand().Border(wxALL, PX(25)));
+        sizer->AddStretchSpacer();
+        SetSizerAndFit(sizer);
+        CenterOnParent();
+    }
+
+    ActivityIndicator *Activity;
+};
+
 
 } // anonymous namespace
 
@@ -453,4 +475,76 @@ void CrowdinOpenFile(wxWindow *parent, std::function<void(wxString)> onLoaded)
         if (retval == wxID_OK)
             onLoaded(dlg->OutLocalFilename);
     });
+}
+
+
+void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
+                     std::function<void(std::shared_ptr<Catalog>)> onDone)
+{
+    if (!CrowdinClient::Get().IsSignedIn())
+    {
+        wxWindowPtr<CrowdinLoginDialog> login(new CrowdinLoginDialog(parent));
+        login->ShowWindowModalThenDo([login,parent,catalog,onDone](int retval){
+            if (retval == wxID_OK)
+                CrowdinSyncFile(parent, catalog, onDone);
+        });
+        return;
+    }
+
+    const auto& header = catalog->Header();
+    auto crowdin_prj = header.GetHeader("X-Crowdin-Project");
+    auto crowdin_file = header.GetHeader("X-Crowdin-File");
+    auto crowdin_lang = header.HasHeader("X-Crowdin-Language")
+                        ? Language::TryParse(header.GetHeader("X-Crowdin-Language").ToStdWstring())
+                        : catalog->GetLanguage();
+
+    wxWindowPtr<SyncProgressDialog> dlg(new SyncProgressDialog(parent));
+
+    auto handle_error = on_main_thread<std::exception_ptr>([=](std::exception_ptr e){
+        dlg->EndModal(wxID_CANCEL);
+        wxWindowPtr<wxMessageDialog> err(new wxMessageDialog
+            (
+                parent,
+                _("Syncing with Crowdin failed."),
+                _("Crowdin error"),
+                wxOK | wxICON_ERROR
+            ));
+        err->SetExtendedMessage(DescribeException(e));
+        err->ShowWindowModalThenDo([err](int){});
+    });
+
+    dlg->Activity->Start(_(L"Uploading translations…"));
+
+    // TODO: nicer API for this.
+    // This must be done right after entering the modal loop (on non-OSX)
+    dlg->CallAfter([=]{
+        CrowdinClient::Get().UploadFile(
+            crowdin_prj, crowdin_file, crowdin_lang,
+            catalog->SaveToBuffer(),
+            [=]{
+            auto tmpdir = std::make_shared<TempDirectory>();
+            auto outfile = tmpdir->CreateFileName("crowdin.po");
+
+            call_on_main_thread([=]{
+                dlg->Activity->Start(_(L"Downloading latest translations…"));
+            });
+
+            CrowdinClient::Get().DownloadFile(
+                crowdin_prj, crowdin_file, crowdin_lang,
+                outfile.ToStdWstring(),
+                on_main_thread([=]{
+                CatalogPtr newcat = std::make_shared<Catalog>(outfile);
+                newcat->SetFileName(catalog->GetFileName());
+
+                tmpdir->Clear();
+                dlg->EndModal(wxID_OK);
+
+                onDone(newcat);
+            }),
+                handle_error);
+        },
+            handle_error);
+    });
+
+    dlg->ShowWindowModal();
 }
