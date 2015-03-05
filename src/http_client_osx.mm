@@ -192,6 +192,35 @@ public:
         [m_native enqueueHTTPRequestOperation:operation];
     }
 
+    void post(const std::string& url, const multipart_form_data& data, response_func_t handler)
+    {
+        NSMutableURLRequest *request = [m_native requestWithMethod:@"POST"
+                                                              path:str::to_NS(url)
+                                                        parameters:nil];
+
+        auto body = data.body();
+        [request setValue:str::to_NS(data.content_type()) forHTTPHeaderField:@"Content-Type"];
+        [request setValue:[NSString stringWithFormat:@"%lu", body.size()] forHTTPHeaderField:@"Content-Length"];
+        [request setHTTPBody:[NSData dataWithBytes:body.data() length:body.size()]];
+
+        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+
+        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *op, id responseObject)
+        {
+            #pragma unused(responseObject)
+            http_response r;
+            r.m_ok = [op hasAcceptableStatusCode] && [op hasAcceptableContentType];
+            handler(r);
+        }
+        failure:^(AFHTTPRequestOperation*, NSError *e)
+        {
+            NSString *desc = [e localizedDescription];
+            handler(std::make_exception_ptr(http_exception(str::to_utf8(desc))));
+        }];
+
+        [m_native enqueueHTTPRequestOperation:operation];
+    }
+
 private:
     AFHTTPClient *m_native;
 };
@@ -224,4 +253,9 @@ void http_client::request(const std::string& url, response_func_t handler)
 void http_client::download(const std::string& url, const std::wstring& output_file, response_func_t handler)
 {
     m_impl->download(url, output_file, handler);
+}
+
+void http_client::post(const std::string& url, const multipart_form_data& data, response_func_t handler)
+{
+    m_impl->post(url, data, handler);
 }

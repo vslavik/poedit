@@ -26,13 +26,10 @@
 #ifndef Poedit_http_client_h
 #define Poedit_http_client_h
 
-#include <codecvt>
 #include <exception>
 #include <functional>
-#include <iomanip>
-#include <locale>
+#include <map>
 #include <memory>
-#include <sstream>
 #include <string>
 
 class http_response;
@@ -63,6 +60,30 @@ public:
 
 private:
     std::shared_ptr<native> m_native;
+};
+
+
+/// Stores POSTed data (RFC 1867)
+class multipart_form_data
+{
+public:
+    multipart_form_data();
+
+    /// Add a form value.
+    void add_value(const std::string& name, const std::string& value);
+
+    /// Add file upload.
+    void add_file(const std::string& name, const std::string& filename, const std::string& file_content);
+
+    /// Content-Type header to use with the data.
+    std::string content_type() const;
+
+    /// Returns generated body of the request.
+    std::string body() const;
+
+private:
+    std::string m_boundary;
+    std::string m_body;
 };
 
 
@@ -114,36 +135,14 @@ public:
      */
     void download(const std::string& url, const std::wstring& output_file, response_func_t handler);
 
+    /**
+        Perform a POST request with multipart/form-data formatted @a params.
+     */
+    void post(const std::string& url, const multipart_form_data& data, response_func_t handler);
+
     // Helper for encoding text as URL-encoded UTF-8
-    static std::string url_encode(const std::string& s)
-    {
-        std::ostringstream escaped;
-        escaped.fill('0');
-        escaped << std::hex;
-
-        for (auto c: s)
-        {
-            if (c == '-' || c == '_' || c == '.' || c == '~' ||
-                (c >= 'a' && c <= 'z') ||
-                (c >= 'A' && c <= 'Z') ||
-                (c >= '0' && c <= '9'))
-            {
-                escaped << c;
-            }
-            else
-            {
-                escaped << '%' << std::setw(2) << int((unsigned char)c);
-            }
-        }
-
-        return escaped.str();
-    }
-
-    static std::string url_encode(const std::wstring& s)
-    {
-        std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> convert;
-        return url_encode(convert.to_bytes(s));
-    }
+    static std::string url_encode(const std::string& s);
+    static std::string url_encode(const std::wstring& s);
 
 private:
     class impl;

@@ -217,6 +217,43 @@ public:
         });
     }
 
+    void post(const std::string& url, const multipart_form_data& data, response_func_t handler)
+    {
+        http::http_request req(http::methods::POST);
+        req.headers().add(http::header_names::accept,     L"application/json");
+        req.headers().add(http::header_names::user_agent, m_userAgent);
+        if (!m_auth.empty())
+            req.headers().add(http::header_names::authorization, m_auth);
+        req.set_request_uri(std::wstring(url.begin(), url.end()));
+
+        auto body = data.body();
+        req.set_body(body, data.content_type());
+        req.headers().set_content_length(body.size());
+
+        m_native.request(req)
+        .then([=](http::http_response response)
+        {
+            try
+            {
+                http_response r;
+                r.m_ok = (response.status_code() == http::status_codes::OK);
+                handler(r);
+            }
+            catch (...)
+            {
+                handler(std::current_exception());
+            }
+        })
+        .then([=](pplx::task<void> t)
+        {
+            try { t.get(); }
+            catch (...)
+            {
+                handler(std::current_exception());
+            }
+        });
+    }
+
 private:
     // convert to wstring and make WinXP ready
     static std::wstring sanitize_url(const std::string& url, int flags)
@@ -279,4 +316,9 @@ void http_client::request(const std::string& url,
 void http_client::download(const std::string& url, const std::wstring& output_file, response_func_t handler)
 {
     m_impl->download(url, output_file, handler);
+}
+
+void http_client::post(const std::string& url, const multipart_form_data& data, response_func_t handler)
+{
+    m_impl->post(url, data, handler);
 }
