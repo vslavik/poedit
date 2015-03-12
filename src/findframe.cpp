@@ -316,21 +316,6 @@ bool FindFrame::DoFind(int dir)
 
         CatalogItemPtr dt = (*m_catalog)[m_listCtrl->ListIndexToCatalog(m_position)];
 
-        if (inStr)
-        {
-            textc = dt->GetString();
-            if (ignoreCase)
-                textc.MakeLower();
-            if (ignoreMnemonicsAmp)
-                textc.Replace("&", "");
-            if (ignoreMnemonicsUnderscore)
-                textc.Replace("_", "");
-            if (TextInString(textc, text, wholeWords))
-            {
-                found = Found_InOrig;
-                break;
-            }
-        }
         if (inTrans)
         {
             // concatenate all translations:
@@ -349,6 +334,21 @@ bool FindFrame::DoFind(int dir)
                 textc.Replace("_", "");
 
             if (TextInString(textc, text, wholeWords)) { found = Found_InTrans; break; }
+        }
+        if (inStr)
+        {
+            textc = dt->GetString();
+            if (ignoreCase)
+                textc.MakeLower();
+            if (ignoreMnemonicsAmp)
+                textc.Replace("&", "");
+            if (ignoreMnemonicsUnderscore)
+                textc.Replace("_", "");
+            if (TextInString(textc, text, wholeWords))
+            {
+                found = Found_InOrig;
+                break;
+            }
         }
         if (inComments)
         {
