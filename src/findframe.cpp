@@ -24,6 +24,7 @@
  */
 
 #include <wx/accel.h>
+#include <wx/choice.h>
 #include <wx/collpane.h>
 #include <wx/config.h>
 #include <wx/button.h>
@@ -32,25 +33,43 @@
 #include <wx/textctrl.h>
 #include <wx/checkbox.h>
 
+#ifdef __WXOSX__
+#include <AppKit/AppKit.h>
+#endif
+
 #include "catalog.h"
 #include "text_control.h"
+#include "edframe.h"
 #include "edlistctrl.h"
 #include "findframe.h"
 #include "hidpi.h"
 #include "utility.h"
 
+namespace
+{
+
 // The word separators used when doing a "Whole words only" search
 // FIXME-ICU: use ICU to separate words
-static const wxString SEPARATORS = wxT(" \t\r\n\\/:;.,?!\"'_|-+=(){}[]<>&#@");
+const wxString SEPARATORS = wxT(" \t\r\n\\/:;.,?!\"'_|-+=(){}[]<>&#@");
+
+enum
+{
+    Mode_Find,
+    Mode_Replace
+};
+
+} // anonymous namespace
+
 
 wxString FindFrame::ms_text;
 
-FindFrame::FindFrame(wxWindow *parent,
+FindFrame::FindFrame(PoeditFrame *owner,
                      PoeditListCtrl *list,
                      const CatalogPtr& c,
                      CustomizedTextCtrl *textCtrlOrig,
                      CustomizedTextCtrl *textCtrlTrans)
-        : wxDialog(parent, wxID_ANY, _("Find")),
+        : wxDialog(owner, wxID_ANY, _("Find")),
+          m_owner(owner),
           m_listCtrl(list),
           m_catalog(c),
           m_position(-1),
@@ -60,11 +79,27 @@ FindFrame::FindFrame(wxWindow *parent,
     wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 
     wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-    topsizer->Add(sizer, wxSizerFlags(1).Expand().PXBorderAll());
+    topsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
 
-    sizer->Add(new wxStaticText(this, wxID_ANY, _("String to find:")), wxSizerFlags().Expand().PXBorder(wxLEFT|wxRIGHT|wxTOP));
-    m_textField = new wxTextCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(PX(400), -1));
-    sizer->Add(m_textField, wxSizerFlags().Expand().PXBorderAll());
+    auto entrySizer = new wxFlexGridSizer(2, wxSize(MSW_OR_OTHER(PX(5), PX(10)), PX(5)));
+    m_mode = new wxChoice(this, wxID_ANY);
+#ifdef __WXOSX__
+    [(NSPopUpButton*)m_mode->GetHandle() setBordered:NO];
+#endif
+    m_mode->Append(_("Find"));
+    m_mode->Append(_("Replace"));
+    m_mode->SetSelection(Mode_Find);
+
+    m_searchField = new wxTextCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(PX(400), -1));
+    m_searchField->SetHint(_("String to find"));
+    m_replaceField = new wxTextCtrl(this, wxID_ANY);
+    m_replaceField->SetHint(_("Replacement string"));
+
+    entrySizer->Add(m_mode);
+    entrySizer->Add(m_searchField, wxSizerFlags(1).Expand());
+    entrySizer->AddSpacer(1);
+    entrySizer->Add(m_replaceField, wxSizerFlags(1).Expand());
+    sizer->Add(entrySizer, wxSizerFlags().Expand().PXBorderAll());
 
 #ifdef __WXMSW__
     #define collPane this
@@ -101,6 +136,8 @@ FindFrame::FindFrame(wxWindow *parent,
 #endif
 
     m_btnClose = new wxButton(this, wxID_CLOSE, _("Close"));
+    m_btnReplaceAll = new wxButton(this, wxID_ANY, MSW_OR_OTHER(_("Replace all"), _("Replace All")));
+    m_btnReplace = new wxButton(this, wxID_ANY, _("Replace"));
     m_btnPrev = new wxButton(this, wxID_ANY, _("< &Previous"));
     m_btnNext = new wxButton(this, wxID_ANY, _("&Next >"));
     m_btnNext->SetDefault();
@@ -109,6 +146,8 @@ FindFrame::FindFrame(wxWindow *parent,
     sizer->Add(buttons, wxSizerFlags().Expand().PXBorderAll());
     buttons->Add(m_btnClose, wxSizerFlags().PXBorder(wxRIGHT));
     buttons->AddStretchSpacer();
+    buttons->Add(m_btnReplaceAll, wxSizerFlags().PXBorder(wxRIGHT));
+    buttons->Add(m_btnReplace, wxSizerFlags().PXBorder(wxRIGHT));
     buttons->Add(m_btnPrev, wxSizerFlags().PXBorder(wxRIGHT));
     buttons->Add(m_btnNext, wxSizerFlags());
 
@@ -120,8 +159,8 @@ FindFrame::FindFrame(wxWindow *parent,
 
     if ( !ms_text.empty() )
     {
-        m_textField->SetValue(ms_text);
-        m_textField->SelectAll();
+        m_searchField->SetValue(ms_text);
+        m_searchField->SelectAll();
     }
 
     Reset(c);
@@ -141,11 +180,19 @@ FindFrame::FindFrame(wxWindow *parent,
     SetAcceleratorTable(accel);
 #endif
 
-    m_textField->Bind(wxEVT_TEXT, &FindFrame::OnTextChange, this);
+    m_searchField->Bind(wxEVT_TEXT, &FindFrame::OnTextChange, this);
     m_btnPrev->Bind(wxEVT_BUTTON, &FindFrame::OnPrev, this);
     m_btnNext->Bind(wxEVT_BUTTON, &FindFrame::OnNext, this);
     Bind(wxEVT_BUTTON, &FindFrame::OnClose, this, wxID_CLOSE);
     Bind(wxEVT_CHECKBOX, &FindFrame::OnCheckbox, this);
+
+    OnModeChanged();
+    m_mode->Bind(wxEVT_CHOICE, [=](wxCommandEvent&){ OnModeChanged(); });
+
+    m_btnReplace->Bind(wxEVT_BUTTON, &FindFrame::OnReplace, this);
+    m_btnReplaceAll->Bind(wxEVT_BUTTON, &FindFrame::OnReplaceAll, this);
+    m_btnReplace->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable((bool)m_lastItem); });
+    m_btnReplaceAll->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable(!ms_text.empty()); });
 }
 
 
@@ -168,10 +215,26 @@ void FindFrame::Reset(const CatalogPtr& c)
 }
 
 
-void FindFrame::FocusSearchField()
+void FindFrame::ShowForFind()
 {
-    m_textField->SetFocus();
-    m_textField->SelectAll();
+    DoShowFor(Mode_Find);
+}
+
+void FindFrame::ShowForReplace()
+{
+    DoShowFor(Mode_Replace);
+}
+
+void FindFrame::DoShowFor(int mode)
+{
+    m_mode->SetSelection(mode);
+    OnModeChanged();
+
+    Show(true);
+    Raise();
+
+    m_searchField->SetFocus();
+    m_searchField->SelectAll();
 }
 
 
@@ -181,9 +244,30 @@ void FindFrame::OnClose(wxCommandEvent&)
 }
 
 
+void FindFrame::OnModeChanged()
+{
+    bool isReplace = m_mode->GetSelection() == Mode_Replace;
+
+    SetTitle(isReplace ? _("Replace") : _("Find"));
+
+    m_btnReplace->Show(isReplace);
+    m_btnReplaceAll->Show(isReplace);
+    m_replaceField->GetContainingSizer()->Show(m_replaceField, isReplace);
+
+    m_findInOrig->Enable(!isReplace);
+    m_findInTrans->Enable(!isReplace);
+    m_findInComments->Enable(!isReplace);
+    m_ignoreCase->Enable(!isReplace);
+
+    Layout();
+    GetSizer()->SetSizeHints(this);
+}
+
+
 void FindFrame::OnTextChange(wxCommandEvent&)
 {
-    ms_text = m_textField->GetValue();
+    ms_text = m_searchField->GetValue();
+    m_lastItem.reset();
 
     Reset(m_catalog);
 }
@@ -228,6 +312,59 @@ void FindFrame::FindNext()
 }
 
 
+namespace
+{
+
+template<typename S, typename F>
+bool FindTextInStringAndDo(S& str, const wxString& text, bool wholeWords, F&& handler)
+{
+    auto textLen = text.Length();
+
+    bool found = false;
+    size_t start = 0;
+    while (start != wxString::npos)
+    {
+        auto index = str.find(text, start);
+        if (index == wxString::npos)
+            break;
+
+        if (wholeWords)
+        {
+            bool result = true;
+            if (index >0)
+                result = result && SEPARATORS.Contains(str[index-1]);
+            if (index+textLen < str.Length())
+                result = result && SEPARATORS.Contains(str[index+textLen]);
+
+            if (!result)
+            {
+                start = index + textLen;
+                continue;
+            }
+        }
+
+        found = true;
+        start = handler(str, index, textLen);
+    }
+
+    return found;
+}
+
+bool IsTextInString(const wxString& str, const wxString& text, bool wholeWords)
+{
+    return FindTextInStringAndDo(str, text, wholeWords,
+                                 [=](const wxString&,size_t,size_t){ return wxString::npos;/*just 1 hit*/ });
+}
+
+bool ReplaceTextInString(wxString& str, const wxString& text, bool wholeWords, const wxString& replacement)
+{
+    return FindTextInStringAndDo(str, text, wholeWords,
+                                 [=](wxString& s, size_t pos, size_t len){
+                                     s.replace(pos, len, replacement);
+                                     return pos + replacement.length();
+                                 });
+}
+
 enum FoundState
 {
     Found_Not = 0,
@@ -237,33 +374,7 @@ enum FoundState
     Found_InExtractedComments
 };
 
-bool TextInString(const wxString& str, const wxString& text, bool wholeWords)
-{
-    int index = str.Find(text);
-    if (index >= 0)
-    {
-        if (wholeWords)
-        {
-            size_t textLen = text.Length();
-
-            bool result = true;
-            if (index >0)
-                result = result && SEPARATORS.Contains(str[index-1]);
-            if (index+textLen < str.Length())
-                result = result && SEPARATORS.Contains(str[index+textLen]);
-
-            return result;
-        }
-        else
-        {
-            return true;
-        }
-    }
-    else
-    {
-        return false;
-    }
-}
+} // anonymous space
 
 bool FindFrame::DoFind(int dir)
 {
@@ -272,16 +383,19 @@ bool FindFrame::DoFind(int dir)
     if (!m_listCtrl)
         return false;
 
+    int mode = m_mode->GetSelection();
     int cnt = m_listCtrl->GetItemCount();
-    bool inStr = m_findInOrig->GetValue();
     bool inTrans = m_findInTrans->GetValue();
-    bool inComments = m_findInComments->GetValue();
-    bool ignoreCase = m_ignoreCase->GetValue();
+    bool inSource = (mode == Mode_Find) && m_findInOrig->GetValue();
+    bool inComments = (mode == Mode_Find) && m_findInComments->GetValue();
+    bool ignoreCase = (mode == Mode_Find) && m_ignoreCase->GetValue();
     bool wholeWords = m_wholeWords->GetValue();
     bool wrapAround = m_wrapAround->GetValue();
     int posOrig = m_position;
 
     FoundState found = Found_Not;
+    CatalogItemPtr lastItem;
+
     wxString textc;
     wxString text(ms_text);
 
@@ -292,8 +406,8 @@ bool FindFrame::DoFind(int dir)
     // doesn't contain them. That's a reasonable heuristics: most of the time,
     // ignoring them is the right thing to do and provides better results. But
     // sometimes, people want to search for them.
-    const bool ignoreMnemonicsAmp = (text.Find(_T('&')) == wxNOT_FOUND);
-    const bool ignoreMnemonicsUnderscore = (text.Find(_T('_')) == wxNOT_FOUND);
+    const bool ignoreMnemonicsAmp = (mode == Mode_Find) && (text.Find(_T('&')) == wxNOT_FOUND);
+    const bool ignoreMnemonicsUnderscore = (mode == Mode_Find) && (text.Find(_T('_')) == wxNOT_FOUND);
 
     int oldPosition = m_position;
     m_position = oldPosition + dir;
@@ -314,7 +428,7 @@ bool FindFrame::DoFind(int dir)
                 break;
         }
 
-        CatalogItemPtr dt = (*m_catalog)[m_listCtrl->ListIndexToCatalog(m_position)];
+        auto dt = lastItem = (*m_catalog)[m_listCtrl->ListIndexToCatalog(m_position)];
 
         if (inTrans)
         {
@@ -333,9 +447,13 @@ bool FindFrame::DoFind(int dir)
             if (ignoreMnemonicsUnderscore)
                 textc.Replace("_", "");
 
-            if (TextInString(textc, text, wholeWords)) { found = Found_InTrans; break; }
+            if (IsTextInString(textc, text, wholeWords))
+            {
+                found = Found_InTrans;
+                break;
+            }
         }
-        if (inStr)
+        if (inSource)
         {
             textc = dt->GetString();
             if (ignoreCase)
@@ -344,7 +462,7 @@ bool FindFrame::DoFind(int dir)
                 textc.Replace("&", "");
             if (ignoreMnemonicsUnderscore)
                 textc.Replace("_", "");
-            if (TextInString(textc, text, wholeWords))
+            if (IsTextInString(textc, text, wholeWords))
             {
                 found = Found_InOrig;
                 break;
@@ -356,7 +474,11 @@ bool FindFrame::DoFind(int dir)
             if (ignoreCase)
                 textc.MakeLower();
 
-            if (TextInString(textc, text, wholeWords)) { found = Found_InComments; break; }
+            if (IsTextInString(textc, text, wholeWords))
+            {
+                found = Found_InComments;
+                break;
+            }
 
             wxArrayString extractedComments = dt->GetExtractedComments();
             textc = wxEmptyString;
@@ -366,12 +488,18 @@ bool FindFrame::DoFind(int dir)
             if (ignoreCase)
                 textc.MakeLower();
 
-            if (TextInString(textc, text, wholeWords)) { found = Found_InExtractedComments; break; }
+            if (IsTextInString(textc, text, wholeWords))
+            {
+                found = Found_InExtractedComments;
+                break;
+            }
         }
     }
 
     if (found != Found_Not)
     {
+        m_lastItem = lastItem;
+
         m_listCtrl->EnsureVisible(m_position);
         m_listCtrl->SelectAndFocus(m_position);
 
@@ -407,4 +535,36 @@ bool FindFrame::DoFind(int dir)
 
     m_position = posOrig;
     return false;
+}
+
+bool FindFrame::DoReplaceInItem(CatalogItemPtr item)
+{
+    bool wholeWords = m_wholeWords->GetValue();
+    auto search = m_searchField->GetValue();
+    auto replace = m_replaceField->GetValue();
+
+    bool replaced = false;
+    for (auto& t: item->GetTranslations())
+    {
+        if (ReplaceTextInString(t, search, wholeWords, replace))
+            replaced = true;
+    }
+
+    if (replaced && item == m_owner->GetCurrentItem())
+        m_owner->UpdateToTextCtrl(PoeditFrame::UndoableEdit);
+
+    return replaced;
+}
+
+void FindFrame::OnReplace(wxCommandEvent&)
+{
+    DoReplaceInItem(m_lastItem);
+    m_listCtrl->Refresh();
+}
+
+void FindFrame::OnReplaceAll(wxCommandEvent&)
+{
+    for (auto& item: m_catalog->items())
+        DoReplaceInItem(item);
+    m_listCtrl->Refresh();
 }

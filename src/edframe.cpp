@@ -104,16 +104,6 @@ const wxWindowID ID_TEXTORIGPLURAL = wxNewId();
 const wxWindowID ID_TEXTTRANS = wxNewId();
 
 
-/// Flags for UpdateToTextCtrl()
-enum UpdateToTextCtrlFlags
-{
-    /// Change to textctrl should be undoable by the user
-    UndoableEdit = 0x01,
-    /// Change is due to item change, discard undo buffer
-    ItemChanged = 0x02
-};
-
-
 #ifdef __VISUALC__
 // Disabling the useless and annoying MSVC++'s
 // warning C4800: 'long' : forcing value to bool 'true' or 'false'
@@ -304,6 +294,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_clear"),       PoeditFrame::OnClearTranslation)
    EVT_MENU           (XRCID("menu_references"),  PoeditFrame::OnReferencesMenu)
    EVT_MENU           (wxID_FIND,                 PoeditFrame::OnFind)
+   EVT_MENU           (wxID_REPLACE,              PoeditFrame::OnFindAndReplace)
    EVT_MENU           (XRCID("menu_find_next"),   PoeditFrame::OnFindNext)
    EVT_MENU           (XRCID("menu_find_prev"),   PoeditFrame::OnFindPrev)
    EVT_MENU           (XRCID("menu_comment"),     PoeditFrame::OnEditComment)
@@ -1882,9 +1873,15 @@ void PoeditFrame::OnFind(wxCommandEvent&)
     if (!m_findWindow)
         m_findWindow = new FindFrame(this, m_list, m_catalog, m_textOrig, m_textTrans);
 
-    m_findWindow->Show(true);
-    m_findWindow->Raise();
-    m_findWindow->FocusSearchField();
+    m_findWindow->ShowForFind();
+}
+
+void PoeditFrame::OnFindAndReplace(wxCommandEvent&)
+{
+    if (!m_findWindow)
+        m_findWindow = new FindFrame(this, m_list, m_catalog, m_textOrig, m_textTrans);
+
+    m_findWindow->ShowForReplace();
 }
 
 void PoeditFrame::OnFindNext(wxCommandEvent&)
@@ -2112,7 +2109,7 @@ void SetTranslationValue(TranslationTextCtrl *txt, const wxString& value, int fl
     // want UpdateFromTextCtrl() to be called from here
     EventHandlerDisabler disabler(txt->GetEventHandler());
 
-    if (flags & UndoableEdit)
+    if (flags & PoeditFrame::UndoableEdit)
         txt->SetValueUserWritten(value);
     else
         txt->SetValue(value);
