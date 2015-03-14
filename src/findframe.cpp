@@ -58,6 +58,9 @@ enum
     Mode_Replace
 };
 
+const int FRAME_STYLE = (wxDEFAULT_FRAME_STYLE | wxFRAME_TOOL_WINDOW | wxTAB_TRAVERSAL | wxFRAME_FLOAT_ON_PARENT)
+                        & ~(wxRESIZE_BORDER | wxMAXIMIZE_BOX);
+
 } // anonymous namespace
 
 
@@ -68,7 +71,7 @@ FindFrame::FindFrame(PoeditFrame *owner,
                      const CatalogPtr& c,
                      CustomizedTextCtrl *textCtrlOrig,
                      CustomizedTextCtrl *textCtrlTrans)
-        : wxDialog(owner, wxID_ANY, _("Find")),
+        : wxFrame(owner, wxID_ANY, _("Find"), wxDefaultPosition, wxDefaultSize, FRAME_STYLE),
           m_owner(owner),
           m_listCtrl(list),
           m_catalog(c),
@@ -76,13 +79,14 @@ FindFrame::FindFrame(PoeditFrame *owner,
           m_textCtrlOrig(textCtrlOrig),
           m_textCtrlTrans(textCtrlTrans)
 {
-    wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
+    auto panel = new wxPanel(this, wxID_ANY);
+    wxBoxSizer *panelsizer = new wxBoxSizer(wxVERTICAL);
 
     wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-    topsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
+    panelsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
 
     auto entrySizer = new wxFlexGridSizer(2, wxSize(MSW_OR_OTHER(PX(5), PX(10)), PX(5)));
-    m_mode = new wxChoice(this, wxID_ANY);
+    m_mode = new wxChoice(panel, wxID_ANY);
 #ifdef __WXOSX__
     [(NSPopUpButton*)m_mode->GetHandle() setBordered:NO];
 #endif
@@ -90,9 +94,9 @@ FindFrame::FindFrame(PoeditFrame *owner,
     m_mode->Append(_("Replace"));
     m_mode->SetSelection(Mode_Find);
 
-    m_searchField = new wxTextCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(PX(400), -1));
+    m_searchField = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(PX(400), -1));
     m_searchField->SetHint(_("String to find"));
-    m_replaceField = new wxTextCtrl(this, wxID_ANY);
+    m_replaceField = new wxTextCtrl(panel, wxID_ANY);
     m_replaceField->SetHint(_("Replacement string"));
 
     entrySizer->Add(m_mode);
@@ -102,10 +106,10 @@ FindFrame::FindFrame(PoeditFrame *owner,
     sizer->Add(entrySizer, wxSizerFlags().Expand().PXBorderAll());
 
 #ifdef __WXMSW__
-    #define collPane this
+    #define collPane panel
 #else
     // TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
-    auto coll = new wxCollapsiblePane(this, wxID_ANY, _("Options"));
+    auto coll = new wxCollapsiblePane(panel, wxID_ANY, _("Options"));
     auto collPane = coll->GetPane();
 #endif
 
@@ -135,11 +139,11 @@ FindFrame::FindFrame(PoeditFrame *owner,
     sizer->Add(coll, wxSizerFlags().Expand().PXBorderAll());
 #endif
 
-    m_btnClose = new wxButton(this, wxID_CLOSE, _("Close"));
-    m_btnReplaceAll = new wxButton(this, wxID_ANY, MSW_OR_OTHER(_("Replace all"), _("Replace All")));
-    m_btnReplace = new wxButton(this, wxID_ANY, _("Replace"));
-    m_btnPrev = new wxButton(this, wxID_ANY, _("< &Previous"));
-    m_btnNext = new wxButton(this, wxID_ANY, _("&Next >"));
+    m_btnClose = new wxButton(panel, wxID_CLOSE, _("Close"));
+    m_btnReplaceAll = new wxButton(panel, wxID_ANY, MSW_OR_OTHER(_("Replace all"), _("Replace All")));
+    m_btnReplace = new wxButton(panel, wxID_ANY, _("Replace"));
+    m_btnPrev = new wxButton(panel, wxID_ANY, _("< &Previous"));
+    m_btnNext = new wxButton(panel, wxID_ANY, _("&Next >"));
     m_btnNext->SetDefault();
 
     wxBoxSizer *buttons = new wxBoxSizer(wxHORIZONTAL);
@@ -151,9 +155,10 @@ FindFrame::FindFrame(PoeditFrame *owner,
     buttons->Add(m_btnPrev, wxSizerFlags().PXBorder(wxRIGHT));
     buttons->Add(m_btnNext, wxSizerFlags());
 
+    panel->SetSizer(panelsizer);
+    auto topsizer = new wxBoxSizer(wxHORIZONTAL);
+    topsizer->Add(panel, wxSizerFlags(1).Expand());
     SetSizerAndFit(topsizer);
-
-    SetEscapeId(wxID_CLOSE);
 
     RestoreWindowState(this, wxDefaultSize, WinState_Pos);
 
@@ -172,13 +177,14 @@ FindFrame::FindFrame(PoeditFrame *owner,
     m_wrapAround->SetValue(wxConfig::Get()->ReadBool("find_wrap_around", true));
     m_wholeWords->SetValue(wxConfig::Get()->ReadBool("whole_words", false));
 
-#ifdef __WXOSX__
     wxAcceleratorEntry entries[] = {
-        { wxACCEL_CMD,  'W', wxID_CLOSE }
+#ifdef __WXOSX__
+        { wxACCEL_CMD,  'W', wxID_CLOSE },
+#endif
+        { wxACCEL_NORMAL,  WXK_ESCAPE, wxID_CLOSE }
     };
     wxAcceleratorTable accel(WXSIZEOF(entries), entries);
     SetAcceleratorTable(accel);
-#endif
 
     m_searchField->Bind(wxEVT_TEXT, &FindFrame::OnTextChange, this);
     m_btnPrev->Bind(wxEVT_BUTTON, &FindFrame::OnPrev, this);
@@ -193,6 +199,9 @@ FindFrame::FindFrame(PoeditFrame *owner,
     m_btnReplaceAll->Bind(wxEVT_BUTTON, &FindFrame::OnReplaceAll, this);
     m_btnReplace->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable((bool)m_lastItem); });
     m_btnReplaceAll->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable(!ms_text.empty()); });
+
+    // Create hidden, will be shown after setting it up
+    Show(false);
 }
 
 

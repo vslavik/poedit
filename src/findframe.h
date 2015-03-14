@@ -28,7 +28,7 @@
 
 #include "edlistctrl.h"
 
-#include <wx/dialog.h>
+#include <wx/frame.h>
 #include <wx/weakref.h>
 
 class WXDLLIMPEXP_FWD_CORE wxButton;
@@ -47,7 +47,7 @@ class PoeditFrame;
     This class assumes that list control's user data contains index
     into the catalog.
  */
-class FindFrame : public wxDialog
+class FindFrame : public wxFrame
 {
     public:
         /** Ctor.
