@@ -148,8 +148,8 @@ class CatalogItem
         wxString GetTranslation(unsigned n = 0) const;
 
         /// Returns all translations.
-        const wxArrayString& GetTranslations() const
-            { return m_translations; }
+        const wxArrayString& GetTranslations() const { return m_translations; }
+        wxArrayString& GetTranslations() { return m_translations; }
 
         /// Returns references (#:) lines for the entry
         const wxArrayString& GetRawReferences() const { return m_references; }

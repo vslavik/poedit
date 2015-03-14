@@ -55,6 +55,7 @@ class TranslationTextCtrl;
 class PoeditFrame;
 class AttentionBar;
 class ErrorBar;
+class FindFrame;
 class MainToolbar;
 class Sidebar;
 
@@ -130,6 +131,24 @@ class PoeditFrame : public wxFrame
         void EditCatalogProperties();
         void EditCatalogPropertiesAndUpdateFromSources();
 
+        /// Returns currently selected (edited) item
+        CatalogItemPtr GetCurrentItem() const;
+
+        /// Flags for UpdateToTextCtrl()
+        enum UpdateToTextCtrlFlags
+        {
+            /// Change to textctrl should be undoable by the user
+            UndoableEdit = 0x01,
+            /// Change is due to item change, discard undo buffer
+            ItemChanged = 0x02
+        };
+
+        /// Puts text from catalog & listctrl to textctrls.
+        void UpdateToTextCtrl(int flags);
+
+        /// Puts text from textctrls to catalog & listctrl.
+        void UpdateFromTextCtrl();
+
     private:
         /** Ctor.
             \param catalog filename of catalog to open. If empty, starts
@@ -171,8 +190,6 @@ class PoeditFrame : public wxFrame
         void SetCustomFonts();
         void SetAccelerators();
 
-        CatalogItemPtr GetCurrentItem() const;
-
         // if there's modified catalog, ask user to save it; return true
         // if it's save to discard m_catalog and load new data
         template<typename TFunctor>
@@ -182,11 +199,6 @@ class PoeditFrame : public wxFrame
 
         // implements opening of files, without asking user
         void DoOpenFile(const wxString& filename);
-
-        /// Puts text from textctrls to catalog & listctrl.
-        void UpdateFromTextCtrl();
-        /// Puts text from catalog & listctrl to textctrls.
-        void UpdateToTextCtrl(int flags);
 
         /// Updates statistics in statusbar.
         void UpdateStatusBar();
@@ -249,6 +261,7 @@ private:
         void OnCopyFromSource(wxCommandEvent& event);
         void OnClearTranslation(wxCommandEvent& event);
         void OnFind(wxCommandEvent& event);
+        void OnFindAndReplace(wxCommandEvent& event);
         void OnFindNext(wxCommandEvent& event);
         void OnFindPrev(wxCommandEvent& event);
         void OnEditComment(wxCommandEvent& event);
@@ -346,6 +359,7 @@ private:
 
         AttentionBar *m_attentionBar;
         Sidebar *m_sidebar;
+        wxWeakRef<FindFrame> m_findWindow;
 
         bool m_modified;
         bool m_hasObsoleteItems;

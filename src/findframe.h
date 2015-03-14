@@ -28,12 +28,17 @@
 
 #include "edlistctrl.h"
 
-#include <wx/dialog.h>
+#include <wx/frame.h>
 #include <wx/weakref.h>
 
 class WXDLLIMPEXP_FWD_CORE wxButton;
+class WXDLLIMPEXP_FWD_CORE wxCheckBox;
+class WXDLLIMPEXP_FWD_CORE wxChoice;
+class WXDLLIMPEXP_FWD_CORE wxTextCtrl;
 
 class Catalog;
+class CustomizedTextCtrl;
+class PoeditFrame;
 
 /** FindFrame is small dialog frame that contains controls for searching
     in content of EditorFrame's wxListCtrl object and associated Catalog
@@ -42,23 +47,17 @@ class Catalog;
     This class assumes that list control's user data contains index
     into the catalog.
  */
-class FindFrame : public wxDialog
+class FindFrame : public wxFrame
 {
     public:
         /** Ctor.
-            \param parent  Parent frame, FindFrame will float on it
+            \param owner  Parent frame, FindFrame will float on it
             \param list    List control to search in
             \param catalog Catalog to search in
          */
-        FindFrame(wxWindow *parent, PoeditListCtrl *list, const CatalogPtr& c,
-                  wxTextCtrl *textCtrlOrig, wxTextCtrl *textCtrlTrans);
+        FindFrame(PoeditFrame *owner, PoeditListCtrl *list, const CatalogPtr& c,
+                  CustomizedTextCtrl *textCtrlOrig, CustomizedTextCtrl *textCtrlTrans);
         ~FindFrame();
-
-        /// Returns singleton instance if it exists. Updates the catalog
-        /// if it differs from the current one.
-        static FindFrame *Get(PoeditListCtrl *list, const CatalogPtr& forCatalog);
-
-        static void NotifyParentDestroyed(PoeditListCtrl *list, const CatalogPtr& forCatalog);
 
         /** Resets the search to starting position and changes
             the catalog in use. Called by EditorFrame when the user
@@ -66,32 +65,40 @@ class FindFrame : public wxDialog
          */
         void Reset(const CatalogPtr& c);
 
-        void FocusSearchField();
-
         void FindPrev();
         void FindNext();
 
+        void ShowForFind();
+        void ShowForReplace();
+
     private:
+        void DoShowFor(int mode);
         void OnClose(wxCommandEvent &event);
+        void OnModeChanged();
         void OnPrev(wxCommandEvent &event);
         void OnNext(wxCommandEvent &event);
         void OnTextChange(wxCommandEvent &event);
         void OnCheckbox(wxCommandEvent &event);
+        void OnReplace(wxCommandEvent &event);
+        void OnReplaceAll(wxCommandEvent &event);
         bool DoFind(int dir);
-        DECLARE_EVENT_TABLE()
+        bool DoReplaceInItem(CatalogItemPtr item);
 
-        wxTextCtrl *m_textField;
+        PoeditFrame *m_owner;
+        wxChoice *m_mode;
+        wxTextCtrl *m_searchField, *m_replaceField;
+        wxCheckBox *m_ignoreCase, *m_wrapAround, *m_wholeWords,
+                   *m_findInOrig, *m_findInTrans, *m_findInComments;
 
         wxWeakRef<PoeditListCtrl> m_listCtrl;
         CatalogPtr m_catalog;
         int m_position;
-        wxButton *m_btnPrev, *m_btnNext;
-        wxTextCtrl *m_textCtrlOrig, *m_textCtrlTrans;
+        CatalogItemPtr m_lastItem;
+        wxButton *m_btnClose, *m_btnReplaceAll, *m_btnReplace, *m_btnPrev, *m_btnNext;
+        CustomizedTextCtrl *m_textCtrlOrig, *m_textCtrlTrans;
 
         // NB: this is static so that last search term is remembered
         static wxString ms_text;
-
-        static FindFrame *ms_singleton;
 };
 
 

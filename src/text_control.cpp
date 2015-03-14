@@ -387,6 +387,16 @@ void CustomizedTextCtrl::Redo()
 }
 #endif // __WXGTK__
 
+void CustomizedTextCtrl::ShowFindIndicator(int from, int length)
+{
+#ifdef __WXOSX__
+    [TextView(this) showFindIndicatorForRange:NSMakeRange(from, length)];
+#else
+    SetSelection(from, from + length);
+#endif
+}
+
+
 
 class AnyTranslatableTextCtrl::Attributes
 {
