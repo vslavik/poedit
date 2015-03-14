@@ -513,7 +513,7 @@ private:
         auto main = _("Are you sure you want to reset the translation memory?");
         auto details = _(L"Resetting the translation memory will irrevocably delete all stored translations from it. You can’t undo this operation.");
 
-        wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog(this, main, title, wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION));
+        wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog(this, main, title, wxYES_NO | wxNO_DEFAULT | wxICON_WARNING));
         dlg->SetExtendedMessage(details);
         dlg->SetYesNoLabels(_("Reset"), _("Cancel"));
 

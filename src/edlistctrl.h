@@ -181,7 +181,7 @@ class PoeditListCtrl : public wxListView
 
         void CreateSortMap();
         void CreateColumns();
-        void ReadCatalog();
+        void ReadCatalog(bool resetSizeAndSelection);
         void OnSize(wxSizeEvent& event);
 
         bool m_displayIDs;
