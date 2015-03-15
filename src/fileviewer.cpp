@@ -46,7 +46,8 @@ FileViewer::FileViewer(wxWindow *parent,
                        const wxString& basePath,
                        const wxArrayString& references,
                        int startAt)
-        : wxFrame(parent, -1, _("Source file")),
+        : wxFrame(parent, -1, _("Source file"), wxDefaultPosition, wxDefaultSize,
+                  wxDEFAULT_FRAME_STYLE | wxFRAME_TOOL_WINDOW),
           m_references(references)
 {
     m_basePath = basePath;
