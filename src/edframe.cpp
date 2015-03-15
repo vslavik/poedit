@@ -317,7 +317,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_SIZE           (PoeditFrame::OnSize)
 
    // handling of selection:
-   EVT_UPDATE_UI(XRCID("menu_references"), PoeditFrame::OnSingleSelectionUpdate)
+   EVT_UPDATE_UI(XRCID("menu_references"), PoeditFrame::OnReferencesMenuUpdate)
    EVT_UPDATE_UI_RANGE(ID_BOOKMARK_SET, ID_BOOKMARK_SET + 9, PoeditFrame::OnSingleSelectionUpdate)
 
    EVT_UPDATE_UI(XRCID("go_done_and_next"),   PoeditFrame::OnSingleSelectionUpdate)
@@ -1695,6 +1695,10 @@ void PoeditFrame::OnListSel(wxListEvent& event)
         else if (!m_textTransPlural.empty())
             m_textTransPlural[0]->SetFocus();
     }
+
+    auto references = FileViewer::GetIfExists();
+    if (references)
+        references->ShowReferences(m_catalog, GetCurrentItem(), 0);
 }
 
 
@@ -1704,26 +1708,18 @@ void PoeditFrame::OnReferencesMenu(wxCommandEvent&)
     auto entry = GetCurrentItem();
     if ( !entry )
         return;
-
-    const wxArrayString& refs = entry->GetReferences();
-
-    if (refs.GetCount() == 0)
-        wxMessageBox(_("No references to this string found."));
-    else if (refs.GetCount() == 1)
-        ShowReference(0);
-    else
-    {
-        wxString *table = new wxString[refs.GetCount()];
-        for (unsigned i = 0; i < refs.GetCount(); i++)
-            table[i] = refs[i];
-        int result = wxGetSingleChoiceIndex(_("Please choose the reference you want to show:"), _("References"),
-                          (int)refs.GetCount(), table);
-        delete[] table;
-        if (result != -1)
-            ShowReference(result);
-    }
+    ShowReference(0);
 }
 
+void PoeditFrame::OnReferencesMenuUpdate(wxUpdateUIEvent& event)
+{
+    OnSingleSelectionUpdate(event);
+    if (event.GetEnabled())
+    {
+        auto item = GetCurrentItem();
+        event.Enable(item && !item->GetReferences().empty());
+    }
+}
 
 void PoeditFrame::OnReference(wxCommandEvent& event)
 {
@@ -1735,38 +1731,9 @@ void PoeditFrame::OnReference(wxCommandEvent& event)
 void PoeditFrame::ShowReference(int num)
 {
     auto entry = GetCurrentItem();
-    wxCHECK_RET( entry, "no entry selected" );
-
-    wxBusyCursor bcur;
-
-    wxString basepath;
-    wxString cwd = wxGetCwd();
-
-    if (!!m_fileName)
-    {
-        wxString path;
-
-        if (wxIsAbsolutePath(m_catalog->Header().BasePath))
-            path = m_catalog->Header().BasePath;
-        else
-            path = wxPathOnly(m_fileName) + "/" + m_catalog->Header().BasePath;
-
-        if (path.Last() == _T('/') || path.Last() == _T('\\'))
-            path.RemoveLast();
-
-        if (wxIsAbsolutePath(path))
-            basepath = path;
-        else
-            basepath = cwd + "/" + path;
-    }
-
-    FileViewer *w = new FileViewer(this, basepath,
-                                   entry->GetReferences(),
-                                   num);
-    if (w->FileOk())
-        w->Show(true);
-    else
-        w->Close();
+    if (!entry)
+        return;
+    FileViewer::GetAndActivate()->ShowReferences(m_catalog, entry, num);
 }
 
 
