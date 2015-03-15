@@ -317,7 +317,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_SIZE           (PoeditFrame::OnSize)
 
    // handling of selection:
-   EVT_UPDATE_UI(XRCID("menu_references"), PoeditFrame::OnSingleSelectionUpdate)
+   EVT_UPDATE_UI(XRCID("menu_references"), PoeditFrame::OnReferencesMenuUpdate)
    EVT_UPDATE_UI_RANGE(ID_BOOKMARK_SET, ID_BOOKMARK_SET + 9, PoeditFrame::OnSingleSelectionUpdate)
 
    EVT_UPDATE_UI(XRCID("go_done_and_next"),   PoeditFrame::OnSingleSelectionUpdate)
@@ -1707,9 +1707,8 @@ void PoeditFrame::OnReferencesMenu(wxCommandEvent&)
 
     const wxArrayString& refs = entry->GetReferences();
 
-    if (refs.GetCount() == 0)
-        wxMessageBox(_("No references to this string found."));
-    else if (refs.GetCount() == 1)
+    wxASSERT(refs.GetCount() > 0);
+    if (refs.GetCount() == 1)
         ShowReference(0);
     else
     {
@@ -1724,6 +1723,15 @@ void PoeditFrame::OnReferencesMenu(wxCommandEvent&)
     }
 }
 
+void PoeditFrame::OnReferencesMenuUpdate(wxUpdateUIEvent& event)
+{
+    OnSingleSelectionUpdate(event);
+    if (event.GetEnabled())
+    {
+        auto item = GetCurrentItem();
+        event.Enable(item && !item->GetReferences().empty());
+    }
+}
 
 void PoeditFrame::OnReference(wxCommandEvent& event)
 {

@@ -254,6 +254,7 @@ private:
         void OnCloseWindow(wxCloseEvent& event);
         void OnReference(wxCommandEvent& event);
         void OnReferencesMenu(wxCommandEvent& event);
+        void OnReferencesMenuUpdate(wxUpdateUIEvent& event);
         void ShowReference(int num);
         void OnRightClick(wxCommandEvent& event);
         void OnFuzzyFlag(wxCommandEvent& event);
