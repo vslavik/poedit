@@ -1931,6 +1931,87 @@ int Catalog::DoValidate(const wxString& po_file)
 }
 
 
+namespace
+{
+
+wxFileName CommonDirectory(const wxFileName& a, const wxFileName& b)
+{
+    const auto& dirs_a = a.GetDirs();
+    const auto& dirs_b = b.GetDirs();
+
+    wxFileName d(a);
+    const auto count = std::min(dirs_a.size(), dirs_b.size());
+    size_t i = 0;
+    for (i = 0; i < count; i++)
+    {
+        if (dirs_a[i] != dirs_b[i])
+            break;
+    }
+    while (d.GetDirCount() != i)
+        d.RemoveLastDir();
+    return d;
+}
+
+enum class SourcesPath
+{
+    Base,
+    Root
+};
+
+wxString GetSourcesPath(const wxString& fileName, const Catalog::HeaderData& header, SourcesPath kind)
+{
+    if (fileName.empty())
+        return wxString();
+
+    wxString basepath;
+    if (wxIsAbsolutePath(header.BasePath))
+    {
+        basepath = header.BasePath;
+    }
+    else
+    {
+        wxString path = wxPathOnly(fileName);
+        if (path.empty())
+            path = ".";
+        basepath = path + wxFILE_SEP_PATH + header.BasePath + wxFILE_SEP_PATH;
+    }
+
+    wxFileName root = wxFileName::DirName(basepath);
+    root.Normalize();
+
+    if (kind == SourcesPath::Root)
+    {
+        // Deal with misconfigured catalogs where the basepath isn't the root.
+        for (auto& p : header.SearchPaths)
+        {
+            wxString path = (p == ".") ? basepath : basepath + wxFILE_SEP_PATH + p;
+
+            wxFileName fn;
+            if (wxDirExists(path))
+                fn.AssignDir(path);
+            else
+                fn.Assign(path);
+            fn.Normalize();
+
+            root = CommonDirectory(root, fn);
+        }
+    }
+
+    return root.GetFullPath();
+}
+
+} // anonymous namespace
+
+wxString Catalog::GetSourcesBasePath() const
+{
+    return GetSourcesPath(m_fileName, m_header, SourcesPath::Base);
+}
+
+wxString Catalog::GetSourcesRootPath() const
+{
+    return GetSourcesPath(m_fileName, m_header, SourcesPath::Root);
+}
+
 bool Catalog::Update(ProgressInfo *progress, bool summary, UpdateResultReason& reason)
 {
     reason = UpdateResultReason::Unspecified;
