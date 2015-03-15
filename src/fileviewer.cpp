@@ -56,6 +56,9 @@ FileViewer::FileViewer(wxWindow *parent,
     wxPanel *panel = new wxPanel(this, -1);
     wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
     panel->SetSizer(sizer);
+#ifdef __WXOSX__
+    panel->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
 
     wxSizer *barsizer = new wxBoxSizer(wxHORIZONTAL);
     sizer->Add(barsizer, wxSizerFlags().Expand().PXBorderAll());
@@ -144,7 +147,12 @@ void FileViewer::SetupTextCtrl()
     // style used:
     wxString fontspec = wxString::Format("face:%s,size:%d",
                                          font.GetFaceName().c_str(),
-                                         font.GetPointSize());
+                                      #ifdef __WXOSX__
+                                         font.GetPointSize() - 1
+                                      #else
+                                         font.GetPointSize()
+                                      #endif
+                                         );
     const wxString DEFAULT     = fontspec + ",fore:black,back:white";
     const wxString STRING      = fontspec + ",bold,fore:#882d21";
     const wxString COMMENT     = fontspec + ",fore:#487e18";
