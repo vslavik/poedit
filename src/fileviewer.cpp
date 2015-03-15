@@ -23,6 +23,8 @@
  *
  */
 
+#include "fileviewer.h"
+
 #include <wx/filename.h>
 #include <wx/log.h>
 #include <wx/button.h>
@@ -38,20 +40,35 @@
 #include <wx/utils.h>
 #include <wx/stc/stc.h>
 
-#include "fileviewer.h"
+#include "customcontrols.h"
 #include "hidpi.h"
 #include "utility.h"
 
-FileViewer::FileViewer(wxWindow *parent,
-                       const wxString& basePath,
-                       const wxArrayString& references,
-                       int startAt)
-        : wxFrame(parent, -1, _("Source file"), wxDefaultPosition, wxDefaultSize,
-                  wxDEFAULT_FRAME_STYLE | wxFRAME_TOOL_WINDOW),
-          m_references(references)
+namespace
 {
-    m_basePath = basePath;
 
+#ifdef __WXOSX__
+const int FRAME_STYLE = wxDEFAULT_FRAME_STYLE | wxFRAME_TOOL_WINDOW;
+#else
+const int FRAME_STYLE = wxDEFAULT_FRAME_STYLE;
+#endif
+
+} // anonymous namespace
+
+FileViewer *FileViewer::ms_instance = nullptr;
+
+FileViewer *FileViewer::GetAndActivate()
+{
+    if (!ms_instance)
+        ms_instance = new FileViewer(nullptr);
+    ms_instance->Show();
+    ms_instance->Raise();
+    return ms_instance;
+}
+
+FileViewer::FileViewer(wxWindow*)
+        : wxFrame(nullptr, wxID_ANY, _("Source file"), wxDefaultPosition, wxDefaultSize, FRAME_STYLE)
+{
     SetName("fileviewer");
 
     wxPanel *panel = new wxPanel(this, -1);
@@ -68,15 +85,11 @@ FileViewer::FileViewer(wxWindow *parent,
                                    _("Source file occurrence:")),
                   wxSizerFlags().Center().PXBorder(wxRIGHT));
 
-    wxChoice *choice = new wxChoice(panel, wxID_ANY);
-    barsizer->Add(choice, wxSizerFlags(1).Center());
+    m_file = new wxChoice(panel, wxID_ANY);
+    barsizer->Add(m_file, wxSizerFlags(1).Center());
 
-    for (size_t i = 0; i < references.Count(); i++)
-        choice->Append(references[i]);
-    choice->SetSelection(startAt);
-
-    wxButton *edit = new wxButton(panel, wxID_ANY, MSW_OR_OTHER(_("Open in editor"), _("Open in Editor")));
-    barsizer->Add(edit, wxSizerFlags().Center().Border(wxLEFT, PX(10)));
+    m_openInEditor = new wxButton(panel, wxID_ANY, MSW_OR_OTHER(_("Open in editor"), _("Open in Editor")));
+    barsizer->Add(m_openInEditor, wxSizerFlags().Center().Border(wxLEFT, PX(10)));
 
     m_text = new wxStyledTextCtrl(panel, wxID_ANY,
                                   wxDefaultPosition, wxDefaultSize,
@@ -84,17 +97,26 @@ FileViewer::FileViewer(wxWindow *parent,
     SetupTextCtrl();
     sizer->Add(m_text, 1, wxEXPAND);
 
+    m_error = new wxStaticText(panel, wxID_ANY, "");
+    m_error->SetForegroundColour(ExplanationLabel::GetTextColor());
+    m_error->SetFont(m_error->GetFont().Larger().Larger());
+    sizer->Add(m_error, wxSizerFlags(1).Center().Border(wxTOP|wxBOTTOM, PX(80)));
+
     RestoreWindowState(this, wxSize(PX(600), PX(400)));
 
     wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
     topsizer->Add(panel, wxSizerFlags(1).Expand());
     SetSizer(topsizer);
+
+    // avoid flicker with these initial settings:
+    m_file->Disable();
+    sizer->Hide(m_error);
+    sizer->Hide(m_text);
+
     Layout();
 
-    choice->Bind(wxEVT_CHOICE, &FileViewer::OnChoice, this);
-    edit->Bind(wxEVT_BUTTON, &FileViewer::OnEditFile, this);
-
-    ShowReference(m_references[startAt]);
+    m_file->Bind(wxEVT_CHOICE, &FileViewer::OnChoice, this);
+    m_openInEditor->Bind(wxEVT_BUTTON, &FileViewer::OnEditFile, this);
 
 #ifdef __WXOSX__
     wxAcceleratorEntry entries[] = {
@@ -110,6 +132,7 @@ FileViewer::FileViewer(wxWindow *parent,
 
 FileViewer::~FileViewer()
 {
+    ms_instance = nullptr;
     SaveWindowState(this);
 }
 
@@ -294,7 +317,28 @@ wxFileName FileViewer::GetFilename(wxString ref) const
 }
 
 
-void FileViewer::ShowReference(const wxString& ref)
+void FileViewer::ShowReferences(CatalogPtr catalog, CatalogItemPtr item, int defaultReference)
+{
+    m_basePath = catalog->GetSourcesBasePath();
+    m_references = item->GetReferences();
+
+    m_file->Clear();
+    m_file->Enable(m_references.size() > 1);
+
+    if (m_references.empty())
+    {
+        ShowError(_("No references for the selected item."));
+    }
+    else
+    {
+        for (auto& r: m_references)
+            m_file->Append(r);
+        m_file->SetSelection(defaultReference);
+        SelectReference(m_references[defaultReference]);
+    }
+}
+
+void FileViewer::SelectReference(const wxString& ref)
 {
     const wxFileName filename = GetFilename(ref);
     wxFFile file;
@@ -304,11 +348,16 @@ void FileViewer::ShowReference(const wxString& ref)
          !file.Open(filename.GetFullPath()) ||
          !file.ReadAll(&data, wxConvAuto()) )
     {
-        wxLogError(_("Error opening file %s!"), filename.GetFullPath().c_str());
+        ShowError(wxString::Format(_("Error opening file %s!"), filename.GetFullPath()));
+        m_openInEditor->Disable();
         return;
     }
 
-    m_current = ref;
+    m_openInEditor->Enable();
+
+    m_error->GetContainingSizer()->Hide(m_error);
+    m_text->GetContainingSizer()->Show(m_text);
+    Layout();
 
     // support GNOME's xml2po's extension to references in the form of
     // filename:line(xml_node):
@@ -329,16 +378,23 @@ void FileViewer::ShowReference(const wxString& ref)
     int lineHeight = m_text->TextHeight((int)linenum);
     int linesInWnd = m_text->GetSize().y / lineHeight;
     m_text->ScrollToLine(wxMax(0, (int)linenum - linesInWnd/2));
+}
 
+void FileViewer::ShowError(const wxString& msg)
+{
+    m_error->SetLabel(msg);
+    m_error->GetContainingSizer()->Show(m_error);
+    m_text->GetContainingSizer()->Hide(m_text);
+    Layout();
 }
 
 
 void FileViewer::OnChoice(wxCommandEvent &event)
 {
-    ShowReference(m_references[event.GetSelection()]);
+    SelectReference(m_references[event.GetSelection()]);
 }
 
 void FileViewer::OnEditFile(wxCommandEvent&)
 {
-    wxLaunchDefaultApplication(GetFilename(m_current).GetFullPath());
+    wxLaunchDefaultApplication(GetFilename(m_file->GetStringSelection()).GetFullPath());
 }
