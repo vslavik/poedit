@@ -1459,6 +1459,7 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
     UpdateResultReason reason = UpdateResultReason::Unspecified;
     bool succ;
 
+    if (m_catalog->HasSourcesAvailable())
     {
         ProgressInfo progress(this, _("Updating catalog"));
         if (pot_file.empty())
@@ -1468,6 +1469,11 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
 
         EnsureContentView(Content::PO);
         NotifyCatalogChanged(m_catalog);
+    }
+    else
+    {
+        reason = UpdateResultReason::NoSourcesFound;
+        succ = false;
     }
 
     m_modified = succ || m_modified;

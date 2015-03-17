@@ -570,6 +570,11 @@ class Catalog
          */
         wxString GetSourcesRootPath() const;
 
+        /**
+            Returns true if the source code to update the PO from is available.
+         */
+        bool HasSourcesAvailable() const;
+
         /** Updates the catalog from sources.
             \see SourceDigger, Parser, UpdateFromPOT.
          */
