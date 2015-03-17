@@ -661,7 +661,7 @@ void PoeditApp::OnOpen(wxCommandEvent&)
     wxString path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
 
     wxFileDialog dlg(nullptr,
-                     _("Open catalog"),
+                     OSX_OR_OTHER("", _("Open catalog")),
                      path,
                      wxEmptyString,
                      wxString::Format("%s (*.po)|*.po|%s (*.*)|*.*",

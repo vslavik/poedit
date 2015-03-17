@@ -1058,7 +1058,7 @@ void PoeditFrame::OnOpen(wxCommandEvent&)
         if (path.empty())
             path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
 
-        wxString name = wxFileSelector(_("Open catalog"),
+        wxString name = wxFileSelector(OSX_OR_OTHER("", _("Open catalog")),
                         path, wxEmptyString, wxEmptyString,
                         wxString::Format("%s (*.po)|*.po|%s (*.*)|*.*",
                             _("PO Translation Files"), _("All Files")),
@@ -1129,7 +1129,7 @@ wxString PoeditFrame::GetSaveAsFilename(const CatalogPtr& cat, const wxString& c
         name = SuggestFileName(cat) + ".po";
     }
 
-    name = wxFileSelector(_("Save as..."), path, name, wxEmptyString,
+    name = wxFileSelector(OSX_OR_OTHER("", _("Save as...")), path, name, wxEmptyString,
 	                      wxString::Format("%s (*.po)|*.po",
                               _("PO Translation Files")),
                           wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);
@@ -1167,7 +1167,7 @@ void PoeditFrame::OnCompileMO(wxCommandEvent&)
     else
         name += ".mo";
 
-    name = wxFileSelector(_("Compile to..."),
+    name = wxFileSelector(OSX_OR_OTHER("", _("Compile to...")),
                           wxPathOnly(m_fileName), name, wxEmptyString,
                           wxString::Format("%s (*.mo)|*.mo", _("Compiled Translation Files")),
                           wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);
@@ -1205,7 +1205,7 @@ void PoeditFrame::OnExport(wxCommandEvent&)
     else
         name += ".html";
 
-    name = wxFileSelector(_("Export as..."),
+    name = wxFileSelector(OSX_OR_OTHER("", _("Export as...")),
                           wxPathOnly(m_fileName), name, wxEmptyString,
                           wxString::Format("%s (*.html)|*.html", _("HTML Files")),
                           wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);

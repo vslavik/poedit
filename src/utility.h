@@ -46,6 +46,12 @@
     #define MSW_OR_OTHER(msw, other) other
 #endif
 
+#ifdef __WXOSX__
+    #define OSX_OR_OTHER(msw, other) msw
+#else
+    #define OSX_OR_OTHER(msw, other) other
+#endif
+
 
 // ----------------------------------------------------------------------
 // Misc helpers
