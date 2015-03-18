@@ -57,7 +57,7 @@ public:
         if (on)
         {
             tool->SetLabel(_("Sync"));
-            tool->SetShortHelp(_("Synchronize the translation with Crowdin."));
+            tool->SetShortHelp(_("Synchronize the translation with Crowdin"));
             m_tb->SetToolNormalBitmap(m_idUpdate, wxArtProvider::GetBitmap("poedit-sync"));
         }
         else
