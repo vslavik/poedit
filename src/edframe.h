@@ -241,7 +241,8 @@ public: // for PoeditApp
 private:
         void OnSave(wxCommandEvent& event);
         void OnSaveAs(wxCommandEvent& event);
-        wxString GetSaveAsFilename(const CatalogPtr& cat, const wxString& current);
+        template<typename F>
+        void GetSaveAsFilenameThenDo(const CatalogPtr& cat, const wxString& current, F then);
         void DoSaveAs(const wxString& filename);
         void OnProperties(wxCommandEvent& event);
         void OnUpdate(wxCommandEvent& event);

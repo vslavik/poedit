@@ -31,7 +31,7 @@
 #include <wx/html/htmlwin.h>
 #include <wx/statline.h>
 #include <wx/sizer.h>
-#include <wx/fs_mem.h>
+#include <wx/filedlg.h>
 #include <wx/datetime.h>
 #include <wx/tokenzr.h>
 #include <wx/xrc/xmlres.h>
@@ -982,12 +982,15 @@ void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler)
         if (retval == wxID_YES)
         {
             if (!m_fileExistsOnDisk || m_fileName.empty())
-                m_fileName = GetSaveAsFilename(m_catalog, m_fileName);
-
-            WriteCatalog(m_fileName, [=](bool saved){
-                if (saved)
-                    completionHandler();
-            });
+            {
+                GetSaveAsFilenameThenDo(m_catalog, m_fileName, [=](const wxString& fn){
+                    m_fileName = fn;
+                    WriteCatalog(m_fileName, [=](bool saved){
+                        if (saved)
+                            completionHandler();
+                    });
+                });
+            }
         }
         else if (retval == wxID_NO)
         {
@@ -1118,7 +1121,8 @@ static wxString SuggestFileName(const CatalogPtr& catalog)
         return name;
 }
 
-wxString PoeditFrame::GetSaveAsFilename(const CatalogPtr& cat, const wxString& current)
+template<typename F>
+void PoeditFrame::GetSaveAsFilenameThenDo(const CatalogPtr& cat, const wxString& current, F then)
 {
     wxString name(wxFileNameFromPath(current));
     wxString path(wxPathOnly(current));
@@ -1129,16 +1133,21 @@ wxString PoeditFrame::GetSaveAsFilename(const CatalogPtr& cat, const wxString& c
         name = SuggestFileName(cat) + ".po";
     }
 
-    name = wxFileSelector(OSX_OR_OTHER("", _("Save as...")), path, name, wxEmptyString,
-	                      wxString::Format("%s (*.po)|*.po",
-                              _("PO Translation Files")),
-                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);
-    if (!name.empty())
-    {
-        wxConfig::Get()->Write("last_file_path", wxPathOnly(name));
-    }
+    wxWindowPtr<wxFileDialog> dlg(
+        new wxFileDialog(this,
+                         OSX_OR_OTHER("", _("Save as...")),
+                         path,
+                         name,
+                         wxString::Format("%s (*.po)|*.po", _("PO Translation Files")),
+                         wxFD_SAVE | wxFD_OVERWRITE_PROMPT));
 
-    return name;
+    dlg->ShowWindowModalThenDo([=](int retcode){
+        if (retcode != wxID_OK)
+            return;
+        auto fn = dlg->GetPath();
+        wxConfig::Get()->Write("last_file_path", wxPathOnly(name));
+        then(fn);
+    });
 }
 
 void PoeditFrame::DoSaveAs(const wxString& filename)
@@ -1152,7 +1161,9 @@ void PoeditFrame::DoSaveAs(const wxString& filename)
 
 void PoeditFrame::OnSaveAs(wxCommandEvent&)
 {
-    DoSaveAs(GetSaveAsFilename(m_catalog, m_fileName));
+    GetSaveAsFilenameThenDo(m_catalog, m_fileName, [=](const wxString& fn){
+        DoSaveAs(fn);
+    });
 }
 
 void PoeditFrame::OnCompileMO(wxCommandEvent&)
@@ -1167,30 +1178,36 @@ void PoeditFrame::OnCompileMO(wxCommandEvent&)
     else
         name += ".mo";
 
-    name = wxFileSelector(OSX_OR_OTHER("", _("Compile to...")),
-                          wxPathOnly(m_fileName), name, wxEmptyString,
-                          wxString::Format("%s (*.mo)|*.mo", _("Compiled Translation Files")),
-                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);
-    if (name.empty())
-        return; // user cancelled
+    wxWindowPtr<wxFileDialog> dlg(
+        new wxFileDialog(this,
+                         OSX_OR_OTHER("", _("Compile to...")),
+                         wxPathOnly(m_fileName),
+                         name,
+                         wxString::Format("%s (*.mo)|*.mo", _("Compiled Translation Files")),
+                         wxFD_SAVE | wxFD_OVERWRITE_PROMPT));
 
-    wxBusyCursor bcur;
-    wxConfig::Get()->Write("last_file_path", wxPathOnly(name));
+    dlg->ShowWindowModalThenDo([=](int retcode){
+        if (retcode != wxID_OK)
+            return;
 
-    int validation_errors = 0;
-    Catalog::CompilationStatus compilation_status = Catalog::CompilationStatus::NotDone;
-    if (!m_catalog->CompileToMO(name, validation_errors, compilation_status))
-        return;
+        wxBusyCursor bcur;
+        auto fn = dlg->GetPath();
+        wxConfig::Get()->Write("last_file_path", wxPathOnly(fn));
+        int validation_errors = 0;
+        Catalog::CompilationStatus compilation_status = Catalog::CompilationStatus::NotDone;
+        if (!m_catalog->CompileToMO(fn, validation_errors, compilation_status))
+            return;
 
-    if (validation_errors)
-    {
-        // Note: this may show window-modal window and because we may
-        //       be called from such window too, run this in the next
-        //       event loop iteration.
-        CallAfter([=]{
-            ReportValidationErrors(validation_errors, compilation_status, /*from_save=*/true, /*other_file_saved=*/false, []{});
-        });
-    }
+        if (validation_errors)
+        {
+            // Note: this may show window-modal window and because we may
+            //       be called from such window too, run this in the next
+            //       event loop iteration.
+            CallAfter([=]{
+                ReportValidationErrors(validation_errors, compilation_status, /*from_save=*/true, /*other_file_saved=*/false, []{});
+            });
+        }
+    });
 }
 
 void PoeditFrame::OnExport(wxCommandEvent&)
@@ -1205,15 +1222,21 @@ void PoeditFrame::OnExport(wxCommandEvent&)
     else
         name += ".html";
 
-    name = wxFileSelector(OSX_OR_OTHER("", _("Export as...")),
-                          wxPathOnly(m_fileName), name, wxEmptyString,
-                          wxString::Format("%s (*.html)|*.html", _("HTML Files")),
-                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);
-    if (!name.empty())
-    {
-        wxConfig::Get()->Write("last_file_path", wxPathOnly(name));
-        ExportCatalog(name);
-    }
+    wxWindowPtr<wxFileDialog> dlg(
+        new wxFileDialog(this,
+                         OSX_OR_OTHER("", _("Export as...")),
+                         wxPathOnly(m_fileName),
+                         name,
+                         wxString::Format("%s (*.html)|*.html", _("HTML Files")),
+                         wxFD_SAVE | wxFD_OVERWRITE_PROMPT));
+
+    dlg->ShowWindowModalThenDo([=](int retcode){
+        if (retcode != wxID_OK)
+            return;
+        auto fn = dlg->GetPath();
+        wxConfig::Get()->Write("last_file_path", wxPathOnly(fn));
+        ExportCatalog(fn);
+    });
 }
 
 bool PoeditFrame::ExportCatalog(const wxString& filename)
