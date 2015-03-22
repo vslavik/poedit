@@ -1908,67 +1908,6 @@ CatalogItemPtr PoeditFrame::GetCurrentItem() const
 }
 
 
-static inline bool IsAnyQuote(wchar_t c)
-{
-    switch (c)
-    {
-        case 0x00BB: // »
-        case 0x00AB: // «
-        case 0x201C: // “
-        case 0x201D: // ”
-        case 0x201E: // „
-        case 0x201F: // ‟
-        case '"':
-            return true;
-        default:
-            return false;
-    }
-}
-
-static wxString TransformNewval(const wxString& val)
-{
-    wxString newval(val);
-
-#ifdef __WXOSX__
-    // Fix occurrences of smart quotes after \, e.g. \“ -- they shouldn't happen
-    // because we disabled smart quotes, but apparently some people either
-    // enable them back or something else interfered. So play it safe and filter
-    // them out:
-    for (wxString::iterator i = newval.begin(); i != newval.end(); ++i)
-    {
-        if (*i == '\\')
-        {
-            ++i;
-            if (i == newval.end())
-                break;
-            if (IsAnyQuote(*i))
-                *i = '"';
-        }
-    }
-#endif // __WXOSX__
-
-    newval.Replace("\n", "");
-
-    if (!newval.empty() && newval[0u] == _T('"'))
-        newval.Prepend("\\");
-    for (unsigned i = 1; i < newval.Len(); i++)
-        if (newval[i] == _T('"') && newval[i-1] != _T('\\'))
-        {
-            newval = newval.Mid(0, i) + _T("\\\"") + newval.Mid(i+1);
-            i++;
-        }
-
-    // string ending with [^\]\ is invalid:
-    if (newval.length() > 1 &&
-        newval[newval.length()-1] == _T('\\') &&
-        newval[newval.length()-2] != _T('\\'))
-    {
-        newval.RemoveLast();
-    }
-
-    return newval;
-}
-
 void PoeditFrame::UpdateFromTextCtrl()
 {
     if (!m_list || !m_list->HasSingleSelection())
@@ -1990,7 +1929,7 @@ void PoeditFrame::UpdateFromTextCtrl()
         wxArrayString str;
         for (unsigned i = 0; i < m_textTransPlural.size(); i++)
         {
-            wxString val = TransformNewval(m_textTransPlural[i]->GetValue());
+            auto val = m_textTransPlural[i]->GetPlainText();
             str.Add(val);
             if ( val.empty() )
                 allTranslated = false;
@@ -2004,8 +1943,7 @@ void PoeditFrame::UpdateFromTextCtrl()
     }
     else
     {
-        wxString newval =
-            TransformNewval(m_textTrans->GetValue());
+        auto newval = m_textTrans->GetPlainText();
 
         if ( newval.empty() )
             allTranslated = false;
@@ -2106,9 +2044,9 @@ void SetTranslationValue(TranslationTextCtrl *txt, const wxString& value, int fl
     EventHandlerDisabler disabler(txt->GetEventHandler());
 
     if (flags & PoeditFrame::UndoableEdit)
-        txt->SetValueUserWritten(value);
+        txt->SetPlainTextUserWritten(value);
     else
-        txt->SetValue(value);
+        txt->SetPlainText(value);
 }
 
 } // anonymous namespace
@@ -2120,26 +2058,11 @@ void PoeditFrame::UpdateToTextCtrl(int flags)
     if ( !entry )
         return;
 
-    wxString t_o, t_t, t_c, t_ac;
-    t_o = entry->GetString();
-    t_o.Replace("\\n", "\\n\n");
-    t_c = entry->GetComment();
-    t_c.Replace("\\n", "\\n\n");
-
-    for (unsigned i=0; i < entry->GetExtractedComments().GetCount(); i++)
-      t_ac += entry->GetExtractedComments()[i] + "\n";
-    t_ac.Replace("\\n", "\\n\n");
-
-    // remove "# " in front of every comment line
-    t_c = CommentDialog::RemoveStartHash(t_c);
-
-    m_textOrig->SetValue(t_o);
+    m_textOrig->SetPlainText(entry->GetString());
 
     if (entry->HasPlural())
     {
-        wxString t_op = entry->GetPluralString();
-        t_op.Replace("\\n", "\\n\n");
-        m_textOrigPlural->SetValue(t_op);
+        m_textOrigPlural->SetPlainText(entry->GetPluralString());
 
         unsigned formsCnt = (unsigned)m_textTransPlural.size();
         for (unsigned j = 0; j < formsCnt; j++)
@@ -2148,16 +2071,12 @@ void PoeditFrame::UpdateToTextCtrl(int flags)
         unsigned i = 0;
         for (i = 0; i < std::min(formsCnt, entry->GetNumberOfTranslations()); i++)
         {
-            t_t = entry->GetTranslation(i);
-            t_t.Replace("\\n", "\\n\n");
-            SetTranslationValue(m_textTransPlural[i], t_t, flags);
+            SetTranslationValue(m_textTransPlural[i], entry->GetTranslation(i), flags);
         }
     }
     else
     {
-        t_t = entry->GetTranslation();
-        t_t.Replace("\\n", "\\n\n");
-        SetTranslationValue(m_textTrans, t_t, flags);
+        SetTranslationValue(m_textTrans, entry->GetTranslation(), flags);
     }
 
     if ( entry->HasContext() )

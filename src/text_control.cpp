@@ -183,9 +183,6 @@ CustomizedTextCtrl::CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long 
 
     [text setTextContainerInset:NSMakeSize(1,3)];
     [text setRichText:NO];
-
-    [text setAutomaticQuoteSubstitutionEnabled:NO];
-    [text setAutomaticDashSubstitutionEnabled:NO];
 }
 
 void CustomizedTextCtrl::DoSetValue(const wxString& value, int flags)
@@ -481,6 +478,110 @@ void AnyTranslatableTextCtrl::SetLanguageRTL(bool isRTL)
 #endif
 }
 
+wxString AnyTranslatableTextCtrl::EscapePlainText(const wxString& s)
+{
+    // Note: the escapes used here should match with
+    //       SyntaxHighlighter::Highlight() ones
+    wxString s2;
+    s2.reserve(s.length());
+    for (auto i = s.begin(); i != s.end(); ++i)
+    {
+        wchar_t c = *i;
+        switch (c)
+        {
+            case '\n':
+                s2 += "\\n\n";
+                break;
+            case '\r':
+                s2 += "\\r";
+                break;
+            case '\t':
+                s2 += "\\t";
+                break;
+            case '\0':
+                s2 += "\\0";
+                break;
+            case '\\':
+            {
+                s2 += c;
+                auto peek = i + 1;
+                if ( peek != s.end() )
+                {
+                    switch ((wchar_t)*peek)
+                    {
+                        case 'n': case '\n':
+                        case 'r': case '\r':
+                        case 't': case '\t':
+                        case '0': case '\0':
+                        case '\\':
+                            s2 += c; // escape problematic backslash
+                            break;
+                    }
+                }
+                break;
+            }
+            default:
+                s2 += c;
+                break;
+        }
+    }
+    return s2;
+}
+
+wxString AnyTranslatableTextCtrl::UnescapePlainText(const wxString& s)
+{
+    wxString s2;
+    s2.reserve(s.length());
+    for (auto i = s.begin(); i != s.end(); ++i)
+    {
+        wchar_t c0 = *i;
+        if (c0 == '\\')
+        {
+            if ( ++i == s.end() )
+            {
+                s2 += '\\';
+                return s2;
+            }
+            wchar_t c = *i;
+            switch (c)
+            {
+                case 'r':
+                    s2 += '\r';
+                    break;
+                case 't':
+                    s2 += '\t';
+                    break;
+                case '0':
+                    s2 += '\0';
+                    break;
+                case 'n':
+                {
+                    s2 += '\n';
+                    auto peek = i + 1;
+                    if ( peek != s.end() && *peek == '\n' )
+                    {
+                        // "\\n\n" should be treated as single newline
+                        i = peek;
+                    }
+                    break;
+                }
+                case '\\':
+                    s2 += '\\';
+                    break;
+                default:
+                    s2 += '\\';
+                    s2 += c;
+                    break;
+            }
+        }
+        else
+        {
+            s2 += c0;
+        }
+    }
+    return s2;
+}
+
 #ifdef __WXMSW__
 void AnyTranslatableTextCtrl::DoSetValue(const wxString& value, int flags)
 {
@@ -588,10 +689,10 @@ void TranslationTextCtrl::DoSetValue(const wxString& value, int flags)
 }
 #endif
 
-void TranslationTextCtrl::SetValueUserWritten(const wxString& value)
+void TranslationTextCtrl::SetPlainTextUserWritten(const wxString& value)
 {
     UndoGroup undo(this);
     SelectAll();
-    WriteText(value);
+    WriteText(EscapePlainText(value));
     SetInsertionPointEnd();
 }
