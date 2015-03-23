@@ -27,6 +27,7 @@
 
 #include "catalog.h"
 #include "errors.h"
+#include "utility.h"
 
 #include <wx/stdpaths.h>
 #include <wx/utils.h>
@@ -179,6 +180,25 @@ bool ContainsResult(const SuggestionsList& all, const std::wstring& r)
     return found != all.end();
 }
 
+// Return translation (or source) text field.
+//
+// Older versions of Poedit used to store C-like escaped text (e.g. "\n" instead
+// of newline), but starting with 1.8, the "true" form of the text is stored.
+// To preserve compatibility with older data, a version field is stored with
+// TM documents and this function decides whether to decode escapes or not.
+//
+// TODO: remove this a few years down the road.
+std::wstring get_text_field(DocumentPtr doc, const std::wstring& field)
+{
+    auto version = doc->get(L"v");
+    auto value = doc->get(field);
+    if (version.empty()) // pre-1.8 data
+        return UnescapeCString(value);
+    else
+        return value;
+}
+
+
 template<typename T>
 void PerformSearchWithBlock(IndexSearcherPtr searcher,
                             QueryPtr srclang, QueryPtr lang,
@@ -203,7 +223,7 @@ void PerformSearchWithBlock(IndexSearcherPtr searcher,
             continue;
 
         auto doc = searcher->doc(scoreDoc->doc);
-        auto src = doc->get(L"source");
+        auto src = get_text_field(doc, L"source");
         if (src == exactSourceText)
         {
             score = 1.0;
@@ -242,7 +262,7 @@ void PerformSearch(IndexSearcherPtr searcher,
         scoreThreshold, scoreScaling,
         [&results](DocumentPtr doc, double score)
         {
-            auto t = doc->get(L"trans");
+            auto t = get_text_field(doc, L"trans");
             if (!ContainsResult(results, t))
             {
                 time_t ts = DateField::stringToTime(doc->get(L"created"));
@@ -328,8 +348,8 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& srclang,
             QUALITY_THRESHOLD, /*scoreScaling=*/0.8,
             [=,&results](DocumentPtr doc, double score)
             {
-                auto s = doc->get(sourceField);
-                auto t = doc->get(L"trans");
+                auto s = get_text_field(doc, sourceField);
+                auto t = get_text_field(doc, L"trans");
                 auto stream2 = m_analyzer->tokenStream(sourceField, newLucene<StringReader>(s));
                 int tokensCount2 = 0;
                 while (stream2->incrementToken())
@@ -421,6 +441,8 @@ public:
 
             doc->add(newLucene<Field>(L"uuid", itemUUID,
                                       Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
+            doc->add(newLucene<Field>(L"v", L"1",
+                                      Field::STORE_YES, Field::INDEX_NO));
             doc->add(newLucene<Field>(L"created", DateField::timeToString(time(NULL)),
                                       Field::STORE_YES, Field::INDEX_NO));
             doc->add(newLucene<Field>(L"srclang", srclang.WCode(),
