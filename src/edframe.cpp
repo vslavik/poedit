@@ -2765,8 +2765,10 @@ void PoeditFrame::OnAutoTranslateAll(wxCommandEvent&)
     sizer->Add(new HeadingLabel(dlg.get(), _("Fill missing translations from TM")), wxSizerFlags().Expand().PXDoubleBorder(wxBOTTOM));
 #endif
     sizer->Add(onlyExact, wxSizerFlags().PXBorder(wxTOP));
+    sizer->AddSpacer(PX(1));
     sizer->Add(onlyExactE, wxSizerFlags().Expand().Border(wxLEFT, ExplanationLabel::CHECKBOX_INDENT));
     sizer->Add(noFuzzy, wxSizerFlags().PXDoubleBorder(wxTOP));
+    sizer->AddSpacer(PX(1));
     sizer->Add(noFuzzyE, wxSizerFlags().Expand().Border(wxLEFT, ExplanationLabel::CHECKBOX_INDENT));
     topsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
 
