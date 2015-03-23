@@ -101,6 +101,17 @@ public:
 
     void SetLanguageRTL(bool isRTL);
 
+    // Set and get control's text as plain/raw text, with no escaping or formatting.
+    // This is the "true" representation, with e.g newlines included. The version
+    // displayed to the user includes syntax highlighting and escaping of some characters
+    // (e.g. tabs shown as \t, newlines as \n followed by newline).
+    void SetPlainText(const wxString& s) { SetValue(EscapePlainText(s)); }
+    wxString GetPlainText() const { return UnescapePlainText(GetValue()); }
+
+    // Apply escaping as described in SetPlainText:
+    static wxString EscapePlainText(const wxString& s);
+    static wxString UnescapePlainText(const wxString& s);
+
 protected:
 #ifdef __WXMSW__
     void DoSetValue(const wxString& value, int flags) override;
@@ -137,9 +148,10 @@ public:
     TranslationTextCtrl(wxWindow *parent, wxWindowID winid);
 
     /// Sets the value to something the user wrote
-    void SetValueUserWritten(const wxString& value);
+    void SetPlainTextUserWritten(const wxString& value);
 
 protected:
+    void OnKeyDown(wxKeyEvent& e);
 #ifdef __WXOSX__
     void DoSetValue(const wxString& value, int flags) override;
 #endif

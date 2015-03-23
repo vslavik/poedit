@@ -63,14 +63,13 @@ void SyntaxHighlighter::Highlight(const std::wstring& s, SyntaxHighlighter::Call
             int pos = int(i - s.begin());
             if (++i == s.end())
                 break;
-            // TODO: highlight full syntax, incl. octals: http://en.cppreference.com/w/cpp/language/escape
+            // Note: this must match AnyTranslatableTextCtrl::EscapePlainText()
             switch (*i)
             {
                 case '0':
                 case 'n':
                 case 'r':
                 case 't':
-                case '"':
                 case '\\':
                     highlight(pos, pos + 2, Escape);
                     break;

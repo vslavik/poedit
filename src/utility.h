@@ -59,6 +59,80 @@
 
 wxString EscapeMarkup(const wxString& str);
 
+// Encoding and decoding a string with C escape sequences:
+
+template<typename T>
+inline T EscapeCString(const T& str)
+{
+    T out;
+    out.reserve(str.length());
+    for (wchar_t c: str)
+    {
+        switch (c)
+        {
+            case '"' : out += L"\\\"";  break;
+            case '\a': out += L"\\a";   break;
+            case '\b': out += L"\\b";   break;
+            case '\f': out += L"\\f";   break;
+            case '\n': out += L"\\n";   break;
+            case '\r': out += L"\\r";   break;
+            case '\t': out += L"\\t";   break;
+            case '\v': out += L"\\v";   break;
+            case '\\': out += L"\\\\";  break;
+            default:
+                out += c;
+                break;
+        }
+    }
+    return out;
+}
+
+template<typename T>
+inline T UnescapeCString(const T& str)
+{
+    T out;
+    out.reserve(str.length());
+    for (auto i = str.begin(); i != str.end(); ++i)
+    {
+        wchar_t c = *i;
+        if (c == '\\')
+        {
+            if (++i != str.end())
+            {
+                switch ((wchar_t)*i)
+                {
+                    case 'a': out += '\a'; break;
+                    case 'b': out += '\b'; break;
+                    case 'f': out += '\f'; break;
+                    case 'n': out += '\n'; break;
+                    case 'r': out += '\r'; break;
+                    case 't': out += '\t'; break;
+                    case 'v': out += '\v'; break;
+                    case '\\':
+                    case '"':
+                    case '\'':
+                    case '?':
+                        out += *i;
+                        break;
+                    default:
+                        out += c;
+                        out += *i;
+                        break;
+                }
+            }
+            else
+            {
+                out += c;
+            }
+        }
+        else
+        {
+            out += c;
+        }
+    }
+    return out;
+}
+
 
 // ----------------------------------------------------------------------
 // TempDirectory

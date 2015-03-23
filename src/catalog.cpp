@@ -143,52 +143,6 @@ bool VerifyFileCharset(const wxTextFile& f, const wxString& filename,
 }
 
 
-// converts \n into newline character and \\ into \:
-wxString UnescapeCEscapes(const wxString& str)
-{
-    wxString out;
-    size_t len = str.size();
-    size_t i;
-
-    if ( len == 0 )
-        return str;
-
-    for (i = 0; i < len-1; i++)
-    {
-        if (str[i] == _T('\\'))
-        {
-            switch ((wxChar)str[i+1])
-            {
-                case _T('n'):
-                    out << _T('\n');
-                    i++;
-                    break;
-                case _T('\\'):
-                    out << _T('\\');
-                    i++;
-                    break;
-                case _T('"'):
-                    out << _T('"');
-                    i++;
-                    break;
-                default:
-                    out << _T('\\');
-            }
-        }
-        else
-        {
-            out << str[i];
-        }
-    }
-
-    // last character:
-    if (i < len)
-        out << str[i];
-
-    return out;
-}
-
-
 wxTextFileType GetFileCRLFFormat(wxTextFile& po_file)
 {
     wxLogNull null;
@@ -231,9 +185,7 @@ wxTextFileType GetDesiredCRLFFormat(wxTextFileType existingCRLF)
 
 void Catalog::HeaderData::FromString(const wxString& str)
 {
-    wxString hdr(str);
-    hdr = UnescapeCEscapes(hdr);
-    wxStringTokenizer tkn(hdr, "\n");
+    wxStringTokenizer tkn(str, "\n");
     wxString ln;
 
     m_entries.clear();
@@ -266,13 +218,9 @@ wxString Catalog::HeaderData::ToString(const wxString& line_delim)
     UpdateDict();
 
     wxString hdr;
-    for (std::vector<Entry>::const_iterator i = m_entries.begin();
-         i != m_entries.end(); i++)
+    for (auto& e: m_entries)
     {
-        wxString v(i->Value);
-        v.Replace("\\", "\\\\");
-        v.Replace(_T("\""), _T("\\\""));
-        hdr << i->Key << ": " << v << "\\n" << line_delim;
+        hdr << EscapeCString(e.Key) << ": " << EscapeCString(e.Value) << "\\n" << line_delim;
     }
     return hdr;
 }
@@ -654,14 +602,14 @@ bool CatalogParser::Parse()
         else if (ReadParam(line, _T("msgctxt \""), dummy))
         {
             has_context = true;
-            msgctxt = dummy.RemoveLast();
+            msgctxt = UnescapeCString(dummy.RemoveLast());
             while (!(line = ReadTextLine()).empty())
             {
                 if (line[0u] == _T('\t'))
                     line.Remove(0, 1);
                 if (line[0u] == _T('"') && line.Last() == _T('"'))
                 {
-                    msgctxt += line.Mid(1, line.Length() - 2);
+                    msgctxt += UnescapeCString(line.Mid(1, line.Length() - 2));
                     PossibleWrappedLine();
                 }
                 else
@@ -672,7 +620,7 @@ bool CatalogParser::Parse()
         // msgid:
         else if (ReadParam(line, _T("msgid \""), dummy))
         {
-            mstr = dummy.RemoveLast();
+            mstr = UnescapeCString(dummy.RemoveLast());
             mlinenum = unsigned(m_textFile->GetCurrentLine() + 1);
             while (!(line = ReadTextLine()).empty())
             {
@@ -680,7 +628,7 @@ bool CatalogParser::Parse()
                     line.Remove(0, 1);
                 if (line[0u] == _T('"') && line.Last() == _T('"'))
                 {
-                    mstr += line.Mid(1, line.Length() - 2);
+                    mstr += UnescapeCString(line.Mid(1, line.Length() - 2));
                     PossibleWrappedLine();
                 }
                 else
@@ -691,7 +639,7 @@ bool CatalogParser::Parse()
         // msgid_plural:
         else if (ReadParam(line, _T("msgid_plural \""), dummy))
         {
-            msgid_plural = dummy.RemoveLast();
+            msgid_plural = UnescapeCString(dummy.RemoveLast());
             has_plural = true;
             mlinenum = unsigned(m_textFile->GetCurrentLine() + 1);
             while (!(line = ReadTextLine()).empty())
@@ -700,7 +648,7 @@ bool CatalogParser::Parse()
                     line.Remove(0, 1);
                 if (line[0u] == _T('"') && line.Last() == _T('"'))
                 {
-                    msgid_plural += line.Mid(1, line.Length() - 2);
+                    msgid_plural += UnescapeCString(line.Mid(1, line.Length() - 2));
                     PossibleWrappedLine();
                 }
                 else
@@ -717,14 +665,14 @@ bool CatalogParser::Parse()
                 return false;
             }
 
-            wxString str = dummy.RemoveLast();
+            wxString str = UnescapeCString(dummy.RemoveLast());
             while (!(line = ReadTextLine()).empty())
             {
                 if (line[0u] == _T('\t'))
                     line.Remove(0, 1);
                 if (line[0u] == _T('"') && line.Last() == _T('"'))
                 {
-                    str += line.Mid(1, line.Length() - 2);
+                    str += UnescapeCString(line.Mid(1, line.Length() - 2));
                     PossibleWrappedLine();
                 }
                 else
@@ -774,14 +722,14 @@ bool CatalogParser::Parse()
 
             while (ReadParam(line, label + _T(" \""), dummy))
             {
-                wxString str = dummy.RemoveLast();
+                wxString str = UnescapeCString(dummy.RemoveLast());
 
                 while (!(line=ReadTextLine()).empty())
                 {
                     line.Trim(/*fromRight=*/false);
                     if (line[0u] == _T('"') && line.Last() == _T('"'))
                     {
-                        str += line.Mid(1, line.Length() - 2);
+                        str += UnescapeCString(line.Mid(1, line.Length() - 2));
                         PossibleWrappedLine();
                     }
                     else
@@ -1470,36 +1418,20 @@ void SaveMultiLines(wxTextFile &f, const wxString& text)
 wxString FormatStringForFile(const wxString& text)
 {
     wxString s;
-    unsigned n_cnt = 0;
-    int len = (int)text.length();
+    s.reserve(text.length() + 16);
 
-    s.Alloc(len + 16);
-    // Scan the string up to len-2 because we don't want to account for the
-    // very last \n on the line:
-    //       "some\n string \n"
-    //                      ^
-    //                      |
-    //                      \--- = len-2
-    int i;
-    for (i = 0; i < len-2; i++)
+    wxStringTokenizer tkn(text, wxS('\n'), wxTOKEN_RET_EMPTY_ALL);
+    while (tkn.HasMoreTokens())
     {
-        if (text[i] == _T('\\') && text[i+1] == _T('n'))
-        {
-            n_cnt++;
-            s << _T("\\n\"\n\"");
-            i++;
-        }
-        else
-            s << text[i];
+        if (!s.empty())
+            s += wxS("\"\n\"");
+        auto piece = tkn.GetNextToken();
+        if (tkn.GetLastDelimiter())
+            piece += tkn.GetLastDelimiter();
+        s += EscapeCString(piece);
     }
-    // ...and add not yet processed characters to the string...
-    for (; i < len; i++)
-        s << text[i];
 
-    if (n_cnt >= 1)
-        return _T("\"\n\"") + s;
-    else
-        return s;
+    return s;
 }
 
 } // anonymous namespace
