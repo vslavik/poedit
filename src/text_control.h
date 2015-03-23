@@ -151,6 +151,7 @@ public:
     void SetPlainTextUserWritten(const wxString& value);
 
 protected:
+    void OnKeyDown(wxKeyEvent& e);
 #ifdef __WXOSX__
     void DoSetValue(const wxString& value, int flags) override;
 #endif

@@ -677,6 +677,15 @@ TranslationTextCtrl::TranslationTextCtrl(wxWindow *parent, wxWindowID winid)
 #ifdef __WXOSX__
     [TextView(this) setAllowsUndo:YES];
 #endif
+
+    Bind(wxEVT_KEY_DOWN, &TranslationTextCtrl::OnKeyDown, this);
+}
+
+void TranslationTextCtrl::OnKeyDown(wxKeyEvent& e)
+{
+    if (e.GetUnicodeKey() == WXK_RETURN)
+        WriteText("\\n");
+    e.Skip();
 }
 
 #ifdef __WXOSX__
