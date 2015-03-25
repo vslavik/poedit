@@ -522,27 +522,27 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
             crowdin_prj, crowdin_file, crowdin_lang,
             catalog->SaveToBuffer(),
             [=]{
-            auto tmpdir = std::make_shared<TempDirectory>();
-            auto outfile = tmpdir->CreateFileName("crowdin.po");
+                auto tmpdir = std::make_shared<TempDirectory>();
+                auto outfile = tmpdir->CreateFileName("crowdin.po");
 
-            call_on_main_thread([=]{
-                dlg->Activity->Start(_(L"Downloading latest translations…"));
-            });
+                call_on_main_thread([=]{
+                    dlg->Activity->Start(_(L"Downloading latest translations…"));
+                });
 
-            CrowdinClient::Get().DownloadFile(
-                crowdin_prj, crowdin_file, crowdin_lang,
-                outfile.ToStdWstring(),
-                on_main_thread([=]{
-                CatalogPtr newcat = std::make_shared<Catalog>(outfile);
-                newcat->SetFileName(catalog->GetFileName());
+                CrowdinClient::Get().DownloadFile(
+                    crowdin_prj, crowdin_file, crowdin_lang,
+                    outfile.ToStdWstring(),
+                    on_main_thread([=]{
+                        CatalogPtr newcat = std::make_shared<Catalog>(outfile);
+                        newcat->SetFileName(catalog->GetFileName());
 
-                tmpdir->Clear();
-                dlg->EndModal(wxID_OK);
+                        tmpdir->Clear();
+                        dlg->EndModal(wxID_OK);
 
-                onDone(newcat);
-            }),
-                handle_error);
-        },
+                        onDone(newcat);
+                    }),
+                    handle_error);
+            },
             handle_error);
     });
 
