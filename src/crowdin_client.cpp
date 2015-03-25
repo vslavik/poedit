@@ -153,7 +153,7 @@ void CrowdinClient::Authenticate(std::function<void()> callback)
     m_authCallback = callback;
 
 #ifdef NEEDS_IN_APP_BROWSER
-    auto win = new wxDialog(nullptr, wxID_ANY, _("Sign in to Crowdin"), wxDefaultPosition, wxSize(PX(800), PX(600)), wxDIALOG_NO_PARENT | wxDEFAULT_DIALOG_STYLE);
+    auto win = new wxFrame(nullptr, wxID_ANY, _("Sign in to Crowdin"), wxDefaultPosition, wxSize(PX(800), PX(600)));
     auto web = wxWebView::New(win, wxID_ANY);
 
     // Protocol handler that simply calls a callback and doesn't return any data.
@@ -172,19 +172,17 @@ void CrowdinClient::Authenticate(std::function<void()> callback)
         std::function<void(std::string)> m_cb;
     };
 
-    std::string auth_uri;
-    web->RegisterHandler(wxSharedPtr<wxWebViewHandler>(new PoeditURIHandler([=,&auth_uri](std::string uri){
+    web->RegisterHandler(wxSharedPtr<wxWebViewHandler>(new PoeditURIHandler([=](std::string uri){
         if (!this->IsOAuthCallback(uri))
             return;
-        auth_uri = uri;
-        win->CallAfter([=]{ win->EndModal(wxID_OK); });
+        win->CallAfter([=]{
+            win->Close();
+            HandleOAuthCallback(uri);
+        });
     })));
 
     win->CallAfter([=]{ web->LoadURL(url); });
-    win->ShowModal();
-    win->Destroy();
-    if (!auth_uri.empty())
-        HandleOAuthCallback(auth_uri);
+    win->Show();
 #else
     wxLaunchDefaultBrowser(url);
 #endif
