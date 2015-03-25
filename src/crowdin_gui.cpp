@@ -272,7 +272,9 @@ public:
         pickers->Add(m_file, wxSizerFlags().Expand().Center());
 
         m_activity = new ActivityIndicator(this);
-        topsizer->Add(m_activity, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT|wxTOP));
+        topsizer->AddSpacer(PX(5));
+        topsizer->Add(m_activity, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
+        topsizer->AddSpacer(PX(5));
 
         auto buttons = CreateButtonSizer(wxOK | wxCANCEL);
         auto ok = static_cast<wxButton*>(FindWindow(wxID_OK));
