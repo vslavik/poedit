@@ -30,6 +30,8 @@
 #include <wx/hyperlink.h>
 #include <wx/xrc/xmlres.h>
 
+class WXDLLIMPEXP_ADV wxActivityIndicator;
+
 #include <exception>
 #include <functional>
 
@@ -146,8 +148,11 @@ public:
     /// Convenience function for showing error message in the indicator
     std::function<void(std::exception_ptr)> HandleError;
 
+    bool HasTransparentBackground() override { return true;  }
+
 private:
     bool m_running;
+    wxActivityIndicator *m_spinner;
     wxStaticText *m_label, *m_error;
 };
 
