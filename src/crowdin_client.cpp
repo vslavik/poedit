@@ -99,43 +99,6 @@ class CrowdinClient::crowdin_http_client : public http_client
 {
 public:
     crowdin_http_client() : http_client("https://api.crowdin.com") {}
-
-    template <typename T1, typename T2>
-    void get(const std::string& url, const T1& onResult, const T2& onError)
-    {
-        http_client::get(url, [onResult,onError](const http_response& r){
-            try
-            {
-                onResult(r.json());
-            }
-            catch (...)
-            {
-                onError(std::current_exception());
-            }
-        });
-    }
-
-    template <typename T1, typename T2>
-    void download(const std::string& url, const std::wstring& output_file, const T1& onSuccess, const T2& onError)
-    {
-        http_client::download(url, output_file, [onSuccess,onError](const http_response& r){
-            if (r.ok())
-                onSuccess();
-            else
-                onError(r.exception());
-        });
-    }
-
-    template <typename T1, typename T2>
-    void post(const std::string& url, const multipart_form_data& data, const T1& onSuccess, const T2& onError)
-    {
-        http_client::post(url, data, [onSuccess,onError](const http_response& r){
-            if (r.ok())
-                onSuccess();
-            else
-                onError(r.exception());
-        });
-    }
 };
 
 

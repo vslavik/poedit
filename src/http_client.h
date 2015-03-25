@@ -32,8 +32,7 @@
 #include <memory>
 #include <string>
 
-class http_response;
-
+class http_client;
 
 class json_dict
 {
@@ -84,6 +83,36 @@ public:
 private:
     std::string m_boundary;
     std::string m_body;
+};
+
+
+/// Response to a HTTP request
+class http_response
+{
+public:
+    http_response() : m_ok(true) {}
+    http_response(std::exception_ptr e) : m_ok(false), m_error(e) {}
+
+    /// Is the response acceptable?
+    bool ok() const { return m_ok; }
+
+    /// Returns json data from the response. May throw if there was error.
+    const json_dict& json() const
+    {
+        if (m_error)
+            std::rethrow_exception(m_error);
+        return m_data;
+    }
+
+    /// Returns the stored exception, if any
+    std::exception_ptr exception() const { return m_error; }
+
+private:
+    bool m_ok;
+    std::exception_ptr m_error;
+    json_dict m_data;
+
+    friend class http_client;
 };
 
 
@@ -140,6 +169,44 @@ public:
      */
     void post(const std::string& url, const multipart_form_data& data, response_func_t handler);
 
+    // Variants that have separate error and success handlers:
+    template <typename T1, typename T2>
+    void get(const std::string& url, const T1& onResult, const T2& onError)
+    {
+        get(url, [onResult,onError](const http_response& r){
+            try
+            {
+                onResult(r.json());
+            }
+            catch (...)
+            {
+                onError(std::current_exception());
+            }
+        });
+    }
+
+    template <typename T1, typename T2>
+    void download(const std::string& url, const std::wstring& output_file, const T1& onSuccess, const T2& onError)
+    {
+        download(url, output_file, [onSuccess,onError](const http_response& r){
+            if (r.ok())
+                onSuccess();
+            else
+                onError(r.exception());
+        });
+    }
+
+    template <typename T1, typename T2>
+    void post(const std::string& url, const multipart_form_data& data, const T1& onSuccess, const T2& onError)
+    {
+        post(url, data, [onSuccess,onError](const http_response& r){
+            if (r.ok())
+                onSuccess();
+            else
+                onError(r.exception());
+        });
+    }
+
     // Helper for encoding text as URL-encoded UTF-8
     static std::string url_encode(const std::string& s);
     static std::string url_encode(const std::wstring& s);
@@ -151,34 +218,5 @@ private:
     std::unique_ptr<impl> m_impl;
 };
 
-
-/// Response to a HTTP request
-class http_response
-{
-public:
-    http_response() : m_ok(true) {}
-    http_response(std::exception_ptr e) : m_ok(false), m_error(e) {}
-
-    /// Is the response acceptable?
-    bool ok() const { return m_ok; }
-
-    /// Returns json data from the response. May throw if there was error.
-    const json_dict& json() const
-    {
-        if (m_error)
-            std::rethrow_exception(m_error);
-        return m_data;
-    }
-
-    /// Returns the stored exception, if any
-    std::exception_ptr exception() const { return m_error; }
-
-private:
-    bool m_ok;
-    std::exception_ptr m_error;
-    json_dict m_data;
-
-    friend class http_client::impl;
-};
 
 #endif // Poedit_http_client_h
