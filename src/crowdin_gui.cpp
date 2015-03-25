@@ -324,8 +324,12 @@ private:
         m_project->Append("");
         for (auto& p: prjs)
             m_project->Append(p.name);
-        m_project->Enable();
-        m_activity->Stop();
+        m_project->Enable(!prjs.empty());
+
+        if (prjs.empty())
+            m_activity->StopWithError(_("No translation projects listed in your Crowdin account."));
+        else
+            m_activity->Stop();
 
         if (prjs.size() == 1)
         {
@@ -370,6 +374,13 @@ private:
             m_language->SetSelection(1);
         if (prj.po_files.size() == 1)
             m_file->SetSelection(1);
+
+        if (prj.po_files.empty())
+        {
+            m_activity->StopWithError(_("This project has no files that can be translated in Poedit."));
+            m_file->Disable();
+            m_language->Disable();
+        }
     }
 
     void OnUpdateOK(wxUpdateUIEvent& e)
