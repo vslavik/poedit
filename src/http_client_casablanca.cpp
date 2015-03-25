@@ -143,8 +143,8 @@ public:
         m_auth = std::wstring(auth.begin(), auth.end());
     }
 
-    void request(const std::string& url,
-                 std::function<void(const http_response&)> handler)
+    void get(const std::string& url,
+             std::function<void(const http_response&)> handler)
     {
         http::http_request req(http::methods::GET);
         req.headers().add(http::header_names::accept,     L"application/json");
@@ -307,10 +307,10 @@ void http_client::set_authorization(const std::string& auth)
     m_impl->set_authorization(auth);
 }
 
-void http_client::request(const std::string& url,
-                               std::function<void(const http_response&)> handler)
+void http_client::get(const std::string& url,
+                      std::function<void(const http_response&)> handler)
 {
-    m_impl->request(url, handler);
+    m_impl->get(url, handler);
 }
 
 void http_client::download(const std::string& url, const std::wstring& output_file, response_func_t handler)

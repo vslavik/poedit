@@ -150,7 +150,7 @@ public:
             [m_native clearAuthorizationHeader];
     }
 
-    void request(const std::string& url, response_func_t handler)
+    void get(const std::string& url, response_func_t handler)
     {
         [m_native getPath:str::to_NS(url)
                parameters:nil
@@ -245,9 +245,9 @@ void http_client::set_authorization(const std::string& auth)
     m_impl->set_authorization(auth);
 }
 
-void http_client::request(const std::string& url, response_func_t handler)
+void http_client::get(const std::string& url, response_func_t handler)
 {
-    m_impl->request(url, handler);
+    m_impl->get(url, handler);
 }
 
 void http_client::download(const std::string& url, const std::wstring& output_file, response_func_t handler)

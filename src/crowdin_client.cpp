@@ -101,9 +101,9 @@ public:
     crowdin_http_client() : http_client("https://api.crowdin.com") {}
 
     template <typename T1, typename T2>
-    void request(const std::string& url, const T1& onResult, const T2& onError)
+    void get(const std::string& url, const T1& onResult, const T2& onError)
     {
-        http_client::request(url, [onResult,onError](const http_response& r){
+        http_client::get(url, [onResult,onError](const http_response& r){
             try
             {
                 onResult(r.json());
@@ -214,7 +214,7 @@ bool CrowdinClient::IsOAuthCallback(const std::string& uri)
 
 void CrowdinClient::GetUserInfo(std::function<void(UserInfo)> callback)
 {
-    m_api->request("/api/account/profile?json=",
+    m_api->get("/api/account/profile?json=",
             // OK:
             [callback](const json_dict& r){
                 auto profile = r.subdict("profile");
@@ -232,7 +232,7 @@ void CrowdinClient::GetUserInfo(std::function<void(UserInfo)> callback)
 void CrowdinClient::GetUserProjects(std::function<void(std::vector<ProjectListing>)> onResult,
                                     error_func_t onError)
 {
-    m_api->request("/api/account/get-projects?json=&role=all",
+    m_api->get("/api/account/get-projects?json=&role=all",
             // OK:
             [onResult](const json_dict& r){
                 std::vector<ProjectListing> all;
@@ -253,7 +253,7 @@ void CrowdinClient::GetProjectInfo(const std::string& project_id,
                                    error_func_t onError)
 {
     auto url = "/api/project/" + project_id + "/info?json=&project-identifier=" + project_id;
-    m_api->request(url,
+    m_api->get(url,
             // OK:
             [onResult](const json_dict& r){
                 ProjectInfo prj;

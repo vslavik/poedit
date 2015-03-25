@@ -119,13 +119,13 @@ public:
 
     typedef std::function<void(const http_response&)> response_func_t;
 
-    /// Perform a request at the given URL and call function to handle the result
-    void request(const std::string& url, response_func_t handler);
+    /// Perform a GET request at the given URL and call function to handle the result
+    void get(const std::string& url, response_func_t handler);
 
-    /// Perform a request at the given URL and ignore the response.
-    void request(const std::string& url)
+    /// Perform a GET request at the given URL and ignore the response.
+    void get(const std::string& url)
     {
-        request(url, [](const http_response&){});
+        get(url, [](const http_response&){});
     }
 
     /**
