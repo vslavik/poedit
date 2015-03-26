@@ -161,17 +161,8 @@ public:
         m_native.request(req)
         .then([=](http::http_response response)
         {
-            try
-            {
-                http_response r;
-                r.m_ok = (response.status_code() == http::status_codes::OK);
-                r.m_data = make_json_dict(response.extract_json().get());
-                handler(r);
-            }
-            catch (...)
-            {
-                handler(std::current_exception());
-            }
+            handle_error(response);
+            handler(make_json_dict(response.extract_json().get()));
         })
         .then([=](pplx::task<void> t)
         {
@@ -200,8 +191,7 @@ public:
         })
         .then([=](http::http_response response)
         {
-            if (response.status_code() != http::status_codes::OK)
-                throw http::http_exception(response.status_code(), response.reason_phrase());
+            handle_error(response);
             return response.body().read_to_end(fileStream->streambuf());
         })
         .then([=](size_t)
@@ -213,7 +203,7 @@ public:
             try
             {
                 t.get();
-                handler(http_response());
+                handler(json_dict());
             }
             catch (...)
             {
@@ -238,16 +228,8 @@ public:
         m_native.request(req)
         .then([=](http::http_response response)
         {
-            try
-            {
-                http_response r;
-                r.m_ok = (response.status_code() == http::status_codes::OK);
-                handler(r);
-            }
-            catch (...)
-            {
-                handler(std::current_exception());
-            }
+            handle_error(response);
+            handler(json_dict());
         })
         .then([=](pplx::task<void> t)
         {
@@ -260,6 +242,14 @@ public:
     }
 
 private:
+    // handle non-OK responses:
+    void handle_error(http::http_response r)
+    {
+        if (r.status_code() == http::status_codes::OK)
+            return; // not an error
+        throw http::http_exception(r.status_code(), r.reason_phrase());
+    }
+
     // convert to wstring and make WinXP ready
     static std::wstring sanitize_url(const std::string& url, int flags)
     {

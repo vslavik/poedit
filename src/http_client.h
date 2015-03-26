@@ -90,7 +90,7 @@ private:
 class http_response
 {
 public:
-    http_response() : m_ok(true) {}
+    http_response(const json_dict& data) : m_ok(true), m_data(data) {}
     http_response(std::exception_ptr e) : m_ok(false), m_error(e) {}
 
     /// Is the response acceptable?

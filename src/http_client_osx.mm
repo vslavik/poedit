@@ -161,15 +161,12 @@ public:
                parameters:nil
                   success:^(AFHTTPRequestOperation *op, NSDictionary *responseObject)
         {
-            http_response r;
-            r.m_ok = [op hasAcceptableStatusCode] && [op hasAcceptableContentType];
-            r.m_data = make_json_dict(responseObject);
-            handler(r);
+            #pragma unused(op)
+            handler(make_json_dict(responseObject));
         }
-        failure:^(AFHTTPRequestOperation*, NSError *e)
+        failure:^(AFHTTPRequestOperation *op, NSError *e)
         {
-            NSString *desc = [e localizedDescription];
-            handler(std::make_exception_ptr(http_exception(str::to_utf8(desc))));
+            handler(make_exception(op, e));
         }];
     }
 
@@ -183,15 +180,12 @@ public:
 
         [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *op, id responseObject)
         {
-            #pragma unused(responseObject)
-            http_response r;
-            r.m_ok = [op hasAcceptableStatusCode] && [op hasAcceptableContentType];
-            handler(r);
+            #pragma unused(op,responseObject)
+            handler(json_dict());
         }
-        failure:^(AFHTTPRequestOperation*, NSError *e)
+        failure:^(AFHTTPRequestOperation *op, NSError *e)
         {
-            NSString *desc = [e localizedDescription];
-            handler(std::make_exception_ptr(http_exception(str::to_utf8(desc))));
+            handler(make_exception(op, e));
         }];
 
         [m_native enqueueHTTPRequestOperation:operation];
@@ -212,21 +206,22 @@ public:
 
         [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *op, id responseObject)
         {
-            #pragma unused(responseObject)
-            http_response r;
-            r.m_ok = [op hasAcceptableStatusCode] && [op hasAcceptableContentType];
-            handler(r);
+            #pragma unused(op,responseObject)
+            handler(json_dict());
         }
-        failure:^(AFHTTPRequestOperation*, NSError *e)
+        failure:^(AFHTTPRequestOperation *op, NSError *e)
         {
-            NSString *desc = [e localizedDescription];
-            handler(std::make_exception_ptr(http_exception(str::to_utf8(desc))));
+            handler(make_exception(op, e));
         }];
 
         [m_native enqueueHTTPRequestOperation:operation];
     }
 
 private:
+    std::exception_ptr make_exception(AFHTTPRequestOperation *op, NSError *e)
+    {
+        return std::make_exception_ptr(http_exception(str::to_utf8([e localizedDescription]));
+    }
     AFHTTPClient *m_native;
 };
 
