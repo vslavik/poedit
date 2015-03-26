@@ -60,6 +60,11 @@ struct json_dict::native
     }
 };
 
+static inline json_dict make_json_dict(NSDictionary *d)
+{
+    return std::make_shared<json_dict::native>(d);
+}
+
 bool json_dict::is_null(const char *name) const
 {
     return m_native->is_null(name);
@@ -68,7 +73,7 @@ bool json_dict::is_null(const char *name) const
 json_dict json_dict::subdict(const char *name) const
 {
     NSDictionary *d = m_native->get(name, [NSDictionary class]);
-    return std::make_shared<json_dict::native>(d);
+    return make_json_dict(d);
 }
 
 std::string json_dict::utf8_string(const char *name) const
@@ -109,7 +114,7 @@ void json_dict::iterate_array(const char *name, std::function<void(const json_di
     NSArray *array = m_native->get(name, [NSArray class]);
     for (NSDictionary *item in array)
     {
-        on_item(std::make_shared<json_dict::native>(item));
+        on_item(make_json_dict(item));
     }
 }
 
@@ -158,7 +163,7 @@ public:
         {
             http_response r;
             r.m_ok = [op hasAcceptableStatusCode] && [op hasAcceptableContentType];
-            r.m_data = std::make_shared<json_dict::native>(responseObject);
+            r.m_data = make_json_dict(responseObject);
             handler(r);
         }
         failure:^(AFHTTPRequestOperation*, NSError *e)

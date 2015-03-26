@@ -52,6 +52,11 @@ struct json_dict::native
     }
 };
 
+static inline json_dict make_json_dict(const web::json::value& x)
+{
+    return std::make_shared<json_dict::native>(x);
+}
+
 bool json_dict::is_null(const char *name) const
 {
     return m_native->get(name).is_null();
@@ -59,7 +64,7 @@ bool json_dict::is_null(const char *name) const
 
 json_dict json_dict::subdict(const char *name) const
 {
-    return std::make_shared<json_dict::native>(m_native->get(name));
+    return make_json_dict(m_native->get(name));
 }
 
 std::string json_dict::utf8_string(const char *name) const
@@ -100,7 +105,7 @@ void json_dict::iterate_array(const char *name, std::function<void(const json_di
     auto size = val.size();
     for (size_t i = 0; i < size; ++i)
     {
-        on_item(std::make_shared<json_dict::native>(val.at(i)));
+        on_item(make_json_dict(val.at(i)));
     }
 }
 
@@ -160,7 +165,7 @@ public:
             {
                 http_response r;
                 r.m_ok = (response.status_code() == http::status_codes::OK);
-                r.m_data = std::make_shared<json_dict::native>(response.extract_json().get());
+                r.m_data = make_json_dict(response.extract_json().get());
                 handler(r);
             }
             catch (...)
