@@ -34,6 +34,7 @@
 #include <boost/algorithm/string.hpp>
 
 #include <wx/config.h>
+#include <wx/translation.h>
 #include <wx/utils.h>
 
 #ifndef __WXOSX__
@@ -103,7 +104,13 @@ public:
 protected:
     std::string parse_json_error(const json_dict& response) const override
     {
-        return response.subdict("error").utf8_string("message");
+        auto msg = response.subdict("error").utf8_string("message");
+
+        // Translate commonly encountered messages:
+        if (msg == "Translations download is forbidden by project owner")
+            msg = _("Downloading translations is disabled in this project.").utf8_str();
+
+        return msg;
     }
 };
 
