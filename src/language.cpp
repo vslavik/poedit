@@ -179,11 +179,11 @@ const DisplayNamesData& GetDisplayNamesData()
             }
             
             s.foldCase();
-            data.names[str::to_wx(s)] = code;
+            data.names[str::to_wstring(s)] = code;
 
             loc->getDisplayName(locEng, s);
             s.foldCase();
-            data.namesEng[str::to_wx(s)] = code;
+            data.namesEng[str::to_wstring(s)] = code;
         }
 
         // sort the names alphabetically for data.sortedNames:
