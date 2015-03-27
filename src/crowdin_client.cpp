@@ -99,6 +99,12 @@ class CrowdinClient::crowdin_http_client : public http_client
 {
 public:
     crowdin_http_client() : http_client("https://api.crowdin.com") {}
+
+protected:
+    std::string parse_json_error(const json_dict& response) const override
+    {
+        return response.subdict("error").utf8_string("message");
+    }
 };
 
 

@@ -125,7 +125,7 @@ class http_client::impl
 public:
     typedef http_client::response_func_t response_funct_t;
 
-    impl(const std::string& url_prefix, int /*flags*/)
+    impl(http_client& owner, const std::string& url_prefix, int /*flags*/) : m_owner(owner)
     {
         NSString *str = str::to_NS(url_prefix);
         m_native = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:str]];
@@ -220,14 +220,33 @@ public:
 private:
     std::exception_ptr make_exception(AFHTTPRequestOperation *op, NSError *e)
     {
-        return std::make_exception_ptr(http_exception(str::to_utf8([e localizedDescription]));
+        std::string desc;
+        if (op.responseData && [op.response.MIMEType isEqualToString:@"application/json"])
+        {
+            NSDictionary *reply = [NSJSONSerialization JSONObjectWithData:op.responseData options:0 error:nil];
+            if (reply)
+            {
+                try
+                {
+                    desc = m_owner.parse_json_error(make_json_dict(reply));
+                }
+                catch (...) {} // report original error if parsing broken
+            }
+        }
+        if (desc.empty())
+        {
+            desc = str::to_utf8([e localizedDescription]);
+        }
+        return std::make_exception_ptr(http_exception(desc));
     }
+
+    http_client& m_owner;
     AFHTTPClient *m_native;
 };
 
 
 http_client::http_client(const std::string& url_prefix, int flags)
-    : m_impl(new impl(url_prefix, flags))
+    : m_impl(new impl(*this, url_prefix, flags))
 {
 }
 

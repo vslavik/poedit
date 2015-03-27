@@ -138,7 +138,7 @@ public:
         @param flags OR-combination of http_client::flags values.
      */
     http_client(const std::string& url_prefix, int flags = 0);
-    ~http_client();
+    virtual ~http_client();
 
     /// Return true if the server is reachable, i.e. client is online
     bool is_reachable() const;
@@ -210,6 +210,16 @@ public:
     // Helper for encoding text as URL-encoded UTF-8
     static std::string url_encode(const std::string& s);
     static std::string url_encode(const std::wstring& s);
+
+protected:
+    /**
+        Extract more detailed, client specific error response from the
+        JSON body of error response, if available.
+        
+        Does nothing by default, but can be overriden in derived class.
+     */
+    virtual std::string parse_json_error(const json_dict& /*response*/) const
+        { return std::string(); }
 
 private:
     class impl;

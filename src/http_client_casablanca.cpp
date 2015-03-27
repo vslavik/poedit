@@ -114,7 +114,8 @@ void json_dict::iterate_array(const char *name, std::function<void(const json_di
 class http_client::impl
 {
 public:
-    impl(const std::string& url_prefix, int flags) : m_native(sanitize_url(url_prefix, flags))
+    impl(http_client& owner, const std::string& url_prefix, int flags)
+        : m_owner(owner), m_native(sanitize_url(url_prefix, flags))
     {
         #define make_wide_str(x) make_wide_str_(x)
         #define make_wide_str_(x) L ## x
@@ -247,6 +248,18 @@ private:
     {
         if (r.status_code() == http::status_codes::OK)
             return; // not an error
+        if (r.headers().content_type() == L"application/json")
+        {
+            std::string error;
+            try
+            {
+                auto json = make_json_dict(r.extract_json().get());
+                error = m_owner.parse_json_error(json);
+            }
+            catch (...) {} // report original error if parsing broken
+            if (!error.empty())
+                throw http::http_exception(r.status_code(), error);
+        }
         throw http::http_exception(r.status_code(), r.reason_phrase());
     }
 
@@ -276,6 +289,7 @@ private:
     }
 
 private:
+    http_client& m_owner;
     http::client::http_client m_native;
     std::wstring m_userAgent;
     std::wstring m_auth;
@@ -284,7 +298,7 @@ private:
 
 
 http_client::http_client(const std::string& url_prefix, int flags)
-    : m_impl(new impl(url_prefix, flags))
+    : m_impl(new impl(*this, url_prefix, flags))
 {
 }
 
