@@ -27,9 +27,7 @@
 
 #include "str_helpers.h"
 
-#include <codecvt>
 #include <iomanip>
-#include <locale>
 #include <sstream>
 
 #include <boost/uuid/uuid.hpp>
@@ -99,6 +97,5 @@ std::string http_client::url_encode(const std::string& s)
 
 std::string http_client::url_encode(const std::wstring& s)
 {
-    std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> convert;
-    return url_encode(convert.to_bytes(s));
+    return url_encode(str::to_utf8(s));
 }

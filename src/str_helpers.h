@@ -26,9 +26,19 @@
 #ifndef Poedit_str_helpers_h
 #define Poedit_str_helpers_h
 
-#include <codecvt>
-#include <locale>
 #include <string>
+
+// as of gcc-4.9, no functional <codecvt> support yet
+#if defined(__clang__) || defined(_MSC_VER)
+    #define HAVE_CODECVT
+#endif
+
+#ifdef HAVE_CODECVT
+    #include <locale>
+    #include <codecvt>
+#else
+    #include <boost/locale/encoding_utf.hpp>
+#endif
 
 #include <wx/string.h>
 
@@ -48,6 +58,7 @@
 namespace str
 {
 
+#ifdef HAVE_CODECVT
 
 inline std::string to_utf8(const std::wstring& str)
 {
@@ -60,6 +71,20 @@ inline std::wstring to_wstring(const std::string& utf8str)
     std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> convert;
     return convert.from_bytes(utf8str.data());
 }
+
+#else
+
+inline std::string to_utf8(const std::wstring& str)
+{
+    return boost::locale::conv::utf_to_utf<char>(str);
+}
+
+inline std::wstring to_wstring(const std::string& utf8str)
+{
+    return boost::locale::conv::utf_to_utf<wchar_t>(utf8str);
+}
+
+#endif
 
 inline std::string to_utf8(const wxString& str)
 {
