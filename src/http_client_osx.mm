@@ -175,12 +175,16 @@ public:
     	NSURLRequest *request = [m_native requestWithMethod:@"GET"
                                                        path:str::to_NS(url)
                                                  parameters:nil];
+        // Read the entire file into memory, then save to file. This is done instead of
+        // setting operation.outputStream to stream directly to the file because it that
+        // case the failure handler wouldn't receive JSON data with the error.
+        //
+        // This doesn't matter much, because files downloaded by Poedit are very small.
         AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-        operation.outputStream = [NSOutputStream outputStreamToFileAtPath:str::to_NS(output_file) append:NO];
-
-        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *op, id responseObject)
+        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *op, NSData *data)
         {
-            #pragma unused(op,responseObject)
+            #pragma unused(op)
+            [data writeToFile:str::to_NS(output_file) atomically:YES];
             handler(json_dict());
         }
         failure:^(AFHTTPRequestOperation *op, NSError *e)
