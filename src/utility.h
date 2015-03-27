@@ -61,7 +61,7 @@ void call_on_main_thread(F&& func)
 #endif
 }
 
-#ifndef _MSC_VER
+#if defined(__clang__)
 
 template<typename... Args>
 auto on_main_thread_impl(std::function<void(Args...)> func) -> std::function<void(Args...)>
@@ -73,7 +73,7 @@ auto on_main_thread_impl(std::function<void(Args...)> func) -> std::function<voi
     };
 }
 
-#else
+#else // sigh... neither VS2013 nor GCC 4.8 can deal with the above
 
 // Visual Studio 2013 is broken and won't parse the above; 2015 fixes it.
 inline auto on_main_thread_impl(std::function<void()> func) -> std::function<void()>
