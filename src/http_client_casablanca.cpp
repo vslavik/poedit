@@ -26,6 +26,7 @@
 #include "http_client.h"
 
 #include "version.h"
+#include "str_helpers.h"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <cpprest/http_client.h>
@@ -248,19 +249,22 @@ private:
     {
         if (r.status_code() == http::status_codes::OK)
             return; // not an error
+
+        int status_code = r.status_code();
+        std::string msg;
         if (r.headers().content_type() == L"application/json")
         {
-            std::string error;
             try
             {
                 auto json = make_json_dict(r.extract_json().get());
-                error = m_owner.parse_json_error(json);
+                msg = m_owner.parse_json_error(json);
             }
             catch (...) {} // report original error if parsing broken
-            if (!error.empty())
-                throw http::http_exception(r.status_code(), error);
         }
-        throw http::http_exception(r.status_code(), r.reason_phrase());
+        if (msg.empty())
+            msg = str::to_utf8(r.reason_phrase());
+        m_owner.on_error_response(status_code, msg);
+        throw http::http_exception(status_code, msg);
     }
 
     // convert to wstring and make WinXP ready

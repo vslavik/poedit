@@ -166,7 +166,7 @@ public:
         }
         failure:^(AFHTTPRequestOperation *op, NSError *e)
         {
-            handler(make_exception(op, e));
+            handle_error(op, e, handler);
         }];
     }
 
@@ -189,7 +189,7 @@ public:
         }
         failure:^(AFHTTPRequestOperation *op, NSError *e)
         {
-            handler(make_exception(op, e));
+            handle_error(op, e, handler);
         }];
 
         [m_native enqueueHTTPRequestOperation:operation];
@@ -215,15 +215,16 @@ public:
         }
         failure:^(AFHTTPRequestOperation *op, NSError *e)
         {
-            handler(make_exception(op, e));
+            handle_error(op, e, handler);
         }];
 
         [m_native enqueueHTTPRequestOperation:operation];
     }
 
 private:
-    std::exception_ptr make_exception(AFHTTPRequestOperation *op, NSError *e)
+    void handle_error(AFHTTPRequestOperation *op, NSError *e, response_func_t error_handler)
     {
+        int status_code = (int)op.response.statusCode;
         std::string desc;
         if (op.responseData && [op.response.MIMEType isEqualToString:@"application/json"])
         {
@@ -241,7 +242,9 @@ private:
         {
             desc = str::to_utf8([e localizedDescription]);
         }
-        return std::make_exception_ptr(http_exception(desc));
+
+        m_owner.on_error_response(status_code, desc);
+        error_handler(std::make_exception_ptr(http_exception(desc)));
     }
 
     http_client& m_owner;

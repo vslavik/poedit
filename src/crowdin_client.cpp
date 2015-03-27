@@ -99,7 +99,9 @@ std::string CrowdinClient::WrapLink(const std::string& page)
 class CrowdinClient::crowdin_http_client : public http_client
 {
 public:
-    crowdin_http_client() : http_client("https://api.crowdin.com") {}
+    crowdin_http_client(CrowdinClient& owner)
+        : http_client("https://api.crowdin.com"), m_owner(owner)
+    {}
 
 protected:
     std::string parse_json_error(const json_dict& response) const override
@@ -112,10 +114,22 @@ protected:
 
         return msg;
     }
+
+    void on_error_response(int& statusCode, std::string& message) override
+    {
+        if (statusCode == 401/*Unauthorized*/)
+        {
+            // message is e.g. "The access token provided is invalid"
+            message = _("Not authorized, please sign in again.").utf8_str();
+            m_owner.SignOut();
+        }
+    }
+
+    CrowdinClient& m_owner;
 };
 
 
-CrowdinClient::CrowdinClient() : m_api(new crowdin_http_client())
+CrowdinClient::CrowdinClient() : m_api(new crowdin_http_client(*this))
 {
     SignInIfAuthorized();
 }

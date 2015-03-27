@@ -221,6 +221,14 @@ protected:
     virtual std::string parse_json_error(const json_dict& /*response*/) const
         { return std::string(); }
 
+    /**
+         Called when an error response is returned, before calling error handler.
+
+         Can be used to react to specific errors, e.g. invalidate expired OAuth tokens,
+         or to modify the response.
+     */
+    virtual void on_error_response(int& /*statusCode*/, std::string& /*message*/) {};
+
 private:
     class impl;
     friend class http_response;
