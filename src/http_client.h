@@ -26,6 +26,8 @@
 #ifndef Poedit_http_client_h
 #define Poedit_http_client_h
 
+#ifdef HAVE_HTTP_CLIENT
+
 #include <exception>
 #include <functional>
 #include <map>
@@ -236,5 +238,6 @@ private:
     std::unique_ptr<impl> m_impl;
 };
 
+#endif // HAVE_HTTP_CLIENT
 
 #endif // Poedit_http_client_h

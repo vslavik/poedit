@@ -314,7 +314,10 @@ int PoeditApp::OnExit()
     DeletePendingObjects();
 
     TranslationMemory::CleanUp();
+
+#ifdef HAVE_HTTP_CLIENT
     CrowdinClient::CleanUp();
+#endif
 
 #ifdef USE_SPARKLE
     Sparkle_Cleanup();
@@ -588,12 +591,14 @@ void PoeditApp::HandleCustomURI(const wxString& uri)
     if (!uri.StartsWith("poedit://"))
         return;
 
+#ifdef HAVE_HTTP_CLIENT
     // nothing to do yet
     if (CrowdinClient::Get().IsOAuthCallback(uri.ToStdString()))
     {
         CrowdinClient::Get().HandleOAuthCallback(uri.ToStdString());
         return;
     }
+#endif
 }
 
 
@@ -636,7 +641,9 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
    EVT_MENU           (wxID_NEW,                  PoeditApp::OnNew)
    EVT_MENU           (XRCID("menu_new_from_pot"),PoeditApp::OnNew)
    EVT_MENU           (wxID_OPEN,                 PoeditApp::OnOpen)
+ #ifdef HAVE_HTTP_CLIENT
    EVT_MENU           (XRCID("menu_open_crowdin"),PoeditApp::OnOpenFromCrowdin)
+ #endif
  #ifndef __WXOSX__
    EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    PoeditApp::OnOpenHist)
  #endif
@@ -712,6 +719,7 @@ void PoeditApp::OnOpen(wxCommandEvent&)
 }
 
 
+#ifdef HAVE_HTTP_CLIENT
 void PoeditApp::OnOpenFromCrowdin(wxCommandEvent& event)
 {
     TRY_FORWARD_TO_ACTIVE_WINDOW( OnOpenFromCrowdin(event) );
@@ -719,6 +727,7 @@ void PoeditApp::OnOpenFromCrowdin(wxCommandEvent& event)
     PoeditFrame *f = PoeditFrame::CreateEmpty();
     f->OnOpenFromCrowdin(event);
 }
+#endif
 
 
 #ifndef __WXOSX__

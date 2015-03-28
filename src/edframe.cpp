@@ -278,7 +278,9 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (wxID_NEW,                  PoeditFrame::OnNew)
    EVT_MENU           (XRCID("menu_new_from_pot"),PoeditFrame::OnNew)
    EVT_MENU           (wxID_OPEN,                 PoeditFrame::OnOpen)
+  #ifdef HAVE_HTTP_CLIENT
    EVT_MENU           (XRCID("menu_open_crowdin"),PoeditFrame::OnOpenFromCrowdin)
+  #endif
 #endif // __WXMSW__
 #ifndef __WXOSX__
    EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    PoeditFrame::OnOpenHist)
@@ -291,7 +293,9 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_catproperties"), PoeditFrame::OnProperties)
    EVT_MENU           (XRCID("menu_update_from_src"), PoeditFrame::OnUpdateFromSources)
    EVT_MENU           (XRCID("menu_update_from_pot"),PoeditFrame::OnUpdateFromPOT)
+  #ifdef HAVE_HTTP_CLIENT
    EVT_MENU           (XRCID("menu_update_from_crowdin"),PoeditFrame::OnUpdateFromCrowdin)
+  #endif
    EVT_MENU           (XRCID("toolbar_update"),PoeditFrame::OnUpdateSmart)
    EVT_MENU           (XRCID("menu_validate"),    PoeditFrame::OnValidate)
    EVT_MENU           (XRCID("menu_purge_deleted"), PoeditFrame::OnPurgeDeleted)
@@ -353,7 +357,9 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_UPDATE_UI(XRCID("menu_statistics"),    PoeditFrame::OnHasCatalogUpdate)
    EVT_UPDATE_UI(XRCID("menu_validate"),      PoeditFrame::OnIsEditableUpdate)
    EVT_UPDATE_UI(XRCID("menu_update_from_src"), PoeditFrame::OnUpdateFromSourcesUpdate)
+ #ifdef HAVE_HTTP_CLIENT
    EVT_UPDATE_UI(XRCID("menu_update_from_crowdin"), PoeditFrame::OnUpdateFromCrowdinUpdate)
+ #endif
    EVT_UPDATE_UI(XRCID("menu_update_from_pot"), PoeditFrame::OnUpdateFromPOTUpdate)
    EVT_UPDATE_UI(XRCID("toolbar_update"), PoeditFrame::OnUpdateSmartUpdate)
 
@@ -513,6 +519,14 @@ PoeditFrame::PoeditFrame() :
         AddBookmarksMenu(MenuBar->GetMenu(MenuBar->FindMenu(_("&Go"))));
 #ifdef __WXOSX__
         wxGetApp().TweakOSXMenuBar(MenuBar);
+#endif
+#ifndef HAVE_HTTP_CLIENT
+        wxMenu *menu;
+        wxMenuItem *item;
+        item = MenuBar->FindItem(XRCID("menu_update_from_crowdin"), &menu);
+        menu->Destroy(item);
+        item = MenuBar->FindItem(XRCID("menu_open_crowdin"), &menu);
+        menu->Destroy(item);
 #endif
     }
     else
@@ -1086,6 +1100,7 @@ void PoeditFrame::OnOpen(wxCommandEvent&)
 }
 
 
+#ifdef HAVE_HTTP_CLIENT
 void PoeditFrame::OnOpenFromCrowdin(wxCommandEvent&)
 {
     DoIfCanDiscardCurrentDoc([=]{
@@ -1094,6 +1109,7 @@ void PoeditFrame::OnOpenFromCrowdin(wxCommandEvent&)
         });
     });
 }
+#endif
 
 
 #ifndef __WXOSX__
@@ -1601,6 +1617,7 @@ void PoeditFrame::OnUpdateFromPOTUpdate(wxUpdateUIEvent& event)
     OnHasCatalogUpdate(event);
 }
 
+#ifdef HAVE_HTTP_CLIENT
 void PoeditFrame::OnUpdateFromCrowdin(wxCommandEvent&)
 {
     DoIfCanDiscardCurrentDoc([=]{
@@ -1617,29 +1634,31 @@ void PoeditFrame::OnUpdateFromCrowdinUpdate(wxUpdateUIEvent& event)
 {
     event.Enable(m_catalog && m_catalog->IsFromCrowdin());
 }
+#endif
 
 void PoeditFrame::OnUpdateSmart(wxCommandEvent& event)
 {
     if (!m_catalog)
         return;
+#ifdef HAVE_HTTP_CLIENT
     if (m_catalog->IsFromCrowdin())
         OnUpdateFromCrowdin(event);
     else
+#endif
         OnUpdateFromSources(event);
 }
 
 void PoeditFrame::OnUpdateSmartUpdate(wxUpdateUIEvent& event)
 {
+    event.Enable(false);
     if (m_catalog)
     {
-        if (m_catalog->IsFromCrowdin())
+#ifdef HAVE_HTTP_CLIENT
+       if (m_catalog->IsFromCrowdin())
             OnUpdateFromCrowdinUpdate(event);
         else
+#endif
             OnUpdateFromSourcesUpdate(event);
-    }
-    else
-    {
-        event.Enable(false);
     }
 }
 
@@ -2338,7 +2357,9 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
     UpdateTitle();
     UpdateTextLanguage();
 
+#ifdef HAVE_HTTP_CLIENT
     m_toolbar->EnableSyncWithCrowdin(m_catalog->IsFromCrowdin());
+#endif
 
     Language srclang = m_catalog->GetSourceLanguage();
     Language lang = m_catalog->GetLanguage();

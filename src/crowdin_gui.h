@@ -26,6 +26,8 @@
 #ifndef Poedit_crowdin_gui_h
 #define Poedit_crowdin_gui_h
 
+#ifdef HAVE_HTTP_CLIENT
+
 #include "catalog.h"
 #include "customcontrols.h"
 
@@ -97,5 +99,7 @@ void CrowdinOpenFile(wxWindow *parent, std::function<void(wxString)> onLoaded);
  */
 void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
                      std::function<void(std::shared_ptr<Catalog>)> onDone);
+
+#endif // HAVE_HTTP_CLIENT
 
 #endif // Poedit_crowdin_gui_h

@@ -760,6 +760,7 @@ public:
 
 
 
+#ifdef HAVE_HTTP_CLIENT
 class AccountsPageWindow : public PrefsPanel
 {
 public:
@@ -788,7 +789,7 @@ public:
     wxBitmap GetLargeIcon() const override { return wxArtProvider::GetBitmap("Prefs-Accounts"); }
     wxWindow *CreateWindow(wxWindow *parent) override { return new AccountsPageWindow(parent); }
 };
-
+#endif // HAVE_HTTP_CLIENT
 
 
 #ifdef HAS_UPDATES_CHECK
@@ -956,7 +957,9 @@ std::unique_ptr<PoeditPreferencesEditor> PoeditPreferencesEditor::Create()
     p->AddPage(new GeneralPage);
     p->AddPage(new TMPage);
     p->AddPage(new ExtractorsPage);
+#ifdef HAVE_HTTP_CLIENT
     p->AddPage(new AccountsPage);
+#endif
 #ifdef HAS_UPDATES_CHECK
     p->AddPage(new UpdatesPage);
 #endif

@@ -26,6 +26,8 @@
 #ifndef Poedit_crowdin_client_h
 #define Poedit_crowdin_client_h
 
+#ifdef HAVE_HTTP_CLIENT
+
 #include <functional>
 #include <memory>
 
@@ -129,5 +131,7 @@ private:
 
     static CrowdinClient *ms_instance;
 };
+
+#endif // HAVE_HTTP_CLIENT
 
 #endif // Poedit_crowdin_client_h
