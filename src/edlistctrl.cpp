@@ -311,7 +311,7 @@ void PoeditListCtrl::CatalogChanged(const CatalogPtr& catalog)
     wxWindowUpdateLocker no_updates(this);
 
     const bool isSameCatalog = (catalog == m_catalog);
-    const bool sizeChanged = (catalog && catalog->GetCount() != GetItemCount());
+    const bool sizeChanged = (catalog && (int)catalog->GetCount() != GetItemCount());
 
     SelectionPreserver preserve(isSameCatalog ? this : nullptr);
 
