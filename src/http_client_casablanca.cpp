@@ -29,6 +29,8 @@
 #include "str_helpers.h"
 
 #include <boost/algorithm/string/predicate.hpp>
+
+#include <cpprest/asyncrt_utils.h>
 #include <cpprest/http_client.h>
 #include <cpprest/http_msg.h>
 #include <cpprest/filestream.h>
@@ -38,8 +40,19 @@
     #include <wininet.h>
 #endif
 
-
 using namespace web;
+
+namespace
+{
+
+using utility::string_t;
+using utility::conversions::to_string_t;
+
+#ifndef _UTF16_STRINGS
+inline string_t to_string_t(const std::wstring& s) { return str::to_utf8(s); }
+#endif
+
+} // anonymous namespace
 
 struct json_dict::native
 {
@@ -49,7 +62,7 @@ struct json_dict::native
 
     const web::json::value& get(const std::string& key)
     {
-        return val.at(std::wstring(key.begin(), key.end()));
+        return val.at(to_string_t(key));
     }
 };
 
@@ -70,12 +83,12 @@ json_dict json_dict::subdict(const char *name) const
 
 std::string json_dict::utf8_string(const char *name) const
 {
-    return utility::conversions::to_utf8string(m_native->get(name).as_string());
+    return str::to_utf8(m_native->get(name).as_string());
 }
 
 std::wstring json_dict::wstring(const char *name) const
 {
-    return m_native->get(name).as_string();
+    return str::to_wstring(m_native->get(name).as_string());
 }
 
 int json_dict::number(const char *name) const
@@ -158,7 +171,7 @@ public:
         req.headers().add(http::header_names::user_agent, m_userAgent);
         if (!m_auth.empty())
             req.headers().add(http::header_names::authorization, m_auth);
-        req.set_request_uri(std::wstring(url.begin(), url.end()));
+        req.set_request_uri(to_string_t(url));
 
         m_native.request(req)
         .then([=](http::http_response response)
@@ -181,14 +194,14 @@ public:
         using namespace concurrency::streams;
         auto fileStream = std::make_shared<ostream>();
 
-        fstream::open_ostream(output_file).then([=](ostream outFile)
+        fstream::open_ostream(to_string_t(output_file)).then([=](ostream outFile)
         {
             *fileStream = outFile;
             http::http_request req(http::methods::GET);
             req.headers().add(http::header_names::user_agent, m_userAgent);
             if (!m_auth.empty())
                 req.headers().add(http::header_names::authorization, m_auth);
-            req.set_request_uri(std::wstring(url.begin(), url.end()));
+            req.set_request_uri(to_string_t(url));
             return m_native.request(req);
         })
         .then([=](http::http_response response)
@@ -221,7 +234,7 @@ public:
         req.headers().add(http::header_names::user_agent, m_userAgent);
         if (!m_auth.empty())
             req.headers().add(http::header_names::authorization, m_auth);
-        req.set_request_uri(std::wstring(url.begin(), url.end()));
+        req.set_request_uri(to_string_t(url));
 
         auto body = data.body();
         req.set_body(body, data.content_type());
@@ -268,7 +281,7 @@ private:
     }
 
     // convert to wstring and make WinXP ready
-    static std::wstring sanitize_url(const std::string& url, int flags)
+    static string_t sanitize_url(const std::string& url, int flags)
     {
         (void)flags;
     #ifdef _WIN32
@@ -285,11 +298,11 @@ private:
             if (info.dwMajorVersion < 6) // XP
             {
                 if (boost::starts_with(url, "https://"))
-                    return L"http://" + std::wstring(url.begin() + 8, url.end());
+                    return U("http://") + string_t(url.begin() + 8, url.end());
             }
         }
     #endif
-        return std::wstring(url.begin(), url.end());
+        return to_string_t(url);
     }
 
 private:
