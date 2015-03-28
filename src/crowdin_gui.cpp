@@ -32,6 +32,7 @@
 #include "customcontrols.h"
 #include "errors.h"
 #include "hidpi.h"
+#include "str_helpers.h"
 #include "utility.h"
 
 #include <wx/app.h>
@@ -532,7 +533,7 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
     // This must be done right after entering the modal loop (on non-OSX)
     dlg->CallAfter([=]{
         CrowdinClient::Get().UploadFile(
-            crowdin_prj, crowdin_file, crowdin_lang,
+            str::to_utf8(crowdin_prj), str::to_wstring(crowdin_file), crowdin_lang,
             catalog->SaveToBuffer(),
             [=]{
                 auto tmpdir = std::make_shared<TempDirectory>();
@@ -543,7 +544,7 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
                 });
 
                 CrowdinClient::Get().DownloadFile(
-                    crowdin_prj, crowdin_file, crowdin_lang,
+                    str::to_utf8(crowdin_prj), str::to_wstring(crowdin_file), crowdin_lang,
                     outfile.ToStdWstring(),
                     on_main_thread([=]{
                         CatalogPtr newcat = std::make_shared<Catalog>(outfile);
