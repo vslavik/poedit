@@ -51,7 +51,8 @@ dist_uiicons_DATA = \
 		window-close.png \
 		SuggestionError.png \
 		SuggestionTM.png \
-		PoeditWelcome.png
+		PoeditWelcome.png \
+		CrowdinLogo.png
 
 
 MIMETYPES = \

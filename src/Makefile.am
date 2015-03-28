@@ -11,6 +11,18 @@ poedit_dump_legacy_tm_SOURCES = tm/dump_legacy_tm.cpp
 poedit_dump_legacy_tm_LDADD = $(DB_LIBS)
 endif
 
+WX_BACKPORT_SRC = wx_backports/wx_gtk_activityindicator.cpp \
+                  wx_backports/activityindicator.h \
+                  wx_backports/gtk_activityindicator.h
+
+if HAVE_CPPREST
+CROWDIN_SUPPORT_SRC = \
+                 http_client.h http_client.cpp http_client_casablanca.cpp \
+                 crowdin_client.h crowdin_client.cpp \
+                 crowdin_gui.h crowdin_gui.cpp
+CROWDIN_SUPPORT_LIBS = $(CPPREST_LIBS)
+endif
+
 poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  errorbar.cpp errorbar.h \
                  catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
@@ -39,10 +51,12 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  text_control.h text_control.cpp \
                  customcontrols.cpp customcontrols.h \
                  hidpi.cpp hidpi.h \
-                 main_toolbar.h wx/main_toolbar.cpp
+                 main_toolbar.h wx/main_toolbar.cpp \
+                 $(CROWDIN_SUPPORT_SRC) \
+                 $(WX_BACKPORT_SRC)
 nodist_poedit_SOURCES = compiled_xrc.cpp
 
-poedit_LDADD = $(WX_LIBS) $(LUCENE_LIBS) $(EXPAT_LIBS) $(CLD2_LIBS) \
+poedit_LDADD = $(WX_LIBS) $(LUCENE_LIBS) $(EXPAT_LIBS) $(CLD2_LIBS) $(CROWDIN_SUPPORT_LIBS) \
                -lboost_regex -lboost_system
 
 XRC_RESOURCES = \

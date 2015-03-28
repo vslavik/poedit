@@ -20,7 +20,7 @@
 // wxActivityIndicator: small animated indicator of some application activity.
 // ----------------------------------------------------------------------------
 
-class WXDLLIMPEXP_ADV wxActivityIndicatorBase : public wxControl
+class wxActivityIndicatorBase : public wxControl
 {
 public:
     // Start or stop the activity animation (it is stopped initially).
@@ -40,7 +40,7 @@ protected:
 };
 
 #ifndef __WXUNIVERSAL__
-#if defined(__WXGTK220__)
+#if defined(__WXGTK20__)
     #define wxHAS_NATIVE_ACTIVITYINDICATOR
     #include "gtk_activityindicator.h"
 #elif defined(__WXOSX_COCOA__)

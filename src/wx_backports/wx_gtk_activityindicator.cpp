@@ -22,9 +22,9 @@
     #pragma hdrstop
 #endif
 
-#if wxUSE_ACTIVITYINDICATOR && defined(__WXGTK220__)
+#if !wxCHECK_VERSION(3,1,0)
 
-#include "wx/activityindicator.h"
+#include "activityindicator.h"
 
 #include "wx/math.h"
 
@@ -33,12 +33,7 @@
 // Macro return the specified expression only if GTK+ run time version is less
 // than 2.20 and compiling it only if it is less than 3.0 (which is why this
 // has to be a macro and not a function).
-#if defined(__WXGTK220__) && !defined(__WXGTK3__)
-    #define RETURN_IF_NO_GTK_SPINNER(expr) \
-        if ( gtk_check_version(2, 20, 0) != 0 ) { return expr; }
-#else
-    #define RETURN_IF_NO_GTK_SPINNER(expr)
-#endif
+#define RETURN_IF_NO_GTK_SPINNER(expr)
 
 // ============================================================================
 // implementation
@@ -137,7 +132,7 @@ wxSize wxActivityIndicator::DoGetBestClientSize() const
     {
         case wxWINDOW_VARIANT_MAX:
             wxFAIL_MSG(wxS("Invalid window variant"));
-            wxFALLTHROUGH;
+            // wxFALLTHROUGH;
 
         case wxWINDOW_VARIANT_NORMAL:
             factor = 2.;
@@ -165,4 +160,4 @@ wxSize wxActivityIndicator::DoGetBestClientSize() const
     return wxSize(wxRound(w*factor), wxRound(h*factor));
 }
 
-#endif // wxUSE_ACTIVITYINDICATOR
+#endif // !wxCHECK_VERSION(3,1,0)

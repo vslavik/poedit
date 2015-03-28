@@ -49,15 +49,62 @@ AC_PROG_CXXCPP
 AC_LANG([C++])
 AX_CXX_COMPILE_STDCXX_11([], [mandatory])
 
+WXLIBS_USED="xrc,stc,html,xml,adv,core"
 
 case "$USE_DEBUG" in
 yes)	DEBUG_FLAGS="-g -Wall -O0"
     ;;    
 esac
 
-WX_CONFIG_CHECK([3.0.0],
-                [WXFOUND=1], [WXFOUND=0],
-                [xrc,stc,html,xml,adv,core], [--unicode])
+
+dnl Check for C++REST SDK used for online features
+AC_ARG_WITH([cpprest],
+    AS_HELP_STRING([--without-cpprest], [Ignore presence of C++ REST SDK and disable it]))
+
+AS_IF([test "x$with_cpprest" != "xno"],
+      [
+          have_cpprest=no
+	  dnl C++11 check above modified CXXFLAGS, but AC_CHECK_HEADERS needs
+	  dnl it for this header too and it uses only the preprocessor in one
+          dnl of its two phases:
+	  old_CPPFLAGS="$CPPFLAGS"
+	  CPPFLAGS="$CPPFLAGS $CXXFLAGS"
+          AC_CHECK_HEADERS([cpprest/http_client.h],
+              [
+                  AC_MSG_CHECKING([for libcpprest])
+                  old_LIBS="$LIBS"
+                  LIBS="-lcpprest $LIBS"
+                  AC_LINK_IFELSE([AC_LANG_PROGRAM(
+                      [
+                          #include <cpprest/http_client.h>
+                      ],
+                      [
+                          web::http::client::http_client c(U("http://poedit.net"));
+                      ])],
+                      [have_cpprest=yes])
+                  LIBS="$old_LIBS"
+                  AC_MSG_RESULT([$have_cpprest])
+              ])
+	  CPPFLAGS="$old_CPPFLAGS"
+      ],
+      [have_cpprest=no])
+
+AS_IF([test "x$have_cpprest" = "xyes"],
+      [
+          AC_DEFINE([HAVE_HTTP_CLIENT])
+          CPPREST_LIBS="-lcpprest"
+          WXLIBS_USED="webview,$WXLIBS_USED"
+          AC_SUBST(CPPREST_LIBS)
+      ],
+      [
+          AS_IF([test "x$with_cpprest" = "xyes"],
+                [AC_MSG_ERROR([C++ REST SDK requested but not found])])
+      ])
+AM_CONDITIONAL([HAVE_CPPREST], [test "x$have_cpprest" != "xno"])
+
+
+
+WX_CONFIG_CHECK([3.0.0], [WXFOUND=1], [WXFOUND=0], [$WXLIBS_USED], [--unicode])
 
 if test "$WXFOUND" != 1; then
     AC_MSG_ERROR([
@@ -131,7 +178,7 @@ AC_TRY_COMPILE([#include <wx/defs.h>],
             ],
             [
                 AC_MSG_RESULT([yes])
-                gtkspell_packages="gtkspell-2.0 gtk+-2.0"
+                gtkspell_packages="gtkspell-2.0 gtk+-2.0 >= 2.20"
             ],
             [
                 AC_MSG_RESULT([no])
@@ -265,4 +312,5 @@ Enabled features:
     * debug build:                    $USE_DEBUG
     * legacy (pre-1.6) TM migration:  $enable_legacytm
     * language detection:             $have_cld2
+    * crowdin integration:            $have_cpprest
 "

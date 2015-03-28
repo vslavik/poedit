@@ -14,19 +14,13 @@
 // the normal base class. With GTK+ 2 however, we may determine during run-time
 // that we need to fall back to the generic implementation because the GTK+
 // version is earlier than 2.20, so we need to inherit from the generic class.
-#ifdef __WXGTK3__
-    #define wxActivityIndicatorGtkBase wxActivityIndicatorBase
-#else
-    #include "wx/generic/activityindicator.h"
-
-    #define wxActivityIndicatorGtkBase wxActivityIndicatorGeneric
-#endif
+#define wxActivityIndicatorGtkBase wxActivityIndicatorBase
 
 // ----------------------------------------------------------------------------
 // wxActivityIndicator: implementation using GtkSpinner.
 // ----------------------------------------------------------------------------
 
-class WXDLLIMPEXP_ADV wxActivityIndicator : public wxActivityIndicatorGtkBase
+class wxActivityIndicator : public wxActivityIndicatorGtkBase
 {
 public:
     wxActivityIndicator()
@@ -51,12 +45,12 @@ public:
                 long style = 0,
                 const wxString& name = wxActivityIndicatorNameStr);
 
-    virtual void Start() wxOVERRIDE;
-    virtual void Stop() wxOVERRIDE;
-    virtual bool IsRunning() const wxOVERRIDE;
+    virtual void Start();
+    virtual void Stop();
+    virtual bool IsRunning() const;
 
 protected:
-    virtual wxSize DoGetBestClientSize() const wxOVERRIDE;
+    virtual wxSize DoGetBestClientSize() const;
 
 private:
     wxDECLARE_DYNAMIC_CLASS(wxActivityIndicator);
