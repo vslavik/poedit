@@ -172,7 +172,8 @@ public:
 
     void download(const std::string& url, const std::wstring& output_file, response_func_t handler)
     {
-    	NSURLRequest *request = [m_native requestWithMethod:@"GET"
+        NSString *outfile = str::to_NS(output_file);
+        NSURLRequest *request = [m_native requestWithMethod:@"GET"
                                                        path:str::to_NS(url)
                                                  parameters:nil];
         // Read the entire file into memory, then save to file. This is done instead of
@@ -184,7 +185,7 @@ public:
         [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *op, NSData *data)
         {
             #pragma unused(op)
-            [data writeToFile:str::to_NS(output_file) atomically:YES];
+            [data writeToFile:outfile atomically:YES];
             handler(json_dict());
         }
         failure:^(AFHTTPRequestOperation *op, NSError *e)
