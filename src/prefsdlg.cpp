@@ -535,7 +535,7 @@ class TMPage : public wxPreferencesPage
 public:
     wxString GetName() const override
     {
-#ifdef __WXOSX__
+#if defined(__WXOSX__) || defined(__WXGTK__)
         // TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on OS X.
         // Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
         // length there.
