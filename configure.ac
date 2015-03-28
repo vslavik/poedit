@@ -71,14 +71,18 @@ AS_IF([test "x$with_cpprest" != "xno"],
 	  CPPFLAGS="$CPPFLAGS $CXXFLAGS"
           AC_CHECK_HEADERS([cpprest/http_client.h],
               [
-                  AC_MSG_CHECKING([for libcpprest])
+                  AC_MSG_CHECKING([for libcpprest >= 2.5])
                   old_LIBS="$LIBS"
                   LIBS="-lcpprest $LIBS"
                   AC_LINK_IFELSE([AC_LANG_PROGRAM(
                       [
+                          #include <cpprest/version.h>
                           #include <cpprest/http_client.h>
                       ],
                       [
+                          #if CPPREST_VERSION < 200500
+                            #error "cpprest >= 2.5 required"
+                          #endif
                           web::http::client::http_client c(U("http://poedit.net"));
                       ])],
                       [have_cpprest=yes])
