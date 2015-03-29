@@ -99,6 +99,10 @@ AS_IF([test "x$have_cpprest" = "xyes"],
           CPPREST_LIBS="-lcpprest"
           WXLIBS_USED="webview,$WXLIBS_USED"
           AC_SUBST(CPPREST_LIBS)
+          PKG_CHECK_MODULES([LIBSECRET], [libsecret-1], [
+              CXXFLAGS="$CXXFLAGS $LIBSECRET_CFLAGS"
+              AC_SUBST(LIBSECRET_LIBS)
+          ])
       ],
       [
           AS_IF([test "x$with_cpprest" = "xyes"],
