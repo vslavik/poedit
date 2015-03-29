@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2013 GitHub Inc.
+ * Copyright (c) 2015 Vaclav Slavik
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -27,17 +28,14 @@
 
 #include <string>
 
-namespace keytar {
+namespace keytar
+{
 
-bool AddPassword(const std::string& service,
-                 const std::string& account,
-                 const std::string& password);
+bool AddPassword(const std::string& account, const std::string& password);
 
-bool GetPassword(const std::string& service,
-                 const std::string& account,
-                 std::string* password);
+bool GetPassword(const std::string& account, std::string* password);
 
-bool DeletePassword(const std::string& service, const std::string& account);
+bool DeletePassword(const std::string& account);
 
 }  // namespace keytar
 

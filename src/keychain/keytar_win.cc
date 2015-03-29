@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2013 GitHub Inc.
+ * Copyright (c) 2015 Vaclav Slavik
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -27,12 +28,14 @@
 #include <windows.h>
 #include <wincred.h>
 
-namespace keytar {
+#define SERVICE_NAME "Poedit/"
 
-bool AddPassword(const std::string& service,
-                 const std::string& account,
-                 const std::string& password) {
-  std::string target_name = service + '/' + account;
+namespace keytar
+{
+
+bool AddPassword(const std::string& account, const std::string& password)
+{
+  std::string target_name = SERVICE_PREFIX + account;
 
   CREDENTIAL cred = { 0 };
   cred.Type = CRED_TYPE_GENERIC;
@@ -44,10 +47,9 @@ bool AddPassword(const std::string& service,
   return ::CredWrite(&cred, 0) == TRUE;
 }
 
-bool GetPassword(const std::string& service,
-                 const std::string& account,
-                 std::string* password) {
-  std::string target_name = service + '/' + account;
+bool GetPassword(const std::string& account, std::string* password)
+{
+  std::string target_name = SERVICE_PREFIX + account;
 
   CREDENTIAL* cred;
   if (::CredRead(target_name.c_str(), CRED_TYPE_GENERIC, 0, &cred) == FALSE)
@@ -59,8 +61,9 @@ bool GetPassword(const std::string& service,
   return true;
 }
 
-bool DeletePassword(const std::string& service, const std::string& account) {
-  std::string target_name = service + '/' + account;
+bool DeletePassword(const std::string& account)
+{
+  std::string target_name = SERVICE_PREFIX + account;
 
   return ::CredDelete(target_name.c_str(), CRED_TYPE_GENERIC, 0) == TRUE;
 }

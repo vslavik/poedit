@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2013 GitHub Inc.
+ * Copyright (c) 2015 Vaclav Slavik
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -28,32 +29,32 @@
 #include <stdio.h>
 #include <unistd.h>
 
-namespace keytar {
+namespace keytar
+{
 
-namespace {
+namespace
+{
 
 const SecretSchema kSchema = {
-  "net.poedit.Credentials", SECRET_SCHEMA_NONE, {
-    { "service", SECRET_SCHEMA_ATTRIBUTE_STRING },
+  "net.poedit.Credentials", SECRET_SCHEMA_NONE,
+  {
     { "account", SECRET_SCHEMA_ATTRIBUTE_STRING },
-    { NULL }
+    { NULL, 0 }
   }
 };
 
 }  // namespace
 
-bool AddPassword(const std::string& service,
-                 const std::string& account,
-                 const std::string& password) {
+bool AddPassword(const std::string& account, const std::string& password)
+{
   GError *error = NULL;
   gboolean result = secret_password_store_sync(
       &kSchema,
       SECRET_COLLECTION_DEFAULT,
-      (service + "/" + account).c_str(),  // label
+      account.c_str(),  // label
       password.c_str(),
       NULL,  // not cancellable
       &error,
-      "service", service.c_str(),
       "account", account.c_str(),
       NULL);
   if (error != NULL) {
@@ -63,16 +64,14 @@ bool AddPassword(const std::string& service,
   return result;
 }
 
-bool GetPassword(const std::string& service,
-                 const std::string& account,
-                 std::string* password) {
+bool GetPassword(const std::string& account, std::string* password)
+{
   GError *error = NULL;
   gchar* raw_passwords;
   raw_passwords = secret_password_lookup_sync(
       &kSchema,
       NULL,  // not cancellable
       &error,
-      "service", service.c_str(),
       "account", account.c_str(),
       NULL);
 
@@ -89,13 +88,13 @@ bool GetPassword(const std::string& service,
   return true;
 }
 
-bool DeletePassword(const std::string& service, const std::string& account) {
+bool DeletePassword(const std::string& account)
+{
   GError *error = NULL;
   gboolean result = secret_password_clear_sync(
       &kSchema,
       NULL,  // not cancellable
       &error,
-      "service", service.c_str(),
       "account", account.c_str(),
       NULL);
   if (error != NULL) {

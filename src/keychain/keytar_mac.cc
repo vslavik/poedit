@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2013 GitHub Inc.
+ * Copyright (c) 2015 Vaclav Slavik
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -26,31 +27,37 @@
 
 #include <Security/Security.h>
 
-namespace keytar {
+namespace
+{
 
-bool AddPassword(const std::string& service,
-                 const std::string& account,
-                 const std::string& password) {
+const std::string SERVICE_NAME("net.poedit.Poedit");
+
+}
+
+namespace keytar
+{
+
+bool AddPassword(const std::string& account, const std::string& password)
+{
   OSStatus status = SecKeychainAddGenericPassword(NULL,
-                                                  service.length(),
-                                                  service.data(),
-                                                  account.length(),
+                                                  (UInt32)SERVICE_NAME.length(),
+                                                  SERVICE_NAME.data(),
+                                                  (UInt32)account.length(),
                                                   account.data(),
-                                                  password.length(),
+                                                  (UInt32)password.length(),
                                                   password.data(),
                                                   NULL);
   return status == errSecSuccess;
 }
 
-bool GetPassword(const std::string& service,
-                 const std::string& account,
-                 std::string* password) {
+bool GetPassword(const std::string& account, std::string* password)
+{
   void *data;
   UInt32 length;
   OSStatus status = SecKeychainFindGenericPassword(NULL,
-                                                  service.length(),
-                                                  service.data(),
-                                                  account.length(),
+                                                  (UInt32)SERVICE_NAME.length(),
+                                                  SERVICE_NAME.data(),
+                                                  (UInt32)account.length(),
                                                   account.data(),
                                                   &length,
                                                   &data,
@@ -63,12 +70,13 @@ bool GetPassword(const std::string& service,
   return true;
 }
 
-bool DeletePassword(const std::string& service, const std::string& account) {
+bool DeletePassword(const std::string& account)
+{
   SecKeychainItemRef item;
   OSStatus status = SecKeychainFindGenericPassword(NULL,
-                                                   service.length(),
-                                                   service.data(),
-                                                   account.length(),
+                                                   (UInt32)SERVICE_NAME.length(),
+                                                   SERVICE_NAME.data(),
+                                                   (UInt32)account.length(),
                                                    account.data(),
                                                    NULL,
                                                    NULL,
