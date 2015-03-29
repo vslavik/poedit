@@ -35,11 +35,15 @@ namespace keytar
 namespace
 {
 
+#ifdef __GNUC__
+   #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
+#endif
+
 const SecretSchema kSchema = {
   "net.poedit.Credentials", SECRET_SCHEMA_NONE,
   {
     { "account", SECRET_SCHEMA_ATTRIBUTE_STRING },
-    { NULL, 0 }
+    { NULL, SecretSchemaAttributeType(0) },
   }
 };
 
