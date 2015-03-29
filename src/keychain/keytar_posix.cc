@@ -105,27 +105,4 @@ bool DeletePassword(const std::string& service, const std::string& account) {
   return result;
 }
 
-bool FindPassword(const std::string& service, std::string* password) {
-  GError *error = NULL;
-  gchar* raw_passwords;
-  raw_passwords = secret_password_lookup_sync(
-      &kSchema,
-      NULL,  // not cancellable
-      &error,
-      "service", service.c_str(),
-      NULL);
-
-  if (error != NULL) {
-    fprintf(stderr, "%s\n", error->message);
-    g_error_free(error);
-    return false;
-  } else if (raw_passwords == NULL) {
-    return false;
-  } else {
-    *password = raw_passwords;
-  }
-  secret_password_free(raw_passwords);
-  return true;
-}
-
 }  // namespace keytar

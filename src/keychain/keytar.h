@@ -39,8 +39,6 @@ bool GetPassword(const std::string& service,
 
 bool DeletePassword(const std::string& service, const std::string& account);
 
-bool FindPassword(const std::string& service, std::string* password);
-
 }  // namespace keytar
 
 #endif  // SRC_KEYTAR_H_
