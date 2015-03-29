@@ -33,7 +33,7 @@ namespace keytar {
 namespace {
 
 const SecretSchema kSchema = {
-  "io.github.atom.node-keytar", SECRET_SCHEMA_NONE, {
+  "net.poedit.Credentials", SECRET_SCHEMA_NONE, {
     { "service", SECRET_SCHEMA_ATTRIBUTE_STRING },
     { "account", SECRET_SCHEMA_ATTRIBUTE_STRING },
     { NULL }
