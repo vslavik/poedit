@@ -31,9 +31,11 @@
 #include <wx/config.h>
 #include <wx/display.h>
 
-#ifdef __WXOSX__
-#include "osx_helpers.h"
+#if defined(__WXOSX__) && defined(__clang__)
+    #include <dispatch/dispatch.h>
 #endif
+
+#include "str_helpers.h"
 
 wxString EscapeMarkup(const wxString& str)
 {
@@ -43,6 +45,17 @@ wxString EscapeMarkup(const wxString& str)
     s.Replace(">", "&gt;");
     return s;
 }
+
+// ----------------------------------------------------------------------
+// Multithreading helpers
+// ----------------------------------------------------------------------
+
+#if defined(__WXOSX__) && defined(__clang__)
+void call_on_main_thread_impl(std::function<void()> func)
+{
+    dispatch_async(dispatch_get_main_queue(), [=]{ func(); });
+}
+#endif
 
 // ----------------------------------------------------------------------
 // TempDirectory
@@ -96,6 +109,14 @@ TempDirectory::~TempDirectory()
     if ( m_dir.empty() )
         return;
 
+    Clear();
+
+    wxLogTrace("poedit.tmp", "removing temp dir %s", m_dir.c_str());
+    wxFileName::Rmdir(m_dir);
+}
+
+void TempDirectory::Clear()
+{
     if ( ms_keepFiles )
     {
         wxLogTrace("poedit.tmp", "keeping temp files in %s", m_dir.c_str());
@@ -110,11 +131,7 @@ TempDirectory::~TempDirectory()
             wxRemoveFile(*i);
         }
     }
-
-    wxLogTrace("poedit.tmp", "removing temp dir %s", m_dir.c_str());
-    wxFileName::Rmdir(m_dir);
 }
-
 
 wxString TempDirectory::CreateFileName(const wxString& suffix)
 {
@@ -132,13 +149,13 @@ wxString TempDirectory::CreateFileName(const wxString& suffix)
 // TempOutputFile
 // ----------------------------------------------------------------------
 
-TempOutputFileFor::TempOutputFileFor(const wxString& filename)
+TempOutputFileFor::TempOutputFileFor(const wxString& filename) : m_filenameFinal(filename)
 {
     wxString path, name, ext;
     wxFileName::SplitPath(filename, &path, &name, &ext);
 
 #ifdef __WXOSX__
-    NSURL *fileUrl = [NSURL fileURLWithPath:wxStringToNS(filename)];
+    NSURL *fileUrl = [NSURL fileURLWithPath:str::to_NS(filename)];
     NSURL *tempdirUrl =
         [[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory
                                                inDomain:NSUserDomainMask
@@ -149,8 +166,8 @@ TempOutputFileFor::TempOutputFileFor(const wxString& filename)
     {
         NSURL *newFileUrl = [tempdirUrl URLByAppendingPathComponent:[fileUrl lastPathComponent]];
         NSString *newFilePath = [newFileUrl path];
-        m_filenameTmp = wxStringFromNS(newFilePath);
-        m_tempDir = wxStringFromNS([tempdirUrl path]);
+        m_filenameTmp = str::to_wx(newFilePath);
+        m_tempDir = str::to_wx([tempdirUrl path]);
     }
     // else: fall through to the generic code
 #endif // __WXOSX__
@@ -164,12 +181,19 @@ TempOutputFileFor::TempOutputFileFor(const wxString& filename)
         wxRemoveFile(m_filenameTmp);
 }
 
+bool TempOutputFileFor::Commit()
+{
+    return wxRenameFile(m_filenameTmp, m_filenameFinal, /*overwrite=*/true);
+}
 
 TempOutputFileFor::~TempOutputFileFor()
 {
 #ifdef __WXOSX__
     if (!m_tempDir.empty())
         wxFileName::Rmdir(m_tempDir, wxPATH_RMDIR_RECURSIVE);
+#else
+    if (wxFileExists(m_filenameTmp))
+        wxRemoveFile(m_filenameTmp);
 #endif
 }
 

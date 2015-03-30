@@ -70,11 +70,13 @@
 #include "hidpi.h"
 #include "icons.h"
 #include "version.h"
+#include "str_helpers.h"
 #include "tm/transmem.h"
 #include "utility.h"
 #include "prefsdlg.h"
 #include "errors.h"
 #include "language.h"
+#include "crowdin_client.h"
 
 #ifdef __WXOSX__
 struct PoeditApp::RecentMenuData
@@ -313,6 +315,10 @@ int PoeditApp::OnExit()
 
     TranslationMemory::CleanUp();
 
+#ifdef HAVE_HTTP_CLIENT
+    CrowdinClient::CleanUp();
+#endif
+
 #ifdef USE_SPARKLE
     Sparkle_Cleanup();
 #endif // USE_SPARKLE
@@ -543,6 +549,7 @@ void PoeditApp::SetDefaultCfg(wxConfigBase *cfg)
 namespace
 {
 const char *CL_KEEP_TEMP_FILES = "keep-temp-files";
+const char *CL_HANDLE_POEDIT_URI = "handle-poedit-uri";
 }
 
 void PoeditApp::OnInitCmdLine(wxCmdLineParser& parser)
@@ -551,8 +558,9 @@ void PoeditApp::OnInitCmdLine(wxCmdLineParser& parser)
 
     parser.AddSwitch("", CL_KEEP_TEMP_FILES,
                      _("don't delete temporary files (for debugging)"));
-
-    parser.AddParam("catalog.po", wxCMD_LINE_VAL_STRING, 
+    parser.AddLongOption(CL_HANDLE_POEDIT_URI,
+                     _("handle a poedit:// URI"), wxCMD_LINE_VAL_STRING);
+    parser.AddParam("catalog.po", wxCMD_LINE_VAL_STRING,
                     wxCMD_LINE_PARAM_OPTIONAL | wxCMD_LINE_PARAM_MULTIPLE);
 }
 
@@ -564,10 +572,33 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
     if ( parser.Found(CL_KEEP_TEMP_FILES) )
         TempDirectory::KeepFiles();
 
+    wxString poeditURI;
+    if (parser.Found(CL_HANDLE_POEDIT_URI, &poeditURI))
+    {
+        // handling the URI shows UI, so do it after OnInit() initialization:
+        CallAfter([=]{ HandleCustomURI(poeditURI); });
+    }
+
     for (size_t i = 0; i < parser.GetParamCount(); i++)
         gs_filesToOpen.Add(parser.GetParam(i));
 
     return true;
+}
+
+
+void PoeditApp::HandleCustomURI(const wxString& uri)
+{
+    if (!uri.StartsWith("poedit://"))
+        return;
+
+#ifdef HAVE_HTTP_CLIENT
+    // nothing to do yet
+    if (CrowdinClient::Get().IsOAuthCallback(uri.ToStdString()))
+    {
+        CrowdinClient::Get().HandleOAuthCallback(uri.ToStdString());
+        return;
+    }
+#endif
 }
 
 
@@ -588,7 +619,7 @@ bool PoeditApp::OnExceptionInMainLoop()
 #ifdef __WXOSX__
     catch ( NSException *e )
     {
-        wxLogError(_("Unhandled exception occurred: %s"), wxStringFromNS([e reason]));
+        wxLogError(_("Unhandled exception occurred: %s"), str::to_wx([e reason]));
     }
 #endif
     catch ( ... )
@@ -610,6 +641,9 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
    EVT_MENU           (wxID_NEW,                  PoeditApp::OnNew)
    EVT_MENU           (XRCID("menu_new_from_pot"),PoeditApp::OnNew)
    EVT_MENU           (wxID_OPEN,                 PoeditApp::OnOpen)
+ #ifdef HAVE_HTTP_CLIENT
+   EVT_MENU           (XRCID("menu_open_crowdin"),PoeditApp::OnOpenFromCrowdin)
+ #endif
  #ifndef __WXOSX__
    EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    PoeditApp::OnOpenHist)
  #endif
@@ -683,6 +717,17 @@ void PoeditApp::OnOpen(wxCommandEvent&)
         OpenFiles(paths);
     }
 }
+
+
+#ifdef HAVE_HTTP_CLIENT
+void PoeditApp::OnOpenFromCrowdin(wxCommandEvent& event)
+{
+    TRY_FORWARD_TO_ACTIVE_WINDOW( OnOpenFromCrowdin(event) );
+
+    PoeditFrame *f = PoeditFrame::CreateEmpty();
+    f->OnOpenFromCrowdin(event);
+}
+#endif
 
 
 #ifndef __WXOSX__
@@ -802,7 +847,7 @@ void PoeditApp::OpenPoeditWeb(const wxString& path)
 
 static NSMenuItem *AddNativeItem(NSMenu *menu, int pos, const wxString&text, SEL ac, NSString *key)
 {
-    NSString *str = wxStringToNS(text);
+    NSString *str = str::to_NS(text);
     if (pos == -1)
         return [menu addItemWithTitle:str action:ac keyEquivalent:key];
     else
@@ -954,7 +999,7 @@ void PoeditApp::InstallOpenRecentMenu(wxMenuBar *bar)
         return;
 
     NSMenu *native = fileMenu->GetHMenu();
-    NSMenuItem *nativeItem = [native itemWithTitle:wxStringToNS(item->GetItemLabelText())];
+    NSMenuItem *nativeItem = [native itemWithTitle:str::to_NS(item->GetItemLabelText())];
     if (!nativeItem)
         return;
 

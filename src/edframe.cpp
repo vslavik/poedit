@@ -58,6 +58,7 @@
 #include <boost/range/counting_range.hpp>
 
 #include "catalog.h"
+#include "crowdin_gui.h"
 #include "customcontrols.h"
 #include "edapp.h"
 #include "hidpi.h"
@@ -80,6 +81,7 @@
 #include "errors.h"
 #include "sidebar.h"
 #include "spellchecking.h"
+#include "str_helpers.h"
 #include "syntaxhighlighter.h"
 #include "text_control.h"
 
@@ -266,6 +268,9 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (wxID_NEW,                  PoeditFrame::OnNew)
    EVT_MENU           (XRCID("menu_new_from_pot"),PoeditFrame::OnNew)
    EVT_MENU           (wxID_OPEN,                 PoeditFrame::OnOpen)
+  #ifdef HAVE_HTTP_CLIENT
+   EVT_MENU           (XRCID("menu_open_crowdin"),PoeditFrame::OnOpenFromCrowdin)
+  #endif
 #endif // __WXMSW__
 #ifndef __WXOSX__
    EVT_MENU_RANGE     (wxID_FILE1, wxID_FILE9,    PoeditFrame::OnOpenHist)
@@ -276,8 +281,12 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_compile_mo"),  PoeditFrame::OnCompileMO)
    EVT_MENU           (XRCID("menu_export"),      PoeditFrame::OnExport)
    EVT_MENU           (XRCID("menu_catproperties"), PoeditFrame::OnProperties)
-   EVT_MENU           (XRCID("menu_update"),      PoeditFrame::OnUpdate)
-   EVT_MENU           (XRCID("menu_update_from_pot"),PoeditFrame::OnUpdate)
+   EVT_MENU           (XRCID("menu_update_from_src"), PoeditFrame::OnUpdateFromSources)
+   EVT_MENU           (XRCID("menu_update_from_pot"),PoeditFrame::OnUpdateFromPOT)
+  #ifdef HAVE_HTTP_CLIENT
+   EVT_MENU           (XRCID("menu_update_from_crowdin"),PoeditFrame::OnUpdateFromCrowdin)
+  #endif
+   EVT_MENU           (XRCID("toolbar_update"),PoeditFrame::OnUpdateSmart)
    EVT_MENU           (XRCID("menu_validate"),    PoeditFrame::OnValidate)
    EVT_MENU           (XRCID("menu_purge_deleted"), PoeditFrame::OnPurgeDeleted)
    EVT_MENU           (XRCID("menu_fuzzy"),       PoeditFrame::OnFuzzyFlag)
@@ -338,8 +347,12 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_UPDATE_UI(wxID_SAVEAS,                 PoeditFrame::OnHasCatalogUpdate)
    EVT_UPDATE_UI(XRCID("menu_statistics"),    PoeditFrame::OnHasCatalogUpdate)
    EVT_UPDATE_UI(XRCID("menu_validate"),      PoeditFrame::OnIsEditableUpdate)
-   EVT_UPDATE_UI(XRCID("menu_update"),        PoeditFrame::OnUpdateFromSourcesUpdate)
-   EVT_UPDATE_UI(XRCID("menu_update_from_pot"), PoeditFrame::OnHasCatalogUpdate)
+   EVT_UPDATE_UI(XRCID("menu_update_from_src"), PoeditFrame::OnUpdateFromSourcesUpdate)
+ #ifdef HAVE_HTTP_CLIENT
+   EVT_UPDATE_UI(XRCID("menu_update_from_crowdin"), PoeditFrame::OnUpdateFromCrowdinUpdate)
+ #endif
+   EVT_UPDATE_UI(XRCID("menu_update_from_pot"), PoeditFrame::OnUpdateFromPOTUpdate)
+   EVT_UPDATE_UI(XRCID("toolbar_update"), PoeditFrame::OnUpdateSmartUpdate)
 
 #if defined(__WXMSW__) || defined(__WXGTK__)
    EVT_MENU(wxID_UNDO,      PoeditFrame::OnTextEditingCommand)
@@ -497,6 +510,14 @@ PoeditFrame::PoeditFrame() :
         AddBookmarksMenu(MenuBar->GetMenu(MenuBar->FindMenu(_("&Go"))));
 #ifdef __WXOSX__
         wxGetApp().TweakOSXMenuBar(MenuBar);
+#endif
+#ifndef HAVE_HTTP_CLIENT
+        wxMenu *menu;
+        wxMenuItem *item;
+        item = MenuBar->FindItem(XRCID("menu_update_from_crowdin"), &menu);
+        menu->Destroy(item);
+        item = MenuBar->FindItem(XRCID("menu_open_crowdin"), &menu);
+        menu->Destroy(item);
 #endif
     }
     else
@@ -1077,6 +1098,17 @@ void PoeditFrame::OnOpen(wxCommandEvent&)
 }
 
 
+#ifdef HAVE_HTTP_CLIENT
+void PoeditFrame::OnOpenFromCrowdin(wxCommandEvent&)
+{
+    DoIfCanDiscardCurrentDoc([=]{
+        CrowdinOpenFile(this, [=](wxString name){
+            DoOpenFile(name);
+        });
+    });
+}
+#endif
+
 
 #ifndef __WXOSX__
 void PoeditFrame::OnOpenHist(wxCommandEvent& event)
@@ -1538,18 +1570,45 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
     return succ;
 }
 
-void PoeditFrame::OnUpdate(wxCommandEvent& event)
+void PoeditFrame::OnUpdateFromSources(wxCommandEvent&)
 {
     DoIfCanDiscardCurrentDoc([=]{
+        try
+        {
+            if (UpdateCatalog())
+            {
+                if (wxConfig::Get()->ReadBool("use_tm", true) &&
+                    wxConfig::Get()->ReadBool("use_tm_when_updating", false))
+                {
+                    AutoTranslateCatalog(nullptr, AutoTranslate_OnlyGoodQuality);
+                }
+            }
+        }
+        catch (...)
+        {
+            wxLogError("%s", DescribeCurrentException());
+        }
 
-        wxString pot_file;
+        RefreshControls();
+    });
+}
 
-        if (event.GetId() == XRCID("menu_update_from_pot"))
+void PoeditFrame::OnUpdateFromSourcesUpdate(wxUpdateUIEvent& event)
+{
+    event.Enable(m_catalog &&
+                 !m_catalog->IsFromCrowdin() &&
+                 !m_catalog->Header().SearchPaths.empty());
+}
+
+void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
+{
+    DoIfCanDiscardCurrentDoc([=]{
+        try
         {
             wxString path = wxPathOnly(m_fileName);
             if (path.empty())
                 path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
-            pot_file =
+            wxString pot_file =
                 wxFileSelector(_("Open catalog template"),
                      path, wxEmptyString, wxEmptyString,
                      wxString::Format
@@ -1563,10 +1622,7 @@ void PoeditFrame::OnUpdate(wxCommandEvent& event)
             if (pot_file.empty())
                 return;
             wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
-        }
 
-        try
-        {
             if (UpdateCatalog(pot_file))
             {
                 if (wxConfig::Get()->ReadBool("use_tm", true) &&
@@ -1576,14 +1632,63 @@ void PoeditFrame::OnUpdate(wxCommandEvent& event)
                 }
             }
         }
-        catch (Exception& e)
+        catch (...)
         {
-            wxLogError("%s", e.What());
+            wxLogError("%s", DescribeCurrentException());
         }
 
         RefreshControls();
-
     });
+}
+
+void PoeditFrame::OnUpdateFromPOTUpdate(wxUpdateUIEvent& event)
+{
+    OnHasCatalogUpdate(event);
+}
+
+#ifdef HAVE_HTTP_CLIENT
+void PoeditFrame::OnUpdateFromCrowdin(wxCommandEvent&)
+{
+    DoIfCanDiscardCurrentDoc([=]{
+        CrowdinSyncFile(this, m_catalog, [=](std::shared_ptr<Catalog> cat){
+            m_catalog = cat;
+            EnsureContentView(Content::PO);
+            NotifyCatalogChanged(m_catalog);
+            RefreshControls();
+        });
+    });
+}
+
+void PoeditFrame::OnUpdateFromCrowdinUpdate(wxUpdateUIEvent& event)
+{
+    event.Enable(m_catalog && m_catalog->IsFromCrowdin());
+}
+#endif
+
+void PoeditFrame::OnUpdateSmart(wxCommandEvent& event)
+{
+    if (!m_catalog)
+        return;
+#ifdef HAVE_HTTP_CLIENT
+    if (m_catalog->IsFromCrowdin())
+        OnUpdateFromCrowdin(event);
+    else
+#endif
+        OnUpdateFromSources(event);
+}
+
+void PoeditFrame::OnUpdateSmartUpdate(wxUpdateUIEvent& event)
+{
+    event.Enable(false);
+    if (m_catalog)
+    {
+#ifdef HAVE_HTTP_CLIENT
+       if (m_catalog->IsFromCrowdin())
+            OnUpdateFromCrowdinUpdate(event);
+        else
+#endif
+            OnUpdateFromSourcesUpdate(event);
+    }
 }
 
 
@@ -2170,6 +2275,10 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
     UpdateTitle();
     UpdateTextLanguage();
 
+#ifdef HAVE_HTTP_CLIENT
+    m_toolbar->EnableSyncWithCrowdin(m_catalog->IsFromCrowdin());
+#endif
+
     Language srclang = m_catalog->GetSourceLanguage();
     Language lang = m_catalog->GetLanguage();
 
@@ -2307,7 +2416,7 @@ void PoeditFrame::NoteAsRecentFile()
     wxFileName fn(m_fileName);
     fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
 #ifdef __WXOSX__
-    [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:wxStringToNS(fn.GetFullPath())]];
+    [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:str::to_NS(fn.GetFullPath())]];
 #else
     FileHistory().AddFileToHistory(fn.GetFullPath());
 #endif
@@ -3327,11 +3436,6 @@ void PoeditFrame::OnHasCatalogUpdate(wxUpdateUIEvent& event)
 void PoeditFrame::OnIsEditableUpdate(wxUpdateUIEvent& event)
 {
     event.Enable(m_catalog && !m_catalog->empty());
-}
-
-void PoeditFrame::OnUpdateFromSourcesUpdate(wxUpdateUIEvent& event)
-{
-    event.Enable(m_catalog && !m_catalog->Header().SearchPaths.empty());
 }
 
 #if defined(__WXMSW__) || defined(__WXGTK__)

@@ -25,18 +25,30 @@
 
 #include "customcontrols.h"
 
+#include "errors.h"
+#include "utility.h"
 #include "hidpi.h"
-#include "icuhelpers.h"
 
+#include <wx/app.h>
 #include <wx/clipbrd.h>
 #include <wx/menu.h>
 #include <wx/settings.h>
+#include <wx/sizer.h>
+#include <wx/weakref.h>
 #include <wx/wupdlock.h>
+
+#if wxCHECK_VERSION(3,1,0)
+    #include <wx/activityindicator.h>
+#else
+    #include "wx_backports/activityindicator.h"
+#endif
 
 #include <unicode/brkiter.h>
 #ifdef __WXGTK__
 #include <gtk/gtk.h>
 #endif
+
+#include "str_helpers.h"
 
 #include <memory>
 
@@ -47,7 +59,7 @@ wxString WrapTextAtWidth(const wxString& text_, int width, wxWindow *wnd)
 {
     if (text_.empty())
         return text_;
-    auto text = ToIcuStr(text_);
+    auto text = str::to_icu(text_);
 
     static std::unique_ptr<icu::BreakIterator> iter;
     if (!iter)
@@ -66,7 +78,7 @@ wxString WrapTextAtWidth(const wxString& text_, int width, wxWindow *wnd)
 
     for (int32_t pos = iter->next(); pos != icu::BreakIterator::DONE; pos = iter->next())
     {
-        auto substr = FromIcuStr(text.tempSubStringBetween(lineStart, pos));
+        auto substr = str::to_wx(text.tempSubStringBetween(lineStart, pos));
 
         if (wnd->GetTextExtent(substr).x > width)
         {
@@ -192,7 +204,6 @@ ExplanationLabel::ExplanationLabel(wxWindow *parent, const wxString& label)
 #if defined(__WXOSX__) || defined(__WXGTK__)
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
-
 #ifndef __WXGTK__
     SetForegroundColour(GetTextColor());
 #endif
@@ -206,6 +217,17 @@ wxColour ExplanationLabel::GetTextColor()
     return wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT);
 #else
     return wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT);
+#endif
+}
+
+SecondaryLabel::SecondaryLabel(wxWindow *parent, const wxString& label)
+    : wxStaticText(parent, wxID_ANY, label)
+{
+#if defined(__WXOSX__) || defined(__WXGTK__)
+    SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+#ifndef __WXGTK__
+    SetForegroundColour(GetTextColor());
 #endif
 }
 
@@ -243,4 +265,68 @@ wxObject *LearnMoreLinkXmlHandler::DoCreateResource()
 bool LearnMoreLinkXmlHandler::CanHandle(wxXmlNode *node)
 {
     return IsOfClass(node, "LearnMoreLink");
+}
+
+
+ActivityIndicator::ActivityIndicator(wxWindow *parent)
+    : wxWindow(parent, wxID_ANY), m_running(false)
+{
+    auto sizer = new wxBoxSizer(wxHORIZONTAL);
+    SetSizer(sizer);
+
+    m_spinner = new wxActivityIndicator(this, wxID_ANY);
+    m_spinner->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+    m_label = new wxStaticText(this, wxID_ANY, "");
+#ifdef __WXOSX__
+    m_label->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+
+    sizer->Add(m_spinner, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
+    sizer->Add(m_label, wxSizerFlags(1).Center());
+
+    HandleError = on_main_thread_for_window<std::exception_ptr>(this, [=](std::exception_ptr e){
+        StopWithError(DescribeException(e));
+    });
+}
+
+void ActivityIndicator::Start(const wxString& msg)
+{
+    m_running = true;
+
+    m_label->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT));
+    m_label->SetLabel(msg);
+
+    auto sizer = GetSizer();
+    sizer->Show(m_spinner);
+    sizer->Show(m_label, !msg.empty());
+    Layout();
+
+    m_spinner->Start();
+}
+
+void ActivityIndicator::Stop()
+{
+    m_running = false;
+
+    m_spinner->Stop();
+    m_label->SetLabel("");
+
+    auto sizer = GetSizer();
+    sizer->Hide(m_spinner);
+    sizer->Hide(m_label);
+    Layout();
+}
+
+void ActivityIndicator::StopWithError(const wxString& msg)
+{
+    m_running = false;
+
+    m_spinner->Stop();
+    m_label->SetForegroundColour(*wxRED);
+    m_label->SetLabel(msg);
+
+    auto sizer = GetSizer();
+    sizer->Hide(m_spinner);
+    sizer->Show(m_label);
+    Layout();
 }

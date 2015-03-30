@@ -38,6 +38,7 @@ dist_uiicons_DATA = \
 		linux/edit-delete.png \
 		linux/poedit-fuzzy.png \
 		linux/poedit-update.png \
+		linux/poedit-sync.png \
 		linux/poedit-validate.png \
 		linux/sidebar.png \
 		poedit-status-automatic.png \
@@ -50,7 +51,8 @@ dist_uiicons_DATA = \
 		window-close.png \
 		SuggestionError.png \
 		SuggestionTM.png \
-		PoeditWelcome.png
+		PoeditWelcome.png \
+		CrowdinLogo.png
 
 
 MIMETYPES = \

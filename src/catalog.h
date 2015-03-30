@@ -547,6 +547,14 @@ class Catalog
                   int& validation_errors,
                   CompilationStatus& mo_compilation_status);
 
+        /**
+            "Saves" the PO file into a memory buffer with content identical
+            to what Save() would save into a file.
+            
+            Returns empty string in case of failure.
+         */
+        std::string SaveToBuffer();
+
         /// Compiles the catalog into binary MO file.
         bool CompileToMO(const wxString& mo_file,
                          int& validation_errors,
@@ -638,6 +646,10 @@ class Catalog
         /// Returns catalog's language (may be invalid).
         Language GetLanguage() const { return m_header.Lang; }
 
+        /// Is the PO file from Crowdin, i.e. sync-able?
+        bool IsFromCrowdin() const
+            { return m_header.HasHeader("X-Crowdin-Project") && m_header.HasHeader("X-Crowdin-File"); }
+
         /// Adds entry to the catalog (the catalog will take ownership of
         /// the object).
         void AddItem(const CatalogItemPtr& data);
@@ -679,7 +691,7 @@ class Catalog
 
         int DoValidate(const wxString& po_file);
         bool DoSaveOnly(const wxString& po_file, wxTextFileType crlf);
-        bool DoSaveOnly(wxTextFile& f, wxTextFileType crlf);
+        bool DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf);
 
         /** Merges the catalog with reference catalog
             (in the sense of msgmerge -- this catalog is old one with

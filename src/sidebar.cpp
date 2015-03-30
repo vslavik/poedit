@@ -28,6 +28,7 @@
 #include "catalog.h"
 #include "customcontrols.h"
 #include "commentdlg.h"
+#include "utility.h"
 #include "errors.h"
 #include "hidpi.h"
 
@@ -648,7 +649,6 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, const C
 
     // we need something to talk to GUI thread through that is guaranteed
     // to exist, and the app object is a good choice:
-    wxApp *app = wxTheApp;
     auto backendPtr = &backend;
     std::weak_ptr<SuggestionsSidebarBlock> weakSelf = std::dynamic_pointer_cast<SuggestionsSidebarBlock>(shared_from_this());
 
@@ -661,7 +661,7 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, const C
 
         // when receiving data
         [=](const SuggestionsList& hits){
-            app->CallAfter([weakSelf,queryId,hits]{
+            call_on_main_thread([weakSelf,queryId,hits]{
                 auto self = weakSelf.lock();
                 // maybe this call is already out of date:
                 if (!self || self->m_latestQueryId != queryId)
@@ -674,7 +674,7 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, const C
 
         // on error:
         [=](std::exception_ptr e){
-            app->CallAfter([weakSelf,queryId,backendPtr,e]{
+            call_on_main_thread([weakSelf,queryId,backendPtr,e]{
                 auto self = weakSelf.lock();
                 // maybe this call is already out of date:
                 if (!self || self->m_latestQueryId != queryId)

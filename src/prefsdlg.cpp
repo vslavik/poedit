@@ -33,6 +33,7 @@
 #include <wx/checkbox.h>
 #include <wx/choice.h>
 #include <wx/checklst.h>
+#include <wx/notebook.h>
 #include <wx/sizer.h>
 #include <wx/stattext.h>
 #include <wx/fontutil.h>
@@ -52,6 +53,7 @@
 #include "edapp.h"
 #include "edframe.h"
 #include "catalog.h"
+#include "crowdin_gui.h"
 #include "hidpi.h"
 #include "tm/transmem.h"
 #include "chooselang.h"
@@ -140,14 +142,6 @@ protected:
     int m_suppressDataTransfer;
 };
 
-
-#ifdef __WXOSX__
-    #define BORDER_WIN(dir, n) Border(dir, 0)
-    #define BORDER_OSX(dir, n) Border(dir, n)
-#else
-    #define BORDER_WIN(dir, n) Border(dir, n)
-    #define BORDER_OSX(dir, n) Border(dir, 0)
-#endif
 
 
 class GeneralPageWindow : public PrefsPanel
@@ -542,7 +536,7 @@ class TMPage : public wxPreferencesPage
 public:
     wxString GetName() const override
     {
-#ifdef __WXOSX__
+#if defined(__WXOSX__) || defined(__WXGTK__)
         // TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on OS X.
         // Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
         // length there.
@@ -767,6 +761,58 @@ public:
 
 
 
+#ifdef HAVE_HTTP_CLIENT
+class AccountsPageWindow : public PrefsPanel
+{
+public:
+    AccountsPageWindow(wxWindow *parent) : PrefsPanel(parent)
+    {
+        wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
+        m_login = new CrowdinLoginPanel(this);
+        topsizer->Add(m_login, wxSizerFlags(1).Expand().Border(wxALL, PX(15)));
+        SetSizer(topsizer);
+
+    #ifdef __WXOSX__
+        // This window was created on demand, init immediately:
+        m_login->EnsureInitialized();
+    #else
+        // On other platforms, notebook pages are all created at once. Don't do
+        // the expensive initialization until shown for the first time. This code
+        // is a hack that takes advantage of wxPreferencesEditor's implementation
+        // detail, but oh well:
+        auto notebook = dynamic_cast<wxNotebook*>(parent);
+        if (notebook)
+        {
+            notebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, [=](wxBookCtrlEvent& e){
+                e.Skip();
+                if (notebook->GetPage(e.GetSelection()) == this)
+                    m_login->EnsureInitialized();
+            });
+        }
+    #endif
+    }
+
+    void InitValues(const wxConfigBase&) override
+    {
+    }
+
+    void SaveValues(wxConfigBase&) override
+    {
+    }
+
+private:
+    CrowdinLoginPanel *m_login;
+};
+
+class AccountsPage : public wxPreferencesPage
+{
+public:
+    wxString GetName() const override { return PXNotebookTab(_("Accounts")); }
+    wxBitmap GetLargeIcon() const override { return wxArtProvider::GetBitmap("Prefs-Accounts"); }
+    wxWindow *CreateWindow(wxWindow *parent) override { return new AccountsPageWindow(parent); }
+};
+#endif // HAVE_HTTP_CLIENT
+
 
 #ifdef HAS_UPDATES_CHECK
 class UpdatesPageWindow : public PrefsPanel
@@ -933,6 +979,9 @@ std::unique_ptr<PoeditPreferencesEditor> PoeditPreferencesEditor::Create()
     p->AddPage(new GeneralPage);
     p->AddPage(new TMPage);
     p->AddPage(new ExtractorsPage);
+#ifdef HAVE_HTTP_CLIENT
+    p->AddPage(new AccountsPage);
+#endif
 #ifdef HAS_UPDATES_CHECK
     p->AddPage(new UpdatesPage);
 #endif

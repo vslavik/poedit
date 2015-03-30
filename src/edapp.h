@@ -70,6 +70,7 @@ class PoeditApp : public wxApp
 #ifdef __WXOSX__
         virtual void MacOpenFiles(const wxArrayString& names) { OpenFiles(names); }
         virtual void MacNewFile() { OpenNewFile(); }
+        virtual void MacOpenURL(const wxString &url) { HandleCustomURI(url); }
 #endif
 
         void EditPreferences();
@@ -102,11 +103,14 @@ class PoeditApp : public wxApp
         bool OnCmdLineParsed(wxCmdLineParser& parser);
         
     private:
+        void HandleCustomURI(const wxString& uri);
+
         void SetupLanguage();
 
         // App-global menu commands:
         void OnNew(wxCommandEvent& event);
         void OnOpen(wxCommandEvent& event);
+        void OnOpenFromCrowdin(wxCommandEvent& event);
 #ifndef __WXOSX__
         void OnOpenHist(wxCommandEvent& event);
 #endif

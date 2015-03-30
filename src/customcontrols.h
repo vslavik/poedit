@@ -30,6 +30,11 @@
 #include <wx/hyperlink.h>
 #include <wx/xrc/xmlres.h>
 
+class WXDLLIMPEXP_ADV wxActivityIndicator;
+
+#include <exception>
+#include <functional>
+
 
 // Label marking a subsection of a dialog:
 class HeadingLabel : public wxStaticText
@@ -68,10 +73,12 @@ public:
 };
 
 
-// Longer, often multiline, explanation label used to provide more information
-// about the effects of some less obvious settings. Typeset using smaller font
-// on OS X and grey appearence. Auto-wraps itself to fit surrounding control's
-// width.
+/** 
+    Longer, often multiline, explanation label used to provide more information
+    about the effects of some less obvious settings. Typeset using smaller font
+    on OS X and grey appearence. Auto-wraps itself to fit surrounding control's
+    width.
+ */
 class ExplanationLabel : public AutoWrappingText
 {
 public:
@@ -88,8 +95,17 @@ public:
     static wxColour GetTextColor();
 };
 
+/// Like ExplanationLabel, but nonwrapping
+class SecondaryLabel : public wxStaticText
+{
+public:
+    SecondaryLabel(wxWindow *parent, const wxString& label);
 
-// "Learn more" hyperlink for dialogs.
+    static wxColour GetTextColor() { return ExplanationLabel::GetTextColor(); }
+};
+
+
+/// "Learn more" hyperlink for dialogs.
 class LearnMoreLink : public wxHyperlinkCtrl
 {
 public:
@@ -102,13 +118,42 @@ public:
 #endif
 };
 
-
 class LearnMoreLinkXmlHandler : public wxXmlResourceHandler
 {
 public:
     LearnMoreLinkXmlHandler() {}
     wxObject *DoCreateResource() override;
     bool CanHandle(wxXmlNode *node) override;
+};
+
+
+/// Indicator of background activity, using spinners where appropriate.
+class ActivityIndicator : public wxWindow
+{
+public:
+    ActivityIndicator(wxWindow *parent);
+
+    /// Start indicating, with optional progress label.
+    void Start(const wxString& msg = "");
+
+    /// Stop the indicator.
+    void Stop();
+
+    /// Stop the indicator and report error in its place.
+    void StopWithError(const wxString& msg);
+
+    /// Is between Start() and Stop() calls?
+    bool IsRunning() const { return m_running; }
+
+    /// Convenience function for showing error message in the indicator
+    std::function<void(std::exception_ptr)> HandleError;
+
+    bool HasTransparentBackground() override { return true;  }
+
+private:
+    bool m_running;
+    wxActivityIndicator *m_spinner;
+    wxStaticText *m_label, *m_error;
 };
 
 #endif // Poedit_customcontrols_h

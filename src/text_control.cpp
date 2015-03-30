@@ -31,7 +31,6 @@
 #ifdef __WXOSX__
   #import <AppKit/NSTextView.h>
   #import <Foundation/NSUndoManager.h>
-  #include "osx_helpers.h"
 #endif
 
 #ifdef __WXMSW__
@@ -50,6 +49,7 @@
 #endif
 
 #include "spellchecking.h"
+#include "str_helpers.h"
 
 
 namespace
@@ -189,7 +189,7 @@ void CustomizedTextCtrl::DoSetValue(const wxString& value, int flags)
 {
     wxEventBlocker block(this, (flags & SetValue_SendEvent) ? 0 : wxEVT_ANY);
 
-    [TextView(this) setString:wxStringToNS(value)];
+    [TextView(this) setString:str::to_NS(value)];
 
     SendTextUpdatedEventIfAllowed();
 }
