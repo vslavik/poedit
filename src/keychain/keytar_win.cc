@@ -25,21 +25,23 @@
 
 #include "keytar.h"
 
+#include "str_helpers.h"
+
 #include <windows.h>
 #include <wincred.h>
 
-#define SERVICE_NAME "Poedit/"
+#define SERVICE_PREFIX L"Poedit:"
 
 namespace keytar
 {
 
 bool AddPassword(const std::string& account, const std::string& password)
 {
-  std::string target_name = SERVICE_PREFIX + account;
+  std::wstring target_name = SERVICE_PREFIX + str::to_wstring(account);
 
   CREDENTIAL cred = { 0 };
   cred.Type = CRED_TYPE_GENERIC;
-  cred.TargetName = const_cast<char*>(target_name.c_str());
+  cred.TargetName = const_cast<wchar_t*>(target_name.c_str());
   cred.CredentialBlobSize = password.size();
   cred.CredentialBlob = (LPBYTE)(password.data());
   cred.Persist = CRED_PERSIST_LOCAL_MACHINE;
@@ -49,7 +51,7 @@ bool AddPassword(const std::string& account, const std::string& password)
 
 bool GetPassword(const std::string& account, std::string* password)
 {
-  std::string target_name = SERVICE_PREFIX + account;
+  std::wstring target_name = SERVICE_PREFIX + str::to_wstring(account);
 
   CREDENTIAL* cred;
   if (::CredRead(target_name.c_str(), CRED_TYPE_GENERIC, 0, &cred) == FALSE)
@@ -63,7 +65,7 @@ bool GetPassword(const std::string& account, std::string* password)
 
 bool DeletePassword(const std::string& account)
 {
-  std::string target_name = SERVICE_PREFIX + account;
+  std::wstring target_name = SERVICE_PREFIX + str::to_wstring(account);
 
   return ::CredDelete(target_name.c_str(), CRED_TYPE_GENERIC, 0) == TRUE;
 }
