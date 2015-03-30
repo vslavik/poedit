@@ -50,9 +50,13 @@ public:
 
     CrowdinLoginPanel(wxWindow *parent, int flags = 0);
 
+    /// Call this when the window is first shown
+    void EnsureInitialized();
+
 protected:
     enum class State
     {
+        Uninitialized,
         Authenticating,
         SignedIn,
         SignedOut,

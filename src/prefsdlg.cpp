@@ -33,6 +33,7 @@
 #include <wx/checkbox.h>
 #include <wx/choice.h>
 #include <wx/checklst.h>
+#include <wx/notebook.h>
 #include <wx/sizer.h>
 #include <wx/stattext.h>
 #include <wx/fontutil.h>
@@ -767,10 +768,28 @@ public:
     AccountsPageWindow(wxWindow *parent) : PrefsPanel(parent)
     {
         wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
-        auto acct = new CrowdinLoginPanel(this);
-        topsizer->Add(acct, wxSizerFlags(1).Expand().Border(wxALL, PX(15)));
+        m_login = new CrowdinLoginPanel(this);
+        topsizer->Add(m_login, wxSizerFlags(1).Expand().Border(wxALL, PX(15)));
         SetSizer(topsizer);
 
+    #ifdef __WXOSX__
+        // This window was created on demand, init immediately:
+        m_login->EnsureInitialized();
+    #else
+        // On other platforms, notebook pages are all created at once. Don't do
+        // the expensive initialization until shown for the first time. This code
+        // is a hack that takes advantage of wxPreferencesEditor's implementation
+        // detail, but oh well:
+        auto notebook = dynamic_cast<wxNotebook*>(parent);
+        if (notebook)
+        {
+            notebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, [=](wxBookCtrlEvent& e){
+                e.Skip();
+                if (notebook->GetPage(e.GetSelection()) == this)
+                    m_login->EnsureInitialized();
+            });
+        }
+    #endif
     }
 
     void InitValues(const wxConfigBase&) override
@@ -780,6 +799,9 @@ public:
     void SaveValues(wxConfigBase&) override
     {
     }
+
+private:
+    CrowdinLoginPanel *m_login;
 };
 
 class AccountsPage : public wxPreferencesPage

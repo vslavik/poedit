@@ -51,7 +51,7 @@
 
 CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     : wxPanel(parent, wxID_ANY),
-      m_state(State::SignedOut)
+      m_state(State::Uninitialized)
 {
     wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
     sizer->SetMinSize(PX(400), -1);
@@ -100,6 +100,14 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
         m_signIn->SetFocus();
     }
 
+    ChangeState(State::Uninitialized);
+}
+
+void CrowdinLoginPanel::EnsureInitialized()
+{
+    if (m_state != State::Uninitialized)
+        return;
+
     if (CrowdinClient::Get().IsSignedIn())
         UpdateUserInfo();
     else
@@ -139,6 +147,7 @@ void CrowdinLoginPanel::CreateLoginInfoControls(State state)
             break;
         }
 
+        case State::Uninitialized:
         case State::SignedOut:
         {
             // nothing to show in the UI except for "sign in" button
@@ -226,7 +235,10 @@ private:
     class Panel : public CrowdinLoginPanel
     {
     public:
-        Panel(CrowdinLoginDialog *parent) : CrowdinLoginPanel(parent, DialogButtons), m_owner(parent) {}
+        Panel(CrowdinLoginDialog *parent) : CrowdinLoginPanel(parent, DialogButtons), m_owner(parent)
+        {
+            EnsureInitialized();
+        }
 
     protected:
         void OnUserSignedIn() override
