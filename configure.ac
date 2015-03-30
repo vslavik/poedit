@@ -63,12 +63,12 @@ AC_ARG_WITH([cpprest],
 
 AS_IF([test "x$with_cpprest" != "xno"],
       [
-          have_cpprest=no
-	  dnl C++11 check above modified CXXFLAGS, but AC_CHECK_HEADERS needs
-	  dnl it for this header too and it uses only the preprocessor in one
-          dnl of its two phases:
-	  old_CPPFLAGS="$CPPFLAGS"
-	  CPPFLAGS="$CPPFLAGS $CXXFLAGS"
+      have_cpprest=no
+      dnl C++11 check above modified CXXFLAGS, but AC_CHECK_HEADERS needs
+      dnl it for this header too and it uses only the preprocessor in one
+      dnl of its two phases:
+      old_CPPFLAGS="$CPPFLAGS"
+      CPPFLAGS="$CPPFLAGS $CXXFLAGS"
           AC_CHECK_HEADERS([cpprest/http_client.h],
               [
                   AC_MSG_CHECKING([for libcpprest >= 2.5])
@@ -89,7 +89,7 @@ AS_IF([test "x$with_cpprest" != "xno"],
                   LIBS="$old_LIBS"
                   AC_MSG_RESULT([$have_cpprest])
               ])
-	  CPPFLAGS="$old_CPPFLAGS"
+      CPPFLAGS="$old_CPPFLAGS"
       ],
       [have_cpprest=no])
 
@@ -99,6 +99,10 @@ AS_IF([test "x$have_cpprest" = "xyes"],
           CPPREST_LIBS="-lcpprest"
           WXLIBS_USED="webview,$WXLIBS_USED"
           AC_SUBST(CPPREST_LIBS)
+          PKG_CHECK_MODULES([LIBSECRET], [libsecret-1], [
+              CXXFLAGS="$CXXFLAGS $LIBSECRET_CFLAGS"
+              AC_SUBST(LIBSECRET_LIBS)
+          ])
       ],
       [
           AS_IF([test "x$with_cpprest" = "xyes"],

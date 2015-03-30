@@ -19,8 +19,9 @@ if HAVE_CPPREST
 CROWDIN_SUPPORT_SRC = \
                  http_client.h http_client.cpp http_client_casablanca.cpp \
                  crowdin_client.h crowdin_client.cpp \
-                 crowdin_gui.h crowdin_gui.cpp
-CROWDIN_SUPPORT_LIBS = $(CPPREST_LIBS)
+                 crowdin_gui.h crowdin_gui.cpp \
+                 keychain/keytar_posix.cc keychain/keytar.h
+CROWDIN_SUPPORT_LIBS = $(CPPREST_LIBS) $(LIBSECRET_LIBS)
 endif
 
 poedit_SOURCES = attentionbar.cpp attentionbar.h \

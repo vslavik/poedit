@@ -27,13 +27,13 @@
 #include "crowdin_client.h"
 
 #include "http_client.h"
+#include "keychain/keytar.h"
 #include "str_helpers.h"
 
 #include <functional>
 #include <mutex>
 #include <boost/algorithm/string.hpp>
 
-#include <wx/config.h>
 #include <wx/translation.h>
 #include <wx/utils.h>
 
@@ -300,17 +300,16 @@ void CrowdinClient::UploadFile(const std::string& project_id, const std::wstring
 
 bool CrowdinClient::IsSignedIn() const
 {
-    return wxConfig::Get()->ReadBool("/crowdin/signed_in", false);
+    std::string token;
+    return keytar::GetPassword("Crowdin", &token);
 }
 
 
 void CrowdinClient::SignInIfAuthorized()
 {
-    if (IsSignedIn())
-    {
-        // TODO: move to secure storage
-        SetToken(wxConfig::Get()->Read("/crowdin/oauth_token").ToStdString());
-    }
+    std::string token;
+    if (keytar::GetPassword("Crowdin", &token))
+        SetToken(token);
 }
 
 
@@ -323,17 +322,14 @@ void CrowdinClient::SetToken(const std::string& token)
 void CrowdinClient::SaveAndSetToken(const std::string& token)
 {
     SetToken(token);
-    auto *cfg = wxConfig::Get();
-    cfg->Write("/crowdin/signed_in", true);
-    cfg->Write("/crowdin/oauth_token", wxString(token));
-    cfg->Flush();
+    keytar::AddPassword("Crowdin", token);
 }
 
 
 void CrowdinClient::SignOut()
 {
     m_api->set_authorization("");
-    wxConfig::Get()->DeleteGroup("/crowdin");
+    keytar::DeletePassword("Crowdin");
 }
 
 
