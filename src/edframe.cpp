@@ -2661,7 +2661,7 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     m_fileExistsOnDisk = true;
 
 #ifndef __WXOSX__
-    FileHistory().AddFileToHistory(m_fileName);
+    FileHistory().AddFileToHistory(GetFileName());
 #endif
 
     UpdateTitle();
