@@ -121,11 +121,10 @@ bool g_focusToText = false;
 {
     wxFileName fn(filename);
 
-    for (PoeditFramesList::const_iterator n = ms_instances.begin();
-         n != ms_instances.end(); ++n)
+    for (auto n: ms_instances)
     {
-        if (wxFileName((*n)->m_fileName) == fn)
-            return *n;
+        if (wxFileName(n->GetFileName()) == fn)
+            return n;
     }
     return NULL;
 }
@@ -1002,11 +1001,10 @@ void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler)
 
         if (retval == wxID_YES)
         {
-            if (!m_fileExistsOnDisk || m_fileName.empty())
+            if (!m_fileExistsOnDisk || GetFileName().empty())
             {
-                GetSaveAsFilenameThenDo(m_catalog, m_fileName, [=](const wxString& fn){
-                    m_fileName = fn;
-                    WriteCatalog(m_fileName, [=](bool saved){
+                GetSaveAsFilenameThenDo(m_catalog, [=](const wxString& fn){
+                    WriteCatalog(fn, [=](bool saved){
                         if (saved)
                             completionHandler();
                     });
@@ -1078,7 +1076,7 @@ void PoeditFrame::OnOpen(wxCommandEvent&)
 {
     DoIfCanDiscardCurrentDoc([=]{
 
-        wxString path = wxPathOnly(m_fileName);
+        wxString path = wxPathOnly(GetFileName());
         if (path.empty())
             path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
 
@@ -1129,10 +1127,10 @@ void PoeditFrame::OnSave(wxCommandEvent& event)
 {
     try
     {
-        if (!m_fileExistsOnDisk || m_fileName.empty())
+        if (!m_fileExistsOnDisk || GetFileName().empty())
             OnSaveAs(event);
         else
-            WriteCatalog(m_fileName);
+            WriteCatalog(GetFileName());
     }
     catch (Exception& e)
     {
@@ -1154,8 +1152,9 @@ static wxString SuggestFileName(const CatalogPtr& catalog)
 }
 
 template<typename F>
-void PoeditFrame::GetSaveAsFilenameThenDo(const CatalogPtr& cat, const wxString& current, F then)
+void PoeditFrame::GetSaveAsFilenameThenDo(const CatalogPtr& cat, F then)
 {
+    auto current = cat->GetFileName();
     wxString name(wxFileNameFromPath(current));
     wxString path(wxPathOnly(current));
 
@@ -1187,21 +1186,21 @@ void PoeditFrame::DoSaveAs(const wxString& filename)
     if (filename.empty())
         return;
 
-    m_fileName = filename;
     WriteCatalog(filename);
 }
 
 void PoeditFrame::OnSaveAs(wxCommandEvent&)
 {
-    GetSaveAsFilenameThenDo(m_catalog, m_fileName, [=](const wxString& fn){
+    GetSaveAsFilenameThenDo(m_catalog, [=](const wxString& fn){
         DoSaveAs(fn);
     });
 }
 
 void PoeditFrame::OnCompileMO(wxCommandEvent&)
 {
+    auto fileName = GetFileName();
     wxString name;
-    wxFileName::SplitPath(m_fileName, nullptr, &name, nullptr);
+    wxFileName::SplitPath(fileName, nullptr, &name, nullptr);
 
     if (name.empty())
     {
@@ -1213,7 +1212,7 @@ void PoeditFrame::OnCompileMO(wxCommandEvent&)
     wxWindowPtr<wxFileDialog> dlg(
         new wxFileDialog(this,
                          OSX_OR_OTHER("", _("Compile to...")),
-                         wxPathOnly(m_fileName),
+                         wxPathOnly(fileName),
                          name,
                          wxString::Format("%s (*.mo)|*.mo", _("Compiled Translation Files")),
                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT));
@@ -1244,8 +1243,9 @@ void PoeditFrame::OnCompileMO(wxCommandEvent&)
 
 void PoeditFrame::OnExport(wxCommandEvent&)
 {
+    auto fileName = GetFileName();
     wxString name;
-    wxFileName::SplitPath(m_fileName, nullptr, &name, nullptr);
+    wxFileName::SplitPath(fileName, nullptr, &name, nullptr);
 
     if (name.empty())
     {
@@ -1257,7 +1257,7 @@ void PoeditFrame::OnExport(wxCommandEvent&)
     wxWindowPtr<wxFileDialog> dlg(
         new wxFileDialog(this,
                          OSX_OR_OTHER("", _("Export as...")),
-                         wxPathOnly(m_fileName),
+                         wxPathOnly(fileName),
                          name,
                          wxString::Format("%s (*.html)|*.html", _("HTML Files")),
                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT));
@@ -1296,7 +1296,7 @@ void PoeditFrame::NewFromPOT()
 {
     CatalogPtr catalog = std::make_shared<Catalog>();
 
-    wxString path = wxPathOnly(m_fileName);
+    wxString path = wxPathOnly(GetFileName());
     if (path.empty())
         path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
     wxString pot_file =
@@ -1326,7 +1326,6 @@ void PoeditFrame::NewFromPOT()
     m_catalog = catalog;
     m_pendingHumanEditedItem.reset();
 
-    m_fileName.clear();
     m_fileExistsOnDisk = false;
     m_modified = true;
 
@@ -1362,7 +1361,7 @@ void PoeditFrame::NewFromPOT()
             wxFileName pot_fn(pot_file);
             pot_fn.SetFullName(lang.Code() + ".po");
 
-            m_fileName = pot_fn.GetFullPath();
+            m_catalog->SetFileName(pot_fn.GetFullPath());
             m_fileExistsOnDisk = false;
             m_modified = true;
         }
@@ -1391,7 +1390,6 @@ void PoeditFrame::NewFromScratch()
     m_catalog = catalog;
     m_pendingHumanEditedItem.reset();
 
-    m_fileName.clear();
     m_fileExistsOnDisk = false;
     m_modified = true;
 
@@ -1605,7 +1603,7 @@ void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
     DoIfCanDiscardCurrentDoc([=]{
         try
         {
-            wxString path = wxPathOnly(m_fileName);
+            wxString path = wxPathOnly(GetFileName());
             if (path.empty())
                 path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
             wxString pot_file =
@@ -2266,7 +2264,6 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
         NotifyCatalogChanged(m_catalog);
     }
 
-    m_fileName = cat->GetFileName();
     m_fileExistsOnDisk = true;
     m_modified = false;
 
@@ -2413,7 +2410,7 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
 
 void PoeditFrame::NoteAsRecentFile()
 {
-    wxFileName fn(m_fileName);
+    wxFileName fn(GetFileName());
     fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
 #ifdef __WXOSX__
     [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:str::to_NS(fn.GetFullPath())]];
@@ -2431,8 +2428,7 @@ void PoeditFrame::RefreshControls(int flags)
     m_hasObsoleteItems = false;
     if (!m_catalog->IsOk())
     {
-        wxLogError(_("Error loading message catalog file '%s'."), m_fileName.c_str());
-        m_fileName.clear();
+        wxLogError(_("Error loading message catalog file '%s'."), m_catalog->GetFileName());
         m_fileExistsOnDisk = false;
         UpdateMenu();
         UpdateTitle();
@@ -2512,13 +2508,14 @@ void PoeditFrame::UpdateTitle()
 #endif
 
     wxString title;
-    if ( !m_fileName.empty() )
+    auto fileName = GetFileName();
+    if ( !fileName.empty() )
     {
-        wxFileName fn(m_fileName);
+        wxFileName fn(GetFileName());
         wxString fpath = fn.GetFullName();
 
         if (m_fileExistsOnDisk)
-            SetRepresentedFilename(m_fileName);
+            SetRepresentedFilename(fileName);
         else
             fpath += _(" (unsaved)");
 
@@ -2660,7 +2657,6 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
         return;
     }
 
-    m_fileName = catalog;
     m_modified = false;
     m_fileExistsOnDisk = true;
 
@@ -2675,7 +2671,7 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     NoteAsRecentFile();
 
     if (ManagerFrame::Get())
-        ManagerFrame::Get()->NotifyFileChanged(m_fileName);
+        ManagerFrame::Get()->NotifyFileChanged(GetFileName());
 
     if ( validation_errors )
     {

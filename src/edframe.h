@@ -243,7 +243,7 @@ private:
         void OnSave(wxCommandEvent& event);
         void OnSaveAs(wxCommandEvent& event);
         template<typename F>
-        void GetSaveAsFilenameThenDo(const CatalogPtr& cat, const wxString& current, F then);
+        void GetSaveAsFilenameThenDo(const CatalogPtr& cat, F then);
         void DoSaveAs(const wxString& filename);
         void OnProperties(wxCommandEvent& event);
 
@@ -343,7 +343,9 @@ private:
 
     private:
         CatalogPtr m_catalog;
-        wxString m_fileName;
+
+        wxString GetFileName() const
+            { return m_catalog ? m_catalog->GetFileName() : wxString(); }
         bool m_fileExistsOnDisk;
 
         std::unique_ptr<MainToolbar> m_toolbar;
