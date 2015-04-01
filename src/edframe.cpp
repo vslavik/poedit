@@ -1595,7 +1595,7 @@ void PoeditFrame::OnUpdateFromSourcesUpdate(wxUpdateUIEvent& event)
 {
     event.Enable(m_catalog &&
                  !m_catalog->IsFromCrowdin() &&
-                 !m_catalog->Header().SearchPaths.empty());
+                 m_catalog->HasSourcesAvailable());
 }
 
 void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)

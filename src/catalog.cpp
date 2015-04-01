@@ -1926,6 +1926,9 @@ wxString GetSourcesPath(const wxString& fileName, const Catalog::HeaderData& hea
     if (fileName.empty())
         return wxString();
 
+    if (header.BasePath.empty())
+        return wxString();
+
     wxString basepath;
     if (wxIsAbsolutePath(header.BasePath))
     {
@@ -1977,7 +1980,7 @@ wxString Catalog::GetSourcesRootPath() const
 
 bool Catalog::HasSourcesAvailable() const
 {
-    return !GetSourcesBasePath().empty();
+    return !GetSourcesBasePath().empty() && !m_header.SearchPaths.empty();
 }
 
 bool Catalog::Update(ProgressInfo *progress, bool summary, UpdateResultReason& reason)
