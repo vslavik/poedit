@@ -136,6 +136,8 @@ TempOutputFileFor::TempOutputFileFor(const wxString& filename)
 {
     wxString path, name, ext;
     wxFileName::SplitPath(filename, &path, &name, &ext);
+    if (!ext.empty())
+        ext = "." + ext;
 
 #ifdef __WXOSX__
     NSURL *fileUrl = [NSURL fileURLWithPath:wxStringToNS(filename)];
@@ -146,22 +148,38 @@ TempOutputFileFor::TempOutputFileFor(const wxString& filename)
                                                  create:YES
                                                   error:nil];
     if (tempdirUrl)
-    {
-        NSURL *newFileUrl = [tempdirUrl URLByAppendingPathComponent:[fileUrl lastPathComponent]];
-        NSString *newFilePath = [newFileUrl path];
-        m_filenameTmp = wxStringFromNS(newFilePath);
         m_tempDir = wxStringFromNS([tempdirUrl path]);
-    }
-    // else: fall through to the generic code
-#endif // __WXOSX__
+#endif
 
-    if (m_filenameTmp.empty())
+    wxString counter;
+    for (;;)
     {
-        m_filenameTmp = filename + ".temp." + ext;
-    }
+#ifdef __WXOSX__
+        if (!m_tempDir.empty())
+        {
+            m_filenameTmp = m_tempDir + wxFILE_SEP_PATH + name + counter + ext;
+        }
+        else
+#endif // __WXOSX__
+        {
+            // Temp filenames may be ugly, nobody cares. Make them safe for
+            // Unicode-unfriendly uses on Windows, i.e. 8.3 without non-ASCII
+            // characters:
+            auto base = CliSafeFileName(path) + wxFILE_SEP_PATH;
+#ifdef __WXMSW__
+            // this is OK, ToAscii() replaces non-ASCII with '_':
+            base += name.ToAscii();
+#else
+            base += name;
+#endif
+            m_filenameTmp = base + ".temp" + counter + ext;
+        }
 
-    if ( wxFileExists(m_filenameTmp) )
-        wxRemoveFile(m_filenameTmp);
+        if (!wxFileExists(m_filenameTmp))
+            break; // good!
+
+        counter += wchar_t('a' + rand() % 26);
+    }
 }
 
 
@@ -172,6 +190,33 @@ TempOutputFileFor::~TempOutputFileFor()
         wxFileName::Rmdir(m_tempDir, wxPATH_RMDIR_RECURSIVE);
 #endif
 }
+
+#ifdef __WXMSW__
+wxString CliSafeFileName(const wxString& fn)
+{
+    if (fn.IsAscii())
+    {
+        return fn;
+    }
+    else if (wxFileExists(fn) || wxDirExists(fn))
+    {
+        return wxFileName(fn).GetShortPath();
+    }
+    else
+    {
+        wxString path, name, ext;
+        wxFileName::SplitPath(fn, &path, &name, &ext);
+        if (wxDirExists(path))
+        {
+            auto p = wxFileName(path).GetShortPath() + wxFILE_SEP_PATH + name;
+            if (!ext.empty())
+                p += "." + ext;
+            return p;
+        }
+    }
+    return fn;
+}
+#endif // __WXMSW__
 
 
 // ----------------------------------------------------------------------
