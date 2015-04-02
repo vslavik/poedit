@@ -1082,8 +1082,8 @@ void PoeditFrame::OnOpen(wxCommandEvent&)
 
         wxString name = wxFileSelector(OSX_OR_OTHER("", _("Open catalog")),
                         path, wxEmptyString, wxEmptyString,
-                        wxString::Format("%s (*.po)|*.po|%s (*.*)|*.*",
-                            _("PO Translation Files"), _("All Files")),
+                        wxString::Format("%s (*.po)|*.po",
+                            _("PO Translation Files")),
                         wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
 
         if (!name.empty())
@@ -1304,10 +1304,9 @@ void PoeditFrame::NewFromPOT()
              path, wxEmptyString, wxEmptyString,
              wxString::Format
              (
-                 "%s (*.pot)|*.pot|%s (*.po)|*.po|%s (*.*)|*.*",
+                 "%s (*.pot)|*.pot|%s (*.po)|*.po",
                  _("POT Translation Templates"),
-                 _("PO Translation Files"),
-                 _("All Files")
+                 _("PO Translation Files")
              ),
              wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
     bool ok = false;
@@ -1612,10 +1611,9 @@ void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
                              wxEmptyString,
                              wxString::Format
                              (
-                                 "%s (*.pot)|*.pot|%s (*.po)|*.po|%s (*.*)|*.*",
+                                 "%s (*.pot)|*.pot|%s (*.po)|*.po",
                                  _("POT Translation Templates"),
-                                 _("PO Translation Files"),
-                                 _("All Files")
+                                 _("PO Translation Files")
                              ),
                              wxFD_OPEN | wxFD_FILE_MUST_EXIST));
 

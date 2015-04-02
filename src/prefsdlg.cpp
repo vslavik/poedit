@@ -467,8 +467,8 @@ private:
             _("Select translation files to import"),
             wxEmptyString,
             wxEmptyString,
-			wxString::Format("%s (*.po)|*.po|%s (*.*)|*.*",
-                _("PO Translation Files"), _("All Files")),
+			wxString::Format("%s (*.po)|*.po",
+                _("PO Translation Files")),
 			wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE));
 
         dlg->ShowWindowModalThenDo([=](int retcode){
