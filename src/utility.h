@@ -316,7 +316,14 @@ public:
     wxString m_filenameFinal;
 };
 
-// Helper for writing files
+
+#ifdef __WXMSW__
+/// Return filename safe for passing to CLI tools (gettext).
+/// Uses 8.3 short names to avoid Unicode and codepage issues.
+wxString CliSafeFileName(const wxString& fn);
+#else
+inline wxString CliSafeFileName(const wxString& fn) { return fn; }
+#endif
 
 
 // ----------------------------------------------------------------------

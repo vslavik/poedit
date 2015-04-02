@@ -1510,9 +1510,11 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
         else if (wrapping != DEFAULT_WRAPPING)
             wrappingFlag.Printf(" --width=%d", wrapping);
 
+        TempOutputFileFor po_file_temp2_obj(po_file_temp);
+        const wxString po_file_temp2 = po_file_temp2_obj.FileName();
         auto msgcatCmd = wxString::Format("msgcat --force-po%s -o %s %s",
                                           wrappingFlag,
-                                          QuoteCmdlineArg(po_file),
+                                          QuoteCmdlineArg(po_file_temp2),
                                           QuoteCmdlineArg(po_file_temp));
         wxLogTrace("poedit", "formatting file with %s", msgcatCmd);
 
@@ -1522,7 +1524,9 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
         //      msgids) that, while correct, are not something a *translator* can
         //      do anything about.
         wxLogNull null;
-        msgcat_ok = ExecuteGettext(msgcatCmd) && wxFileExists(po_file);
+        msgcat_ok = ExecuteGettext(msgcatCmd) &&
+                    wxFileExists(po_file_temp2) &&
+                    wxRenameFile(po_file_temp2, po_file, /*overwrite=*/true);
     }
 
     if ( msgcat_ok )
@@ -1574,7 +1578,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
                   (
                       wxString::Format("msgfmt -o %s %s",
                                        QuoteCmdlineArg(mo_file_temp),
-                                       QuoteCmdlineArg(po_file))
+                                       QuoteCmdlineArg(CliSafeFileName(po_file)))
                   ) )
             {
                 mo_compilation_status = CompilationStatus::Success;
@@ -1865,7 +1869,7 @@ int Catalog::DoValidate(const wxString& po_file)
     GettextErrors err;
     ExecuteGettextAndParseOutput
     (
-        wxString::Format("msgfmt -o /dev/null -c %s", QuoteCmdlineArg(po_file)),
+        wxString::Format("msgfmt -o /dev/null -c %s", QuoteCmdlineArg(CliSafeFileName(po_file))),
         err
     );
 
