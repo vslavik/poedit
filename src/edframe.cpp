@@ -1275,6 +1275,10 @@ bool PoeditFrame::ExportCatalog(const wxString& filename)
 {
     wxBusyCursor bcur;
     bool ok = m_catalog->ExportToHTML(filename);
+    if (!ok)
+    {
+        wxLogError(_("Couldn't save file %s."), filename);
+    }
     return ok;
 }
 

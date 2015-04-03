@@ -66,6 +66,12 @@ inline std::string to_utf8(const std::wstring& str)
     return convert.to_bytes(str.data());
 }
 
+inline std::string to_utf8(const wchar_t *str)
+{
+    std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> convert;
+    return convert.to_bytes(str);
+}
+
 inline std::wstring to_wstring(const std::string& utf8str)
 {
     std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> convert;
@@ -75,6 +81,11 @@ inline std::wstring to_wstring(const std::string& utf8str)
 #else
 
 inline std::string to_utf8(const std::wstring& str)
+{
+    return boost::locale::conv::utf_to_utf<char>(str);
+}
+
+inline std::string to_utf8(const wchar_t *str)
 {
     return boost::locale::conv::utf_to_utf<char>(str);
 }
