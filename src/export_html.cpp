@@ -29,10 +29,6 @@
 #include "str_helpers.h"
 
 #include <wx/intl.h>
-#include <wx/utils.h>
-
-#include <iostream>
-#include <fstream>
 
 namespace
 {
@@ -57,12 +53,8 @@ extern const char *CSS_STYLE;
 
 } // anonymous namespace
 
-bool Catalog::ExportToHTML(const wxString& filename)
+void Catalog::ExportToHTML(std::ostream& f)
 {
-    TempOutputFileFor tempfile(filename);
-    std::ofstream f;
-    f.open(tempfile.FileName().fn_str());
-
     f << "<!DOCTYPE html>\n"
          "<html>\n"
          "<head>\n"
@@ -171,10 +163,13 @@ bool Catalog::ExportToHTML(const wxString& filename)
         f << "<td class='tra' " << lang_tra << ">\n";
         if (item->HasPlural())
         {
-            f << "<ol class='plurals'>\n";
-            for (auto t: item->GetTranslations())
-                f << "  <li>" << fmt_trans(t) << "</li>\n";
-            f << "</ol>\n";
+            if (item->IsTranslated())
+            {
+                f << "<ol class='plurals'>\n";
+                for (auto t: item->GetTranslations())
+                    f << "  <li>" << fmt_trans(t) << "</li>\n";
+                f << "</ol>\n";
+            }
         }
         else
         {
@@ -212,9 +207,6 @@ bool Catalog::ExportToHTML(const wxString& filename)
          "</div>\n"
          "</body>\n"
          "</html>\n";
-
-    f.close();
-    return tempfile.Commit();
 }
 
 
@@ -326,7 +318,8 @@ table.metadata td {
 
 /* Translations */
 table.translations {
-  width:100%;
+  width: 100%;
+  table-layout: fixed;
 }
 table.translations th, table.translations td {
   padding: 5px 10px;

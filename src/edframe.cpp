@@ -52,8 +52,9 @@
 #include "osx_helpers.h"
 #endif
 
-#include <map>
 #include <algorithm>
+#include <map>
+#include <fstream>
 #include <future>
 #include <boost/range/counting_range.hpp>
 
@@ -1274,12 +1275,17 @@ void PoeditFrame::OnExport(wxCommandEvent&)
 bool PoeditFrame::ExportCatalog(const wxString& filename)
 {
     wxBusyCursor bcur;
-    bool ok = m_catalog->ExportToHTML(filename);
-    if (!ok)
+
+    TempOutputFileFor tempfile(filename);
+    std::ofstream f;
+    f.open(tempfile.FileName().fn_str());
+    m_catalog->ExportToHTML(f);
+    if (!tempfile.Commit())
     {
         wxLogError(_("Couldn't save file %s."), filename);
+        return false;
     }
-    return ok;
+    return true;
 }
 
 
