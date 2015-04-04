@@ -102,6 +102,10 @@
 		B2CE2FEF1A94EBF50020A620 /* crowdin_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2CE2FED1A94EBF50020A620 /* crowdin_client.cpp */; };
 		B2CE2FF21A94F19D0020A620 /* Prefs-Accounts.png in Resources */ = {isa = PBXBuildFile; fileRef = B2CE2FF01A94F19D0020A620 /* Prefs-Accounts.png */; };
 		B2CE2FF31A94F19D0020A620 /* Prefs-Accounts@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2CE2FF11A94F19D0020A620 /* Prefs-Accounts@2x.png */; };
+		B2CE6D1F1ACFCD95007E6863 /* GenerateThumbnailForURL.c in Sources */ = {isa = PBXBuildFile; fileRef = B2CE6D1E1ACFCD95007E6863 /* GenerateThumbnailForURL.c */; };
+		B2CE6D211ACFCD95007E6863 /* GeneratePreviewForURL.c in Sources */ = {isa = PBXBuildFile; fileRef = B2CE6D201ACFCD95007E6863 /* GeneratePreviewForURL.c */; };
+		B2CE6D231ACFCD95007E6863 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B2CE6D221ACFCD95007E6863 /* main.c */; };
+		B2CE6D2B1AD00A0E007E6863 /* PoeditQuicklook.qlgenerator in Copy Quicklook plugin */ = {isa = PBXBuildFile; fileRef = B2CE6D1A1ACFCD95007E6863 /* PoeditQuicklook.qlgenerator */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B2D76A45181D027F0083C9D9 /* libLucenePlusPlus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A44181D027F0083C9D9 /* libLucenePlusPlus.a */; };
 		B2D76A4C181D028B0083C9D9 /* libboost_date_time.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A46181D028B0083C9D9 /* libboost_date_time.a */; };
 		B2D76A4D181D028B0083C9D9 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A47181D028B0083C9D9 /* libboost_filesystem.a */; };
@@ -171,6 +175,13 @@
 			remoteGlobalIDString = B27115F8170830A800B936D5;
 			remoteInfo = ant_external_deps;
 		};
+		B2CE6D271AD00897007E6863 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B2CE6D191ACFCD95007E6863;
+			remoteInfo = PoeditQuicklook;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -194,6 +205,17 @@
 				B2B7D472170DD93E00ED0AFE /* GettextTools.bundle in Copy Gettext bundle */,
 			);
 			name = "Copy Gettext bundle";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2CE6D2A1AD0096C007E6863 /* Copy Quicklook plugin */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/QuickLook;
+			dstSubfolderSpec = 1;
+			files = (
+				B2CE6D2B1AD00A0E007E6863 /* PoeditQuicklook.qlgenerator in Copy Quicklook plugin */,
+			);
+			name = "Copy Quicklook plugin";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B2E836D81709EB0700F31559 /* Copy Private Frameworks */ = {
@@ -422,6 +444,11 @@
 		B2CE2FEE1A94EBF50020A620 /* crowdin_client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crowdin_client.h; sourceTree = "<group>"; };
 		B2CE2FF01A94F19D0020A620 /* Prefs-Accounts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Prefs-Accounts.png"; sourceTree = "<group>"; };
 		B2CE2FF11A94F19D0020A620 /* Prefs-Accounts@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Prefs-Accounts@2x.png"; sourceTree = "<group>"; };
+		B2CE6D1A1ACFCD95007E6863 /* PoeditQuicklook.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PoeditQuicklook.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2CE6D1D1ACFCD95007E6863 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B2CE6D1E1ACFCD95007E6863 /* GenerateThumbnailForURL.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GenerateThumbnailForURL.c; sourceTree = "<group>"; };
+		B2CE6D201ACFCD95007E6863 /* GeneratePreviewForURL.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GeneratePreviewForURL.c; sourceTree = "<group>"; };
+		B2CE6D221ACFCD95007E6863 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		B2D04DFB197A831D00D24B42 /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B2D76A44181D027F0083C9D9 /* libLucenePlusPlus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libLucenePlusPlus.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D76A46181D028B0083C9D9 /* libboost_date_time.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_date_time.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -511,6 +538,13 @@
 				B2D76A51181D028B0083C9D9 /* libboost_thread.a in Frameworks */,
 				B2083D131A87D17D00150BBF /* libcld2.a in Frameworks */,
 				B22E690F1A936294002C06C7 /* libAFNetworking.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2CE6D161ACFCD95007E6863 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -694,6 +728,7 @@
 			children = (
 				B24ACD6416F6201F00399242 /* Poedit */,
 				B248B2E1170D765100EBA58E /* GettextTools */,
+				B2CE6D1B1ACFCD95007E6863 /* Quicklook */,
 				B24ACD5D16F6201F00399242 /* Frameworks */,
 				B24ACD5C16F6201F00399242 /* Products */,
 			);
@@ -705,6 +740,7 @@
 				B24ACD5B16F6201F00399242 /* Poedit.app */,
 				B248B2DE170D765100EBA58E /* GettextTools.bundle */,
 				B23D1F6418142CF400E6B212 /* dump-legacy-tm */,
+				B2CE6D1A1ACFCD95007E6863 /* PoeditQuicklook.qlgenerator */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -840,6 +876,18 @@
 			path = osx;
 			sourceTree = "<group>";
 		};
+		B2CE6D1B1ACFCD95007E6863 /* Quicklook */ = {
+			isa = PBXGroup;
+			children = (
+				B2CE6D1E1ACFCD95007E6863 /* GenerateThumbnailForURL.c */,
+				B2CE6D201ACFCD95007E6863 /* GeneratePreviewForURL.c */,
+				B2CE6D221ACFCD95007E6863 /* main.c */,
+				B2CE6D1D1ACFCD95007E6863 /* Info.plist */,
+			);
+			name = Quicklook;
+			path = src/quicklook;
+			sourceTree = "<group>";
+		};
 		B2E836DF1709ECF100F31559 /* Artwork */ = {
 			isa = PBXGroup;
 			children = (
@@ -867,6 +915,16 @@
 			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		B2CE6D171ACFCD95007E6863 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXLegacyTarget section */
 		B27115F8170830A800B936D5 /* ant_external_deps */ = {
@@ -934,6 +992,7 @@
 				B2E836D81709EB0700F31559 /* Copy Private Frameworks */,
 				B23D1F72181446EF00E6B212 /* Copy Auxiliary Binaries */,
 				B2B7D470170DD91C00ED0AFE /* Copy Gettext bundle */,
+				B2CE6D2A1AD0096C007E6863 /* Copy Quicklook plugin */,
 				B2E83707170C96DB00F31559 /* Copy PO Translations */,
 			);
 			buildRules = (
@@ -941,12 +1000,32 @@
 			dependencies = (
 				B2B7D474170DDAAB00ED0AFE /* PBXTargetDependency */,
 				B248B2EE170D773000EBA58E /* PBXTargetDependency */,
+				B2CE6D281AD00897007E6863 /* PBXTargetDependency */,
 				B23D1F6E18142D0100E6B212 /* PBXTargetDependency */,
 			);
 			name = Poedit;
 			productName = Poedit;
 			productReference = B24ACD5B16F6201F00399242 /* Poedit.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B2CE6D191ACFCD95007E6863 /* PoeditQuicklook */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B2CE6D261ACFCD95007E6863 /* Build configuration list for PBXNativeTarget "PoeditQuicklook" */;
+			buildPhases = (
+				B2CE6D151ACFCD95007E6863 /* Sources */,
+				B2CE6D161ACFCD95007E6863 /* Frameworks */,
+				B2CE6D171ACFCD95007E6863 /* Headers */,
+				B2CE6D181ACFCD95007E6863 /* Resources */,
+				B2CE6D291AD008F6007E6863 /* Set CFBundleVersion from git */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PoeditQuicklook;
+			productName = PoeditQuicklook;
+			productReference = B2CE6D1A1ACFCD95007E6863 /* PoeditQuicklook.qlgenerator */;
+			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
 
@@ -957,6 +1036,11 @@
 				CLASSPREFIX = PO;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Václav Slavík";
+				TargetAttributes = {
+					B2CE6D191ACFCD95007E6863 = {
+						CreatedOnToolsVersion = 6.2;
+					};
+				};
 			};
 			buildConfigurationList = B24ACD5616F6201F00399242 /* Build configuration list for PBXProject "Poedit" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1015,6 +1099,7 @@
 				B24ACD5A16F6201F00399242 /* Poedit */,
 				B27115F8170830A800B936D5 /* ant_external_deps */,
 				B248B2DD170D765100EBA58E /* GettextTools */,
+				B2CE6D191ACFCD95007E6863 /* PoeditQuicklook */,
 				B23D1F6318142CF400E6B212 /* dump-legacy-tm */,
 			);
 		};
@@ -1091,6 +1176,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B2CE6D181ACFCD95007E6863 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1121,6 +1213,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "VERSION_NUMBER=`cat deps/gettext/.version`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"";
+		};
+		B2CE6D291AD008F6007E6863 /* Set CFBundleVersion from git */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Set CFBundleVersion from git";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "BUILD_NUMBER=`git rev-list HEAD --count`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"";
 		};
 		B2E83707170C96DB00F31559 /* Copy PO Translations */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1221,6 +1327,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B2CE6D151ACFCD95007E6863 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2CE6D1F1ACFCD95007E6863 /* GenerateThumbnailForURL.c in Sources */,
+				B2CE6D211ACFCD95007E6863 /* GeneratePreviewForURL.c in Sources */,
+				B2CE6D231ACFCD95007E6863 /* main.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1248,6 +1364,11 @@
 			isa = PBXTargetDependency;
 			target = B27115F8170830A800B936D5 /* ant_external_deps */;
 			targetProxy = B2B7D473170DDAAB00ED0AFE /* PBXContainerItemProxy */;
+		};
+		B2CE6D281AD00897007E6863 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B2CE6D191ACFCD95007E6863 /* PoeditQuicklook */;
+			targetProxy = B2CE6D271AD00897007E6863 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1617,6 +1738,63 @@
 			};
 			name = Release;
 		};
+		B2CE6D241ACFCD95007E6863 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = src/quicklook/Info.plist;
+				INSTALL_PATH = /Library/QuickLook;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = qlgenerator;
+			};
+			name = Debug;
+		};
+		B2CE6D251ACFCD95007E6863 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = src/quicklook/Info.plist;
+				INSTALL_PATH = /Library/QuickLook;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = qlgenerator;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1664,6 +1842,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		B2CE6D261ACFCD95007E6863 /* Build configuration list for PBXNativeTarget "PoeditQuicklook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2CE6D241ACFCD95007E6863 /* Debug */,
+				B2CE6D251ACFCD95007E6863 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
