@@ -102,8 +102,7 @@
 		B2CE2FEF1A94EBF50020A620 /* crowdin_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2CE2FED1A94EBF50020A620 /* crowdin_client.cpp */; };
 		B2CE2FF21A94F19D0020A620 /* Prefs-Accounts.png in Resources */ = {isa = PBXBuildFile; fileRef = B2CE2FF01A94F19D0020A620 /* Prefs-Accounts.png */; };
 		B2CE2FF31A94F19D0020A620 /* Prefs-Accounts@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2CE2FF11A94F19D0020A620 /* Prefs-Accounts@2x.png */; };
-		B2CE6D1F1ACFCD95007E6863 /* GenerateThumbnailForURL.c in Sources */ = {isa = PBXBuildFile; fileRef = B2CE6D1E1ACFCD95007E6863 /* GenerateThumbnailForURL.c */; };
-		B2CE6D211ACFCD95007E6863 /* GeneratePreviewForURL.c in Sources */ = {isa = PBXBuildFile; fileRef = B2CE6D201ACFCD95007E6863 /* GeneratePreviewForURL.c */; };
+		B2CE6D211ACFCD95007E6863 /* GeneratePreviewForURL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2CE6D201ACFCD95007E6863 /* GeneratePreviewForURL.cpp */; };
 		B2CE6D231ACFCD95007E6863 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B2CE6D221ACFCD95007E6863 /* main.c */; };
 		B2CE6D2B1AD00A0E007E6863 /* PoeditQuicklook.qlgenerator in Copy Quicklook plugin */ = {isa = PBXBuildFile; fileRef = B2CE6D1A1ACFCD95007E6863 /* PoeditQuicklook.qlgenerator */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B2D76A45181D027F0083C9D9 /* libLucenePlusPlus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A44181D027F0083C9D9 /* libLucenePlusPlus.a */; };
@@ -113,6 +112,17 @@
 		B2D76A4F181D028B0083C9D9 /* libboost_regex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A49181D028B0083C9D9 /* libboost_regex.a */; };
 		B2D76A50181D028B0083C9D9 /* libboost_system.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A4A181D028B0083C9D9 /* libboost_system.a */; };
 		B2D76A51181D028B0083C9D9 /* libboost_thread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A4B181D028B0083C9D9 /* libboost_thread.a */; };
+		B2DAD70A1AD13D2A00DCB398 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B24ACD5E16F6201F00399242 /* Cocoa.framework */; };
+		B2DAD70B1AD13D3E00DCB398 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84BB170846940030AA22 /* Carbon.framework */; };
+		B2DAD70C1AD13D4C00DCB398 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84BD170847220030AA22 /* libz.dylib */; };
+		B2DAD70D1AD13D6000DCB398 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84B9170846290030AA22 /* OpenGL.framework */; };
+		B2DAD70E1AD1451300DCB398 /* catalog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CAC16F629D30018AF7E /* catalog.cpp */; };
+		B2DAD70F1AD1984200DCB398 /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CDE16F629D30018AF7E /* utility.cpp */; };
+		B2DAD7101AD198B800DCB398 /* gexecute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CC416F629D30018AF7E /* gexecute.cpp */; };
+		B2DAD7111AD198C000DCB398 /* export_html.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CE216F629D30018AF7E /* export_html.cpp */; };
+		B2DAD7121AD198DE00DCB398 /* language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22C5F0817DDC67400ECAFD1 /* language.cpp */; };
+		B2DAD7131AD1990200DCB398 /* libcld2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2083D121A87D17D00150BBF /* libcld2.a */; };
+		B2DB288D1AD1AD800066C69F /* libwx_osx_cocoa_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2567976170763B700C52BC5 /* libwx_osx_cocoa_static.a */; };
 		B2DFCCFB19B5FD15003DFAD0 /* sidebar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2DFCCF919B5FD15003DFAD0 /* sidebar.cpp */; };
 		B2E11F121A2C66FB00E4E42C /* text_control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2E11F101A2C66FB00E4E42C /* text_control.cpp */; };
 		B2E2184C199A76B100EA2784 /* syntaxhighlighter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2E2184A199A76B100EA2784 /* syntaxhighlighter.cpp */; };
@@ -181,6 +191,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = B2CE6D191ACFCD95007E6863;
 			remoteInfo = PoeditQuicklook;
+		};
+		B2DAD7141AD19AAD00DCB398 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B27115F8170830A800B936D5;
+			remoteInfo = ant_external_deps;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -446,8 +463,7 @@
 		B2CE2FF11A94F19D0020A620 /* Prefs-Accounts@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Prefs-Accounts@2x.png"; sourceTree = "<group>"; };
 		B2CE6D1A1ACFCD95007E6863 /* PoeditQuicklook.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PoeditQuicklook.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2CE6D1D1ACFCD95007E6863 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B2CE6D1E1ACFCD95007E6863 /* GenerateThumbnailForURL.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GenerateThumbnailForURL.c; sourceTree = "<group>"; };
-		B2CE6D201ACFCD95007E6863 /* GeneratePreviewForURL.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GeneratePreviewForURL.c; sourceTree = "<group>"; };
+		B2CE6D201ACFCD95007E6863 /* GeneratePreviewForURL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GeneratePreviewForURL.cpp; sourceTree = "<group>"; };
 		B2CE6D221ACFCD95007E6863 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		B2D04DFB197A831D00D24B42 /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B2D76A44181D027F0083C9D9 /* libLucenePlusPlus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libLucenePlusPlus.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -545,6 +561,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2DB288D1AD1AD800066C69F /* libwx_osx_cocoa_static.a in Frameworks */,
+				B2DAD7131AD1990200DCB398 /* libcld2.a in Frameworks */,
+				B2DAD70C1AD13D4C00DCB398 /* libz.dylib in Frameworks */,
+				B2DAD70A1AD13D2A00DCB398 /* Cocoa.framework in Frameworks */,
+				B2DAD70B1AD13D3E00DCB398 /* Carbon.framework in Frameworks */,
+				B2DAD70D1AD13D6000DCB398 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -879,8 +901,7 @@
 		B2CE6D1B1ACFCD95007E6863 /* Quicklook */ = {
 			isa = PBXGroup;
 			children = (
-				B2CE6D1E1ACFCD95007E6863 /* GenerateThumbnailForURL.c */,
-				B2CE6D201ACFCD95007E6863 /* GeneratePreviewForURL.c */,
+				B2CE6D201ACFCD95007E6863 /* GeneratePreviewForURL.cpp */,
 				B2CE6D221ACFCD95007E6863 /* main.c */,
 				B2CE6D1D1ACFCD95007E6863 /* Info.plist */,
 			);
@@ -1017,10 +1038,12 @@
 				B2CE6D171ACFCD95007E6863 /* Headers */,
 				B2CE6D181ACFCD95007E6863 /* Resources */,
 				B2CE6D291AD008F6007E6863 /* Set CFBundleVersion from git */,
+				B2C1DA6A1AD2DC0E00CDABFF /* Link Resources/ to Embedding App */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B2DAD7151AD19AAD00DCB398 /* PBXTargetDependency */,
 			);
 			name = PoeditQuicklook;
 			productName = PoeditQuicklook;
@@ -1186,6 +1209,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		B2C1DA6A1AD2DC0E00CDABFF /* Link Resources/ to Embedding App */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Link Resources/ to Embedding App";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ln -sf ../../../../Resources \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n";
+		};
 		B2CC62E117DB7E2D0097461B /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1331,8 +1368,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2CE6D1F1ACFCD95007E6863 /* GenerateThumbnailForURL.c in Sources */,
-				B2CE6D211ACFCD95007E6863 /* GeneratePreviewForURL.c in Sources */,
+				B2DAD7111AD198C000DCB398 /* export_html.cpp in Sources */,
+				B2DAD7121AD198DE00DCB398 /* language.cpp in Sources */,
+				B2DAD70F1AD1984200DCB398 /* utility.cpp in Sources */,
+				B2DAD7101AD198B800DCB398 /* gexecute.cpp in Sources */,
+				B2CE6D211ACFCD95007E6863 /* GeneratePreviewForURL.cpp in Sources */,
+				B2DAD70E1AD1451300DCB398 /* catalog.cpp in Sources */,
 				B2CE6D231ACFCD95007E6863 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1369,6 +1410,11 @@
 			isa = PBXTargetDependency;
 			target = B2CE6D191ACFCD95007E6863 /* PoeditQuicklook */;
 			targetProxy = B2CE6D271AD00897007E6863 /* PBXContainerItemProxy */;
+		};
+		B2DAD7151AD19AAD00DCB398 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B27115F8170830A800B936D5 /* ant_external_deps */;
+			targetProxy = B2DAD7141AD19AAD00DCB398 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1601,7 +1647,10 @@
 					deps/AFNetworking/AFNetworking,
 					"$(DEPS_BUILD_DIR)/icu/include",
 				);
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(DEPS_BUILD_DIR)/icu/lib",
+					"$(DEPS_BUILD_DIR)/db/lib",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				POEDIT_FEATURES = "";
@@ -1654,7 +1703,10 @@
 					deps/AFNetworking/AFNetworking,
 					"$(DEPS_BUILD_DIR)/icu/include",
 				);
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(DEPS_BUILD_DIR)/icu/lib",
+					"$(DEPS_BUILD_DIR)/db/lib",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				POEDIT_FEATURES = "";
 				POEDIT_VERSION = 1.8beta1;
@@ -1672,10 +1724,7 @@
 				GCC_PREFIX_HEADER = "src/Poedit-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/macosx/Poedit-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(DEPS_BUILD_DIR)/icu/lib",
-					"$(DEPS_BUILD_DIR)/db/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-licuuc",
 					"-licudata",
@@ -1697,10 +1746,7 @@
 				GCC_PREFIX_HEADER = "src/Poedit-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/macosx/Poedit-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(DEPS_BUILD_DIR)/icu/lib",
-					"$(DEPS_BUILD_DIR)/db/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-licuuc",
 					"-licudata",
@@ -1752,7 +1798,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					"wxUSE_GUI=0",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -1762,6 +1808,12 @@
 				INFOPLIST_FILE = src/quicklook/Info.plist;
 				INSTALL_PATH = /Library/QuickLook;
 				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = (
+					"-licuuc",
+					"-licudata",
+					"-licui18n",
+				);
+				POEDIT_FEATURES = HAVE_CLD2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = qlgenerator;
@@ -1783,12 +1835,22 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"wxUSE_GUI=0",
+					"$(inherited)",
+				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = src/quicklook/Info.plist;
 				INSTALL_PATH = /Library/QuickLook;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = (
+					"-licuuc",
+					"-licudata",
+					"-licui18n",
+				);
+				POEDIT_FEATURES = HAVE_CLD2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = qlgenerator;
@@ -1850,6 +1912,7 @@
 				B2CE6D251ACFCD95007E6863 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

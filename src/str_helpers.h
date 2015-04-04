@@ -28,6 +28,10 @@
 
 #include <string>
 
+#ifdef __OBJC__
+#include <Foundation/NSString.h>
+#endif
+
 // as of gcc-4.9, no functional <codecvt> support yet
 #if defined(__clang__) || defined(_MSC_VER)
     #define HAVE_CODECVT

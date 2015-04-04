@@ -7,7 +7,7 @@
 //
 //==============================================================================
 
-
+// Small modifications to allow wx initialization
 
 
 
@@ -16,6 +16,9 @@
 #include <CoreFoundation/CFPlugInCOM.h>
 #include <CoreServices/CoreServices.h>
 #include <QuickLook/QuickLook.h>
+
+extern void Initialize_plugin();
+extern void Uninitialize_plugin();
 
 // -----------------------------------------------------------------------------
 //	constants
@@ -91,6 +94,8 @@ static QLGeneratorInterfaceStruct myInterfaceFtbl = {
 //
 QuickLookGeneratorPluginType *AllocQuickLookGeneratorPluginType(CFUUIDRef inFactoryID)
 {
+    Initialize_plugin();
+
     QuickLookGeneratorPluginType *theNewInstance;
 
     theNewInstance = (QuickLookGeneratorPluginType *)malloc(sizeof(QuickLookGeneratorPluginType));
@@ -131,6 +136,8 @@ void DeallocQuickLookGeneratorPluginType(QuickLookGeneratorPluginType *thisInsta
         CFPlugInRemoveInstanceForFactory(theFactoryID);
         CFRelease(theFactoryID);
     }
+    
+    Uninitialize_plugin();
 }
 
 // -----------------------------------------------------------------------------
@@ -200,6 +207,7 @@ ULONG QuickLookGeneratorPluginRelease(void *thisInstance)
 // -----------------------------------------------------------------------------
 void *QuickLookGeneratorPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID)
 {
+    #pragma unused(allocator)
     QuickLookGeneratorPluginType *result;
     CFUUIDRef                 uuid;
 
