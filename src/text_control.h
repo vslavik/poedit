@@ -152,9 +152,13 @@ public:
 
 protected:
     void OnKeyDown(wxKeyEvent& e);
+    void OnText(wxCommandEvent& e);
+
 #ifdef __WXOSX__
     void DoSetValue(const wxString& value, int flags) override;
 #endif
+
+    bool m_lastKeyWasReturn;
 };
 
 #endif // Poedit_text_control_h

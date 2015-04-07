@@ -668,7 +668,8 @@ SourceTextCtrl::SourceTextCtrl(wxWindow *parent, wxWindowID winid)
 
 
 TranslationTextCtrl::TranslationTextCtrl(wxWindow *parent, wxWindowID winid)
-    : AnyTranslatableTextCtrl(parent, winid)
+    : AnyTranslatableTextCtrl(parent, winid),
+      m_lastKeyWasReturn(false)
 {
 #ifdef __WXMSW__
     PrepareTextCtrlForSpellchecker(this);
@@ -679,12 +680,27 @@ TranslationTextCtrl::TranslationTextCtrl(wxWindow *parent, wxWindowID winid)
 #endif
 
     Bind(wxEVT_KEY_DOWN, &TranslationTextCtrl::OnKeyDown, this);
+    Bind(wxEVT_TEXT, &TranslationTextCtrl::OnText, this);
 }
 
 void TranslationTextCtrl::OnKeyDown(wxKeyEvent& e)
 {
-    if (e.GetUnicodeKey() == WXK_RETURN)
-        WriteText("\\n");
+    m_lastKeyWasReturn = (e.GetUnicodeKey() == WXK_RETURN);
+    e.Skip();
+}
+
+void TranslationTextCtrl::OnText(wxCommandEvent& e)
+{
+    if (m_lastKeyWasReturn)
+    {
+        // Insert \n markup in front of newlines:
+        m_lastKeyWasReturn = false;
+        long pos = GetInsertionPoint();
+        auto range = GetRange(std::max(0l, pos - 3), pos);
+        if (range.Last() == '\n' && range != "\\n\n")
+            Replace(pos - 1, pos, "\\n\n");
+    }
+
     e.Skip();
 }
 
