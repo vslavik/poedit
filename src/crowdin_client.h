@@ -96,7 +96,7 @@ public:
         std::wstring name;
         std::string identifier;
         std::vector<Language> languages;
-        std::vector<std::wstring> po_files;
+        std::vector<std::wstring> files;
     };
 
     /// Retrieve listing of projects accessible to the user

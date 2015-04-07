@@ -48,6 +48,7 @@
 #include <wx/weakref.h>
 #include <wx/windowptr.h>
 
+#include <boost/algorithm/string.hpp>
 
 CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     : wxPanel(parent, wxID_ANY),
@@ -303,6 +304,7 @@ public:
         CenterOnParent();
 
         m_project->Bind(wxEVT_CHOICE, [=](wxCommandEvent&){ OnProjectSelected(); });
+        m_file->Bind(wxEVT_CHOICE, [=](wxCommandEvent&){ OnFileSelected(); });
         ok->Bind(wxEVT_UPDATE_UI, &CrowdinOpenDialog::OnUpdateOK, this);
         ok->Bind(wxEVT_BUTTON, &CrowdinOpenDialog::OnOK, this);
 
@@ -369,26 +371,53 @@ private:
     void OnFetchedProjectInfo(const CrowdinClient::ProjectInfo& prj)
     {
         m_info = prj;
+        // Put supported files first in the list:
+        std::vector<std::wstring> f_unsup;
+        m_info.files.clear();
+        m_supportedFilesCount = 0;
+        for (auto& i: prj.files)
+        {
+            if (IsFileSupported(i))
+            {
+                m_info.files.push_back(i);
+                m_supportedFilesCount++;
+            }
+            else
+            {
+                f_unsup.push_back(i);
+            }
+        }
+        std::move(f_unsup.begin(), f_unsup.end(), std::inserter(m_info.files, m_info.files.end()));
 
         m_language->Clear();
         m_language->Append("");
-        for (auto& i: prj.languages)
+        for (auto& i: m_info.languages)
             m_language->Append(i.DisplayName());
 
         m_file->Clear();
         m_file->Append("");
-        for (auto& i: prj.po_files)
-            m_file->Append(i);
+        for (auto& i: m_info.files)
+        {
+            if (IsFileSupported(i))
+            {
+                m_file->Append(i);
+            }
+            else
+            {
+                /// TRANSLATORS: This is a file selector list, %s is filename, and it is shown for Crowdin files not editable in Poedit
+                m_file->Append(wxString::Format(L"%s — not supported", i));
+            }
+        }
 
         EnableAllChoices();
         m_activity->Stop();
 
-        if (prj.languages.size() == 1)
+        if (m_info.languages.size() == 1)
             m_language->SetSelection(1);
-        if (prj.po_files.size() == 1)
+        if (m_supportedFilesCount == 1)
             m_file->SetSelection(1);
 
-        if (prj.po_files.empty())
+        if (m_supportedFilesCount == 0)
         {
             m_activity->StopWithError(_("This project has no files that can be translated in Poedit."));
             m_file->Disable();
@@ -396,18 +425,28 @@ private:
         }
     }
 
+    void OnFileSelected()
+    {
+        auto filesel = m_file->GetSelection();
+        if (filesel - 1 < m_supportedFilesCount)
+            m_activity->Stop();
+        else
+            m_activity->StopWithError(_(L"This file can only be edited in Crowdin’s web interface."));
+    }
+
     void OnUpdateOK(wxUpdateUIEvent& e)
     {
+        auto filesel = m_file->GetSelection();
         e.Enable(!m_activity->IsRunning() &&
                  m_project->GetSelection() > 0 &&
-                 m_file->GetSelection() > 0 &&
-                 m_language->GetSelection() > 0);
+                 m_language->GetSelection() > 0 &&
+                 filesel > 0 && filesel - 1 < m_supportedFilesCount);
     }
 
     void OnOK(wxCommandEvent&)
     {
         auto crowdin_prj = m_info.identifier;
-        auto crowdin_file = m_info.po_files[m_file->GetSelection() - 1];
+        auto crowdin_file = m_info.files[m_file->GetSelection() - 1];
         auto crowdin_lang = m_info.languages[m_language->GetSelection() - 1];
         OutLocalFilename = CreateLocalFilename(crowdin_file, crowdin_lang);
 
@@ -423,6 +462,11 @@ private:
             }),
             m_activity->HandleError
         );
+    }
+
+    bool IsFileSupported(const wxString& name) const
+    {
+        return boost::ends_with(name, ".po") || boost::ends_with(name, ".pot");
     }
 
     wxString CreateLocalFilename(const wxString& name, const Language& lang)
@@ -456,6 +500,7 @@ private:
 
     std::vector<CrowdinClient::ProjectListing> m_projects;
     CrowdinClient::ProjectInfo m_info;
+    int m_supportedFilesCount;
 };
 
 

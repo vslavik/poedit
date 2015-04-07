@@ -76,8 +76,7 @@ void ExtractFilesFromInfo(std::vector<std::wstring>& out, const json_dict& r, co
         auto node_type = i.utf8_string("node_type");
         if (node_type == "file")
         {
-            if (boost::ends_with(name, ".po") || boost::ends_with(name, ".pot"))
-                out.push_back(name);
+            out.push_back(name);
         }
         else if (node_type == "directory")
         {
@@ -256,7 +255,7 @@ void CrowdinClient::GetProjectInfo(const std::string& project_id,
                     if (i.number("can_translate") != 0)
                         prj.languages.push_back(Language::TryParse(i.wstring("code")));
                 });
-                ExtractFilesFromInfo(prj.po_files, r, L"/");
+                ExtractFilesFromInfo(prj.files, r, L"/");
                 onResult(prj);
             },
             onError
