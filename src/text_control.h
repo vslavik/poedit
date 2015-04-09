@@ -70,6 +70,9 @@ protected:
     void OnCopy(wxClipboardTextEvent& event);
     void OnCut(wxClipboardTextEvent& event);
     void OnPaste(wxClipboardTextEvent& event);
+
+    virtual wxString DoCopyText(long from, long to);
+    virtual void DoPasteText(long from, long to, const wxString& s);
 #endif // __WXMSW__/__WXGTK__
 
 #ifdef __WXGTK__
@@ -113,6 +116,11 @@ public:
     static wxString UnescapePlainText(const wxString& s);
 
 protected:
+#if defined(__WXMSW__) || defined(__WXGTK__)
+    wxString DoCopyText(long from, long to) override;
+    void DoPasteText(long from, long to, const wxString& s) override;
+#endif
+
 #ifdef __WXMSW__
     void DoSetValue(const wxString& value, int flags) override;
     void UpdateRTLStyle();

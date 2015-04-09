@@ -183,6 +183,11 @@ CustomizedTextCtrl::CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long 
 
     [text setTextContainerInset:NSMakeSize(1,3)];
     [text setRichText:NO];
+
+    // TODO: This isn't implemented and doesn't work in OS X
+    //Bind(wxEVT_TEXT_COPY, &CustomizedTextCtrl::OnCopy, this);
+    //Bind(wxEVT_TEXT_CUT, &CustomizedTextCtrl::OnCut, this);
+    //Bind(wxEVT_TEXT_PASTE, &CustomizedTextCtrl::OnPaste, this);
 }
 
 void CustomizedTextCtrl::DoSetValue(const wxString& value, int flags)
@@ -264,12 +269,11 @@ bool CustomizedTextCtrl::DoCopy()
     if ( from == to )
         return false;
 
-    const wxString sel = GetRange(from, to);
-
     wxClipboardLocker lock;
     wxCHECK_MSG( !!lock, false, "failed to lock clipboard" );
 
-    wxClipboard::Get()->SetData(new wxTextDataObject(sel));
+    auto text = DoCopyText(from, to);
+    wxClipboard::Get()->SetData(new wxTextDataObject(text));
     return true;
 }
 
@@ -298,10 +302,19 @@ void CustomizedTextCtrl::OnPaste(wxClipboardTextEvent&)
 
     long from, to;
     GetSelection(&from, &to);
-    Replace(from, to, d.GetText());
+    DoPasteText(from, to, d.GetText());
+}
+
+wxString CustomizedTextCtrl::DoCopyText(long from, long to)
+{
+    return GetRange(from, to);
+}
+
+void CustomizedTextCtrl::DoPasteText(long from, long to, const wxString& s)
+{
+    Replace(from, to, s);
 }
 #endif // __WXMSW__/__WXGTK__
-
 
 #ifdef __WXGTK__
 void CustomizedTextCtrl::BeginUndoGrouping()
@@ -581,6 +594,18 @@ wxString AnyTranslatableTextCtrl::UnescapePlainText(const wxString& s)
     }
     return s2;
 }
+
+#if defined(__WXMSW__) || defined(__WXGTK__)
+wxString AnyTranslatableTextCtrl::DoCopyText(long from, long to)
+{
+    return UnescapePlainText(GetRange(from, to));
+}
+
+void AnyTranslatableTextCtrl::DoPasteText(long from, long to, const wxString& s)
+{
+    Replace(from, to, EscapePlainText(s));
+}
+#endif
 
 #ifdef __WXMSW__
 void AnyTranslatableTextCtrl::DoSetValue(const wxString& value, int flags)
