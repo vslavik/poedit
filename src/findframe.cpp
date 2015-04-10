@@ -95,9 +95,7 @@ FindFrame::FindFrame(PoeditFrame *owner,
     m_mode->SetSelection(Mode_Find);
 
     m_searchField = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(PX(400), -1));
-    m_searchField->SetHint(_("String to find"));
     m_replaceField = new wxTextCtrl(panel, wxID_ANY);
-    m_replaceField->SetHint(_("Replacement string"));
 
     entrySizer->Add(m_mode);
     entrySizer->Add(m_searchField, wxSizerFlags(1).Expand());
@@ -200,6 +198,11 @@ FindFrame::FindFrame(PoeditFrame *owner,
     m_btnReplace->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable((bool)m_lastItem); });
     m_btnReplaceAll->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable(!ms_text.empty()); });
 
+    // SetHint() needs to be called *after* binding any event handlers, for
+    // compatibility with its generic implementation:
+    m_searchField->SetHint(_("String to find"));
+    m_replaceField->SetHint(_("Replacement string"));
+
     // Create hidden, will be shown after setting it up
     Show(false);
 }
@@ -273,12 +276,14 @@ void FindFrame::OnModeChanged()
 }
 
 
-void FindFrame::OnTextChange(wxCommandEvent&)
+void FindFrame::OnTextChange(wxCommandEvent& e)
 {
     ms_text = m_searchField->GetValue();
     m_lastItem.reset();
 
     Reset(m_catalog);
+
+    e.Skip();
 }
 
 
