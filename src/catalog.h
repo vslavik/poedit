@@ -32,9 +32,10 @@
 #include <wx/arrstr.h>
 #include <wx/textfile.h>
 
-#include <vector>
+#include <iostream>
 #include <map>
 #include <memory>
+#include <vector>
 
 class ProgressInfo;
 
@@ -561,7 +562,7 @@ class Catalog
                          CompilationStatus& mo_compilation_status);
 
         /// Exports the catalog to HTML format
-        bool ExportToHTML(const wxString& filename);
+        void ExportToHTML(std::ostream& output);
 
         /**
             Return base path to source code for extraction, or empty string if not configured.

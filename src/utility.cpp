@@ -29,10 +29,17 @@
 #include <wx/filename.h>
 #include <wx/log.h>
 #include <wx/config.h>
-#include <wx/display.h>
+
+#if wxUSE_GUI
+    #include <wx/display.h>
+#endif
 
 #if defined(__WXOSX__) && defined(__clang__)
     #include <dispatch/dispatch.h>
+#endif
+
+#ifdef __WXOSX__
+    #include <Foundation/Foundation.h>
 #endif
 
 #include "str_helpers.h"
@@ -247,6 +254,8 @@ wxString CliSafeFileName(const wxString& fn)
 // Helpers for persisting windows' state
 // ----------------------------------------------------------------------
 
+#if wxUSE_GUI
+
 void SaveWindowState(const wxTopLevelWindow *win, int flags)
 {
 #ifdef __WXOSX__
@@ -367,3 +376,5 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
     }
 #endif // !__WXOSX__
 }
+
+#endif // wxUSE_GUI

@@ -156,8 +156,8 @@
             <arg value="--prefix=/"/>
             <arg value="CC=${osx.cc}"/>
             <arg value="CXX=${osx.cxx}"/>
-            <arg value="CFLAGS=${osx.cflags}"/>
-            <arg value="CXXFLAGS=${osx.cxxflags}"/>
+            <arg value="CFLAGS=${osx.cflags} -DU_STATIC_IMPLEMENTATION"/>
+            <arg value="CXXFLAGS=${osx.cxxflags} -DU_STATIC_IMPLEMENTATION"/>
             <arg value="LDFLAGS=${osx.ldflags}"/>
             <arg value="--disable-shared"/>
             <arg value="--enable-static"/>

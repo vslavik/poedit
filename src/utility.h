@@ -32,12 +32,16 @@
     #endif
 #endif
 
-#include <wx/app.h>
-#include <wx/string.h>
-#include <wx/arrstr.h>
-#include <wx/toplevel.h>
-
 #include <functional>
+
+#include <wx/app.h>
+#include <wx/arrstr.h>
+#include <wx/string.h>
+#include <wx/weakref.h>
+
+#if wxUSE_GUI
+    #include <wx/toplevel.h>
+#endif
 
 // ----------------------------------------------------------------------
 // Multithreading helpers
@@ -330,6 +334,8 @@ inline wxString CliSafeFileName(const wxString& fn) { return fn; }
 // Helpers for persisting windows' state
 // ----------------------------------------------------------------------
 
+#if wxUSE_GUI
+
 enum WinStateFlags
 {
     WinState_Pos  = 1,
@@ -345,5 +351,7 @@ inline wxString WindowStatePath(const wxWindow *win)
 {
     return wxString::Format("/windows/%s/", win->GetName().c_str());
 }
+
+#endif // wxUSE_GUI
 
 #endif // _UTILITY_H_

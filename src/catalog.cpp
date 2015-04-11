@@ -33,7 +33,6 @@
 #include <wx/textfile.h>
 #include <wx/strconv.h>
 #include <wx/memtext.h>
-#include <wx/msgdlg.h>
 #include <wx/filename.h>
 
 #include <set>
@@ -44,13 +43,18 @@
 #include "gexecute.h"
 #include "progressinfo.h"
 #include "str_helpers.h"
-#include "summarydlg.h"
 #include "utility.h"
 #include "version.h"
 #include "language.h"
 
 #ifdef __WXOSX__
 #import <Foundation/Foundation.h>
+#endif
+
+// TODO: split into different file
+#if wxUSE_GUI
+    #include <wx/msgdlg.h>
+    #include "summarydlg.h"
 #endif
 
 // ----------------------------------------------------------------------
@@ -1834,11 +1838,13 @@ bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
 
     if (!CanEncodeToCharset(f, m_header.Charset))
     {
+#if wxUSE_GUI
         wxString msg;
         msg.Printf(_("The catalog couldn't be saved in '%s' charset as specified in catalog settings.\n\nIt was saved in UTF-8 instead and the setting was modified accordingly."),
                    m_header.Charset.c_str());
         wxMessageBox(msg, _("Error saving catalog"),
                      wxOK | wxICON_EXCLAMATION);
+#endif
         m_header.Charset = "UTF-8";
 
         // Re-do the save again because we modified a header:
@@ -1987,6 +1993,7 @@ bool Catalog::HasSourcesAvailable() const
     return !GetSourcesBasePath().empty() && !m_header.SearchPaths.empty();
 }
 
+#if wxUSE_GUI // TODO: better separation into another file
 bool Catalog::Update(ProgressInfo *progress, bool summary, UpdateResultReason& reason)
 {
     reason = UpdateResultReason::Unspecified;
@@ -2039,7 +2046,7 @@ bool Catalog::Update(ProgressInfo *progress, bool summary, UpdateResultReason& r
 
     return newcat != nullptr;
 }
-
+#endif
 
 bool Catalog::UpdateFromPOT(const wxString& pot_file,
                             bool summary,
@@ -2165,6 +2172,7 @@ void Catalog::GetMergeSummary(const CatalogPtr& refcat,
 
 bool Catalog::ShowMergeSummary(const CatalogPtr& refcat, bool *cancelledByUser)
 {
+#if wxUSE_GUI
     if (cancelledByUser)
         *cancelledByUser = false;
     if (wxConfig::Get()->ReadBool("show_summary", false))
@@ -2180,6 +2188,11 @@ bool Catalog::ShowMergeSummary(const CatalogPtr& refcat, bool *cancelledByUser)
     }
     else
         return true;
+#else
+    (void)refcat;
+    (void)cancelledByUser;
+    return true;
+#endif
 }
 
 static unsigned GetCountFromPluralFormsHeader(const Catalog::HeaderData& header)

@@ -63,12 +63,14 @@
 		B2083D071A87C03600150BBF /* cld2_generated_distinctoctachrome.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cld2_generated_distinctoctachrome.cc; sourceTree = "<group>"; };
 		B2083D081A87C03600150BBF /* cld2_generated_quadchrome_2.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cld2_generated_quadchrome_2.cc; sourceTree = "<group>"; };
 		B2083D091A87C03600150BBF /* generated_distinct_bi_0.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = generated_distinct_bi_0.cc; sourceTree = "<group>"; };
+		B228A1551AD95B9A006B0BBC /* third_party.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = third_party.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		B2083CCB1A87BD1A00150BBF = {
 			isa = PBXGroup;
 			children = (
+				B228A1551AD95B9A006B0BBC /* third_party.xcconfig */,
 				B2083CDB1A87BDEA00150BBF /* Headers */,
 				B2083CE01A87BE1C00150BBF /* Sources */,
 				B2083CD51A87BD1A00150BBF /* Products */,
@@ -224,6 +226,7 @@
 /* Begin XCBuildConfiguration section */
 		B2083CD61A87BD1A00150BBF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B228A1551AD95B9A006B0BBC /* third_party.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
@@ -239,7 +242,6 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -248,24 +250,21 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
 		};
 		B2083CD71A87BD1A00150BBF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B228A1551AD95B9A006B0BBC /* third_party.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
@@ -281,7 +280,6 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -292,11 +290,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Release;
 		};

@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  This file is part of Poedit (http://poedit.net)
  *
  *  Copyright (C) 2003 Christophe Hermier
@@ -24,242 +24,334 @@
  *
  */
 
-#include <wx/intl.h>
-#include <wx/colour.h>
-#include <wx/utils.h>
-#include <wx/textfile.h>
-#include <wx/log.h>
-
 #include "catalog.h"
 #include "utility.h"
+#include "str_helpers.h"
+
+#include <wx/intl.h>
 
 namespace
 {
 
-// colours used in the list:
-// (FIXME: this is duplicated with code in edframe.cpp, get rid of this
-// duplication, preferably by making the colours customizable and stored
-// in wxConfig)
-
-#define g_darkColourFactor 0.95
-#define DARKEN_COLOUR(r,g,b) (wxColour(int((r)*g_darkColourFactor),\
-                                       int((g)*g_darkColourFactor),\
-                                       int((b)*g_darkColourFactor)))
-#define LIST_COLOURS(r,g,b) { wxColour(r,g,b), DARKEN_COLOUR(r,g,b) }
-wxColour
-    g_ItemColourNormal[2] =       LIST_COLOURS(0xFF,0xFF,0xFF), // white
-    g_ItemColourUntranslated[2] = LIST_COLOURS(0xA5,0xEA,0xEF), // blue
-    g_ItemColourFuzzy[2] =        LIST_COLOURS(0xF4,0xF1,0xC1); // yellow
-
-wxString FormatTransString(const wxString& s)
+inline std::string fmt_trans(const wxString& s)
 {
     wxString out = EscapeMarkup(s);
-    out.Replace("\\n", "\\n<br>");
-    return out;
+    out.Replace("\n", "\n<br>");
+    return str::to_utf8(out);
 }
+
+template<typename T1, typename T2>
+inline void TableRow(std::ostream& f, const T1& col1, const T2& col2)
+{
+    f << "<tr>"
+      << "<td>" << str::to_utf8(col1) << "</td>"
+      << "<td>" << str::to_utf8(col2) << "</td>"
+      << "</tr>\n";
+}
+
+extern const char *CSS_STYLE;
 
 } // anonymous namespace
 
-bool Catalog::ExportToHTML(const wxString& filename)
+void Catalog::ExportToHTML(std::ostream& f)
 {
-    size_t i;
-    wxTextFile f;
+    f << "<!DOCTYPE html>\n"
+         "<html>\n"
+         "<head>\n"
+         "  <title>" << str::to_utf8(m_header.Project) << "</title>\n"
+         "  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>\n"
+         "  <style>\n" << CSS_STYLE << "\n"
+         "  </style>\n"
+         "</head>\n"
+         "<body>\n"
+         "<div class='container'>\n";
 
-    TempOutputFileFor tempfile_obj(filename);
-    const wxString tempfile = tempfile_obj.FileName();
+    // Metadata section:
 
-    if (!f.Create(tempfile))
-    {
-        return false;
-    }
-
-    // TODO use some kind of HTML template system to allow different styles
-
-    wxString line;
-
-    // HTML HEADER
-    f.AddLine(_T("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">"));
-    f.AddLine("<html>");
-
-    f.AddLine("<head>");
-    line.Printf("<title> %s - %s - Poedit Export </title>",
-                EscapeMarkup(m_header.Project).c_str(),
-                EscapeMarkup(m_header.Lang.Code()).c_str());
-    f.AddLine(line);
-    f.AddLine(_T("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">" ) );
-    f.AddLine("</head>");
-    f.AddLine("<body bgcolor='#FFFFFF'>");
-
-    line.Printf("<h1> %s : %s</h1>",
-                EscapeMarkup(m_header.Project).c_str(),
-                EscapeMarkup(m_header.Lang.Code()).c_str());
-    f.AddLine(line);
+    f << "<table class='metadata'>\n";
+    if (!m_header.Project.empty())
+        TableRow(f, _("Project:"), m_header.Project);
+    if (m_header.Lang.IsValid())
+        TableRow(f, _("Language:"), m_header.Lang.DisplayName());
+    f << "</table>\n";
 
 
-    // po file header information :
-
-    // String here are duplicates from the ones in setting.xrc
-    // TODO find a way if possible to synchronize them
-
-    f.AddLine("<table align=center border=1 cellspacing=2 cellpadding=4>");
-
-    line.Printf("<tr><th colspan=2>%s</th></tr>",
-                _("Project info"));
-    f.AddLine(line);
-    wxString line_format = "<tr><td>%s</td><td>%s</td></tr>";
-    line.Printf(line_format,
-                _("Project name and version:"),
-                EscapeMarkup(m_header.Project).c_str());
-    f.AddLine(line);
-    line.Printf(line_format, _("Language:"),
-                EscapeMarkup(m_header.Lang.Code()).c_str());
-    f.AddLine(line);
-    line.Printf(line_format, _("Team:"),
-                EscapeMarkup(m_header.Team).c_str());
-    f.AddLine(line);
-    line.Printf(_T("<tr><td>%s</td><td><a href=\"mailto:%s\">%s</a></td></tr>"),
-                _("Team's email address:"),
-                EscapeMarkup(m_header.TeamEmail).c_str(),
-                EscapeMarkup(m_header.TeamEmail).c_str());
-    f.AddLine(line);
-    line.Printf(line_format, _("Charset:"),
-                EscapeMarkup(m_header.Charset).c_str());
-    f.AddLine(line);
-
-    f.AddLine( "</table>" );
-    // statistics
+    // Statistics:
 
     int all = 0;
     int fuzzy = 0;
     int untranslated = 0;
-    int errors = 0;
     int unfinished = 0;
-    GetStatistics(&all, &fuzzy, &errors, &untranslated, &unfinished);
-
+    GetStatistics(&all, &fuzzy, nullptr, &untranslated, &unfinished);
     int percent = (all == 0 ) ? 0 : (100 * (all - unfinished) / all);
 
-    line.Printf(_("Translated: %d of %d (%d %%)"), all - unfinished, all, percent);
+    f << "<div class='stats'>\n"
+      << "  <div class='graph'>\n";
+    if (all > unfinished)
+      f << "    <div class='percent-done' style='width: " << 100.0 * (all - unfinished) / all << "%'>&nbsp;</div>\n";
+    if (fuzzy > 0)
+      f << "    <div class='percent-fuzzy' style='width: " << 100.0 * fuzzy / all << "%'>&nbsp;</div>\n";
+    if (untranslated > 0)
+      f << "    <div class='percent-untrans' style='width: " << 100.0 * untranslated / all << "%'>&nbsp;</div>\n";
+    f << "  </div>\n"
+      << "  <div class='legend'>";
+    f << str::to_utf8(wxString::Format(_("Translated: %d of %d (%d %%)"), all - unfinished, all, percent));
     if (unfinished > 0)
+        f << str::to_utf8(L"  •  ") << str::to_utf8(wxString::Format(_("Remaining: %d"), unfinished));
+    f << "  </div>\n"
+      << "</div>\n";
+
+
+    // Translations:
+
+    std::string lang_src, lang_tra;
+    if (m_sourceLanguage.IsValid())
+        lang_src = " lang='" + m_sourceLanguage.RFC3066() + "'";
+    if (m_header.Lang.IsValid())
     {
-        line += L"  •  ";
-        line += wxString::Format(_("Remaining: %d"), unfinished);
-    }
-    if (errors > 0)
-    {
-        line += L"  •  ";
-        line += wxString::Format(wxPLURAL("%d error", "%d errors", errors), errors);
-    }
-
-    f.AddLine(line);
-
-    // data printed in a table :
-    f.AddLine("<table border=1 cellspacing=2 cellpadding=4>");
-
-    f.AddLine("<tr>");
-    f.AddLine("<th>");
-    f.AddLine(_("Source"));
-    f.AddLine("</th>");
-    f.AddLine("<th>");
-    f.AddLine(_("Translation"));
-    f.AddLine("</th>");
-    f.AddLine("<th>");
-    f.AddLine(_("Notes"));
-    f.AddLine("</th>");
-    f.AddLine("</tr>");
-
-    for (i = 0; i < GetCount(); i++)
-    {
-        const CatalogItem& data = *m_items[i];
-
-        wxColour bgcolor = g_ItemColourNormal[i % 2];
-
-        wxString source_string = FormatTransString(data.GetString());
-        if (data.HasContext())
-            source_string += FormatTransString(wxString::Format("  [ %s ]", data.GetContext()));
-        if (data.HasPlural())
-            source_string += "<br>~~~<br>\n" + FormatTransString(data.GetPluralString());
-
-        wxString translation = FormatTransString(data.GetTranslation());
-        if (data.HasPlural())
-        {
-            for (unsigned int t = 1; t < data.GetNumberOfTranslations(); t++)
-                translation += "<br>~~~<br>\n" + FormatTransString(data.GetTranslation(t));
-        }
-
-        if (translation.empty())
-        {
-            translation = " ";
-            bgcolor = g_ItemColourUntranslated[i % 2];
-        }
-
-        wxString notes;
-
-        if (data.IsAutomatic())
-        {
-            notes += EscapeMarkup(_("Automatic translation"));
-            notes += "<BR>";
-        }
-        if (data.IsFuzzy())
-        {
-            bgcolor = g_ItemColourFuzzy[i % 2];
-            notes += EscapeMarkup(_("Fuzzy translation"));
-            notes += "<BR>";
-        }
-
-        if (data.HasExtractedComments())
-        {
-            notes += "<font color='#888'>";
-            notes += _("Notes for translators:");
-            notes += "</font>";
-            notes += "<br>";
-            for (auto n: data.GetExtractedComments())
-                notes += EscapeMarkup(n) + "<br>";
-        }
-        if (data.HasComment())
-        {
-            notes += "<font color='#888'>";
-            notes += _("Comment:");
-            notes += "</font>";
-            notes += "<br>";
-            notes += EscapeMarkup(data.GetComment());
-            notes += "<br>";
-        }
-
-        if (notes.empty())
-            notes = " ";
-
-        wxString tr;
-        tr.Printf("<tr bgcolor='#%0X%0X%0X'>",
-                  bgcolor.Red(), bgcolor.Green(), bgcolor.Blue());
-        f.AddLine(tr);
-
-        f.AddLine("<td>");
-        f.AddLine(source_string);
-        f.AddLine("</td>");
-        f.AddLine("<td>");
-        f.AddLine(translation);
-        f.AddLine("</td>");
-        f.AddLine("<td>");
-        f.AddLine(_T("<font size=\"-1\">"));
-        f.AddLine(notes);
-        f.AddLine("</font>");
-        f.AddLine("</td>");
-        f.AddLine("</tr>");
+        lang_tra = " lang='" + m_header.Lang.RFC3066() + "'";
+        if (m_header.Lang.IsRTL())
+            lang_tra += " dir='rtl'";
     }
 
-    f.AddLine("</table>");
-    f.AddLine("</body>");
-    f.AddLine("</html>");
+    auto thead_src = m_sourceLanguage.IsValid()
+                     ? (wxString::Format(_(L"Source text — %s"), m_sourceLanguage.DisplayName()))
+                     : _("Source text");
+    auto thead_tra = wxString::Format(_(L"Translation — %s"),
+                                      m_header.Lang.IsValid() ? m_header.Lang.DisplayName() : _("unknown language"));
 
-    bool written = f.Write(wxTextFileType_None, wxConvUTF8);
+    f << "<table class='translations'>\n"
+         "  <thead>\n"
+         "    <tr>\n"
+         "      <th>" << str::to_utf8(thead_src) << "</th>\n"
+         "      <th>" << str::to_utf8(thead_tra) << "</th>\n"
+         "    </tr>\n"
+         "  </thead>\n"
+         "  <tbody>\n";
 
-    f.Close();
-
-    if ( written && !wxRenameFile(tempfile, filename, /*overwrite=*/true) )
+    for (auto& item: items())
     {
-        wxLogError(_("Couldn't save file %s."), filename.c_str());
-        written = false;
+        bool hasComments = item->HasComment() || item->HasExtractedComments();
+
+        std::string klass("i");
+        if (!item->IsTranslated())
+            klass += " untrans";
+        if (item->IsFuzzy())
+            klass += " fuzzy";
+        if (hasComments)
+            klass += " with-comments";
+        f << "<tr class='" << klass << "'>\n";
+
+        // Source string:
+        f << "<td class='src' " << lang_src << ">\n";
+        if (item->HasPlural())
+        {
+            f << "<ol class='plurals'>\n"
+              << "  <li>" << fmt_trans(item->GetString()) << "</li>\n"
+              << "  <li>" << fmt_trans(item->GetPluralString()) << "</li>\n"
+              << "</ol>\n";
+        }
+        else
+        {
+            f << fmt_trans(item->GetString());
+        }
+        if (item->HasContext())
+            f << " <span class='msgctxt'>[" << fmt_trans(item->GetContext()) << "]</span>";
+        f << "</td>\n";
+
+        // Translation:
+        f << "<td class='tra' " << lang_tra << ">\n";
+        if (item->HasPlural())
+        {
+            if (item->IsTranslated())
+            {
+                f << "<ol class='plurals'>\n";
+                for (auto t: item->GetTranslations())
+                    f << "  <li>" << fmt_trans(t) << "</li>\n";
+                f << "</ol>\n";
+            }
+        }
+        else
+        {
+            f << fmt_trans(item->GetTranslation());
+        }
+        f << "</td>\n";
+
+        // Notes, if present:
+        if (hasComments)
+        {
+            f << "</tr>\n"
+              << "<tr class='comments'>\n"
+              << "  <td colspan='2'><div>";
+            if (item->HasExtractedComments())
+            {
+                f << "<p>\n";
+                for (auto& n: item->GetExtractedComments())
+                    f << fmt_trans(n) << "<br>\n";
+                f << "</p>\n";
+            }
+            if (item->HasComment())
+            {
+                f << "<p>\n"
+                  << fmt_trans(item->GetComment())
+                  << "</p>\n";
+            }
+            f << "</div></td>\n";
+        }
+
+        f << "</tr>\n";
     }
 
-    return written;
+    f << "</tbody>\n"
+         "</table>\n"
+         "</div>\n"
+         "</body>\n"
+         "</html>\n";
 }
+
+
+namespace
+{
+
+const char *CSS_STYLE = R"(
+
+/*
+Based on Minimal CSS (minimalcss.com) under the MIT license.
+*/
+
+/* Reset */
+* { margin: 0; padding: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+
+/* Layout */
+body { background-color: #fff; color: #333;	font: 14px/20px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+header { width: 100%; margin: 0 auto; position: relative; padding: 20px 0; margin-bottom: 20px; }
+
+nav ul { margin: 0; }
+nav ul li { display: inline; margin-right: 20px; font-size: 16px; line-height: 28px; color: #333; }
+nav ul li a { color: #333; }
+
+.container { position: relative; max-width: 90%; margin: 0 auto; }
+
+footer { border-top:1px solid #ccc; font-size:11px; line-height:26px; color:#999; }
+footer a { color:#999999; }
+footer a:hover { color:#105CB6; }
+footer ul li { display:inline; list-style:none; padding-left:20px; }
+
+/* Typography */
+a { color: #105CB6; text-decoration: none; }
+a:hover, a:focus { color: #105CB6; text-decoration: underline; }
+a:active { color: #105CB6; }
+
+h1 { font-size: 24px; line-height: 20px; margin: 10px 0; }
+h2 { font-size: 20px; line-height: 20px; margin: 10px 0; }
+h3 { font-size: 16px; line-height: 20px; margin: 10px 0; }
+h4 { font-size: 14px; line-height: 20px; margin: 10px 0; }
+h5 { font-size: 12px; line-height: 20px; margin: 10px 0; }
+h5 { font-size: 10px; line-height: 20px; margin: 10px 0; }
+h1,h2,h3,h4,h5,h6 { color: #333; }
+
+p { margin-bottom: 10px; }
+
+.float-left     { float: left; }
+.float-right    { float: right; }
+img.float-left  { float: left; margin: 0 20px 20px 0; }
+img.float-right { float: right; margin: 0 0 20px 20px; }
+img.center      { margin: 0 auto; display: block; }
+
+.text-left    { text-align: left; }
+.text-center  { text-align: center; }
+.text-right   { text-align: right; }
+.text-justify { text-align: justify; }
+
+/* Misc */
+hr { background-color: #ccc; border: 0px; color: #ccc; height: 1px; margin: 8px 0 20px 0; }
+pre, code { background:#E0ECF6; display:block; margin-bottom: 20px; padding:10px; }
+
+blockquote { margin: 10px 10px 20px; padding: 9px; background-color: #f8f8f8; color: #666; border-left: 5px solid #ddd; font: 14px/20px Georgia, Times, serif; quotes: "\201C" "\201D"; }
+blockquote p { margin: 0; }
+blockquote:before { content: open-quote; font-weight: bold; }
+blockquote:after  { content: close-quote; font-weight: bold; }
+
+/* List */
+ul { list-style-position:inside; }
+ol { list-style-position:inside; }
+
+/* Table */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+th { font-weight: bold; }
+tfoot { font-style: italic; }
+
+/* Metadata part */
+
+.metadata {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  font-size: 90%;
+}
+table.metadata td {
+  padding-right: 20px;
+}
+
+.stats {
+  padding-top: 5px;
+  padding-bottom: 20px;
+}
+.graph {
+  width: 100%;
+}
+.graph div { float: left; }
+.graph div:first-child { border-radius: 3px 0 0 3px; }
+.graph div:last-child { border-radius: 0 3px 3px 0; }
+.percent-done    { background-color: #BFEE3F; height: 10px; }
+.percent-fuzzy   { background-color: #FEEE43; height: 10px; }
+.percent-untrans { background-color: #F1F5F5; height: 10px; }
+.legend {
+  font-size: smaller;
+  color: #aaa;
+  padding-top: 12px;
+  text-align: center;
+}
+
+/* Translations */
+table.translations {
+  width: 100%;
+  table-layout: fixed;
+}
+table.translations th, table.translations td {
+  padding: 5px 10px;
+  vertical-align: top;
+  border-bottom: 1px solid #E1E1E1;
+}
+table.translations th {
+  text-align: left;
+}
+table.translations th:first-child, table.translations td:first-child { padding-left: 0; }
+table.translations th:last-child, table.translations td:last-child { padding-right: 0; }
+
+.with-comments td {
+  border-bottom: none !important;
+}
+tr.comments div {
+  float: right;
+  max-width: 75%;
+  font-size: smaller;
+  color: #aaa;
+}
+tr.comments div p:last-child { margin-bottom: 0; }
+
+.fuzzy .tra {
+  color: #a9861b;
+}
+
+.msgctxt {
+  font-size: smaller;
+  color: #6d8e13;
+}
+
+)";
+
+} // anonymous namespace

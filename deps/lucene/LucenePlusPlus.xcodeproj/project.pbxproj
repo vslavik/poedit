@@ -838,6 +838,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B228A1571AD95D0A006B0BBC /* third_party.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = third_party.xcconfig; path = ../custom_build/third_party.xcconfig; sourceTree = "<group>"; };
 		B23D1F7D181598E600E6B212 /* libLucenePlusPlus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLucenePlusPlus.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B23D1F851815995C00E6B212 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		B23D1F871815997200E6B212 /* AbstractAllTermDocs.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = AbstractAllTermDocs.h; path = LucenePlusPlus/include/AbstractAllTermDocs.h; sourceTree = "<group>"; };
@@ -1683,6 +1684,7 @@
 		B23D1F74181598E600E6B212 = {
 			isa = PBXGroup;
 			children = (
+				B228A1571AD95D0A006B0BBC /* third_party.xcconfig */,
 				B23D1F851815995C00E6B212 /* Config.h */,
 				B23D1F841815994E00E6B212 /* Headers */,
 				B23D22911815998C00E6B212 /* Sources */,
@@ -3564,6 +3566,7 @@
 /* Begin XCBuildConfiguration section */
 		B23D1F7F181598E600E6B212 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B228A1571AD95D0A006B0BBC /* third_party.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -3577,7 +3580,6 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -3600,16 +3602,14 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
 		};
 		B23D1F80181598E600E6B212 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B228A1571AD95D0A006B0BBC /* third_party.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -3623,7 +3623,6 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3646,10 +3645,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Release;
 		};
