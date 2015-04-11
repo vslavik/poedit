@@ -20,6 +20,8 @@
 extern void Initialize_plugin();
 extern void Uninitialize_plugin();
 
+#pragma GCC visibility push(default)
+
 // -----------------------------------------------------------------------------
 //	constants
 // -----------------------------------------------------------------------------
