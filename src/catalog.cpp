@@ -251,10 +251,16 @@ void Catalog::HeaderData::UpdateDict()
     }
 
     if (TeamEmail.empty())
+    {
         SetHeader("Language-Team", Team);
+    }
     else
-        SetHeader("Language-Team",
-                  Team + " <" + TeamEmail + ">");
+    {
+        if (Team.empty())
+            SetHeader("Language-Team", TeamEmail);
+        else
+            SetHeader("Language-Team", Team + " <" + TeamEmail + ">");
+    }
 
     SetHeader("MIME-Version", "1.0");
     SetHeader("Content-Type", "text/plain; charset=" + Charset);
