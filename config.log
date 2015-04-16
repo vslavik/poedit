@@ -486,7 +486,10 @@ configure:5507: result: /usr/bin/pkg-config
 configure:5532: checking pkg-config is at least version 0.9.0
 configure:5535: result: yes
 configure:5693: checking for wx-config
-configure:5725: result: no
+configure:5712: found /usr/bin/wx-config
+configure:5725: result: /usr/bin/wx-config
+configure:5743: checking for wxWidgets version >= 3.0.0 (--unicode)
+configure:5858: result: no (version 2.8.12 is not new enough)
 configure:5928: error: 
         Please check that wx-config is in path, the directory
         where wxWidgets libraries are installed (returned by
@@ -569,7 +572,7 @@ ac_cv_host=x86_64-unknown-linux-gnu
 ac_cv_objext=o
 ac_cv_path_EGREP='/bin/grep -E'
 ac_cv_path_GREP=/bin/grep
-ac_cv_path_WX_CONFIG_PATH=no
+ac_cv_path_WX_CONFIG_PATH=/usr/bin/wx-config
 ac_cv_path_ac_pt_PKG_CONFIG=/usr/bin/pkg-config
 ac_cv_path_install='/usr/bin/install -c'
 ac_cv_path_mkdir=/bin/mkdir
@@ -678,18 +681,18 @@ VERSION='1.8beta1'
 WXRC=''
 WX_CFLAGS=''
 WX_CFLAGS_ONLY=''
-WX_CONFIG_PATH='no'
-WX_CONFIG_WITH_ARGS=''
+WX_CONFIG_PATH='/usr/bin/wx-config'
+WX_CONFIG_WITH_ARGS='/usr/bin/wx-config  --unicode'
 WX_CPPFLAGS=''
 WX_CXXFLAGS=''
 WX_CXXFLAGS_ONLY=''
 WX_LIBS=''
 WX_LIBS_STATIC=''
 WX_RESCOMP=''
-WX_VERSION=''
-WX_VERSION_MAJOR=''
-WX_VERSION_MICRO=''
-WX_VERSION_MINOR=''
+WX_VERSION='2.8.12'
+WX_VERSION_MAJOR='2'
+WX_VERSION_MICRO='12'
+WX_VERSION_MINOR='8'
 ac_ct_CC='gcc'
 ac_ct_CXX='g++'
 am__EXEEXT_FALSE=''
