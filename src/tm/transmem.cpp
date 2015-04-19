@@ -149,9 +149,9 @@ IndexReaderPtr TranslationMemoryImpl::Reader()
 {
     std::lock_guard<std::mutex> guard(m_readerMutex);
 
-    auto newReader = m_reader->reopen();
-    if (m_reader != newReader)
+    if (!m_reader->isCurrent())
     {
+        auto newReader = m_reader->reopen();
         m_reader->close();
         m_reader = newReader;
     }
