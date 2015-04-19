@@ -28,7 +28,7 @@
 #include "catalog.h"
 #include "customcontrols.h"
 #include "commentdlg.h"
-#include "utility.h"
+#include "concurrency.h"
 #include "errors.h"
 #include "hidpi.h"
 

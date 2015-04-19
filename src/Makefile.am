@@ -35,13 +35,12 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  spellchecking.h spellchecking.cpp \
                  findframe.cpp findframe.h commentdlg.h commentdlg.cpp \
                  tm/suggestions.cpp tm/suggestions.h tm/transmem.cpp tm/transmem.h tm/tm_migrate.cpp \
-                 tm/ThreadPool.h \
                  manager.h manager.cpp chooselang.cpp chooselang.h \
                  export_html.cpp icons.h icons.cpp \
                  pluralforms/pl_evaluate.cpp pluralforms/pl_evaluate.h \
                  edlistctrl.cpp edlistctrl.h digits.h \
                  cat_sorting.cpp cat_sorting.h \
-                 utility.cpp utility.h \
+                 utility.cpp utility.h ThreadPool.h concurrency.cpp concurrency.h \
                  version.h errors.h \
                  str_helpers.h logcapture.h \
                  language.cpp language.h language_impl_legacy.h language_impl_plurals.h \
