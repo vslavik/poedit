@@ -25,13 +25,13 @@
 
 #include "suggestions.h"
 
-#include "ThreadPool.h"
+#include "concurrency.h"
 
 
 class SuggestionsProviderImpl
 {
 public:
-    SuggestionsProviderImpl() : m_pool(2) {}
+    SuggestionsProviderImpl() {}
 
     void SuggestTranslation(SuggestionsBackend& backend,
                             const Language& srclang,
@@ -41,7 +41,7 @@ public:
                             SuggestionsProvider::error_func_type onError)
     {
         auto bck = &backend;
-        m_pool.enqueue([=](){
+        background_queue::add([=](){
             // don't bother asking the backend if the language is invalid:
             if (!lang.IsValid())
             {
@@ -52,9 +52,6 @@ public:
             bck->SuggestTranslation(srclang, lang, source, onSuccess, onError);
         });
     }
-
-private:
-    ThreadPool m_pool;
 };
 
 

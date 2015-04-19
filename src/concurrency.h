@@ -31,6 +31,33 @@
 #include <wx/app.h>
 #include <wx/weakref.h>
 
+#include "ThreadPool.h"
+
+// ----------------------------------------------------------------------
+// Background operations
+// ----------------------------------------------------------------------
+
+class background_queue
+{
+public:
+    /**
+        Enqueue an operation for background processing.
+        
+        Return future for it.
+     */
+    template<class F, class... Args>
+    static auto add(F&& f, Args&&... args)
+        -> std::future<typename std::result_of<F(Args...)>::type>
+    {
+        return ms_pool.enqueue(f, args...);
+    }
+
+private:
+    // TODO: Use NSOperationQeueue on OS X
+    static ThreadPool ms_pool;
+};
+
+
 // ----------------------------------------------------------------------
 // Helpers for running code on the main thread
 // ----------------------------------------------------------------------
