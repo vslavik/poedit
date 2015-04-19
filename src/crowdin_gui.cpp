@@ -29,6 +29,7 @@
 #include "crowdin_client.h"
 
 #include "catalog.h"
+#include "concurrency.h"
 #include "customcontrols.h"
 #include "errors.h"
 #include "hidpi.h"

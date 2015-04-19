@@ -41,7 +41,7 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  pluralforms/pl_evaluate.cpp pluralforms/pl_evaluate.h \
                  edlistctrl.cpp edlistctrl.h digits.h \
                  cat_sorting.cpp cat_sorting.h \
-                 utility.cpp utility.h \
+                 utility.cpp utility.h concurrency.cpp concurrency.h \
                  version.h errors.h \
                  str_helpers.h logcapture.h \
                  language.cpp language.h language_impl_legacy.h language_impl_plurals.h \

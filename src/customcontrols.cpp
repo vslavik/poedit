@@ -25,8 +25,8 @@
 
 #include "customcontrols.h"
 
+#include "concurrency.h"
 #include "errors.h"
-#include "utility.h"
 #include "hidpi.h"
 
 #include <wx/app.h>
