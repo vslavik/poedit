@@ -290,7 +290,14 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
         int width = (int)cfg->Read(path + "w", defaultSize.x);
         int height = (int)cfg->Read(path + "h", defaultSize.y);
         if ( width != -1 || height != -1 )
+        {
+            // filter out ridiculous sizes:
+            if (width != -1 && width < 100)
+                width = defaultSize.x;
+            if (height != -1 && height < 100)
+                height = defaultSize.y;
             win->SetClientSize(width, height);
+        }
     }
 
 #if defined(__WXMSW__) || defined(__WXOSX__)
@@ -327,17 +334,10 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
 
     // If the window is completely out of all screens (e.g. because
     // screens configuration changed), move it to primary screen:
-#ifdef __WXOSX__
-    if ( win->GetPosition().x < 0 || win->GetPosition().y < 0 )
-        win->Move(20, 30);
-#else
     if ( wxDisplay::GetFromWindow(win) == wxNOT_FOUND )
-        win->Move(0, 0);
-#endif
-
+        win->Move(20, 40);
 #endif // __WXMSW__/__WXOSX__
 
-#ifndef __WXOSX__
     // If the window is larger than current screen, resize it to fit:
     int display = wxDisplay::GetFromWindow(win);
     if ( display == wxNOT_FOUND )
@@ -347,10 +347,13 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
 
     wxRect winRect = win->GetRect();
     if ( winRect.GetPosition() == wxDefaultPosition )
-        winRect.SetPosition(screenRect.GetPosition()); // not place yet, fake it
+        winRect.SetPosition(screenRect.GetPosition()); // not placed yet, fake it
 
     if ( !screenRect.Contains(winRect) )
     {
+        // Don't crop the window immediately, because it could become too small
+        // due to it. Try to move it to the center of the screen first, then crop.
+        winRect = winRect.CenterIn(screenRect);
         winRect.Intersect(screenRect);
         win->SetSize(winRect);
     }
@@ -360,7 +363,6 @@ void RestoreWindowState(wxTopLevelWindow *win, const wxSize& defaultSize, int fl
     {
         win->Maximize();
     }
-#endif // !__WXOSX__
 }
 
 #endif // wxUSE_GUI
