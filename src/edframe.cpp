@@ -59,6 +59,7 @@
 #include <boost/range/counting_range.hpp>
 
 #include "catalog.h"
+#include "concurrency.h"
 #include "crowdin_gui.h"
 #include "customcontrols.h"
 #include "edapp.h"
@@ -2908,51 +2909,58 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, const T& range, int fl
     auto srclang = m_catalog->GetSourceLanguage();
     auto lang = m_catalog->GetLanguage();
 
-    int matches = 0;
-    wxString msg;
-
     // TODO: make this window-modal
     ProgressInfo progress(this, _("Translating"));
     progress.UpdateMessage(_("Filling missing translations from TM..."));
-    progress.SetGaugeMax((int)range.size());
+
+    std::vector<std::future<bool>> operations;
     for (int i: range)
     {
-        progress.UpdateGauge();
-
         auto dt = (*m_catalog)[i];
         if (dt->HasPlural())
             continue; // can't handle yet (TODO?)
-        if (dt->IsFuzzy() || !dt->IsTranslated())
-        {
+        if (dt->IsTranslated() && !dt->IsFuzzy())
+            continue;
+
+        operations.push_back(background_queue::add([=,&tm]{
             auto results = tm.Search(srclang, lang, dt->GetString().ToStdWstring());
             if (results.empty())
-                continue;
-
+                return false;
             auto& res = results.front();
             if ((flags & AutoTranslate_OnlyExact) && !res.IsExactMatch())
-                continue;
+                return false;
 
-            if ((flags & AutoTranslate_OnlyGoodQuality) && res.score < 0.75)
-                continue;
+            if ((flags & AutoTranslate_OnlyGoodQuality) && res.score < 0.80)
+                return false;
 
             dt->SetTranslation(res.text);
             dt->SetAutomatic(true);
             dt->SetFuzzy(!res.IsExactMatch() || (flags & AutoTranslate_ExactNotFuzzy) == 0);
+            return true;
+        }));
+    }
 
+    progress.SetGaugeMax((int)operations.size());
+
+    int matches = 0;
+    for (auto& op: operations)
+    {
+        progress.UpdateGauge();
+        if (op.get())
+        {
             matches++;
-            msg.Printf(wxPLURAL("Translated %u string", "Translated %u strings", matches), matches);
-            progress.UpdateMessage(msg);
-
-            if (m_modified == false)
-            {
-                m_modified = true;
-                UpdateTitle();
-            }
+            progress.UpdateMessage(wxString::Format(wxPLURAL("Translated %u string", "Translated %u strings", matches), matches));
         }
     }
 
     if (matchesCount)
         *matchesCount = matches;
+
+    if (matches && !m_modified)
+    {
+        m_modified = true;
+        UpdateTitle();
+    }
 
     RefreshControls();
 
