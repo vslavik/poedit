@@ -28,6 +28,7 @@
 
 #include <cmath>
 #include <functional>
+#include <future>
 #include <limits>
 #include <memory>
 #include <string>
@@ -125,6 +126,13 @@ public:
                             const std::wstring& source,
                             success_func_type onSuccess,
                             error_func_type onError);
+
+    /// Same as the other version but returns a future
+    std::future<SuggestionsList>
+    SuggestTranslation(SuggestionsBackend& backend,
+                       const Language& srclang,
+                       const Language& lang,
+                       const std::wstring& source);
 
 private:
     std::unique_ptr<SuggestionsProviderImpl> m_impl;

@@ -52,6 +52,25 @@ public:
             bck->SuggestTranslation(srclang, lang, source, onSuccess, onError);
         });
     }
+
+    std::future<SuggestionsList> SuggestTranslation(SuggestionsBackend& backend,
+                                                   const Language& srclang,
+                                                   const Language& lang,
+                                                   const std::wstring& source)
+    {
+        auto promise = std::make_shared<std::promise<SuggestionsList>>();
+
+        SuggestTranslation(backend, srclang, lang, source,
+            [=](const SuggestionsList& results) {
+                promise->set_value(results);
+            },
+            [=](std::exception_ptr e) {
+                promise->set_exception(e);
+            }
+        );
+
+        return promise->get_future();
+    }
 };
 
 
@@ -72,4 +91,13 @@ void SuggestionsProvider::SuggestTranslation(SuggestionsBackend& backend,
                                              error_func_type onError)
 {
     m_impl->SuggestTranslation(backend, srclang, lang, source, onSuccess, onError);
+}
+
+std::future<SuggestionsList>
+SuggestionsProvider::SuggestTranslation(SuggestionsBackend& backend,
+                                        const Language& srclang,
+                                        const Language& lang,
+                                        const std::wstring& source)
+{
+    return m_impl->SuggestTranslation(backend, srclang, lang, source);
 }
