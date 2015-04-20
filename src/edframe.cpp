@@ -2916,17 +2916,9 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, const T& range, int fl
     ProgressInfo progress(this, _("Translating"));
     progress.UpdateMessage(_("Filling missing translations from TM..."));
 
-    std::vector<std::future<bool>> operations;
-    for (int i: range)
-    {
-        auto dt = (*m_catalog)[i];
-        if (dt->HasPlural())
-            continue; // can't handle yet (TODO?)
-        if (dt->IsTranslated() && !dt->IsFuzzy())
-            continue;
-
-        operations.push_back(background_queue::add([=,&tm]{
-            auto results = tm.Search(srclang, lang, dt->GetString().ToStdWstring());
+    // Function to apply fetched suggestions to a catalog item:
+    auto process_results = [=](CatalogItemPtr dt, const SuggestionsList& results) -> bool
+        {
             if (results.empty())
                 return false;
             auto& res = results.front();
@@ -2940,6 +2932,21 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, const T& range, int fl
             dt->SetAutomatic(true);
             dt->SetFuzzy(!res.IsExactMatch() || (flags & AutoTranslate_ExactNotFuzzy) == 0);
             return true;
+        };
+
+    std::vector<std::future<bool>> operations;
+    for (int i: range)
+    {
+        auto dt = (*m_catalog)[i];
+        if (dt->HasPlural())
+            continue; // can't handle yet (TODO?)
+        if (dt->IsTranslated() && !dt->IsFuzzy())
+            continue;
+
+        operations.push_back(background_queue::add([=,&tm]{
+            auto results = tm.Search(srclang, lang, dt->GetString().ToStdWstring());
+            bool ok = process_results(dt, results);
+            return ok;
         }));
     }
 
