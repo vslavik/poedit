@@ -78,7 +78,7 @@ void ProgressInfo::SetGaugeMax(int limit)
     XRCCTRL(*m_dlg, "progress", wxGauge)->SetRange(limit);
 }
 
-void ProgressInfo::UpdateGauge(int increment)
+bool ProgressInfo::UpdateGauge(int increment)
 {
     wxGauge *g = XRCCTRL(*m_dlg, "progress", wxGauge);
     g->SetValue(g->GetValue() + increment);
@@ -89,6 +89,8 @@ void ProgressInfo::UpdateGauge(int increment)
     txt->SetLabel(txt->GetLabel());
     txt->Update();
 #endif
+
+    return !m_cancelled;
 }
 
 void ProgressInfo::ResetGauge(int value)

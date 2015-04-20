@@ -46,7 +46,7 @@ class ProgressInfo
                 \param increment the delta
                 \return false if user cancelled operation, true otherwise
              */
-            void UpdateGauge(int increment = +1);
+            bool UpdateGauge(int increment = +1);
 
             /// Resets the gauge to given \a value.
             void ResetGauge(int value = 0);

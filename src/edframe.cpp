@@ -2955,7 +2955,9 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, const T& range, int fl
     int matches = 0;
     for (auto& op: operations)
     {
-        progress.UpdateGauge();
+        if (!progress.UpdateGauge())
+            break; // TODO: cancel pending 'operations' futures
+
         if (op.get())
         {
             matches++;
