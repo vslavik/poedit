@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -15,15 +15,17 @@ get_all_langs()
 
 lang_to_osx()
 {
-    echo $1 | sed -e 's/zh_TW/zh_Hant/' \
-            | sed -e 's/zh_CN/zh_Hans/' \
-            | sed -e 's/@latin/_Latn/'
+    x="$1"
+    x="${x/zh_TW/zh_Hant}"
+    x="${x/zh_CN/zh_Hans}"
+    x="${x/@latin/_Latn}"
+    echo "$x"
 }
 
 try_compile_po()
 {
     lang="$1"
-    shortlang=`echo $lang | cut -c1-2`
+    shortlang=${lang:0:2}
     outfile="$2"
     podir="$3"
 
