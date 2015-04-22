@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -29,6 +31,29 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.poedit.po</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>pot</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>GenericTranslation</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>text/x-gettext-translation-template</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Translation Template</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.microsoft.powerpoint.pot</string>
+				<string>net.poedit.pot</string>
 			</array>
 		</dict>
 		<dict>
@@ -134,6 +159,31 @@
 					<string>application/x-gettext</string>
 					<string>text/x-gettext-translation</string>
 					<string>text/x-po</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.content</string>
+				<string>public.data</string>
+				<string>public.plain-text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Translation Template</string>
+			<key>UTTypeIconFile</key>
+			<string>GenericTranslation</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.poedit.pot</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>pot</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>text/x-gettext-translation-template</string>
 				</array>
 			</dict>
 		</dict>

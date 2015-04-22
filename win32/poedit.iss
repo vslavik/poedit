@@ -130,6 +130,12 @@ Root: "HKCR"; Subkey: "Poedit.MO"; ValueType: string; ValueName: "FriendlyTypeNa
 Root: "HKCR"; Subkey: "Poedit.MO\Shell\Open\Command"; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
 Root: "HKCR"; Subkey: "Poedit.MO\DefaultIcon"; ValueType: string; ValueData: "{app}\Resources\poedit-translation-generic.ico"; Flags: uninsdeletekey noerror
 
+Root: "HKCR"; Subkey: ".pot"; ValueType: string; ValueData: "Poedit.POT"; Flags: noerror
+Root: "HKCR"; Subkey: "Poedit.POT"; ValueType: string; ValueData: "Translation Template"; Flags: uninsdeletekey noerror
+Root: "HKCR"; Subkey: "Poedit.POT"; ValueType: string; ValueName: "FriendlyTypeName"; ValueData: "@{app}\Poedit.exe,-224"; Flags: uninsdeletekey noerror
+Root: "HKCR"; Subkey: "Poedit.POT\Shell\Open\Command"; ValueType: string; ValueData: """{app}\Poedit.exe"" ""%1"""; Flags: uninsdeletevalue noerror
+Root: "HKCR"; Subkey: "Poedit.POT\DefaultIcon"; ValueType: string; ValueData: "{app}\Resources\poedit-translation-generic.ico"; Flags: uninsdeletekey noerror
+
 ; Remove old, incorrectly done, association keys when upgrading:
 Root: "HKCR"; Subkey: "GettextFile"; ValueType: none; Flags: uninsdeletekey noerror dontcreatekey deletekey
 
