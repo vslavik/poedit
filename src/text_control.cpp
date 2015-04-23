@@ -399,6 +399,7 @@ void CustomizedTextCtrl::Redo()
 
 void CustomizedTextCtrl::ShowFindIndicator(int from, int length)
 {
+    ShowPosition(from);
 #ifdef __WXOSX__
     [TextView(this) showFindIndicatorForRange:NSMakeRange(from, length)];
 #else
