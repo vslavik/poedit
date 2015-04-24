@@ -188,6 +188,7 @@ FindFrame::FindFrame(PoeditFrame *owner,
     m_btnPrev->Bind(wxEVT_BUTTON, &FindFrame::OnPrev, this);
     m_btnNext->Bind(wxEVT_BUTTON, &FindFrame::OnNext, this);
     Bind(wxEVT_BUTTON, &FindFrame::OnClose, this, wxID_CLOSE);
+    Bind(wxEVT_MENU, &FindFrame::OnClose, this, wxID_CLOSE);
     Bind(wxEVT_CHECKBOX, &FindFrame::OnCheckbox, this);
 
     OnModeChanged();
