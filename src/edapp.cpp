@@ -698,8 +698,7 @@ void PoeditApp::OnOpen(wxCommandEvent&)
                      OSX_OR_OTHER("", _("Open catalog")),
                      path,
                      wxEmptyString,
-                     wxString::Format("%s (*.po)|*.po",
-                         _("PO Translation Files")),
+                     Catalog::GetAllTypesFileMask(),
                      wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE);
 
     if (dlg.ShowModal() == wxID_OK)

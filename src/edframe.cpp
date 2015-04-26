@@ -1084,8 +1084,7 @@ void PoeditFrame::OnOpen(wxCommandEvent&)
 
         wxString name = wxFileSelector(OSX_OR_OTHER("", _("Open catalog")),
                         path, wxEmptyString, wxEmptyString,
-                        wxString::Format("%s (*.po)|*.po",
-                            _("PO Translation Files")),
+                        Catalog::GetAllTypesFileMask(),
                         wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
 
         if (!name.empty())
@@ -1171,7 +1170,7 @@ void PoeditFrame::GetSaveAsFilenameThenDo(const CatalogPtr& cat, F then)
                          OSX_OR_OTHER("", _("Save as...")),
                          path,
                          name,
-                         wxString::Format("%s (*.po)|*.po", _("PO Translation Files")),
+                         m_catalog->GetFileMask(),
                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT));
 
     dlg->ShowWindowModalThenDo([=](int retcode){
@@ -1313,12 +1312,7 @@ void PoeditFrame::NewFromPOT()
     wxString pot_file =
         wxFileSelector(_("Open catalog template"),
              path, wxEmptyString, wxEmptyString,
-             wxString::Format
-             (
-                 "%s (*.pot)|*.pot|%s (*.po)|*.po",
-                 _("POT Translation Templates"),
-                 _("PO Translation Files")
-             ),
+             Catalog::GetTypesFileMask({Catalog::Type::POT, Catalog::Type::PO}),
              wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
     bool ok = false;
     if (!pot_file.empty())

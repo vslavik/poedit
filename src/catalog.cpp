@@ -1901,6 +1901,56 @@ bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
     return f.Write(crlf, wxCSConv(m_header.Charset));
 }
 
+namespace
+{
+
+wxString MaskForType(const char *extensions, const wxString& description, bool showExt = true)
+{
+    (void)showExt;
+#ifdef __WXMSW__
+    if (showExt)
+        return wxString::Format("%s (%s)|%s", description, extensions, extensions);
+    else
+#endif
+        return wxString::Format("%s|%s", description, extensions);
+}
+
+wxString MaskForType(Catalog::Type t)
+{
+    switch (t)
+    {
+        case Catalog::Type::PO:
+            return MaskForType("*.po", _("PO Translation Files"));
+        case Catalog::Type::POT:
+            return MaskForType("*.pot", _("POT Translation Templates"));
+    }
+    return ""; // silence stupid warning
+}
+
+} // anonymous namespace
+
+wxString Catalog::GetTypesFileMask(std::initializer_list<Type> types)
+{
+    if (types.size() == 0)
+        return "";
+    wxString out;
+    auto t = types.begin();
+    out += MaskForType(*t);
+    for (++t; t != types.end(); ++t)
+    {
+        out += "|";
+        out += MaskForType(*t);
+    }
+    return out;
+}
+
+wxString Catalog::GetAllTypesFileMask()
+{
+    return MaskForType("*.po;*.pot", _("All Translation Files"), /*showExt=*/false) +
+           "|" +
+           GetTypesFileMask({Type::PO, Type::POT});
+}
+
 
 int Catalog::Validate()
 {

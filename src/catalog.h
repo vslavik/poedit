@@ -32,6 +32,7 @@
 #include <wx/arrstr.h>
 #include <wx/textfile.h>
 
+#include <initializer_list>
 #include <iostream>
 #include <map>
 #include <memory>
@@ -573,6 +574,12 @@ class Catalog
             Returns empty string in case of failure.
          */
         std::string SaveToBuffer();
+
+        /// File mask for opening/saving this catalog's file type
+        wxString GetFileMask() const { return GetTypesFileMask({m_fileType}); }
+        /// File mask for opening/saving any supported file type
+        static wxString GetTypesFileMask(std::initializer_list<Type> types);
+        static wxString GetAllTypesFileMask();
 
         /// Compiles the catalog into binary MO file.
         bool CompileToMO(const wxString& mo_file,
