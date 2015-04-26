@@ -425,6 +425,24 @@ typedef std::map<wxString, unsigned> CatalogItemIndex;
 class Catalog
 {
     public:
+        /// Type of the file loaded
+        enum class Type
+        {
+            PO,
+            POT
+        };
+
+        /// Capabilities of the file type
+        enum class Cap
+        {
+            Translations,    // Can translations be added (e.g. POTs can't)?
+            LanguageSetting, // Is language code saved in the file?
+            UserComments,    // Can users add comments?
+        };
+
+        /// Is this file capable of doing these things
+        bool HasCapability(Cap cap) const;
+
         /// PO file header information.
         class HeaderData
         {
@@ -683,6 +701,8 @@ class Catalog
         /// Returns number of errors (i.e. 0 if no errors).
         int Validate();
 
+        Type GetFileType() const { return m_fileType; }
+
         const wxString& GetFileName() const { return m_fileName; }
         void SetFileName(const wxString& fn) { m_fileName = fn; }
 
@@ -725,6 +745,7 @@ class Catalog
         CatalogDeletedDataArray m_deletedItems;
 
         bool m_isOk;
+        Type m_fileType;
         wxString m_fileName;
         HeaderData m_header;
         Language m_sourceLanguage;

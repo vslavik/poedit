@@ -1081,6 +1081,8 @@ bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
 Catalog::Catalog()
 {
     m_sourceLanguage = Language::English();
+    m_fileType = Type::PO;
+
     m_fileCRLF = wxTextFileType_None;
     m_fileWrappingWidth = DEFAULT_WRAPPING;
 
@@ -1092,6 +1094,16 @@ Catalog::Catalog()
     }
 }
 
+Catalog::Catalog(const wxString& po_file, int flags)
+{
+    m_sourceLanguage = Language::English();
+    m_fileType = Type::PO;
+
+    m_fileCRLF = wxTextFileType_None;
+    m_fileWrappingWidth = DEFAULT_WRAPPING;
+
+    m_isOk = Load(po_file, flags);
+}
 
 Catalog::~Catalog()
 {
@@ -1099,12 +1111,16 @@ Catalog::~Catalog()
 }
 
 
-Catalog::Catalog(const wxString& po_file, int flags)
+bool Catalog::HasCapability(Catalog::Cap cap) const
 {
-    m_fileCRLF = wxTextFileType_None;
-    m_fileWrappingWidth = DEFAULT_WRAPPING;
-
-    m_isOk = Load(po_file, flags);
+    switch (cap)
+    {
+        case Cap::Translations:
+        case Cap::LanguageSetting:
+        case Cap::UserComments:
+            return m_fileType == Type::PO;
+    }
+    return false; // silence VC++ warning
 }
 
 
@@ -1172,6 +1188,13 @@ bool Catalog::Load(const wxString& po_file, int flags)
     m_isOk = false;
     m_fileName = po_file;
     m_header.BasePath = wxEmptyString;
+
+    wxString ext;
+    wxFileName::SplitPath(po_file, nullptr, nullptr, &ext);
+    if (ext.CmpNoCase("pot") == 0)
+        m_fileType = Type::POT;
+    else
+        m_fileType = Type::PO;
 
     /* Load the .po file: */
 
@@ -1243,6 +1266,13 @@ bool Catalog::Load(const wxString& po_file, int flags)
 
 void Catalog::FixupCommonIssues()
 {
+    if (m_header.Project == "PACKAGE VERSION")
+        m_header.Project.clear();
+
+    // All the following fixups are specific to POs and should *not* be done in POTs:
+    if (m_fileType == Type::POT)
+        return;
+
     if (!m_header.Lang.IsValid())
     {
         if (!m_fileName.empty())
@@ -1274,9 +1304,6 @@ void Catalog::FixupCommonIssues()
     }
 
     wxLogTrace("poedit", "catalog lang is '%s'", GetLanguage().Code());
-
-    if (m_header.Project == "PACKAGE VERSION")
-        m_header.Project.clear();
 
     if (m_header.GetHeader("Language-Team") == "LANGUAGE <LL@li.org>")
     {
@@ -1573,7 +1600,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
 
     /* If the user wants it, compile .mo file right now: */
 
-    if (save_mo && wxConfig::Get()->Read("compile_mo", (long)true))
+    if (m_fileType == Type::PO && save_mo && wxConfig::Get()->Read("compile_mo", (long)true))
     {
         const wxString mo_file = wxFileName::StripExtension(po_file) + ".mo";
         TempOutputFileFor mo_file_temp_obj(mo_file);
@@ -1766,10 +1793,22 @@ bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
     // was empty previously, the author apparently doesn't want this header
     // set, so don't mess with it. See https://sourceforge.net/tracker/?func=detail&atid=389156&aid=1900298&group_id=27043
     // for motivation:
-    if ( !m_header.RevisionDate.empty() )
-        m_header.RevisionDate = GetCurrentTimeRFC822();
+    auto currentTime = GetCurrentTimeRFC822();
+    switch (m_fileType)
+    {
+        case Type::PO:
+            if ( !m_header.RevisionDate.empty() )
+                m_header.RevisionDate = currentTime;
+            break;
+        case Type::POT:
+            if ( m_fileType == Type::POT && !m_header.CreationDate.empty() )
+                m_header.CreationDate = currentTime;
+            break;
+    }
 
     SaveMultiLines(f, m_header.Comment);
+    if (m_fileType == Type::POT)
+        f.AddLine("#, fuzzy");
     f.AddLine(_T("msgid \"\""));
     f.AddLine(_T("msgstr \"\""));
     wxString pohdr = wxString(_T("\"")) + m_header.ToString(_T("\"\n\""));
@@ -2031,7 +2070,7 @@ bool Catalog::Update(ProgressInfo *progress, bool summary, UpdateResultReason& r
     if (progress->Cancelled())
         reason = UpdateResultReason::CancelledByUser;
 
-    if (newcat != NULL)
+    if (newcat)
     {
         bool succ = false;
         if ( progress )
@@ -2039,7 +2078,18 @@ bool Catalog::Update(ProgressInfo *progress, bool summary, UpdateResultReason& r
 
         bool cancelledByUser = false;
         if (!summary || ShowMergeSummary(newcat, &cancelledByUser))
-            succ = Merge(newcat);
+        {
+            switch (m_fileType)
+            {
+                case Type::PO:
+                    succ = Merge(newcat);
+                    break;
+                case Type::POT:
+                    m_items = newcat->m_items;
+                    succ = true;
+                    break;
+            }
+        }
         if (!succ)
         {
             newcat.reset();
