@@ -37,6 +37,11 @@
 #include <AppKit/AppKit.h>
 #endif
 
+#ifdef __WXGTK__
+#include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
+#endif
+
 #include "catalog.h"
 #include "text_control.h"
 #include "edframe.h"
@@ -176,6 +181,9 @@ FindFrame::FindFrame(PoeditFrame *owner,
     m_wholeWords->SetValue(wxConfig::Get()->ReadBool("whole_words", false));
 
     wxAcceleratorEntry entries[] = {
+#ifndef __WXGTK__
+        { wxACCEL_SHIFT,  WXK_RETURN, wxID_BACKWARD },
+#endif
 #ifdef __WXOSX__
         { wxACCEL_CMD,  'W', wxID_CLOSE },
 #endif
@@ -190,6 +198,12 @@ FindFrame::FindFrame(PoeditFrame *owner,
     Bind(wxEVT_BUTTON, &FindFrame::OnClose, this, wxID_CLOSE);
     Bind(wxEVT_MENU, &FindFrame::OnClose, this, wxID_CLOSE);
     Bind(wxEVT_CHECKBOX, &FindFrame::OnCheckbox, this);
+
+#ifdef __WXGTK__
+    GtkAccelGroup *accelGroup = gtk_accel_group_new();
+    gtk_window_add_accel_group(GTK_WINDOW(GetHandle()), accelGroup);
+    gtk_widget_add_accelerator(m_btnPrev->GetHandle(), "activate", accelGroup, GDK_KEY_Return, GDK_SHIFT_MASK, GTK_ACCEL_VISIBLE);
+#endif
 
     OnModeChanged();
     m_mode->Bind(wxEVT_CHOICE, [=](wxCommandEvent&){ OnModeChanged(); });
