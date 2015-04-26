@@ -37,6 +37,11 @@
 #include <AppKit/AppKit.h>
 #endif
 
+#ifdef __WXGTK__
+#include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
+#endif
+
 #include "catalog.h"
 #include "text_control.h"
 #include "edframe.h"
@@ -176,6 +181,9 @@ FindFrame::FindFrame(PoeditFrame *owner,
     m_wholeWords->SetValue(wxConfig::Get()->ReadBool("whole_words", false));
 
     wxAcceleratorEntry entries[] = {
+#ifndef __WXGTK__
+        { wxACCEL_SHIFT,  WXK_RETURN, m_btnPrev->GetId() },
+#endif
 #ifdef __WXOSX__
         { wxACCEL_CMD,  'W', wxID_CLOSE },
 #endif
@@ -190,6 +198,22 @@ FindFrame::FindFrame(PoeditFrame *owner,
     Bind(wxEVT_BUTTON, &FindFrame::OnClose, this, wxID_CLOSE);
     Bind(wxEVT_MENU, &FindFrame::OnClose, this, wxID_CLOSE);
     Bind(wxEVT_CHECKBOX, &FindFrame::OnCheckbox, this);
+
+    // Set Shift+Return accelerator natively so that the button is animated.
+    // (Can't be done on Windows where wxAcceleratorEntry above is used.)
+#if defined(__WXGTK__)
+    GtkAccelGroup *accelGroup = gtk_accel_group_new();
+    gtk_window_add_accel_group(GTK_WINDOW(GetHandle()), accelGroup);
+    gtk_widget_add_accelerator(m_btnPrev->GetHandle(), "activate", accelGroup, GDK_KEY_Return, GDK_SHIFT_MASK, GTK_ACCEL_VISIBLE);
+#elif defined(__WXOSX__)
+    // wx's code interferes with normal processing of Shift-Return and
+    // setKeyEquivalent: @"\r" with setKeyEquivalentModifierMask: NSShiftKeyMask
+    // wouldn't work. Emulate it in custom code instead, by handling the
+    // event originating from the button and from the accelerator table above
+    // differently. More than a bit of a hack, but it works.
+    NSButton *osxPrev = (NSButton*)m_btnPrev->GetHandle();
+    Bind(wxEVT_MENU, [=](wxCommandEvent&){ [osxPrev performClick:nil]; }, m_btnPrev->GetId());
+#endif
 
     OnModeChanged();
     m_mode->Bind(wxEVT_CHOICE, [=](wxCommandEvent&){ OnModeChanged(); });
