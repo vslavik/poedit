@@ -231,7 +231,10 @@ public:
 
     bool IsGrowable() const override { return true; }
 
-    bool ShouldShowForItem(const CatalogItemPtr&) const override { return true; }
+    bool ShouldShowForItem(const CatalogItemPtr&) const override
+    {
+        return m_parent->FileHasCapability(Catalog::Cap::UserComments);
+    }
 
     void Update(const CatalogItemPtr& item) override
     {
@@ -618,7 +621,8 @@ void SuggestionsSidebarBlock::Show(bool show)
 
 bool SuggestionsSidebarBlock::ShouldShowForItem(const CatalogItemPtr&) const
 {
-    return wxConfig::Get()->ReadBool("use_tm", true);
+    return m_parent->FileHasCapability(Catalog::Cap::Translations) &&
+           wxConfig::Get()->ReadBool("use_tm", true);
 }
 
 void SuggestionsSidebarBlock::Update(const CatalogItemPtr& item)
@@ -763,6 +767,11 @@ Language Sidebar::GetCurrentSourceLanguage() const
     if (!m_catalog)
         return Language::English();
     return m_catalog->GetSourceLanguage();
+}
+
+bool Sidebar::FileHasCapability(Catalog::Cap cap) const
+{
+    return m_catalog && m_catalog->HasCapability(cap);
 }
 
 void Sidebar::RefreshContent()

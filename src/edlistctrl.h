@@ -185,6 +185,7 @@ class PoeditListCtrl : public wxListView
         void OnSize(wxSizeEvent& event);
 
         bool m_displayIDs;
+        int m_colSource, m_colTrans, m_colId;
         unsigned m_colWidth;
         bool m_isRTL, m_appIsRTL;
 
