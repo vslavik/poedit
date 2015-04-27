@@ -39,4 +39,25 @@ void call_on_main_thread_impl(std::function<void()> func)
 #endif // defined(__WXOSX__) && defined(__clang__)
 
 
-ThreadPool background_queue::ms_pool(std::thread::hardware_concurrency() + 1);
+namespace
+{
+
+// TODO: Use NSOperationQeueue on OS X
+std::unique_ptr<ThreadPool> gs_pool;
+static std::once_flag initializationFlag;
+
+} // anonymous namespace
+
+ThreadPool& background_queue::pool()
+{
+    std::call_once(initializationFlag, []{
+        gs_pool.reset(new ThreadPool(std::thread::hardware_concurrency() + 1));
+    });
+    return *gs_pool;
+}
+
+void background_queue::cleanup()
+{
+    gs_pool.reset();
+}
+

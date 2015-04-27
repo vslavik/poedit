@@ -49,12 +49,15 @@ public:
     static auto add(F&& f, Args&&... args)
         -> std::future<typename std::result_of<F(Args...)>::type>
     {
-        return ms_pool.enqueue(f, args...);
+        return pool().enqueue(f, args...);
     }
 
+
+    /// @internal Call on shutdown to terminate the queue
+    static void cleanup();
+
 private:
-    // TODO: Use NSOperationQeueue on OS X
-    static ThreadPool ms_pool;
+    static ThreadPool& pool();
 };
 
 

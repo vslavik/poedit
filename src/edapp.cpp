@@ -62,6 +62,7 @@
 
 #include "edapp.h"
 #include "edframe.h"
+#include "concurrency.h"
 #include "manager.h"
 #include "prefsdlg.h"
 #include "extractor.h"
@@ -318,6 +319,8 @@ int PoeditApp::OnExit()
 #ifdef HAVE_HTTP_CLIENT
     CrowdinClient::CleanUp();
 #endif
+
+    background_queue::cleanup();
 
 #ifdef USE_SPARKLE
     Sparkle_Cleanup();
