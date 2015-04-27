@@ -787,7 +787,34 @@ void PoeditFrame::CreateContentViewEditControls(wxWindow *p, wxBoxSizer *panelSi
 
 void PoeditFrame::CreateContentViewTemplateControls(wxWindow *p, wxBoxSizer *panelSizer)
 {
-    // FIXME
+    auto win = new wxPanel(p, wxID_ANY);
+    auto sizer = new wxBoxSizer(wxVERTICAL);
+
+    auto explain = new wxStaticText(win, wxID_ANY, _(L"POT files are only templates and don’t contain any translations themselves.\nTo make a translation, create a new PO file based on the template."), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE_HORIZONTAL);
+#ifdef __WXOSX__
+    explain->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+    explain->SetForegroundColour(ExplanationLabel::GetTextColor().ChangeLightness(160));
+    win->SetBackgroundColour(GetBackgroundColour().ChangeLightness(50));
+
+    auto button = new wxButton(win, wxID_ANY, MSW_OR_OTHER(_("Create new translation"), _("Create New Translation")));
+    button->Bind(wxEVT_BUTTON, [=](wxCommandEvent&)
+    {
+        wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
+        dlg->ShowWindowModalThenDo([=](int retcode){
+            if (retcode == wxID_OK)
+                NewFromPOT(m_catalog->GetFileName(), dlg->GetLang());
+        });
+    });
+
+    sizer->AddStretchSpacer();
+    sizer->Add(explain, wxSizerFlags().Center().Border(wxLEFT|wxRIGHT, PX(100)));
+    sizer->Add(button, wxSizerFlags().Center().Border(wxTOP|wxBOTTOM, PX(10)));
+    sizer->AddStretchSpacer();
+
+    win->SetSizerAndFit(sizer);
+
+    panelSizer->Add(win, 1, wxEXPAND);
 }
 
 
@@ -1348,8 +1375,6 @@ void PoeditFrame::OnNew(wxCommandEvent& event)
 
 void PoeditFrame::NewFromPOT()
 {
-    CatalogPtr catalog = std::make_shared<Catalog>();
-
     wxString path = wxPathOnly(GetFileName());
     if (path.empty())
         path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
@@ -1358,18 +1383,24 @@ void PoeditFrame::NewFromPOT()
              path, wxEmptyString, wxEmptyString,
              Catalog::GetTypesFileMask({Catalog::Type::POT, Catalog::Type::PO}),
              wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
-    bool ok = false;
     if (!pot_file.empty())
     {
         wxConfig::Get()->Write("last_file_path", wxPathOnly(pot_file));
-        UpdateResultReason reason;
-        ok = catalog->UpdateFromPOT(pot_file,
-                                    /*summary=*/false,
-                                    reason,
-                                    /*replace_header=*/true);
+        NewFromPOT(pot_file);
     }
-    if (!ok)
+}
+
+void PoeditFrame::NewFromPOT(const wxString& pot_file, Language language)
+{
+    UpdateResultReason reason;
+    CatalogPtr catalog = std::make_shared<Catalog>();
+    if (!catalog->UpdateFromPOT(pot_file,
+                                /*summary=*/false,
+                                reason,
+                                /*replace_header=*/true))
+    {
         return;
+    }
 
     m_catalog = catalog;
     m_pendingHumanEditedItem.reset();
@@ -1385,13 +1416,10 @@ void PoeditFrame::NewFromPOT()
     UpdateStatusBar();
     UpdateTextLanguage();
 
-    // Choose the language:
-    wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
-
-    dlg->ShowWindowModalThenDo([=](int retcode){
-        if (retcode == wxID_OK)
+    auto setLanguageFunc = [=](Language lang)
+    {
+        if (lang.IsValid())
         {
-            Language lang = dlg->GetLang();
             catalog->Header().Lang = lang;
             catalog->Header().SetHeaderNotEmpty("Plural-Forms", lang.DefaultPluralFormsExpr());
 
@@ -1401,10 +1429,7 @@ void PoeditFrame::NewFromPOT()
             // save the file just yet and let the user confirm the location when saving.
             wxFileName pot_fn(pot_file);
             pot_fn.SetFullName(lang.Code() + ".po");
-
             m_catalog->SetFileName(pot_fn.GetFullPath());
-            m_fileExistsOnDisk = false;
-            m_modified = true;
         }
         else
         {
@@ -1419,7 +1444,24 @@ void PoeditFrame::NewFromPOT()
         UpdateStatusBar();
         UpdateTextLanguage();
         NotifyCatalogChanged(m_catalog); // refresh language column
-    });
+    };
+
+    if (language.IsValid())
+    {
+        setLanguageFunc(language);
+    }
+    else
+    {
+        // Choose the language:
+        wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
+
+        dlg->ShowWindowModalThenDo([=](int retcode){
+            if (retcode == wxID_OK)
+                setLanguageFunc(dlg->GetLang());
+            else
+                setLanguageFunc(Language());
+        });
+    }
 }
 
 

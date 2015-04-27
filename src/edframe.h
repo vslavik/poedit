@@ -238,6 +238,7 @@ public: // for PoeditApp
         void OnNew(wxCommandEvent& event);
         void NewFromScratch();
         void NewFromPOT();
+        void NewFromPOT(const wxString& pot_file, Language language = Language());
 
         void OnOpen(wxCommandEvent& event);
         void OnOpenFromCrowdin(wxCommandEvent& event);

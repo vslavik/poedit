@@ -710,7 +710,7 @@ class Catalog
 
         Type GetFileType() const { return m_fileType; }
 
-        const wxString& GetFileName() const { return m_fileName; }
+        wxString GetFileName() const { return m_fileName; }
         void SetFileName(const wxString& fn) { m_fileName = fn; }
 
     protected:
