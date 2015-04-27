@@ -115,6 +115,8 @@ class PoeditFrame : public wxFrame
         template<typename TFunctor>
         void WriteCatalog(const wxString& catalog, TFunctor completionHandler);
 
+        void WarnAboutLanguageIssues();
+
         /// Did the user modify the catalog?
         bool IsModified() const { return m_modified; }
         /** Updates catalog and sets m_modified flag. Updates from POT
@@ -162,6 +164,7 @@ class PoeditFrame : public wxFrame
             Invalid, // no content whatsoever
             Welcome,
             PO,
+            POT,
             Empty_PO
         };
         Content m_contentType;
@@ -172,7 +175,10 @@ class PoeditFrame : public wxFrame
         /// Ensures creation of specified content view, destroying the
         /// current content if necessary
         void EnsureContentView(Content type);
-        wxWindow* CreateContentViewPO();
+        void EnsureAppropriateContentView();
+        wxWindow* CreateContentViewPO(Content type);
+        void CreateContentViewEditControls(wxWindow *p, wxBoxSizer *panelSizer);
+        void CreateContentViewTemplateControls(wxWindow *p, wxBoxSizer *panelSizer);
         wxWindow* CreateContentViewWelcome();
         wxWindow* CreateContentViewEmptyPO();
         void DestroyContentView();
@@ -232,6 +238,7 @@ public: // for PoeditApp
         void OnNew(wxCommandEvent& event);
         void NewFromScratch();
         void NewFromPOT();
+        void NewFromPOT(const wxString& pot_file, Language language = Language());
 
         void OnOpen(wxCommandEvent& event);
         void OnOpenFromCrowdin(wxCommandEvent& event);
@@ -288,9 +295,11 @@ private:
         void OnUpdateShowHideSidebar(wxUpdateUIEvent& event);
 
         void OnSelectionUpdate(wxUpdateUIEvent& event);
+        void OnSelectionUpdateEditable(wxUpdateUIEvent& event);
         void OnSingleSelectionUpdate(wxUpdateUIEvent& event);
         void OnHasCatalogUpdate(wxUpdateUIEvent& event);
         void OnIsEditableUpdate(wxUpdateUIEvent& event);
+        void OnEditCommentUpdate(wxUpdateUIEvent& event);
 
 #if defined(__WXMSW__) || defined(__WXGTK__)
         void OnTextEditingCommand(wxCommandEvent& event);

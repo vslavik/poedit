@@ -41,7 +41,7 @@ class WXDLLIMPEXP_FWD_CORE wxComboBox;
 class PropertiesDialog : public wxDialog
 {
     public:
-        PropertiesDialog(wxWindow *parent, bool fileExistsOnDisk, int initialPage = 0);
+        PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileExistsOnDisk, int initialPage = 0);
 
         /// Reads data from the catalog and fill dialog's controls.
         void TransferTo(const CatalogPtr& cat);
@@ -68,6 +68,7 @@ class PropertiesDialog : public wxDialog
         wxEditableListBox *m_paths, *m_excludedPaths, *m_keywords;
         wxString m_rememberedPluralForm;
 
+        bool m_hasLang;
         int m_validatedPlural, m_validatedLang;
 };
 

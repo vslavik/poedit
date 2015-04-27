@@ -272,10 +272,17 @@ void PoeditListCtrl::SetDisplayLines(bool dl)
 void PoeditListCtrl::CreateColumns()
 {
     DeleteAllColumns();
-    InsertColumn(0, _("Source text"));
-    InsertColumn(1, _("Translation"));
+
+    int curr = 0;
+    m_colSource = (int)InsertColumn(curr++, _("Source text"));
+    if (m_catalog && m_catalog->HasCapability(Catalog::Cap::Translations))
+        m_colTrans = (int)InsertColumn(curr++, _("Translation"));
+    else
+        m_colTrans = -1;
     if (m_displayIDs)
-        InsertColumn(2, _("ID"), wxLIST_FORMAT_RIGHT);
+        m_colId = (int)InsertColumn(curr++, _("ID"), wxLIST_FORMAT_RIGHT);
+    else
+        m_colId = -1;
 
 #ifdef __WXMSW__
     if (m_appIsRTL)
@@ -283,7 +290,7 @@ void PoeditListCtrl::CreateColumns()
         // another wx quirk: if we truly need left alignment, we must lie under RTL locales
         wxListItem colInfoOrig;
         colInfoOrig.SetAlign(wxLIST_FORMAT_RIGHT);
-        SetColumn(0, colInfoOrig);
+        SetColumn(m_colSource, colInfoOrig);
     }
 #endif
 
@@ -297,12 +304,21 @@ void PoeditListCtrl::SizeColumns()
     int w = GetSize().x
             - wxSystemSettings::GetMetric(wxSYS_VSCROLL_X) - 10
             - LINE_COL_SIZE;
-    SetColumnWidth(0, w / 2);
-    SetColumnWidth(1, w - w / 2);
-    if (m_displayIDs)
-        SetColumnWidth(2, LINE_COL_SIZE);
 
-    m_colWidth = (w/2) / GetCharWidth();
+    if (m_colTrans != -1)
+    {
+        SetColumnWidth(m_colSource, w / 2);
+        SetColumnWidth(m_colTrans, w - w / 2);
+        m_colWidth = (w/2) / GetCharWidth();
+    }
+    else
+    {
+        SetColumnWidth(m_colSource, w);
+        m_colWidth = w / GetCharWidth();
+    }
+
+    if (m_displayIDs)
+        SetColumnWidth(m_colId, LINE_COL_SIZE);
 }
 
 
@@ -325,6 +341,7 @@ void PoeditListCtrl::CatalogChanged(const CatalogPtr& catalog)
 
     // now read the new catalog:
     m_catalog = catalog;
+    CreateColumns();
     ReadCatalog(/*resetSizeAndSelection=*/sizeChanged);
 }
 
@@ -361,12 +378,15 @@ void PoeditListCtrl::ReadCatalog(bool resetSizeAndSelection)
         colInfo.SetText(wxString::Format(_(L"Source text — %s"), srclang.DisplayName()));
     else
         colInfo.SetText(_("Source text"));
-    SetColumn(0, colInfo);
+    SetColumn(m_colSource, colInfo);
 
-    wxString langname = lang.IsValid() ? lang.DisplayName() : _("unknown language");
-    colInfo.SetText(wxString::Format(_(L"Translation — %s"), langname));
-    colInfo.SetAlign(isRTL ? wxLIST_FORMAT_RIGHT : wxLIST_FORMAT_LEFT);
-    SetColumn(1, colInfo);
+    if (m_colTrans != -1)
+    {
+        wxString langname = lang.IsValid() ? lang.DisplayName() : _("unknown language");
+        colInfo.SetText(wxString::Format(_(L"Translation — %s"), langname));
+        colInfo.SetAlign(isRTL ? wxLIST_FORMAT_RIGHT : wxLIST_FORMAT_LEFT);
+        SetColumn(m_colTrans, colInfo);
+    }
 
     // sort catalog items, create indexes mapping
     CreateSortMap();
@@ -440,36 +460,36 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
 
     auto d = ListIndexToCatalogItem((int)item);
 
-    switch (column)
+    if (column == m_colSource)
     {
-        case 0:
-        {
-            wxString orig;
-            if ( d->HasContext() )
-                orig.Printf("%s  [ %s ]",
-                            d->GetString().c_str(), d->GetContext().c_str());
-            else
-                orig = d->GetString();
+        wxString orig;
+        if ( d->HasContext() )
+            orig.Printf("%s  [ %s ]",
+                        d->GetString().c_str(), d->GetContext().c_str());
+        else
+            orig = d->GetString();
 
-            // Add RTL Unicode mark to render bidi texts correctly
-            if (m_appIsRTL)
-                return L"\u202a" + orig.substr(0,GetMaxColChars());
-            else
-                return orig.substr(0,GetMaxColChars());
-        }
-        case 1:
-        {
-            // Add RTL Unicode mark to render bidi texts correctly
-            if (m_isRTL && !m_appIsRTL)
-                return L"\u202b" + d->GetTranslation();
-            else
-                return d->GetTranslation();
-        }
-        case 2:
-            return wxString() << d->GetId();
-
-        default:
-            return wxEmptyString;
+        // Add RTL Unicode mark to render bidi texts correctly
+        if (m_appIsRTL)
+            return L"\u202a" + orig.substr(0,GetMaxColChars());
+        else
+            return orig.substr(0,GetMaxColChars());
+    }
+    else if (column == m_colTrans)
+    {
+        // Add RTL Unicode mark to render bidi texts correctly
+        if (m_isRTL && !m_appIsRTL)
+            return L"\u202b" + d->GetTranslation();
+        else
+            return d->GetTranslation();
+    }
+    else if (column == m_colId)
+    {
+        return wxString() << d->GetId();
+    }
+    else
+    {
+        return wxEmptyString;
     }
 }
 
@@ -494,7 +514,7 @@ wxListItemAttr *PoeditListCtrl::OnGetItemAttr(long item) const
 
 wxListItemAttr *PoeditListCtrl::OnGetItemColumnAttr(long item, long column) const
 {
-    if (column == 2)
+    if (column == m_colId)
     {
         return (wxListItemAttr*)&m_attrId;
     }

@@ -44,9 +44,11 @@
 #include "pluralforms/pl_evaluate.h"
 
 
-PropertiesDialog::PropertiesDialog(wxWindow *parent, bool fileExistsOnDisk, int initialPage)
+PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileExistsOnDisk, int initialPage)
     : m_validatedPlural(-1), m_validatedLang(-1)
 {
+    m_hasLang = cat->HasCapability(Catalog::Cap::LanguageSetting);
+
     wxXmlResource::Get()->LoadDialog(this, parent, "properties");
 
     m_team = XRCCTRL(*this, "team_name", wxTextCtrl);
@@ -65,6 +67,19 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, bool fileExistsOnDisk, int 
 #else
     m_pluralFormsExpr->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
+
+    if (!m_hasLang)
+    {
+        for (auto w: { (wxWindow*)m_language,
+                       (wxWindow*)m_pluralFormsDefault,
+                       (wxWindow*)m_pluralFormsCustom,
+                       (wxWindow*)m_pluralFormsExpr,
+                       XRCCTRL(*this, "language_label", wxWindow),
+                       XRCCTRL(*this, "plural_forms_label", wxWindow) })
+        {
+            w->GetContainingSizer()->Hide(w);
+        }
+    }
 
     // my custom controls:
     m_keywords = new wxEditableListBox(this, -1, _("Additional keywords"));
@@ -222,19 +237,22 @@ void PropertiesDialog::TransferTo(const CatalogPtr& cat)
     SET_VAL(BasePath, basePath);
     #undef SET_VAL
 
-    m_language->SetLang(cat->Header().Lang);
-    OnLanguageValueChanged(m_language->GetValue());
+    if (m_hasLang)
+    {
+        m_language->SetLang(cat->Header().Lang);
+        OnLanguageValueChanged(m_language->GetValue());
 
-    wxString pf_def = cat->Header().Lang.DefaultPluralFormsExpr();
-    wxString pf_cat = cat->Header().GetHeader("Plural-Forms");
-    if (pf_cat == "nplurals=INTEGER; plural=EXPRESSION;")
-        pf_cat = pf_def;
+        wxString pf_def = cat->Header().Lang.DefaultPluralFormsExpr();
+        wxString pf_cat = cat->Header().GetHeader("Plural-Forms");
+        if (pf_cat == "nplurals=INTEGER; plural=EXPRESSION;")
+            pf_cat = pf_def;
 
-    m_pluralFormsExpr->SetValue(pf_cat);
-    if (!pf_cat.empty() && pf_cat == pf_def)
-        m_pluralFormsDefault->SetValue(true);
-    else
-        m_pluralFormsCustom->SetValue(true);
+        m_pluralFormsExpr->SetValue(pf_cat);
+        if (!pf_cat.empty() && pf_cat == pf_def)
+            m_pluralFormsDefault->SetValue(true);
+        else
+            m_pluralFormsCustom->SetValue(true);
+    }
 
     m_paths->SetStrings(cat->Header().SearchPaths);
     m_excludedPaths->SetStrings(cat->Header().SearchPathsExcluded);
@@ -254,9 +272,26 @@ void PropertiesDialog::TransferFrom(const CatalogPtr& cat)
     GET_VAL(BasePath, basePath);
     #undef GET_VAL
 
-    Language lang = m_language->GetLang();
-    if (lang.IsValid())
-        cat->Header().Lang = lang;
+    if (m_hasLang)
+    {
+        Language lang = m_language->GetLang();
+        if (lang.IsValid())
+            cat->Header().Lang = lang;
+
+        wxString pluralForms;
+        if (m_pluralFormsDefault->GetValue() && cat->Header().Lang.IsValid())
+        {
+            pluralForms = cat->Header().Lang.DefaultPluralFormsExpr();
+        }
+
+        if (pluralForms.empty())
+        {
+            pluralForms = m_pluralFormsExpr->GetValue().Strip(wxString::both);
+            if ( !pluralForms.empty() && !pluralForms.EndsWith(";") )
+                pluralForms += ";";
+        }
+        cat->Header().SetHeaderNotEmpty("Plural-Forms", pluralForms);
+    }
 
     GetStringsFromControl(m_keywords, cat->Header().Keywords);
     GetPathsFromControl(m_paths, cat->Header().SearchPaths);
@@ -266,20 +301,6 @@ void PropertiesDialog::TransferFrom(const CatalogPtr& cat)
         cat->Header().BasePath = ".";
 
     m_keywords->GetStrings(cat->Header().Keywords);
-
-    wxString pluralForms;
-    if (m_pluralFormsDefault->GetValue() && cat->Header().Lang.IsValid())
-    {
-        pluralForms = cat->Header().Lang.DefaultPluralFormsExpr();
-    }
-
-    if (pluralForms.empty())
-    {
-        pluralForms = m_pluralFormsExpr->GetValue().Strip(wxString::both);
-        if ( !pluralForms.empty() && !pluralForms.EndsWith(";") )
-            pluralForms += ";";
-    }
-    cat->Header().SetHeaderNotEmpty("Plural-Forms", pluralForms);
 }
 
 
@@ -352,6 +373,9 @@ void PropertiesDialog::OnPluralFormsCustom(wxCommandEvent& event)
 
 bool PropertiesDialog::Validate()
 {
+    if (!m_hasLang)
+        return true;
+
     if (m_validatedPlural == -1)
     {
         m_validatedPlural = 1;

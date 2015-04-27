@@ -55,6 +55,8 @@ extern const char *CSS_STYLE;
 
 void Catalog::ExportToHTML(std::ostream& f)
 {
+    const bool translated = HasCapability(Catalog::Cap::Translations);
+
     f << "<!DOCTYPE html>\n"
          "<html>\n"
          "<head>\n"
@@ -71,36 +73,49 @@ void Catalog::ExportToHTML(std::ostream& f)
     f << "<table class='metadata'>\n";
     if (!m_header.Project.empty())
         TableRow(f, _("Project:"), m_header.Project);
-    if (m_header.Lang.IsValid())
+    if (translated && m_header.Lang.IsValid())
         TableRow(f, _("Language:"), m_header.Lang.DisplayName());
     f << "</table>\n";
 
 
     // Statistics:
+    if (translated)
+    {
+        int all = 0;
+        int fuzzy = 0;
+        int untranslated = 0;
+        int unfinished = 0;
+        GetStatistics(&all, &fuzzy, nullptr, &untranslated, &unfinished);
+        int percent = (all == 0 ) ? 0 : (100 * (all - unfinished) / all);
 
-    int all = 0;
-    int fuzzy = 0;
-    int untranslated = 0;
-    int unfinished = 0;
-    GetStatistics(&all, &fuzzy, nullptr, &untranslated, &unfinished);
-    int percent = (all == 0 ) ? 0 : (100 * (all - unfinished) / all);
-
-    f << "<div class='stats'>\n"
-      << "  <div class='graph'>\n";
-    if (all > unfinished)
-      f << "    <div class='percent-done' style='width: " << 100.0 * (all - unfinished) / all << "%'>&nbsp;</div>\n";
-    if (fuzzy > 0)
-      f << "    <div class='percent-fuzzy' style='width: " << 100.0 * fuzzy / all << "%'>&nbsp;</div>\n";
-    if (untranslated > 0)
-      f << "    <div class='percent-untrans' style='width: " << 100.0 * untranslated / all << "%'>&nbsp;</div>\n";
-    f << "  </div>\n"
-      << "  <div class='legend'>";
-    f << str::to_utf8(wxString::Format(_("Translated: %d of %d (%d %%)"), all - unfinished, all, percent));
-    if (unfinished > 0)
-        f << str::to_utf8(L"  •  ") << str::to_utf8(wxString::Format(_("Remaining: %d"), unfinished));
-    f << "  </div>\n"
-      << "</div>\n";
-
+        f << "<div class='stats'>\n"
+          << "  <div class='graph'>\n";
+        if (all > unfinished)
+          f << "    <div class='percent-done' style='width: " << 100.0 * (all - unfinished) / all << "%'>&nbsp;</div>\n";
+        if (fuzzy > 0)
+          f << "    <div class='percent-fuzzy' style='width: " << 100.0 * fuzzy / all << "%'>&nbsp;</div>\n";
+        if (untranslated > 0)
+          f << "    <div class='percent-untrans' style='width: " << 100.0 * untranslated / all << "%'>&nbsp;</div>\n";
+        f << "  </div>\n"
+          << "  <div class='legend'>";
+        f << str::to_utf8(wxString::Format(_("Translated: %d of %d (%d %%)"), all - unfinished, all, percent));
+        if (unfinished > 0)
+            f << str::to_utf8(L"  •  ") << str::to_utf8(wxString::Format(_("Remaining: %d"), unfinished));
+        f << "  </div>\n"
+          << "</div>\n";
+    }
+    else
+    {
+        int all = (int)items().size();
+        f << "<div class='stats'>\n"
+          << "  <div class='graph'>\n"
+          << "    <div class='percent-untrans' style='width: 100%'>&nbsp;</div>\n"
+          << "  </div>\n"
+          << "  <div class='legend'>"
+          << str::to_utf8(wxString::Format(wxPLURAL(_("%d entry"), _("%d entries"), all), all))
+          << "  </div>\n"
+          << "</div>\n";
+    }
 
     // Translations:
 
@@ -123,9 +138,12 @@ void Catalog::ExportToHTML(std::ostream& f)
     f << "<table class='translations'>\n"
          "  <thead>\n"
          "    <tr>\n"
-         "      <th>" << str::to_utf8(thead_src) << "</th>\n"
-         "      <th>" << str::to_utf8(thead_tra) << "</th>\n"
-         "    </tr>\n"
+         "      <th>" << str::to_utf8(thead_src) << "</th>\n";
+    if (translated)
+    {
+        f << "      <th>" << str::to_utf8(thead_tra) << "</th>\n";
+    }
+    f << "    </tr>\n"
          "  </thead>\n"
          "  <tbody>\n";
 
@@ -160,29 +178,32 @@ void Catalog::ExportToHTML(std::ostream& f)
         f << "</td>\n";
 
         // Translation:
-        f << "<td class='tra' " << lang_tra << ">\n";
-        if (item->HasPlural())
+        if (translated)
         {
-            if (item->IsTranslated())
+            f << "<td class='tra' " << lang_tra << ">\n";
+            if (item->HasPlural())
             {
-                f << "<ol class='plurals'>\n";
-                for (auto t: item->GetTranslations())
-                    f << "  <li>" << fmt_trans(t) << "</li>\n";
-                f << "</ol>\n";
+                if (item->IsTranslated())
+                {
+                    f << "<ol class='plurals'>\n";
+                    for (auto t: item->GetTranslations())
+                        f << "  <li>" << fmt_trans(t) << "</li>\n";
+                    f << "</ol>\n";
+                }
             }
+            else
+            {
+                f << fmt_trans(item->GetTranslation());
+            }
+            f << "</td>\n";
         }
-        else
-        {
-            f << fmt_trans(item->GetTranslation());
-        }
-        f << "</td>\n";
 
         // Notes, if present:
         if (hasComments)
         {
             f << "</tr>\n"
               << "<tr class='comments'>\n"
-              << "  <td colspan='2'><div>";
+              << "  <td colspan='" << (translated ? 2 : 1) << "'><div>";
             if (item->HasExtractedComments())
             {
                 f << "<p>\n";
