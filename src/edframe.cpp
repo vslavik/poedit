@@ -3199,17 +3199,33 @@ void PoeditFrame::RecreatePluralTextCtrls()
             desc.Printf(_("Form %i"), form);
         else if (examplesCnt == 1)
         {
-            if (firstExample == 0)
-                desc = _("Zero");
-            else if (firstExample == 1)
-                desc = _("One");
-            else if (firstExample == 2)
-                desc = _("Two");
+            if (formsCount == 2 && firstExample == 1) // English-like
+            {
+                desc = _("Singular");
+            }
             else
-                desc.Printf(L"n = %s", examples);
+            {
+                if (firstExample == 0)
+                    desc = _("Zero");
+                else if (firstExample == 1)
+                    desc = _("One");
+                else if (firstExample == 2)
+                    desc = _("Two");
+                else
+                    desc.Printf(L"n = %s", examples);
+            }
+        }
+        else if (formsCount == 2 && examplesCnt == 2 && firstExample == 0 && examples == "0, 1")
+        {
+            desc = _("Singular");
         }
         else if (formsCount == 2 && firstExample != 1 && examplesCnt == maxExamplesCnt)
-            desc = _("Other");
+        {
+            if (firstExample == 0 || firstExample == 2)
+                desc = _("Plural");
+            else
+                desc = _("Other");
+        }
         else
             desc.Printf(L"n → %s", examples);
 
