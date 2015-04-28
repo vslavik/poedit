@@ -27,11 +27,16 @@
 #define Poedit_concurrency_h
 
 #include <functional>
+#include <future>
+#include <memory>
 
 #include <wx/app.h>
 #include <wx/weakref.h>
 
-#include "ThreadPool.h"
+#if defined(__WXOSX__) && defined(__clang__)
+    #define HAVE_DISPATCH
+    extern void call_on_main_thread_impl(std::function<void()>&& f);
+#endif
 
 // ----------------------------------------------------------------------
 // Background operations
@@ -45,11 +50,14 @@ public:
         
         Return future for it.
      */
-    template<class F, class... Args>
-    static auto add(F&& f, Args&&... args)
-        -> std::future<typename std::result_of<F(Args...)>::type>
+    template<class F>
+    static auto add(F&& f) -> std::future<typename std::result_of<F()>::type>
     {
-        return pool().enqueue(f, args...);
+        using return_type = typename std::result_of<F()>::type;
+        auto task = std::make_shared< std::packaged_task<return_type()> >(std::forward<F>(f));
+        std::future<return_type> res = task->get_future();
+        enqueue([task](){ (*task)(); });
+        return res;
     }
 
 
@@ -57,18 +65,13 @@ public:
     static void cleanup();
 
 private:
-    static ThreadPool& pool();
+    static void enqueue(std::function<void()>&& f);
 };
 
 
 // ----------------------------------------------------------------------
 // Helpers for running code on the main thread
 // ----------------------------------------------------------------------
-
-#if defined(__WXOSX__) && defined(__clang__)
-    #define HAVE_DISPATCH
-    extern void call_on_main_thread_impl(std::function<void()> func);
-#endif
 
 /**
     Simply calls the callable @a func on the main thread, asynchronously.

@@ -25,30 +25,43 @@
 
 #include "concurrency.h"
 
-#include <thread>
+#ifdef HAVE_DISPATCH
 
-#if defined(__WXOSX__) && defined(__clang__)
 
 #include <dispatch/dispatch.h>
 
-void call_on_main_thread_impl(std::function<void()> func)
+void call_on_main_thread_impl(std::function<void()>&& f)
 {
-    dispatch_async(dispatch_get_main_queue(), [=]{ func(); });
+    std::function<void()> func(std::move(f));
+    dispatch_async(dispatch_get_main_queue(), [func]{ func(); });
 }
 
-#endif // defined(__WXOSX__) && defined(__clang__)
+void background_queue::enqueue(std::function<void()>&& f)
+{
+    std::function<void()> func(std::move(f));
+    dispatch_queue_t q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(q, [func]{ func(); });
+}
 
+void background_queue::cleanup()
+{
+}
+
+
+#else // !HAVE_DISPATCH
+
+
+#include "ThreadPool.h"
+
+#include <thread>
 
 namespace
 {
 
-// TODO: Use NSOperationQeueue on OS X
 std::unique_ptr<ThreadPool> gs_pool;
 static std::once_flag initializationFlag;
 
-} // anonymous namespace
-
-ThreadPool& background_queue::pool()
+ThreadPool& pool()
 {
     std::call_once(initializationFlag, []{
         gs_pool.reset(new ThreadPool(std::thread::hardware_concurrency() + 1));
@@ -56,8 +69,17 @@ ThreadPool& background_queue::pool()
     return *gs_pool;
 }
 
+} // anonymous namespace
+
+void background_queue::enqueue(std::function<void()>&& f)
+{
+    pool().enqueue_func(std::move(f));
+}
+
 void background_queue::cleanup()
 {
     gs_pool.reset();
 }
 
+
+#endif // !HAVE_DISPATCH

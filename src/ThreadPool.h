@@ -45,6 +45,7 @@ public:
     template<class F, class... Args>
     auto enqueue(F&& f, Args&&... args)
         -> std::future<typename std::result_of<F(Args...)>::type>;
+    void enqueue_func(std::function<void()>&& f);
     ~ThreadPool();
 private:
     // need to keep track of threads so we can join them
@@ -98,6 +99,12 @@ auto ThreadPool::enqueue(F&& f, Args&&... args)
         );
         
     std::future<return_type> res = task->get_future();
+    enqueue_func([task](){ (*task)(); });
+    return res;
+}
+
+inline void ThreadPool::enqueue_func(std::function<void()>&& f)
+{
     {
         std::unique_lock<std::mutex> lock(queue_mutex);
 
@@ -105,10 +112,9 @@ auto ThreadPool::enqueue(F&& f, Args&&... args)
         if(stop)
             throw std::runtime_error("enqueue on stopped ThreadPool");
 
-        tasks.emplace([task](){ (*task)(); });
+        tasks.emplace(f);
     }
     condition.notify_one();
-    return res;
 }
 
 // the destructor joins all threads
