@@ -348,17 +348,36 @@ void PoeditApp::SetupLanguage()
     wxTranslations *trans = new wxTranslations();
     wxTranslations::Set(trans);
 
-#ifdef __WXGTK__
+    int language = wxLANGUAGE_DEFAULT;
+
+#if NEED_CHOOSELANG_UI
+    auto uilang = GetUILanguage();
+    if (!uilang.empty())
+    {
+        auto langinfo = wxLocale::FindLanguageInfo(uilang);
+        if (langinfo)
+            language = langinfo->Language;
+    }
+#endif
+
     // Properly set locale is important for some aspects of GTK+ as well as
     // other things. It's also the common thing to do, so don't break
     // expectations needlessly:
-    m_locale.reset(new wxLocale());
-    m_locale->Init(wxLANGUAGE_DEFAULT, wxLOCALE_DONT_LOAD_DEFAULT);
-#endif
-
+    {
+        // supress error logging because setting locale may fail and we want to
+        // handle that gracefully and invisibly:
+        wxLogNull null;
+        m_locale.reset(new wxLocale());
+        if (!m_locale->Init(language, wxLOCALE_DONT_LOAD_DEFAULT))
+        {
+            m_locale.reset();
 #if NEED_CHOOSELANG_UI
-    trans->SetLanguage(GetUILanguage());
+            if (!uilang.empty())
+                trans->SetLanguage(uilang);
 #endif
+        }
+    }
+
     trans->AddStdCatalog();
     trans->AddCatalog("poedit");
 
