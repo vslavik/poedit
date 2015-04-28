@@ -467,16 +467,16 @@ bool FindFrame::DoFind(int dir)
                 break;
         }
 
-        auto dt = lastItem = (*m_catalog)[m_listCtrl->ListIndexToCatalog(m_position)];
+        lastItem = (*m_catalog)[m_listCtrl->ListIndexToCatalog(m_position)];
 
         if (inTrans)
         {
             // concatenate all translations:
-            unsigned cntTrans = dt->GetNumberOfTranslations();
+            unsigned cntTrans = lastItem->GetNumberOfTranslations();
             textc = wxEmptyString;
             for (unsigned i = 0; i < cntTrans; i++)
             {
-                textc += dt->GetTranslation(i);
+                textc += lastItem->GetTranslation(i);
             }
             // and search for the substring in them:
             if (ignoreCase)
@@ -494,7 +494,7 @@ bool FindFrame::DoFind(int dir)
         }
         if (inSource)
         {
-            textc = dt->GetString();
+            textc = lastItem->GetString();
             if (ignoreCase)
                 textc.MakeLower();
             if (ignoreMnemonicsAmp)
@@ -509,7 +509,7 @@ bool FindFrame::DoFind(int dir)
         }
         if (inComments)
         {
-            textc = dt->GetComment();
+            textc = lastItem->GetComment();
             if (ignoreCase)
                 textc.MakeLower();
 
@@ -519,7 +519,7 @@ bool FindFrame::DoFind(int dir)
                 break;
             }
 
-            wxArrayString extractedComments = dt->GetExtractedComments();
+            wxArrayString extractedComments = lastItem->GetExtractedComments();
             textc = wxEmptyString;
             for (unsigned i = 0; i < extractedComments.GetCount(); i++)
                 textc += extractedComments[i];
