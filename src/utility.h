@@ -134,6 +134,7 @@ inline T UnescapeCString(const T& str)
             else
             {
                 out += c;
+                break;
             }
         }
         else
