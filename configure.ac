@@ -49,7 +49,7 @@ AC_PROG_CXXCPP
 AC_LANG([C++])
 AX_CXX_COMPILE_STDCXX_11([], [mandatory])
 
-WXLIBS_USED="xrc,stc,html,xml,adv,core"
+WXLIBS_USED="xrc,stc,html,xml,adv,core,net"
 
 case "$USE_DEBUG" in
 yes)	DEBUG_FLAGS="-g -Wall -O0"

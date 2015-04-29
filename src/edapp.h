@@ -35,6 +35,7 @@
 #include "prefsdlg.h"
 
 class WXDLLIMPEXP_FWD_BASE wxConfigBase;
+class WXDLLIMPEXP_FWD_BASE wxSingleInstanceChecker;
 class WXDLLIMPEXP_FWD_CORE wxMenuBar;
 
 
@@ -140,6 +141,13 @@ class PoeditApp : public wxApp
         std::unique_ptr<PoeditPreferencesEditor> m_preferences;
 
         std::unique_ptr<wxLocale> m_locale;
+
+#ifndef __WXOSX__
+        class RemoteServer;
+        class RemoteClient;
+        std::unique_ptr<RemoteServer> m_remoteServer;
+        std::unique_ptr<wxSingleInstanceChecker> m_instanceChecker;
+#endif
 };
 
 DECLARE_APP(PoeditApp);

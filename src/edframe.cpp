@@ -131,16 +131,14 @@ bool g_focusToText = false;
     return NULL;
 }
 
-/*static*/ PoeditFrame *PoeditFrame::UnusedActiveWindow()
+/*static*/ PoeditFrame *PoeditFrame::UnusedWindow(bool active)
 {
-    for (PoeditFramesList::const_iterator n = ms_instances.begin();
-         n != ms_instances.end(); ++n)
+    for (auto win: ms_instances)
     {
-        PoeditFrame *win = *n;
-        if (win->IsActive() && win->m_catalog == nullptr)
+        if ((!active || win->IsActive()) && win->m_catalog == nullptr)
             return win;
     }
-    return NULL;
+    return nullptr;
 }
 
 /*static*/ bool PoeditFrame::AnyWindowIsModified()

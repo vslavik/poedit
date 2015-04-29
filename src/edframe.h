@@ -95,7 +95,9 @@ class PoeditFrame : public wxFrame
 
         /// Returns active PoeditFrame, if it is unused (i.e. not showing
         /// content, not having catalog loaded); NULL otherwise.
-        static PoeditFrame *UnusedActiveWindow();
+        static PoeditFrame *UnusedActiveWindow() { return UnusedWindow(true); }
+        /// Ditto, but not required to be active
+        static PoeditFrame *UnusedWindow(bool active);
 
         /// Returns true if at least one one window has unsaved changes
         static bool AnyWindowIsModified();

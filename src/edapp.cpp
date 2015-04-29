@@ -34,12 +34,14 @@
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
 #include <wx/filedlg.h>
+#include <wx/snglinst.h>
 #include <wx/sysopt.h>
 #include <wx/stdpaths.h>
 #include <wx/aboutdlg.h>
 #include <wx/artprov.h>
 #include <wx/datetime.h>
 #include <wx/intl.h>
+#include <wx/ipc.h>
 #include <wx/translation.h>
 
 #ifdef __WXOSX__
@@ -92,6 +94,133 @@ struct PoeditApp::RecentMenuData
 extern bool MigrateLegacyTranslationMemory();
 #endif
 
+
+#ifndef __WXOSX__
+
+// IPC for ensuring that only one instance of Poedit runs at a time. This is
+// handled native on OS X and GtkApplication could do it under GTK+3, but wx
+// doesn't support that and we have to implement everything manually for both
+// Windows and GTK+ ports.
+
+namespace
+{
+
+#ifdef __UNIX__
+wxString GetRuntimeDir()
+{
+    wxString dir;
+    if (!wxGetEnv("XDG_RUNTIME_DIR", &dir))
+        dir = wxGetHomeDir();
+    if (dir.Last() != '/')
+        dir += '/';
+    return dir;
+}
+wxString RemoteService() { return GetRuntimeDir() + "poedit.ipc"; }
+#else
+wxString RemoteService() { return "Poedit"; }
+#endif
+
+const char *IPC_TOPIC = "cmdline";
+
+} // anonymous namespace
+
+class PoeditApp::RemoteServer
+{
+public:
+    RemoteServer(PoeditApp *app) : m_server(app)
+    {
+        m_server.Create(RemoteService());
+    }
+
+private:
+    class Connection : public wxConnection
+    {
+    public:
+        Connection(PoeditApp *app) : m_app(app) {}
+
+        bool OnExec(const wxString& topic, const wxString& data) override
+        {
+            if (topic != IPC_TOPIC)
+                return false;
+            wxString payload;
+            if (data == "Activate")
+            {
+                m_app->OpenNewFile();
+                return true;
+            }
+            if (data.StartsWith("OpenURI:", &payload))
+            {
+                m_app->HandleCustomURI(payload);
+                return true;
+            }
+            if (data.StartsWith("OpenFile:", &payload))
+            {
+                wxArrayString a;
+                a.push_back(payload);
+                m_app->OpenFiles(a);
+                return true;
+            }
+            return false;
+        }
+
+    private:
+        PoeditApp *m_app;
+    };
+
+    class Server : public wxServer
+    {
+    public:
+        Server(PoeditApp *app) : m_app(app) {}
+
+        wxConnectionBase *OnAcceptConnection(const wxString& topic) override
+        {
+            if (topic != IPC_TOPIC)
+                return nullptr;
+            return new Connection(m_app);
+        }
+
+    private:
+        PoeditApp *m_app;
+    };
+
+    Server m_server;
+};
+
+class PoeditApp::RemoteClient
+{
+public:
+    RemoteClient(PoeditApp*) : m_client()
+    {
+        m_conn.reset(m_client.MakeConnection("localhost", RemoteService(), IPC_TOPIC));
+    }
+
+    void Activate()
+    {
+        Command("Activate");
+    }
+
+    void HandleCustomURI(const wxString& uri)
+    {
+        Command("OpenURI:" + uri);
+    }
+
+    void OpenFile(const wxString& filename)
+    {
+        wxFileName fn(filename);
+        fn.MakeAbsolute();
+        Command("OpenFile:" + fn.GetFullPath());
+    }
+
+private:
+    void Command(const wxString cmd) { m_conn->Execute(cmd); }
+
+    wxClient m_client;
+    std::unique_ptr<wxConnectionBase> m_conn;
+};
+
+#endif // __WXOSX__
+
+
 IMPLEMENT_APP(PoeditApp);
 
 PoeditApp::PoeditApp()
@@ -129,8 +258,25 @@ extern void InitXmlResource();
 
 bool PoeditApp::OnInit()
 {
+    SetVendorName("Vaclav Slavik");
+    SetAppName("Poedit");
+
+#ifndef __WXOSX__
+    // create early for use in cmd line parsing
+    m_instanceChecker.reset(new wxSingleInstanceChecker);
+  #ifdef __UNIX__
+    m_instanceChecker->Create("poedit.lock", GetRuntimeDir());
+  #else
+    m_instanceChecker->CreateDefault();
+  #endif
+#endif
+
     if (!wxApp::OnInit())
         return false;
+
+#ifndef __WXOSX__
+    m_remoteServer.reset(new RemoteServer(this));
+#endif
 
     InitHiDPIHandling();
 
@@ -183,9 +329,6 @@ bool PoeditApp::OnInit()
         }
     }
 #endif // __UNIX__
-
-    SetVendorName("Vaclav Slavik");
-    SetAppName("Poedit");
 
 #if defined(__WXOSX__)
     #define CFG_FILE (wxStandardPaths::Get().GetUserConfigDir() + "/net.poedit.Poedit.cfg")
@@ -331,6 +474,11 @@ int PoeditApp::OnExit()
 
     u_cleanup();
 
+#ifndef __WXOSX__
+    m_instanceChecker.reset();
+    m_remoteServer.reset();
+#endif
+
     return wxApp::OnExit();
 }
 
@@ -398,7 +546,11 @@ wxLayoutDirection PoeditApp::GetLayoutDirection() const
 
 void PoeditApp::OpenNewFile()
 {
-    PoeditFrame::CreateWelcome();
+    PoeditFrame *unused = PoeditFrame::UnusedWindow(/*active=*/false);
+    if (unused)
+        unused->Raise();
+    else
+        PoeditFrame::CreateWelcome();
 }
 
 void PoeditApp::OpenFiles(const wxArrayString& names)
@@ -593,6 +745,28 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
 
     if ( parser.Found(CL_KEEP_TEMP_FILES) )
         TempDirectory::KeepFiles();
+
+#ifndef __WXOSX__
+    if (m_instanceChecker->IsAnotherRunning())
+    {
+        RemoteClient client(this);
+        wxString poeditURI;
+        if (parser.Found(CL_HANDLE_POEDIT_URI, &poeditURI))
+            client.HandleCustomURI(poeditURI);
+
+        if (parser.GetParamCount() == 0)
+        {
+            client.Activate();
+        }
+        else
+        {
+            for (size_t i = 0; i < parser.GetParamCount(); i++)
+                client.OpenFile(parser.GetParam(i));
+        }
+        return false; // terminate program
+    }
+    // else: fall through and handle normally
+#endif
 
     wxString poeditURI;
     if (parser.Found(CL_HANDLE_POEDIT_URI, &poeditURI))
