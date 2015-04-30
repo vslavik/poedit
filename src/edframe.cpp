@@ -3631,14 +3631,13 @@ bool Pred_UnfinishedItem(const CatalogItemPtr& item)
 
 } // anonymous namespace
 
-
-void PoeditFrame::Navigate(int step, NavigatePredicate predicate, bool wrap)
+long PoeditFrame::NavigateGetNextItem(const long start,
+                                      int step, PoeditFrame::NavigatePredicate predicate, bool wrap,
+                                      CatalogItemPtr *out_item)
 {
     const int count = m_list ? m_list->GetItemCount() : 0;
     if ( !count )
-        return;
-
-    const long start = m_list->GetFirstSelected();
+        return -1;
 
     long i = start;
 
@@ -3651,26 +3650,36 @@ void PoeditFrame::Navigate(int step, NavigatePredicate predicate, bool wrap)
             if ( wrap )
                 i += count;
             else
-                return; // nowhere to go
+                return -1; // nowhere to go
         }
         else if ( i >= count )
         {
             if ( wrap )
                 i -= count;
             else
-                return; // nowhere to go
+                return -1; // nowhere to go
         }
 
         if ( i == start )
-            return; // nowhere to go
+            return -1; // nowhere to go
 
         auto item = m_list->ListIndexToCatalogItem(i);
         if ( predicate(item) )
         {
-            m_list->SelectOnly(i);
-            return;
+            if (out_item)
+                *out_item = item;
+            return i;
         }
     }
+}
+
+void PoeditFrame::Navigate(int step, NavigatePredicate predicate, bool wrap)
+{
+    auto i = NavigateGetNextItem(m_list->GetFirstSelected(), step, predicate, wrap, nullptr);
+    if (i == -1)
+        return;
+
+    m_list->SelectOnly(i);
 }
 
 void PoeditFrame::OnPrev(wxCommandEvent&)
