@@ -2062,7 +2062,7 @@ void PoeditFrame::OnClearTranslation(wxCommandEvent&)
 void PoeditFrame::OnFind(wxCommandEvent&)
 {
     if (!m_findWindow)
-        m_findWindow = new FindFrame(this, m_list, m_catalog, m_textOrig, m_textTrans);
+        m_findWindow = new FindFrame(this, m_list, m_catalog, m_textOrig, m_textTrans, m_pluralNotebook);
 
     m_findWindow->ShowForFind();
 }
@@ -2070,7 +2070,7 @@ void PoeditFrame::OnFind(wxCommandEvent&)
 void PoeditFrame::OnFindAndReplace(wxCommandEvent&)
 {
     if (!m_findWindow)
-        m_findWindow = new FindFrame(this, m_list, m_catalog, m_textOrig, m_textTrans);
+        m_findWindow = new FindFrame(this, m_list, m_catalog, m_textOrig, m_textTrans, m_pluralNotebook);
 
     m_findWindow->ShowForReplace();
 }
