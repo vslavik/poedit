@@ -424,7 +424,7 @@ bool FindFrame::DoFind(int dir)
 
     int mode = m_mode->GetSelection();
     int cnt = m_listCtrl->GetItemCount();
-    bool inTrans = m_findInTrans->GetValue();
+    bool inTrans = m_findInTrans->GetValue()  && (m_catalog->HasCapability(Catalog::Cap::Translations));
     bool inSource = (mode == Mode_Find) && m_findInOrig->GetValue();
     bool inComments = (mode == Mode_Find) && m_findInComments->GetValue();
     bool ignoreCase = (mode == Mode_Find) && m_ignoreCase->GetValue();
