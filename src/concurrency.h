@@ -38,28 +38,60 @@
     extern void call_on_main_thread_impl(std::function<void()>&& f);
 #endif
 
+#if defined(_MSC_VER) && (_MSC_VER >= 1800)
+    #define HAVE_PPL
+    #include <concrt.h>
+#endif
+
 // ----------------------------------------------------------------------
 // Background operations
 // ----------------------------------------------------------------------
 
+#if defined(HAVE_PPL)
+
 class background_queue
 {
 public:
+    /// Future type used by the queue.
+    template<typename T> using future = Concurrency::task<T>;
+
     /**
         Enqueue an operation for background processing.
         
         Return future for it.
      */
     template<class F>
-    static auto add(F&& f) -> std::future<typename std::result_of<F()>::type>
+    static auto add(F&& f) -> future<typename std::result_of<F()>::type>
+    {
+        return Concurrency::create_task(f);
+    }
+
+    /// @internal Call on shutdown to terminate the queue
+    static void cleanup() {}
+};
+
+#else // generic version
+
+class background_queue
+{
+public:
+    /// Future type used by the queue.
+    template<typename T> using future = std::future<T>;
+
+    /**
+        Enqueue an operation for background processing.
+        
+        Return future for it.
+     */
+    template<class F>
+    static auto add(F&& f) -> future<typename std::result_of<F()>::type>
     {
         using return_type = typename std::result_of<F()>::type;
         auto task = std::make_shared< std::packaged_task<return_type()> >(std::forward<F>(f));
-        std::future<return_type> res = task->get_future();
+        future<return_type> res = task->get_future();
         enqueue([task](){ (*task)(); });
         return res;
     }
-
 
     /// @internal Call on shutdown to terminate the queue
     static void cleanup();
@@ -67,6 +99,8 @@ public:
 private:
     static void enqueue(std::function<void()>&& f);
 };
+
+#endif // !HAVE_PPL
 
 
 // ----------------------------------------------------------------------

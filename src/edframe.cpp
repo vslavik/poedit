@@ -2722,7 +2722,7 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
 {
     wxBusyCursor bcur;
 
-    std::future<void> tmUpdateThread;
+    background_queue::future<void> tmUpdateThread;
     if (wxConfig::Get()->ReadBool("use_tm", true))
     {
         tmUpdateThread = background_queue::add([=]{
@@ -3020,7 +3020,7 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, const T& range, int fl
             return true;
         };
 
-    std::vector<std::future<bool>> operations;
+    std::vector<background_queue::future<bool>> operations;
     for (int i: range)
     {
         auto dt = (*m_catalog)[i];

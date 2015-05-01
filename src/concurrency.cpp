@@ -25,7 +25,7 @@
 
 #include "concurrency.h"
 
-#ifdef HAVE_DISPATCH
+#if defined(HAVE_DISPATCH)
 
 
 #include <dispatch/dispatch.h>
@@ -48,7 +48,7 @@ void background_queue::cleanup()
 }
 
 
-#else // !HAVE_DISPATCH
+#elif !defined(HAVE_PPL) // generic implementation
 
 
 #include "ThreadPool.h"
