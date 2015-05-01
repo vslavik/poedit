@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2015-01-10 16:00+0100\n"
-"PO-Revision-Date: 2015-03-10 12:33-0400\n"
+"POT-Creation-Date: 2015-04-30 20:06+0200\n"
+"PO-Revision-Date: 2015-04-30 13:54-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -36,7 +36,7 @@ msgstr "第 %d 行已损坏（文件“%s”中），不是有效的 %s 数据�
 
 #, c-format
 msgid "Malformed header: '%s'"
-msgstr "错误的头： '%s'"
+msgstr "格式异常的头：“%s”"
 
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
@@ -48,7 +48,7 @@ msgstr "已损坏的编目文件：在没有 msgid_plural 的情况下使用了�
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
-msgstr "当加载编目时有错误。因此有些数据可能缺少或损坏。"
+msgstr "加载编目时遇到错误。有些数据可能缺失或损坏。"
 
 #, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
@@ -59,8 +59,8 @@ msgid ""
 "File '%s' is read-only and cannot be saved.\n"
 "Please save it under different name."
 msgstr ""
-"文件 '%s' 为只读，不能保存。\n"
-"请使用不同的名称保存。"
+"文件“%s”为只读，不能保存。\n"
+"请使用其他名称保存。"
 
 #, c-format
 msgid "Couldn't save file %s."
@@ -84,12 +84,21 @@ msgstr ""
 msgid "Error saving catalog"
 msgstr "保存编目时出错"
 
+msgid "PO Translation Files"
+msgstr "PO 翻译文件"
+
+msgid "POT Translation Templates"
+msgstr "POT 翻译模板"
+
+msgid "All Translation Files"
+msgstr ""
+
 msgid "Merging differences..."
 msgstr "合并差异..."
 
 #, c-format
 msgid "'%s' is not a valid POT file."
-msgstr "'%s' 不是有效的 POT 文件。"
+msgstr "“%s”不是一个有效的 POT 文件。"
 
 msgid "(Use default language)"
 msgstr "(使用默认语言)"
@@ -102,6 +111,85 @@ msgstr "语言选择"
 
 msgid "You must restart Poedit for this change to take effect."
 msgstr "您必须重新启动 Poedit 才能使这个更改生效。"
+
+msgid "Downloading translations is disabled in this project."
+msgstr "此项目禁用了下载翻译。"
+
+msgid "Not authorized, please sign in again."
+msgstr "未授权，请尝试重新登录。"
+
+msgid "Sign in to Crowdin"
+msgstr "登录到 Crowdin"
+
+msgid ""
+"Crowdin is an online localization management platform and collaborative "
+"translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
+msgstr ""
+"Crowdin 是一个在线的本地化管理平台和协作翻译工具。Poedit 可以无缝同步在 "
+"Crowdin 上管理的 PO 文件。"
+
+msgid "Sign In"
+msgstr "登录"
+
+msgid "Sign in"
+msgstr "登录"
+
+msgid "Sign Out"
+msgstr "登出"
+
+msgid "Sign out"
+msgstr "登出"
+
+msgid "Waiting for authentication…"
+msgstr "正在等待身份验证…"
+
+msgid "Updating user information…"
+msgstr "正在更新用户信息…"
+
+msgid "Signed in as:"
+msgstr "已登录为："
+
+msgid "Learn More About Crowdin"
+msgstr "了解更多有关 Crowdin"
+
+msgid "Learn more about Crowdin"
+msgstr "了解更多有关 Crowdin"
+
+msgid "Open Crowdin translation"
+msgstr "打开 Crowdin 翻译"
+
+msgid "Project:"
+msgstr "项目："
+
+msgid "Language:"
+msgstr "语言:"
+
+msgid "File:"
+msgstr "文件："
+
+msgid "No translation projects listed in your Crowdin account."
+msgstr "您的 Crowdin 账户中没有列出翻译项目。"
+
+msgid "This project has no files that can be translated in Poedit."
+msgstr "此项目没有可以在 Poedit 中翻译的文件。"
+
+msgid "This file can only be edited in Crowdin’s web interface."
+msgstr ""
+
+msgid "Downloading latest translations…"
+msgstr "正在下载最新的翻译…"
+
+msgid "Syncing with Crowdin"
+msgstr "正在与 Crowdin 同步"
+
+msgid "Syncing with Crowdin failed."
+msgstr "与 Crowdin 同步失败。"
+
+msgid "Crowdin error"
+msgstr "Crowdin 错误"
+
+msgid "Uploading translations…"
+msgstr "正在上传翻译…"
 
 msgid "&Copy"
 msgstr "复制(&C)"
@@ -125,7 +213,7 @@ msgstr "正在扫描文件..."
 #. TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
 #, c-format
 msgid "Parsing %s files..."
-msgstr "正在分析 %s 文件..."
+msgstr "正在解析 %s 文件..."
 
 msgid "Failed to load extracted catalog."
 msgstr "加载已提取的编目失败。"
@@ -147,6 +235,9 @@ msgstr "请打开并编辑对应的 PO 文件。当你保存它时，MO 文件�
 msgid "don't delete temporary files (for debugging)"
 msgstr "不删除临时文件(供调试使用)"
 
+msgid "handle a poedit:// URI"
+msgstr "处理 poedit:// URI"
+
 #, c-format
 msgid "Unhandled exception occurred: %s"
 msgstr "发生了不能处理的异常：%s"
@@ -157,15 +248,9 @@ msgstr "发生了不能处理的异常。"
 msgid "Open catalog"
 msgstr "打开编目"
 
-msgid "All Files"
-msgstr "所有文件"
-
-msgid "PO Translation Files"
-msgstr "PO 翻译文件"
-
 #, c-format
 msgid "File '%s' doesn't exist."
-msgstr "文件 '%s' 不存在。"
+msgstr "文件“%s”不存在。"
 
 #. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
 #. ("Poedit" here, but please use "%s")
@@ -367,7 +452,7 @@ msgstr "您不能在 Poedit 窗口上放下一个以上的文件。"
 
 #, c-format
 msgid "File '%s' is not a message catalog."
-msgstr "文件 '%s' 不是消息编目。"
+msgstr "文件“%s”不是一个消息编目。"
 
 msgid "Poedit"
 msgstr "Poedit"
@@ -389,6 +474,17 @@ msgstr "复数："
 
 msgid "Translation:"
 msgstr "翻译："
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+
+msgid "Create New Translation"
+msgstr ""
+
+msgid "Create new translation"
+msgstr "创建新的翻译"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
@@ -437,9 +533,6 @@ msgstr "HTML 文件"
 msgid "Open catalog template"
 msgstr "打开编目模板"
 
-msgid "POT Translation Templates"
-msgstr "POT 翻译模板"
-
 msgid "Updating catalog"
 msgstr "更新编目"
 
@@ -472,7 +565,7 @@ msgid ""
 "Entries with errors were marked in red in the list. Details of the error "
 "will be shown when you select such an entry."
 msgstr ""
-"有错误的条目在列表中被标记为红色。当您选择这样的条目时将显示错误的详细信息。"
+"有错误的条目在列表中被标记为红色。您选择这样的条目时将显示错误的详细信息。"
 
 msgid "The file was saved safely."
 msgstr "文件已被安全地保存。"
@@ -507,15 +600,6 @@ msgstr[0] "翻译已经可以被使用了，但是还有 %d 个条目没有被�
 msgid "The translation is ready for use."
 msgstr "翻译为使用准备就绪。"
 
-msgid "No references to this string found."
-msgstr "未找到对这个字串的引用。"
-
-msgid "Please choose the reference you want to show:"
-msgstr "请选择您想要显示的引用："
-
-msgid "References"
-msgstr "引用"
-
 msgid "Context:"
 msgstr "上下文："
 
@@ -527,6 +611,23 @@ msgstr "设置语言"
 
 msgid "Set language"
 msgstr "选择语言"
+
+#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
+msgid ""
+"Suggestions are not available if the translation language is not set "
+"correctly. Other features, such as plural forms, may be affected as well."
+msgstr ""
+"如果翻译语言设置不正确，建议将不可用。其他特性（例如复数形式）也可能受到影"
+"响。"
+
+msgid "Language of the translation is the same as source language."
+msgstr "翻译语言与源语言相同。"
+
+msgid "Fix Language"
+msgstr "修复语言"
+
+msgid "Fix language"
+msgstr "修复语言"
 
 msgid ""
 "This catalog has entries with plural forms, but doesn't have Plural-Forms "
@@ -558,6 +659,7 @@ msgstr "修正头"
 msgid "Plural forms expression used by the catalog is unusual for %s."
 msgstr "该目录中所使用的复数形式对于 %s 是不同寻常的。"
 
+#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
 msgid "Review"
 msgstr "检查"
 
@@ -669,10 +771,10 @@ msgid_plural "Translated %u strings"
 msgstr[0] "已翻译 %u 个字符串"
 
 msgid "Copy from source text"
-msgstr "从源文本中复制"
+msgstr "复制源文本"
 
 msgid "Copy from Source Text"
-msgstr "从源文本中复制"
+msgstr "复制源文本"
 
 msgid "Clear translation"
 msgstr "清除翻译"
@@ -696,6 +798,9 @@ msgstr "一切"
 msgid "Form %i"
 msgstr "表格 %i"
 
+msgid "Singular"
+msgstr ""
+
 msgid "Zero"
 msgstr "零"
 
@@ -704,6 +809,9 @@ msgstr "一"
 
 msgid "Two"
 msgstr "二"
+
+msgid "Plural"
+msgstr ""
 
 msgid "Other"
 msgstr "其他"
@@ -742,6 +850,10 @@ msgstr "翻译"
 msgid "ID"
 msgstr "ID"
 
+#, c-format
+msgid "Source text — %s"
+msgstr "源文本 — %s"
+
 msgid "unknown language"
 msgstr "未知语言"
 
@@ -752,41 +864,13 @@ msgstr "翻译 — %s"
 msgid "Error:"
 msgstr "错误："
 
-msgid "Project info"
-msgstr "项目信息"
+#, c-format
+msgid "%d entries"
+msgstr ""
 
-msgid "Project name and version:"
-msgstr "项目名称和版本:"
-
-msgid "Language:"
-msgstr "语言:"
-
-msgid "Team:"
-msgstr "团队："
-
-msgid "Team's email address:"
-msgstr "团队的电子邮件地址："
-
-msgid "Charset:"
-msgstr "字符集："
-
-msgid "Source"
-msgstr "源文"
-
-msgid "Notes"
-msgstr "注释"
-
-msgid "Automatic translation"
-msgstr "自动翻译"
-
-msgid "Fuzzy translation"
-msgstr "模糊翻译"
-
-msgid "Notes for translators:"
-msgstr "给译员的注释:"
-
-msgid "Comment:"
-msgstr "注释："
+#, c-format
+msgid "%d entry"
+msgstr ""
 
 msgid "Source file"
 msgstr "源文件"
@@ -800,9 +884,61 @@ msgstr "在编辑器中打开"
 msgid "Open in editor"
 msgstr "在编辑器中打开"
 
+msgid "No references for the selected item."
+msgstr "没有对选定项的引用。"
+
 #, c-format
 msgid "Error opening file %s!"
 msgstr "打开文件 %s 时出错！"
+
+msgid "Find"
+msgstr "查找"
+
+msgid "Replace"
+msgstr "替换"
+
+#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+msgid "Options"
+msgstr "选项"
+
+msgid "Ignore case"
+msgstr "忽略大小写"
+
+msgid "Wrap around"
+msgstr "全字匹配"
+
+msgid "Whole words only"
+msgstr "仅整个单词"
+
+msgid "Find in source texts"
+msgstr "在源文本中查找"
+
+msgid "Find in translations"
+msgstr "在翻译中查找"
+
+msgid "Find in comments"
+msgstr "在注释中查找"
+
+msgid "Close"
+msgstr "关闭"
+
+msgid "Replace All"
+msgstr "全部替换"
+
+msgid "Replace all"
+msgstr "全部替换"
+
+msgid "< &Previous"
+msgstr "< 上一个(&P)"
+
+msgid "&Next >"
+msgstr "下一个(&N) >"
+
+msgid "String to find"
+msgstr "要查找的字符串"
+
+msgid "Replacement string"
+msgstr "替换字符串"
 
 #, c-format
 msgid "Cannot execute program: %s"
@@ -924,7 +1060,7 @@ msgid "General"
 msgstr "常规"
 
 msgid "Use translation memory"
-msgstr "使用翻译记忆库"
+msgstr "使用翻译记忆"
 
 msgid "Learn From Files..."
 msgstr "从文件中学习..."
@@ -945,7 +1081,7 @@ msgid ""
 "near-empty, it will not be very effective. The more translations\n"
 "you edit and the larger the TM grows, the better it gets."
 msgstr ""
-"如果启用， Poedit 会尝试使用你以前存储在翻译\n"
+"如果启用，Poedit 会尝试使用你以前存储在翻译\n"
 "记忆库中的翻译填补新的条目。如果翻译记忆库\n"
 "几乎是空的，这将不会非常有效。你翻译的越多，\n"
 "翻译记忆库就会成长得越大，自动填补的效果就会越好。"
@@ -1001,8 +1137,18 @@ msgstr "新建"
 msgid "Edit"
 msgstr "编辑"
 
+msgid "Delete extractor"
+msgstr "删除提取器"
+
+#, c-format
+msgid "Are you sure you want to delete the “%s” extractor?"
+msgstr "您确定要删除“%s”提取器吗？"
+
 msgid "Extractors"
 msgstr "提取器"
+
+msgid "Accounts"
+msgstr "账号"
 
 msgid "Automatically check for updates"
 msgstr "自动检查更新"
@@ -1063,7 +1209,10 @@ msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (推荐)"
 
 msgid "Please save the file first. This section cannot be edited until then."
-msgstr "请先保存文件。 以下内容在此之前不能被编辑。"
+msgstr "请先保存文件。以下内容在此之前不能被编辑。"
+
+msgid "Comment:"
+msgstr "注释："
 
 msgid "OK"
 msgstr "确定"
@@ -1073,42 +1222,6 @@ msgstr "清除(&L)"
 
 msgid "Clear the comment"
 msgstr "清除注释"
-
-msgid "Find..."
-msgstr "查找..."
-
-msgid "String to find:"
-msgstr "要查找的字串："
-
-msgid "Case sensitive"
-msgstr "区分大小写"
-
-msgid "Start from the first item"
-msgstr "从第一项开始"
-
-msgid "Whole words only"
-msgstr "仅整个单词"
-
-msgid "Find in original strings"
-msgstr "在原始字串中查找"
-
-msgid "Find in translations"
-msgstr "在翻译中查找"
-
-msgid "Find in comments"
-msgstr "在注释中查找"
-
-msgid "Find in automatic comments"
-msgstr "在自动注释中查找"
-
-msgid "Close"
-msgstr "关闭"
-
-msgid "< &Previous"
-msgstr "< 上一个(&P)"
-
-msgid "&Next >"
-msgstr "下一个(&N) >"
 
 msgid "Create new translations project"
 msgstr "创建新的翻译项目"
@@ -1164,6 +1277,12 @@ msgstr "打开(&O)..."
 msgid "Open Recent"
 msgstr "打开最近的"
 
+msgid "Open from Crowdin..."
+msgstr "从 Crowdin 打开..."
+
+msgid "Open From Crowdin..."
+msgstr "从 Crowdin 打开..."
+
 msgid "&Save"
 msgstr "保存(&S)"
 
@@ -1212,14 +1331,17 @@ msgstr "显示引用(&S)"
 msgid "&Find..."
 msgstr "查找(&F)..."
 
+msgid "Replace..."
+msgstr "替换..."
+
 msgid "Find next"
 msgstr "查找下一个"
 
 msgid "Find previous"
 msgstr "查找上一个"
 
-msgid "Find"
-msgstr "查找"
+msgid "Find and Replace..."
+msgstr "查找和替换..."
 
 msgid "Find Next"
 msgstr "查找下一个"
@@ -1260,6 +1382,12 @@ msgstr "按上下文分组(&G)"
 msgid "&Group By Context"
 msgstr "按上下文分组(&G)"
 
+msgid "Entries with errors first"
+msgstr "带有错误的条目优先"
+
+msgid "Entries with Errors First"
+msgstr "带有错误的条目优先"
+
 msgid "&Untranslated entries first"
 msgstr "未翻译条目优先(&U)"
 
@@ -1283,6 +1411,9 @@ msgstr "从 POT 文件更新(&P)..."
 
 msgid "Update from &POT File..."
 msgstr "从 POT 文件更新(&P)..."
+
+msgid "Sync with Crowdin"
+msgstr "与 Crowdin 同步"
 
 msgid "Fill missing translations from &TM..."
 msgstr "从 TM 填补缺少的翻译...(&T)"
@@ -1412,6 +1543,9 @@ msgstr ""
 msgid "Catalog properties"
 msgstr "编目属性"
 
+msgid "Project name and version:"
+msgstr "项目名称和版本:"
+
 msgid "Plural Forms:"
 msgstr "复数形式："
 
@@ -1422,7 +1556,16 @@ msgid "Use custom expression"
 msgstr "使用自定义表达式"
 
 msgid "Learn about plural forms"
-msgstr "学习复数形式"
+msgstr "了解复数形式"
+
+msgid "Charset:"
+msgstr "字符集："
+
+msgid "Team:"
+msgstr "团队："
+
+msgid "Team's email address:"
+msgstr "团队的电子邮件地址："
 
 msgid "Translation properties"
 msgstr "翻译属性"
@@ -1494,7 +1637,7 @@ msgstr "更新编目 - 将其与源文同步"
 msgid "Toggled if selected string has fuzzy translation"
 msgstr "切换是否选择的字串有模糊翻译"
 
-msgid "Show or hide the sidebar."
+msgid "Show or hide the sidebar"
 msgstr "显示或隐藏侧边栏"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
@@ -1505,6 +1648,9 @@ msgid ""
 "The old source text (before it changed during an update) that the fuzzy "
 "translation corresponds to."
 msgstr "模糊翻译与相对应的旧的源文本 (在更新期间改变之前)。"
+
+msgid "Notes for translators:"
+msgstr "给译员的注释:"
 
 msgid "Add comment"
 msgstr "添加注释"
@@ -1551,8 +1697,8 @@ msgid ""
 "This must be done before Poedit can start. It may take a few minutes if you "
 "have lots of translations stored, but should normally be much faster."
 msgstr ""
-"完成这些之后 Poedit 就可以开始工作了。如果你有大量需要翻译的字符串，这可能需"
-"要几分钟的时间，但一般应很快。"
+"完成这些之后 Poedit 就可以开始工作了。如果你有大量可翻译的字符串，这可能需要"
+"几分钟的时间，但一般应很快。"
 
 msgid "Proceed"
 msgstr "继续进行"
@@ -1584,13 +1730,20 @@ msgstr "编辑翻译"
 msgid "Open an existing PO file and edit the translation."
 msgstr "打开一个现有的PO文件并编辑翻译。"
 
-msgid "Create new translation"
-msgstr "创建新的翻译"
-
 msgid ""
 "Take an existing PO file or POT template and create a new translation from "
 "it."
 msgstr "利用现有的PO文件或者POT模板，并从它创建一个新的翻译。"
+
+msgid "Collaborate on a translation with Crowdin"
+msgstr "在 Crowdin 上进行翻译协作"
+
+msgid ""
+"Download a file from Crowdin project, translate and sync your changes back."
+msgstr "从 Crowdin 项目下载一个文件、翻译，然后将您的更改同步回去。"
+
+msgid "What is Crowdin?"
+msgstr "Crowdin 是什么？"
 
 msgid "There are no translations. That’s unusual."
 msgstr "找不到翻译文件，这不正常"
@@ -1602,28 +1755,34 @@ msgid ""
 "Translators typically use PO template files (POTs) prepared for them by the "
 "developer."
 msgstr ""
-"翻译条目不会在Gettext系统中手动添加条目，但是会自动从源代码中提取。\n"
-"这样一来，我们可以掌握最新和最准确的需要翻译的条目。\n"
-"翻译人员通常使用由开发商为他们准备PO模板文件（POTS）。"
+"翻译条目不是在 Gettext 系统中手动添加的，而是自动从源代码中提取。\n"
+"这样一来，我们才可以掌握最新且最准确的需要翻译的条目。\n"
+"翻译人员通常使用开发商为他们准备的 PO 模板文件（.pot）。"
 
 msgid "(Learn more about GNU gettext)"
 msgstr "(了解更多关于 GNU gettext 的内容)"
 
 msgid "The simplest way to fill this catalog is to update it from a POT:"
-msgstr "填补这个条目的最简单的办法是从一个 POT 文件更新："
+msgstr "填补这个编目的最简单的办法是从一个 POT 文件更新："
 
 msgid "Update from POT"
 msgstr "从 POT 文件更新"
 
 msgid "Take translatable strings from an existing POT template."
-msgstr "从现有的 POT 模版中提取需要翻译的字符串。"
+msgstr "从现有的 POT 模板中提取可翻译的字符串。"
 
 msgid ""
 "You can also extract translatable strings directly from the source code:"
-msgstr "你也可以直接从源代码中提取需要翻译的字符串："
+msgstr "你也可以直接从源代码中提取可翻译的字符串："
 
 msgid "Extract from sources"
 msgstr "从源代码中提取"
 
 msgid "Configure source code extraction in Properties."
 msgstr "在属性中配置源代码提取。"
+
+msgid "Sync"
+msgstr "同步"
+
+msgid "Synchronize the translation with Crowdin"
+msgstr "与 Crowdin 同步翻译"
