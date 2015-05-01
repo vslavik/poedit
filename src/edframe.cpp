@@ -1072,15 +1072,16 @@ void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler)
 
         if (retval == wxID_YES)
         {
-            if (!m_fileExistsOnDisk || GetFileName().empty())
-            {
-                GetSaveAsFilenameThenDo(m_catalog, [=](const wxString& fn){
-                    WriteCatalog(fn, [=](bool saved){
-                        if (saved)
-                            completionHandler();
-                    });
+            auto doSaveFile = [=](const wxString& fn){
+                WriteCatalog(fn, [=](bool saved){
+                    if (saved)
+                        completionHandler();
                 });
-            }
+            };
+            if (!m_fileExistsOnDisk || GetFileName().empty())
+                GetSaveAsFilenameThenDo(m_catalog, doSaveFile);
+            else
+                doSaveFile(GetFileName());
         }
         else if (retval == wxID_NO)
         {
