@@ -88,11 +88,13 @@ class PoeditListCtrl : public wxListView
         /// Returns item from the catalog based on list index
         CatalogItemPtr ListIndexToCatalogItem(long index) const
         {
-            return (*m_catalog)[ListIndexToCatalog(index)];
+            auto idx = ListIndexToCatalog(index);
+            return idx != -1 ? (*m_catalog)[idx] : nullptr;
         }
         CatalogItemPtr ListIndexToCatalogItem(long index)
         {
-            return (*m_catalog)[ListIndexToCatalog(index)];
+            auto idx = ListIndexToCatalog(index);
+            return idx != -1 ? (*m_catalog)[idx] : nullptr;
         }
 
         /// Returns index of selected catalog item
