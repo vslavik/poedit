@@ -112,7 +112,7 @@ void Catalog::ExportToHTML(std::ostream& f)
           << "    <div class='percent-untrans' style='width: 100%'>&nbsp;</div>\n"
           << "  </div>\n"
           << "  <div class='legend'>"
-          << str::to_utf8(wxString::Format(wxPLURAL(_("%d entry"), _("%d entries"), all), all))
+          << str::to_utf8(wxString::Format(wxPLURAL("%d entry", "%d entries", all), all))
           << "  </div>\n"
           << "</div>\n";
     }
