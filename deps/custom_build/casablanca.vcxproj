@@ -64,6 +64,7 @@
       <AdditionalDependencies>Winhttp.lib;httpapi.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <Import Project="..\casablanca\Release\src\build\sources.proj" />
+  <Import Project="..\casablanca\Release\src\build\common.vcxitems" Label="Shared" />
+  <Import Project="..\casablanca\Release\src\build\win32.vcxitems" Label="Shared" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
