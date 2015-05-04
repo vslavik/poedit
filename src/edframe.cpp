@@ -2201,7 +2201,7 @@ void PoeditFrame::OnNewTranslationEntered(const CatalogItemPtr& item)
     {
         auto srclang = m_catalog->GetSourceLanguage();
         auto lang = m_catalog->GetLanguage();
-        background_queue::add([=](){
+        concurrency_queue::add([=](){
             try
             {
                 auto tm = TranslationMemory::Get().GetWriter();
@@ -2722,10 +2722,10 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
 {
     wxBusyCursor bcur;
 
-    background_queue::future<void> tmUpdateThread;
+    concurrency_queue::future<void> tmUpdateThread;
     if (wxConfig::Get()->ReadBool("use_tm", true))
     {
-        tmUpdateThread = background_queue::add([=]{
+        tmUpdateThread = concurrency_queue::add([=]{
             try
             {
                 auto tm = TranslationMemory::Get().GetWriter();
@@ -3020,7 +3020,7 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, const T& range, int fl
             return true;
         };
 
-    std::vector<background_queue::future<bool>> operations;
+    std::vector<concurrency_queue::future<bool>> operations;
     for (int i: range)
     {
         auto dt = (*m_catalog)[i];
@@ -3029,7 +3029,7 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, const T& range, int fl
         if (dt->IsTranslated() && !dt->IsFuzzy())
             continue;
 
-        operations.push_back(background_queue::add([=,&tm]{
+        operations.push_back(concurrency_queue::add([=,&tm]{
             auto results = tm.Search(srclang, lang, dt->GetString().ToStdWstring());
             bool ok = process_results(dt, results);
             return ok;

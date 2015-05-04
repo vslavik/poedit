@@ -41,7 +41,7 @@ public:
                             SuggestionsProvider::error_func_type onError)
     {
         auto bck = &backend;
-        background_queue::add([=](){
+        concurrency_queue::add([=](){
             // don't bother asking the backend if the language is invalid:
             if (!lang.IsValid())
             {

@@ -49,7 +49,7 @@
 
 #if defined(HAVE_PPL)
 
-class background_queue
+class concurrency_queue
 {
 public:
     /// Future type used by the queue.
@@ -72,7 +72,7 @@ public:
 
 #else // generic version
 
-class background_queue
+class concurrency_queue
 {
 public:
     /// Future type used by the queue.

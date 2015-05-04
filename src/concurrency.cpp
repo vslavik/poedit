@@ -36,14 +36,14 @@ void call_on_main_thread_impl(std::function<void()>&& f)
     dispatch_async(dispatch_get_main_queue(), [func]{ func(); });
 }
 
-void background_queue::enqueue(std::function<void()>&& f)
+void concurrency_queue::enqueue(std::function<void()>&& f)
 {
     std::function<void()> func(std::move(f));
     dispatch_queue_t q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(q, [func]{ func(); });
 }
 
-void background_queue::cleanup()
+void concurrency_queue::cleanup()
 {
 }
 
@@ -71,12 +71,12 @@ ThreadPool& pool()
 
 } // anonymous namespace
 
-void background_queue::enqueue(std::function<void()>&& f)
+void concurrency_queue::enqueue(std::function<void()>&& f)
 {
     pool().enqueue_func(std::move(f));
 }
 
-void background_queue::cleanup()
+void concurrency_queue::cleanup()
 {
     gs_pool.reset();
 }
