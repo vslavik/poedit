@@ -1,6 +1,6 @@
 /*
 *******************************************************************************
-*   Copyright (C) 2000-2014, International Business Machines
+*   Copyright (C) 2000-2015, International Business Machines
 *   Corporation and others.  All Rights Reserved.
 *******************************************************************************
 *
@@ -51,13 +51,13 @@
  *  @stable ICU 2.4
  */
 #define U_COPYRIGHT_STRING \
-  " Copyright (C) 2014, International Business Machines Corporation and others. All Rights Reserved. "
+  " Copyright (C) 2015, International Business Machines Corporation and others. All Rights Reserved. "
 
 /** The current ICU major version as an integer.
  *  This value will change in the subsequent releases of ICU
  *  @stable ICU 2.4
  */
-#define U_ICU_VERSION_MAJOR_NUM 54
+#define U_ICU_VERSION_MAJOR_NUM 55
 
 /** The current ICU minor version as an integer.
  *  This value will change in the subsequent releases of ICU
@@ -83,7 +83,7 @@
  *  This value will change in the subsequent releases of ICU
  *  @stable ICU 2.6
  */
-#define U_ICU_VERSION_SUFFIX _54
+#define U_ICU_VERSION_SUFFIX _55
 
 /**
  * \def U_DEF2_ICU_ENTRY_POINT_RENAME
@@ -118,19 +118,19 @@
  *  This value will change in the subsequent releases of ICU
  *  @stable ICU 2.4
  */
-#define U_ICU_VERSION "54.1"
+#define U_ICU_VERSION "55.1"
 
 /** The current ICU library major/minor version as a string without dots, for library name suffixes.
  *  This value will change in the subsequent releases of ICU
  *  @stable ICU 2.6
  */
-#define U_ICU_VERSION_SHORT "54"
+#define U_ICU_VERSION_SHORT "55"
 
 #ifndef U_HIDE_INTERNAL_API
 /** Data version in ICU4C.
  * @internal ICU 4.4 Internal Use Only
  **/
-#define U_ICU_DATA_VERSION "54.1"
+#define U_ICU_DATA_VERSION "55.1"
 #endif  /* U_HIDE_INTERNAL_API */
 
 /*===========================================================================
@@ -146,7 +146,7 @@
  * This value may change in subsequent releases of ICU.
  * @stable ICU 2.4
  */
-#define UCOL_RUNTIME_VERSION 8
+#define UCOL_RUNTIME_VERSION 9
 
 /**
  * Collation builder code version.

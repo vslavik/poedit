@@ -1,6 +1,6 @@
 /*
  ********************************************************************************
- *   Copyright (C) 1997-2014, International Business Machines
+ *   Copyright (C) 1997-2015, International Business Machines
  *   Corporation and others.  All Rights Reserved.
  ********************************************************************************
  *
@@ -571,6 +571,100 @@ public:
                                               EStyle timeStyle = kDefault,
                                               const Locale& aLocale = Locale::getDefault());
 
+#ifndef U_HIDE_DRAFT_API
+
+    /**
+     * Creates a date/time formatter for the given skeleton and 
+     * default locale.
+     *
+     * @param skeleton The skeleton e.g "yMMMMd." Fields in the skeleton can
+     *                 be in any order, and this method uses the locale to
+     *                 map the skeleton to a pattern that includes locale
+     *                 specific separators with the fields in the appropriate
+     *                 order for that locale.
+     * @param status   Any error returned here.
+     * @return         A date/time formatter which the caller owns.
+     * @draft ICU 55
+     */
+    static DateFormat* U_EXPORT2 createInstanceForSkeleton(
+            const UnicodeString& skeleton,
+            UErrorCode &status);
+
+    /**
+     * Creates a date/time formatter for the given skeleton and locale.
+     *
+     * @param skeleton The skeleton e.g "yMMMMd." Fields in the skeleton can
+     *                 be in any order, and this method uses the locale to
+     *                 map the skeleton to a pattern that includes locale
+     *                 specific separators with the fields in the appropriate
+     *                 order for that locale.
+     * @param locale  The given locale.
+     * @param status   Any error returned here.
+     * @return         A date/time formatter which the caller owns.
+     * @draft ICU 55
+     */
+    static DateFormat* U_EXPORT2 createInstanceForSkeleton(
+            const UnicodeString& skeleton,
+            const Locale &locale,
+            UErrorCode &status);
+
+    /**
+     * Creates a date/time formatter for the given skeleton and locale.
+     *
+     * @param calendarToAdopt the calendar returned DateFormat is to use.
+     * @param skeleton The skeleton e.g "yMMMMd." Fields in the skeleton can
+     *                 be in any order, and this method uses the locale to
+     *                 map the skeleton to a pattern that includes locale
+     *                 specific separators with the fields in the appropriate
+     *                 order for that locale.
+     * @param locale  The given locale.
+     * @param status   Any error returned here.
+     * @return         A date/time formatter which the caller owns.
+     * @draft ICU 55
+     */
+    static DateFormat* U_EXPORT2 createInstanceForSkeleton(
+            Calendar *calendarToAdopt,
+            const UnicodeString& skeleton,
+            const Locale &locale,
+            UErrorCode &status);
+
+#endif /* U_HIDE_DRAFT_API */
+
+#ifndef U_HIDE_INTERNAL_API 
+
+    /**
+     * Creates a date/time formatter for the given skeleton and locale and
+     * uses the given DateTimePatternGenerator to convert the skeleton to
+     * a format pattern. As creating a DateTimePatternGenerator is
+     * expensive, callers can supply it here (if they already have it) to save
+     * this method from creating its own.
+     *
+     * @param skeleton The skeleton e.g "yMMMMd." Fields in the skeleton can
+     *                 be in any order, and this method uses the provided
+     *                 DateTimePatternGenerator to map the skeleton to a
+     *                 pattern that includes appropriate separators with
+     *                 the fields in the appropriate order.
+     * @param locale  The given locale.
+     * @param dpng     The user supplied DateTimePatternGenerator. dpng
+     *                 must be created for the same locale as locale.
+     *                 Moreover, the caller must not modify dpng between
+     *                 creating it by locale and calling this method.
+     *                 Although dpng is a non-const reference, the caller
+     *                 must not regard it as an out or in-out parameter.
+     *                 The only reason dpng is a non-const reference is
+     *                 because its method, getBestPattern, which converts
+     *                 a skeleton to a date format pattern is non-const.
+     * @return         A date/time formatter which the caller owns.
+     * @internal For ICU use only
+     */
+    static DateFormat* U_EXPORT2 internalCreateInstanceForSkeleton(
+            const UnicodeString& skeleton,
+            const Locale &locale,
+            DateTimePatternGenerator &dpng,
+            UErrorCode &status);
+
+#endif /* U_HIDE_INTERNAL_API */
+
     /**
      * Gets the set of locales for which DateFormats are installed.
      * @param count Filled in with the number of locales in the list that is returned.
@@ -610,15 +704,13 @@ public:
     virtual void setLenient(UBool lenient);
 
 
-    /* Cannot use #ifndef U_HIDE_DRAFT_API for the following draft method since it is virtual */
     /**
      * Returns whether date/time parsing in the encapsulated Calendar object processing is lenient.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     virtual UBool isCalendarLenient(void) const;
 
 
-    /* Cannot use #ifndef U_HIDE_DRAFT_API for the following draft method since it is virtual */
     /**
      * Specifies whether encapsulated Calendar date/time parsing is to be lenient.  With
      * lenient parsing, the parser may use heuristics to interpret inputs that
@@ -626,7 +718,7 @@ public:
      * inputs must match this object's format more closely.
      * @param lenient when true, parsing is lenient
      * @see com.ibm.icu.util.Calendar#setLenient
-     * @draft ICU 53
+     * @stable ICU 53
      */
     virtual void setCalendarLenient(UBool lenient);
 
@@ -707,7 +799,6 @@ public:
      */
     virtual void setTimeZone(const TimeZone& zone);
 
-    /* Cannot use #ifndef U_HIDE_DRAFT_API for the following draft method since it is virtual */
     /**
      * Set a particular UDisplayContext value in the formatter, such as
      * UDISPCTX_CAPITALIZATION_FOR_STANDALONE.
@@ -715,11 +806,10 @@ public:
      * @param status Input/output status. If at entry this indicates a failure
      *               status, the function will do nothing; otherwise this will be
      *               updated with any new status from the function. 
-     * @draft ICU 53
+     * @stable ICU 53
      */
     virtual void setContext(UDisplayContext value, UErrorCode& status);
 
-    /* Cannot use #ifndef U_HIDE_DRAFT_API for the following draft method since it is virtual */
     /**
      * Get the formatter's UDisplayContext value for the specified UDisplayContextType,
      * such as UDISPCTX_TYPE_CAPITALIZATION.
@@ -728,11 +818,10 @@ public:
      *               status, the function will do nothing; otherwise this will be
      *               updated with any new status from the function. 
      * @return The UDisplayContextValue for the specified type.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     virtual UDisplayContext getContext(UDisplayContextType type, UErrorCode& status) const;
 
-   /* Cannot use #ifndef U_HIDE_DRAFT_API for the following draft method since it is virtual */
    /**
      * Sets an boolean attribute on this DateFormat.
      * May return U_UNSUPPORTED_ERROR if this instance does not support
@@ -741,14 +830,13 @@ public:
      * @param newvalue new value
      * @param status the error type
      * @return *this - for chaining (example: format.setAttribute(...).setAttribute(...) )
-     * @draft ICU 53
+     * @stable ICU 53
      */
 
     virtual DateFormat&  U_EXPORT2 setBooleanAttribute(UDateFormatBooleanAttribute attr,
     									UBool newvalue,
     									UErrorCode &status);
 
-    /* Cannot use #ifndef U_HIDE_DRAFT_API for the following draft method since it is virtual */
     /**
      * Returns a boolean from this DateFormat
      * May return U_UNSUPPORTED_ERROR if this instance does not support
@@ -756,7 +844,7 @@ public:
      * @param attr the attribute to set
      * @param status the error type
      * @return the attribute value. Undefined if there is an error.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     virtual UBool U_EXPORT2 getBooleanAttribute(UDateFormatBooleanAttribute attr, UErrorCode &status) const;
 
@@ -817,6 +905,7 @@ private:
 
 
     UDisplayContext fCapitalizationContext;
+    friend class DateFmtKeyByStyle;
 
 public:
 #ifndef U_HIDE_OBSOLETE_API
