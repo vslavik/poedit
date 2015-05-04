@@ -688,7 +688,7 @@ UnicodeString&
 LocaleDisplayNamesImpl::localeIdName(const char* localeId,
                                      UnicodeString& result) const {
     if (nameLength == UDISPCTX_LENGTH_SHORT) {
-        langData.getNoFallback("LanguagesShort", localeId, result);
+        langData.getNoFallback("Languages%short", localeId, result);
         if (!result.isBogus()) {
             return result;
         }
@@ -703,7 +703,7 @@ LocaleDisplayNamesImpl::languageDisplayName(const char* lang,
         return result = UnicodeString(lang, -1, US_INV);
     }
     if (nameLength == UDISPCTX_LENGTH_SHORT) {
-        langData.get("LanguagesShort", lang, result);
+        langData.get("Languages%short", lang, result);
         if (!result.isBogus()) {
             return adjustForUsageAndContext(kCapContextUsageLanguage, result);
         }
@@ -735,7 +735,7 @@ UnicodeString&
 LocaleDisplayNamesImpl::regionDisplayName(const char* region,
                                           UnicodeString& result) const {
     if (nameLength == UDISPCTX_LENGTH_SHORT) {
-        regionData.get("CountriesShort", region, result);
+        regionData.get("Countries%short", region, result);
         if (!result.isBogus()) {
             return adjustForUsageAndContext(kCapContextUsageTerritory, result);
         }
@@ -764,6 +764,23 @@ UnicodeString&
 LocaleDisplayNamesImpl::keyValueDisplayName(const char* key,
                                             const char* value,
                                             UnicodeString& result) const {
+    if (uprv_strcmp(key, "currency") == 0) {
+        // ICU4C does not have ICU4J CurrencyDisplayInfo equivalent for now.
+        UErrorCode sts = U_ZERO_ERROR;
+        UnicodeString ustrValue(value, -1, US_INV);
+        int32_t len;
+        UBool isChoice = FALSE;
+        const UChar *currencyName = ucurr_getName(ustrValue.getTerminatedBuffer(),
+            locale.getBaseName(), UCURR_LONG_NAME, &isChoice, &len, &sts);
+        if (U_FAILURE(sts)) {
+            // Return the value as is on failure
+            result = ustrValue;
+            return result;
+        }
+        result.setTo(currencyName, len);
+        return adjustForUsageAndContext(kCapContextUsageKeyValue, result);
+    }
+
     if (nameLength == UDISPCTX_LENGTH_SHORT) {
         langData.get("Types%short", key, value, result);
         if (!result.isBogus()) {

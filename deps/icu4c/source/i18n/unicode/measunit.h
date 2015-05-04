@@ -1,6 +1,6 @@
 /*
 **********************************************************************
-* Copyright (c) 2004-2014, International Business Machines
+* Copyright (c) 2004-2015, International Business Machines
 * Corporation and others.  All Rights Reserved.
 **********************************************************************
 * Author: Alan Liu
@@ -46,13 +46,13 @@ class U_I18N_API MeasureUnit: public UObject {
     
     /**
      * Copy constructor.
-     * @draft ICU 53
+     * @stable ICU 3.0
      */
     MeasureUnit(const MeasureUnit &other);
         
     /**
      * Assignment operator.
-     * @draft ICU 53
+     * @stable ICU 3.0
      */
     MeasureUnit &operator=(const MeasureUnit &other);
 
@@ -76,11 +76,10 @@ class U_I18N_API MeasureUnit: public UObject {
      */
     virtual UBool operator==(const UObject& other) const;
 
-#ifndef U_HIDE_DRAFT_API
     /**
      * Inequality operator.  Return true if this object is not equal
      * to the given object.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     UBool operator!=(const UObject& other) const {
         return !(*this == other);
@@ -88,13 +87,13 @@ class U_I18N_API MeasureUnit: public UObject {
 
     /**
      * Get the type.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     const char *getType() const;
 
     /**
      * Get the sub type.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     const char *getSubtype() const;
 
@@ -107,7 +106,7 @@ class U_I18N_API MeasureUnit: public UObject {
      * @param destCapacity number of MeasureUnit instances available at dest.
      * @param errorCode ICU error code.
      * @return number of available units.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static int32_t getAvailable(
             MeasureUnit *destArray,
@@ -124,7 +123,7 @@ class U_I18N_API MeasureUnit: public UObject {
      * @param destCapacity number of MeasureUnit instances available at dest.
      * @param errorCode ICU error code.
      * @return number of available units for type.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static int32_t getAvailable(
             const char *type,
@@ -138,10 +137,9 @@ class U_I18N_API MeasureUnit: public UObject {
      *
      * @param errorCode ICU error code.
      * @return the types.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static StringEnumeration* getAvailableTypes(UErrorCode &errorCode);
-#endif /* U_HIDE_DRAFT_API */
 
     /**
      * Return the class ID for this class. This is useful only for comparing to
@@ -152,7 +150,7 @@ class U_I18N_API MeasureUnit: public UObject {
      * .       erived::getStaticClassID()) ...
      * </pre>
      * @return          The class ID for all objects of this class.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static UClassID U_EXPORT2 getStaticClassID(void);
 
@@ -165,7 +163,7 @@ class U_I18N_API MeasureUnit: public UObject {
      * @return          The class ID for this object. All objects of a
      *                  given class have the same class ID.  Objects of
      *                  other classes have different class IDs.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     virtual UClassID getDynamicClassID(void) const;
 
@@ -184,26 +182,31 @@ class U_I18N_API MeasureUnit: public UObject {
      * @internal
      */
     static int32_t getIndexCount();
+
+    /**
+     * ICU use only.
+     * @internal
+     */
+    static MeasureUnit *resolveUnitPerUnit(
+            const MeasureUnit &unit, const MeasureUnit &perUnit);
 #endif /* U_HIDE_INTERNAL_API */
 
 // All code between the "Start generated createXXX methods" comment and
 // the "End generated createXXX methods" comment is auto generated code
 // and must not be edited manually. For instructions on how to correctly
 // update this code, refer to:
-// https://sites.google.com/site/icusite/design/formatting/measureformat/updating-measure-unit
+// http://site.icu-project.org/design/formatting/measureformat/updating-measure-unit
 //
 // Start generated createXXX methods
 
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of acceleration: g-force.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createGForce(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of acceleration: meter-per-second-squared.
@@ -214,36 +217,30 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createMeterPerSecondSquared(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of angle: arc-minute.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createArcMinute(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of angle: arc-second.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createArcSecond(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of angle: degree.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createDegree(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of angle: radian.
@@ -254,26 +251,22 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createRadian(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of area: acre.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createAcre(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of area: hectare.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createHectare(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of area: square-centimeter.
@@ -284,16 +277,14 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createSquareCentimeter(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of area: square-foot.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createSquareFoot(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of area: square-inch.
@@ -304,36 +295,30 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createSquareInch(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of area: square-kilometer.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createSquareKilometer(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of area: square-meter.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createSquareMeter(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of area: square-mile.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createSquareMile(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of area: square-yard.
@@ -464,26 +449,22 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createTerabyte(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of duration: day.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createDay(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of duration: hour.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createHour(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of duration: microsecond.
@@ -494,36 +475,30 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createMicrosecond(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of duration: millisecond.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createMillisecond(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of duration: minute.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createMinute(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of duration: month.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createMonth(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of duration: nanosecond.
@@ -534,36 +509,30 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createNanosecond(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of duration: second.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createSecond(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of duration: week.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createWeek(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of duration: year.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createYear(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of electric: ampere.
@@ -714,16 +683,14 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createAstronomicalUnit(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of length: centimeter.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createCentimeter(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of length: decimeter.
@@ -744,16 +711,14 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createFathom(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of length: foot.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createFoot(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of length: furlong.
@@ -764,46 +729,38 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createFurlong(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of length: inch.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createInch(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of length: kilometer.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createKilometer(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of length: light-year.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createLightYear(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of length: meter.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createMeter(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of length: micrometer.
@@ -814,26 +771,22 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createMicrometer(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of length: mile.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createMile(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of length: millimeter.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createMillimeter(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of length: nanometer.
@@ -864,26 +817,22 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createParsec(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of length: picometer.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createPicometer(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of length: yard.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createYard(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of light: lux.
@@ -904,26 +853,22 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createCarat(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of mass: gram.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createGram(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of mass: kilogram.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createKilogram(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of mass: metric-ton.
@@ -954,16 +899,14 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createMilligram(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of mass: ounce.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createOunce(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of mass: ounce-troy.
@@ -974,16 +917,14 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createOunceTroy(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of mass: pound.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createPound(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of mass: stone.
@@ -1014,26 +955,22 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createGigawatt(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of power: horsepower.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createHorsepower(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of power: kilowatt.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createKilowatt(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of power: megawatt.
@@ -1054,46 +991,38 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createMilliwatt(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of power: watt.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createWatt(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of pressure: hectopascal.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createHectopascal(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of pressure: inch-hg.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createInchHg(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of pressure: millibar.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createMillibar(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of pressure: millimeter-of-mercury.
@@ -1124,56 +1053,46 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createKarat(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of speed: kilometer-per-hour.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createKilometerPerHour(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of speed: meter-per-second.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createMeterPerSecond(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of speed: mile-per-hour.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createMilePerHour(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of temperature: celsius.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createCelsius(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of temperature: fahrenheit.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createFahrenheit(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of temperature: kelvin.
@@ -1244,16 +1163,14 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createCubicInch(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of volume: cubic-kilometer.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createCubicKilometer(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of volume: cubic-meter.
@@ -1264,16 +1181,14 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createCubicMeter(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of volume: cubic-mile.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createCubicMile(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of volume: cubic-yard.
@@ -1334,16 +1249,14 @@ class U_I18N_API MeasureUnit: public UObject {
     static MeasureUnit *createHectoliter(UErrorCode &status);
 
 #endif /* U_HIDE_DRAFT_API */
-#ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of volume: liter.
      * Caller owns returned value and must free it.
      * @param status ICU error code.
-     * @draft ICU 53
+     * @stable ICU 53
      */
     static MeasureUnit *createLiter(UErrorCode &status);
 
-#endif /* U_HIDE_DRAFT_API */
 #ifndef U_HIDE_DRAFT_API
     /**
      * Returns unit of volume: megaliter.

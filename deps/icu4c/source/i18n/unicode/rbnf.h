@@ -1,6 +1,6 @@
 /*
 *******************************************************************************
-* Copyright (C) 1997-2014, International Business Machines Corporation and others.
+* Copyright (C) 1997-2015, International Business Machines Corporation and others.
 * All Rights Reserved.
 *******************************************************************************
 */
@@ -619,7 +619,7 @@ public:
    * locale.  There are four legal values: URBNF_SPELLOUT, which creates a formatter that
    * spells out a value in words in the desired language, URBNF_ORDINAL, which attaches
    * an ordinal suffix from the desired language to the end of a number (e.g. "123rd"),
-   * URBNF_DURATION, which formats a duration in seconds as hours, minutes, and seconds,
+   * URBNF_DURATION, which formats a duration in seconds as hours, minutes, and seconds always rounding down,
    * and URBNF_NUMBERING_SYSTEM, which is used to invoke rules for alternate numbering
    * systems such as the Hebrew numbering system, or for Roman Numerals, etc.
    * @param locale The locale for the formatter.
@@ -913,7 +913,6 @@ public:
    */
   virtual UnicodeString getDefaultRuleSetName() const;
 
-  /* Cannot use #ifndef U_HIDE_DRAFT_API for the following draft method since it is virtual */
   /**
    * Set a particular UDisplayContext value in the formatter, such as
    * UDISPCTX_CAPITALIZATION_FOR_STANDALONE. Note: For getContext, see
@@ -922,7 +921,7 @@ public:
    * @param status Input/output status. If at entry this indicates a failure
    *               status, the function will do nothing; otherwise this will be
    *               updated with any new status from the function. 
-   * @draft ICU 53
+   * @stable ICU 53
    */
   virtual void setContext(UDisplayContext value, UErrorCode& status);
 

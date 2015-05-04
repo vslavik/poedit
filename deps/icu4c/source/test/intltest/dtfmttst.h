@@ -150,6 +150,8 @@ public: // package
      */
     virtual void TestLocaleDateFormat(void);
 
+    virtual void TestFormattingLocaleTimeSeparator(void);
+
     virtual void TestDateFormatCalendar(void);
 
     virtual void TestSpaceParsing(void);
@@ -214,6 +216,10 @@ public:
     
     void TestHostClone(void);
 
+    void TestHebrewClone(void);
+
+    void TestDateFormatSymbolsClone(void);
+
     void TestTimeZoneDisplayName(void);
 
     void TestRoundtripWithCalendar(void);
@@ -237,6 +243,12 @@ public:
 
     // test override NumberFormat
     void TestNumberFormatOverride();
+    void TestCreateInstanceForSkeleton();
+    void TestCreateInstanceForSkeletonDefault();
+    void TestCreateInstanceForSkeletonWithCalendar();
+    void TestDFSCreateForLocaleNonGregorianLocale();
+    void TestDFSCreateForLocaleWithCalendarInLocale();
+    void TestChangeCalendar();
 
 private:
     UBool showParse(DateFormat &format, const UnicodeString &formattedString);

@@ -1,6 +1,6 @@
 /***********************************************************************
  * COPYRIGHT: 
- * Copyright (c) 1997-2014, International Business Machines Corporation
+ * Copyright (c) 1997-2015, International Business Machines Corporation
  * and others. All Rights Reserved.
  ***********************************************************************/
 
@@ -134,6 +134,13 @@ TimeZoneTest::TestGenericAPI()
          */
         infoln("WARNING: t_timezone may be incorrect. It is not a multiple of 15min.", tzoffset);
     }
+
+    TimeZone* hostZone = TimeZone::detectHostTimeZone();
+    /* Host time zone's offset should match the offset returned by uprv_timezone() */
+    if (hostZone->getRawOffset() != tzoffset * (-1000)) {
+        errln("FAIL: detectHostTimeZone()'s raw offset != host timezone's offset");
+    }
+    delete hostZone;
 
     UErrorCode status = U_ZERO_ERROR;
     const char* tzver = TimeZone::getTZDataVersion(status);
@@ -1973,6 +1980,8 @@ void TimeZoneTest::TestCanonicalID() {
         const char *alias;
         const char *zone;
     } excluded1[] = {
+        {"Africa/Addis_Ababa", "Africa/Nairobi"},
+        {"Africa/Asmera", "Africa/Nairobi"},
         {"Africa/Bamako", "Africa/Abidjan"},
         {"Africa/Bangui", "Africa/Lagos"},
         {"Africa/Banjul", "Africa/Abidjan"},
@@ -1981,10 +1990,13 @@ void TimeZoneTest::TestCanonicalID() {
         {"Africa/Bujumbura", "Africa/Maputo"},
         {"Africa/Conakry", "Africa/Abidjan"},
         {"Africa/Dakar", "Africa/Abidjan"},
+        {"Africa/Dar_es_Salaam", "Africa/Nairobi"},
+        {"Africa/Djibouti", "Africa/Nairobi"},
         {"Africa/Douala", "Africa/Lagos"},
         {"Africa/Freetown", "Africa/Abidjan"},
         {"Africa/Gaborone", "Africa/Maputo"},
         {"Africa/Harare", "Africa/Maputo"},
+        {"Africa/Kampala", "Africa/Nairobi"},
         {"Africa/Khartoum", "Africa/Juba"},
         {"Africa/Kigali", "Africa/Maputo"},
         {"Africa/Kinshasa", "Africa/Lagos"},
@@ -1996,30 +2008,39 @@ void TimeZoneTest::TestCanonicalID() {
         {"Africa/Maseru", "Africa/Johannesburg"},
         {"Africa/Malabo", "Africa/Lagos"},
         {"Africa/Mbabane", "Africa/Johannesburg"},
+        {"Africa/Mogadishu", "Africa/Nairobi"},
         {"Africa/Niamey", "Africa/Lagos"},
         {"Africa/Nouakchott", "Africa/Abidjan"},
         {"Africa/Ouagadougou", "Africa/Abidjan"},
         {"Africa/Porto-Novo", "Africa/Lagos"},
         {"Africa/Sao_Tome", "Africa/Abidjan"},
+        {"America/Antigua", "America/Port_of_Spain"},
+        {"America/Anguilla", "America/Port_of_Spain"},
         {"America/Curacao", "America/Aruba"},
-        {"America/Dominica", "America/Anguilla"},
-        {"America/Grenada", "America/Anguilla"},
-        {"America/Guadeloupe", "America/Anguilla"},
+        {"America/Dominica", "America/Port_of_Spain"},
+        {"America/Grenada", "America/Port_of_Spain"},
+        {"America/Guadeloupe", "America/Port_of_Spain"},
         {"America/Kralendijk", "America/Aruba"},
         {"America/Lower_Princes", "America/Aruba"},
-        {"America/Marigot", "America/Anguilla"},
-        {"America/Montserrat", "America/Anguilla"},
-        {"America/Port_of_Spain", "America/Anguilla"},
-        {"America/Shiprock", "America/Denver"}, // America/Shiprock is defined as a Link to America/Denver in tzdata
-        {"America/St_Barthelemy", "America/Anguilla"},
-        {"America/St_Kitts", "America/Anguilla"},
-        {"America/St_Lucia", "America/Anguilla"},
-        {"America/St_Thomas", "America/Anguilla"},
-        {"America/St_Vincent", "America/Anguilla"},
-        {"America/Tortola", "America/Anguilla"},
-        {"America/Virgin", "America/Anguilla"},
+        {"America/Marigot", "America/Port_of_Spain"},
+        {"America/Montserrat", "America/Port_of_Spain"},
+        {"America/Panama", "America/Cayman"},
+        {"America/Shiprock", "America/Denver"},
+        {"America/St_Barthelemy", "America/Port_of_Spain"},
+        {"America/St_Kitts", "America/Port_of_Spain"},
+        {"America/St_Lucia", "America/Port_of_Spain"},
+        {"America/St_Thomas", "America/Port_of_Spain"},
+        {"America/St_Vincent", "America/Port_of_Spain"},
+        {"America/Tortola", "America/Port_of_Spain"},
+        {"America/Virgin", "America/Port_of_Spain"},
         {"Antarctica/South_Pole", "Antarctica/McMurdo"},
         {"Arctic/Longyearbyen", "Europe/Oslo"},
+        {"Asia/Kuwait", "Asia/Aden"},
+        {"Asia/Muscat", "Asia/Dubai"},
+        {"Asia/Phnom_Penh", "Asia/Bangkok"},
+        {"Asia/Qatar", "Asia/Bahrain"},
+        {"Asia/Riyadh", "Asia/Aden"},
+        {"Asia/Vientiane", "Asia/Bangkok"},
         {"Atlantic/Jan_Mayen", "Europe/Oslo"},
         {"Atlantic/St_Helena", "Africa/Abidjan"},
         {"Europe/Bratislava", "Europe/Prague"},
@@ -2036,8 +2057,13 @@ void TimeZoneTest::TestCanonicalID() {
         {"Europe/Vaduz", "Europe/Zurich"},
         {"Europe/Vatican", "Europe/Rome"},
         {"Europe/Zagreb", "Europe/Belgrade"},
+        {"Indian/Antananarivo", "Africa/Nairobi"},
+        {"Indian/Comoro", "Africa/Nairobi"},
+        {"Indian/Mayotte", "Africa/Nairobi"},
         {"Pacific/Auckland", "Antarctica/McMurdo"},
         {"Pacific/Johnston", "Pacific/Honolulu"},
+        {"Pacific/Midway", "Pacific/Pago_Pago"},
+        {"Pacific/Saipan", "Pacific/Guam"},
         {0, 0}
     };
 

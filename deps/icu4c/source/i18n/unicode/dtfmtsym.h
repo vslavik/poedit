@@ -1,6 +1,6 @@
 /*  
 ********************************************************************************
-*   Copyright (C) 1997-2014, International Business Machines
+*   Copyright (C) 1997-2015, International Business Machines
 *   Corporation and others.  All Rights Reserved.
 ********************************************************************************
 *
@@ -408,6 +408,38 @@ public:
      */
     void setAmPmStrings(const UnicodeString* ampms, int32_t count);
 
+#ifndef U_HIDE_INTERNAL_API
+    /**
+     * This default time separator is used for formatting when the locale
+     * doesn't specify any time separator, and always recognized when parsing.
+     * @internal
+     */
+    static const UChar DEFAULT_TIME_SEPARATOR = 0x003a;  // ':'
+
+    /**
+     * This alternate time separator is always recognized when parsing.
+     * @internal
+     */
+    static const UChar ALTERNATE_TIME_SEPARATOR = 0x002e;  // '.'
+#endif  /* U_HIDE_INTERNAL_API */
+
+#ifndef U_HIDE_DRAFT_API
+    /**
+     * Gets the time separator string. For example: ":".
+     * @param result Output param which will receive the time separator string.
+     * @return       A reference to 'result'.
+     * @draft ICU 55
+     */
+    UnicodeString& getTimeSeparatorString(UnicodeString& result) const;
+
+    /**
+     * Sets the time separator string. For example: ":".
+     * @param newTimeSeparator the new time separator string.
+     * @draft ICU 55
+     */
+    void setTimeSeparatorString(const UnicodeString& newTimeSeparator);
+#endif  /* U_HIDE_DRAFT_API */
+
 #ifndef U_HIDE_DRAFT_API
     /**
      * Gets cyclic year name strings if the calendar has them, by width and context.
@@ -711,6 +743,17 @@ private:
     int32_t         fAmPmsCount;
 
     /**
+     * Narrow Ampm strings. For example: "a" and "p".
+     */
+    UnicodeString*  fNarrowAmPms;
+    int32_t         fNarrowAmPmsCount;
+
+    /**
+     * Time separator string. For example: ":".
+     */
+    UnicodeString   fTimeSeparator;
+
+    /**
      * Quarter strings. For example: "1st quarter", "2nd quarter", etc.
      */
     UnicodeString  *fQuarters;
@@ -902,6 +945,22 @@ private:
      * Returns TRUE if c (repeated count times) is the pattern character for a numeric field.
      */
     static UBool U_EXPORT2 isNumericPatternChar(UChar c, int32_t count);
+public:
+#ifndef U_HIDE_INTERNAL_API
+    /**
+     * Gets a DateFormatSymbols by locale.
+     * Unlike the constructors which always use gregorian calendar, this
+     * method uses the calendar in the locale. If the locale contains no
+     * explicit calendar, this method uses the default calendar for that
+     * locale.
+     * @param locale the locale.
+     * @param status error returned here.
+     * @return the new DateFormatSymbols which the caller owns.
+     * @internal For ICU use only.
+     */
+    static DateFormatSymbols * U_EXPORT2 createForLocale(
+            const Locale &locale, UErrorCode &status);
+#endif  /* U_HIDE_INTERNAL_API */
 };
 
 U_NAMESPACE_END
