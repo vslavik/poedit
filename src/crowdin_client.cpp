@@ -142,41 +142,50 @@ void CrowdinClient::Authenticate(std::function<void()> callback)
     m_authCallback = callback;
 
 #ifdef NEEDS_IN_APP_BROWSER
-    auto win = new wxDialog(nullptr, wxID_ANY, _("Sign in to Crowdin"), wxDefaultPosition, wxSize(PX(800), PX(600)), wxDIALOG_NO_PARENT | wxDEFAULT_FRAME_STYLE);
-    auto web = wxWebView::New(win, wxID_ANY);
-
-    // Protocol handler that simply calls a callback and doesn't return any data.
-    // We have to use this hack, because wxEVT_WEBVIEW_NAVIGATING is unreliable
-    // with IE on Windows 8 and is not sent at all or sent one navigation event too
-    // late, possibly due to the custom protocol used, possibly not.
-    class PoeditURIHandler : public wxWebViewHandler
+  // Windows XP has broken wxWebViewHandler and it's not worth fixing. Use external browser
+  // on XP, even though its user experience is suboptimal. Use in-app browser on other
+  // platforms and Windows versions.
+  #ifdef __WXMSW__
+    if (wxPlatformInfo::Get().CheckOSVersion(6, 0))
+  #endif
     {
-    public:
-        PoeditURIHandler(std::function<void(std::string)> cb) : wxWebViewHandler("poedit"), m_cb(cb) {}
-        wxFSFile* GetFile(const wxString &uri) override
+        auto win = new wxDialog(nullptr, wxID_ANY, _("Sign in to Crowdin"), wxDefaultPosition, wxSize(PX(800), PX(600)), wxDIALOG_NO_PARENT | wxDEFAULT_FRAME_STYLE);
+        auto web = wxWebView::New(win, wxID_ANY);
+
+        // Protocol handler that simply calls a callback and doesn't return any data.
+        // We have to use this hack, because wxEVT_WEBVIEW_NAVIGATING is unreliable
+        // with IE on Windows 8 and is not sent at all or sent one navigation event too
+        // late, possibly due to the custom protocol used, possibly not.
+        class PoeditURIHandler : public wxWebViewHandler
         {
-            m_cb(uri.ToStdString());
-            return nullptr;
-        }
-        std::function<void(std::string)> m_cb;
-    };
+        public:
+            PoeditURIHandler(std::function<void(std::string)> cb) : wxWebViewHandler("poedit"), m_cb(cb) {}
+            wxFSFile* GetFile(const wxString &uri) override
+            {
+                m_cb(uri.ToStdString());
+                return nullptr;
+            }
+            std::function<void(std::string)> m_cb;
+        };
 
-    std::string auth_uri;
-    web->RegisterHandler(wxSharedPtr<wxWebViewHandler>(new PoeditURIHandler([=,&auth_uri](std::string uri){
-        if (!this->IsOAuthCallback(uri))
-            return;
-        auth_uri = uri;
-        win->CallAfter([=]{ win->EndModal(wxID_OK); });
-    })));
+        std::string auth_uri;
+        web->RegisterHandler(wxSharedPtr<wxWebViewHandler>(new PoeditURIHandler([=, &auth_uri](std::string uri){
+            if (!this->IsOAuthCallback(uri))
+                return;
+            auth_uri = uri;
+            win->CallAfter([=]{ win->EndModal(wxID_OK); });
+        })));
 
-    win->CallAfter([=]{ web->LoadURL(url); });
-    win->ShowModal();
-    win->Destroy();
-    if (!auth_uri.empty())
-        HandleOAuthCallback(auth_uri);
-#else
-    wxLaunchDefaultBrowser(url);
+        win->CallAfter([=]{ web->LoadURL(url); });
+        win->ShowModal();
+        win->Destroy();
+        if (!auth_uri.empty())
+            HandleOAuthCallback(auth_uri);
+        return;
+    }
+    // else: fall through
 #endif
+    wxLaunchDefaultBrowser(url);
 }
 
 
