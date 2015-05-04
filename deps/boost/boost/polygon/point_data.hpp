@@ -45,10 +45,18 @@ class point_data {
     return *this;
   }
 
+#ifdef __GNUC__
+  // "explicit" to work around https://gcc.gnu.org/bugzilla/show_bug.cgi?id=63356
+  template <typename PointType>
+  explicit point_data(const PointType& that) {
+    *this = that;
+  }
+#else // __GNUC__
   template <typename PointType>
   point_data(const PointType& that) {
     *this = that;
   }
+#endif // __GNUC__
 
   template <typename PointType>
   point_data& operator=(const PointType& that) {

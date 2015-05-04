@@ -12,7 +12,7 @@
 #include <boost/container/detail/config_begin.hpp>
 
 #include <boost/container/throw_exception.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 using namespace boost::container;
 

@@ -41,7 +41,13 @@ int main()
 
     pair_type pair( 10, 20 );
 
+#if defined(BOOST_MSVC) && (BOOST_MSVC >= 1600) && (BOOST_MSVC < 1700)
+// bind is being confused with 'std::tr1::_Bind' to be found here
+// C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\INCLUDE\xxbind1(485)
+    int const & x = boost::phoenix::bind( &pair_type::first, _1 )( pair );
+#else
     int const & x = bind( &pair_type::first, _1 )( pair );
+#endif
 
     BOOST_TEST( &pair.first == &x );
 

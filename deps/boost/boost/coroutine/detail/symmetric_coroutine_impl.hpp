@@ -342,25 +342,25 @@ public:
 
     virtual ~symmetric_coroutine_impl() {}
 
-    bool force_unwind() const BOOST_NOEXCEPT
+    inline bool force_unwind() const BOOST_NOEXCEPT
     { return 0 != ( flags_ & flag_force_unwind); }
 
-    bool unwind_requested() const BOOST_NOEXCEPT
+    inline bool unwind_requested() const BOOST_NOEXCEPT
     { return 0 != ( flags_ & flag_unwind_stack); }
 
-    bool preserve_fpu() const BOOST_NOEXCEPT
+    inline bool preserve_fpu() const BOOST_NOEXCEPT
     { return 0 != ( flags_ & flag_preserve_fpu); }
 
-    bool is_started() const BOOST_NOEXCEPT
+    inline bool is_started() const BOOST_NOEXCEPT
     { return 0 != ( flags_ & flag_started); }
 
-    bool is_running() const BOOST_NOEXCEPT
+    inline bool is_running() const BOOST_NOEXCEPT
     { return 0 != ( flags_ & flag_running); }
 
-    bool is_complete() const BOOST_NOEXCEPT
+    inline bool is_complete() const BOOST_NOEXCEPT
     { return 0 != ( flags_ & flag_complete); }
 
-    void unwind_stack() BOOST_NOEXCEPT
+    inline void unwind_stack() BOOST_NOEXCEPT
     {
         if ( is_started() && ! is_complete() && force_unwind() )
         {
@@ -378,7 +378,7 @@ public:
         }
     }
 
-    void resume() BOOST_NOEXCEPT
+    inline void resume() BOOST_NOEXCEPT
     {
         BOOST_ASSERT( ! is_running() );
         BOOST_ASSERT( ! is_complete() );
@@ -392,7 +392,7 @@ public:
         flags_ &= ~flag_running;
     }
 
-    void yield() BOOST_NOEXCEPT
+    inline void yield() BOOST_NOEXCEPT
     {
         BOOST_ASSERT( is_running() );
         BOOST_ASSERT( ! is_complete() );

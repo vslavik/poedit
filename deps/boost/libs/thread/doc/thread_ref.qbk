@@ -26,7 +26,13 @@
       void sleep_until(const chrono::time_point<Clock, Duration>& abs_time); 
       template <class Rep, class Period>
       void sleep_for(const chrono::duration<Rep, Period>& rel_time);
-
+      namespace no_interruption_point  // EXTENSION
+      {
+      	template <class Clock, class Duration>
+      	void sleep_until(const chrono::time_point<Clock, Duration>& abs_time); 
+      	template <class Rep, class Period>
+      	void sleep_for(const chrono::duration<Rep, Period>& rel_time);
+      }
       template<typename Callable>
       void at_thread_exit(Callable func); // EXTENSION
 
@@ -119,7 +125,7 @@ the user to set the platform specific attributes. Boost.Thread stay in the middl
 thread::attributes which allows to set at least in a portable way the stack size as follows:
 
   boost::thread::attributes attrs;
-  attrs.set_size(4096*10);
+  attrs.set_stack_size(4096*10);
   boost::thread deep_thought_2(attrs, find_the_question, 42);
 
 Even for this simple attribute there could be portable issues as some platforms could require that the stack size 
@@ -141,7 +147,7 @@ Next follows how the user could set the stack size and the scheduling policy on 
         // ... window version
     #elif defined(BOOST_THREAD_PLATFORM_PTHREAD)
         // ... pthread version
-        pthread_attr_setschedpolicy(attr.get_native_handle(), SCHED_RR);
+        pthread_attr_setschedpolicy(attr.native_handle(), SCHED_RR);
     #else
     #error "Boost threads unavailable on this platform"
     #endif
@@ -426,12 +432,14 @@ This behavior is incompatible with the current Boost.Thread design, so the use o
         class attributes; // EXTENSION
 
         thread() noexcept;
+        ~thread();
+        
         thread(const thread&) = delete;
         thread& operator=(const thread&) = delete;
 
+        // move support
         thread(thread&&) noexcept;
         thread& operator=(thread&&) noexcept;
-        ~thread();
 
         template <class F>
         explicit thread(F f);
@@ -449,10 +457,6 @@ This behavior is incompatible with the current Boost.Thread design, so the use o
         thread(attributes& attrs, F &&f); // EXTENSION
         template <class F, class ...Args> 
         explicit thread(attributes& attrs, F&& f, Args&&... args);
-
-        // move support
-        thread(thread && x) noexcept;
-        thread& operator=(thread && x) noexcept;
 
         void swap(thread& x) noexcept;
 
@@ -752,7 +756,7 @@ corresponding successful `join()` return. ]]
 
 [*resource_deadlock_would_occur]: if deadlock is detected or `this->get_id() == boost::this_thread::get_id()`.
 
-[*invalid_argument]: if the thread is not joinable and `BOOST_THREAD_TRHOW_IF_PRECONDITION_NOT_SATISFIED` is defined.
+[*invalid_argument]: if the thread is not joinable and `BOOST_THREAD_THROW_IF_PRECONDITION_NOT_SATISFIED` is defined.
 
 
 [/
@@ -801,7 +805,7 @@ unchanged.]]
 
 [*resource_deadlock_would_occur]: if deadlock is detected or this->get_id() == boost::this_thread::get_id().
 
-[*invalid_argument]: if the thread is not joinable and BOOST_THREAD_TRHOW_IF_PRECONDITION_NOT_SATISFIED is defined.
+[*invalid_argument]: if the thread is not joinable and BOOST_THREAD_THROW_IF_PRECONDITION_NOT_SATISFIED is defined.
 
 
 [/
@@ -841,7 +845,7 @@ unchanged.]]
 
 [*resource_deadlock_would_occur]: if deadlock is detected or this->get_id() == boost::this_thread::get_id().
 
-[*invalid_argument]: if the thread is not joinable and BOOST_THREAD_TRHOW_IF_PRECONDITION_NOT_SATISFIED is defined.
+[*invalid_argument]: if the thread is not joinable and BOOST_THREAD_THROW_IF_PRECONDITION_NOT_SATISFIED is defined.
 
 
 [/
@@ -881,7 +885,7 @@ unchanged.]]
 
 [*resource_deadlock_would_occur]: if deadlock is detected or this->get_id() == boost::this_thread::get_id().
 
-[*invalid_argument]: if the thread is not joinable and BOOST_THREAD_TRHOW_IF_PRECONDITION_NOT_SATISFIED is defined.
+[*invalid_argument]: if the thread is not joinable and BOOST_THREAD_THROW_IF_PRECONDITION_NOT_SATISFIED is defined.
 
 
 [/
@@ -917,7 +921,7 @@ unchanged.]]
 
 [*no_such_process]: if the thread is not valid.
 
-[*invalid_argument]: if the thread is not joinable and BOOST_THREAD_TRHOW_IF_PRECONDITION_NOT_SATISFIED is defined.
+[*invalid_argument]: if the thread is not joinable and BOOST_THREAD_THROW_IF_PRECONDITION_NOT_SATISFIED is defined.
 
 ]]
 
@@ -1489,6 +1493,11 @@ specified by `rel_time` has elapsed or the time point specified by
     {
       template <class Clock, class Duration>
       void sleep_until(const chrono::time_point<Clock, Duration>& abs_time); 
+      namespace no_interruption_point
+      {
+        template <class Clock, class Duration>
+        void sleep_until(const chrono::time_point<Clock, Duration>& abs_time); 
+      }
     }
 
 [variablelist
@@ -1500,6 +1509,7 @@ specified by `rel_time` has elapsed or the time point specified by
 do not throw exceptions. __thread_interrupted__ if the current thread of execution is interrupted. ]]
 
 [[Notes:] [`sleep_until()` is one of the predefined __interruption_points__.]]
+[[Notes:] [`no_interruption_point::sleep_until()` is NOT one of the __interruption_points__.]]
 
 ]
 
@@ -1513,6 +1523,11 @@ do not throw exceptions. __thread_interrupted__ if the current thread of executi
     {
       template <class Rep, class Period>
       void sleep_for(const chrono::duration<Rep, Period>& rel_time);
+      namespace no_interruption_point
+      {
+        template <class Rep, class Period>
+        void sleep_for(const chrono::duration<Rep, Period>& rel_time);
+      }
     }
 
 [variablelist
@@ -1523,6 +1538,7 @@ by `rel_time` has elapsed.]]
 [[Throws:] [Nothing if operations of chrono::duration<Rep, Period> do not throw exceptions. __thread_interrupted__ if the current thread of execution is interrupted.]]
 
 [[Notes:] [`sleep_for()` is one of the predefined __interruption_points__.]]
+[[Notes:] [`no_interruption_point:: sleep_for()` is NOT one of the __interruption_points__.]]
 
 ]
 

@@ -1,8 +1,8 @@
 /*
  *
  * Copyright (c) 2003 Dr John Maddock
- * Use, modification and distribution is subject to the 
- * Boost Software License, Version 1.0. (See accompanying file 
+ * Use, modification and distribution is subject to the
+ * Boost Software License, Version 1.0. (See accompanying file
  * LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  *
  */
@@ -27,7 +27,7 @@ context_before_license(const fileview& v, fileview::const_iterator start,
 {
   char last_char = '\0';
   while (start != v.begin() && context_lines >= 0) {
-    if ((*start == '\r') || (*start == '\n')
+    if (((*start == '\r') || (*start == '\n'))
         && ((last_char == *start) || ((last_char != '\r') && (last_char != '\n'))))
         --context_lines;
 
@@ -48,7 +48,7 @@ context_after_license(const fileview& v, fileview::const_iterator end,
 {
   char last_char = '\0';
   while (end != v.end() && context_lines >= 0) {
-    if (*end == '\r' || *end == '\n'
+    if ((*end == '\r' || *end == '\n')
         && (last_char == *end || (last_char != '\r' && last_char != '\n')))
         --context_lines;
 
@@ -79,7 +79,7 @@ find_prefix(const fileview& v, fileview::const_iterator start_of_line)
   return std::string(start_of_line, first_noncomment_char);
 }
 
-static std::string 
+static std::string
 html_escape(fileview::const_iterator first, fileview::const_iterator last)
 {
   std::string result;
@@ -110,7 +110,7 @@ void bcp_implementation::scan_license(const fs::path& p, const fileview& v)
    int author_count = 0;
    int nonbsl_author_count = 0;
    bool has_non_bsl_license = false;
-   fileview::const_iterator start_of_license = v.begin(), 
+   fileview::const_iterator start_of_license = v.begin(),
                             end_of_license = v.end();
    bool start_in_middle_of_line = false;
 
@@ -122,7 +122,7 @@ void bcp_implementation::scan_license(const fs::path& p, const fileview& v)
            start_of_license = m[0].first;
          end_of_license = m[0].second;
 
-         if (is_non_bsl_license(i) && i < licenses.second - 1) 
+         if (is_non_bsl_license(i) && i < licenses.second - 1)
            has_non_bsl_license = true;
 
          // add this license to the list:
@@ -137,9 +137,9 @@ void bcp_implementation::scan_license(const fs::path& p, const fileview& v)
          {
 #if 0
              // Not dealing with copyrights because we don't have the years
-            if ((*cpy)[0].first < start_of_license) 
+            if ((*cpy)[0].first < start_of_license)
               start_of_license = (*cpy)[0].first;
-            if ((*cpy)[0].second > end_of_license) 
+            if ((*cpy)[0].second > end_of_license)
               end_of_license = (*cpy)[0].second;
 #endif
 
@@ -161,7 +161,7 @@ void bcp_implementation::scan_license(const fs::path& p, const fileview& v)
                   m_author_data[name].insert(p);
                   ++author_count;
 
-                  // If this is not the Boost Software License (license 0), and the author hasn't given 
+                  // If this is not the Boost Software License (license 0), and the author hasn't given
                   // blanket permission, note this for the report.
                   if (has_non_bsl_license
                       && m_bsl_authors.find(name) == m_bsl_authors.end()) {
@@ -199,12 +199,12 @@ void bcp_implementation::scan_license(const fs::path& p, const fileview& v)
 
    if (has_non_bsl_license) {
      bool converted = false;
-     if (nonbsl_author_count == 0 
+     if (nonbsl_author_count == 0
          && license_count == 1) {
        // Grab a few lines of context
-       fileview::const_iterator context_start = 
+       fileview::const_iterator context_start =
          context_before_license(v, start_of_license);
-       fileview::const_iterator context_end = 
+       fileview::const_iterator context_end =
          context_after_license(v, end_of_license);
 
        // TBD: For files that aren't C++ code, this will have to
@@ -213,14 +213,14 @@ void bcp_implementation::scan_license(const fs::path& p, const fileview& v)
 
        // Create enough information to permit manual verification of
        // the correctness of the transformation
-       std::string before_conversion = 
+       std::string before_conversion =
          html_escape(context_start, start_of_license);
        before_conversion += "<b>";
        before_conversion += html_escape(start_of_license, end_of_license);
        before_conversion += "</b>";
        before_conversion += html_escape(end_of_license, context_end);
 
-       std::string after_conversion = 
+       std::string after_conversion =
          html_escape(context_start, start_of_license);
        if (start_in_middle_of_line)
          after_conversion += '\n';
@@ -233,7 +233,7 @@ void bcp_implementation::scan_license(const fs::path& p, const fileview& v)
        after_conversion += "</b>";
        after_conversion += html_escape(end_of_license, context_end);
 
-       m_converted_to_bsl[p] = 
+       m_converted_to_bsl[p] =
          std::make_pair(before_conversion, after_conversion);
 
        // Perform the actual conversion

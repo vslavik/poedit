@@ -15,6 +15,20 @@ project
       <link>static
     ;
     
-exe issue5403 : recurse_dir_iter_5403.cpp ;
-
-install bin : issue5403 ;    #invoke "b2", not "b2 install"
+   test-suite "filesystem-issues" :
+#       [ run 9054_static_const_codecvt_segfault_pre_main.cpp 
+#           :  :  : <link>shared : 9054_shared ]                  
+#       [ run 9054_static_const_codecvt_segfault_pre_main.cpp
+#           :  :  : <link>static : 9054_static ]                  
+#       [ run hello_filesystem.cpp
+#           :  :  : <link>shared : hello_shared ]                  
+#       [ run hello_filesystem.cpp
+#           :  :  : <link>static : hello_static ]                  
+#       [ run 9219.cpp
+#           :  :  : <link>shared : 9219_shared ]                  
+#       [ run 9219.cpp
+#           :  :  : <link>static : 9219_static ]                  
+       [ run 10485.cpp
+           :  :  : <link>shared <test-info>always_show_run_output ]                  
+       ;
+       

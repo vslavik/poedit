@@ -11,7 +11,7 @@
 
 path-constant nav_images :  html/images/ ; # png and svg images for home, next, note, tip...
 path-constant images_location : html/images ; # location of my SVG and PNG images referenced by Quickbook.
-path-constant pdf_images_location : html ; # location of SVG and PNG images referenced by pdf.
+path-constant pdf_images_location : .. ; # location of SVG and PNG images referenced by pdf.
 path-constant here : . ; # location of /doc folder.
 
 # echo "nav_images = " $(nav_images) ; # "nav_images = I:\boost-trunk\libs\circular_buffer\doc\html\images
@@ -181,14 +181,15 @@ boostbook standalone
     # Set these one for PDF generation *only*:
     # default png graphics are awful in PDF form,
     # better use SVG instead:
-    #<format>pdf:<xsl:param>admon.graphics.extension=".svg"
-    <format>pdf:<xsl:param>admon.graphics.extension=".png" # Only png images are available.
-    <format>pdf:<xsl:param>admon.graphics.path=$(nav_images)/ # next, prev, note, tip ... for pdf.
+    <format>pdf:<xsl:param>admon.graphics.extension=".svg"
+    #<format>pdf:<xsl:param>admon.graphics.extension=".png" # Only png images are available.
+    # Don't need this, default path works OK:
+    #<format>pdf:<xsl:param>admon.graphics.path=$(nav_images)/ # next, prev, note, tip ... for pdf.
     <format>pdf:<xsl:param>use.role.for.mediaobject=1 
     <format>pdf:<xsl:param>preferred.mediaobject.role=print
-        <format>pdf:<xsl:param>img.src.path=$(pdf_images_location)/ # graphics (diagrams) for pdf.
+    <format>pdf:<xsl:param>img.src.path=$(pdf_images_location)/ # graphics (diagrams) for pdf.
     <format>pdf:<xsl:param>draft.mode="no"
-        <format>pdf:<xsl:param>boost.url.prefix=../../../..
+    <format>pdf:<xsl:param>boost.url.prefix=../../../..
     
     <dependency>autodoc # 
     <dependency>png_install
@@ -205,7 +206,7 @@ install png_install : [ glob $(here)/*.png ] : <location>$(here)/../../../doc/ht
 # because a modified pdf file is created, so this command
 # will rename the file to the expected filename, here circular_buffer.pdf.
 
-install pdf-install : standalone : <install-type>PDF <location>. <name>circular_buffer.pdf ;
+install pdfinstall : standalone : <install-type>PDF <location>. <name>circular_buffer.pdf ;
 
 
 

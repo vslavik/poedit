@@ -28,7 +28,8 @@ Conceptually, then, a node can be thought of as the following structure:
       list< pair<key_type, ptree> > children; // ordered list of named children
    };
 
-Both key_type and data_type are configurable, but will usually be std::string.
+Both key_type and data_type are configurable to some extent, but will usually be
+std::string or std::wstring, and the parsers only work with this kind of tree.
 
 Many software projects develop a similar tool at some point of their lifetime,
 and property tree originated the same way.  We hope the library can save many

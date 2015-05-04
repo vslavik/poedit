@@ -18,6 +18,7 @@
 #include <boost/detail/lightweight_test.hpp>  // for main, BOOST_TEST
 #include <boost/integer.hpp>  // for boost::int_t, boost::uint_t
 #include <boost/type_traits/is_same.hpp>
+#include <boost/mpl/bool.hpp> // for mpl::true_ and false_
 
 #include <climits>   // for ULONG_MAX, LONG_MAX, LONG_MIN
 #include <iostream>  // for std::cout (std::endl indirectly)

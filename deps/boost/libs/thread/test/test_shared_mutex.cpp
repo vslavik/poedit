@@ -5,6 +5,7 @@
 
 #define BOOST_THREAD_VERSION 2
 #define BOOST_THREAD_PROVIDES_INTERRUPTIONS
+#define BOOST_TEST_MODULE Boost.Threads: shared_mutex test suite
 
 #include <boost/test/unit_test.hpp>
 #include <boost/thread/thread.hpp>
@@ -18,7 +19,7 @@
         BOOST_CHECK_EQUAL(value,expected_value);                     \
     }
 
-void test_multiple_readers()
+BOOST_AUTO_TEST_CASE(test_multiple_readers)
 {
   std::cout << __LINE__ << std::endl;
     unsigned const number_of_threads=10;
@@ -66,7 +67,7 @@ void test_multiple_readers()
     CHECK_LOCKED_VALUE_EQUAL(unblocked_count_mutex,max_simultaneous_running,number_of_threads);
 }
 
-void test_only_one_writer_permitted()
+BOOST_AUTO_TEST_CASE(test_only_one_writer_permitted)
 {
   std::cout << __LINE__ << std::endl;
     unsigned const number_of_threads=10;
@@ -109,7 +110,7 @@ void test_only_one_writer_permitted()
     CHECK_LOCKED_VALUE_EQUAL(unblocked_count_mutex,max_simultaneous_running,1u);
 }
 
-void test_reader_blocks_writer()
+BOOST_AUTO_TEST_CASE(test_reader_blocks_writer)
 {
   std::cout << __LINE__ << std::endl;
     boost::thread_group pool;
@@ -156,7 +157,7 @@ void test_reader_blocks_writer()
     CHECK_LOCKED_VALUE_EQUAL(unblocked_count_mutex,max_simultaneous_running,1u);
 }
 
-void test_unlocking_writer_unblocks_all_readers()
+BOOST_AUTO_TEST_CASE(test_unlocking_writer_unblocks_all_readers)
 {
   std::cout << __LINE__ << std::endl;
     boost::thread_group pool;
@@ -208,7 +209,7 @@ void test_unlocking_writer_unblocks_all_readers()
     CHECK_LOCKED_VALUE_EQUAL(unblocked_count_mutex,max_simultaneous_running,reader_count);
 }
 
-void test_unlocking_last_reader_only_unblocks_one_writer()
+BOOST_AUTO_TEST_CASE(test_unlocking_last_reader_only_unblocks_one_writer)
 {
   std::cout << __LINE__ << std::endl;
     boost::thread_group pool;
@@ -277,19 +278,3 @@ void test_unlocking_last_reader_only_unblocks_one_writer()
     CHECK_LOCKED_VALUE_EQUAL(unblocked_count_mutex,max_simultaneous_readers,reader_count);
     CHECK_LOCKED_VALUE_EQUAL(unblocked_count_mutex,max_simultaneous_writers,1u);
 }
-
-boost::unit_test::test_suite* init_unit_test_suite(int, char*[])
-{
-    boost::unit_test::test_suite* test =
-        BOOST_TEST_SUITE("Boost.Threads: shared_mutex test suite");
-
-    test->add(BOOST_TEST_CASE(&test_multiple_readers));
-    test->add(BOOST_TEST_CASE(&test_only_one_writer_permitted));
-    test->add(BOOST_TEST_CASE(&test_reader_blocks_writer));
-    test->add(BOOST_TEST_CASE(&test_unlocking_writer_unblocks_all_readers));
-    test->add(BOOST_TEST_CASE(&test_unlocking_last_reader_only_unblocks_one_writer));
-
-    return test;
-}
-
-

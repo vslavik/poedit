@@ -9,7 +9,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 #include <boost/move/detail/config_begin.hpp>
-#include <boost/move/utility.hpp>
+#include <boost/move/utility_core.hpp>
 #include <boost/utility/enable_if.hpp>
 #include "../example/movable.hpp"
 #include "../example/copymovable.hpp"

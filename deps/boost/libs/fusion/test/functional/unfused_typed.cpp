@@ -9,11 +9,9 @@
 #include <boost/fusion/functional/adapter/unfused_typed.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/blank.hpp>
 #include <boost/noncopyable.hpp>
 
-#include <boost/utility/result_of.hpp>
-
+#include <boost/mpl/empty_base.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/placeholders.hpp>
 
@@ -31,7 +29,7 @@ typedef fusion::vector<> types0;
 typedef fusion::vector<long &> types1;
 typedef fusion::vector<long &,int,char> types3;
 
-template <class Base = boost::blank>
+template <class Base = boost::mpl::empty_base>
 struct test_func
     : Base
 {

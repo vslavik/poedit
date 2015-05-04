@@ -655,7 +655,7 @@ public:
         BOOST_ASSERT( px != 0 );
         BOOST_ASSERT( i >= 0 && ( i < boost::detail::sp_extent< T >::value || boost::detail::sp_extent< T >::value == 0 ) );
 
-        return px[ i ];
+        return static_cast< typename boost::detail::sp_array_access< T >::type >( px[ i ] );
     }
 
     element_type * get() const BOOST_NOEXCEPT
@@ -893,7 +893,7 @@ class esft2_deleter_wrapper
 {
 private:
 
-    shared_ptr<void> deleter_;
+    shared_ptr<void const volatile> deleter_;
 
 public:
 

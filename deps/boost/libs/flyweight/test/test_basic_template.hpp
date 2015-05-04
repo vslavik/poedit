@@ -28,6 +28,14 @@
 #include <utility>
 #endif
 
+#if !defined(BOOST_FLYWEIGHT_DISABLE_HASH_SUPPORT)
+#include <boost/functional/hash.hpp>
+
+#if !defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
+#include <functional>
+#endif
+#endif
+
 #define LENGTHOF(array) (sizeof(array)/sizeof((array)[0]))
 
 template<typename Flyweight,typename ForwardIterator>
@@ -58,6 +66,13 @@ void test_basic_template(
     Flyweight cr2(std::move(c2));
     BOOST_TEST(f1==cr1);
     BOOST_TEST(f2==cr2);
+#endif
+
+#if !defined(BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX)
+    /* testcase for https://svn.boost.org/trac/boost/ticket/10439 */
+
+    Flyweight f3={};
+    BOOST_TEST(f3==f2);
 #endif
 
     f1=f1;
@@ -97,6 +112,21 @@ void test_basic_template(
     std::ostringstream oss2;
     oss2<<f1.get();
     BOOST_TEST(oss1.str()==oss2.str());
+
+#if !defined(BOOST_FLYWEIGHT_DISABLE_HASH_SUPPORT)
+
+    /* hash support */
+
+    BOOST_TEST(boost::hash<Flyweight>()(f1)==boost::hash<Flyweight>()(c1));
+    BOOST_TEST(boost::hash<Flyweight>()(f1)==
+               boost::hash<const value_type*>()(&f1.get()));
+
+#if !defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
+    BOOST_TEST(std::hash<Flyweight>()(f1)==std::hash<Flyweight>()(c1));
+    BOOST_TEST(std::hash<Flyweight>()(f1)==
+               std::hash<const value_type*>()(&f1.get()));
+#endif
+#endif
   }
 }
 

@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2014.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -57,6 +57,7 @@
 #include <boost/log/expressions/filter.hpp>
 #include <boost/log/expressions/formatter.hpp>
 #include <boost/log/utility/string_literal.hpp>
+#include <boost/log/utility/functional/nop.hpp>
 #include <boost/log/utility/setup/from_settings.hpp>
 #include <boost/log/utility/setup/filter_parser.hpp>
 #include <boost/log/utility/setup/formatter_parser.hpp>
@@ -323,9 +324,18 @@ protected:
 
         // Construct the frontend, considering Asynchronous parameter
         if (!async)
+        {
             p = init_formatter(boost::make_shared< sinks::synchronous_sink< backend_t > >(backend), params, is_formatting_t());
+        }
         else
+        {
             p = init_formatter(boost::make_shared< sinks::asynchronous_sink< backend_t > >(backend), params, is_formatting_t());
+
+            // https://svn.boost.org/trac/boost/ticket/10638
+            // The user doesn't have a way to process excaptions from the dedicated thread anyway, so just suppress them instead of
+            // terminating the application.
+            p->set_exception_handler(nop());
+        }
 #else
         // When multithreading is disabled we always use the unlocked sink frontend
         p = init_formatter(boost::make_shared< sinks::unlocked_sink< backend_t > >(backend), params, is_formatting_t());

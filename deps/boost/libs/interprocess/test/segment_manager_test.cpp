@@ -33,6 +33,9 @@ struct atomic_func_test
    {
       object = rsm.template find<int>("atomic_func_find_object").first;
    }
+   private:
+   atomic_func_test operator=(const atomic_func_test&);
+   atomic_func_test(const atomic_func_test&);
 };
 
 template <class SegmentManager>
@@ -213,7 +216,7 @@ bool test_segment_manager()
       const char *const object2_name = "object2";
       int const int_array_values[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-      for(std::size_t i = 0; i != 4; ++i){
+      for(std::size_t i = 0; i != 1/*4*/; ++i){
          if(seg_mgr->template find<unsigned int>(object1_name).first)
             return false;
          //Single element construction

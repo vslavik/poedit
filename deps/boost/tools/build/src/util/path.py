@@ -193,7 +193,35 @@ def is_rooted (path):
 #           return [ sequence.join $(tokens2) : "/" ] ;
 #       }
 #   }
-#   
+def reverse(path):
+    """Returns path2 such that `os.path.join(path, path2) == '.'`.
+    `path` may not contain '..' or be rooted.
+
+    Args:
+        path (str): the path to reverse
+
+    Returns:
+        the string of the reversed path
+
+    Example:
+
+        >>> p1 = 'path/to/somewhere'
+        >>> p2 = reverse('path/to/somewhere')
+        >>> p2
+        '../../..'
+        >>> os.path.normpath(os.path.join(p1, p2))
+        '.'
+    """
+    if is_rooted(path) or '..' in path:
+        from b2.manager import get_manager
+        get_manager().errors()(
+            'reverse(path): path is either rooted or contains ".." in the path')
+    if path == '.':
+        return path
+    path = os.path.normpath(path)
+    # os.sep.join() is being used over os.path.join() due
+    # to an extra '..' that is created by os.path.join()
+    return os.sep.join('..' for t in path.split(os.sep))
 #   #
 #   # Auxillary rule: does all the semantic of 'join', except for error cheching.
 #   # The error checking is separated because this rule is recursive, and I don't
@@ -418,7 +446,11 @@ def programs_path ():
     for elem in raw:
         if elem:
             for p in elem.split(os.path.pathsep):
-                result.append(make(p))
+                # it's possible that the user's Path has
+                # double path separators, thus it is possible
+                # for p to be an empty string.
+                if p:
+                    result.append(make(p))
 
     return result
 

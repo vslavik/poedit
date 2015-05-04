@@ -213,6 +213,17 @@ void do_round_trip(const T& val)
    do_round_trip(val, std::ios_base::fmtflags(std::ios_base::scientific));
    if((fabs(val) > 1) && (fabs(val) < 1e100))
       do_round_trip(val, std::ios_base::fmtflags(std::ios_base::fixed));
+
+   static int error_count = 0;
+
+   if(error_count != boost::detail::test_errors())
+   {
+      error_count = boost::detail::test_errors();
+      std::cout << "Errors occured while testing value....";
+      if(val.backend().sign())
+         std::cout << "-";
+      std::cout << boost::multiprecision::cpp_int(val.backend().bits()) << "e" << val.backend().exponent() << std::endl;
+   }
 }
 
 template <class T>
@@ -232,6 +243,8 @@ void test_round_trip()
       do_round_trip(T(-val));
       do_round_trip(T(1/val));
       do_round_trip(T(-1/val));
+
+      if(boost::detail::test_errors() > 200) break; // escape if there are too many errors.
    }
 
    std::cout << "Execution time = " << boost::chrono::duration_cast<boost::chrono::duration<double> >(w.elapsed()).count() << "s" << std::endl;

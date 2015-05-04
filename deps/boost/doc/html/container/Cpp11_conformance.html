@@ -1,11 +1,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>C++11 Conformance</title>
+<title>C++11/C++14 Conformance</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../container.html" title="Chapter&#160;9.&#160;Boost.Container">
+<link rel="up" href="../container.html" title="Chapter&#160;8.&#160;Boost.Container">
 <link rel="prev" href="extended_functionality.html" title="Extended functionality">
 <link rel="next" href="known_issues.html" title="Known Issues">
 </head>
@@ -24,7 +24,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="container.Cpp11_conformance"></a><a class="link" href="Cpp11_conformance.html" title="C++11 Conformance">C++11 Conformance</a>
+<a name="container.Cpp11_conformance"></a><a class="link" href="Cpp11_conformance.html" title="C++11/C++14 Conformance">C++11/C++14 Conformance</a>
 </h2></div></div></div>
 <div class="toc"><dl class="toc">
 <dt><span class="section"><a href="Cpp11_conformance.html#container.Cpp11_conformance.move_emplace">Move and Emplace</a></span></dt>
@@ -32,12 +32,19 @@
       allocators</a></span></dt>
 <dt><span class="section"><a href="Cpp11_conformance.html#container.Cpp11_conformance.scoped_allocator">Scoped
       allocators</a></span></dt>
+<dt><span class="section"><a href="Cpp11_conformance.html#container.Cpp11_conformance.insertion_hints">Insertion
+      hints in associative containers and preserving insertion ordering for elements
+      with equivalent keys</a></span></dt>
 <dt><span class="section"><a href="Cpp11_conformance.html#container.Cpp11_conformance.initializer_lists">Initializer
       lists</a></span></dt>
+<dt><span class="section"><a href="Cpp11_conformance.html#container.Cpp11_conformance.null_iterators">Null Forward
+      Iterators</a></span></dt>
 <dt><span class="section"><a href="Cpp11_conformance.html#container.Cpp11_conformance.forward_list"><code class="computeroutput"><span class="identifier">forward_list</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code></a></span></dt>
 <dt><span class="section"><a href="Cpp11_conformance.html#container.Cpp11_conformance.vector_exception_guarantees"><code class="computeroutput"><span class="identifier">vector</span></code> vs. <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span></code>
       exception guarantees</a></span></dt>
-<dt><span class="section"><a href="Cpp11_conformance.html#container.Cpp11_conformance.Vector_bool"><code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">&gt;</span></code></a></span></dt>
+<dt><span class="section"><a href="Cpp11_conformance.html#container.Cpp11_conformance.container_const_reference_parameters">Parameter
+      taken by const reference that can be changed</a></span></dt>
+<dt><span class="section"><a href="Cpp11_conformance.html#container.Cpp11_conformance.Vector_bool"><code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">&gt;</span></code> specialization</a></span></dt>
 <dt><span class="section"><a href="Cpp11_conformance.html#container.Cpp11_conformance.non_standard_memset_initialization">Non-standard
       value initialization using <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">memset</span></code></a></span></dt>
 </dl></div>
@@ -64,7 +71,7 @@
         supports placement insertion (<code class="computeroutput"><span class="identifier">emplace</span></code>,
         ...) functions from C++11. For those compilers without variadic templates
         support <span class="bold"><strong>Boost.Container</strong></span> uses the preprocessor
-        to create a set of overloads up to a finite (10) number of parameters.
+        to create a set of overloads up to a finite number of parameters.
       </p>
 </div>
 <div class="section">
@@ -91,9 +98,9 @@
         <code class="computeroutput"><span class="identifier">allocator_traits</span></code> requirements.
         <span class="bold"><strong>Boost.Container</strong></span> not only supports this model
         with C++11 but also <span class="bold"><strong>backports it to C++03</strong></span>
-        via <code class="computeroutput"><a class="link" href="../boost/container/allocator_traits.html" title="Struct template allocator_traits">boost::container::allocator_traits</a></code>.
-        This class offers some workarounds for C++03 compilers to achieve the same
-        allocator guarantees as <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">allocator_traits</span></code>.
+        via <code class="computeroutput"><a class="link" href="../boost/container/allocator_traits.html" title="Struct template allocator_traits">boost::container::allocator_traits</a></code>
+        including some C++17 changes. This class offers some workarounds for C++03
+        compilers to achieve the same allocator guarantees as <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">allocator_traits</span></code>.
       </p>
 <p>
         In [Boost.Container] containers, if possible, a single allocator is hold
@@ -128,11 +135,12 @@
         elements, and so on.
       </p>
 <p>
-        <span class="bold"><strong>Boost.Container</strong></span> implements its own <code class="computeroutput"><span class="identifier">scoped_allocator_adaptor</span></code> class and <span class="bold"><strong>backports this feature also to C++03 compilers</strong></span>. Due
-        to C++03 limitations, in those compilers the allocator propagation implemented
+        <span class="bold"><strong>Boost.Container</strong></span> implements its own <code class="computeroutput"><a class="link" href="../boost/container/scoped_allocator_adaptor.html" title="Class template scoped_allocator_adaptor">scoped_allocator_adaptor</a></code>
+        class and <span class="bold"><strong>backports this feature also to C++03 compilers</strong></span>.
+        Due to C++03 limitations, in those compilers the allocator propagation implemented
         by <code class="computeroutput"><span class="identifier">scoped_allocator_adaptor</span><span class="special">::</span><span class="identifier">construct</span></code>
-        functions will be based on traits (<code class="computeroutput"><a class="link" href="../boost/container/constructible__idp31645472.html" title="Struct template constructible_with_allocator_suffix">constructible_with_allocator_suffix</a></code>
-        and <code class="computeroutput"><a class="link" href="../boost/container/constructible__idp31654272.html" title="Struct template constructible_with_allocator_prefix">constructible_with_allocator_prefix</a></code>)
+        functions will be based on traits (<code class="computeroutput"><a class="link" href="../boost/container/constructible__idp29792032.html" title="Struct template constructible_with_allocator_suffix">constructible_with_allocator_suffix</a></code>
+        and <code class="computeroutput"><a class="link" href="../boost/container/constructible__idp29781664.html" title="Struct template constructible_with_allocator_prefix">constructible_with_allocator_prefix</a></code>)
         proposed in <a href="http://www.open-std.org/jtc1/sc22/WG21/docs/papers/2008/n2554.pdf" target="_top">N2554:
         The Scoped Allocator Model (Rev 2) proposal</a>. In conforming C++11
         compilers or compilers supporting SFINAE expressions (when <code class="computeroutput"><span class="identifier">BOOST_NO_SFINAE_EXPR</span></code> is NOT defined), traits
@@ -147,15 +155,61 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
+<a name="container.Cpp11_conformance.insertion_hints"></a><a class="link" href="Cpp11_conformance.html#container.Cpp11_conformance.insertion_hints" title="Insertion hints in associative containers and preserving insertion ordering for elements with equivalent keys">Insertion
+      hints in associative containers and preserving insertion ordering for elements
+      with equivalent keys</a>
+</h3></div></div></div>
+<p>
+        <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/lwg-defects.html#233" target="_top">LWG
+        Issue #233</a> corrected a defect in C++98 and specified how equivalent
+        keys were to be inserted in associative containers. <span class="bold"><strong>Boost.Container</strong></span>
+        implements the C++11 changes that were specified in <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2005/n1780.html" target="_top">N1780
+        <span class="emphasis"><em>Comments on LWG issue 233: Insertion hints in associative containers</em></span></a>:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">a_eq</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">t</span><span class="special">)</span></code>:
+            If a range containing elements equivalent to t exists in a_eq, t is inserted
+            at the end of that range.
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">a_eq</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">p</span><span class="special">,</span><span class="identifier">t</span><span class="special">)</span></code>:
+            t is inserted as close as possible to the position just prior to p.
+          </li>
+</ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
 <a name="container.Cpp11_conformance.initializer_lists"></a><a class="link" href="Cpp11_conformance.html#container.Cpp11_conformance.initializer_lists" title="Initializer lists">Initializer
       lists</a>
 </h3></div></div></div>
 <p>
-        <span class="bold"><strong>Boost.Container</strong></span> does not support initializer
-        lists when constructing or assigning containers but it will support it for
-        compilers with initialized-list support. This feature won't be backported
-        to C++03 compilers.
+        <span class="bold"><strong>Boost.Container</strong></span> supports initialization,
+        assignments and insertions from initializer lists in compilers that implement
+        this feature.
       </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="container.Cpp11_conformance.null_iterators"></a><a class="link" href="Cpp11_conformance.html#container.Cpp11_conformance.null_iterators" title="Null Forward Iterators">Null Forward
+      Iterators</a>
+</h3></div></div></div>
+<p>
+        <span class="bold"><strong>Boost.Container</strong></span> implements <a href="http://www.open-std.org/JTC1/sc22/WG21/docs/papers/2013/n3644.pdf" target="_top">C++14
+        Null Forward Iterators</a>, which means that value-initialized iterators
+        may be compared and compare equal to other value-initialized iterators of
+        the same type. Value initialized iterators behave as if they refer past the
+        end of the same empty sequence (example taken from N3644):
+      </p>
+<pre class="programlisting"><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">v</span> <span class="special">=</span> <span class="special">{</span> <span class="special">...</span> <span class="special">};</span>
+<span class="keyword">auto</span> <span class="identifier">ni</span> <span class="special">=</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;::</span><span class="identifier">iterator</span><span class="special">();</span>
+<span class="keyword">auto</span> <span class="identifier">nd</span> <span class="special">=</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;::</span><span class="identifier">iterator</span><span class="special">();</span>
+<span class="identifier">ni</span> <span class="special">==</span> <span class="identifier">ni</span><span class="special">;</span> <span class="comment">// True.</span>
+<span class="identifier">nd</span> <span class="special">!=</span> <span class="identifier">nd</span><span class="special">;</span> <span class="comment">// False.</span>
+<span class="identifier">v</span><span class="special">.</span><span class="identifier">begin</span><span class="special">()</span> <span class="special">==</span> <span class="identifier">ni</span><span class="special">;</span> <span class="comment">// ??? (likely false in practice).</span>
+<span class="identifier">v</span><span class="special">.</span><span class="identifier">end</span><span class="special">()</span> <span class="special">==</span> <span class="identifier">ni</span><span class="special">;</span>   <span class="comment">// ??? (likely false in practice).</span>
+<span class="identifier">ni</span> <span class="special">==</span> <span class="identifier">nd</span><span class="special">;</span> <span class="comment">// Won't compile.</span>
+</pre>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -200,7 +254,43 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="container.Cpp11_conformance.Vector_bool"></a><a class="link" href="Cpp11_conformance.html#container.Cpp11_conformance.Vector_bool" title="vector&lt;bool&gt;"><code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">&gt;</span></code></a>
+<a name="container.Cpp11_conformance.container_const_reference_parameters"></a><a class="link" href="Cpp11_conformance.html#container.Cpp11_conformance.container_const_reference_parameters" title="Parameter taken by const reference that can be changed">Parameter
+      taken by const reference that can be changed</a>
+</h3></div></div></div>
+<p>
+        Several container operations use a parameter taken by const reference that
+        can be changed during execution of the function. <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/lwg-closed.html#526" target="_top">LWG
+        Issue 526 (<span class="emphasis"><em>Is it undefined if a function in the standard changes
+        in parameters?</em></span>)</a> discusses them:
+      </p>
+<pre class="programlisting"><span class="comment">//Given std::vector&lt;int&gt; v</span>
+<span class="identifier">v</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">v</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">v</span><span class="special">[</span><span class="number">2</span><span class="special">]);</span>
+<span class="comment">//v[2] can be changed by moving elements of vector</span>
+
+<span class="comment">//Given std::list&lt;int&gt; l:</span>
+<span class="identifier">l</span><span class="special">.</span><span class="identifier">remove</span><span class="special">(*</span><span class="identifier">l</span><span class="special">.</span><span class="identifier">begin</span><span class="special">())</span>
+<span class="comment">//The operation could delete the first element, and then continue trying to access it.</span>
+</pre>
+<p>
+        The adopted resolution, NAD (Not A Defect), implies that previous operations
+        must be well-defined. This requires code to detect a reference to an inserted
+        element and an additional copy in that case, impacting performance even when
+        references to already inserted objects are not used. Note that equivalent
+        functions taking rvalue references or iterator ranges require elements not
+        already inserted in the container.
+      </p>
+<p>
+        <span class="bold"><strong>Boost.Container</strong></span> prioritizes performance
+        and has not implemented the NAD resolution: in functions that might modify
+        the argument, the library requires references to elements not stored in the
+        container. Using references to inserted elements yields to undefined behaviour
+        (although in debug mode, this precondition violation could be notified via
+        BOOST_ASSERT).
+      </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="container.Cpp11_conformance.Vector_bool"></a><a class="link" href="Cpp11_conformance.html#container.Cpp11_conformance.Vector_bool" title="vector&lt;bool&gt; specialization"><code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">&gt;</span></code> specialization</a>
 </h3></div></div></div>
 <p>
         <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">&gt;</span></code> specialization
@@ -212,8 +302,7 @@
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-            <a href="http://home.roadrunner.com/~hinnant/onvectorbool.html" target="_top">On
-            <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">&gt;</span></code></a>
+            <a href="http://howardhinnant.github.io/onvectorbool.html" target="_top">On <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">&gt;</span></code></a>
           </li>
 <li class="listitem">
             <a href="http://www.gotw.ca/publications/N1211.pdf" target="_top">vector&lt;bool&gt;:

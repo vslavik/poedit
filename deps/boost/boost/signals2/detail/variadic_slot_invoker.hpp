@@ -15,11 +15,6 @@
 #ifndef BOOST_SIGNALS2_DETAIL_VARIADIC_SLOT_INVOKER_HPP
 #define BOOST_SIGNALS2_DETAIL_VARIADIC_SLOT_INVOKER_HPP
 
-#if defined(_MSVC_VER)
-# pragma warning(push)
-# pragma warning(disable:4100) // unreferenced formal parameter
-#endif
-
 #include <boost/mpl/size_t.hpp>
 #include <boost/signals2/detail/variadic_arg_type.hpp>
 
@@ -97,6 +92,16 @@ namespace boost
           func(BOOST_SIGNALS2_GET<indices>(args)...);
           return R();
         }
+        // This overload is redundant, as it is the same as the previous variadic method when
+        // it has zero "indices" or "Args" variadic template parameters.  This overload
+        // only exists to quiet some unused parameter warnings
+        // on certain compilers (some versions of gcc and msvc)
+        template<typename Func>
+        R m_invoke(void *, Func &func, unsigned_meta_array<>, BOOST_SIGNALS2_TUPLE<>) const
+        {
+          func();
+          return R();
+        }
       };
 
       template<typename R, typename ... Args>
@@ -131,9 +136,5 @@ namespace boost
     } // namespace detail
   } // namespace signals2
 } // namespace boost
-
-#if defined(_MSVC_VER)
-# pragma warning(pop)
-#endif
 
 #endif // BOOST_SIGNALS2_DETAIL_VARIADIC_SLOT_INVOKER_HPP

@@ -775,7 +775,7 @@ b2 toolset=gcc variant=debug optimization=space
           <varlistentry>
             <term><option>-d0</option></term>
             <listitem>
-              <para>Supress all informational messages.</para>
+              <para>Suppress all informational messages.</para>
             </listitem>
           </varlistentry>
 
@@ -1194,14 +1194,14 @@ obj main : main.cpp : &lt;optimization&gt;off ;
         release mode.
 <programlisting>
 lib network : network.cpp
-    : <emphasis role="bold">&lt;link&gt;shared:&lt;define&gt;NEWORK_LIB_SHARED</emphasis>
+    : <emphasis role="bold">&lt;link&gt;shared:&lt;define&gt;NETWORK_LIB_SHARED</emphasis>
      &lt;variant&gt;release:&lt;define&gt;EXTRA_FAST
     ;
 </programlisting>
 
         In the example above, whenever <filename>network</filename> is
         built with <code>&lt;link&gt;shared</code>,
-        <code>&lt;define&gt;NEWORK_LIB_SHARED</code> will be in its
+        <code>&lt;define&gt;NETWORK_LIB_SHARED</code> will be in its
         properties, too.
         </para>
 

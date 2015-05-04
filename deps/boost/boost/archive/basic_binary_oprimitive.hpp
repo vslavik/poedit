@@ -54,6 +54,9 @@ namespace std{
 namespace boost {
 namespace archive {
 
+template<class Ch>
+class codecvt_null;
+
 /////////////////////////////////////////////////////////////////////////
 // class basic_binary_oprimitive - binary output of prmitives
 
@@ -71,6 +74,7 @@ public:
         return static_cast<Archive *>(this);
     }
     #ifndef BOOST_NO_STD_LOCALE
+    boost::scoped_ptr<codecvt_null<Elem> > codecvt_facet;
     boost::scoped_ptr<std::locale> archive_locale;
     basic_streambuf_locale_saver<Elem, Tr> locale_saver;
     #endif

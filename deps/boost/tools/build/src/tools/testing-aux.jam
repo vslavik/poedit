@@ -70,7 +70,7 @@ rule capture-output ( target : source : properties * : targets-to-remove * )
     # OK if it cannot find the target or updating rule.
     NOCARE $(target:S=.output) ;
 
-    # This has two-fold effect. First it adds input files to the dependendency
+    # This has two-fold effect. First it adds input files to the dependency
     # graph, preventing a warning. Second, it causes input files to be bound
     # before target is created. Therefore, they are bound using SEARCH setting
     # on them and not LOCATE setting of $(target), as in other case (due to jam

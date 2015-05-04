@@ -23,6 +23,7 @@
 #include <boost/fusion/sequence/comparison/less_equal.hpp>
 #include <boost/fusion/sequence/comparison/greater.hpp>
 #include <boost/fusion/sequence/comparison/greater_equal.hpp>
+#include <boost/fusion/sequence/convert.hpp>
 #include <boost/fusion/mpl.hpp>
 #include <boost/fusion/support/is_view.hpp>
 #include <boost/tuple/tuple.hpp>
@@ -87,7 +88,14 @@ main()
         fusion::list<int, std::string> l(tuples::make_tuple(123, "Hola!!!"));
         l = tuples::make_tuple(123, "Hola!!!");
     }
-    
+
+    {
+        // conversion vector to boost tuple
+        boost::tuple<int, std::string> t = convert<boost_tuple_tag>(make_vector(123, "Hola!!!"));
+        BOOST_TEST(get<0>(t) == 123);
+        BOOST_TEST(get<1>(t) == "Hola!!!");
+    }
+
     { 
         // test from Ticket #1601, submitted by Shunsuke Sogame 
         // expanded by Stjepan Rajko 

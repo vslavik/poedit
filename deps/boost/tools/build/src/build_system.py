@@ -455,7 +455,7 @@ def main_real():
     import b2.build.configure as configure
 
     if "--version" in sys.argv:
-
+        from b2.build import version
         version.report()
         return
 
@@ -804,7 +804,7 @@ def main_real():
 
     j = option.get("jobs")
     if j:
-        bjam.call("set-variable", PARALLELISM, j)
+        bjam.call("set-variable", 'PARALLELISM', j)
 
     k = option.get("keep-going", "true", "true")
     if k in ["on", "yes", "true"]:

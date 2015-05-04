@@ -24,18 +24,37 @@ void foo(IntPromise p)
 
 void bar(boost::future<int> fooResult)
 {
+  try {
     std::cout << "bar" << std::endl;
     int i = fooResult.get(); // Code hangs on this line (Due to future already being locked by the set_value call)
     std::cout << "i: " << i << std::endl;
+  } catch(...) {
+    std::cout << __FILE__ << ":" << __LINE__ << std::endl;
+  }
 }
 
 int main()
 {
+  std::cout << __FILE__ << ":" << __LINE__ << std::endl;
+  try {
     IntPromise p(new boost::promise<int>());
     boost::thread t(boost::bind(foo, p));
     boost::future<int> f1 = p->get_future();
-    //f1.then(launch::deferred, boost::bind(bar, _1));
     f1.then(boost::launch::deferred, &bar);
     t.join();
+  } catch(...) {
+    return 1;
+  }
+  std::cout << __FILE__ << ":" << __LINE__ << std::endl;
+  try {
+    IntPromise p(new boost::promise<int>());
+    boost::thread t(boost::bind(foo, p));
+    boost::future<int> f1 = p->get_future();
+    f1.then(boost::launch::async, &bar);
+    t.join();
+  } catch(...) {
+    return 2;
+  }
+  std::cout << __FILE__ << ":" << __LINE__ << std::endl;
 }
 

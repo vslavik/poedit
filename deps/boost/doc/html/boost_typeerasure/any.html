@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_typeerasure.html" title="Chapter&#160;35.&#160;Boost.TypeErasure">
+<link rel="up" href="../boost_typeerasure.html" title="Chapter&#160;33.&#160;Boost.TypeErasure">
 <link rel="prev" href="concept.html" title="Concepts in Depth">
 <link rel="next" href="examples.html" title="Examples">
 </head>
@@ -41,7 +41,7 @@
       </p>
 <p>
         The library provides the <code class="computeroutput"><a class="link" href="../boost/type_erasure/constructible.html" title="Struct template constructible">constructible</a></code>
-        concept to allow an <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>
+        concept to allow an <code class="computeroutput">any</code>
         to capture constructors. The single template argument should be a function
         signature. The return type must be a placeholder specifying the type to be
         constructed. The arguments are the arguments of the constructor.
@@ -70,7 +70,7 @@
       </p>
 <p>
         Now, suppose that we want a default constructor? We can't have the default
-        constructor of <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>
+        constructor of <code class="computeroutput">any</code>
         call the default constructor of the contained type, because it would have
         no way of knowing what the contained type is. So, we'll need to pass the
         placeholder binding information explicitly.
@@ -112,8 +112,8 @@
         (For the source of the examples in this section see <a href="../../../libs/type_erasure/example/convert.cpp" target="_top">convert.cpp</a>)
       </p>
 <p>
-        An <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code> can be converted
-        to another <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code> as long
+        An <code class="computeroutput">any</code> can be converted
+        to another <code class="computeroutput">any</code> as long
         as the conversion is an "upcast."
       </p>
 <p>
@@ -176,7 +176,7 @@
           <code class="computeroutput"><span class="identifier">_self</span></code> is the default <code class="computeroutput"><a class="link" href="../boost/type_erasure/placeholder.html" title="Struct placeholder">placeholder</a></code>, so it is
           easiest to use <code class="computeroutput"><span class="identifier">_self</span><span class="special">&amp;</span></code>.
           We could use another <code class="computeroutput"><a class="link" href="../boost/type_erasure/placeholder.html" title="Struct placeholder">placeholder</a></code>
-          instead. <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code><code class="computeroutput"><span class="special">&lt;</span></code><code class="computeroutput"><a class="link" href="../boost/type_erasure/typeid_.html" title="Struct template typeid_">typeid_</a></code><code class="computeroutput"><span class="special">&lt;</span><span class="identifier">_a</span><span class="special">&gt;,</span> <span class="identifier">_a</span><span class="special">&amp;&gt;</span></code> has exactly the same behavior.
+          instead. <code class="computeroutput">any</code><code class="computeroutput"><span class="special">&lt;</span></code><code class="computeroutput"><a class="link" href="../boost/type_erasure/typeid_.html" title="Struct template typeid_">typeid_</a></code><code class="computeroutput"><span class="special">&lt;</span><span class="identifier">_a</span><span class="special">&gt;,</span> <span class="identifier">_a</span><span class="special">&amp;&gt;</span></code> has exactly the same behavior.
         </p></td></tr>
 </table></div>
 <p>
@@ -203,7 +203,7 @@
         </p></td></tr>
 </table></div>
 <p>
-        A reference can be bound to another <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>.
+        A reference can be bound to another <code class="computeroutput">any</code>.
       </p>
 <p>
 </p>
@@ -279,15 +279,15 @@
 <p>
         In most cases using an any has the same syntax as using the underlying object.
         However, there are a few cases where this is not possible to implement. An
-        <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code> reference is proxy
+        <code class="computeroutput">any</code> reference is proxy
         and cannot be used in contexts where a real reference is required. In particular,
         <code class="computeroutput"><a class="link" href="../boost/type_erasure/forward_iterator.html" title="Struct template forward_iterator">forward_iterator</a></code>
         does not create a conforming ForwardIterator (unless the value_type is fixed.)
         Another difference is that all operations which do not take at least one
-        <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code> argument have to
+        <code class="computeroutput">any</code> argument have to
         be passed the type information explicitly. Static member functions and constructors
         can fall in this category. All this means that generic algorithms might not
-        work when applied to <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>
+        work when applied to <code class="computeroutput">any</code>
         arguments.
       </p>
 </div>

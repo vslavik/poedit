@@ -125,6 +125,16 @@ struct _target
     ACTIONS  * actions;               /* rules to execute, if any */
     SETTINGS * settings;              /* variables to define */
 
+    TARGETS  * depends;               /* dependencies */
+    TARGETS  * dependants;            /* the inverse of dependencies */
+    TARGETS  * rebuilds;              /* targets that should be force-rebuilt
+                                       * whenever this one is
+                                       */
+    TARGET   * includes;              /* internal includes node */
+
+    timestamp  time;                  /* update time */
+    timestamp  leaf;                  /* update time of leaf sources */
+
     short      flags;                 /* status info */
 
 #define T_FLAG_TEMP           0x0001  /* TEMPORARY applied */
@@ -164,18 +174,6 @@ struct _target
 #define T_BIND_PARENTS        2       /* using parent's timestamp */
 #define T_BIND_EXISTS         3       /* real file, timestamp valid */
 
-    TARGETS  * depends;               /* dependencies */
-    TARGETS  * dependants;            /* the inverse of dependencies */
-    TARGETS  * rebuilds;              /* targets that should be force-rebuilt
-                                       * whenever this one is
-                                       */
-    TARGET   * includes;              /* internal includes node */
-    TARGET   * original_target;       /* original_target->includes = this */
-    char       rescanned;
-
-    timestamp  time;                  /* update time */
-    timestamp  leaf;                  /* update time of leaf sources */
-
     char       fate;                  /* make0()'s diagnosis */
 
 #define T_FATE_INIT           0       /* nothing done to target */
@@ -212,11 +210,11 @@ struct _target
     #define T_MAKE_SEMAPHORE  5       /* Special target type for semaphores */
 #endif
 
+    char       status;                /* exec_cmd() result */
+
 #ifdef OPT_SEMAPHORE
     TARGET   * semaphore;             /* used in serialization */
 #endif
-
-    char       status;                /* exec_cmd() result */
 
     int        asynccnt;              /* child deps outstanding */
     TARGETS  * parents;               /* used by make1() for completion */

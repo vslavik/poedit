@@ -8,7 +8,6 @@ project
     : requirements
       <library>/boost/filesystem//boost_filesystem
       <library>/boost/system//boost_system
-      <library>/boost/test//boost_prg_exec_monitor
       <toolset>msvc:<asynch-exceptions>on
     ;
     
@@ -18,6 +17,7 @@ project
    test-suite "filesystem" :
        [ run convenience_test.cpp ]
        [ compile macro_default_test.cpp ]
+       [ run odr1_test.cpp odr2_test.cpp ]
        [ run deprecated_test.cpp ]                  
        [ run fstream_test.cpp ]
        [ run large_file_support_test.cpp ]

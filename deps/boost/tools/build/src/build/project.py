@@ -45,9 +45,11 @@ from b2.build.errors import ExceptionWithUserContext
 import b2.build.targets
 
 import bjam
+import b2
 
 import re
 import sys
+import pkgutil
 import os
 import string
 import imp
@@ -119,6 +121,8 @@ class ProjectRegistry:
         if not self.JAMFILE:
             self.JAMFILE = ["[Bb]uild.jam", "[Jj]amfile.v2", "[Jj]amfile",
                             "[Jj]amfile.jam"]
+
+        self.__python_module_cache = {}
 
 
     def load (self, jamfile_location):
@@ -525,7 +529,6 @@ actual value %s""" % (jamfile_module, saved_project, self.current_project))
     def attribute(self, project, attribute):
         """Returns the value of the specified attribute in the
         specified jamfile module."""
-        return self.module2attributes[project].get(attribute)
         try:
             return self.module2attributes[project].get(attribute)
         except:
@@ -607,6 +610,39 @@ actual value %s""" % (jamfile_module, saved_project, self.current_project))
 
         return result
 
+    def __build_python_module_cache(self):
+        """Recursively walks through the b2/src subdirectories and
+        creates an index of base module name to package name. The
+        index is stored within self.__python_module_cache and allows
+        for an O(1) module lookup.
+
+        For example, given the base module name `toolset`,
+        self.__python_module_cache['toolset'] will return
+        'b2.build.toolset'
+
+        pkgutil.walk_packages() will find any python package
+        provided a directory contains an __init__.py. This has the
+        added benefit of allowing libraries to be installed and
+        automatically avaiable within the contrib directory.
+
+        *Note*: pkgutil.walk_packages() will import any subpackage
+        in order to access its __path__variable. Meaning:
+        any initialization code will be run if the package hasn't
+        already been imported.
+        """
+        cache = {}
+        for importer, mname, ispkg in pkgutil.walk_packages(b2.__path__, prefix='b2.'):
+            basename = mname.split('.')[-1]
+            # since the jam code is only going to have "import toolset ;"
+            # it doesn't matter if there are separately named "b2.build.toolset" and
+            # "b2.contrib.toolset" as it is impossible to know which the user is
+            # referring to.
+            if basename in cache:
+                self.manager.errors()('duplicate module name "{0}" '
+                                      'found in boost-build path'.format(basename))
+            cache[basename] = mname
+        self.__python_module_cache = cache
+
     def load_module(self, name, extra_path=None):
         """Load a Python module that should be useable from Jamfiles.
 
@@ -620,50 +656,61 @@ actual value %s""" % (jamfile_module, saved_project, self.current_project))
         since then we might get naming conflicts between standard
         Python modules and those.
         """
-
         # See if we loaded module of this name already
         existing = self.loaded_tool_modules_.get(name)
         if existing:
             return existing
 
-        # See if we have a module b2.whatever.<name>, where <name>
-        # is what is passed to this function
-        modules = sys.modules
-        for class_name in modules:
-            parts = class_name.split('.')
-            if name is class_name or parts[0] == "b2" \
-            and parts[-1] == name.replace("-", "_"):
-                module = modules[class_name]
-                self.loaded_tool_modules_[name] = module
-                return module
+        # check the extra path as well as any paths outside
+        # of the b2 package and import the  module if it exists
+        b2_path = os.path.normpath(b2.__path__[0])
+        # normalize the pathing in the BOOST_BUILD_PATH.
+        # this allows for using startswith() to determine
+        # if a path is a subdirectory of the b2 root_path
+        paths = [os.path.normpath(p) for p in self.manager.boost_build_path()]
+        # remove all paths that start with b2's root_path
+        paths = [p for p in paths if not p.startswith(b2_path)]
+        # add any extra paths
+        paths.extend(extra_path)
 
-        # Lookup a module in BOOST_BUILD_PATH
-        path = extra_path
-        if not path:
-            path = []
-        path.extend(self.manager.boost_build_path())
-        location = None
-        for p in path:
-            l = os.path.join(p, name + ".py")
-            if os.path.exists(l):
-                location = l
-                break
-
-        if not location:
-            self.manager.errors()("Cannot find module '%s'" % name)
-
-        mname = name + "__for_jamfile"
-        file = open(location)
         try:
-            # TODO: this means we'll never make use of .pyc module,
-            # which might be a problem, or not.
+            # find_module is used so that the pyc's can be used.
+            # an ImportError is raised if not found
+            f, location, description = imp.find_module(name, paths)
+            mname = name + "__for_jamfile"
             self.loaded_tool_module_path_[mname] = location
-            module = imp.load_module(mname, file, os.path.basename(location),
-                                     (".py", "r", imp.PY_SOURCE))
+            module = imp.load_module(mname, f, location, description)
             self.loaded_tool_modules_[name] = module
             return module
-        finally:
-            file.close()
+        except ImportError:
+            # if the module is not found in the b2 package,
+            # this error will be handled later
+            pass
+
+        # the cache is created here due to possibly importing packages
+        # that end up calling get_manager() which might fail
+        if not self.__python_module_cache:
+            self.__build_python_module_cache()
+
+        underscore_name = name.replace('-', '_')
+        # check to see if the module is within the b2 package
+        # and already loaded
+        mname = self.__python_module_cache.get(underscore_name)
+        if mname in sys.modules:
+            return sys.modules[mname]
+        # otherwise, if the module name is within the cache,
+        # the module exists within the BOOST_BUILD_PATH,
+        # load it.
+        elif mname:
+            # __import__ can be used here since the module
+            # is guaranteed to be found under the `b2` namespace.
+            __import__(mname)
+            module = sys.modules[mname]
+            self.loaded_tool_modules_[name] = module
+            self.loaded_tool_module_path_[mname] = module.__file__
+            return module
+
+        self.manager.errors()("Cannot find module '%s'" % name)
 
 
 

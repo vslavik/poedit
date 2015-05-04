@@ -14,7 +14,12 @@ boostbook userman : src/standalone.xml
      <xsl:param>nav.layout=none
      <implicit-dependency>jam_docs
      <dependency>jam_docs
-     <xsl:param>boost.root=../../../..
+     <xsl:param>boost.root=..
+     <xsl:param>boost.graphics.root=../images/
+     <xsl:param>html.stylesheet=../boostbook.css
+     <xsl:param>chunk.first.sections=0
+     <xsl:param>admon.graphics=0
+
      <xsl:param>boost.defaults=Boost
    ;
    

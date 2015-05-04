@@ -1,11 +1,15 @@
-/** -*- c++ -*- \file num_rows.hpp \file Test the \c num_rows operation. */
+//  Copyright (c) 2011 David Bellot
+//
+//  Distributed under the Boost Software License, Version 1.0. (See
+//  accompanying file LICENSE_1_0.txt or copy at
+//  http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/numeric/ublas/fwd.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/matrix_expression.hpp>
 #include <boost/numeric/ublas/operation/num_rows.hpp>
 #include <iostream>
-#include "libs/numeric/ublas/test/utils.hpp"
+#include "utils.hpp"
 
 
 BOOST_UBLAS_TEST_DEF( test_row_major_matrix_container )

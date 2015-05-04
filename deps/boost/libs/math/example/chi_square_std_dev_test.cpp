@@ -15,6 +15,8 @@ using std::setprecision;
 
 #include <boost/math/distributions/chi_squared.hpp>
 
+int error_result = 0;
+
 void confidence_limits_on_std_deviation(
         double Sd,    // Sample Standard Deviation
         unsigned N)   // Sample size
@@ -268,6 +270,7 @@ void chi_squared_sample_sized(
     // which may give some helpful clues as to the cause of the exception.
     std::cout <<
       "\n""Message from thrown exception was:\n   " << e.what() << std::endl;
+    ++error_result;
   }
 } // chi_squared_sample_sized
 
@@ -302,7 +305,7 @@ int main()
    confidence_limits_on_std_deviation_alpha(1., 0.05);
    confidence_limits_on_std_deviation_alpha(1., 0.01);
 
-   return 0;
+   return error_result;
 }
 
 /*

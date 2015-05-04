@@ -85,7 +85,7 @@ struct pow_impl
     Arg1
     operator()(Arg1 a, Arg2 b) const
     {
-        return pow(a, b);
+      return std::pow(a, b);
     }
 };
 
@@ -125,7 +125,7 @@ main()
     BOOST_TEST(sqr(arg1)(i5) == (i5*i5));
     BOOST_TEST(fact(4)() == 24);
     BOOST_TEST(fact(arg1)(i5) == 120);
-    BOOST_TEST((int)power(arg1, arg2)(d5, d3) == (int)pow(d5, d3));
+    BOOST_TEST((int)power(arg1, arg2)(d5, d3) == (int)std::pow(d5, d3));
     BOOST_TEST((sqr(arg1) + 5)(i5) == ((i5*i5)+5));
     BOOST_TEST(add(arg1, arg1, arg1, arg1)(i5) == (5+5+5+5));
 

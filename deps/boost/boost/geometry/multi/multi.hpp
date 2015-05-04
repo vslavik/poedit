@@ -28,6 +28,7 @@
 #include <boost/geometry/core/tags.hpp>
 #include <boost/geometry/core/topological_dimension.hpp>
 
+#include <boost/geometry/algorithms/append.hpp>
 #include <boost/geometry/algorithms/area.hpp>
 #include <boost/geometry/algorithms/centroid.hpp>
 #include <boost/geometry/algorithms/clear.hpp>
@@ -39,8 +40,11 @@
 #include <boost/geometry/algorithms/envelope.hpp>
 #include <boost/geometry/algorithms/equals.hpp>
 #include <boost/geometry/algorithms/for_each.hpp>
+#include <boost/geometry/algorithms/intersection.hpp>
 #include <boost/geometry/algorithms/length.hpp>
 #include <boost/geometry/algorithms/num_geometries.hpp>
+#include <boost/geometry/algorithms/num_interior_rings.hpp>
+#include <boost/geometry/algorithms/num_points.hpp>
 #include <boost/geometry/algorithms/perimeter.hpp>
 #include <boost/geometry/algorithms/remove_spikes.hpp>
 #include <boost/geometry/algorithms/reverse.hpp>
@@ -48,11 +52,6 @@
 #include <boost/geometry/algorithms/transform.hpp>
 #include <boost/geometry/algorithms/unique.hpp>
 #include <boost/geometry/algorithms/within.hpp>
-
-#include <boost/geometry/multi/algorithms/append.hpp>
-#include <boost/geometry/multi/algorithms/intersection.hpp>
-#include <boost/geometry/multi/algorithms/num_interior_rings.hpp>
-#include <boost/geometry/multi/algorithms/num_points.hpp>
 
 #include <boost/geometry/algorithms/detail/point_on_border.hpp>
 

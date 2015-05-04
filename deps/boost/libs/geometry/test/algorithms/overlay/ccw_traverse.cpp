@@ -36,9 +36,12 @@ struct rev : boost::mpl::if_c<bg::point_order<Geometry>::value == bg::counterclo
 {};
 
 template <typename Geometry1, typename Geometry2>
-inline typename bg::coordinate_type<Geometry1>::type intersect(Geometry1 const& g1, Geometry2 const& g2, std::string const& name,
-               bg::detail::overlay::operation_type op)
+inline typename bg::coordinate_type<Geometry1>::type
+intersect(Geometry1 const& g1, Geometry2 const& g2, std::string const& name,
+          bg::detail::overlay::operation_type op)
 {
+    boost::ignore_unused(name);
+
     typedef typename bg::strategy::side::services::default_strategy
     <
         typename bg::cs_tag<Geometry1>::type

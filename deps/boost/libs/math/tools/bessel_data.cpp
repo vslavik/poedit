@@ -5,17 +5,16 @@
 //
 // Computes test data for the various bessel functions using
 // archived - deliberately naive - version of the code.
-// We'll rely on the high precision of boost::math::ntl::RR to get us out of
+// We'll rely on the high precision of mp_t to get us out of
 // trouble and not worry about how long the calculations take.
 // This provides a reasonably independent set of test data to
 // compare against newly added asymptotic expansions etc.
 //
 #include <fstream>
 
-#include <boost/math/bindings/rr.hpp>
 #include <boost/math/tools/test_data.hpp>
-
 #include <boost/math/special_functions/bessel.hpp>
+#include "mp_t.hpp"
 
 using namespace boost::math::tools;
 using namespace boost::math;
@@ -267,11 +266,10 @@ int main(int argc, char* argv[])
    std::cout << sph_bessel_j_bare(0., 0.1185395751953125e4) << std::endl;
    std::cout << sph_bessel_j_bare(22., 0.6540834903717041015625) << std::endl;
 
-   parameter_info<boost::math::ntl::RR> arg1, arg2;
-   test_data<boost::math::ntl::RR> data;
+   std::cout << std::setprecision(40) << std::scientific;
 
-   boost::math::ntl::RR::SetPrecision(1000); 
-   boost::math::ntl::RR::SetOutputPrecision(40);
+   parameter_info<mp_t> arg1, arg2;
+   test_data<mp_t> data;
 
    int functype = 0;
    std::string letter = "J";
@@ -315,7 +313,7 @@ int main(int argc, char* argv[])
    do{
       get_user_parameter_info(arg1, "v");
       get_user_parameter_info(arg2, "x");
-      boost::math::ntl::RR (*fp)(boost::math::ntl::RR, boost::math::ntl::RR);
+      mp_t (*fp)(mp_t, mp_t);
       if(functype == func_J) 
          fp = cyl_bessel_j_bare;
       else if(functype == func_I) 
@@ -346,7 +344,7 @@ int main(int argc, char* argv[])
       line = "bessel_j_data.ipp";
    std::ofstream ofs(line.c_str());
    line.erase(line.find('.'));
-   ofs << std::scientific;
+   ofs << std::scientific << std::setprecision(40);
    write_code(ofs, data, line.c_str());
 
    return 0;

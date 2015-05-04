@@ -6,6 +6,30 @@ Currently open bug reports can be viewed
 All bug reports including closed ones can be viewed
 [@https://svn.boost.org/trac/boost/query?status=assigned&status=closed&status=new&status=reopened&component=math&col=id&col=summary&col=status&col=type&col=milestone&col=component&order=priority here].
 
+[h4 Math-2.2.0 (boost-1.58.0)]
+
+* Added two new special functions - __trigamma and __polygamma.
+* Fixed namespace scope constants so they are constexpr on conforming compilers, see https://svn.boost.org/trac/boost/ticket/10901.
+* Fixed various cases of spurious under/overflow in the incomplete beta and gamma functions, plus the elliptic integrals,
+with thanks to Rocco Romeo.
+* Fix 3-arg __legendre_p and __legendre_q functions to not call the policy based overload if the final argument
+is not actually a policy.
+* Cleaned up some dead code in the incomplete beta function, see [@https://svn.boost.org/trac/boost/ticket/10985 #10985].
+* Fixed extreme-value pdf for large valued inputs, see [@https://svn.boost.org/trac/boost/ticket/10938 #10938].
+* Large update to the Elliptic integral code to use Carlson's latest algorithms - these should be more stable, more accurate
+and slightly faster than before.  Also added support for Carlson's RG integral.
+* Added __ellint_d, __jacobi_zeta and __heuman_lambda elliptic integrals.
+* Switched documentation to use SVG rather than PNG graphs and equations - browsers seem to have finally caught up!
+
+[h4 Math-2.1.0 (boost-1.57.0)]
+
+* Added __hyperexponential_distrib.
+* Fix some spurious overflows in the incomplete gamma functions (with thanks to Rocco Romeo).
+* Fix bug in derivative of incomplete beta when a = b = 0.5 - this also effects several non-central distributions,
+see [@https://svn.boost.org/trac/boost/ticket/10480 10480].
+* Fixed some corner cases in __round.
+* Don't support 80-bit floats in cstdfloat.hpp if standard library support is broken.
+
 [h4 Math-2.0.0 (Boost-1.56.0)]
 
 * [*Breaking change]: moved a number of non-core headers that are predominantly used for internal

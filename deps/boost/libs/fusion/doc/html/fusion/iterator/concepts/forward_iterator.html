@@ -352,23 +352,127 @@
           <span class="phrase"><a name="fusion.iterator.concepts.forward_iterator.expression_semantics"></a></span><a class="link" href="forward_iterator.html#fusion.iterator.concepts.forward_iterator.expression_semantics">Expression
           Semantics</a>
         </h6>
-<p>
-          [ table [[Expression] [Semantics]] [[<code class="computeroutput"><a class="link" href="../functions/next.html" title="next"><code class="computeroutput"><span class="identifier">next</span></code></a><span class="special">(</span><span class="identifier">i</span><span class="special">)</span></code>] [An
-          iterator to the element following <code class="computeroutput"><span class="identifier">i</span></code>]]
-          [[<code class="computeroutput"><span class="identifier">i</span> <span class="special">==</span>
-          <span class="identifier">j</span></code>] [Iterator equality comparison]]
-          [[<code class="computeroutput"><span class="identifier">i</span> <span class="special">!=</span>
-          <span class="identifier">j</span></code>] [Iterator inequality comparison]]
-          [[<code class="computeroutput"><a class="link" href="../functions/advance_c.html" title="advance_c"><code class="computeroutput"><span class="identifier">advance_c</span></code></a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;(</span><span class="identifier">i</span><span class="special">)</span></code>] [An
-          iterator n elements after <code class="computeroutput"><span class="identifier">i</span></code>
-          in the sequence]] [[<code class="computeroutput"><a class="link" href="../functions/advance.html" title="advance"><code class="computeroutput"><span class="identifier">advance</span></code></a><span class="special">&lt;</span><span class="identifier">M</span><span class="special">&gt;(</span><span class="identifier">i</span><span class="special">)</span></code>] [Equivalent
-          to <code class="computeroutput"><span class="identifier">advance_c</span><span class="special">&lt;</span><span class="identifier">M</span><span class="special">::</span><span class="identifier">value</span><span class="special">&gt;(</span><span class="identifier">i</span><span class="special">)</span></code>]] [[<code class="computeroutput"><a class="link" href="../functions/distance.html" title="distance"><code class="computeroutput"><span class="identifier">distance</span></code></a><span class="special">(</span><span class="identifier">i</span><span class="special">,</span> <span class="identifier">j</span><span class="special">)</span></code>] [The number of elements between <code class="computeroutput"><span class="identifier">i</span></code> and <code class="computeroutput"><span class="identifier">j</span></code>]]
-          [[<code class="computeroutput"><a class="link" href="../functions/deref.html" title="deref"><code class="computeroutput"><span class="identifier">deref</span></code></a><span class="special">(</span><span class="identifier">i</span><span class="special">)</span></code>]
-          [The element at position<code class="computeroutput"><span class="identifier">i</span></code>]]
-          [[<code class="computeroutput"><span class="special">*</span><span class="identifier">i</span></code>]
-          [Equivalent to <code class="computeroutput"><span class="identifier">deref</span><span class="special">(</span><span class="identifier">i</span><span class="special">)</span></code>]]
-          ]
-        </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Expression
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Semantics
+                  </p>
+                </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><a class="link" href="../functions/next.html" title="next"><code class="computeroutput"><span class="identifier">next</span></code></a><span class="special">(</span><span class="identifier">i</span><span class="special">)</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    An iterator to the element following <code class="computeroutput"><span class="identifier">i</span></code>
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">i</span> <span class="special">==</span>
+                    <span class="identifier">j</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Iterator equality comparison
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">i</span> <span class="special">!=</span>
+                    <span class="identifier">j</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Iterator inequality comparison
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><a class="link" href="../functions/advance_c.html" title="advance_c"><code class="computeroutput"><span class="identifier">advance_c</span></code></a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;(</span><span class="identifier">i</span><span class="special">)</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    An iterator n elements after <code class="computeroutput"><span class="identifier">i</span></code>
+                    in the sequence
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><a class="link" href="../functions/advance.html" title="advance"><code class="computeroutput"><span class="identifier">advance</span></code></a><span class="special">&lt;</span><span class="identifier">M</span><span class="special">&gt;(</span><span class="identifier">i</span><span class="special">)</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Equivalent to <code class="computeroutput"><span class="identifier">advance_c</span><span class="special">&lt;</span><span class="identifier">M</span><span class="special">::</span><span class="identifier">value</span><span class="special">&gt;(</span><span class="identifier">i</span><span class="special">)</span></code>
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><a class="link" href="../functions/distance.html" title="distance"><code class="computeroutput"><span class="identifier">distance</span></code></a><span class="special">(</span><span class="identifier">i</span><span class="special">,</span>
+                    <span class="identifier">j</span><span class="special">)</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    The number of elements between <code class="computeroutput"><span class="identifier">i</span></code>
+                    and <code class="computeroutput"><span class="identifier">j</span></code>
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><a class="link" href="../functions/deref.html" title="deref"><code class="computeroutput"><span class="identifier">deref</span></code></a><span class="special">(</span><span class="identifier">i</span><span class="special">)</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    The element at position<code class="computeroutput"><span class="identifier">i</span></code>
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="special">*</span><span class="identifier">i</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Equivalent to <code class="computeroutput"><span class="identifier">deref</span><span class="special">(</span><span class="identifier">i</span><span class="special">)</span></code>
+                  </p>
+                </td>
+</tr>
+</tbody>
+</table></div>
 <h6>
 <a name="fusion.iterator.concepts.forward_iterator.h4"></a>
           <span class="phrase"><a name="fusion.iterator.concepts.forward_iterator.invariants"></a></span><a class="link" href="forward_iterator.html#fusion.iterator.concepts.forward_iterator.invariants">Invariants</a>

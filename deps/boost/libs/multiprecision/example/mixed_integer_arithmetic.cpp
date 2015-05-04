@@ -11,13 +11,11 @@
 #  define _SCL_SECURE_NO_WARNINGS
 #endif
 
+//[mixed_eg
 #include <boost/multiprecision/cpp_int.hpp>
 
 int main()
 {
-   //[mixed_eg
-   //=#include <boost/multiprecision/cpp_int.hpp>
-
    using namespace boost::multiprecision;
 
    boost::uint64_t i = (std::numeric_limits<boost::uint64_t>::max)();
@@ -37,10 +35,9 @@ int main()
    ui128 = (std::numeric_limits<uint128_t>::max)();
    std::cout << std::hex << std::showbase << multiply(ui256, ui128, ui128) << std::endl;
 
-   //]
-
    return 0;
 }
+//]
 
 /* 
 

@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../variant.html" title="Chapter&#160;40.&#160;Boost.Variant">
-<link rel="prev" href="../variant.html" title="Chapter&#160;40.&#160;Boost.Variant">
+<link rel="up" href="../variant.html" title="Chapter&#160;38.&#160;Boost.Variant">
+<link rel="prev" href="../variant.html" title="Chapter&#160;38.&#160;Boost.Variant">
 <link rel="next" href="reference.html" title="Reference">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -77,15 +77,15 @@
   contained value. There are two ways to accomplish this:
   <code class="computeroutput"><a class="link" href="../boost/apply_visitor.html" title="Function apply_visitor">apply_visitor</a></code>, which is safest
   and very powerful, and
-  <code class="computeroutput"><a class="link" href="../boost/get_idp308982624.html" title="Function get">get</a>&lt;T&gt;</code>, which is
+  <code class="computeroutput"><a class="link" href="../boost/get_idp108797984.html" title="Function get">get</a>&lt;T&gt;</code>, which is
   sometimes more convenient to use.</p>
 <p>For instance, suppose we wanted to concatenate to the string contained
   in <code class="computeroutput">v</code>. With <span class="bold"><strong>value retrieval</strong></span>
-  by <code class="computeroutput"><a class="link" href="../boost/get_idp308982624.html" title="Function get">get</a></code>, this may be accomplished
+  by <code class="computeroutput"><a class="link" href="../boost/get_idp108797984.html" title="Function get">get</a></code>, this may be accomplished
   quite simply, as seen in the following:
 
 </p>
-<pre class="programlisting">std::string&amp; str = <code class="computeroutput"><a class="link" href="../boost/get_idp308982624.html" title="Function get">boost::get</a></code>&lt;std::string&gt;(v);
+<pre class="programlisting">std::string&amp; str = <code class="computeroutput"><a class="link" href="../boost/get_idp108797984.html" title="Function get">boost::get</a></code>&lt;std::string&gt;(v);
 str += " world! ";</pre>
 <p>
 
@@ -112,9 +112,9 @@ str += " world! ";</pre>
 </p>
 <pre class="programlisting">void times_two( boost::variant&lt; int, std::string &gt; &amp; operand )
 {
-    if ( int* pi = <code class="computeroutput"><a class="link" href="../boost/get_idp308982624.html" title="Function get">boost::get</a></code>&lt;int&gt;( &amp;operand ) )
+    if ( int* pi = <code class="computeroutput"><a class="link" href="../boost/get_idp108797984.html" title="Function get">boost::get</a></code>&lt;int&gt;( &amp;operand ) )
         *pi *= 2;
-    else if ( std::string* pstr = <code class="computeroutput"><a class="link" href="../boost/get_idp308982624.html" title="Function get">boost::get</a></code>&lt;std::string&gt;( &amp;operand ) )
+    else if ( std::string* pstr = <code class="computeroutput"><a class="link" href="../boost/get_idp108797984.html" title="Function get">boost::get</a></code>&lt;std::string&gt;( &amp;operand ) )
         *pstr += *pstr;
 }</pre>
 <p>
@@ -265,7 +265,7 @@ std::for_each(
     might write a function accepting any given <code class="computeroutput">variant</code>.</p>
 <p>Due to the lack of support for true variadic template parameter lists
     in the C++98 standard, the preprocessor is needed. While the
-    <a href="../../../libs/preprocessor/index.html" target="_top">Preprocessor</a> library provides a general and
+    Preprocessor library provides a general and
     powerful solution, the need to repeat
     <code class="computeroutput"><a class="link" href="../BOOST_VARIANT_LIMIT_TYPES.html" title="Macro BOOST_VARIANT_LIMIT_TYPES">BOOST_VARIANT_LIMIT_TYPES</a></code>
     unnecessarily clutters otherwise simple code. Therefore, for common
@@ -306,7 +306,7 @@ class some_class&lt; <code class="computeroutput"><a class="link" href="../boost
     <code class="computeroutput">make_variant_over&lt; <span class="emphasis"><em>Sequence</em></span> &gt;</code>
     exposes a <code class="computeroutput">variant</code> whose bounded types are the elements of
     <code class="computeroutput">Sequence</code> (where <code class="computeroutput">Sequence</code> is any type fulfilling
-    the requirements of <a href="../../../libs/mpl/index.html" target="_top">MPL</a>'s
+    the requirements of MPL's
     <span class="emphasis"><em>Sequence</em></span> concept). For instance,
 
 </p>
@@ -509,7 +509,7 @@ int_tree_t var(result);</pre>
     <code class="computeroutput">var</code> as <code class="computeroutput">( 1 ( 3 5 ) 7 )</code>.</p>
 <p>Finally, note that a type sequence can be used to specify the bounded
     types of a recursive <code class="computeroutput">variant</code> via the use of
-    <code class="computeroutput"><a class="link" href="../boost/make_recursiv_idp303723616.html" title="Class template make_recursive_variant_over">boost::make_recursive_variant_over</a></code>,
+    <code class="computeroutput"><a class="link" href="../boost/make_recursiv_idp295097024.html" title="Class template make_recursive_variant_over">boost::make_recursive_variant_over</a></code>,
     whose semantics are the same as <code class="computeroutput">make_variant_over</code> (which is
     described in <a class="xref" href="tutorial.html#variant.tutorial.over-sequence" title="Using a type sequence to specify bounded types">the section called &#8220;Using a type sequence to specify bounded types&#8221;</a>).</p>
 <p><span class="bold"><strong>Portability</strong></span>: Unfortunately, due to
@@ -634,19 +634,20 @@ struct if_visitor: public <code class="computeroutput"><a class="link" href="../
 
 </p>
 <pre class="programlisting">
-bool_like_t v0(1), v1(true), v2(1.0);
+bool_like_t v0(true), v1(1), v2(2.0);
 
 assert(
     <code class="computeroutput"><a class="link" href="../boost/apply_visitor.html" title="Function apply_visitor">boost::apply_visitor</a></code>(if_visitor(), v0, v1, v2)
     ==
-    arithmetics_t(true)
+    arithmetics_t(1)
 );
 </pre>
 <p>
   </p>
 <p>Finally, we must note that multi visitation does not support 
     "delayed" form of
-    <code class="computeroutput"><a class="link" href="../boost/apply_visitor.html" title="Function apply_visitor">apply_visitor</a></code>.
+    <code class="computeroutput"><a class="link" href="../boost/apply_visitor.html" title="Function apply_visitor">apply_visitor</a> if
+    <a class="link" href="../BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES.html" title="Macro BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES">BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES</a> is defined</code>.
   </p>
 </div>
 </div>

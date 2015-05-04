@@ -138,6 +138,18 @@ if (<functionname>indeterminate</functionname>(x)) {
 else {
   // report success or failure of x
 }</programlisting>
+
+  <para> All the logical operators and methods of <code><classname>tribool</classname></code> are marked
+  as <code>constexpr</code> in C++11. It means that <code><classname>tribool</classname></code> can
+  be used in compile time expressions:</para>
+
+  <programlisting>constexpr <classname>tribool</classname> x = (tribool(true) || tribool(indeterminate));
+<functionname>static_assert</functionname>(x, "Must be true!");
+</programlisting>
+
+  <note>Some compilers may have troubles with evaluating <code>tribool::operator safe_bool()</code> at compile time.</note>
+
+
 </section>
   
   <section>

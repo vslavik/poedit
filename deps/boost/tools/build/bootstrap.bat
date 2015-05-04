@@ -47,3 +47,4 @@ ECHO.
 goto :end
 
 :end
+exit /b %ERRORLEVEL%

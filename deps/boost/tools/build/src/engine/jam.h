@@ -154,6 +154,11 @@
     #define OSMINOR "OS=HPUX"
     #define OS_HPUX
 #endif
+#ifdef __HAIKU__
+    #define unix
+    #define OSMINOR "OS=HAIKU"
+    #define OS_HAIKU
+#endif
 #ifdef __OPENNT
     #define unix
     #define OSMINOR "OS=INTERIX"
@@ -370,7 +375,8 @@
     #define OSPLAT "OSPLAT=MIPS"
 #endif
 
-#ifdef __arm__
+#if defined( __arm__ ) || \
+    defined( __aarch64__ )
     #define OSPLAT "OSPLAT=ARM"
 #endif
 

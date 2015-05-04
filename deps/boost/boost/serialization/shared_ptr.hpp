@@ -17,6 +17,7 @@
 //  See http://www.boost.org for updates, documentation, and revision history.
 
 #include <cstddef> // NULL
+#include <memory>
 
 #include <boost/config.hpp>
 #include <boost/mpl/integral_c.hpp>
@@ -94,6 +95,11 @@ struct null_deleter {
 /////////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
 // serialization for boost::shared_ptr
 
+// Using a constant means that all shared pointers are held in the same set.
+// Thus we detect handle multiple pointers to the same value instances
+// in the archive.
+void * const shared_ptr_helper_id = 0;
+
 template<class Archive, class T>
 inline void save(
     Archive & ar,
@@ -115,7 +121,6 @@ inline void load(
     boost::shared_ptr< T > &t,
     const unsigned int file_version
 ){
-    // The most common cause of trapping here would be serializing
     // something like shared_ptr<int>.  This occurs because int
     // is never tracked by default.  Wrap int in a trackable type
     BOOST_STATIC_ASSERT((tracking_level< T >::value != track_never));
@@ -129,9 +134,9 @@ inline void load(
         ar >> boost::serialization::make_nvp("pn", sp.pn);
         // got to keep the sps around so the sp.pns don't disappear
         boost::serialization::shared_ptr_helper<boost::shared_ptr> & h =
-            ar.template get_helper<
-                shared_ptr_helper<boost::shared_ptr>
-            >();
+            ar.template get_helper< shared_ptr_helper<boost::shared_ptr> >(
+                shared_ptr_helper_id
+            );
         h.append(sp);
         r = sp.get();
     }
@@ -139,12 +144,13 @@ inline void load(
         ar >> boost::serialization::make_nvp("px", r);
     }
     shared_ptr_helper<boost::shared_ptr> & h =
-        ar.template get_helper<
-            boost::serialization::shared_ptr_helper<boost::shared_ptr>
-        >();
+        ar.template get_helper<shared_ptr_helper<boost::shared_ptr> >(
+            shared_ptr_helper_id
+        );
     h.reset(t,r);
 }
 #else
+
 template<class Archive, class T>
 inline void load(
     Archive & ar,
@@ -157,11 +163,12 @@ inline void load(
     BOOST_STATIC_ASSERT((tracking_level< T >::value != track_never));
     T* r;
     ar >> boost::serialization::make_nvp("px", r);
+
     boost::serialization::shared_ptr_helper<boost::shared_ptr> & h =
-        ar.template get_helper<
-            shared_ptr_helper<boost::shared_ptr>
-        >();
-    h.reset(t,r);
+        ar.template get_helper<shared_ptr_helper<boost::shared_ptr> >(
+            shared_ptr_helper_id
+        );
+    h.reset(t,r);    
 }
 #endif
 
@@ -249,10 +256,13 @@ inline void load(
     BOOST_STATIC_ASSERT((tracking_level< T >::value != track_never));
     T* r;
     ar >> boost::serialization::make_nvp("px", r);
+    //void (* const id)(Archive &, std::shared_ptr< T > &, const unsigned int) = & load;
     boost::serialization::shared_ptr_helper<std::shared_ptr> & h =
         ar.template get_helper<
             shared_ptr_helper<std::shared_ptr>
-        >();
+        >(
+            shared_ptr_helper_id
+        );
     h.reset(t,r);
 }
 

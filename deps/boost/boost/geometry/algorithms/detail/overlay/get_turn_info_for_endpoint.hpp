@@ -245,10 +245,6 @@ struct get_turn_info_for_endpoint
         if ( ip_count == 0 )
             return false;
 
-        int segment_index0 = tp_model.operations[0].seg_id.segment_index;
-        int segment_index1 = tp_model.operations[1].seg_id.segment_index;
-        BOOST_ASSERT(segment_index0 >= 0 && segment_index1 >= 0);
-
         if ( !is_p_first && !is_p_last && !is_q_first && !is_q_last )
             return false;
 
@@ -294,7 +290,7 @@ struct get_turn_info_for_endpoint
                                        linear_intersections::ip_info const& ip_info,
                                        TurnInfo const& tp_model,
                                        IntersectionInfo const& inters,
-                                       int ip_index,
+                                       unsigned int ip_index,
                                        OutputIterator out)
     {
 #ifdef BOOST_GEOMETRY_DEBUG_GET_TURNS_LINEAR_LINEAR
@@ -400,7 +396,7 @@ struct get_turn_info_for_endpoint
                                        RobustPoint2 const& ri2, RobustPoint2 const& rj2, RobustPoint2 const& rk2,
                                        bool first1, bool last1, bool first2, bool last2,
                                        bool ip_i2, bool ip_j2, TurnInfo const& tp_model,
-                                       IntersectionInfo const& inters, int ip_index,
+                                       IntersectionInfo const& inters, unsigned int ip_index,
                                        operation_type & op1, operation_type & op2)
     {
         boost::ignore_unused_variable_warning(i2);
@@ -539,7 +535,7 @@ struct get_turn_info_for_endpoint
               typename OutputIterator>
     static inline void assign(Point1 const& pi, Point2 const& qi,
                               IntersectionResult const& result,
-                              int ip_index,
+                              unsigned int ip_index,
                               method_type method,
                               operation_type op0, operation_type op1,
                               turn_position pos0, turn_position pos1,
@@ -589,7 +585,9 @@ struct get_turn_info_for_endpoint
             }
         }
 
-        AssignPolicy::apply(tp, pi, qi, result.template get<0>(), result.template get<1>());
+        // TODO: this should get an intersection_info, which is unavailable here
+        // Because the assign_null policy accepts any structure, we pass the result instead for now
+        AssignPolicy::apply(tp, pi, qi, result);
         *out++ = tp;
     }
 

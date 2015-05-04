@@ -223,9 +223,11 @@ BOOST_AUTO_TEST_CASE( test_main )
 {
    test<float>("float");
    test<double>("double");
+#ifndef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
    test<long double>("long double");
    test<boost::math::concepts::real_concept>("real_concept");
    test_real_concept_extra();
+#endif
 }
 
 

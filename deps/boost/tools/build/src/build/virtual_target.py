@@ -708,7 +708,7 @@ class FileTarget (AbstractFileTarget):
                 # any more
                 self.path_ = target_path
 
-        return self.path_
+        return os.path.normpath(self.path_)
 
 
 class NotFileTarget(AbstractFileTarget):

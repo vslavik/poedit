@@ -14,7 +14,6 @@
 #include <boost/interprocess/containers/vector.hpp>
 #include <boost/interprocess/containers/list.hpp>
 #include <iostream>
-#include <algorithm>
 #include <functional>
 #include "print_container.hpp"
 #include <string>

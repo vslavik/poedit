@@ -15,7 +15,6 @@
 #define BOOST_INTRUSIVE_BPTR_VALUE_HPP
 
 #include <cassert>
-#include <boost/intrusive/list.hpp>
 #include "bounded_pointer.hpp"
 #include "common_functors.hpp"
 
@@ -39,7 +38,6 @@ struct BPtr_Value
    {
       if (is_linked())
       {
-         std::cerr << "BPtr_Value dtor: destructing linked value: &=" << (void*)this << "\n";
          assert(false);
       }
    }
@@ -50,7 +48,6 @@ struct BPtr_Value
    {
       if (is_linked())
       {
-         std::cerr << "BPtr_Value asop: assigning to linked value: &=" << (void*)this << ", src=" << (void*)&src << "\n";
          assert(false);
       }
       value_ = src.value_;
@@ -99,11 +96,6 @@ struct BPtr_Value
    friend bool operator!= (const BPtr_Value &other1, int other2)
    {  return !(other1.value_ == other2);  }
 
-   friend std::ostream& operator << (std::ostream& os, const BPtr_Value& v)
-   {
-      os << v.value_;
-      return os;
-   }
 }; // class BPtr_Value
 
 template < typename Node_Algorithms >

@@ -5,10 +5,11 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/utility/swap.hpp>
-#define BOOST_INCLUDE_MAIN
-#include <boost/test/test_tools.hpp>
+#include <boost/core/lightweight_test.hpp>
+#define BOOST_CHECK BOOST_TEST
+#define BOOST_CHECK_EQUAL BOOST_TEST_EQ
 
-int test_main(int, char*[])
+int main()
 {
   int object1 = 1;
   int object2 = 2;
@@ -18,6 +19,6 @@ int test_main(int, char*[])
   BOOST_CHECK_EQUAL(object1,2);
   BOOST_CHECK_EQUAL(object2,1);
 
-  return 0;
+  return boost::report_errors();
 }
 

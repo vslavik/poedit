@@ -7,8 +7,8 @@
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
 
-// This file was modified by Oracle on 2013.
-// Modifications copyright (c) 2013, Oracle and/or its affiliates.
+// This file was modified by Oracle on 2013, 2014.
+// Modifications copyright (c) 2013, 2014, Oracle and/or its affiliates.
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -30,6 +30,7 @@
 #include <boost/geometry/core/ring_type.hpp>
 #include <boost/geometry/core/tags.hpp>
 #include <boost/geometry/geometries/concepts/check.hpp>
+#include <boost/geometry/util/range.hpp>
 
 
 namespace boost { namespace geometry
@@ -57,7 +58,8 @@ struct full_section_polygon
     {
         return section.ring_id.ring_index < 0
             ? geometry::exterior_ring(polygon)
-            : geometry::interior_rings(polygon)[section.ring_id.ring_index];
+            : range::at(geometry::interior_rings(polygon),
+                        static_cast<std::size_t>(section.ring_id.ring_index));
     }
 };
 
@@ -73,13 +75,15 @@ struct full_section_multi
     static inline typename ring_return_type<MultiGeometry const>::type apply(
                 MultiGeometry const& multi, Section const& section)
     {
+        typedef typename boost::range_size<MultiGeometry>::type size_type;
+
         BOOST_ASSERT
             (
                 section.ring_id.multi_index >= 0
-                && section.ring_id.multi_index < int(boost::size(multi))
+                && size_type(section.ring_id.multi_index) < boost::size(multi)
             );
 
-        return Policy::apply(multi[section.ring_id.multi_index], section);
+        return Policy::apply(range::at(multi, size_type(section.ring_id.multi_index)), section);
     }
 };
 

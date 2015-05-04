@@ -43,16 +43,17 @@ void test_sequence ( Container &v, Predicate comp, int expected ) {
     
     res = ba::partition_point ( v.begin (), v.end (), comp );
     exp = offset_to_iter ( v, expected );
-    std::cout << "Expected(1): " << std::distance ( v.begin (), exp ) 
-              <<       ", got: " << std::distance ( v.begin (), res ) << std::endl;
     BOOST_CHECK ( exp == res );
 
 //  Duplicate the last element; this checks for any even/odd problems
     v.push_back ( * v.rbegin ());
     res = ba::partition_point ( v.begin (), v.end (), comp );
     exp = offset_to_iter ( v, expected );
-    std::cout << "Expected(2): " << std::distance ( v.begin (), exp ) 
-              <<       ", got: " << std::distance ( v.begin (), res ) << std::endl;
+    BOOST_CHECK ( exp == res );
+
+//  Range based test
+    res = ba::partition_point ( v, comp );
+    exp = offset_to_iter ( v, expected );
     BOOST_CHECK ( exp == res );
     }
 

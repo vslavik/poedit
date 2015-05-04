@@ -28,15 +28,9 @@
 #include <boost/geometry/geometries/point_xy.hpp>
 #include <boost/geometry/multi/geometries/multi_geometries.hpp>
 
-#include <boost/geometry/io/svg/svg_mapper.hpp>
-#include <boost/geometry/extensions/algorithms/midpoints.hpp>
-
 #include <boost/geometry/algorithms/detail/buffer/buffer_inserter.hpp>
 
-#include <boost/geometry/multi/multi.hpp> // TODO: more specific
-
 #include <boost/geometry/strategies/buffer.hpp>
-#include <boost/geometry/strategies/agnostic/buffer_distance_asymmetric.hpp>
 
 #include <common/common_settings.hpp>
 #include <common/make_square_polygon.hpp>
@@ -197,28 +191,33 @@ bool test_buffer(MultiPolygon& result, int& index,
     typedef bg::strategy::buffer::distance_asymmetric<coordinate_type> distance_strategy_type;
     distance_strategy_type distance_strategy(settings.distance, settings.distance);
 
-    typedef bg::strategy::buffer::join_round<point_type, point_type> join_strategy_type;
-    join_strategy_type join_strategy;
-
     typedef typename boost::range_value<MultiPolygon>::type polygon_type;
     MultiPolygon buffered;
 
     std::ostringstream out;
     out << "recursive_polygons_buffer_" << index++ << "_" << level;
 
+    bg::strategy::buffer::end_round end_strategy;
+    bg::strategy::buffer::point_circle point_strategy;
+    bg::strategy::buffer::side_straight side_strategy;
+    bg::strategy::buffer::join_round join_round_strategy(100); // Compatible with unit tests
+    bg::strategy::buffer::join_miter join_miter_strategy;
+
     try
     {
         switch(settings.join_code)
         {
             case 1 :
-                bg::buffer_inserter<polygon_type>(mp, std::back_inserter(buffered),
-                                distance_strategy,
-                                bg::strategy::buffer::join_round<point_type, point_type>());
+                bg::buffer(mp, buffered,
+                                distance_strategy, side_strategy,
+                                join_round_strategy,
+                                end_strategy, point_strategy);
                 break;
             case 2 :
-                bg::buffer_inserter<polygon_type>(mp, std::back_inserter(buffered),
-                                distance_strategy,
-                                bg::strategy::buffer::join_miter<point_type, point_type>());
+                bg::buffer(mp, buffered,
+                                distance_strategy, side_strategy,
+                                join_miter_strategy,
+                                end_strategy, point_strategy);
                 break;
             default :
                 return false;

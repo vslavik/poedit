@@ -98,7 +98,7 @@ or inheriting from a class which add these lockable functions.
 The `basic_lockable_adapter` class helps to define the `BankAccount` class as
 
   class BankAccount
-  : public basic_lockable_adapter<thread_mutex>
+  : public basic_lockable_adapter<boost::mutex>
   {
       int balance_;
   public:
@@ -138,7 +138,7 @@ Notice that now acct is being locked by Withdraw after it has already been locke
 As `boost::mutex` is not recursive, we need to use its recursive version `boost::recursive_mutex`.
 
   class BankAccount
-  : public basic_lockable_adapter<recursive_mutex>
+  : public basic_lockable_adapter<boost::recursive_mutex>
   {
   
       // ...
@@ -147,7 +147,7 @@ As `boost::mutex` is not recursive, we need to use its recursive version `boost:
 The caller-ensured locking approach is more flexible and the most efficient, but very dangerous. In an implementation using caller-ensured locking, BankAccount still holds a mutex, but its member functions don't manipulate it at all. Deposit and Withdraw are not thread-safe anymore. Instead, the client code is responsible for locking BankAccount properly.
 
     class BankAccount
-        : public basic_lockable_adapter<boost:mutex> {
+        : public basic_lockable_adapter<boost::mutex> {
         int balance_;
     public:
         void Deposit(int amount) {
@@ -271,7 +271,7 @@ Now that we have such a strict `strict_lock`, how do we harness its power in def
 A little code is worth 1,000 words, a (hacked into) saying goes, so here's the new BankAccount class:
 
     class BankAccount
-    : public basic_lockable_adapter<boost:recursive_mutex>
+    : public basic_lockable_adapter<boost::mutex>
     {
         int balance_;
     public:
@@ -280,7 +280,7 @@ A little code is worth 1,000 words, a (hacked into) saying goes, so here's the n
             balance_ += amount;
         }
         void Deposit(int amount) {
-            strict_lock<boost:mutex> guard(*this); // Internally locked
+            strict_lock<BankAccount> guard(*this); // Internally locked
             Deposit(amount, guard);
         }
         void Withdraw(int amount, strict_lock<BankAccount>&) {
@@ -288,7 +288,7 @@ A little code is worth 1,000 words, a (hacked into) saying goes, so here's the n
             balance_ -= amount;
         }
         void Withdraw(int amount) {
-            strict_lock<boost:mutex> guard(*this); // Internally locked
+            strict_lock<BankAccount> guard(*this); // Internally locked
             Withdraw(amount, guard);
         }
     };
@@ -327,7 +327,7 @@ The scheme is useful because the likelihood of a programmer forgetting about any
 Using `strict_lock` permits compile-time checking of the most common source of errors, and runtime checking of the less frequent problem.
 
 Let's see how to enforce that the appropriate BankAccount object is locked. First, we need to add a member function to the `strict_lock` class template. 
-The `bool strict_lock<T>::owns_lock(Loclable*)` function returns a reference to the locked object.
+The `bool strict_lock<T>::owns_lock(Lockable*)` function returns a reference to the locked object.
 
     template <class Lockable> class strict_lock {
         ... as before ...
@@ -338,7 +338,7 @@ The `bool strict_lock<T>::owns_lock(Loclable*)` function returns a reference to 
 Second, BankAccount needs to use this function compare the locked object against this:
 
     class BankAccount {
-    : public basic_lockable_adapter<boost::recursive_mutex>
+    : public basic_lockable_adapter<boost::mutex>
         int balance_;
     public:
         void Deposit(int amount, strict_lock<BankAccount>& guard) {
@@ -403,7 +403,7 @@ The solution is to use a little bridge template `externally_locked` that control
       T& get(strict_lock<Lockable>& lock) {
   
   #ifdef BOOST_THREAD_THROW_IF_PRECONDITION_NOT_SATISFIED
-          if (!lock.owns_lock(&lockable_)) throw lock_error(); run time check throw if not locks the same
+          if (!lock.owns_lock(&lockable_)) throw lock_error(); //run time check throw if not locks the same
   #endif
           return obj_;
       }
@@ -421,10 +421,10 @@ The solution is to use a little bridge template `externally_locked` that control
 Instead of making `checkingAcct_` and `savingsAcct_` of type `BankAccount`, `AccountManager` holds objects of type `externally_locked<BankAccount, AccountManager>`:
 
   class AccountManager
-      : public basic_lockable_adapter<thread_mutex>
+      : public basic_lockable_adapter<boost::mutex>
   {
   public:
-      typedef basic_lockable_adapter<thread_mutex> lockable_base_type;
+      typedef basic_lockable_adapter<boost::mutex> lockable_base_type;
       AccountManager()
           : checkingAcct_(*this)
           , savingsAcct_(*this)
@@ -498,7 +498,7 @@ Now we need to state that both classes are `strict_lock`s.
 
 Well let me show what this `nested_strict_lock` class looks like and the impacts on the `externally_locked` class and the `AccountManager::AMoreComplicatedFunction` function.
 
-First `nested_strict_lock` class will store on a temporary lock the `Locker`, and transfer the lock ownership on the constructor. On destruction it will restore the ownership. Note the use of `lock_traits` and that the `Locker` needs to have a reference to the mutex otherwise and exception is thrown.
+First `nested_strict_lock` class will store on a temporary lock the `Locker`, and transfer the lock ownership on the constructor. On destruction it will restore the ownership. Note the use of `lock_traits` and that the `Locker` needs to have a reference to the mutex otherwise an exception is thrown.
 
   template <typename Locker >
   class nested_strict_lock
@@ -510,7 +510,7 @@ First `nested_strict_lock` class will store on a temporary lock the `Locker`, an
   
       nested_strict_lock(Locker& lock)
           : lock_(lock)  // Store reference to locker
-          , tmp_lock_(lock.move()) // Move ownership to temporaty locker 
+          , tmp_lock_(lock.move()) // Move ownership to temporary locker 
       {
           #ifdef BOOST_THREAD_THROW_IF_PRECONDITION_NOT_SATISFIED
           if (tmp_lock_.mutex()==0) {

@@ -283,4 +283,13 @@ structures.
 [endsect]
 
 
+[section:valgrind Support for valgrind]
+
+Running programs that switch stacks under valgrind causes problems.
+Property (b2 command-line) `valgrind=on` let valgrind treat the memory regions
+as stack space which suppresses the errors.
+
+[endsect]
+
+
 [endsect]

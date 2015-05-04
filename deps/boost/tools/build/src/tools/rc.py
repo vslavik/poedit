@@ -27,6 +27,7 @@ import re
 import bjam
 
 from b2.build import type, toolset, generators, scanner, feature
+from b2.exceptions import AlreadyDefined
 from b2.tools import builtin
 from b2.util import regex
 from b2.build.toolset import flags
@@ -91,7 +92,7 @@ class RCAction:
 def rc_register_action(action_name, function = None):
     global engine
     if engine.actions.has_key(action_name):
-        raise "Bjam action %s is already defined" % action_name
+        raise AlreadyDefined("Bjam action %s is already defined" % action_name)
     engine.actions[action_name] = RCAction(action_name, function)
 
 def rc_compile_resource(targets, sources, properties):

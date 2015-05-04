@@ -4,6 +4,8 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 
+import ../check/predef : require : predef-require ;
+
 local predef-include-root ;
 local predef-dependency ;
 
@@ -53,6 +55,6 @@ test-suite predef :
     [ run info_as_objc.m : : : <test-info>always_show_run_output ]
     [ run version.cpp ]
     [ run make.cpp ]
-    [ compile macos_endian.c ]
-    [ compile macos_vs_bsd.c ]
+    [ compile macos_endian.c : [ predef-require "BOOST_OS_MACOS" : cpp ] ]
+    [ compile macos_vs_bsd.c : [ predef-require "BOOST_OS_MACOS" : cpp ] ]
     ;

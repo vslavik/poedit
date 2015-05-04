@@ -9,7 +9,10 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 #include <boost/move/detail/config_begin.hpp>
+// move
+#include <boost/move/algorithm.hpp>
 #include <boost/move/iterator.hpp>
+// container
 #include <boost/container/deque.hpp>
 #include <boost/container/list.hpp>
 #include <boost/container/stable_vector.hpp>

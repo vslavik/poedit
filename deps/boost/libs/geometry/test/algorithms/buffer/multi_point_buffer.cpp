@@ -1,7 +1,7 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
-// Copyright (c) 2012-2014 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2012-2015 Barend Gehrels, Amsterdam, the Netherlands.
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -14,23 +14,31 @@
 static std::string const simplex = "MULTIPOINT((5 5),(7 7))";
 static std::string const three = "MULTIPOINT((5 8),(9 8),(7 11))";
 
-// Generates error (extra polygon on top of rest) at distance 14.0:
+// Generated error (extra polygon on top of rest) at distance 14.0:
 static std::string const multipoint_a = "MULTIPOINT((39 44),(38 37),(41 29),(15 33),(58 39))";
 
 // Just one with holes at distance ~ 15
 static std::string const multipoint_b = "MULTIPOINT((5 56),(98 67),(20 7),(58 60),(10 4),(75 68),(61 68),(75 62),(92 26),(74 6),(67 54),(20 43),(63 30),(45 7))";
 
+// Grid, U-form, generates error for square point at 0.54 (top cells to control rescale)
+static std::string const grid_a = "MULTIPOINT(5 0,6 0,7 0,  5 1,7 1,  0 13,8 13)";
 
-template <typename P>
+static std::string const mysql_report_2015_02_25_1 = "MULTIPOINT(-9 19,9 -6,-4 4,16 -14,-3 16,14 9)";
+static std::string const mysql_report_2015_02_25_2 = "MULTIPOINT(-2 11,-15 3,6 4,-14 0,20 -7,-17 -1)";
+
+template <bool Clockwise, typename P>
 void test_all()
 {
-    //std::cout << typeid(bg::coordinate_type<P>::type).name() << std::endl;
-
-    typedef bg::model::polygon<P> polygon;
+    typedef bg::model::polygon<P, Clockwise> polygon;
     typedef bg::model::multi_point<P> multi_point_type;
 
     bg::strategy::buffer::join_miter join_miter;
     bg::strategy::buffer::end_flat end_flat;
+    typedef bg::strategy::buffer::distance_symmetric
+    <
+        typename bg::coordinate_type<P>::type
+    > distance_strategy;
+    bg::strategy::buffer::side_straight side_strategy;
 
     double const pi = boost::geometry::math::pi<double>();
 
@@ -48,153 +56,102 @@ void test_all()
     test_one<multi_point_type, polygon>("multipoint_b", multipoint_b, join_miter, end_flat, 7109.88, 15.0, 15.0);
     test_one<multi_point_type, polygon>("multipoint_b1", multipoint_b, join_miter, end_flat, 6911.89, 14.7, 14.7);
     test_one<multi_point_type, polygon>("multipoint_b2", multipoint_b, join_miter, end_flat, 7174.79, 15.1, 15.1);
-}
 
-template 
-<
-    typename GeometryOut, 
-    template<typename, typename> class JoinStrategy,
-    template<typename, typename> class EndStrategy,
-    typename Geometry
->
-double test_growth(Geometry const& geometry, int n, int d, double distance)
-{
-    namespace bg = boost::geometry;
 
-    typedef typename bg::coordinate_type<Geometry>::type coordinate_type;
-    typedef typename bg::point_type<Geometry>::type point_type;
-
-    // extern int point_buffer_count;
-    std::ostringstream complete;
-    complete
-        << "point" << "_"
-        << "growth" << "_"
-        << string_from_type<coordinate_type>::name()
-        << "_" << "r"
-        << "_" << n
-        << "_" << d
-         // << "_" << point_buffer_count
-        ;
-
-    //std::cout << complete.str() << std::endl;
-
-    std::ostringstream filename;
-    filename << "buffer_" << complete.str() << ".svg";
-
-    std::ofstream svg(filename.str().c_str());
-
-#ifdef BOOST_GEOMETRY_DEBUG_WITH_MAPPER
-    bg::svg_mapper<point_type> mapper(svg, 500, 500);
-
+    // Grid tests
     {
-        bg::model::box<point_type> box;
-        bg::envelope(geometry, box);
+        bg::strategy::buffer::point_square point_strategy;
 
-        bg::buffer(box, box, distance * 1.01);
-        mapper.add(box);
-    }
+
+        test_with_custom_strategies<multi_point_type, polygon>("grid_a50",
+                grid_a, join_miter, end_flat,
+                distance_strategy(0.5), side_strategy, point_strategy, 7.0);
+
+#if defined(BOOST_GEOMETRY_BUFFER_INCLUDE_FAILING_TESTS)
+        test_with_custom_strategies<multi_point_type, polygon>("grid_a54",
+                grid_a, join_miter, end_flat,
+                distance_strategy(0.54), side_strategy, point_strategy, 99);
 #endif
 
-    JoinStrategy
-        <
-            point_type,
-            typename bg::point_type<GeometryOut>::type
-        > join_strategy;
-    EndStrategy
-        <
-            point_type,
-            typename bg::point_type<GeometryOut>::type
-        > end_strategy;
-
-    typedef bg::strategy::buffer::distance_symmetric<coordinate_type> distance_strategy_type;
-    distance_strategy_type distance_strategy(distance);
-
-    std::vector<GeometryOut> buffered;
-
-    typedef typename bg::rescale_policy_type<point_type>::type
-        rescale_policy_type;
-    rescale_policy_type rescale_policy
-            = bg::get_rescale_policy<rescale_policy_type>(geometry);
-
-    bg::detail::buffer::buffer_inserter<GeometryOut>(geometry,
-                        std::back_inserter(buffered),
-                        distance_strategy, 
-                        join_strategy,
-                        end_strategy,
-                        rescale_policy
-#ifdef BOOST_GEOMETRY_DEBUG_WITH_MAPPER
-                        , mapper
-#endif
-                                );
-
-    typename bg::default_area_result<GeometryOut>::type area = 0;
-    BOOST_FOREACH(GeometryOut const& polygon, buffered)
-    {
-        area += bg::area(polygon);
     }
 
-#ifdef BOOST_GEOMETRY_DEBUG_WITH_MAPPER
-    // Map input geometry in green
-    mapper.map(geometry, "opacity:0.5;fill:rgb(0,128,0);stroke:rgb(0,128,0);stroke-width:10");
-
-    BOOST_FOREACH(GeometryOut const& polygon, buffered)
-    {
-        mapper.map(polygon, "opacity:0.4;fill:rgb(255,255,128);stroke:rgb(0,0,0);stroke-width:3");
-    }
-#endif
-
-    return area;
+    test_with_custom_strategies<multi_point_type, polygon>("mysql_report_2015_02_25_1_800",
+            mysql_report_2015_02_25_1, join_miter, end_flat,
+            distance_strategy(6051788), side_strategy,
+            bg::strategy::buffer::point_circle(800), 115057490003226.125, 1.0);
 }
 
 template <typename P>
-void test_growth(int n, int distance_count)
+void test_many_points_per_circle()
 {
-    srand(int(time(NULL)));
-    //std::cout << typeid(bg::coordinate_type<P>::type).name() << std::endl;
-    boost::timer t;
+    // Tests for large distances / many points in circles.
+    // Before Boost 1.58, this would (seem to) hang. It is solved by using monotonic sections in get_turns for buffer
+    // This is more time consuming, only calculate this for counter clockwise
+    // Reported by MySQL 2015-02-25
+    //   SELECT ST_ASTEXT(ST_BUFFER(ST_GEOMFROMTEXT(''), 6051788, ST_BUFFER_STRATEGY('point_circle', 83585)));
+    //   SELECT ST_ASTEXT(ST_BUFFER(ST_GEOMFROMTEXT(''), 5666962, ST_BUFFER_STRATEGY('point_circle', 46641))) ;
 
-    namespace buf = bg::strategy::buffer;
-    typedef bg::model::polygon<P> polygon;
+    typedef bg::model::polygon<P, false> polygon;
     typedef bg::model::multi_point<P> multi_point_type;
 
-    multi_point_type multi_point;
-    for (int i = 0; i < n; i++)
-    {
-        P point(rand() % 100, rand() % 100);
-        multi_point.push_back(point);
-    }
+    bg::strategy::buffer::join_miter join_miter;
+    bg::strategy::buffer::end_flat end_flat;
+    typedef bg::strategy::buffer::distance_symmetric
+    <
+        typename bg::coordinate_type<P>::type
+    > distance_strategy;
+    bg::strategy::buffer::side_straight side_strategy;
 
-    //std::cout << bg::wkt(multi_point) << std::endl;
+    using bg::strategy::buffer::point_circle;
 
-    double previous_area = 0;
-    double epsilon = 0.1;
-    double distance = 15.0;
-    for (int d = 0; d < distance_count; d++, distance += epsilon)
-    {
-        double area = test_growth<polygon, buf::join_miter, buf::end_round>(multi_point, n, d, distance);
-        if (area < previous_area)
-        {
-            std::cout << "Error: " << area << " < " << previous_area << std::endl
-                << " n=" << n << " distance=" << distance
-                << bg::wkt(multi_point) << std::endl;
-        }
-        previous_area = area;
-    }
-    std::cout << "n=" << n << " time=" << t.elapsed() << std::endl;
+    double const tolerance = 1.0;
+
+    // Strategies with many points, which are (very) slow in debug mode
+    test_with_custom_strategies<multi_point_type, polygon>(
+            "mysql_report_2015_02_25_1_8000",
+            mysql_report_2015_02_25_1, join_miter, end_flat,
+            distance_strategy(6051788), side_strategy, point_circle(8000),
+            115058661065242.812, tolerance);
+
+    test_with_custom_strategies<multi_point_type, polygon>(
+            "mysql_report_2015_02_25_1",
+            mysql_report_2015_02_25_1, join_miter, end_flat,
+            distance_strategy(6051788), side_strategy, point_circle(83585),
+            115058672785611.219, tolerance);
+
+    // Takes about 20 seconds in release mode
+    test_with_custom_strategies<multi_point_type, polygon>(
+            "mysql_report_2015_02_25_1_250k",
+            mysql_report_2015_02_25_1, join_miter, end_flat,
+            distance_strategy(6051788), side_strategy, point_circle(250000),
+            115058672880671.531, tolerance);
+
+#if defined(BOOST_GEOMETRY_BUFFER_INCLUDE_FAILING_TESTS)
+    // Takes too long, TODO improve turn_in_piece_visitor
+    test_with_custom_strategies<multi_point_type, polygon>(
+            "mysql_report_2015_02_25_1",
+            mysql_report_2015_02_25_1, join_miter, end_flat,
+            distance_strategy(6051788), side_strategy, point_circle(800000),
+            115058672799999.999, tolerance); // area to be determined
+#endif
+
+    test_with_custom_strategies<multi_point_type, polygon>(
+            "mysql_report_2015_02_25_2",
+            mysql_report_2015_02_25_2, join_miter, end_flat,
+            distance_strategy(5666962), side_strategy, point_circle(46641),
+            100891031341757.344, tolerance);
+
 }
 
 int test_main(int, char* [])
 {
-    //std::cout << std::setprecision(6);
-    //test_all<bg::model::point<float, 2, bg::cs::cartesian> >();
-    test_all<bg::model::point<double, 2, bg::cs::cartesian> >();
+    test_all<true, bg::model::point<double, 2, bg::cs::cartesian> >();
+    test_all<false, bg::model::point<double, 2, bg::cs::cartesian> >();
 
-
-#ifdef BOOST_GEOMETRY_BUFFER_TEST_GROWTH
-    for (int i = 5; i <= 50; i++)
-    {
-        test_growth<bg::model::point<double, 2, bg::cs::cartesian> >(i, 20);
-    }
+#if defined(BOOST_GEOMETRY_COMPILER_MODE_RELEASE) && ! defined(BOOST_GEOMETRY_COMPILER_MODE_DEBUG)
+    test_many_points_per_circle<bg::model::point<double, 2, bg::cs::cartesian> >();
+#else
+    std::cout << "Skipping some tests in debug or unknown mode" << std::endl;
 #endif
 
     return 0;

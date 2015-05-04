@@ -142,7 +142,7 @@ public:
 class moveable
 {
 private:
-    BOOST_MOVABLE_BUT_NOT_COPYABLE( moveable);
+    BOOST_MOVABLE_BUT_NOT_COPYABLE( moveable)
 
 public:
     bool    state;

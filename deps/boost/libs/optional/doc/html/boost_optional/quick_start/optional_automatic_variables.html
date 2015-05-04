@@ -49,11 +49,11 @@
         in an indeterminate state. Its state is always well defined. Instruction
         <code class="computeroutput"><span class="identifier">ans</span> <span class="special">=</span>
         <span class="identifier">i</span></code> initializes the optional object.
-        It uses the assignment from <code class="computeroutput"><span class="keyword">int</span></code>.
+        It uses the 'mixed' assignment from <code class="computeroutput"><span class="keyword">int</span></code>.
         In general, for <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>,
         when an assignment from <code class="computeroutput"><span class="identifier">T</span></code>
         is invoked, it can do two things. If the optional object is not initialized
-        our case here), it initializes it with <code class="computeroutput"><span class="identifier">T</span></code>'s
+        (our case here), it initializes the contained value using <code class="computeroutput"><span class="identifier">T</span></code>'s
         copy constructor. If the optional object is already initialized, it assigns
         the new value to it using <code class="computeroutput"><span class="identifier">T</span></code>'s
         copy assignment.
@@ -61,7 +61,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2007 Fernando Luis Cacciola Carballal<br>Copyright &#169; 2014 Andrzej Krzemie&#324;ski<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2007 Fernando Luis Cacciola Carballal<br>Copyright &#169; 2014, 2015 Andrzej Krzemie&#324;ski<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

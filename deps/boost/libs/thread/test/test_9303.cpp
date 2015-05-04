@@ -1,3 +1,8 @@
+// Copyright (C) 2014 Vicente Botet
+//
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying
+//  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
 #define BOOST_THREAD_VERSION 4
     #include <iostream>
     #include <fstream>
@@ -81,7 +86,7 @@
 
     #if defined EXAMPLE_3
         //! Doesn't compile in C++03.
-        //! error: variable â€˜boost::packaged_task<std::basic_string<char>(std::basic_string<char>&)> exampleâ€™ has initializer but incomplete type
+        //! error: variable âboost::packaged_task<std::basic_string<char>(std::basic_string<char>&)> exampleâ has initializer but incomplete type
 
         {
             boost::packaged_task<std::string(std::string&)> example(string_with_params);

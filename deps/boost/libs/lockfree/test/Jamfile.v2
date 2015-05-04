@@ -29,7 +29,7 @@ rule test_all
       : # requirements
         <toolset>acc:<linkflags>-lrt
         <toolset>acc-pa_risc:<linkflags>-lrt
-        <toolset>gcc-mingw:<linkflags>"-lole32 -loleaut32 -lpsapi -ladvapi32"
+        <target-os>windows,<toolset>gcc:<linkflags>"-lole32 -loleaut32 -lpsapi -ladvapi32"
         <host-os>hpux,<toolset>gcc:<linkflags>"-Wl,+as,mpas"
         <library>../../thread/build//boost_thread/
         <threading>multi

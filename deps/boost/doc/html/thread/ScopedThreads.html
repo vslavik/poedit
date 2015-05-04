@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../thread.html" title="Chapter&#160;32.&#160;Thread 4.3.0">
+<link rel="up" href="../thread.html" title="Chapter&#160;30.&#160;Thread 4.5.0">
 <link rel="prev" href="thread_management.html" title="Thread Management">
 <link rel="next" href="synchronization.html" title="Synchronization">
 </head>
@@ -27,7 +27,7 @@
 <a name="thread.ScopedThreads"></a><a class="link" href="ScopedThreads.html" title="Scoped Threads">Scoped Threads</a>
 </h2></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.motovation">Motivation</a></span></dt>
+<dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.motivation">Motivation</a></span></dt>
 <dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.tutorial">Tutorial</a></span></dt>
 <dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.thread_functors">Free Thread Functors</a></span></dt>
 <dt><span class="section"><a href="ScopedThreads.html#thread.ScopedThreads.strict_scoped_thread">Class <code class="computeroutput"><span class="identifier">strict_scoped_thread</span></code></a></span></dt>
@@ -52,7 +52,7 @@
 </pre>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="thread.ScopedThreads.motovation"></a><a class="link" href="ScopedThreads.html#thread.ScopedThreads.motovation" title="Motivation">Motivation</a>
+<a name="thread.ScopedThreads.motivation"></a><a class="link" href="ScopedThreads.html#thread.ScopedThreads.motivation" title="Motivation">Motivation</a>
 </h3></div></div></div>
 <p>
         Based on the scoped_thread class defined in C++ Concurrency in Action Boost.Thread
@@ -63,7 +63,7 @@
         While the scoped_thread class defined in C++ Concurrency in Action is closer
         to strict_scoped_thread class that doesn't allows any change in the wrapped
         thread, Boost.Thread provides a class scoped_thread that provides the same
-        non-deprecated interface than <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a>.
+        non-deprecated interface as <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a>.
       </p>
 </div>
 <div class="section">
@@ -75,14 +75,14 @@
         what to do at destruction time. One of the common uses is to join the thread
         at destruction time so this is the default behavior. This is the single difference
         respect to a thread. While thread call std::terminate() on the destructor
-        is the thread is joinable, strict_scoped_thread&lt;&gt; or scoped_thread&lt;&gt;
+        if the thread is joinable, strict_scoped_thread&lt;&gt; or scoped_thread&lt;&gt;
         join the thread if joinable.
       </p>
 <p>
         The difference between strict_scoped_thread and scoped_thread is that the
         strict_scoped_thread hides completely the owned thread and so the user can
         do nothing with the owned thread other than the specific action given as
-        parameter, while scoped_thread provide the same interface than <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a> and forwards all the operations.
+        parameter, while scoped_thread provide the same interface as <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a> and forwards all the operations.
       </p>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">strict_scoped_thread</span><span class="special">&lt;&gt;</span> <span class="identifier">t1</span><span class="special">((</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">(</span><span class="identifier">f</span><span class="special">)));</span>
 <span class="comment">//t1.detach(); // compile fails</span>
@@ -189,7 +189,7 @@
 <span class="special">};</span>
 </pre>
 <p>
-        RAI <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a>
+        RAII <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a>
         wrapper adding a specific destroyer allowing to master what can be done at
         destruction time.
       </p>
@@ -200,10 +200,8 @@
         The default is a <code class="computeroutput"><span class="identifier">join_if_joinable</span></code>.
       </p>
 <p>
-        <code class="computeroutput"><span class="identifier">std</span><span class="special">/</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code> destructor terminates the program
-        if the <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a>
-        is not joinable. This wrapper can be used to join the thread before destroying
-        it seems a natural need.
+        Thread destructor terminates the program if the <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a> is joinable. This wrapper
+        can be used to join the thread before destroying it.
       </p>
 <h5>
 <a name="thread.ScopedThreads.strict_scoped_thread.h0"></a>
@@ -375,7 +373,7 @@
 <span class="keyword">void</span> <span class="identifier">swap</span><span class="special">(</span><span class="identifier">scoped_thread</span><span class="special">&amp;</span> <span class="identifier">lhs</span><span class="special">,</span><span class="identifier">scoped_thread</span><span class="special">&amp;</span> <span class="identifier">rhs</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
 </pre>
 <p>
-        RAI <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a>
+        RAII <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a>
         wrapper adding a specific destroyer allowing to master what can be done at
         destruction time.
       </p>
@@ -383,9 +381,8 @@
         CallableThread: A callable void(thread&amp;). The default is join_if_joinable.
       </p>
 <p>
-        thread std::thread destructor terminates the program if the thread is not
-        joinable. Having a wrapper that can join the thread before destroying it
-        seems a natural need.
+        Thread destructor terminates the program if the thread is joinable. This
+        wrapper can be used to join the thread before destroying it.
       </p>
 <p>
         Remark: <code class="computeroutput"><span class="identifier">scoped_thread</span></code> is
@@ -510,12 +507,13 @@
 <dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
-                move the thread to own <code class="computeroutput"><span class="identifier">t_</span></code>.
+                Transfers ownership of the thread managed by <code class="computeroutput"><span class="identifier">other</span></code>
+                (if any) to the newly constructed scoped_thread instance.
               </p></dd>
 <dt><span class="term">Postconditions:</span></dt>
 <dd><p>
-                <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span><span class="special">.</span><span class="identifier">t_</span></code>
-                refers to the newly created thread of execution and <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">()!=</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">id</span><span class="special">()</span></code>.
+                other.get_id()==thread::id() and get_id() returns the value of other.get_id()
+                prior to the construction.
               </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -537,7 +535,7 @@
 <dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
-                Construct a internal thread in place.
+                Construct an internal thread in place.
               </p></dd>
 <dt><span class="term">Postconditions:</span></dt>
 <dd><p>
@@ -789,7 +787,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -11 Anthony Williams<br>Copyright &#169; 2011 -14 Vicente J. Botet Escriba<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -11 Anthony Williams<br>Copyright &#169; 2011 -15 Vicente J. Botet Escriba<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

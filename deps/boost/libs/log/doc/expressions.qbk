@@ -1,5 +1,5 @@
 [/
-              Copyright Andrey Semashev 2007 - 2014.
+              Copyright Andrey Semashev 2007 - 2015.
      Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
               http://www.boost.org/LICENSE_1_0.txt)
@@ -484,7 +484,7 @@ There are times when one would like to additionally post-process the composed st
 
     #include <``[boost_log_expressions_formatters_xml_decorator_hpp]``>
 
-This decorator replaces XML special characters (&, <, > and \') with the corresponding tokens (`&amp;`, `&lt;`, `&gt;` and `&apos;`, correspondingly). The usage is as follows:
+This decorator replaces XML special characters (&, <, >, \" and \') with the corresponding tokens (`&amp;`, `&lt;`, `&gt;`, `&quot;` and `&apos;`, correspondingly). The usage is as follows:
 
     xml_sink->set_formatter
     (

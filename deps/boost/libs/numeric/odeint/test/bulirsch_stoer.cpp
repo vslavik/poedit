@@ -131,7 +131,25 @@ BOOST_AUTO_TEST_CASE( test_bulirsch_stoer )
     bs_do.do_step( sin_system() );
     x = bs_do.current_state();
 
-    std::cout << "x( " << bs_do.current_time() << " ) = [ " << x[0] << " , " << x[1] << " , " << x[2] << " ]" << std::endl;
+    std::cout << "x( " << bs_do.current_time() << " ) = [ " << x[0] << " , " << x[1] << " , " << x[2] << " ]" << std::endl << std::endl << std::endl;
 }
+
+BOOST_AUTO_TEST_CASE( test_bulirsch_stoer_adjust_size )
+{
+    typedef bulirsch_stoer< state_type > stepper_type;
+    stepper_type stepper( 1E-9 , 1E-9 , 1.0 , 0.0 );
+
+    state_type x;  x[0] = 10.0 ; x[1] = 10.0 ; x[2] = 5.0;
+
+    stepper.adjust_size( x );
+
+
+    double dt = 0.1;
+
+    size_t steps = integrate_adaptive( stepper , lorenz() , x , 0.0 , 10.0 , dt );
+
+    std::cout << "required steps: " << steps << std::endl;
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()

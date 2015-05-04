@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Bernoulli Numbers</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 1.9.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
 <link rel="up" href="../number_series.html" title="Number Series">
 <link rel="prev" href="../number_series.html" title="Number Series">
 <link rel="next" href="tangent_numbers.html" title="Tangent Numbers">
@@ -135,7 +135,7 @@ and also obtain much
         <code class="computeroutput"><span class="identifier">unchecked_bernoulli_b2n</span></code> provides
         access to Bernoulli numbers <span class="bold"><strong>without any checks for
         overflow or invalid parameters</strong></span>. It is implemented as a direct
-        (and very fast) table lookup, and while not recomended for general use it
+        (and very fast) table lookup, and while not recommended for general use it
         can be useful inside inner loops where the ultimate performance is required,
         and error checking is moved outside the loop.
       </p>
@@ -153,7 +153,7 @@ and also obtain much
         types, it's the largest value for which the result can be represented as
         the ratio of two 64-bit integers, for example <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">max_bernoulli_b2n</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">::</span><span class="identifier">cpp_dec_float_50</span><span class="special">&gt;::</span><span class="identifier">value</span></code>
         is just 17. Of course larger indexes can be passed to <code class="computeroutput"><span class="identifier">bernoulli_b2n</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">n</span><span class="special">)</span></code>, but
-        then then you loose fast table lookup (i.e. values may need to be calculated).
+        then you lose fast table lookup (i.e. values may need to be calculated).
       </p>
 <pre class="programlisting"><span class="comment">/*For example:
 */</span>
@@ -328,14 +328,14 @@ and also obtain much
         is given by Brent and Harvey's equation 14:
       </p>
 <p>
-        &#8192;&#8192;  <span class="inlinemediaobject"><img src="../../../equations/tangent_numbers.png"></span>
+        &#8192;&#8192;  <span class="inlinemediaobject"><img src="../../../equations/tangent_numbers.svg"></span>
       </p>
 <p>
         Their relation with Bernoulli numbers <span class="emphasis"><em>B<sub>i</sub></em></span> are defined
         by
       </p>
 <p>
-        if i &gt; 0 and i is even then &#8192;&#8192;  <span class="inlinemediaobject"><img src="../../../equations/bernoulli_numbers.png"></span> <br> elseif
+        if i &gt; 0 and i is even then &#8192;&#8192;  <span class="inlinemediaobject"><img src="../../../equations/bernoulli_numbers.svg"></span> <br> elseif
         i == 0 then <span class="emphasis"><em>B<sub>i</sub></em></span> = 1 <br> elseif i == 1 then <span class="emphasis"><em>B<sub>i</sub></em></span>
         = -1/2 <br> elseif i &lt; 0 or i is odd then <span class="emphasis"><em>B<sub>i</sub></em></span> =
         0
@@ -343,23 +343,23 @@ and also obtain much
 <p>
         Note that computed values are stored in a fixed-size table, access is thread
         safe via atomic operations (i.e. lock free programming), this imparts a much
-        lower overhead on access to cached values than might overwise be expected
+        lower overhead on access to cached values than might otherwise be expected
         - typically for multiprecision types the cost of thread synchronisation is
-        negligable, while for built in types this code is not normally executed anyway.
+        negligible, while for built in types this code is not normally executed anyway.
         For very large arguments which cannot be reasonably computed or stored in
         our cache, an asymptotic expansion <a href="http://www.luschny.de/math/primes/bernincl.html" target="_top">due
         to Luschny</a> is used:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/bernoulli_numbers2.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/bernoulli_numbers2.svg"></span>
       </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012, 2013 Nikhar Agrawal, Anton Bikineev,
-      Paul A. Bristow, Christopher Kormanyos, Hubert Holin, Bruno Lalande, John Maddock,
-      Johan R&#229;de, Gautam Sewani, Benjamin Sobotta, Thijs van den Berg, Daryle Walker
-      and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
+      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
+      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
+      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

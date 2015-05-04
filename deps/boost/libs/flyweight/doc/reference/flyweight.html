@@ -45,9 +45,16 @@ Key-value flyweights
           <li><a href="#modifiers">Modifiers</a></li>
           <li><a href="#comparison">Comparison operators</a></li>
           <li><a href="#specialized">Specialized algorithms</a></li>
+          <li><a href="#hash">Hash support</a></li>
           <li><a href="#config_macros">Configuration macros</a></li>
         </ul>
       </li>
+    </ul>
+  </li>
+  <li><a href="#serialize_synopsis">Header
+    <code>"boost/flyweight/serialize.hpp"</code> synopsis</a>
+    <ul>
+      <li><a href="#serialization">Serialization</a></li>
     </ul>
   </li>
 </ul>
@@ -59,6 +66,7 @@ synopsis</a>
 </h2>
 
 <blockquote><pre>
+<span class=preprocessor>#include</span> <span class=special>&lt;</span><span class=identifier>boost</span><span class=special>/</span><span class=identifier>functional</span><span class=special>/</span><span class=identifier>hash_fwd</span><span class=special>.</span><span class=identifier>hpp</span><span class=special>&gt;</span>
 <span class=preprocessor>#include</span> <span class=special>&lt;</span><span class=identifier>iosfwd</span><span class=special>&gt;</span>
 
 <span class=keyword>namespace</span> <span class=identifier>boost</span><span class=special>{</span>
@@ -126,11 +134,30 @@ synopsis</a>
 <span class=keyword>using</span> <span class=identifier>flyweights</span><span class=special>::</span><span class=identifier>flyweight</span><span class=special>;</span>
 
 <span class=special>}</span> <span class=comment>// namespace boost</span>
+
+<span class=comment>// hash support:</span>
+
+<span class=keyword>namespace</span> <span class=identifier>std</span><span class=special>{</span>
+
+<span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>class</span> <span class=identifier>T</span><span class=special>&gt;</span> <span class=keyword>struct</span> <span class=identifier>hash</span><span class=special>;</span>
+<span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>T</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>Arg1</span><span class=special>,...,</span><span class=keyword>typename</span> <span class=identifier>Arg5</span><span class=special>&gt;</span>
+<span class=keyword>struct</span> <span class=identifier>hash</span><span class=special>&lt;</span><span class=identifier>boost</span><span class=special>::</span><span class=identifier>flyweight</span><span class=special>&lt;</span><span class=identifier>T</span><span class=special>,</span><span class=identifier>Arg1</span><span class=special>,...,</span><span class=identifier>Arg5</span><span class=special>&gt;</span> <span class=special>&gt;;</span>
+
+<span class=special>}</span> <span class=comment>// namespace std</span> 
+
+<span class=keyword>namespace</span> <span class=identifier>boost</span><span class=special>{</span>
+<span class=keyword>namespace</span> <span class=identifier>flyweights</span><span class=special>{</span>
+
+<span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span> <span class=identifier>T</span><span class=special>,</span><span class=keyword>typename</span> <span class=identifier>Arg1</span><span class=special>,...,</span><span class=keyword>typename</span> <span class=identifier>Arg5</span><span class=special>&gt;</span>
+<span class=keyword>inline</span> <span class=identifier>std</span><span class=special>::</span><span class=identifier>size_t</span> <span class=identifier>hash_value</span><span class=special>(</span><span class=keyword>const</span> <span class=identifier>flyweight</span><span class=special>&lt;</span><span class=identifier>T</span><span class=special>,</span><span class=identifier>Arg1</span><span class=special>,...,</span><span class=identifier>Arg5</span><span class=special>&gt;&amp;</span> <span class=identifier>x</span><span class=special>);</span>
+
+<span class=special>}</span> <span class=comment>// namespace boost::flyweights</span>
+<span class=special>}</span> <span class=comment>// namespace boost</span>
 </pre></blockquote>
 
 <p>
 <code>flyweight_fwd.hpp</code> forward declares the class template
-<a href="#flyweight"><code>flyweight</code></a> and its associated global functions.
+<a href="#flyweight"><code>flyweight</code></a> and its associated global functions and class template specializations.
 </p>
 
 <h2>
@@ -241,6 +268,8 @@ objects constructed from equivalent keys.
     
   <span class=comment>// construct/copy/destroy:</span>
   
+  <span class=identifier>flyweight</span><span class=special>();</span>
+
   <span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>typename</span><span class=special>...</span> <span class=identifier>Args</span><span class=special>&gt;</span>
   <span class=keyword>explicit</span> <span class=identifier>flyweight</span><span class=special>(</span><span class=identifier>Args</span><span class=special>&amp;&amp;...</span> <span class=identifier>args</span><span class=special>);</span>
 
@@ -356,6 +385,16 @@ constructed.<br>
 
 <h4><a name="constructors">Constructors, copy and assignment</a></h4>
 
+<code>flyweight();</code>
+
+<blockquote>
+<b>Effects:</b> Constructs a <code>flyweight</code> object with the value
+<code>value_type(key_type())</code>
+if <code>flyweight</code> is key-value
+or <code>value_type()</code>
+otherwise.
+</blockquote>
+
 <a name="fwd_ctor">
 <code>template&lt;typename... Args&gt;<br>
 explicit flyweight(Args&amp;&amp;... args);</code></a>
@@ -452,7 +491,7 @@ flyweight&amp; operator=(value_type&amp;&amp; x);</code>
 <code>const key_type&amp; get_key()const;</code>
 
 <blockquote>
-<b>Return:</b> A copy of the key used to construct the
+<b>Returns:</b> A copy of the key used to construct the
 <code>value_type</code> associated to the <code>flyweight</code>
 object.<br>
 <b>Exception safety:</b> If <code>flyweight</code> is not key-value or
@@ -463,7 +502,7 @@ if <code>KeyFromValue</code> was not provided, <code>nothrow</code>.
 	operator const value_type&amp;()const;</code>
 
 <blockquote>
-<b>Return:</b> The value associated to the <code>flyweight</code>
+<b>Returns:</b> The value associated to the <code>flyweight</code>
 object.<br>
 <b>Exception safety:</b> <code>nothrow</code>.
 </blockquote>
@@ -628,17 +667,107 @@ and assigns it to <code>x</code>.<br>
 <b>Returns:</b> <code>in</code>.
 </blockquote>
 
+<h4><a name="hash">Hash support</a></h4>
+
+<p>
+Support is provided for hashing <code>flyweight</code>s both with <code>std::hash</code> and
+<a href="../../../../doc/html/hash.html"><code>boost::hash</code></a>. In either case, the calculation
+does not involve hashing the associated <code>value_type</code> objects themselves; so, it is
+immaterial whether <code>value_type</code> is hashable or not.
+The results given by <code>std::hash</code> and <code>boost::hash</code> for the same
+<code>flyweight</code> object will usually differ.<br />
+<b>Note:</b> Hash support can be <a href="#disable_hash_support">disabled</a> to solve
+clashes with code where this has already been defined by the user.
+</p>
+
+<code>namespace std{<br>
+template&lt;typename T,typename Arg1,...,typename Arg5&gt;<br>
+struct hash&lt;boost::flyweight&lt;T,Arg1,...,Arg5&gt; &gt;;<br>
+}</code>
+
+<blockquote>
+This template specialization meets the requirements of class template <code>std::hash</code> in <b>[unord.hash]</b>.
+No exception is thrown when invoking instances of this specialization.
+</blockquote>
+
+<code>template&lt;typename T,typename Arg1,...,typename Arg5&gt;<br>
+inline std::size_t hash_value(const flyweight&lt;T,Arg1,...,Arg5&gt;&amp; x);</code>
+
+<blockquote>
+<b>Returns:</b> A hash value for <code>x</code> to be used by
+<a href="../../../../doc/html/hash/custom.html">Boost.Hash</a>.<br>
+<b>Exception safety:</b> <code>nothrow</code>.
+</blockquote>
+
 <h4><a name="config_macros">Configuration macros</a></h4>
 
 <a name="limit_num_ctor_args">
 <code>BOOST_FLYWEIGHT_LIMIT_PERFECT_FWD_ARGS</code></a>
 
 <blockquote>
-<b>Effects:</b> In compilers without variadic template support,
+In compilers without variadic template support,
 globally define this macro to set the maximum number of
 arguments accepted by <code>flyweight</code>
 <a href="#fwd_ctor">forwarding constructor</a>, which by default
 is 5.
+</blockquote>
+
+<a name="disable_hash_support">
+<code>BOOST_FLYWEIGHT_DISABLE_HASH_SUPPORT</code></a>
+
+<blockquote>
+If defined, hash support is not provided. This can be useful to cope
+with legacy code where general <code>flyweight</code> hashing has already been
+defined by the user.
+</blockquote>
+
+<h2>
+<a name="serialize_synopsis">Header
+</a><a href="../../../../boost/flyweight/serialize.hpp"><code>"boost/flyweight/serialize.hpp"</code></a>
+synopsis
+</h2>
+
+<p>
+<code>serialize.hpp</code> includes the necessary functionality for interoperability
+of <code>flyweight</code> with
+<a href="../../../serialization/index.html">Boost.Serialization</a>.
+</p>
+
+<h3><a name="serialization">Serialization</a></h3>
+
+<p>
+<code>flyweight</code>s can be archived and retrieved by means of
+<a href="../../../serialization/index.html">Boost.Serialization</a>. Regular as well
+as XML archives are supported.
+Serialization is done in an efficient manner so that saving equivalent <code>flyweight</code>s
+result in their common <code>key_type</code> value being stored only once, regardless
+of whether <code>key_type</code> is 
+<a href="../../../serialization/doc/traits.html#tracking">tracked</a> by
+Boost.Serialization or not.
+</p>
+
+Operation: saving of a <code>flyweight</code> object <code>x</code> to an
+output archive (XML archive) <code>ar</code>.
+
+<blockquote>
+<b>Requires:</b> <code>key_type</code> is serializable (XML-serializable).<br>
+<b>Effects:</b> The value <code>k=x.get_key()</code> is saved into <code>ar</code> as
+part of this operation or of a previous saving operation of a <code>flyweight</code>
+object with the same key.<br>
+<b>Exception safety:</b> Strong with respect to <code>x</code>. If an exception
+is thrown, <code>ar</code> may be left in an inconsistent state.
+</blockquote>
+
+Operation: loading of a <code>flyweight</code> <code>x'</code> from an
+input archive (XML archive) <code>ar</code>.
+
+<blockquote>
+<b>Requires:</b> <code>key_type</code> is serializable (XML-serializable).<br>
+<b>Effects:</b> <code>x'</code> is associated to a value constructed from a key
+equivalent to <code>k'</code>, a restored copy of the value <code>k</code>
+defined above.<br>
+<b>Exception safety:</b> Strong with respect to <code>x'</code>. If an exception
+is thrown, <code>ar</code> may be left in an inconsistent state.
 </blockquote>
 
 <hr>
@@ -655,7 +784,7 @@ Key-value flyweights
 
 <br>
 
-<p>Revised February 1st 2014</p>
+<p>Revised November 11th 2014</p>
 
 <p>&copy; Copyright 2006-2014 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 

@@ -43,12 +43,16 @@ struct buffered_ring_collection_tag : polygonal_tag, multi_tag
 template <typename Ring>
 struct buffered_ring : public Ring
 {
+    bool has_concave;
     bool has_accepted_intersections;
     bool has_discarded_intersections;
+    bool is_untouched_outside_original;
 
     inline buffered_ring()
-        : has_accepted_intersections(false)
+        : has_concave(false)
+        , has_accepted_intersections(false)
         , has_discarded_intersections(false)
+        , is_untouched_outside_original(false)
     {}
 
     inline bool discarded() const

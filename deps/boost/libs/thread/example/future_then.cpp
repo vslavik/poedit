@@ -4,11 +4,7 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/config.hpp>
-#ifndef BOOST_NO_CXX11_DECLTYPE_N3276
-#define BOOST_THREAD_NO_CXX11_DECLTYPE_N3276
-#endif
 #if ! defined  BOOST_NO_CXX11_DECLTYPE
-//&& ! defined BOOST_NO_CXX11_DECLTYPE_N3276
 #define BOOST_RESULT_OF_USE_DECLTYPE
 #endif
 
@@ -48,6 +44,7 @@ int p2(boost::future<int> f)
     BOOST_ASSERT(false);
   }
   BOOST_THREAD_LOG << "P2>" << BOOST_THREAD_END_LOG;
+  return 0;
 }
 int p2s(boost::shared_future<int> f)
 {
@@ -68,6 +65,7 @@ int p2s(boost::shared_future<int> f)
     BOOST_ASSERT(false);
   }
   BOOST_THREAD_LOG << "P2S>" << BOOST_THREAD_END_LOG;
+  return 0;
 }
 
 int main()

@@ -12,7 +12,7 @@ import quickbook ;
 
 using auto-index ;
 
-path-constant images_location : html ;
+path-constant images_location : ../ ;
 path-constant here : . ;
 
 doxygen autodoc
@@ -29,15 +29,20 @@ doxygen autodoc
                                    \"BOOST_CONTAINER_DOXYGEN_INVOKED\" \\
                                    \"BOOST_CONTAINER_IMPDEF(T)=implementation_defined\" \\
                                    \"BOOST_CONTAINER_SEEDOC(T)=see_documentation\" \\
-                                   \"BOOST_CONTAINER_NOEXCEPT=noexcept\" \\
-                                   \"BOOST_CONTAINER_NOEXCEPT_IF(T)=noexcept(T)\" \\
-                                   \"BOOST_RV_REF(T)=T &&\" \\
+                                   \"BOOST_NOEXCEPT_OR_NOTHROW=noexcept\" \\
+                                   \"BOOST_NOEXCEPT_IF(T)=noexcept(T)\" \\
+                                   \"BOOST_RV_REF(T)=T&&\" \\
                                    \"BOOST_RV_REF_BEG=\" \\
                                    \"BOOST_RV_REF_END=&&\" \\
                                    \"BOOST_COPY_ASSIGN_REF(T)=const T &\" \\
                                    \"BOOST_FWD_REF(a)=a &&\" \\
-                                   \"BOOST_INTRUSIVE_OPTION_CONSTANT(OPTION_NAME, TYPE, VALUE, CONSTANT_NAME)   = template<TYPE VALUE> struct OPTION_NAME{};\" \\
-                                   \"BOOST_INTRUSIVE_OPTION_TYPE(OPTION_NAME, TYPE, TYPEDEF_EXPR, TYPEDEF_NAME) = template<class TYPE> struct OPTION_NAME{};\" "
+                                   \"BOOST_INTRUSIVE_OPTION_CONSTANT(OPTION_NAME, TYPE, VALUE, CONSTANT_NAME) = template<TYPE VALUE> struct OPTION_NAME{};\" \\
+                                   \"BOOST_CONTAINER_DOC1ST(T1, T2)=T1\" \\
+                                   \"BOOST_CONTAINER_DOCIGN(T) \"\\
+                                   \"BOOST_CONTAINER_DOCONLY(T)=T\"\\
+                                   \"BOOST_CONTAINER_SCOPEDALLOC_DUMMYTRUE=\"\\
+                                   \"BOOST_CONTAINER_SCOPEDALLOC_ALLINNER=InnerAllocs...\"\\
+                                   "
         <xsl:param>"boost.doxygen.reftitle=Boost.Container Header Reference"
    ;
 

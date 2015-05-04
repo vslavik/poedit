@@ -72,7 +72,7 @@ int main()
          std::fstream file(ManagedFile2, std::ios_base::out | std::ios_base::binary);
          if(!file)
             throw int(0);
-		 file.write(static_cast<const char *>(managed_file_cow.get_address()), (std::streamsize)managed_file_cow.get_size());
+       file.write(static_cast<const char *>(managed_file_cow.get_address()), (std::streamsize)managed_file_cow.get_size());
       }
 
       //Now open the modified file and test changes

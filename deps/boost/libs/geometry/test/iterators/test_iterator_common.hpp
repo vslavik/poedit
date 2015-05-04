@@ -88,8 +88,8 @@ template <typename CombinedIterator, typename CombinedContainer>
 inline void test_size(CombinedIterator first, CombinedIterator beyond,
                       CombinedContainer const& combined)
 {
-    std::size_t size = std::distance(first, beyond);
-    BOOST_CHECK( combined.size() == std::distance(first, beyond) );
+    std::size_t size = static_cast<std::size_t>(std::distance(first, beyond));
+    BOOST_CHECK( combined.size() == size );
 
     size = 0;
     for (CombinedIterator it = first; it != beyond; ++it)

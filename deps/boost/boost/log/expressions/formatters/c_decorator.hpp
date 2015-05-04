@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2014.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -60,8 +60,13 @@ struct c_decorator_traits< char >
     template< unsigned int N >
     static std::size_t print_escaped(char (&buf)[N], char c)
     {
-        return static_cast< std::size_t >(
-            boost::log::aux::snprintf(buf, N, "\\x%0.2X", static_cast< unsigned int >(static_cast< uint8_t >(c))));
+        int n = boost::log::aux::snprintf(buf, N, "\\x%0.2X", static_cast< unsigned int >(static_cast< uint8_t >(c)));
+        if (n < 0)
+        {
+            n = 0;
+            buf[0] = '\0';
+        }
+        return static_cast< unsigned int >(n) >= N ? N - 1 : static_cast< unsigned int >(n);
     }
 };
 #endif // BOOST_LOG_USE_CHAR
@@ -107,7 +112,13 @@ struct c_decorator_traits< wchar_t >
             val = static_cast< uint32_t >(c);
         }
 
-        return static_cast< std::size_t >(boost::log::aux::swprintf(buf, N, format, val));
+        int n = boost::log::aux::swprintf(buf, N, format, val);
+        if (n < 0)
+        {
+            n = 0;
+            buf[0] = L'\0';
+        }
+        return static_cast< unsigned int >(n) >= N ? N - 1 : static_cast< unsigned int >(n);
     }
 };
 #endif // BOOST_LOG_USE_WCHAR_T

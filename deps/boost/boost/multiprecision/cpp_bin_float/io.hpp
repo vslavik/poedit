@@ -496,7 +496,7 @@ std::string cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::s
          // Fixed precision, no significant digits, and nothing to round!
          s = "0";
          if(sign())
-            s.insert(0, 1, '-');
+            s.insert(static_cast<std::string::size_type>(0), 1, '-');
          boost::multiprecision::detail::format_float_string(s, base10_exp, dig, f, true);
          return s;
       }
@@ -661,7 +661,7 @@ std::string cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::s
       }
 
       if(sign())
-         s.insert(0, 1, '-');
+         s.insert(static_cast<std::string::size_type>(0), 1, '-');
 
       boost::multiprecision::detail::format_float_string(s, base10_exp, dig, f, false);
    }

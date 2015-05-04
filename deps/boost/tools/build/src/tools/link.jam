@@ -94,6 +94,8 @@ rule can-junction ( project : ps )
 else
 {
 
+.can-junction = false ;
+
 rule can-junction ( project : ps )
 {
 }
@@ -229,10 +231,20 @@ rule do-file-link
 {
     local target = [ path.native [ path.relative-to [ path.pwd ] $(<) ] ] ;
     local source = [ path.native [ path.relative-to [ path.pwd ] $(>) ] ] ;
+    local old-source = [ on $(target) return $(LINK-SOURCE) ] ;
+    if $(old-source)
+    {
+        import errors ;
+        errors.user-error
+            Cannot create link $(target) to $(source). :
+            Link previously defined to another file, $(old-source[1]). ;
+    }
+    LINK-SOURCE on $(target) = $(source) $(.current-target) ;
     LOCATE on $(target) = . ;
     DEPENDS $(.current-target) : $(target) ;
     if $(.can-symlink) = true
     {
+        DEPENDS $(target) : $(source) ;
         link.mklink $(target) : $(source) ;
     }
     else if $(.can-hardlink) = true
@@ -279,6 +291,12 @@ rule do-link
     }
 }
 
+rule force-update
+{
+    local target = [ path.native [ path.relative-to [ path.pwd ] $(<) ] ] ;
+    ALWAYS $(target) ;
+}
+
 rule do-split
 {
     local target = [ path.native [ path.relative-to [ path.pwd ] $(<) ] ] ;
@@ -309,7 +327,7 @@ actions mklink-or-dir
     $(MKLINK_OR_DIR)
 }
 
-rule link-entries ( target : files * : split ? )
+rule link-entries ( target : files * : split ? : deleted ? )
 {
     for local s in $(files)
     {
@@ -324,7 +342,7 @@ rule link-entries ( target : files * : split ? )
         }
         if $(split)
         {
-            link-recursively $(t) : $(s) ;
+            link-recursively $(t) : $(s) : : $(deleted) ;
         }
         else
         {
@@ -338,8 +356,12 @@ rule link-entries ( target : files * : split ? )
     }
 }
 
-rule link-recursively ( target : source : no-recurse ? )
+rule link-recursively ( target : source : no-recurse ? : deleted ? )
 {
+    if $(deleted) {
+        force-update $(target) ;
+    }
+
     local split ;
     if [ CHECK_IF_FILE [ path.native $(source) ] ]
     {
@@ -350,30 +372,47 @@ rule link-recursively ( target : source : no-recurse ? )
         split = true ;
         if ! $(.split-dirs.$(target))
         {
+            if [ READLINK [ path.native $(target) ] ]
+            {
+                if ! $(deleted) {
+                    do-rm $(target) ;
+                    deleted = true ;
+                    .deleted-dirs.$(target) = true ;
+                }
+            }
             local .current-target = $(.known-dirs.base.$(target)) ;
             for local s in $(.known-dirs.$(target))
             {
                 local t = [ path.join $(target) [ path.basename $(s) ] ] ;
-                link-recursively $(t) : $(s) : flat ;
-            }
-            if [ READLINK [ path.native $(target) ] ]
-            {
-                do-rm $(target) ;
+                link-recursively $(t) : $(s) : flat : $(deleted) ;
             }
             do-split $(target) ;
-            .split-dirs.$(target) = true ;
+        }
+        else if $(.deleted-dirs.$(target))
+        {
+            deleted = true ;
         }
     }
-    else if [ path.exists [ path.native $(target) ] ]
+    else if [ path.exists [ path.native $(target) ] ] && ! $(deleted)
     {
         local link-target = [ READLINK [ path.native $(target) ] ] ;
         if $(link-target)
         {
             local full-path =
                 [ path.root [ path.make $(link-target) ] [ path.parent $(target) ] ] ;
-            if $(full-path) != $(source)
+            # HACK: Take advantage of the fact that path.glob
+            # normalizes its arguments.  If full-path and
+            # source are different, but both are empty, they
+            # will compare equal, but that's okay because
+            # for the purposes of this module, empty directories
+            # are equivalent.
+            if [ path.glob $(full-path) : * ] != [ path.glob $(source) : * ]
             {
-                do-rm $(target) ;
+                if ! $(deleted) {
+                    do-rm $(target) ;
+                    deleted = true ;
+                    .deleted-dirs.$(target) = true ;
+                }
                 do-split $(target) ;
                 split = true ;
             }
@@ -388,7 +427,11 @@ rule link-recursively ( target : source : no-recurse ? )
     {
         if [ READLINK [ path.native $(target) ] ]
         {
-            do-rm $(target) ;
+            if ! $(deleted) {
+                do-rm $(target) ;
+                deleted = true ;
+                .deleted-dirs.$(target) = true ;
+            }
         }
         do-split $(target) ;
         split = true ;
@@ -398,9 +441,14 @@ rule link-recursively ( target : source : no-recurse ? )
         do-link $(target) : $(source) ;
     }
 
+    if $(split)
+    {
+        .split-dirs.$(target) = true ;
+    }
+
     if ! $(no-recurse)
     {
-        link-entries $(target) : [ path.glob $(source) : * ] : $(split) ;
+        link-entries $(target) : [ path.glob $(source) : * ] : $(split) : $(deleted) ;
     }
 }
 
@@ -433,7 +481,6 @@ rule mklink
         [ path.join [ path.root [ path.make $(source-path[1]) ] [ path.pwd ] ] [ path.make $(>:G=) ] ] ] ;
 
     PATH_TO_SOURCE on $(<) = [ path.native $(relative-path) ] ;
-    NOUPDATE $(<) ;
 }
 
 if [ os.name ] = NT

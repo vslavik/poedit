@@ -15,16 +15,14 @@
 
 int main()
 {
-    using namespace boost;
-    coroutines::asymmetric_coroutine<int>::pull_type c([](coroutines::asymmetric_coroutine<int>::push_type& yield) {
-        for (int i = 0; i < 5; ++i) {
-            yield(i);
-        }
-    });
-    auto crange = make_iterator_range(begin(c), end(c));
-    for (auto n : crange
-            | adaptors::filtered([](int n){return n % 2 == 0;})) // the filtered adaptor needs const operator==.
-        {
+    boost::coroutines::asymmetric_coroutine<int>::pull_type c(
+        [](boost::coroutines::asymmetric_coroutine<int>::push_type& yield) {
+            for (int i = 0; i < 5; ++i) {
+                yield(i);
+            }
+        });
+    auto crange = boost::make_iterator_range(boost::begin(c), boost::end(c));
+    for (auto n : crange) {
         std::cout << n << std::endl;
     }
 }

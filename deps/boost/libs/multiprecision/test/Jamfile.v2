@@ -5,6 +5,7 @@
 
 import modules ;
 import path ;
+import ../../config/checks/config : requires ;
 
 local ntl-path = [ modules.peek : NTL_PATH ] ;
 local gmp_path = [ modules.peek : GMP_PATH ] ;
@@ -344,7 +345,18 @@ run test_move.cpp
 
 run test_test.cpp ;
 run test_cpp_int_lit.cpp ;
-compile test_constexpr.cpp : [ check-target-builds ../config//has_float128 : <define>HAVE_FLOAT128 : ] [ check-target-builds ../config//has_intel_quad : <cxxflags>-Qoption,cpp,--extended_float_type <define>HAVE_FLOAT128 : ] ;
+compile test_constexpr.cpp : 
+   [ check-target-builds ../config//has_float128 : <define>HAVE_FLOAT128 : ] 
+   [ check-target-builds ../config//has_intel_quad : <cxxflags>-Qoption,cpp,--extended_float_type <define>HAVE_FLOAT128 : ] 
+   [ requires cxx11_constexpr cxx11_user_defined_literals ] ;
+
+compile test_nothrow_cpp_int.cpp ;
+compile test_nothrow_cpp_rational.cpp ;
+compile test_nothrow_cpp_bin_float.cpp ;
+compile test_nothrow_cpp_dec_float.cpp ;
+compile test_nothrow_float128.cpp : [ check-target-builds ../config//has_float128 : : <build>no ] ;
+compile test_nothrow_gmp.cpp : [ check-target-builds ../config//has_gmp : : <build>no ] ;
+compile test_nothrow_mpfr.cpp : [ check-target-builds ../config//has_mpfr : : <build>no ] ;
 
 run test_cpp_bin_float_io.cpp /boost/system//boost_system /boost/chrono//boost_chrono
         : # command line
@@ -529,54 +541,77 @@ run test_generic_conv.cpp
          release # Otherwise runtime is slow
          ;
 
-
-run ../example/gmp_snips.cpp gmp
+run test_rat_float_interconv.cpp /boost/system//boost_system /boost/chrono//boost_chrono
         : # command line
         : # input files
         : # requirements
-         [ check-target-builds ../config//has_gmp : : <build>no ] ;
+        <define>TEST1
+        release 
+        : test_rat_float_interconv_1 ;
 
-run ../example/mpfr_snips.cpp mpfr
+run test_rat_float_interconv.cpp /boost/system//boost_system /boost/chrono//boost_chrono
         : # command line
         : # input files
         : # requirements
-         [ check-target-builds ../config//has_mpfr : : <build>no ] ;
+        <define>TEST2
+        release 
+        : test_rat_float_interconv_2 ;
 
-run ../example/mpfi_snips.cpp mpfi mpfr gmp
+run test_rat_float_interconv.cpp /boost/system//boost_system /boost/chrono//boost_chrono
         : # command line
         : # input files
         : # requirements
-         [ check-target-builds ../config//has_mpfi : : <build>no ] ;
+        <define>TEST3
+        release 
+        : test_rat_float_interconv_3 ;
 
-run ../example/float128_snips.cpp quadmath
+run test_rat_float_interconv.cpp /boost/system//boost_system /boost/chrono//boost_chrono
         : # command line
         : # input files
         : # requirements
-         [ check-target-builds ../config//has_float128 : : <build>no ] ;
+        <define>TEST4
+        release 
+        : test_rat_float_interconv_4 ;
 
-run ../example/float128_snips.cpp
+run test_rat_float_interconv.cpp /boost/system//boost_system /boost/chrono//boost_chrono mpfr gmp
         : # command line
         : # input files
         : # requirements
-         [ check-target-builds ../config//has_intel_quad : <cxxflags>-Qoption,cpp,--extended_float_type : <build>no ] [ check-target-builds ../config//has_float128 : <source>quadmath ]
-        : float128_snips_intel_quad ;
+        <define>TEST5
+        [ check-target-builds ../config//has_mpfr : : <build>no ]
+        release 
+        : test_rat_float_interconv_5 ;
 
-run ../example/logged_adaptor.cpp mpfi mpfr gmp
+run test_rat_float_interconv.cpp /boost/system//boost_system /boost/chrono//boost_chrono mpfr gmp
         : # command line
         : # input files
         : # requirements
-         [ check-target-builds ../config//has_mpfi : : <build>no ] ;
+        <define>TEST6
+        [ check-target-builds ../config//has_mpfr : : <build>no ]
+        release 
+        : test_rat_float_interconv_6 ;
 
-run ../example/cpp_dec_float_snips.cpp ;
-run ../example/cpp_int_snips.cpp ;
-run ../example/cpp_bin_float_snips.cpp ;
-
-run ../example/tommath_snips.cpp $(TOMMATH)
+run test_rat_float_interconv.cpp /boost/system//boost_system /boost/chrono//boost_chrono mpfr gmp
         : # command line
         : # input files
         : # requirements
-         [ check-target-builds ../config//has_tommath : : <build>no ] ;
-run ../example/floating_point_examples.cpp ;
+        <define>TEST7
+        [ check-target-builds ../config//has_mpfr : : <build>no ]
+        release 
+        : test_rat_float_interconv_7 ;
+
+run test_rat_float_interconv.cpp /boost/system//boost_system /boost/chrono//boost_chrono mpfr gmp
+        : # command line
+        : # input files
+        : # requirements
+        <define>TEST8
+        [ check-target-builds ../config//has_mpfr : : <build>no ]
+        release 
+        : test_rat_float_interconv_8 ;
+
+build-project ../example ;
+
+
 run test_cpp_int_conv.cpp ;
 run test_native_integer.cpp ;
 

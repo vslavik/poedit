@@ -3,6 +3,7 @@
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+#define BOOST_TEST_MODULE foobar
 #define BOOST_UBLAS_TYPE_CHECK_EPSILON (type_traits<real_type>::type_sqrt (boost::math::tools::epsilon <real_type>()))
 #define BOOST_UBLAS_TYPE_CHECK_MIN (type_traits<real_type>::type_sqrt ( boost::math::tools::min_value<real_type>()))
 #define BOOST_UBLAS_NDEBUG
@@ -21,6 +22,7 @@ using boost::math::ntl::pow;
 #include <iomanip>
 #include <string>
 #include <boost/test/included/unit_test.hpp> // for test_main
+#include <boost/multiprecision/cpp_bin_float.hpp>
 
 extern boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant);
 extern void show_extra(
@@ -211,6 +213,41 @@ void graph(const char*, const char*)
 }
 
 template <class T>
+boost::math::ntl::RR convert_to_rr(const T& val)
+{
+   return val;
+}
+template <class Backend, boost::multiprecision::expression_template_option ET>
+boost::math::ntl::RR convert_to_rr(const boost::multiprecision::number<Backend, ET>& val)
+{
+   return boost::lexical_cast<boost::math::ntl::RR>(val.str());
+}
+
+namespace boost{ namespace math{ namespace tools{
+
+template <>
+boost::multiprecision::cpp_bin_float_double_extended real_cast<boost::multiprecision::cpp_bin_float_double_extended, boost::math::ntl::RR>(boost::math::ntl::RR val)
+{
+   unsigned p = NTL::RR::OutputPrecision();
+   NTL::RR::SetOutputPrecision(20);
+   boost::multiprecision::cpp_bin_float_double_extended r = boost::lexical_cast<boost::multiprecision::cpp_bin_float_double_extended>(val);
+   NTL::RR::SetOutputPrecision(p);
+   return r;
+}
+template <>
+boost::multiprecision::cpp_bin_float_quad real_cast<boost::multiprecision::cpp_bin_float_quad, boost::math::ntl::RR>(boost::math::ntl::RR val)
+{
+   unsigned p = NTL::RR::OutputPrecision();
+   NTL::RR::SetOutputPrecision(35);
+   boost::multiprecision::cpp_bin_float_quad r = boost::lexical_cast<boost::multiprecision::cpp_bin_float_quad>(val);
+   NTL::RR::SetOutputPrecision(p);
+   return r;
+}
+
+}}}
+
+
+template <class T>
 void do_test(T, const char* name)
 {
    boost::math::ntl::RR::SetPrecision(working_precision);
@@ -260,8 +297,8 @@ void do_test(T, const char* name)
       {
          boost::math::ntl::RR true_result = the_function(zeros[i]);
          T absissa = boost::math::tools::real_cast<T>(zeros[i]);
-         boost::math::ntl::RR test_result = n.evaluate(absissa) / d.evaluate(absissa);
-         boost::math::ntl::RR cheb_result = boost::math::tools::evaluate_chebyshev(cn, absissa) / boost::math::tools::evaluate_chebyshev(cd, absissa);
+         boost::math::ntl::RR test_result = convert_to_rr(n.evaluate(absissa) / d.evaluate(absissa));
+         boost::math::ntl::RR cheb_result = convert_to_rr(boost::math::tools::evaluate_chebyshev(cn, absissa) / boost::math::tools::evaluate_chebyshev(cd, absissa));
          boost::math::ntl::RR err, cheb_err;
          if(rel_error)
          {
@@ -287,8 +324,8 @@ void do_test(T, const char* name)
       {
          boost::math::ntl::RR true_result = the_function(cheb[i]);
          T absissa = boost::math::tools::real_cast<T>(cheb[i]);
-         boost::math::ntl::RR test_result = n.evaluate(absissa) / d.evaluate(absissa);
-         boost::math::ntl::RR cheb_result = boost::math::tools::evaluate_chebyshev(cn, absissa) / boost::math::tools::evaluate_chebyshev(cd, absissa);
+         boost::math::ntl::RR test_result = convert_to_rr(n.evaluate(absissa) / d.evaluate(absissa));
+         boost::math::ntl::RR cheb_result = convert_to_rr(boost::math::tools::evaluate_chebyshev(cn, absissa) / boost::math::tools::evaluate_chebyshev(cd, absissa));
          boost::math::ntl::RR err, cheb_err;
          if(rel_error)
          {
@@ -332,6 +369,16 @@ void test_double(const char*, const char*)
 void test_long(const char*, const char*)
 {
    do_test((long double)(0), "long double");
+}
+
+void test_float80(const char*, const char*)
+{
+   do_test((boost::multiprecision::cpp_bin_float_double_extended)(0), "float80");
+}
+
+void test_float128(const char*, const char*)
+{
+   do_test((boost::multiprecision::cpp_bin_float_quad)(0), "float128");
 }
 
 void test_all(const char*, const char*)
@@ -383,9 +430,12 @@ void do_test_n(T, const char* name, unsigned count)
       for(boost::math::ntl::RR x = a; x <= b; x += step)
       {
          boost::math::ntl::RR true_result = the_function(x);
+         //std::cout << true_result << std::endl;
          T absissa = boost::math::tools::real_cast<T>(x);
-         boost::math::ntl::RR test_result = n.evaluate(absissa) / d.evaluate(absissa);
-         boost::math::ntl::RR cheb_result = boost::math::tools::evaluate_chebyshev(cn, absissa) / boost::math::tools::evaluate_chebyshev(cd, absissa);
+         boost::math::ntl::RR test_result = convert_to_rr(n.evaluate(absissa) / d.evaluate(absissa));
+         //std::cout << test_result << std::endl;
+         boost::math::ntl::RR cheb_result = convert_to_rr(boost::math::tools::evaluate_chebyshev(cn, absissa) / boost::math::tools::evaluate_chebyshev(cd, absissa));
+         //std::cout << cheb_result << std::endl;
          boost::math::ntl::RR err, cheb_err;
          if(rel_error)
          {
@@ -439,6 +489,16 @@ void test_double_n(unsigned n)
 void test_long_n(unsigned n)
 {
    do_test_n((long double)(0), "long double", n);
+}
+
+void test_float80_n(unsigned n)
+{
+   do_test_n((boost::multiprecision::cpp_bin_float_double_extended)(0), "float80", n);
+}
+
+void test_float128_n(unsigned n)
+{
+   do_test_n((boost::multiprecision::cpp_bin_float_quad)(0), "float128", n);
 }
 
 void rotate(const char*, const char*)
@@ -504,7 +564,7 @@ BOOST_AUTO_TEST_CASE( test_main )
    while(std::getline(std::cin, line))
    {
       if(parse(line.c_str(), str_p("quit"), space_p).full)
-         return 0;
+         return;
       if(false == parse(line.c_str(), 
          (
 
@@ -569,6 +629,14 @@ BOOST_AUTO_TEST_CASE( test_main )
             str_p("test") && str_p("long") && uint_p[&test_long_n]
       ||
             str_p("test") && str_p("long")[&test_long]
+      ||
+            str_p("test") && str_p("float80") && uint_p[&test_float80_n]
+      ||
+            str_p("test") && str_p("float80")[&test_float80]
+      ||
+            str_p("test") && str_p("float128") && uint_p[&test_float128_n]
+      ||
+            str_p("test") && str_p("float128")[&test_float128]
       ||
             str_p("test") && str_p("all")[&test_all]
       ||

@@ -60,32 +60,32 @@ struct stats_traits;
 template<>
 struct stats_traits<std::vector>
 {
-   template<class T, class A>
-   static void reset_alloc_stats(std::vector<T, A> &)
+   template<class T, class Allocator>
+   static void reset_alloc_stats(std::vector<T, Allocator> &)
       {}
 
-   template<class T, class A>
-   static std::size_t get_num_alloc(std::vector<T, A> &)
+   template<class T, class Allocator>
+   static std::size_t get_num_alloc(std::vector<T, Allocator> &)
       {  return 0;   }
 
-   template<class T, class A>
-   static std::size_t get_num_expand(std::vector<T, A> &)
+   template<class T, class Allocator>
+   static std::size_t get_num_expand(std::vector<T, Allocator> &)
       {  return 0;   }
 };
 
 template<>
 struct stats_traits<bc::vector>
 {
-   template<class T, class A>
-   static void reset_alloc_stats(bc::vector<T, A> &v)
+   template<class T, class Allocator>
+   static void reset_alloc_stats(bc::vector<T, Allocator> &v)
       { v.reset_alloc_stats(); }
 
-   template<class T, class A>
-   static std::size_t get_num_alloc(bc::vector<T, A> &v)
+   template<class T, class Allocator>
+   static std::size_t get_num_alloc(bc::vector<T, Allocator> &v)
       {  return v.num_alloc;  }
 
-   template<class T, class A>
-   static std::size_t get_num_expand(bc::vector<T, A> &v)
+   template<class T, class Allocator>
+   static std::size_t get_num_expand(bc::vector<T, Allocator> &v)
       {  return v.num_expand_fwd;  }
 };
 

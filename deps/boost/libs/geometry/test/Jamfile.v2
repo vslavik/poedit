@@ -16,6 +16,9 @@ project boost-geometry-test
         <include>.
         <include>../../../boost/geometry/extensions/contrib/ttmath
         <toolset>msvc:<asynch-exceptions>on
+        <toolset>msvc:<cxxflags>/bigobj
+        <toolset>clang:<cxxflags>-Wno-unneeded-internal-declaration # supress warning by Boost.None
+        <host-os>windows,<toolset>intel:<cxxflags>/bigobj
     ;
 
 build-project core ;
@@ -29,4 +32,3 @@ build-project policies ;
 build-project io ;
 build-project util ;
 build-project views ;
-build-project multi ;

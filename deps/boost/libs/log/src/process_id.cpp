@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2014.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -14,9 +14,8 @@
  */
 
 #include <iostream>
-#include <boost/integer.hpp>
-#include <boost/io/ios_state.hpp>
 #include <boost/log/detail/process_id.hpp>
+#include "id_formatting.hpp"
 #include <boost/log/detail/header.hpp>
 
 #if defined(BOOST_WINDOWS)
@@ -95,11 +94,10 @@ operator<< (std::basic_ostream< CharT, TraitsT >& strm, process::id const& pid)
 {
     if (strm.good())
     {
-        io::ios_flags_saver flags_saver(strm, std::ios_base::hex | std::ios_base::showbase);
-        // The width is set calculated to accommodate pid in hex + "0x" prefix
-        io::ios_width_saver width_saver(strm, static_cast< std::streamsize >(pid_size * 2 + 2));
-        io::basic_ios_fill_saver< CharT, TraitsT > fill_saver(strm, static_cast< CharT >('0'));
-        strm << static_cast< uint_t< pid_size * 8 >::least >(pid.native_id());
+        CharT buf[pid_size * 2 + 3]; // 2 chars per byte + 3 chars for the leading 0x and terminating zero
+        format_id< pid_size >(buf, sizeof(buf) / sizeof(*buf), pid.native_id(), (strm.flags() & std::ios_base::uppercase) != 0);
+
+        strm << buf;
     }
 
     return strm;

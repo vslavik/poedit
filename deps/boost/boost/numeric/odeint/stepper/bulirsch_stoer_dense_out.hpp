@@ -155,8 +155,6 @@ public:
         
         static const value_type val1( 1.0 );
 
-        typename odeint::unwrap_reference< System >::type &sys = system;
-
         bool reject( true );
 
         time_vector h_opt( m_k_max+1 );
@@ -261,6 +259,7 @@ public:
         {
 
             //calculate dxdt for next step and dense output
+            typename odeint::unwrap_reference< System >::type &sys = system;
             sys( out , dxdt_new , t+dt );
 
             //prepare dense output
@@ -367,7 +366,7 @@ public:
     void adjust_size( const StateIn &x )
     {
         resize_impl( x );
-        m_midpoint.adjust_size();
+        m_midpoint.adjust_size( x );
     }
 
 

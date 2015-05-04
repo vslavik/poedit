@@ -457,7 +457,7 @@ void basic_xml_grammar<CharType>::init(IStream & is){
 
 template<class CharType>
 void basic_xml_grammar<CharType>::windup(IStream & is){
-    if(is.fail())
+    if(is.fail() || is.eof())
         return;
     // uh-oh - don't throw exception from code called by a destructor !
     // so just ignore any failure.

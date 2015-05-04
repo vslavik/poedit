@@ -42,81 +42,137 @@
   <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">forward_iterator_tag</span>             <a name="boost.xpressive.regex_iterator.iterator_category"></a><span class="identifier">iterator_category</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="regex_iterator.html#boost.xpressive.regex_iteratorconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="regex_iterator.html#idp351466304-bb"><span class="identifier">regex_iterator</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="regex_iterator.html#idp351466592-bb"><span class="identifier">regex_iterator</span></a><span class="special">(</span><span class="identifier">BidiIter</span><span class="special">,</span> <span class="identifier">BidiIter</span><span class="special">,</span> <a class="link" href="basic_regex.html" title="Struct template basic_regex">basic_regex</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
+  <a class="link" href="regex_iterator.html#idp353466224-bb"><span class="identifier">regex_iterator</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="regex_iterator.html#idp353466512-bb"><span class="identifier">regex_iterator</span></a><span class="special">(</span><span class="identifier">BidiIter</span><span class="special">,</span> <span class="identifier">BidiIter</span><span class="special">,</span> <a class="link" href="basic_regex.html" title="Struct template basic_regex">basic_regex</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
                  <span class="identifier">regex_constants</span><span class="special">::</span><span class="identifier">match_flag_type</span> <span class="special">=</span> <span class="identifier">regex_constants</span><span class="special">::</span><span class="identifier">match_default</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> LetExpr<span class="special">&gt;</span> 
-    <a class="link" href="regex_iterator.html#idp351470240-bb"><span class="identifier">regex_iterator</span></a><span class="special">(</span><span class="identifier">BidiIter</span><span class="special">,</span> <span class="identifier">BidiIter</span><span class="special">,</span> <a class="link" href="basic_regex.html" title="Struct template basic_regex">basic_regex</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
+    <a class="link" href="regex_iterator.html#idp353470160-bb"><span class="identifier">regex_iterator</span></a><span class="special">(</span><span class="identifier">BidiIter</span><span class="special">,</span> <span class="identifier">BidiIter</span><span class="special">,</span> <a class="link" href="basic_regex.html" title="Struct template basic_regex">basic_regex</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
                    <span class="emphasis"><em><span class="identifier">unspecified</span></em></span><span class="special">,</span> 
                    <span class="identifier">regex_constants</span><span class="special">::</span><span class="identifier">match_flag_type</span> <span class="special">=</span> <span class="identifier">regex_constants</span><span class="special">::</span><span class="identifier">match_default</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="regex_iterator.html#idp351475552-bb"><span class="identifier">regex_iterator</span></a><span class="special">(</span><a class="link" href="regex_iterator.html" title="Struct template regex_iterator">regex_iterator</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="regex_iterator.html" title="Struct template regex_iterator">regex_iterator</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="special">&amp;</span> <a class="link" href="regex_iterator.html#idp351476816-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="regex_iterator.html" title="Struct template regex_iterator">regex_iterator</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="regex_iterator.html#idp353475472-bb"><span class="identifier">regex_iterator</span></a><span class="special">(</span><a class="link" href="regex_iterator.html" title="Struct template regex_iterator">regex_iterator</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="regex_iterator.html" title="Struct template regex_iterator">regex_iterator</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="special">&amp;</span> <a class="link" href="regex_iterator.html#idp353476736-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="regex_iterator.html" title="Struct template regex_iterator">regex_iterator</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="regex_iterator.html#idp351453776-bb">public member functions</a></span>
-  <span class="identifier">value_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a class="link" href="regex_iterator.html#idp351454336-bb"><span class="keyword">operator</span><span class="special">*</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">value_type</span> <span class="keyword">const</span> <span class="special">*</span> <a class="link" href="regex_iterator.html#idp351455456-bb"><span class="keyword">operator</span><span class="special">-&gt;</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <a class="link" href="regex_iterator.html" title="Struct template regex_iterator">regex_iterator</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="special">&amp;</span> <a class="link" href="regex_iterator.html#idp351456576-bb"><span class="keyword">operator</span><span class="special">++</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="regex_iterator.html" title="Struct template regex_iterator">regex_iterator</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <a class="link" href="regex_iterator.html#idp351464320-bb"><span class="keyword">operator</span><span class="special">++</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="regex_iterator.html#idp353451888-bb">public member functions</a></span>
+  <span class="identifier">value_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a class="link" href="regex_iterator.html#idp353452448-bb"><span class="keyword">operator</span><span class="special">*</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">value_type</span> <span class="keyword">const</span> <span class="special">*</span> <a class="link" href="regex_iterator.html#idp353453568-bb"><span class="keyword">operator</span><span class="special">-&gt;</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <a class="link" href="regex_iterator.html" title="Struct template regex_iterator">regex_iterator</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="special">&amp;</span> <a class="link" href="regex_iterator.html#idp353454688-bb"><span class="keyword">operator</span><span class="special">++</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="regex_iterator.html" title="Struct template regex_iterator">regex_iterator</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <a class="link" href="regex_iterator.html#idp353464240-bb"><span class="keyword">operator</span><span class="special">++</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp537162496"></a><h2>Description</h2>
+<a name="idp534016016"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp537162912"></a><h3>
+<a name="idp534016432"></a><h3>
 <a name="boost.xpressive.regex_iteratorconstruct-copy-destruct"></a><code class="computeroutput">regex_iterator</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><a name="idp351466304-bb"></a><span class="identifier">regex_iterator</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a name="idp351466592-bb"></a><span class="identifier">regex_iterator</span><span class="special">(</span><span class="identifier">BidiIter</span> begin<span class="special">,</span> <span class="identifier">BidiIter</span> end<span class="special">,</span> 
+<li class="listitem"><pre class="literallayout"><a name="idp353466224-bb"></a><span class="identifier">regex_iterator</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp353466512-bb"></a><span class="identifier">regex_iterator</span><span class="special">(</span><span class="identifier">BidiIter</span> begin<span class="special">,</span> <span class="identifier">BidiIter</span> end<span class="special">,</span> 
                <a class="link" href="basic_regex.html" title="Struct template basic_regex">basic_regex</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> rex<span class="special">,</span> 
                <span class="identifier">regex_constants</span><span class="special">::</span><span class="identifier">match_flag_type</span> flags <span class="special">=</span> <span class="identifier">regex_constants</span><span class="special">::</span><span class="identifier">match_default</span><span class="special">)</span><span class="special">;</span></pre></li>
 <li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> LetExpr<span class="special">&gt;</span> 
-  <a name="idp351470240-bb"></a><span class="identifier">regex_iterator</span><span class="special">(</span><span class="identifier">BidiIter</span> begin<span class="special">,</span> <span class="identifier">BidiIter</span> end<span class="special">,</span> 
+  <a name="idp353470160-bb"></a><span class="identifier">regex_iterator</span><span class="special">(</span><span class="identifier">BidiIter</span> begin<span class="special">,</span> <span class="identifier">BidiIter</span> end<span class="special">,</span> 
                  <a class="link" href="basic_regex.html" title="Struct template basic_regex">basic_regex</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> rex<span class="special">,</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> args<span class="special">,</span> 
                  <span class="identifier">regex_constants</span><span class="special">::</span><span class="identifier">match_flag_type</span> flags <span class="special">=</span> <span class="identifier">regex_constants</span><span class="special">::</span><span class="identifier">match_default</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a name="idp351475552-bb"></a><span class="identifier">regex_iterator</span><span class="special">(</span><a class="link" href="regex_iterator.html" title="Struct template regex_iterator">regex_iterator</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp353475472-bb"></a><span class="identifier">regex_iterator</span><span class="special">(</span><a class="link" href="regex_iterator.html" title="Struct template regex_iterator">regex_iterator</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre></li>
 <li class="listitem"><pre class="literallayout"><a class="link" href="regex_iterator.html" title="Struct template regex_iterator">regex_iterator</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="special">&amp;</span> 
-<a name="idp351476816-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="regex_iterator.html" title="Struct template regex_iterator">regex_iterator</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre></li>
+<a name="idp353476736-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="regex_iterator.html" title="Struct template regex_iterator">regex_iterator</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp537222992"></a><h3>
-<a name="idp351453776-bb"></a><code class="computeroutput">regex_iterator</code> public member functions</h3>
+<a name="idp534076704"></a><h3>
+<a name="idp353451888-bb"></a><code class="computeroutput">regex_iterator</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="identifier">value_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a name="idp351454336-bb"></a><span class="keyword">operator</span><span class="special">*</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">value_type</span> <span class="keyword">const</span> <span class="special">*</span> <a name="idp351455456-bb"></a><span class="keyword">operator</span><span class="special">-&gt;</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">value_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a name="idp353452448-bb"></a><span class="keyword">operator</span><span class="special">*</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">value_type</span> <span class="keyword">const</span> <span class="special">*</span> <a name="idp353453568-bb"></a><span class="keyword">operator</span><span class="special">-&gt;</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="regex_iterator.html" title="Struct template regex_iterator">regex_iterator</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="special">&amp;</span> <a name="idp351456576-bb"></a><span class="keyword">operator</span><span class="special">++</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="regex_iterator.html" title="Struct template regex_iterator">regex_iterator</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="special">&amp;</span> <a name="idp353454688-bb"></a><span class="keyword">operator</span><span class="special">++</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>If what.prefix().first != what[0].second and if the element match_prev_avail is not set in flags then sets it. Then behaves as if by calling regex_search(what[0].second, end, what, *pre, flags), with the following variation: in the event that the previous match found was of zero length (what[0].length() == 0) then attempts to find a non-zero length match starting at what[0].second, only if that fails and provided what[0].second != suffix().second does it look for a (possibly zero length) match starting from what[0].second + 1. If no further match is found then sets *this equal to the end of sequence iterator. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
 <col>
 </colgroup>
-<tbody><tr>
+<tbody>
+<tr>
 <td><p><span class="term">Postconditions:</span></p></td>
-<td>
-<p>(*this)-&gt;size() == pre-&gt;mark_count() + 1 </p>
-<p>(*this)-&gt;empty() == false </p>
-<p>(*this)-&gt;prefix().first == An iterator denoting the end point of the previous match found </p>
-<p>(*this)-&gt;prefix().last == (**this)[0].first </p>
-<p>(*this)-&gt;prefix().matched == (*this)-&gt;prefix().first != (*this)-&gt;prefix().second </p>
-<p>(*this)-&gt;suffix().first == (**this)[0].second </p>
-<p>(*this)-&gt;suffix().last == end </p>
-<p>(*this)-&gt;suffix().matched == (*this)-&gt;suffix().first != (*this)-&gt;suffix().second </p>
-<p>(**this)[0].first == The starting iterator for this match. </p>
-<p>(**this)[0].second == The ending iterator for this match. </p>
-<p>(**this)[0].matched == true if a full match was found, and false if it was a partial match (found as a result of the match_partial flag being set). </p>
-<p>(**this)[n].first == For all integers n &lt; (*this)-&gt;size(), the start of the sequence that matched sub-expression n. Alternatively, if sub-expression n did not participate in the match, then end. </p>
-<p>(**this)[n].second == For all integers n &lt; (*this)-&gt;size(), the end of the sequence that matched sub-expression n. Alternatively, if sub-expression n did not participate in the match, then end. </p>
-<p>(**this)[n].matched == For all integers n &lt; (*this)-&gt;size(), true if sub-expression n participated in the match, false otherwise. </p>
-<p>(*this)-&gt;position() == The distance from the start of the original sequence being iterated, to the start of this match. </p>
-</td>
-</tr></tbody>
+<td><p>(*this)-&gt;size() == pre-&gt;mark_count() + 1 </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Postconditions:</span></p></td>
+<td><p>(*this)-&gt;empty() == false </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Postconditions:</span></p></td>
+<td><p>(*this)-&gt;prefix().first == An iterator denoting the end point of the previous match found </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Postconditions:</span></p></td>
+<td><p>(*this)-&gt;prefix().last == (**this)[0].first </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Postconditions:</span></p></td>
+<td><p>(*this)-&gt;prefix().matched == (*this)-&gt;prefix().first != (*this)-&gt;prefix().second </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Postconditions:</span></p></td>
+<td><p>(*this)-&gt;suffix().first == (**this)[0].second </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Postconditions:</span></p></td>
+<td><p>(*this)-&gt;suffix().last == end </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Postconditions:</span></p></td>
+<td><p>(*this)-&gt;suffix().matched == (*this)-&gt;suffix().first != (*this)-&gt;suffix().second </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Postconditions:</span></p></td>
+<td><p>(**this)[0].first == The starting iterator for this match. </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Postconditions:</span></p></td>
+<td><p>(**this)[0].second == The ending iterator for this match. </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Postconditions:</span></p></td>
+<td><p>(**this)[0].matched == true if a full match was found, and false if it was a partial match (found as a result of the match_partial flag being set). </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Postconditions:</span></p></td>
+<td><p>(**this)[n].first == For all integers n &lt; (*this)-&gt;size(), the start of the sequence that matched sub-expression n. Alternatively, if sub-expression n did not participate in the match, then end. </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Postconditions:</span></p></td>
+<td><p>(**this)[n].second == For all integers n &lt; (*this)-&gt;size(), the end of the sequence that matched sub-expression n. Alternatively, if sub-expression n did not participate in the match, then end. </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Postconditions:</span></p></td>
+<td><p>(**this)[n].matched == For all integers n &lt; (*this)-&gt;size(), true if sub-expression n participated in the match, false otherwise. </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Postconditions:</span></p></td>
+<td><p>(*this)-&gt;position() == The distance from the start of the original sequence being iterated, to the start of this match. </p></td>
+</tr>
+</tbody>
 </table></div>
 </li>
-<li class="listitem"><pre class="literallayout"><a class="link" href="regex_iterator.html" title="Struct template regex_iterator">regex_iterator</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <a name="idp351464320-bb"></a><span class="keyword">operator</span><span class="special">++</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a class="link" href="regex_iterator.html" title="Struct template regex_iterator">regex_iterator</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <a name="idp353464240-bb"></a><span class="keyword">operator</span><span class="special">++</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>

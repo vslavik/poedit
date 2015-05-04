@@ -23,7 +23,6 @@ lib opencl : : <name>OpenCL ;
 
 project : requirements
         <implicit-dependency>/boost//headers
-        <include>../../../../..
         <include>$(VEXCL_INCLUDE)
         <include>$(OPENCL_INCLUDE)
         <toolset>gcc:<cxxflags>-std=c++0x

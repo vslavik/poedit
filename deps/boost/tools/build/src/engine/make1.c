@@ -593,8 +593,6 @@ static void make1c( state const * const pState )
                 TARGET * saved_includes;
                 SETTINGS * s;
 
-                t->rescanned = 1;
-
                 /* Clean current includes. */
                 saved_includes = t->includes;
                 t->includes = 0;

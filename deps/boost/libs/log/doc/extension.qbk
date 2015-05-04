@@ -1,5 +1,5 @@
 [/
-              Copyright Andrey Semashev 2007 - 2014.
+              Copyright Andrey Semashev 2007 - 2015.
      Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
               http://www.boost.org/LICENSE_1_0.txt)
@@ -312,9 +312,9 @@ the `on_equality_relation` method will be called with `name` argument being "Coo
 
 The constructed filter will use the corresponding comparison operators for the `point` class. Ordering operations, like ">" or "<=", will not be supported for attributes named "Coordinates", and this is exactly the way we want it, because the `point` class does not support them either. The complete example is available [@boost:/libs/log/example/doc/extension_filter_parser.cpp here].
 
-The library allows not only adding support for new types, but also associating new relations with them. For instance, we can create a new relation "is_in_rect" that will yield positive if the coordinates fit into a rectangle denoted with two points. The filter might look like this:
+The library allows not only adding support for new types, but also associating new relations with them. For instance, we can create a new relation "is_in_rectangle" that will yield positive if the coordinates fit into a rectangle denoted with two points. The filter might look like this:
 
-[pre %Coordinates% is\_in\_rect "{(10, 10) - (20, 20)}"]
+[pre %Coordinates% is\_in\_rectangle "{(10, 10) - (20, 20)}"]
 
 First, let's define our rectangle class:
 
@@ -324,7 +324,7 @@ As it was said, the rectangle is described by two points - the top left and the 
 
 [example_extension_custom_filter_factory_with_custom_rel]
 
-The `on_custom_relation` method is called with the relation name (the "is\_in\_rect" string in our case) and the right-hand argument for the relation (the rectangle description). All we have to do is to construct the filter, which is implemented by our `is_in_rect` function. We use `bind` from __boost_phoenix__ to compose the filter from the function and the [link log.detailed.expressions.attr attribute placeholder]. You can find the complete code of this example [@boost:/libs/log/example/doc/extension_filter_parser_custom_rel.cpp here].
+The `on_custom_relation` method is called with the relation name (the "is\_in\_rectangle" string in our case) and the right-hand argument for the relation (the rectangle description). All we have to do is to construct the filter, which is implemented by our `is_in_rectangle` function. We use `bind` from __boost_phoenix__ to compose the filter from the function and the [link log.detailed.expressions.attr attribute placeholder]. You can find the complete code of this example [@boost:/libs/log/example/doc/extension_filter_parser_custom_rel.cpp here].
 
 [heading Adding support for user-defined sinks]
 

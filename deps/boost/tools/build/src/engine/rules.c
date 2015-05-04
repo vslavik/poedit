@@ -63,7 +63,6 @@ static TARGET * get_target_includes( TARGET * const t )
         i->name = object_copy( t->name );
         i->boundname = object_copy( i->name );
         i->flags |= T_FLAG_NOTFILE | T_FLAG_INTERNAL;
-        i->original_target = t;
         t->includes = i;
     }
     return t->includes;

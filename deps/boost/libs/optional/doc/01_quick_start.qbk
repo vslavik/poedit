@@ -14,7 +14,7 @@
 
 [section Optional return values]
 
-Let's write and use a converter function that converts an a `std::string` to an `int`. It is possible that for a given string (e.g. `"cat"`) there exist no value of type `int` capable of representing the conversion result. We do not consider such situation an error. We expect that the converter can be used only to check if the conversion is possible. A natural signature for this function can be:
+Let's write and use a converter function that converts a `std::string` to an `int`. It is possible that for a given string (e.g. `"cat"`) there exists no value of type `int` capable of representing the conversion result. We do not consider such situation an error. We expect that the converter can be used only to check if the conversion is possible. A natural signature for this function can be:
 
     #include <boost/optional.hpp>
     boost::optional<int> convert(const std::string& text);
@@ -91,7 +91,7 @@ We could write function `convert` in a slightly different manner, so that it has
       return ans;
     }
 
-The default constructor of `optional` creates an unitialized optional object. Unlike with `int`s you cannot have an `optional<int>` in an indeterminate state. Its state is always well defined. Instruction `ans = i` initializes the optional object. It uses the assignment from `int`. In general, for `optional<T>`, when an assignment from `T` is invoked, it can do two things. If the optional object is not initialized our case here), it initializes it with `T`'s copy constructor. If the optional object is already initialized, it assigns the new value to it using `T`'s copy assignment.      
+The default constructor of `optional` creates an unitialized optional object. Unlike with `int`s you cannot have an `optional<int>` in an indeterminate state. Its state is always well defined. Instruction `ans = i` initializes the optional object. It uses the 'mixed' assignment from `int`. In general, for `optional<T>`, when an assignment from `T` is invoked, it can do two things. If the optional object is not initialized (our case here), it initializes the contained value using `T`'s copy constructor. If the optional object is already initialized, it assigns the new value to it using `T`'s copy assignment.      
 [endsect]
 
 [section Optional data members]

@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../bbv2.html" title="Chapter&#160;45.&#160;Boost.Build V2 User Manual">
+<link rel="up" href="../bbv2.html" title="Chapter&#160;43.&#160;Boost.Build User Manual">
 <link rel="prev" href="tasks.html" title="Common tasks">
 <link rel="next" href="extender.html" title="Extender Manual">
 </head>
@@ -259,7 +259,7 @@ path-constant DATA : data/a.txt ;
 <p>This section documents the features that are built-in into
     Boost.Build. For features with a fixed set of values, that set is
     provided, with the default value listed first.</p>
-<a class="indexterm" name="idp548508560"></a><div class="variablelist"><dl class="variablelist">
+<a class="indexterm" name="idp544515200"></a><div class="variablelist"><dl class="variablelist">
 <dt><span class="term"><code class="literal">variant</code></span></dt>
 <dd>
 <p>
@@ -584,7 +584,7 @@ path-constant DATA : data/a.txt ;
 </dd>
 <dt><span class="term"><code class="literal">embed-manifest</code></span></dt>
 <dd>
-<a class="indexterm" name="idp548655312"></a><a class="indexterm" name="idp548656416"></a><p>
+<a class="indexterm" name="idp544662016"></a><a class="indexterm" name="idp544663120"></a><p>
             <span class="bold"><strong>Allowed values:</strong></span> on, off.
           </p>
 <p>This feature is specific to the msvc toolset (see
@@ -595,6 +595,16 @@ path-constant DATA : data/a.txt ;
           under <span class="guimenu">Configuration Properties</span> &#8594; <span class="guisubmenu">Manifest Tool</span> &#8594; <span class="guisubmenu">Input and Output</span> &#8594; <span class="guimenuitem">Embed manifest</span>.
           </p>
 </dd>
+<dt><span class="term"><code class="literal">embed-manifest-file</code></span></dt>
+<dd>
+<a class="indexterm" name="idp544671360"></a><a class="indexterm" name="idp544672464"></a><p>This feature is specific to the msvc toolset (see
+          <a class="xref" href="reference.html#bbv2.reference.tools.compiler.msvc" title="Microsoft Visual C++">the section called &#8220;Microsoft Visual C++&#8221;</a>),
+          and controls which manifest files should be embedded inside
+          executables and shared libraries.  This
+          feature corresponds to the IDE option found in the project settings dialog,
+          under <span class="guimenu">Configuration Properties</span> &#8594; <span class="guisubmenu">Manifest Tool</span> &#8594; <span class="guisubmenu">Input and Output</span> &#8594; <span class="guimenuitem">Additional Manifest Files</span>.
+          </p>
+</dd>
 </dl></div>
 </div>
 <div class="section">
@@ -602,8 +612,8 @@ path-constant DATA : data/a.txt ;
 <a name="bbv2.reference.tools"></a>Builtin tools</h3></div></div></div>
 <div class="toc"><dl class="toc">
 <dt><span class="section"><a href="reference.html#bbv2.reference.tools.compilers">C++ Compilers</a></span></dt>
-<dt><span class="section"><a href="reference.html#idp548958496">Third-party libraries</a></span></dt>
-<dt><span class="section"><a href="reference.html#idp548994624">Documentation tools</a></span></dt>
+<dt><span class="section"><a href="reference.html#idp544988224">Third-party libraries</a></span></dt>
+<dt><span class="section"><a href="reference.html#idp545024352">Documentation tools</a></span></dt>
 </dl></div>
 <p>Boost.Build comes with support for a large number of C++ compilers,
       and other tools. This section documents how to use those tools.</p>
@@ -692,7 +702,7 @@ using gcc : [<span class="optional"><em class="replaceable"><code>version</code>
                 be either <code class="computeroutput">windres</code> for msvc resource compiler,
                 or <code class="computeroutput">rc</code> for borland's resource compiler.</p></dd>
 </dl></div>
-<a class="indexterm" name="idp548702240"></a>
+<a class="indexterm" name="idp544717120"></a>
 
           In order to compile 64-bit applications, you have to specify
           <code class="computeroutput">address-model=64</code>, and the <code class="computeroutput">instruction-set</code>
@@ -709,7 +719,7 @@ using gcc : [<span class="optional"><em class="replaceable"><code>version</code>
           to that of the gcc module.
           </p>
 <p>
-          <a class="indexterm" name="idp548710704"></a>
+          <a class="indexterm" name="idp544725648"></a>
           The darwin toolset can generate so called "fat"
           binaries&#8212;binaries that can run support more than one
           architecture, or address mode. To build a binary that can run both
@@ -819,7 +829,7 @@ using msvc : [<span class="optional"><em class="replaceable"><code>version</code
 <div class="section">
 <div class="titlepage"><div><div><h6 class="title">
 <a name="v2.reference.tools.compiler.msvc.64"></a>64-bit support</h6></div></div></div>
-<a class="indexterm" name="idp548765744"></a><p>Starting with version 8.0, Microsoft Visual Studio can
+<a class="indexterm" name="idp544780688"></a><p>Starting with version 8.0, Microsoft Visual Studio can
             generate binaries for 64-bit processor, both 64-bit flavours of x86
             (codenamed AMD64/EM64T), and Itanium (codenamed IA64). In addition,
             compilers that are itself run in 64-bit mode, for better
@@ -862,6 +872,42 @@ using msvc : [<span class="optional"><em class="replaceable"><code>version</code
             specific flavor of 64-bit x86. Boost.Build will make use of those
             options depending on the value of the<code class="computeroutput">instruction-set</code>
             feature.</p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h6 class="title">
+<a name="v2.reference.tools.compiler.msvc.winrt"></a>Windows Runtime support</h6></div></div></div>
+<a class="indexterm" name="idp544796752"></a><p>
+            Starting with version 11.0, Microsoft Visual Studio can
+            produce binaries for Windows Store and Phone in addition to 
+            traditional Win32 desktop. To specify which Windows API set
+            to target, use the <code class="literal">windows-api</code> feature.
+            Available options are <code class="literal">desktop</code>,
+            <code class="literal">store</code>, or <code class="literal">phone</code>. If not
+            specified, <code class="literal">desktop</code> will be used.
+            </p>
+<p>
+            When using <code class="literal">store</code> or <code class="literal">phone</code>
+            the specified toolset determines what Windows version is 
+            targeted. The following options are available:
+            </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>Windows 8.0: toolset=msvc-11.0 windows-api=store</p></li>
+<li class="listitem"><p>Windows 8.1: toolset=msvc-12.0 windows-api=store</p></li>
+<li class="listitem"><p>Windows Phone 8.0: toolset=msvc-11.0 windows-api=phone</p></li>
+<li class="listitem"><p>Windows Phone 8.1: toolset=msvc-12.0 windows-api=phone</p></li>
+</ul></div>
+<p>
+            For example use the following to build for Windows Store 8.1 
+            with the ARM architecture:
+            </p>
+<pre class="programlisting">
+.\b2 toolset=msvc-12.0 windows-api=store architecture=arm</pre>
+<p>
+            Note that when targeting Windows Phone 8.1, version 12.0 didn't 
+            include the vcvars phone setup scripts. They can be separately 
+            downloaded from 
+            <a href="http://blogs.msdn.com/b/vcblog/archive/2014/07/18/using-boost-libraries-in-windows-store-and-phone-applications.aspx" target="_top">here</a>.
+            </p>
 </div>
 </div>
 <div class="section">
@@ -1159,7 +1205,7 @@ using sun : [<span class="optional"><em class="replaceable"><code>version</code>
 <dd><p>Specifies additional command line options that will be
       passed to the linker.</p></dd>
 </dl></div>
-<a class="indexterm" name="idp548949280"></a>
+<a class="indexterm" name="idp544979008"></a>
           Starting with Sun Studio 12, you can create 64-bit applications
           by using the <code class="computeroutput">address-model=64</code> property.
 
@@ -1184,7 +1230,7 @@ using vacpp ;</pre>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idp548958496"></a>Third-party libraries</h4></div></div></div>
+<a name="idp544988224"></a>Third-party libraries</h4></div></div></div>
 <div class="toc"><dl class="toc">
 <dt><span class="section"><a href="reference.html#bbv2.reference.tools.libraries.stlport">STLport library</a></span></dt>
 <dt><span class="section"><a href="reference.html#bbv2.reference.tools.libraries.zlib">zlib</a></span></dt>
@@ -1194,7 +1240,7 @@ using vacpp ;</pre>
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
 <a name="bbv2.reference.tools.libraries.stlport"></a>STLport library</h5></div></div></div>
-<a class="indexterm" name="idp548960896"></a><p>The <a href="http://stlport.org" target="_top">STLport</a> library
+<a class="indexterm" name="idp544990624"></a><p>The <a href="http://stlport.org" target="_top">STLport</a> library
           is an alternative implementation of C++ runtime library. Boost.Build
           supports using that library on Windows platfrom.  Linux is
           hampered by different naming of libraries in each STLport
@@ -1223,7 +1269,7 @@ using stlport : [<span class="optional"><em class="replaceable"><code>version</c
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
 <a name="bbv2.reference.tools.libraries.zlib"></a>zlib</h5></div></div></div>
-<a class="indexterm" name="idp548971920"></a><p>Provides support for the
+<a class="indexterm" name="idp545001648"></a><p>Provides support for the
           <a href="http://www.zlib.net" target="_top">zlib</a> library.  zlib
           can be configured either to use precompiled binaries or to
           build the library from source.</p>
@@ -1273,7 +1319,7 @@ using zlib : 1.2.7 : : &lt;toolset&gt;gcc ;
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idp548994624"></a>Documentation tools</h4></div></div></div>
+<a name="idp545024352"></a>Documentation tools</h4></div></div></div>
 <div class="toc"><dl class="toc">
 <dt><span class="section"><a href="reference.html#bbv2.reference.tools.doc.xsltproc">xsltproc</a></span></dt>
 <dt><span class="section"><a href="reference.html#bbv2.reference.tools.doc.boostbook">boostbook</a></span></dt>
@@ -1287,7 +1333,7 @@ using zlib : 1.2.7 : : &lt;toolset&gt;gcc ;
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
 <a name="bbv2.reference.tools.doc.xsltproc"></a>xsltproc</h5></div></div></div>
-<a class="indexterm" name="idp548996912"></a><p>To use xsltproc, you first need to configure it using the following syntax:</p>
+<a class="indexterm" name="idp545026640"></a><p>To use xsltproc, you first need to configure it using the following syntax:</p>
 <pre class="programlisting">
 using xsltproc : [<span class="optional"><em class="replaceable"><code>xsltproc</code></em></span>] ;
 </pre>
@@ -1335,7 +1381,7 @@ rule xslt-dir ( target : source stylesheet : properties * : dirname )
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
 <a name="bbv2.reference.tools.doc.boostbook"></a>boostbook</h5></div></div></div>
-<a class="indexterm" name="idp549022928"></a><p>To use boostbook, you first need to configure it using the following syntax:</p>
+<a class="indexterm" name="idp545052640"></a><p>To use boostbook, you first need to configure it using the following syntax:</p>
 <pre class="programlisting">
 using boostbook : [<span class="optional"><em class="replaceable"><code>docbook-xsl-dir</code></em></span>] : [<span class="optional"><em class="replaceable"><code>docbook-dtd-dir</code></em></span>] : [<span class="optional"><em class="replaceable"><code>boostbook-dir</code></em></span>] ;
 </pre>
@@ -1389,7 +1435,7 @@ rule boostbook ( target-name : sources * : requirements * : default-build * )
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
 <a name="bbv2.reference.tools.doc.doxygen"></a>doxygen</h5></div></div></div>
-<a class="indexterm" name="idp549058384"></a><p>To use doxygen, you first need to configure it using the following syntax:</p>
+<a class="indexterm" name="idp545088096"></a><p>To use doxygen, you first need to configure it using the following syntax:</p>
 <pre class="programlisting">
 using doxygen : [<span class="optional"><em class="replaceable"><code>name</code></em></span>] ;
 </pre>
@@ -1448,7 +1494,7 @@ rule doxygen ( target : sources * : requirements * : default-build * : usage-req
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
 <a name="bbv2.reference.tools.doc.quickbook"></a>quickbook</h5></div></div></div>
-<a class="indexterm" name="idp549083952"></a><p>The quickbook module provides a generator to convert from
+<a class="indexterm" name="idp545113680"></a><p>The quickbook module provides a generator to convert from
           Quickbook to BoostBook XML.</p>
 <p>To use quickbook, you first need to configure it using the following syntax:</p>
 <pre class="programlisting">
@@ -1464,7 +1510,7 @@ using quickbook : [<span class="optional"><em class="replaceable"><code>command<
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
 <a name="bbv2.reference.tools.doc.fop"></a>fop</h5></div></div></div>
-<a class="indexterm" name="idp549089232"></a><p>The fop module provides generators to convert from
+<a class="indexterm" name="idp545119024"></a><p>The fop module provides generators to convert from
           XSL formatting objects to Postscript and PDF.</p>
 <p>To use fop, you first need to configure it using the following syntax:</p>
 <pre class="programlisting">
@@ -1501,7 +1547,7 @@ using fop : [<span class="optional"><em class="replaceable"><code>fop-command</c
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="bbv2.reference.modules.modules"></a>modules</h4></div></div></div>
-<a class="indexterm" name="idp549098896"></a><p>
+<a class="indexterm" name="idp545128688"></a><p>
         The <code class="computeroutput">modules</code> module defines basic functionality
         for handling modules.
       </p>
@@ -1551,7 +1597,7 @@ using fop : [<span class="optional"><em class="replaceable"><code>fop-command</c
       </p>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<a name="bbv2.reference.modules.modules.binding"></a><a class="indexterm" name="idp549108720"></a><code class="computeroutput"><span class="keyword">rule</span> binding <span class="special">(</span> module-name <span class="special">)</span></code><p>Returns the filesystem binding of the given module.</p>
+<a name="bbv2.reference.modules.modules.binding"></a><a class="indexterm" name="idp545138448"></a><code class="computeroutput"><span class="keyword">rule</span> binding <span class="special">(</span> module-name <span class="special">)</span></code><p>Returns the filesystem binding of the given module.</p>
 <p>For example, a module can get its own location with:
           </p>
 <pre class="programlisting">me <span class="special">=</span> <span class="special">[</span> modules.binding $(__name__) <span class="special">]</span> <span class="special">;</span></pre>
@@ -1559,7 +1605,7 @@ using fop : [<span class="optional"><em class="replaceable"><code>fop-command</c
           </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.modules.poke"></a><a class="indexterm" name="idp549117600"></a><code class="computeroutput"><span class="keyword">rule</span> poke <span class="special">(</span> module-name ? <span class="special">:</span> variables + <span class="special">:</span> value * <span class="special">)</span></code><p>Sets the module-local value of a variable.</p>
+<a name="bbv2.reference.modules.modules.poke"></a><a class="indexterm" name="idp545147264"></a><code class="computeroutput"><span class="keyword">rule</span> poke <span class="special">(</span> module-name ? <span class="special">:</span> variables + <span class="special">:</span> value * <span class="special">)</span></code><p>Sets the module-local value of a variable.</p>
 <p>For example, to set a variable in the global module:
           </p>
 <pre class="programlisting">modules.poke <span class="special">:</span> ZLIB_INCLUDE <span class="special">:</span> /usr/local/include <span class="special">;</span></pre>
@@ -1567,7 +1613,7 @@ using fop : [<span class="optional"><em class="replaceable"><code>fop-command</c
           </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.modules.peek"></a><a class="indexterm" name="idp549127136"></a><code class="computeroutput"><span class="keyword">rule</span> peek <span class="special">(</span> module-name ? <span class="special">:</span> variables + <span class="special">)</span></code><p>Returns the module-local value of a variable.</p>
+<a name="bbv2.reference.modules.modules.peek"></a><a class="indexterm" name="idp545156864"></a><code class="computeroutput"><span class="keyword">rule</span> peek <span class="special">(</span> module-name ? <span class="special">:</span> variables + <span class="special">)</span></code><p>Returns the module-local value of a variable.</p>
 <p>
             For example, to read a variable from the global module:
             </p>
@@ -1576,7 +1622,7 @@ using fop : [<span class="optional"><em class="replaceable"><code>fop-command</c
           </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.modules.call-in"></a><a class="indexterm" name="idp549137952"></a><code class="computeroutput"><span class="keyword">rule</span> call-in <span class="special">(</span> module-name ? <span class="special">:</span> rule-name args * <span class="special">:</span> * <span class="special">)</span> </code><p>Call the given rule locally in the given module. Use
+<a name="bbv2.reference.modules.modules.call-in"></a><a class="indexterm" name="idp545167664"></a><code class="computeroutput"><span class="keyword">rule</span> call-in <span class="special">(</span> module-name ? <span class="special">:</span> rule-name args * <span class="special">:</span> * <span class="special">)</span> </code><p>Call the given rule locally in the given module. Use
           this for rules accepting rule names as arguments, so that
           the passed rule may be invoked in the context of the rule's
           caller (for example, if the rule accesses module globals or
@@ -1611,7 +1657,7 @@ using fop : [<span class="optional"><em class="replaceable"><code>fop-command</c
           </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.modules.load"></a><a class="indexterm" name="idp549164624"></a><code class="computeroutput"><span class="keyword">rule</span> load <span class="special">(</span> module-name <span class="special">:</span> filename ? <span class="special">:</span> search * <span class="special">)</span></code><p>Load the indicated module if it is not already loaded.</p>
+<a name="bbv2.reference.modules.modules.load"></a><a class="indexterm" name="idp545194336"></a><code class="computeroutput"><span class="keyword">rule</span> load <span class="special">(</span> module-name <span class="special">:</span> filename ? <span class="special">:</span> search * <span class="special">)</span></code><p>Load the indicated module if it is not already loaded.</p>
 <div class="variablelist"><dl class="variablelist">
 <dt><span class="term"><code class="literal">module-name</code></span></dt>
 <dd><p>Name of module to load.</p></dd>
@@ -1627,7 +1673,7 @@ using fop : [<span class="optional"><em class="replaceable"><code>fop-command</c
 </dl></div>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.modules.import"></a><a class="indexterm" name="idp549178880"></a><code class="computeroutput"><span class="keyword">rule</span> import <span class="special">(</span> module-names + <span class="special">:</span> rules-opt * <span class="special">:</span> rename-opt * <span class="special">)</span></code><p>Load the indicated module and import rule names into the
+<a name="bbv2.reference.modules.modules.import"></a><a class="indexterm" name="idp545208528"></a><code class="computeroutput"><span class="keyword">rule</span> import <span class="special">(</span> module-names + <span class="special">:</span> rules-opt * <span class="special">:</span> rename-opt * <span class="special">)</span></code><p>Load the indicated module and import rule names into the
           current module. Any members of <code class="computeroutput">rules-opt</code> will be
           available without qualification in the caller's module. Any
           members of <code class="computeroutput">rename-opt</code> will be taken as the names
@@ -1656,7 +1702,7 @@ import path <span class="special">:</span> native make <span class="special">:</
           </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.modules.clone-rules"></a><a class="indexterm" name="idp549197216"></a><code class="computeroutput"><span class="keyword">rule</span> clone-rules <span class="special">(</span> source-module target-module <span class="special">)</span></code><p>Define exported copies in <code class="computeroutput">$(target-module)</code>
+<a name="bbv2.reference.modules.modules.clone-rules"></a><a class="indexterm" name="idp545226864"></a><code class="computeroutput"><span class="keyword">rule</span> clone-rules <span class="special">(</span> source-module target-module <span class="special">)</span></code><p>Define exported copies in <code class="computeroutput">$(target-module)</code>
           of all rules exported from <code class="computeroutput">$(source-module)</code>. Also
           make them available in the global module with qualification,
           so that it is just as though the rules were defined originally
@@ -1667,7 +1713,7 @@ import path <span class="special">:</span> native make <span class="special">:</
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="bbv2.reference.modules.path"></a>path</h4></div></div></div>
-<a class="indexterm" name="idp549205296"></a><p>
+<a class="indexterm" name="idp545235008"></a><p>
     Performs various path manipulations. Paths are always in a 'normalized'
     representation. In it, a path may be either:
     
@@ -1686,25 +1732,25 @@ import path <span class="special">:</span> native make <span class="special">:</
   </p>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<a name="bbv2.reference.modules.path.make"></a><a class="indexterm" name="idp549212720"></a><code class="computeroutput"><span class="keyword">rule</span> make <span class="special">(</span> native <span class="special">)</span></code><p>Converts the native path into normalized form.</p>
+<a name="bbv2.reference.modules.path.make"></a><a class="indexterm" name="idp545242432"></a><code class="computeroutput"><span class="keyword">rule</span> make <span class="special">(</span> native <span class="special">)</span></code><p>Converts the native path into normalized form.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.path.native"></a><a class="indexterm" name="idp549218432"></a><code class="computeroutput"><span class="keyword">rule</span> native <span class="special">(</span> path <span class="special">)</span></code><p>Builds the native representation of the path.</p>
+<a name="bbv2.reference.modules.path.native"></a><a class="indexterm" name="idp545248208"></a><code class="computeroutput"><span class="keyword">rule</span> native <span class="special">(</span> path <span class="special">)</span></code><p>Builds the native representation of the path.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.path.is-rooted"></a><a class="indexterm" name="idp549223792"></a><code class="computeroutput"><span class="keyword">rule</span> is-rooted <span class="special">(</span> path <span class="special">)</span></code><p>Tests if a path is rooted.</p>
+<a name="bbv2.reference.modules.path.is-rooted"></a><a class="indexterm" name="idp545253632"></a><code class="computeroutput"><span class="keyword">rule</span> is-rooted <span class="special">(</span> path <span class="special">)</span></code><p>Tests if a path is rooted.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.path.has-parent"></a><a class="indexterm" name="idp549229136"></a><code class="computeroutput"><span class="keyword">rule</span> has-parent <span class="special">(</span> path <span class="special">)</span></code><p>Tests if a path has a parent.</p>
+<a name="bbv2.reference.modules.path.has-parent"></a><a class="indexterm" name="idp545258976"></a><code class="computeroutput"><span class="keyword">rule</span> has-parent <span class="special">(</span> path <span class="special">)</span></code><p>Tests if a path has a parent.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.path.basename"></a><a class="indexterm" name="idp549234480"></a><code class="computeroutput"><span class="keyword">rule</span> basename <span class="special">(</span> path <span class="special">)</span></code><p>Returns the path without any directory components.</p>
+<a name="bbv2.reference.modules.path.basename"></a><a class="indexterm" name="idp545264384"></a><code class="computeroutput"><span class="keyword">rule</span> basename <span class="special">(</span> path <span class="special">)</span></code><p>Returns the path without any directory components.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.path.parent"></a><a class="indexterm" name="idp549239840"></a><code class="computeroutput"><span class="keyword">rule</span> parent <span class="special">(</span> path <span class="special">)</span></code><p>Returns the parent directory of the path. If no parent exists, an error is issued.</p>
+<a name="bbv2.reference.modules.path.parent"></a><a class="indexterm" name="idp545269808"></a><code class="computeroutput"><span class="keyword">rule</span> parent <span class="special">(</span> path <span class="special">)</span></code><p>Returns the parent directory of the path. If no parent exists, an error is issued.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.path.reverse"></a><a class="indexterm" name="idp549245296"></a><code class="computeroutput"><span class="keyword">rule</span> reverse <span class="special">(</span> path <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.path.reverse"></a><a class="indexterm" name="idp545275136"></a><code class="computeroutput"><span class="keyword">rule</span> reverse <span class="special">(</span> path <span class="special">)</span></code><p>
         Returns <code class="computeroutput">path2</code> such that
         <code class="computeroutput"><span class="special">[</span> join path path2 <span class="special">]</span> <span class="special">=</span> "."</code>.
         The path may not contain <code class="computeroutput">".."</code>
@@ -1712,23 +1758,23 @@ import path <span class="special">:</span> native make <span class="special">:</
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.path.join"></a><a class="indexterm" name="idp549254752"></a><code class="computeroutput"><span class="keyword">rule</span> join <span class="special">(</span> elements + <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.path.join"></a><a class="indexterm" name="idp545284592"></a><code class="computeroutput"><span class="keyword">rule</span> join <span class="special">(</span> elements + <span class="special">)</span></code><p>
         Concatenates the passed path elements. Generates an error if any
         element other than the first one is rooted. Skips any empty or
         undefined path elements.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.path.root"></a><a class="indexterm" name="idp549260192"></a><code class="computeroutput"><span class="keyword">rule</span> root <span class="special">(</span> path root <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.path.root"></a><a class="indexterm" name="idp545290160"></a><code class="computeroutput"><span class="keyword">rule</span> root <span class="special">(</span> path root <span class="special">)</span></code><p>
         If <code class="computeroutput">path</code> is relative, it is rooted at
         <code class="computeroutput">root</code>. Otherwise, it is unchanged.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.path.pwd"></a><a class="indexterm" name="idp549267056"></a><code class="computeroutput"><span class="keyword">rule</span> pwd <span class="special">(</span> <span class="special">)</span></code><p>Returns the current working directory.</p>
+<a name="bbv2.reference.modules.path.pwd"></a><a class="indexterm" name="idp545296960"></a><code class="computeroutput"><span class="keyword">rule</span> pwd <span class="special">(</span> <span class="special">)</span></code><p>Returns the current working directory.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.path.glob"></a><a class="indexterm" name="idp549272384"></a><code class="computeroutput"><span class="keyword">rule</span> glob <span class="special">(</span> dirs * <span class="special">:</span> patterns + <span class="special">:</span> exclude-patterns * <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.path.glob"></a><a class="indexterm" name="idp545302288"></a><code class="computeroutput"><span class="keyword">rule</span> glob <span class="special">(</span> dirs * <span class="special">:</span> patterns + <span class="special">:</span> exclude-patterns * <span class="special">)</span></code><p>
         Returns the list of files matching the given pattern in the specified
         directory. Both directories and patterns are supplied as portable paths. Each
         pattern should be a non-absolute path, and can't contain "." or ".." elements.
@@ -1753,7 +1799,7 @@ import path <span class="special">:</span> native make <span class="special">:</
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.path.glob-tree"></a><a class="indexterm" name="idp549286384"></a><code class="computeroutput"><span class="keyword">rule</span> glob-tree <span class="special">(</span> roots * <span class="special">:</span> patterns + <span class="special">:</span> exclude-patterns * <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.path.glob-tree"></a><a class="indexterm" name="idp545316288"></a><code class="computeroutput"><span class="keyword">rule</span> glob-tree <span class="special">(</span> roots * <span class="special">:</span> patterns + <span class="special">:</span> exclude-patterns * <span class="special">)</span></code><p>
         Recursive version of <a class="link" href="reference.html#bbv2.reference.modules.path.glob">glob</a>.
         Builds the glob of files while also searching in
         the subdirectories of the given roots. An optional set of exclusion patterns
@@ -1763,10 +1809,10 @@ import path <span class="special">:</span> native make <span class="special">:</
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.path.exists"></a><a class="indexterm" name="idp549294320"></a><code class="computeroutput"><span class="keyword">rule</span> exists <span class="special">(</span> file <span class="special">)</span></code><p>Returns true if the specified file exists.</p>
+<a name="bbv2.reference.modules.path.exists"></a><a class="indexterm" name="idp545324288"></a><code class="computeroutput"><span class="keyword">rule</span> exists <span class="special">(</span> file <span class="special">)</span></code><p>Returns true if the specified file exists.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.path.all-parents"></a><a class="indexterm" name="idp549299616"></a><code class="computeroutput"><span class="keyword">rule</span> all-parents <span class="special">(</span> path <span class="special">:</span> upper_limit ? <span class="special">:</span> cwd ? <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.path.all-parents"></a><a class="indexterm" name="idp545329712"></a><code class="computeroutput"><span class="keyword">rule</span> all-parents <span class="special">(</span> path <span class="special">:</span> upper_limit ? <span class="special">:</span> cwd ? <span class="special">)</span></code><p>
         Find out the absolute name of path and return the list of all the parents,
         starting with the immediate one. Parents are returned as relative names. If
         <code class="computeroutput">upper_limit</code> is specified, directories above it
@@ -1774,7 +1820,7 @@ import path <span class="special">:</span> native make <span class="special">:</
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.path.glob-in-parents"></a><a class="indexterm" name="idp549307232"></a><code class="computeroutput"><span class="keyword">rule</span> glob-in-parents <span class="special">(</span> dir <span class="special">:</span> patterns + <span class="special">:</span> upper-limit ? <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.path.glob-in-parents"></a><a class="indexterm" name="idp545337456"></a><code class="computeroutput"><span class="keyword">rule</span> glob-in-parents <span class="special">(</span> dir <span class="special">:</span> patterns + <span class="special">:</span> upper-limit ? <span class="special">)</span></code><p>
         Search for <code class="computeroutput">patterns</code> in parent directories
         of <code class="computeroutput">dir</code>, up to and including
         <code class="computeroutput">upper_limit</code>, if it is specified, or
@@ -1782,23 +1828,23 @@ import path <span class="special">:</span> native make <span class="special">:</
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.path.relative"></a><a class="indexterm" name="idp549316224"></a><code class="computeroutput"><span class="keyword">rule</span> relative <span class="special">(</span> child parent <span class="special">:</span> no-error ? <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.path.relative"></a><a class="indexterm" name="idp545346512"></a><code class="computeroutput"><span class="keyword">rule</span> relative <span class="special">(</span> child parent <span class="special">:</span> no-error ? <span class="special">)</span></code><p>
         Assuming <code class="computeroutput">child</code> is a subdirectory of
         <code class="computeroutput">parent</code>, return the relative path from
         <code class="computeroutput">parent</code> to <code class="computeroutput">child</code>.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.path.relative-to"></a><a class="indexterm" name="idp549325168"></a><code class="computeroutput"><span class="keyword">rule</span> relative-to <span class="special">(</span> path1 path2 <span class="special">)</span></code><p>Returns the minimal path to path2 that is relative path1.</p>
+<a name="bbv2.reference.modules.path.relative-to"></a><a class="indexterm" name="idp545355520"></a><code class="computeroutput"><span class="keyword">rule</span> relative-to <span class="special">(</span> path1 path2 <span class="special">)</span></code><p>Returns the minimal path to path2 that is relative path1.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.path.programs-path"></a><a class="indexterm" name="idp549330656"></a><code class="computeroutput"><span class="keyword">rule</span> programs-path <span class="special">(</span> <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.path.programs-path"></a><a class="indexterm" name="idp545360944"></a><code class="computeroutput"><span class="keyword">rule</span> programs-path <span class="special">(</span> <span class="special">)</span></code><p>
         Returns the list of paths which are used by the operating system for
         looking up programs.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.path.mkdirs"></a><a class="indexterm" name="idp549336000"></a><code class="computeroutput"><span class="keyword">rule</span> makedirs <span class="special">(</span> path <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.path.mkdirs"></a><a class="indexterm" name="idp545366448"></a><code class="computeroutput"><span class="keyword">rule</span> makedirs <span class="special">(</span> path <span class="special">)</span></code><p>
         Creates a directory and all parent directories that do not
         already exist.
       </p>
@@ -1808,7 +1854,7 @@ import path <span class="special">:</span> native make <span class="special">:</
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="bbv2.reference.modules.regex"></a>regex</h4></div></div></div>
-<a class="indexterm" name="idp549342080"></a><p>
+<a class="indexterm" name="idp545372432"></a><p>
     Contains rules for string processing using regular expressions.
   </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
@@ -1857,7 +1903,7 @@ import path <span class="special">:</span> native make <span class="special">:</
 </ul></div>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<a name="bbv2.reference.modules.regex.split"></a><a class="indexterm" name="idp549369168"></a><code class="computeroutput"><span class="keyword">rule</span> split <span class="special">(</span> string separator <span class="special">)</span></code><p>Returns a list of the following substrings:
+<a name="bbv2.reference.modules.regex.split"></a><a class="indexterm" name="idp545399520"></a><code class="computeroutput"><span class="keyword">rule</span> split <span class="special">(</span> string separator <span class="special">)</span></code><p>Returns a list of the following substrings:
       </p>
 <div class="orderedlist"><ol class="orderedlist" type="a">
 <li class="listitem"><p>from beginning till the first occurrence of
@@ -1875,34 +1921,34 @@ import path <span class="special">:</span> native make <span class="special">:</
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.regex.split-list"></a><a class="indexterm" name="idp549379856"></a><code class="computeroutput"><span class="keyword">rule</span> split-list <span class="special">(</span> list * <span class="special">:</span> separator <span class="special">)</span></code><p>Returns the concatenated results of applying
+<a name="bbv2.reference.modules.regex.split-list"></a><a class="indexterm" name="idp545410144"></a><code class="computeroutput"><span class="keyword">rule</span> split-list <span class="special">(</span> list * <span class="special">:</span> separator <span class="special">)</span></code><p>Returns the concatenated results of applying
       <a class="link" href="reference.html#bbv2.reference.modules.regex.split">regex.split</a>
       to every element of the list using the separator pattern.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.regex.match"></a><a class="indexterm" name="idp549387232"></a><code class="computeroutput"><span class="keyword">rule</span> match <span class="special">(</span> pattern <span class="special">:</span> string <span class="special">:</span> indices * <span class="special">)</span></code><p>Match <code class="computeroutput">string</code> against
+<a name="bbv2.reference.modules.regex.match"></a><a class="indexterm" name="idp545417520"></a><code class="computeroutput"><span class="keyword">rule</span> match <span class="special">(</span> pattern <span class="special">:</span> string <span class="special">:</span> indices * <span class="special">)</span></code><p>Match <code class="computeroutput">string</code> against
       <code class="computeroutput">pattern</code>, and return the elements
       indicated by <code class="computeroutput">indices</code>.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.regex.transform"></a><a class="indexterm" name="idp549396608"></a><code class="computeroutput"><span class="keyword">rule</span> transform <span class="special">(</span> list * <span class="special">:</span> pattern <span class="special">:</span> indices * <span class="special">)</span></code><p>Matches all elements of <code class="computeroutput">list</code> against
+<a name="bbv2.reference.modules.regex.transform"></a><a class="indexterm" name="idp545426832"></a><code class="computeroutput"><span class="keyword">rule</span> transform <span class="special">(</span> list * <span class="special">:</span> pattern <span class="special">:</span> indices * <span class="special">)</span></code><p>Matches all elements of <code class="computeroutput">list</code> against
       the <code class="computeroutput">pattern</code> and returns a list of elements
       indicated by <code class="computeroutput">indices</code> of all successful
       matches. If <code class="computeroutput">indices</code> is omitted returns a list
       of first parenthesized groups of all successful matches.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.regex.escape"></a><a class="indexterm" name="idp549406816"></a><code class="computeroutput"><span class="keyword">rule</span> escape <span class="special">(</span> string <span class="special">:</span> symbols <span class="special">:</span> escape-symbol <span class="special">)</span></code><p>Escapes all of the characters in <code class="computeroutput">symbols</code>
+<a name="bbv2.reference.modules.regex.escape"></a><a class="indexterm" name="idp545436912"></a><code class="computeroutput"><span class="keyword">rule</span> escape <span class="special">(</span> string <span class="special">:</span> symbols <span class="special">:</span> escape-symbol <span class="special">)</span></code><p>Escapes all of the characters in <code class="computeroutput">symbols</code>
       using the escape symbol <code class="computeroutput">escape-symbol</code> for
       the given string, and returns the escaped string.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.regex.replace"></a><a class="indexterm" name="idp549415520"></a><code class="computeroutput"><span class="keyword">rule</span> replace <span class="special">(</span> string match replacement <span class="special">)</span></code><p>Replaces occurrences of a match string in a given string and
+<a name="bbv2.reference.modules.regex.replace"></a><a class="indexterm" name="idp545445616"></a><code class="computeroutput"><span class="keyword">rule</span> replace <span class="special">(</span> string match replacement <span class="special">)</span></code><p>Replaces occurrences of a match string in a given string and
       returns the new string. The match string can be a regex expression.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.regex.replace-list"></a><a class="indexterm" name="idp549421440"></a><code class="computeroutput"><span class="keyword">rule</span> replace-list <span class="special">(</span> list * <span class="special">:</span> match <span class="special">:</span> replacement <span class="special">)</span></code><p>Replaces occurrences of a match string in a given list of strings
+<a name="bbv2.reference.modules.regex.replace-list"></a><a class="indexterm" name="idp545451536"></a><code class="computeroutput"><span class="keyword">rule</span> replace-list <span class="special">(</span> list * <span class="special">:</span> match <span class="special">:</span> replacement <span class="special">)</span></code><p>Replaces occurrences of a match string in a given list of strings
       and returns a list of new strings. The match string can be a regex
       expression.
       </p>
@@ -1913,7 +1959,7 @@ import path <span class="special">:</span> native make <span class="special">:</
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="bbv2.reference.modules.sequence"></a>sequence</h4></div></div></div>
-<a class="indexterm" name="idp549430544"></a><p>
+<a class="indexterm" name="idp545460704"></a><p>
     Various useful list functions.  Note that algorithms in this module
     execute largely in the caller's module namespace, so that local
     rules can be used as function objects. Also note that most predicates
@@ -1923,50 +1969,50 @@ import path <span class="special">:</span> native make <span class="special">:</
   </p>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<a name="bbv2.reference.modules.sequence.filter"></a><a class="indexterm" name="idp549434384"></a><code class="computeroutput"><span class="keyword">rule</span> filter <span class="special">(</span> predicate + <span class="special">:</span> sequence * <span class="special">)</span></code><p>Return the elements <code class="computeroutput">e</code> of
+<a name="bbv2.reference.modules.sequence.filter"></a><a class="indexterm" name="idp545464480"></a><code class="computeroutput"><span class="keyword">rule</span> filter <span class="special">(</span> predicate + <span class="special">:</span> sequence * <span class="special">)</span></code><p>Return the elements <code class="computeroutput">e</code> of
       <code class="computeroutput">$(sequence)</code> for which
       <code class="computeroutput"><span class="special">[</span> $(predicate) e <span class="special">]</span></code> has a non-null value.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.sequence.transform"></a><a class="indexterm" name="idp549444064"></a><code class="computeroutput"><span class="keyword">rule</span> transform <span class="special">(</span> function + <span class="special">:</span> sequence * <span class="special">)</span></code><p>Return a new sequence consisting of
+<a name="bbv2.reference.modules.sequence.transform"></a><a class="indexterm" name="idp545474224"></a><code class="computeroutput"><span class="keyword">rule</span> transform <span class="special">(</span> function + <span class="special">:</span> sequence * <span class="special">)</span></code><p>Return a new sequence consisting of
       <code class="computeroutput"><span class="special">[</span> $(function) $(e) <span class="special">]</span></code> for each element
       <code class="computeroutput">e</code> of <code class="computeroutput">$(sequence)</code>.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.sequence.reverse"></a><a class="indexterm" name="idp549453808"></a><code class="computeroutput"><span class="keyword">rule</span> reverse <span class="special">(</span> s * <span class="special">)</span></code><p>Returns the elements of <code class="computeroutput">s</code> in
+<a name="bbv2.reference.modules.sequence.reverse"></a><a class="indexterm" name="idp545483968"></a><code class="computeroutput"><span class="keyword">rule</span> reverse <span class="special">(</span> s * <span class="special">)</span></code><p>Returns the elements of <code class="computeroutput">s</code> in
       reverse order.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.sequence.insertion-sort"></a><a class="indexterm" name="idp549460384"></a><code class="computeroutput"><span class="keyword">rule</span> insertion-sort <span class="special">(</span> s * <span class="special">:</span> ordered * <span class="special">)</span></code><p>Insertion-sort <code class="computeroutput">s</code> using the
+<a name="bbv2.reference.modules.sequence.insertion-sort"></a><a class="indexterm" name="idp545490480"></a><code class="computeroutput"><span class="keyword">rule</span> insertion-sort <span class="special">(</span> s * <span class="special">:</span> ordered * <span class="special">)</span></code><p>Insertion-sort <code class="computeroutput">s</code> using the
       BinaryPredicate <code class="computeroutput">ordered</code>.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.sequence.merge"></a><a class="indexterm" name="idp549468224"></a><code class="computeroutput"><span class="keyword">rule</span> merge <span class="special">(</span> s1 * <span class="special">:</span> s2 * <span class="special">:</span> ordered * <span class="special">)</span></code><p>Merge two ordered sequences using the BinaryPredicate
+<a name="bbv2.reference.modules.sequence.merge"></a><a class="indexterm" name="idp545498320"></a><code class="computeroutput"><span class="keyword">rule</span> merge <span class="special">(</span> s1 * <span class="special">:</span> s2 * <span class="special">:</span> ordered * <span class="special">)</span></code><p>Merge two ordered sequences using the BinaryPredicate
       <code class="computeroutput">ordered</code>.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.sequence.join"></a><a class="indexterm" name="idp549476144"></a><code class="computeroutput"><span class="keyword">rule</span> join <span class="special">(</span> s * <span class="special">:</span> joint ? <span class="special">)</span></code><p>Join the elements of <code class="computeroutput">s</code> into one
+<a name="bbv2.reference.modules.sequence.join"></a><a class="indexterm" name="idp545506256"></a><code class="computeroutput"><span class="keyword">rule</span> join <span class="special">(</span> s * <span class="special">:</span> joint ? <span class="special">)</span></code><p>Join the elements of <code class="computeroutput">s</code> into one
       long string. If <code class="computeroutput">joint</code> is supplied, it
       is used as a separator.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.sequence.length"></a><a class="indexterm" name="idp549484032"></a><code class="computeroutput"><span class="keyword">rule</span> length <span class="special">(</span> s * <span class="special">)</span></code><p>Find the length of any sequence.</p>
+<a name="bbv2.reference.modules.sequence.length"></a><a class="indexterm" name="idp545514144"></a><code class="computeroutput"><span class="keyword">rule</span> length <span class="special">(</span> s * <span class="special">)</span></code><p>Find the length of any sequence.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.sequence.unique"></a><a class="indexterm" name="idp549489856"></a><code class="computeroutput"><span class="keyword">rule</span> unique <span class="special">(</span> list * <span class="special">:</span> stable ? <span class="special">)</span></code><p>Removes duplicates from <code class="computeroutput">list</code>.
+<a name="bbv2.reference.modules.sequence.unique"></a><a class="indexterm" name="idp545519904"></a><code class="computeroutput"><span class="keyword">rule</span> unique <span class="special">(</span> list * <span class="special">:</span> stable ? <span class="special">)</span></code><p>Removes duplicates from <code class="computeroutput">list</code>.
       If <code class="computeroutput">stable</code> is passed, then the order
       of the elements will be unchanged.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.sequence.max-element"></a><a class="indexterm" name="idp549497904"></a><code class="computeroutput"><span class="keyword">rule</span> max-element <span class="special">(</span> elements + <span class="special">:</span> ordered ? <span class="special">)</span></code><p>Returns the maximum number in <code class="computeroutput">elements</code>.
+<a name="bbv2.reference.modules.sequence.max-element"></a><a class="indexterm" name="idp545527888"></a><code class="computeroutput"><span class="keyword">rule</span> max-element <span class="special">(</span> elements + <span class="special">:</span> ordered ? <span class="special">)</span></code><p>Returns the maximum number in <code class="computeroutput">elements</code>.
       Uses <code class="computeroutput">ordered</code> for comparisons or
       <a class="link" href="../">numbers.less</a>
       if none is provided.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.sequence.select-highest-ranked"></a><a class="indexterm" name="idp549506928"></a><code class="computeroutput"><span class="keyword">rule</span> select-highest-ranked <span class="special">(</span> elements * <span class="special">:</span> ranks * <span class="special">)</span></code><p>Returns all of <code class="computeroutput">elements</code> for which
+<a name="bbv2.reference.modules.sequence.select-highest-ranked"></a><a class="indexterm" name="idp545536976"></a><code class="computeroutput"><span class="keyword">rule</span> select-highest-ranked <span class="special">(</span> elements * <span class="special">:</span> ranks * <span class="special">)</span></code><p>Returns all of <code class="computeroutput">elements</code> for which
       the corresponding element in the parallel list
       <code class="computeroutput">rank</code> is equal to the maximum value in
       <code class="computeroutput">rank</code>.</p>
@@ -1976,13 +2022,13 @@ import path <span class="special">:</span> native make <span class="special">:</
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="bbv2.reference.modules.type"></a>type</h4></div></div></div>
-<a class="indexterm" name="idp549516256"></a><p>
+<a class="indexterm" name="idp545546368"></a><p>
     Deals with target type declaration and defines target class which supports
     typed targets.
   </p>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<a name="bbv2.reference.modules.type.register"></a><a class="indexterm" name="idp549519744"></a><code class="computeroutput"><span class="keyword">rule</span> register <span class="special">(</span> type <span class="special">:</span> suffixes * <span class="special">:</span> base-type ? <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.type.register"></a><a class="indexterm" name="idp545549920"></a><code class="computeroutput"><span class="keyword">rule</span> register <span class="special">(</span> type <span class="special">:</span> suffixes * <span class="special">:</span> base-type ? <span class="special">)</span></code><p>
         Registers a target type, possible derived from a
         <code class="computeroutput">base-type</code>.  Providing a list
         of suffixes here is a shortcut for separately calling the
@@ -1993,7 +2039,7 @@ import path <span class="special">:</span> native make <span class="special">:</
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.type.register-suffixes"></a><a class="indexterm" name="idp549529936"></a><code class="computeroutput"><span class="keyword">rule</span> register-suffixes <span class="special">(</span> suffixes + <span class="special">:</span> type <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.type.register-suffixes"></a><a class="indexterm" name="idp545560112"></a><code class="computeroutput"><span class="keyword">rule</span> register-suffixes <span class="special">(</span> suffixes + <span class="special">:</span> type <span class="special">)</span></code><p>
         Specifies that files with suffix from <code class="computeroutput">suffixes</code>
         be recognized as targets of  type <code class="computeroutput">type</code>.
         Issues an error if a different type is already specified for any
@@ -2001,47 +2047,47 @@ import path <span class="special">:</span> native make <span class="special">:</
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.type.registered"></a><a class="indexterm" name="idp549537504"></a><code class="computeroutput"><span class="keyword">rule</span> registered <span class="special">(</span> type <span class="special">)</span></code><p>Returns true iff type has been registered.</p>
+<a name="bbv2.reference.modules.type.registered"></a><a class="indexterm" name="idp545567680"></a><code class="computeroutput"><span class="keyword">rule</span> registered <span class="special">(</span> type <span class="special">)</span></code><p>Returns true iff type has been registered.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.type.validate"></a><a class="indexterm" name="idp549542944"></a><code class="computeroutput"><span class="keyword">rule</span> validate <span class="special">(</span> type <span class="special">)</span></code><p>Issues an error if <code class="computeroutput">type</code> is unknown.</p>
+<a name="bbv2.reference.modules.type.validate"></a><a class="indexterm" name="idp545573104"></a><code class="computeroutput"><span class="keyword">rule</span> validate <span class="special">(</span> type <span class="special">)</span></code><p>Issues an error if <code class="computeroutput">type</code> is unknown.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.type.set-scanner"></a><a class="indexterm" name="idp549548992"></a><code class="computeroutput"><span class="keyword">rule</span> set-scanner <span class="special">(</span> type <span class="special">:</span> scanner <span class="special">)</span></code><p>Sets a scanner class that will be used for this type.</p>
+<a name="bbv2.reference.modules.type.set-scanner"></a><a class="indexterm" name="idp545579216"></a><code class="computeroutput"><span class="keyword">rule</span> set-scanner <span class="special">(</span> type <span class="special">:</span> scanner <span class="special">)</span></code><p>Sets a scanner class that will be used for this type.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.type.get-scanner"></a><a class="indexterm" name="idp549555104"></a><code class="computeroutput"><span class="keyword">rule</span> get-scanner <span class="special">(</span> type <span class="special">:</span> property-set <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.type.get-scanner"></a><a class="indexterm" name="idp545585328"></a><code class="computeroutput"><span class="keyword">rule</span> get-scanner <span class="special">(</span> type <span class="special">:</span> property-set <span class="special">)</span></code><p>
         Returns a scanner instance appropriate to <code class="computeroutput">type</code>
         and <code class="computeroutput">property-set</code>.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.type.base"></a><a class="indexterm" name="idp549562592"></a><code class="computeroutput"><span class="keyword">rule</span> base <span class="special">(</span> type <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.type.base"></a><a class="indexterm" name="idp545592880"></a><code class="computeroutput"><span class="keyword">rule</span> base <span class="special">(</span> type <span class="special">)</span></code><p>
         Returns a base type for the given type or nothing in case the given
         type is not derived.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.type.all-bases"></a><a class="indexterm" name="idp549567952"></a><code class="computeroutput"><span class="keyword">rule</span> all-bases <span class="special">(</span> type <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.type.all-bases"></a><a class="indexterm" name="idp545598304"></a><code class="computeroutput"><span class="keyword">rule</span> all-bases <span class="special">(</span> type <span class="special">)</span></code><p>
         Returns the given type and all of its base types in order of
         their distance from type.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.type.all-derived"></a><a class="indexterm" name="idp549573312"></a><code class="computeroutput"><span class="keyword">rule</span> all-derived <span class="special">(</span> type <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.type.all-derived"></a><a class="indexterm" name="idp545603792"></a><code class="computeroutput"><span class="keyword">rule</span> all-derived <span class="special">(</span> type <span class="special">)</span></code><p>
         Returns the given type and all of its derived types in order
         of their distance from type.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.type.is-derived"></a><a class="indexterm" name="idp549578800"></a><code class="computeroutput"><span class="keyword">rule</span> is-derived <span class="special">(</span> type base <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.type.is-derived"></a><a class="indexterm" name="idp545609152"></a><code class="computeroutput"><span class="keyword">rule</span> is-derived <span class="special">(</span> type base <span class="special">)</span></code><p>
         Returns true if <code class="computeroutput">type</code> is equal to
         <code class="computeroutput">base</code> or has <code class="computeroutput">base</code>
         as its direct or indirect base.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.type.set-generated-target-suffix"></a><a class="indexterm" name="idp549586400"></a><code class="computeroutput"><span class="keyword">rule</span> set-generated-target-suffix <span class="special">(</span> type <span class="special">:</span> properties * <span class="special">:</span> suffix <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.type.set-generated-target-suffix"></a><a class="indexterm" name="idp545616752"></a><code class="computeroutput"><span class="keyword">rule</span> set-generated-target-suffix <span class="special">(</span> type <span class="special">:</span> properties * <span class="special">:</span> suffix <span class="special">)</span></code><p>
         Sets a file suffix to be used when generating a target of <code class="computeroutput">type</code> with the
         specified properties. Can be called with no properties if no suffix has
         already been specified for the <code class="computeroutput">type</code>. The <code class="computeroutput">suffix</code> parameter can be an empty
@@ -2058,19 +2104,19 @@ import path <span class="special">:</span> native make <span class="special">:</
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.type.change-generated-target-suffix"></a><a class="indexterm" name="idp549599216"></a><code class="computeroutput"><span class="keyword">rule</span> change-generated-target-suffix <span class="special">(</span> type <span class="special">:</span> properties * <span class="special">:</span> suffix <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.type.change-generated-target-suffix"></a><a class="indexterm" name="idp545629632"></a><code class="computeroutput"><span class="keyword">rule</span> change-generated-target-suffix <span class="special">(</span> type <span class="special">:</span> properties * <span class="special">:</span> suffix <span class="special">)</span></code><p>
         Change the suffix previously registered for this type/properties
         combination. If suffix is not yet specified, sets it.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.type.generated-target-suffix"></a><a class="indexterm" name="idp549606240"></a><code class="computeroutput"><span class="keyword">rule</span> generated-target-suffix <span class="special">(</span> type <span class="special">:</span> property-set <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.type.generated-target-suffix"></a><a class="indexterm" name="idp545636592"></a><code class="computeroutput"><span class="keyword">rule</span> generated-target-suffix <span class="special">(</span> type <span class="special">:</span> property-set <span class="special">)</span></code><p>
         Returns the suffix used when generating a file of
         <code class="computeroutput">type</code> with the given properties.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.type.set-generated-target-prefix"></a><a class="indexterm" name="idp549613040"></a><code class="computeroutput"><span class="keyword">rule</span> set-generated-target-prefix <span class="special">(</span> type <span class="special">:</span> properties * <span class="special">:</span> prefix <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.type.set-generated-target-prefix"></a><a class="indexterm" name="idp545643472"></a><code class="computeroutput"><span class="keyword">rule</span> set-generated-target-prefix <span class="special">(</span> type <span class="special">:</span> properties * <span class="special">:</span> prefix <span class="special">)</span></code><p>
         Sets a target prefix that should be used when generating targets of
         <code class="computeroutput">type</code> with the specified properties. Can
         be called with empty properties if no prefix for
@@ -2087,19 +2133,19 @@ import path <span class="special">:</span> native make <span class="special">:</
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.type.change-generated-target-prefix"></a><a class="indexterm" name="idp549624512"></a><code class="computeroutput"><span class="keyword">rule</span> change-generated-target-prefix <span class="special">(</span> type <span class="special">:</span> properties * <span class="special">:</span> prefix <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.type.change-generated-target-prefix"></a><a class="indexterm" name="idp545655008"></a><code class="computeroutput"><span class="keyword">rule</span> change-generated-target-prefix <span class="special">(</span> type <span class="special">:</span> properties * <span class="special">:</span> prefix <span class="special">)</span></code><p>
         Change the prefix previously registered for this type/properties
         combination. If prefix is not yet specified, sets it.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.type.generated-target-prefix"></a><a class="indexterm" name="idp549631600"></a><code class="computeroutput"><span class="keyword">rule</span> generated-target-prefix <span class="special">(</span> type <span class="special">:</span> property-set <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.type.generated-target-prefix"></a><a class="indexterm" name="idp545662032"></a><code class="computeroutput"><span class="keyword">rule</span> generated-target-prefix <span class="special">(</span> type <span class="special">:</span> property-set <span class="special">)</span></code><p>
         Returns the prefix used when generating a file of
         <code class="computeroutput">type</code> with the given properties.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.modules.type.type"></a><a class="indexterm" name="idp549638416"></a><code class="computeroutput"><span class="keyword">rule</span> type <span class="special">(</span> filename <span class="special">)</span></code><p>
+<a name="bbv2.reference.modules.type.type"></a><a class="indexterm" name="idp545668848"></a><code class="computeroutput"><span class="keyword">rule</span> type <span class="special">(</span> filename <span class="special">)</span></code><p>
         Returns file type given its name. If there are several
         dots in filename, tries each suffix. E.g. for name of
         "file.so.1.2" suffixes "2", "1", and "so" will be tried.
@@ -2122,7 +2168,7 @@ import path <span class="special">:</span> native make <span class="special">:</
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="bbv2.reference.class.abstract-target"></a>Class abstract-target</h4></div></div></div>
-<a class="indexterm" name="idp549646224"></a><p>
+<a class="indexterm" name="idp545676656"></a><p>
     Base class for all abstract targets.
   </p>
 <pre class="programlisting">
@@ -2159,19 +2205,19 @@ import path <span class="special">:</span> native make <span class="special">:</
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.class.abstract-target.name"></a><a class="indexterm" name="idp549686000"></a><code class="computeroutput"><span class="keyword">rule</span> name <span class="special">(</span> <span class="special">)</span></code><p>Returns the name of this target.</p>
+<a name="bbv2.reference.class.abstract-target.name"></a><a class="indexterm" name="idp545716624"></a><code class="computeroutput"><span class="keyword">rule</span> name <span class="special">(</span> <span class="special">)</span></code><p>Returns the name of this target.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.class.abstract-target.project"></a><a class="indexterm" name="idp549691680"></a><code class="computeroutput"><span class="keyword">rule</span> project <span class="special">(</span> <span class="special">)</span></code><p>Returns the <a class="link" href="reference.html#bbv2.reference.class.project-target" title="Class project-target">project</a> for this target.</p>
+<a name="bbv2.reference.class.abstract-target.project"></a><a class="indexterm" name="idp545722304"></a><code class="computeroutput"><span class="keyword">rule</span> project <span class="special">(</span> <span class="special">)</span></code><p>Returns the <a class="link" href="reference.html#bbv2.reference.class.project-target" title="Class project-target">project</a> for this target.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.class.abstract-target.location"></a><a class="indexterm" name="idp549698256"></a><code class="computeroutput"><span class="keyword">rule</span> location <span class="special">(</span> <span class="special">)</span></code><p>Returns the location where the target was declared.</p>
+<a name="bbv2.reference.class.abstract-target.location"></a><a class="indexterm" name="idp545728880"></a><code class="computeroutput"><span class="keyword">rule</span> location <span class="special">(</span> <span class="special">)</span></code><p>Returns the location where the target was declared.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.class.abstract-target.full-name"></a><a class="indexterm" name="idp549703904"></a><code class="computeroutput"><span class="keyword">rule</span> full-name <span class="special">(</span> <span class="special">)</span></code><p>Returns a user-readable name for this target.</p>
+<a name="bbv2.reference.class.abstract-target.full-name"></a><a class="indexterm" name="idp545734464"></a><code class="computeroutput"><span class="keyword">rule</span> full-name <span class="special">(</span> <span class="special">)</span></code><p>Returns a user-readable name for this target.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.class.abstract-target.generate"></a><a class="indexterm" name="idp549709584"></a><code class="computeroutput"><span class="keyword">rule</span> generate <span class="special">(</span> property-set <span class="special">)</span></code><p>
+<a name="bbv2.reference.class.abstract-target.generate"></a><a class="indexterm" name="idp545740144"></a><code class="computeroutput"><span class="keyword">rule</span> generate <span class="special">(</span> property-set <span class="special">)</span></code><p>
         Generates virtual targets for this abstract target using the specified
         properties, unless a different value of some feature is required by the
         target.  This is an abstract method which must be overriden by derived
@@ -2194,7 +2240,7 @@ import path <span class="special">:</span> native make <span class="special">:</
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="bbv2.reference.class.project-target"></a>Class project-target</h4></div></div></div>
-<a class="indexterm" name="idp549718784"></a><pre class="programlisting">
+<a class="indexterm" name="idp545749408"></a><pre class="programlisting">
 <span class="keyword">class</span> project-target <span class="special">:</span> <a class="link" href="reference.html#bbv2.reference.class.abstract-target" title="Class abstract-target">abstract-target</a> <span class="special">{</span>
     <span class="keyword">rule</span> <a class="link" href="reference.html#bbv2.reference.class.project-target.generate">generate</a> <span class="special">(</span> property-set <span class="special">)</span>
     <span class="keyword">rule</span> <a class="link" href="reference.html#bbv2.reference.class.project-target.build-dir">build-dir</a> <span class="special">(</span> <span class="special">)</span>
@@ -2219,7 +2265,7 @@ import path <span class="special">:</span> native make <span class="special">:</
   </p>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<a name="bbv2.reference.class.project-target.generate"></a><a class="indexterm" name="idp549756080"></a><code class="computeroutput"><span class="keyword">rule</span> generate <span class="special">(</span> property-set <span class="special">)</span></code><p>
+<a name="bbv2.reference.class.project-target.generate"></a><a class="indexterm" name="idp545786704"></a><code class="computeroutput"><span class="keyword">rule</span> generate <span class="special">(</span> property-set <span class="special">)</span></code><p>
         Overrides
         <a class="link" href="reference.html#bbv2.reference.class.abstract-target.generate">abstract-target.generate</a>.
 
@@ -2236,26 +2282,26 @@ import path <span class="special">:</span> native make <span class="special">:</
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.class.project-target.build-dir"></a><a class="indexterm" name="idp549764448"></a><code class="computeroutput"><span class="keyword">rule</span> build-dir <span class="special">(</span> <span class="special">)</span></code><p>
+<a name="bbv2.reference.class.project-target.build-dir"></a><a class="indexterm" name="idp545795136"></a><code class="computeroutput"><span class="keyword">rule</span> build-dir <span class="special">(</span> <span class="special">)</span></code><p>
         Returns the root build directory of the project.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.class.project-target.main-target"></a><a class="indexterm" name="idp549770160"></a><code class="computeroutput"><span class="keyword">rule</span> main-target <span class="special">(</span> name <span class="special">)</span></code><p>
+<a name="bbv2.reference.class.project-target.main-target"></a><a class="indexterm" name="idp545800848"></a><code class="computeroutput"><span class="keyword">rule</span> main-target <span class="special">(</span> name <span class="special">)</span></code><p>
         Returns a <a class="link" href="reference.html#bbv2.reference.class.main-target" title="Class main-target">main-target</a>
         class instance corresponding to <code class="literal">name</code>.
         Can only be called after the project has been fully loaded.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.class.project-target.has-main-target"></a><a class="indexterm" name="idp549777584"></a><code class="computeroutput"><span class="keyword">rule</span> has-main-target <span class="special">(</span> name <span class="special">)</span></code><p>
+<a name="bbv2.reference.class.project-target.has-main-target"></a><a class="indexterm" name="idp545808272"></a><code class="computeroutput"><span class="keyword">rule</span> has-main-target <span class="special">(</span> name <span class="special">)</span></code><p>
         Returns whether a <a class="link" href="reference.html#bbv2.reference.class.main-target" title="Class main-target">main-target</a>
         with the specified name exists.
         Can only be called after the project has been fully loaded.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.class.project-target.find"></a><a class="indexterm" name="idp549784256"></a><code class="computeroutput"><span class="keyword">rule</span> find <span class="special">(</span> id <span class="special">:</span> no-error ? <span class="special">)</span></code><p>
+<a name="bbv2.reference.class.project-target.find"></a><a class="indexterm" name="idp545814944"></a><code class="computeroutput"><span class="keyword">rule</span> find <span class="special">(</span> id <span class="special">:</span> no-error ? <span class="special">)</span></code><p>
         Find and return the target with the specified id, treated relative to
         self. Id may specify either a target or a file name with the target taking
         priority. May report an error or return nothing if the target is not found
@@ -2267,7 +2313,7 @@ import path <span class="special">:</span> native make <span class="special">:</
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="bbv2.reference.class.main-target"></a>Class main-target</h4></div></div></div>
-<a class="indexterm" name="idp549792240"></a><pre class="programlisting">
+<a class="indexterm" name="idp545822864"></a><pre class="programlisting">
 <span class="keyword">class</span> main-target <span class="special">:</span> <a class="link" href="reference.html#bbv2.reference.class.abstract-target" title="Class abstract-target">abstract-target</a> <span class="special">{</span>
     <span class="keyword">rule</span> <a class="link" href="reference.html#bbv2.reference.class.main-target.generate">generate</a> <span class="special">(</span> property-set <span class="special">)</span>
 
@@ -2283,7 +2329,7 @@ import path <span class="special">:</span> native make <span class="special">:</
     represents a named top-level target in a Jamfile.
   </p>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<a name="bbv2.reference.class.main-target.generate"></a><a class="indexterm" name="idp549816368"></a><code class="computeroutput"><span class="keyword">rule</span> generate <span class="special">(</span> property-set <span class="special">)</span></code><p>
+<a name="bbv2.reference.class.main-target.generate"></a><a class="indexterm" name="idp545846928"></a><code class="computeroutput"><span class="keyword">rule</span> generate <span class="special">(</span> property-set <span class="special">)</span></code><p>
         Overrides
         <a class="link" href="reference.html#bbv2.reference.class.abstract-target.generate">abstract-target.generate</a>.
         
@@ -2307,7 +2353,7 @@ import path <span class="special">:</span> native make <span class="special">:</
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="bbv2.reference.class.basic-target"></a>Class basic-target</h4></div></div></div>
-<a class="indexterm" name="idp549827344"></a><pre class="programlisting">
+<a class="indexterm" name="idp545857840"></a><pre class="programlisting">
 <span class="keyword">class</span> basic-target <span class="special">:</span> <a class="link" href="reference.html#bbv2.reference.class.abstract-target" title="Class abstract-target">abstract-target</a> <span class="special">{</span>
     <span class="keyword">rule</span> <a class="link" href="reference.html#bbv2.reference.class.basic-target.__init__">__init__</a> <span class="special">(</span> name <span class="special">:</span> project <span class="special">:</span> sources * <span class="special">:</span> requirements * <span class="special">:</span> default-build * <span class="special">:</span> usage-requirements * <span class="special">)</span>  
     <span class="keyword">rule</span> <a class="link" href="reference.html#bbv2.reference.class.basic-target.generate">generate</a> <span class="special">(</span> property-set <span class="special">)</span>
@@ -2343,7 +2389,7 @@ import path <span class="special">:</span> native make <span class="special">:</
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.class.basic-target.generate"></a><a class="indexterm" name="idp549873696"></a><code class="computeroutput"><span class="keyword">rule</span> generate <span class="special">(</span> property-set <span class="special">)</span></code><p>
+<a name="bbv2.reference.class.basic-target.generate"></a><a class="indexterm" name="idp545904128"></a><code class="computeroutput"><span class="keyword">rule</span> generate <span class="special">(</span> property-set <span class="special">)</span></code><p>
         Overrides
         <a class="link" href="reference.html#bbv2.reference.class.abstract-target.generate">abstract-target.generate</a>.
 
@@ -2362,7 +2408,7 @@ import path <span class="special">:</span> native make <span class="special">:</
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.class.basic-target.construct"></a><a class="indexterm" name="idp549882992"></a><code class="computeroutput"><span class="keyword">rule</span> construct <span class="special">(</span> name <span class="special">:</span> source-targets * <span class="special">:</span> property-set <span class="special">)</span></code><p>
+<a name="bbv2.reference.class.basic-target.construct"></a><a class="indexterm" name="idp545913424"></a><code class="computeroutput"><span class="keyword">rule</span> construct <span class="special">(</span> name <span class="special">:</span> source-targets * <span class="special">:</span> property-set <span class="special">)</span></code><p>
         Constructs virtual targets for this abstract target. Returns a
         usage-requirements property-set and a list of virtual
         targets. Should be overriden in derived classes.
@@ -2373,7 +2419,7 @@ import path <span class="special">:</span> native make <span class="special">:</
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="bbv2.reference.class.typed-target"></a>Class typed-target</h4></div></div></div>
-<a class="indexterm" name="idp549890848"></a><pre class="programlisting">
+<a class="indexterm" name="idp545921280"></a><pre class="programlisting">
 <span class="keyword">class</span> typed-target <span class="special">:</span> <a class="link" href="reference.html#bbv2.reference.class.basic-target" title="Class basic-target">basic-target</a> <span class="special">{</span>
     <span class="keyword">rule</span> <a class="link" href="reference.html#bbv2.reference.class.typed-target.__init__">__init__</a> <span class="special">(</span> name <span class="special">:</span> project <span class="special">:</span> type <span class="special">:</span> sources * <span class="special">:</span> requirements * <span class="special">:</span> default-build * <span class="special">:</span> usage-requirements * <span class="special">)</span> 
     <span class="keyword">rule</span> <a class="link" href="reference.html#bbv2.reference.class.typed-target.type">type</a> <span class="special">(</span> <span class="special">)</span>
@@ -2416,13 +2462,13 @@ import path <span class="special">:</span> native make <span class="special">:</
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.class.typed-target.type"></a><a class="indexterm" name="idp549946944"></a><code class="computeroutput"><span class="keyword">rule</span> type <span class="special">(</span> <span class="special">)</span></code><p>
+<a name="bbv2.reference.class.typed-target.type"></a><a class="indexterm" name="idp545977152"></a><code class="computeroutput"><span class="keyword">rule</span> type <span class="special">(</span> <span class="special">)</span></code><p>
         Returns the <a class="link" href="reference.html#bbv2.reference.modules.type" title="type">type</a>
         of the target.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.class.typed-target.construct"></a><a class="indexterm" name="idp549953408"></a><code class="computeroutput"><span class="keyword">rule</span> construct <span class="special">(</span> name <span class="special">:</span> source-targets * <span class="special">:</span> property-set <span class="special">)</span></code><p>
+<a name="bbv2.reference.class.typed-target.construct"></a><a class="indexterm" name="idp545983680"></a><code class="computeroutput"><span class="keyword">rule</span> construct <span class="special">(</span> name <span class="special">:</span> source-targets * <span class="special">:</span> property-set <span class="special">)</span></code><p>
         Implements <a class="link" href="reference.html#bbv2.reference.class.basic-target.construct">
         basic-target.construct</a>.  Attempts to create a target of
         the correct type using generators appropriate for the given
@@ -2451,7 +2497,7 @@ import path <span class="special">:</span> native make <span class="special">:</
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="bbv2.reference.class.property-set"></a>Class property-set</h4></div></div></div>
-<a class="indexterm" name="idp549965888"></a><p>Class for storing a set of properties.</p>
+<a class="indexterm" name="idp545996096"></a><p>Class for storing a set of properties.</p>
 <pre class="programlisting">
 <span class="keyword">class</span> property-set <span class="special">{</span>
     <span class="keyword">rule</span> <a class="link" href="reference.html#bbv2.reference.class.property-set.raw">raw</a> <span class="special">(</span> <span class="special">)</span>
@@ -2470,20 +2516,20 @@ import path <span class="special">:</span> native make <span class="special">:</
   </p>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<a name="bbv2.reference.class.property-set.raw"></a><a class="indexterm" name="idp549993520"></a><code class="computeroutput"><span class="keyword">rule</span> raw <span class="special">(</span> <span class="special">)</span></code><p>Returns a Jam list of the stored properties.</p>
+<a name="bbv2.reference.class.property-set.raw"></a><a class="indexterm" name="idp546023792"></a><code class="computeroutput"><span class="keyword">rule</span> raw <span class="special">(</span> <span class="special">)</span></code><p>Returns a Jam list of the stored properties.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.class.property-set.str"></a><a class="indexterm" name="idp549999056"></a><code class="computeroutput"><span class="keyword">rule</span> str <span class="special">(</span> <span class="special">)</span></code><p>Returns the string repesentation of the stored properties.</p>
+<a name="bbv2.reference.class.property-set.str"></a><a class="indexterm" name="idp546029392"></a><code class="computeroutput"><span class="keyword">rule</span> str <span class="special">(</span> <span class="special">)</span></code><p>Returns the string repesentation of the stored properties.</p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.class.property-set.propagated"></a><a class="indexterm" name="idp550004768"></a><code class="computeroutput"><span class="keyword">rule</span> propagated <span class="special">(</span> <span class="special">)</span></code><p>
+<a name="bbv2.reference.class.property-set.propagated"></a><a class="indexterm" name="idp546035104"></a><code class="computeroutput"><span class="keyword">rule</span> propagated <span class="special">(</span> <span class="special">)</span></code><p>
         Returns a <a class="link" href="reference.html#bbv2.reference.class.property-set" title="Class property-set">property-set</a>
         containing all the <a class="link" href="reference.html#bbv2.reference.features.attributes.propagated">propagated</a>
         properties in this <a class="link" href="reference.html#bbv2.reference.class.property-set" title="Class property-set">property-set</a>.
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.class.property-set.add"></a><a class="indexterm" name="idp550012992"></a><code class="computeroutput"><span class="keyword">rule</span> add <span class="special">(</span> ps <span class="special">)</span></code><p>
+<a name="bbv2.reference.class.property-set.add"></a><a class="indexterm" name="idp546043328"></a><code class="computeroutput"><span class="keyword">rule</span> add <span class="special">(</span> ps <span class="special">)</span></code><p>
         Returns a new <a class="link" href="reference.html#bbv2.reference.class.property-set" title="Class property-set">
         property-set</a> containing the union of the properties
         in this <a class="link" href="reference.html#bbv2.reference.class.property-set" title="Class property-set">
@@ -2505,7 +2551,7 @@ import path <span class="special">:</span> native make <span class="special">:</
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.class.property-set.add-raw"></a><a class="indexterm" name="idp550023584"></a><code class="computeroutput"><span class="keyword">rule</span> add-raw <span class="special">(</span> properties * <span class="special">)</span></code><p>
+<a name="bbv2.reference.class.property-set.add-raw"></a><a class="indexterm" name="idp546053856"></a><code class="computeroutput"><span class="keyword">rule</span> add-raw <span class="special">(</span> properties * <span class="special">)</span></code><p>
         Link <a class="link" href="reference.html#bbv2.reference.class.property-set.add">
         add</a>, except that it takes a list of properties
         instead of a <a class="link" href="reference.html#bbv2.reference.class.property-set" title="Class property-set">
@@ -2513,7 +2559,7 @@ import path <span class="special">:</span> native make <span class="special">:</
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.class.property-set.refine"></a><a class="indexterm" name="idp550031104"></a><code class="computeroutput"><span class="keyword">rule</span> refine <span class="special">(</span> ps <span class="special">)</span></code><p>
+<a name="bbv2.reference.class.property-set.refine"></a><a class="indexterm" name="idp546061312"></a><code class="computeroutput"><span class="keyword">rule</span> refine <span class="special">(</span> ps <span class="special">)</span></code><p>
         Refines properties by overriding any non-free and non-conditional
         properties for which a different value is specified in
         <code class="literal">ps</code>. Returns the resulting
@@ -2521,7 +2567,7 @@ import path <span class="special">:</span> native make <span class="special">:</
       </p>
 </li>
 <li class="listitem">
-<a name="bbv2.reference.class.property-set.get"></a><a class="indexterm" name="idp550038400"></a><code class="computeroutput"><span class="keyword">rule</span> get <span class="special">(</span> feature <span class="special">)</span></code><p>
+<a name="bbv2.reference.class.property-set.get"></a><a class="indexterm" name="idp546068608"></a><code class="computeroutput"><span class="keyword">rule</span> get <span class="special">(</span> feature <span class="special">)</span></code><p>
         Returns all the values of <code class="literal">feature</code>.
       </p>
 </li>
@@ -2633,7 +2679,7 @@ exe a : a.cpp
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="bbv2.reference.buildprocess.targetpath"></a>Target Paths</h4></div></div></div>
-<a class="indexterm" name="idp550069552"></a><p>Several factors determine the location of a concrete
+<a class="indexterm" name="idp546099280"></a><p>Several factors determine the location of a concrete
       file target.  All files in a project are built under
       the directory bin unless this is overriden by the build-dir project
       attribute.  Under bin is a path that depends on the properties
@@ -3004,11 +3050,7 @@ requested-properties -&gt; property-path
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2009, 2014 Vladimir Prus<p>Distributed under the Boost Software License, Version 1.0.
-      (See accompanying file <code class="filename">LICENSE_1_0.txt</code> or copy at 
-      <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
-      </p>
-</div></td>
+<td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

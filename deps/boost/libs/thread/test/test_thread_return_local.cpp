@@ -5,6 +5,8 @@
 
 #define BOOST_THREAD_USES_MOVE
 
+#define BOOST_TEST_MODULE Boost.Threads: thread return local test suite
+
 #include <boost/thread/thread_only.hpp>
 #include <boost/test/unit_test.hpp>
 
@@ -19,7 +21,7 @@ boost::thread make_thread_return_local(boost::thread::id* the_id)
     return boost::move(t);
 }
 
-void test_move_from_function_return_local()
+BOOST_AUTO_TEST_CASE(test_move_from_function_return_local)
 {
     boost::thread::id the_id;
     boost::thread x=make_thread_return_local(&the_id);
@@ -27,14 +29,3 @@ void test_move_from_function_return_local()
     x.join();
     BOOST_CHECK_EQUAL(the_id,x_id);
 }
-
-boost::unit_test::test_suite* init_unit_test_suite(int, char*[])
-{
-    boost::unit_test::test_suite* test =
-        BOOST_TEST_SUITE("Boost.Threads: thread move test suite");
-
-    test->add(BOOST_TEST_CASE(test_move_from_function_return_local));
-    return test;
-}
-
-

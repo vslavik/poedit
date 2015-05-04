@@ -298,6 +298,19 @@
 <td>
                   <p>
                     <code class="computeroutput"><a class="link" href="../intrinsic/metafunctions/at.html" title="at"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">at</span></code></a><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span>
+                    <span class="identifier">M</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Amortized constant time
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><a class="link" href="../intrinsic/metafunctions/at_c.html" title="at_c"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">at_c</span></code></a><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span>
                     <span class="identifier">N</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
                   </p>
                 </td>
@@ -311,6 +324,19 @@
 <td>
                   <p>
                     <code class="computeroutput"><a class="link" href="../intrinsic/metafunctions/value_at.html" title="value_at"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">value_at</span></code></a><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span>
+                    <span class="identifier">M</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Amortized constant time
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><a class="link" href="../intrinsic/metafunctions/value_at_c.html" title="value_at_c"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">value_at_c</span></code></a><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span>
                     <span class="identifier">N</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
                   </p>
                 </td>
@@ -322,17 +348,23 @@
 </tr>
 </tbody>
 </table></div>
-<div class="sidebar">
-<div class="titlepage"></div>
-<p>
-          <span class="inlinemediaobject"><img src="../../../images/note.png" alt="note"></span> <code class="computeroutput"><a class="link" href="../intrinsic/metafunctions/at.html" title="at"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">at</span></code></a><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span> <span class="identifier">N</span><span class="special">&gt;</span></code> returns the actual type returned by
-          <code class="computeroutput"><a class="link" href="../intrinsic/functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;(</span><span class="identifier">s</span><span class="special">)</span></code>. In
-          most cases, this is a reference. Hence, there is no way to know the exact
-          element type using <code class="computeroutput"><a class="link" href="../intrinsic/metafunctions/at.html" title="at"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">at</span></code></a><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span> <span class="identifier">N</span><span class="special">&gt;</span></code>.The element at <code class="computeroutput"><span class="identifier">N</span></code>
-          may actually be a reference to begin with. For this purpose, you can use
-          <code class="computeroutput"><a class="link" href="../intrinsic/metafunctions/value_at.html" title="value_at"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">value_at</span></code></a><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span> <span class="identifier">N</span><span class="special">&gt;</span></code>.
-        </p>
-</div>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            <code class="computeroutput"><a class="link" href="../intrinsic/metafunctions/at.html" title="at"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">at</span></code></a><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span> <span class="identifier">M</span><span class="special">&gt;</span></code>
+            returns the actual type returned by <code class="computeroutput"><a class="link" href="../intrinsic/functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a><span class="special">&lt;</span><span class="identifier">M</span><span class="special">&gt;(</span><span class="identifier">s</span><span class="special">)</span></code>.
+            In most cases, this is a reference. Hence, there is no way to know the
+            exact element type using <code class="computeroutput"><a class="link" href="../intrinsic/metafunctions/at.html" title="at"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">at</span></code></a><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span> <span class="identifier">M</span><span class="special">&gt;</span></code>.The
+            element at <code class="computeroutput"><span class="identifier">M</span></code> may actually
+            be a reference to begin with. For this purpose, you can use <code class="computeroutput"><a class="link" href="../intrinsic/metafunctions/value_at.html" title="value_at"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">value_at</span></code></a><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span> <span class="identifier">M</span><span class="special">&gt;</span></code>
+            (Note that, <code class="computeroutput"><a class="link" href="../intrinsic/metafunctions/value_at_c.html" title="value_at_c"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">value_at_c</span></code></a><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span> <span class="identifier">N</span><span class="special">&gt;</span></code>
+            is a counterpart of <code class="computeroutput"><a class="link" href="../intrinsic/metafunctions/at_c.html" title="at_c"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">at_c</span></code></a><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span> <span class="identifier">N</span><span class="special">&gt;</span></code>
+            as well).
+          </p></td></tr>
+</table></div>
 <h6>
 <a name="fusion.sequence.concepts.random_access_sequence.h4"></a>
           <span class="phrase"><a name="fusion.sequence.concepts.random_access_sequence.expression_semantics"></a></span><a class="link" href="random_access_sequence.html#fusion.sequence.concepts.random_access_sequence.expression_semantics">Expression

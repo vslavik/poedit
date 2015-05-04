@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Spherical Bessel Functions of the First and Second Kinds</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 1.9.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
 <link rel="up" href="../bessel.html" title="Bessel Functions">
 <link rel="prev" href="mbessel.html" title="Modified Bessel Functions of the First and Second Kinds">
 <link rel="next" href="bessel_derivatives.html" title="Derivatives of the Bessel Functions">
@@ -66,7 +66,7 @@
         where:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/sbessel2.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/sbessel2.svg"></span>
       </p>
 <p>
         The return type of these functions is computed using the <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>result
@@ -86,14 +86,14 @@
         The j<sub>v</sub> &#160; function is cyclic like J<sub>v</sub> &#160; but differs in its behaviour at the origin:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../graphs/sph_bessel.png" align="middle"></span>
+        <span class="inlinemediaobject"><img src="../../../graphs/sph_bessel.svg" align="middle"></span>
       </p>
 <p>
         Likewise y<sub>v</sub> &#160; is also cyclic for large x, but tends to -&#8734; &#160;
 for small <span class="emphasis"><em>x</em></span>:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../graphs/sph_neumann.png" align="middle"></span>
+        <span class="inlinemediaobject"><img src="../../../graphs/sph_neumann.svg" align="middle"></span>
       </p>
 <h5>
 <a name="math_toolkit.bessel.sph_bessel.h2"></a>
@@ -123,7 +123,7 @@ for small <span class="emphasis"><em>x</em></span>:
         implemented directly in terms of their definitions:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/sbessel2.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/sbessel2.svg"></span>
       </p>
 <p>
         The special cases occur for:
@@ -136,7 +136,7 @@ for small <span class="emphasis"><em>x</em></span>:
         and for small <span class="emphasis"><em>x &lt; 1</em></span>, we can use the series:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/sbessel5.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/sbessel5.svg"></span>
       </p>
 <p>
         which neatly avoids the problem of calculating 0/0 that can occur with the
@@ -145,10 +145,10 @@ for small <span class="emphasis"><em>x</em></span>:
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012, 2013 Nikhar Agrawal, Anton Bikineev,
-      Paul A. Bristow, Christopher Kormanyos, Hubert Holin, Bruno Lalande, John Maddock,
-      Johan R&#229;de, Gautam Sewani, Benjamin Sobotta, Thijs van den Berg, Daryle Walker
-      and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
+      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
+      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
+      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -1,6 +1,6 @@
 /* Boost.Flyweight test suite.
  *
- * Copyright 2006-2008 Joaquin M Lopez Munoz.
+ * Copyright 2006-2014 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -18,6 +18,7 @@
 #include "test_multictor.hpp"
 #include "test_no_locking.hpp"
 #include "test_no_tracking.hpp"
+#include "test_serialization.hpp"
 #include "test_set_factory.hpp"
 
 int main()
@@ -30,6 +31,7 @@ int main()
   test_multictor();
   test_no_locking();
   test_no_tracking();
+  test_serialization();
   test_set_factory();
 
   return boost::report_errors();

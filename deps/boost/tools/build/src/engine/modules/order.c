@@ -77,7 +77,7 @@ void topological_sort( int * * graph, int num_vertices, int * result )
     for ( i = 0; i < num_vertices; ++i )
         colors[ i ] = white;
 
-    for ( i = 0; i < num_vertices; ++i )
+    for ( i = num_vertices - 1; i >= 0; --i )
         if ( colors[ i ] == white )
             do_ts( graph, i, colors, &result );
 

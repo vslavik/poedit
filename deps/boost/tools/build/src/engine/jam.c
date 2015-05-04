@@ -627,7 +627,8 @@ char *executable_path( char const * argv0 )
 # include <stdlib.h>
 char * executable_path( char const * argv0 )
 {
-    return strdup( getexecname() );
+    const char * execname = getexecname();
+    return execname ? strdup( execname ) : NULL;
 }
 #elif defined(__FreeBSD__)
 # include <sys/sysctl.h>

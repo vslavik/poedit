@@ -70,13 +70,13 @@ public:
     typedef TypeInfo                                type_info_t;
 
     /// \b Override: This function \b may be redefined in Derived class. Overrides \b must not throw.
-    /// \return Name of a type. By default retuns Derived::raw_name().
+    /// \return Name of a type. By default returns Derived::raw_name().
     inline const char* name() const BOOST_NOEXCEPT {
         return derived().raw_name();
     }
 
     /// \b Override: This function \b may be redefined in Derived class. Overrides may throw.
-    /// \return Human redable type name. By default retuns Derived::name().
+    /// \return Human readable type name. By default returns Derived::name().
     inline std::string pretty_name() const {
         return derived().name();
     }

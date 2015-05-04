@@ -94,7 +94,7 @@ public:
   {
     ++n_copies;
   }
-  A& operator=(A const& a)
+  A& operator=(BOOST_THREAD_COPY_ASSIGN_REF(A) a)
   {
     data_ = a.data_;
     ++n_copies;

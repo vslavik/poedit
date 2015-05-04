@@ -232,17 +232,20 @@
 </tr>
 </tbody>
 </table></div>
-<div class="sidebar">
-<div class="titlepage"></div>
-<p>
-          <span class="inlinemediaobject"><img src="../../../images/note.png" alt="note"></span> <code class="computeroutput"><a class="link" href="../intrinsic/metafunctions/at_key.html" title="at_key"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">at_key</span></code></a><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span> <span class="identifier">K</span><span class="special">&gt;</span></code> returns the actual type returned by
-          <code class="computeroutput"><a class="link" href="../intrinsic/functions/at_key.html" title="at_key"><code class="computeroutput"><span class="identifier">at_key</span></code></a><span class="special">&lt;</span><span class="identifier">K</span><span class="special">&gt;(</span><span class="identifier">s</span><span class="special">)</span></code>. In
-          most cases, this is a reference. Hence, there is no way to know the exact
-          element type using <code class="computeroutput"><a class="link" href="../intrinsic/metafunctions/at_key.html" title="at_key"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">at_key</span></code></a><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span> <span class="identifier">K</span><span class="special">&gt;</span></code>.The element at <code class="computeroutput"><span class="identifier">K</span></code>
-          may actually be a reference to begin with. For this purpose, you can use
-          <code class="computeroutput"><a class="link" href="../intrinsic/metafunctions/value_at_key.html" title="value_at_key"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">value_at_key</span></code></a><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span> <span class="identifier">N</span><span class="special">&gt;</span></code>.
-        </p>
-</div>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            <code class="computeroutput"><a class="link" href="../intrinsic/metafunctions/at_key.html" title="at_key"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">at_key</span></code></a><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span> <span class="identifier">K</span><span class="special">&gt;</span></code>
+            returns the actual type returned by <code class="computeroutput"><a class="link" href="../intrinsic/functions/at_key.html" title="at_key"><code class="computeroutput"><span class="identifier">at_key</span></code></a><span class="special">&lt;</span><span class="identifier">K</span><span class="special">&gt;(</span><span class="identifier">s</span><span class="special">)</span></code>.
+            In most cases, this is a reference. Hence, there is no way to know the
+            exact element type using <code class="computeroutput"><a class="link" href="../intrinsic/metafunctions/at_key.html" title="at_key"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">at_key</span></code></a><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span> <span class="identifier">K</span><span class="special">&gt;</span></code>.The
+            element at <code class="computeroutput"><span class="identifier">K</span></code> may actually
+            be a reference to begin with. For this purpose, you can use <code class="computeroutput"><a class="link" href="../intrinsic/metafunctions/value_at_key.html" title="value_at_key"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">value_at_key</span></code></a><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span> <span class="identifier">K</span><span class="special">&gt;</span></code>.
+          </p></td></tr>
+</table></div>
 <h6>
 <a name="fusion.sequence.concepts.associative_sequence.h3"></a>
           <span class="phrase"><a name="fusion.sequence.concepts.associative_sequence.expression_semantics"></a></span><a class="link" href="associative_sequence.html#fusion.sequence.concepts.associative_sequence.expression_semantics">Expression

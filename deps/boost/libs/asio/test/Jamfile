@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2003-2014 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+# Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 #
 # Distributed under the Boost Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -26,7 +26,6 @@ if $(UNIX)
 
 template asio_unit_test
   : <lib>@boost/libs/regex/build/boost_regex
-    <lib>@boost/libs/test/build/boost_test_exec_monitor
     <lib>@boost_system/libs/system/build/boost_system
   : <include>../../.. <include>@boost <include>@boost_system
     <define>BOOST_ALL_NO_LIB=1

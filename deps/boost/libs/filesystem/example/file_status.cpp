@@ -11,12 +11,7 @@
 #include <boost/config.hpp>
 #include <boost/version.hpp>
 #include <boost/filesystem.hpp>
-
-#ifndef BOOST_LIGHTWEIGHT_MAIN
-#  include <boost/test/prg_exec_monitor.hpp>
-#else
-#  include <boost/detail/lightweight_main.hpp>
-#endif
+#include <boost/detail/lightweight_main.hpp>
 
 using std::cout; using std::endl;
 using namespace boost::filesystem;

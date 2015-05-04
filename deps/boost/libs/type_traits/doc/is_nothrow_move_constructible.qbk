@@ -16,8 +16,8 @@ or a type without move-constructor but with non-throwing copy-constructor,
 then inherits from __true_type, otherwise inherits from __false_type.  Type `T`
 must be a complete type.
 
-In other words, inherits from __true_type only if expression `T(std::move(varaible1))`
-won't throw (`varaible1` is a variable of type `T`).
+In other words, inherits from __true_type only if expression `T(std::move(variable1))`
+won't throw (`variable1` is a variable of type `T`).
 
 __compat If the compiler does not support partial-specialization of class 
 templates, then this template can not be used with function types.

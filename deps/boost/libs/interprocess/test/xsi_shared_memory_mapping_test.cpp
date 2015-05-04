@@ -58,7 +58,7 @@ inline std::string get_filename()
    return ret;
 }
 
-int main (int argc, char *argv[])
+int main ()
 {
    std::string filename(get_filename());
    const char *names[2] = { filename.c_str(), 0 };

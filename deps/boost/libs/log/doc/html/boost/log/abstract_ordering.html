@@ -31,38 +31,38 @@
   <span class="keyword">typedef</span> <span class="keyword">bool</span> <a name="boost.log.abstract_ordering.result_type"></a><span class="identifier">result_type</span><span class="special">;</span>  <span class="comment">// Result type. </span>
 
   <span class="comment">// <a class="link" href="abstract_ordering.html#boost.log.abstract_orderingconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="abstract_ordering.html#idp39161856-bb"><span class="identifier">abstract_ordering</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="abstract_ordering.html#idp39163040-bb"><span class="identifier">abstract_ordering</span></a><span class="special">(</span><span class="identifier">FunT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="abstract_ordering.html#idp46443952-bb"><span class="identifier">abstract_ordering</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="abstract_ordering.html#idp46445136-bb"><span class="identifier">abstract_ordering</span></a><span class="special">(</span><span class="identifier">FunT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="abstract_ordering.html#idp39158224-bb">public member functions</a></span>
-  <span class="identifier">result_type</span> <a class="link" href="abstract_ordering.html#idp39158784-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="abstract_ordering.html#idp46440320-bb">public member functions</a></span>
+  <span class="identifier">result_type</span> <a class="link" href="abstract_ordering.html#idp46440880-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp146968368"></a><h2>Description</h2>
+<a name="idp132774016"></a><h2>Description</h2>
 <p>Since record views only refer to a shared implementation data, this predicate is able to order the views by comparing the pointers to the data. Therefore two views are considered to be equivalent if they refer to the same implementation data. Otherwise it is not specified whether one record is ordered before the other until the predicate is applied. Note that the ordering may change every time the application runs.</p>
 <p>This kind of ordering may be useful if log records are to be stored in an associative container with as least performance overhead as possible, when the particular order is not important.</p>
 <p>The <code class="computeroutput">FunT</code> template argument is the predicate that is used to actually compare pointers. It should be able to compare <code class="computeroutput">const void*</code> pointers. The compared pointers may refer to distinct memory regions, the pointers must not be interpreted in any way. </p>
 <div class="refsect2">
-<a name="idp146971872"></a><h3>
+<a name="idp132777520"></a><h3>
 <a name="boost.log.abstract_orderingconstruct-copy-destruct"></a><code class="computeroutput">abstract_ordering</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp39161856-bb"></a><span class="identifier">abstract_ordering</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp46443952-bb"></a><span class="identifier">abstract_ordering</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Default constructor. Requires <code class="computeroutput">FunT</code> to be default constructible. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp39163040-bb"></a><span class="identifier">abstract_ordering</span><span class="special">(</span><span class="identifier">FunT</span> <span class="keyword">const</span> <span class="special">&amp;</span> fun<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp46445136-bb"></a><span class="identifier">abstract_ordering</span><span class="special">(</span><span class="identifier">FunT</span> <span class="keyword">const</span> <span class="special">&amp;</span> fun<span class="special">)</span><span class="special">;</span></pre>
 <p>Initializing constructor. Constructs <code class="computeroutput">FunT</code> instance as a copy of the <span class="emphasis"><em>fun</em></span> argument. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp146986656"></a><h3>
-<a name="idp39158224-bb"></a><code class="computeroutput">abstract_ordering</code> public member functions</h3>
+<a name="idp132792368"></a><h3>
+<a name="idp46440320-bb"></a><code class="computeroutput">abstract_ordering</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="identifier">result_type</span> <a name="idp39158784-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> left<span class="special">,</span> <span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> right<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">result_type</span> <a name="idp46440880-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> left<span class="special">,</span> <span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> right<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Ordering operator </p>
 </li></ol></div>
 </div>
@@ -70,7 +70,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2014 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2015 Andrey
+      Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

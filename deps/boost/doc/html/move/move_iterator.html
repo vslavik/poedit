@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../move.html" title="Chapter&#160;20.&#160;Boost.Move">
+<link rel="up" href="../move.html" title="Chapter&#160;19.&#160;Boost.Move">
 <link rel="prev" href="move_return.html" title="Implicit Move when returning a local object">
 <link rel="next" href="move_inserters.html" title="Move inserters">
 </head>
@@ -36,7 +36,7 @@
       <code class="computeroutput"><a class="link" href="../boost/move_iterator.html" title="Class template move_iterator">move_iterator</a></code> is an iterator
       adaptor with the same behavior as the underlying iterator except that its dereference
       operator implicitly converts the value returned by the underlying iterator's
-      dereference operator to an rvalue reference: <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">move</span><span class="special">(*</span><span class="identifier">underlying_iterator</span><span class="special">)</span></code>
+      dereference operator to a rvalue reference: <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">move</span><span class="special">(*</span><span class="identifier">underlying_iterator</span><span class="special">)</span></code>
       It is a read-once iterator, but can have up to random access traversal characteristics.
     </p>
 <p>

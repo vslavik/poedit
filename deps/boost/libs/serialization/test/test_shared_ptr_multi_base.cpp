@@ -169,6 +169,7 @@ void shared_weak(
     BOOST_REQUIRE(NULL != testfile);
     int firstm = first->m_x;
     
+    BOOST_REQUIRE(! second.expired());
     int secondm = second.lock()->m_x;
     save2(testfile, first, second);
 
@@ -177,6 +178,7 @@ void shared_weak(
     first.reset();
 
     load2(testfile, first, second);
+    BOOST_CHECK(! second.expired());
 
     // Check data member
     BOOST_CHECK(firstm == first->m_x);
@@ -198,6 +200,7 @@ void weak_shared(
 ){
     const char * testfile = boost::archive::tmpnam(NULL);
     BOOST_REQUIRE(NULL != testfile);
+    BOOST_CHECK(! first.expired());
     int firstm = first.lock()->m_x;
     int secondm = second->m_x;
     save2(testfile, first, second);
@@ -207,6 +210,7 @@ void weak_shared(
     second.reset();
 
     load2(testfile, first, second);
+    BOOST_CHECK(! first.expired());
 
     // Check data member
     BOOST_CHECK(firstm == first.lock()->m_x);

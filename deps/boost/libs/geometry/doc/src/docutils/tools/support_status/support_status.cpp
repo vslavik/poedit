@@ -1,8 +1,8 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Tool reporting Implementation Support Status in QBK or plain text format
 
-// Copyright (c) 2011-2012 Bruno Lalande, Paris, France.
-// Copyright (c) 2011-2012 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2011-2015 Bruno Lalande, Paris, France.
+// Copyright (c) 2011-2015 Barend Gehrels, Amsterdam, the Netherlands.
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -40,6 +40,7 @@
 #include <boost/geometry/algorithms/num_geometries.hpp>
 #include <boost/geometry/algorithms/num_interior_rings.hpp>
 #include <boost/geometry/algorithms/num_points.hpp>
+#include <boost/geometry/algorithms/num_segments.hpp>
 #include <boost/geometry/algorithms/overlaps.hpp>
 #include <boost/geometry/algorithms/perimeter.hpp>
 #include <boost/geometry/algorithms/reverse.hpp>
@@ -47,26 +48,6 @@
 #include <boost/geometry/algorithms/transform.hpp>
 #include <boost/geometry/algorithms/unique.hpp>
 #include <boost/geometry/io/wkt/wkt.hpp>
-#include <boost/geometry/multi/algorithms/append.hpp>
-#include <boost/geometry/multi/algorithms/area.hpp>
-#include <boost/geometry/multi/algorithms/centroid.hpp>
-#include <boost/geometry/multi/algorithms/clear.hpp>
-#include <boost/geometry/multi/algorithms/convert.hpp>
-#include <boost/geometry/multi/algorithms/correct.hpp>
-#include <boost/geometry/multi/algorithms/covered_by.hpp>
-#include <boost/geometry/multi/algorithms/distance.hpp>
-#include <boost/geometry/multi/algorithms/envelope.hpp>
-#include <boost/geometry/multi/algorithms/equals.hpp>
-#include <boost/geometry/multi/algorithms/for_each.hpp>
-#include <boost/geometry/multi/algorithms/length.hpp>
-#include <boost/geometry/multi/algorithms/num_geometries.hpp>
-#include <boost/geometry/multi/algorithms/num_interior_rings.hpp>
-#include <boost/geometry/multi/algorithms/num_points.hpp>
-#include <boost/geometry/multi/algorithms/perimeter.hpp>
-#include <boost/geometry/multi/algorithms/reverse.hpp>
-#include <boost/geometry/multi/algorithms/simplify.hpp>
-#include <boost/geometry/multi/algorithms/transform.hpp>
-#include <boost/geometry/multi/algorithms/unique.hpp>
 #include <boost/geometry/strategies/strategies.hpp>
 
 #include "text_outputter.hpp"
@@ -102,6 +83,11 @@ typedef boost::mpl::vector<
     struct algorithm: boost::geometry::dispatch::algorithm<G> \
     {};
 
+#define DECLARE_UNARY_ALGORITHM_WITH_BOOLEAN(algorithm) \
+    template <typename G> \
+    struct algorithm: boost::geometry::dispatch::algorithm<G,false>  \
+    {};
+
 #define DECLARE_BINARY_ALGORITHM(algorithm) \
     template <typename G1, typename G2> \
     struct algorithm: boost::geometry::dispatch::algorithm<G1, G2> \
@@ -128,7 +114,8 @@ DECLARE_UNARY_ALGORITHM(is_valid)
 DECLARE_UNARY_ALGORITHM(length)
 DECLARE_UNARY_ALGORITHM(num_geometries)
 DECLARE_UNARY_ALGORITHM(num_interior_rings)
-DECLARE_UNARY_ALGORITHM(num_points)
+DECLARE_UNARY_ALGORITHM_WITH_BOOLEAN(num_points)
+DECLARE_UNARY_ALGORITHM(num_segments)
 DECLARE_BINARY_ALGORITHM(overlaps)
 DECLARE_UNARY_ALGORITHM(perimeter)
 DECLARE_UNARY_ALGORITHM(reverse)

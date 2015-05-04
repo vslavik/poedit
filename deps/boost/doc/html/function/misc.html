@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../function.html" title="Chapter&#160;12.&#160;Boost.Function">
+<link rel="up" href="../function.html" title="Chapter&#160;11.&#160;Boost.Function">
 <link rel="prev" href="faq.html" title="Frequently Asked Questions">
 <link rel="next" href="testsuite.html" title="Testsuite">
 </head>
@@ -26,14 +26,14 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="function.misc"></a>Miscellaneous Notes</h2></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="misc.html#idp214897344">Boost.Function vs. Function Pointers</a></span></dt>
-<dt><span class="section"><a href="misc.html#idp214904528">Performance</a></span></dt>
-<dt><span class="section"><a href="misc.html#idp214912176">Combatting virtual function "bloat"</a></span></dt>
-<dt><span class="section"><a href="misc.html#idp214915696">Acknowledgements</a></span></dt>
+<dt><span class="section"><a href="misc.html#idp106319648">Boost.Function vs. Function Pointers</a></span></dt>
+<dt><span class="section"><a href="misc.html#idp106326832">Performance</a></span></dt>
+<dt><span class="section"><a href="misc.html#idp106334416">Combatting virtual function "bloat"</a></span></dt>
+<dt><span class="section"><a href="misc.html#idp106337936">Acknowledgements</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp214897344"></a>Boost.Function vs. Function Pointers</h3></div></div></div>
+<a name="idp106319648"></a>Boost.Function vs. Function Pointers</h3></div></div></div>
 <p>Boost.Function has several advantages over function pointers, namely:
 
 </p>
@@ -56,37 +56,37 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp214904528"></a>Performance</h3></div></div></div>
+<a name="idp106326832"></a>Performance</h3></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="misc.html#idp214905200">Function object wrapper size</a></span></dt>
-<dt><span class="section"><a href="misc.html#idp214907552">Copying efficiency</a></span></dt>
-<dt><span class="section"><a href="misc.html#idp214910560">Invocation efficiency</a></span></dt>
+<dt><span class="section"><a href="misc.html#idp106327504">Function object wrapper size</a></span></dt>
+<dt><span class="section"><a href="misc.html#idp106329856">Copying efficiency</a></span></dt>
+<dt><span class="section"><a href="misc.html#idp106332800">Invocation efficiency</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idp214905200"></a>Function object wrapper size</h4></div></div></div>
+<a name="idp106327504"></a>Function object wrapper size</h4></div></div></div>
 <p> Function object wrappers will be the size of a struct containing a member function pointer and two data pointers. The actual size can vary significantly depending on the underlying platform; on 32-bit Mac OS X with GCC, this amounts to 16 bytes, while it is 32 bytes Windows with Visual C++. Additionally, the function object target may be allocated on the heap, if it cannot be placed into the small-object buffer in the <code class="computeroutput">boost::function</code> object.</p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idp214907552"></a>Copying efficiency</h4></div></div></div>
+<a name="idp106329856"></a>Copying efficiency</h4></div></div></div>
 <p> Copying function object wrappers may require allocating memory for a copy of the function object target. The default allocator may be replaced with a faster custom allocator or one may choose to allow the function object wrappers to only store function object targets by reference (using <code class="computeroutput">ref</code>) if the cost of this cloning becomes prohibitive. Small function objects can be stored within the <code class="computeroutput">boost::function</code> object itself, improving copying efficiency.</p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idp214910560"></a>Invocation efficiency</h4></div></div></div>
+<a name="idp106332800"></a>Invocation efficiency</h4></div></div></div>
 <p> With a properly inlining compiler, an invocation of a function object requires one call through a function pointer. If the call is to a free function pointer, an additional call must be made to that function pointer (unless the compiler has very powerful interprocedural analysis).</p>
 </div>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp214912176"></a>Combatting virtual function "bloat"</h3></div></div></div>
+<a name="idp106334416"></a>Combatting virtual function "bloat"</h3></div></div></div>
 <p> The use of virtual functions tends to cause 'code bloat' on many compilers. When a class contains a virtual function, it is necessary to emit an additional function that classifies the type of the object. It has been our experience that these auxiliary functions increase the size of the executable significantly when many <code class="computeroutput">boost::function</code> objects are used. </p>
 <p> In Boost.Function, an alternative but equivalent approach was taken using free functions instead of virtual functions. The Boost.Function object essentially holds two pointers to make a valid target call: a void pointer to the function object it contains and a void pointer to an "invoker" that can call the function object, given the function pointer. This invoker function performs the argument and return value conversions Boost.Function provides. A third pointer points to a free function called the "manager", which handles the cloning and destruction of function objects. The scheme is typesafe because the only functions that actually handle the function object, the invoker and the manager, are instantiated given the type of the function object, so they can safely cast the incoming void pointer (the function object pointer) to the appropriate type.</p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp214915696"></a>Acknowledgements</h3></div></div></div>
+<a name="idp106337936"></a>Acknowledgements</h3></div></div></div>
 <p> Many people were involved in the construction of this
     library. William Kempf, Jesse Jones and Karl Nelson were all
     extremely helpful in isolating an interface and scope for the

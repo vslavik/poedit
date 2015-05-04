@@ -6,7 +6,7 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../date_time/doxy.html#header.boost.date_time.date_generators_hpp" title="Header &lt;boost/date_time/date_generators.hpp&gt;">
-<link rel="prev" href="nth_kday_of_month.html" title="Class template nth_kday_of_month">
+<link rel="prev" href="first_kday_before.html" title="Class template first_kday_before">
 <link rel="next" href="last_kday_of_month.html" title="Class template last_kday_of_month">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="nth_kday_of_month.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../date_time/doxy.html#header.boost.date_time.date_generators_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="last_kday_of_month.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="first_kday_before.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../date_time/doxy.html#header.boost.date_time.date_generators_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="last_kday_of_month.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.date_time.first_kday_of_month"></a><div class="titlepage"></div>
@@ -44,24 +44,24 @@
   <span class="keyword">typedef</span> <span class="identifier">date_type</span><span class="special">::</span><span class="identifier">duration_type</span>        <a name="boost.date_time.first_kday_of_month.duration_type"></a><span class="identifier">duration_type</span><span class="special">;</span>   
 
   <span class="comment">// <a class="link" href="first_kday_of_month.html#boost.date_time.first_kday_of_monthconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="first_kday_of_month.html#idp101778576-bb"><span class="identifier">first_kday_of_month</span></a><span class="special">(</span><span class="identifier">day_of_week_type</span><span class="special">,</span> <span class="identifier">month_type</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="first_kday_of_month.html#idp94700112-bb"><span class="identifier">first_kday_of_month</span></a><span class="special">(</span><span class="identifier">day_of_week_type</span><span class="special">,</span> <span class="identifier">month_type</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="first_kday_of_month.html#idp40182704-bb">public member functions</a></span>
-  <span class="keyword">virtual</span> <span class="identifier">date_type</span> <a class="link" href="first_kday_of_month.html#idp101807888-bb"><span class="identifier">get_date</span></a><span class="special">(</span><span class="identifier">year_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">month_type</span> <a class="link" href="first_kday_of_month.html#idp99891376-bb"><span class="identifier">month</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">day_of_week_type</span> <a class="link" href="first_kday_of_month.html#idp109634464-bb"><span class="identifier">day_of_week</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="first_kday_of_month.html#idp109635584-bb"><span class="identifier">to_string</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="first_kday_of_month.html#idp46529904-bb">public member functions</a></span>
+  <span class="keyword">virtual</span> <span class="identifier">date_type</span> <a class="link" href="first_kday_of_month.html#idp46530464-bb"><span class="identifier">get_date</span></a><span class="special">(</span><span class="identifier">year_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">month_type</span> <a class="link" href="first_kday_of_month.html#idp33988528-bb"><span class="identifier">month</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">day_of_week_type</span> <a class="link" href="first_kday_of_month.html#idp40110304-bb"><span class="identifier">day_of_week</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="first_kday_of_month.html#idp40111392-bb"><span class="identifier">to_string</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp191775312"></a><h2>Description</h2>
+<a name="idp180913040"></a><h2>Description</h2>
 <p>Similar to <a class="link" href="nth_kday_of_month.html" title="Class template nth_kday_of_month">nth_kday_of_month</a>, but requires less paramters </p>
 <div class="refsect2">
-<a name="idp191776896"></a><h3>
+<a name="idp180914624"></a><h3>
 <a name="boost.date_time.first_kday_of_monthconstruct-copy-destruct"></a><code class="computeroutput">first_kday_of_month</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp101778576-bb"></a><span class="identifier">first_kday_of_month</span><span class="special">(</span><span class="identifier">day_of_week_type</span> dow<span class="special">,</span> <span class="identifier">month_type</span> m<span class="special">)</span><span class="special">;</span></pre>Specify the first 'Sunday' in 'April' spec. <p>
+<pre class="literallayout"><a name="idp94700112-bb"></a><span class="identifier">first_kday_of_month</span><span class="special">(</span><span class="identifier">day_of_week_type</span> dow<span class="special">,</span> <span class="identifier">month_type</span> m<span class="special">)</span><span class="special">;</span></pre>Specify the first 'Sunday' in 'April' spec. <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
@@ -91,15 +91,15 @@
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp191789680"></a><h3>
-<a name="idp40182704-bb"></a><code class="computeroutput">first_kday_of_month</code> public member functions</h3>
+<a name="idp180927264"></a><h3>
+<a name="idp46529904-bb"></a><code class="computeroutput">first_kday_of_month</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">date_type</span> <a name="idp101807888-bb"></a><span class="identifier">get_date</span><span class="special">(</span><span class="identifier">year_type</span> year<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return a concrete date when provided with a year specific year. </li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">month_type</span> <a name="idp99891376-bb"></a><span class="identifier">month</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">day_of_week_type</span> <a name="idp109634464-bb"></a><span class="identifier">day_of_week</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">date_type</span> <a name="idp46530464-bb"></a><span class="identifier">get_date</span><span class="special">(</span><span class="identifier">year_type</span> year<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return a concrete date when provided with a year specific year. </li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">month_type</span> <a name="idp33988528-bb"></a><span class="identifier">month</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">day_of_week_type</span> <a name="idp40110304-bb"></a><span class="identifier">day_of_week</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="idp109635584-bb"></a><span class="identifier">to_string</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns string suitable for use in POSIX time zone string. <p>Returns a string formatted as "M4.1.0" ==&gt; 1st Sunday in April. </p>
+<pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="idp40111392-bb"></a><span class="identifier">to_string</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns string suitable for use in POSIX time zone string. <p>Returns a string formatted as "M4.1.0" ==&gt; 1st Sunday in April. </p>
 </li>
 </ol></div>
 </div>
@@ -113,7 +113,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="nth_kday_of_month.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../date_time/doxy.html#header.boost.date_time.date_generators_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="last_kday_of_month.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="first_kday_before.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../date_time/doxy.html#header.boost.date_time.date_generators_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="last_kday_of_month.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

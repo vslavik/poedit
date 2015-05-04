@@ -20,18 +20,20 @@
 #include <boost/geometry/geometries/geometries.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
 #include <boost/geometry/io/wkt/wkt.hpp>
-
+#include <boost/geometry/util/condition.hpp>
 
 
 template <int DimensionCount, bool Reverse, typename Geometry>
-void test_sectionalize(std::string const caseid, Geometry const& geometry, std::size_t section_count)
+void test_sectionalize(std::string const /*caseid*/, Geometry const& geometry, std::size_t section_count)
 {
     typedef typename bg::point_type<Geometry>::type point;
     typedef bg::model::box<point> box;
     typedef bg::sections<box, DimensionCount> sections;
 
+    typedef boost::mpl::vector_c<std::size_t, 0> dim2;
+
     sections s;
-    bg::sectionalize<Reverse>(geometry, s);
+    bg::sectionalize<Reverse, dim2>(geometry, bg::detail::no_rescale_policy(), s);
 
     BOOST_CHECK_EQUAL(s.size(), section_count);
 
@@ -71,7 +73,7 @@ void test_sectionalize(std::string const& caseid, std::string const& wkt,
 {
     Geometry geometry;
     bg::read_wkt(wkt, geometry);
-    if (bg::closure<Geometry>::value == bg::open)
+    if ( BOOST_GEOMETRY_CONDITION( bg::closure<Geometry>::value == bg::open ) )
     {
         geometry.outer().resize(geometry.outer().size() - 1);
     }

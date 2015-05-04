@@ -777,6 +777,17 @@ ptr_t GC_get_main_stack_base(void){
 # endif /* BEOS */
 
 
+# ifdef HAIKU
+# include <OS.h>
+ptr_t GC_get_main_stack_base(void)
+{
+	thread_info th;
+	get_thread_info(find_thread(NULL), &th);
+	return th.stack_end;
+}
+# endif
+
+
 # ifdef OS2
 
 ptr_t GC_get_main_stack_base(void)
@@ -1097,7 +1108,7 @@ ptr_t GC_get_main_stack_base(void)
 
 #if !defined(BEOS) && !defined(AMIGA) && !defined(MSWIN32) \
     && !defined(MSWINCE) && !defined(OS2) && !defined(NOSYS) && !defined(ECOS) \
-    && !defined(CYGWIN32)
+    && !defined(CYGWIN32) && !defined(HAIKU)
 
 ptr_t GC_get_main_stack_base(void)
 {
@@ -1154,7 +1165,7 @@ ptr_t GC_get_main_stack_base(void)
 #   endif /* STACKBOTTOM */
 }
 
-# endif /* ! AMIGA, !OS 2, ! MS Windows, !BEOS, !NOSYS, !ECOS */
+# endif /* ! AMIGA, !OS 2, ! MS Windows, !BEOS, !NOSYS, !ECOS, !HAIKU */
 
 #if defined(GC_LINUX_THREADS) && !defined(HAVE_GET_STACK_BASE)
 

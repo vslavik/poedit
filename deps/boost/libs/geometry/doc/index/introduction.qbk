@@ -56,8 +56,10 @@ The examples of structures of trees created by use of different algorithms and e
 [[*100k knn queries*]       [6.37s] [2.09s] [0.64s] [0.52s]]
 ]
 
+The configuration of the machine used for testing was: /Intel(R) Core(TM) i7 870 @ 2.93GHz, 8GB RAM, MS Windows 7 x64/.
+The code was compiled with optimization for speed (`O2`).
+
 The performance of the R-tree for different values of Max parameter and Min=0.5*Max is presented in the table below.
-The configuration of the machine used for testing is: /Intel(R) Core(TM) i7 870 @ 2.93GHz, 8GB RAM, MS Windows 7 x64/.
 In the two upper figures you can see the performance of the __rtree__ storing random, relatively small, non-overlapping, 2d boxes.
 In the lower ones, the performance of the __rtree__ also storing random, 2d boxes, but this time quite big and possibly overlapping.
 As you can see, the __rtree__ performance is different in both cases.

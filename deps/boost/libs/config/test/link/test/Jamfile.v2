@@ -73,10 +73,10 @@ autolink-lib link_test : ../link_test.cpp
 explicit link_test ;
 
 run ../main.cpp link_test
-  : : : <toolset>msvc-8.0:<build>no <toolset>msvc-9.0:<build>no <toolset>msvc-10.0:<build>no <link>static <runtime-link>static <threading>single debug : link_test_ssd ;
+  : : : <toolset>msvc-8.0:<build>no <toolset>msvc-9.0:<build>no <toolset>msvc-10.0:<build>no <toolset>msvc-11.0:<build>no <toolset>msvc-12.0:<build>no <link>static <runtime-link>static <threading>single debug : link_test_ssd ;
 
 run ../main.cpp link_test
-  : : : <toolset>msvc-8.0:<build>no <toolset>msvc-9.0:<build>no <toolset>msvc-10.0:<build>no <link>static <runtime-link>static <threading>single release : link_test_ssr ;
+  : : : <toolset>msvc-8.0:<build>no <toolset>msvc-9.0:<build>no <toolset>msvc-10.0:<build>no <toolset>msvc-11.0:<build>no <toolset>msvc-12.0:<build>no <link>static <runtime-link>static <threading>single release : link_test_ssr ;
 
 run ../main.cpp link_test
   : : : <link>static <runtime-link>static <threading>multi debug : link_test_smd ;

@@ -11,6 +11,7 @@
 import testing ;
 import modules ;
 import path ;
+import ../../config/checks/config : requires ;
 
 local ntl-path = [ modules.peek : NTL_PATH ] ;
 local gmp_path = [ modules.peek : GMP_PATH ] ;
@@ -76,12 +77,12 @@ run cpp_bin_float_snips.cpp ;
 run debug_adaptor_snips.cpp ;
 run float128_snips.cpp quadmath : : : [ check-target-builds ../config//has_float128 : : <build>no ] ;
 run floating_point_examples.cpp ;
-run gauss_laguerre_quadrature.cpp ;
-run hypergeometric_luke_algorithms.cpp ;
+run gauss_laguerre_quadrature.cpp : : : release [ requires cxx11_lambdas ] ;
+run hypergeometric_luke_algorithms.cpp : : : [ requires cxx11_nullptr ]  ;
 run integer_examples.cpp ;
 run logged_adaptor.cpp mpfi mpfr gmp :  :  : [ check-target-builds ../config//has_mpfi : : <build>no ] ;
 run mixed_integer_arithmetic.cpp ;
-run numeric_limits_snips.cpp /boost//test_exec_monitor ;
+run numeric_limits_snips.cpp /boost//test_exec_monitor : : : [ requires cxx11_numeric_limits ]   ;
 run random_snips.cpp gmp : : : [ check-target-builds ../config//has_gmp : : <build>no ] ;
 run safe_prime.cpp ;
 

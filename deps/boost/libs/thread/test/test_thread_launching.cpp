@@ -4,6 +4,7 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #define BOOST_THREAD_VERSION 3
+#define BOOST_TEST_MODULE Boost.Threads: thread launching test suite
 
 #include <boost/thread/thread_only.hpp>
 #include <boost/test/unit_test.hpp>
@@ -19,7 +20,7 @@ void normal_function()
     normal_function_called=true;
 }
 
-void test_thread_function_no_arguments()
+BOOST_AUTO_TEST_CASE(test_thread_function_no_arguments)
 {
     boost::thread function(normal_function);
     function.join();
@@ -33,7 +34,7 @@ void normal_function_one_arg(int i)
     nfoa_res=i;
 }
 
-void test_thread_function_one_argument()
+BOOST_AUTO_TEST_CASE(test_thread_function_one_argument)
 {
     boost::thread function(normal_function_one_arg,42);
     function.join();
@@ -52,7 +53,7 @@ struct callable_no_args
 
 bool callable_no_args::called=false;
 
-void test_thread_callable_object_no_arguments()
+BOOST_AUTO_TEST_CASE(test_thread_callable_object_no_arguments)
 {
     callable_no_args func;
     boost::thread callable(func);
@@ -74,7 +75,7 @@ struct callable_noncopyable_no_args:
 
 bool callable_noncopyable_no_args::called=false;
 
-void test_thread_callable_object_ref_no_arguments()
+BOOST_AUTO_TEST_CASE(test_thread_callable_object_ref_no_arguments)
 {
     callable_noncopyable_no_args func;
 
@@ -98,7 +99,7 @@ struct callable_one_arg
 bool callable_one_arg::called=false;
 int callable_one_arg::called_arg=0;
 
-void test_thread_callable_object_one_argument()
+BOOST_AUTO_TEST_CASE(test_thread_callable_object_one_argument)
 {
     callable_one_arg func;
     boost::thread callable(func,42);
@@ -140,7 +141,7 @@ std::string callable_multiple_arg::called_three_arg1;
 std::vector<int> callable_multiple_arg::called_three_arg2;
 int callable_multiple_arg::called_three_arg3;
 
-void test_thread_callable_object_multiple_arguments()
+BOOST_AUTO_TEST_CASE(test_thread_callable_object_multiple_arguments)
 {
     std::vector<int> x;
     for(unsigned i=0;i<7;++i)
@@ -196,7 +197,7 @@ struct X
 
 };
 
-void test_thread_member_function_no_arguments()
+BOOST_AUTO_TEST_CASE(test_thread_member_function_no_arguments)
 {
     X x;
 
@@ -206,29 +207,10 @@ void test_thread_member_function_no_arguments()
 }
 
 
-void test_thread_member_function_one_argument()
+BOOST_AUTO_TEST_CASE(test_thread_member_function_one_argument)
 {
     X x;
     boost::thread function(&X::f1,&x,42);
     function.join();
     BOOST_CHECK_EQUAL(42,x.arg_value);
 }
-
-
-boost::unit_test::test_suite* init_unit_test_suite(int, char*[])
-{
-    boost::unit_test::test_suite* test =
-        BOOST_TEST_SUITE("Boost.Threads: thread launching test suite");
-
-    test->add(BOOST_TEST_CASE(test_thread_function_no_arguments));
-    test->add(BOOST_TEST_CASE(test_thread_function_one_argument));
-    test->add(BOOST_TEST_CASE(test_thread_callable_object_no_arguments));
-    test->add(BOOST_TEST_CASE(test_thread_callable_object_ref_no_arguments));
-    test->add(BOOST_TEST_CASE(test_thread_callable_object_one_argument));
-    test->add(BOOST_TEST_CASE(test_thread_callable_object_multiple_arguments));
-    test->add(BOOST_TEST_CASE(test_thread_member_function_no_arguments));
-    test->add(BOOST_TEST_CASE(test_thread_member_function_one_argument));
-    return test;
-}
-
-

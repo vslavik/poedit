@@ -265,6 +265,11 @@ struct nothrow_construct_UDT
    { return true; }
 };
 
+#ifndef BOOST_NO_CXX11_FINAL
+struct final_UDT final
+{};
+#endif
+
 class Base { };
 
 class Derived : public Base { };

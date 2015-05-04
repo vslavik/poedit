@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>number</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../ref.html" title="Reference">
 <link rel="prev" href="../ref.html" title="Reference">
@@ -159,11 +159,14 @@
 <span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">sinh</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
 <span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">tanh</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
 
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">ldexp</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">int</span><span class="special">);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">frexp</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">int</span><span class="special">*);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">ldexp</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">frexp</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">*);</span>
 <span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">pow</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
 <span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">fmod</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
 <span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">atan2</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">scalbn</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">logb</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>integer-type</em></span>                              <span class="identifier">ilogb</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
 
 <span class="comment">// Traits support:</span>
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
@@ -652,11 +655,14 @@
 <span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">sinh</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
 <span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">tanh</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
 
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">ldexp</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">int</span><span class="special">);</span>
-<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">frexp</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">int</span><span class="special">*);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">ldexp</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">frexp</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">*);</span>
 <span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">pow</span>   <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
 <span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">fmod</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
 <span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">atan2</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">scalbn</span><span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="emphasis"><em>integer-type</em></span><span class="special">);</span>
+<span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">logb</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>integer-type</em></span>                              <span class="identifier">ilogb</span> <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
 </pre>
 <p>
         These functions all behave exactly as their standard library C++11 counterparts
@@ -664,6 +670,13 @@
         or an expression template derived from it; If the argument is of type <code class="computeroutput"><span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">Backend</span><span class="special">,</span> <span class="identifier">et_off</span><span class="special">&gt;</span></code>
         then that is also the return type, otherwise the return type is an expression
         template.
+      </p>
+<p>
+        The integer type arguments to <code class="computeroutput"><span class="identifier">ldexp</span></code>,
+        <code class="computeroutput"><span class="identifier">frexp</span></code>, <code class="computeroutput"><span class="identifier">scalbn</span></code>
+        and <code class="computeroutput"><span class="identifier">ilogb</span></code> may be either type
+        <code class="computeroutput"><span class="keyword">int</span></code>, or the actual type of the
+        exponent of the number type.
       </p>
 <p>
         These functions are normally implemented by the Backend type. However, default
@@ -955,7 +968,7 @@
               </td>
 <td>
                 <p>
-                  1045eps<a href="#ftn.boost_multiprecision.ref.number.f0" class="footnote" name="boost_multiprecision.ref.number.f0"><sup class="footnote">[1]</sup></a>
+                  1045eps<a href="#ftn.boost_multiprecision.ref.number.f0" class="footnote"><sup class="footnote"><a name="boost_multiprecision.ref.number.f0"></a>[1]</sup></a>
                 </p>
               </td>
 <td>

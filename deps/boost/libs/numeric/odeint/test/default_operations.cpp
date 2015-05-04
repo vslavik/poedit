@@ -229,12 +229,6 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( scale_sum2_units_test , T , test_types )
     typedef unit_fixture< T > fix_type;
     typedef typename fix_type::value_type value_type;
     typedef typename fix_type::time_type time_type;
-    typedef typename fix_type::time_2_type time_2_type;
-    typedef typename fix_type::time_3_type time_3_type;
-    typedef typename fix_type::time_4_type time_4_type;
-    typedef typename fix_type::time_5_type time_5_type;
-    typedef typename fix_type::time_6_type time_6_type;
-    typedef typename fix_type::time_7_type time_7_type;
 
     fix_type f;
     typedef default_operations::scale_sum2< value_type , time_type > Op;
@@ -249,11 +243,6 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( scale_sum3_units_test , T , test_types )
     typedef typename fix_type::value_type value_type;
     typedef typename fix_type::time_type time_type;
     typedef typename fix_type::time_2_type time_2_type;
-    typedef typename fix_type::time_3_type time_3_type;
-    typedef typename fix_type::time_4_type time_4_type;
-    typedef typename fix_type::time_5_type time_5_type;
-    typedef typename fix_type::time_6_type time_6_type;
-    typedef typename fix_type::time_7_type time_7_type;
 
     fix_type f;
     typedef default_operations::scale_sum3< value_type , time_type , time_2_type > Op;

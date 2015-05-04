@@ -27,25 +27,17 @@ namespace std{
 #endif
 
 #include <boost/io/ios_state.hpp>
-#include <boost/detail/no_exceptions_support.hpp>
+#include <boost/core/no_exceptions_support.hpp>
 #include <boost/serialization/pfto.hpp>
-
 #include <boost/serialization/string.hpp>
-#include <boost/archive/add_facet.hpp>
-#ifndef BOOST_NO_CXX11_HDR_CODECVT
-    #include <codecvt>
-    namespace boost { namespace archive { namespace detail {
-        typedef std::codecvt_utf8<wchar_t> utf8_codecvt_facet;
-    } } }
-#else
-    #include <boost/archive/detail/utf8_codecvt_facet.hpp>
-#endif
-
-#include <boost/archive/xml_archive_exception.hpp>
-#include <boost/archive/iterators/mb_from_wchar.hpp>
 
 #include <boost/archive/basic_xml_archive.hpp>
 #include <boost/archive/xml_wiarchive.hpp>
+
+#include <boost/archive/add_facet.hpp>
+
+#include <boost/archive/xml_archive_exception.hpp>
+#include <boost/archive/iterators/mb_from_wchar.hpp>
 
 #include "basic_xml_grammar.hpp"
 
@@ -170,26 +162,18 @@ xml_wiarchive_impl<Archive>::xml_wiarchive_impl(
     gimpl(new xml_wgrammar())
 {
     if(0 == (flags & no_codecvt)){
+        // note usage of argument "1" so that the locale isn't
+        // automatically delete the facet
         archive_locale.reset(
             add_facet(
                 is_.getloc(),
                 new boost::archive::detail::utf8_codecvt_facet
             )
         );
-        is.imbue(* archive_locale);
+        //is.imbue(* archive_locale);
     }
-    if(0 == (flags & no_header)){
-        BOOST_TRY{
-            this->init();
-        }
-        BOOST_CATCH(...){
-            delete gimpl;
-            #ifndef BOOST_NO_EXCEPTIONS
-                throw; // re-throw
-            #endif
-        }
-        BOOST_CATCH_END
-    }
+    if(0 == (flags & no_header))
+        init();
 }
 
 template<class Archive>
@@ -202,7 +186,6 @@ xml_wiarchive_impl<Archive>::~xml_wiarchive_impl(){
         BOOST_CATCH(...){}
         BOOST_CATCH_END
     }
-    delete gimpl;
 }
 
 } // namespace archive

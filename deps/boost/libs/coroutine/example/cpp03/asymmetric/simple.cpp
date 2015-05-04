@@ -4,14 +4,7 @@
 #include <boost/bind.hpp>
 #include <boost/coroutine/all.hpp>
 
-struct X
-{
-    int i;
-
-    X( int i_) :
-        i( i_)
-    {}
-};
+#include "X.h"
 
 typedef boost::coroutines::asymmetric_coroutine< X& >::pull_type pull_coro_t;
 typedef boost::coroutines::asymmetric_coroutine< X& >::push_type push_coro_t;

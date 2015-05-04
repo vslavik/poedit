@@ -136,7 +136,7 @@ bool test_all_node_pool()
    typedef boost::interprocess::test::test_node_pool<node_pool_t> test_node_pool_t;
    shared_memory_object::remove(test::get_process_id_name());
    {
-	  managed_shared_memory shm(create_only, test::get_process_id_name(), 4*1024*sizeof(segment_manager::void_pointer));
+     managed_shared_memory shm(create_only, test::get_process_id_name(), 4*1024*sizeof(segment_manager::void_pointer));
 
       typedef deleter<node_pool_t, segment_manager> deleter_t;
       typedef unique_ptr<node_pool_t, deleter_t> unique_ptr_t;

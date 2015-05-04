@@ -22,6 +22,11 @@
 #include <boost/test/included/unit_test.hpp>
 
 #include <boost/assign/list_of.hpp>
+#include <boost/concept_check.hpp>
+#include <boost/core/ignore_unused.hpp>
+#include <boost/iterator/iterator_concepts.hpp>
+#include <boost/tuple/tuple.hpp>
+#include <boost/type_traits/is_const.hpp>
 
 #include <boost/geometry/core/point_type.hpp>
 #include <boost/geometry/multi/core/point_type.hpp>
@@ -37,12 +42,8 @@
 
 #include <boost/geometry/policies/compare.hpp>
 
-#include <boost/geometry/io/wkt/read.hpp>
-#include <boost/geometry/io/wkt/write.hpp>
+#include <boost/geometry/io/wkt/wkt.hpp>
 #include <boost/geometry/io/dsv/write.hpp>
-#include <boost/geometry/multi/io/dsv/write.hpp>
-#include <boost/geometry/multi/io/wkt/write.hpp>
-#include <boost/geometry/multi/io/wkt/read.hpp>
 
 #include <boost/geometry/iterators/point_iterator.hpp>
 #include <boost/geometry/iterators/point_reverse_iterator.hpp>
@@ -94,6 +95,36 @@ inline std::ostream& print_point_range(std::ostream& os,
     os << " )";
     return os;
 }
+
+
+template
+<
+    typename Geometry,
+    bool IsConst = boost::is_const<Geometry>::value
+>
+struct test_iterator_concepts
+{
+    typedef bg::point_iterator<Geometry> iterator;
+    BOOST_CONCEPT_ASSERT(( boost::BidirectionalIteratorConcept<iterator> ));
+    BOOST_CONCEPT_ASSERT(( boost_concepts::ReadableIteratorConcept<iterator> ));
+    BOOST_CONCEPT_ASSERT(( boost_concepts::LvalueIteratorConcept<iterator> ));
+    BOOST_CONCEPT_ASSERT
+        (( boost_concepts::BidirectionalTraversalConcept<iterator> ));
+};
+
+template <typename Geometry>
+struct test_iterator_concepts<Geometry, false>
+    : test_iterator_concepts<Geometry, true>
+{
+    typedef bg::point_iterator<Geometry> iterator;
+    BOOST_CONCEPT_ASSERT
+        (( boost::Mutable_BidirectionalIteratorConcept<iterator> ));
+    BOOST_CONCEPT_ASSERT
+        (( boost_concepts::WritableIteratorConcept<iterator> ));
+    BOOST_CONCEPT_ASSERT
+        (( boost_concepts::SwappableIteratorConcept<iterator> ));
+};
+
 
 struct equals
 {
@@ -207,15 +238,21 @@ struct test_point_iterator_of_geometry
     {
         typedef bg::point_iterator<G> point_iterator;
 
+        test_iterator_concepts<G>();
+
         point_iterator begin = bg::points_begin(geometry);
         point_iterator end = bg::points_end(geometry);
 
-        BOOST_CHECK( std::distance(begin, end) == bg::num_points(geometry) );
+        BOOST_CHECK( std::size_t(std::distance(begin, end))
+                     ==
+                     bg::num_points(geometry) );
 
         BOOST_CHECK( equals::apply(begin, end,
                                    bg::points_begin(point_range),
                                    bg::points_end(point_range))
                      );
+
+        boost::ignore_unused(header);
 
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
         std::cout << header << " geometry: " << bg::wkt(geometry) << std::endl;

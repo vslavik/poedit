@@ -33,6 +33,13 @@
 <p>
             Returns the result type of <a class="link" href="../functions/make_map.html" title="make_map"><code class="computeroutput"><span class="identifier">make_map</span></code></a>.
           </p>
+<p>
+            The implementation depends on the support of variadic templates.
+          </p>
+<p>
+            When variadic templates are not supported, make_map is a metafunction
+            of the form:
+          </p>
 <h6>
 <a name="fusion.container.generation.metafunctions.make_map.h1"></a>
             <span class="phrase"><a name="fusion.container.generation.metafunctions.make_map.synopsis"></a></span><a class="link" href="make_map.html#fusion.container.generation.metafunctions.make_map.synopsis">Synopsis</a>
@@ -43,7 +50,10 @@
 <span class="keyword">struct</span> <span class="identifier">make_map</span><span class="special">;</span>
 </pre>
 <p>
-            The variadic function accepts <code class="computeroutput"><span class="number">0</span></code>
+            For C++11 compilers, the variadic function interface has no upper bound.
+          </p>
+<p>
+            For C++03 compilers, the variadic function accepts <code class="computeroutput"><span class="number">0</span></code>
             to <code class="computeroutput"><span class="identifier">FUSION_MAX_MAP_SIZE</span></code>
             elements, where <code class="computeroutput"><span class="identifier">FUSION_MAX_MAP_SIZE</span></code>
             is a user definable predefined maximum that defaults to <code class="computeroutput"><span class="number">10</span></code>. You may define the preprocessor constant
@@ -52,8 +62,24 @@
           </p>
 <pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">FUSION_MAX_MAP_SIZE</span> <span class="number">20</span>
 </pre>
+<p>
+            When variadic templates are supported, make_map is a metafunction class
+            of the form:
+          </p>
 <h6>
 <a name="fusion.container.generation.metafunctions.make_map.h2"></a>
+            <span class="phrase"><a name="fusion.container.generation.metafunctions.make_map.synopsis0"></a></span><a class="link" href="make_map.html#fusion.container.generation.metafunctions.make_map.synopsis0">Synopsis</a>
+          </h6>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span>
+    <span class="keyword">typename</span> <span class="identifier">K0</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">K1</span><span class="special">,...</span> <span class="keyword">typename</span> <span class="identifier">KN</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">make_map</span>
+<span class="special">{</span>
+    <span class="keyword">struct</span> <span class="identifier">apply</span><span class="special">&lt;</span>
+    <span class="keyword">typename</span> <span class="identifier">T0</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T1</span><span class="special">,...</span> <span class="keyword">typename</span> <span class="identifier">TN</span><span class="special">&gt;</span>
+<span class="special">};</span>
+</pre>
+<h6>
+<a name="fusion.container.generation.metafunctions.make_map.h3"></a>
             <span class="phrase"><a name="fusion.container.generation.metafunctions.make_map.parameters"></a></span><a class="link" href="make_map.html#fusion.container.generation.metafunctions.make_map.parameters">Parameters</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -121,14 +147,19 @@
 </tbody>
 </table></div>
 <h6>
-<a name="fusion.container.generation.metafunctions.make_map.h3"></a>
+<a name="fusion.container.generation.metafunctions.make_map.h4"></a>
             <span class="phrase"><a name="fusion.container.generation.metafunctions.make_map.expression_semantics"></a></span><a class="link" href="make_map.html#fusion.container.generation.metafunctions.make_map.expression_semantics">Expression
             Semantics</a>
           </h6>
-<pre class="programlisting"><span class="identifier">resulf_of</span><span class="special">::</span><span class="identifier">make_map</span><span class="special">&lt;</span><span class="identifier">K0</span><span class="special">,</span> <span class="identifier">K1</span><span class="special">,...</span> <span class="identifier">KN</span><span class="special">,</span> <span class="identifier">T0</span><span class="special">,</span> <span class="identifier">T1</span><span class="special">,...</span> <span class="identifier">TN</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
+<pre class="programlisting"><span class="preprocessor">#if</span> <span class="special">!</span><span class="identifier">defined</span><span class="special">(</span><span class="identifier">BOOST_FUSION_HAS_VARIADIC_MAP</span><span class="special">)</span>
+<span class="identifier">resulf_of</span><span class="special">::</span><span class="identifier">make_map</span><span class="special">&lt;</span><span class="identifier">K0</span><span class="special">,</span> <span class="identifier">K1</span><span class="special">,...</span> <span class="identifier">KN</span><span class="special">,</span> <span class="identifier">T0</span><span class="special">,</span> <span class="identifier">T1</span><span class="special">,...</span> <span class="identifier">TN</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
+<span class="preprocessor">#else</span>
+<span class="identifier">resulf_of</span><span class="special">::</span><span class="identifier">make_map</span><span class="special">&lt;</span><span class="identifier">K0</span><span class="special">,</span> <span class="identifier">K1</span><span class="special">,...</span> <span class="identifier">KN</span><span class="special">&gt;::</span><span class="identifier">apply</span><span class="special">&lt;</span><span class="identifier">T0</span><span class="special">,</span> <span class="identifier">T1</span><span class="special">,...</span> <span class="identifier">TN</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">;</span>
+<span class="preprocessor">#endif</span>
 </pre>
 <p>
-            <span class="bold"><strong>Return type</strong></span>: <a class="link" href="make_map.html" title="make_map"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">make_map</span></code></a><code class="computeroutput"><span class="special">&lt;</span><span class="identifier">K0</span><span class="special">,</span> <span class="identifier">K0</span><span class="special">,...</span> <span class="identifier">KN</span><span class="special">,</span> <span class="identifier">T0</span><span class="special">,</span> <span class="identifier">T1</span><span class="special">,...</span> <span class="identifier">TN</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
+            <span class="bold"><strong>Return type</strong></span>: <a class="link" href="make_map.html" title="make_map"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">make_map</span></code></a><code class="computeroutput"><span class="special">&lt;</span><span class="identifier">K0</span><span class="special">,</span> <span class="identifier">K0</span><span class="special">,...</span> <span class="identifier">KN</span><span class="special">,</span> <span class="identifier">T0</span><span class="special">,</span> <span class="identifier">T1</span><span class="special">,...</span> <span class="identifier">TN</span><span class="special">&gt;::</span><span class="identifier">type</span></code> when variadic templates are not
+            supported, or <a class="link" href="make_map.html" title="make_map"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">make_map</span></code></a><code class="computeroutput"><span class="special">&lt;</span><span class="identifier">K0</span><span class="special">,</span> <span class="identifier">K0</span><span class="special">,...</span> <span class="identifier">KN</span><span class="special">&gt;::</span><span class="identifier">apply</span><span class="special">&lt;</span><span class="identifier">T0</span><span class="special">,</span> <span class="identifier">T1</span><span class="special">,...</span> <span class="identifier">TN</span><span class="special">&gt;::</span><span class="identifier">type</span></code> when variadic templates are supported.
           </p>
 <p>
             <span class="bold"><strong>Semantics</strong></span>: A <a class="link" href="../../map.html" title="map"><code class="computeroutput"><span class="identifier">map</span></code></a> with <a class="link" href="../../../support/pair.html" title="pair"><code class="computeroutput"><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">pair</span></code></a> elements where the <code class="computeroutput"><span class="identifier">second_type</span></code> is converted following
@@ -140,20 +171,24 @@
             key types.
           </p>
 <h6>
-<a name="fusion.container.generation.metafunctions.make_map.h4"></a>
+<a name="fusion.container.generation.metafunctions.make_map.h5"></a>
             <span class="phrase"><a name="fusion.container.generation.metafunctions.make_map.header"></a></span><a class="link" href="make_map.html#fusion.container.generation.metafunctions.make_map.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">container</span><span class="special">/</span><span class="identifier">generation</span><span class="special">/</span><span class="identifier">make_map</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">make_map</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h6>
-<a name="fusion.container.generation.metafunctions.make_map.h5"></a>
+<a name="fusion.container.generation.metafunctions.make_map.h6"></a>
             <span class="phrase"><a name="fusion.container.generation.metafunctions.make_map.example"></a></span><a class="link" href="make_map.html#fusion.container.generation.metafunctions.make_map.example">Example</a>
           </h6>
-<pre class="programlisting"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">make_map</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">double</span><span class="special">,</span> <span class="keyword">char</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;::</span><span class="identifier">type</span>
+<pre class="programlisting"><span class="preprocessor">#if</span> <span class="special">!</span><span class="identifier">defined</span><span class="special">(</span><span class="identifier">BOOST_FUSION_HAS_VARIADIC_MAP</span><span class="special">)</span>
+<span class="identifier">result_of</span><span class="special">::</span><span class="identifier">make_map</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">double</span><span class="special">,</span> <span class="keyword">char</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;::</span><span class="identifier">type</span>
+<span class="preprocessor">#else</span>
+<span class="identifier">result_of</span><span class="special">::</span><span class="identifier">make_map</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;::</span><span class="identifier">apply</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;::</span><span class="identifier">type</span>
+<span class="preprocessor">#endif</span>
 </pre>
 <h6>
-<a name="fusion.container.generation.metafunctions.make_map.h6"></a>
+<a name="fusion.container.generation.metafunctions.make_map.h7"></a>
             <span class="phrase"><a name="fusion.container.generation.metafunctions.make_map.see_also"></a></span><a class="link" href="make_map.html#fusion.container.generation.metafunctions.make_map.see_also">See
             also</a>
           </h6>

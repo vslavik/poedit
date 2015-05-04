@@ -9,11 +9,11 @@
 //  Also, if any operation is lock-free, then the platform
 //  implementation must provide overridden fence implementations.
 
-#include <iostream>
-
-#include <boost/config.hpp>
 #include <boost/atomic.hpp>
-#include <boost/test/minimal.hpp>
+
+#include <iostream>
+#include <boost/config.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 static const char * lock_free_level[] = {
     "never",
@@ -25,15 +25,15 @@ template<typename T>
 void
 verify_lock_free(const char * type_name, int lock_free_macro_val, int lock_free_expect)
 {
-    BOOST_CHECK(lock_free_macro_val >= 0 && lock_free_macro_val <= 2);
-    BOOST_CHECK(lock_free_macro_val == lock_free_expect);
+    BOOST_TEST(lock_free_macro_val >= 0 && lock_free_macro_val <= 2);
+    BOOST_TEST(lock_free_macro_val == lock_free_expect);
 
     boost::atomic<T> value;
 
     if (lock_free_macro_val == 0)
-        BOOST_CHECK(!value.is_lock_free());
+        BOOST_TEST(!value.is_lock_free());
     if (lock_free_macro_val == 2)
-        BOOST_CHECK(value.is_lock_free());
+        BOOST_TEST(value.is_lock_free());
 
     std::cout << "atomic<" << type_name << "> is " << lock_free_level[lock_free_macro_val] << " lock free\n";
 }
@@ -174,7 +174,7 @@ verify_lock_free(const char * type_name, int lock_free_macro_val, int lock_free_
 
 #endif
 
-int test_main(int, char *[])
+int main(int, char *[])
 {
     verify_lock_free<char>("char", BOOST_ATOMIC_CHAR_LOCK_FREE, EXPECT_CHAR_LOCK_FREE);
     verify_lock_free<short>("short", BOOST_ATOMIC_SHORT_LOCK_FREE, EXPECT_SHORT_LOCK_FREE);
@@ -197,7 +197,7 @@ int test_main(int, char *[])
         BOOST_ATOMIC_LLONG_LOCK_FREE > 0 ||
         BOOST_ATOMIC_BOOL_LOCK_FREE > 0;
 
-    BOOST_CHECK(!any_lock_free || BOOST_ATOMIC_THREAD_FENCE > 0);
+    BOOST_TEST(!any_lock_free || BOOST_ATOMIC_THREAD_FENCE > 0);
 
-    return 0;
+    return boost::report_errors();
 }

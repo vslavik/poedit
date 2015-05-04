@@ -65,7 +65,7 @@ Refer to __policy_section for more details.
   inline T unchecked_bernoulli_b2n(unsigned n);
 
 `unchecked_bernoulli_b2n` provides access to Bernoulli numbers [*without any checks for overflow or invalid parameters].
-It is implemented as a direct (and very fast) table lookup, and while not recomended for general use it can be useful
+It is implemented as a direct (and very fast) table lookup, and while not recommended for general use it can be useful
 inside inner loops where the ultimate performance is required, and error checking is moved outside the loop.
 
 The largest value you can pass to `unchecked_bernoulli_b2n<>` is `max_bernoulli_b2n<>::value`: passing values greater than
@@ -76,7 +76,7 @@ The value of `boost::math::max_bernoulli_b2n<T>::value` varies by the type T, fo
 it's the largest value which doesn't overflow the target type: for example, `boost::math::max_bernoulli_b2n<double>::value` is 129.
 However, for multiprecision types, it's the largest value for which the result can be represented as the ratio of two 64-bit
 integers, for example `boost::math::max_bernoulli_b2n<boost::multiprecision::cpp_dec_float_50>::value` is just 17.  Of course
-larger indexes can be passed to `bernoulli_b2n<T>(n)`, but then then you loose fast table lookup (i.e. values may need to be calculated).
+larger indexes can be passed to `bernoulli_b2n<T>(n)`, but then you lose fast table lookup (i.e. values may need to be calculated).
 
 [bernoulli_example_4]
 [bernoulli_output_4]
@@ -156,8 +156,8 @@ elseif i == 1 then  ['B[sub i]] = -1/2 [br]
 elseif i < 0 or i is odd then ['B[sub i]] = 0
 
 Note that computed values are stored in a fixed-size table, access is thread safe via atomic operations (i.e. lock
-free programming), this imparts a much lower overhead on access to cached values than might overwise be expected - 
-typically for multiprecision types the cost of thread synchronisation is negligable, while for built in types
+free programming), this imparts a much lower overhead on access to cached values than might otherwise be expected - 
+typically for multiprecision types the cost of thread synchronisation is negligible, while for built in types
 this code is not normally executed anyway.  For very large arguments which cannot be reasonably computed or
 stored in our cache, an asymptotic expansion [@http://www.luschny.de/math/primes/bernincl.html due to Luschny] is used:
 

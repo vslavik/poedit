@@ -29,6 +29,7 @@ struct clock_overhead
     }
 };
 
+inline
 duration_type overhead_clock()
 {
     std::size_t iterations( 10);

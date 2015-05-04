@@ -54,13 +54,13 @@
           const &amp;)</a></span></dt>
 <dt><span class="section"><a href="boost__geometry__index__rtree/insert_iterator__iterator_.html">insert(Iterator,
           Iterator)</a></span></dt>
-<dt><span class="section"><a href="boost__geometry__index__rtree/insert_range_const___.html">insert(Range
+<dt><span class="section"><a href="boost__geometry__index__rtree/insert_convertibleorrange_const___.html">insert(ConvertibleOrRange
           const &amp;)</a></span></dt>
 <dt><span class="section"><a href="boost__geometry__index__rtree/remove_value_type_const___.html">remove(value_type
           const &amp;)</a></span></dt>
 <dt><span class="section"><a href="boost__geometry__index__rtree/remove_iterator__iterator_.html">remove(Iterator,
           Iterator)</a></span></dt>
-<dt><span class="section"><a href="boost__geometry__index__rtree/remove_range_const___.html">remove(Range
+<dt><span class="section"><a href="boost__geometry__index__rtree/remove_convertibleorrange_const___.html">remove(ConvertibleOrRange
           const &amp;)</a></span></dt>
 <dt><span class="section"><a href="boost__geometry__index__rtree/query_predicates_const____outiter_.html">query(Predicates
           const &amp;, OutIter)</a></span></dt>
@@ -79,7 +79,7 @@
 <dt><span class="section"><a href="boost__geometry__index__rtree/get_allocator__.html">get_allocator()</a></span></dt>
 </dl></div>
 <p>
-          <a class="indexterm" name="idp119064112"></a><a class="indexterm" name="idp119064800"></a><a class="indexterm" name="idp119065488"></a><a class="indexterm" name="idp119066176"></a>
+          <a class="indexterm" name="idp125711984"></a><a class="indexterm" name="idp125712672"></a><a class="indexterm" name="idp125713360"></a><a class="indexterm" name="idp125714048"></a>
 The R-tree spatial index.
         </p>
 <h6>
@@ -133,17 +133,18 @@ The R-tree spatial index.
         </h6>
 <p>
           The object of IndexableGetter type translates from Value to Indexable each
-          time r-tree requires it. Which means that this operation is done for each
+          time r-tree requires it. This means that this operation is done for each
           Value access. Therefore the IndexableGetter should return the Indexable
-          by const reference instead of a value. Default one can translate all types
-          adapted to Point, Box or Segment concepts (called Indexables). It also
-          handles <code class="literal"><code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">Indexable</span><span class="special">,</span>
-          <span class="identifier">T</span><span class="special">&gt;</span></code></code>
-          and <code class="literal"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">Indexable</span><span class="special">,</span>
-          <span class="special">...&gt;</span></code></code>. For example,
-          if <code class="literal"><code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">Box</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span></code></code>
-          is stored in the container, the default IndexableGetter translates from
-          <code class="literal"><code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">Box</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span></code></code>
+          by a reference type. The Indexable should not be calculated since it could
+          harm the performance. The default IndexableGetter can translate all types
+          adapted to Point, Box or Segment concepts (called Indexables). Furthermore,
+          it can handle <code class="literal"><code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">Indexable</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span></code></code>,
+          <code class="literal"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">Indexable</span><span class="special">,</span>
+          <span class="special">...&gt;</span></code></code> and <code class="literal"><code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">Indexable</span><span class="special">,</span>
+          <span class="special">...&gt;</span></code></code> when possible.
+          For example, for Value of type <code class="literal"><code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">Box</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span></code></code>,
+          the default IndexableGetter translates from <code class="literal"><code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">Box</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span>
+          <span class="keyword">const</span><span class="special">&amp;</span></code></code>
           to <code class="literal"><code class="computeroutput"><span class="identifier">Box</span> <span class="keyword">const</span><span class="special">&amp;</span></code></code>.
         </p>
 <h6>
@@ -151,11 +152,11 @@ The R-tree spatial index.
           <span class="phrase"><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.equalto"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.equalto">EqualTo</a>
         </h6>
 <p>
-          The object of EqualTo type compares Values and returns <code class="literal"><code class="computeroutput"><span class="keyword">true</span></code></code> if they're equal. It's similar
+          The object of EqualTo type compares Values and returns <code class="literal"><code class="computeroutput"><span class="keyword">true</span></code></code> if they are equal. It's similar
           to <code class="literal"><code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">equal_to</span><span class="special">&lt;&gt;</span></code></code>.
           The default EqualTo returns the result of <code class="literal"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">geometry</span><span class="special">::</span><span class="identifier">equals</span><span class="special">()</span></code></code> for types adapted to some Geometry
-          concept defined in Boost.Geometry and the result of operator= for other
-          types. Components of Pairs and Tuples are compared left-to-right.
+          concept defined in Boost.Geometry and the result of <code class="literal"><code class="computeroutput"><span class="keyword">operator</span><span class="special">==</span></code></code>
+          for other types. Components of Pairs and Tuples are compared left-to-right.
         </p>
 <h6>
 <a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.h4"></a>
@@ -707,13 +708,14 @@ The R-tree spatial index.
                 </td>
 <td>
                   <p>
-                    <a class="link" href="boost__geometry__index__rtree/insert_range_const___.html#classboost_1_1geometry_1_1index_1_1rtree_1a39be117f85cc9ebc508d8ecf77578329"><code class="computeroutput"><span class="identifier">insert</span><span class="special">(</span><span class="identifier">Range</span> <span class="keyword">const</span>
+                    <a class="link" href="boost__geometry__index__rtree/insert_convertibleorrange_const___.html#classboost_1_1geometry_1_1index_1_1rtree_1a5db294b14ebf1319edcfc92e78c8167e"><code class="computeroutput"><span class="identifier">insert</span><span class="special">(</span><span class="identifier">ConvertibleOrRange</span> <span class="keyword">const</span>
                     <span class="special">&amp;)</span></code></a>
                   </p>
                 </td>
 <td>
                   <p>
-                    Insert a range of values to the index.
+                    Insert a value created using convertible object or a range of
+                    values to the index.
                   </p>
                 </td>
 </tr>
@@ -752,13 +754,14 @@ The R-tree spatial index.
                 </td>
 <td>
                   <p>
-                    <a class="link" href="boost__geometry__index__rtree/remove_range_const___.html#classboost_1_1geometry_1_1index_1_1rtree_1a8a6460c186f595e91be69b1062ecae8b"><code class="computeroutput"><span class="identifier">remove</span><span class="special">(</span><span class="identifier">Range</span> <span class="keyword">const</span>
+                    <a class="link" href="boost__geometry__index__rtree/remove_convertibleorrange_const___.html#classboost_1_1geometry_1_1index_1_1rtree_1a320cd1861ba7b43364ed53e1f93a4411"><code class="computeroutput"><span class="identifier">remove</span><span class="special">(</span><span class="identifier">ConvertibleOrRange</span> <span class="keyword">const</span>
                     <span class="special">&amp;)</span></code></a>
                   </p>
                 </td>
 <td>
                   <p>
-                    Remove a range of values from the container.
+                    Remove value corresponding to an object convertible to it or
+                    a range of values from the container.
                   </p>
                 </td>
 </tr>
@@ -973,8 +976,8 @@ The R-tree spatial index.
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2014 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam
-      Wulkiewicz, Oracle and/or its affiliates<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
+      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

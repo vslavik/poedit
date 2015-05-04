@@ -6,7 +6,7 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp" title="Header &lt;boost/xpressive/regex_actions.hpp&gt;">
-<link rel="prev" href="back/result_This_S_idp350772512.html" title="Struct template result&lt;This(Sequence)&gt;">
+<link rel="prev" href="throw_.html" title="Struct template throw_">
 <link rel="next" href="top/result.html" title="Struct template result">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="back/result_This_S_idp350772512.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="top/result.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="throw_.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="top/result.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.xpressive.op.top"></a><div class="titlepage"></div>
@@ -38,24 +38,24 @@
   <span class="keyword">struct</span> <a class="link" href="top/result.html" title="Struct template result">result</a> <span class="special">{</span>
   <span class="special">}</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> This<span class="special">,</span> <span class="keyword">typename</span> Sequence<span class="special">&gt;</span> 
-  <span class="keyword">struct</span> <a class="link" href="top/result_This_S_idp350784944.html" title="Struct template result&lt;This(Sequence)&gt;">result</a><span class="special">&lt;</span><span class="identifier">This</span><span class="special">(</span><span class="identifier">Sequence</span><span class="special">)</span><span class="special">&gt;</span> <span class="special">{</span>
+  <span class="keyword">struct</span> <a class="link" href="top/result_This_S_idp352975792.html" title="Struct template result&lt;This(Sequence)&gt;">result</a><span class="special">&lt;</span><span class="identifier">This</span><span class="special">(</span><span class="identifier">Sequence</span><span class="special">)</span><span class="special">&gt;</span> <span class="special">{</span>
     <span class="comment">// types</span>
-    <span class="keyword">typedef</span> <span class="identifier">remove_reference</span><span class="special">&lt;</span> <span class="identifier">Sequence</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span>                                                                                                    <a class="link" href="top/result_This_S_idp350784944.html#boost.xpressive.op.top.result_This(S_idp350784944.sequence_type"><span class="identifier">sequence_type</span></a><span class="special">;</span>
-    <span class="keyword">typedef</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">if_c</span><span class="special">&lt;</span> <span class="identifier">is_const</span><span class="special">&lt;</span> <span class="identifier">sequence_type</span> <span class="special">&gt;</span><span class="special">::</span><a class="link" href="../value.html" title="Struct template value">value</a><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">sequence_type</span><span class="special">::</span><span class="identifier">value_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">sequence_type</span><span class="special">::</span><span class="identifier">value_type</span> <span class="special">&amp;</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <a class="link" href="top/result_This_S_idp350784944.html#boost.xpressive.op.top.result_This(S_idp350784944.type"><span class="identifier">type</span></a><span class="special">;</span>         
+    <span class="keyword">typedef</span> <span class="identifier">remove_reference</span><span class="special">&lt;</span> <span class="identifier">Sequence</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span>                                                                                                    <a class="link" href="top/result_This_S_idp352975792.html#boost.xpressive.op.top.result_This(S_idp352975792.sequence_type"><span class="identifier">sequence_type</span></a><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">if_c</span><span class="special">&lt;</span> <span class="identifier">is_const</span><span class="special">&lt;</span> <span class="identifier">sequence_type</span> <span class="special">&gt;</span><span class="special">::</span><a class="link" href="../value.html" title="Struct template value">value</a><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">sequence_type</span><span class="special">::</span><span class="identifier">value_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">sequence_type</span><span class="special">::</span><span class="identifier">value_type</span> <span class="special">&amp;</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <a class="link" href="top/result_This_S_idp352975792.html#boost.xpressive.op.top.result_This(S_idp352975792.type"><span class="identifier">type</span></a><span class="special">;</span>         
   <span class="special">}</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="top.html#idp350789424-bb">public member functions</a></span>
+  <span class="comment">// <a class="link" href="top.html#idp352980272-bb">public member functions</a></span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sequence<span class="special">&gt;</span> 
-    <a class="link" href="top/result.html" title="Struct template result">result</a><span class="special">&lt;</span> <a class="link" href="top.html" title="Struct top">top</a><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <a class="link" href="top.html#idp350789984-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <a class="link" href="top/result.html" title="Struct template result">result</a><span class="special">&lt;</span> <a class="link" href="top.html" title="Struct top">top</a><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <a class="link" href="top.html#idp352980832-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp532519056"></a><h2>Description</h2>
+<a name="idp530692864"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp532519472"></a><h3>
-<a name="idp350789424-bb"></a><code class="computeroutput">top</code> public member functions</h3>
+<a name="idp530693280"></a><h3>
+<a name="idp352980272-bb"></a><code class="computeroutput">top</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sequence<span class="special">&gt;</span> 
-  <a class="link" href="top/result.html" title="Struct template result">result</a><span class="special">&lt;</span> <a class="link" href="top.html" title="Struct top">top</a><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <a name="idp350789984-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span> seq<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+  <a class="link" href="top/result.html" title="Struct template result">result</a><span class="special">&lt;</span> <a class="link" href="top.html" title="Struct top">top</a><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <a name="idp352980832-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Sequence</span> <span class="special">&amp;</span> seq<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>
 
 </p>
@@ -98,7 +98,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="back/result_This_S_idp350772512.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="top/result.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="throw_.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="top/result.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

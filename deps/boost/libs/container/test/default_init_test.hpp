@@ -12,27 +12,7 @@
 #define BOOST_CONTAINER_TEST_DEFAULT_INIT_TEST_HEADER
 
 #include <boost/container/detail/config_begin.hpp>
-#include <algorithm>
-#include <memory>
-#include <vector>
-#include <iostream>
-#include <functional>
-#include <list>
-
-#include <boost/move/utility.hpp>
-#include <boost/container/detail/mpl.hpp>
-#include "print_container.hpp"
-#include "check_equal_containers.hpp"
-#include "movable_int.hpp"
-#include <string>
-#include <vector>
-#include "emplace_test.hpp"
-#include "input_from_forward_iterator.hpp"
-#include <boost/move/utility.hpp>
-#include <boost/move/iterator.hpp>
-#include <boost/detail/no_exceptions_support.hpp>
-#include <boost/static_assert.hpp>
-#include "insert_test.hpp"
+#include <cstddef>
 
 namespace boost{
 namespace container {
@@ -133,6 +113,17 @@ bool default_init_test()//Test for default initialization
       test::default_init_allocator<int>::reset_pattern(0);
       test::default_init_allocator<int>::set_ascending(true);
       IntDefaultInitAllocVector v(Capacity, default_init);
+      typename IntDefaultInitAllocVector::iterator it = v.begin();
+      //Compare with the pattern
+      for(std::size_t i = 0; i != Capacity; ++i, ++it){
+         if(!test::check_ascending_byte_pattern(*it))
+            return false;
+      }
+   }
+   {
+      test::default_init_allocator<int>::reset_pattern(0);
+      test::default_init_allocator<int>::set_ascending(true);
+      IntDefaultInitAllocVector v(Capacity, default_init, test::default_init_allocator<int>());
       typename IntDefaultInitAllocVector::iterator it = v.begin();
       //Compare with the pattern
       for(std::size_t i = 0; i != Capacity; ++i, ++it){

@@ -88,9 +88,9 @@
       typedef T value_type;
       typedef Lockable mutex_type;
 
-      synchronized_value() noexept(is_nothrow_default_constructible<T>::value);
-      synchronized_value(T const& other) noexept(is_nothrow_copy_constructible<T>::value);
-      synchronized_value(T&& other) noexept(is_nothrow_move_constructible<T>::value);
+      synchronized_value() noexcept(is_nothrow_default_constructible<T>::value);
+      synchronized_value(T const& other) noexcept(is_nothrow_copy_constructible<T>::value);
+      synchronized_value(T&& other) noexcept(is_nothrow_move_constructible<T>::value);
       synchronized_value(synchronized_value const& rhs);
       synchronized_value(synchronized_value&& other);
 
@@ -129,7 +129,7 @@
 
 [section:constructor `synchronized_value()`]
 
-      synchronized_value() noexept(is_nothrow_default_constructible<T>::value);
+      synchronized_value() noexcept(is_nothrow_default_constructible<T>::value);
 
 [variablelist
 
@@ -145,7 +145,7 @@
 
 [section:constructor_vt `synchronized_value(T const&)`]
 
-      synchronized_value(T const& other) noexept(is_nothrow_copy_constructible<T>::value);
+      synchronized_value(T const& other) noexcept(is_nothrow_copy_constructible<T>::value);
 
 [variablelist
 
@@ -175,11 +175,11 @@
 
 [section:move_vt `synchronized_value(T&&)`]
 
-      synchronized_value(T&& other) noexept(is_nothrow_move_constructible<T>::value);
+      synchronized_value(T&& other) noexcept(is_nothrow_move_constructible<T>::value);
 
 [variablelist
 
-[[Requires:] [`T` is `CopyMovable `.]]
+[[Requires:] [`T` is `MoveConstructible `.]]
 [[Effects:] [Move constructs the cloaked value_type]]
 
 [[Throws:] [Any exception thrown by `value_type(value_type&&)`.]]
@@ -194,7 +194,7 @@
 
 [variablelist
 
-[[Requires:] [`T` is `CopyMovable `.]]
+[[Requires:] [`T` is `MoveConstructible `.]]
 [[Effects:] [Move constructs the cloaked value_type]]
 
 [[Throws:] [Any exception thrown by `value_type(value_type&&)` or `mtx_.lock()`.]]
@@ -209,7 +209,7 @@
 
 [variablelist
 
-[[Requires:] [`T` is `Assignale`.]]
+[[Requires:] [`T` is `Assignable`.]]
 [[Effects:] [Copies the underlying value on a scope protected by the two mutexes. The mutex is not copied. The locks are acquired avoiding deadlock. For example, there is no problem if one thread assigns `a = b` and the other assigns `b = a`.]]
 [[Return:] [`*this`]]
 
@@ -224,7 +224,7 @@
 
 [variablelist
 
-[[Requires:] [`T` is `Assignale`.]]
+[[Requires:] [`T` is `Assignable`.]]
 [[Effects:] [Copies the value on a scope protected by the mutex.]]
 [[Return:] [`*this`]]
 
@@ -273,7 +273,7 @@
 
 [variablelist
 
-[[Requires:] [`T` is `Assignale`.]]
+[[Requires:] [`T` is `Assignable`.]]
 [[Effects:] [Swaps the data on a scope protected by both mutex. Both mutex are acquired to avoid dead-lock. The mutexes are not swapped.]]
 
 [[Throws:] [Any exception thrown by `swap(value_, rhs.value)` or `mtx_.lock()` or `rhs_.mtx_.lock()`.]]

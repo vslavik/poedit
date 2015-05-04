@@ -9,8 +9,6 @@
 
 #include <cstddef>
 
-#include <boost/assert.hpp>
-
 #include <boost/geometry/core/coordinate_type.hpp>
 #include <boost/geometry/core/access.hpp>
 #include <boost/geometry/util/math.hpp>
@@ -69,14 +67,19 @@ public :
         // Generate a block along (left or right of) the segment
 
         // Simulate a vector d (dx,dy)
-        coordinate_type dx = get<0>(input_p2) - get<0>(input_p1);
-        coordinate_type dy = get<1>(input_p2) - get<1>(input_p1);
+        coordinate_type const dx = get<0>(input_p2) - get<0>(input_p1);
+        coordinate_type const dy = get<1>(input_p2) - get<1>(input_p1);
 
         // For normalization [0,1] (=dot product d.d, sqrt)
         promoted_type const length = geometry::math::sqrt(dx * dx + dy * dy);
 
-        // Because coordinates are not equal, length should not be zero
-        BOOST_ASSERT((! geometry::math::equals(length, 0)));
+        if (geometry::math::equals(length, 0))
+        {
+            // Coordinates are simplified and therefore most often not equal.
+            // But if simplify is skipped, or for lines with two
+            // equal points, length is 0 and we cannot generate output.
+            return;
+        }
 
         // Generate the normalized perpendicular p, to the left (ccw)
         promoted_type const px = -dy / length;

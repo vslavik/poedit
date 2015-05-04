@@ -48,7 +48,7 @@ public: // typedefs
     typedef R result_type;
 
 protected: // for use as base class only
-#ifndef BOOST_NO_DEFAULTED_FUNCTIONS
+#if !defined(BOOST_NO_CXX11_DEFAULTED_FUNCTIONS) && !defined(BOOST_NO_CXX11_NON_PUBLIC_DEFAULTED_FUNCTIONS)
     static_visitor() = default;
     ~static_visitor() = default;
 #else

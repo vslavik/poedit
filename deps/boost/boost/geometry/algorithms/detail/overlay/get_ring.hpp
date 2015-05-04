@@ -19,6 +19,7 @@
 #include <boost/geometry/core/tags.hpp>
 #include <boost/geometry/algorithms/detail/ring_identifier.hpp>
 #include <boost/geometry/geometries/concepts/check.hpp>
+#include <boost/geometry/util/range.hpp>
 
 
 namespace boost { namespace geometry
@@ -34,16 +35,16 @@ template<typename Tag>
 struct get_ring
 {};
 
-// A container of rings (multi-ring but that does not exist)
+// A range of rings (multi-ring but that does not exist)
 // gets the "void" tag and is dispatched here.
 template<>
 struct get_ring<void>
 {
-    template<typename Container>
-    static inline typename boost::range_value<Container>::type const&
-                apply(ring_identifier const& id, Container const& container)
+    template<typename Range>
+    static inline typename boost::range_value<Range>::type const&
+                apply(ring_identifier const& id, Range const& container)
     {
-        return container[id.multi_index];
+        return range::at(container, id.multi_index);
     }
 };
 
@@ -88,7 +89,7 @@ struct get_ring<polygon_tag>
             );
         return id.ring_index < 0
             ? exterior_ring(polygon)
-            : interior_rings(polygon)[id.ring_index];
+            : range::at(interior_rings(polygon), id.ring_index);
     }
 };
 
@@ -107,7 +108,7 @@ struct get_ring<multi_polygon_tag>
                 && id.multi_index < int(boost::size(multi_polygon))
             );
         return get_ring<polygon_tag>::apply(id,
-                    multi_polygon[id.multi_index]);
+                    range::at(multi_polygon, id.multi_index));
     }
 };
 

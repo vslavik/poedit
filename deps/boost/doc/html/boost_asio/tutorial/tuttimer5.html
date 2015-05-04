@@ -110,7 +110,7 @@
 
   <span class="special">~</span><span class="identifier">printer</span><span class="special">()</span>
   <span class="special">{</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Final count is "</span> <span class="special">&lt;&lt;</span> <span class="identifier">count_</span> <span class="special">&lt;&lt;</span> <span class="string">"\n"</span><span class="special">;</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Final count is "</span> <span class="special">&lt;&lt;</span> <span class="identifier">count_</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
   <span class="special">}</span>
 </pre>
 <p>
@@ -124,7 +124,7 @@
   <span class="special">{</span>
     <span class="keyword">if</span> <span class="special">(</span><span class="identifier">count_</span> <span class="special">&lt;</span> <span class="number">10</span><span class="special">)</span>
     <span class="special">{</span>
-      <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Timer 1: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">count_</span> <span class="special">&lt;&lt;</span> <span class="string">"\n"</span><span class="special">;</span>
+      <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Timer 1: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">count_</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
       <span class="special">++</span><span class="identifier">count_</span><span class="special">;</span>
 
       <span class="identifier">timer1_</span><span class="special">.</span><span class="identifier">expires_at</span><span class="special">(</span><span class="identifier">timer1_</span><span class="special">.</span><span class="identifier">expires_at</span><span class="special">()</span> <span class="special">+</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">seconds</span><span class="special">(</span><span class="number">1</span><span class="special">));</span>
@@ -136,7 +136,7 @@
   <span class="special">{</span>
     <span class="keyword">if</span> <span class="special">(</span><span class="identifier">count_</span> <span class="special">&lt;</span> <span class="number">10</span><span class="special">)</span>
     <span class="special">{</span>
-      <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Timer 2: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">count_</span> <span class="special">&lt;&lt;</span> <span class="string">"\n"</span><span class="special">;</span>
+      <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Timer 2: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">count_</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
       <span class="special">++</span><span class="identifier">count_</span><span class="special">;</span>
 
       <span class="identifier">timer2_</span><span class="special">.</span><span class="identifier">expires_at</span><span class="special">(</span><span class="identifier">timer2_</span><span class="special">.</span><span class="identifier">expires_at</span><span class="special">()</span> <span class="special">+</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">seconds</span><span class="special">(</span><span class="number">1</span><span class="special">));</span>
@@ -145,7 +145,7 @@
   <span class="special">}</span>
 
 <span class="keyword">private</span><span class="special">:</span>
-  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">strand</span> <span class="identifier">strand_</span><span class="special">;</span>
+  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">io_service</span><span class="special">::</span><span class="identifier">strand</span> <span class="identifier">strand_</span><span class="special">;</span>
   <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">deadline_timer</span> <span class="identifier">timer1_</span><span class="special">;</span>
   <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">deadline_timer</span> <span class="identifier">timer2_</span><span class="special">;</span>
   <span class="keyword">int</span> <span class="identifier">count_</span><span class="special">;</span>
@@ -186,7 +186,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2014 Christopher M. Kohlhoff<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2015 Christopher M.
+      Kohlhoff<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../container.html" title="Chapter&#160;9.&#160;Boost.Container">
-<link rel="prev" href="../container.html" title="Chapter&#160;9.&#160;Boost.Container">
+<link rel="up" href="../container.html" title="Chapter&#160;8.&#160;Boost.Container">
+<link rel="prev" href="../container.html" title="Chapter&#160;8.&#160;Boost.Container">
 <link rel="next" href="exception_handling.html" title="Boost.Container and C++ exceptions">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -69,7 +69,7 @@
 <p>
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">container</span><span class="special">/</span><span class="identifier">vector</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">move</span><span class="special">/</span><span class="identifier">utility</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">move</span><span class="special">/</span><span class="identifier">utility_core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cassert</span><span class="special">&gt;</span>
 
 <span class="comment">//Non-copyable class</span>
@@ -238,6 +238,10 @@
         and this requires complete types and <code class="computeroutput"><a class="link" href="../boost/container/basic_string.html" title="Class template basic_string">basic_string</a></code>
         implements Small String Optimization which also requires complete types.
       </p>
+<p>
+        <span class="bold"><strong>Boost.Container</strong></span> containers supporting incomplete
+        types also support instantiating iterators to those incomplete elements.
+      </p>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="container.main_features.containers_of_incomplete_types.recursive_containers"></a><a class="link" href="main_features.html#container.main_features.containers_of_incomplete_types.recursive_containers" title="Recursive containers">Recursive
@@ -263,14 +267,19 @@
    <span class="keyword">int</span>               <span class="identifier">i_</span><span class="special">;</span>
    <span class="comment">//A vector holding still undefined class 'data'</span>
    <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">data</span><span class="special">&gt;</span>      <span class="identifier">v_</span><span class="special">;</span>
+   <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">data</span><span class="special">&gt;::</span><span class="identifier">iterator</span> <span class="identifier">vi_</span><span class="special">;</span>
    <span class="comment">//A stable_vector holding still undefined class 'data'</span>
    <span class="identifier">stable_vector</span><span class="special">&lt;</span><span class="identifier">data</span><span class="special">&gt;</span> <span class="identifier">sv_</span><span class="special">;</span>
+   <span class="identifier">stable_vector</span><span class="special">&lt;</span><span class="identifier">data</span><span class="special">&gt;::</span><span class="identifier">iterator</span> <span class="identifier">svi_</span><span class="special">;</span>
    <span class="comment">//A stable_vector holding still undefined class 'data'</span>
    <span class="identifier">deque</span><span class="special">&lt;</span><span class="identifier">data</span><span class="special">&gt;</span> <span class="identifier">d_</span><span class="special">;</span>
+   <span class="identifier">deque</span><span class="special">&lt;</span><span class="identifier">data</span><span class="special">&gt;::</span><span class="identifier">iterator</span> <span class="identifier">di_</span><span class="special">;</span>
    <span class="comment">//A list holding still undefined 'data'</span>
    <span class="identifier">list</span><span class="special">&lt;</span><span class="identifier">data</span><span class="special">&gt;</span>        <span class="identifier">l_</span><span class="special">;</span>
+   <span class="identifier">list</span><span class="special">&lt;</span><span class="identifier">data</span><span class="special">&gt;::</span><span class="identifier">iterator</span> <span class="identifier">li_</span><span class="special">;</span>
    <span class="comment">//A map holding still undefined 'data'</span>
    <span class="identifier">map</span><span class="special">&lt;</span><span class="identifier">data</span><span class="special">,</span> <span class="identifier">data</span><span class="special">&gt;</span>   <span class="identifier">m_</span><span class="special">;</span>
+   <span class="identifier">map</span><span class="special">&lt;</span><span class="identifier">data</span><span class="special">,</span> <span class="identifier">data</span><span class="special">&gt;::</span><span class="identifier">iterator</span>   <span class="identifier">mi_</span><span class="special">;</span>
 
    <span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span> <span class="special">&lt;(</span><span class="keyword">const</span> <span class="identifier">data</span> <span class="special">&amp;</span><span class="identifier">l</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">data</span> <span class="special">&amp;</span><span class="identifier">r</span><span class="special">)</span>
    <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">l</span><span class="special">.</span><span class="identifier">i_</span> <span class="special">&lt;</span> <span class="identifier">r</span><span class="special">.</span><span class="identifier">i_</span><span class="special">;</span> <span class="special">}</span>
@@ -282,7 +291,8 @@
    <span class="identifier">string</span> <span class="identifier">value</span><span class="special">;</span>
 
    <span class="comment">//children nodes of this node</span>
-   <span class="identifier">list</span><span class="special">&lt;</span><span class="identifier">tree_node</span><span class="special">&gt;</span>        <span class="identifier">children_</span><span class="special">;</span>
+   <span class="identifier">list</span><span class="special">&lt;</span><span class="identifier">tree_node</span><span class="special">&gt;</span>            <span class="identifier">children_</span><span class="special">;</span>
+   <span class="identifier">list</span><span class="special">&lt;</span><span class="identifier">tree_node</span><span class="special">&gt;::</span><span class="identifier">iterator</span>  <span class="identifier">selected_child_</span><span class="special">;</span>
 <span class="special">};</span>
 
 
@@ -299,6 +309,7 @@
    <span class="identifier">root</span><span class="special">.</span><span class="identifier">name</span>  <span class="special">=</span> <span class="string">"root"</span><span class="special">;</span>
    <span class="identifier">root</span><span class="special">.</span><span class="identifier">value</span> <span class="special">=</span> <span class="string">"root_value"</span><span class="special">;</span>
    <span class="identifier">root</span><span class="special">.</span><span class="identifier">children_</span><span class="special">.</span><span class="identifier">resize</span><span class="special">(</span><span class="number">7</span><span class="special">);</span>
+   <span class="identifier">root</span><span class="special">.</span><span class="identifier">selected_child_</span> <span class="special">=</span> <span class="identifier">root</span><span class="special">.</span><span class="identifier">children_</span><span class="special">.</span><span class="identifier">begin</span><span class="special">();</span>
    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>

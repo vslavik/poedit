@@ -107,7 +107,7 @@ namespace boost { namespace detail {
 
 /// Noncopyable type_info that does not require RTTI.
 /// CTTI == Compile Time Type Info.
-/// This name must be as short as posible, to avoid code bloat
+/// This name must be as short as possible, to avoid code bloat
 template <class T>
 struct ctti {
 
@@ -119,6 +119,7 @@ struct ctti {
         return boost::typeindex::detail::skip_begining< sizeof(__FUNCSIG__) >(__FUNCSIG__);
     #elif defined(__PRETTY_FUNCTION__) \
                 || defined(__GNUC__) \
+                || (defined(__SUNPRO_CC) && (__SUNPRO_CC >= 0x5130)) \
                 || (defined(__MWERKS__) && (__MWERKS__ >= 0x3000)) \
                 || (defined(__ICC) && (__ICC >= 600)) \
                 || defined(__ghs__) \

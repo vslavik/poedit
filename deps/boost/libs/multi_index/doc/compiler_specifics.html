@@ -39,6 +39,7 @@ We list some of the possible limitations along with suitable workarounds when av
   <li><a href="#move">Move semantics</a></li>
   <li><a href="#emplace">Emplace functions</a></li>
   <li><a href="#initializer_list">Initializer lists</a></li>
+  <li><a href="#tuple">Tuples</a></li>
   <li><a href="#symbol_reduction">Reduction of symbol name lengths</a>
     <ul>
       <li><a href="#argument_limitation">Limitation of maximum number of arguments</a></li>
@@ -82,6 +83,14 @@ No transparent emulation of this functionality can be provided in the absence of
 <code>std::initializer_list</code>: consider
 <a href="../../../libs/assign/index.html">Boost.Assign</a> as a
 possible replacement.
+</p>
+
+<h2><a name="tuple">Tuples</a></h2>
+
+<p>
+Everywhere where <code>std::tuple</code>s are used in the library interface,
+<code>boost::tuple</code>s can be resorted to in their place. The converse, however,
+is not true.
 </p>
 
 <h2><a name="symbol_reduction">Reduction of symbol name lengths</a></h2>
@@ -368,7 +377,7 @@ Performance
 
 <br>
 
-<p>Revised January 16th 2014</p>
+<p>Revised August 20th 2014</p>
 
 <p>&copy; Copyright 2003-2014 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 

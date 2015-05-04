@@ -36,8 +36,8 @@ int test()
   #endif
 
    int i;
-   fexcept_t fe;
-   fenv_t env;
+   has_fexcept_t fe;
+   has_fenv_t env;
   
    i = feclearexcept(FE_ALL_EXCEPT);
    i += fetestexcept(FE_ALL_EXCEPT); // All flags should be zero

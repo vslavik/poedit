@@ -15,7 +15,6 @@
 
 #include <boost/intrusive/detail/config_begin.hpp>
 #include <boost/intrusive/pointer_traits.hpp>
-#include <boost/intrusive/detail/utilities.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/static_assert.hpp>
 
@@ -98,7 +97,7 @@ struct nonhook_node_member_value_traits
    {
       return pointer_traits<const_node_ptr>::pointer_to(static_cast<const node&>(value.*P));
    }
-   
+
    static pointer to_value_ptr(node_ptr n)
    {
       return pointer_traits<pointer>::pointer_to

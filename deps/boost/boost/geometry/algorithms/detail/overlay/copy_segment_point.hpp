@@ -11,6 +11,7 @@
 
 
 #include <boost/array.hpp>
+#include <boost/assert.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/range.hpp>
 
@@ -20,8 +21,8 @@
 #include <boost/geometry/core/tags.hpp>
 #include <boost/geometry/algorithms/convert.hpp>
 #include <boost/geometry/geometries/concepts/check.hpp>
-#include <boost/geometry/views/closeable_view.hpp>
-#include <boost/geometry/views/reversible_view.hpp>
+#include <boost/geometry/util/range.hpp>
+#include <boost/geometry/views/detail/normalized_view.hpp>
 
 
 namespace boost { namespace geometry
@@ -36,41 +37,24 @@ namespace detail { namespace copy_segments
 template <typename Range, bool Reverse, typename SegmentIdentifier, typename PointOut>
 struct copy_segment_point_range
 {
-    typedef typename closeable_view
-        <
-            Range const,
-            closure<Range>::value
-        >::type cview_type;
-
-    typedef typename reversible_view
-        <
-            cview_type const,
-            Reverse ? iterate_reverse : iterate_forward
-        >::type rview_type;
-
     static inline bool apply(Range const& range,
             SegmentIdentifier const& seg_id, bool second,
             PointOut& point)
     {
-        int index = seg_id.segment_index;
+        detail::normalized_view<Range const> view(range);
+
+        signed_index_type const n = boost::size(view);
+        signed_index_type index = seg_id.segment_index;
         if (second)
         {
             index++;
-            if (index >= int(boost::size(range)))
+            if (index >= n)
             {
                 index = 0;
             }
         }
 
-        // Exception?
-        if (index >= int(boost::size(range)))
-        {
-            return false;
-        }
-
-        cview_type cview(range);
-        rview_type view(cview);
-
+        BOOST_ASSERT(index >= 0 && index < n);
 
         geometry::convert(*(boost::begin(view) + index), point);
         return true;
@@ -95,8 +79,8 @@ struct copy_segment_point_polygon
             >::apply
                 (
                     seg_id.ring_index < 0
-                    ? geometry::exterior_ring(polygon)
-                    : geometry::interior_rings(polygon)[seg_id.ring_index],
+                        ? geometry::exterior_ring(polygon)
+                        : range::at(geometry::interior_rings(polygon), seg_id.ring_index),
                     seg_id, second,
                     point
                 );
@@ -111,7 +95,7 @@ struct copy_segment_point_box
             SegmentIdentifier const& seg_id, bool second,
             PointOut& point)
     {
-        int index = seg_id.segment_index;
+        signed_index_type index = seg_id.segment_index;
         if (second)
         {
             index++;
@@ -146,7 +130,7 @@ struct copy_segment_point_multi
             );
 
         // Call the single-version
-        return Policy::apply(multi[seg_id.multi_index], seg_id, second, point);
+        return Policy::apply(range::at(multi, seg_id.multi_index), seg_id, second, point);
     }
 };
 
@@ -321,6 +305,8 @@ inline bool copy_segment_point(Geometry1 const& geometry1, Geometry2 const& geom
 {
     concept::check<Geometry1 const>();
     concept::check<Geometry2 const>();
+
+    BOOST_ASSERT(seg_id.source_index == 0 || seg_id.source_index == 1);
 
     if (seg_id.source_index == 0)
     {

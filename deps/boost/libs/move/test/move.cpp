@@ -1,6 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////
 //
 // (C) Copyright David Abrahams, Vicente Botet, Ion Gaztanaga 2009.
+// (C) Copyright Ion Gaztanaga 2009-2014.
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -9,7 +10,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 #include <boost/move/detail/config_begin.hpp>
-#include <boost/move/utility.hpp>
+#include <boost/move/utility_core.hpp>
 #include "../example/movable.hpp"
 #include "../example/copymovable.hpp"
 #include <boost/static_assert.hpp>
@@ -110,40 +111,40 @@ int main()
       movable m3(function(movable(boost::move(m2))));
       movable m4(function(boost::move(m3)));
       (void)m;(void)m2;(void)m3;(void)m4;
-	}
+   }
    {
       movable m;
       movable m2(boost::move(m));
       movable m3(functionr(movable(boost::move(m2))));
       movable m4(functionr(boost::move(m3))); 
       (void)m;(void)m2;(void)m3;(void)m4;
-	}
+   }
    {
       movable m;
       movable m2(boost::move(m));
       movable m3(function2(movable(boost::move(m2))));
       movable m4(function2(boost::move(m3)));
       (void)m;(void)m2;(void)m3;(void)m4;
-	}
+   }
    {
       movable m;
       movable m2(boost::move(m));
       movable m3(function2r(movable(boost::move(m2))));
       movable m4(function2r(boost::move(m3)));
       (void)m;(void)m2;(void)m3;(void)m4;
-	}
+   }
    {
       movable m;
       movable m2(boost::move(m));
       movable m3(move_return_function());
       (void)m;(void)m2;(void)m3;
-	}
+   }
    {
       movable m;
       movable m2(boost::move(m));
       movable m3(move_return_function2());
       (void)m;(void)m2;(void)m3;
-	}
+   }
    {
       //movable
       movable m (factory_wrapper<movable>(factory<movable>()));

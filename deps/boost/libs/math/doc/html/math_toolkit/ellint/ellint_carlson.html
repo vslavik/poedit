@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Elliptic Integrals - Carlson Form</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 1.9.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
 <link rel="up" href="../ellint.html" title="Elliptic Integrals">
 <link rel="prev" href="ellint_intro.html" title="Elliptic Integral Overview">
 <link rel="next" href="ellint_1.html" title="Elliptic Integrals of the First Kind - Legendre Form">
@@ -79,6 +79,18 @@
 
 <span class="special">}}</span> <span class="comment">// namespaces</span>
 </pre>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">special_functions</span><span class="special">/</span><span class="identifier">ellint_rg</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">math</span> <span class="special">{</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ellint_rg</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">x</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">y</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">z</span><span class="special">)</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ellint_rg</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">x</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">y</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;)</span>
+
+<span class="special">}}</span> <span class="comment">// namespaces</span>
+</pre>
 <h5>
 <a name="math_toolkit.ellint.ellint_carlson.h1"></a>
         <span class="phrase"><a name="math_toolkit.ellint.ellint_carlson.description"></a></span><a class="link" href="ellint_carlson.html#math_toolkit.ellint.ellint_carlson.description">Description</a>
@@ -89,7 +101,7 @@
         graph gives an idea of their behavior:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../graphs/ellint_carlson.png" align="middle"></span>
+        <span class="inlinemediaobject"><img src="../../../graphs/ellint_carlson.svg" align="middle"></span>
       </p>
 <p>
         The return type of these functions is computed using the <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>result
@@ -106,7 +118,7 @@
         Returns Carlson's Elliptic Integral R<sub>F</sub>:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ellint9.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ellint9.svg"></span>
       </p>
 <p>
         Requires that all of the arguments are non-negative, and at most one may
@@ -128,7 +140,7 @@
         Returns Carlson's elliptic integral R<sub>D</sub>:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ellint10.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ellint10.svg"></span>
       </p>
 <p>
         Requires that x and y are non-negative, with at most one of them zero, and
@@ -150,7 +162,7 @@
         Returns Carlson's elliptic integral R<sub>J</sub>:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ellint11.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ellint11.svg"></span>
       </p>
 <p>
         Requires that x, y and z are non-negative, with at most one of them zero,
@@ -167,7 +179,7 @@
         principal value</a> using the relation:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ellint17.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ellint17.svg"></span>
       </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ellint_rc</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">x</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">y</span><span class="special">)</span>
@@ -179,7 +191,7 @@
         Returns Carlson's elliptic integral R<sub>C</sub>:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ellint12.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ellint12.svg"></span>
       </p>
 <p>
         Requires that <span class="emphasis"><em>x &gt; 0</em></span> and that <span class="emphasis"><em>y != 0</em></span>.
@@ -196,7 +208,29 @@
         principal value</a> using the relation:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ellint18.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ellint18.svg"></span>
+      </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ellint_rg</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">x</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">y</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">z</span><span class="special">)</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ellint_rg</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">x</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">y</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;)</span>
+</pre>
+<p>
+        Returns Carlson's elliptic integral R<sub>G</sub>:
+      </p>
+<p>
+        <span class="inlinemediaobject"><img src="../../../equations/ellint27.svg"></span>
+      </p>
+<p>
+        Requires that x and y are non-negative, otherwise returns the result of
+        <a class="link" href="../error_handling.html#math_toolkit.error_handling.domain_error">domain_error</a>.
+      </p>
+<p>
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        be used to control the behaviour of the function: how it handles errors,
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        documentation for more details</a>.
       </p>
 <h5>
 <a name="math_toolkit.ellint.ellint_carlson.h2"></a>
@@ -384,7 +418,7 @@
         is the duplication theorem:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ellint13.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ellint13.svg"></span>
       </p>
 <p>
         By applying it repeatedly, <span class="emphasis"><em>x</em></span>, <span class="emphasis"><em>y</em></span>,
@@ -392,12 +426,13 @@
         the special case equation
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ellint16.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ellint16.svg"></span>
       </p>
 <p>
         is used. More specifically, <span class="emphasis"><em>[R F]</em></span> is evaluated from
         a Taylor series expansion to the fifth order. The calculations of the other
-        three integrals are analogous.
+        three integrals are analogous, except for R<sub>C</sub> which can be computed from elementary
+        functions.
       </p>
 <p>
         For <span class="emphasis"><em>p &lt; 0</em></span> in <span class="emphasis"><em>R<sub>J</sub>(x, y, z, p)</em></span>
@@ -406,18 +441,18 @@
         principal values</a> are returned via the relations:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ellint17.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ellint17.svg"></span>
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ellint18.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ellint18.svg"></span>
       </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012, 2013 Nikhar Agrawal, Anton Bikineev,
-      Paul A. Bristow, Christopher Kormanyos, Hubert Holin, Bruno Lalande, John Maddock,
-      Johan R&#229;de, Gautam Sewani, Benjamin Sobotta, Thijs van den Berg, Daryle Walker
-      and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
+      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
+      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
+      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

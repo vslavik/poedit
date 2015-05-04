@@ -9,7 +9,7 @@
 [section Container]
 
 Fusion provides a few predefined sequences out of the box. These
-/containers/ actually hold heterogenously typed data; unlike
+/containers/ actually hold heterogeneously typed data; unlike
 __views__. These containers are more or less counterparts of those in __stl__.
 
 [heading Header]
@@ -21,7 +21,7 @@ __views__. These containers are more or less counterparts of those in __stl__.
 
 [heading Description]
 
-`vector` is a __random_access_sequence__ of heterogenous typed data
+`vector` is a __random_access_sequence__ of heterogeneous typed data
 structured as a simple `struct` where each element is held as a member
 variable. `vector` is the simplest of the Fusion sequence container (a
 vector with N elements is just a struct with N members), and in many
@@ -191,7 +191,7 @@ defined in __forward_sequence__.
     [[`__at__<N>(l)`]           [The Nth element from the beginning of the sequence; see __at__.]]
 ]
 
-[blurb __note__ `__at__<N>(l)` is provided for convenience and compatibility
+[note `__at__<N>(l)` is provided for convenience and compatibility
 with the original __tuple__ library, despite `cons` being a
 __forward_sequence__ only (`at` is supposed to be a
 __random_access_sequence__ requirement). The runtime complexity of __at__ is
@@ -209,7 +209,7 @@ constant (see __recursive_inline__).]
 
 [heading Description]
 
-`list` is a __forward_sequence__ of heterogenous typed data built on top of
+`list` is a __forward_sequence__ of heterogeneous typed data built on top of
 __cons__. It is more efficient than __vector__ when the target sequence is
 constructed piecemeal (a data at a time). The runtime cost of access to
 each element is peculiarly constant (see __recursive_inline__).
@@ -276,7 +276,7 @@ defined in __forward_sequence__.
     [[`__at__<N>(l)`]           [The Nth element from the beginning of the sequence; see __at__.]]
 ]
 
-[blurb __note__ `__at__<n>(l)` is provided for convenience and compatibility
+[note `__at__<n>(l)` is provided for convenience and compatibility
 with the original __tuple__ library, despite `list` being a
 __forward_sequence__ only (__at__ is supposed to be a
 __random_access_sequence__ requirement). The runtime complexity of __at__ is
@@ -309,7 +309,7 @@ __front_extended_deque__ and __back_extended_deque__.
 
     #include <boost/fusion/container/deque.hpp>
     #include <boost/fusion/include/deque.hpp>
-    #include <boost/fusion/container/list/deque_fwd.hpp>
+    #include <boost/fusion/container/deque/deque_fwd.hpp>
     #include <boost/fusion/include/deque_fwd.hpp>
 
 [heading Synopsis]
@@ -363,7 +363,7 @@ defined in __bidirectional_sequence__.
     [[`__at__<N>(d)`]       [The Nth element from the beginning of the sequence; see __at__.]]
 ]
 
-[blurb __note__ `__at__<N>(d)` is provided for convenience, despite
+[note `__at__<N>(d)` is provided for convenience, despite
 `deque` being a __bidirectional_sequence__ only (`at` is supposed to be
 a __random_access_sequence__ requirement). The runtime complexity of
 __at__ is constant (see __recursive_inline__). `deque` element access
@@ -406,7 +406,7 @@ the same properties as the __deque__.
     [[`T`]                  [Element type]              [ ]]
 ]
 
-[blurb __note__ `Deque` can be a __deque__, a __front_extended_deque__ or a
+[note `Deque` can be a __deque__, a __front_extended_deque__ or a
 __back_extended_deque__]
 
 [heading Model of]
@@ -430,7 +430,7 @@ not defined in __bidirectional_sequence__.
     [[`__at__<N>(d)`]       [The Nth element from the beginning of the sequence; see __at__.]]
 ]
 
-[blurb __note__ See __deque__ for further details.]
+[note See __deque__ for further details.]
 
 [heading Example]
 
@@ -467,7 +467,7 @@ the same properties as the __deque__.
     [[`T`]                  [Element type]              [ ]]
 ]
 
-[blurb __note__ `Deque` can be a __deque__, a __back_extended_deque__ or a
+[note `Deque` can be a __deque__, a __back_extended_deque__ or a
 __back_extended_deque__]
 
 [heading Model of]
@@ -491,7 +491,7 @@ not defined in __bidirectional_sequence__.
     [[`__at__<N>(d)`]       [The Nth element from the beginning of the sequence; see __at__.]]
 ]
 
-[blurb __note__ See __deque__ for further details.]
+[note See __deque__ for further details.]
 
 [heading Example]
 
@@ -508,7 +508,7 @@ not defined in __bidirectional_sequence__.
 
 [heading Description]
 
-set is an __associative_sequence__ of heteregenous typed data elements.
+set is an __associative_sequence__ of heterogeneous typed data elements.
 Type identity is used to impose an equivalence relation on keys. The
 element's type is its key. A set may contain at most one element for each
 key. Membership testing and element key lookup has constant runtime
@@ -589,7 +589,7 @@ defined in __random_access_sequence__ and __associative_sequence__.
 
 [heading Description]
 
-map is an __associative_sequence__ of heteregenous typed data elements.
+map is an __associative_sequence__ of heterogeneous typed data elements.
 Each element is a key/data pair (see __fusion_pair__) where the key has no
 data (type only). Type identity is used to impose an equivalence relation
 on keys. A map may contain at most one element for each key. Membership
@@ -730,7 +730,7 @@ before including any Fusion header to change the default. Example:
 
 [heading See also]
 
-__note_boost_ref__
+__note_ref_wrappers__
 
 [endsect]
 
@@ -778,7 +778,7 @@ __result_of_make_cons__`<Car>::type`
 
 [heading See also]
 
-__note_boost_ref__
+__note_ref_wrappers__
 
 [endsect]
 
@@ -828,7 +828,7 @@ default. Example:
 
 [heading See also]
 
-__note_boost_ref__
+__note_ref_wrappers__
 
 [endsect]
 
@@ -846,7 +846,7 @@ Create a __deque__ from one or more values.
 
 For C++11 compilers, the variadic function interface has no upper bound.
 
-For C++11 compilers, the variadic function accepts `0` to
+For C++03 compilers, the variadic function accepts `0` to
 `FUSION_MAX_DEQUE_SIZE` elements, where `FUSION_MAX_DEQUE_SIZE` is a
 user definable predefined maximum that defaults to `10`. You may define
 the preprocessor constant `FUSION_MAX_DEQUE_SIZE` before including any
@@ -880,7 +880,7 @@ Fusion header to change the default. Example:
 
 [heading See also]
 
-__note_boost_ref__
+__note_ref_wrappers__
 
 [endsect]
 
@@ -932,7 +932,7 @@ default. Example:
 
 [heading See also]
 
-__note_boost_ref__
+__note_ref_wrappers__
 
 [endsect]
 
@@ -950,7 +950,9 @@ Create a __map__ from one or more key/data pairs.
     typename __result_of_make_map__<K0, K0,... KN, T0, T1,... TN>::type
     make_map(T0 const& x0, T1 const& x1... TN const& xN);
 
-The variadic function accepts `0` to `FUSION_MAX_MAP_SIZE` elements,
+For C++11 compilers, the variadic function interface has no upper bound.
+
+For C++03 compilers, the variadic function accepts `0` to `FUSION_MAX_MAP_SIZE` elements,
 where `FUSION_MAX_MAP_SIZE` is a user definable predefined maximum that
 defaults to `10`. You may define the preprocessor constant
 `FUSION_MAX_MAP_SIZE` before including any Fusion header to change the
@@ -988,7 +990,7 @@ default. Example:
 
 [heading See also]
 
-__note_boost_ref__, __fusion_pair__
+__note_ref_wrappers__, __fusion_pair__
 
 [endsect]
 
@@ -1468,6 +1470,10 @@ rules for __element_conversion__.
 
 Returns the result type of __make_map__.
 
+The implementation depends on the support of variadic templates.
+
+When variadic templates are not supported, make_map is a metafunction of the form:
+
 [heading Synopsis]
 
     template <
@@ -1475,13 +1481,27 @@ Returns the result type of __make_map__.
       , typename T0, typename T1,... typename TN>
     struct make_map;
 
-The variadic function accepts `0` to `FUSION_MAX_MAP_SIZE` elements,
+For C++11 compilers, the variadic function interface has no upper bound.
+
+For C++03 compilers, the variadic function accepts `0` to `FUSION_MAX_MAP_SIZE` elements,
 where `FUSION_MAX_MAP_SIZE` is a user definable predefined maximum that
 defaults to `10`. You may define the preprocessor constant
 `FUSION_MAX_MAP_SIZE` before including any Fusion header to change the
 default. Example:
 
     #define FUSION_MAX_MAP_SIZE 20
+
+When variadic templates are supported, make_map is a metafunction class of the form:
+
+[heading Synopsis]
+
+    template <
+        typename K0, typename K1,... typename KN>
+    struct make_map
+    {
+        struct apply<
+        typename T0, typename T1,... typename TN>
+    };
 
 [heading Parameters]
 
@@ -1493,9 +1513,16 @@ default. Example:
 
 [heading Expression Semantics]
 
+    #if !defined(BOOST_FUSION_HAS_VARIADIC_MAP)
     resulf_of::make_map<K0, K1,... KN, T0, T1,... TN>::type;
+    #else
+    resulf_of::make_map<K0, K1,... KN>::apply<T0, T1,... TN>::type;
+    #endif
 
 [*Return type]: __result_of_make_map__`<K0, K0,... KN, T0, T1,... TN>::type`
+when variadic templates are not supported, or
+__result_of_make_map__`<K0, K0,... KN>::apply<T0, T1,... TN>::type`
+when variadic templates are supported.
 
 [*Semantics]: A __map__ with __fusion_pair__ elements where the
 `second_type` is converted following the rules for __element_conversion__.
@@ -1509,7 +1536,11 @@ default. Example:
 
 [heading Example]
 
+    #if !defined(BOOST_FUSION_HAS_VARIADIC_MAP)
     result_of::make_map<int, double, char, double>::type
+    #else
+    result_of::make_map<int, double>::apply<char, double>::type
+    #endif
 
 [heading See also]
 
@@ -1918,7 +1949,7 @@ Convert a fusion sequence to a __map__.
 
 [*Semantics]: Convert a fusion sequence, `seq`, to a __map__.
 
-[*Precondition]: The elements of the sequence are assumed to be
+[*Precondition]: For non-associative sequence, the elements are assumed to be
 __fusion_pair__s. There may be no duplicate __fusion_pair__ key types.
 
 [heading Header]
@@ -1928,9 +1959,25 @@ __fusion_pair__s. There may be no duplicate __fusion_pair__ key types.
 
 [heading Example]
 
+    // from sequence of __fusion_pair__
     as_map(__make_vector__(
         __fusion_make_pair__<int>('X')
       , __fusion_make_pair__<double>("Men")))
+    
+    // from associative sequence
+    namespace ns
+    {
+        struct x_member;
+        struct y_member;
+    }
+    BOOST_FUSION_DEFINE_ASSOC_STRUCT(
+        (ns),
+        point,
+        (int, x, ns::x_member)
+        (int, y, ns::y_member)
+    )
+    ...
+    as_map(ns::point(123, 456))
 
 [endsect]
 
@@ -2119,7 +2166,7 @@ Returns the result type of __as_map__.
 
 [*Semantics]: Convert a fusion sequence, `Sequence`, to a __map__.
 
-[*Precondition]: The elements of the sequence are assumed to be
+[*Precondition]: For non-associative sequence, the elements are assumed to be
 __fusion_pair__s. There may be no duplicate __fusion_pair__ key types.
 
 [heading Header]
@@ -2129,9 +2176,25 @@ __fusion_pair__s. There may be no duplicate __fusion_pair__ key types.
 
 [heading Example]
 
+    // from sequence of __fusion_pair__
     result_of::as_map<__vector__<
         __fusion_pair__<int, char>
       , __fusion_pair__<double, std::string> > >::type
+    
+    // from associative sequence
+    namespace ns
+    {
+        struct x_member;
+        struct y_member;
+    }
+    BOOST_FUSION_DEFINE_ASSOC_STRUCT(
+        (ns),
+        point,
+        (int, x, ns::x_member)
+        (int, y, ns::y_member)
+    )
+    ...
+    result_of::as_map<ns::point>::type // __map__<__fusion_pair__<ns::x_member, int>, __fusion_pair__<ns::y_member, int> >
 
 [endsect]
 

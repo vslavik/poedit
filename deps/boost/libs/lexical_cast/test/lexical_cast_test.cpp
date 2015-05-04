@@ -56,6 +56,12 @@ struct my_traits : std::char_traits<CharT>
 template<class CharT>
 struct my_allocator : std::allocator<CharT>
 {
+    typedef std::allocator<CharT> base_t;
+
+    my_allocator(){}
+    template <class U> my_allocator(const my_allocator<U>& v) : base_t(v) {}
+
+    template <class U> struct rebind { typedef my_allocator<U> other; };
 };
 
 using namespace boost;

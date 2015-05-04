@@ -65,7 +65,7 @@ struct envelope_visitor : public boost::static_visitor<box>
 };
 
 
-int main(void)
+int main()
 {
     // geometries container
     map geometries;

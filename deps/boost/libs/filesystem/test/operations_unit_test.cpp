@@ -31,16 +31,9 @@
 #   error Configuration not supported: Boost.Filesystem V3 and later requires std::wstring support
 # endif
 
-#include <boost/foreach.hpp>
 #include <boost/system/error_code.hpp>
 #include <boost/detail/lightweight_test.hpp>
-
-#ifndef BOOST_LIGHTWEIGHT_MAIN
-#  include <boost/test/prg_exec_monitor.hpp>
-#else
-#  include <boost/detail/lightweight_main.hpp>
-#endif
-
+#include <boost/detail/lightweight_main.hpp>
 #include <iostream>
 
 using namespace boost::filesystem;
@@ -166,10 +159,10 @@ namespace
     }
 #endif
 
-    BOOST_FOREACH(directory_entry& x, directory_iterator("."))
+    for (directory_iterator itr("."); itr != directory_iterator(); ++itr)
     {
-      CHECK(!x.path().empty());
-      //cout << "  " << x.path() << "\n";
+      CHECK(!itr->path().empty());
+      //cout << "  " << itr->path() << "\n";
     }
 
     cout << "directory_iterator_test complete" << endl;
@@ -227,10 +220,11 @@ namespace
     }
 #endif
 
-    BOOST_FOREACH(directory_entry& x, recursive_directory_iterator(".."))
+    for (recursive_directory_iterator itr("..");
+      itr != recursive_directory_iterator(); ++itr)
     {
-      CHECK(!x.path().empty());
-      //cout << "  " << x.path() << "\n";
+      CHECK(!itr->path().empty());
+      //cout << "  " << itr->path() << "\n";
     }
 
     cout << "recursive_directory_iterator_test complete" << endl;
@@ -351,6 +345,8 @@ int cpp_main(int, char*[])
 
   cout << unique_path() << endl;
   cout << unique_path("foo-%%%%%-%%%%%-bar") << endl;
-  
+  cout << unique_path("foo-%%%%%-%%%%%-%%%%%-%%%%%-%%%%%-%%%%%-%%%%%-%%%%-bar") << endl;
+  cout << unique_path("foo-%%%%%-%%%%%-%%%%%-%%%%%-%%%%%-%%%%%-%%%%%-%%%%%-bar") << endl;
+
   return ::boost::report_errors();
 }

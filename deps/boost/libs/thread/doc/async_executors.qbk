@@ -10,7 +10,7 @@
 
 [warning These features are experimental and subject to change in future versions. There are not too much tests yet, so it is possible that you can find out some trivial bugs :(] 
 
-[note These features are based on the [@http://www.open-std.org/JTC1/SC22/WG21/docs/papers/2013/n3785.pdf [*N3785 - Executors and Schedulers revision 3]] C++1y proposal from Chris Mysen, Niklas Gustafsson, Matt Austern, Jeffrey Yasskin. The text that follows has been adapted from tis paper to show the differences.]
+[note These features are based on the [@http://www.open-std.org/JTC1/SC22/WG21/docs/papers/2013/n3785.pdf [*N3785 - Executors and Schedulers revision 3]] C++1y proposal from Chris Mysen, Niklas Gustafsson, Matt Austern, Jeffrey Yasskin. The text that follows has been adapted from this paper to show the differences.]
 
 Executors are objects that can execute units of work packaged as function objects. Boost.Thread differs from N3785 mainly in the an Executor doesn't needs to inherit from an abstract class Executor. Static polymorphism is used instead and type erasure is used internally. 
 
@@ -122,21 +122,21 @@ An Executor is an object that schedules the closures that have been submitted to
 
 * The choice of which executor to use is explicit. This is important for reasons described in the Motivation section. In particular, consider the common case of an asynchronous operation that itself spawns asynchronous operations. If both operations ran on the same executor, and if that executor had a bounded number of worker threads, then we could get deadlock. Programs often deal with such issues by splitting different kinds of work between different executors.
 
-* Even if there could be a strong value in having a default executor, that can be used when detailed control is unnecessary, the authors don't know how to implement it in a portable a robust way.
+* Even if there could be a strong value in having a default executor, that can be used when detailed control is unnecessary, the authors don't know how to implement it in a portable and robust way.
 
-* The library provides Executors based on static and dynamic polymorphism. The static polymorphism interface is intended to be used on contexts that need to have the best performances. The dynamic polymorphism interface has the advantage to been able to change the executor a function is suing without making it a template and it possible to pass executors across a binary interface. For some applications, the cost of an additional virtual dispatch could be almost certainly negligible compared to the other operations involved.
+* The library provides Executors based on static and dynamic polymorphism. The static polymorphism interface is intended to be used on contexts that need to have the best performances. The dynamic polymorphism interface has the advantage to been able to change the executor a function is using without making it a template and is possible to pass executors across a binary interface. For some applications, the cost of an additional virtual dispatch could be almost certainly negligible compared to the other operations involved.
 
 * Conceptually, an executor puts closures on a queue and at some point executes them. The queue is always unbounded, so adding a closure to an executor never blocks. (Defining “never blocks” formally is challenging, but informally we just mean that submit() is an ordinary function that executes something and returns, rather than waiting for the completion of some potentially long running operation in another thread.)
 
 [heading Closure]
 
-One important question is just what a closure is. This library has a very simple answer: a closure is a `Callable` with no parameters and returning `voidv. 
+One important question is just what a closure is. This library has a very simple answer: a closure is a `Callable` with no parameters and returning `void`. 
 
 N3785 choose the more specific `std::function<void()>` as it provides only dynamic polymorphism and states that in practice the implementation of a template based approach or another approach is impractical. The authors of this library think that the template based approach is compatible with a dynamic based approach. They give some arguments:
 
 The first one is that a virtual function can not be a template. This is true but it is also true that the executor interface can provide the template functions that call to the virtual public functions. Another reason they give is that "a template parameter would complicate the interface without adding any real generality. In the end an executor class is going to need some kind of type erasure to handle all the different kinds of function objects with `void()` signature, and that’s exactly what std::function already does". We think that it is up to the executor to manage with this implementation details, not to the user.
 
-We share all the argument they give related to the `void()` interface of the work unit. A work unit is a closure that takes no arguments and returns no value. This is indeed a limitation on user code, but combined with `boost::async` taking executors as parameters the user has all what is needs.
+We share all the argument they give related to the `void()` interface of the work unit. A work unit is a closure that takes no arguments and returns no value. This is indeed a limitation on user code, but combined with `boost::async` taking executors as parameters the user has all what she needs.
 
 The third one is related to performance. They assert that "any mechanism for storing closures on an executor’s queue will have to use some form of type erasure. There’s no reason to believe that a custom closure mechanism, written just for std::executor and used nowhere else within the standard library, would be better in that respect than `std::function<void()>`". We believe that the implementation can do better that storing the closure on a `std::function<void()>`. e.g. the implementation can use intrusive data to store the closure and the pointers to other nodes needed to store the closures in a given order. 
 
@@ -158,6 +158,24 @@ In order to manage with all the clocks, there are two alternatives:
 The library chose the first of those options, largely for simplicity.
 ]
 
+[heading Scheduled work]
+
+The approach of this library respect to scheduled work of the N3785 proposal is quite different. Instead of adding the scheduled operations to a specific scheduled_executor polymorphic interface, we opt by adding a specific `scheduler` class that is not an executor and knows how to manage with the scheduling of timed tasks `submit_at`/`submit_after`. 
+
+
+`scheduler` provides executor factories `at`/`after` given a specific `time_point` or a `duration`. The built executors wrap a reference to this scheduler and the time at which the submitted task will be executed. 
+
+If we want to schedule these operations on an existing executor (as `serial_executor` does), these classes provide a `on` factory taking another  executor as parameter and wraps both instance on the returned executor. 
+
+      sch.on(tp).after(seconds(i)).submit(boost::bind(fn,i));
+
+This has several advantages:
+
+* The scheduled operations are available for all the executors via wrappers.
+* The template functions could accept any chrono `time_point` and `duration` respectively as we are not working with virtual functions.
+
+In order to manage with all the clocks, this library propose generic solution. `scheduler<Clock>` know how to manage with the `submit_at`/`submit_after` `Clock::time_point`/`Clock::duration` tasks. Note that the durations on different clocks differ.
+
 [heading Not Handled Exceptions]
 As in N3785 and based on the same design decision than `std`/`boost::thread` if a user closure throws an exception, the executor must call the `std::terminate` function.
 Note that when we combine `boost::async` and `Executors`, the exception will be caught by the closure associated to the returned future, so that the exception is stored on the returned future, as for the other `async` overloads.
@@ -166,7 +184,7 @@ Note that when we combine `boost::async` and `Executors`, the exception will be 
 
 It is common idiom to set some thread local variable at the beginning of a thread. As Executors could instantiate threads internally these Executors shall have the ability to call a user specific function at thread entry on the executor constructor.
 
-For executors that don't instantiate any thread an that would use the current thread this function shall be called only for the thread calling the `at_thread_entry` member function. 
+For executors that don't instantiate any thread and that would use the current thread this function shall be called only for the thread calling the `at_thread_entry` member function. 
 
 [heading Cancelation]
 
@@ -182,49 +200,108 @@ An alternative is to make async return a cancelable_task but this will need also
 [/
 The library would provide in the future a cancelable_task that could support cancelation.
 
-  class cancelation_state {
-      std::atomic<bool> requested;      std::atomic<bool> enabled;      std::condition_variable* cond;      std::mutex cond_mutex;
-  public:
-      cancelation_state():          thread_cond(0)      {}      void cancel() {        requested.store(true,std::memory_order_relaxed);        std::lock_guard<std::mutex> lk(cond_mutex);        if(cond)        {            cond->notify_all();        }      }      bool cancellation_requested() const      {        return requested.load(std::memory_order_relaxed);      }
-      void enable() {        enable.store(true,std::memory_order_relaxed);      }      void disable() {        enable.store(false,std::memory_order_relaxed);      }      bool cancellation_enabled() const      {        return enabled.load(std::memory_order_relaxed);      }      void set_condition_variable(std::condition_variable& cv)      {        std::lock_guard<std::mutex> lk(cond_mutex);        cond = &cv;      }      void clear_condition_variable()      {        std::lock_guard<std::mutex> lk(cond_mutex);        cond = 0;      }      struct clear_cv_on_destruct      {        ~clear_cv_on_destruct()        {            this_thread_interrupt_flag.clear_condition_variable();        }	};
-	void cancelation_point();
-	void cancelable_wait(std::condition_variable& cv,                        std::unique_lock<std::mutex>& lk)	{    		cancelation_point();    		this_cancelable_state.set_condition_variable(cv);	      this_cancelable_state::clear_cv_on_destruct guard;    		interruption_point();
-    		cv.wait_for(lk, std::chrono::milliseconds(1));    		this_cancelable_state.clear_condition_variable();    		cancelation_point();	}
-      class disable_cancelation
-      {
-      public:
-          disable_cancelation(const disable_cancelation&) = delete;
-          disable_cancelation& operator=(const disable_cancelation&) = delete;
-          disable_cancelation(cancelable_closure& closure) noexcept;
-          ~disable_cancelation() noexcept;
-      };
-      class restore_cancelation
-      {
-      public:
-          restore_cancelation(const restore_cancelation&) = delete;
-          restore_cancelation& operator=(const restore_cancelation&) = delete;
-          explicit restore_cancelation(cancelable_closure& closure, disable_cancelation& disabler) noexcept;
-          ~restore_cancelation() noexcept;
-      };
-  };
-
-  template <class Closure>	
-  struct cancelable_closure_mixin : cancelable_closure {
-	void operator() {
-		cancel_point();
-		this->Closure::run();
-	}
-  };
-
-  struct my_clousure : cancelable_closure_mixin<my_clousure> 
+  class cancelation_state
   {
-	void run() {
-	    while () {
-              cancel_point();
-	    }
-	}
+    std::atomic<bool> requested;
+    std::atomic<bool> enabled;
+    std::condition_variable* cond;
+    std::mutex cond_mutex;
+  public:
+    cancelation_state() :
+      thread_cond(0)
+    {
+    }
+    void cancel()
+    {
+      requested.store(true, std::memory_order_relaxed);
+      std::lock_guard < std::mutex > lk(cond_mutex);
+      if (cond)
+      {
+        cond->notify_all();
+      }
+    }
+    bool cancellation_requested() const
+    {
+      return requested.load(std::memory_order_relaxed);
+    }
+    void enable()
+    {
+      enable.store(true, std::memory_order_relaxed);
+    }
+    void disable()
+    {
+      enable.store(false, std::memory_order_relaxed);
+    }
+    bool cancellation_enabled() const
+    {
+      return enabled.load(std::memory_order_relaxed);
+    }
+    void set_condition_variable(std::condition_variable& cv)
+    {
+      std::lock_guard < std::mutex > lk(cond_mutex);
+      cond = &cv;
+    }
+    void clear_condition_variable()
+    {
+      std::lock_guard < std::mutex > lk(cond_mutex);
+      cond = 0;
+    }
+    struct clear_cv_on_destruct
+    {
+      ~clear_cv_on_destruct()
+      {
+        this_thread_interrupt_flag.clear_condition_variable();
+      }
+    };
+    void cancelation_point();
+    void cancelable_wait(std::condition_variable& cv, std::unique_lock<std::mutex>& lk)
+    {
+      cancelation_point();
+      this_cancelable_state.set_condition_variable(cv);
+      this_cancelable_state::clear_cv_on_destruct guard;
+      interruption_point();
+      cv.wait_for(lk, std::chrono::milliseconds(1));
+      this_cancelable_state.clear_condition_variable();
+      cancelation_point();
+    }
+    class disable_cancelation
+    {
+    public:
+      disable_cancelation(const disable_cancelation&)= delete;
+      disable_cancelation& operator=(const disable_cancelation&)= delete;
+      disable_cancelation(cancelable_closure& closure)
+  noexcept    ;
+      ~disable_cancelation() noexcept;
+    };
+    class restore_cancelation
+    {
+    public:
+      restore_cancelation(const restore_cancelation&) = delete;
+      restore_cancelation& operator=(const restore_cancelation&) = delete;
+      explicit restore_cancelation(cancelable_closure& closure, disable_cancelation& disabler) noexcept;
+      ~restore_cancelation() noexcept;
+    };
+  };
+  
+  template <class Closure>
+  struct cancelable_closure_mixin: cancelable_closure
+  {
+    void operator()
+    {
+      cancel_point();this->Closure::run();
+    }
+  };
+  
+  struct my_clousure: cancelable_closure_mixin<my_clousure>
+  {
+    void run()
+    {
+      while ()
+      {
+        cancel_point();
+      }
+    }
   }
-
 ]
 
 [heading Current executor]
@@ -242,32 +319,22 @@ The reason is that the user can always use a thread_local variable and reset it 
 		}
 	);
 
+[
 [heading Default executor]
 
 The library authors share some of the concerns of the C++ standard committee (introduction of a new single shared resource, a singleton, could make it difficult to make it portable to all the environments) and that this library doesn't need to provide a default executor for the time been. 
 
-The user can always define his default executor himself and use the `at_thread_entry ` member function to set the default constructor.
+The user can always define his default executor himself.
 
-	thread_local default_executor_state_type default_executor_state;
-	executor* default_executor() { return default_executor_state.default_executor(); }
-
-	// in main
-	MyDefaultExecutor myDefaultExecutor( 
-		// at_thread_entry
-		[](MyDefaultExecutor& ex) { 
-			default_executor_state.set_default_executor(ex);
-		}
-	);
-
-	basic_thread_pool pool(
-		// at_thread_entry
-		[&myDefaultExecutor](basic_thread_pool& pool) { 
-			default_executor_state.set_default_executor(myDefaultExecutor);
-		}
-	);
+	boost::generic_executor_ref default_executor()
+	{
+  		static boost::basic_thread_pool tp(4);
+  		return generic_executor_ref(tp);
+	}
 
 
 [endsect]
+
 
 [/////////////////////]
 [section:ref Reference]
@@ -287,9 +354,6 @@ The `Executor` concept models the common operations of all the executors.
  
 A type `E` meets the `Executor` requirements if the following expressions are well-formed and have the specified semantics 
 
-* `E::work`
-* `e.submit(lw);`
-* `e.submit(rw);`
 * `e.submit(lc);`
 * `e.submit(rc);`
 * `e.close();`
@@ -300,50 +364,10 @@ A type `E` meets the `Executor` requirements if the following expressions are we
 where 
 
 * `e` denotes a value of type `E`, 
-* `lw` denotes a lvalue referece of type `E::work`, 
-* `rc` denotes a rvalue referece of type `E::work`
 * `lc` denotes a lvalue referece of type `Closure`, 
 * `rc` denotes a rvalue referece of type `Closure`
 * `p` denotes a value of type `Predicate`
 
-[/////////////////////////////////////]
-[section:submitlw `e.submit(lw);`]
-
-[variablelist
-
-[[Effects:] [The specified closure will be scheduled for execution at some point in the future.
-If invoked closure throws an exception the executor will call std::terminate, as is the case with threads.]]
-
-[[Synchronization:] [completion of closure on a particular thread happens before destruction of thread's thread local variables.]]
-
-[[Return type:] [`void`.]]
-
-[[Throws:] [sync_queue_is_closed if the thread pool is closed. Whatever exception that can be throw while storing the closure.]]
-
-[[Exception safety:] [If an exception is thrown then the executor state is unmodified.]]
-
-]
-
-[endsect]
-[/////////////////////////////////////]
-[section:submitrw `e.submit(rw);`]
-
-[variablelist
-
-[[Effects:] [The specified closure will be scheduled for execution at some point in the future.
-If invoked closure throws an exception the executor will call std::terminate, as is the case with threads.]]
-
-[[Synchronization:] [completion of closure on a particular thread happens before destruction of thread's thread local variables.]]
-
-[[Return type:] [`void`.]]
-
-[[Throws:] [sync_queue_is_closed if the thread pool is closed. Whatever exception that can be throw while storing the closure.]]
-
-[[Exception safety:] [If an exception is thrown then the executor state is unmodified.]]
-
-]
-
-[endsect]
 [/////////////////////////////////////]
 [section:submitlc `e.submit(lc);`]
 
@@ -387,7 +411,7 @@ If invoked closure throws an exception the executor will call std::terminate, as
 
 [variablelist
 
-[[Effects:] [close the executor `e` for submissions.]]
+[[Effects:] [close the scheduler/executor `e` for submissions.]]
 
 [[Remark:] [The worker threads will work until there is no more closures to run.]]
 
@@ -401,15 +425,16 @@ If invoked closure throws an exception the executor will call std::terminate, as
 
 [endsect]
 [/////////////////////////////////////]
-[section:close `b = e.close();`]
+[section:closed `b = e.closed();`]
 
 [variablelist
 
 [[Return type:] [`bool`.]]
 
-[[Return:] [`void`.]]
+[[Return:] [whether the scheduler/executor is closed for submissions.]]
 
-[[Throws:] [whether the pool is closed for submissions.]]
+[[Throws:] [Whatever exception that can be throw while ensuring the thread safety.]]
+
 
 ]
 
@@ -433,7 +458,7 @@ If invoked closure throws an exception the executor will call std::terminate, as
 
 [endsect]
 [/////////////////////////////////////]
-[section:try_executing_one `e.reschedule_until(p);`]
+[section:reschedule_until `e.reschedule_until(p);`]
 
 [variablelist
 
@@ -491,6 +516,7 @@ Executor abstract base class.
       virtual bool closed() = 0;
   
       virtual void submit(work&& closure) = 0;
+      virtual void submit(work& closure) = 0;
       template <typename Closure>
       void submit(Closure&& closure);
   
@@ -553,12 +579,13 @@ Polymorphic adaptor of a model of Executor to an executor.
       template <typename ...Args>
       executor_adaptor(Args&& ... args);
 
-      Executor& underlying_executor();
+      Executor& underlying_executor() noexcept;
   
       void close();
       bool closed();
   
       void submit(work&& closure);
+      void submit(work& closure);
   
       bool try_executing_one();
   
@@ -584,7 +611,7 @@ Polymorphic adaptor of a model of Executor to an executor.
 [/////////////////////////////////////]
 [section:destructor Destructor `~executor_adaptor()`]
 
-      virtual ~ executor_adaptor();
+      virtual ~executor_adaptor();
 
 [variablelist
 
@@ -598,13 +625,11 @@ Polymorphic adaptor of a model of Executor to an executor.
 [/////////////////////////////////////]
 [section:underlying_executor Function member `underlying_executor()`]
 
-      Executor& underlying_executor();
+      Executor& underlying_executor() noexcept;
 
 [variablelist
 
 [[Return:] [The underlying executor instance. ]]
-
-[[Throws:] [Nothing.]]
 
 ]
 
@@ -612,60 +637,86 @@ Polymorphic adaptor of a model of Executor to an executor.
 [endsect]
 
 [endsect]
-[/
-[//////////////////////////////////////////////////////////]
-[section:scheduled_executor Template Class `scheduled_executor`]
 
-Executor providing time related functions.
+[/////////////////////////////////]
+[section:generic_executor_ref Class `generic_executor_ref`]
 
-  #include <boost/thread/scheduled_executor.hpp>
+Executor abstract base class.
+
+  #include <boost/thread/generic_executor_ref.hpp>
   namespace boost {
-    template <class Executor>
-    class scheduled_executor
+    class generic_executor_ref
     {
-	Executor& ex;
     public:
-      typedef  executor::work work;
-  
-      scheduled_executor(scheduled_executor const&) = delete;
-      scheduled_executor& operator=(scheduled_executor const&) = delete;
-  
-      template <class Rep, class Period>  
-      scheduled_executor(Executor& ex, chrono::duration<Rep, Period> granularity=chrono::milliseconds(100));
- 
-      Executor& underlying_executor();
+      generic_executor_ref(generic_executor_ref const&);
+      generic_executor_ref& operator=(generic_executor_ref const&);
 
-      void close();
-      bool closed();
+      template <class Executor>
+      generic_executor_ref(Executor& ex); 
+      generic_executor_ref() {};
   
-      void submit(work&& closure);
+      void close() = 0;
+      bool closed() = 0;
+  
       template <typename Closure>
       void submit(Closure&& closure);
   
-      bool try_executing_one();
+      virtual bool try_executing_one() = 0;
       template <typename Pred>
       bool reschedule_until(Pred const& pred);
+    };
+  }
 
-      template <class Clock, class Duration>  
-      void submit_at(chrono::time_point<Clock,Duration> abs_time, work&& closure);
-      template <class Rep, class Period>  
-      void submit_after(chrono::duration<Rep,Period> rel_time, work&& closure);
-      template <class Clock, class Duration, typename Closure>  
-      void submit_at(chrono::time_point<Clock,Duration> abs_time, Closure&& closure);
+[endsect]
+
+[//////////////////////////////////////////////////////////]
+[section: scheduler Template Class `scheduler `]
+
+Scheduler providing time related functions. Note that `scheduler` is not an Executor.
+
+  #include <boost/thread/executors/scheduler.hpp>
+  namespace boost {
+
+    template <class Clock=steady_clock>
+    class scheduler
+    {
+    public:
+      using work = boost::function<void()> ;
+      using clock = Clock;
+
+      scheduler(scheduler const&) = delete;
+      scheduler& operator=(scheduler const&) = delete;
+  
+      scheduler();
+      ~scheduler();
+ 
+      void close();
+      bool closed();
+  
+      template <class Duration, typename Closure>  
+      void submit_at(chrono::time_point<clock,Duration> abs_time, Closure&& closure);
       template <class Rep, class Period, typename Closure>  
       void submit_after(chrono::duration<Rep,Period> rel_time, Closure&& closure);
+
+      template <class Duration>  
+      at_executor<scheduler> submit_at(chrono::time_point<clock,Duration> abs_time);
+      template <class Rep, class Period>  
+      at_executor<scheduler> submit_after(chrono::duration<Rep,Period> rel_time);
+
+      template <class Executor>
+      scheduler_executor_wrapper<scheduler, Executor> on(Executor& ex);
+
     };
   }
 
 [/////////////////////////////////////]
-[section:constructor Constructor `scheduled_executor(Executor&, chrono::duration<Rep, Period>)`]
+[section:constructor Constructor `scheduler()`]
 
-      template <class Rep, class Period>  
-      scheduled_executor(Executor& ex, chrono::duration<Rep, Period> granularity=chrono::milliseconds(100));
+      scheduler();
 
 [variablelist
 
-[[Effects:] [Constructs a scheduled_executor. ]]
+[[Effects:] [Constructs a `scheduler`. ]]
 
 [[Throws:] [Nothing. ]]
 
@@ -674,9 +725,391 @@ Executor providing time related functions.
 
 [endsect]
 [/////////////////////////////////////]
-[section:destructor Destructor `~scheduled_executor()`]
+[section:destructor Destructor `~scheduler()`]
 
-      ~scheduled_executor();
+      ~scheduler();
+
+[variablelist
+
+[[Effects:] [Destroys the scheduler.]]
+
+[[Synchronization:] [The completion of all the closures happen before the completion of the executor destructor.]]
+
+]
+
+[endsect]
+[/////////////////////////////////////]
+[section:submit_at Template Function Member `submit_at()`]
+
+      template <class Clock, class Duration, typename Closure>  
+      void submit_at(chrono::time_point<Clock,Duration> abs_time, Closure&& closure);
+
+[variablelist
+
+[[Effects:] [Schedule a `closure` to be executed at `abs_time`. ]]
+
+[[Throws:] [Nothing.]]
+
+]
+
+
+[endsect]
+[/////////////////////////////////////]
+[section:submit_after Template Function Member `submit_after()`]
+
+      template <class Rep, class Period, typename Closure>  
+      void submit_after(chrono::duration<Rep,Period> rel_time, Closure&& closure);
+
+[variablelist
+
+[[Effects:] [Schedule a `closure` to be executed after `rel_time`. ]]
+
+[[Throws:] [Nothing.]]
+
+]
+
+
+[endsect]
+
+[endsect]
+
+[//////////////////////////////////////////////////////////]
+[section:at_executor Template Class `at_executor`]
+
+
+  #include <boost/thread/executors/scheduler.hpp>
+  namespace boost {
+
+    template <class Scheduler>
+    class at_executor
+    {
+    public:
+      using work = Scheduler::work;
+      using clock = Scheduler::clock;
+
+      at_executor(at_executor const&) = default;
+      at_executor(at_executor &&) = default;
+      at_executor& operator=(at_executor const&) = default;
+      at_executor& operator=(at_executor &&) = default;
+  
+      at_executor(Scheduler& sch, clock::time_point const& tp);
+      ~at_executor();
+ 
+      void close();
+      bool closed();
+  
+      Scheduler& underlying_scheduler();
+
+      template <class Closure>
+      void submit(Closure&& closure);
+      template <class Duration, typename Work>  
+      void submit_at(chrono::time_point<clock,Duration> abs_time, Closure&& closure);
+      template <class Rep, class Period, typename Work>  
+      void submit_after(chrono::duration<Rep,Period> rel_time, Closure&& closure);
+
+      template <class Executor>
+      resubmit_at_executor<Scheduler, Executor> on(Executor& ex);
+
+    };
+  }
+
+[/////////////////////////////////////]
+[section:constructor Constructor `at_executor(Scheduler&)`]
+
+      at_executor(Scheduler& sch, clock::time_point const& tp);
+
+[variablelist
+
+[[Effects:] [Constructs a `at_executor`. ]]
+
+[[Throws:] [Nothing. ]]
+
+]
+
+
+[endsect]
+[/////////////////////////////////////]
+[section:destructor Destructor `~at_executor()`]
+
+      ~at_executor();
+
+[variablelist
+
+[[Effects:] [Destroys the `at_executor`.]]
+
+[[Synchronization:] [The completion of all the closures happen before the completion of the executor destructor.]]
+
+]
+
+[endsect]
+[/////////////////////////////////////]
+[section:underlying_scheduler Function member `underlying_scheduler()`]
+
+      Scheduler& underlying_scheduler() noexcept;
+
+[variablelist
+
+[[Return:] [The underlying scheduler instance. ]]
+
+]
+
+[endsect]
+[/////////////////////////////////////]
+[section:submit_at Template Function Member `submit()`]
+
+      template <typename Closure>  
+      void submit(Closure&& closure);
+
+[variablelist
+
+[[Effects:] [Schedule the `closure` to be executed at the `abs_time` given at construction time. ]]
+
+[[Throws:] [Nothing.]]
+
+]
+
+[endsect]
+[/////////////////////////////////////]
+[section:submit_at Template Function Member `submit_at()`]
+
+      template <class Clock, class Duration, typename Closure>  
+      void submit_at(chrono::time_point<Clock,Duration> abs_time, Closure&& closure);
+
+[variablelist
+
+[[Effects:] [Schedule a `closure` to be executed at `abs_time`. ]]
+
+[[Throws:] [Nothing.]]
+
+]
+
+
+[endsect]
+[/////////////////////////////////////]
+[section:submit_after Template Function Member `submit_after()`]
+
+      template <class Rep, class Period, typename Closure>  
+      void submit_after(chrono::duration<Rep,Period> rel_time, Closure&& closure);
+
+[variablelist
+
+[[Effects:] [Schedule a `closure` to be executed after `rel_time`. ]]
+
+[[Throws:] [Nothing.]]
+
+]
+
+
+[endsect]
+
+[endsect]
+
+
+[//////////////////////////////////////////////////////////]
+[section:scheduler_executor_wrapper Template Class `scheduler_executor_wrapper`]
+
+  #include <boost/thread/executors/scheduler.hpp>
+  namespace boost {
+
+    template <class Scheduler, class Executor>
+    class scheduler_executor_wrapper
+    {
+    public:
+      using work = Scheduler::work;
+      using clock = Scheduler::clock;
+
+      scheduler_executor_wrapper(scheduler_executor_wrapper const&) = default;
+      scheduler_executor_wrapper(scheduler_executor_wrapper &&) = default;
+      scheduler_executor_wrapper& operator=(scheduler_executor_wrapper const&) = default;
+      scheduler_executor_wrapper& operator=(scheduler_executor_wrapper &&) = default;
+  
+      scheduler_executor_wrapper(Scheduler& sch, Executor& ex);
+
+      ~scheduler_executor_wrapper();
+ 
+      void close();
+      bool closed();
+
+      Executor& underlying_executor();
+      Scheduler& underlying_scheduler();
+ 
+      template <class Closure>
+      void submit(Closure&& closure);
+      template <class Duration, typename Work>  
+      void submit_at(chrono::time_point<clock,Duration> abs_time, Closure&& closure);
+      template <class Rep, class Period, typename Work>  
+      void submit_after(chrono::duration<Rep,Period> rel_time, Closure&& closure);
+
+      template <class Duration>  
+      resubmit_at_executor<Scheduler, Executor> at(chrono::time_point<clock,Duration> abs_time);
+      template <class Rep, class Period>  
+      resubmit_at_executor<Scheduler, Executor> after(chrono::duration<Rep,Period> rel_time);
+
+    };
+  }
+
+[/////////////////////////////////////]
+[section:constructor Constructor `scheduler_executor_wrapper(Scheduler&, Executor&)`]
+
+      scheduler_executor_wrapper(Scheduler& sch, Executor& ex);
+
+[variablelist
+
+[[Effects:] [Constructs a `scheduler_executor_wrapper`. ]]
+
+[[Throws:] [Nothing. ]]
+
+]
+
+[endsect]
+[/////////////////////////////////////]
+[section:destructor Destructor `~scheduler_executor_wrapper()`]
+
+      ~scheduler_executor_wrapper();
+
+[variablelist
+
+[[Effects:] [Destroys the `scheduler_executor_wrapper`.]]
+
+[[Synchronization:] [The completion of all the closures happen before the completion of the executor destructor.]]
+
+]
+
+[endsect]
+[/////////////////////////////////////]
+[section:underlying_scheduler Function member `underlying_scheduler()`]
+
+      Scheduler& underlying_scheduler() noexcept;
+
+[variablelist
+
+[[Return:] [The underlying scheduler instance. ]]
+
+]
+
+[endsect]
+[/////////////////////////////////////]
+[section:underlying_executor Function member `underlying_executor()`]
+
+      Executor& underlying_executor() noexcept;
+
+[variablelist
+
+[[Return:] [The underlying executor instance. ]]
+
+]
+
+[endsect]
+[/////////////////////////////////////]
+[section:submit_at Template Function Member `submit()`]
+
+      template <typename Closure>  
+      void submit(Closure&& closure);
+
+[variablelist
+
+[[Effects:] [Submit the `closure` on the underlying executor. ]]
+
+[[Throws:] [Nothing.]]
+
+]
+
+[endsect]
+[/////////////////////////////////////]
+[section:submit_at Template Function Member `submit_at()`]
+
+      template <class Clock, class Duration, typename Closure>  
+      void submit_at(chrono::time_point<Clock,Duration> abs_time, Closure&& closure);
+
+[variablelist
+
+[[Effects:] [Resubmit the `closure` to be executed on the underlying executor at `abs_time`. ]]
+
+[[Throws:] [Nothing.]]
+
+]
+
+[endsect]
+[/////////////////////////////////////]
+[section:submit_after Template Function Member `submit_after()`]
+
+      template <class Rep, class Period, typename Closure>  
+      void submit_after(chrono::duration<Rep,Period> rel_time, Closure&& closure);
+
+[variablelist
+
+[[Effects:] [Resubmit the `closure` to be executed on the underlying executor after `rel_time`. ]]
+
+[[Throws:] [Nothing.]]
+
+]
+
+[endsect]
+
+[endsect]
+
+
+[//////////////////////////////////////////////////////////]
+[section:resubmit_at_executor Template Class `resubmit_at_executor`]
+
+`Executor` wrapping an `Scheduler`, an `Executor` and a `time_point` providing an `Executor` interface.
+
+  #include <boost/thread/executors/scheduler.hpp>
+  namespace boost {
+
+    template <class Scheduler, class Executor>
+    class resubmit_at_executor
+    {
+    public:
+      using work = Scheduler::work;
+      using clock = Scheduler::clock;
+  
+      resubmit_at_executor(resubmit_at_executor const&) = default;
+      resubmit_at_executor(resubmit_at_executor &&) = default;
+      resubmit_at_executor& operator=(resubmit_at_executor const&) = default;
+      resubmit_at_executor& operator=(resubmit_at_executor &&) = default;
+  
+      template <class Duration>  
+      resubmit_at_executor(Scheduler& sch, Executor& ex, clock::time_point<Duration> const& tp);
+      ~resubmit_at_executor();
+ 
+      void close();
+      bool closed();
+ 
+      Executor& underlying_executor();
+      Scheduler& underlying_scheduler();
+ 
+      template <class Closure>
+      void submit(Closure&& closure);
+      template <class Duration, typename Work>  
+      void submit_at(chrono::time_point<clock,Duration> abs_time, Closure&& closure);
+      template <class Rep, class Period, typename Work>  
+      void submit_after(chrono::duration<Rep,Period> rel_time, Closure&& closure);
+
+    };
+  }
+
+
+[/////////////////////////////////////]
+[section:constructor Constructor `resubmit_at_executor(Scheduler&, Executor&, clock::time_point<Duration>)`]
+
+      template <class Duration>  
+      resubmit_at_executor(Scheduler& sch, Executor& ex, clock::time_point<Duration> const& tp);
+
+[variablelist
+
+[[Effects:] [Constructs a `resubmit_at_executor`. ]]
+
+[[Throws:] [Nothing. ]]
+
+]
+
+
+[endsect]
+[/////////////////////////////////////]
+[section:destructor Destructor `~resubmit_at_executor()`]
+
+      ~resubmit_at_executor();
 
 [variablelist
 
@@ -690,11 +1123,184 @@ Executor providing time related functions.
 [/////////////////////////////////////]
 [section:underlying_executor Function member `underlying_executor()`]
 
-      Executor& underlying_executor();
+      Executor& underlying_executor() noexcept;
 
 [variablelist
 
 [[Return:] [The underlying executor instance. ]]
+
+]
+
+[endsect]
+[/////////////////////////////////////]
+[section:underlying_scheduler Function member `underlying_scheduler()`]
+
+      Scheduler& underlying_scheduler() noexcept;
+
+[variablelist
+
+[[Return:] [The underlying scheduler instance. ]]
+
+]
+
+[endsect]
+[/////////////////////////////////////]
+[section:submit_at Template Function Member `submit()`]
+
+      template <typename Closure>  
+      void submit(Closure&& closure);
+
+[variablelist
+
+[[Effects:] [Resubmit the `closure` to be executed on the underlying executor at the `abs_time` given at construction time. ]]
+
+[[Throws:] [Nothing.]]
+
+]
+
+[endsect]
+[/////////////////////////////////////]
+[section:submit_at Template Function Member `submit_at()`]
+
+      template <class Clock, class Duration, typename Closure>  
+      void submit_at(chrono::time_point<Clock,Duration> abs_time, Closure&& closure);
+
+[variablelist
+
+[[Effects:] [Resubmit the `closure` to be executed on the underlying executor at `abs_time`. ]]
+
+[[Throws:] [Nothing.]]
+
+]
+
+[endsect]
+[/////////////////////////////////////]
+[section:submit_after Template Function Member `submit_after()`]
+
+      template <class Rep, class Period, typename Closure>  
+      void submit_after(chrono::duration<Rep,Period> rel_time, Closure&& closure);
+
+[variablelist
+
+[[Effects:] [Resubmit the `closure` to be executed on the underlying executor after `rel_time`. ]]
+
+[[Throws:] [Nothing.]]
+
+]
+
+[endsect]
+
+[endsect]
+
+
+[//////////////////////////////////////////////////////////]
+[/
+[section:scheduled_executor_ref Template Class `scheduled_executor_ref`]
+
+Executor providing time related functions.
+
+  #include <boost/thread/executors/scheduled_executor_ref.hpp>
+  namespace boost {
+    template <class Executor>
+    class scheduled_executor_ref
+    {
+	Executor& ex;
+    public:
+      typedef  executor::work work;
+  
+      scheduled_executor_ref(scheduled_executor_ref const&) = delete;
+      scheduled_executor_ref& operator=(scheduled_executor_ref const&) = delete;
+  
+      template <class Rep, class Period>  
+      scheduled_executor_ref(Executor& ex, chrono::duration<Rep, Period> granularity=chrono::milliseconds(100));
+ 
+      Executor& underlying_executor() noexcept;
+
+      void close();
+      bool closed();
+  
+      void submit(work&& closure);
+      void submit(work& closure);
+      template <typename Closure>
+      void submit(Closure&& closure);
+  
+      bool try_executing_one();
+      template <typename Pred>
+      bool reschedule_until(Pred const& pred);
+
+      template <class Clock, class Duration, typename Closure>  
+      void submit_at(chrono::time_point<Clock,Duration> abs_time, Closure&& closure);
+      template <class Rep, class Period, typename Closure>  
+      void submit_after(chrono::duration<Rep,Period> rel_time, Closure&& closure);
+    };
+  }
+
+[/////////////////////////////////////]
+[section:constructor Constructor `scheduled_executor_ref(Executor&, chrono::duration<Rep, Period>)`]
+
+      template <class Rep, class Period>  
+      scheduled_executor_ref(Executor& ex, chrono::duration<Rep, Period> granularity=chrono::milliseconds(100));
+
+[variablelist
+
+[[Effects:] [Constructs a scheduled_executor_ref. ]]
+
+[[Throws:] [Nothing. ]]
+
+]
+
+
+[endsect]
+[/////////////////////////////////////]
+[section:destructor Destructor `~scheduled_executor_ref()`]
+
+      ~scheduled_executor_ref();
+
+[variablelist
+
+[[Effects:] [Destroys the executor_adaptor.]]
+
+[[Synchronization:] [The completion of all the closures happen before the completion of the executor destructor.]]
+
+]
+
+[endsect]
+[/////////////////////////////////////]
+[section:underlying_executor Function member `underlying_executor()`]
+
+      Executor& underlying_executor() noexcept;
+
+[variablelist
+
+[[Return:] [The underlying executor instance. ]]
+
+]
+
+[endsect]
+[/////////////////////////////////////]
+[section:submit_at Template Function Member `submit()`]
+
+      template <typename Closure>  
+      void submit(Closure&& closure);
+
+[variablelist
+
+[[Effects:] [Resubmit the `closure` to be executed on the underlying executor. ]]
+
+[[Throws:] [Nothing.]]
+
+]
+
+[endsect]
+[/////////////////////////////////////]
+[section:submit_at Template Function Member `submit_at()`]
+
+      template <class Clock, class Duration, typename Closure>  
+      void submit_at(chrono::time_point<Clock,Duration> abs_time, Closure&& closure);
+
+[variablelist
+
+[[Effects:] [Schedule a `closure` to be executed at `abs_time`. ]]
 
 [[Throws:] [Nothing.]]
 
@@ -702,12 +1308,28 @@ Executor providing time related functions.
 
 
 [endsect]
+[/////////////////////////////////////]
+[section:submit_after Template Function Member `submit_after()`]
+
+      template <class Rep, class Period, typename Closure>  
+      void submit_after(chrono::duration<Rep,Period> rel_time, Closure&& closure);
+
+[variablelist
+
+[[Effects:] [Schedule a `closure` to be executed after `rel_time`. ]]
+
+[[Throws:] [Nothing.]]
+
+]
+
+[endsect]
+
 
 [endsect]
 ]
 
 [//////////////////////////////////////////////////////////]
-[section:scheduled_executor Template Class `serial_executor`]
+[section:serial_executor Template Class `serial_executor`]
 
 A serial executor ensuring that there are no two work units that executes concurrently.
 
@@ -716,21 +1338,18 @@ A serial executor ensuring that there are no two work units that executes concur
     template <class Executor>
     class serial_executor
     {
-	Executor& ex;
     public:
-      typedef  executors::work work;
-  
       serial_executor(serial_executor const&) = delete;
       serial_executor& operator=(serial_executor const&) = delete;
   
+      template <class Executor>
       serial_executor(Executor& ex);
  
-      Executor& underlying_executor();
+      Executor& underlying_executor() noexcept;
 
       void close();
       bool closed();
   
-      void submit(work&& closure);
       template <typename Closure>
       void submit(Closure&& closure);
   
@@ -742,8 +1361,9 @@ A serial executor ensuring that there are no two work units that executes concur
   }
 
 [/////////////////////////////////////]
-[section:constructor Constructor `serial_executor(Executor&, chrono::duration<Rep, Period>)`]
+[section:constructor Constructor `serial_executor(Executor&)`]
 
+      template <class Executor>
       serial_executor(Executor& ex);
 
 [variablelist
@@ -773,7 +1393,7 @@ A serial executor ensuring that there are no two work units that executes concur
 [/////////////////////////////////////]
 [section:underlying_executor Function member `underlying_executor()`]
 
-      Executor& underlying_executor();
+      generic_executor_ref& underlying_executor() noexcept;
 
 [variablelist
 
@@ -788,6 +1408,145 @@ A serial executor ensuring that there are no two work units that executes concur
 
 [endsect]
 
+[//////////////////////////////////////////////////////////]
+[section:generic_serial_executor Class `generic_serial_executor`]
+
+A serial executor ensuring that there are no two work units that executes concurrently.
+
+  #include <boost/thread/generic_serial_executor.hpp>
+  namespace boost {
+    class generic_serial_executor
+    {
+    public:
+      generic_serial_executor(generic_serial_executor const&) = delete;
+      generic_serial_executor& operator=(generic_serial_executor const&) = delete;
+  
+      template <class Executor>
+      generic_serial_executor(Executor& ex);
+ 
+      generic_executor_ref& underlying_executor() noexcept;
+
+      void close();
+      bool closed();
+  
+      template <typename Closure>
+      void submit(Closure&& closure);
+  
+      bool try_executing_one();
+      template <typename Pred>
+      bool reschedule_until(Pred const& pred);
+
+    };
+  }
+
+[/////////////////////////////////////]
+[section:constructor Constructor `generic_serial_executor(Executor&)`]
+
+      template <class Executor>
+      generic_serial_executor(Executor& ex);
+
+[variablelist
+
+[[Effects:] [Constructs a serial_executor. ]]
+
+[[Throws:] [Nothing. ]]
+
+]
+
+
+[endsect]
+[/////////////////////////////////////]
+[section:destructor Destructor `~serial_executor()`]
+
+      ~generic_serial_executor();
+
+[variablelist
+
+[[Effects:] [Destroys the serial_executor.]]
+
+[[Synchronization:] [The completion of all the closures happen before the completion of the executor destructor.]]
+
+]
+
+[endsect]
+[/////////////////////////////////////]
+[section:underlying_executor Function member `underlying_executor()`]
+
+      Executor& underlying_executor() noexcept;
+
+[variablelist
+
+[[Return:] [The underlying executor instance. ]]
+
+]
+
+
+[endsect]
+
+[endsect]
+
+
+[//////////////////////////////////////////////////////////]
+[section:inline_executor Class `inline_executor`]
+
+A serial executor ensuring that there are no two work units that executes concurrently.
+
+  #include <boost/thread/inline_executor.hpp>
+  namespace boost {
+    class inline_executor
+    {
+    public:
+      inline_executor(inline_executor const&) = delete;
+      inline_executor& operator=(inline_executor const&) = delete;
+  
+      inline_executor();
+ 
+      void close();
+      bool closed();
+  
+      template <typename Closure>
+      void submit(Closure&& closure);
+  
+      bool try_executing_one();
+      template <typename Pred>
+      bool reschedule_until(Pred const& pred);
+
+    };
+  }
+
+[/////////////////////////////////////]
+[section:constructor Constructor `inline_executor()`]
+
+      inline_executor();
+
+[variablelist
+
+[[Effects:] [Constructs a inline_executor. ]]
+
+[[Throws:] [Nothing. ]]
+
+]
+
+
+[endsect]
+[/////////////////////////////////////]
+[section:destructor Destructor `~inline_executor()`]
+
+      ~inline_executor();
+
+[variablelist
+
+[[Effects:] [Destroys the inline_executor.]]
+
+[[Synchronization:] [The completion of all the closures happen before the completion of the executor destructor.]]
+
+]
+
+[endsect]
+
+
+[endsect]
+
 
 
 
@@ -796,13 +1555,12 @@ A serial executor ensuring that there are no two work units that executes concur
 
 A thread pool with up to a fixed number of threads.
 
-  #include <boost/thread/work.hpp>
+  #include <boost/thread/executors/basic_thread_pool.hpp>
   namespace boost {
     class basic_thread_pool
     { 
     public:
-      typedef  boost::work work;
-  
+ 
       basic_thread_pool(basic_thread_pool const&) = delete;
       basic_thread_pool& operator=(basic_thread_pool const&) = delete;
   
@@ -841,7 +1599,7 @@ A thread pool with up to a fixed number of threads.
 [/////////////////////////////////////]
 [section:destructor Destructor `~basic_thread_pool()`]
 
-      virtual ~basic_thread_pool();
+     ~basic_thread_pool();
 
 [variablelist
 
@@ -854,6 +1612,64 @@ A thread pool with up to a fixed number of threads.
 
 [endsect]
 
+[///////////////////////////////////////]
+[section:thread_executor Class `thread_executor`]
+
+A thread_executor with a threads for each task.
+
+  #include <boost/thread/executors/thread_executor.hpp>
+  namespace boost {
+    class thread_executor
+    { 
+    public:
+ 
+      thread_executor(thread_executor const&) = delete;
+      thread_executor& operator=(thread_executor const&) = delete;
+  
+      thread_executor();
+      template <class AtThreadEntry>
+      basic_thread_pool( unsigned const thread_count, AtThreadEntry at_thread_entry);
+      ~thread_executor();
+  
+      void close();
+      bool closed();
+  
+      template <typename Closure>
+      void submit(Closure&& closure);
+   
+    };
+  }
+
+[/////////////////////////////////////]
+[section:constructor Constructor `thread_executor()`]
+
+[variablelist
+
+[[Effects:] [creates a thread_executor. ]]
+
+[[Throws:] [Whatever exception is thrown while initializing the needed resources. ]]
+
+]
+
+
+[endsect]
+[/////////////////////////////////////]
+[section:destructor Destructor `~thread_executor()`]
+
+     ~thread_executor();
+
+[variablelist
+
+[[Effects:] [Waits for closures (if any) to complete, then joins and destroys the threads.]]
+
+[[Synchronization:] [The completion of all the closures happen before the completion of the executor destructor.]]
+
+]
+[endsect]
+
+[endsect]
+
+
 [/////////////////////////////////]
 [section:loop_executor Class `loop_executor`]
 
@@ -864,8 +1680,7 @@ A user scheduled executor.
     class loop_executor
     { 
     public:
-      typedef  thread_detail::work work;
-  
+ 
       loop_executor(loop_executor const&) = delete;
       loop_executor& operator=(loop_executor const&) = delete;
   
@@ -909,7 +1724,7 @@ A user scheduled executor.
 
 [variablelist
 
-[[Effects:] [Destroys the thread pool.]]
+[[Effects:] [Destroys the executor.]]
 
 [[Synchronization:] [The completion of all the closures happen before the completion of the executor destructor.]]
 

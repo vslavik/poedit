@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../date_time.html" title="Chapter&#160;10.&#160;Boost.Date_Time">
+<link rel="up" href="../date_time.html" title="Chapter&#160;9.&#160;Boost.Date_Time">
 <link rel="prev" href="gregorian.html" title="Gregorian">
 <link rel="next" href="local_time.html" title="Local Time">
 </head>
@@ -32,18 +32,18 @@
 <dt><span class="section"><a href="posix_time.html#date_time.posix_time.time_iterators">Time Iterators</a></span></dt>
 </dl></div>
 <h3>
-<a name="idp182898576"></a>Posix Time System</h3>
+<a name="idp172247968"></a>Posix Time System</h3>
 <p>
     <a class="link" href="posix_time.html#posix_intro">Introduction</a> -- 
     <a class="link" href="posix_time.html#posix_ex">Usage Examples</a>
   </p>
 <a name="posix_intro"></a><h4>
-<a name="idp182902336"></a>Introduction</h4>
+<a name="idp172251744"></a>Introduction</h4>
 <p>
     Defines a non-adjusted time system with nano-second/micro-second resolution and stable calculation properties.  The nano-second resolution option uses 96 bits of underlying storage for each ptime while the micro-second resolution uses 64 bits per ptime (see <a class="link" href="details.html#date_time.buildinfo" title="Build-Compiler Information">Build Options</a> for details). This time system uses the Gregorian calendar to implement the date portion of the time representation. 
   </p>
 <a name="posix_ex"></a><h4>
-<a name="idp182905360"></a>Usage Examples</h4>
+<a name="idp172254896"></a>Usage Examples</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -89,7 +89,7 @@
   <a class="link" href="posix_time.html#ptime_to_string">Conversion To String</a> --
   <a class="link" href="posix_time.html#ptime_operators">Operators</a> --
   <a class="link" href="posix_time.html#ptime_struct_tm">Struct tm, time_t, and FILETIME Functions</a><a name="ptime_intro"></a><h4>
-<a name="idp182929360"></a>Introduction</h4>
+<a name="idp172278768"></a>Introduction</h4>
 <p>
     The class boost::posix_time::ptime is the primary interface for time point manipulation. In general, the ptime class is immutable once constructed although it does allow assignment. 
   </p>
@@ -100,7 +100,7 @@
     Other techniques for creating times include <a class="link" href="posix_time.html#date_time.posix_time.time_iterators" title="Time Iterators">time iterators</a>. 
   </p>
 <a name="ptime_header"></a><h4>
-<a name="idp182934144"></a>Header</h4>
+<a name="idp172283616"></a>Header</h4>
 <p>
     </p>
 <pre class="programlisting">#include "boost/date_time/posix_time/posix_time.hpp" //include all types plus i/o
@@ -109,7 +109,7 @@ or
 <p>
   </p>
 <a name="ptime_constr"></a><h4>
-<a name="idp182936736"></a>Construction</h4>
+<a name="idp172286208"></a>Construction</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -159,7 +159,7 @@ ptime d5(min_date_time);</pre></td></tr>
 <p>
   </p>
 <a name="ptime_from_string"></a><h4>
-<a name="idp182956880"></a>Construct from String</h4>
+<a name="idp172306352"></a>Construct from String</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -192,7 +192,7 @@ ptime t(from_iso_string(ts))</pre></td></tr>
 <p>
   </p>
 <a name="ptime_from_clock"></a><h4>
-<a name="idp182970928"></a>Construct from Clock</h4>
+<a name="idp172320400"></a>Construct from Clock</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -233,7 +233,7 @@ ptime t(from_iso_string(ts))</pre></td></tr>
 <p>
   </p>
 <a name="ptime_from_funcs"></a><h4>
-<a name="idp182991280"></a>Construct using Conversion Functions</h4>
+<a name="idp172340688"></a>Construct using Conversion Functions</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -264,7 +264,7 @@ ptime t(from_iso_string(ts))</pre></td></tr>
 <p>
   </p>
 <a name="ptime_accessors"></a><h4>
-<a name="idp183004352"></a>Accessors</h4>
+<a name="idp172353760"></a>Accessors</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -338,7 +338,7 @@ pt3.is_special(); // --&gt; false</pre></td></tr>
 <p>
   </p>
 <a name="ptime_to_string"></a><h4>
-<a name="idp183035520"></a>Conversion to String</h4>
+<a name="idp172384928"></a>Conversion to String</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -374,7 +374,7 @@ pt3.is_special(); // --&gt; false</pre></td></tr>
 <p>
   </p>
 <a name="ptime_operators"></a><h4>
-<a name="idp183056112"></a>Operators</h4>
+<a name="idp172405520"></a>Operators</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -463,7 +463,7 @@ time_duration t3 = t2 - t1;//negative result</pre>
 <p>
   </p>
 <a name="ptime_struct_tm"></a><h4>
-<a name="idp183088832"></a>Struct tm, time_t, and FILETIME Functions</h4>
+<a name="idp172438240"></a>Struct tm, time_t, and FILETIME Functions</h4>
 <p>Functions for converting posix_time objects to, and from, <code class="computeroutput">tm</code> structs are provided as well as conversion from <code class="computeroutput">time_t</code> and <code class="computeroutput">FILETIME</code>.</p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -496,8 +496,8 @@ tm pt_tm = to_tm(pt);
    tm_isddst =&gt; -1 */</pre>
 	  </td></tr>
 <tr>
-<td rowspan="2" valign="top"><pre class="screen">date date_from_tm(tm datetm)</pre></td>
-<td>A function for converting a <code class="computeroutput">tm</code> struct to a <code class="computeroutput">date</code> object. The fields: <code class="computeroutput">tm_wday </code>, <code class="computeroutput">tm_yday </code>, and <code class="computeroutput">tm_isdst</code> are ignored.</td>
+<td rowspan="2" valign="top"><pre class="screen">ptime ptime_from_tm(tm timetm)</pre></td>
+<td>A function for converting a <code class="computeroutput">tm</code> struct to a <code class="computeroutput">ptime</code> object. The fields: <code class="computeroutput">tm_wday </code>, <code class="computeroutput">tm_yday </code>, and <code class="computeroutput">tm_isdst</code> are ignored.</td>
 </tr>
 <tr><td>
 <pre class="screen">tm pt_tm;
@@ -560,7 +560,7 @@ ptime pt = from_ftime&lt;ptime&gt;(ft);
   <a class="link" href="posix_time.html#time_duration_to_string">Conversion To String</a> --
   <a class="link" href="posix_time.html#time_duration_operators">Operators</a> --
   <a class="link" href="posix_time.html#time_duration_struct_tm">Struct tm Functions</a><a name="time_duration_intro"></a><h4>
-<a name="idp183138576"></a>Introduction</h4>
+<a name="idp172488160"></a>Introduction</h4>
 <p>
     The class boost::posix_time::time_duration the base type responsible for representing a length of time. A duration can be either positive or negative. The general time_duration class provides a constructor that takes a count of the number of hours, minutes, seconds, and fractional seconds count as shown in the code fragment below. The resolution of the time_duration is configure able at compile time. See <a class="link" href="details.html#date_time.buildinfo" title="Build-Compiler Information">Build-Compiler Information</a> for more information. 
   </p>
@@ -608,7 +608,7 @@ time_duration td(1,2,3,count); //01:02:03.5 //no matter the resolution settings
 <p>
   </p>
 <a name="time_duration_header"></a><h4>
-<a name="idp183148816"></a>Header</h4>
+<a name="idp172498400"></a>Header</h4>
 <p>
     </p>
 <pre class="programlisting">#include "boost/date_time/posix_time/posix_time.hpp" //include all types plus i/o
@@ -617,7 +617,7 @@ or
 <p>
   </p>
 <a name="time_duration_constr"></a><h4>
-<a name="idp183151408"></a>Construction</h4>
+<a name="idp172500992"></a>Construction</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -662,7 +662,7 @@ total_seconds()</pre>The remaining accessor functions will work as expected.</td
 <p>
   </p>
 <a name="time_duration_count_constr"></a><h4>
-<a name="idp183166384"></a>Count Based Construction</h4>
+<a name="idp172515968"></a>Count Based Construction</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -713,7 +713,7 @@ total_seconds()</pre>The remaining accessor functions will work as expected.</td
 <p>
   </p>
 <a name="time_duration_from_string"></a><h4>
-<a name="idp183192576"></a>Construct from String</h4>
+<a name="idp172542160"></a>Construct from String</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -742,7 +742,7 @@ time_duration td(duration_from_string(ts));</pre>
 <p>
   </p>
 <a name="time_duration_accessors"></a><h4>
-<a name="idp183203376"></a>Accessors</h4>
+<a name="idp172552960"></a>Accessors</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -905,7 +905,7 @@ td3.is_special(); // --&gt; false</pre></td></tr>
 <p>
   </p>
 <a name="time_duration_to_string"></a><h4>
-<a name="idp183290736"></a>Conversion To String</h4>
+<a name="idp172640368"></a>Conversion To String</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -936,7 +936,7 @@ td3.is_special(); // --&gt; false</pre></td></tr>
 <p>
   </p>
 <a name="time_duration_operators"></a><h4>
-<a name="idp183305824"></a>Operators</h4>
+<a name="idp172655392"></a>Operators</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -1007,7 +1007,7 @@ nanosecond(3)/2 == nanosecond(1);</pre>
 <p>
   </p>
 <a name="time_duration_struct_tm"></a><h4>
-<a name="idp183334848"></a>Struct tm, time_t, and FILETIME Functions</h4>
+<a name="idp172684416"></a>Struct tm, time_t, and FILETIME Functions</h4>
 <p>Function for converting a time_duration to a <code class="computeroutput">tm</code> struct is provided.</p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -1052,7 +1052,7 @@ tm td_tm = to_tm(td);
   <a class="link" href="posix_time.html#time_period_accessors">Accessors</a> --
   <a class="link" href="posix_time.html#time_period_to_string">Conversion To String</a> --
   <a class="link" href="posix_time.html#time_period_operators">Operators</a><a name="time_period_intro"></a><h4>
-<a name="idp183359184"></a>Introduction</h4>
+<a name="idp172708992"></a>Introduction</h4>
 <p>
     The class boost::posix_time::time_period provides direct representation for ranges between two times. Periods provide the ability to simplify some types of calculations by simplifying the conditional logic of the program. 
   </p>
@@ -1063,7 +1063,7 @@ tm td_tm = to_tm(td);
     The <a class="link" href="examples.html#date_time.examples.time_periods" title="Time Periods">time periods example</a> provides an example of using time periods. 
   </p>
 <a name="time_period_header"></a><h4>
-<a name="idp183364672"></a>Header</h4>
+<a name="idp172714480"></a>Header</h4>
 <p>
     </p>
 <pre class="programlisting">#include "boost/date_time/posix_time/posix_time.hpp" //include all types plus i/o
@@ -1072,7 +1072,7 @@ or
 <p>
   </p>
 <a name="time_period_constr"></a><h4>
-<a name="idp183367264"></a>Construction</h4>
+<a name="idp172717072"></a>Construction</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -1119,7 +1119,7 @@ time_period tp(t, hours(3));</pre>
 <p>
   </p>
 <a name="time_period_mutators"></a><h4>
-<a name="idp183384336"></a>Mutators</h4>
+<a name="idp172734128"></a>Mutators</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -1162,7 +1162,7 @@ tp.expand(minutes(5));
 <p>
   </p>
 <a name="time_period_accessors"></a><h4>
-<a name="idp183398064"></a>Accessors</h4>
+<a name="idp172747856"></a>Accessors</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -1289,7 +1289,7 @@ tp2.intersects(tp1); // --&gt; true</pre>
 <p>
   </p>
 <a name="time_period_to_string"></a><h4>
-<a name="idp183442560"></a>Conversion To String</h4>
+<a name="idp172792304"></a>Conversion To String</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -1318,7 +1318,7 @@ tp2.intersects(tp1); // --&gt; true</pre>
 <p>
   </p>
 <a name="time_period_operators"></a><h4>
-<a name="idp183453680"></a>Operators</h4>
+<a name="idp172803424"></a>Operators</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -1378,7 +1378,7 @@ tp2.intersects(tp1); // --&gt; true</pre>
   <a class="link" href="posix_time.html#time_iter_header">Header</a> --
   <a class="link" href="posix_time.html#time_iter_overview">Overview</a> --
   <a class="link" href="posix_time.html#time_iter_operators">Operators</a><a name="time_iter_intro"></a><h4>
-<a name="idp183488064"></a>Introduction</h4>
+<a name="idp172837776"></a>Introduction</h4>
 <p>
     Time iterators provide a mechanism for iteration through times. Time iterators are similar to <a href="http://www.sgi.com/tech/stl/BidirectionalIterator.html" target="_top">Bidirectional Iterators</a>. However, time_iterators are different than standard iterators in that there is no underlying sequence, just a calculation function. In addition, time_iterators are directly comparable against instances of <a class="link" href="posix_time.html#date_time.posix_time.ptime_class" title="Ptime">class ptime</a>. Thus a second iterator for the end point of the iteration is not required, but rather a point in time can be used directly. For example, the following code iterates using a 15 minute iteration interval. The <a class="link" href="examples.html#date_time.examples.print_hours" title="Print Hours">print hours</a> example also illustrates the use of the time_iterator. 
   </p>
@@ -1416,7 +1416,7 @@ tp2.intersects(tp1); // --&gt; true</pre>
 <p>
   </p>
 <a name="time_iter_header"></a><h4>
-<a name="idp183494928"></a>Header</h4>
+<a name="idp172844672"></a>Header</h4>
 <p>
     </p>
 <pre class="programlisting">#include "boost/date_time/posix_time/posix_time.hpp" //include all types plus i/o
@@ -1425,7 +1425,7 @@ or
 <p>
   </p>
 <a name="time_iter_overview"></a><h4>
-<a name="idp183497520"></a>Overview</h4>
+<a name="idp172847200"></a>Overview</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">
@@ -1451,7 +1451,7 @@ or
 <p>
   </p>
 <a name="time_iter_operators"></a><h4>
-<a name="idp183507120"></a>Operators</h4>
+<a name="idp172856832"></a>Operators</h4>
 <p>
     </p>
 <div class="informaltable"><table class="table">

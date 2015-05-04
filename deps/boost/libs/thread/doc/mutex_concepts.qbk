@@ -2664,7 +2664,7 @@ Only the specificities respect to __Lockable are described here.
 
 [endsect]
 [///////////////////////////////]
-[section:get2 `get(strict_lock<nested_strict_lock<Lock>>&)`]
+[section:get2 `get(nested_strict_lock<Lock>&)`]
 
     template <class Lock>
     T& get(nested_strict_lock<Lock>& lk);
@@ -2684,7 +2684,7 @@ Only the specificities respect to __Lockable are described here.
 [endsect]
 
 [///////////////////////////////]
-[section:get3 `get(strict_lock<nested_strict_lock<Lock>>&)`]
+[section:get3 `get(Lock&)`]
 
     template <class Lock>
     T& get(Lock& lk);
@@ -2826,7 +2826,7 @@ Only the specificities respect to __Lockable are described here.
 
 [endsect]
 [///////////////////////////////]
-[section:get2 `get(strict_lock<nested_strict_lock<Lock>>&)`]
+[section:get2 `get(nested_strict_lock<Lock>&)`]
 
     template <class Lock>
     T& get(nested_strict_lock<Lock>& lk);
@@ -2846,7 +2846,7 @@ Only the specificities respect to __Lockable are described here.
 [endsect]
 
 [///////////////////////////////]
-[section:get3 `get(strict_lock<nested_strict_lock<Lock>>&)`]
+[section:get3 `get(Lock&)`]
 
     template <class Lock>
     T& get(Lock& lk);

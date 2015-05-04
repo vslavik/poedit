@@ -19,7 +19,9 @@
 // for And_ operator
 #include <boost/msm/front/euml/operator.hpp>
 
+#ifndef BOOST_MSM_NONSTANDALONE_TEST
 #define BOOST_TEST_MODULE MyTest
+#endif
 #include <boost/test/unit_test.hpp>
 
 using namespace std;
@@ -201,7 +203,7 @@ namespace
         struct DummyGuard 
         {
             template <class EVT,class FSM,class SourceState,class TargetState>
-            bool operator()(EVT const& evt,FSM& fsm,SourceState& src,TargetState& tgt)
+            bool operator()(EVT const&,FSM&,SourceState&,TargetState&)
             {
                 return true;
             }
@@ -222,7 +224,7 @@ namespace
         struct always_true 
         {
             template <class EVT,class FSM,class SourceState,class TargetState>
-            bool operator()(EVT const& evt ,FSM&,SourceState& ,TargetState& )
+            bool operator()(EVT const&  ,FSM&,SourceState& ,TargetState& )
             {             
                 return true;
             }
@@ -230,7 +232,7 @@ namespace
         struct can_close_drawer 
         {
             template <class EVT,class FSM,class SourceState,class TargetState>
-            bool operator()(EVT const& evt ,FSM& fsm,SourceState& ,TargetState& )
+            bool operator()(EVT const&  ,FSM& fsm,SourceState& ,TargetState& )
             {      
                 ++fsm.can_close_drawer_counter;
                 return true;

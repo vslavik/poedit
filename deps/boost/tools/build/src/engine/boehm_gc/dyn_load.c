@@ -64,7 +64,7 @@ static int (*GC_has_static_roots)(const char *, void *, size_t);
     !defined(AIX) && !defined(SCO_ELF) && !defined(DGUX) && \
     !(defined(FREEBSD) && defined(__ELF__)) && \
     !(defined(NETBSD) && defined(__ELF__)) && !defined(HURD) && \
-    !defined(DARWIN) && !defined(CYGWIN32)
+    !defined(DARWIN) && !defined(CYGWIN32) && !defined(HAIKU)
  --> We only know how to find data segments of dynamic libraries for the
  --> above.  Additional SVR4 variants might not be too
  --> hard to add.
@@ -80,6 +80,10 @@ static int (*GC_has_static_roots)(const char *, void *, size_t);
 #if defined(NETBSD)
 #   include <machine/elf_machdep.h>
 #   define ELFSIZE ARCH_ELFSIZE
+#endif
+
+#if defined(HAIKU)
+//  purposefully empty
 #endif
 
 #if defined(LINUX) && defined(__ELF__) || defined(SCO_ELF) || \
@@ -216,7 +220,8 @@ void GC_register_dynamic_libraries()
 
 #if defined(LINUX) && defined(__ELF__) || defined(SCO_ELF) || \
     (defined(FREEBSD) && defined(__ELF__)) || defined(DGUX) || \
-    (defined(NETBSD) && defined(__ELF__)) || defined(HURD)
+    (defined(NETBSD) && defined(__ELF__)) || defined(HURD) \
+    defined(HAIKU)
 
 
 #ifdef USE_PROC_FOR_LIBRARIES

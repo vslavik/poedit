@@ -1,7 +1,8 @@
 /*=============================================================================
     Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2015      John Fletcher
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <iostream>
@@ -118,7 +119,7 @@ main()
     BOOST_TEST(bind(sqr(), arg1)(i5) == (i5*i5));
     BOOST_TEST(bind(fact(), 4)() == 24);
     BOOST_TEST(bind(fact(), arg1)(i5) == 120);
-    BOOST_TEST((int)bind(power(), arg1, arg2)(d5, d3) == (int)pow(d5, d3));
+    BOOST_TEST((int)bind(power(), arg1, arg2)(d5, d3) == (int)std::pow(d5, d3));
     BOOST_TEST((bind(sqr(), arg1) + 5)(i5) == ((i5*i5)+5));
     BOOST_TEST(bind(add(), arg1, arg1, arg1, arg1)(i5) == (5+5+5+5));
 

@@ -3,6 +3,9 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
+// This file doesn't work on other compilers.
+#if defined(__GNUC__) || defined(__KCC)
+
 #include <algorithm>
 #include <numeric>
 #include <boost/config.hpp>
@@ -905,3 +908,9 @@ main()
   }
   return 0;
 }
+
+#else
+
+int main() {}
+
+#endif

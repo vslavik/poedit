@@ -3,10 +3,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Hypergeometric Distribution</title>
 <link rel="stylesheet" href="../../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../index.html" title="Math Toolkit 1.9.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="../../../index.html" title="Math Toolkit 2.2.0">
 <link rel="up" href="../dists.html" title="Distributions">
-<link rel="prev" href="geometric_dist.html" title="Geometric Distribution">
+<link rel="prev" href="hyperexponential_dist.html" title="Hyperexponential Distribution">
 <link rel="next" href="inverse_chi_squared_dist.html" title="Inverse Chi Squared Distribution">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="geometric_dist.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../dists.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="inverse_chi_squared_dist.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="hyperexponential_dist.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../dists.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="inverse_chi_squared_dist.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
@@ -86,7 +86,7 @@
           sample sizes constant:
         </p>
 <p>
-          <span class="inlinemediaobject"><img src="../../../../graphs/hypergeometric_pdf_1.png" align="middle"></span>
+          <span class="inlinemediaobject"><img src="../../../../graphs/hypergeometric_pdf_1.svg" align="middle"></span>
         </p>
 <p>
           Note that since the distribution is symmetrical in parameters <span class="emphasis"><em>n</em></span>
@@ -95,7 +95,7 @@
           the same graphs:
         </p>
 <p>
-          <span class="inlinemediaobject"><img src="../../../../graphs/hypergeometric_pdf_2.png" align="middle"></span>
+          <span class="inlinemediaobject"><img src="../../../../graphs/hypergeometric_pdf_2.svg" align="middle"></span>
         </p>
 <h5>
 <a name="math_toolkit.dist_ref.dists.hypergeometric_dist.h0"></a>
@@ -105,7 +105,7 @@
 <pre class="programlisting"><span class="identifier">hypergeometric_distribution</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">r</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="identifier">n</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="identifier">N</span><span class="special">);</span>
 </pre>
 <p>
-          Constructs a hypergeometric distribution with with a population of <span class="emphasis"><em>N</em></span>
+          Constructs a hypergeometric distribution with a population of <span class="emphasis"><em>N</em></span>
           objects, of which <span class="emphasis"><em>r</em></span> are defective, and from which
           <span class="emphasis"><em>n</em></span> are sampled.
         </p>
@@ -202,7 +202,7 @@
           N = 110000.
         </p>
 <p>
-          In general for very large N, the user should expect to loose log<sub>10</sub>N decimal
+          In general for very large N, the user should expect to lose log<sub>10</sub>N decimal
           digits of precision during the calculation, with the results becoming meaningless
           for N &gt;= 10<sup>15</sup>.
         </p>
@@ -226,7 +226,7 @@
           The PDF can be calculated directly using the formula:
         </p>
 <p>
-          <span class="inlinemediaobject"><img src="../../../../equations/hypergeometric1.png"></span>
+          <span class="inlinemediaobject"><img src="../../../../equations/hypergeometric1.svg"></span>
         </p>
 <p>
           However, this can only be used directly when the largest of the factorials
@@ -244,21 +244,21 @@
           method for factorising a factorial into the product of prime numbers:
         </p>
 <p>
-          <span class="inlinemediaobject"><img src="../../../../equations/hypergeometric2.png"></span>
+          <span class="inlinemediaobject"><img src="../../../../equations/hypergeometric2.svg"></span>
         </p>
 <p>
           Where p<sub>i</sub> is the i'th prime number, and e<sub>i</sub> is a small positive integer or
           zero, which can be calculated via:
         </p>
 <p>
-          <span class="inlinemediaobject"><img src="../../../../equations/hypergeometric3.png"></span>
+          <span class="inlinemediaobject"><img src="../../../../equations/hypergeometric3.svg"></span>
         </p>
 <p>
           Further we can combine the factorials in the expression for the PDF to
           yield the PDF directly as the product of prime numbers:
         </p>
 <p>
-          <span class="inlinemediaobject"><img src="../../../../equations/hypergeometric4.png"></span>
+          <span class="inlinemediaobject"><img src="../../../../equations/hypergeometric4.svg"></span>
         </p>
 <p>
           With this time the exponents e<sub>i</sub> being either positive, negative or zero.
@@ -289,7 +289,7 @@
           lgamma, or by directly combining lanczos approximations to avoid calculating
           via logarithms. We use the latter method, as it is usually 1 or 2 decimal
           digits more accurate than computing via logarithms with lgamma. However,
-          in this area where N &gt; 104729, the user should expect to loose around
+          in this area where N &gt; 104729, the user should expect to lose around
           log<sub>10</sub>N decimal digits during the calculation in the worst case.
         </p>
 <p>
@@ -300,7 +300,7 @@
           successive PDF values via the recurrence relations:
         </p>
 <p>
-          <span class="inlinemediaobject"><img src="../../../../equations/hypergeometric5.png"></span>
+          <span class="inlinemediaobject"><img src="../../../../equations/hypergeometric5.svg"></span>
         </p>
 <p>
           Until we either reach the end of the distributions domain, or the next
@@ -317,15 +317,15 @@
           are calculated via:
         </p>
 <p>
-          <span class="inlinemediaobject"><img src="../../../../equations/hypergeometric6.png"></span>
+          <span class="inlinemediaobject"><img src="../../../../equations/hypergeometric6.svg"></span>
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012, 2013 Nikhar Agrawal, Anton Bikineev,
-      Paul A. Bristow, Christopher Kormanyos, Hubert Holin, Bruno Lalande, John Maddock,
-      Johan R&#229;de, Gautam Sewani, Benjamin Sobotta, Thijs van den Berg, Daryle Walker
-      and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
+      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
+      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
+      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -333,7 +333,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="geometric_dist.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../dists.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="inverse_chi_squared_dist.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="hyperexponential_dist.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../dists.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="inverse_chi_squared_dist.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

@@ -114,6 +114,26 @@ int test_main(int, char*[])
     BOOST_CHECK(false);
   }
 
+#ifndef BOOST_NO_CXX11_CONSTEXPR
+  constexpr bool res_ors = indeterminate(false || tribool(false) || false || indeterminate); // true
+  BOOST_CHECK(res_ors);
+  char array_ors[res_ors ? 2 : 3];
+  BOOST_CHECK(sizeof(array_ors) / sizeof(char) == 2);
+
+  constexpr bool res_ands = !indeterminate(!(true && tribool(true) && true && indeterminate)); // false
+  BOOST_CHECK(!res_ands);
+  char array_ands[res_ands ? 2 : 3];
+  BOOST_CHECK(sizeof(array_ands) / sizeof(char) == 3);
+
+  // We avoid checking the tribool::operator safe_bool(),
+  // because GCC-4.8 fails to evaluate it at compile-time.
+  // Clang compiles well.
+  //
+  // constexpr bool res_safe_bool = tribool(true); // false
+  // constexpr tribool xxx = (tribool(true) || tribool(indeterminate));
+  // static_assert(xxx, "Must be true!");
+#endif
+
   std::cout << "no errors detected\n";
   return 0;
 }

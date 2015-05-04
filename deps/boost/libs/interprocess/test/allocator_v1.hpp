@@ -23,12 +23,8 @@
 #include <boost/interprocess/interprocess_fwd.hpp>
 #include <boost/interprocess/containers/allocation_type.hpp>
 #include <boost/interprocess/detail/utilities.hpp>
-#include <boost/interprocess/containers/version_type.hpp>
 #include <boost/interprocess/exceptions.hpp>
-#include <memory>
-#include <algorithm>
-#include <cstddef>
-#include <stdexcept>
+#include <boost/move/adl_move_swap.hpp>
 #include <boost/static_assert.hpp>
 
 //!\file
@@ -146,7 +142,7 @@ class allocator_v1
    //!Swap segment manager. Does not throw. If each allocator_v1 is placed in
    //!different memory segments, the result is undefined.
    friend void swap(self_t &alloc1, self_t &alloc2)
-   {  ipcdetail::do_swap(alloc1.mp_mngr, alloc2.mp_mngr);   }
+   {  ::boost::adl_move_swap(alloc1.mp_mngr, alloc2.mp_mngr);   }
 };
 
 //!Equality test for same type of allocator_v1

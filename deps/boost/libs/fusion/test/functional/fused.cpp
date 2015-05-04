@@ -10,18 +10,18 @@
 #include <boost/detail/lightweight_test.hpp>
 
 #include <boost/noncopyable.hpp>
-#include <boost/blank.hpp>
 
 #include <boost/fusion/container/generation/make_vector.hpp>
 #include <boost/fusion/container/vector.hpp>
 
 #include <boost/type_traits/is_same.hpp>
 #include <boost/mpl/assert.hpp>
+#include <boost/mpl/empty_base.hpp>
 
 namespace fusion = boost::fusion;
 using boost::noncopyable;
 
-template <class Base = boost::blank>
+template <class Base = boost::mpl::empty_base>
 struct test_func
     : Base
 {

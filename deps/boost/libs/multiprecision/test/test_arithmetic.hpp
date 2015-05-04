@@ -802,6 +802,31 @@ void test_float_ops(const boost::mpl::int_<boost::multiprecision::number_kind_fl
    BOOST_CHECK_EQUAL(r ,  0.5);
    BOOST_CHECK_EQUAL(exp2 ,  -8);
    //
+   // scalbn and logb, these are the same as ldexp and frexp unless the radix is
+   // something other than 2:
+   //
+   if(std::numeric_limits<Real>::is_specialized && std::numeric_limits<Real>::radix)
+   {
+      BOOST_CHECK_EQUAL(scalbn(Real(2), 5), 2 * pow(double(std::numeric_limits<Real>::radix), 5));
+      BOOST_CHECK_EQUAL(scalbn(Real(2), -5), Real(2) / pow(double(std::numeric_limits<Real>::radix), 5));
+      Real v(512);
+      int exponent;
+      Real r;
+      exponent = ilogb(v);
+      r = scalbn(v, -exponent);
+      BOOST_CHECK(r >= 1);
+      BOOST_CHECK(r < std::numeric_limits<Real>::radix);
+      BOOST_CHECK_EQUAL(exponent, logb(v));
+      BOOST_CHECK_EQUAL(v, scalbn(r, exponent));
+      v = 1 / v;
+      exponent = ilogb(v);
+      r = scalbn(v, -exponent);
+      BOOST_CHECK(r >= 1);
+      BOOST_CHECK(r < std::numeric_limits<Real>::radix);
+      BOOST_CHECK_EQUAL(exponent, logb(v));
+      BOOST_CHECK_EQUAL(v, scalbn(r, exponent));
+   }
+   //
    // pow and exponent:
    //
    v = 3.25;

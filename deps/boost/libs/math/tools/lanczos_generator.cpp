@@ -3,10 +3,8 @@
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/math/bindings/rr.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <boost/math/tools/precision.hpp>
-#include <boost/math/tools/test.hpp>
 #include <boost/math/tools/polynomial.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
@@ -16,7 +14,7 @@
 #include <boost/math/special_functions/log1p.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/array.hpp>
-#include <boost/test/included/prg_exec_monitor.hpp>
+#include "mp_t.hpp"
 
 //
 // this is a sort of recursive include, since this file
@@ -3635,14 +3633,14 @@ lanczos_spot_data sweet_spots[] = {
 //
 // A bunch of helper functions used for calculating the coefficients:
 //
-boost::math::ntl::RR factorial(unsigned n)
+mp_t factorial(unsigned n)
 {
-   static boost::array<boost::array<boost::math::ntl::RR, 1>, 201> result; 
+   static boost::array<boost::array<mp_t, 1>, 201> result; 
    static bool init = false;
    if(!init)
    {
       unsigned k = 1;
-      boost::math::ntl::RR fact = 1;
+      mp_t fact = 1;
       do{
          result[k-1][0] = fact;
          fact *= k++;
@@ -3655,7 +3653,7 @@ boost::math::ntl::RR factorial(unsigned n)
       return result[n][0];
 
    unsigned i = (unsigned)result.size()-1;
-   boost::math::ntl::RR r = result[i][0];
+   mp_t r = result[i][0];
    while(i < n)
       r *= ++i;
    return r;
@@ -4050,7 +4048,7 @@ T get_max_error(const lanczos_info<T>& dat, R)
          continue;
       T gam = gamr;
       T exp = tests[i][1];
-      T err = boost::math::tools::relative_error(gam, exp);
+      T err = relative_error(gam, exp);
       if(err > max_error)
          max_error = err;
    }
@@ -4063,6 +4061,7 @@ T get_max_error(const lanczos_info<T>& dat, R)
 template <class T>
 void print_code(const lanczos_info<T>& l, const char* name)
 {
+   std::cout << std::scientific << std::setprecision(std::numeric_limits<T>::digits10 + 3);
    using namespace std;
    lanczos_info<T> l2(l);
    T factor = exp(l.r);
@@ -4226,7 +4225,7 @@ void print_code(const lanczos_info<T>& l, const char* name)
 //
 // Print out the test values:
 //
-void print_test_values(const std::vector<std::vector<boost::math::ntl::RR> >& v, const char* name, int offset = 1)
+void print_test_values(const std::vector<std::vector<mp_t> >& v, const char* name, int offset = 1)
 {
    std::cout << "#define SC_(x) static_cast<T>(BOOST_JOIN(x, L))\n";
    std::cout << 
@@ -4240,9 +4239,9 @@ void print_test_values(const std::vector<std::vector<boost::math::ntl::RR> >& v,
 //
 // Get the error for a specific approximation, and print out it's code:
 //
-void calculate_lanczos_spot(int n, boost::math::ntl::RR r, const char* suffix = "")
+void calculate_lanczos_spot(int n, mp_t r, const char* suffix = "")
 {
-   lanczos_info<boost::math::ntl::RR> info = generate_lanczos(n, r);
+   lanczos_info<mp_t> info = generate_lanczos(n, r);
    // note error is calculated at high precision:
    info.err = get_max_error(info, r);
    print_code(info, suffix);
@@ -4255,14 +4254,14 @@ void find_best_lanczos(const char* name, T eps, int max_scan = 100)
 {
    using namespace std;
 
-   lanczos_info<boost::math::ntl::RR> best;
+   lanczos_info<mp_t> best;
    best.err = 100; // best case had better be better than this!
    for(int i = 0; i < sizeof(sweet_spots)/sizeof(sweet_spots[0]); ++i)
    {
       if((sweet_spots[i].err < eps*10) && (sweet_spots[i].N < max_scan))
       {
-         lanczos_info<boost::math::ntl::RR> info = generate_lanczos(sweet_spots[i].N, boost::math::ntl::RR(sweet_spots[i].g));
-         boost::math::ntl::RR err = get_max_error(info, eps);
+         lanczos_info<mp_t> info = generate_lanczos(sweet_spots[i].N, mp_t(sweet_spots[i].g));
+         mp_t err = get_max_error(info, eps);
          if(err/eps < 1000)
          {
             std::cout << sweet_spots[i].N << " " << sweet_spots[i].g << " " << err/eps << std::endl;
@@ -4278,7 +4277,7 @@ void find_best_lanczos(const char* name, T eps, int max_scan = 100)
 
    print_code(best, name);
 }
-int cpp_main(int argc, char*argv [])
+int main(int argc, char*argv [])
 {
    bool test_double(false), test_long(false), test_float(false), test_quad(false), spots(false), test_data(false);
 
@@ -4291,7 +4290,7 @@ int cpp_main(int argc, char*argv [])
          "  -long-double  test type long double for the best approximation\n"
          "  -spots        print out the best cases found in previous runs\n"
          "  -data         print out the test data\n" << std::flush;
-      return 0;
+      return 1;
    }
 
    for(int i = 1; i < argc; ++i)
@@ -4310,9 +4309,6 @@ int cpp_main(int argc, char*argv [])
          test_data = true;
    }
 
-   boost::math::ntl::RR::SetPrecision(1000);
-   boost::math::ntl::RR::SetOutputPrecision(40);
-
    if(spots)
    {
       // these are optimal N and R from Pugh:
@@ -4327,7 +4323,6 @@ int cpp_main(int argc, char*argv [])
       calculate_lanczos_spot(6, 1.428456135094165802001953125);
       calculate_lanczos_spot(13, 6.024680040776729583740234375);
       calculate_lanczos_spot(17, 12.2252227365970611572265625);
-      boost::math::ntl::RR::SetOutputPrecision(90);
       calculate_lanczos_spot(24, 20.3209821879863739013671875);
    }
    if(test_float)
@@ -4351,15 +4346,13 @@ int cpp_main(int argc, char*argv [])
    {
       std::cout << "Test Data follows:\n\n";
 
-      boost::math::ntl::RR::SetPrecision(1000);
-      
-      std::vector<std::vector<boost::math::ntl::RR> > const & tests = get_test_data<boost::math::ntl::RR>();
+      std::vector<std::vector<mp_t> > const & tests = get_test_data<mp_t>();
       print_test_values(tests, "factorials");
-      print_test_values(get_test_data_near_1<boost::math::ntl::RR>(), "near_1", 0);
-      print_test_values(get_test_data_near_2<boost::math::ntl::RR>(), "near_2", 0);
-      print_test_values(get_test_data_near_x<boost::math::ntl::RR>(boost::math::ntl::RR(0)), "near_0", 0);
-      print_test_values(get_test_data_near_x<boost::math::ntl::RR>(boost::math::ntl::RR(-10)), "near_m10", 0);
-      print_test_values(get_test_data_near_x<boost::math::ntl::RR>(boost::math::ntl::RR(-55)), "near_m55", 0);
+      print_test_values(get_test_data_near_1<mp_t>(), "near_1", 0);
+      print_test_values(get_test_data_near_2<mp_t>(), "near_2", 0);
+      print_test_values(get_test_data_near_x<mp_t>(mp_t(0)), "near_0", 0);
+      print_test_values(get_test_data_near_x<mp_t>(mp_t(-10)), "near_m10", 0);
+      print_test_values(get_test_data_near_x<mp_t>(mp_t(-55)), "near_m55", 0);
    }
    return 0;
 }

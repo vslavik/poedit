@@ -9,7 +9,7 @@ Boost.Build_ is a text-based system for developing, testing, and
 installing software. First, you'll need to build and
 install it. To do this:
 
-1. Go to the directory ``tools``\ |/|\ ``build``\ |/|\ ``v2``\ |/|.
+1. Go to the directory ``tools``\ |/|\ ``build``\ |/|.
 2. Run |bootstrap|
 3. Run ``b2 install --prefix=``\ *PREFIX* where *PREFIX* is
    the directory where you want Boost.Build to be installed
@@ -28,7 +28,7 @@ First, find the toolset corresponding to your compiler in the
 following table (an up-to-date list is always available `in the
 Boost.Build documentation`__).
 
-__ http://www.boost.org/boost-build2/doc/html/bbv2/reference/tools.html
+__ http://www.boost.org/build/doc/html/bbv2/reference/tools.html
 
 .. Note:: If you previously chose a toolset for the purposes of
   `building b2`_, you should assume it won't work and instead
@@ -107,5 +107,5 @@ invoke ``b2`` as follows:
 For a complete description of these and other invocation options,
 please see the `Boost.Build documentation`__.
 
-__ http://www.boost.org/boost-build2/doc/html/bbv2/advanced/invocation.html
+__ http://www.boost.org/build/doc/html/bbv2/overview/invocation.html
 

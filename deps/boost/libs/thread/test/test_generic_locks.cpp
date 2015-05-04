@@ -5,13 +5,15 @@
 
 #define BOOST_THREAD_VERSION 2
 
+#define BOOST_TEST_MODULE Boost.Threads: generic locks test suite
+
 #include <boost/test/unit_test.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread_only.hpp>
 #include <boost/thread/locks.hpp>
 #include <boost/thread/condition_variable.hpp>
 
-void test_lock_two_uncontended()
+BOOST_AUTO_TEST_CASE(test_lock_two_uncontended)
 {
     boost::mutex m1,m2;
 
@@ -87,7 +89,7 @@ void lock_pair(boost::mutex* m1,boost::mutex* m2)
         l2(*m2,boost::adopt_lock);
 }
 
-void test_lock_two_other_thread_locks_in_order()
+BOOST_AUTO_TEST_CASE(test_lock_two_other_thread_locks_in_order)
 {
     boost::mutex m1,m2;
     wait_data locked;
@@ -106,7 +108,7 @@ void test_lock_two_other_thread_locks_in_order()
     t.join();
 }
 
-void test_lock_two_other_thread_locks_in_opposite_order()
+BOOST_AUTO_TEST_CASE(test_lock_two_other_thread_locks_in_opposite_order)
 {
     boost::mutex m1,m2;
     wait_data locked;
@@ -125,7 +127,7 @@ void test_lock_two_other_thread_locks_in_opposite_order()
     t.join();
 }
 
-void test_lock_five_uncontended()
+BOOST_AUTO_TEST_CASE(test_lock_five_uncontended)
 {
     boost::mutex m1,m2,m3,m4,m5;
 
@@ -176,7 +178,7 @@ void lock_five(boost::mutex* m1,boost::mutex* m2,boost::mutex* m3,boost::mutex* 
     m5->unlock();
 }
 
-void test_lock_five_other_thread_locks_in_order()
+BOOST_AUTO_TEST_CASE(test_lock_five_other_thread_locks_in_order)
 {
     boost::mutex m1,m2,m3,m4,m5;
     wait_data locked;
@@ -195,7 +197,7 @@ void test_lock_five_other_thread_locks_in_order()
     t.join();
 }
 
-void test_lock_five_other_thread_locks_in_different_order()
+BOOST_AUTO_TEST_CASE(test_lock_five_other_thread_locks_in_different_order)
 {
     boost::mutex m1,m2,m3,m4,m5;
     wait_data locked;
@@ -224,7 +226,7 @@ void lock_n(boost::mutex* mutexes,unsigned count)
 }
 
 
-void test_lock_ten_other_thread_locks_in_different_order()
+BOOST_AUTO_TEST_CASE(test_lock_ten_other_thread_locks_in_different_order)
 {
     unsigned const num_mutexes=10;
 
@@ -285,7 +287,7 @@ namespace boost
 
 
 
-void test_lock_five_in_range()
+BOOST_AUTO_TEST_CASE(test_lock_five_in_range)
 {
     unsigned const num_mutexes=5;
     dummy_mutex mutexes[num_mutexes];
@@ -350,7 +352,7 @@ public:
 };
 
 
-void test_lock_five_in_range_custom_iterator()
+BOOST_AUTO_TEST_CASE(test_lock_five_in_range_custom_iterator)
 {
     unsigned const num_mutexes=5;
     dummy_mutex mutexes[num_mutexes];
@@ -368,7 +370,7 @@ class dummy_mutex2:
 {};
 
 
-void test_lock_ten_in_range_inherited_mutex()
+BOOST_AUTO_TEST_CASE(test_lock_ten_in_range_inherited_mutex)
 {
     unsigned const num_mutexes=10;
     dummy_mutex2 mutexes[num_mutexes];
@@ -381,7 +383,7 @@ void test_lock_ten_in_range_inherited_mutex()
     }
 }
 
-void test_try_lock_two_uncontended()
+BOOST_AUTO_TEST_CASE(test_try_lock_two_uncontended)
 {
     dummy_mutex m1,m2;
 
@@ -391,7 +393,7 @@ void test_try_lock_two_uncontended()
     BOOST_CHECK(m1.is_locked);
     BOOST_CHECK(m2.is_locked);
 }
-void test_try_lock_two_first_locked()
+BOOST_AUTO_TEST_CASE(test_try_lock_two_first_locked)
 {
     dummy_mutex m1,m2;
     m1.lock();
@@ -407,7 +409,7 @@ void test_try_lock_two_first_locked()
     BOOST_CHECK(!l1.owns_lock());
     BOOST_CHECK(!l2.owns_lock());
 }
-void test_try_lock_two_second_locked()
+BOOST_AUTO_TEST_CASE(test_try_lock_two_second_locked)
 {
     dummy_mutex m1,m2;
     m2.lock();
@@ -424,7 +426,7 @@ void test_try_lock_two_second_locked()
     BOOST_CHECK(!l2.owns_lock());
 }
 
-void test_try_lock_three()
+BOOST_AUTO_TEST_CASE(test_try_lock_three)
 {
     int const num_mutexes=3;
 
@@ -469,7 +471,7 @@ void test_try_lock_three()
     }
 }
 
-void test_try_lock_four()
+BOOST_AUTO_TEST_CASE(test_try_lock_four)
 {
     int const num_mutexes=4;
 
@@ -517,7 +519,7 @@ void test_try_lock_four()
     }
 }
 
-void test_try_lock_five()
+BOOST_AUTO_TEST_CASE(test_try_lock_five)
 {
     int const num_mutexes=5;
 
@@ -567,32 +569,4 @@ void test_try_lock_five()
         }
     }
 }
-
-
-
-boost::unit_test::test_suite* init_unit_test_suite(int, char*[])
-{
-    boost::unit_test::test_suite* test =
-        BOOST_TEST_SUITE("Boost.Threads: generic locks test suite");
-
-    test->add(BOOST_TEST_CASE(&test_lock_two_uncontended));
-    test->add(BOOST_TEST_CASE(&test_lock_two_other_thread_locks_in_order));
-    test->add(BOOST_TEST_CASE(&test_lock_two_other_thread_locks_in_opposite_order));
-    test->add(BOOST_TEST_CASE(&test_lock_five_uncontended));
-    test->add(BOOST_TEST_CASE(&test_lock_five_other_thread_locks_in_order));
-    test->add(BOOST_TEST_CASE(&test_lock_five_other_thread_locks_in_different_order));
-    test->add(BOOST_TEST_CASE(&test_lock_five_in_range));
-    test->add(BOOST_TEST_CASE(&test_lock_five_in_range_custom_iterator));
-    test->add(BOOST_TEST_CASE(&test_lock_ten_in_range_inherited_mutex));
-    test->add(BOOST_TEST_CASE(&test_lock_ten_other_thread_locks_in_different_order));
-    test->add(BOOST_TEST_CASE(&test_try_lock_two_uncontended));
-    test->add(BOOST_TEST_CASE(&test_try_lock_two_first_locked));
-    test->add(BOOST_TEST_CASE(&test_try_lock_two_second_locked));
-    test->add(BOOST_TEST_CASE(&test_try_lock_three));
-    test->add(BOOST_TEST_CASE(&test_try_lock_four));
-    test->add(BOOST_TEST_CASE(&test_try_lock_five));
-
-    return test;
-}
-
 

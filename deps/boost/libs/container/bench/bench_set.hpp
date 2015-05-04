@@ -13,7 +13,7 @@
 
 #include <iostream>
 #include <boost/timer/timer.hpp>
-#include <algorithm>
+#include <algorithm> //sort
 #include <exception>
 #include <sstream>
 #include <iomanip>
@@ -23,7 +23,6 @@
 using boost::timer::cpu_timer;
 using boost::timer::cpu_times;
 using boost::timer::nanosecond_type;
-using namespace boost::container;
 
 #ifdef NDEBUG
 static const std::size_t NElements = 1000;
@@ -42,10 +41,10 @@ void compare_times(cpu_times time_numerator, cpu_times time_denominator){
    std::cout << "----------------------------------------------" << '\n' << std::endl;
 }
 
-vector<int> sorted_unique_range_int;
-vector<int> sorted_range_int;
-vector<int> random_unique_range_int;
-vector<int> random_range_int;
+boost::container::vector<int> sorted_unique_range_int;
+boost::container::vector<int> sorted_range_int;
+boost::container::vector<int> random_unique_range_int;
+boost::container::vector<int> random_range_int;
 
 void fill_range_ints()
 {
@@ -69,15 +68,15 @@ void fill_range_ints()
    std::random_shuffle(random_unique_range_int.begin(), random_unique_range_int.end());
 }
 
-vector<string> sorted_unique_range_string;
-vector<string> sorted_range_string;
-vector<string> random_unique_range_string;
-vector<string> random_range_string;
+boost::container::vector<boost::container::string> sorted_unique_range_string;
+boost::container::vector<boost::container::string> sorted_range_string;
+boost::container::vector<boost::container::string> random_unique_range_string;
+boost::container::vector<boost::container::string> random_range_string;
 
 void fill_range_strings()
 {
-   string model_s;
-   model_s.append(sizeof(string), '*');
+   boost::container::string model_s;
+   model_s.append(sizeof(boost::container::string), '*');
 
    //sorted_unique_range_int
    sorted_unique_range_string.resize(NElements);
@@ -111,7 +110,7 @@ struct range_provider;
 template<>
 struct range_provider<int>
 {
-   typedef vector<int> type;
+   typedef boost::container::vector<int> type;
 
    static type &sorted_unique()
    {  return sorted_unique_range_int;  }
@@ -127,9 +126,9 @@ struct range_provider<int>
 };
 
 template<>
-struct range_provider<string>
+struct range_provider<boost::container::string>
 {
-   typedef vector<string> type;
+   typedef boost::container::vector<boost::container::string> type;
 
    static type &sorted_unique()
    {  return sorted_unique_range_string;  }
@@ -145,7 +144,7 @@ struct range_provider<string>
 };
 
 template<typename C>
-cpu_times copy_destroy_time(vector<typename C::value_type> &unique_range)
+cpu_times copy_destroy_time(boost::container::vector<typename C::value_type> &unique_range)
 {
    cpu_timer copy_timer, assign_timer, destroy_timer;
 
@@ -176,7 +175,9 @@ cpu_times copy_destroy_time(vector<typename C::value_type> &unique_range)
 }
 
 template<typename C>
-cpu_times construct_time(vector<typename C::value_type> &unique_range, vector<typename C::value_type> &range, const char *RangeType)
+cpu_times construct_time( boost::container::vector<typename C::value_type> &unique_range
+                        , boost::container::vector<typename C::value_type> &range
+                        , const char *RangeType)
 {
    cpu_timer sur_timer, sr_timer;
 
@@ -206,7 +207,9 @@ cpu_times construct_time(vector<typename C::value_type> &unique_range, vector<ty
 }
 
 template<typename C>
-cpu_times insert_time(vector<typename C::value_type> &unique_range, vector<typename C::value_type> &range, const char *RangeType)
+cpu_times insert_time( boost::container::vector<typename C::value_type> &unique_range
+                     , boost::container::vector<typename C::value_type> &range
+                     , const char *RangeType)
 {
    cpu_timer ur_timer,r_timer;
    ur_timer.stop();r_timer.stop();
@@ -240,7 +243,7 @@ cpu_times insert_time(vector<typename C::value_type> &unique_range, vector<typen
 }
 
 template<typename Iterator>
-bool check_not_end(vector<Iterator> &iterators, Iterator itend, std::size_t number_of_ends = 0)
+bool check_not_end(boost::container::vector<Iterator> &iterators, Iterator itend, std::size_t number_of_ends = 0)
 {
    std::size_t end_count = 0;
    for(std::size_t i = 0, max = iterators.size(); i != max; ++i){
@@ -251,7 +254,7 @@ bool check_not_end(vector<Iterator> &iterators, Iterator itend, std::size_t numb
 }
 
 template<typename Iterator>
-bool check_all_not_empty(vector< std::pair<Iterator, Iterator > > &iterator_pairs)
+bool check_all_not_empty(boost::container::vector< std::pair<Iterator, Iterator > > &iterator_pairs)
 {
    for(std::size_t i = 0, max = iterator_pairs.size(); i != max; ++i){
       if(iterator_pairs[i].first == iterator_pairs[i].second)
@@ -261,7 +264,7 @@ bool check_all_not_empty(vector< std::pair<Iterator, Iterator > > &iterator_pair
 }
 
 template<typename C>
-cpu_times search_time(vector<typename C::value_type> &unique_range, const char *RangeType)
+cpu_times search_time(boost::container::vector<typename C::value_type> &unique_range, const char *RangeType)
 {
    cpu_timer find_timer, lower_timer, upper_timer, equal_range_timer, count_timer;
 
@@ -270,8 +273,8 @@ cpu_times search_time(vector<typename C::value_type> &unique_range, const char *
    cpu_timer total_time;
    total_time.resume();
 
-   vector<typename C::iterator> v_it(NElements);
-   vector< std::pair<typename C::iterator, typename C::iterator> > v_itp(NElements);
+   boost::container::vector<typename C::iterator> v_it(NElements);
+   boost::container::vector< std::pair<typename C::iterator, typename C::iterator> > v_itp(NElements);
 
    for(std::size_t i = 0; i != NIter; ++i){
       //Find
@@ -348,7 +351,7 @@ cpu_times search_time(vector<typename C::value_type> &unique_range, const char *
 }
 
 template<typename C>
-void extensions_time(vector<typename C::value_type> &sorted_unique_range)
+void extensions_time(boost::container::vector<typename C::value_type> &sorted_unique_range)
 {
    cpu_timer sur_timer,sur_opt_timer;
    sur_timer.stop();sur_opt_timer.stop();

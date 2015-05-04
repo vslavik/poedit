@@ -24,6 +24,10 @@
 // So decided that at least for Boost 1.49 this is commented for
 // scalar results, except distance.
 
+#if defined(BOOST_GEOMETRY_EMPTY_INPUT_NO_THROW)
+#include <boost/core/ignore_unused.hpp>
+#endif
+
 namespace boost { namespace geometry
 {
 
@@ -39,6 +43,8 @@ inline void throw_on_empty_input(Geometry const& geometry)
     {
         throw empty_input_exception();
     }
+#else
+    boost::ignore_unused(geometry);
 #endif
 }
 

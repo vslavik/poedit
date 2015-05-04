@@ -180,7 +180,7 @@ struct test_distance_result_box
 
 //=========================================================================
 
-template <std::size_t D, typename CS>
+template <std::size_t D, typename CoordinateSystem>
 inline void test_segment_all()
 {
 #if defined(HAVE_TTMATH)
@@ -189,32 +189,32 @@ inline void test_segment_all()
 #endif
     typedef typename boost::mpl::if_
         <
-            typename boost::is_same<CS, bg::cs::cartesian>::type,
+            typename boost::is_same<CoordinateSystem, bg::cs::cartesian>::type,
             double,
             float
         >::type float_return_type;
 
-    test_distance_result_segment<short, short, D, CS, double>();
-    test_distance_result_segment<int, int, D, CS, double>();
-    test_distance_result_segment<int, long, D, CS, double>();
-    test_distance_result_segment<long, long, D, CS, double>();
+    test_distance_result_segment<short, short, D, CoordinateSystem, double>();
+    test_distance_result_segment<int, int, D, CoordinateSystem, double>();
+    test_distance_result_segment<int, long, D, CoordinateSystem, double>();
+    test_distance_result_segment<long, long, D, CoordinateSystem, double>();
 
-    test_distance_result_segment<int, float, D, CS, float_return_type>();
-    test_distance_result_segment<float, float, D, CS, float_return_type>();
+    test_distance_result_segment<int, float, D, CoordinateSystem, float_return_type>();
+    test_distance_result_segment<float, float, D, CoordinateSystem, float_return_type>();
 
-    test_distance_result_segment<int, double, D, CS, double>();
-    test_distance_result_segment<double, int, D, CS, double>();
-    test_distance_result_segment<float, double, D, CS, double>();
-    test_distance_result_segment<double, float, D, CS, double>();
-    test_distance_result_segment<double, double, D, CS, double>();
+    test_distance_result_segment<int, double, D, CoordinateSystem, double>();
+    test_distance_result_segment<double, int, D, CoordinateSystem, double>();
+    test_distance_result_segment<float, double, D, CoordinateSystem, double>();
+    test_distance_result_segment<double, float, D, CoordinateSystem, double>();
+    test_distance_result_segment<double, double, D, CoordinateSystem, double>();
 
 #if defined(HAVE_TTMATH)
-    test_distance_result_segment<tt, int, D, CS, tt>();
-    test_distance_result_segment<tt, default_integral, D, CS, tt>();
+    test_distance_result_segment<tt, int, D, CoordinateSystem, tt>();
+    test_distance_result_segment<tt, default_integral, D, CoordinateSystem, tt>();
 
-    test_distance_result_segment<tt, float, D, CS, tt>();
-    test_distance_result_segment<tt, double, D, CS, tt>();
-    test_distance_result_segment<tt, tt, D, CS, tt>();
+    test_distance_result_segment<tt, float, D, CoordinateSystem, tt>();
+    test_distance_result_segment<tt, double, D, CoordinateSystem, tt>();
+    test_distance_result_segment<tt, tt, D, CoordinateSystem, tt>();
 #endif
 }
 

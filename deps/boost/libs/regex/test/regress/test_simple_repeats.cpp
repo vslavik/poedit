@@ -172,6 +172,10 @@ void test_simple_repeats()
    TEST_REGEX_SEARCH("^a{0,1}?$", perl, "aaaaa", match_default, make_array(-2, -2));
    TEST_REGEX_SEARCH("^(?:a){0,1}?$", perl, "aaaaa", match_default, make_array(-2, -2));
    TEST_REGEX_SEARCH("^a(?:bc)?", perl, "abcbc", match_any|match_all, make_array(-2, -2));
+   TEST_REGEX_SEARCH("a}", perl, "a}", match_default, make_array(0, 2, -2, -2));
+   TEST_REGEX_SEARCH("a{12b", perl, "a{12bc", match_default, make_array(0, 5, -2, -2));
+   TEST_INVALID_REGEX("a{b", extended);
+   TEST_INVALID_REGEX("a}b", extended);
    test_simple_repeats2();
 }
 

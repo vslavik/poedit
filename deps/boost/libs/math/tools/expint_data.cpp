@@ -3,22 +3,21 @@
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/math/bindings/rr.hpp>
 #include <boost/math/special_functions/expint.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <fstream>
-
 #include <boost/math/tools/test_data.hpp>
+#include "mp_t.hpp"
 
 using namespace boost::math::tools;
 
 struct expint_data_generator
 {
-   boost::math::ntl::RR operator()(boost::math::ntl::RR a, boost::math::ntl::RR b)
+   mp_t operator()(mp_t a, mp_t b)
    {
       unsigned n = boost::math::tools::real_cast<unsigned>(a);
       std::cout << n << "  " << b << "  ";
-      boost::math::ntl::RR result = boost::math::expint(n, b);
+      mp_t result = boost::math::expint(n, b);
       std::cout << result << std::endl;
       return result;
    }
@@ -27,14 +26,11 @@ struct expint_data_generator
 
 int main()
 {
-   boost::math::ntl::RR::SetPrecision(1000);
-   boost::math::ntl::RR::SetOutputPrecision(40);
-
    boost::math::expint(1, 0.06227754056453704833984375);
-   std::cout << boost::math::expint(1, boost::math::ntl::RR(0.5)) << std::endl;
+   std::cout << boost::math::expint(1, mp_t(0.5)) << std::endl;
 
-   parameter_info<boost::math::ntl::RR> arg1, arg2;
-   test_data<boost::math::ntl::RR> data;
+   parameter_info<mp_t> arg1, arg2;
+   test_data<mp_t> data;
 
    std::cout << "Welcome.\n"
       "This program will generate spot tests for the expint function:\n"
@@ -60,6 +56,7 @@ int main()
    if(line == "")
       line = "expint_data.ipp";
    std::ofstream ofs(line.c_str());
+   ofs << std::scientific << std::setprecision(40);
    write_code(ofs, data, "expint_data");
    
    return 0;

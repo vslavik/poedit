@@ -24,7 +24,6 @@ local NT2_SIMD_FLAGS = [ os.environ NT2_SIMD_FLAGS ] ;
 project
   : requirements
     <define>BOOST_ALL_NO_LIB=1
-    <include>../../../../..
     <include>$(NT2_ROOT_PATH)/include/
     <link>static
     <toolset>gcc:<cxxflags>-DBOOST_SIMD_NO_STRICT_ALIASING

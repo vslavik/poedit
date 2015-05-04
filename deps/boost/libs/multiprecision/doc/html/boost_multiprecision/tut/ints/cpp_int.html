@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>cpp_int</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../ints.html" title="Integer Types">
 <link rel="prev" href="../ints.html" title="Integer Types">
@@ -36,8 +36,8 @@
 <span class="keyword">enum</span> <span class="identifier">cpp_integer_type</span>    <span class="special">{</span> <span class="identifier">signed_magnitude</span><span class="special">,</span> <span class="identifier">unsigned_magnitude</span> <span class="special">};</span>
 <span class="keyword">enum</span> <span class="identifier">cpp_int_check_type</span>  <span class="special">{</span> <span class="identifier">checked</span><span class="special">,</span> <span class="identifier">unchecked</span> <span class="special">};</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">unsigned</span> <span class="identifier">MinDigits</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span>
-          <span class="keyword">unsigned</span> <span class="identifier">MaxDits</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">unsigned</span> <span class="identifier">MinBits</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span>
+          <span class="keyword">unsigned</span> <span class="identifier">MaxBits</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span>
           <span class="identifier">cpp_integer_type</span> <span class="identifier">SignType</span> <span class="special">=</span> <span class="identifier">signed_magnitude</span><span class="special">,</span>
           <span class="identifier">cpp_int_check_type</span> <span class="identifier">Checked</span> <span class="special">=</span> <span class="identifier">unchecked</span><span class="special">,</span>
           <span class="keyword">class</span> <span class="identifier">Allocator</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">allocator</span><span class="special">&lt;</span><span class="identifier">limb_type</span><span class="special">&gt;</span> <span class="special">&gt;</span>
@@ -45,8 +45,8 @@
 <span class="comment">//</span>
 <span class="comment">// Expression templates default to et_off if there is no allocator:</span>
 <span class="comment">//</span>
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">unsigned</span> <span class="identifier">MinDigits</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="identifier">MaxDigits</span><span class="special">,</span> <span class="identifier">cpp_integer_type</span> <span class="identifier">SignType</span><span class="special">,</span> <span class="identifier">cpp_int_check_type</span> <span class="identifier">Checked</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">expression_template_default</span><span class="special">&lt;</span><span class="identifier">cpp_int_backend</span><span class="special">&lt;</span><span class="identifier">MinDigits</span><span class="special">,</span> <span class="identifier">MaxDigits</span><span class="special">,</span> <span class="identifier">SignType</span><span class="special">,</span> <span class="identifier">Checked</span><span class="special">,</span> <span class="keyword">void</span><span class="special">&gt;</span> <span class="special">&gt;</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">unsigned</span> <span class="identifier">MinBits</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="identifier">MaxBits</span><span class="special">,</span> <span class="identifier">cpp_integer_type</span> <span class="identifier">SignType</span><span class="special">,</span> <span class="identifier">cpp_int_check_type</span> <span class="identifier">Checked</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">expression_template_default</span><span class="special">&lt;</span><span class="identifier">cpp_int_backend</span><span class="special">&lt;</span><span class="identifier">MinBits</span><span class="special">,</span> <span class="identifier">MaxBits</span><span class="special">,</span> <span class="identifier">SignType</span><span class="special">,</span> <span class="identifier">Checked</span><span class="special">,</span> <span class="keyword">void</span><span class="special">&gt;</span> <span class="special">&gt;</span>
 <span class="special">{</span> <span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">expression_template_option</span> <span class="identifier">value</span> <span class="special">=</span> <span class="identifier">et_off</span><span class="special">;</span> <span class="special">};</span>
 
 <span class="keyword">typedef</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">cpp_int_backend</span><span class="special">&lt;&gt;</span> <span class="special">&gt;</span>              <span class="identifier">cpp_int</span><span class="special">;</span>    <span class="comment">// arbitrary precision integer</span>
@@ -344,23 +344,29 @@
           <span class="phrase"><a name="boost_multiprecision.tut.ints.cpp_int.example"></a></span><a class="link" href="cpp_int.html#boost_multiprecision.tut.ints.cpp_int.example">Example:</a>
         </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">multiprecision</span><span class="special">/</span><span class="identifier">cpp_int</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 
-<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">;</span>
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+   <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">;</span>
 
-<span class="identifier">int128_t</span> <span class="identifier">v</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span>
+   <span class="identifier">int128_t</span> <span class="identifier">v</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span>
 
-<span class="comment">// Do some fixed precision arithmetic:</span>
-<span class="keyword">for</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;=</span> <span class="number">20</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
-   <span class="identifier">v</span> <span class="special">*=</span> <span class="identifier">i</span><span class="special">;</span>
+   <span class="comment">// Do some fixed precision arithmetic:</span>
+   <span class="keyword">for</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;=</span> <span class="number">20</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
+      <span class="identifier">v</span> <span class="special">*=</span> <span class="identifier">i</span><span class="special">;</span>
 
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">v</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// prints 20!</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">v</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// prints 20!</span>
 
-<span class="comment">// Repeat at arbitrary precision:</span>
-<span class="identifier">cpp_int</span> <span class="identifier">u</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span>
-<span class="keyword">for</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;=</span> <span class="number">100</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
-   <span class="identifier">u</span> <span class="special">*=</span> <span class="identifier">i</span><span class="special">;</span>
+   <span class="comment">// Repeat at arbitrary precision:</span>
+   <span class="identifier">cpp_int</span> <span class="identifier">u</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span>
+   <span class="keyword">for</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;=</span> <span class="number">100</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
+      <span class="identifier">u</span> <span class="special">*=</span> <span class="identifier">i</span><span class="special">;</span>
 
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">u</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// prints 100!</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">u</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// prints 100!</span>
+
+   <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
 </pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

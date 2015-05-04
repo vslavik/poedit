@@ -23,6 +23,21 @@ As such the fusion tuple type provides a lot of functionality beyond that requir
 Currently tuple is basically a synonym for __vector__, although this may be changed
 in future releases of fusion.
 
+[heading Header]
+
+    #include <boost/fusion/tuple.hpp>
+    #include <boost/fusion/include/tuple.hpp>
+
+    #include <boost/fusion/tuple/tuple.hpp>
+    #include <boost/fusion/tuple/tuple_fwd.hpp>
+    #include <boost/fusion/include/tuple_fwd.hpp>
+
+    // for creation function
+    #include <boost/fusion/tuple/tuple_tie.hpp>
+    #include <boost/fusion/include/tuple_tie.hpp>
+    #include <boost/fusion/tuple/make_tuple.hpp>
+    #include <boost/fusion/include/make_tuple.hpp>
+
 [heading Synopsis]
     template<
         typename T1 = __unspecified__,
@@ -30,8 +45,6 @@ in future releases of fusion.
         ...
         typename TN = __unspecified__>
     class tuple;
-
-/tuple.hpp>
 
 [section Construction]
 
@@ -49,7 +62,7 @@ The __tr1__tuple__ type provides a default constructor, a constructor that takes
 
     tuple();
 
-[*Requirements]: Each `Ti` is default constructable.
+[*Requirements]: Each `Ti` is default-constructible.
 
 [*Semantics]: Default initializes each element of the tuple.
 
@@ -61,7 +74,7 @@ The __tr1__tuple__ type provides a default constructor, a constructor that takes
 
     tuple(const tuple& t);
 
-[*Requirements]: Each `Ti` should be copy constructable.
+[*Requirements]: Each `Ti` should be copy-constructible.
 
 [*Semantics]: Copy constructs each element of `*this` with the corresponding element of `t`.
 
@@ -77,19 +90,21 @@ The __tr1__tuple__ type provides a default constructor, a constructor that takes
 [section Tuple creation functions]
 
 [heading Description]
-TR1 describes 2 utility functions for creating __tr1__tuple__s. `make_tuple` builds a tuple out of it's argument list, and `tie` builds a tuple of references to it's arguments. The details of these creation functions are described in this section.
+TR1 describes 2 utility functions for creating __tr1__tuple__. `make_tuple` builds a tuple out of it's argument list, and `tie` builds a tuple of references to it's arguments. The details of these creation functions are described in this section.
 
 [heading Specification]
 
     template<typename T1, typename T2, ..., typename TN>
-    tuple<V1, V2, ..., VN> make_tuple(const T1& t1, const T2& t2, ..., const TN& tn);
+    tuple<V1, V2, ..., VN>
+    make_tuple(const T1& t1, const T2& t2, ..., const TN& tn);
 
 Where `Vi` is `X&` if the cv-unqualified type `Ti` is `reference_wrapper<X>`, otherwise `Vi` is `Ti`.
 
 [*Returns]: `tuple<V1, V2, ..., VN>(t1, t2, ..., tN)`
 
     template<typename T1, typename T2, ..., typename TN>
-    tuple<T1&, T2&, ..., TN&> tie(T1& t1, T2& t2, ..., TN& tn);
+    tuple<T1&, T2&, ..., TN&>
+    tie(T1& t1, T2& t2, ..., TN& tn);
 
 [*Returns]: tuple<T1&, T2&, ..., TN&>(t1, t2, ..., tN). When argument `ti` is `ignore`, assigning any value to the corresponding tuple element has no effect.
 

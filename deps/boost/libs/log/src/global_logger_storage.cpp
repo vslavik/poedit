@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2014.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -84,7 +84,8 @@ BOOST_LOG_API BOOST_LOG_NORETURN void throw_odr_violation(
     logger_holder_base const& registered)
 {
     char buf[std::numeric_limits< unsigned int >::digits10 + 3];
-    log::aux::snprintf(buf, sizeof(buf), "%u", registered.m_RegistrationLine);
+    if (log::aux::snprintf(buf, sizeof(buf), "%u", registered.m_RegistrationLine) < 0)
+        buf[0] = '\0';
     std::string str =
         std::string("Could not initialize global logger with tag \"") +
         type_info_wrapper(tag_type).pretty_name() +

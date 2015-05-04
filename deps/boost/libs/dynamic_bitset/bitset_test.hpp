@@ -2,6 +2,7 @@
 //              Copyright (c) 2001 Jeremy Siek
 //        Copyright (c) 2003-2006, 2008 Gennaro Prota
 //             Copyright (c) 2014 Ahmed Charles
+//            Copyright (c) 2014 Riccardo Marcangelo 
 //
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -365,6 +366,20 @@ struct bitset_test {
     Bitset b(lhs);
     b.clear();
     BOOST_CHECK(b.size() == 0);
+  }
+
+  static void pop_back(const Bitset& lhs)
+  {
+    Bitset b(lhs);
+    b.pop_back();
+    BOOST_CHECK(b.size() == lhs.size() - 1);
+    for (std::size_t i = 0; i < b.size(); ++i)
+      BOOST_CHECK(b[i] == lhs[i]);
+
+    b.pop_back();
+    BOOST_CHECK(b.size() == lhs.size() - 2);
+    for (std::size_t j = 0; j < b.size(); ++j)
+      BOOST_CHECK(b[j] == lhs[j]);
   }
 
   static void append_bit(const Bitset& lhs)

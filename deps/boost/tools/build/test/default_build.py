@@ -19,7 +19,7 @@ t.run_build_system()
 t.expect_addition("bin/$toolset/debug/a.exe")
 t.expect_addition("bin/$toolset/release/a.exe")
 
-# Check that explictly-specified build variant supresses default-build.
+# Check that explictly-specified build variant suppresses default-build.
 t.rm("bin")
 t.run_build_system(["release"])
 t.expect_addition(BoostBuild.List("bin/$toolset/release/") * "a.exe a.obj")

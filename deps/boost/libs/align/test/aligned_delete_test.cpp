@@ -1,10 +1,10 @@
 /*
- Copyright (c) 2014 Glen Joseph Fernandes
- glenfe at live dot com
+ (c) 2014 Glen Joseph Fernandes
+ glenjofe at gmail dot com
 
- Distributed under the Boost Software License,
- Version 1.0. (See accompanying file LICENSE_1_0.txt
- or copy at http://boost.org/LICENSE_1_0.txt)
+ Distributed under the Boost Software
+ License, Version 1.0.
+ http://boost.org/LICENSE_1_0.txt
 */
 #include <boost/align/aligned_alloc.hpp>
 #include <boost/align/aligned_delete.hpp>
@@ -13,45 +13,65 @@
 #include <new>
 #include <cstddef>
 
+template<class T>
 class type {
 public:
-    static int value;
+    static int count;
 
-    type() {
-        value++;
+    type()
+        : value() {
+        count++;
     }
 
     ~type() {
-        value--;
+        count--;
     }
+
+private:
+    T value;
 };
 
-int type::value = 0;
+template<class T>
+int type<T>::count = 0;
+
+template<class T>
+T* aligned_new()
+{
+    void* p = boost::alignment::aligned_alloc(boost::
+        alignment::alignment_of<T>::value, sizeof(T));
+    if (p) {
+        return ::new(p) T();
+    } else {
+        throw std::bad_alloc();
+    }
+}
+
+template<class T>
+void test()
+{
+    type<T>* p = aligned_new<type<T> >();
+    BOOST_TEST(type<T>::count == 1);
+    boost::alignment::aligned_delete()(p);
+    BOOST_TEST(type<T>::count == 0);
+}
+
+class C { };
 
 int main()
 {
-    {
-        void* p = boost::alignment::aligned_alloc(boost::
-            alignment::alignment_of<type>::value, sizeof(type));
-        if (!p) {
-            throw std::bad_alloc();
-        }
-        type* q = ::new(p) type();
-        boost::alignment::aligned_delete d;
-        BOOST_TEST(type::value == 1);
-        d(q);
-        BOOST_TEST(type::value == 0);
-    }
-    {
-        void* p = boost::alignment::aligned_alloc(boost::
-            alignment::alignment_of<int>::value, sizeof(int));
-        if (!p) {
-            throw std::bad_alloc();
-        }
-        int* q = ::new(p) int();
-        boost::alignment::aligned_delete d;
-        d(q);
-    }
+    test<char>();
+    test<bool>();
+    test<short>();
+    test<int>();
+    test<long>();
+    test<float>();
+    test<double>();
+    test<long double>();
+    test<void*>();
+    test<void(*)()>();
+    test<C>();
+    test<int C::*>();
+    test<int (C::*)()>();
 
     return boost::report_errors();
 }

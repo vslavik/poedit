@@ -7,7 +7,7 @@
 
 #include "static_assert_same.hpp"
 
-#include <boost/iterator/detail/minimum_category.hpp>
+#include <boost/iterator/minimum_category.hpp>
 
 struct X { int a; };
 
@@ -29,30 +29,30 @@ void operator_arrow_test()
 template <class T, class U, class Min>
 struct static_assert_min_cat
   : static_assert_same<
-       typename boost::detail::minimum_category<T,U>::type, Min
+       typename boost::iterators::minimum_category<T,U>::type, Min
     >
 {};
 
 void category_test()
 {
-    using namespace boost;
-    using namespace boost::detail;
-    
+    using namespace boost::iterators;
+    using namespace boost::iterators::detail;
+
     BOOST_STATIC_ASSERT((
         !boost::is_convertible<
             std::input_iterator_tag
           , input_output_iterator_tag>::value));
-    
+
     BOOST_STATIC_ASSERT((
         !boost::is_convertible<
             std::output_iterator_tag
           , input_output_iterator_tag>::value));
-    
+
     BOOST_STATIC_ASSERT((
         boost::is_convertible<
             input_output_iterator_tag
           , std::input_iterator_tag>::value));
-    
+
     BOOST_STATIC_ASSERT((
         boost::is_convertible<
             input_output_iterator_tag
@@ -64,7 +64,7 @@ void category_test()
         boost::is_convertible<
             std::forward_iterator_tag
           , input_output_iterator_tag>::value));
-#endif 
+#endif
 
     int test = static_assert_min_cat<
         std::input_iterator_tag,input_output_iterator_tag, std::input_iterator_tag
@@ -78,7 +78,7 @@ void category_test()
     test = static_assert_min_cat<
         input_output_iterator_tag,std::forward_iterator_tag, input_output_iterator_tag
     >::value;
-#endif 
+#endif
 
     test = static_assert_min_cat<
         std::input_iterator_tag,std::forward_iterator_tag, std::input_iterator_tag
@@ -93,8 +93,8 @@ void category_test()
     test = static_assert_min_cat<
         std::output_iterator_tag,std::random_access_iterator_tag, std::output_iterator_tag
     >::value;
-#endif 
-    
+#endif
+
     (void)test;
 }
 

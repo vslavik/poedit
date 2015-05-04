@@ -1,4 +1,3 @@
-//
 //  Copyright (c) 2000-2002
 //  Joerg Walter, Mathias Koch
 //
@@ -8,7 +7,6 @@
 //
 //  The authors gratefully acknowledge the support of
 //  GeNeSys mbH & Co. KG in producing this work.
-//
 
 #include "test1.hpp"
 

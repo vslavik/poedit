@@ -51,6 +51,8 @@ using boost::get_pointer ;
 // via the safe_bool operator.
 #if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1300) ) // 1300 == VC++ 7.1
 #define BOOST_OPTIONAL_NO_NULL_COMPARE
+#else
+#define BOOST_OPTIONAL_NO_NULL_COMPARE  // Andrzej: I also disable 0 comparison everywhere
 #endif
 
 #define ARG(T) (static_cast< T const* >(0))

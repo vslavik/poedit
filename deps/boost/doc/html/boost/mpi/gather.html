@@ -49,7 +49,7 @@
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
   <span class="keyword">void</span> <span class="identifier">gather</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="communicator.html" title="Class communicator">communicator</a> <span class="special">&amp;</span> comm<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">*</span> in_values<span class="special">,</span> <span class="keyword">int</span> n<span class="special">,</span> <span class="keyword">int</span> root<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp338980160"></a><h2>Description</h2>
+<a name="idp331443152"></a><h2>Description</h2>
 <p><code class="computeroutput">gather</code> is a collective algorithm that collects the values stored at each process into a vector of values at the <code class="computeroutput">root</code> process. This vector is indexed by the process number that the value came from. The type <code class="computeroutput">T</code> of the values may be any type that is serializable or has an associated MPI data type.</p>
 <p>When the type <code class="computeroutput">T</code> has an associated MPI data type, this routine invokes <code class="computeroutput">MPI_Gather</code> to gather the values.</p>
 <p>

@@ -10,6 +10,7 @@
 //
 
 #include <boost/core/demangle.hpp>
+#include <typeinfo>
 #include <iostream>
 
 template<class T1, class T2> struct Y1

@@ -18,8 +18,10 @@
 #include <boost/fusion/iterator/next.hpp>
 #include <boost/fusion/support/pair.hpp>
 #include <boost/fusion/support/category_of.hpp>
+#include <boost/fusion/support/is_sequence.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/mpl/assert.hpp>
+#include <boost/mpl/is_sequence.hpp>
 #include <iostream>
 #include <string>
 
@@ -76,6 +78,28 @@ main()
         std::cout << make_set('X', 123) << std::endl;
         BOOST_TEST(at_key<char>(make_set('X', 123)) == 'X');
         BOOST_TEST(at_key<int>(make_set('X', 123)) == 123);
+    }
+
+    {   // testing is_sequence
+
+        typedef set<int, float, double> t1;
+        typedef set<> t2;
+        typedef set<char> t3;
+
+        BOOST_MPL_ASSERT((traits::is_sequence<t1>));
+        BOOST_MPL_ASSERT((traits::is_sequence<t2>));
+        BOOST_MPL_ASSERT((traits::is_sequence<t3>));
+    }
+
+    {   // testing mpl::is_sequence
+
+        typedef set<int, float, double> t1;
+        typedef set<> t2;
+        typedef set<char> t3;
+
+        BOOST_MPL_ASSERT((boost::mpl::is_sequence<t1>));
+        BOOST_MPL_ASSERT((boost::mpl::is_sequence<t2>));
+        BOOST_MPL_ASSERT((boost::mpl::is_sequence<t3>));
     }
 
     return boost::report_errors();

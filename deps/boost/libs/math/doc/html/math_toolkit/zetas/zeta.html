@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Riemann Zeta Function</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 1.9.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
 <link rel="up" href="../zetas.html" title="Zeta Functions">
 <link rel="prev" href="../zetas.html" title="Zeta Functions">
 <link rel="next" href="../expint.html" title="Exponential Integrals">
@@ -67,13 +67,13 @@
         function</a> of z:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/zeta1.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/zeta1.svg"></span>
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../graphs/zeta1.png" align="middle"></span>
+        <span class="inlinemediaobject"><img src="../../../graphs/zeta1.svg" align="middle"></span>
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../graphs/zeta2.png" align="middle"></span>
+        <span class="inlinemediaobject"><img src="../../../graphs/zeta2.svg" align="middle"></span>
       </p>
 <h5>
 <a name="math_toolkit.zetas.zeta.h2"></a>
@@ -248,13 +248,13 @@
         make their arguments positive:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/zeta3.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/zeta3.svg"></span>
       </p>
 <p>
         The generic versions of these functions are implemented using the series:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/zeta6.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/zeta6.svg"></span>
       </p>
 <p>
         When the significand (mantissa) size is recognised (currently for 53, 64
@@ -266,7 +266,7 @@
         For 0 &lt; z &lt; 1 the approximating form is:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/zeta4.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/zeta4.svg"></span>
       </p>
 <p>
         For a rational approximation R(1-z) and a constant C.
@@ -275,7 +275,7 @@
         For 1 &lt; z &lt; 4 the approximating form is:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/zeta5.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/zeta5.svg"></span>
       </p>
 <p>
         For a rational approximation R(n-z) and a constant C and integer n.
@@ -292,13 +292,30 @@
         of: &#949;/R(0). This saves us quite a few digits when dealing with large z, especially
         when &#949; is small.
       </p>
+<p>
+        Finally, there are some special cases for integer arguments, there are closed
+        forms for negative or even integers:
+      </p>
+<p>
+        <span class="inlinemediaobject"><img src="../../../equations/zeta7.svg"></span>
+      </p>
+<p>
+        <span class="inlinemediaobject"><img src="../../../equations/zeta8.svg"></span>
+      </p>
+<p>
+        <span class="inlinemediaobject"><img src="../../../equations/zeta9.svg"></span>
+      </p>
+<p>
+        and for positive odd integers we simply cache pre-computed values as these
+        are of great benefit to some infinite series calculations.
+      </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012, 2013 Nikhar Agrawal, Anton Bikineev,
-      Paul A. Bristow, Christopher Kormanyos, Hubert Holin, Bruno Lalande, John Maddock,
-      Johan R&#229;de, Gautam Sewani, Benjamin Sobotta, Thijs van den Berg, Daryle Walker
-      and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
+      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
+      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
+      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

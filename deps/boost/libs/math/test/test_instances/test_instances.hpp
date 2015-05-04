@@ -206,11 +206,31 @@ namespace boost{ namespace math{
    template tools::promote_args<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE>::type 
          ellint_rj(BOOST_MATH_TEST_TYPE x, BOOST_MATH_TEST_TYPE y, BOOST_MATH_TEST_TYPE z, BOOST_MATH_TEST_TYPE p, const policies::policy<>& pol);
 
+   template tools::promote_args<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE>::type 
+      ellint_rg(BOOST_MATH_TEST_TYPE x, BOOST_MATH_TEST_TYPE y, BOOST_MATH_TEST_TYPE z);
+
+   template tools::promote_args<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE>::type 
+      ellint_rg(BOOST_MATH_TEST_TYPE x, BOOST_MATH_TEST_TYPE y, BOOST_MATH_TEST_TYPE z, const policies::policy<>& pol);
+
    template tools::promote_args<BOOST_MATH_TEST_TYPE>::type ellint_2(BOOST_MATH_TEST_TYPE k);
 
    template tools::promote_args<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE>::type ellint_2(BOOST_MATH_TEST_TYPE k, BOOST_MATH_TEST_TYPE phi);
 
    template tools::promote_args<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE>::type ellint_2(BOOST_MATH_TEST_TYPE k, BOOST_MATH_TEST_TYPE phi, const policies::policy<>& pol);
+
+   template tools::promote_args<BOOST_MATH_TEST_TYPE>::type ellint_d(BOOST_MATH_TEST_TYPE k);
+
+   template tools::promote_args<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE>::type ellint_d(BOOST_MATH_TEST_TYPE k, BOOST_MATH_TEST_TYPE phi);
+
+   template tools::promote_args<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE>::type ellint_d(BOOST_MATH_TEST_TYPE k, BOOST_MATH_TEST_TYPE phi, const policies::policy<>& pol);
+
+   template tools::promote_args<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE>::type jacobi_zeta(BOOST_MATH_TEST_TYPE k, BOOST_MATH_TEST_TYPE phi);
+
+   template tools::promote_args<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE>::type jacobi_zeta(BOOST_MATH_TEST_TYPE k, BOOST_MATH_TEST_TYPE phi, const policies::policy<>& pol);
+
+   template tools::promote_args<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE>::type heuman_lambda(BOOST_MATH_TEST_TYPE k, BOOST_MATH_TEST_TYPE phi);
+
+   template tools::promote_args<BOOST_MATH_TEST_TYPE, BOOST_MATH_TEST_TYPE>::type heuman_lambda(BOOST_MATH_TEST_TYPE k, BOOST_MATH_TEST_TYPE phi, const policies::policy<>& pol);
 
    template tools::promote_args<BOOST_MATH_TEST_TYPE>::type ellint_1(BOOST_MATH_TEST_TYPE k);
 
@@ -287,8 +307,13 @@ namespace boost{ namespace math{
 
    // digamma:
    template tools::promote_args<BOOST_MATH_TEST_TYPE>::type digamma(BOOST_MATH_TEST_TYPE x);
-
    template tools::promote_args<BOOST_MATH_TEST_TYPE>::type digamma(BOOST_MATH_TEST_TYPE x, const policies::policy<>&);
+   // trigamma:
+   template tools::promote_args<BOOST_MATH_TEST_TYPE>::type trigamma(BOOST_MATH_TEST_TYPE x);
+   template tools::promote_args<BOOST_MATH_TEST_TYPE>::type trigamma(BOOST_MATH_TEST_TYPE x, const policies::policy<>&);
+   // polygamma:
+   template tools::promote_args<BOOST_MATH_TEST_TYPE>::type polygamma(int, BOOST_MATH_TEST_TYPE x);
+   template tools::promote_args<BOOST_MATH_TEST_TYPE>::type polygamma(int, BOOST_MATH_TEST_TYPE x, const policies::policy<>&);
 #endif
 #ifdef TEST_GROUP_6
    // Hypotenuse function sqrt(x ^ 2 + y ^ 2).
@@ -332,6 +357,12 @@ namespace boost{ namespace math{
    template tools::promote_args<BOOST_MATH_TEST_TYPE>::type sqrt1pm1(const BOOST_MATH_TEST_TYPE& val);
 
    template tools::promote_args<BOOST_MATH_TEST_TYPE>::type sqrt1pm1(const BOOST_MATH_TEST_TYPE& val, const policies::policy<>&);
+
+   // sin_pi, cos_pi
+   template tools::promote_args<BOOST_MATH_TEST_TYPE>::type sin_pi(const BOOST_MATH_TEST_TYPE val);
+   template tools::promote_args<BOOST_MATH_TEST_TYPE>::type sin_pi(const BOOST_MATH_TEST_TYPE val, const policies::policy<>&);
+   template tools::promote_args<BOOST_MATH_TEST_TYPE>::type cos_pi(const BOOST_MATH_TEST_TYPE val);
+   template tools::promote_args<BOOST_MATH_TEST_TYPE>::type cos_pi(const BOOST_MATH_TEST_TYPE val, const policies::policy<>&);
 #endif
 #ifdef TEST_GROUP_7
    // Bessel functions:

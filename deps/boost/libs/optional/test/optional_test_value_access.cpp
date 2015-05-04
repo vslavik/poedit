@@ -8,18 +8,6 @@
 //
 // You are welcome to contact the author at:
 //  akrzemi1@gmail.com
-//
-// Revisions:
-//
-#include<iostream>
-#include<stdexcept>
-#include<string>
-
-#define BOOST_ENABLE_ASSERT_HANDLER
-
-#include "boost/bind/apply.hpp" // Included just to test proper interaction with boost::apply<> as reported by Daniel Wallin
-#include "boost/mpl/bool.hpp"
-#include "boost/mpl/bool_fwd.hpp"  // For mpl::true_ and mpl::false_
 
 #include "boost/optional/optional.hpp"
 
@@ -27,11 +15,10 @@
 #pragma hdrstop
 #endif
 
-#include "boost/none.hpp"
+#include "boost/core/ignore_unused.hpp"
+#include "boost/core/lightweight_test.hpp"
 
-#include "boost/test/minimal.hpp"
-
-#include "optional_test_common.cpp"
+using boost::optional;
 
 struct IntWrapper
 {
@@ -48,10 +35,10 @@ void test_function_value_or_for()
   optional<T> oM1(1);
   const optional<T> oC2(2);
   
-  BOOST_CHECK(oM0.value_or(5) == 5);
-  BOOST_CHECK(oC0.value_or(5) == 5);
-  BOOST_CHECK(oM1.value_or(5) == 1);
-  BOOST_CHECK(oC2.value_or(5) == 2);
+  BOOST_TEST(oM0.value_or(5) == 5);
+  BOOST_TEST(oC0.value_or(5) == 5);
+  BOOST_TEST(oM1.value_or(5) == 1);
+  BOOST_TEST(oC2.value_or(5) == 2);
 }
 
 template <typename T>
@@ -64,36 +51,24 @@ void test_function_value_for()
   try
   {
     T& v = o1.value();
-    BOOST_CHECK(v == 1);
+    BOOST_TEST(v == 1);
   }
   catch(...)
   {
-    BOOST_CHECK(false);
+    BOOST_TEST(false);
   }
   
   try
   {
     T const& v = oC.value();
-    BOOST_CHECK(v == 2);
+    BOOST_TEST(v == 2);
   }
   catch(...)
   {
-    BOOST_CHECK(false);
+    BOOST_TEST(false);
   }
   
-  try
-  {
-    T& v = o0.value();
-    BOOST_CHECK(false);
-    boost::ignore_unused(v);
-  }
-  catch(boost::bad_optional_access const&)
-  {
-  }
-  catch(...)
-  {
-    BOOST_CHECK(false);
-  }
+  BOOST_TEST_THROWS(o0.value(), boost::bad_optional_access);
 }
 
 void test_function_value()
@@ -120,12 +95,12 @@ void test_function_value_or()
     test_function_value_or_for<IntWrapper>();
     
     optional<int> oi(1);
-    BOOST_CHECK(oi.value_or(FatToIntConverter(2)) == 1);
-    BOOST_CHECK(FatToIntConverter::conversions == 0);
+    BOOST_TEST(oi.value_or(FatToIntConverter(2)) == 1);
+    BOOST_TEST(FatToIntConverter::conversions == 0);
     
     oi = boost::none;
-    BOOST_CHECK(oi.value_or(FatToIntConverter(2)) == 2);
-    BOOST_CHECK(FatToIntConverter::conversions == 1);
+    BOOST_TEST(oi.value_or(FatToIntConverter(2)) == 2);
+    BOOST_TEST(FatToIntConverter::conversions == 1);
 }
 
 
@@ -156,42 +131,34 @@ void test_function_value_or_eval()
     FunM funM;
     FunC funC;
     
-    BOOST_CHECK(o1.value_or_eval(funM) == 1);
-    BOOST_CHECK(oN.value_or_eval(funM) == 5);
-    BOOST_CHECK(o1.value_or_eval(FunM()) == 1);
-    BOOST_CHECK(oN.value_or_eval(FunM()) == 5);
+    BOOST_TEST_EQ(o1.value_or_eval(funM), 1);
+    BOOST_TEST_EQ(oN.value_or_eval(funM), 5);
+    BOOST_TEST_EQ(o1.value_or_eval(FunM()), 1);
+    BOOST_TEST_EQ(oN.value_or_eval(FunM()), 5);
     
-    BOOST_CHECK(o1.value_or_eval(funC) == 1);
-    BOOST_CHECK(oN.value_or_eval(funC) == 6);
-    BOOST_CHECK(o1.value_or_eval(FunC()) == 1);
-    BOOST_CHECK(oN.value_or_eval(FunC()) == 6);
+    BOOST_TEST_EQ(o1.value_or_eval(funC), 1);
+    BOOST_TEST_EQ(oN.value_or_eval(funC), 6);
+    BOOST_TEST_EQ(o1.value_or_eval(FunC()), 1);
+    BOOST_TEST_EQ(oN.value_or_eval(FunC()), 6);
     
-    BOOST_CHECK(o1.value_or_eval(funP) == 1);
-    BOOST_CHECK(oN.value_or_eval(funP) == 7);
+    BOOST_TEST_EQ(o1.value_or_eval(funP), 1);
+    BOOST_TEST_EQ(oN.value_or_eval(funP), 7);
     
 #ifndef BOOST_NO_CXX11_LAMBDAS
-    BOOST_CHECK(o1.value_or_eval([](){return 8;}) == 1);
-    BOOST_CHECK(oN.value_or_eval([](){return 8;}) == 8);
+    BOOST_TEST_EQ(o1.value_or_eval([](){return 8;}), 1);
+    BOOST_TEST_EQ(oN.value_or_eval([](){return 8;}), 8);
 #endif
 
     try
     {
-      BOOST_CHECK(o1.value_or_eval(throw_) == 1);
+      BOOST_TEST_EQ(o1.value_or_eval(throw_), 1);
     }
     catch(...)
     {
-      BOOST_CHECK(false);
+      BOOST_TEST(false);
     }
     
-    try
-    {
-      BOOST_CHECK(oN.value_or_eval(throw_) == 1);
-      BOOST_CHECK(false);
-    }
-    catch(...)
-    {
-      BOOST_CHECK(true);
-    }
+    BOOST_TEST_THROWS(oN.value_or_eval(throw_), int);
 }
 
 const optional<std::string> makeConstOptVal()
@@ -244,21 +211,12 @@ void test_move_only_getters()
 
 #endif // !defined BOOST_NO_CXX11_REF_QUALIFIERS
 
-int test_main( int, char* [] )
+int main()
 {
-  try
-  {
-    test_function_value();
-    test_function_value_or();
-    test_function_value_or_eval();
-    test_const_move();
-  }
-  catch ( ... )
-  {
-    BOOST_ERROR("Unexpected Exception caught!");
-  }
+  test_function_value();
+  test_function_value_or();
+  test_function_value_or_eval();
+  test_const_move();
 
-  return 0;
+  return boost::report_errors();
 }
-
-

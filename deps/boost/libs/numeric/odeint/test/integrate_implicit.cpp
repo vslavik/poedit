@@ -106,7 +106,7 @@ struct perform_integrate_const_test
         integrate_const( Stepper() , std::make_pair( sys() , jacobi() ) , x , 0.0 , t_end ,
                                         dt , push_back_time( times ) );
 
-        BOOST_CHECK_EQUAL( static_cast<int>(times.size()) , static_cast<int>(floor(t_end/dt))+1 );
+        BOOST_CHECK_EQUAL( static_cast<int>(times.size()) , static_cast<int>(std::floor(t_end/dt))+1 );
 
         for( size_t i=0 ; i<times.size() ; ++i )
         {

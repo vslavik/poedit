@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Perl Regular Expression Syntax</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Boost.Regex 5.0.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="../../index.html" title="Boost.Regex 5.0.1">
 <link rel="up" href="../syntax.html" title="Regular Expression Syntax">
 <link rel="prev" href="../syntax.html" title="Regular Expression Syntax">
 <link rel="next" href="basic_extended.html" title="POSIX Extended Regular Expression Syntax">
@@ -176,6 +176,13 @@
 <pre class="programlisting"><span class="identifier">a</span>
 <span class="identifier">aaaa</span>
 </pre>
+<p>
+        Note that the "{" and "}" characters will treated as
+        ordinary literals when used in a context that is not a repeat: this matches
+        Perl 5.x behavior. For example in the expressions "ab{1", "ab1}"
+        and "a{b}c" the curly brackets are all treated as literals and
+        <span class="emphasis"><em>no error will be raised</em></span>.
+      </p>
 <p>
         It is an error to use a repeat operator, if the preceding construct can not
         be repeated, for example:

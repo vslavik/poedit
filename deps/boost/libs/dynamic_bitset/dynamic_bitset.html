@@ -180,6 +180,7 @@ public:
     void <a href=
 "#resize">resize</a>(size_type num_bits, bool value = false);
     void <a href="#clear">clear</a>();
+    void <a href="#pop_back">pop_back</a>();
     void <a href="#push_back">push_back</a>(bool bit);
     void <a href="#append1">append</a>(Block block);
 
@@ -365,7 +366,7 @@ were chosen for this reason.</p>
 <p><tt>dynamic_bitset</tt> does not throw exceptions when a
 precondition is violated (as is done in <tt>std::bitset</tt>).
 Instead <tt>assert</tt> is used. See the guidelines for <a href=
-"http://www.boost.org/more/error_handling.html">Error and Exception Handling</a>
+"http://www.boost.org/community/error_handling.html">Error and Exception Handling</a>
 for the explanation.</p>
 
 <h3><a id="header-files">Header Files</a></h3>
@@ -834,6 +835,15 @@ void <a id="clear">clear</a>()
 <b>Effects:</b> The size of the bitset becomes zero.<br />
  <b>Throws:</b> nothing.
 
+<hr />
+<pre>
+void <a id="pop_back">pop_back</a>();
+</pre>
+
+<b>Precondition:</b> <tt>!this-&gt;empty()</tt>.<br />
+<b>Effects:</b> Decreases the size of the bitset by one.<br />
+ <b>Throws:</b> nothing.
+ 
 <hr />
 <pre>
 void <a id="push_back">push_back</a>(bool value);

@@ -417,9 +417,7 @@ basic_oarchive::basic_oarchive(unsigned int flags)
 
 BOOST_ARCHIVE_DECL(BOOST_PP_EMPTY()) 
 basic_oarchive::~basic_oarchive()
-{
-    delete pimpl;
-}
+{}
 
 BOOST_ARCHIVE_DECL(void) 
 basic_oarchive::save_object(

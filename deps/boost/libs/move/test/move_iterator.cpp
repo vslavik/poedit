@@ -11,6 +11,7 @@
 #include <boost/move/detail/config_begin.hpp>
 #include <boost/move/iterator.hpp>
 #include <boost/container/vector.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include "../example/movable.hpp"
 
 int main()
@@ -20,36 +21,24 @@ int main()
    bc::vector<movable> v(10);
 
    //Test default constructed value
-   if(v[0].moved()){
-      return 1;
-   }
+   BOOST_TEST(!v[0].moved());
 
    //Move values
    bc::vector<movable> v2
       (boost::make_move_iterator(v.begin()), boost::make_move_iterator(v.end()));
 
    //Test values have been moved
-   if(!v[0].moved()){
-      return 1;
-   }
-
-   if(v2.size() != 10){
-      return 1;
-   }
+   BOOST_TEST(v[0].moved());
+   BOOST_TEST(v2.size() == 10);
 
    //Move again
    v.assign(boost::make_move_iterator(v2.begin()), boost::make_move_iterator(v2.end()));
 
    //Test values have been moved
-   if(!v2[0].moved()){
-      return 1;
-   }
+   BOOST_TEST(v2[0].moved());
+   BOOST_TEST(!v[0].moved());
 
-   if(v[0].moved()){
-      return 1;
-   }
-
-   return 0;
+   return ::boost::report_errors();
 }
 
 #include <boost/move/detail/config_end.hpp>

@@ -71,9 +71,10 @@ void test_completion_latch_reset()
     }
     catch (...)
     {
+      BOOST_TEST(false);
       g.interrupt_all();
       g.join_all();
-      throw;
+      //throw;
     }
   }
   gen_latch.then(&test_global_parameter);
@@ -91,9 +92,10 @@ void test_completion_latch_reset()
     }
     catch (...)
     {
+      BOOST_TEST(false);
       g2.interrupt_all();
       g2.join_all();
-      throw;
+      //throw;
     }
   }
 }

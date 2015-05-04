@@ -5,6 +5,7 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #define BOOST_THREAD_VERSION 2
+#define BOOST_TEST_MODULE Boost.Threads: mutex test suite
 
 #include <boost/thread/detail/config.hpp>
 
@@ -14,6 +15,8 @@
 #include <boost/thread/recursive_mutex.hpp>
 #include <boost/thread/thread_time.hpp>
 #include <boost/thread/condition.hpp>
+
+#define BOOST_TEST_MODULE Boost.Threads: mutex test suite
 
 #include <boost/test/unit_test.hpp>
 
@@ -270,7 +273,7 @@ void do_test_mutex()
     test_lock<boost::mutex>()();
 }
 
-void test_mutex()
+BOOST_AUTO_TEST_CASE(test_mutex)
 {
     timed_test(&do_test_mutex, 3);
 }
@@ -281,7 +284,7 @@ void do_test_try_mutex()
     test_trylock<boost::try_mutex>()();
 }
 
-void test_try_mutex()
+BOOST_AUTO_TEST_CASE(test_try_mutex)
 {
     timed_test(&do_test_try_mutex, 3);
 }
@@ -293,7 +296,7 @@ void do_test_timed_mutex()
     test_timedlock<boost::timed_mutex>()();
 }
 
-void test_timed_mutex()
+BOOST_AUTO_TEST_CASE(test_timed_mutex)
 {
     timed_test(&do_test_timed_mutex, 3);
 }
@@ -304,7 +307,7 @@ void do_test_recursive_mutex()
     test_recursive_lock<boost::recursive_mutex>()();
 }
 
-void test_recursive_mutex()
+BOOST_AUTO_TEST_CASE(test_recursive_mutex)
 {
     timed_test(&do_test_recursive_mutex, 3);
 }
@@ -316,7 +319,7 @@ void do_test_recursive_try_mutex()
     test_recursive_lock<boost::recursive_try_mutex>()();
 }
 
-void test_recursive_try_mutex()
+BOOST_AUTO_TEST_CASE(test_recursive_try_mutex)
 {
     timed_test(&do_test_recursive_try_mutex, 3);
 }
@@ -329,24 +332,10 @@ void do_test_recursive_timed_mutex()
     test_recursive_lock<boost::recursive_timed_mutex>()();
 }
 
-void test_recursive_timed_mutex()
+BOOST_AUTO_TEST_CASE(test_recursive_timed_mutex)
 {
     timed_test(&do_test_recursive_timed_mutex, 3);
 }
 
-boost::unit_test::test_suite* init_unit_test_suite(int, char*[])
-{
-    boost::unit_test::test_suite* test =
-        BOOST_TEST_SUITE("Boost.Threads: mutex test suite");
-
-    test->add(BOOST_TEST_CASE(&test_mutex));
-    test->add(BOOST_TEST_CASE(&test_try_mutex));
-    test->add(BOOST_TEST_CASE(&test_timed_mutex));
-    test->add(BOOST_TEST_CASE(&test_recursive_mutex));
-    test->add(BOOST_TEST_CASE(&test_recursive_try_mutex));
-    test->add(BOOST_TEST_CASE(&test_recursive_timed_mutex));
-
-    return test;
-}
 
 

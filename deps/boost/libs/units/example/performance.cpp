@@ -55,6 +55,7 @@ solving y' = 1 - x + 4 * y with quantity: 1.84 seconds
 #include <boost/units/quantity.hpp>
 #include <boost/units/systems/si.hpp>
 #include <boost/units/cmath.hpp>
+#include <boost/units/io.hpp>
 
 enum {
     tile_block_size = 24

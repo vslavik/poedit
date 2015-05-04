@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../move.html" title="Chapter&#160;20.&#160;Boost.Move">
+<link rel="up" href="../move.html" title="Chapter&#160;19.&#160;Boost.Move">
 <link rel="prev" href="introduction.html" title="Introduction">
 <link rel="next" href="composition_inheritance.html" title="Composition or inheritance">
 </head>
@@ -122,16 +122,16 @@
           </li>
 </ul></div>
 <p>
-        When the source of the copy is known to be an <code class="computeroutput"><span class="identifier">rvalue</span></code>
+        When the source of the copy is known to be a <code class="computeroutput"><span class="identifier">rvalue</span></code>
         (e.g.: a temporary object), one can avoid the potentially expensive <code class="computeroutput"><span class="identifier">clone</span><span class="special">()</span></code>
         operation by pilfering source's pointer (no one will notice!). The move constructor
         above does exactly that, leaving the rvalue in a default constructed state.
         The move assignment operator simply does the same freeing old resources.
       </p>
 <p>
-        Now when code tries to copy an rvalue <code class="computeroutput"><span class="identifier">clone_ptr</span></code>,
+        Now when code tries to copy a rvalue <code class="computeroutput"><span class="identifier">clone_ptr</span></code>,
         or if that code explicitly gives permission to consider the source of the
-        copy an rvalue (using <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">move</span></code>),
+        copy a rvalue (using <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">move</span></code>),
         the operation will execute much faster.
       </p>
 <p>

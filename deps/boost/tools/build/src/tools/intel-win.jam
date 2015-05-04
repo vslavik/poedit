@@ -141,6 +141,7 @@ local rule configure ( version ? : command * : options * )
 
 local rule configure-really ( version ? : command * : options * : compatibility )
 {
+    local rewrite-setupscript = [ feature.get-values <rewrite-setup-scripts> : $(options) ] ;
     local condition = [  common.check-init-parameters intel-win
         : version $(version) : compatibility $(compatibility) ] ;
         
@@ -175,7 +176,7 @@ local rule configure-really ( version ? : command * : options * : compatibility 
     }
 
     local setup ;
-    setup = [ GLOB $(root) : iclvars_*.bat ] ;
+    setup = [ path.glob $(root) : iclvars_*.bat ] ;
     if ! $(setup)
     {
        setup = [ path.join $(root) "iclvars.bat" ] ;
@@ -200,7 +201,14 @@ local rule configure-really ( version ? : command * : options * : compatibility 
         {
             errors.error "Don't know what parameter to pass for vc version ( $(compatibility) )" ;
         }
-        if [ MATCH ^(AMD64) : [ os.environ PROCESSOR_ARCHITECTURE ] ]
+        # There are two possible paths for the 64-bit intel compiler,
+        # one for the IA32-Intel64 cross compiler, and one for the native
+        # 64 bit compiler. We prefer the latter one if it's installed,
+        # and don't rely on whether the OS reports whether we're 64 or 32 bit
+        # as that really only tells us which subsystem bjam is running in:
+        #
+        local intel64_path = [ path.join $(root) intel64 ] ;
+        if [ path.glob $(intel64_path) : icl.exe ]
         {
             target_types = ia32 intel64 ;
         }
@@ -226,7 +234,8 @@ local rule configure-really ( version ? : command * : options * : compatibility 
         local setup-call ;
         if $(major) >= 12
         {
-            setup-call = "call \""$(setup)"\" $(c) $(iclvars_vs_arg) > nul " ;
+            local t = [ msvc.maybe-rewrite-setup intel-win : "\"$(setup)\"" :  "$(c) $(iclvars_vs_arg)" : $(version) : $(rewrite-setupscript) ] ;
+            setup-call = "call $(t) > nul " ;
             cpu-conditions = $(condition)/$(.cpu-arch-$(c)) ;
         }
         else
@@ -354,6 +363,7 @@ local rule configure-really ( version ? : command * : options * : compatibility 
         compatibility = vc7.1 ;
     }
 
+    msvc-version = [ msvc.resolve-possible-msvc-version-alias $(msvc-version) ] ;
     msvc.configure-version-specific intel-win :  $(msvc-version) : $(condition) ;
 }
 
@@ -463,6 +473,7 @@ if [ MATCH (--debug-configuration) : [ modules.peek : ARGV ] ]
 .iclvars-12.1-supported-vcs = "10.0 9.0 8.0" ;
 .iclvars-13.0-supported-vcs = "11.0 10.0 9.0" ;
 .iclvars-14.0-supported-vcs = "12.0 11.0 10.0 9.0" ;
+.iclvars-15.0-supported-vcs = "12.0 11.0 10.0 9.0" ;
 .iclvars-version-alias-vc12 = vs2013 ;
 .iclvars-version-alias-vc11 = vs2012 ;
 .iclvars-version-alias-vc10 = vs2010 ;

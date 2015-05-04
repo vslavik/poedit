@@ -25,7 +25,7 @@ namespace ublas = boost::numeric::ublas;
 
 #include "common/init.hpp"
 
-template<class V, int N>
+template<class V, std::size_t N>
 struct test_blas_1 {
     typedef typename V::value_type value_type;
     typedef typename ublas::type_traits<value_type>::real_type real_type;
@@ -33,14 +33,14 @@ struct test_blas_1 {
     void test ();
 };
 
-template<class V, class M, int N>
+template<class V, class M, std::size_t N>
 struct test_blas_2 {
     typedef typename V::value_type value_type;
 
     void test ();
 };
 
-template<class M, int N>
+template<class M, std::size_t N>
 struct test_blas_3 {
     typedef typename M::value_type value_type;
 

@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../move.html" title="Chapter&#160;20.&#160;Boost.Move">
+<link rel="up" href="../move.html" title="Chapter&#160;19.&#160;Boost.Move">
 <link rel="prev" href="thanks_to.html" title="Thanks and credits">
 <link rel="next" href="reference.html" title="Reference">
 </head>
@@ -27,6 +27,10 @@
 <a name="move.release_notes"></a><a class="link" href="release_notes.html" title="Release Notes">Release Notes</a>
 </h2></div></div></div>
 <div class="toc"><dl class="toc">
+<dt><span class="section"><a href="release_notes.html#move.release_notes.release_notes_boost_1_58_00">Boost
+      1.58 Release</a></span></dt>
+<dt><span class="section"><a href="release_notes.html#move.release_notes.release_notes_boost_1_57_00">Boost
+      1.57 Release</a></span></dt>
 <dt><span class="section"><a href="release_notes.html#move.release_notes.release_notes_boost_1_56_00">Boost
       1.56 Release</a></span></dt>
 <dt><span class="section"><a href="release_notes.html#move.release_notes.release_notes_boost_1_55_00">Boost
@@ -42,6 +46,68 @@
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
+<a name="move.release_notes.release_notes_boost_1_58_00"></a><a class="link" href="release_notes.html#move.release_notes.release_notes_boost_1_58_00" title="Boost 1.58 Release">Boost
+      1.58 Release</a>
+</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            Added <code class="computeroutput"><a class="link" href="../BOOST_MOVE_BASE.html" title="Macro BOOST_MOVE_BASE">BOOST_MOVE_BASE</a></code> utility.
+          </li>
+<li class="listitem">
+            Added <code class="computeroutput"><a class="link" href="../boost/adl_move_swap.html" title="Function template adl_move_swap">adl_move_swap</a></code>
+            utility.
+          </li>
+<li class="listitem">
+            Reduced dependencies on other Boost libraries to make the library a bit
+            more lightweight.
+          </li>
+<li class="listitem">
+            Fixed bugs:
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/11044" target="_top">Trac
+                  #11044: <span class="emphasis"><em>"boost::rv inherits off union, when such
+                  passed as template argument"</em></span></a>.
+                </li></ul></div>
+          </li>
+</ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="move.release_notes.release_notes_boost_1_57_00"></a><a class="link" href="release_notes.html#move.release_notes.release_notes_boost_1_57_00" title="Boost 1.57 Release">Boost
+      1.57 Release</a>
+</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            Added <code class="computeroutput"><span class="identifier">unique_ptr</span></code> smart
+            pointer. Thanks to Howard Hinnant for his excellent unique_ptr emulation
+            code and testsuite.
+          </li>
+<li class="listitem">
+            Added <code class="computeroutput"><span class="identifier">move_if_noexcept</span></code>
+            utility. Thanks to Antony Polukhin for the implementation.
+          </li>
+<li class="listitem">
+            Fixed bugs:
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/9785" target="_top">Trac
+                  #9785: <span class="emphasis"><em>"Compiler warning with intel icc in boost/move/core.hpp"</em></span></a>,
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/10460" target="_top">Trac
+                  #10460: <span class="emphasis"><em>"Compiler error due to looser throw specifier"</em></span></a>,
+                </li>
+<li class="listitem">
+                  <a href="https://github.com/boostorg/move/pull/3" target="_top">Git Pull #3:
+                  <span class="emphasis"><em>"Don't delete copy constructor when rvalue references
+                  are disabled"</em></span></a>,
+                </li>
+</ul></div>
+          </li>
+</ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
 <a name="move.release_notes.release_notes_boost_1_56_00"></a><a class="link" href="release_notes.html#move.release_notes.release_notes_boost_1_56_00" title="Boost 1.56 Release">Boost
       1.56 Release</a>
 </h3></div></div></div>
@@ -50,11 +116,22 @@
             Added <code class="computeroutput"><a class="link" href="../BOOST_MOVE_RET.html" title="Macro BOOST_MOVE_RET">BOOST_MOVE_RET</a></code>.
           </li>
 <li class="listitem">
-            Fixed bug <a href="https://svn.boost.org/trac/boost/ticket/9482" target="_top">#9482:
-            <span class="emphasis"><em>"MSVC macros not undefined in boost/move/detail/config_end.hpp"</em></span></a>,
-            <a href="https://svn.boost.org/trac/boost/ticket/9045" target="_top">#9045: <span class="emphasis"><em>"Wrong
-            macro name on docs"</em></span></a>, <a href="https://svn.boost.org/trac/boost/ticket/8420" target="_top">#8420:
-            <span class="emphasis"><em>"move's is_convertible does not compile with aligned data"</em></span></a>.
+            Fixed bugs:
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/9482" target="_top">#9482:
+                  <span class="emphasis"><em>"MSVC macros not undefined in boost/move/detail/config_end.hpp"</em></span></a>,
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/9045" target="_top">#9045:
+                  <span class="emphasis"><em>"Wrong macro name on docs"</em></span></a>,
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/8420" target="_top">#8420:
+                  <span class="emphasis"><em>"move's is_convertible does not compile with aligned
+                  data"</em></span></a>.
+                </li>
+</ul></div>
           </li>
 </ul></div>
 </div>

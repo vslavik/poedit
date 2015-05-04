@@ -337,3 +337,228 @@ and
 [equation ellint26]
 
 [endsect]
+
+[section:ellint_d Elliptic Integral D - Legendre Form]
+
+[heading Synopsis]
+
+``
+  #include <boost/math/special_functions/ellint_d.hpp>
+``
+
+  namespace boost { namespace math {
+
+  template <class T1, class T2>
+  ``__sf_result`` ellint_d(T1 k, T2 phi);
+
+  template <class T1, class T2, class ``__Policy``>
+  ``__sf_result`` ellint_d(T1 k, T2 phi, const ``__Policy``&);
+
+  template <class T1>
+  ``__sf_result`` ellint_d(T1 k);
+
+  template <class T1, class ``__Policy``>
+  ``__sf_result`` ellint_d(T1 k, const ``__Policy``&);
+
+  }} // namespaces
+  
+[heading Description]
+
+These two functions evaluate the incomplete elliptic integral 
+['D([phi], k)] and its complete counterpart ['D(k) = D([pi]/2, k)].
+
+The return type of these functions is computed using the __arg_pomotion_rules
+when the arguments are of different types: when they are the same type then the result
+is the same type as the arguments.
+
+  template <class T1, class T2>
+  ``__sf_result`` ellint_d(T1 k, T2 phi);
+  
+  template <class T1, class T2, class ``__Policy``>
+  ``__sf_result`` ellint_3(T1 k, T2 phi, const ``__Policy``&);
+  
+Returns the incomplete elliptic integral:
+
+[equation ellint_d]
+
+Requires ['-1 <= k <= 1], otherwise 
+returns the result of __domain_error (outside this range the result 
+would be complex).
+
+[optional_policy]
+
+  template <class T1>
+  ``__sf_result`` ellint_d(T1 k);
+  
+  template <class T1, class ``__Policy``>
+  ``__sf_result`` ellint_d(T1 k, const ``__Policy``&);
+  
+Returns the complete elliptic integral ['D(k) = D([pi]/2, k)]
+
+Requires ['-1 <= k <= 1] otherwise returns the 
+result of __domain_error (outside this range the result would be complex).
+
+[optional_policy]
+
+[heading Accuracy]
+
+These functions are trivially computed in terms of other elliptic integrals
+and generally have very low error rates (a few epsilon) unless parameter [phi]
+is very large, in which case the usual trigonometric function argument-reduction issues apply.
+
+[heading Testing]
+
+The tests use a mixture of spot test values calculated using 
+values calculated at wolframalpha.com, and random test data generated using
+MPFR at 1000-bit precision and a deliberately naive implementation in terms of
+the Legendre integrals.
+
+[heading Implementation]
+
+The implementation for D([phi], k) first performs argument reduction using the relations:
+
+['D(-[phi], k) = -D([phi], k)]
+
+and
+
+['D(n[pi]+[phi], k) = 2nD(k) + D([phi], k)]
+
+to move [phi][space] to the range \[0, [pi]\/2\].
+
+The functions are then implemented in terms of Carlson's integral R[sub D]
+using the relation:
+
+[equation ellint_d]
+
+[endsect]
+
+[section:jacobi_zeta Jacobi Zeta Function]
+
+[heading Synopsis]
+
+``
+  #include <boost/math/special_functions/jacobi_zeta.hpp>
+``
+
+  namespace boost { namespace math {
+
+  template <class T1, class T2>
+  ``__sf_result`` jacobi_zeta(T1 k, T2 phi);
+
+  template <class T1, class T2, class ``__Policy``>
+  ``__sf_result`` jacobi_zeta(T1 k, T2 phi, const ``__Policy``&);
+
+  }} // namespaces
+  
+[heading Description]
+
+This function evaluates the Jacobi Zeta Function ['Z([phi], k)]
+
+[equation jacobi_zeta]
+
+The return type of this function is computed using the __arg_pomotion_rules
+when the arguments are of different types: when they are the same type then the result
+is the same type as the arguments.
+
+Requires ['-1 <= k <= 1], otherwise 
+returns the result of __domain_error (outside this range the result 
+would be complex).
+
+[optional_policy]
+
+Note that there is no complete analogue of this function (where [phi] = [pi] / 2)
+as this takes the value 0 for all ['k].
+
+[heading Accuracy]
+
+These functions are trivially computed in terms of other elliptic integrals
+and generally have very low error rates (a few epsilon) unless parameter [phi]
+is very large, in which case the usual trigonometric function argument-reduction issues apply.
+
+[heading Testing]
+
+The tests use a mixture of spot test values calculated using 
+values calculated at wolframalpha.com, and random test data generated using
+MPFR at 1000-bit precision and a deliberately naive implementation in terms of
+the Legendre integrals.
+
+[heading Implementation]
+
+The implementation for Z([phi], k) first makes the argument [phi] positive using:
+
+['Z(-[phi], k) = -Z([phi], k)]
+
+The function is then implemented in terms of Carlson's integral R[sub J]
+using the relation:
+
+[equation jacobi_zeta]
+
+There is one special case where the above relation fails: when ['k = 1], in that case
+the function simplifies to
+
+['Z([phi], 1) = sign(cos([phi])) sin([phi])]
+
+[endsect]
+
+[section:heuman_lambda Heuman Lambda Function]
+
+[heading Synopsis]
+
+``
+  #include <boost/math/special_functions/heuman_lambda.hpp>
+``
+
+  namespace boost { namespace math {
+
+  template <class T1, class T2>
+  ``__sf_result`` heuman_lambda(T1 k, T2 phi);
+
+  template <class T1, class T2, class ``__Policy``>
+  ``__sf_result`` heuman_lambda(T1 k, T2 phi, const ``__Policy``&);
+
+  }} // namespaces
+  
+[heading Description]
+
+This function evaluates the Heuman Lambda Function ['[Lambda][sub 0]([phi], k)]
+
+[equation heuman_lambda]
+
+The return type of this function is computed using the __arg_pomotion_rules
+when the arguments are of different types: when they are the same type then the result
+is the same type as the arguments.
+
+Requires ['-1 <= k <= 1], otherwise 
+returns the result of __domain_error (outside this range the result 
+would be complex).
+
+[optional_policy]
+
+Note that there is no complete analogue of this function (where [phi] = [pi] / 2)
+as this takes the value 1 for all ['k].
+
+[heading Accuracy]
+
+These functions are trivially computed in terms of other elliptic integrals
+and generally have very low error rates (a few epsilon) unless parameter [phi]
+is very large, in which case the usual trigonometric function argument-reduction issues apply.
+
+[heading Testing]
+
+The tests use a mixture of spot test values calculated using 
+values calculated at wolframalpha.com, and random test data generated using
+MPFR at 1000-bit precision and a deliberately naive implementation in terms of
+the Legendre integrals.
+
+[heading Implementation]
+
+The function is then implemented in terms of Carlson's integrals R[sub J] and R[sub F]
+using the relation:
+
+[equation heuman_lambda]
+
+This relation fails for ['|[phi]| >= [pi]/2] in which case the definition in terms of the
+Jacobi Zeta is used.
+
+[endsect]
+

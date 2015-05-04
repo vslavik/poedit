@@ -8,12 +8,13 @@
 // std::string has its own std::swap overload.
 
 #include <boost/utility/swap.hpp>
-#define BOOST_INCLUDE_MAIN
-#include <boost/test/test_tools.hpp>
+#include <boost/core/lightweight_test.hpp>
+#define BOOST_CHECK BOOST_TEST
+#define BOOST_CHECK_EQUAL BOOST_TEST_EQ
 
 #include <string>
 
-int test_main(int, char*[])
+int main()
 {
   const std::string initial_value1 = "one";
   const std::string initial_value2 = "two";
@@ -26,6 +27,6 @@ int test_main(int, char*[])
   BOOST_CHECK_EQUAL(object1,initial_value2);
   BOOST_CHECK_EQUAL(object2,initial_value1);
 
-  return 0;
+  return boost::report_errors();
 }
 

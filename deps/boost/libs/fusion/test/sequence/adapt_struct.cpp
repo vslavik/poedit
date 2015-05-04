@@ -38,6 +38,7 @@ namespace ns
     {
         int x;
         int y;
+        int z;
     };
 
 #if !BOOST_WORKAROUND(__GNUC__,<4)
@@ -48,65 +49,119 @@ namespace ns
     private:
         int x;
         int y;
+        int z;
 
     public:
-        point_with_private_attributes(int x, int y):x(x),y(y)
+        point_with_private_attributes(int x, int y, int z):x(x),y(y),z(z)
         {}
     };
 #endif
+
+    struct foo
+    {
+        int x;
+    };
+    
+    struct bar
+    {
+        foo foo_;
+        int y;
+    };
 }
 
-BOOST_FUSION_ADAPT_STRUCT(
-    ns::point,
-    (int, x)
-    (int, y)
-)
+#if BOOST_PP_VARIADICS
 
-#if !BOOST_WORKAROUND(__GNUC__,<4)
-BOOST_FUSION_ADAPT_STRUCT(
-    ns::point_with_private_attributes,
-    (int, x)
-    (int, y)
-)
+    BOOST_FUSION_ADAPT_STRUCT(
+        ns::point,
+        x,
+        y,
+        z
+    )
+
+#   if !BOOST_WORKAROUND(__GNUC__,<4)
+    BOOST_FUSION_ADAPT_STRUCT(
+        ns::point_with_private_attributes,
+        x,
+        y,
+        z
+    )
+#   endif
+
+    struct s { int m; };
+    BOOST_FUSION_ADAPT_STRUCT(s, m)
+
+    BOOST_FUSION_ADAPT_STRUCT(
+        ns::bar,
+        foo_.x, // test that adapted members can actually be expressions
+        y
+    )
+
+#else // BOOST_PP_VARIADICS
+
+    BOOST_FUSION_ADAPT_STRUCT(
+        ns::point,
+        (int, x)
+        (int, y)
+        (BOOST_FUSION_ADAPT_AUTO, z)
+    )
+
+#   if !BOOST_WORKAROUND(__GNUC__,<4)
+    BOOST_FUSION_ADAPT_STRUCT(
+        ns::point_with_private_attributes,
+        (int, x)
+        (int, y)
+        (BOOST_FUSION_ADAPT_AUTO, z)
+    )
+#   endif
+
+    struct s { int m; };
+    BOOST_FUSION_ADAPT_STRUCT(s, (BOOST_FUSION_ADAPT_AUTO, m))
+
+    BOOST_FUSION_ADAPT_STRUCT(
+        ns::bar,
+        (BOOST_FUSION_ADAPT_AUTO, foo_.x) // test that adapted members can actually be expressions
+        (BOOST_FUSION_ADAPT_AUTO, y)
+    )
+
 #endif
-
-struct s { int m; };
-BOOST_FUSION_ADAPT_STRUCT(s, (int, m))
 
 int
 main()
 {
     using namespace boost::fusion;
     using namespace boost;
+    using ns::point;
 
     std::cout << tuple_open('[');
     std::cout << tuple_close(']');
     std::cout << tuple_delimiter(", ");
 
     {
-        BOOST_MPL_ASSERT_NOT((traits::is_view<ns::point>));
-        ns::point p = {123, 456};
+        BOOST_MPL_ASSERT_NOT((traits::is_view<point>));
+        point p = {123, 456, 789};
 
         std::cout << at_c<0>(p) << std::endl;
         std::cout << at_c<1>(p) << std::endl;
+        std::cout << at_c<2>(p) << std::endl;
         std::cout << p << std::endl;
-        BOOST_TEST(p == make_vector(123, 456));
+        BOOST_TEST(p == make_vector(123, 456, 789));
 
         at_c<0>(p) = 6;
         at_c<1>(p) = 9;
-        BOOST_TEST(p == make_vector(6, 9));
+        at_c<2>(p) = 12;
+        BOOST_TEST(p == make_vector(6, 9, 12));
 
-        BOOST_STATIC_ASSERT(boost::fusion::result_of::size<ns::point>::value == 2);
-        BOOST_STATIC_ASSERT(!boost::fusion::result_of::empty<ns::point>::value);
+        BOOST_STATIC_ASSERT(boost::fusion::result_of::size<point>::value == 3);
+        BOOST_STATIC_ASSERT(!boost::fusion::result_of::empty<point>::value);
 
         BOOST_TEST(front(p) == 6);
-        BOOST_TEST(back(p) == 9);
+        BOOST_TEST(back(p) == 12);
     }
 
     {
-        fusion::vector<int, float> v1(4, 2);
-        ns::point v2 = {5, 3};
-        fusion::vector<long, double> v3(5, 4);
+        vector<int, float, int> v1(4, 2, 2);
+        point v2 = {5, 3, 3};
+        vector<long, double, int> v3(5, 4, 4);
         BOOST_TEST(v1 < v2);
         BOOST_TEST(v1 <= v2);
         BOOST_TEST(v2 > v1);
@@ -118,16 +173,16 @@ main()
     }
 
     {
-        // conversion from ns::point to vector
-        ns::point p = {5, 3};
-        fusion::vector<int, long> v(p);
+        // conversion from point to vector
+        point p = {5, 3, 3};
+        vector<int, long, int> v(p);
         v = p;
     }
 
     {
-        // conversion from ns::point to list
-        ns::point p = {5, 3};
-        fusion::list<int, long> l(p);
+        // conversion from point to list
+        point p = {5, 3, 3};
+        list<int, long, int> l(p);
         l = p;
     }
 
@@ -150,14 +205,24 @@ main()
 
 #if !BOOST_WORKAROUND(__GNUC__,<4)
     {
-        ns::point_with_private_attributes p(123, 456);
+        ns::point_with_private_attributes p(123, 456, 789);
 
         std::cout << at_c<0>(p) << std::endl;
         std::cout << at_c<1>(p) << std::endl;
+        std::cout << at_c<2>(p) << std::endl;
         std::cout << p << std::endl;
-        BOOST_TEST(p == make_vector(123, 456));
+        BOOST_TEST(p == make_vector(123, 456, 789));
     }
 #endif
+
+    {
+        fusion::vector<int, float> v1(4, 2);
+        ns::bar v2 = {{5}, 3};
+        BOOST_TEST(v1 < v2);
+        BOOST_TEST(v1 <= v2);
+        BOOST_TEST(v2 > v1);
+        BOOST_TEST(v2 >= v1);
+    }
 
     return boost::report_errors();
 }

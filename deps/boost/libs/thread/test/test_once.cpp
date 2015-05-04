@@ -5,6 +5,7 @@
 
 #define BOOST_THREAD_VERSION 2
 #define BOOST_THREAD_PROVIDES_INTERRUPTIONS
+#define BOOST_TEST_MODULE Boost.Threads: once test suite
 
 #include <boost/test/unit_test.hpp>
 #include <boost/thread/thread.hpp>
@@ -43,7 +44,7 @@ void call_once_thread()
     BOOST_CHECK_EQUAL(my_once_value, 1);
 }
 
-void test_call_once()
+BOOST_AUTO_TEST_CASE(test_call_once)
 {
   LOG;
 
@@ -102,7 +103,7 @@ void call_once_with_functor()
     BOOST_CHECK_EQUAL(my_once_value, 1);
 }
 
-void test_call_once_arbitrary_functor()
+BOOST_AUTO_TEST_CASE(test_call_once_arbitrary_functor)
 {
   LOG;
 
@@ -163,7 +164,7 @@ void call_once_with_exception()
     }
 }
 
-void test_call_once_retried_on_exception()
+BOOST_AUTO_TEST_CASE(test_call_once_retried_on_exception)
 {
   LOG;
     unsigned const num_threads=20;
@@ -186,19 +187,6 @@ void test_call_once_retried_on_exception()
 
     BOOST_CHECK_EQUAL(throw_before_third_pass::pass_counter,3u);
     BOOST_CHECK_EQUAL(exception_counter,2u);
-}
-
-
-boost::unit_test::test_suite* init_unit_test_suite(int, char*[])
-{
-    boost::unit_test::test_suite* test =
-        BOOST_TEST_SUITE("Boost.Threads: call_once test suite");
-
-    test->add(BOOST_TEST_CASE(test_call_once));
-    test->add(BOOST_TEST_CASE(test_call_once_arbitrary_functor));
-    test->add(BOOST_TEST_CASE(test_call_once_retried_on_exception));
-
-    return test;
 }
 
 

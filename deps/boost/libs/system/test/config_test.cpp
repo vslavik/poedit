@@ -41,7 +41,8 @@ int main()
   std::cout << "BOOST_POSIX_API is not defined" << std::endl;
 #endif
 #ifdef BOOST_PLAT_WINDOWS_DESKTOP
-  std::cout << "BOOST_PLAT_WINDOWS_DESKTOP is defined" << std::endl;
+  std::cout << "BOOST_PLAT_WINDOWS_DESKTOP is defined as "
+    << BOOST_PLAT_WINDOWS_DESKTOP << std::endl;
 #else
   std::cout << "BOOST_PLAT_WINDOWS_DESKTOP is not defined" << std::endl;
 #endif

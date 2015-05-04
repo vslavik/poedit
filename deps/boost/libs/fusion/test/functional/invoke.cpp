@@ -7,6 +7,7 @@
     http://www.boost.org/LICENSE_1_0.txt).
 ==============================================================================*/
 
+#include <boost/config.hpp>
 #include <boost/fusion/functional/invocation/invoke.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
@@ -29,6 +30,8 @@
 #include <boost/fusion/view/iterator_range.hpp>
 #include <boost/fusion/iterator/advance.hpp>
 #include <boost/fusion/algorithm/transformation/join.hpp>
+
+#include "../compile_time/sfinae_friendly.hpp"
 
 namespace mpl = boost::mpl;
 namespace fusion = boost::fusion;
@@ -79,6 +82,11 @@ struct fobj
     int operator()(int i, object const &, object_nc &);
     int operator()(int i, object const &, object_nc &) const;
 };
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<fobj, sfinae_friendly::v0>));
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<fobj, sfinae_friendly::v1>));
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<fobj, sfinae_friendly::v2>));
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<fobj, sfinae_friendly::v3>));
+
 
 struct nullary_fobj
 {
@@ -87,6 +95,10 @@ struct nullary_fobj
     int operator()()       { return 0; }
     int operator()() const { return 1; }
 };
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<nullary_fobj, sfinae_friendly::v1>));
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<nullary_fobj, sfinae_friendly::v2>));
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<nullary_fobj, sfinae_friendly::v3>));
+
 
 struct fobj_nc
       : boost::noncopyable
@@ -104,6 +116,11 @@ struct fobj_nc
     int operator()(int i)       { return 14 + i; }
     int operator()(int i) const { return 15 + i; }
 };
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<fobj_nc, sfinae_friendly::v0>));
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<fobj_nc, sfinae_friendly::v1>));
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<fobj_nc, sfinae_friendly::v2>));
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<fobj_nc, sfinae_friendly::v3>));
+
 
 struct nullary_fobj_nc
       : boost::noncopyable
@@ -113,11 +130,34 @@ struct nullary_fobj_nc
     int operator()()       { return 12; }
     int operator()() const { return 13; }
 };
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<nullary_fobj_nc, sfinae_friendly::v1>));
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<nullary_fobj_nc, sfinae_friendly::v2>));
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<nullary_fobj_nc, sfinae_friendly::v3>));
+
 
 int nullary() { return 16; }
 int unary(int i) { return 17 + i; }
 int binary1(int i, object &) { return 18 + i; }
 int binary2(int i, object const &) { return 19 + i; }
+//FIXME
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<int(*)(), sfinae_friendly::v1>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<int(*)(), sfinae_friendly::v2>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<int(*)(), sfinae_friendly::v3>));
+//
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<int(*)(int), sfinae_friendly::v0>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<int(*)(int), sfinae_friendly::v1>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<int(*)(int), sfinae_friendly::v2>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<int(*)(int), sfinae_friendly::v3>));
+//
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<int(*)(int, object &), sfinae_friendly::v0>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<int(*)(int, object &), sfinae_friendly::v1>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<int(*)(int, object &), sfinae_friendly::v2>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<int(*)(int, object &), sfinae_friendly::v3>));
+//
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<int(*)(int, object const &), sfinae_friendly::v0>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<int(*)(int, object const &), sfinae_friendly::v1>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<int(*)(int, object const &), sfinae_friendly::v2>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<int(*)(int, object const &), sfinae_friendly::v3>));
 
 typedef int (*                   func_ptr)(int);
 typedef int (* const           c_func_ptr)(int);
@@ -146,10 +186,27 @@ class members
     int binary_c(int i, object) const { return data + 6 + i; }
 };
 
+#ifdef BOOST_NO_CXX11_SMART_PTR
+typedef std::auto_ptr<members      >       members_ptr;
+typedef std::auto_ptr<members const> const_members_ptr;
+#else
+typedef std::unique_ptr<members      >       members_ptr;
+typedef std::unique_ptr<members const> const_members_ptr;
+#endif
+
 struct derived
     : members
 {
 };
+
+#ifdef BOOST_NO_CXX11_SMART_PTR
+typedef std::auto_ptr<derived      >       derived_ptr;
+typedef std::auto_ptr<derived const> const_derived_ptr;
+#else
+typedef std::unique_ptr<derived      >       derived_ptr;
+typedef std::unique_ptr<derived const> const_derived_ptr;
+#endif
+
 
 typedef int         element1_type;
 typedef object      element2_type;
@@ -161,31 +218,123 @@ object_nc   element3;
 
 members that;
 
-std::auto_ptr<members> spt_that(new members);
-std::auto_ptr<members const> spt_that_c(new members);
+members_ptr spt_that(new members);
+const_members_ptr spt_that_c(new members);
 
-fusion::single_view<members  > sv_obj_ctx(  that);
-fusion::single_view<members &> sv_ref_ctx(  that);
-fusion::single_view<members *> sv_ptr_ctx(& that);
-fusion::single_view<members const  > sv_obj_c_ctx(  that);
-fusion::single_view<members const &> sv_ref_c_ctx(  that);
-fusion::single_view<members const *> sv_ptr_c_ctx(& that);
-fusion::single_view<std::auto_ptr<members> const &> sv_spt_ctx(spt_that);
-fusion::single_view< std::auto_ptr<members const> const &> sv_spt_c_ctx(spt_that_c);
+typedef fusion::single_view<members  > sv_obj;
+typedef fusion::single_view<members &> sv_ref;
+typedef fusion::single_view<members *> sv_ptr;
+typedef fusion::single_view<members const  > sv_obj_c;
+typedef fusion::single_view<members const &> sv_ref_c;
+typedef fusion::single_view<members const *> sv_ptr_c;
+typedef fusion::single_view<members_ptr const &> sv_spt;
+typedef fusion::single_view<const_members_ptr const &> sv_spt_c;
+
+sv_obj sv_obj_ctx(  that);
+sv_ref sv_ref_ctx(  that);
+sv_ptr sv_ptr_ctx(& that);
+sv_obj_c sv_obj_c_ctx(  that);
+sv_ref_c sv_ref_c_ctx(  that);
+sv_ptr_c sv_ptr_c_ctx(& that);
+sv_spt sv_spt_ctx(spt_that);
+sv_spt_c sv_spt_c_ctx(spt_that_c);
+template <typename F, typename S>
+struct sv_helper
+{
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<F, typename fusion::result_of::join<sv_obj  , S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<F, typename fusion::result_of::join<sv_ref  , S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<F, typename fusion::result_of::join<sv_ptr  , S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<F, typename fusion::result_of::join<sv_obj_c, S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<F, typename fusion::result_of::join<sv_ref_c, S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<F, typename fusion::result_of::join<sv_ptr_c, S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<F, typename fusion::result_of::join<sv_spt  , S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<F, typename fusion::result_of::join<sv_spt_c, S>::type>));
+};
+// FIXME:
+//template struct sv_helper<int (members::*)()      , sfinae_friendly::v1>;
+//template struct sv_helper<int (members::*)()      , sfinae_friendly::v2>;
+//template struct sv_helper<int (members::*)()      , sfinae_friendly::v3>;
+//template struct sv_helper<int (members::*)() const, sfinae_friendly::v1>;
+//template struct sv_helper<int (members::*)() const, sfinae_friendly::v2>;
+//template struct sv_helper<int (members::*)() const, sfinae_friendly::v3>;
+
+//template struct sv_helper<int (members::*)(int)      , sfinae_friendly::v0>;
+//template struct sv_helper<int (members::*)(int)      , sfinae_friendly::v1>;
+//template struct sv_helper<int (members::*)(int)      , sfinae_friendly::v2>;
+//template struct sv_helper<int (members::*)(int)      , sfinae_friendly::v3>;
+//template struct sv_helper<int (members::*)(int) const, sfinae_friendly::v0>;
+//template struct sv_helper<int (members::*)(int) const, sfinae_friendly::v1>;
+//template struct sv_helper<int (members::*)(int) const, sfinae_friendly::v2>;
+//template struct sv_helper<int (members::*)(int) const, sfinae_friendly::v3>;
+
+//template struct sv_helper<int (members::*)(int, object)      , sfinae_friendly::v0>;
+//template struct sv_helper<int (members::*)(int, object)      , sfinae_friendly::v1>;
+//template struct sv_helper<int (members::*)(int, object)      , sfinae_friendly::v2>;
+//template struct sv_helper<int (members::*)(int, object)      , sfinae_friendly::v3>;
+//template struct sv_helper<int (members::*)(int, object) const, sfinae_friendly::v0>;
+//template struct sv_helper<int (members::*)(int, object) const, sfinae_friendly::v1>;
+//template struct sv_helper<int (members::*)(int, object) const, sfinae_friendly::v2>;
+//template struct sv_helper<int (members::*)(int, object) const, sfinae_friendly::v3>;
 
 derived derived_that;
 
-std::auto_ptr<derived> spt_derived_that(new derived);
-std::auto_ptr<derived const> spt_derived_that_c(new derived);
+derived_ptr spt_derived_that(new derived);
+const_derived_ptr spt_derived_that_c(new derived);
 
-fusion::single_view<derived  > sv_obj_d_ctx(  derived_that);
-fusion::single_view<derived &> sv_ref_d_ctx(  derived_that);
-fusion::single_view<derived *> sv_ptr_d_ctx(& derived_that);
-fusion::single_view<derived const  > sv_obj_c_d_ctx(  derived_that);
-fusion::single_view<derived const &> sv_ref_c_d_ctx(  derived_that);
-fusion::single_view<derived const *> sv_ptr_c_d_ctx(& derived_that);
-fusion::single_view<std::auto_ptr<derived> const &> sv_spt_d_ctx(spt_derived_that);
-fusion::single_view< std::auto_ptr<derived const> const &> sv_spt_c_d_ctx(spt_derived_that_c);
+typedef fusion::single_view<derived  > sv_obj_d;
+typedef fusion::single_view<derived &> sv_ref_d;
+typedef fusion::single_view<derived *> sv_ptr_d;
+typedef fusion::single_view<derived const  > sv_obj_c_d;
+typedef fusion::single_view<derived const &> sv_ref_c_d;
+typedef fusion::single_view<derived const *> sv_ptr_c_d;
+typedef fusion::single_view<derived_ptr const &> sv_spt_d;
+typedef fusion::single_view<const_derived_ptr const &> sv_spt_c_d;
+
+sv_obj_d sv_obj_d_ctx(  derived_that);
+sv_ref_d sv_ref_d_ctx(  derived_that);
+sv_ptr_d sv_ptr_d_ctx(& derived_that);
+sv_obj_c_d sv_obj_c_d_ctx(  derived_that);
+sv_ref_c_d sv_ref_c_d_ctx(  derived_that);
+sv_ptr_c_d sv_ptr_c_d_ctx(& derived_that);
+sv_spt_d sv_spt_d_ctx(spt_derived_that);
+sv_spt_c_d sv_spt_c_d_ctx(spt_derived_that_c);
+template <typename F, typename S>
+struct sv_d_helper
+{
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<F, typename fusion::result_of::join<sv_obj_d  , S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<F, typename fusion::result_of::join<sv_ref_d  , S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<F, typename fusion::result_of::join<sv_ptr_d  , S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<F, typename fusion::result_of::join<sv_obj_c_d, S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<F, typename fusion::result_of::join<sv_ref_c_d, S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<F, typename fusion::result_of::join<sv_ptr_c_d, S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<F, typename fusion::result_of::join<sv_spt_d  , S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke<F, typename fusion::result_of::join<sv_spt_c_d, S>::type>));
+};
+// FIXME:
+//template struct sv_d_helper<int (members::*)()      , sfinae_friendly::v1>;
+//template struct sv_d_helper<int (members::*)()      , sfinae_friendly::v2>;
+//template struct sv_d_helper<int (members::*)()      , sfinae_friendly::v3>;
+//template struct sv_d_helper<int (members::*)() const, sfinae_friendly::v1>;
+//template struct sv_d_helper<int (members::*)() const, sfinae_friendly::v2>;
+//template struct sv_d_helper<int (members::*)() const, sfinae_friendly::v3>;
+
+//template struct sv_d_helper<int (members::*)(int)      , sfinae_friendly::v0>;
+//template struct sv_d_helper<int (members::*)(int)      , sfinae_friendly::v1>;
+//template struct sv_d_helper<int (members::*)(int)      , sfinae_friendly::v2>;
+//template struct sv_d_helper<int (members::*)(int)      , sfinae_friendly::v3>;
+//template struct sv_d_helper<int (members::*)(int) const, sfinae_friendly::v0>;
+//template struct sv_d_helper<int (members::*)(int) const, sfinae_friendly::v1>;
+//template struct sv_d_helper<int (members::*)(int) const, sfinae_friendly::v2>;
+//template struct sv_d_helper<int (members::*)(int) const, sfinae_friendly::v3>;
+
+//template struct sv_d_helper<int (members::*)(int, object)      , sfinae_friendly::v0>;
+//template struct sv_d_helper<int (members::*)(int, object)      , sfinae_friendly::v1>;
+//template struct sv_d_helper<int (members::*)(int, object)      , sfinae_friendly::v2>;
+//template struct sv_d_helper<int (members::*)(int, object)      , sfinae_friendly::v3>;
+//template struct sv_d_helper<int (members::*)(int, object) const, sfinae_friendly::v0>;
+//template struct sv_d_helper<int (members::*)(int, object) const, sfinae_friendly::v1>;
+//template struct sv_d_helper<int (members::*)(int, object) const, sfinae_friendly::v2>;
+//template struct sv_d_helper<int (members::*)(int, object) const, sfinae_friendly::v3>;
 
 template <class Sequence>
 void test_sequence_n(Sequence & seq, mpl::int_<0>)
@@ -299,7 +448,6 @@ void test_sequence_n(Sequence & seq, mpl::int_<1>)
     BOOST_TEST(that.unary_c(element1) == fusion::invoke(& members::unary_c, fusion::join(sv_ref_c_d_ctx,seq)));
     BOOST_TEST(that.unary_c(element1) == fusion::invoke(& members::unary_c, fusion::join(sv_ptr_c_d_ctx,seq)));
     BOOST_TEST(that.unary_c(element1) == fusion::invoke(& members::unary_c, fusion::join(sv_spt_c_d_ctx,seq)));
-
 }
 
 template <class Sequence>

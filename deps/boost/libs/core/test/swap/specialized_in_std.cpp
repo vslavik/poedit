@@ -5,8 +5,9 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/utility/swap.hpp>
-#define BOOST_INCLUDE_MAIN
-#include <boost/test/test_tools.hpp>
+#include <boost/core/lightweight_test.hpp>
+#define BOOST_CHECK BOOST_TEST
+#define BOOST_CHECK_EQUAL BOOST_TEST_EQ
 
 //Put test class in the global namespace
 #include "./swap_test_class.hpp"
@@ -22,7 +23,7 @@ namespace std
   }
 }
 
-int test_main(int, char*[])
+int main()
 {
   const swap_test_class initial_value1(1);
   const swap_test_class initial_value2(2);
@@ -39,6 +40,6 @@ int test_main(int, char*[])
   BOOST_CHECK_EQUAL(swap_test_class::swap_count(),1);
   BOOST_CHECK_EQUAL(swap_test_class::copy_count(),0);
 
-  return 0;
+  return boost::report_errors();
 }
 

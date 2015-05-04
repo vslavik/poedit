@@ -18,7 +18,7 @@
 
 #include <istream>
 
-//#include <boost/scoped_ptr.hpp>
+#include <boost/scoped_ptr.hpp>
 #include <boost/archive/detail/auto_link_archive.hpp>
 #include <boost/archive/basic_text_iprimitive.hpp>
 #include <boost/archive/basic_xml_iarchive.hpp>
@@ -64,10 +64,8 @@ protected:
         friend class load_access;
     #endif
 #endif
-    // instances of micro xml parser to parse start preambles
-    // scoped_ptr doesn't play nice with borland - so use a naked pointer
-    // scoped_ptr<xml_grammar> gimpl;
-    xml_grammar *gimpl;
+    // use boost:scoped_ptr to implement automatic deletion;
+    boost::scoped_ptr<xml_grammar> gimpl;
 
     std::istream & get_is(){
         return is;

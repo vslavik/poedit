@@ -13,7 +13,7 @@
 #include <boost/container/string.hpp>
 #include <string>
 #include <vector>
-#include <algorithm>
+#include <boost/container/detail/algorithm.hpp> //equal()
 #include <cstring>
 #include <cstdio>
 #include <cstddef>
@@ -68,7 +68,7 @@ template<class StrVector1, class StrVector2>
 bool CheckEqualStringVector(StrVector1 *strvect1, StrVector2 *strvect2)
 {
    StringEqual comp;
-   return std::equal(strvect1->begin(), strvect1->end(),
+   return boost::container::algo_equal(strvect1->begin(), strvect1->end(),
                      strvect2->begin(), comp);
 }
 
@@ -432,34 +432,21 @@ bool test_expand_bwd()
    return  test::test_all_expand_bwd<string_type>();
 }
 
-template<class T, class A>
-class string_propagate_test_wrapper
-   : public basic_string<T, std::char_traits<T>, A>
+struct boost_container_string;
+
+namespace boost { namespace container {   namespace test {
+
+template<>
+struct alloc_propagate_base<boost_container_string>
 {
-   BOOST_COPYABLE_AND_MOVABLE(string_propagate_test_wrapper)
-   typedef basic_string<T, std::char_traits<T>, A> Base;
-   public:
-   string_propagate_test_wrapper()
-      : Base()
-   {}
-
-   string_propagate_test_wrapper(const string_propagate_test_wrapper &x)
-      : Base(x)
-   {}
-
-   string_propagate_test_wrapper(BOOST_RV_REF(string_propagate_test_wrapper) x)
-      : Base(boost::move(static_cast<Base&>(x)))
-   {}
-
-   string_propagate_test_wrapper &operator=(BOOST_COPY_ASSIGN_REF(string_propagate_test_wrapper) x)
-   {  this->Base::operator=(x);  return *this; }
-
-   string_propagate_test_wrapper &operator=(BOOST_RV_REF(string_propagate_test_wrapper) x)
-   {  this->Base::operator=(boost::move(static_cast<Base&>(x)));  return *this; }
-
-   void swap(string_propagate_test_wrapper &x)
-   {  this->Base::swap(x);  }
+   template <class T, class Allocator>
+   struct apply
+   {
+      typedef boost::container::basic_string<T, std::char_traits<T>, Allocator> type;
+   };
 };
+
+}}}   //namespace boost::container::test
 
 int main()
 {
@@ -480,7 +467,7 @@ int main()
    ////////////////////////////////////
    //    Allocator propagation testing
    ////////////////////////////////////
-   if(!boost::container::test::test_propagate_allocator<string_propagate_test_wrapper>())
+   if(!boost::container::test::test_propagate_allocator<boost_container_string>())
       return 1;
 
    ////////////////////////////////////

@@ -15,6 +15,7 @@
 #include "common_functors.hpp"
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/intrusive/options.hpp>
+#include <boost/intrusive/detail/iterator.hpp>
 #include "test_macros.hpp"
 #include "test_container.hpp"
 #include "generic_assoc_test.hpp"
@@ -226,7 +227,7 @@ void test_generic_multiset<ValueTraits, ContainerDefiner>::test_find(value_cont_
 
       BOOST_TEST (range.first->value_ == 2);
       BOOST_TEST (range.second->value_ == 3);
-      BOOST_TEST (std::distance (range.first, range.second) == 2);
+      BOOST_TEST (boost::intrusive::iterator_distance (range.first, range.second) == 2);
 
       (&cmp_val)->value_ = 7;
       BOOST_TEST (testset.find (cmp_val) == testset.end());
@@ -246,7 +247,7 @@ void test_generic_multiset<ValueTraits, ContainerDefiner>::test_find(value_cont_
       range = testset.bounded_range (cmp_val_lower, cmp_val_upper, true, true);
       BOOST_TEST (range.first->value_ == 1);
       BOOST_TEST (range.second->value_ == 3);
-      BOOST_TEST (std::distance (range.first, range.second) == 3);
+      BOOST_TEST (boost::intrusive::iterator_distance (range.first, range.second) == 3);
       }
       {
       (&cmp_val_lower)->value_ = 1;
@@ -254,14 +255,14 @@ void test_generic_multiset<ValueTraits, ContainerDefiner>::test_find(value_cont_
       const_range = const_testset.bounded_range (cmp_val_lower, cmp_val_upper, true, false);
       BOOST_TEST (const_range.first->value_ == 1);
       BOOST_TEST (const_range.second->value_ == 2);
-      BOOST_TEST (std::distance (const_range.first, const_range.second) == 1);
+      BOOST_TEST (boost::intrusive::iterator_distance (const_range.first, const_range.second) == 1);
 
       (&cmp_val_lower)->value_ = 1;
       (&cmp_val_upper)->value_ = 3;
       range = testset.bounded_range (cmp_val_lower, cmp_val_upper, true, false);
       BOOST_TEST (range.first->value_ == 1);
       BOOST_TEST (range.second->value_ == 3);
-      BOOST_TEST (std::distance (range.first, range.second) == 3);
+      BOOST_TEST (boost::intrusive::iterator_distance (range.first, range.second) == 3);
       }
       {
       (&cmp_val_lower)->value_ = 1;
@@ -269,7 +270,7 @@ void test_generic_multiset<ValueTraits, ContainerDefiner>::test_find(value_cont_
       const_range = const_testset.bounded_range (cmp_val_lower, cmp_val_upper, false, true);
       BOOST_TEST (const_range.first->value_ == 2);
       BOOST_TEST (const_range.second->value_ == 3);
-      BOOST_TEST (std::distance (const_range.first, const_range.second) == 2);
+      BOOST_TEST (boost::intrusive::iterator_distance (const_range.first, const_range.second) == 2);
       }
       {
       (&cmp_val_lower)->value_ = 1;
@@ -277,7 +278,7 @@ void test_generic_multiset<ValueTraits, ContainerDefiner>::test_find(value_cont_
       range = testset.bounded_range (cmp_val_lower, cmp_val_upper, false, false);
       BOOST_TEST (range.first->value_ == 2);
       BOOST_TEST (range.second->value_ == 2);
-      BOOST_TEST (std::distance (range.first, range.second) == 0);
+      BOOST_TEST (boost::intrusive::iterator_distance (range.first, range.second) == 0);
       }
       {
       (&cmp_val_lower)->value_ = 5;
@@ -285,7 +286,7 @@ void test_generic_multiset<ValueTraits, ContainerDefiner>::test_find(value_cont_
       const_range = const_testset.bounded_range (cmp_val_lower, cmp_val_upper, true, false);
       BOOST_TEST (const_range.first->value_ == 5);
       BOOST_TEST (const_range.second == const_testset.end());
-      BOOST_TEST (std::distance (const_range.first, const_range.second) == 1);
+      BOOST_TEST (boost::intrusive::iterator_distance (const_range.first, const_range.second) == 1);
       }
    }
 }

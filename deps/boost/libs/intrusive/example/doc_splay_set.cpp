@@ -12,7 +12,7 @@
 //[doc_splay_set_code
 #include <boost/intrusive/splay_set.hpp>
 #include <vector>
-#include <algorithm>
+#include <functional>
 
 using namespace boost::intrusive;
 

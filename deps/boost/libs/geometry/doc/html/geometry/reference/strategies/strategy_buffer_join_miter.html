@@ -27,7 +27,7 @@
 <a name="geometry.reference.strategies.strategy_buffer_join_miter"></a><a class="link" href="strategy_buffer_join_miter.html" title="strategy::buffer::join_miter">strategy::buffer::join_miter</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp125147392"></a><a class="indexterm" name="idp125148080"></a><a class="indexterm" name="idp125148768"></a>
+          <a class="indexterm" name="idp131631136"></a><a class="indexterm" name="idp131631824"></a><a class="indexterm" name="idp131632512"></a>
 Let the buffer create sharp corners.
         </p>
 <h6>
@@ -41,8 +41,10 @@ Let the buffer create sharp corners.
           the miters might become very long. Therefore there is a limit (miter_limit),
           in terms of the used distance, which limits their length. The miter is
           not changed to a bevel form (as done in some other software), it is just
-          adapted to the specified miter_limit but keeps its miter form. This strategy
-          is only applicable for Cartesian coordinate systems.
+          adapted to the specified miter_limit but keeps its miter form. If the buffer
+          distance is 5.0, and the miter limit is 2.0, generated points will be located
+          at a distance of at most 10.0 (2*5) units. This strategy is only applicable
+          for Cartesian coordinate systems.
         </p>
 <h6>
 <a name="geometry.reference.strategies.strategy_buffer_join_miter.h1"></a>
@@ -182,8 +184,8 @@ Let the buffer create sharp corners.
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2014 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam
-      Wulkiewicz, Oracle and/or its affiliates<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
+      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

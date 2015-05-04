@@ -69,14 +69,11 @@ flags cray.compile DEFINES <define> ;
 flags cray.compile INCLUDES <include> ;
 flags cray.link OPTIONS <linkflags> ;
 
-# flags cray.compile OPTIONS : -hgnu -fPIC -h system_alloc -h tolerant -h ipa0 ;
-flags cray.compile OPTIONS : -march=bdver1 -mfpmath=sse -mfma4 -mavx -funroll-all-loops -mprefer-avx128 -fprefetch-loop-arrays --param prefetch-latency=300 -minline-all-stringops -ffast-math -fno-finite-math-only ;
+flags cray.compile OPTIONS : -hgnu -fPIC -h system_alloc -h tolerant -h ipa0 ;
 flags cray.compile OPTIONS <link>shared : -dynamic ;
 flags cray.compile OPTIONS <link>static : -static ;
-# flags cray.link OPTIONS <link>static : -static ;
-# flags cray.link OPTIONS <link>shared ;
-flags cray.link OPTIONS <link>static : -static -march=bdver1 -mfpmath=sse -mfma4 -mavx -funroll-all-loops -mprefer-avx128 -fprefetch-loop-arrays --param prefetch-latency=300 -minline-all-stringops -ffast-math -fno-finite-math-only -Xlinker --allow-multiple-definition ;
-flags cray.link OPTIONS <link>shared : -march=bdver1 -mfpmath=sse -mfma4 -mavx -funroll-all-loops -mprefer-avx128 -fprefetch-loop-arrays --param prefetch-latency=300 -minline-all-stringops -ffast-math -fno-finite-math-only -Xlinker --allow-multiple-definition ;
+flags cray.link OPTIONS <link>static : -static ;
+flags cray.link OPTIONS <link>shared ;
 flags cray.link LOPTIONS <link>shared : -dynamic ;
 
 flags cray.link LIBPATH <library-path> ;

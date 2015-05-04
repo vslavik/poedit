@@ -5,6 +5,11 @@
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
+// This file was modified by Oracle on 2014.
+// Modifications copyright (c) 2014 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
 
@@ -42,8 +47,8 @@ void check_wkt(G const& geometry, std::string const& expected)
 }
 
 template <typename G>
-void test_wkt(std::string const& wkt, std::size_t n, double len = 0,
-            double ar = 0, double peri = 0)
+void test_wkt(std::string const& wkt, std::string const& expected,
+              std::size_t n, double len = 0, double ar = 0, double peri = 0)
 {
     G geometry;
 
@@ -67,8 +72,15 @@ void test_wkt(std::string const& wkt, std::size_t n, double len = 0,
         BOOST_CHECK_CLOSE(double(bg::perimeter(geometry)), peri, 0.0001);
     }
 
-    check_wkt(geometry, wkt);
-    check_wkt(boost::variant<G>(geometry), wkt);
+    check_wkt(geometry, expected);
+    check_wkt(boost::variant<G>(geometry), expected);
+}
+
+template <typename G>
+void test_wkt(std::string const& wkt,
+              std::size_t n, double len = 0, double ar = 0, double peri = 0)
+{
+    test_wkt<G>(wkt, wkt, n, len, ar, peri);
 }
 
 template <typename G>
@@ -136,6 +148,44 @@ void test_wkt_output_iterator(std::string const& wkt)
 
 #ifndef GEOMETRY_TEST_MULTI
 template <typename T>
+void test_order_closure()
+{
+    using namespace boost::geometry;
+    typedef bg::model::point<T, 2, bg::cs::cartesian> Pt;
+    typedef bg::model::polygon<Pt, true, true> PCWC;
+    typedef bg::model::polygon<Pt, true, false> PCWO;
+    typedef bg::model::polygon<Pt, false, true> PCCWC;
+    typedef bg::model::polygon<Pt, false, false> PCCWO;
+
+    {
+        std::string wkt_cwc = "POLYGON((0 0,0 2,2 2,2 0,0 0))";
+        std::string wkt_cwo = "POLYGON((0 0,0 2,2 2,2 0))";
+        std::string wkt_ccwc = "POLYGON((0 0,2 0,2 2,0 2,0 0))";
+        std::string wkt_ccwo = "POLYGON((0 0,2 0,2 2,0 2))";
+
+        test_wkt<PCWC>(wkt_cwc, 5, 0, 4, 8);
+        test_wkt<PCWO>(wkt_cwc, 4, 0, 4, 8);
+        test_wkt<PCWO>(wkt_cwo, wkt_cwc, 4, 0, 4, 8);
+        test_wkt<PCCWC>(wkt_ccwc, 5, 0, 4, 8);
+        test_wkt<PCCWO>(wkt_ccwc, 4, 0, 4, 8);
+        test_wkt<PCCWO>(wkt_ccwo, wkt_ccwc, 4, 0, 4, 8);
+    }
+    {
+        std::string wkt_cwc = "POLYGON((0 0,0 3,3 3,3 0,0 0),(1 1,2 1,2 2,1 2,1 1))";
+        std::string wkt_cwo = "POLYGON((0 0,0 3,3 3,3 0),(1 1,2 1,2 2,1 2))";
+        std::string wkt_ccwc = "POLYGON((0 0,3 0,3 3,0 3,0 0),(1 1,1 2,2 2,2 1,1 1))";
+        std::string wkt_ccwo = "POLYGON((0 0,3 0,3 3,0 3),(1 1,1 2,2 2,2 1,1 1))";
+
+        test_wkt<PCWC>(wkt_cwc, 10, 0, 8, 16);
+        test_wkt<PCWO>(wkt_cwc, 8, 0, 8, 16);
+        test_wkt<PCWO>(wkt_cwo, wkt_cwc, 8, 0, 8, 16);
+        test_wkt<PCCWC>(wkt_ccwc, 10, 0, 8, 16);
+        test_wkt<PCCWO>(wkt_ccwc, 8, 0, 8, 16);
+        test_wkt<PCCWO>(wkt_ccwo, wkt_ccwc, 8, 0, 8, 16);
+    }
+}
+
+template <typename T>
 void test_all()
 {
     using namespace boost::geometry;
@@ -192,8 +242,8 @@ void test_all()
     test_wrong_wkt<bg::model::box<P> >("BOX(1 1,2 2,3 3)", "box should have 2");
     test_wrong_wkt<bg::model::box<P> >("BOX(1 1,2 2) )", "too much tokens");
 
-    if (boost::is_floating_point<T>::type::value
-        || ! boost::is_fundamental<T>::type::value)
+    if ( BOOST_GEOMETRY_CONDITION(boost::is_floating_point<T>::type::value
+                               || ! boost::is_fundamental<T>::type::value ) )
     {
         test_wkt<P>("POINT(1.1 2.1)", 1);
     }
@@ -201,9 +251,10 @@ void test_all()
     // Deprecated:
     // test_wkt_output_iterator<bg::model::linestring<P> >("LINESTRING(1 1,2 2,3 3)");
     // test_wkt_output_iterator<bg::model::ring<P> >("POLYGON((1 1,2 2,3 3))");
+
+    test_order_closure<T>();
 }
 #endif
-
 
 int test_main(int, char* [])
 {

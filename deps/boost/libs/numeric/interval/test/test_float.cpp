@@ -80,10 +80,10 @@ new_unary_bunch(bunch_abs, abs, true);
 
 template<class T>
 void test_all_unaries() {
-  BOOST_CHECKPOINT("pos");  test_unary<T, bunch_pos<T> >();
-  BOOST_CHECKPOINT("neg");  test_unary<T, bunch_neg<T> >();
-  BOOST_CHECKPOINT("sqrt"); test_unary<T, bunch_sqrt<T> >();
-  BOOST_CHECKPOINT("abs");  test_unary<T, bunch_abs<T> >();
+  BOOST_TEST_CHECKPOINT("pos");  test_unary<T, bunch_pos<T> >();
+  BOOST_TEST_CHECKPOINT("neg");  test_unary<T, bunch_neg<T> >();
+  BOOST_TEST_CHECKPOINT("sqrt"); test_unary<T, bunch_sqrt<T> >();
+  BOOST_TEST_CHECKPOINT("abs");  test_unary<T, bunch_abs<T> >();
 }
 
 #define new_binary_bunch(name, op, val) \
@@ -105,20 +105,20 @@ new_binary_bunch(div, /, !zero_in(b));
 
 template<class T>
 void test_all_binaries() {
-  BOOST_CHECKPOINT("add"); test_binary<T, bunch_add<T> >();
-  BOOST_CHECKPOINT("sub"); test_binary<T, bunch_sub<T> >();
-  BOOST_CHECKPOINT("mul"); test_binary<T, bunch_mul<T> >();
-  BOOST_CHECKPOINT("div"); test_binary<T, bunch_div<T> >();
+  BOOST_TEST_CHECKPOINT("add"); test_binary<T, bunch_add<T> >();
+  BOOST_TEST_CHECKPOINT("sub"); test_binary<T, bunch_sub<T> >();
+  BOOST_TEST_CHECKPOINT("mul"); test_binary<T, bunch_mul<T> >();
+  BOOST_TEST_CHECKPOINT("div"); test_binary<T, bunch_div<T> >();
 }
 
 int test_main(int, char *[]) {
-  BOOST_CHECKPOINT("float tests");
+  BOOST_TEST_CHECKPOINT("float tests");
   test_all_unaries<float> ();
   test_all_binaries<float> ();
-  BOOST_CHECKPOINT("double tests");
+  BOOST_TEST_CHECKPOINT("double tests");
   test_all_unaries<double>();
   test_all_binaries<double>();
-  //BOOST_CHECKPOINT("long double tests");
+  //BOOST_TEST_CHECKPOINT("long double tests");
   //test_all_unaries<long double>();
   //test_all_binaries<long double>();
 # ifdef __BORLANDC__

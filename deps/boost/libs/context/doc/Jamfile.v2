@@ -9,6 +9,8 @@ import boostbook ;
 import quickbook ;
 import modules ;
 
+path-constant here : . ;
+
 boostbook context
     :
         context.qbk
@@ -26,4 +28,6 @@ boostbook context
         <xsl:param>toc.max.depth=3
         # How far down we go with TOC's
         <xsl:param>generate.section.toc.level=10
+        # Absolute path for images:
+        <format>pdf:<xsl:param>img.src.path=$(here)/html/
     ;

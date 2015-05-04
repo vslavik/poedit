@@ -215,6 +215,10 @@
 #    define BEOS
 #    define mach_type_known
 # endif
+# if defined(__HAIKU__) && defined(_X86_)
+#    define I386
+#    define HAIKU
+#    define mach_type_known
 # if defined(LINUX) && (defined(i386) || defined(__i386__))
 #    define I386
 #    define mach_type_known
@@ -1012,6 +1016,13 @@
 #     include <OS.h>
 #     define GETPAGESIZE() B_PAGE_SIZE
       extern int etext[];
+#     define DATASTART ((ptr_t)((((word) (etext)) + 0xfff) & ~0xfff))
+#   endif
+#   ifdef HAIKU
+#     define OS_TYPE "HAIKU"
+#     include <OS.h>
+#     define GETPAGESIZE() B_PAGE_SIZE
+#     extern int etext[];
 #     define DATASTART ((ptr_t)((((word) (etext)) + 0xfff) & ~0xfff))
 #   endif
 #   ifdef SOLARIS

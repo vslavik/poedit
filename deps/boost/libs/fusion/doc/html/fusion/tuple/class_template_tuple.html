@@ -38,7 +38,7 @@
         operators</a></span></dt>
 </dl></div>
 <p>
-        Fusion's implementation of the <a href="http://std.dkuug.dk/jtc1/sc22/wg21/docs/papers/2002/n1403.pdf" target="_top">TR1
+        Fusion's implementation of the <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2002/n1403.pdf" target="_top">TR1
         Tuple</a> is also a fusion <a class="link" href="../sequence/concepts/forward_sequence.html" title="Forward Sequence">Forward
         Sequence</a>. As such the fusion tuple type provides a lot of functionality
         beyond that required by TR1.
@@ -49,6 +49,23 @@
       </p>
 <h5>
 <a name="fusion.tuple.class_template_tuple.h0"></a>
+        <span class="phrase"><a name="fusion.tuple.class_template_tuple.header"></a></span><a class="link" href="class_template_tuple.html#fusion.tuple.class_template_tuple.header">Header</a>
+      </h5>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">tuple</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">tuple</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">tuple</span><span class="special">/</span><span class="identifier">tuple</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">tuple</span><span class="special">/</span><span class="identifier">tuple_fwd</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">tuple_fwd</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="comment">// for creation function</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">tuple</span><span class="special">/</span><span class="identifier">tuple_tie</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">tuple_tie</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">tuple</span><span class="special">/</span><span class="identifier">make_tuple</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">make_tuple</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<h5>
+<a name="fusion.tuple.class_template_tuple.h1"></a>
         <span class="phrase"><a name="fusion.tuple.class_template_tuple.synopsis"></a></span><a class="link" href="class_template_tuple.html#fusion.tuple.class_template_tuple.synopsis">Synopsis</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
@@ -58,9 +75,6 @@
     <span class="keyword">typename</span> <span class="identifier">TN</span> <span class="special">=</span> <span class="emphasis"><em>unspecified</em></span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">tuple</span><span class="special">;</span>
 </pre>
-<p>
-        /tuple.hpp&gt;
-      </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

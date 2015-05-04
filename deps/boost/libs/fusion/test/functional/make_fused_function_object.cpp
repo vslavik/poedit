@@ -10,7 +10,7 @@
 #include <boost/detail/lightweight_test.hpp>
 
 #include <boost/noncopyable.hpp>
-#include <boost/blank.hpp>
+#include <boost/mpl/empty_base.hpp>
 
 #include <boost/fusion/container/generation/make_vector.hpp>
 #include <boost/fusion/container/vector.hpp>
@@ -20,7 +20,7 @@ using boost::noncopyable;
 using boost::cref;
 using boost::ref;
 
-template <class Base = boost::blank>
+template <class Base = boost::mpl::empty_base>
 struct test_func
     : Base
 {

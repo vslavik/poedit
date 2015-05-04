@@ -26,7 +26,7 @@
 
 </span><span class="emphasis"><em><span class="identifier">unspecified</span></em></span> c_ascii_decor<span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp126037152"></a><h2>Description</h2>
+<a name="idp111849088"></a><h2>Description</h2>
 <p>C-style decorator generator object. Acts similarly to <code class="computeroutput">c_decor</code>, except that <code class="computeroutput">c_ascii_decor</code> also converts all non-ASCII and non-printable ASCII characters, except for space character, into C-style hexadecimal escape sequences. The generator provides <code class="computeroutput">operator[]</code> that can be used to construct the actual decorator. For example:</p>
 <p><code class="computeroutput"> c_ascii_decor[ attr&lt; std::string &gt;("MyAttr") ] </code></p>
 <p>For wide-character formatting there is the similar <code class="computeroutput">wc_ascii_decor</code> decorator generator object. </p>
@@ -34,7 +34,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2014 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2015 Andrey
+      Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

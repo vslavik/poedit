@@ -162,6 +162,9 @@ it statically allocates memory for `value_type` and this requires complete types
 [classref boost::container::basic_string basic_string] implements Small String Optimization which
 also requires complete types.
 
+[*Boost.Container] containers supporting incomplete types also support instantiating iterators to
+those incomplete elements.
+
 [section:recursive_containers Recursive containers]
 
 Most [*Boost.Container] containers can be used to define recursive containers:
@@ -511,6 +514,21 @@ are a particular case where `static_vector` can be beneficial.
 
 [endsect]
 
+[section:small_vector ['small_vector]]
+
+`small_vector` is a vector-like container optimized for the case when it contains few elements.
+It contains some preallocated elements in-place, which allows it to avoid the use of dynamic storage allocation
+when the actual number of elements is below that preallocated threshold. `small_vector` is inspired by
+[@http://llvm.org/docs/ProgrammersManual.html#llvm-adt-smallvector-h LLVM's `SmallVector`] container.
+Unlike `static_vector`, `small_vector`'s capacity can grow beyond the initial preallocated capacity.
+
+`small_vector<T, N, Allocator>` is convertible to `small_vector_base<T, Allocator>`, a type that is independent
+from the preallocated element count, allowing client code that does not need to be templated on that N argument.
+`small_vector` inherits all `vector`'s member functions so it supports all standard features like emplacement,
+stateful allocators, etc.
+
+[endsect]
+
 [endsect]
 
 [section:extended_functionality Extended functionality]
@@ -593,7 +611,7 @@ used to customize these containers:
 
 In the first C++ standard `list::size()` was not required to be constant-time,
 and that caused some controversy in the C++ community. Quoting Howard Hinnant's
-[@http://home.roadrunner.com/~hinnant/On_list_size.html ['On List Size]] paper:
+[@http://howardhinnant.github.io/On_list_size.html ['On List Size]] paper:
 
 [: ['There is a considerable debate on whether `std::list<T>::size()` should be O(1) or O(N).
 The usual argument notes that it is a tradeoff with:]
@@ -709,7 +727,7 @@ Use them simply specifying the new allocator in the corresponding template argum
 
 [endsect]
 
-[section:Cpp11_conformance C++11 Conformance]
+[section:Cpp11_conformance C++11/C++14 Conformance]
 
 [*Boost.Container] aims for full C++11 conformance except reasoned deviations,
 backporting as much as possible for C++03. Obviously, this conformance is a work
@@ -726,7 +744,7 @@ are movable, requirements for `value_type` are those specified for C++11 contain
 For compilers with variadic templates, [*Boost.Container] supports placement insertion
 (`emplace`, ...) functions from C++11. For those compilers without variadic templates
 support [*Boost.Container] uses the preprocessor to create a set of overloads up to
-a finite (10) number of parameters.
+a finite number of parameters.
 
 [endsect]
 
@@ -746,7 +764,8 @@ C++11 further improves stateful allocator support through
 an allocator writer can customize its behaviour (should the container propagate it in
 move constructor, swap, etc.?) following `allocator_traits` requirements. [*Boost.Container]
 not only supports this model with C++11 but also [*backports it to C++03] via
-[classref boost::container::allocator_traits boost::container::allocator_traits]. This class
+[classref boost::container::allocator_traits boost::container::allocator_traits] including some
+C++17 changes. This class
 offers some workarounds for C++03 compilers to achieve the same allocator guarantees as
 `std::allocator_traits`.
 
@@ -774,7 +793,8 @@ is the outer allocator for use by the container, the second allocator is passed 
 container's elements, and, if the elements themselves are containers, the third allocator is passed to the
 elements' elements, and so on.
 
-[*Boost.Container] implements its own `scoped_allocator_adaptor` class and [*backports this feature also
+[*Boost.Container] implements its own [classref boost::container::scoped_allocator_adaptor scoped_allocator_adaptor]
+class and [*backports this feature also
 to C++03 compilers]. Due to C++03 limitations, in those compilers
 the allocator propagation implemented by `scoped_allocator_adaptor::construct` functions
 will be based on traits ([classref boost::container::constructible_with_allocator_suffix constructible_with_allocator_suffix]
@@ -788,11 +808,44 @@ will be used to detect if the allocator must be propagated with suffix or prefix
 
 [endsect]
 
+[section:insertion_hints Insertion hints in associative containers and preserving
+ insertion ordering for elements with equivalent keys]
+
+[@http://www.open-std.org/jtc1/sc22/wg21/docs/lwg-defects.html#233 LWG Issue #233] corrected a defect
+in C++98 and specified how equivalent keys were to be inserted in associative containers. [*Boost.Container]
+implements the C++11 changes that were specified in [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2005/n1780.html N1780
+['Comments on LWG issue 233: Insertion hints in associative containers]]:
+
+* `a_eq.insert(t)`: If a range containing elements equivalent to t exists in a_eq, t is inserted at the end of that range.
+* `a_eq.insert(p,t)`: t is inserted as close as possible to the position just prior to p.
+
+[endsect]
+
 [section:initializer_lists Initializer lists]
 
-[*Boost.Container] does not support initializer lists when constructing or assigning containers
-but it will support it for compilers with initialized-list support. This feature won't be backported
-to C++03 compilers.
+[*Boost.Container] supports initialization, assignments and insertions from initializer lists
+in compilers that implement this feature.
+
+[endsect]
+
+[section:null_iterators Null Forward Iterators]
+
+[*Boost.Container] implements
+[@http://www.open-std.org/JTC1/sc22/WG21/docs/papers/2013/n3644.pdf C++14 Null Forward Iterators],
+which means that value-initialized iterators may be compared and compare equal
+to other value-initialized iterators of the same type. Value initialized iterators behave as if they refer
+past the end of the same empty sequence (example taken from N3644):
+
+[c++]
+
+   vector<int> v = { ... };
+   auto ni = vector<int>::iterator();
+   auto nd = vector<double>::iterator();
+   ni == ni; // True.
+   nd != nd; // False.
+   v.begin() == ni; // ??? (likely false in practice).
+   v.end() == ni;   // ??? (likely false in practice).
+   ni == nd; // Won't compile.
 
 [endsect]
 
@@ -825,14 +878,43 @@ while offering only basic safety guarantees. It trades off exception guarantees 
 
 [endsect]
 
-[section:Vector_bool `vector<bool>`]
+[section:container_const_reference_parameters Parameter taken by const reference that can be changed]
+
+Several container operations use a parameter taken by const reference that can be changed during execution of the function.
+[@http://www.open-std.org/jtc1/sc22/wg21/docs/lwg-closed.html#526 LWG Issue 526
+   (['Is it undefined if a function in the standard changes in parameters?])]
+discusses them:
+
+[c++]
+
+   //Given std::vector<int> v
+   v.insert(v.begin(), v[2]);
+   //v[2] can be changed by moving elements of vector
+
+   //Given std::list<int> l:
+   l.remove(*l.begin())
+   //The operation could delete the first element, and then continue trying to access it.
+
+The adopted resolution, NAD (Not A Defect), implies that previous operations must be well-defined. This requires code
+to detect a reference to an inserted element and an additional copy in that case, impacting performance even when
+references to already inserted objects are not used. Note that equivalent functions taking rvalue references or
+iterator ranges require elements not already inserted in the container.
+
+[*Boost.Container] prioritizes performance and has not implemented the NAD resolution:
+in functions that might modify the argument, the library requires references to elements not stored
+in the container. Using references to inserted elements yields to undefined behaviour (although in debug mode, this
+precondition violation could be notified via BOOST_ASSERT).
+
+[endsect]
+
+[section:Vector_bool `vector<bool>` specialization]
 
 `vector<bool>` specialization has been quite problematic, and there have been several
 unsuccessful tries to deprecate or remove it from the standard. [*Boost.Container] does not implement it
 as there is a superior [@http://www.boost.org/libs/dynamic_bitset/ Boost.DynamicBitset]
 solution. For issues with `vector<bool>` see the following papers:
 
-* [@http://home.roadrunner.com/~hinnant/onvectorbool.html On `vector<bool>`]
+* [@http://howardhinnant.github.io/onvectorbool.html On `vector<bool>`]
 * [@http://www.gotw.ca/publications/N1211.pdf vector<bool>: N1211: More Problems, Better Solutions],
 * [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2160.html N2160: Library Issue 96: Fixing vector<bool>],
 * [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2204.html N2204 A Specification to deprecate vector<bool>].
@@ -881,7 +963,7 @@ member object and member function pointers) to be initializable using `std::mems
 Most platforms are compatible with this initialization, but in case this initialization is not desired the
 user can `#define BOOST_CONTAINER_MEMZEROED_POINTER_IS_NOT_ZERO` before including library headers.
 
-If neither `BOOST_CONTAINER_MEMZEROED_FLOATING_POINT_IS_NOT_ZERO` nor 
+If neither `BOOST_CONTAINER_MEMZEROED_FLOATING_POINT_IS_NOT_ZERO` nor
 `BOOST_CONTAINER_MEMZEROED_POINTER_IS_NOT_ZERO` is defined [*Boost.Container] also considers POD
 types to be value initializable via `std::memset` with value zero.
 
@@ -1013,6 +1095,37 @@ use [*Boost.Container]? There are several reasons for that:
 [endsect]
 
 [section:release_notes Release Notes]
+
+[section:release_notes_boost_1_58_00 Boost 1.58 Release]
+*  Experimental [classref boost::container::small_vector small_vector] container.
+*  Massive dependency reorganization. Now [*Boost.Container] depends on very basic utilities like Boost.Core
+   and [*Boost.Intrusive]. Preprocessed code size have decreased considerably and compilation times have improved.
+*  Added `nth` and `index_of` functions to containers with random-access iterators (except `basic_string`).
+*  Added C++17's `allocator_traits<Allocator>::is_always_equal`.
+*  Updated containers to implement new constructors as specified in
+   [@http://www.open-std.org/jtc1/sc22/wg21/docs/lwg-defects.html#2210 2210. Missing allocator-extended constructor for allocator-aware containers].
+*  Fixed bugs:
+   * [@https://svn.boost.org/trac/boost/ticket/9931 #9931: ['"flat_map::insert(ordered_unique_range_t...) fails with move_iterators"]] (reopened).
+   * [@https://svn.boost.org/trac/boost/ticket/11076 #11076: ['"Unqualified calls to memmove/memcpy in container/detail/copy_move_algo.hpp"]].
+   * [@https://svn.boost.org/trac/boost/ticket/10790 Trac #10790 (['long long errors from container"])].
+   * [@https://svn.boost.org/trac/boost/ticket/10808 Trac #10808 (['compare equal operator of vector is broken"])].
+* [*Source Breaking]: [classref boost::container::scoped_allocator_adaptor scoped_allocator_adaptor]'s
+   `propagate_on_container_copy_assignment`, `propagate_on_container_move_assignment` and `propagate_on_container_swap`
+   are no longer `::boost::integral_constant<bool, true/false>` types. The dependency reorganization needed to break
+   with those classes to avoid MPL dependencies, and interoperability with `std::integral_constant` was not guaranteed.
+   Code assumming `boost::true_type/boost::false_type` on this will not compile. As a workaround, use the guaranteed internal
+   `::value` constant: `::boost::integral_constant<bool, scoped_allocator_adaptor<Allocator>::propagate_on_container_move_assignment::value>`.
+
+[endsect]
+
+[section:release_notes_boost_1_57_00 Boost 1.57 Release]
+*  Added support for `initializer_list`. Contributed by Robert Matusewicz.
+*  Fixed double destruction bugs in vector and backward expansion capable allocators.
+*  Fixed bugs:
+   * [@https://svn.boost.org/trac/boost/ticket/10263 Trac #10263 (['"AIX 6.1 bug with sched_yield() function out of scope"])].
+   * [@https://github.com/boostorg/container/pull/16 GitHub #16: ['Fix iterators of incomplete type containers]]. Thanks to Mikael Persson.
+
+[endsect]
 
 [section:release_notes_boost_1_56_00 Boost 1.56 Release]
 

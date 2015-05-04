@@ -34,7 +34,7 @@
           The I/O operators: <code class="computeroutput"><span class="special">&lt;&lt;</span></code>
           and <code class="computeroutput"><span class="special">&gt;&gt;</span></code> work generically
           on all Fusion sequences. The I/O operators are overloaded in namespace
-          <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">fusion</span></code> <a href="#ftn.fusion.sequence.operator.i_o.f0" class="footnote" name="fusion.sequence.operator.i_o.f0"><sup class="footnote">[9]</sup></a>
+          <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">fusion</span></code> <a href="#ftn.fusion.sequence.operator.i_o.f0" class="footnote" name="fusion.sequence.operator.i_o.f0"><sup class="footnote">[10]</sup></a>
         </p>
 <p>
           The <code class="computeroutput"><span class="keyword">operator</span><span class="special">&lt;&lt;</span></code>
@@ -103,7 +103,7 @@
 <a class="link" href="../../container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">j</span><span class="special">;</span>
 
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cin</span> <span class="special">&gt;&gt;</span> <span class="identifier">i</span><span class="special">;</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cin</span> <span class="special">&gt;&gt;</span> <span class="identifier">set_open</span><span class="special">(</span><span class="char">'['</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="identifier">set_close</span><span class="special">(</span><span class="char">']'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="identifier">set_delimiter</span><span class="special">(</span><span class="char">':'</span><span class="special">);</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">cin</span> <span class="special">&gt;&gt;</span> <span class="identifier">tuple_open</span><span class="special">(</span><span class="char">'['</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="identifier">tuple_close</span><span class="special">(</span><span class="char">']'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="identifier">tuple_delimiter</span><span class="special">(</span><span class="char">':'</span><span class="special">);</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cin</span> <span class="special">&gt;&gt;</span> <span class="identifier">j</span><span class="special">;</span>
 </pre>
 <p>
@@ -125,12 +125,12 @@
 </pre>
 <div class="footnotes">
 <br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.fusion.sequence.operator.i_o.f0" class="footnote"><p><a href="#fusion.sequence.operator.i_o.f0" class="para"><sup class="para">[9] </sup></a>
-            __sequences__ and <a class="link" href="../../view.html" title="View">Views</a> residing in
-            different namespaces will have to either provide their own I/O operators
-            (possibly forwarding to fusion's I/O operators) or hoist fusion's I/O
-            operators (using declaration), in their own namespaces for proper argument
-            dependent lookup.
+<div id="ftn.fusion.sequence.operator.i_o.f0" class="footnote"><p><a href="#fusion.sequence.operator.i_o.f0" class="para"><sup class="para">[10] </sup></a>
+            <a class="link" href="../../sequence.html" title="Sequence">Sequence</a>(s) and <a class="link" href="../../view.html" title="View">Views</a>
+            residing in different namespaces will have to either provide their own
+            I/O operators (possibly forwarding to fusion's I/O operators) or hoist
+            fusion's I/O operators (using declaration), in their own namespaces for
+            proper argument dependent lookup.
           </p></div>
 </div>
 </div>

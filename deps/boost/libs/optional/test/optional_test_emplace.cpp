@@ -8,19 +8,6 @@
 //
 // You are welcome to contact the author at:
 //  akrzemi1@gmail.com
-//
-// Revisions:
-//
-#include<iostream>
-#include<stdexcept>
-#include<string>
-
-#define BOOST_ENABLE_ASSERT_HANDLER
-
-#include "boost/bind/apply.hpp" // Included just to test proper interaction with boost::apply<> as reported by Daniel Wallin
-#include "boost/mpl/bool.hpp"
-#include "boost/mpl/bool_fwd.hpp"  // For mpl::true_ and mpl::false_
-#include "boost/static_assert.hpp"
 
 #include "boost/optional/optional.hpp"
 
@@ -28,14 +15,14 @@
 #pragma hdrstop
 #endif
 
+#include "boost/core/lightweight_test.hpp"
 #include "boost/none.hpp"
-
-#include "boost/test/minimal.hpp"
-
-#include "optional_test_common.cpp"
 
 //#ifndef BOOST_OPTIONAL_NO_CONVERTING_ASSIGNMENT
 //#ifndef BOOST_OPTIONAL_NO_CONVERTING_COPY_CTOR
+
+using boost::optional;
+using boost::none;
 
 #if (!defined BOOST_NO_CXX11_RVALUE_REFERENCES) && (!defined BOOST_NO_CXX11_VARIADIC_TEMPLATES)
 
@@ -68,36 +55,36 @@ void test_emplace()
     optional<Guard> o;
     
     o.emplace();
-    BOOST_CHECK(o);
-    BOOST_CHECK(0 == o->which_ctor);
+    BOOST_TEST(o);
+    BOOST_TEST(0 == o->which_ctor);
     
     o.emplace(i, 2.0);
-    BOOST_CHECK(o);
-    BOOST_CHECK(1 == o->which_ctor);
+    BOOST_TEST(o);
+    BOOST_TEST(1 == o->which_ctor);
     
     o.emplace(1, d);
-    BOOST_CHECK(o);
-    BOOST_CHECK(2 == o->which_ctor);
+    BOOST_TEST(o);
+    BOOST_TEST(2 == o->which_ctor);
     
     o.emplace(1, 2.0);
-    BOOST_CHECK(o);
-    BOOST_CHECK(3 == o->which_ctor);
+    BOOST_TEST(o);
+    BOOST_TEST(3 == o->which_ctor);
     
     o.emplace(i, d);
-    BOOST_CHECK(o);
-    BOOST_CHECK(4 == o->which_ctor);
+    BOOST_TEST(o);
+    BOOST_TEST(4 == o->which_ctor);
     
     o.emplace(cs);
-    BOOST_CHECK(o);
-    BOOST_CHECK(5 == o->which_ctor);
+    BOOST_TEST(o);
+    BOOST_TEST(5 == o->which_ctor);
     
     o.emplace(ms);
-    BOOST_CHECK(o);
-    BOOST_CHECK(6 == o->which_ctor);
+    BOOST_TEST(o);
+    BOOST_TEST(6 == o->which_ctor);
     
     o.emplace(std::string());
-    BOOST_CHECK(o);
-    BOOST_CHECK(7 == o->which_ctor);
+    BOOST_TEST(o);
+    BOOST_TEST(7 == o->which_ctor);
 }
 
 
@@ -119,10 +106,10 @@ void test_no_moves_on_emplacement()
     try {
         optional<ThrowOnMove> o;
         o.emplace(1);
-        BOOST_CHECK(o);
+        BOOST_TEST(o);
     } 
     catch (...) {
-        BOOST_CHECK(false);
+        BOOST_TEST(false);
     }
 }
 #endif
@@ -143,47 +130,40 @@ void test_clear_on_throw()
     optional<Thrower> ot;
     try {
         ot.emplace(false);
-        BOOST_CHECK(ot);
+        BOOST_TEST(ot);
     } catch(...) {
-        BOOST_CHECK(false);
+        BOOST_TEST(false);
     }
     
     try {
         ot.emplace(true);
-        BOOST_CHECK(false);
+        BOOST_TEST(false);
     } catch(...) {
-        BOOST_CHECK(!ot);
+        BOOST_TEST(!ot);
     }
 }
 
 void test_no_assignment_on_emplacement()
 {
     optional<const std::string> os;
-    BOOST_CHECK(!os);
+    BOOST_TEST(!os);
     os.emplace("wow");
-    BOOST_CHECK(os);
-    BOOST_CHECK(*os == "wow");
+    BOOST_TEST(os);
+    BOOST_TEST_EQ(*os, "wow");
 }
 
-int test_main( int, char* [] )
+int main()
 {
-  try
-  {
 #if (!defined BOOST_NO_CXX11_RVALUE_REFERENCES) && (!defined BOOST_NO_CXX11_VARIADIC_TEMPLATES)
-    test_emplace();
+  test_emplace();
 #endif
 #if (!defined BOOST_NO_CXX11_RVALUE_REFERENCES)
-    test_no_moves_on_emplacement();
+  test_no_moves_on_emplacement();
 #endif
-    test_clear_on_throw();
-    test_no_assignment_on_emplacement();
-  }
-  catch ( ... )
-  {
-    BOOST_ERROR("Unexpected Exception caught!");
-  }
+  test_clear_on_throw();
+  test_no_assignment_on_emplacement();
 
-  return 0;
+  return boost::report_errors();
 }
 
 

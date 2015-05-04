@@ -64,12 +64,7 @@
 #include <cstring>
 #include <cassert>
 #include <boost/detail/lightweight_test.hpp>
-
-#ifndef BOOST_LIGHTWEIGHT_MAIN
-#  include <boost/test/prg_exec_monitor.hpp>
-#else
-#  include <boost/detail/lightweight_main.hpp>
-#endif
+#include <boost/detail/lightweight_main.hpp>
 
 namespace fs = boost::filesystem;
 using boost::filesystem::path;
@@ -647,27 +642,27 @@ namespace
 
     //  operator == and != are implemented separately, so test separately
 
-    path p1("fe/fi/fo/fum");
-    path p2(p1);
-    path p3("fe/fi/fo/fumm");
-    BOOST_TEST(p1.string() != p3.string());
+    path p101("fe/fi/fo/fum");
+    path p102(p101);
+    path p103("fe/fi/fo/fumm");
+    BOOST_TEST(p101.string() != p103.string());
 
     // check each overload
-    BOOST_TEST(p1 != p3);
-    BOOST_TEST(p1 != p3.string());
-    BOOST_TEST(p1 != p3.string().c_str());
-    BOOST_TEST(p1.string() != p3);
-    BOOST_TEST(p1.string().c_str() != p3);
+    BOOST_TEST(p101 != p103);
+    BOOST_TEST(p101 != p103.string());
+    BOOST_TEST(p101 != p103.string().c_str());
+    BOOST_TEST(p101.string() != p103);
+    BOOST_TEST(p101.string().c_str() != p103);
 
-    p3 = p2;
-    BOOST_TEST(p1.string() == p3.string());
+    p103 = p102;
+    BOOST_TEST(p101.string() == p103.string());
 
     // check each overload
-    BOOST_TEST(p1 == p3);
-    BOOST_TEST(p1 == p3.string());
-    BOOST_TEST(p1 == p3.string().c_str());
-    BOOST_TEST(p1.string() == p3);
-    BOOST_TEST(p1.string().c_str() == p3);
+    BOOST_TEST(p101 == p103);
+    BOOST_TEST(p101 == p103.string());
+    BOOST_TEST(p101 == p103.string().c_str());
+    BOOST_TEST(p101.string() == p103);
+    BOOST_TEST(p101.string().c_str() == p103);
 
     if (platform == "Windows")
     {
@@ -1572,13 +1567,14 @@ namespace
     PATH_TEST_EQ(path("foo/") / "bar", "foo/bar");
     append_test_aux("foo/", "bar", "foo/bar");
 
-    PATH_TEST_EQ(path("foo/") / "/bar", "foo//bar");
-    append_test_aux("foo/", "/bar", "foo//bar");
 
     if (platform == "Windows")
     {
       PATH_TEST_EQ(path("foo") / "bar", "foo\\bar");
       append_test_aux("foo", "bar", "foo\\bar");
+
+      PATH_TEST_EQ(path("foo\\") / "\\bar", "foo\\\\bar");
+      append_test_aux("foo\\", "\\bar", "foo\\\\bar");
 
       // hand created test case specific to Windows
       PATH_TEST_EQ(path("c:") / "bar", "c:bar");
@@ -1807,10 +1803,10 @@ int cpp_main(int, char*[])
   p3 = p2;
   BOOST_TEST(p1.string() == p3.string());
 
-  path p4("foobar");
-  BOOST_TEST(p4.string() == "foobar");
-  p4 = p4; // self-assignment
-  BOOST_TEST(p4.string() == "foobar");
+  path p04("foobar");
+  BOOST_TEST(p04.string() == "foobar");
+  p04 = p04; // self-assignment
+  BOOST_TEST(p04.string() == "foobar");
 
   construction_tests();
   append_tests();

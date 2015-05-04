@@ -16,10 +16,15 @@
 
 namespace boost_no_cxx11_lambdas {
 
+template <class Func>
+int f(Func f)
+{
+   return f();
+}
+
 int test()
 {
-  (void)[](){};
-  return 0;
+  return f([](){ return 0; });
 }
 
 }

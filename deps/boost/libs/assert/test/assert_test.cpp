@@ -58,7 +58,7 @@ void test_disabled()
     BOOST_ASSERT(p);
     BOOST_ASSERT_MSG(p, "msg");
 
-    // supress warnings
+    // suppress warnings
     p = &x;
     p = &p;
 }

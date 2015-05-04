@@ -10,10 +10,12 @@
 
 void t1()
 {
-   //[random_eg1
-   //=#include <boost/multiprecision/gmp.hpp>
-   //=#include <boost/multiprecision/random.hpp>
-
+//[random_eg1
+//=#include <boost/multiprecision/gmp.hpp>
+//=#include <boost/multiprecision/random.hpp>
+//=
+//=int main()
+//={
    using namespace boost::multiprecision;
    using namespace boost::random;
 
@@ -29,15 +31,19 @@ void t1()
    std::cout << std::hex << std::showbase;
    for(unsigned i = 0; i < 10; ++i)
       std::cout << gen() << std::endl;
-   //]
+//=   return 0;
+//=}
+//]
 }
 
 void t2()
 {
-   //[random_eg2
-   //=#include <boost/multiprecision/gmp.hpp>
-   //=#include <boost/multiprecision/random.hpp>
-
+//[random_eg2
+//=#include <boost/multiprecision/gmp.hpp>
+//=#include <boost/multiprecision/random.hpp>
+//=
+//=int main()
+//={
    using namespace boost::multiprecision;
    using namespace boost::random;
 
@@ -55,15 +61,19 @@ void t2()
    for(unsigned i = 0; i < 10; ++i)
       std::cout << ui(mt) << std::endl;
 
-   //]
+//=   return 0;
+//=}
+//]
 }
 
 void t3()
 {
-   //[random_eg3
-   //=#include <boost/multiprecision/gmp.hpp>
-   //=#include <boost/multiprecision/random.hpp>
-
+//[random_eg3
+//=#include <boost/multiprecision/gmp.hpp>
+//=#include <boost/multiprecision/random.hpp>
+//=
+//=int main()
+//={
    using namespace boost::multiprecision;
    using namespace boost::random;
    //
@@ -79,15 +89,19 @@ void t3()
    std::cout << std::setprecision(50);
    for(unsigned i = 0; i < 20; ++i)
       std::cout << uf(gen) << std::endl;
-   //]
+//=   return 0;
+//=}
+//]
 }
 
 void t4()
 {
-   //[random_eg4
-   //=#include <boost/multiprecision/gmp.hpp>
-   //=#include <boost/multiprecision/random.hpp>
-
+//[random_eg4
+//=#include <boost/multiprecision/gmp.hpp>
+//=#include <boost/multiprecision/random.hpp>
+//=
+//=int main()
+//={
    using namespace boost::multiprecision;
    using namespace boost::random;
    //
@@ -104,7 +118,9 @@ void t4()
       std::cout << ur(gen) << std::endl;
    for(unsigned i = 0; i < 20; ++i)
       std::cout << gd(gen) << std::endl;
-   //]
+//=   return 0;
+//=}
+//]
 }
 
 int main()

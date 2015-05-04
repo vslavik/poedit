@@ -27,7 +27,7 @@
 <a name="geometry.reference.strategies.strategy_buffer_end_round"></a><a class="link" href="strategy_buffer_end_round.html" title="strategy::buffer::end_round">strategy::buffer::end_round</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp125317600"></a><a class="indexterm" name="idp125318288"></a><a class="indexterm" name="idp125318976"></a>
+          <a class="indexterm" name="idp131800992"></a><a class="indexterm" name="idp131801680"></a><a class="indexterm" name="idp131802368"></a>
 Let the buffer create rounded ends.
         </p>
 <h6>
@@ -96,7 +96,8 @@ Let the buffer create rounded ends.
 <td>
                   <p>
                     <span class="bold"><strong>std::size_t</strong></span>: <span class="emphasis"><em>points_per_circle</em></span>:
-                    points which would be used for a full circle
+                    points which would be used for a full circle (if points_per_circle
+                    is smaller than 4, it is internally set to 4)
                   </p>
                 </td>
 </tr></tbody>
@@ -178,8 +179,8 @@ Let the buffer create rounded ends.
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2014 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam
-      Wulkiewicz, Oracle and/or its affiliates<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
+      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

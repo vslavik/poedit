@@ -188,7 +188,7 @@ void test_spots(T, const char* name)
 
    // Very small values, from a bug report by Rocco Romeo:
    BOOST_CHECK_CLOSE(::boost::math::tgamma(ldexp(static_cast<T>(1), -12)), static_cast<T>(4095.42302574977164107280305038926932586783813167844235368772L), tolerance);
-   BOOST_CHECK_CLOSE(::boost::math::tgamma(ldexp(static_cast<T>(1), -14)), static_cast<T>(16383.4228446989052821887834066513143241996925504706815681204L), tolerance);
+   BOOST_CHECK_CLOSE(::boost::math::tgamma(ldexp(static_cast<T>(1), -14)), static_cast<T>(16383.4228446989052821887834066513143241996925504706815681204L), tolerance * 2);
    BOOST_CHECK_CLOSE(::boost::math::tgamma(ldexp(static_cast<T>(1), -25)), static_cast<T>(3.35544314227843645746319656372890833248893111091576093784981e7L), tolerance);
    BOOST_CHECK_CLOSE(::boost::math::tgamma(ldexp(static_cast<T>(1), -27)), static_cast<T>(1.34217727422784342467508497080056807355928046680073490038257e8L), tolerance);
    BOOST_CHECK_CLOSE(::boost::math::tgamma(ldexp(static_cast<T>(1), -29)), static_cast<T>(5.36870911422784336940727488260481582524683632281496706906706e8L), tolerance);
@@ -199,7 +199,7 @@ void test_spots(T, const char* name)
    BOOST_CHECK_CLOSE(::boost::math::tgamma(ldexp(static_cast<T>(1), -33)), static_cast<T>(8.58993459142278433521360841138215453639282914047157884932317481977e9L), tolerance);
    BOOST_CHECK_CLOSE(::boost::math::tgamma(4 / boost::math::tools::max_value<T>()), boost::math::tools::max_value<T>() / 4, tolerance);
    BOOST_CHECK_CLOSE(::boost::math::tgamma(-ldexp(static_cast<T>(1), -12)), static_cast<T>(-4096.57745718775464971331294488248972086965434176847741450728L), tolerance);
-   BOOST_CHECK_CLOSE(::boost::math::tgamma(-ldexp(static_cast<T>(1), -14)), static_cast<T>(-16384.5772760354695939336148831283410381037202353359487504624L), tolerance);
+   BOOST_CHECK_CLOSE(::boost::math::tgamma(-ldexp(static_cast<T>(1), -14)), static_cast<T>(-16384.5772760354695939336148831283410381037202353359487504624L), tolerance * 2);
    BOOST_CHECK_CLOSE(::boost::math::tgamma(-ldexp(static_cast<T>(1), -25)), static_cast<T>(-3.35544325772156943776992988569766723938420508937071533029983e7L), tolerance);
    BOOST_CHECK_CLOSE(::boost::math::tgamma(-ldexp(static_cast<T>(1), -27)), static_cast<T>(-1.34217728577215672270574319043497450577151370942651414968627e8L), tolerance);
    BOOST_CHECK_CLOSE(::boost::math::tgamma(-ldexp(static_cast<T>(1), -29)), static_cast<T>(-5.36870912577215666743793215770406791630514293641886249382012e8L), tolerance);
@@ -223,7 +223,7 @@ void test_spots(T, const char* name)
    if (boost::math::tools::digits<T>() > 60)
    {
       BOOST_CHECK_CLOSE(::boost::math::tgamma(-1 + ldexp(static_cast<T>(1), -55)), static_cast<T>(-3.60287970189639684227843350984671785799289582631555600561524e16L), tolerance);
-      BOOST_CHECK_CLOSE(::boost::math::tgamma(-1 - ldexp(static_cast<T>(1), -55)), static_cast<T>(3.60287970189639675772156649015328997929531384279596450489170e16L), tolerance);
+      BOOST_CHECK_CLOSE(::boost::math::tgamma(-1 - ldexp(static_cast<T>(1), -55)), static_cast<T>(3.60287970189639675772156649015328997929531384279596450489170e16L), tolerance * 2);
       BOOST_CHECK_CLOSE(::boost::math::tgamma(-4 + ldexp(static_cast<T>(1), -55)), static_cast<T>(1.50119987579016539608823618465835611632004877549994080474627e15L), tolerance * extra_tol);
       BOOST_CHECK_CLOSE(::boost::math::tgamma(-4 - ldexp(static_cast<T>(1), -55)), static_cast<T>(-1.50119987579016527057843048200831672241827850458884790004313e15L), tolerance * extra_tol);
    }

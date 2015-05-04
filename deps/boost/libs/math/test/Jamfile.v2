@@ -93,6 +93,7 @@ run log1p_expm1_test.cpp test_instances//test_instances pch_light ../../test/bui
 run powm1_sqrtp1m1_test.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
 run special_functions_test.cpp ../../test/build//boost_unit_test_framework ;
 run test_airy.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
+run test_arcsine.cpp pch ../../test/build//boost_unit_test_framework ;
 run test_bernoulli.cpp ../../test/build//boost_unit_test_framework ;
 run test_constants.cpp ../../test/build//boost_unit_test_framework ;
 run test_print_info_on_type.cpp ;
@@ -197,6 +198,9 @@ run test_dist_overloads.cpp ../../test/build//boost_unit_test_framework ;
 run test_ellint_1.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
 run test_ellint_2.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
 run test_ellint_3.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
+run test_ellint_d.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
+run test_jacobi_zeta.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
+run test_heuman_lambda.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
 run test_erf.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
 run test_error_handling.cpp ../../test/build//boost_unit_test_framework ;
 run test_expint.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
@@ -211,6 +215,7 @@ run test_gamma_dist.cpp pch ../../test/build//boost_unit_test_framework ;
 run test_geometric.cpp ../../test/build//boost_unit_test_framework ;
 run test_hankel.cpp ../../test/build//boost_unit_test_framework ;
 run test_hermite.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
+run test_hyperexponential_dist.cpp ../../test/build//boost_unit_test_framework ;
 run test_hypergeometric_dist.cpp ../../test/build//boost_unit_test_framework
         : # command line
         : # input files
@@ -602,6 +607,8 @@ run test_nc_t.cpp  pch ../../test/build//boost_unit_test_framework
 run test_normal.cpp pch ../../test/build//boost_unit_test_framework ;
 run test_owens_t.cpp ../../test/build//boost_unit_test_framework ;
 run test_pareto.cpp ../../test/build//boost_unit_test_framework ;
+run test_polygamma.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
+run test_trigamma.cpp test_instances//test_instances ../../test/build//boost_unit_test_framework ;
 run test_poisson.cpp ../../test/build//boost_unit_test_framework
         : # command line
         : # input files
@@ -665,6 +672,7 @@ run test_skew_normal.cpp ../../test/build//boost_unit_test_framework ;
 run test_tgamma_ratio.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
 run test_toms748_solve.cpp pch ../../test/build//boost_unit_test_framework ;
 run test_triangular.cpp pch ../../test/build//boost_unit_test_framework ;
+run test_trig.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
 run test_uniform.cpp pch ../../test/build//boost_unit_test_framework ;
 run test_weibull.cpp ../../test/build//boost_unit_test_framework ;
 run test_zeta.cpp ../../test/build//boost_unit_test_framework test_instances//test_instances pch_light ;
@@ -746,6 +754,7 @@ run  compile_test/dist_fisher_f_incl_test.cpp compile_test_main ;
 run  compile_test/dist_gamma_incl_test.cpp compile_test_main ;
 run  compile_test/dist_inv_gamma_incl_test.cpp compile_test_main ;
 run  compile_test/dist_inv_chi_sq_incl_test.cpp compile_test_main ;
+run  compile_test/dist_hyperexponential_incl_test.cpp compile_test_main ;
 run  compile_test/dist_hypergeo_incl_test.cpp compile_test_main ;
 run  compile_test/dist_laplace_incl_test.cpp compile_test_main ;
 run  compile_test/dist_logistic_incl_test.cpp compile_test_main ;
@@ -770,13 +779,18 @@ run  compile_test/sf_binomial_incl_test.cpp compile_test_main ;
 run  compile_test/sf_cbrt_incl_test.cpp compile_test_main ;
 run  compile_test/sf_cos_pi_incl_test.cpp compile_test_main ;
 run  compile_test/sf_digamma_incl_test.cpp compile_test_main ;
+run  compile_test/sf_polygamma_incl_test.cpp compile_test_main ;
 run  compile_test/sf_ellint_1_incl_test.cpp compile_test_main ;
 run  compile_test/sf_ellint_2_incl_test.cpp compile_test_main ;
 run  compile_test/sf_ellint_3_incl_test.cpp compile_test_main ;
+run  compile_test/sf_ellint_d_incl_test.cpp compile_test_main ;
+run  compile_test/sf_jacobi_zeta_incl_test.cpp compile_test_main ;
+run  compile_test/sf_heuman_lambda_incl_test.cpp compile_test_main ;
 run  compile_test/sf_ellint_rc_incl_test.cpp compile_test_main ;
 run  compile_test/sf_ellint_rd_incl_test.cpp compile_test_main ;
 run  compile_test/sf_ellint_rf_incl_test.cpp compile_test_main ;
 run  compile_test/sf_ellint_rj_incl_test.cpp compile_test_main ;
+run  compile_test/sf_ellint_rg_incl_test.cpp compile_test_main ;
 run  compile_test/sf_erf_incl_test.cpp compile_test_main ;
 run  compile_test/sf_expint_incl_test.cpp compile_test_main ;
 run  compile_test/sf_expm1_incl_test.cpp compile_test_main ;

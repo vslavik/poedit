@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2014.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -79,7 +79,7 @@ private:
     typedef intrusive::list<
         node,
         intrusive::value_traits< value_traits >,
-        intrusive::constant_time_size< false >
+        intrusive::constant_time_size< true >
     > node_list;
 
     //! A hash table bucket
@@ -100,7 +100,7 @@ private:
     struct disposer
     {
         typedef void result_type;
-        void operator() (node* p) const
+        void operator() (node* p) const BOOST_NOEXCEPT
         {
             if (!p->m_DynamicallyAllocated)
                 p->~node();
@@ -259,7 +259,7 @@ public:
     size_type size()
     {
         freeze();
-        return (m_pEnd - m_pStorage);
+        return m_Nodes.size();
     }
 
     //! Looks for the element with an equivalent key

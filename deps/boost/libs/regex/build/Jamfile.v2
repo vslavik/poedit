@@ -60,9 +60,9 @@ if ! $(disable-icu)
 
       lib icuin : :                                                    <name>icui18n <link>shared <runtime-link>shared <conditional>@path_options ;
       lib icuin : : <toolset>msvc                     <variant>debug   <name>icuind  <link>shared <runtime-link>shared <conditional>@path_options ;
-      lib icuin : : <toolset>msvc                     <variant>release <name>icuin   <link>shared <runtime-link>shared <conditional>@path_options ;
+      lib icuin : : <toolset>msvc                                      <name>icuin   <link>shared <runtime-link>shared <conditional>@path_options ;
       lib icuin : : <toolset>intel <target-os>windows <variant>debug   <name>icuind  <link>shared <runtime-link>shared <conditional>@path_options ;
-      lib icuin : : <toolset>intel <target-os>windows <variant>release <name>icuin   <link>shared <runtime-link>shared <conditional>@path_options ;
+      lib icuin : : <toolset>intel <target-os>windows                  <name>icuin   <link>shared <runtime-link>shared <conditional>@path_options ;
       lib icuin : : <name>this_is_an_invalid_library_name ;
 
       if $(ICU_PATH)
@@ -103,12 +103,13 @@ if ! $(disable-icu)
          <library>icuin/<link>shared/<runtime-link>shared 
          <define>BOOST_HAS_ICU=1 
          <runtime-link>shared
-         <toolset>msvc:<linkflags>/delayload:$(icuucd_name:B).dll
-         <toolset>msvc:<linkflags>/delayload:$(icuuc_name:B).dll
-         <toolset>msvc:<linkflags>/delayload:$(icudt_name:B).dll
-         <toolset>msvc:<linkflags>/delayload:$(icuin_name:B).dll
-         <toolset>msvc:<linkflags>/delayload:$(icuind_name:B).dll
-         <toolset>msvc:<linkflags>delayimp.lib 
+         # As of ICU-54 this does not work anymore (release mode):
+         #<toolset>msvc:<linkflags>/delayload:$(icuucd_name:B).dll
+         #<toolset>msvc:<linkflags>/delayload:$(icuuc_name:B).dll
+         #<toolset>msvc:<linkflags>/delayload:$(icudt_name:B).dll
+         #<toolset>msvc:<linkflags>/delayload:$(icuin_name:B).dll
+         #<toolset>msvc:<linkflags>/delayload:$(icuind_name:B).dll
+         #<toolset>msvc:<linkflags>delayimp.lib 
          ;
    }
 

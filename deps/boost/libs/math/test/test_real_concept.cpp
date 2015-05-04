@@ -12,7 +12,8 @@
 #include <boost/test/results_collector.hpp>
 #include <boost/test/unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
-
+#include <iostream>
+#include <iomanip>
 
 
 BOOST_AUTO_TEST_CASE( test_main )

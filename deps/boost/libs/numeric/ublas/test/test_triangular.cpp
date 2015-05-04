@@ -1,4 +1,6 @@
 #include <iostream>
+#include <stdlib.h>
+#include <cmath>
 
 #include <boost/numeric/ublas/vector.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
@@ -7,11 +9,6 @@
 #include <boost/numeric/ublas/io.hpp>
 
 #include <boost/timer/timer.hpp>
-
-#include <sys/times.h>
-#include <sys/time.h>
-#include <sys/stat.h>
-
 
 namespace ublas  = boost::numeric::ublas;
 
@@ -22,7 +19,7 @@ double diff(const mat& A, const vec& x, const vec& b) {
   for (typename vec::size_type i=0; i<temp.size(); ++i) {
     result += temp(i)*temp(i);
   }
-  return sqrt(result);
+  return std::sqrt(result);
 }
 
 template<class mat, class vec>
@@ -50,10 +47,10 @@ int main() {
 
   std::cerr << "Constructing..." << std::endl;
   for (int i=0; i<n; ++i) {
-    b(i) = rand() % 10;
-    double main = -10 + rand() % 20 ;
+    b(i) = std::rand() % 10;
+    double main = -10 + std::rand() % 20 ;
     if (main == 0) main+=1;
-    double side = -10 + rand() % 20 ;
+    double side = -10 + std::rand() % 20 ;
     if (i-1>=0) {
       mat_row_low(i, i-1) = side;
     }

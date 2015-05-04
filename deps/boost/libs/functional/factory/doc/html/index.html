@@ -38,6 +38,7 @@
 <dt><span class="section"><a href="index.html#boost_functional_factory.brief_description">Brief Description</a></span></dt>
 <dt><span class="section"><a href="index.html#boost_functional_factory.background">Background</a></span></dt>
 <dt><span class="section"><a href="index.html#boost_functional_factory.reference">Reference</a></span></dt>
+<dt><span class="section"><a href="index.html#boost_functional_factory.changes">Changes</a></span></dt>
 <dt><span class="section"><a href="index.html#boost_functional_factory.acknowledgements">Acknowledgements</a></span></dt>
 <dt><span class="section"><a href="index.html#boost_functional_factory.references">References</a></span></dt>
 </dl>
@@ -448,7 +449,7 @@
     <span class="special">};</span>
 
     <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">Pointer</span><span class="special">,</span>
-        <span class="keyword">class</span> <span class="identifier">Allocator</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">none_t</span><span class="special">,</span>
+        <span class="keyword">class</span> <span class="identifier">Allocator</span> <span class="special">=</span> <span class="keyword">void</span><span class="special">,</span>
         <span class="identifier">factory_alloc_propagation</span> <span class="identifier">AllocProp</span> <span class="special">=</span>
             <span class="identifier">factory_alloc_for_pointee_and_deleter</span> <span class="special">&gt;</span>
     <span class="keyword">class</span> <span class="identifier">factory</span><span class="special">;</span>
@@ -564,6 +565,25 @@
         arity. It defaults to 10.
       </p>
 </div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="boost_functional_factory.changes"></a><a class="link" href="index.html#boost_functional_factory.changes" title="Changes">Changes</a>
+</h2></div></div></div>
+<h4>
+<a name="boost_functional_factory.changes.h0"></a>
+      <span class="phrase"><a name="boost_functional_factory.changes.boost_1_58_0"></a></span><a class="link" href="index.html#boost_functional_factory.changes.boost_1_58_0">Boost
+      1.58.0</a>
+    </h4>
+<p>
+      In order to remove the dependency on Boost.Optional, the default parameter
+      for allocators has been changed from <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">none_t</span></code>
+      to <code class="computeroutput"><span class="keyword">void</span></code>. If you have code that
+      has stopped working because it uses <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">none_t</span></code>,
+      a quick fix is to define <code class="computeroutput"><span class="identifier">BOOST_FUNCTIONAL_FACTORY_SUPPORT_NONE_T</span></code>,
+      which will restore support, but this will be removed in a future release. It
+      should be be relatively easy to fix this properly.
+    </p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">

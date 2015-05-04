@@ -196,12 +196,12 @@ def set_default (feature, value):
         bad_attribute = "free"
     elif attributes & Feature.OPTIONAL:
         bad_attribute = "optional"
-        
+
     if bad_attribute:
         raise InvalidValue ("%s property %s cannot have a default" % (bad_attribute, feature.name()))
-        
+
     if not value in f.values():
-        raise InvalidValue ("The specified default value, '%s' is invalid.\n" % value + "allowed values are: %s" % values)
+        raise InvalidValue ("The specified default value, '%s' is invalid.\n" % value + "allowed values are: %s" % f.values())
 
     f.set_default(value)
 
@@ -442,7 +442,7 @@ def validate_value_string (f, value_string):
     # An empty value is allowed for optional features
     if not values[0] in f.values() and \
            (values[0] or not f.optional()):
-        raise InvalidValue ("'%s' is not a known value of feature '%s'\nlegal values: '%s'" % (values [0], feature, f.values()))
+        raise InvalidValue ("'%s' is not a known value of feature '%s'\nlegal values: '%s'" % (values [0], f.name(), f.values()))
 
     for v in values [1:]:
         # this will validate any subfeature values in value-string

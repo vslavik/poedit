@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2007-2013
+// (C) Copyright Ion Gaztanaga 2007-2014
 //
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -16,8 +16,12 @@
 #include <boost/intrusive/intrusive_fwd.hpp>
 #include <boost/intrusive/detail/mpl.hpp>
 #include <boost/intrusive/sgtree.hpp>
-#include <iterator>
-#include <boost/move/move.hpp>
+#include <boost/static_assert.hpp>
+#include <boost/move/utility_core.hpp>
+
+#if defined(BOOST_HAS_PRAGMA_ONCE)
+#  pragma once
+#endif
 
 namespace boost {
 namespace intrusive {
@@ -91,12 +95,12 @@ class sg_set_impl
 
    //! @copydoc ::boost::intrusive::sgtree::sgtree(sgtree &&)
    sg_set_impl(BOOST_RV_REF(sg_set_impl) x)
-      :  tree_type(::boost::move(static_cast<tree_type&>(x)))
+      :  tree_type(BOOST_MOVE_BASE(tree_type, x))
    {}
 
    //! @copydoc ::boost::intrusive::sgtree::operator=(sgtree &&)
    sg_set_impl& operator=(BOOST_RV_REF(sg_set_impl) x)
-   {  return static_cast<sg_set_impl&>(tree_type::operator=(::boost::move(static_cast<tree_type&>(x)))); }
+   {  return static_cast<sg_set_impl&>(tree_type::operator=(BOOST_MOVE_BASE(tree_type, x))); }
 
    #ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
    //! @copydoc ::boost::intrusive::sgtree::~sgtree()
@@ -168,7 +172,7 @@ class sg_set_impl
    //! @copydoc ::boost::intrusive::sgtree::clone_from
    template <class Cloner, class Disposer>
    void clone_from(const sg_set_impl &src, Cloner cloner, Disposer disposer);
-   
+
    #endif   //#ifdef BOOST_iNTRUSIVE_DOXYGEN_INVOKED
 
    //! @copydoc ::boost::intrusive::sgtree::insert_unique(reference)
@@ -262,7 +266,7 @@ class sg_set_impl
 
    //! @copydoc ::boost::intrusive::sgtree::lower_bound(const_reference)
    iterator lower_bound(const_reference value);
-   
+
    //! @copydoc ::boost::intrusive::sgtree::lower_bound(const KeyType&,KeyValueCompare)
    template<class KeyType, class KeyValueCompare>
    iterator lower_bound(const KeyType& key, KeyValueCompare comp);
@@ -425,15 +429,13 @@ struct make_sg_set
 
    typedef typename detail::get_value_traits
       <T, typename packed_options::proto_value_traits>::type value_traits;
-   typedef typename detail::get_header_holder_type
-      < value_traits, typename packed_options::header_holder_type >::type header_holder_type;
 
    typedef sg_set_impl
          < value_traits
          , typename packed_options::compare
          , typename packed_options::size_type
          , packed_options::floating_point
-         , header_holder_type
+         , typename packed_options::header_holder_type
          > implementation_defined;
    /// @endcond
    typedef implementation_defined type;
@@ -486,11 +488,11 @@ class sg_set
    {}
 
    sg_set(BOOST_RV_REF(sg_set) x)
-      :  Base(::boost::move(static_cast<Base&>(x)))
+      :  Base(BOOST_MOVE_BASE(Base, x))
    {}
 
    sg_set& operator=(BOOST_RV_REF(sg_set) x)
-   {  return static_cast<sg_set &>(this->Base::operator=(::boost::move(static_cast<Base&>(x))));  }
+   {  return static_cast<sg_set &>(this->Base::operator=(BOOST_MOVE_BASE(Base, x)));  }
 
    static sg_set &container_from_end_iterator(iterator end_iterator)
    {  return static_cast<sg_set &>(Base::container_from_end_iterator(end_iterator));   }
@@ -576,12 +578,12 @@ class sg_multiset_impl
 
    //! @copydoc ::boost::intrusive::sgtree::sgtree(sgtree &&)
    sg_multiset_impl(BOOST_RV_REF(sg_multiset_impl) x)
-      :  tree_type(::boost::move(static_cast<tree_type&>(x)))
+      :  tree_type(BOOST_MOVE_BASE(tree_type, x))
    {}
 
    //! @copydoc ::boost::intrusive::sgtree::operator=(sgtree &&)
    sg_multiset_impl& operator=(BOOST_RV_REF(sg_multiset_impl) x)
-   {  return static_cast<sg_multiset_impl&>(tree_type::operator=(::boost::move(static_cast<tree_type&>(x)))); }
+   {  return static_cast<sg_multiset_impl&>(tree_type::operator=(BOOST_MOVE_BASE(tree_type, x))); }
 
    #ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
    //! @copydoc ::boost::intrusive::sgtree::~sgtree()
@@ -721,10 +723,10 @@ class sg_multiset_impl
    //! @copydoc ::boost::intrusive::sgtree::count(const KeyType&,KeyValueCompare)const
    template<class KeyType, class KeyValueCompare>
    size_type count(const KeyType& key, KeyValueCompare comp) const;
-   
+
    //! @copydoc ::boost::intrusive::sgtree::lower_bound(const_reference)
    iterator lower_bound(const_reference value);
-   
+
    //! @copydoc ::boost::intrusive::sgtree::lower_bound(const KeyType&,KeyValueCompare)
    template<class KeyType, class KeyValueCompare>
    iterator lower_bound(const KeyType& key, KeyValueCompare comp);
@@ -879,15 +881,13 @@ struct make_sg_multiset
 
    typedef typename detail::get_value_traits
       <T, typename packed_options::proto_value_traits>::type value_traits;
-   typedef typename detail::get_header_holder_type
-      < value_traits, typename packed_options::header_holder_type >::type header_holder_type;
 
    typedef sg_multiset_impl
          < value_traits
          , typename packed_options::compare
          , typename packed_options::size_type
          , packed_options::floating_point
-         , header_holder_type
+         , typename packed_options::header_holder_type
          > implementation_defined;
    /// @endcond
    typedef implementation_defined type;
@@ -941,11 +941,11 @@ class sg_multiset
    {}
 
    sg_multiset(BOOST_RV_REF(sg_multiset) x)
-      :  Base(::boost::move(static_cast<Base&>(x)))
+      :  Base(BOOST_MOVE_BASE(Base, x))
    {}
 
    sg_multiset& operator=(BOOST_RV_REF(sg_multiset) x)
-   {  return static_cast<sg_multiset &>(this->Base::operator=(::boost::move(static_cast<Base&>(x))));  }
+   {  return static_cast<sg_multiset &>(this->Base::operator=(BOOST_MOVE_BASE(Base, x)));  }
 
    static sg_multiset &container_from_end_iterator(iterator end_iterator)
    {  return static_cast<sg_multiset &>(Base::container_from_end_iterator(end_iterator));   }

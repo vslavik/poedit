@@ -16,8 +16,22 @@
 #include "boost/type_traits/is_nothrow_move_assignable.hpp"
 #include "boost/mpl/bool.hpp"
 
-// Most part of tests from this file require rvalue references support
+#include <boost/blank.hpp>
+#include <boost/swap.hpp>
 
+namespace swap_ambiguouty_test_ns {
+    struct A {};
+    struct B {};
+
+    void swap_ambiguouty_test() {
+        // If boost::blank is not used, then it compiles.
+        typedef boost::variant<boost::blank, A, B> Variant;
+        Variant v1, v2;
+        swap(v1, v2);
+    }
+} // namespace swap_ambiguouty_test_ns
+
+// Most part of tests from this file require rvalue references support
 
 class move_copy_conting_class {
 public:
@@ -288,6 +302,7 @@ void run_is_container_compilation_test()
 
 int test_main(int , char* [])
 {
+   swap_ambiguouty_test_ns::swap_ambiguouty_test();
    run();
    run1();
    run_move_only();

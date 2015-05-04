@@ -48,6 +48,7 @@
 \defgroup num_geometries number of geometries: calculate the number of geometries in a multi-geometry
 \defgroup num_interior_rings number of interior rings: calculate the number of interior rings
 \defgroup num_points number of points: calculate number of points of a geometry
+\defgroup num_segments number of segments: calculate number of segments of a geometry
 \defgroup overlaps overlaps: detect overlap between two geometries
 \defgroup perimeter perimeter: calculate perimeter of a geometry
 \defgroup projection projection: Projection struct's, classes

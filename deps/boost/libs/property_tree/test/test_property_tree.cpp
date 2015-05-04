@@ -132,6 +132,40 @@ namespace boost { namespace property_tree {
 #   undef WIDECHAR
 #endif
 
+template <typename Ptree>
+void run_tests(Ptree* pt)
+{
+    test_debug(pt);
+    test_constructor_destructor_assignment(pt);
+    test_insertion(pt);
+    test_erasing(pt);
+    test_clear(pt);
+    test_pushpop(pt);
+    test_container_iteration(pt);
+    test_swap(pt);
+    test_sort_reverse(pt);
+    test_case(pt);
+    test_comparison(pt);
+    test_front_back(pt);
+    test_get_put(pt);
+    test_get_child_put_child(pt);
+    test_equal_range(pt);
+    test_path_separator(pt);
+    test_path(pt);
+    test_precision(pt);
+    test_locale(pt);
+    test_custom_data_type(pt);
+    test_empty_size_max_size(pt);
+    test_ptree_bad_path(pt);
+    test_ptree_bad_data(pt);
+    test_serialization(pt);
+    test_bool(pt);
+    test_char(pt);
+    test_float(pt);
+    test_sort(pt);
+    test_leaks(pt);                  // must be a final test
+}
+
 int test_main(int, char *[])
 {
     
@@ -140,138 +174,30 @@ int test_main(int, char *[])
     // char tests, case sensitive
     {
         ptree *pt = 0;
-        test_debug(pt);
-        test_constructor_destructor_assignment(pt);
-        test_insertion(pt);
-        test_erasing(pt);
-        test_clear(pt);
-        test_pushpop(pt);
-        test_container_iteration(pt);
-        test_swap(pt);
-        test_sort_reverse(pt);
-        test_case(pt);
-        test_comparison(pt);
-        test_front_back(pt);
-        test_get_put(pt);
-        test_get_child_put_child(pt);
-        test_equal_range(pt);
-        test_path_separator(pt);
-        test_path(pt);
-        test_precision(pt);
-        test_locale(pt);
-        test_custom_data_type(pt);
-        test_empty_size_max_size(pt);
-        test_ptree_bad_path(pt);
-        test_ptree_bad_data(pt);
-        test_serialization(pt);
-        test_bool(pt);
-        test_char(pt);
-        test_sort(pt);
-        test_leaks(pt);                  // must be a final test
+        run_tests(pt);
     }
-#if 0
+
     // wchar_t tests, case sensitive
 #ifndef BOOST_NO_CWCHAR
     {
         wptree *pt = 0;
-        test_debug(pt);
-        test_constructor_destructor_assignment(pt);
-        test_insertion(pt);
-        test_erasing(pt);
-        test_clear(pt);
-        test_pushpop(pt);
-        test_container_iteration(pt);
-        test_swap(pt);
-        test_sort_reverse(pt);
-        test_case(pt);
-        test_comparison(pt);
-        test_front_back(pt);
-        test_get_put(pt);
-        test_get_child_put_child(pt);
-        test_equal_range(pt);
-        test_path_separator(pt);
-        test_path(pt);
-        test_precision(pt);
-        test_locale(pt);
-        test_custom_data_type(pt);
-        test_empty_size_max_size(pt);
-        test_ptree_bad_path(pt);
-        test_ptree_bad_data(pt);
-        test_serialization(pt);
-        test_bool(pt);
-        test_char(pt);
-        test_sort(pt);
-        test_leaks(pt);                  // must be a final test
+        run_tests(pt);
     }
 #endif
 
     // char tests, case insensitive
     {
         iptree *pt = 0;
-        test_debug(pt);
-        test_constructor_destructor_assignment(pt);
-        test_insertion(pt);
-        test_erasing(pt);
-        test_clear(pt);
-        test_pushpop(pt);
-        test_container_iteration(pt);
-        test_swap(pt);
-        test_sort_reverse(pt);
-        test_case(pt);
-        test_comparison(pt);
-        test_front_back(pt);
-        test_get_put(pt);
-        test_get_child_put_child(pt);
-        test_equal_range(pt);
-        test_path_separator(pt);
-        test_path(pt);
-        test_precision(pt);
-        test_locale(pt);
-        test_custom_data_type(pt);
-        test_empty_size_max_size(pt);
-        test_ptree_bad_path(pt);
-        test_ptree_bad_data(pt);
-        test_serialization(pt);
-        test_bool(pt);
-        test_char(pt);
-        test_sort(pt);
-        test_leaks(pt);                  // must be a final test
+        run_tests(pt);
     }
 
     // wchar_t tests, case insensitive
 #ifndef BOOST_NO_CWCHAR
     {
         wiptree *pt = 0;
-        test_debug(pt);
-        test_constructor_destructor_assignment(pt);
-        test_insertion(pt);
-        test_erasing(pt);
-        test_clear(pt);
-        test_pushpop(pt);
-        test_container_iteration(pt);
-        test_swap(pt);
-        test_sort_reverse(pt);
-        test_case(pt);
-        test_comparison(pt);
-        test_front_back(pt);
-        test_get_put(pt);
-        test_get_child_put_child(pt);
-        test_equal_range(pt);
-        test_path_separator(pt);
-        test_path(pt);
-        test_precision(pt);
-        test_locale(pt);
-        test_custom_data_type(pt);
-        test_empty_size_max_size(pt);
-        test_ptree_bad_path(pt);
-        test_ptree_bad_data(pt);
-        test_serialization(pt);
-        test_bool(pt);
-        test_char(pt);
-        test_sort(pt);
-        test_leaks(pt);                  // must be a final test
+        run_tests(pt);
     }
 #endif
-#endif
+
     return 0;
 }

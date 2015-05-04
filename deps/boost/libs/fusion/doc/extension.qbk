@@ -71,7 +71,7 @@ tag type for operations involving our sequence. This is done by specializing
     }}}
 
 `traits::tag_of` also has a second template argument,
-that can be used in conjuction with `boost::enable_if` to provide tag
+that can be used in conjunction with `boost::enable_if` to provide tag
 support for groups of related types. This feature is not necessary
 for our sequence, but for an example see the code in:
 
@@ -228,7 +228,7 @@ bit of metaprogramming to return `const` references if the underlying sequence
 is const.
 
 [note Although there is a fair amount of left to do to produce a fully fledged
-Fusion sequence, __result_of_value_of__ and __deref__ illustrate all the signficant concepts
+Fusion sequence, __result_of_value_of__ and __deref__ illustrate all the significant concepts
 required. The remainder of the process is very repetitive, simply requiring
 implementation of a suitable `xxxx_impl` for each feature `xxxx`.
 ]
@@ -323,7 +323,7 @@ For our __random_access_sequence__ we will also need to implement `size_impl`,
 In order for `example_struct` to serve as an associative forward sequence,
 we need to adapt the traversal category of our sequence and our iterator
 accordingly and enable 3 intrinsic sequence lookup features, __at_key__,
-__value_at_key__ and __has_key__. We also need to enable 3 iterator lookup
+__result_of_value_at_key__ and __has_key__. We also need to enable 3 iterator lookup
 features, __result_of_key_of__, __result_of_value_of_data__ and __deref_data__.
 
 To implement `at_key_impl` we need to associate the `fields::name` and `fields::age`
@@ -378,7 +378,7 @@ the example code.
 
 We've now worked through the entire process for adding a new random
 access sequence and we've also enabled our type to serve as an associative
-sequence. The implementation was slightly longwinded, but followed
+sequence. The implementation was slightly long-winded, but followed
 a simple repeating pattern.
 
 The support for `std::pair`, __mpl__ sequences, and `boost::array` all

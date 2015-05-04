@@ -4,7 +4,7 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #define BOOST_THREAD_VERSION 2
-
+#define BOOST_TEST_MODULE Boost.Threads: condition_variable notify_all test suite
 #include <boost/thread/detail/config.hpp>
 
 #include <boost/thread/thread_only.hpp>
@@ -202,7 +202,7 @@ void do_test_notify_all_following_notify_one_wakes_all_threads()
     thread3.join();
 }
 
-void test_condition_notify_all()
+BOOST_AUTO_TEST_CASE(test_condition_notify_all)
 {
     timed_test(&do_test_condition_notify_all_wakes_from_wait, timeout_seconds);
     timed_test(&do_test_condition_notify_all_wakes_from_wait_with_predicate, timeout_seconds);
@@ -212,15 +212,5 @@ void test_condition_notify_all()
     timed_test(&do_test_notify_all_following_notify_one_wakes_all_threads, timeout_seconds);
 }
 
-
-boost::unit_test::test_suite* init_unit_test_suite(int, char*[])
-{
-    boost::unit_test::test_suite* test =
-        BOOST_TEST_SUITE("Boost.Threads: condition test suite");
-
-    test->add(BOOST_TEST_CASE(&test_condition_notify_all));
-
-    return test;
-}
 
 

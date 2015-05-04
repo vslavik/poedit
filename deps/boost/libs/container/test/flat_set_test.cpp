@@ -21,6 +21,7 @@
 #include "set_test.hpp"
 #include "propagate_allocator_test.hpp"
 #include "emplace_test.hpp"
+#include "container_common_tests.hpp"
 #include <vector>
 #include <boost/container/detail/flat_tree.hpp>
 
@@ -179,6 +180,11 @@ class recursive_flat_set
    }
    int id_;
    flat_set<recursive_flat_set> flat_set_;
+   flat_set<recursive_flat_set>::iterator it_;
+   flat_set<recursive_flat_set>::const_iterator cit_;
+   flat_set<recursive_flat_set>::reverse_iterator rit_;
+   flat_set<recursive_flat_set>::const_reverse_iterator crit_;
+
    friend bool operator< (const recursive_flat_set &a, const recursive_flat_set &b)
    {  return a.id_ < b.id_;   }
 };
@@ -200,6 +206,11 @@ class recursive_flat_multiset
    }
    int id_;
    flat_multiset<recursive_flat_multiset> flat_multiset_;
+   flat_multiset<recursive_flat_multiset>::iterator it_;
+   flat_multiset<recursive_flat_multiset>::const_iterator cit_;
+   flat_multiset<recursive_flat_multiset>::reverse_iterator rit_;
+   flat_multiset<recursive_flat_multiset>::const_reverse_iterator crit_;
+
    friend bool operator< (const recursive_flat_multiset &a, const recursive_flat_multiset &b)
    {  return a.id_ < b.id_;   }
 };
@@ -215,35 +226,6 @@ void test_move()
    move_assign = boost::move(move_ctor);
    move_assign.swap(original);
 }
-
-template<class T, class A>
-class flat_set_propagate_test_wrapper
-   : public boost::container::flat_set<T, std::less<T>, A>
-{
-   BOOST_COPYABLE_AND_MOVABLE(flat_set_propagate_test_wrapper)
-   typedef boost::container::flat_set<T, std::less<T>, A> Base;
-   public:
-   flat_set_propagate_test_wrapper()
-      : Base()
-   {}
-
-   flat_set_propagate_test_wrapper(const flat_set_propagate_test_wrapper &x)
-      : Base(x)
-   {}
-
-   flat_set_propagate_test_wrapper(BOOST_RV_REF(flat_set_propagate_test_wrapper) x)
-      : Base(boost::move(static_cast<Base&>(x)))
-   {}
-
-   flat_set_propagate_test_wrapper &operator=(BOOST_COPY_ASSIGN_REF(flat_set_propagate_test_wrapper) x)
-   {  this->Base::operator=(x);  return *this; }
-
-   flat_set_propagate_test_wrapper &operator=(BOOST_RV_REF(flat_set_propagate_test_wrapper) x)
-   {  this->Base::operator=(boost::move(static_cast<Base&>(x)));  return *this; }
-
-   void swap(flat_set_propagate_test_wrapper &x)
-   {  this->Base::swap(x);  }
-};
 
 namespace boost{
 namespace container {
@@ -262,24 +244,24 @@ bool flat_tree_ordered_insertion_test()
       }
       //Construction insertion
       flat_multiset<int> fmset(ordered_range, int_mset.begin(), int_mset.end());
-      if(!CheckEqualContainers(&int_mset, &fmset))
+      if(!CheckEqualContainers(int_mset, fmset))
          return false;
       //Insertion when empty
       fmset.clear();
       fmset.insert(ordered_range, int_mset.begin(), int_mset.end());
-      if(!CheckEqualContainers(&int_mset, &fmset))
+      if(!CheckEqualContainers(int_mset, fmset))
          return false;
       //Re-insertion
       fmset.insert(ordered_range, int_mset.begin(), int_mset.end());
       std::multiset<int> int_mset2(int_mset);
       int_mset2.insert(int_mset.begin(), int_mset.end());
-      if(!CheckEqualContainers(&int_mset2, &fmset))
+      if(!CheckEqualContainers(int_mset2, fmset))
          return false;
       //Re-re-insertion
       fmset.insert(ordered_range, int_mset2.begin(), int_mset2.end());
       std::multiset<int> int_mset4(int_mset2);
       int_mset4.insert(int_mset2.begin(), int_mset2.end());
-      if(!CheckEqualContainers(&int_mset4, &fmset))
+      if(!CheckEqualContainers(int_mset4, fmset))
          return false;
       //Re-re-insertion of even
       std::multiset<int> int_even_mset;
@@ -288,7 +270,7 @@ bool flat_tree_ordered_insertion_test()
       }
       fmset.insert(ordered_range, int_even_mset.begin(), int_even_mset.end());
       int_mset4.insert(int_even_mset.begin(), int_even_mset.end());
-      if(!CheckEqualContainers(&int_mset4, &fmset))
+      if(!CheckEqualContainers(int_mset4, fmset))
          return false;
    }
 
@@ -300,33 +282,95 @@ bool flat_tree_ordered_insertion_test()
       }
       //Construction insertion
       flat_set<int> fset(ordered_unique_range, int_set.begin(), int_set.end());
-      if(!CheckEqualContainers(&int_set, &fset))
+      if(!CheckEqualContainers(int_set, fset))
          return false;
       //Insertion when empty
       fset.clear();
       fset.insert(ordered_unique_range, int_set.begin(), int_set.end());
-      if(!CheckEqualContainers(&int_set, &fset))
+      if(!CheckEqualContainers(int_set, fset))
          return false;
       //Re-insertion
       fset.insert(ordered_unique_range, int_set.begin(), int_set.end());
       std::set<int> int_set2(int_set);
       int_set2.insert(int_set.begin(), int_set.end());
-      if(!CheckEqualContainers(&int_set2, &fset))
+      if(!CheckEqualContainers(int_set2, fset))
          return false;
       //Re-re-insertion
       fset.insert(ordered_unique_range, int_set2.begin(), int_set2.end());
       std::set<int> int_set4(int_set2);
       int_set4.insert(int_set2.begin(), int_set2.end());
-      if(!CheckEqualContainers(&int_set4, &fset))
+      if(!CheckEqualContainers(int_set4, fset))
          return false;
       //Re-re-insertion of even
       std::set<int> int_even_set;
       for(std::size_t i = 0; i < NumElements; i+=2){
-         int_set.insert(static_cast<int>(i));
+         int_even_set.insert(static_cast<int>(i));
       }
       fset.insert(ordered_unique_range, int_even_set.begin(), int_even_set.end());
       int_set4.insert(int_even_set.begin(), int_even_set.end());
-      if(!CheckEqualContainers(&int_set4, &fset))
+      if(!CheckEqualContainers(int_set4, fset))
+         return false;
+      //Partial Re-re-insertion of even
+      int_even_set.clear();
+      for(std::size_t i = 0; i < NumElements; i+=4){
+         int_even_set.insert(static_cast<int>(i));
+      }
+      fset.clear();
+      int_set4.clear();
+      //insert 0,4,8,12...
+      fset.insert(ordered_unique_range, int_even_set.begin(), int_even_set.end());
+      int_set4.insert(int_even_set.begin(), int_even_set.end());
+      if(!CheckEqualContainers(int_set4, fset))
+         return false;
+      for(std::size_t i = 2; i < NumElements; i+=4){
+         int_even_set.insert(static_cast<int>(i));
+      }
+      //insert 0,2,4,6,8,10,12...
+      fset.insert(ordered_unique_range, int_even_set.begin(), int_even_set.end());
+      int_set4.insert(int_even_set.begin(), int_even_set.end());
+      if(!CheckEqualContainers(int_set4, fset))
+         return false;
+      int_even_set.clear();
+      for(std::size_t i = 0; i < NumElements; i+=8){
+         int_even_set.insert(static_cast<int>(i));
+      }
+      fset.clear();
+      int_set4.clear();
+      //insert 0,8,16...
+      fset.insert(ordered_unique_range, int_even_set.begin(), int_even_set.end());
+      int_set4.insert(int_even_set.begin(), int_even_set.end());
+      if(!CheckEqualContainers(int_set4, fset))
+         return false;
+      for(std::size_t i = 0; i < NumElements; i+=2){
+         int_even_set.insert(static_cast<int>(i));
+      }
+      //insert 0,2,4,6,8,10,12...
+      fset.insert(ordered_unique_range, int_even_set.begin(), int_even_set.end());
+      int_set4.insert(int_even_set.begin(), int_even_set.end());
+      if(!CheckEqualContainers(int_set4, fset))
+         return false;
+
+
+      int_even_set.clear();
+      for(std::size_t i = 0; i < NumElements; i+=8){
+         int_even_set.insert(static_cast<int>(i));
+         int_even_set.insert(static_cast<int>(i+2));
+      }
+      int_even_set.insert(static_cast<int>(NumElements-2));
+      fset.clear();
+      int_set4.clear();
+      //insert 0,2,8,10...
+      fset.insert(ordered_unique_range, int_even_set.begin(), int_even_set.end());
+      int_set4.insert(int_even_set.begin(), int_even_set.end());
+      if(!CheckEqualContainers(int_set4, fset))
+         return false;
+      for(std::size_t i = 0; i < NumElements; i+=2){
+         int_even_set.insert(static_cast<int>(i));
+      }
+      //insert 0,2,4,6,8,10,12...
+      fset.insert(ordered_unique_range, int_even_set.begin(), int_even_set.end());
+      int_set4.insert(int_even_set.begin(), int_even_set.end());
+      if(!CheckEqualContainers(int_set4, fset))
          return false;
    }
 
@@ -412,19 +456,97 @@ int test_set_variants()
 }
 
 
+template<typename FlatSetType>
+bool test_support_for_initialization_list_for()
+{
+#if !defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST)
+   const std::initializer_list<int> il
+      = {1, 2};
+
+   const FlatSetType expected(il.begin(), il.end());
+   {
+      const FlatSetType sil = il;
+      if (sil != expected)
+         return false;
+
+      const FlatSetType sil_ordered(ordered_unique_range, il);
+      if(sil_ordered != expected)
+         return false;
+
+      FlatSetType sil_assign = {99};
+      sil_assign = il;
+      if(sil_assign != expected)
+         return false;
+   }
+   {
+      FlatSetType sil;
+      sil.insert(il);
+      if(sil != expected)
+         return false;
+   }
+   return true;
+#endif
+   return true;
+}
+
+struct boost_container_flat_set;
+struct boost_container_flat_multiset;
+
+namespace boost {
+namespace container {
+namespace test {
+
+template<>
+struct alloc_propagate_base<boost_container_flat_set>
+{
+   template <class T, class Allocator>
+   struct apply
+   {
+      typedef boost::container::flat_set<T, std::less<T>, Allocator> type;
+   };
+};
+
+template<>
+struct alloc_propagate_base<boost_container_flat_multiset>
+{
+   template <class T, class Allocator>
+   struct apply
+   {
+      typedef boost::container::flat_multiset<T, std::less<T>, Allocator> type;
+   };
+};
+
+}}}   //boost::container::test
+
 int main()
 {
    using namespace boost::container::test;
 
    //Allocator argument container
    {
-      flat_set<int> set_((std::allocator<int>()));
-      flat_multiset<int> multiset_((std::allocator<int>()));
+      flat_set<int> set_((flat_set<int>::allocator_type()));
+      flat_multiset<int> multiset_((flat_multiset<int>::allocator_type()));
    }
    //Now test move semantics
    {
       test_move<flat_set<recursive_flat_set> >();
       test_move<flat_multiset<recursive_flat_multiset> >();
+   }
+   //Now test nth/index_of
+   {
+      flat_set<int> set;
+      flat_multiset<int> mset;
+
+      set.insert(0);
+      set.insert(1);
+      set.insert(2);
+      mset.insert(0);
+      mset.insert(1);
+      mset.insert(2);
+      if(!boost::container::test::test_nth_index_of(set))
+         return 1;
+      if(!boost::container::test::test_nth_index_of(mset))
+         return 1;
    }
 
    ////////////////////////////////////
@@ -468,10 +590,19 @@ int main()
    if(!boost::container::test::test_emplace<flat_multiset<test::EmplaceInt>, SetOptions>())
       return 1;
 
+   if (!boost::container::test::test_set_methods_with_initializer_list_as_argument_for<flat_set<int> >())
+      return 1;
+
+   if (!boost::container::test::test_set_methods_with_initializer_list_as_argument_for<flat_multiset<int> >())
+      return 1;
+
    ////////////////////////////////////
    //    Allocator propagation testing
    ////////////////////////////////////
-   if(!boost::container::test::test_propagate_allocator<flat_set_propagate_test_wrapper>())
+   if(!boost::container::test::test_propagate_allocator<boost_container_flat_set>())
+      return 1;
+
+   if(!boost::container::test::test_propagate_allocator<boost_container_flat_multiset>())
       return 1;
 
    return 0;

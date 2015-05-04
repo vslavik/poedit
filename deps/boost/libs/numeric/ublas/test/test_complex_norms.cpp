@@ -8,7 +8,7 @@
 #include <boost/numeric/ublas/matrix.hpp>
 #include <complex>
 
-#include "libs/numeric/ublas/test/utils.hpp"
+#include "utils.hpp"
 
 using namespace boost::numeric::ublas;
 
@@ -62,7 +62,7 @@ BOOST_UBLAS_TEST_DEF ( test_float_complex_norm_2 ) {
     for (unsigned int i = 0; i < v.size(); ++i)
         v[i] = dComplex(i, i + 1);
 
-    const float expected = sqrt(44.0);
+    const double expected = sqrt(44.0);
 
     BOOST_UBLAS_DEBUG_TRACE( "norm is " << norm_2(v) );
     BOOST_UBLAS_TEST_CHECK(std::abs(norm_2(v) - expected) < TOL);

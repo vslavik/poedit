@@ -8,9 +8,6 @@ import feature ;
 import modules ;
 import toolset ;
 
-feature.feature segmented-stacks : on : optional propagated composite ;
-feature.compose <segmented-stacks>on : <define>BOOST_USE_SEGMENTED_STACKS ;
-
 project boost/coroutine
     : requirements
       <library>/boost/context//boost_context

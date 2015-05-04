@@ -21,6 +21,66 @@
 </h2></div></div></div>
 <h4>
 <a name="log.changelog.h0"></a>
+      <span class="phrase"><a name="log.changelog.2_5__boost_1_58"></a></span><a class="link" href="changelog.html#log.changelog.2_5__boost_1_58">2.5,
+      Boost 1.58</a>
+    </h4>
+<p>
+      <span class="bold"><strong>Bug fixes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Fixed thread id formatting. The thread identifiers could be presented as
+          zeros on big-endian platforms. Also the lower 4 bits of the ids were lost
+          in the output.
+        </li>
+<li class="listitem">
+          Fixed process id formatting. Process ids could have misplaced filler zeros.
+          ( <a href="https://svn.boost.org/trac/boost/ticket/10926" target="_top">#10926</a>)
+        </li>
+<li class="listitem">
+          Fixed build failure on GNU Hurd.
+        </li>
+<li class="listitem">
+          Fixed incorrect behavior of <a class="link" href="detailed/sink_backends.html#log.detailed.sink_backends.text_file" title="Text file backend">text
+          file sink backend</a> in case if free space on the file system gets
+          exhausted. The sink will no longer create lots of empty files in attempt
+          to recover. ( <a href="https://svn.boost.org/trac/boost/ticket/11016" target="_top">#11016</a>)
+        </li>
+<li class="listitem">
+          Fixed incorrect behavior of <code class="computeroutput"><span class="identifier">attribute_set</span><span class="special">::</span><span class="identifier">insert</span><span class="special">()</span></code> in some cases. The inserted elements
+          could have made some previously inserted elements not findable. ( <a href="https://svn.boost.org/trac/boost/ticket/11106" target="_top">#11106</a>)
+        </li>
+<li class="listitem">
+          Fixed incorrect behavior of <code class="computeroutput"><span class="identifier">attribute_value_set</span><span class="special">::</span><span class="identifier">size</span><span class="special">()</span></code> if a large number of attribute values
+          are inserted into the set. ( <a href="https://svn.boost.org/trac/boost/ticket/11148" target="_top">#11148</a>)
+        </li>
+</ul></div>
+<h4>
+<a name="log.changelog.h1"></a>
+      <span class="phrase"><a name="log.changelog.2_4__boost_1_57"></a></span><a class="link" href="changelog.html#log.changelog.2_4__boost_1_57">2.4,
+      Boost 1.57</a>
+    </h4>
+<p>
+      <span class="bold"><strong>Bug fixes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          <a class="link" href="detailed/expressions.html#log.detailed.expressions.formatters.decorators" title="Character decorators">XML character
+          decorator</a> now escapes quote (") characters.
+        </li>
+<li class="listitem">
+          The exceptions thrown by asynchronous sinks created as a result of <a class="link" href="detailed/utilities.html#log.detailed.utilities.setup.settings" title="Library initialization from a settings container">initialization from settings</a>
+          are now silently suppressed instead of terminating the application. If
+          special error handling is needed, it is recommended to <a class="link" href="extension/settings.html#log.extension.settings.adding_support_for_user_defined_sinks">register
+          a user-defined sink factory</a>. ( <a href="https://svn.boost.org/trac/boost/ticket/10638" target="_top">#10638</a>)
+        </li>
+<li class="listitem">
+          Corrected syslog message composition on MSVC, if message length exceeds
+          1025 bytes. ( <a href="https://svn.boost.org/trac/boost/ticket/10700" target="_top">#10700</a>)
+        </li>
+</ul></div>
+<h4>
+<a name="log.changelog.h2"></a>
       <span class="phrase"><a name="log.changelog.2_3__boost_1_56"></a></span><a class="link" href="changelog.html#log.changelog.2_3__boost_1_56">2.3,
       Boost 1.56</a>
     </h4>
@@ -116,7 +176,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h1"></a>
+<a name="log.changelog.h3"></a>
       <span class="phrase"><a name="log.changelog.2_2__boost_1_55"></a></span><a class="link" href="changelog.html#log.changelog.2_2__boost_1_55">2.2,
       Boost 1.55</a>
     </h4>
@@ -179,7 +239,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h2"></a>
+<a name="log.changelog.h4"></a>
       <span class="phrase"><a name="log.changelog.2_1__boost_1_54"></a></span><a class="link" href="changelog.html#log.changelog.2_1__boost_1_54">2.1,
       Boost 1.54</a>
     </h4>
@@ -226,7 +286,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h3"></a>
+<a name="log.changelog.h5"></a>
       <span class="phrase"><a name="log.changelog.2_0__13_april_2013"></a></span><a class="link" href="changelog.html#log.changelog.2_0__13_april_2013">2.0,
       13 April 2013</a>
     </h4>
@@ -601,7 +661,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h4"></a>
+<a name="log.changelog.h6"></a>
       <span class="phrase"><a name="log.changelog.1_1__02_december_2011"></a></span><a class="link" href="changelog.html#log.changelog.1_1__02_december_2011">1.1,
       02 December 2011</a>
     </h4>
@@ -621,7 +681,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h5"></a>
+<a name="log.changelog.h7"></a>
       <span class="phrase"><a name="log.changelog.1_0__09_may_2010"></a></span><a class="link" href="changelog.html#log.changelog.1_0__09_may_2010">1.0,
       09 May 2010</a>
     </h4>
@@ -661,7 +721,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h6"></a>
+<a name="log.changelog.h8"></a>
       <span class="phrase"><a name="log.changelog.release_candidate_4__08_jan_2010"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_4__08_jan_2010">Release
       Candidate 4, 08 Jan 2010</a>
     </h4>
@@ -756,7 +816,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h7"></a>
+<a name="log.changelog.h9"></a>
       <span class="phrase"><a name="log.changelog.release_candidate_3__08_feb_2009"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_3__08_feb_2009">Release
       Candidate 3, 08 Feb 2009</a>
     </h4>
@@ -790,7 +850,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h8"></a>
+<a name="log.changelog.h10"></a>
       <span class="phrase"><a name="log.changelog.release_candidate_2"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_2">Release
       Candidate 2</a>
     </h4>
@@ -800,7 +860,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2014 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2015 Andrey
+      Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

@@ -195,19 +195,23 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<int[2][4][5][6][3
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<UDT>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<empty_UDT>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<void>::value, false);
+#if (!defined(BOOST_NO_CXX11_NOEXCEPT) && !defined(BOOST_NO_SFINAE_EXPR)) || defined(BOOST_IS_NOTHROW_MOVE_ASSIGN)
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<empty_POD_UDT>::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<POD_UDT>::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<POD_union_UDT>::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<empty_POD_union_UDT>::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<nothrow_assign_UDT>::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<nothrow_move_UDT>::value, true);
+#else
 // cases we would like to succeed but can't implement in the language:
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<empty_POD_UDT>::value, true, false);
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<POD_UDT>::value, true, false);
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<POD_union_UDT>::value, true, false);
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<empty_POD_union_UDT>::value, true, false);
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<nothrow_assign_UDT>::value, true, false);
+#endif
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<nothrow_copy_UDT>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<nothrow_construct_UDT>::value, false);
-
-#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && !defined(BOOST_NO_CXX11_NOEXCEPT)
-BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<nothrow_move_UDT>::value, true);
-#endif
-
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<test_abc1>::value, false);
 
 TT_TEST_END

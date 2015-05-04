@@ -88,6 +88,10 @@ struct test_my_matrix {
         std::cout << "m1 * 1. = " << m2 << std::endl;
         m2 = m1 * t;
         std::cout << "m1 * N = " << m2 << std::endl;
+        m2 = m1 / value_type (2.);
+        std::cout << "m1 / 2. = " << m2 << std::endl;
+        m2 = m1 / t;
+        std::cout << "m1 / N = " << m2 << std::endl;
 
         // Some assignments
         initialize_matrix (m1);

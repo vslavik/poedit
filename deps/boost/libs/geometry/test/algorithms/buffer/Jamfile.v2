@@ -14,11 +14,13 @@ project boost-geometry-algorithms-buffer
 
 test-suite boost-geometry-algorithms-buffer
     :
-    [ run point_buffer.cpp            : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE <toolset>msvc:<cxxflags>/bigobj ]
-    [ run linestring_buffer.cpp       : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE <toolset>msvc:<cxxflags>/bigobj ]
-    [ run polygon_buffer.cpp          : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE <toolset>msvc:<cxxflags>/bigobj ]
-    [ run multi_point_buffer.cpp      : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE <toolset>msvc:<cxxflags>/bigobj ]
-    [ run multi_linestring_buffer.cpp : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE <toolset>msvc:<cxxflags>/bigobj ]
-    [ run multi_polygon_buffer.cpp    : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE <toolset>msvc:<cxxflags>/bigobj ]
+    [ run point_buffer.cpp            : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE ]
+    [ run linestring_buffer.cpp       : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE ]
+    [ run polygon_buffer.cpp          : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE ]
+    [ run multi_point_buffer.cpp      : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE ]
+    [ run multi_linestring_buffer.cpp : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE ]
+    [ run multi_polygon_buffer.cpp    : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE ]
+    [ run aimes_linestring_buffer.cpp : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE ]
+#    [ run country_buffer.cpp          : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE ] # Uncomment if you want to test this manually; requires access to data/ folder
     ;
 

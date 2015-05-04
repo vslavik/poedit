@@ -3,13 +3,12 @@
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/math/bindings/rr.hpp>
 #include <boost/math/tools/test_data.hpp>
 #include <boost/test/included/prg_exec_monitor.hpp>
 #include <boost/math/special_functions/ellint_1.hpp>
 #include <fstream>
 #include <boost/math/tools/test_data.hpp>
-#include <boost/tr1/random.hpp>
+#include "mp_t.hpp"
 
 using namespace boost::math::tools;
 using namespace boost::math;
@@ -35,11 +34,8 @@ int cpp_main(int argc, char*argv [])
 {
    using namespace boost::math::tools;
 
-   boost::math::ntl::RR::SetOutputPrecision(50);
-   boost::math::ntl::RR::SetPrecision(1000);
-
-   parameter_info<boost::math::ntl::RR> arg1, arg2;
-   test_data<boost::math::ntl::RR> data;
+   parameter_info<mp_t> arg1, arg2;
+   test_data<mp_t> data;
 
    bool cont;
    std::string line;
@@ -53,7 +49,7 @@ int cpp_main(int argc, char*argv [])
       if(0 == get_user_parameter_info(arg2, "k"))
          return 1;
 
-      data.insert(&ellint_f_data<boost::math::ntl::RR>, arg1, arg2);
+      data.insert(&ellint_f_data<mp_t>, arg1, arg2);
 
       std::cout << "Any more data [y/n]?";
       std::getline(std::cin, line);
@@ -68,7 +64,7 @@ int cpp_main(int argc, char*argv [])
       line = "ellint_f.ipp";
    std::ofstream ofs(line.c_str());
    line.erase(line.find('.'));
-   ofs << std::scientific;
+   ofs << std::scientific << std::setprecision(40);
    write_code(ofs, data, line.c_str());
 
    return 0;

@@ -613,3 +613,4 @@ goto Set_Args
 :Skip_Jam
 
 :Finish
+exit /b %ERRORLEVEL%

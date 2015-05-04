@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Language" content="en-us">
 <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
 <meta name="ProgId" content="FrontPage.Editor.Document">
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Filesystem Release History</title>
-<link rel="stylesheet" type="text/css" href="../../../doc/src/minimal.css">
+<link href="styles.css" rel="stylesheet">
 </head>
 
 <body>
@@ -22,19 +22,71 @@
   </tr>
 </table>
 
-<table border="0" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" bgcolor="#D7EEFF" width="100%">
+<table border="0" cellpadding="5" cellspacing="0" style="border-collapse: collapse"
+ bordercolor="#111111" bgcolor="#D7EEFF" width="100%">
   <tr>
-    <td><a href="../../../index.htm">Boost Home</a> &nbsp;&nbsp;
-    <a href="index.htm">Library Home</a> &nbsp;&nbsp; <a href="reference.html">Reference</a> &nbsp;&nbsp;
+    <td><a href="index.htm">Home</a> &nbsp;&nbsp;
     <a href="tutorial.html">Tutorial</a> &nbsp;&nbsp;
+    <a href="reference.html">Reference</a> &nbsp;&nbsp;
     <a href="faq.htm">FAQ</a> &nbsp;&nbsp;
+    <a href="release_history.html">Releases</a> &nbsp;&nbsp;
     <a href="portability_guide.htm">Portability</a> &nbsp;&nbsp;
     <a href="v3.html">V3 Intro</a> &nbsp;&nbsp;
     <a href="v3_design.html">V3 Design</a> &nbsp;&nbsp;
     <a href="deprecated.html">Deprecated</a> &nbsp;&nbsp;
+    <a href="issue_reporting.html">Bug Reports </a>&nbsp;&nbsp;
     </td>
-  </tr>
 </table>
+
+<h2>1.58.0</h2>
+<ul>
+  <li>Rewrite Windows implementation of temp_directory_path() to (1) avoid 
+  GetTempPath() failure if path length &gt; 130 (ticket #5300) and (2) provide a 
+  more sensible sequence of directories than provided by GetTempPath(), per 
+  boost list discussion &quot;[filesystem] temp_directory_path() behavior on 
+  Windows&quot;. The new sequence is:<ol>
+    <li><i><code>%TMP%</code></i></li>
+    <li><i><code>%TEMP%</code></i></li>
+    <li><code><i>%LOCALAPPDATA%</i>/Temp</code></li>
+    <li><code><i>%USERPROFILE%</i>/Temp</code></li>
+    <li><code><i>GetWindowsDirectoryW()</i>/Temp</code></li>
+  </ol>
+  </li>
+</ul>
+
+<h2>1.57.0</h2>
+<ul>
+  <li>Rework class <code>path</code> locale and codecvt implementation for increased reliability. 
+  This change was SVN revision 83021, which should have gone into 1.56.0 but 
+  unfortunately the merge didn't happen until too late.</li>
+  <li>Fix tickets <a href="https://svn.boost.org/trac/boost/ticket/8930">#8930</a>, <a href="https://svn.boost.org/trac/boost/ticket/9054">#9054</a>,
+  <a href="https://svn.boost.org/trac/boost/ticket/9214">#9219</a>,
+  <a href="https://svn.boost.org/trac/boost/ticket/10228">#10228</a>, and
+  <a href="https://svn.boost.org/trac/boost/ticket/10641">#10641</a>, all 
+  related to locales and codecvt facets.</li>
+  <li>The net effect of the above changes and fixes should be to eliminate 
+  spurious &quot;locale::facet::_S_create_c_locale name not valid&quot; errors on Linux 
+  and other non-BSD POSIX-like systems. The error will continue to occur, as it 
+  should, when a path encoding conversion char-to-wchar_t or wchar_t-to-char is 
+  attempted in an environment without a valid C locale (for example, if the LANG 
+  environment variable is invalid or not defined).</li>
+  <li>Fix <a href="https://svn.boost.org/trac/boost/ticket/6124">#6124</a>,
+  <a href="https://svn.boost.org/trac/boost/ticket/6779">#6779</a>, and
+  <a href="https://svn.boost.org/trac/boost/ticket/10038">#10038</a> - an 
+  undefined reference that occurred when the library was compiled for C++03 but 
+  the using program was compiled for C++11, or vice versa. The private library 
+  interface has been changed to use a plain-old C++03 enum. This is the fix 
+  suggested by Andy in 6779.</li>
+  <li>The Windows implementation now treats NTFS directory junctions (also known 
+  as junctions, also known as mount points) as symlinks. This has the effect of 
+  treating directory junctions as directories, and thus supporting all 
+  operations suitable for directories. This resolves
+  <a href="https://svn.boost.org/trac/boost/ticket/9016">#9016</a>. Directory 
+  junctions are very similar to symlinks, but may have performance or other 
+  advantages in some situations. They can be created from the command line with 
+  &quot;<code>mklink /j link target</code>&quot;. There is no plan for Boost.Filesystem to 
+  be able to create them directly other than by calling <code>std::system()</code>.</li>
+</ul>
 
 <h2>1.56.0</h2>
 <ul>
@@ -54,7 +106,7 @@
   Solaris 10. (Chris Stylianou)</li>
   <li>Minor fixes and code cleanup.</li>
   <li>Update IDE projects to Visual Studio 2013.</li>
-  <li>Remove unused <code>const char colon</code> to clear clang warning. (Jürgen 
+  <li>Remove unused <code>const char colon</code> to clear clang warning. (J?gen 
   Hunold)</li>
   <li>Add BOOST_NOEXCEPT to <code>class filesystem_error</code>.</li>
   <li>Change <code>perms::all_all</code> and <code>perms::perms_mask</code> to 
@@ -225,8 +277,8 @@
 </ul>
 <hr>
 <p>Revised
-<!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%d %B, %Y" startspan -->22 July, 2014<!--webbot bot="Timestamp" endspan i-checksum="21122" --></p>
-<p>© Copyright Beman Dawes, 2011</p>
+<!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%d %B, %Y" startspan -->03 February, 2015<!--webbot bot="Timestamp" endspan i-checksum="40532" --></p>
+<p>&copy; Copyright Beman Dawes, 2011</p>
 <p> Use, modification, and distribution are subject to the Boost Software 
 License, Version 1.0. See <a href="http://www.boost.org/LICENSE_1_0.txt">
 www.boost.org/LICENSE_1_0.txt</a></p>

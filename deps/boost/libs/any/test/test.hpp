@@ -118,7 +118,7 @@ namespace any_tests // test utilities
 
     inline void check_non_null(const void * ptr, const std::string & description)
     {
-        check(ptr, "expected non-null pointer: " + description);
+        check(ptr != 0, "expected non-null pointer: " + description);
     }
 }
 

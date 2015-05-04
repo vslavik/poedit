@@ -8,12 +8,14 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
+#include <boost/core/ignore_unused.hpp>
 #include <boost/units/systems/si/base.hpp>
 #include <boost/units/quantity.hpp>
 
 void foo()
 {
     boost::units::quantity<boost::units::si::dimensionless> d = boost::units::quantity< boost::units::si::dimensionless >();
+    boost::ignore_unused(d);
 }
 
 #include <boost/test/test_tools.hpp>

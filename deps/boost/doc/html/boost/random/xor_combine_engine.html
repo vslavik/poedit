@@ -40,39 +40,39 @@
   <span class="keyword">typedef</span> <span class="identifier">base1_type</span><span class="special">::</span><span class="identifier">result_type</span> <a name="boost.random.xor_combine_engine.result_type"></a><span class="identifier">result_type</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="xor_combine_engine.html#boost.random.xor_combine_engineconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="xor_combine_engine.html#idp145878592-bb"><span class="identifier">xor_combine_engine</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="xor_combine_engine.html#idp145880192-bb"><span class="identifier">xor_combine_engine</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">base1_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">base2_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="xor_combine_engine.html#idp145882736-bb"><span class="identifier">xor_combine_engine</span></a><span class="special">(</span><span class="identifier">result_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> SeedSeq<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="xor_combine_engine.html#idp203146032-bb"><span class="identifier">xor_combine_engine</span></a><span class="special">(</span><span class="identifier">SeedSeq</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> It<span class="special">&gt;</span> <a class="link" href="xor_combine_engine.html#idp203149888-bb"><span class="identifier">xor_combine_engine</span></a><span class="special">(</span><span class="identifier">It</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">It</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="xor_combine_engine.html#idp35625328-bb"><span class="identifier">xor_combine_engine</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="xor_combine_engine.html#idp35626864-bb"><span class="identifier">xor_combine_engine</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">base1_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">base2_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="xor_combine_engine.html#idp35629408-bb"><span class="identifier">xor_combine_engine</span></a><span class="special">(</span><span class="identifier">result_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> SeedSeq<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="xor_combine_engine.html#idp35633312-bb"><span class="identifier">xor_combine_engine</span></a><span class="special">(</span><span class="identifier">SeedSeq</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> It<span class="special">&gt;</span> <a class="link" href="xor_combine_engine.html#idp35637168-bb"><span class="identifier">xor_combine_engine</span></a><span class="special">(</span><span class="identifier">It</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">It</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="xor_combine_engine.html#idp153588064-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="xor_combine_engine.html#idp153588624-bb"><span class="identifier">seed</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="xor_combine_engine.html#idp153590352-bb"><span class="identifier">seed</span></a><span class="special">(</span><span class="identifier">result_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> SeedSeq<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="xor_combine_engine.html#idp153593056-bb"><span class="identifier">seed</span></a><span class="special">(</span><span class="identifier">SeedSeq</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> It<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="xor_combine_engine.html#idp153596624-bb"><span class="identifier">seed</span></a><span class="special">(</span><span class="identifier">It</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">It</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">const</span> <span class="identifier">base1_type</span> <span class="special">&amp;</span> <a class="link" href="xor_combine_engine.html#idp153600768-bb"><span class="identifier">base1</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">const</span> <span class="identifier">base2_type</span> <span class="special">&amp;</span> <a class="link" href="xor_combine_engine.html#idp145869664-bb"><span class="identifier">base2</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">result_type</span> <a class="link" href="xor_combine_engine.html#idp145871216-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Iter<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="xor_combine_engine.html#idp145872512-bb"><span class="identifier">generate</span></a><span class="special">(</span><span class="identifier">Iter</span><span class="special">,</span> <span class="identifier">Iter</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="xor_combine_engine.html#idp145876016-bb"><span class="identifier">discard</span></a><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uintmax_t</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="xor_combine_engine.html#idp223993360-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="xor_combine_engine.html#idp223993920-bb"><span class="identifier">seed</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="xor_combine_engine.html#idp223995648-bb"><span class="identifier">seed</span></a><span class="special">(</span><span class="identifier">result_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> SeedSeq<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="xor_combine_engine.html#idp223998352-bb"><span class="identifier">seed</span></a><span class="special">(</span><span class="identifier">SeedSeq</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> It<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="xor_combine_engine.html#idp92926128-bb"><span class="identifier">seed</span></a><span class="special">(</span><span class="identifier">It</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">It</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">const</span> <span class="identifier">base1_type</span> <span class="special">&amp;</span> <a class="link" href="xor_combine_engine.html#idp92930272-bb"><span class="identifier">base1</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">const</span> <span class="identifier">base2_type</span> <span class="special">&amp;</span> <a class="link" href="xor_combine_engine.html#idp92931824-bb"><span class="identifier">base2</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">result_type</span> <a class="link" href="xor_combine_engine.html#idp92933376-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Iter<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="xor_combine_engine.html#idp92934672-bb"><span class="identifier">generate</span></a><span class="special">(</span><span class="identifier">Iter</span><span class="special">,</span> <span class="identifier">Iter</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="xor_combine_engine.html#idp92938176-bb"><span class="identifier">discard</span></a><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uintmax_t</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="xor_combine_engine.html#idp203154336-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">result_type</span> <a class="link" href="xor_combine_engine.html#idp203154896-bb"><span class="identifier">min</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="identifier">result_type</span> <a class="link" href="xor_combine_engine.html#idp203156480-bb"><span class="identifier">max</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="xor_combine_engine.html#idp150174304-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">result_type</span> <a class="link" href="xor_combine_engine.html#idp150174864-bb"><span class="identifier">min</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="identifier">result_type</span> <a class="link" href="xor_combine_engine.html#idp150176448-bb"><span class="identifier">max</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="xor_combine_engine.html#idp211859488-bb">friend functions</a></span>
+  <span class="comment">// <a class="link" href="xor_combine_engine.html#idp150178192-bb">friend functions</a></span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> Traits<span class="special">&gt;</span> 
     <span class="keyword">friend</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span> 
-    <a class="link" href="xor_combine_engine.html#idp211860048-bb"><span class="keyword">operator</span><span class="special">&lt;&lt;</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">,</span> 
+    <a class="link" href="xor_combine_engine.html#idp150178752-bb"><span class="keyword">operator</span><span class="special">&lt;&lt;</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">,</span> 
                <span class="keyword">const</span> <a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> Traits<span class="special">&gt;</span> 
     <span class="keyword">friend</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_istream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span> 
-    <a class="link" href="xor_combine_engine.html#idp211865088-bb"><span class="keyword">operator</span><span class="special">&gt;&gt;</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_istream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">,</span> 
+    <a class="link" href="xor_combine_engine.html#idp150183728-bb"><span class="keyword">operator</span><span class="special">&gt;&gt;</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_istream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">,</span> 
                <span class="keyword">const</span> <a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">friend</span> <span class="keyword">bool</span> <a class="link" href="xor_combine_engine.html#idp211870128-bb"><span class="keyword">operator</span><span class="special">==</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a> <span class="special">&amp;</span><span class="special">,</span> 
+  <span class="keyword">friend</span> <span class="keyword">bool</span> <a class="link" href="xor_combine_engine.html#idp99934320-bb"><span class="keyword">operator</span><span class="special">==</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a> <span class="special">&amp;</span><span class="special">,</span> 
                          <span class="keyword">const</span> <a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">friend</span> <span class="keyword">bool</span> <a class="link" href="xor_combine_engine.html#idp215329184-bb"><span class="keyword">operator</span><span class="special">!=</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a> <span class="special">&amp;</span><span class="special">,</span> 
+  <span class="keyword">friend</span> <span class="keyword">bool</span> <a class="link" href="xor_combine_engine.html#idp99937904-bb"><span class="keyword">operator</span><span class="special">!=</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a> <span class="special">&amp;</span><span class="special">,</span> 
                          <span class="keyword">const</span> <a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
   <span class="comment">// public data members</span>
@@ -81,24 +81,24 @@
   <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> <span class="identifier">shift2</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp419807728"></a><h2>Description</h2>
+<a name="idp412499600"></a><h2>Description</h2>
 <p>Instantiations of <code class="computeroutput"><a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a></code> model a  <a class="link" href="../../boost_random/reference.html#boost_random.reference.concepts.pseudo_random_number_generator" title="Pseudo-Random Number Generator">pseudo-random number generator</a> . To produce its output it invokes each of the base generators, shifts their results and xors them together. </p>
 <div class="refsect2">
-<a name="idp419810768"></a><h3>
+<a name="idp412502688"></a><h3>
 <a name="boost.random.xor_combine_engineconstruct-copy-destruct"></a><code class="computeroutput">xor_combine_engine</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp145878592-bb"></a><span class="identifier">xor_combine_engine</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp35625328-bb"></a><span class="identifier">xor_combine_engine</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Constructors a <code class="computeroutput"><code class="computeroutput"><a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a></code></code> by default constructing both base generators. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp145880192-bb"></a><span class="identifier">xor_combine_engine</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">base1_type</span> <span class="special">&amp;</span> rng1<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">base2_type</span> <span class="special">&amp;</span> rng2<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp35626864-bb"></a><span class="identifier">xor_combine_engine</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">base1_type</span> <span class="special">&amp;</span> rng1<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">base2_type</span> <span class="special">&amp;</span> rng2<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructs a <code class="computeroutput">xor_combine</code> by copying two base generators. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp145882736-bb"></a><span class="identifier">xor_combine_engine</span><span class="special">(</span><span class="identifier">result_type</span> v<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp35629408-bb"></a><span class="identifier">xor_combine_engine</span><span class="special">(</span><span class="identifier">result_type</span> v<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructs a <code class="computeroutput"><code class="computeroutput"><a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a></code></code>, seeding both base generators with <code class="computeroutput">v</code>.</p>
 <p> </p>
 <div class="warning"><table border="0" summary="Warning">
@@ -111,96 +111,96 @@
 <p>  </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> SeedSeq<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idp203146032-bb"></a><span class="identifier">xor_combine_engine</span><span class="special">(</span><span class="identifier">SeedSeq</span> <span class="special">&amp;</span> seq<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> SeedSeq<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idp35633312-bb"></a><span class="identifier">xor_combine_engine</span><span class="special">(</span><span class="identifier">SeedSeq</span> <span class="special">&amp;</span> seq<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructs a <code class="computeroutput"><code class="computeroutput"><a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a></code></code>, seeding both base generators with values produced by <code class="computeroutput">seq</code>. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> It<span class="special">&gt;</span> <a name="idp203149888-bb"></a><span class="identifier">xor_combine_engine</span><span class="special">(</span><span class="identifier">It</span> <span class="special">&amp;</span> first<span class="special">,</span> <span class="identifier">It</span> last<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> It<span class="special">&gt;</span> <a name="idp35637168-bb"></a><span class="identifier">xor_combine_engine</span><span class="special">(</span><span class="identifier">It</span> <span class="special">&amp;</span> first<span class="special">,</span> <span class="identifier">It</span> last<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructs a <code class="computeroutput"><code class="computeroutput"><a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a></code></code>, seeding both base generators with values from the iterator range [first, last) and changes first to point to the element after the last one used. If there are not enough elements in the range to seed both generators, throws <code class="computeroutput">std::invalid_argument</code>. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp419859168"></a><h3>
-<a name="idp153588064-bb"></a><code class="computeroutput">xor_combine_engine</code> public member functions</h3>
+<a name="idp412551152"></a><h3>
+<a name="idp223993360-bb"></a><code class="computeroutput">xor_combine_engine</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp153588624-bb"></a><span class="identifier">seed</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp223993920-bb"></a><span class="identifier">seed</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Calls <code class="computeroutput">seed()</code> for both base generators. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp153590352-bb"></a><span class="identifier">seed</span><span class="special">(</span><span class="identifier">result_type</span> v<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp223995648-bb"></a><span class="identifier">seed</span><span class="special">(</span><span class="identifier">result_type</span> v<span class="special">)</span><span class="special">;</span></pre>
 <p><code class="computeroutput">seeds</code> both base generators with <code class="computeroutput">v</code>. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> SeedSeq<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp153593056-bb"></a><span class="identifier">seed</span><span class="special">(</span><span class="identifier">SeedSeq</span> <span class="special">&amp;</span> seq<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> SeedSeq<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp223998352-bb"></a><span class="identifier">seed</span><span class="special">(</span><span class="identifier">SeedSeq</span> <span class="special">&amp;</span> seq<span class="special">)</span><span class="special">;</span></pre>
 <p><code class="computeroutput">seeds</code> both base generators with values produced by <code class="computeroutput">seq</code>. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> It<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp153596624-bb"></a><span class="identifier">seed</span><span class="special">(</span><span class="identifier">It</span> <span class="special">&amp;</span> first<span class="special">,</span> <span class="identifier">It</span> last<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> It<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp92926128-bb"></a><span class="identifier">seed</span><span class="special">(</span><span class="identifier">It</span> <span class="special">&amp;</span> first<span class="special">,</span> <span class="identifier">It</span> last<span class="special">)</span><span class="special">;</span></pre>
 <p>seeds both base generators with values from the iterator range [first, last) and changes first to point to the element after the last one used. If there are not enough elements in the range to seed both generators, throws <code class="computeroutput">std::invalid_argument</code>. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">const</span> <span class="identifier">base1_type</span> <span class="special">&amp;</span> <a name="idp153600768-bb"></a><span class="identifier">base1</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">const</span> <span class="identifier">base1_type</span> <span class="special">&amp;</span> <a name="idp92930272-bb"></a><span class="identifier">base1</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Returns the first base generator. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">const</span> <span class="identifier">base2_type</span> <span class="special">&amp;</span> <a name="idp145869664-bb"></a><span class="identifier">base2</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">const</span> <span class="identifier">base2_type</span> <span class="special">&amp;</span> <a name="idp92931824-bb"></a><span class="identifier">base2</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Returns the second base generator. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">result_type</span> <a name="idp145871216-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">result_type</span> <a name="idp92933376-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Returns the next value of the generator. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Iter<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp145872512-bb"></a><span class="identifier">generate</span><span class="special">(</span><span class="identifier">Iter</span> first<span class="special">,</span> <span class="identifier">Iter</span> last<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Iter<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp92934672-bb"></a><span class="identifier">generate</span><span class="special">(</span><span class="identifier">Iter</span> first<span class="special">,</span> <span class="identifier">Iter</span> last<span class="special">)</span><span class="special">;</span></pre>
 <p>Fills a range with random values </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp145876016-bb"></a><span class="identifier">discard</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uintmax_t</span> z<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp92938176-bb"></a><span class="identifier">discard</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uintmax_t</span> z<span class="special">)</span><span class="special">;</span></pre>
 <p>Advances the state of the generator by <code class="computeroutput">z</code>. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp419929040"></a><h3>
-<a name="idp203154336-bb"></a><code class="computeroutput">xor_combine_engine</code> public static functions</h3>
+<a name="idp412620960"></a><h3>
+<a name="idp150174304-bb"></a><code class="computeroutput">xor_combine_engine</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">result_type</span> <a name="idp203154896-bb"></a><span class="identifier">min</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">result_type</span> <a name="idp150174864-bb"></a><span class="identifier">min</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Returns the smallest value that the generator can produce. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">result_type</span> <a name="idp203156480-bb"></a><span class="identifier">max</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">result_type</span> <a name="idp150176448-bb"></a><span class="identifier">max</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Returns the largest value that the generator can produce. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp419941888"></a><h3>
-<a name="idp211859488-bb"></a><code class="computeroutput">xor_combine_engine</code> friend functions</h3>
+<a name="idp412633744"></a><h3>
+<a name="idp150178192-bb"></a><code class="computeroutput">xor_combine_engine</code> friend functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> Traits<span class="special">&gt;</span> 
   <span class="keyword">friend</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span> 
-  <a name="idp211860048-bb"></a><span class="keyword">operator</span><span class="special">&lt;&lt;</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span> os<span class="special">,</span> 
+  <a name="idp150178752-bb"></a><span class="keyword">operator</span><span class="special">&lt;&lt;</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span> os<span class="special">,</span> 
              <span class="keyword">const</span> <a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a> <span class="special">&amp;</span> s<span class="special">)</span><span class="special">;</span></pre>
 <p>Writes the textual representation of the generator to a <code class="computeroutput">std::ostream</code>. </p>
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> Traits<span class="special">&gt;</span> 
   <span class="keyword">friend</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_istream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span> 
-  <a name="idp211865088-bb"></a><span class="keyword">operator</span><span class="special">&gt;&gt;</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_istream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span> is<span class="special">,</span> 
+  <a name="idp150183728-bb"></a><span class="keyword">operator</span><span class="special">&gt;&gt;</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_istream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span> is<span class="special">,</span> 
              <span class="keyword">const</span> <a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a> <span class="special">&amp;</span> s<span class="special">)</span><span class="special">;</span></pre>
 <p>Reads the textual representation of the generator from a <code class="computeroutput">std::istream</code>. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">friend</span> <span class="keyword">bool</span> <a name="idp211870128-bb"></a><span class="keyword">operator</span><span class="special">==</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a> <span class="special">&amp;</span> x<span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">friend</span> <span class="keyword">bool</span> <a name="idp99934320-bb"></a><span class="keyword">operator</span><span class="special">==</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a> <span class="special">&amp;</span> x<span class="special">,</span> 
                        <span class="keyword">const</span> <a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a> <span class="special">&amp;</span> y<span class="special">)</span><span class="special">;</span></pre>
 <p>Returns true if the two generators will produce identical sequences. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">friend</span> <span class="keyword">bool</span> <a name="idp215329184-bb"></a><span class="keyword">operator</span><span class="special">!=</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a> <span class="special">&amp;</span> lhs<span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">friend</span> <span class="keyword">bool</span> <a name="idp99937904-bb"></a><span class="keyword">operator</span><span class="special">!=</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a> <span class="special">&amp;</span> lhs<span class="special">,</span> 
                        <span class="keyword">const</span> <a class="link" href="xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
 <p>Returns true if the two generators will produce different sequences. </p>
 </li>

@@ -30,6 +30,8 @@ Acknowledgements
 <h2>Contents</h2>
 
 <ul>
+  <li><a href="#boost_1_58">Boost 1.58 release</a></li>
+  <li><a href="#boost_1_57">Boost 1.57 release</a></li>
   <li><a href="#boost_1_56">Boost 1.56 release</a></li>
   <li><a href="#boost_1_55">Boost 1.55 release</a></li>
   <li><a href="#boost_1_54">Boost 1.54 release</a></li>
@@ -48,6 +50,44 @@ Acknowledgements
   <li><a href="#boost_1_33_1">Boost 1.33.1 release</a></li>
   <li><a href="#boost_1_33">Boost 1.33 release</a></li>
 </ul>
+
+<h2><a name="boost_1_58">Boost 1.58 release</a></h2>
+
+<p>
+<ul>
+  <li>The efficiency of lookup operations has improved in situations where they involve
+    the generation of temporary values of <code>key_type</code>. Consider for instance
+    the following code:
+<blockquote><pre>
+<span class=keyword>typedef</span> <span class=identifier>multi_index_container</span><span class=special>&lt;</span>
+  <span class=identifier>std</span><span class=special>::</span><span class=identifier>string</span><span class=special>,</span>
+  <span class=identifier>indexed_by</span><span class=special>&lt;</span>
+    <span class=identifier>ordered_unique</span><span class=special>&lt;</span><span class=identifier>identity</span><span class=special>&lt;</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>string</span><span class=special>&gt;</span> <span class=special>&gt;</span>
+  <span class=special>&gt;</span>
+<span class=special>&gt;</span> <span class=identifier>multi_t</span><span class=special>;</span>
+<span class=special>...</span>
+<span class=identifier>multi_t</span> <span class=identifier>m</span><span class=special>=...;</span>
+<span class=identifier>m</span><span class=special>.</span><span class=identifier>find</span><span class=special>(</span><span class=string>&quot;boost&quot;</span><span class=special>);</span> <span class=comment>// passed a const char*, not a std::string</span>
+</pre></blockquote>
+      In previous versions of the library, the <code>find</code> operation generates
+      several temporary <code>std::string</code>s (one every time an internal comparison is made).
+      In sufficiently advanced compilers, this is now avoided so that only one temporary is
+      created.
+  </li>
+  <li>Maintenance fixes.</li>
+</ul>
+</p>
+
+<h2><a name="boost_1_57">Boost 1.57 release</a></h2>
+
+<p>
+<ul>
+  <li>When <code>std::tuple</code>s are available, these can be used for lookup operations
+     in indices equipped with composite keys. <code>boost::tuple</code>s are also supported
+     for backwards compatibility.
+  </li>
+</ul>
+</p>
 
 <h2><a name="boost_1_56">Boost 1.56 release</a></h2>
 
@@ -451,7 +491,7 @@ Acknowledgements
 
 <br>
 
-<p>Revised March 24th 2014</p>
+<p>Revised November 12th 2014</p>
 
 <p>&copy; Copyright 2003-2014 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 

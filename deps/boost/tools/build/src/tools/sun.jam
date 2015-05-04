@@ -18,9 +18,30 @@ generators.override sun.prebuilt : builtin.lib-generator ;
 generators.override sun.prebuilt : builtin.prebuilt ;
 generators.override sun.searched-lib-generator : searched-lib-generator ;
 
+#
+# There are no less than 5 standard library options:
+# 1) The default, which uses an old version of the Rogue Wave std lib,
+#    also available via -std=sun03.
+# 2) C++03 mode + STLport, selected via the -library option.
+# 3) C++03 mode plus the Apache std lib, selected via the -library option.
+# 4) C++03 or C++11 in g++ compatibility mode, and GNU libstdc++3, selected via -std=c++03/11.
+#
+# Note that the -std, -library and -compat compiler switches appear to be largely mutually
+# incompatible, and that going forward the -std switch seems to be the prefered one.
+#
+# See http://docs.oracle.com/cd/E37069_01/html/E37075/bkamw.html#OSSCPgnaof
+#
 feature.extend stdlib : sun-stlport ;
 feature.compose <stdlib>sun-stlport
     : <cxxflags>-library=stlport4 <linkflags>-library=stlport4
+    ;
+feature.extend stdlib : apache ;
+feature.compose <stdlib>apache
+    : <cxxflags>-library=stdcxx4 <linkflags>-library=stdcxx4
+    ;
+feature.extend stdlib : gnu ;
+feature.compose <stdlib>gnu
+    : <cxxflags>-std=c++03 <linkflags>-std=c++03
     ;
 
 rule init ( version ? : command * : options * ) 

@@ -7,9 +7,6 @@
 #if ! defined  BOOST_NO_CXX11_DECLTYPE
 #define BOOST_RESULT_OF_USE_DECLTYPE
 #endif
-#ifndef BOOST_NO_CXX11_DECLTYPE_N3276
-#define BOOST_THREAD_NO_CXX11_DECLTYPE_N3276
-#endif
 
 #define BOOST_THREAD_VERSION 4
 #define BOOST_THREAD_PROVIDES_EXECUTORS
@@ -67,12 +64,13 @@ void submit_some(boost::executor& tp)
 
 }
 
+
 void at_th_entry(boost::basic_thread_pool& )
 {
 
 }
 
-int main()
+int test_executor_adaptor()
 {
   // std::cout << BOOST_CONTEXTOF << std::endl;
   {
@@ -143,4 +141,10 @@ int main()
   }
   // std::cout << BOOST_CONTEXTOF << std::endl;
   return 0;
+}
+
+
+int main()
+{
+  return test_executor_adaptor();
 }

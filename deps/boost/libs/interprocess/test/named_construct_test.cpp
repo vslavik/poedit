@@ -10,7 +10,8 @@
 #include <boost/interprocess/detail/config_begin.hpp>
 #include <boost/interprocess/detail/workaround.hpp>
 #include <boost/interprocess/managed_shared_memory.hpp>
-#include <utility>
+// intrusive/detail
+#include <boost/intrusive/detail/minimal_pair_header.hpp>
 
 typedef std::pair<double, int> simple_pair;
 

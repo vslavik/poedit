@@ -10,14 +10,15 @@
 #include <boost/detail/lightweight_test.hpp>
 
 #include <boost/noncopyable.hpp>
-#include <boost/blank.hpp>
 
+#include <boost/mpl/empty_base.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/and.hpp>
+#include <boost/mpl/not.hpp>
 #include <boost/mpl/bool.hpp>
-#include <boost/mpl/identity.hpp>
 
 #include <boost/utility/result_of.hpp>
+#include <boost/core/enable_if.hpp>
 
 #include <boost/fusion/sequence/intrinsic/empty.hpp>
 #include <boost/fusion/algorithm/iteration/fold.hpp>
@@ -33,17 +34,18 @@ typedef mpl::true_ no_nullary_call;
 using boost::ref;
 using boost::cref;
 
-template <class Base = boost::blank, class RemoveNullary = mpl::false_>
+template <class Base = mpl::empty_base, class RemoveNullary = mpl::false_>
 struct test_func
     : Base
 {
     template <typename Sig>
     struct result;
 
-    template <class Self, class Seq> 
+    template <class Self, class Seq>
     struct result< Self(Seq &) >
-        : mpl::if_< mpl::and_< boost::fusion::result_of::empty<Seq>, RemoveNullary >, 
-                    boost::blank, mpl::identity<long> >::type
+        : boost::enable_if<
+              mpl::not_<mpl::and_<boost::fusion::result_of::empty<Seq>, RemoveNullary> >,
+              long>
     { };
 
     template <typename Seq>

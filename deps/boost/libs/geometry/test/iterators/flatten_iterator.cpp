@@ -24,6 +24,7 @@
 #include <vector>
 #include <list>
 
+#include <boost/core/ignore_unused.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/type_traits/is_const.hpp>
 #include <boost/assign/std/vector.hpp>
@@ -151,6 +152,8 @@ struct test_flatten_iterator
                              std::string const& case_id,
                              std::string const& container_id)
     {
+        boost::ignore_unused(case_id, container_id);
+
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
         std::stringstream sstream;
         sstream << case_id << " [" << container_id << "]";

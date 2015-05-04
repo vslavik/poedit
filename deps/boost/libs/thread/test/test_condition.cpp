@@ -7,7 +7,7 @@
 
 #define BOOST_THREAD_VERSION 2
 #define BOOST_THREAD_PROVIDES_INTERRUPTIONS
-
+#define BOOST_TEST_MODULE Boost.Threads: condition test suite
 #include <boost/thread/detail/config.hpp>
 
 #include <boost/thread/condition.hpp>
@@ -156,7 +156,7 @@ void do_test_condition_waits()
     BOOST_CHECK_EQUAL(data.awoken, 5);
 }
 
-void test_condition_waits()
+BOOST_AUTO_TEST_CASE(test_condition_waits)
 {
     // We should have already tested notify_one here, so
     // a timed test with the default execution_monitor::use_condition
@@ -176,20 +176,8 @@ void do_test_condition_wait_is_a_interruption_point()
 }
 
 
-void test_condition_wait_is_a_interruption_point()
+BOOST_AUTO_TEST_CASE(test_condition_wait_is_a_interruption_point)
 {
     timed_test(&do_test_condition_wait_is_a_interruption_point, 1);
 }
-
-boost::unit_test::test_suite* init_unit_test_suite(int, char*[])
-{
-    boost::unit_test::test_suite* test =
-        BOOST_TEST_SUITE("Boost.Threads: condition test suite");
-
-    test->add(BOOST_TEST_CASE(&test_condition_waits));
-    test->add(BOOST_TEST_CASE(&test_condition_wait_is_a_interruption_point));
-
-    return test;
-}
-
 

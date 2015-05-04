@@ -101,7 +101,31 @@
 
 [endsect]
 
-[section:cxx1y C++1y TS Concurrency - On going proposals]
+
+[section:cxx1y C++14 TS Extensions for Concurrency V1 ]
+
+[note [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4107.html N4107-Extensions for Concurrency]]
+
+
+[table Improvements to std::future<T> and related APIs]
+    [[Section]  [Description]  [Status] [Comments]]
+    [[2.1]      [ - ]  [ - ] [ - ]]
+    [[2.2]      [Class template future]  [Partial] [ - ]]
+    [[2.2]      [then]  [ Partial ] [ without implicit unwrapping #10550 and blocking #10551 ]]
+    [[2.2]      [is_ready]  [ Yes ] [ - ]]
+    [[2.3]      [Class template shared_future]  [Partial] [ - ]]
+    [[2.3]      [then]  [ Partial ] [ Without implicit unwrapping #10550 and blocking #10551 ]]
+    [[2.3]      [is_ready]  [ Yes ] [ - ]]
+    [[2.4]      [Function template when_all]  [Partial] [ interface not complete #10426 and blocking #10551 ]]
+    [[2.5]      [Function template when_any]  [Partial] [ interface not complete #10427 and blocking #10551 ]]
+    [[2.6]      [Function template when_any_back]  [No] [ #XXXX  ]]
+    [[2.7]      [Function template make_ready_future]  [Yes] [ - ]]
+]
+
+
+[endsect]
+
+[section:cxx1y C++1z TS Concurrency - On going proposals]
 
 [section:latch C++ Latches and Barriers]
 
@@ -161,8 +185,6 @@
 [endsect]
 [section:executors Asynchronous Executors]
 
-While Boost.Thread implementation of executors would not use dynamic polymorphism, it is worth comparing with the current trend on the standard.
-
 [note [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3785.pdf N3785 Executors and Schedulers]]
 
 [table Asynchronous Executors
@@ -181,30 +203,13 @@ While Boost.Thread implementation of executors would not use dynamic polymorphis
     [[V.2.5]      [thread_executor]  [Yes] [ static version thread_executor, dynamic one execduler_adaptor<thread_executor> ]]
 ]
 
-[endsect]
-[section:async Improvements to std::future<T> and Related APIs]
+[note [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3784.pdf N3784-Improvements to `std::future<T> and Related APIs]]
 
-[note [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n3857.pdf N3857-Improvements to std::future<T> and Related APIs]]
-
-[note These functions are based on [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3634.pdf [*N3634 - Improvements to std::future<T> and related APIs]] C++1y proposal by N. Gustafsson, A. Laksberg, H. Sutter, S. Mithani.]
-
-[table Improvements to std::future<T> and related APIs]
+[table `async, future/shared_future::then`and Executors
     [[Section]  [Description]  [Status] [Comments]]
-    [[30.6.6]      [Class template future]  [Partial] [ - ]]
-    [[30.6.6]      [unwrap constructor]  [Yes] [ - ]]
-    [[30.6.6]      [then]  [Yes] [ - ]]
-    [[30.6.6]      [unwrap]  [Yes] [ - ]]
-    [[30.6.6]      [ready]  [Partial] [ is_ready  ]]
-    [[30.6.7]      [Class template shared_future]  [Partial] [ - ]]
-    [[30.6.6]      [unwrap constructor]  [Yes] [ - ]]
-    [[30.6.7]      [then]  [Yes] [ - ]]
-    [[30.6.7]      [unwrap]  [No] [ #XXXX ]]
-    [[30.6.7]      [ready]  [Partial] [ is_ready  ]]
-    [[30.6.X]      [Function template when_all]  [Partial] [ interface not complete #7447  ]]
-    [[30.6.X]      [Function template when_any]  [Partial] [ interface not complete #7446  ]]
-    [[30.6.X]      [Function template when_any_swaped]  [No] [ #XXXX  ]]
-    [[30.6.X]      [Function template make_ready_future]  [Yes] [ - ]]
-    [[30.6.8]      [Function template async ]  [Yes] [ - ]]
+    [[30.6.6]      [`future<T>::then`]  [Yes] [  ]]
+    [[30.6.7]      [`shared_future<T>::then`]  [Yes] [    ]]
+    [[30.6.8]      [`async`]  [Yes] [ - ]]
 ]
 
 [endsect]

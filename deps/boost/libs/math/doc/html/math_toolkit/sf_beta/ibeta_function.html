@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Incomplete Beta Functions</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 1.9.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
 <link rel="up" href="../sf_beta.html" title="Beta Functions">
 <link rel="prev" href="beta_function.html" title="Beta">
 <link rel="next" href="ibeta_inv_function.html" title="The Incomplete Beta Function Inverses">
@@ -109,10 +109,10 @@
         Returns the normalised incomplete beta function of a, b and x:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ibeta3.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ibeta3.svg"></span>
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../graphs/ibeta.png" align="middle"></span>
+        <span class="inlinemediaobject"><img src="../../../graphs/ibeta.svg" align="middle"></span>
       </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ibetac</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">);</span>
@@ -125,7 +125,7 @@
         and x:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ibeta4.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ibeta4.svg"></span>
       </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">beta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">);</span>
@@ -137,7 +137,7 @@
         Returns the full (non-normalised) incomplete beta function of a, b and x:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ibeta1.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ibeta1.svg"></span>
       </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">betac</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">);</span>
@@ -150,7 +150,7 @@
         of a, b and x:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ibeta2.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ibeta2.svg"></span>
       </p>
 <h5>
 <a name="math_toolkit.sf_beta.ibeta_function.h2"></a>
@@ -891,7 +891,7 @@
         both x and y, and can return either p or q where these are related by:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ibeta_inv5.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ibeta_inv5.svg"></span>
       </p>
 <p>
         so at any point we can swap a for b, x for y and p for q if this results
@@ -905,7 +905,7 @@
         than the alternatives - however it is used to generate test data:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ibeta5.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ibeta5.svg"></span>
       </p>
 <p>
         The following continued fraction is due to <a href="http://portal.acm.org/citation.cfm?doid=131766.131776" target="_top">Didonato
@@ -913,13 +913,13 @@
         greater than 1:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ibeta6.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ibeta6.svg"></span>
       </p>
 <p>
         For smallish b and x then a series representation can be used:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ibeta7.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ibeta7.svg"></span>
       </p>
 <p>
         When b &lt;&lt; a then the transition from 0 to 1 occurs very close to x
@@ -927,7 +927,7 @@
         case the following series representation is used:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ibeta8.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ibeta8.svg"></span>
 
       </p>
 <p>
@@ -942,17 +942,17 @@
         the following finite sum:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ibeta12.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ibeta12.svg"></span>
       </p>
 <p>
         Finally we can sidestep difficult areas, or move to an area with a more efficient
         means of computation, by using the duplication formulae:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ibeta10.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ibeta10.svg"></span>
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/ibeta11.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/ibeta11.svg"></span>
       </p>
 <p>
         The domains of a, b and x for which the various methods are used are identical
@@ -962,10 +962,10 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012, 2013 Nikhar Agrawal, Anton Bikineev,
-      Paul A. Bristow, Christopher Kormanyos, Hubert Holin, Bruno Lalande, John Maddock,
-      Johan R&#229;de, Gautam Sewani, Benjamin Sobotta, Thijs van den Berg, Daryle Walker
-      and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
+      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
+      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
+      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -11,7 +11,7 @@
 #include <boost/math/special_functions/math_fwd.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <boost/array.hpp>
-#include <boost/tr1/random.hpp>
+#include <boost/random.hpp>
 #include "functor.hpp"
 
 #include "handle_test_result.hpp"
@@ -90,7 +90,7 @@ void do_test_ellint_rj(T& data, const char* type_name, const char* test)
       bind_func<Real>(fp, 0, 1, 2, 3),
       extract_result<Real>(4));
       handle_test_result(result, data[result.worst()], result.worst(), 
-      type_name, "boost::math::ellint_rf", test);
+      type_name, "boost::math::ellint_rj", test);
 
    std::cout << std::endl;
 
@@ -121,6 +121,31 @@ void do_test_ellint_rd(T& data, const char* type_name, const char* test)
 
 }
 
+template <class Real, typename T>
+void do_test_ellint_rg(T& data, const char* type_name, const char* test)
+{
+   typedef Real                   value_type;
+
+   std::cout << "Testing: " << test << std::endl;
+
+#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+   value_type(*fp)(value_type, value_type, value_type) = boost::math::ellint_rg<value_type, value_type, value_type>;
+#else
+   value_type(*fp)(value_type, value_type, value_type) = boost::math::ellint_rg;
+#endif
+   boost::math::tools::test_result<value_type> result;
+
+   result = boost::math::tools::test_hetero<Real>(
+      data,
+      bind_func<Real>(fp, 0, 1, 2),
+      extract_result<Real>(3));
+   handle_test_result(result, data[result.worst()], result.worst(),
+      type_name, "boost::math::ellint_rg", test);
+
+   std::cout << std::endl;
+
+}
+
 template <typename T>
 void test_spots(T, const char* type_name)
 {
@@ -131,14 +156,14 @@ void test_spots(T, const char* type_name)
    // Elliptic Integrals, B. C. Carlson: http://arxiv.org/abs/math.CA/9409227
    // RF:
    T tolerance = (std::max)(T(1e-13f), tools::epsilon<T>() * 5) * 100; // Note 5eps expressed as a persentage!!!
-   T eps2 = 2 * tools::epsilon<T>();
+   T eps2 = 5 * tools::epsilon<T>();
    BOOST_CHECK_CLOSE(ellint_rf(T(1), T(2), T(0)), T(1.3110287771461), tolerance);
    BOOST_CHECK_CLOSE(ellint_rf(T(0.5), T(1), T(0)), T(1.8540746773014), tolerance);
    BOOST_CHECK_CLOSE(ellint_rf(T(2), T(3), T(4)), T(0.58408284167715), tolerance);
    // RC:
    BOOST_CHECK_CLOSE_FRACTION(ellint_rc(T(0), T(1)/4), boost::math::constants::pi<T>(), eps2);
-   BOOST_CHECK_CLOSE_FRACTION(ellint_rc(T(9)/4, T(2)), log(T(2)), eps2);
-   BOOST_CHECK_CLOSE_FRACTION(ellint_rc(T(1)/4, T(-2)), log(T(2))/3, eps2);
+   BOOST_CHECK_CLOSE_FRACTION(ellint_rc(T(9)/4, T(2)), boost::math::constants::ln_two<T>(), eps2);
+   BOOST_CHECK_CLOSE_FRACTION(ellint_rc(T(1) / 4, T(-2)), boost::math::constants::ln_two<T>() / 3, eps2);
    // RJ:
    BOOST_CHECK_CLOSE(ellint_rj(T(0), T(1), T(2), T(3)), T(0.77688623778582), tolerance);
    BOOST_CHECK_CLOSE(ellint_rj(T(2), T(3), T(4), T(5)), T(0.14297579667157), tolerance);
@@ -150,8 +175,8 @@ void test_spots(T, const char* type_name)
 
    // Sanity/consistency checks from Numerical Computation of Real or Complex 
    // Elliptic Integrals, B. C. Carlson: http://arxiv.org/abs/math.CA/9409227
-   std::tr1::mt19937 ran;
-   std::tr1::uniform_real<float> ur(0, 1000);
+   boost::mt19937 ran;
+   boost::uniform_real<float> ur(0, 1000);
    T eps40 = 40 * tools::epsilon<T>();
 
    for(unsigned i = 0; i < 1000; ++i)
@@ -202,6 +227,22 @@ void test_spots(T, const char* type_name)
 
    do_test_ellint_rf<T>(ellint_rf_data, type_name, "RF: Random data");
 
+#include "ellint_rf_xxx.ipp"
+
+   do_test_ellint_rf<T>(ellint_rf_xxx, type_name, "RF: x = y = z");
+
+#include "ellint_rf_xyy.ipp"
+
+   do_test_ellint_rf<T>(ellint_rf_xyy, type_name, "RF: x = y or y = z or x = z");
+
+#include "ellint_rf_0yy.ipp"
+
+   do_test_ellint_rf<T>(ellint_rf_0yy, type_name, "RF: x = 0, y = z");
+
+#include "ellint_rf_xy0.ipp"
+
+   do_test_ellint_rf<T>(ellint_rf_xy0, type_name, "RF: z = 0");
+
 #include "ellint_rc_data.ipp"
 
    do_test_ellint_rc<T>(ellint_rc_data, type_name, "RC: Random data");
@@ -210,8 +251,64 @@ void test_spots(T, const char* type_name)
 
    do_test_ellint_rj<T>(ellint_rj_data, type_name, "RJ: Random data");
 
+#include "ellint_rj_e4.ipp"
+
+   do_test_ellint_rj<T>(ellint_rj_e4, type_name, "RJ: 4 Equal Values");
+
+#include "ellint_rj_e3.ipp"
+
+   do_test_ellint_rj<T>(ellint_rj_e3, type_name, "RJ: 3 Equal Values");
+
+#include "ellint_rj_e2.ipp"
+
+   do_test_ellint_rj<T>(ellint_rj_e2, type_name, "RJ: 2 Equal Values");
+
+#include "ellint_rj_zp.ipp"
+
+   do_test_ellint_rj<T>(ellint_rj_zp, type_name, "RJ: Equal z and p");
+
 #include "ellint_rd_data.ipp"
 
    do_test_ellint_rd<T>(ellint_rd_data, type_name, "RD: Random data");
+
+#include "ellint_rd_xyy.ipp"
+
+   do_test_ellint_rd<T>(ellint_rd_xyy, type_name, "RD: y = z");
+
+#include "ellint_rd_xxz.ipp"
+
+   do_test_ellint_rd<T>(ellint_rd_xxz, type_name, "RD: x = y");
+
+#include "ellint_rd_0yy.ipp"
+
+   do_test_ellint_rd<T>(ellint_rd_0yy, type_name, "RD: x = 0, y = z");
+
+#include "ellint_rd_xxx.ipp"
+
+   do_test_ellint_rd<T>(ellint_rd_xxx, type_name, "RD: x = y = z");
+
+#include "ellint_rd_0xy.ipp"
+
+   do_test_ellint_rd<T>(ellint_rd_0xy, type_name, "RD: x = 0");
+
+#include "ellint_rg.ipp"
+
+   do_test_ellint_rg<T>(ellint_rg, type_name, "RG: Random Data");
+
+#include "ellint_rg_00x.ipp"
+
+   do_test_ellint_rg<T>(ellint_rg_00x, type_name, "RG: two values 0");
+
+#include "ellint_rg_xxx.ipp"
+
+   do_test_ellint_rg<T>(ellint_rg_xxx, type_name, "RG: All values the same or zero");
+
+#include "ellint_rg_xyy.ipp"
+
+   do_test_ellint_rg<T>(ellint_rg_xyy, type_name, "RG: two values the same");
+
+#include "ellint_rg_xy0.ipp"
+
+   do_test_ellint_rg<T>(ellint_rg_xy0, type_name, "RG: one value zero");
 }
 

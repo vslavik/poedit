@@ -14,6 +14,8 @@ import regex ;
 import os ;
 import path ;
 
+path-constant here : . ;
+
 doxygen_files =
     additive_combine
     bernoulli_distribution
@@ -37,6 +39,7 @@ doxygen_files =
     lognormal_distribution
     mersenne_twister
     negative_binomial_distribution
+    non_central_chi_squared_distribution
     normal_distribution
     piecewise_constant_distribution
     piecewise_linear_distribution
@@ -168,4 +171,5 @@ boostbook standalone :
     <implicit-dependency>reference
     <xsl:param>boost.root=../../../..
     <xsl:param>chunk.section.depth=2
+    <format>pdf:<xsl:param>img.src.path=$(here)/html/
 ;

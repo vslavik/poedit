@@ -11,7 +11,7 @@
 #include <boost/container/detail/pair.hpp>
 #include "movable_int.hpp"
 #include "emplace_test.hpp"
-#include<boost/move/move.hpp>
+#include<boost/move/utility_core.hpp>
 
 //non_copymovable_int
 //copyable_int

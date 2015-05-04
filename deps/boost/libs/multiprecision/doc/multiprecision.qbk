@@ -410,8 +410,8 @@ The following back-ends provide integer arithmetic:
    enum cpp_integer_type    { signed_magnitude, unsigned_magnitude };
    enum cpp_int_check_type  { checked, unchecked };
 
-   template <unsigned MinDigits = 0,
-             unsigned MaxDits = 0,
+   template <unsigned MinBits = 0,
+             unsigned MaxBits = 0,
              cpp_integer_type SignType = signed_magnitude,
              cpp_int_check_type Checked = unchecked,
              class Allocator = std::allocator<limb_type> >
@@ -419,8 +419,8 @@ The following back-ends provide integer arithmetic:
    //
    // Expression templates default to et_off if there is no allocator:
    //
-   template <unsigned MinDigits, unsigned MaxDigits, cpp_integer_type SignType, cpp_int_check_type Checked>
-   struct expression_template_default<cpp_int_backend<MinDigits, MaxDigits, SignType, Checked, void> >
+   template <unsigned MinBits, unsigned MaxBits, cpp_integer_type SignType, cpp_int_check_type Checked>
+   struct expression_template_default<cpp_int_backend<MinBits, MaxBits, SignType, Checked, void> >
    { static const expression_template_option value = et_off; };
 
    typedef number<cpp_int_backend<> >              cpp_int;    // arbitrary precision integer
@@ -1506,6 +1506,16 @@ In particular:
 
    mpz_int z(2);
    int i = z.template convert_to<int>(); // sets i to 2
+
+* Conversions to rational numbers from floating point ones are always allowed, and are exact and implicit
+as long as the rational number uses an unbounded integer type.  Please be aware that constructing a rational
+number from an extended precision floating point type with a large exponent range can effectively run the system
+out of memory, as in the extreme case ['2[super max_exponent] / CHAR_BITS] bytes of storage may be required.  This
+does not represent a problem for built in floating point types however, as the exponent range for these is rather
+limited.
+
+* Conversions to floating point numbers from rational ones are rounded to nearest (less than 0.5ulp error)
+as long as the floating point number is binary, and the integer type used by the rational number is unbounded.
 
 Additional conversions may be supported by particular backends.
 
@@ -2947,11 +2957,14 @@ which may be useful to ensure that columns line up.
    ``['unmentionable-expression-template-type]``    sinh   (const ``['number-or-expression-template-type]``&);
    ``['unmentionable-expression-template-type]``    tanh   (const ``['number-or-expression-template-type]``&);
 
-   ``['unmentionable-expression-template-type]``    ldexp (const ``['number-or-expression-template-type]``&, int);
-   ``['unmentionable-expression-template-type]``    frexp (const ``['number-or-expression-template-type]``&, int*);
+   ``['unmentionable-expression-template-type]``    ldexp (const ``['number-or-expression-template-type]``&, ``['integer-type]``);
+   ``['unmentionable-expression-template-type]``    frexp (const ``['number-or-expression-template-type]``&, ``['integer-type]``*);
    ``['unmentionable-expression-template-type]``    pow   (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
    ``['unmentionable-expression-template-type]``    fmod  (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
    ``['unmentionable-expression-template-type]``    atan2 (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    scalbn(const ``['number-or-expression-template-type]``&, ``['integer-type]``);
+   ``['unmentionable-expression-template-type]``    logb  (const ``['number-or-expression-template-type]``&);
+   ``['integer-type]``                              ilogb (const ``['number-or-expression-template-type]``&);
 
    // Traits support:
    template <class T>
@@ -3283,15 +3296,21 @@ that allows arithmetic to be performed on native integer types producing an exte
    ``['unmentionable-expression-template-type]``    sinh   (const ``['number-or-expression-template-type]``&);
    ``['unmentionable-expression-template-type]``    tanh   (const ``['number-or-expression-template-type]``&);
 
-   ``['unmentionable-expression-template-type]``    ldexp (const ``['number-or-expression-template-type]``&, int);
-   ``['unmentionable-expression-template-type]``    frexp (const ``['number-or-expression-template-type]``&, int*);
+   ``['unmentionable-expression-template-type]``    ldexp (const ``['number-or-expression-template-type]``&, ``['integer-type]``);
+   ``['unmentionable-expression-template-type]``    frexp (const ``['number-or-expression-template-type]``&, ``['integer-type]``*);
    ``['unmentionable-expression-template-type]``    pow   (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
    ``['unmentionable-expression-template-type]``    fmod  (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
    ``['unmentionable-expression-template-type]``    atan2 (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['unmentionable-expression-template-type]``    scalbn(const ``['number-or-expression-template-type]``&, ``['integer-type]``);
+   ``['unmentionable-expression-template-type]``    logb  (const ``['number-or-expression-template-type]``&);
+   ``['integer-type]``                              ilogb (const ``['number-or-expression-template-type]``&);
 
 These functions all behave exactly as their standard library C++11 counterparts do: their argument is either an instance of `number` or
 an expression template derived from it; If the argument is of type `number<Backend, et_off>` then that is also the return type,
 otherwise the return type is an expression template.
+
+The integer type arguments to `ldexp`, `frexp`, `scalbn` and `ilogb` may be either type `int`, or the actual
+type of the exponent of the number type.
 
 These functions are normally implemented by the Backend type.  However, default versions are provided for Backend types that
 don't have native support for these functions.  Please note however, that this default support requires the precision of the type
@@ -4233,6 +4252,12 @@ and `ff` is a variable of type `std::ios_base::fmtflags`.
             The default version of this function is synthesised from other operations above.][[space]]]
 [[`eval_atan2(b, cb, cb2)`][`void`][Performs the equivalent operation to `std::atan` on arguments `cb` and `cb2`, and store the result in `b`.  Only required when `B` is an floating-point type.
             The default version of this function is synthesised from other operations above.][[space]]]
+[[`eval_scalbn(b, cb, e)`][`void`][Scales value `cb` by ['r[super e]], where ['r] is the radix of the type.  The default version of this function
+                  is implemented in terms of eval_ldexp, consequently this function must be provided for types with a radix other than 2.]]
+[[`eval_ilogb(cb)`][`B::exponent_type`][Returns the exponent ['e] of value `cb` such that ['1 <= cb*r[super -e] < r], where ['r] is the radix of type B.
+                    The default version of this function is implemented in terms of eval_frexp, consequently this function must be provided for types with a radix other than 2.]]
+[[`eval_logb(b, cb)`][`B::exponent_type`][Sets `b` to the exponent ['e] of value `cb` such that ['1 <= cb*r[super -b] < r], where ['r] is the radix of type B.
+                  The default version of this function is implemented in terms of `eval_ilogb`.]]
 ]
 
 When the tables above place no ['throws] requirements on an operation, then it is up to each type modelling this concept to
@@ -4919,6 +4944,20 @@ Windows Vista machine.
 
 [section:hist History]
 
+[h4 Multiprecision-2.2.4 (Boost-1.58)]
+
+* Changed `frexp` to always be non-expression template generating, see: [@https://svn.boost.org/trac/boost/ticket/10993 10993].
+* Improved support of cpp_dec_float on Cygwin and other platforms with missing long double support, see [@https://svn.boost.org/trac/boost/ticket/10924 10924].
+* Improved noexcept support and added some more tests, see [@https://svn.boost.org/trac/boost/ticket/10990 10990].
+* Various workarounds applied for Intel-15.0 and Solaris-12.4 compilers.
+
+[h4 Multiprecision-2.2.3 (Boost-1.57)]
+
+* Changed rational to float conversions to exactly round to nearest, see [@https://svn.boost.org/trac/boost/ticket/10085 10085].
+* Added improved generic float to rational conversions.
+* Fixed rare bug in exponent function for __cpp_bin_float.
+* Fixed various minor documentation issues.
+
 [h4 Multiprecision-2.2.2 (Boost-1.56)]
 
 * Change floating point to rational conversions to be implicit, see [@https://svn.boost.org/trac/boost/ticket/10082 10082].
@@ -5015,10 +5054,8 @@ More a list of what ['could] be done, rather than what ['should] be done (which 
 
 * Add back-end support for libdecNumber.
 * Add an adaptor back-end for complex number types.
-* Add a back-end for MPFR interval arithmetic.
 * Add better multiplication routines (Karatsuba, FFT etc) to cpp_int_backend.
 * Add assembly level routines to cpp_int_backend.
-* Add an all C++ Boost licensed binary floating point type.
 * Can ring types (exact floating point types) be supported?  The answer should be yes, but someone needs to write it,
 the hard part is IO and binary-decimal conversion.
 * Should there be a choice of rounding mode (probably MPFR specific)?

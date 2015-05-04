@@ -10,7 +10,7 @@
 
 #include <boost/config.hpp>
 
-#include <boost/lexical_cast.hpp>
+#include <boost/lexical_cast/try_lexical_convert.hpp>
 #include <boost/test/unit_test.hpp>
 
 using namespace boost::conversion;

@@ -124,6 +124,7 @@ public:
     transform_width(const transform_width & rhs) : 
         super_t(rhs.base_reference()),
         m_buffer_out_full(rhs.m_buffer_out_full),
+        m_buffer_out(rhs.m_buffer_out),
         m_buffer_in(rhs.m_buffer_in),
         m_remaining_bits(rhs.m_remaining_bits),
         m_end_of_sequence(false)

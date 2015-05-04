@@ -12,32 +12,11 @@
 #define BOOST_PRINTCONTAINER_HPP
 
 #include <boost/container/detail/config_begin.hpp>
-#include <functional>
 #include <iostream>
-#include <algorithm>
 
 namespace boost{
 namespace container {
 namespace test{
-
-struct PrintValues
-{
-	typedef int    argument_type;
-	typedef void   result_type;
-
-   void operator() (int value) const
-   {
-      std::cout << value << " ";
-   }
-};
-
-template<class Container>
-void PrintContents(const Container &cont, const char *contName)
-{
-   std::cout<< "Printing contents of " << contName << std::endl;
-   std::for_each(cont.begin(), cont.end(), PrintValues());
-   std::cout<< std::endl << std::endl;
-}
 
 //Function to dump data
 template<class MyBoostCont

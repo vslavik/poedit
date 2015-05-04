@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE header PUBLIC "-//Boost//DTD BoostBook XML V1.0//EN"
   "http://www.boost.org/tools/boostbook/dtd/boostbook.dtd">
+<!--
+    Copyright 2013-2014, Antony Polukhin.
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+-->
 <header name="boost/variant/multivisitors.hpp">
   <using-namespace name="boost"/>
 
@@ -10,7 +16,9 @@
     <macro name="BOOST_VARAINT_MAX_MULTIVIZITOR_PARAMS">
       <purpose>
         <simpara>Controls maximum amount of <code><classname>variant</classname></code>
-          parameters for multi visistors. </simpara>
+          parameters for multi visistors. Not used when <code>std::tuple</code> is available and
+          <code><macroname>BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES</macroname></code>
+          is not defined.</simpara>
       </purpose>
 
       <description>
@@ -38,7 +46,7 @@
           <template-type-parameter name="Variant3"/>
         </template>
 
-        <type>typename MultiVisitor::result_type</type>
+        <type>typename MultiVisitor::result_type OR decltype(auto)</type>
 
         <parameter name="visitor">
           <paramtype>MultiVisitor &amp;</paramtype>
@@ -65,7 +73,7 @@
           <template-type-parameter name="Variant3"/>
         </template>
 
-        <type>typename MultiVisitor::result_type</type>
+        <type>typename MultiVisitor::result_type OR decltype(auto)</type>
 
         <parameter name="visitor">
           <paramtype>const MultiVisitor &amp;</paramtype>

@@ -1,7 +1,7 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
-// Copyright (c) 2014, Oracle and/or its affiliates.
+// Copyright (c) 2014-2015, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 
@@ -46,6 +46,8 @@
 #include <boost/geometry/algorithms/is_valid.hpp>
 
 #include <boost/geometry/algorithms/detail/check_iterator_range.hpp>
+
+#include <from_wkt.hpp>
 
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
 #include "pretty_print_geometry.hpp"
@@ -218,14 +220,38 @@ template <typename ValidityTester>
 struct validity_checker
 {
     template <typename Geometry>
-    static inline bool apply(Geometry const& geometry,
-                             bool expected_result)
+    static inline bool apply(std::string const& case_id,
+                             Geometry const& geometry,
+                             bool expected_result,
+                             std::string& reason)
     {
         bool valid = ValidityTester::apply(geometry);
-        BOOST_CHECK_MESSAGE( valid == expected_result,
-            "Expected: " << expected_result
-            << " detected: " << valid
-            << " wkt: " << bg::wkt(geometry) );
+        std::string const reason_valid
+            = bg::validity_failure_type_message(bg::no_failure);
+        reason = ValidityTester::reason(geometry);
+        std::string reason_short = reason.substr(0, reason_valid.length());
+
+        BOOST_CHECK_MESSAGE(valid == expected_result,
+            "case id: " << case_id
+            << ", Expected: " << expected_result
+            << ", detected: " << valid
+            << "; wkt: " << bg::wkt(geometry));
+
+        BOOST_CHECK_MESSAGE(reason != "",
+            "case id (empty reason): " << case_id
+            << ", Expected: " << valid
+            << ", detected reason: " << reason
+            << "; wkt: " << bg::wkt(geometry));
+
+        BOOST_CHECK_MESSAGE((valid && reason == reason_valid)
+                            ||
+                            (! valid && reason != reason_valid)
+                            ||
+                            (! valid && reason_short != reason_valid),
+            "case id (reason): " << case_id
+            << ", Expected: " << valid
+            << ", detected reason: " << reason
+            << "; wkt: " << bg::wkt(geometry));
 
         return valid;
     }
@@ -242,6 +268,14 @@ struct default_validity_tester
     {
         return bg::is_valid(geometry);
     }
+
+    template <typename Geometry>
+    static inline std::string reason(Geometry const& geometry)
+    {
+        std::string message;
+        bg::is_valid(geometry, message);
+        return message;
+    }
 };
 
 
@@ -251,12 +285,19 @@ struct validity_tester_linear
     template <typename Geometry>
     static inline bool apply(Geometry const& geometry)
     {
-        return bg::dispatch::is_valid
-            <
-                Geometry,
-                typename bg::tag<Geometry>::type,
-                AllowSpikes
-            >::apply(geometry);
+        bool const irrelevant = true;
+        bg::is_valid_default_policy<irrelevant, AllowSpikes> visitor;
+        return bg::is_valid(geometry, visitor);
+    }
+
+    template <typename Geometry>
+    static inline std::string reason(Geometry const& geometry)
+    {
+        bool const irrelevant = true;
+        std::ostringstream oss;
+        bg::failing_reason_policy<irrelevant, AllowSpikes> visitor(oss);
+        bg::is_valid(geometry, visitor);
+        return oss.str();
     }
 };
 
@@ -267,16 +308,19 @@ struct validity_tester_areal
     template <typename Geometry>
     static inline bool apply(Geometry const& geometry)
     {
-        bool const irrelevant = true;
-
-        return bg::dispatch::is_valid
-            <
-                Geometry,
-                typename bg::tag<Geometry>::type,
-                irrelevant,
-                AllowDuplicates
-            >::apply(geometry);
+        bg::is_valid_default_policy<AllowDuplicates> visitor;
+        return bg::is_valid(geometry, visitor);
     }
+
+    template <typename Geometry>
+    static inline std::string reason(Geometry const& geometry)
+    {
+        std::ostringstream oss;
+        bg::failing_reason_policy<AllowDuplicates> visitor(oss);
+        bg::is_valid(geometry, visitor);
+        return oss.str();
+    }
+
 };
 
 
@@ -292,37 +336,47 @@ template
     typename CWClosedGeometry = Geometry,
     typename Tag = typename bg::tag<Geometry>::type
 >
-struct test_valid
+class test_valid
 {
+protected:
     template <typename G>
-    static inline void base_test(G const& g, bool expected_result)
+    static inline void base_test(std::string const& case_id,
+                                 G const& g,
+                                 bool expected_result)
     {
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
         std::cout << "=======" << std::endl;
 #endif
 
+        std::string reason;
         bool valid = validity_checker
             <
                 ValidityTester
-            >::apply(g, expected_result);
+            >::apply(case_id, g, expected_result, reason);
         boost::ignore_unused(valid);
 
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
-        std::cout << "Geometry: ";
+        std::cout << "case id: " << case_id << ", Geometry: ";
         pretty_print_geometry<G>::apply(std::cout, g);
         std::cout << std::endl;
         std::cout << "wkt: " << bg::wkt(g) << std::endl;
         std::cout << std::boolalpha;
         std::cout << "is valid? " << valid << std::endl;
         std::cout << "expected result: " << expected_result << std::endl;
+        std::cout << "reason: " << reason << std::endl;
         std::cout << "=======" << std::endl;
         std::cout << std::noboolalpha;
 #endif
     }
 
-    static inline void apply(Geometry const& geometry, bool expected_result)
+public:
+    static inline void apply(std::string const& case_id,
+                             Geometry const& geometry,
+                             bool expected_result)
     {
-        base_test(geometry, expected_result);
+        std::stringstream sstr;
+        sstr << case_id << "-original";
+        base_test(sstr.str(), geometry, expected_result);
 
         if ( is_convertible_to_closed<Geometry>::apply(geometry) )
         {
@@ -332,7 +386,9 @@ struct test_valid
 #endif
             ClosedGeometry closed_geometry;
             bg::convert(geometry, closed_geometry);
-            base_test(closed_geometry, expected_result);
+            sstr.str("");
+            sstr << case_id << "-2closed";
+            base_test(sstr.str(), closed_geometry, expected_result);
         }
         if ( is_convertible_to_cw<Geometry>::apply(geometry) )
         {
@@ -342,7 +398,9 @@ struct test_valid
 #endif            
             CWGeometry cw_geometry;
             bg::convert(geometry, cw_geometry);
-            base_test(cw_geometry, expected_result);
+            sstr.str("");
+            sstr << case_id << "-2CW";
+            base_test(sstr.str(), cw_geometry, expected_result);
             if ( is_convertible_to_closed<CWGeometry>::apply(cw_geometry) )
             {
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
@@ -351,11 +409,13 @@ struct test_valid
 #endif            
                 CWClosedGeometry cw_closed_geometry;
                 bg::convert(cw_geometry, cw_closed_geometry);
-                base_test(cw_closed_geometry, expected_result);
+                sstr.str("");
+                sstr << case_id << "-2CWclosed";
+                base_test(sstr.str(), cw_closed_geometry, expected_result);
             }
         }
 
-        if ( is_convertible_to_polygon<Geometry>::value )
+        if ( BOOST_GEOMETRY_CONDITION(is_convertible_to_polygon<Geometry>::value) )
         {
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
             std::cout << "...checking geometry converted to polygon..."
@@ -363,10 +423,12 @@ struct test_valid
 #endif            
             typename is_convertible_to_polygon<Geometry>::type polygon;
             bg::convert(geometry, polygon);
-            base_test(polygon, expected_result);
+            sstr.str("");
+            sstr << case_id << "-2Polygon";
+            base_test(sstr.str(), polygon, expected_result);
         }
 
-        if ( is_convertible_to_multipolygon<Geometry>::value )
+        if ( BOOST_GEOMETRY_CONDITION(is_convertible_to_multipolygon<Geometry>::value) )
         {
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
             std::cout << "...checking geometry converted to multi-polygon..."
@@ -378,12 +440,21 @@ struct test_valid
                 >::type multipolygon;
 
             bg::convert(geometry, multipolygon);
-            base_test(multipolygon, expected_result);
+            sstr.str("");
+            sstr << case_id << "-2MultiPolygon";
+            base_test(sstr.str(), multipolygon, expected_result);
         }
 
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
         std::cout << std::endl << std::endl << std::endl;
 #endif
+    }
+
+    static inline void apply(std::string const& case_id,
+                             std::string const& wkt,
+                             bool expected_result)
+    {
+        apply(case_id, from_wkt<Geometry>(wkt), expected_result);
     }
 };
 
@@ -392,14 +463,19 @@ struct test_valid
 
 
 template <typename VariantGeometry>
-struct test_valid_variant
+class test_valid_variant
+    : test_valid<default_validity_tester, VariantGeometry>
 {
-    static inline void apply(VariantGeometry const& vg, bool expected_result)
+private:
+    typedef test_valid<default_validity_tester, VariantGeometry> base_type;
+
+public:
+    static inline void apply(std::string const& case_id,
+                             VariantGeometry const& vg,
+                             bool expected_result)
     {
-        test_valid
-            <
-                default_validity_tester, VariantGeometry
-            >::base_test(vg, expected_result);
+        std::ostringstream oss;
+        base_type::base_test(case_id, vg, expected_result);
     }
 };
 

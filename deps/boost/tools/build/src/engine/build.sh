@@ -142,16 +142,27 @@ case $BOOST_JAM_TOOLSET in
     ;;
 
     intel-linux)
-    if test -r /opt/intel/cc/9.0/bin/iccvars.sh ; then
-        BOOST_JAM_TOOLSET_ROOT=/opt/intel/cc/9.0/
-    elif test -r /opt/intel_cc_80/bin/iccvars.sh ; then
-        BOOST_JAM_TOOLSET_ROOT=/opt/intel_cc_80/
-    elif test -r /opt/intel/compiler70/ia32/bin/iccvars.sh ; then
-        BOOST_JAM_TOOLSET_ROOT=/opt/intel/compiler70/ia32/
-    elif test -r /opt/intel/compiler60/ia32/bin/iccvars.sh ; then
-        BOOST_JAM_TOOLSET_ROOT=/opt/intel/compiler60/ia32/
-    elif test -r /opt/intel/compiler50/ia32/bin/iccvars.sh ; then
-        BOOST_JAM_TOOLSET_ROOT=/opt/intel/compiler50/ia32/
+    which icc >/dev/null 2>&1
+    if test $? ; then
+	BOOST_JAM_CC=$(which icc)
+	echo "Found $BOOST_JAM_CC in environment"
+	BOOST_JAM_TOOLSET_ROOT=$(echo $BOOST_JAM_CC | sed -e 's/bin.*\/icc//')
+	# probably the most widespread
+	ARCH=intel64
+    else
+	echo "No intel compiler in current path"
+	echo "Look in a few old place for legacy reason"
+	if test -r /opt/intel/cc/9.0/bin/iccvars.sh ; then
+            BOOST_JAM_TOOLSET_ROOT=/opt/intel/cc/9.0/
+	elif test -r /opt/intel_cc_80/bin/iccvars.sh ; then
+            BOOST_JAM_TOOLSET_ROOT=/opt/intel_cc_80/
+	elif test -r /opt/intel/compiler70/ia32/bin/iccvars.sh ; then
+            BOOST_JAM_TOOLSET_ROOT=/opt/intel/compiler70/ia32/
+	elif test -r /opt/intel/compiler60/ia32/bin/iccvars.sh ; then
+            BOOST_JAM_TOOLSET_ROOT=/opt/intel/compiler60/ia32/
+	elif test -r /opt/intel/compiler50/ia32/bin/iccvars.sh ; then
+            BOOST_JAM_TOOLSET_ROOT=/opt/intel/compiler50/ia32/
+	fi
     fi
     if test -r ${BOOST_JAM_TOOLSET_ROOT}bin/iccvars.sh ; then
         # iccvars does not change LD_RUN_PATH. We adjust LD_RUN_PATH here in
@@ -164,9 +175,11 @@ case $BOOST_JAM_TOOLSET in
             LD_RUN_PATH="${BOOST_JAM_TOOLSET_ROOT}lib:${LD_RUN_PATH}"
         fi
         export LD_RUN_PATH
-        . ${BOOST_JAM_TOOLSET_ROOT}bin/iccvars.sh
+        . ${BOOST_JAM_TOOLSET_ROOT}bin/iccvars.sh $ARCH
     fi
-    BOOST_JAM_CC=icc
+    if test -z "$BOOST_JAM_CC" ; then
+	BOOST_JAM_CC=icc
+    fi
     ;;
 
     vacpp)

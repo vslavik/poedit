@@ -27,7 +27,6 @@
 #  include <boost/geometry/io/svg/write_svg.hpp>
 #endif
 
-#include <boost/bind.hpp>
 #include <boost/random.hpp>
 #include <boost/range.hpp>
 #include <boost/shared_ptr.hpp>
