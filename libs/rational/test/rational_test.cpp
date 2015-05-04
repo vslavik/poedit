@@ -13,7 +13,15 @@
  *  extended, by Paul Moore, with permission.
  */
 
+// boostinspect:nolicense (don't complain about the lack of a Boost license)
+// (Stephen Silver hasn't been contacted yet for permission to change the
+// license.  If Paul Moore's permission is also needed, then that's a problem
+// since he hasn't been in contact for years.)
+
 // Revision History
+// 30 Aug 13  Add bug-test of assignments holding the basic and/or strong
+//            guarantees (Daryle Walker)
+// 27 Aug 13  Add test for cross-version constructor template (Daryle Walker)
 // 23 Aug 13  Add bug-test of narrowing conversions during order comparison;
 //            spell logical-negation in it as "!" because MSVC won't accept
 //            "not" (Daryle Walker)
@@ -30,21 +38,21 @@
 #define BOOST_TEST_MAIN  "Boost::Rational unit tests"
 
 #include <boost/config.hpp>
+#include <boost/limits.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/operators.hpp>
 #include <boost/preprocessor/stringize.hpp>
-#include <boost/math/common_factor_rt.hpp>
+#include <boost/integer/common_factor_rt.hpp>
 
 #include <boost/rational.hpp>
 
 #include <boost/test/unit_test.hpp>
-#include <boost/test/floating_point_comparison.hpp>
-#include <boost/test/test_case_template.hpp>
 
 #include <climits>
+#include <iomanip>
+#include <ios>
 #include <iostream>
 #include <istream>
-#include <limits>
 #include <ostream>
 #include <sstream>
 #include <stdexcept>
@@ -231,8 +239,10 @@ class numeric_limits< MyInt >
 public:
     static const bool is_specialized = limits_type::is_specialized;
 
-    static MyInt min BOOST_PREVENT_MACRO_SUBSTITUTION () throw()  { return (limits_type::min)(); }
-    static MyInt max BOOST_PREVENT_MACRO_SUBSTITUTION () throw()  { return (limits_type::max)(); }
+    static MyInt min BOOST_PREVENT_MACRO_SUBSTITUTION () throw()  { return
+     limits_type::min BOOST_PREVENT_MACRO_SUBSTITUTION (); }
+    static MyInt max BOOST_PREVENT_MACRO_SUBSTITUTION () throw()  { return
+     limits_type::max BOOST_PREVENT_MACRO_SUBSTITUTION (); }
     static MyInt lowest() throw()  { return min BOOST_PREVENT_MACRO_SUBSTITUTION
      (); }  // C++11
 
@@ -280,8 +290,10 @@ class numeric_limits< MyOverflowingUnsigned >
 public:
     static const bool is_specialized = limits_type::is_specialized;
 
-    static MyOverflowingUnsigned min BOOST_PREVENT_MACRO_SUBSTITUTION () throw()  { return (limits_type::min)(); }
-    static MyOverflowingUnsigned max BOOST_PREVENT_MACRO_SUBSTITUTION () throw()  { return (limits_type::max)(); }
+    static MyOverflowingUnsigned min BOOST_PREVENT_MACRO_SUBSTITUTION () throw()
+      { return limits_type::min BOOST_PREVENT_MACRO_SUBSTITUTION (); }
+    static MyOverflowingUnsigned max BOOST_PREVENT_MACRO_SUBSTITUTION () throw()
+      { return limits_type::max BOOST_PREVENT_MACRO_SUBSTITUTION (); }
     static MyOverflowingUnsigned lowest() throw()
       { return min BOOST_PREVENT_MACRO_SUBSTITUTION (); }  // C++11
 
@@ -422,6 +434,7 @@ typedef ::boost::mpl::list<short, int, long, MyInt>  all_signed_test_types;
 ::boost::rational<long>                  dummy3;
 ::boost::rational<MyInt>                 dummy4;
 ::boost::rational<MyOverflowingUnsigned> dummy5;
+::boost::rational<unsigned>              dummy6;
 
 // Should there be regular tests with unsigned integer types?
 
@@ -797,13 +810,38 @@ BOOST_AUTO_TEST_SUITE_END()
 // The non-basic rational operations suite
 BOOST_AUTO_TEST_SUITE( rational_extras_suite )
 
+#ifndef BOOST_NO_IOSTREAM
 // Output test
 BOOST_AUTO_TEST_CASE_TEMPLATE( rational_output_test, T, all_signed_test_types )
 {
-    std::ostringstream  oss;
+    using namespace std;
+    typedef boost::rational<T>  rational_type;
 
-    oss << boost::rational<T>( 44, 14 );
+    // Basic test
+    ostringstream  oss;
+
+    oss << rational_type( 44, 14 );
     BOOST_CHECK_EQUAL( oss.str(), "22/7" );
+
+    // Width
+    oss.clear(); oss.str( "" );
+    oss << setw( 5 ) << setfill('*') << rational_type( 1, 2 ) << 'r';
+    BOOST_CHECK_EQUAL( oss.str(), "**1/2r" );  // not "****1/2r"
+
+    // Positive-sign
+    oss.clear(); oss.str( "" );
+    oss << showpos << rational_type( 2, 3 ) << noshowpos;
+    BOOST_CHECK_EQUAL( oss.str(), "+2/3" );  // not "+2/+3"
+
+    // Internal padding
+    oss.clear(); oss.str( "" );
+    oss << setw( 8 ) << internal << rational_type( 36, -15 ) << right << 'r';
+    BOOST_CHECK_EQUAL( oss.str(), "-***12/5r" );  // not "-*****12/5r"
+
+    // Showbase prefix
+    oss.clear(); oss.str( "" );
+    oss << showbase << hex << rational_type( 34, 987 ) << noshowbase << dec;
+    BOOST_CHECK_EQUAL( oss.str(), "0x22/3db" );  // not "0x22/0x3db"
 }
 
 // Input test, failing
@@ -815,6 +853,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( rational_input_failing_test, T,
 
     iss >> r;
     BOOST_CHECK( !iss );
+    BOOST_CHECK( !iss.bad() );
 
     iss.clear();
     iss.str( "42" );
@@ -845,6 +884,30 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( rational_input_failing_test, T,
     iss.str( "1 /2" );
     iss >> r;
     BOOST_CHECK( !iss );
+
+    // Illegal value check(s)
+    typedef std::numeric_limits<T>  limits_type;
+
+    iss.clear();
+    iss.str( "3/0" );
+    iss >> r;
+    BOOST_CHECK( !iss );
+
+    if ( limits_type::is_signed && limits_type::is_bounded &&
+     limits_type::min BOOST_PREVENT_MACRO_SUBSTITUTION () +
+     limits_type::max BOOST_PREVENT_MACRO_SUBSTITUTION () < T(0) )
+    {
+        std::ostringstream  oss;
+
+        oss << 1 << '/' << limits_type::min BOOST_PREVENT_MACRO_SUBSTITUTION ();
+        iss.clear();
+        iss.str( oss.str() );
+        iss.exceptions( std::ios::failbit );
+        BOOST_CHECK( iss.good() );
+        BOOST_CHECK_THROW( iss >> r, boost::bad_rational );
+        BOOST_CHECK( iss.fail() && !iss.bad() );
+        iss.exceptions( std::ios::goodbit );
+    }
 }
 
 // Input test, passing
@@ -871,6 +934,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE( rational_input_passing_test, T,
     BOOST_CHECK( iss >> r );
     BOOST_CHECK_EQUAL( r, rational_type(1, 2) );
 }
+#endif  // BOOST_NO_IOSTREAM
 
 // Conversion test
 BOOST_AUTO_TEST_CASE( rational_cast_test )
@@ -895,6 +959,44 @@ BOOST_AUTO_TEST_CASE( rational_cast_test )
     BOOST_CHECK_EQUAL( boost::rational_cast<MyOverflowingUnsigned>(threehalves),
      MyOverflowingUnsigned(1u) );
 }
+
+#ifndef BOOST_NO_MEMBER_TEMPLATES
+// Cross-conversion constructor test
+BOOST_AUTO_TEST_CASE( rational_cross_constructor_test )
+{
+    // This template will be repeated a lot.
+    using boost::rational;
+
+    // Create a bunch of explicit conversions.
+    rational<int> const                    half_i( 2, 4 );
+    rational<unsigned> const               half_u( half_i );
+    rational<MyInt> const                  half_mi( half_i );
+    rational<MyOverflowingUnsigned> const  half_mu1(half_u), half_mu2(half_mi);
+
+    BOOST_CHECK_EQUAL( half_u.numerator(), 1u );
+    BOOST_CHECK_EQUAL( half_u.denominator(), 2u );
+    BOOST_CHECK_EQUAL( half_mi.numerator(), MyInt(1) );
+    BOOST_CHECK_EQUAL( half_mi.denominator(), MyInt(2) );
+    BOOST_CHECK_EQUAL( half_mu1.numerator(), MyOverflowingUnsigned(1u) );
+    BOOST_CHECK_EQUAL( half_mu1.denominator(), MyOverflowingUnsigned(2u) );
+    BOOST_CHECK_EQUAL( half_mu2.numerator(), MyOverflowingUnsigned(1u) );
+    BOOST_CHECK_EQUAL( half_mu2.denominator(), MyOverflowingUnsigned(2u) );
+
+#if 0
+    // This will fail since it needs an implicit conversion.
+    // (Try it if your compiler supports C++11 lambdas.)
+    BOOST_CHECK( [](rational<unsigned> x){return !!x;}(half_i) );
+#endif
+
+    // Translation from a built-in unsigned type to a signed one is
+    // implementation-defined, so hopefully we won't get a trap value.
+    // (We're counting on static_cast<int>(UINT_MAX) being negative.)
+    rational<unsigned> const  too_small( 1u, UINT_MAX );
+    rational<int>             receiver;
+
+    BOOST_CHECK_THROW( receiver=rational<int>(too_small), boost::bad_rational );
+}
+#endif  // BOOST_NO_MEMBER_TEMPLATES
 
 // Dice tests (a non-main test)
 BOOST_AUTO_TEST_CASE_TEMPLATE( dice_roll_test, T, all_signed_test_types )
@@ -931,8 +1033,8 @@ BOOST_AUTO_TEST_CASE( bug_798357_test )
     unsigned const  n2 = d1, d2 = UINT_MAX;
     boost::rational<MyOverflowingUnsigned> const  r1( n1, d1 ), r2( n2, d2 );
 
-    BOOST_REQUIRE_EQUAL( boost::math::gcd(n1, d1), 1u );
-    BOOST_REQUIRE_EQUAL( boost::math::gcd(n2, d2), 1u );
+    BOOST_REQUIRE_EQUAL( boost::integer::gcd(n1, d1), 1u );
+    BOOST_REQUIRE_EQUAL( boost::integer::gcd(n2, d2), 1u );
     BOOST_REQUIRE( n1 > UINT_MAX / d2 );
     BOOST_REQUIRE( n2 > UINT_MAX / d1 );
     BOOST_CHECK( r1 < r2 );
@@ -961,7 +1063,7 @@ BOOST_AUTO_TEST_CASE( patch_1438626_test )
     // If a GCD routine takes the absolute value of an argument only before
     // processing, it won't realize that -INT_MIN -> INT_MIN (i.e. no change
     // from negation) and will propagate a negative sign to its result.
-    BOOST_REQUIRE_EQUAL( boost::math::gcd(INT_MIN, 6), 2 );
+    BOOST_REQUIRE_EQUAL( boost::integer::gcd(INT_MIN, 6), 2 );
 
     // That is bad if the rational number type does not check for that
     // possibility during normalization.
@@ -1006,6 +1108,45 @@ BOOST_AUTO_TEST_CASE( ticket_5855_test )
     bool const  dummy = rational_type() < rational_type();
 
     BOOST_REQUIRE( !dummy );
+}
+
+// "rational::assign" doesn't even have the basic guarantee
+BOOST_AUTO_TEST_CASE( ticket_9067_test )
+{
+    using boost::rational;
+    using boost::integer::gcd;
+
+    rational<int>  a( 6, -8 );
+
+    // Normalize to maintain invariants
+    BOOST_CHECK_EQUAL( a.numerator(), -3 );
+    BOOST_CHECK_EQUAL( a.denominator(), 4 );
+    BOOST_CHECK( a.denominator() > 0 );
+    BOOST_CHECK_EQUAL( gcd(a.numerator(), a.denominator()), 1 );
+
+    // Do we maintain the basic guarantee after a failed component-assign?
+    BOOST_CHECK_THROW( a.assign(1, 0), boost::bad_rational );
+    BOOST_CHECK_NE( a.denominator(), 0 );
+    BOOST_CHECK( a.denominator() > 0 );
+    BOOST_CHECK_EQUAL( gcd(a.numerator(), a.denominator()), 1 );
+
+    // Do we get the strong guarantee?
+    BOOST_CHECK_EQUAL( a.numerator(), -3 );
+    BOOST_CHECK_EQUAL( a.denominator(), 4 );
+
+#if INT_MIN + INT_MAX < 0
+    // Try an example without a zero-denominator
+    a = rational<int>( -9, 12 );
+    BOOST_CHECK_EQUAL( a.numerator(), -3 );
+    BOOST_CHECK_EQUAL( a.denominator(), 4 );
+    BOOST_CHECK( a.denominator() > 0 );
+    BOOST_CHECK_EQUAL( gcd(a.numerator(), a.denominator()), 1 );
+    BOOST_CHECK_THROW( a.assign(-(INT_MIN + 1), INT_MIN), boost::bad_rational );
+    BOOST_CHECK( a.denominator() > 0 );
+    BOOST_CHECK_EQUAL( gcd(a.numerator(), a.denominator()), 1 );
+    BOOST_CHECK_EQUAL( a.numerator(), -3 );
+    BOOST_CHECK_EQUAL( a.denominator(), 4 );
+#endif
 }
 
 BOOST_AUTO_TEST_SUITE_END()

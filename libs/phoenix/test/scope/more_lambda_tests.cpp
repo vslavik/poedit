@@ -22,10 +22,10 @@ main()
     using boost::phoenix::ref;
     using boost::phoenix::val;
     using boost::phoenix::arg_names::_1;
-    using boost::phoenix::arg_names::_2;
+    //using boost::phoenix::arg_names::_2;
     using boost::phoenix::local_names::_a;
-    using boost::phoenix::local_names::_b;
-    using boost::phoenix::placeholders::arg1;
+    // using boost::phoenix::local_names::_b;
+    //using boost::phoenix::placeholders::arg1;
 
     {
         int x = 1;
@@ -39,4 +39,10 @@ main()
         BOOST_TEST(x+1 == y);
     }
 
+    {
+        int x = lambda[val(1)]()();
+        BOOST_TEST(x == 1);
+    }
+
+    return boost::report_errors();
 }

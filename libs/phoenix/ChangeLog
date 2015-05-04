@@ -3,7 +3,7 @@ http://www.boost.org/
 
 Copyright (c) 2005-2010 Joel de Guzman
 Copyright (c) 2010-2013 Thomas Heller
-Copyright (c) 2014      John Fletcher
+Copyright (c) 2014-2015 John Fletcher
 
 Distributed under the Boost Software License, Version 1.0. (See accompanying
 file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -18,8 +18,11 @@ TODO (known issues):
   decide on priorities for fixing the bugs below.
     One such library is Boost log.
 - Identify dependencies on other libraries and cooperate on bugs.
+    It is now known that the other libraries which use Boost Phoenix
+    are Boost Spirit and Boost Meta State Machine (MSM)
 - Add more examples
 - Develop documentation.
+    A start has been made on this in release 3.1.0
 - Inspection report outstanding issues
     Fix libs/phoenix/doc/html/boostbook.css: Unlinked File
 - Investigate fixes needed for the following bugs
@@ -43,7 +46,61 @@ Added test bug5875 - test withdrawn for further checking.
 CHANGELOG
 
 - DEVELOP
+
+- V3.2.0
+
+- patch for #10927 in test/stdlib/cmath.cpp
+- patch for #11085 in test/function/function_tests.cpp
+
+- Bump version number to 3.2.0 in version.hpp.
+
+- New header files in boost/phoenix/function
+  These are the first versions of the lazy functionality being introduced.
+  This is reimplementation of the ideas in FC++ on top of Phoenix.
+  The Phoenix code used is Phoenix.Function, along with Boost.Function.
+  lazy_prelude.hpp  This is the top level header and also has prelude functions.
+  lazy_operator.hpp This defines lazy operators such as plus and minus.
+  lazy_list.hpp     This defines list<T> a lazy list class and associated code.
+  lazy_reuser.hpp   This defines the reuser functions used in the code.
+
+- New tests for lazy functionality.
+  test/include/function/lazy_headers Test of the header structure.
+  test/function/lazy_list_tests      Simple tests of list<T>.
+  test/function/lazy_list2_tests     More tests of list<T>.
+- Develop documentation for version 3.2.0
+  This includes a new section on the lazy list implementation.
+
+- V3.1.1
+
+- Bump version number to 3.1.1 in version.hpp and branch for release.
+
+- New tests for lazy functions using existing phoenix/function capability.
+  lazy_argument_tests, lazy_make_pair_tests, lazy_templated_struct_tests
+
+- New example bind_goose.cpp comparing boost.bind and boost.phoenix.bind.
+
+- Changes to let_tests and more_let_tests to avoid failing cases.
+
+- Updates to documentation.
+
+- V3.1.0
+- Bump version number to 3.1.0 in version.hpp and branch for release.
+- New file boost/phoenix/config.hpp to centralise configuration issues.
+  At the moment it simply includes boost/config.hpp
+- Changes to some tests to identify problems with several compilers.
+- Add more cases to cmath test to test failures on some compilers.
+- #7165 and #7166 Change tests to phoenix/core.hpp to reduce compiler load
+- Testing fix for failures of tests as follows
+  bind_member_function_tests, bind_mf2_test, bind_test
+  with compilers including gcc 4.9.0 and clang 3.5
+  This involves use of boost::lazy_disable_if to resolve
+  the choice of overloaded bind functions in
+  bind/bind_member_variable.hpp
+  bind/bind_member_function.hpp Add reverse test boost::lazy_enable_if
+  This resolves a smaller number of failures.
 - #9742 New tests for_each and for_test to attempt to resolve this.
+- bind_rv_sp_test changed to give workaround for MSVC 8,9,10,
+  This removes a COMDAT error which does not occur with boost/bind.
 
 - V3.0.6
 - Fixed bug in example/container_actor.cpp in end() function.

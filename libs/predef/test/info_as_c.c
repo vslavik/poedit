@@ -13,8 +13,8 @@ http://www.boost.org/LICENSE_1_0.txt)
 typedef struct predef_info
 {
     unsigned tag;
-    char * name;
-    char * description;
+    const char * name;
+    const char * description;
     unsigned value;
 } predef_info;
 
@@ -46,7 +46,7 @@ int main()
         if (*i == 0x67890DEF)
         {
             predef_count += 1;
-            predefs = realloc(predefs,predef_count*sizeof(predef_info*));
+            predefs = (predef_info**)realloc(predefs,predef_count*sizeof(predef_info*));
             predefs[predef_count-1] = (predef_info*)i;
         }
     }

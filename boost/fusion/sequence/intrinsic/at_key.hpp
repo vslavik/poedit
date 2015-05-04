@@ -38,7 +38,7 @@ namespace boost { namespace fusion
                     >::type
                 type;
 
-                BOOST_FUSION_GPU_ENABLED
+                BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
                 static type
                 call(Seq& seq)
                 {
@@ -74,7 +74,7 @@ namespace boost { namespace fusion
     }
 
     template <typename Key, typename Sequence>
-    BOOST_FUSION_GPU_ENABLED
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
     inline typename 
         lazy_disable_if<
             is_const<Sequence>
@@ -86,7 +86,7 @@ namespace boost { namespace fusion
     }
 
     template <typename Key, typename Sequence>
-    BOOST_FUSION_GPU_ENABLED
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
     inline typename result_of::at_key<Sequence const, Key>::type
     at_key(Sequence const& seq)
     {

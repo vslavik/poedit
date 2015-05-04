@@ -72,7 +72,7 @@ void test_bind() {
   BOOST_TEST(c == 345);
 }
 
-#if defined(BOOST_NO_VARIADIC_TEMPLATES)
+#if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
 void test_bind_non_const() {
   std::cout << "c++11 variadic templates disabled" << std::endl;
 }

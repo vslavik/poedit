@@ -93,8 +93,8 @@ struct is_valid_mixed_compare<expression<tag, Arg1, Arg2, Arg3, Arg4>, number<B,
 
 }
 
-template <class Backend, expression_template_option ExpressionTemplates>
-inline bool operator == (const number<Backend, ExpressionTemplates>& a, const number<Backend, ExpressionTemplates>& b)
+template <class Backend, expression_template_option ExpressionTemplates, class Backend2, expression_template_option ExpressionTemplates2>
+inline bool operator == (const number<Backend, ExpressionTemplates>& a, const number<Backend2, ExpressionTemplates2>& b)
 {
    using default_ops::eval_eq;
    return eval_eq(a.backend(), b.backend());
@@ -141,8 +141,8 @@ inline typename enable_if<is_same<typename detail::expression<Tag, A1, A2, A3, A
    return eval_eq(t.backend(), t2.backend());
 }
 
-template <class Backend, expression_template_option ExpressionTemplates>
-inline bool operator != (const number<Backend, ExpressionTemplates>& a, const number<Backend, ExpressionTemplates>& b)
+template <class Backend, expression_template_option ExpressionTemplates, class Backend2, expression_template_option ExpressionTemplates2>
+inline bool operator != (const number<Backend, ExpressionTemplates>& a, const number<Backend2, ExpressionTemplates2>& b)
 {
    using default_ops::eval_eq;
    return !eval_eq(a.backend(), b.backend());
@@ -189,8 +189,8 @@ inline typename enable_if<is_same<typename detail::expression<Tag, A1, A2, A3, A
    return !eval_eq(t.backend(), t2.backend());
 }
 
-template <class Backend, expression_template_option ExpressionTemplates>
-inline bool operator < (const number<Backend, ExpressionTemplates>& a, const number<Backend, ExpressionTemplates>& b)
+template <class Backend, expression_template_option ExpressionTemplates, class Backend2, expression_template_option ExpressionTemplates2>
+inline bool operator < (const number<Backend, ExpressionTemplates>& a, const number<Backend2, ExpressionTemplates2>& b)
 {
    using default_ops::eval_lt;
    return eval_lt(a.backend(), b.backend());
@@ -237,8 +237,8 @@ inline typename enable_if<is_same<typename detail::expression<Tag, A1, A2, A3, A
    return eval_lt(t.backend(), t2.backend());
 }
 
-template <class Backend, expression_template_option ExpressionTemplates>
-inline bool operator > (const number<Backend, ExpressionTemplates>& a, const number<Backend, ExpressionTemplates>& b)
+template <class Backend, expression_template_option ExpressionTemplates, class Backend2, expression_template_option ExpressionTemplates2>
+inline bool operator > (const number<Backend, ExpressionTemplates>& a, const number<Backend2, ExpressionTemplates2>& b)
 {
    using default_ops::eval_gt;
    return eval_gt(a.backend(), b.backend());
@@ -285,8 +285,8 @@ inline typename enable_if<is_same<typename detail::expression<Tag, A1, A2, A3, A
    return eval_gt(t.backend(), t2.backend());
 }
 
-template <class Backend, expression_template_option ExpressionTemplates>
-inline bool operator <= (const number<Backend, ExpressionTemplates>& a, const number<Backend, ExpressionTemplates>& b)
+template <class Backend, expression_template_option ExpressionTemplates, class Backend2, expression_template_option ExpressionTemplates2>
+inline bool operator <= (const number<Backend, ExpressionTemplates>& a, const number<Backend2, ExpressionTemplates2>& b)
 {
    using default_ops::eval_gt;
    return !eval_gt(a.backend(), b.backend());
@@ -333,8 +333,8 @@ inline typename enable_if<is_same<typename detail::expression<Tag, A1, A2, A3, A
    return !eval_gt(t.backend(), t2.backend());
 }
 
-template <class Backend, expression_template_option ExpressionTemplates>
-inline bool operator >= (const number<Backend, ExpressionTemplates>& a, const number<Backend, ExpressionTemplates>& b)
+template <class Backend, expression_template_option ExpressionTemplates, class Backend2, expression_template_option ExpressionTemplates2>
+inline bool operator >= (const number<Backend, ExpressionTemplates>& a, const number<Backend2, ExpressionTemplates2>& b)
 {
    using default_ops::eval_lt;
    return !eval_lt(a.backend(), b.backend());

@@ -4,6 +4,7 @@
 
 #include <boost/move/detail/config_begin.hpp>
 #include <iostream>
+#include <boost/core/lightweight_test.hpp>
 
 #ifdef NO_MOVE
 # undef BOOST_COPY_ASSIGN_REF
@@ -12,7 +13,7 @@
 # define BOOST_COPYABLE_AND_MOVABLE(X)
 # define MOVE(x) (x)
 #else
-#include <boost/move/utility.hpp>
+#include <boost/move/utility_core.hpp>
 # define MOVE(x) boost::move(x)
 #endif
 
@@ -73,9 +74,12 @@ unsigned X::instances = 0;
         stmt;                                                           \
     }                                                                   \
     unsigned const n = X::copies - old_copies;                          \
-    if (n > max)                                                        \
+    volatile unsigned const minv(min), maxv(max);                       \
+    BOOST_TEST(n <= maxv);                                              \
+    if (n > maxv)                                                       \
         std::cout << "*** max is too low or compiler is buggy ***\n";   \
-    if (n < min)                                                        \
+    BOOST_TEST(n >= minv);                                              \
+    if (n < minv)                                                       \
         std::cout << "*** min is too high or compiler is buggy ***\n";  \
                                                                         \
     std::cout << "-----------\n"                                        \
@@ -84,7 +88,7 @@ unsigned X::instances = 0;
               << max - n << "/" << max - min                            \
               << " possible elisions performed\n\n";                    \
                                                                         \
-    if (n > min)                                                        \
+    if (n > minv)                                                       \
         std::cout << "*** " << n - min                                  \
                   << " possible elisions missed! ***\n";                \
 }
@@ -105,7 +109,7 @@ struct trace
     char const* m_name;
 };
 
-void sink(X a)
+void sink(X)
 {
   trace t("sink");
 }
@@ -146,28 +150,28 @@ int main(int argc, char* argv[])
 {
    (void)argv;
     // Double parens prevent "most vexing parse"
-    CHECK_COPIES( X a(( lvalue() )), 1, 1, "Direct initialization from lvalue");
-    CHECK_COPIES( X a(( rvalue() )), 0, 1, "Direct initialization from rvalue");
+    CHECK_COPIES( X a(( lvalue() )), 1U, 1U, "Direct initialization from lvalue");
+    CHECK_COPIES( X a(( rvalue() )), 0U, 1U, "Direct initialization from rvalue");
     
-    CHECK_COPIES( X a = lvalue(), 1, 1, "Copy initialization from lvalue" );
-    CHECK_COPIES( X a = rvalue(), 0, 1, "Copy initialization from rvalue" );
+    CHECK_COPIES( X a = lvalue(), 1U, 1U, "Copy initialization from lvalue" );
+    CHECK_COPIES( X a = rvalue(), 0U, 1U, "Copy initialization from rvalue" );
 
-    CHECK_COPIES( sink( lvalue() ), 1, 1, "Pass lvalue by value" );
-    CHECK_COPIES( sink( rvalue() ), 0, 1, "Pass rvalue by value" );
+    CHECK_COPIES( sink( lvalue() ), 1U, 1U, "Pass lvalue by value" );
+    CHECK_COPIES( sink( rvalue() ), 0U, 1U, "Pass rvalue by value" );
 
-    CHECK_COPIES( nrvo_source(), 0, 1, "Named return value optimization (NRVO)" );
-    CHECK_COPIES( urvo_source(), 0, 1, "Unnamed return value optimization (URVO)" );
+    CHECK_COPIES( nrvo_source(), 0U, 1U, "Named return value optimization (NRVO)" );
+    CHECK_COPIES( urvo_source(), 0U, 1U, "Unnamed return value optimization (URVO)" );
 
     // Just to prove these things compose properly
-    CHECK_COPIES( X a(urvo_source()), 0, 2, "Return value used as ctor arg" );
+    CHECK_COPIES( X a(urvo_source()), 0U, 2U, "Return value used as ctor arg" );
     
     // Expect to miss one possible elision here
-    CHECK_COPIES( identity( rvalue() ), 0, 2, "Return rvalue passed by value" );
+    CHECK_COPIES( identity( rvalue() ), 0U, 2U, "Return rvalue passed by value" );
 
     // Expect to miss an elision in at least one of the following lines
-    CHECK_COPIES( X a = ternary( argc == 1000 ), 0, 2, "Return result of ternary operation" );
-    CHECK_COPIES( X a = ternary( argc != 1000 ), 0, 2, "Return result of ternary operation again" );
-    return 0;
+    CHECK_COPIES( X a = ternary( argc == 1000 ), 0U, 2U, "Return result of ternary operation" );
+    CHECK_COPIES( X a = ternary( argc != 1000 ), 0U, 2U, "Return result of ternary operation again" );
+    return boost::report_errors();
 }
 
 #include <boost/move/detail/config_end.hpp>

@@ -11,7 +11,7 @@
 // auto then(F&& func) -> future<decltype(func(*this))>;
 
 #define BOOST_THREAD_VERSION 4
-#define BOOST_THREAD_USES_LOG
+//#define BOOST_THREAD_USES_LOG
 #define BOOST_THREAD_USES_LOG_THREAD_ID
 #include <boost/thread/detail/log.hpp>
 
@@ -59,6 +59,30 @@ int main()
     try
     {
       BOOST_TEST(f2.get()==2);
+    }
+    catch (std::exception& ex)
+    {
+      BOOST_THREAD_LOG << "ERRORRRRR "<<ex.what() << "" << BOOST_THREAD_END_LOG;
+      BOOST_TEST(false);
+    }
+    catch (...)
+    {
+      BOOST_THREAD_LOG << " ERRORRRRR exception thrown" << BOOST_THREAD_END_LOG;
+      BOOST_TEST(false);
+    }
+  }
+  BOOST_THREAD_LOG << BOOST_THREAD_END_LOG;
+  {
+    boost::shared_future<int> f1 = boost::async(boost::launch::async, &p1).share();
+    BOOST_TEST(f1.valid());
+    boost::future<int> f2 = f1.then(&p2);
+    boost::future<int> f3 = f1.then(&p2);
+    BOOST_TEST(f2.valid());
+    BOOST_TEST(f3.valid());
+    try
+    {
+      BOOST_TEST(f2.get()==2);
+      BOOST_TEST(f3.get()==2);
     }
     catch (std::exception& ex)
     {

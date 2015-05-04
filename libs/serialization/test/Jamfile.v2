@@ -72,7 +72,8 @@ test-suite "serialization" :
      [ test-bsl-run_files test_diamond ]
      [ test-bsl-run_files test_diamond_complex ]
      [ test-bsl-run_files test_exported : polymorphic_base ]
-    [ test-bsl-run_files test_helper_support ]
+     [ test-bsl-run_files test_helper_support ]
+     [ test-bsl-run_files test_interrupts ]
      [ test-bsl-run_files test_list : A ]
      [ test-bsl-run_files test_list_ptrs : A ]
      [ test-bsl-run_files test_map : A ]
@@ -137,6 +138,8 @@ if ! $(BOOST_ARCHIVE_LIST) {
             : ../src/codecvt_null 
             : <dependency>../../config/test/all//BOOST_NO_STD_WSTREAMBUF
         ]
+
+	[ test-bsl-run-no-lib test_z ]
 
         # should fail compilation
         [ compile-fail test_not_serializable.cpp ]

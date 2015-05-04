@@ -14,14 +14,14 @@
 #include <boost/geometry/algorithms/length.hpp>
 #include <boost/geometry/io/wkt/read.hpp>
 #include <boost/geometry/strategies/strategies.hpp>
-#include <boost/typeof/typeof.hpp>
 #include <boost/variant/variant.hpp>
 
 
 template <typename Geometry>
 void test_length(Geometry const& geometry, long double expected_length)
 {
-    BOOST_AUTO(length, bg::length(geometry));
+    typename bg::default_length_result<Geometry>::type
+        length = bg::length(geometry);
 
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
     std::ostringstream out;

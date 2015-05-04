@@ -7,7 +7,7 @@
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../lockfree/reference.html#header.boost.lockfree.spsc_queue_hpp" title="Header &lt;boost/lockfree/spsc_queue.hpp&gt;">
 <link rel="prev" href="queue.html" title="Class template queue">
-<link rel="next" href="spsc_queue/implementation_defined.html" title="Struct template implementation_defined">
+<link rel="next" href="stack.html" title="Class template stack">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="queue.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../lockfree/reference.html#header.boost.lockfree.spsc_queue_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="spsc_queue/implementation_defined.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="queue.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../lockfree/reference.html#header.boost.lockfree.spsc_queue_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="stack.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.lockfree.spsc_queue"></a><div class="titlepage"></div>
@@ -31,8 +31,7 @@
 <h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../lockfree/reference.html#header.boost.lockfree.spsc_queue_hpp" title="Header &lt;boost/lockfree/spsc_queue.hpp&gt;">boost/lockfree/spsc_queue.hpp</a>&gt;
 
-</span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">,</span> <span class="keyword">typename</span> A0 <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">parameter</span><span class="special">::</span><span class="identifier">void_</span><span class="special">,</span> 
-         <span class="keyword">typename</span> A1 <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">parameter</span><span class="special">::</span><span class="identifier">void_</span><span class="special">&gt;</span> 
+</span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">,</span> <span class="special">...</span> Options<span class="special">&gt;</span> 
 <span class="keyword">class</span> <a class="link" href="spsc_queue.html" title="Class template spsc_queue">spsc_queue</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// types</span>
@@ -40,48 +39,44 @@
   <span class="keyword">typedef</span> <span class="identifier">implementation_defined</span><span class="special">::</span><span class="identifier">allocator</span> <a name="boost.lockfree.spsc_queue.allocator"></a><span class="identifier">allocator</span><span class="special">;</span> 
   <span class="keyword">typedef</span> <span class="identifier">implementation_defined</span><span class="special">::</span><span class="identifier">size_type</span> <a name="boost.lockfree.spsc_queue.size_type"></a><span class="identifier">size_type</span><span class="special">;</span> 
 
-  <span class="comment">// member classes/structs/unions</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">,</span> <span class="special">...</span> Options<span class="special">&gt;</span> 
-  <span class="keyword">struct</span> <a class="link" href="spsc_queue/implementation_defined.html" title="Struct template implementation_defined">implementation_defined</a> <span class="special">{</span>
-    <span class="comment">// types</span>
-    <span class="keyword">typedef</span> <span class="identifier">allocator_arg</span> <a class="link" href="spsc_queue/implementation_defined.html#boost.lockfree.spsc_queue.implementation_defined.allocator"><span class="identifier">allocator</span></a><span class="special">;</span>
-    <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span>   <a class="link" href="spsc_queue/implementation_defined.html#boost.lockfree.spsc_queue.implementation_defined.size_type"><span class="identifier">size_type</span></a><span class="special">;</span>
-  <span class="special">}</span><span class="special">;</span>
-
   <span class="comment">// <a class="link" href="spsc_queue.html#boost.lockfree.spsc_queueconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="spsc_queue.html#idp203190336-bb"><span class="identifier">spsc_queue</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="spsc_queue.html#idp200431408-bb"><span class="identifier">spsc_queue</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> U<span class="special">&gt;</span> 
-    <span class="keyword">explicit</span> <a class="link" href="spsc_queue.html#idp203214352-bb"><span class="identifier">spsc_queue</span></a><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">allocator</span><span class="special">::</span><span class="keyword">template</span> <span class="identifier">rebind</span><span class="special">&lt;</span> <span class="identifier">U</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">other</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="spsc_queue.html#idp203225008-bb"><span class="identifier">spsc_queue</span></a><span class="special">(</span><span class="identifier">allocator</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="spsc_queue.html#idp203226256-bb"><span class="identifier">spsc_queue</span></a><span class="special">(</span><span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
+    <span class="keyword">explicit</span> <a class="link" href="spsc_queue.html#idp201959376-bb"><span class="identifier">spsc_queue</span></a><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">allocator</span><span class="special">::</span><span class="keyword">template</span> <span class="identifier">rebind</span><span class="special">&lt;</span> <span class="identifier">U</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">other</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="spsc_queue.html#idp209133376-bb"><span class="identifier">spsc_queue</span></a><span class="special">(</span><span class="identifier">allocator</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="spsc_queue.html#idp209134624-bb"><span class="identifier">spsc_queue</span></a><span class="special">(</span><span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> U<span class="special">&gt;</span> 
-    <a class="link" href="spsc_queue.html#idp203667376-bb"><span class="identifier">spsc_queue</span></a><span class="special">(</span><span class="identifier">size_type</span><span class="special">,</span> 
+    <a class="link" href="spsc_queue.html#idp216010880-bb"><span class="identifier">spsc_queue</span></a><span class="special">(</span><span class="identifier">size_type</span><span class="special">,</span> 
                <span class="keyword">typename</span> <span class="identifier">allocator</span><span class="special">::</span><span class="keyword">template</span> <span class="identifier">rebind</span><span class="special">&lt;</span> <span class="identifier">U</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">other</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="spsc_queue.html#idp204848480-bb"><span class="identifier">spsc_queue</span></a><span class="special">(</span><span class="identifier">size_type</span><span class="special">,</span> <span class="identifier">allocator_arg</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="spsc_queue.html#idp215838864-bb"><span class="identifier">spsc_queue</span></a><span class="special">(</span><span class="identifier">size_type</span><span class="special">,</span> <span class="identifier">allocator_arg</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="spsc_queue.html#idp204873488-bb">public member functions</a></span>
-  <span class="keyword">bool</span> <a class="link" href="spsc_queue.html#idp204874048-bb"><span class="identifier">push</span></a><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="spsc_queue.html#idp98556800-bb">public member functions</a></span>
+  <span class="keyword">bool</span> <a class="link" href="spsc_queue.html#idp98557360-bb"><span class="identifier">push</span></a><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="spsc_queue.html#idp95884576-bb"><span class="identifier">pop</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> U<span class="special">&gt;</span> 
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">enable_if</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">is_convertible</span><span class="special">&lt;</span> <span class="identifier">T</span><span class="special">,</span> <span class="identifier">U</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> 
-    <a class="link" href="spsc_queue.html#idp206583312-bb"><span class="identifier">pop</span></a><span class="special">(</span><span class="identifier">U</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">size_type</span> <a class="link" href="spsc_queue.html#idp206597312-bb"><span class="identifier">push</span></a><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="identifier">size_type</span> size<span class="special">&gt;</span> <span class="identifier">size_type</span> <a class="link" href="spsc_queue.html#idp211940992-bb"><span class="identifier">push</span></a><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">(</span><span class="special">&amp;</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
+    <a class="link" href="spsc_queue.html#idp152946592-bb"><span class="identifier">pop</span></a><span class="special">(</span><span class="identifier">U</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">size_type</span> <a class="link" href="spsc_queue.html#idp144688800-bb"><span class="identifier">push</span></a><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="identifier">size_type</span> size<span class="special">&gt;</span> <span class="identifier">size_type</span> <a class="link" href="spsc_queue.html#idp155679088-bb"><span class="identifier">push</span></a><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">(</span><span class="special">&amp;</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ConstIterator<span class="special">&gt;</span> 
-    <span class="identifier">ConstIterator</span> <a class="link" href="spsc_queue.html#idp212419632-bb"><span class="identifier">push</span></a><span class="special">(</span><span class="identifier">ConstIterator</span><span class="special">,</span> <span class="identifier">ConstIterator</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">size_type</span> <a class="link" href="spsc_queue.html#idp215400672-bb"><span class="identifier">pop</span></a><span class="special">(</span><span class="identifier">T</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="identifier">size_type</span> size<span class="special">&gt;</span> <span class="identifier">size_type</span> <a class="link" href="spsc_queue.html#idp215907456-bb"><span class="identifier">pop</span></a><span class="special">(</span><span class="identifier">T</span><span class="special">(</span><span class="special">&amp;</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <a class="link" href="../../OutputIterator.html" title="Concept OutputIterator">OutputIterator</a><span class="special">&gt;</span> 
+    <span class="identifier">ConstIterator</span> <a class="link" href="spsc_queue.html#idp149050256-bb"><span class="identifier">push</span></a><span class="special">(</span><span class="identifier">ConstIterator</span><span class="special">,</span> <span class="identifier">ConstIterator</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">size_type</span> <a class="link" href="spsc_queue.html#idp156356704-bb"><span class="identifier">pop</span></a><span class="special">(</span><span class="identifier">T</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="identifier">size_type</span> size<span class="special">&gt;</span> <span class="identifier">size_type</span> <a class="link" href="spsc_queue.html#idp156346752-bb"><span class="identifier">pop</span></a><span class="special">(</span><span class="identifier">T</span><span class="special">(</span><span class="special">&amp;</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> OutputIterator<span class="special">&gt;</span> 
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">disable_if</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">is_convertible</span><span class="special">&lt;</span> <span class="identifier">T</span><span class="special">,</span> <span class="identifier">OutputIterator</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">,</span> <span class="identifier">size_type</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> 
-    <a class="link" href="spsc_queue.html#idp224951696-bb"><span class="identifier">pop</span></a><span class="special">(</span><span class="identifier">OutputIterator</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Functor<span class="special">&gt;</span> <span class="keyword">bool</span> <a class="link" href="spsc_queue.html#idp42866800-bb"><span class="identifier">consume_one</span></a><span class="special">(</span><span class="identifier">Functor</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Functor<span class="special">&gt;</span> <span class="keyword">bool</span> <a class="link" href="spsc_queue.html#idp223944816-bb"><span class="identifier">consume_one</span></a><span class="special">(</span><span class="identifier">Functor</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Functor<span class="special">&gt;</span> <span class="identifier">size_type</span> <a class="link" href="spsc_queue.html#idp159292752-bb"><span class="identifier">consume_all</span></a><span class="special">(</span><span class="identifier">Functor</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Functor<span class="special">&gt;</span> <span class="identifier">size_type</span> <a class="link" href="spsc_queue.html#idp157669888-bb"><span class="identifier">consume_all</span></a><span class="special">(</span><span class="identifier">Functor</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">size_type</span> <a class="link" href="spsc_queue.html#idp157647904-bb"><span class="identifier">read_available</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">size_type</span> <a class="link" href="spsc_queue.html#idp98869744-bb"><span class="identifier">write_available</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <a class="link" href="spsc_queue.html#idp155666240-bb"><span class="identifier">pop</span></a><span class="special">(</span><span class="identifier">OutputIterator</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Functor<span class="special">&gt;</span> <span class="keyword">bool</span> <a class="link" href="spsc_queue.html#idp155542224-bb"><span class="identifier">consume_one</span></a><span class="special">(</span><span class="identifier">Functor</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Functor<span class="special">&gt;</span> <span class="keyword">bool</span> <a class="link" href="spsc_queue.html#idp155355280-bb"><span class="identifier">consume_one</span></a><span class="special">(</span><span class="identifier">Functor</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Functor<span class="special">&gt;</span> <span class="identifier">size_type</span> <a class="link" href="spsc_queue.html#idp155341312-bb"><span class="identifier">consume_all</span></a><span class="special">(</span><span class="identifier">Functor</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Functor<span class="special">&gt;</span> <span class="identifier">size_type</span> <a class="link" href="spsc_queue.html#idp155327136-bb"><span class="identifier">consume_all</span></a><span class="special">(</span><span class="identifier">Functor</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">size_type</span> <a class="link" href="spsc_queue.html#idp155317296-bb"><span class="identifier">read_available</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">size_type</span> <a class="link" href="spsc_queue.html#idp155320592-bb"><span class="identifier">write_available</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> <a class="link" href="spsc_queue.html#idp155013232-bb"><span class="identifier">front</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">T</span> <span class="special">&amp;</span> <a class="link" href="spsc_queue.html#idp154759456-bb"><span class="identifier">front</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="spsc_queue.html#idp154594816-bb"><span class="identifier">reset</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp330777728"></a><h2>Description</h2>
+<a name="idp319981728"></a><h2>Description</h2>
 <p>The <a class="link" href="spsc_queue.html" title="Class template spsc_queue">spsc_queue</a> class provides a single-writer/single-reader fifo queue, pushing and popping is wait-free.</p>
 <p><span class="bold"><strong>Policies:</strong></span> </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
@@ -100,13 +95,13 @@
 <p>
 </p>
 <div class="refsect2">
-<a name="idp330786864"></a><h3>
+<a name="idp319990864"></a><h3>
 <a name="boost.lockfree.spsc_queueconstruct-copy-destruct"></a><code class="computeroutput">spsc_queue</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp203190336-bb"></a><span class="identifier">spsc_queue</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp200431408-bb"></a><span class="identifier">spsc_queue</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Constructs a <code class="computeroutput"><a class="link" href="spsc_queue.html" title="Class template spsc_queue">spsc_queue</a></code></p>
 <p>
 </p>
@@ -122,10 +117,10 @@
 </table></div>
 </li>
 <li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> U<span class="special">&gt;</span> 
-  <span class="keyword">explicit</span> <a name="idp203214352-bb"></a><span class="identifier">spsc_queue</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">allocator</span><span class="special">::</span><span class="keyword">template</span> <span class="identifier">rebind</span><span class="special">&lt;</span> <span class="identifier">U</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">other</span> <span class="keyword">const</span> <span class="special">&amp;</span> alloc<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">explicit</span> <a name="idp203225008-bb"></a><span class="identifier">spsc_queue</span><span class="special">(</span><span class="identifier">allocator</span> <span class="keyword">const</span> <span class="special">&amp;</span> alloc<span class="special">)</span><span class="special">;</span></pre></li>
+  <span class="keyword">explicit</span> <a name="idp201959376-bb"></a><span class="identifier">spsc_queue</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">allocator</span><span class="special">::</span><span class="keyword">template</span> <span class="identifier">rebind</span><span class="special">&lt;</span> <span class="identifier">U</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">other</span> <span class="keyword">const</span> <span class="special">&amp;</span> alloc<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">explicit</span> <a name="idp209133376-bb"></a><span class="identifier">spsc_queue</span><span class="special">(</span><span class="identifier">allocator</span> <span class="keyword">const</span> <span class="special">&amp;</span> alloc<span class="special">)</span><span class="special">;</span></pre></li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp203226256-bb"></a><span class="identifier">spsc_queue</span><span class="special">(</span><span class="identifier">size_type</span> element_count<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp209134624-bb"></a><span class="identifier">spsc_queue</span><span class="special">(</span><span class="identifier">size_type</span> element_count<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructs a <code class="computeroutput"><a class="link" href="spsc_queue.html" title="Class template spsc_queue">spsc_queue</a></code> for element_count elements</p>
 <p>
 </p>
@@ -141,17 +136,17 @@
 </table></div>
 </li>
 <li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> U<span class="special">&gt;</span> 
-  <a name="idp203667376-bb"></a><span class="identifier">spsc_queue</span><span class="special">(</span><span class="identifier">size_type</span> element_count<span class="special">,</span> 
+  <a name="idp216010880-bb"></a><span class="identifier">spsc_queue</span><span class="special">(</span><span class="identifier">size_type</span> element_count<span class="special">,</span> 
              <span class="keyword">typename</span> <span class="identifier">allocator</span><span class="special">::</span><span class="keyword">template</span> <span class="identifier">rebind</span><span class="special">&lt;</span> <span class="identifier">U</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">other</span> <span class="keyword">const</span> <span class="special">&amp;</span> alloc<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a name="idp204848480-bb"></a><span class="identifier">spsc_queue</span><span class="special">(</span><span class="identifier">size_type</span> element_count<span class="special">,</span> <span class="identifier">allocator_arg</span> <span class="keyword">const</span> <span class="special">&amp;</span> alloc<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp215838864-bb"></a><span class="identifier">spsc_queue</span><span class="special">(</span><span class="identifier">size_type</span> element_count<span class="special">,</span> <span class="identifier">allocator_arg</span> <span class="keyword">const</span> <span class="special">&amp;</span> alloc<span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp330848864"></a><h3>
-<a name="idp204873488-bb"></a><code class="computeroutput">spsc_queue</code> public member functions</h3>
+<a name="idp320052864"></a><h3>
+<a name="idp98556800-bb"></a><code class="computeroutput">spsc_queue</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp204874048-bb"></a><span class="identifier">push</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span> t<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp98557360-bb"></a><span class="identifier">push</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span> t<span class="special">)</span><span class="special">;</span></pre>
 <p>Pushes object t to the ringbuffer.</p>
 <p>
 
@@ -188,9 +183,46 @@
 </table></div>
 </li>
 <li class="listitem">
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp95884576-bb"></a><span class="identifier">pop</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<p>Pops one object from ringbuffer.</p>
+<p>
+
+
+</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>Thread-safe and wait-free </p></td></tr>
+</table></div>
+<p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Requires:</span></p></td>
+<td><p>only one thread is allowed to pop data to the <a class="link" href="spsc_queue.html" title="Class template spsc_queue">spsc_queue</a> </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Postconditions:</span></p></td>
+<td><p>if ringbuffer is not empty, object will be discarded. </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p>true, if the pop operation is successful, false if ringbuffer was empty.</p></td>
+</tr>
+</tbody>
+</table></div>
+</li>
+<li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> U<span class="special">&gt;</span> 
   <span class="identifier">boost</span><span class="special">::</span><span class="identifier">enable_if</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">is_convertible</span><span class="special">&lt;</span> <span class="identifier">T</span><span class="special">,</span> <span class="identifier">U</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> 
-  <a name="idp206583312-bb"></a><span class="identifier">pop</span><span class="special">(</span><span class="identifier">U</span> <span class="special">&amp;</span> ret<span class="special">)</span><span class="special">;</span></pre>
+  <a name="idp152946592-bb"></a><span class="identifier">pop</span><span class="special">(</span><span class="identifier">U</span> <span class="special">&amp;</span> ret<span class="special">)</span><span class="special">;</span></pre>
 <p>Pops one object from ringbuffer.</p>
 <p>
 
@@ -227,7 +259,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">size_type</span> <a name="idp206597312-bb"></a><span class="identifier">push</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">*</span> t<span class="special">,</span> <span class="identifier">size_type</span> size<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">size_type</span> <a name="idp144688800-bb"></a><span class="identifier">push</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">*</span> t<span class="special">,</span> <span class="identifier">size_type</span> size<span class="special">)</span><span class="special">;</span></pre>
 <p>Pushes as many objects from the array t as there is space.</p>
 <p>
 
@@ -259,7 +291,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="identifier">size_type</span> size<span class="special">&gt;</span> <span class="identifier">size_type</span> <a name="idp211940992-bb"></a><span class="identifier">push</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">(</span><span class="special">&amp;</span><span class="special">)</span> t<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="identifier">size_type</span> size<span class="special">&gt;</span> <span class="identifier">size_type</span> <a name="idp155679088-bb"></a><span class="identifier">push</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">(</span><span class="special">&amp;</span><span class="special">)</span> t<span class="special">)</span><span class="special">;</span></pre>
 <p>Pushes as many objects from the array t as there is space available.</p>
 <p>
 
@@ -292,7 +324,7 @@
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ConstIterator<span class="special">&gt;</span> 
-  <span class="identifier">ConstIterator</span> <a name="idp212419632-bb"></a><span class="identifier">push</span><span class="special">(</span><span class="identifier">ConstIterator</span> begin<span class="special">,</span> <span class="identifier">ConstIterator</span> end<span class="special">)</span><span class="special">;</span></pre>
+  <span class="identifier">ConstIterator</span> <a name="idp149050256-bb"></a><span class="identifier">push</span><span class="special">(</span><span class="identifier">ConstIterator</span> begin<span class="special">,</span> <span class="identifier">ConstIterator</span> end<span class="special">)</span><span class="special">;</span></pre>
 <p>Pushes as many objects from the range [begin, end) as there is space .</p>
 <p>
 
@@ -324,7 +356,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">size_type</span> <a name="idp215400672-bb"></a><span class="identifier">pop</span><span class="special">(</span><span class="identifier">T</span> <span class="special">*</span> ret<span class="special">,</span> <span class="identifier">size_type</span> size<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">size_type</span> <a name="idp156356704-bb"></a><span class="identifier">pop</span><span class="special">(</span><span class="identifier">T</span> <span class="special">*</span> ret<span class="special">,</span> <span class="identifier">size_type</span> size<span class="special">)</span><span class="special">;</span></pre>
 <p>Pops a maximum of size objects from ringbuffer.</p>
 <p>
 
@@ -356,7 +388,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="identifier">size_type</span> size<span class="special">&gt;</span> <span class="identifier">size_type</span> <a name="idp215907456-bb"></a><span class="identifier">pop</span><span class="special">(</span><span class="identifier">T</span><span class="special">(</span><span class="special">&amp;</span><span class="special">)</span> ret<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="identifier">size_type</span> size<span class="special">&gt;</span> <span class="identifier">size_type</span> <a name="idp156346752-bb"></a><span class="identifier">pop</span><span class="special">(</span><span class="identifier">T</span><span class="special">(</span><span class="special">&amp;</span><span class="special">)</span> ret<span class="special">)</span><span class="special">;</span></pre>
 <p>Pops a maximum of size objects from <code class="computeroutput"><a class="link" href="spsc_queue.html" title="Class template spsc_queue">spsc_queue</a></code>.</p>
 <p>
 
@@ -388,9 +420,9 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <a class="link" href="../../OutputIterator.html" title="Concept OutputIterator">OutputIterator</a><span class="special">&gt;</span> 
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> OutputIterator<span class="special">&gt;</span> 
   <span class="identifier">boost</span><span class="special">::</span><span class="identifier">disable_if</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">is_convertible</span><span class="special">&lt;</span> <span class="identifier">T</span><span class="special">,</span> <span class="identifier">OutputIterator</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">,</span> <span class="identifier">size_type</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> 
-  <a name="idp224951696-bb"></a><span class="identifier">pop</span><span class="special">(</span><span class="identifier">OutputIterator</span> it<span class="special">)</span><span class="special">;</span></pre>
+  <a name="idp155666240-bb"></a><span class="identifier">pop</span><span class="special">(</span><span class="identifier">OutputIterator</span> it<span class="special">)</span><span class="special">;</span></pre>
 <p>Pops objects to the output iterator it</p>
 <p>
 
@@ -422,7 +454,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Functor<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="idp42866800-bb"></a><span class="identifier">consume_one</span><span class="special">(</span><span class="identifier">Functor</span> <span class="special">&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Functor<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="idp155542224-bb"></a><span class="identifier">consume_one</span><span class="special">(</span><span class="identifier">Functor</span> <span class="special">&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>
 <p>consumes one element via a functor</p>
 <p>pops one element from the queue and applies the functor on this object</p>
 <p>
@@ -448,7 +480,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Functor<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="idp223944816-bb"></a><span class="identifier">consume_one</span><span class="special">(</span><span class="identifier">Functor</span> <span class="keyword">const</span> <span class="special">&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Functor<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="idp155355280-bb"></a><span class="identifier">consume_one</span><span class="special">(</span><span class="identifier">Functor</span> <span class="keyword">const</span> <span class="special">&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>
 <p>consumes one element via a functor</p>
 <p>pops one element from the queue and applies the functor on this object</p>
 <p>
@@ -474,7 +506,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Functor<span class="special">&gt;</span> <span class="identifier">size_type</span> <a name="idp159292752-bb"></a><span class="identifier">consume_all</span><span class="special">(</span><span class="identifier">Functor</span> <span class="special">&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Functor<span class="special">&gt;</span> <span class="identifier">size_type</span> <a name="idp155341312-bb"></a><span class="identifier">consume_all</span><span class="special">(</span><span class="identifier">Functor</span> <span class="special">&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>
 <p>consumes all elements via a functor</p>
 <p>sequentially pops all elements from the queue and applies the functor on each object</p>
 <p>
@@ -500,7 +532,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Functor<span class="special">&gt;</span> <span class="identifier">size_type</span> <a name="idp157669888-bb"></a><span class="identifier">consume_all</span><span class="special">(</span><span class="identifier">Functor</span> <span class="keyword">const</span> <span class="special">&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Functor<span class="special">&gt;</span> <span class="identifier">size_type</span> <a name="idp155327136-bb"></a><span class="identifier">consume_all</span><span class="special">(</span><span class="identifier">Functor</span> <span class="keyword">const</span> <span class="special">&amp;</span> f<span class="special">)</span><span class="special">;</span></pre>
 <p>consumes all elements via a functor</p>
 <p>sequentially pops all elements from the queue and applies the functor on each object</p>
 <p>
@@ -526,7 +558,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">size_type</span> <a name="idp157647904-bb"></a><span class="identifier">read_available</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">size_type</span> <a name="idp155317296-bb"></a><span class="identifier">read_available</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>get number of elements that are available for read</p>
 <p>
 </p>
@@ -551,7 +583,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">size_type</span> <a name="idp98869744-bb"></a><span class="identifier">write_available</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">size_type</span> <a name="idp155320592-bb"></a><span class="identifier">write_available</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>get write space to write elements</p>
 <p>
 </p>
@@ -575,6 +607,95 @@
 </tr></tbody>
 </table></div>
 </li>
+<li class="listitem">
+<pre class="literallayout"><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> <a name="idp155013232-bb"></a><span class="identifier">front</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<p>get reference to element in the front of the queue</p>
+<p>Availability of front element can be checked using read_available().</p>
+<p>
+
+
+</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>Thread-safe and wait-free </p></td></tr>
+</table></div>
+<p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Requires:</span></p></td>
+<td><p>only one thread is allowed to check front element </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Requires:</span></p></td>
+<td><p>read_available() &gt; 0. If ringbuffer is empty, it's undefined behaviour to invoke this method. </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p>reference to the first element in the queue</p></td>
+</tr>
+</tbody>
+</table></div>
+</li>
+<li class="listitem">
+<pre class="literallayout"><span class="identifier">T</span> <span class="special">&amp;</span> <a name="idp154759456-bb"></a><span class="identifier">front</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<p>get reference to element in the front of the queue</p>
+<p>Availability of front element can be checked using read_available().</p>
+<p>
+
+
+</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>Thread-safe and wait-free </p></td></tr>
+</table></div>
+<p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term">Requires:</span></p></td>
+<td><p>only one thread is allowed to check front element </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Requires:</span></p></td>
+<td><p>read_available() &gt; 0. If ringbuffer is empty, it's undefined behaviour to invoke this method. </p></td>
+</tr>
+<tr>
+<td><p><span class="term">Returns:</span></p></td>
+<td><p>reference to the first element in the queue</p></td>
+</tr>
+</tbody>
+</table></div>
+</li>
+<li class="listitem">
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp154594816-bb"></a><span class="identifier">reset</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="special">;</span></pre>
+<p>reset the ringbuffer</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>Not thread-safe </p></td></tr>
+</table></div>
+<p>
+</p>
+</li>
 </ol></div>
 </div>
 </div>
@@ -590,7 +711,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="queue.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../lockfree/reference.html#header.boost.lockfree.spsc_queue_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="spsc_queue/implementation_defined.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="queue.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../lockfree/reference.html#header.boost.lockfree.spsc_queue_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="stack.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

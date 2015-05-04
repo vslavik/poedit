@@ -228,9 +228,18 @@ STACK * stack_global()
     return &result;
 }
 
+struct list_alignment_helper
+{
+    char ch;
+    LIST * l;
+};
+
+#define LISTPTR_ALIGN_BASE ( sizeof( struct list_alignment_helper ) - sizeof( LIST * ) )
+#define LISTPTR_ALIGN ( ( LISTPTR_ALIGN_BASE > sizeof( LIST * ) ) ? sizeof( LIST * ) : LISTPTR_ALIGN_BASE )
+
 static void check_alignment( STACK * s )
 {
-    assert( (size_t)s->data % sizeof( LIST * ) == 0 );
+    assert( (size_t)s->data % LISTPTR_ALIGN == 0 );
 }
 
 void * stack_allocate( STACK * s, int size )

@@ -19,7 +19,9 @@
 #endif
 #define USE_LOCKS    1
 #define MSPACES      1
-#define NO_MALLINFO  0
+#define NO_MALLINFO  1
+#define NO_MALLOC_STATS 1
+
 
 #if !defined(NDEBUG)
    #if !defined(DEBUG)
@@ -1179,12 +1181,47 @@ BOOST_CONTAINER_DECL size_t boost_cont_footprint()
 
 BOOST_CONTAINER_DECL size_t boost_cont_allocated_memory()
 {
-   struct mallinfo info = mspace_mallinfo(gm);
+   size_t alloc_mem = 0;
+   mstate m = (mstate)gm;
    ensure_initialization();
-   if(info.ordblks)
-      return (size_t)(info.uordblks - (info.ordblks-1)*TOP_FOOT_SIZE);
-   else
-      return info.uordblks;
+   if (!ok_magic(ms)) {
+      USAGE_ERROR_ACTION(ms,ms);
+   }
+
+
+   if (!PREACTION(m)) {
+      check_malloc_state(m);
+      if (is_initialized(m)) {
+      size_t nfree = SIZE_T_ONE; /* top always free */
+      size_t mfree = m->topsize + TOP_FOOT_SIZE;
+      size_t sum = mfree;
+      msegmentptr s = &m->seg;
+      while (s != 0) {
+         mchunkptr q = align_as_chunk(s->base);
+         while (segment_holds(s, q) &&
+               q != m->top && q->head != FENCEPOST_HEAD) {
+            size_t sz = chunksize(q);
+            sum += sz;
+            if (!is_inuse(q)) {
+            mfree += sz;
+            ++nfree;
+            }
+            q = next_chunk(q);
+         }
+         s = s->next;
+      }
+      {
+         size_t uordblks = m->footprint - mfree;
+         if(nfree)
+            alloc_mem = (size_t)(uordblks - (nfree-1)*TOP_FOOT_SIZE);
+         else
+            alloc_mem = uordblks;
+         }
+      }
+
+      POSTACTION(m);
+   }
+   return alloc_mem;
 }
 
 BOOST_CONTAINER_DECL size_t boost_cont_chunksize(const void *p)

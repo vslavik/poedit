@@ -1,10 +1,10 @@
 /*
- Copyright (c) 2014 Glen Joseph Fernandes
- glenfe at live dot com
+ (c) 2014 Glen Joseph Fernandes
+ glenjofe at gmail dot com
 
- Distributed under the Boost Software License,
- Version 1.0. (See accompanying file LICENSE_1_0.txt
- or copy at http://boost.org/LICENSE_1_0.txt)
+ Distributed under the Boost Software
+ License, Version 1.0.
+ http://boost.org/LICENSE_1_0.txt
 */
 #include <boost/align/aligned_alloc.hpp>
 #include <boost/align/is_aligned.hpp>
@@ -46,9 +46,14 @@ void test(std::size_t alignment)
 
 int main()
 {
-    for (std::size_t i = 1; i <= 128; i <<= 1) {
-        test(i);
-    }
+    test(1);
+    test(2);
+    test(4);
+    test(8);
+    test(16);
+    test(32);
+    test(64);
+    test(128);
 
     return boost::report_errors();
 }

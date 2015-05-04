@@ -258,26 +258,31 @@ main()
   //time_t conversions:
   t18 = from_time_t(0); //1970-1-1 0:0:0
   check("time_t conversion of 0", t18 == ptime(date(1970,1,1)));
+  check("time_t conversion from 0", to_time_t(t18) == 0);
   
   std::time_t tt(500000000); 
   t18 = from_time_t(tt); //1985-11-5 0:53:20
   check("time_t conversion of 500000000", 
         t18 == ptime(date(1985,11,5), time_duration(0,53,20)));
+  check("time_t conversion from 500000000", to_time_t(t18) == tt);
   
   std::time_t tt1(1060483634); 
   t18 = from_time_t(tt1); //2003-08-10 2:47:14
   check("time_t conversion of 1060483634", 
         t18 == ptime(date(2003,8,10), time_duration(2,47,14)));
+  check("time_t conversion from 1060483634", to_time_t(t18) == tt1);
   
   std::time_t tt2(1760483634); 
   t18 = from_time_t(tt2); //2025-10-14 23:13:54
   check("time_t conversion of 1760483634", 
         t18 == ptime(date(2025,10,14), time_duration(23,13,54)));
+  check("time_t conversion from 1760483634", to_time_t(t18) == tt2);
   
   std::time_t tt3(1960483634); 
   t18 = from_time_t(tt3); //2032-2-15 18:47:14
   check("time_t conversion of 1960483634", 
         t18 == ptime(date(2032,2,15), time_duration(18,47,14)));
+  check("time_t conversion from 1960483634", to_time_t(t18) == tt3);
 
   special_values_tests();
 

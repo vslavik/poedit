@@ -11,7 +11,6 @@
 // See http://www.boost.org/libs/intrusive for documentation.
 //
 /////////////////////////////////////////////////////////////////////////////
-#include<boost/intrusive/detail/config_begin.hpp>
 #include<boost/intrusive/any_hook.hpp>
 #include<boost/intrusive/slist.hpp>
 #include<boost/intrusive/rbtree.hpp>
@@ -188,5 +187,3 @@ int main()
    instantiation_test();
    return 0;
 }
-
-#include <boost/intrusive/detail/config_end.hpp>

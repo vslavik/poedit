@@ -12,9 +12,8 @@
 #define BOOST_INTERPROCESS_TEST_CHECK_EQUAL_CONTAINERS_HPP
 
 #include <boost/interprocess/detail/config_begin.hpp>
-#include <functional>
-#include <iostream>
-#include <algorithm>
+// container/detail
+#include <boost/container/detail/iterator.hpp>
 #include <boost/container/detail/pair.hpp>
 
 namespace boost{
@@ -50,7 +49,8 @@ bool CheckEqualContainers(MyShmCont *shmcont, MyStdCont *stdcont)
 
    typename MyShmCont::iterator itshm(shmcont->begin()), itshmend(shmcont->end());
    typename MyStdCont::iterator itstd(stdcont->begin());
-   typename MyStdCont::size_type dist = (typename MyStdCont::size_type)std::distance(itshm, itshmend);
+   typename MyStdCont::size_type dist =
+      typename MyStdCont::size_type(boost::container::iterator_distance(itshm, itshmend));
    if(dist != shmcont->size()){
       return false;
    }

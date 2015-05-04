@@ -3,8 +3,8 @@
 // See http://www.boost.org for updates, documentation, and revision history.
 //-----------------------------------------------------------------------------
 //
-// Copyright (c) 2003
-// Eric Friedman, Itay Maman
+// Copyright (c) 2003 Eric Friedman, Itay Maman
+// Copyright (c) 2014 Antony Polukhin
 //
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
@@ -34,6 +34,9 @@ void assert_equality_comparable(
     BOOST_CHECK( !(&x == &y) || (x == y) );
     BOOST_CHECK( !(&x == &z) || (x == z) );
     BOOST_CHECK( !(&y == &z) || (y == z) );
+    BOOST_CHECK( !(&x == &y) || !(x != y) );
+    BOOST_CHECK( !(&x == &z) || !(x != z) );
+    BOOST_CHECK( !(&y == &z) || !(y != z) );
 
     // reflexivity check
     BOOST_CHECK( (x == x) );
@@ -43,12 +46,18 @@ void assert_equality_comparable(
     // symmetry check
     BOOST_CHECK( !(x == y) || (y == x) );
     BOOST_CHECK( !(y == x) || (x == y) );
+    BOOST_CHECK( (x != y) || (y == x) );
+    BOOST_CHECK( (y != x) || (x == y) );
 
     BOOST_CHECK( !(x == z) || (z == x) );
     BOOST_CHECK( !(z == x) || (x == z) );
+    BOOST_CHECK( (x != z) || (z == x) );
+    BOOST_CHECK( (z != x) || (x == z) );
 
     BOOST_CHECK( !(y == z) || (z == y) );
     BOOST_CHECK( !(z == y) || (y == z) );
+    BOOST_CHECK( (y != z) || (z == y) );
+    BOOST_CHECK( (z != y) || (y == z) );
 
     // transitivity check
     BOOST_CHECK( !(x == y && y == z) || (x == z) );
@@ -65,11 +74,33 @@ void assert_less_than_comparable(
     BOOST_CHECK( !(x < x) );
     BOOST_CHECK( !(y < y) );
     BOOST_CHECK( !(z < z) );
+    BOOST_CHECK( !(x > x) );
+    BOOST_CHECK( !(y > y) );
+    BOOST_CHECK( !(z > z) );
+
+    BOOST_CHECK( (x <= x) );
+    BOOST_CHECK( (y <= y) );
+    BOOST_CHECK( (z <= z) );
+    BOOST_CHECK( (x >= x) );
+    BOOST_CHECK( (y >= y) );
+    BOOST_CHECK( (z >= z) );
 
     // transitivity check
     BOOST_CHECK( (x < y) );
     BOOST_CHECK( (y < z) );
     BOOST_CHECK( (x < z) );
+
+    BOOST_CHECK( (x <= y) );
+    BOOST_CHECK( (y <= z) );
+    BOOST_CHECK( (x <= z) );
+
+    BOOST_CHECK( (z > y) );
+    BOOST_CHECK( (y > x) );
+    BOOST_CHECK( (z > x) );
+
+    BOOST_CHECK( (z >= y) );
+    BOOST_CHECK( (y >= x) );
+    BOOST_CHECK( (z >= x) );
 
     // antisymmetry check
     BOOST_CHECK( !(y < x) );

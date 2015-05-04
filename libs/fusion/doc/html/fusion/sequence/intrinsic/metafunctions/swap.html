@@ -44,7 +44,7 @@
 <span class="special">};</span>
 </pre>
 <div class="table">
-<a name="fusion.sequence.intrinsic.metafunctions.swap.t0"></a><p class="title"><b>Table&#160;1.36.&#160;Parameters</b></p>
+<a name="fusion.sequence.intrinsic.metafunctions.swap.t0"></a><p class="title"><b>Table&#160;1.35.&#160;Parameters</b></p>
 <div class="table-contents"><table class="table" summary="Parameters">
 <colgroup>
 <col>
@@ -96,10 +96,15 @@
 <pre class="programlisting"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">swap</span><span class="special">&lt;</span><span class="identifier">Seq1</span><span class="special">,</span> <span class="identifier">Seq2</span><span class="special">&gt;::</span><span class="identifier">type</span>
 </pre>
 <p>
-            <span class="bold"><strong>Return type</strong></span>: <code class="computeroutput"><span class="keyword">void</span></code>.
+            <span class="bold"><strong>Return type</strong></span>: <code class="computeroutput"><span class="keyword">void</span></code>
+            iff both of <code class="computeroutput"><span class="identifier">Seq1</span></code> and
+            <code class="computeroutput"><span class="identifier">Seq2</span></code> are sequence. Otherwise,
+            none.
           </p>
 <p>
-            <span class="bold"><strong>Semantics</strong></span>: Always returns <code class="computeroutput"><span class="keyword">void</span></code>.
+            <span class="bold"><strong>Semantics</strong></span>: Returns the return type of
+            <a class="link" href="../functions/swap.html" title="swap"><code class="computeroutput"><span class="identifier">swap</span></code></a> for 2 sequences of types
+            <code class="computeroutput"><span class="identifier">Seq1</span></code> and <code class="computeroutput"><span class="identifier">Seq2</span></code>.
           </p>
 <h6>
 <a name="fusion.sequence.intrinsic.metafunctions.swap.h3"></a>

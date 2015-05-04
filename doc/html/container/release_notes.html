@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../container.html" title="Chapter&#160;9.&#160;Boost.Container">
+<link rel="up" href="../container.html" title="Chapter&#160;8.&#160;Boost.Container">
 <link rel="prev" href="acknowledgements_notes.html" title="Acknowledgements, notes and links">
-<link rel="next" href="../date_time.html" title="Chapter&#160;10.&#160;Boost.Date_Time">
+<link rel="next" href="../date_time.html" title="Chapter&#160;9.&#160;Boost.Date_Time">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -27,6 +27,10 @@
 <a name="container.release_notes"></a><a class="link" href="release_notes.html" title="Release Notes">Release Notes</a>
 </h2></div></div></div>
 <div class="toc"><dl class="toc">
+<dt><span class="section"><a href="release_notes.html#container.release_notes.release_notes_boost_1_58_00">Boost
+      1.58 Release</a></span></dt>
+<dt><span class="section"><a href="release_notes.html#container.release_notes.release_notes_boost_1_57_00">Boost
+      1.57 Release</a></span></dt>
 <dt><span class="section"><a href="release_notes.html#container.release_notes.release_notes_boost_1_56_00">Boost
       1.56 Release</a></span></dt>
 <dt><span class="section"><a href="release_notes.html#container.release_notes.release_notes_boost_1_55_00">Boost
@@ -46,6 +50,101 @@
 <dt><span class="section"><a href="release_notes.html#container.release_notes.release_notes_boost_1_48_00">Boost
       1.48 Release</a></span></dt>
 </dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="container.release_notes.release_notes_boost_1_58_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_58_00" title="Boost 1.58 Release">Boost
+      1.58 Release</a>
+</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            Experimental <code class="computeroutput"><a class="link" href="../boost/container/small_vector.html" title="Class template small_vector">small_vector</a></code>
+            container.
+          </li>
+<li class="listitem">
+            Massive dependency reorganization. Now <span class="bold"><strong>Boost.Container</strong></span>
+            depends on very basic utilities like Boost.Core and <span class="bold"><strong>Boost.Intrusive</strong></span>.
+            Preprocessed code size have decreased considerably and compilation times
+            have improved.
+          </li>
+<li class="listitem">
+            Added <code class="computeroutput"><span class="identifier">nth</span></code> and <code class="computeroutput"><span class="identifier">index_of</span></code> functions to containers with
+            random-access iterators (except <code class="computeroutput"><span class="identifier">basic_string</span></code>).
+          </li>
+<li class="listitem">
+            Added C++17's <code class="computeroutput"><span class="identifier">allocator_traits</span><span class="special">&lt;</span><span class="identifier">Allocator</span><span class="special">&gt;::</span><span class="identifier">is_always_equal</span></code>.
+          </li>
+<li class="listitem">
+            Updated containers to implement new constructors as specified in <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/lwg-defects.html#2210" target="_top">2210.
+            Missing allocator-extended constructor for allocator-aware containers</a>.
+          </li>
+<li class="listitem">
+            Fixed bugs:
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/9931" target="_top">#9931:
+                  <span class="emphasis"><em>"flat_map::insert(ordered_unique_range_t...) fails
+                  with move_iterators"</em></span></a> (reopened).
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/11076" target="_top">#11076:
+                  <span class="emphasis"><em>"Unqualified calls to memmove/memcpy in container/detail/copy_move_algo.hpp"</em></span></a>.
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/10790" target="_top">Trac
+                  #10790 (<span class="emphasis"><em>long long errors from container"</em></span>)</a>.
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/10808" target="_top">Trac
+                  #10808 (<span class="emphasis"><em>compare equal operator of vector is broken"</em></span>)</a>.
+                </li>
+</ul></div>
+          </li>
+<li class="listitem">
+            <span class="bold"><strong>Source Breaking</strong></span>: <code class="computeroutput"><a class="link" href="../boost/container/scoped_allocator_adaptor.html" title="Class template scoped_allocator_adaptor">scoped_allocator_adaptor</a></code>'s
+            <code class="computeroutput"><span class="identifier">propagate_on_container_copy_assignment</span></code>,
+            <code class="computeroutput"><span class="identifier">propagate_on_container_move_assignment</span></code>
+            and <code class="computeroutput"><span class="identifier">propagate_on_container_swap</span></code>
+            are no longer <code class="computeroutput"><span class="special">::</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="keyword">true</span><span class="special">/</span><span class="keyword">false</span><span class="special">&gt;</span></code> types. The dependency reorganization
+            needed to break with those classes to avoid MPL dependencies, and interoperability
+            with <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">integral_constant</span></code> was not guaranteed.
+            Code assumming <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">true_type</span><span class="special">/</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">false_type</span></code>
+            on this will not compile. As a workaround, use the guaranteed internal
+            <code class="computeroutput"><span class="special">::</span><span class="identifier">value</span></code>
+            constant: <code class="computeroutput"><span class="special">::</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="identifier">scoped_allocator_adaptor</span><span class="special">&lt;</span><span class="identifier">Allocator</span><span class="special">&gt;::</span><span class="identifier">propagate_on_container_move_assignment</span><span class="special">::</span><span class="identifier">value</span><span class="special">&gt;</span></code>.
+          </li>
+</ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="container.release_notes.release_notes_boost_1_57_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_57_00" title="Boost 1.57 Release">Boost
+      1.57 Release</a>
+</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            Added support for <code class="computeroutput"><span class="identifier">initializer_list</span></code>.
+            Contributed by Robert Matusewicz.
+          </li>
+<li class="listitem">
+            Fixed double destruction bugs in vector and backward expansion capable
+            allocators.
+          </li>
+<li class="listitem">
+            Fixed bugs:
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/10263" target="_top">Trac
+                  #10263 (<span class="emphasis"><em>"AIX 6.1 bug with sched_yield() function
+                  out of scope"</em></span>)</a>.
+                </li>
+<li class="listitem">
+                  <a href="https://github.com/boostorg/container/pull/16" target="_top">GitHub
+                  #16: <span class="emphasis"><em>Fix iterators of incomplete type containers</em></span></a>.
+                  Thanks to Mikael Persson.
+                </li>
+</ul></div>
+          </li>
+</ul></div>
+</div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="container.release_notes.release_notes_boost_1_56_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_56_00" title="Boost 1.56 Release">Boost

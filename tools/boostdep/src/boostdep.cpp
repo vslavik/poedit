@@ -1,7 +1,7 @@
 
 // boostdep - a tool to generate Boost dependency reports
 //
-// Copyright 2014 Peter Dimov
+// Copyright 2014, 2015 Peter Dimov
 //
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at
@@ -174,7 +174,19 @@ static fs::path module_include_path( std::string module )
     return fs::path( "libs" ) / module / "include";
 }
 
-static void scan_module_dependencies( std::string const & module, module_primary_actions & actions )
+static fs::path module_source_path( std::string module )
+{
+    std::replace( module.begin(), module.end(), '~', '/' );
+    return fs::path( "libs" ) / module / "src";
+}
+
+static fs::path module_build_path( std::string module )
+{
+    std::replace( module.begin(), module.end(), '~', '/' );
+    return fs::path( "libs" ) / module / "build";
+}
+
+static void scan_module_dependencies( std::string const & module, module_primary_actions & actions, bool track_sources )
 {
     // module -> [ header, header... ]
     std::map< std::string, std::set< std::string > > deps;
@@ -182,18 +194,40 @@ static void scan_module_dependencies( std::string const & module, module_primary
     // header -> included from [ header, header... ]
     std::map< std::string, std::set< std::string > > from;
 
-    fs::path dir = module_include_path( module );
-    size_t n = dir.generic_string().size();
-
-    fs::recursive_directory_iterator it( dir ), last;
-
-    for( ; it != last; ++it )
     {
-        std::string header = it->path().generic_string().substr( n+1 );
+        fs::path dir = module_include_path( module );
+        size_t n = dir.generic_string().size();
 
-        fs::ifstream is( it->path() );
+        fs::recursive_directory_iterator it( dir ), last;
 
-        scan_header_dependencies( header, is, deps, from );
+        for( ; it != last; ++it )
+        {
+            std::string header = it->path().generic_string().substr( n+1 );
+
+            fs::ifstream is( it->path() );
+
+            scan_header_dependencies( header, is, deps, from );
+        }
+    }
+
+    if( track_sources )
+    {
+        fs::path dir = module_source_path( module );
+        size_t n = dir.generic_string().size();
+
+        if( fs::exists( dir ) )
+        {
+            fs::recursive_directory_iterator it( dir ), last;
+
+            for( ; it != last; ++it )
+            {
+                std::string header = it->path().generic_string().substr( n+1 );
+
+                fs::ifstream is( it->path() );
+
+                scan_header_dependencies( header, is, deps, from );
+            }
+        }
     }
 
     actions.heading( module );
@@ -266,20 +300,20 @@ struct build_mdmap_actions: public module_primary_actions
     }
 };
 
-static void build_module_dependency_map()
+static void build_module_dependency_map( bool track_sources )
 {
     for( std::set< std::string >::iterator i = s_modules.begin(); i != s_modules.end(); ++i )
     {
         build_mdmap_actions actions;
-        scan_module_dependencies( *i, actions );
+        scan_module_dependencies( *i, actions, track_sources );
     }
 }
 
-static void output_module_primary_report( std::string const & module, module_primary_actions & actions )
+static void output_module_primary_report( std::string const & module, module_primary_actions & actions, bool track_sources )
 {
     try
     {
-        scan_module_dependencies( module, actions );
+        scan_module_dependencies( module, actions, track_sources );
     }
     catch( fs::filesystem_error const & x )
     {
@@ -460,17 +494,17 @@ struct module_primary_html_actions: public module_primary_actions
     }
 };
 
-static void output_module_primary_report( std::string const & module, bool html )
+static void output_module_primary_report( std::string const & module, bool html, bool track_sources )
 {
     if( html )
     {
         module_primary_html_actions actions;
-        output_module_primary_report( module, actions );
+        output_module_primary_report( module, actions, track_sources );
     }
     else
     {
         module_primary_txt_actions actions;
-        output_module_primary_report( module, actions );
+        output_module_primary_report( module, actions, track_sources );
     }
 }
 
@@ -1050,11 +1084,25 @@ struct module_level_html_actions: public module_level_actions
 
     void module2( std::string const & module, int level )
     {
-        std::cout << " " << module;
+        std::cout << " ";
+
+        bool important = level < unknown_level && level > 1 && level >= level_ - 1;
+
+        if( important )
+        {
+            std::cout << "<strong>";
+        }
+
+        std::cout << module;
 
         if( level < unknown_level )
         {
             std::cout << "<sup>" << level << "</sup>";
+        }
+
+        if( important )
+        {
+            std::cout << "</strong>";
         }
     }
 };
@@ -1182,6 +1230,39 @@ static void output_module_overview_report( bool html )
     }
 }
 
+// list_dependencies
+
+struct list_dependencies_actions: public module_overview_actions
+{
+    void heading()
+    {
+    }
+
+    void module_start( std::string const & module )
+    {
+        std::cout << module << " ->";
+    }
+
+    void module_end( std::string const & /*module*/ )
+    {
+        std::cout << "\n";
+    }
+
+    void module2( std::string const & module )
+    {
+        if( module != "(unknown)" )
+        {
+            std::cout << " " << module;
+        }
+    }
+};
+
+static void list_dependencies()
+{
+    list_dependencies_actions actions;
+    output_module_overview_report( actions );
+}
+
 //
 
 static void output_html_header( std::string const & title )
@@ -1201,13 +1282,13 @@ static void output_html_footer( std::string const & footer )
     std::cout << "</html>\n";
 }
 
-static void enable_secondary( bool & secondary )
+static void enable_secondary( bool & secondary, bool track_sources )
 {
     if( !secondary )
     {
         try
         {
-            build_module_dependency_map();
+            build_module_dependency_map( track_sources );
         }
         catch( fs::filesystem_error const & x )
         {
@@ -1218,22 +1299,309 @@ static void enable_secondary( bool & secondary )
     }
 }
 
+static void list_modules()
+{
+    for( std::set< std::string >::iterator i = s_modules.begin(); i != s_modules.end(); ++i )
+    {
+        std::cout << *i << "\n";
+    }
+}
+
+static void list_buildable()
+{
+    for( std::set< std::string >::iterator i = s_modules.begin(); i != s_modules.end(); ++i )
+    {
+        if( fs::exists( module_build_path( *i ) ) && fs::exists( module_source_path( *i ) ) )
+        {
+            std::cout << *i << "\n";
+        }
+    }
+}
+
+// module_weight_report
+
+struct module_weight_actions
+{
+    virtual void heading() = 0;
+
+    virtual void weight_start( int weight ) = 0;
+    virtual void weight_end( int weight ) = 0;
+
+    virtual void module_start( std::string const & module ) = 0;
+    virtual void module_end( std::string const & module ) = 0;
+
+    virtual void module_primary_start() = 0;
+    virtual void module_primary( std::string const & module, int weight ) = 0;
+    virtual void module_primary_end() = 0;
+
+    virtual void module_secondary_start() = 0;
+    virtual void module_secondary( std::string const & module, int weight ) = 0;
+    virtual void module_secondary_end() = 0;
+};
+
+static void output_module_weight_report( module_weight_actions & actions )
+{
+    // gather secondary dependencies
+
+    struct build_secondary_deps: public module_secondary_actions
+    {
+        std::map< std::string, std::set< std::string > > * pm_;
+
+        build_secondary_deps( std::map< std::string, std::set< std::string > > * pm ): pm_( pm )
+        {
+        }
+
+        std::string module_;
+
+        void heading( std::string const & module )
+        {
+            module_ = module;
+        }
+
+        void module_start( std::string const & /*module*/ )
+        {
+        }
+
+        void module_end( std::string const & /*module*/ )
+        {
+        }
+
+        void module_adds( std::string const & module )
+        {
+            (*pm_)[ module_ ].insert( module );
+        }
+    };
+
+    std::map< std::string, std::set< std::string > > secondary_deps;
+
+    build_secondary_deps bsd( &secondary_deps );
+
+    for( std::set< std::string >::const_iterator i = s_modules.begin(); i != s_modules.end(); ++i )
+    {
+        output_module_secondary_report( *i, bsd );
+    }
+
+    // build weight map
+
+    std::map< int, std::set< std::string > > modules_by_weight;
+
+    for( std::set< std::string >::const_iterator i = s_modules.begin(); i != s_modules.end(); ++i )
+    {
+        int w = s_module_deps[ *i ].size() + secondary_deps[ *i ].size();
+        modules_by_weight[ w ].insert( *i );
+    }
+
+    // output report
+
+    actions.heading();
+
+    for( std::map< int, std::set< std::string > >::const_iterator i = modules_by_weight.begin(); i != modules_by_weight.end(); ++i )
+    {
+        actions.weight_start( i->first );
+
+        for( std::set< std::string >::const_iterator j = i->second.begin(); j != i->second.end(); ++j )
+        {
+            actions.module_start( *j );
+
+            if( !s_module_deps[ *j ].empty() )
+            {
+                actions.module_primary_start();
+
+                for( std::set< std::string >::const_iterator k = s_module_deps[ *j ].begin(); k != s_module_deps[ *j ].end(); ++k )
+                {
+                    int w = s_module_deps[ *k ].size() + secondary_deps[ *k ].size();
+                    actions.module_primary( *k, w );
+                }
+
+                actions.module_primary_end();
+            }
+
+            if( !secondary_deps[ *j ].empty() )
+            {
+                actions.module_secondary_start();
+
+                for( std::set< std::string >::const_iterator k = secondary_deps[ *j ].begin(); k != secondary_deps[ *j ].end(); ++k )
+                {
+                    int w = s_module_deps[ *k ].size() + secondary_deps[ *k ].size();
+                    actions.module_secondary( *k, w );
+                }
+
+                actions.module_secondary_end();
+            }
+
+            actions.module_end( *j );
+        }
+
+        actions.weight_end( i->first );
+    }
+}
+
+struct module_weight_txt_actions: public module_weight_actions
+{
+    void heading()
+    {
+        std::cout << "Module Weights:\n\n";
+    }
+
+    void weight_start( int weight )
+    {
+        std::cout << "Weight " << weight << ":\n";
+    }
+
+    void weight_end( int /*weight*/ )
+    {
+        std::cout << "\n";
+    }
+
+    void module_start( std::string const & module )
+    {
+        std::cout << "    " << module;
+    }
+
+    void module_end( std::string const & /*module*/ )
+    {
+        std::cout << "\n";
+    }
+
+    void module_primary_start()
+    {
+        std::cout << " ->";
+    }
+
+    void module_primary( std::string const & module, int weight )
+    {
+        std::cout << " " << module << "(" << weight << ")";
+    }
+
+    void module_primary_end()
+    {
+    }
+
+    void module_secondary_start()
+    {
+        std::cout << " ->";
+    }
+
+    void module_secondary( std::string const & module, int /*weight*/ )
+    {
+        std::cout << " " << module;
+    }
+
+    void module_secondary_end()
+    {
+    }
+};
+
+struct module_weight_html_actions: public module_weight_actions
+{
+    int weight_;
+
+    void heading()
+    {
+        std::cout << "<h1>Module Weights</h1>\n";
+    }
+
+    void weight_start( int weight )
+    {
+        std::cout << "  <h2>Weight " << weight << "</h2><ul>\n";
+        weight_ = weight;
+    }
+
+    void weight_end( int /*weight*/ )
+    {
+        std::cout << "  </ul>\n";
+    }
+
+    void module_start( std::string const & module )
+    {
+        std::cout << "    <li><a href =\"" << module << ".html\">" << module << "</a><small>";
+    }
+
+    void module_end( std::string const & /*module*/ )
+    {
+        std::cout << "</small></li>\n";
+    }
+
+    void module_primary_start()
+    {
+        std::cout << "<br />&#8674;";
+    }
+
+    void module_primary( std::string const & module, int weight )
+    {
+        std::cout << " ";
+
+        bool heavy = weight >= 0.8 * weight_;
+
+        if( heavy )
+        {
+            std::cout << "<strong>";
+        }
+
+        std::cout << module << "<sup>" << weight << "</sup>";
+
+        if( heavy )
+        {
+            std::cout << "</strong>";
+        }
+    }
+
+    void module_primary_end()
+    {
+    }
+
+    void module_secondary_start()
+    {
+        std::cout << "<br /><span style=\"padding-left: 1em;\">&#8674;";
+    }
+
+    void module_secondary( std::string const & module, int /*weight*/ )
+    {
+        std::cout << " " << module;
+    }
+
+    void module_secondary_end()
+    {
+        std::cout << "</span>";
+    }
+};
+
+static void output_module_weight_report( bool html )
+{
+    if( html )
+    {
+        module_weight_html_actions actions;
+        output_module_weight_report( actions );
+    }
+    else
+    {
+        module_weight_txt_actions actions;
+        output_module_weight_report( actions );
+    }
+}
+
 int main( int argc, char const* argv[] )
 {
     if( argc < 2 )
     {
-        std::cerr << "Usage:\n\n";
-        std::cerr << "    boostdep --list-modules\n";
-        std::cerr << "\n";
-        std::cerr << "    boostdep [options] --module-overview\n";
-        std::cerr << "    boostdep [options] --module-levels\n";
-        std::cerr << "\n";
-        std::cerr << "    boostdep [options] [--primary] <module>\n";
-        std::cerr << "    boostdep [options] --secondary <module>\n";
-        std::cerr << "    boostdep [options] --reverse <module>\n";
-        std::cerr << "    boostdep [options] [--header] <header>\n";
-        std::cerr << "\n";
-        std::cerr << "        where [options] can be [--title <title>] [--footer <footer>] [--html]\n";
+        std::cout <<
+
+            "Usage:\n"
+            "\n"
+            "    boostdep --list-modules\n";
+            "    boostdep --list-buildable\n";
+            "    boostdep [--track-sources] --list-dependencies\n";
+            "\n";
+            "    boostdep [options] --module-overview\n";
+            "    boostdep [options] --module-levels\n";
+            "    boostdep [options] --module-weights\n";
+            "\n";
+            "    boostdep [options] [--primary] <module>\n";
+            "    boostdep [options] --secondary <module>\n";
+            "    boostdep [options] --reverse <module>\n";
+            "    boostdep [options] [--header] <header>\n";
+            "\n";
+            "    [options]: [--track-sources] [--title <title>] [--footer <footer>] [--html]\n";
 
         return -1;
     }
@@ -1249,6 +1617,7 @@ int main( int argc, char const* argv[] )
 
     bool html = false;
     bool secondary = false;
+    bool track_sources = false;
 
     std::string title = "Boost Dependency Report";
     std::string footer;
@@ -1259,10 +1628,11 @@ int main( int argc, char const* argv[] )
 
         if( option == "--list-modules" )
         {
-            for( std::set< std::string >::iterator i = s_modules.begin(); i != s_modules.end(); ++i )
-            {
-                std::cout << *i << "\n";
-            }
+            list_modules();
+        }
+        else if( option == "--list-buildable" )
+        {
+            list_buildable();
         }
         else if( option == "--title" )
         {
@@ -1286,18 +1656,22 @@ int main( int argc, char const* argv[] )
                 output_html_header( title );
             }
         }
+        else if( option == "--track-sources" )
+        {
+            track_sources = true;
+        }
         else if( option == "--primary" )
         {
             if( i + 1 < argc )
             {
-                output_module_primary_report( argv[ ++i ], html );
+                output_module_primary_report( argv[ ++i ], html, track_sources );
             }
         }
         else if( option == "--secondary" )
         {
             if( i + 1 < argc )
             {
-                enable_secondary( secondary );
+                enable_secondary( secondary, track_sources );
                 output_module_secondary_report( argv[ ++i ], html );
             }
         }
@@ -1305,7 +1679,7 @@ int main( int argc, char const* argv[] )
         {
             if( i + 1 < argc )
             {
-                enable_secondary( secondary );
+                enable_secondary( secondary, track_sources );
                 output_module_reverse_report( argv[ ++i ], html );
             }
         }
@@ -1313,27 +1687,37 @@ int main( int argc, char const* argv[] )
         {
             if( i + 1 < argc )
             {
-                enable_secondary( secondary );
-                output_header_report( option, html );
+                enable_secondary( secondary, track_sources );
+                output_header_report( argv[ ++i ], html );
             }
         }
         else if( option == "--module-levels" )
         {
-            enable_secondary( secondary );
+            enable_secondary( secondary, track_sources );
             output_module_level_report( html );
         }
         else if( option == "--module-overview" )
         {
-            enable_secondary( secondary );
+            enable_secondary( secondary, track_sources );
             output_module_overview_report( html );
+        }
+        else if( option == "--module-weights" )
+        {
+            enable_secondary( secondary, track_sources );
+            output_module_weight_report( html );
+        }
+        else if( option == "--list-dependencies" )
+        {
+            enable_secondary( secondary, track_sources );
+            list_dependencies();
         }
         else if( s_modules.count( option ) )
         {
-            output_module_primary_report( option, html );
+            output_module_primary_report( option, html, track_sources );
         }
         else if( s_header_map.count( option ) )
         {
-            enable_secondary( secondary );
+            enable_secondary( secondary, track_sources );
             output_header_report( option, html );
         }
         else

@@ -4,9 +4,6 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/config.hpp>
-#ifndef BOOST_NO_CXX11_DECLTYPE_N3276
-#define BOOST_THREAD_NO_CXX11_DECLTYPE_N3276
-#endif
 #if ! defined  BOOST_NO_CXX11_DECLTYPE
 #define BOOST_RESULT_OF_USE_DECLTYPE
 #endif

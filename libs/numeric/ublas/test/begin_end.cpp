@@ -1,4 +1,8 @@
-/** -*- c++ -*- \file begin_end.hpp \brief Test the \c begin and \c end operations. */
+//  Copyright (c) 2011 David Bellot
+//
+//  Distributed under the Boost Software License, Version 1.0. (See
+//  accompanying file LICENSE_1_0.txt or copy at
+//  http://www.boost.org/LICENSE_1_0.txt)
 
 #include <cmath>
 #include <boost/numeric/ublas/traits/const_iterator_type.hpp>
@@ -13,7 +17,7 @@
 #include <boost/numeric/ublas/vector.hpp>
 #include <boost/numeric/ublas/vector_expression.hpp>
 #include <iostream>
-#include "libs/numeric/ublas/test/utils.hpp"
+#include "utils.hpp"
 
 
 static const double TOL(1.0e-5); ///< Used for comparing two real numbers.

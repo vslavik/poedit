@@ -3,15 +3,12 @@
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/math/bindings/rr.hpp>
-#include <boost/test/included/prg_exec_monitor.hpp>
 #include <boost/math/special_functions/gamma.hpp>
 #include <boost/math/special_functions/erf.hpp> // for inverses
 #include <boost/math/constants/constants.hpp>
-#include <boost/math/tools/test.hpp>
 #include <fstream>
-
 #include <boost/math/tools/test_data.hpp>
+#include "mp_t.hpp"
 
 using namespace boost::math::tools;
 using namespace std;
@@ -23,7 +20,7 @@ float force_truncate(const float* f)
    return external_f;
 }
 
-float truncate_to_float(boost::math::ntl::RR r)
+float truncate_to_float(mp_t r)
 {
    float f = boost::math::tools::real_cast<float>(r);
    return force_truncate(&f);
@@ -31,7 +28,7 @@ float truncate_to_float(boost::math::ntl::RR r)
 
 struct erf_data_generator
 {
-   boost::math::tuple<boost::math::ntl::RR, boost::math::ntl::RR> operator()(boost::math::ntl::RR z)
+   boost::math::tuple<mp_t, mp_t> operator()(mp_t z)
    {
       // very naively calculate spots using the gamma function at high precision:
       int sign = 1;
@@ -40,9 +37,9 @@ struct erf_data_generator
          sign = -1;
          z = -z;
       }
-      boost::math::ntl::RR g1, g2;
-      g1 = boost::math::tgamma_lower(boost::math::ntl::RR(0.5), z * z);
-      g1 /= sqrt(boost::math::constants::pi<boost::math::ntl::RR>());
+      mp_t g1, g2;
+      g1 = boost::math::tgamma_lower(mp_t(0.5), z * z);
+      g1 /= sqrt(boost::math::constants::pi<mp_t>());
       g1 *= sign;
 
       if(z < 0.5)
@@ -51,8 +48,8 @@ struct erf_data_generator
       }
       else
       {
-         g2 = boost::math::tgamma(boost::math::ntl::RR(0.5), z * z);
-         g2 /= sqrt(boost::math::constants::pi<boost::math::ntl::RR>());
+         g2 = boost::math::tgamma(mp_t(0.5), z * z);
+         g2 /= sqrt(boost::math::constants::pi<mp_t>());
       }
       if(sign < 1)
          g2 = 2 - g2;
@@ -117,24 +114,21 @@ void asymptotic_limit(int Bits)
       << terms << " terms." << std::endl;
 }
 
-boost::math::tuple<boost::math::ntl::RR, boost::math::ntl::RR> erfc_inv(boost::math::ntl::RR r)
+boost::math::tuple<mp_t, mp_t> erfc_inv(mp_t r)
 {
-   boost::math::ntl::RR x = exp(-r * r);
-   x = NTL::RoundToPrecision(x.value(), 64);
+   mp_t x = exp(-r * r);
+   x = x.convert_to<double>();
    std::cout << x << "   ";
-   boost::math::ntl::RR result = boost::math::erfc_inv(x);
+   mp_t result = boost::math::erfc_inv(x);
    std::cout << result << std::endl;
    return boost::math::make_tuple(x, result);
 }
 
 
-int cpp_main(int argc, char*argv [])
+int main(int argc, char*argv [])
 {
-   boost::math::ntl::RR::SetPrecision(1000);
-   boost::math::ntl::RR::SetOutputPrecision(40);
-
-   parameter_info<boost::math::ntl::RR> arg1;
-   test_data<boost::math::ntl::RR> data;
+   parameter_info<mp_t> arg1;
+   test_data<mp_t> data;
 
    bool cont;
    std::string line;
@@ -152,18 +146,18 @@ int cpp_main(int argc, char*argv [])
       }
       else if(strcmp(argv[1], "--erf_inv") == 0)
       {
-         boost::math::ntl::RR (*f)(boost::math::ntl::RR);
+         mp_t (*f)(mp_t);
          f = boost::math::erf_inv;
          std::cout << "Welcome.\n"
             "This program will generate spot tests for the inverse erf function:\n";
          std::cout << "Enter the number of data points: ";
          int points;
          std::cin >> points;
-         data.insert(f, make_random_param(boost::math::ntl::RR(-1), boost::math::ntl::RR(1), points));
+         data.insert(f, make_random_param(mp_t(-1), mp_t(1), points));
       }
       else if(strcmp(argv[1], "--erfc_inv") == 0)
       {
-         boost::math::tuple<boost::math::ntl::RR, boost::math::ntl::RR> (*f)(boost::math::ntl::RR);
+         boost::math::tuple<mp_t, mp_t> (*f)(mp_t);
          f = erfc_inv;
          std::cout << "Welcome.\n"
             "This program will generate spot tests for the inverse erfc function:\n";
@@ -173,7 +167,7 @@ int cpp_main(int argc, char*argv [])
          std::cout << "Enter the number of data points: ";
          int points;
          std::cin >> points;
-         parameter_info<boost::math::ntl::RR> arg = make_random_param(boost::math::ntl::RR(0), boost::math::ntl::RR(max_val), points);
+         parameter_info<mp_t> arg = make_random_param(mp_t(0), mp_t(max_val), points);
          arg.type |= dummy_param;
          data.insert(f, arg);
       }
@@ -202,6 +196,7 @@ int cpp_main(int argc, char*argv [])
    if(line == "")
       line = "erf_data.ipp";
    std::ofstream ofs(line.c_str());
+   ofs << std::scientific << std::setprecision(40);
    write_code(ofs, data, "erf_data");
    
    return 0;

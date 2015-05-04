@@ -29,13 +29,13 @@
 <h4>Notation</h4>
 In the following descriptions
 <ul>
-  <li><code>SA</code> is an type modeling the <a href="#saving_interface">Saving Archive Concept</a>
+  <li><code>SA</code> is an type modeling the <a href="#saving_interface">Saving Archive Concept</a>.
   <li><code>sa</code> is an instance of type SA.
-  <li><code>LA</code> is an type modeling the <a href="#loading_interface">Loading Archive Concept</a>
+  <li><code>LA</code> is an type modeling the <a href="#loading_interface">Loading Archive Concept</a>.
   <li><code>la</code> is an instance of type LA.
-  <li><code>T</code> is an <a href="serialization.html"><strong>Serializable</strong></a> Type
-  <li><code>x</code> is an instance of type T Type</li>.
-  <li><code>u,v</code> is a pointer to a an instance of type T
+  <li><code>T</code> is an <a href="serialization.html"><strong>Serializable</strong></a> Type.
+  <li><code>x</code> is an instance of type T Type.
+  <li><code>u,v</code> is a pointer to a an instance of type T.
   <li><code>count</code> is an instance of a type that can be converted to <code>std::size_t</code>.
 </ul>
 <h4><a name="saving_interface">Saving Archive Concept</a></h4>
@@ -112,6 +112,14 @@ way the data are rendered <a href="serialization.html">serializable</a>.
     might be conditioned on the library version to make sure that libraries created by 
     previous versions of the library can still be read.
   </dd>
+  <dt><h4><code>
+    sa.get_helper&lt;Helper&gt;(void * const helper_instance_id = 0)
+  </code></h4></dt>
+  <dd>
+    See <code>la.get_helper&lt;Helper&gt;(void * const helper_instance_id = 0)</code>
+    below.
+  </dd>
+
 </dl>
 
 <h4><a name="loading_interface">Loading Archive Concept</a></h4>
@@ -183,24 +191,22 @@ equivalent to the original.
     sure that libraries created by previous versions of the library can still be read.
   </dd>
   <dt><h4><code>
-    la.get_helper&lt;Helper&gt;()
-    <br>
-    la.get_helper(u)
+    la.get_helper&lt;Helper&gt;(void * const helper_instance_id)
   </code></h4></dt>
   <dd>
-    The first time <code  style="white-space: normal">la.get_helper&lt;Helper&gt;()</code>
-    is invoked for a given <code  style="white-space: normal">la</code> with a particular copyable type
-    <code  style="white-space: normal">Helper</code>, a default-constructed
+    Some otherwise unserializable types can be made serializable by inclusion of
+    a helper object.  The iconic example of this is shared_ptr which needs this
+    helper object to keep track of previously loaded shared_ptr instances so they
+    can be "matched up" with subsequently loaded ones.
+    The first time <code  style="white-space: normal">la.get_helper&lt;Helper&gt;(void * const helper_instance_id)</code>
+    is invoked for a given helper_instance_id, <code  style="white-space: normal">Helper</code>, a default-constructed
     <code style="white-space: normal">Helper</code> object is created, attached to
     <code  style="white-space: normal">la</code> and a reference to it is returned. Subsequent
-    invocations of <code style="white-space: normal">la.get_helper&lt;Helper&gt;()</code> return
+    invocations of <code style="white-space: normal">la.get_helper&lt;Helper&gt;(void * const helper_instance_id)</code> with the same id value return
     a reference to the formerly constructed object. All objects created in this manner are
     destroyed  upon <code style="white-space: normal">la</code> destruction time. The purpose
     of helper objects is discussed in
     <a href="special.html#helpersupport">Special Considerations - Helper Support</a>.
-    The second syntax is included to permit this function to be called on non-conforming
-    compilers when <code style="white-space: normal">la</code> is a template argument.
-    For more information, see <a target="detail" href="implementation.html#tempatesyntax">Template Invocation syntax</a>
   </dd>
   <dt><h4><code>
     la.reset_object_address(v, u)

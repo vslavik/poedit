@@ -362,7 +362,7 @@ def __add_flag (rule_or_module, variable_name, condition, values):
     assert m
     module = m.group(1)
 
-    __module_flags.setdefault(m, []).append(f)
+    __module_flags.setdefault(module, []).append(f)
     __flags.setdefault(rule_or_module, []).append(f)
 
 __requirements = []

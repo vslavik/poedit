@@ -1,6 +1,6 @@
 # Boost.Flyweight tests Jamfile
 #
-# Copyright 2006-2008 Joaquín M López Muñoz.
+# Copyright 2006-2014 Joaquín M López Muñoz.
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
@@ -26,6 +26,8 @@ test-suite "flyweight" :
     [ run test_multictor.cpp          test_multictor_main.cpp       ]
     [ run test_no_locking.cpp         test_no_locking_main.cpp      ]
     [ run test_no_tracking.cpp        test_no_tracking_main.cpp     ]
+    [ run test_serialization.cpp      test_serialization_main.cpp
+          /boost/serialization//boost_serialization/<link>static    ]
     [ run test_set_factory.cpp        test_set_factory_main.cpp     ]
     ;
 

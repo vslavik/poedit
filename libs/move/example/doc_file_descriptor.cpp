@@ -14,7 +14,7 @@
 
 //[file_descriptor_def
 
-#include <boost/move/utility.hpp>
+#include <boost/move/utility_core.hpp>
 #include <stdexcept>
 
 class file_descriptor

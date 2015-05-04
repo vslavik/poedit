@@ -2,7 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <!--
-  Copyright (c) 2003-2014 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+  Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 
   Distributed under the Boost Software License, Version 1.0. (See accompanying
   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -26,7 +26,7 @@
 -->
 <xsl:template match="/doxygen">
 <xsl:text>[/
- / Copyright (c) 2003-2014 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+ / Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -752,10 +752,16 @@
     <xsl:when test="contains($file, 'boost/asio/high_resolution_timer')">
       <xsl:text>None</xsl:text>
     </xsl:when>
+    <xsl:when test="contains($file, 'boost/asio/spawn')">
+      <xsl:text>None</xsl:text>
+    </xsl:when>
     <xsl:when test="contains($file, 'boost/asio/steady_timer')">
       <xsl:text>None</xsl:text>
     </xsl:when>
     <xsl:when test="contains($file, 'boost/asio/system_timer')">
+      <xsl:text>None</xsl:text>
+    </xsl:when>
+    <xsl:when test="contains($file, 'boost/asio/use_future')">
       <xsl:text>None</xsl:text>
     </xsl:when>
     <xsl:otherwise>

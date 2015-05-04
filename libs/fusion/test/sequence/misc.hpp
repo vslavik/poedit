@@ -13,6 +13,7 @@
 #include <boost/mpl/equal.hpp>
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/integral_c.hpp>
+#include <boost/mpl/is_sequence.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <string>
 
@@ -173,6 +174,17 @@ test()
         BOOST_STATIC_ASSERT(traits::is_sequence<t3>::value);
         BOOST_STATIC_ASSERT(!traits::is_sequence<int>::value);
         BOOST_STATIC_ASSERT(!traits::is_sequence<char>::value);
+    }
+
+    {   // testing mpl::is_sequence
+
+        typedef FUSION_SEQUENCE<int, float, double> t1;
+        typedef FUSION_SEQUENCE<> t2;
+        typedef FUSION_SEQUENCE<char> t3;
+
+        BOOST_STATIC_ASSERT(boost::mpl::is_sequence<t1>::value);
+        BOOST_STATIC_ASSERT(boost::mpl::is_sequence<t2>::value);
+        BOOST_STATIC_ASSERT(boost::mpl::is_sequence<t3>::value);
     }
 
     {   // testing mpl compatibility

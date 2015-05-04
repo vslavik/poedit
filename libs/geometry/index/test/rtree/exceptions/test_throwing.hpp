@@ -2,7 +2,7 @@
 //
 // Throwing objects implementation
 //
-// Copyright (c) 2011-2013 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2011-2014 Adam Wulkiewicz, Lodz, Poland.
 //
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -116,6 +116,13 @@ public:
     typedef typename container::reference reference;
     typedef typename container::const_reference const_reference;
 
+    inline throwing_varray() {}
+
+    template <typename It>
+    inline throwing_varray(It first, It last)
+        : container(first, last)
+    {}
+
     inline void resize(size_type s)
     {
         throwing_varray_settings::throw_if_required();
@@ -134,5 +141,21 @@ public:
         container::push_back(v);
     }
 };
+
+// elements derived type trait
+
+namespace boost { namespace geometry { namespace index {
+
+namespace detail { namespace rtree {
+
+template <typename OldValue, size_t N, typename NewValue>
+struct container_from_elements_type<throwing_varray<OldValue, N>, NewValue>
+{
+    typedef throwing_varray<NewValue, N> type;
+};
+
+}} // namespace detail::rtree
+
+}}} // namespace boost::geometry::index
 
 #endif // BOOST_GEOMETRY_INDEX_TEST_THROWING_HPP

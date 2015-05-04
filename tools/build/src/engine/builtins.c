@@ -759,8 +759,9 @@ static int has_wildcards( char const * const str )
 
 static LIST * append_if_exists( LIST * list, OBJECT * file )
 {
-    return file_query( file )
-        ? list_push_back( list, object_copy( file ) )
+    file_info_t * info = file_query( file );
+    return info
+        ? list_push_back( list, object_copy( info->name ) )
         : list ;
 }
 

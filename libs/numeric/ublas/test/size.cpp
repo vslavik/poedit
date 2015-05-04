@@ -1,4 +1,8 @@
-/** -*- c++ -*- \file size.hpp \brief Test the \c size operation. */
+//  Copyright (c) 2011 David Bellot
+//
+//  Distributed under the Boost Software License, Version 1.0. (See
+//  accompanying file LICENSE_1_0.txt or copy at
+//  http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/numeric/ublas/fwd.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
@@ -8,7 +12,7 @@
 #include <boost/numeric/ublas/vector.hpp>
 #include <boost/numeric/ublas/vector_expression.hpp>
 #include <iostream>
-#include "libs/numeric/ublas/test/utils.hpp"
+#include "utils.hpp"
 
 
 BOOST_UBLAS_TEST_DEF( test_vector_container )

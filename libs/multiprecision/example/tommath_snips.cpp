@@ -8,9 +8,12 @@
 
 void t1()
 {
-   //[tommath_eg
-   //=#include <boost/multiprecision/tommath.hpp>
-
+//[tommath_eg
+//=#include <boost/multiprecision/tommath.hpp>
+//=#include <iostream>
+//=
+//=int main()
+//={
    boost::multiprecision::tom_int v = 1;
 
    // Do some arithmetic:
@@ -38,14 +41,19 @@ void t1()
       std::cout << e.what() << std::endl;
    }
 
-   //]
+//=   return 0;
+//=}
+//]
 }
 
 void t3()
 {
-   //[mp_rat_eg
-   //=#include <boost/multiprecision/tommath.hpp>
-
+//[mp_rat_eg
+//=#include <boost/multiprecision/tommath.hpp>
+//=#include <iostream>
+//=
+//=int main()
+//={
    using namespace boost::multiprecision;
 
    tom_rational v = 1;
@@ -62,12 +70,15 @@ void t3()
    tom_rational w(2, 3); // Component wise constructor
    std::cout << w << std::endl; // prints 2/3
 
-   //]
+//=   return 0;
+//=}
+//]
 }
 
 int main()
 {
    t1();
+   t3();
    return 0;
 }
 

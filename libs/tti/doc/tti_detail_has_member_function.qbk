@@ -1,5 +1,5 @@
 [/ 
-  (C) Copyright Edward Diener 2011,2012
+  (C) Copyright Edward Diener 2011,2012,2014
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE_1_0.txt or copy at
   http://www.boost.org/LICENSE_1_0.txt).
@@ -37,7 +37,7 @@ must be a const function.
 The second way of invoking the metafunction is by passing it a single 
 parameter, which is a pointer to member function. This type has the form of:
 
- Return_Type Enclosing_Type::* ( Parameter_Types ) cv_qualifier(s)
+ Return_Type ( Enclosing_Type::* ) ( Parameter_Types ) cv_qualifier(s)
  
 where the Parameter_Types may be empty, or a comma-separated 
 list of parameter types if there are more than one parameter type.
@@ -79,7 +79,7 @@ A return value called 'value' is a compile time bool constant.
   
   has_member_function_AMemberFunction
     <
-    MemberFunction_ReturnType Enclosing_Type::* (MemberFunction_ParameterTypes) optional_cv_qualification
+    MemberFunction_ReturnType (Enclosing_Type::*) (MemberFunction_ParameterTypes) optional_cv_qualification
     >::value
     
 [heading Examples]
@@ -120,11 +120,11 @@ desired.
  has_member_function_function1<Top,int,boost::mpl::vector<> >::value; // true
  has_member_function_function1<Top2,int>::value; // false
  
- has_member_function_function2<AClass Top::* (double,short *)>::value; // true
- has_member_function_function2<AClass Top2::* (double,short *)>::value; // false
- has_member_function_function2<long Top2::* (Top &,int,bool,short,float)>::value; // true
+ has_member_function_function2<AClass (Top::*) (double,short *)>::value; // true
+ has_member_function_function2<AClass (Top2::*) (double,short *)>::value; // false
+ has_member_function_function2<long (Top2::*) (Top &,int,bool,short,float)>::value; // true
  
- has_member_function_function3<int Top2::* ()>::value; // false
+ has_member_function_function3<int (Top2::*) ()>::value; // false
  has_member_function_function3<Top2,Top *,boost::mpl::vector<long,int,AClass &> >::value; // true;
    
 [heading Metafunction re-use]

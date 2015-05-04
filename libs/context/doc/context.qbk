@@ -1,5 +1,5 @@
 [/
-          Copyright Oliver Kowalke 2009.
+          Copyright Oliver Kowalke 2014.
  Distributed under the Boost Software License, Version 1.0.
     (See accompanying file LICENSE_1_0.txt or copy at
           http://www.boost.org/LICENSE_1_0.txt
@@ -8,7 +8,7 @@
 [library Context
     [quickbook 1.5]
     [authors [Kowalke, Oliver]]
-    [copyright 2009 Oliver Kowalke]
+    [copyright 2014 Oliver Kowalke]
     [id context]
     [purpose C++ Library for swiching different user ctx]
     [category text]
@@ -22,8 +22,6 @@
 
 [def __boost_build__ [*Boost.Build]]
 [def __boost_context__ [*Boost.Context]]
-[def __boost_fiber__ [*Boost.Coroutine]]
-[def __boost_task__ [*Boost.Task]]
 
 [template cs_example_link[link_text] [link context.examples.enumerator [link_text]]]
 [template context_link[link_text] [link context.context.context [link_text]]]
@@ -42,9 +40,16 @@
 [def __threads__ ['threads]]
 [def __tls__ ['thread-local storage]]
 [def __stack_allocator__ ['StackAllocator]]
+[def __stack_allocator_concept__ ['stack-allocator concept]]
+[def __stack_traits__ ['stack-traits]]
 
+[def __econtext__ ['execution_context]]
 [def __fcontext__ ['fcontext_t]]
 [def __ucontext__ ['ucontext_t]]
+[def __fixedsize__ ['fixedsize_stack]]
+[def __protected_fixedsize__ ['protected_fixedsize_stack]]
+[def __segmented__ ['segmented_stack]]
+[def __stack_context__ ['stack_context]]
 
 [def __fls_alloc__ ['::FlsAlloc()]]
 [def __fls_free__ ['::FlsFree()]]
@@ -65,6 +70,8 @@
 [include overview.qbk]
 [include requirements.qbk]
 [include fcontext.qbk]
+[include execution_context.qbk]
+[include stack.qbk]
 [include performance.qbk]
 [include architectures.qbk]
 [include rationale.qbk]

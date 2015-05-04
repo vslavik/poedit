@@ -26,7 +26,8 @@ project
         <toolset>sun:<define>__typeof__=__typeof__
         <warnings>all
         <toolset>gcc:<cxxflags>-Wextra
-        <toolset>gcc:<cxxflags>-pedantic
+        #<toolset>gcc:<cxxflags>-pedantic
+        <toolset>clang:<warnings>on
         <toolset>gcc:<cxxflags>-Wno-long-long
         <toolset>gcc:<cxxflags>-Wno-variadic-macros
         <toolset>darwin:<cxxflags>-Wextra
@@ -437,6 +438,8 @@ rule chrono-compile2 ( sources : name )
         [ chrono-v1-v2-run-header io/time_point_input.cpp  ]
         [ chrono-v1-v2-run-header io/time_point_output.cpp  ]
         [ chrono-run test_7868.cpp  ]
+        [ chrono-run test_11006.cpp  ]
+        [ chrono-run test_11012.cpp  ]
         ;
 
     test-suite "win32"
@@ -449,5 +452,6 @@ rule chrono-compile2 ( sources : name )
         :
         #[ chrono-run test_7868.cpp  ]
         #[ chrono-run test_9337.cpp  ]
+        #[ chrono-run test_10778.cpp  ]
         ;
 

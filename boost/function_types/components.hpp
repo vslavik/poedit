@@ -47,7 +47,6 @@
 
 #include <boost/function_types/config/config.hpp>
 
-#ifndef BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION
 #   if   BOOST_FT_MAX_ARITY < 10
 #     include <boost/mpl/vector/vector10.hpp>
 #   elif BOOST_FT_MAX_ARITY < 20
@@ -59,9 +58,6 @@
 #   elif BOOST_FT_MAX_ARITY < 50
 #     include <boost/mpl/vector/vector50.hpp>
 #   endif
-#else
-#   include <boost/function_types/detail/classifier.hpp>
-#endif
 
 #include <boost/function_types/detail/class_transform.hpp>
 #include <boost/function_types/property_tags.hpp>

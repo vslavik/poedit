@@ -22,7 +22,7 @@ type.register('IDL', ['idl'])
 # to resources of an application (.rc). In order to be found by a resource 
 # compiler its target type should be derived from 'H' - otherwise
 # the property '<implicit-dependency>' will be ignored.
-type.register('MSTYPELIB', 'tlb', 'H')
+type.register('MSTYPELIB', ['tlb'], 'H')
 
 # Register scanner for MIDL files
 class MidlScanner(scanner.Scanner):

@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_typeindex.html" title="Chapter&#160;36.&#160;Boost.TypeIndex 4.0">
+<link rel="up" href="../boost_typeindex.html" title="Chapter&#160;34.&#160;Boost.TypeIndex 4.0">
 <link rel="prev" href="code_bloat.html" title="Code bloat">
 <link rel="next" href="mixing_sources_with_rtti_on_and_.html" title="Mixing sources with RTTI on and RTTI off">
 </head>
@@ -59,7 +59,13 @@
 </pre>
 <p>
         <span class="bold"><strong>Compilers that have that limitation:</strong></span> GCC,
-        CLANG.
+        CLANG, Intel.
+      </p>
+<p>
+        <span class="bold"><strong>Test:</strong></span> you can test this issue by runing
+        the <code class="computeroutput"><span class="identifier">testing_crossmodule_anonymous_no_rtti</span></code>
+        that can be build if you run <code class="computeroutput"><span class="special">../../../</span><span class="identifier">b2</span></code> in <code class="computeroutput"><span class="identifier">type_index</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span></code>
+        folder.
       </p>
 </td></tr>
 </table></div>
@@ -93,7 +99,7 @@
         If the output of <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">typeindex</span><span class="special">::</span><span class="identifier">ctti_type_index</span><span class="special">::</span><span class="identifier">type_id</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;().</span><span class="identifier">name</span><span class="special">()</span></code>
         * returns not just <code class="computeroutput"><span class="keyword">int</span></code> but also
         a lot of text around the <code class="computeroutput"><span class="keyword">int</span></code>
-        * or does not return type at all then you are usng a compiler that was not
+        * or does not return type at all then you are using a compiler that was not
         tested with this library and you need to setup the <code class="computeroutput"><a class="link" href="../BOOST_TYPE_INDEX_CTTI_USER_DEFINED_PARSING.html" title="Macro BOOST_TYPE_INDEX_CTTI_USER_DEFINED_PARSING">BOOST_TYPE_INDEX_CTTI_USER_DEFINED_PARSING</a></code>
         macro.
       </p>
@@ -144,7 +150,7 @@
 </ul></div>
           </li>
 <li class="listitem">
-            (optional, but highly recomended) <a href="http://www.boost.org/support/bugs.html" target="_top">create
+            (optional, but highly recommended) <a href="http://www.boost.org/support/bugs.html" target="_top">create
             ticket</a> with feature request to add your compiler to supported
             compilers list. Include parameters provided to <code class="computeroutput"><span class="identifier">BOOST_TYPE_INDEX_CTTI_USER_DEFINED_PARSING</span></code>
             macro.
@@ -171,7 +177,7 @@
         int]"". Then you shall set <code class="computeroutput"><span class="identifier">skip_at_begin</span></code>
         to <code class="computeroutput"><span class="keyword">sizeof</span><span class="special">(</span><span class="string">"static const char *boost::detail::ctti&lt;"</span><span class="special">)</span> <span class="special">-</span> <span class="number">1</span></code>
         and <code class="computeroutput"><span class="identifier">skip_at_end</span></code> to <code class="computeroutput"><span class="keyword">sizeof</span><span class="special">(</span><span class="string">"]"</span><span class="special">)</span> <span class="special">-</span> <span class="number">1</span></code>
-        and last parameter of macto to "T = ".
+        and last parameter of macro to "T = ".
       </p>
 <pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_TYPE_INDEX_CTTI_USER_DEFINED_PARSING</span> <span class="special">(</span><span class="number">39</span><span class="special">,</span> <span class="number">1</span><span class="special">,</span> <span class="keyword">true</span><span class="special">,</span> <span class="string">"T = "</span><span class="special">)</span>
 </pre>

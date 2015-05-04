@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Constructing and Interconverting Between Number Types</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../tut.html" title="Tutorial">
 <link rel="prev" href="misc/visualizers.html" title="Visual C++ Debugger Visualizers">
@@ -65,6 +65,21 @@
 <span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="identifier">z</span><span class="special">.</span><span class="keyword">template</span> <span class="identifier">convert_to</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;();</span> <span class="comment">// sets i to 2</span>
 </pre>
 </li>
+<li class="listitem">
+            Conversions to rational numbers from floating point ones are always allowed,
+            and are exact and implicit as long as the rational number uses an unbounded
+            integer type. Please be aware that constructing a rational number from
+            an extended precision floating point type with a large exponent range
+            can effectively run the system out of memory, as in the extreme case
+            <span class="emphasis"><em>2<sup>max_exponent</sup> / CHAR_BITS</em></span> bytes of storage may be
+            required. This does not represent a problem for built in floating point
+            types however, as the exponent range for these is rather limited.
+          </li>
+<li class="listitem">
+            Conversions to floating point numbers from rational ones are rounded
+            to nearest (less than 0.5ulp error) as long as the floating point number
+            is binary, and the integer type used by the rational number is unbounded.
+          </li>
 </ul></div>
 <p>
         Additional conversions may be supported by particular backends.

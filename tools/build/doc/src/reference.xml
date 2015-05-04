@@ -817,6 +817,26 @@ path-constant DATA : data/a.txt ;
         </listitem>
       </varlistentry>
 
+      <varlistentry><term><literal>embed-manifest-file</literal></term>
+        <listitem>
+
+          <indexterm><primary>manifest file</primary><secondary>embedding</secondary></indexterm>
+          <indexterm><primary>embed-manifest-file</primary></indexterm>
+
+          <para>This feature is specific to the msvc toolset (see
+          <xref linkend="bbv2.reference.tools.compiler.msvc"/>),
+          and controls which manifest files should be embedded inside
+          executables and shared libraries.  This
+          feature corresponds to the IDE option found in the project settings dialog,
+          under <menuchoice><guimenu>Configuration Properties</guimenu> 
+            <guisubmenu>Manifest Tool</guisubmenu>
+            <guisubmenu>Input and Output</guisubmenu>
+            <guimenuitem>Additional Manifest Files</guimenuitem> </menuchoice>.
+          </para>
+
+        </listitem>
+      </varlistentry>
+
 
     </variablelist>
   </section>
@@ -1139,6 +1159,55 @@ using msvc : &toolset_ops; ;
             specific flavor of 64-bit x86. Boost.Build will make use of those
             options depending on the value of the<code>instruction-set</code>
             feature.</para>
+          </section>
+          
+          <section id="v2.reference.tools.compiler.msvc.winrt">
+            <title>Windows Runtime support</title>
+
+            <indexterm><primary>Windows Runtime support</primary>
+            <secondary>Microsoft Visual Studio</secondary></indexterm>
+
+            <para>
+            Starting with version 11.0, Microsoft Visual Studio can
+            produce binaries for Windows Store and Phone in addition to 
+            traditional Win32 desktop. To specify which Windows API set
+            to target, use the <literal>windows-api</literal> feature.
+            Available options are <literal>desktop</literal>,
+            <literal>store</literal>, or <literal>phone</literal>. If not
+            specified, <literal>desktop</literal> will be used.
+            </para>
+            
+            <para>
+            When using <literal>store</literal> or <literal>phone</literal>
+            the specified toolset determines what Windows version is 
+            targeted. The following options are available:
+            </para>
+
+            <itemizedlist>
+              <listitem><para>Windows 8.0: toolset=msvc-11.0 windows-api=store</para>
+              </listitem>
+              <listitem><para>Windows 8.1: toolset=msvc-12.0 windows-api=store</para>
+              </listitem>
+              <listitem><para>Windows Phone 8.0: toolset=msvc-11.0 windows-api=phone</para>
+              </listitem>
+              <listitem><para>Windows Phone 8.1: toolset=msvc-12.0 windows-api=phone</para>
+              </listitem>
+            </itemizedlist>
+
+            <para>
+            For example use the following to build for Windows Store 8.1 
+            with the ARM architecture:
+            </para>
+            <programlisting>
+.\b2 toolset=msvc-12.0 windows-api=store architecture=arm</programlisting>
+            
+            <para>
+            Note that when targeting Windows Phone 8.1, version 12.0 didn't 
+            include the vcvars phone setup scripts. They can be separately 
+            downloaded from 
+            <ulink url="http://blogs.msdn.com/b/vcblog/archive/2014/07/18/using-boost-libraries-in-windows-store-and-phone-applications.aspx">here</ulink>.
+            </para>
+            
           </section>
         </section>
 

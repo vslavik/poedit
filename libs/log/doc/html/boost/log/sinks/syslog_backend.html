@@ -6,14 +6,14 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../../sinks.html#header.boost.log.sinks.syslog_backend_hpp" title="Header &lt;boost/log/sinks/syslog_backend.hpp&gt;">
-<link rel="prev" href="syslog/custom_severity_mapping.html" title="Class template custom_severity_mapping">
+<link rel="prev" href="syslog/direct_severity_mapping.html" title="Class template direct_severity_mapping">
 <link rel="next" href="syslog/make_level.html" title="Function make_level">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td></tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="syslog/custom_severity_mapping.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../sinks.html#header.boost.log.sinks.syslog_backend_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="syslog/make_level.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="syslog/direct_severity_mapping.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../sinks.html#header.boost.log.sinks.syslog_backend_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="syslog/make_level.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.log.sinks.syslog_backend"></a><div class="titlepage"></div>
@@ -33,37 +33,37 @@
   <span class="keyword">typedef</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span>            <a name="boost.log.sinks.syslog_backend.severity_mapper_type"></a><span class="identifier">severity_mapper_type</span><span class="special">;</span>  <span class="comment">// Syslog severity level mapper type. </span>
 
   <span class="comment">// <a class="link" href="syslog_backend.html#boost.log.sinks.syslog_backendconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="syslog_backend.html#idp37262688-bb"><span class="identifier">syslog_backend</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="syslog_backend.html#idp37263904-bb"><span class="identifier">syslog_backend</span></a><span class="special">(</span><span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="syslog_backend.html#idp37274768-bb"><span class="special">~</span><span class="identifier">syslog_backend</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="syslog_backend.html#idp44705312-bb"><span class="identifier">syslog_backend</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="syslog_backend.html#idp44706528-bb"><span class="identifier">syslog_backend</span></a><span class="special">(</span><span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="syslog_backend.html#idp44717392-bb"><span class="special">~</span><span class="identifier">syslog_backend</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="syslog_backend.html#idp37238672-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="syslog_backend.html#idp37239232-bb"><span class="identifier">set_severity_mapper</span></a><span class="special">(</span><span class="identifier">severity_mapper_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="syslog_backend.html#idp37241280-bb"><span class="identifier">set_local_address</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="special">=</span> <span class="number">514</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="syslog_backend.html#idp37245920-bb"><span class="identifier">set_local_address</span></a><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">ip</span><span class="special">::</span><span class="identifier">address</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
+  <span class="comment">// <a class="link" href="syslog_backend.html#idp44681296-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="syslog_backend.html#idp44681856-bb"><span class="identifier">set_severity_mapper</span></a><span class="special">(</span><span class="identifier">severity_mapper_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="syslog_backend.html#idp44683904-bb"><span class="identifier">set_local_address</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="special">=</span> <span class="number">514</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="syslog_backend.html#idp44688544-bb"><span class="identifier">set_local_address</span></a><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">ip</span><span class="special">::</span><span class="identifier">address</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
                          <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="special">=</span> <span class="number">514</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="syslog_backend.html#idp37250512-bb"><span class="identifier">set_target_address</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="special">=</span> <span class="number">514</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="syslog_backend.html#idp37255184-bb"><span class="identifier">set_target_address</span></a><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">ip</span><span class="special">::</span><span class="identifier">address</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
+  <span class="keyword">void</span> <a class="link" href="syslog_backend.html#idp44693136-bb"><span class="identifier">set_target_address</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="special">=</span> <span class="number">514</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="syslog_backend.html#idp44697808-bb"><span class="identifier">set_target_address</span></a><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">ip</span><span class="special">::</span><span class="identifier">address</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
                           <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="special">=</span> <span class="number">514</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="syslog_backend.html#idp37259824-bb"><span class="identifier">consume</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="syslog_backend.html#idp44702448-bb"><span class="identifier">consume</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp139901184"></a><h2>Description</h2>
+<a name="idp125725936"></a><h2>Description</h2>
 <p>The backend provides support for the syslog protocol, defined in RFC3164. The backend sends log records to a remote host via UDP. The host name can be specified by calling the <code class="computeroutput">set_target_address</code> method. By default log records will be sent to localhost:514. The local address can be specified as well, by calling the <code class="computeroutput">set_local_address</code> method. By default syslog packets will be sent from any local address available.</p>
 <p>It is safe to create several sink backends with the same local addresses - the backends within the process will share the same socket. The same applies to different processes that use the syslog backends to send records from the same socket. However, it is not guaranteed to work if some third party facility is using the socket.</p>
 <p>On systems with native syslog implementation it may be preferable to utilize the POSIX syslog API instead of direct socket management in order to bypass possible security limitations that may be in action. To do so one has to pass the <code class="computeroutput">use_impl = native</code> to the backend constructor. Note, however, that in that case you will only have one chance to specify syslog facility and process identification string - on the first native syslog backend construction. Other native syslog backends will ignore these parameters. Obviously, the <code class="computeroutput">set_local_address</code> and <code class="computeroutput">set_target_address</code> methods have no effect for native backends. Using <code class="computeroutput">use_impl = native</code> on platforms with no native support for POSIX syslog API will have no effect. </p>
 <div class="refsect2">
-<a name="idp139907920"></a><h3>
+<a name="idp125732768"></a><h3>
 <a name="boost.log.sinks.syslog_backendconstruct-copy-destruct"></a><code class="computeroutput">syslog_backend</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp37262688-bb"></a><span class="identifier">syslog_backend</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp44705312-bb"></a><span class="identifier">syslog_backend</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor. Creates a UDP socket-based backend with <code class="computeroutput">syslog::user</code> facility code. IPv4 protocol will be used. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idp37263904-bb"></a><span class="identifier">syslog_backend</span><span class="special">(</span><span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idp44706528-bb"></a><span class="identifier">syslog_backend</span><span class="special">(</span><span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor. Creates a sink backend with the specified named parameters. The following named parameters are supported:</p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem"><p><code class="computeroutput">facility</code> - Specifies the facility code. If not specified, <code class="computeroutput">syslog::user</code> will be used. </p></li>
@@ -77,21 +77,21 @@
 </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp37274768-bb"></a><span class="special">~</span><span class="identifier">syslog_backend</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp44717392-bb"></a><span class="special">~</span><span class="identifier">syslog_backend</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Destructor </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp139939920"></a><h3>
-<a name="idp37238672-bb"></a><code class="computeroutput">syslog_backend</code> public member functions</h3>
+<a name="idp125764816"></a><h3>
+<a name="idp44681296-bb"></a><code class="computeroutput">syslog_backend</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp37239232-bb"></a><span class="identifier">set_severity_mapper</span><span class="special">(</span><span class="identifier">severity_mapper_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> mapper<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp44681856-bb"></a><span class="identifier">set_severity_mapper</span><span class="special">(</span><span class="identifier">severity_mapper_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> mapper<span class="special">)</span><span class="special">;</span></pre>
 <p>The method installs the function object that maps application severity levels to syslog levels </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp37241280-bb"></a><span class="identifier">set_local_address</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> addr<span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">short</span> port <span class="special">=</span> <span class="number">514</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp44683904-bb"></a><span class="identifier">set_local_address</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> addr<span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">short</span> port <span class="special">=</span> <span class="number">514</span><span class="special">)</span><span class="special">;</span></pre>
 <p>The method sets the local host name which log records will be sent from. The host name is resolved to obtain the final IP address.</p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -130,7 +130,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp37245920-bb"></a><span class="identifier">set_local_address</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">ip</span><span class="special">::</span><span class="identifier">address</span> <span class="keyword">const</span> <span class="special">&amp;</span> addr<span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp44688544-bb"></a><span class="identifier">set_local_address</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">ip</span><span class="special">::</span><span class="identifier">address</span> <span class="keyword">const</span> <span class="special">&amp;</span> addr<span class="special">,</span> 
                        <span class="keyword">unsigned</span> <span class="keyword">short</span> port <span class="special">=</span> <span class="number">514</span><span class="special">)</span><span class="special">;</span></pre>
 <p>The method sets the local address which log records will be sent from.</p>
 <div class="note"><table border="0" summary="Note">
@@ -170,7 +170,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp37250512-bb"></a><span class="identifier">set_target_address</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> addr<span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">short</span> port <span class="special">=</span> <span class="number">514</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp44693136-bb"></a><span class="identifier">set_target_address</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span> <span class="special">&amp;</span> addr<span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">short</span> port <span class="special">=</span> <span class="number">514</span><span class="special">)</span><span class="special">;</span></pre>
 <p>The method sets the remote host name where log records will be sent to. The host name is resolved to obtain the final IP address.</p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -209,7 +209,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp37255184-bb"></a><span class="identifier">set_target_address</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">ip</span><span class="special">::</span><span class="identifier">address</span> <span class="keyword">const</span> <span class="special">&amp;</span> addr<span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp44697808-bb"></a><span class="identifier">set_target_address</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">ip</span><span class="special">::</span><span class="identifier">address</span> <span class="keyword">const</span> <span class="special">&amp;</span> addr<span class="special">,</span> 
                         <span class="keyword">unsigned</span> <span class="keyword">short</span> port <span class="special">=</span> <span class="number">514</span><span class="special">)</span><span class="special">;</span></pre>
 <p>The method sets the address of the remote host where log records will be sent to.</p>
 <div class="note"><table border="0" summary="Note">
@@ -249,7 +249,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp37259824-bb"></a><span class="identifier">consume</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> rec<span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> formatted_message<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp44702448-bb"></a><span class="identifier">consume</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> rec<span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> formatted_message<span class="special">)</span><span class="special">;</span></pre>
 <p>The method passes the formatted message to the syslog API or sends to a syslog server </p>
 </li>
 </ol></div>
@@ -258,7 +258,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2014 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2015 Andrey
+      Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>
@@ -266,7 +267,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="syslog/custom_severity_mapping.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../sinks.html#header.boost.log.sinks.syslog_backend_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="syslog/make_level.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="syslog/direct_severity_mapping.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../sinks.html#header.boost.log.sinks.syslog_backend_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="syslog/make_level.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

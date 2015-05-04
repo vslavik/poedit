@@ -271,7 +271,7 @@ def tag_maybe(param):
 def tag_system(name, type, prop_set):
     return common.format_name(['<base>'] + tag_maybe(__build_id), name, type, prop_set)
 
-def tag_system(name, type, prop_set):
+def tag_tagged(name, type, prop_set):
     return common.format_name(['<base>', '<threading>', '<runtime>'] + tag_maybe(__build_id), name, type, prop_set)
 
 def tag_versioned(name, type, prop_set):

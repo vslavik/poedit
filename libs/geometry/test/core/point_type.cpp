@@ -3,6 +3,11 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
+// This file was modified by Oracle on 2014.
+// Modifications copyright (c) 2014 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -10,6 +15,7 @@
 
 #include <geometry_test_common.hpp>
 
+#include <boost/type_traits/is_same.hpp>
 
 #include <boost/geometry/core/tag.hpp>
 
@@ -38,6 +44,9 @@ void test_geometry()
 {
     BOOST_CHECK_EQUAL(typeid(typename bg::point_type<G>::type).name(),
         typeid(Expected).name());
+
+    static const bool is_same = boost::is_same<typename bg::point_type<G>::type, Expected>::value;
+    BOOST_CHECK(is_same);
 }
 
 template <typename P>
@@ -45,7 +54,12 @@ void test_all()
 {
     test_geometry<P, P>();
     test_geometry<P const, P>();
+    test_geometry<P*, P>();
+    test_geometry<P&, P>();
+    test_geometry<P*&, P>();
+    test_geometry<const P *, P>();
     test_geometry<bg::model::linestring<P> , P>();
+    test_geometry<bg::model::linestring<P> *&, P>();
     test_geometry<bg::model::ring<P> , P>();
     test_geometry<bg::model::polygon<P> , P>();
     test_geometry<bg::model::box<P> , P>();

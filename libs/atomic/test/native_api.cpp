@@ -4,14 +4,15 @@
 //  See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/config.hpp>
 #include <boost/atomic.hpp>
+
+#include <boost/config.hpp>
 #include <boost/cstdint.hpp>
-#include <boost/test/minimal.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 #include "api_test_helpers.hpp"
 
-int test_main(int, char *[])
+int main(int, char *[])
 {
     test_flag_api();
 
@@ -66,5 +67,5 @@ int test_main(int, char *[])
     // Other non-trivial constructors are allowed.
     test_struct_with_ctor_api();
 
-    return 0;
+    return boost::report_errors();
 }

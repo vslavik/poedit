@@ -74,7 +74,7 @@ public:
 #ifdef BOOST_NO_CXX11_RVALUE_REFERENCES
         fn_( fn),
 #else
-        fn_( forward< Fn >( fn) ),
+        fn_( boost::forward< Fn >( fn) ),
 #endif
         stack_ctx_( stack_ctx),
         stack_alloc_( stack_alloc)
@@ -155,7 +155,7 @@ public:
 #ifdef BOOST_NO_CXX11_RVALUE_REFERENCES
         fn_( fn),
 #else
-        fn_( forward< Fn >( fn) ),
+        fn_( boost::forward< Fn >( fn) ),
 #endif
         stack_ctx_( stack_ctx),
         stack_alloc_( stack_alloc)
@@ -236,7 +236,7 @@ public:
 #ifdef BOOST_NO_CXX11_RVALUE_REFERENCES
         fn_( fn),
 #else
-        fn_( forward< Fn >( fn) ),
+        fn_( boost::forward< Fn >( fn) ),
 #endif
         stack_ctx_( stack_ctx),
         stack_alloc_( stack_alloc)

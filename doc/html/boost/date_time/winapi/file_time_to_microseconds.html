@@ -35,17 +35,23 @@
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> FileTimeT<span class="special">&gt;</span> 
   <span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">file_time_to_microseconds</span><span class="special">(</span><span class="identifier">FileTimeT</span> <span class="keyword">const</span> <span class="special">&amp;</span> ft<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp194341904"></a><h2>Description</h2>
+<a name="idp183724912"></a><h2>Description</h2>
 <p>The function converts file_time into number of microseconds elapsed since 1970-Jan-01</p>
 <div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../doc/src/images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td align="left" valign="top">
-<p>Only dates after 1970-Jan-01 are supported. Dates before will be wrapped.</p>
-<p>The function is templated on the <code class="computeroutput"><a class="link" href="FILETIME.html" title="Struct FILETIME">FILETIME</a></code> type, so that it can be used with both native <code class="computeroutput"><a class="link" href="FILETIME.html" title="Struct FILETIME">FILETIME</a></code> and the ad-hoc boost::date_time::winapi::file_time type. </p>
-</td></tr>
+<tr><td align="left" valign="top"><p>Only dates after 1970-Jan-01 are supported. Dates before will be wrapped.</p></td></tr>
+</table></div>
+<p>
+</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>The function is templated on the <code class="computeroutput"><a class="link" href="FILETIME.html" title="Struct FILETIME">FILETIME</a></code> type, so that it can be used with both native <code class="computeroutput"><a class="link" href="FILETIME.html" title="Struct FILETIME">FILETIME</a></code> and the ad-hoc boost::date_time::winapi::file_time type. </p></td></tr>
 </table></div>
 <p>
 </p>

@@ -67,9 +67,9 @@ private:
    exponent_type m_exponent;
    bool m_sign;
 public:
-   cpp_bin_float() : m_data(), m_exponent(exponent_nan), m_sign(false) {}
+   cpp_bin_float() BOOST_NOEXCEPT_IF(noexcept(rep_type())) : m_data(), m_exponent(exponent_nan), m_sign(false) {}
 
-   cpp_bin_float(const cpp_bin_float &o)
+   cpp_bin_float(const cpp_bin_float &o) BOOST_NOEXCEPT_IF(noexcept(rep_type(std::declval<const rep_type&>())))
       : m_data(o.m_data), m_exponent(o.m_exponent), m_sign(o.m_sign) {}
 
    template <unsigned D, digit_base_type B, class A, class E, E MinE, E MaxE>
@@ -104,7 +104,7 @@ public:
       this->assign_float(f);
    }
 
-   cpp_bin_float& operator=(const cpp_bin_float &o)
+   cpp_bin_float& operator=(const cpp_bin_float &o) BOOST_NOEXCEPT_IF(noexcept(std::declval<rep_type&>() = std::declval<const rep_type&>()))
    {
       m_data = o.m_data;
       m_exponent = o.m_exponent;
@@ -136,6 +136,7 @@ public:
    {
       BOOST_MATH_STD_USING
       using default_ops::eval_add;
+      typedef typename boost::multiprecision::detail::canonical<int, cpp_bin_float>::type bf_int_type;
 
       switch((boost::math::fpclassify)(f))
       {
@@ -174,10 +175,16 @@ public:
       {
          f = ldexp(f, bits);
          e -= bits;
+#ifndef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
          int ipart = itrunc(f);
+#else
+         int ipart = static_cast<int>(f);
+#endif
          f -= ipart;
          m_exponent += bits;
-         eval_add(*this, ipart);
+         cpp_bin_float t;
+         t = static_cast<bf_int_type>(ipart);
+         eval_add(*this, t);
       }
       m_exponent += static_cast<Exponent>(e);
       return *this;
@@ -472,10 +479,10 @@ inline void do_eval_add(cpp_bin_float<Digits, DigitBase, Allocator, Exponent, Mi
          res = b;
       else
          res = a;
-      return; // ault is still infinite.
+      return; // result is still infinite.
    case cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::exponent_nan:
       res = a;
-      return; // ault is still a NaN.
+      return; // result is still a NaN.
    }
    switch(b.exponent())
    {
@@ -486,10 +493,10 @@ inline void do_eval_add(cpp_bin_float<Digits, DigitBase, Allocator, Exponent, Mi
       res = b;
       if(res.sign())
          res.negate();
-      return; // ault is infinite.
+      return; // result is infinite.
    case cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::exponent_nan:
       res = b;
-      return; // ault is a NaN.
+      return; // result is a NaN.
    }
    
    typename cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::exponent_type e_diff = a.exponent() - b.exponent();
@@ -829,7 +836,8 @@ inline void eval_divide(cpp_bin_float<Digits, DigitBase, Allocator, Exponent, Mi
    //
    // q + r/v = u/v
    //
-   // From this, assuming q has "cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count" cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count, we only need to determine whether
+   // From this, assuming q has cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count 
+   // bits we only need to determine whether
    // r/v is less than, equal to, or greater than 0.5 to determine rounding - 
    // this we can do with a shift and comparison.
    //
@@ -844,18 +852,22 @@ inline void eval_divide(cpp_bin_float<Digits, DigitBase, Allocator, Exponent, Mi
    eval_left_shift(t, cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count);
    eval_qr(t, t2, q, r);
    //
-   // We now have either "cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count" or "cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count+1" significant cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count in q.
+   // We now have either "cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count" 
+   // or "cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count+1" significant 
+   // bits in q.
    //
    static const unsigned limb_bits = sizeof(limb_type) * CHAR_BIT;
    if(eval_bit_test(q, cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count))
    {
       //
-      // OK we have cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count+1 cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count, so we already have rounding info,
-      // we just need to changes things if the last bit is 1 and the
-      // remainder is non-zero (ie we do not have a tie).
+      // OK we have cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count+1 bits, 
+      // so we already have rounding info,
+      // we just need to changes things if the last bit is 1 and either the
+      // remainder is non-zero (ie we do not have a tie) or the quotient would
+      // be odd if it were shifted to the correct number of bits (ie a tiebreak).
       //
       BOOST_ASSERT((eval_msb(q) == cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count));
-      if((q.limbs()[0] & 1u) && eval_get_sign(r))
+      if((q.limbs()[0] & 1u) && (eval_get_sign(r) || (q.limbs()[0] & 2u)))
       {
          eval_increment(q);
       }
@@ -863,7 +875,7 @@ inline void eval_divide(cpp_bin_float<Digits, DigitBase, Allocator, Exponent, Mi
    else
    {
       //
-      // We have exactly "cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count" cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count in q.
+      // We have exactly "cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count" bits in q.
       // Get rounding info, which we can get by comparing 2r with v.
       // We want to call copy_and_round to handle rounding and general cleanup,
       // so we'll left shift q and add some fake digits on the end to represent

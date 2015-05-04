@@ -45,7 +45,8 @@
 			     || defined(GC_AIX_THREADS) \
 			     || defined(GC_LINUX_THREADS) \
 			     || defined(GC_NETBSD_THREADS) \
-			     || defined(GC_GNU_THREADS))
+			     || defined(GC_GNU_THREADS) \
+			     || defined(GC_HAIKU_THREADS))
 # define _REENTRANT
 	/* Better late than never.  This fails if system headers that	*/
 	/* depend on this were previously included.			*/
@@ -65,7 +66,7 @@
 	defined(GC_DGUX386_THREADS) || defined(GC_DARWIN_THREADS) || \
         defined(GC_AIX_THREADS) || defined(GC_NETBSD_THREADS) || \
         (defined(GC_WIN32_THREADS) && defined(__CYGWIN32__)) || \
-	defined(GC_GNU_THREADS)
+	defined(GC_GNU_THREADS) || defined(GC_HAIKU_THREADS)
 #   define GC_PTHREADS
 # endif
 

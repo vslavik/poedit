@@ -8,9 +8,12 @@
 
 void t1()
 {
-   //[cpp_int_eg
-   //=#include <boost/multiprecision/cpp_int.hpp>
-
+//[cpp_int_eg
+//=#include <boost/multiprecision/cpp_int.hpp>
+//=#include <iostream>
+//=
+//=int main()
+//={
    using namespace boost::multiprecision;
 
    int128_t v = 1;
@@ -28,14 +31,19 @@ void t1()
 
    std::cout << u << std::endl; // prints 100!
 
-   //]
+//=   return 0;
+//=}
+//]
 }
 
 void t3()
 {
-   //[cpp_rational_eg
-   //=#include <boost/multiprecision/cpp_int.hpp>
-
+//[cpp_rational_eg
+//=#include <boost/multiprecision/cpp_int.hpp>
+//=#include <iostream>
+//=
+//=int main()
+//={
    using namespace boost::multiprecision;
 
    cpp_rational v = 1;
@@ -51,7 +59,9 @@ void t3()
 
    cpp_rational w(2, 3);  // component wise constructor
    std::cout << w << std::endl; // prints 2/3
-   //]
+//=   return 0;
+//=}
+//]
 }
 
 

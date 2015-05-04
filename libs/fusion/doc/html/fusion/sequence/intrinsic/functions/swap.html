@@ -38,7 +38,8 @@
             <span class="phrase"><a name="fusion.sequence.intrinsic.functions.swap.synopsis"></a></span><a class="link" href="swap.html#fusion.sequence.intrinsic.functions.swap.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Seq1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Seq2</span><span class="special">&gt;</span>
-<span class="keyword">void</span> <span class="identifier">swap</span><span class="special">(</span><span class="identifier">Seq1</span><span class="special">&amp;</span> <span class="identifier">seq1</span><span class="special">,</span> <span class="identifier">Seq2</span><span class="special">&amp;</span> <span class="identifier">seq2</span><span class="special">);</span>
+<span class="keyword">typename</span> <a class="link" href="../metafunctions/swap.html" title="swap"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">swap</span></code></a><span class="special">&lt;</span><span class="identifier">Seq1</span><span class="special">,</span> <span class="identifier">Seq2</span><span class="special">&gt;::</span><span class="identifier">type</span>
+<span class="identifier">swap</span><span class="special">(</span><span class="identifier">Seq1</span><span class="special">&amp;</span> <span class="identifier">seq1</span><span class="special">,</span> <span class="identifier">Seq2</span><span class="special">&amp;</span> <span class="identifier">seq2</span><span class="special">);</span>
 </pre>
 <h6>
 <a name="fusion.sequence.intrinsic.functions.swap.h2"></a>
@@ -81,7 +82,7 @@
                   </td>
 <td>
                     <p>
-                      The sequences whos elements we wish to swap.
+                      The sequences whose elements we wish to swap.
                     </p>
                   </td>
 </tr></tbody>
@@ -102,11 +103,15 @@
 <p>
             <span class="bold"><strong>Semantics</strong></span>: Calls <code class="computeroutput"><span class="identifier">swap</span><span class="special">(</span><span class="identifier">a1</span><span class="special">,</span> <span class="identifier">b1</span><span class="special">)</span></code> for corresponding elements in <code class="computeroutput"><span class="identifier">seq1</span></code> and <code class="computeroutput"><span class="identifier">seq2</span></code>.
           </p>
-<p>
-            /sequence/intrinsic/swap.hpp&gt;
-          </p>
 <h6>
 <a name="fusion.sequence.intrinsic.functions.swap.h4"></a>
+            <span class="phrase"><a name="fusion.sequence.intrinsic.functions.swap.header"></a></span><a class="link" href="swap.html#fusion.sequence.intrinsic.functions.swap.header">Header</a>
+          </h6>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">sequence</span><span class="special">/</span><span class="identifier">intrinsic</span><span class="special">/</span><span class="identifier">swap</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">swap</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<h6>
+<a name="fusion.sequence.intrinsic.functions.swap.h5"></a>
             <span class="phrase"><a name="fusion.sequence.intrinsic.functions.swap.example"></a></span><a class="link" href="swap.html#fusion.sequence.intrinsic.functions.swap.example">Example</a>
           </h6>
 <pre class="programlisting"><a class="link" href="../../../container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">v1</span><span class="special">(</span><span class="number">1</span><span class="special">,</span> <span class="string">"hello"</span><span class="special">),</span> <span class="identifier">v2</span><span class="special">(</span><span class="number">2</span><span class="special">,</span> <span class="string">"world"</span><span class="special">);</span>

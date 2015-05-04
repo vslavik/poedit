@@ -21,18 +21,18 @@
   class scoped_thread;
   void swap(scoped_thread& lhs,scoped_thread& rhs) noexcept;
 
-[section:motovation Motivation]
+[section:motivation Motivation]
 Based on the scoped_thread class defined in C++ Concurrency in Action Boost.Thread defines a thread wrapper class that instead of calling terminate if the thread is joinable on destruction, call a specific action given as template parameter.
 
-While the scoped_thread class defined in C++ Concurrency in Action is closer to strict_scoped_thread class that doesn't allows any change in the wrapped thread, Boost.Thread provides a class scoped_thread that provides the same non-deprecated interface than __thread.
+While the scoped_thread class defined in C++ Concurrency in Action is closer to strict_scoped_thread class that doesn't allows any change in the wrapped thread, Boost.Thread provides a class scoped_thread that provides the same non-deprecated interface as __thread.
 
 [endsect]
 
 [section:tutorial Tutorial]
 
-Scoped Threads are wrappers around a thread that allows the user to state what to do at destruction time. One of the common uses is to join the thread at destruction time so this is the default behavior. This is the single difference respect to a thread. While thread call std::terminate() on the destructor is the thread is joinable, strict_scoped_thread<> or scoped_thread<> join the thread if joinable.
+Scoped Threads are wrappers around a thread that allows the user to state what to do at destruction time. One of the common uses is to join the thread at destruction time so this is the default behavior. This is the single difference respect to a thread. While thread call std::terminate() on the destructor if the thread is joinable, strict_scoped_thread<> or scoped_thread<> join the thread if joinable.
 
-The difference between strict_scoped_thread and scoped_thread is that the strict_scoped_thread hides completely the owned thread and so the user can do nothing with the owned thread other than the specific action given as parameter, while scoped_thread provide the same interface than __thread and forwards all the operations.   
+The difference between strict_scoped_thread and scoped_thread is that the strict_scoped_thread hides completely the owned thread and so the user can do nothing with the owned thread other than the specific action given as parameter, while scoped_thread provide the same interface as __thread and forwards all the operations.   
 
   boost::strict_scoped_thread<> t1((boost::thread(f)));
   //t1.detach(); // compile fails
@@ -114,15 +114,15 @@ The difference between strict_scoped_thread and scoped_thread is that the strict
   };
 
 
-RAI __thread wrapper adding a specific destroyer allowing to master what can be done at destruction time.
+RAII __thread wrapper adding a specific destroyer allowing to master what can be done at destruction time.
 
 CallableThread: A callable `void(thread&)`.
 
 The default is a `join_if_joinable`.
 
 
-`std/boost::thread` destructor terminates the program if the __thread is not joinable.
-This wrapper can be used to join the thread before destroying it seems a natural need.
+Thread destructor terminates the program if the __thread is joinable.
+This wrapper can be used to join the thread before destroying it.
 
 [heading Example]
 
@@ -233,13 +233,13 @@ This wrapper can be used to join the thread before destroying it seems a natural
     void swap(scoped_thread& lhs,scoped_thread& rhs) noexcept;
 
 
-RAI __thread wrapper adding a specific destroyer allowing to master what can be done at destruction time.
+RAII __thread wrapper adding a specific destroyer allowing to master what can be done at destruction time.
 
 CallableThread: A callable void(thread&).
 The default is join_if_joinable.
 
-thread std::thread destructor terminates the program if the thread is not joinable.
-Having a wrapper that can join the thread before destroying it seems a natural need.
+Thread destructor terminates the program if the thread is joinable.
+This wrapper can be used to join the thread before destroying it. 
 
 Remark: `scoped_thread` is not a __thread as __thread is not designed to be derived from as a polymorphic type.
 
@@ -312,9 +312,9 @@ any) to `*this`.
 
 [variablelist
 
-[[Effects:] [move the thread to own `t_`.]]
+[[Effects:] [Transfers ownership of the thread managed by `other` (if any) to the newly constructed scoped_thread instance.]]
 
-[[Postconditions:] [`*this.t_` refers to the newly created thread of execution and `this->get_id()!=thread::id()`.]]
+[[Postconditions:] [other.get_id()==thread::id() and get_id() returns the value of other.get_id() prior to the construction.]]
 
 [[Throws:] [Nothing]]
 
@@ -329,7 +329,7 @@ any) to `*this`.
 
 [variablelist
 
-[[Effects:] [Construct a internal thread in place.]]
+[[Effects:] [Construct an internal thread in place.]]
 
 [[Postconditions:] [`*this.t_` refers to the newly created thread of execution and `this->get_id()!=thread::id()`.]]
 

@@ -37,8 +37,8 @@
       </h5>
 <pre class="programlisting"><span class="identifier">BOOST_FUSION_ADAPT_ADT</span><span class="special">(</span>
     <span class="identifier">type_name</span><span class="special">,</span>
-    <span class="special">(</span><span class="identifier">attribute_type0</span><span class="special">,</span> <span class="identifier">attribute_const_type0</span><span class="special">,</span> <span class="identifier">get_expr0</span><span class="special">,</span> <span class="identifier">set_expr0</span><span class="special">)</span>
-    <span class="special">(</span><span class="identifier">attribute_type1</span><span class="special">,</span> <span class="identifier">attribute_const_type1</span><span class="special">,</span> <span class="identifier">get_expr1</span><span class="special">,</span> <span class="identifier">set_expr1</span><span class="special">)</span>
+    <span class="special">([</span><span class="identifier">attribute_type0</span><span class="special">,</span> <span class="identifier">attribute_const_type0</span><span class="special">,]</span> <span class="identifier">get_expr0</span><span class="special">,</span> <span class="identifier">set_expr0</span><span class="special">)</span>
+    <span class="special">([</span><span class="identifier">attribute_type1</span><span class="special">,</span> <span class="identifier">attribute_const_type1</span><span class="special">,]</span> <span class="identifier">get_expr1</span><span class="special">,</span> <span class="identifier">set_expr1</span><span class="special">)</span>
     <span class="special">...</span>
     <span class="special">)</span>
 </pre>
@@ -50,11 +50,11 @@
 <p>
         The above macro generates the necessary code to adapt <code class="computeroutput"><span class="identifier">type_name</span></code>
         as a model of <a class="link" href="../sequence/concepts/random_access_sequence.html" title="Random Access Sequence">Random
-        Access Sequence</a>. The sequence of <code class="literal">(attribute_type<span class="emphasis"><em>N</em></span>,
-        attribute_const_type<span class="emphasis"><em>N</em></span>, get_expr<span class="emphasis"><em>N</em></span>,
-        set_expr<span class="emphasis"><em>N</em></span>)</code> quadruples declares the types,
-        const types, get-expressions and set-expressions of the elements that are
-        part of the adapted fusion sequence. <code class="literal">get_expr<span class="emphasis"><em>N</em></span></code>
+        Access Sequence</a>. The sequence of <code class="literal">([attribute_type<span class="emphasis"><em>N</em></span>,
+        attribute_const_type<span class="emphasis"><em>N</em></span>,</code> get_expr<span class="emphasis"><em>N</em></span>,
+        set_expr<span class="emphasis"><em>N</em></span>)] quadruples declares the types, const types,
+        get-expressions and set-expressions of the elements that are part of the
+        adapted fusion sequence. <code class="literal">get_expr<span class="emphasis"><em>N</em></span></code>
         is the expression that is invoked to get the <span class="emphasis"><em>N</em></span>th element
         of an instance of <code class="computeroutput"><span class="identifier">type_name</span></code>.
         This expression may access a variable named <code class="computeroutput"><span class="identifier">obj</span></code>
@@ -63,10 +63,12 @@
         of <code class="computeroutput"><span class="identifier">type_name</span></code>. <code class="literal">attribute_type<span class="emphasis"><em>N</em></span></code>
         and <code class="literal">attribute_const_type<span class="emphasis"><em>N</em></span></code> may specify
         the types that <code class="literal">get_expr<span class="emphasis"><em>N</em></span></code> denotes
-        to. <code class="literal">set_expr<span class="emphasis"><em>N</em></span></code> is the expression that
-        is invoked to set the <span class="emphasis"><em>N</em></span>th element of an instance of
-        <code class="computeroutput"><span class="identifier">type_name</span></code>. This expression
-        may access variables named <code class="computeroutput"><span class="identifier">obj</span></code>
+        to, when omitted the type is deduced from [get_expr<span class="emphasis"><em>N</em></span>]
+        return type via BOOST_TYPEOF. On compiler missing support for variadic macros
+        BOOST_FUSION_ADAPT_AUTO can be used to avoid repeating the type. <code class="literal">set_expr<span class="emphasis"><em>N</em></span></code>
+        is the expression that is invoked to set the <span class="emphasis"><em>N</em></span>th element
+        of an instance of <code class="computeroutput"><span class="identifier">type_name</span></code>.
+        This expression may access variables named <code class="computeroutput"><span class="identifier">obj</span></code>
         of type <code class="computeroutput"><span class="identifier">type_name</span><span class="special">&amp;</span></code>,
         which represent the corresponding instance of <code class="computeroutput"><span class="identifier">type_name</span></code>,
         and <code class="computeroutput"><span class="identifier">val</span></code> of an arbitrary const-qualified
@@ -131,8 +133,8 @@
 
 <span class="identifier">BOOST_FUSION_ADAPT_ADT</span><span class="special">(</span>
     <span class="identifier">demo</span><span class="special">::</span><span class="identifier">employee</span><span class="special">,</span>
-    <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="keyword">const</span><span class="special">&amp;,</span> <span class="identifier">obj</span><span class="special">.</span><span class="identifier">get_name</span><span class="special">(),</span> <span class="identifier">obj</span><span class="special">.</span><span class="identifier">set_name</span><span class="special">(</span><span class="identifier">val</span><span class="special">))</span>
-    <span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="identifier">obj</span><span class="special">.</span><span class="identifier">get_age</span><span class="special">(),</span> <span class="identifier">obj</span><span class="special">.</span><span class="identifier">set_age</span><span class="special">(</span><span class="identifier">val</span><span class="special">)))</span>
+    <span class="special">(</span><span class="identifier">obj</span><span class="special">.</span><span class="identifier">get_name</span><span class="special">(),</span> <span class="identifier">obj</span><span class="special">.</span><span class="identifier">set_name</span><span class="special">(</span><span class="identifier">val</span><span class="special">))</span>
+    <span class="special">(</span><span class="identifier">obj</span><span class="special">.</span><span class="identifier">get_age</span><span class="special">(),</span> <span class="identifier">obj</span><span class="special">.</span><span class="identifier">set_age</span><span class="special">(</span><span class="identifier">val</span><span class="special">)))</span>
 
 <span class="identifier">demo</span><span class="special">::</span><span class="identifier">employee</span> <span class="identifier">e</span><span class="special">;</span>
 <span class="identifier">front</span><span class="special">(</span><span class="identifier">e</span><span class="special">)=</span><span class="string">"Edward Norton"</span><span class="special">;</span>

@@ -3,18 +3,18 @@
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/math/bindings/rr.hpp>
 #include <boost/limits.hpp>
 #include <vector>
+#include "mp_t.hpp"
 
 void write_table(unsigned max_exponent)
 {
-   boost::math::ntl::RR max = ldexp(boost::math::ntl::RR(1), max_exponent);
+   mp_t max = ldexp(mp_t(1), (int)max_exponent);
 
-   std::vector<boost::math::ntl::RR> factorials;
+   std::vector<mp_t> factorials;
    factorials.push_back(1);
 
-   boost::math::ntl::RR f(1);
+   mp_t f(1);
    unsigned i = 1;
 
    while(f < max)
@@ -27,7 +27,7 @@ void write_table(unsigned max_exponent)
    //
    // now write out the results to cout:
    //
-   std::cout << std::scientific;
+   std::cout << std::scientific << std::setprecision(40);
    std::cout << "   static const boost::array<T, " << factorials.size() << "> factorials = {\n";
    for(unsigned j = 0; j < factorials.size(); ++j)
       std::cout << "      " << factorials[j] << "L,\n";
@@ -37,7 +37,5 @@ void write_table(unsigned max_exponent)
 
 int main()
 {
-   boost::math::ntl::RR::SetPrecision(300);
-   boost::math::ntl::RR::SetOutputPrecision(40);
    write_table(16384/*std::numeric_limits<float>::max_exponent*/);
 }

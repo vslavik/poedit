@@ -17,6 +17,7 @@ rule test_all
       :  # test-files
       :  # requirements
         <toolset>msvc:<cxxflags>/bigobj
+        <host-os>windows,<toolset>intel:<cxxflags>/bigobj
       ] ;
    }
 

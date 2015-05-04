@@ -8,6 +8,123 @@
 
 [section:changes History]
 
+[heading Version 4.5.0 - boost 1.58]
+
+[*Know Bugs:]
+
+* [@http://svn.boost.org/trac/boost/ticket/3926 #3926] thread_specific_ptr + dlopen library causes a SIGSEGV.
+* [@http://svn.boost.org/trac/boost/ticket/4833 #4833] MinGW/test_tss_lib: Support of automatic tss cleanup for native threading API not available
+* [@http://svn.boost.org/trac/boost/ticket/8600 #8600] wait_for_any hangs, if called with multiple copies of shared_future referencing same task
+* [@http://svn.boost.org/trac/boost/ticket/9118 #9118] Seg fault on thread join when llvm and libc++ are used
+* [@http://svn.boost.org/trac/boost/ticket/9309 #9309] test_latch fails often on clang-darwin-tot11
+* [@http://svn.boost.org/trac/boost/ticket/9311 #9311] ex_lambda_future fails on msvc-11.0
+* [@http://svn.boost.org/trac/boost/ticket/10942 #10942] Boost.Thread fails to build on Cygwin.
+
+[/
+* [@http://svn.boost.org/trac/boost/ticket/7319 #7319] Take care of c++std-lib-32966 issue
+* [@http://svn.boost.org/trac/boost/ticket/10651 #10651] boost::thread leaks memory when using the MinGW compiler.
+* [@http://svn.boost.org/trac/boost/ticket/10685 #10685] mfc_thread_init.hpp does not compile.
+* [@http://svn.boost.org/trac/boost/ticket/10967 #10967] Timed wait points inconsistently convert relative to absolute waits.
+]
+
+Please take a look at [@https://svn.boost.org/trac/boost/query?status=assigned&status=new&status=reopened&component=thread&type=!Feature+Requests&col=id&col=summary&order=id thread Know Bugs] to see the current state.
+
+Please take a look at [@http://www.boost.org/development/tests/master/developer/thread.html thread trunk regression test] to see the last regression test snapshot.
+
+[*Sever limitations:]
+
+There are some severe bugs that prevent the use of the library on concrete contexts, in particular:
+
+* on thread specific storage that prevent the library to be used with dynamic libraries ( [@http://svn.boost.org/trac/boost/ticket/3926 #3926], ),
+
+[*New Experimental Features:]
+
+* [@http://svn.boost.org/trac/boost/ticket/9600 #9600] Async: Add task_region
+* [@http://svn.boost.org/trac/boost/ticket/10611 #10611] Add emplace promise::set_value and emplace make_ready_future
+* [@http://svn.boost.org/trac/boost/ticket/10826 #10826] Add scheduled executor operations
+* [@http://svn.boost.org/trac/boost/ticket/11048 #11048] Add a serial_executor based on continuations
+
+[*Fixed Bugs:]
+
+* [@http://svn.boost.org/trac/boost/ticket/6787 #6787] boost::thread::sleep() hangs if system time is rolled back
+* [@http://svn.boost.org/trac/boost/ticket/10734 #10734] Submit method work differently on different executors, some throw exception and some silently ignore error (thread_executor and inline_executor)
+* [@http://svn.boost.org/trac/boost/ticket/10736 #10736] Task exceptions silently ignored. I think std::terminate solution from N3785 and std::thread is better choice and more consistent.
+* [@http://svn.boost.org/trac/boost/ticket/10737 #10737] In serial_executor we have infinite wait if task throw exception.
+* [@http://svn.boost.org/trac/boost/ticket/10822 #10822] Boost.Thread fails to compile on Android
+* [@http://svn.boost.org/trac/boost/ticket/10824 #10824] Boost.Thread 1.57 breaks Windows XP compatibility for SP2 and below.
+* [@http://svn.boost.org/trac/boost/ticket/10963 #10963] future<future<T>>::then Has No Implementation
+* [@http://svn.boost.org/trac/boost/ticket/10964 #10964] future<future<T>>::unwrap().then() Deadlocks
+* [@http://svn.boost.org/trac/boost/ticket/10968 #10968] The futures returned by async() and future::then() are not blocking.
+* [@http://svn.boost.org/trac/boost/ticket/10971 #10971] shared_future::get()/get_or() must be const
+* [@http://svn.boost.org/trac/boost/ticket/10972 #10972] shared_future::then() can be called multiple times.
+* [@http://svn.boost.org/trac/boost/ticket/10979 #10979] Support T& type deduction when the make_ready_future parameter is reference_wrapper<T>
+* [@http://svn.boost.org/trac/boost/ticket/10996 #10996] Thread physical_concurrency() is failing on Windows
+* [@http://svn.boost.org/trac/boost/ticket/11035 #11035] BOOST_HAS_PTHREAD_MUTEXATTR_SETTYPE not defined for Android
+* [@http://svn.boost.org/trac/boost/ticket/11053 #11053] The attached code results in a R6025 - pure virtual function call in run_thread_exit_callbacks
+
+
+[heading Version 4.4.0 - boost 1.57]
+
+[*Know Bugs:]
+
+* [@http://svn.boost.org/trac/boost/ticket/2442 #2442] Application statically linked with Boost.Thread crashes when Google Desktop is installed (Windows XP)
+* [@http://svn.boost.org/trac/boost/ticket/3926 #3926] thread_specific_ptr + dlopen library causes a SIGSEGV.
+* [@http://svn.boost.org/trac/boost/ticket/4833 #4833] MinGW/test_tss_lib: Support of automatic tss cleanup for native threading API not available
+* [@http://svn.boost.org/trac/boost/ticket/7319 #7319] Take care of c++std-lib-32966 issue
+* [@http://svn.boost.org/trac/boost/ticket/8600 #8600] wait_for_any hangs, if called with multiple copies of shared_future referencing same task
+* [@http://svn.boost.org/trac/boost/ticket/9118 #9118] Seg fault on thread join when llvm and libc++ are used
+* [@http://svn.boost.org/trac/boost/ticket/9309 #9309] test_latch fails often on clang-darwin-tot11
+* [@http://svn.boost.org/trac/boost/ticket/9310 #9310] test_4648_lib fails on clang-darwin-asan11
+* [@http://svn.boost.org/trac/boost/ticket/9311 #9311] ex_lambda_future fails on msvc-11.0
+* [@http://svn.boost.org/trac/boost/ticket/10537 #10537] Application crash on throw exception
+* [@http://svn.boost.org/trac/boost/ticket/10651 #10651] boost::thread leaks memory when using the MinGW compiler
+
+
+Please take a look at [@https://svn.boost.org/trac/boost/query?status=assigned&status=new&status=reopened&component=thread&type=!Feature+Requests&col=id&col=summary&order=id thread Know Bugs] to see the current state.
+
+Please take a look at [@http://www.boost.org/development/tests/master/developer/thread.html thread trunk regression test] to see the last snapshot.
+
+[*Sever limitations:]
+
+There are some severe bugs that prevent the use of the library on concrete contexts, in particular:
+
+* on thread specific storage that prevent the library to be used with dynamic libraries,
+
+[*New Experimental Features:]
+
+* [@http://svn.boost.org/trac/boost/ticket/6227 #6227] Synchro: Use of variadic templates on Generic Locking Algorithms on compilers providing them
+* [@http://svn.boost.org/trac/boost/ticket/10298 #10298] Synchro: Added queue views.
+* [@http://svn.boost.org/trac/boost/ticket/10300 #10300] Async: Added generic_executor_ref.
+* [@http://svn.boost.org/trac/boost/ticket/10552 #10552] Add make_valid_future
+
+[*Fixed Bugs:]
+
+* [@http://svn.boost.org/trac/boost/ticket/6782 #6782] call_once uses incorrect barrier intrinsic on Visual Studio
+* [@http://svn.boost.org/trac/boost/ticket/6787 #6787] boost::thread::sleep() hangs if system time is rolled back
+* [@http://svn.boost.org/trac/boost/ticket/7665 #7665] this_thread::sleep_for no longer uses steady_clock in thread
+* [@http://svn.boost.org/trac/boost/ticket/9307 #9307] future::fallback_to assert with ERRORRRRR boost: mutex lock failed in pthread_mutex_lock: Invalid argument
+* [@http://svn.boost.org/trac/boost/ticket/9308 #9308] future::async fails with terminate called throwing an exception when called with a lambda - clang-darwin-asan11
+* [@http://svn.boost.org/trac/boost/ticket/9310 #9310] test_4648_lib fails on clang-darwin-asan11
+* [@http://svn.boost.org/trac/boost/ticket/9425 #9425] Boost promise & future does not use supplied allocator for value storage
+* [@http://svn.boost.org/trac/boost/ticket/9558 #9558] future continuations unit test hangs in get()/pthread_cond_wait() on Mac 10.7/32-bit/x86/darwin-4.2.1
+* [@http://svn.boost.org/trac/boost/ticket/9787 #9787] [windows] Small duration value passed down to basic_timed_mutex::try_lock_until and condition_variable::wait_until can cause infinite or near infinite wait for win32
+* [@http://svn.boost.org/trac/boost/ticket/9880 #9880] [windows] boost::condition_variable.timed_wait() exception if system time < 1970
+* [@http://svn.boost.org/trac/boost/ticket/10159 #10159] GCC 4.4 error sorry, unimplemented
+* [@http://svn.boost.org/trac/boost/ticket/10196 #10196] thread_specific_ptr does not support void*
+* [@http://svn.boost.org/trac/boost/ticket/10296 #10296] Boost.Thread 1.56 rc1 does not compile on Mingw
+* [@http://svn.boost.org/trac/boost/ticket/10297 #10297] Boost.Thread 1.56 rc1 hangs when built with clang on armhf
+* [@http://svn.boost.org/trac/boost/ticket/10340 #10340] No boost::promise<T>::set_value(const T&) overload present in C++03 mode
+* [@http://svn.boost.org/trac/boost/ticket/10425 #10425] Missing documentation for when_all/when_any.
+* [@http://svn.boost.org/trac/boost/ticket/10426 #10426] Take in account the deferred futures in when_all.
+* [@http://svn.boost.org/trac/boost/ticket/10427 #10427] Take in account the deferred and ready futures in when_any.
+* [@http://svn.boost.org/trac/boost/ticket/10428 #10428] Adapt to new unique_ptr interface in Boost.Move
+* [@http://svn.boost.org/trac/boost/ticket/10465 #10465] Missing implementation of when_all/when_any when the result is a tuple.
+* [@http://svn.boost.org/trac/boost/ticket/10476 #10476] classes using BOOST_THREAD_MOVABLE_ONLY<T> dont satisfy is_copy_constructible<T>::value == false
+* [@http://svn.boost.org/trac/boost/ticket/10478 #10478] Data race in boost/thread/future.hpp
+* [@http://svn.boost.org/trac/boost/ticket/10529 #10529] The pthread/condition_variable_any constructor reports incorrect error code for pthread_cond_init
+* [@http://svn.boost.org/trac/boost/ticket/10563 #10563] shared_future<R>::then should be const
+
+
 [heading Version 4.3.0 - boost 1.56]
 
 [*Know Bugs:]
@@ -28,7 +145,7 @@
 
 Please take a look at [@https://svn.boost.org/trac/boost/query?status=assigned&status=new&status=reopened&component=thread&type=!Feature+Requests&col=id&col=summary&order=id thread Know Bugs] to see the current state.
 
-Please take a look at [@http://www.boost.org/development/tests/release/developer/thread.html thread trunk regression test] to see the last snapshot.
+Please take a look at [@http://www.boost.org/development/tests/master/developer/thread.html thread trunk regression test] to see the last snapshot.
 
 
 [*Sever limitations:]
@@ -496,22 +613,12 @@ been moved to __thread_id__.
 
 The following features will be included in next releases. 
 
-# Complete the C++11 missing features, in particular
-  * [@http://svn.boost.org/trac/boost/ticket/6227 #6227] C++11 compliance: Use of variadic templates on Generic Locking Algorithms on compilers providing them. 
-
 # Add some minor features, in particular
   * [@http://svn.boost.org/trac/boost/ticket/7589 #7589] Synchro: Add polymorphic lockables.
 
 # Add some features based on C++ proposals, in particular
   * [@http://svn.boost.org/trac/boost/ticket/8273 #8273] Synchro: Add externally locked streams.
   * [@http://svn.boost.org/trac/boost/ticket/8514 #8514] Async: Add a thread_pool executor with work stealing.
-
-# Add some of the extension proposed in [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3428.pdf A Standardized Representation of Asynchronous Operations] or extension to them, in particular
-
-  * [@http://svn.boost.org/trac/boost/ticket/7446 #7446] Async: Add when_any.
-  * [@http://svn.boost.org/trac/boost/ticket/7447 #7447] Async: Add when_all.
-  * [@http://svn.boost.org/trac/boost/ticket/7448 #7448] Async: Add async taking a scheduler parameter.
-  * [@http://svn.boost.org/trac/boost/ticket/8516 #8516] Async: Add future/shared_future::then taking a scheduler as parameter.
 
 # And some additional extensions related to futures as:
 

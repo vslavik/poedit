@@ -39,6 +39,9 @@
     </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
+          <a class="link" href="reference/is_final.html" title="is_final">is_final</a>
+        </li>
+<li class="listitem">
           <a class="link" href="reference/is_union.html" title="is_union">is_union</a>
         </li>
 <li class="listitem">
@@ -283,6 +286,30 @@
 <tr>
 <td>
               <p>
+                BOOST_IS_NOTHROW_MOVE_ASSIGN(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true T has a non-throwing move assign operator.
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                BOOST_IS_NOTHROW_MOVE_CONSTRUCT(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true T has a non-throwing move constructor.
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
                 BOOST_IS_ABSTRACT(T)
               </p>
             </td>
@@ -360,7 +387,20 @@
             </td>
 <td>
               <p>
-                Should evaluate to the alignment requirements of type T.
+                Should evaluate to the alignment requirements of type T
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                BOOST_IS_FINAL(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true if T is a class type declared with the final
+                specifier
               </p>
             </td>
 </tr>

@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>The Lanczos Approximation</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../index.html" title="Math Toolkit 1.9.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="../index.html" title="Math Toolkit 2.2.0">
 <link rel="up" href="../backgrounders.html" title="Chapter&#160;16.&#160;Backgrounders">
 <link rel="prev" href="relative_error.html" title="Relative Error">
 <link rel="next" href="remez.html" title="The Remez Method">
@@ -106,7 +106,7 @@
       The Lanczos Approximation to the Gamma Function is given by:
     </p>
 <p>
-      <span class="inlinemediaobject"><img src="../../equations/lanczos0.png"></span>
+      <span class="inlinemediaobject"><img src="../../equations/lanczos0.svg"></span>
     </p>
 <p>
       Where S<sub>g</sub>(z) is an infinite sum, that is convergent for all z &gt; 0, and <span class="emphasis"><em>g</em></span>
@@ -114,13 +114,13 @@
       in the sum which is given by:
     </p>
 <p>
-      <span class="inlinemediaobject"><img src="../../equations/lanczos0a.png"></span>
+      <span class="inlinemediaobject"><img src="../../equations/lanczos0a.svg"></span>
     </p>
 <p>
       With individual coefficients defined in closed form by:
     </p>
 <p>
-      <span class="inlinemediaobject"><img src="../../equations/lanczos0b.png"></span>
+      <span class="inlinemediaobject"><img src="../../equations/lanczos0b.svg"></span>
     </p>
 <p>
       However, evaluation of the sum in that form can lead to numerical instability
@@ -133,13 +133,13 @@
       with the leading constants absorbed by the coefficients in the sum:
     </p>
 <p>
-      <span class="inlinemediaobject"><img src="../../equations/lanczos1.png"></span>
+      <span class="inlinemediaobject"><img src="../../equations/lanczos1.svg"></span>
     </p>
 <p>
       where:
     </p>
 <p>
-      <span class="inlinemediaobject"><img src="../../equations/lanczos2.png"></span>
+      <span class="inlinemediaobject"><img src="../../equations/lanczos2.svg"></span>
     </p>
 <p>
       Again parameter <span class="emphasis"><em>g</em></span> is an arbitrarily chosen constant, and
@@ -178,25 +178,25 @@
       where B is an NxN matrix:
     </p>
 <p>
-      <span class="inlinemediaobject"><img src="../../equations/lanczos4.png"></span>
+      <span class="inlinemediaobject"><img src="../../equations/lanczos4.svg"></span>
     </p>
 <p>
       D is an NxN matrix:
     </p>
 <p>
-      <span class="inlinemediaobject"><img src="../../equations/lanczos3.png"></span>
+      <span class="inlinemediaobject"><img src="../../equations/lanczos3.svg"></span>
     </p>
 <p>
       C is an NxN matrix:
     </p>
 <p>
-      <span class="inlinemediaobject"><img src="../../equations/lanczos5.png"></span>
+      <span class="inlinemediaobject"><img src="../../equations/lanczos5.svg"></span>
     </p>
 <p>
       and F is an N element column vector:
     </p>
 <p>
-      <span class="inlinemediaobject"><img src="../../equations/lanczos6.png"></span>
+      <span class="inlinemediaobject"><img src="../../equations/lanczos6.svg"></span>
     </p>
 <p>
       Note than the matrices B, D and C contain all integer terms and depend only
@@ -526,7 +526,7 @@
       by exp(g):
     </p>
 <p>
-      <span class="inlinemediaobject"><img src="../../equations/lanczos7.png"></span>
+      <span class="inlinemediaobject"><img src="../../equations/lanczos7.svg"></span>
     </p>
 <p>
       This form is more convenient for calculating lgamma, but for the gamma function
@@ -560,10 +560,10 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012, 2013 Nikhar Agrawal, Anton Bikineev,
-      Paul A. Bristow, Christopher Kormanyos, Hubert Holin, Bruno Lalande, John Maddock,
-      Johan R&#229;de, Gautam Sewani, Benjamin Sobotta, Thijs van den Berg, Daryle Walker
-      and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
+      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
+      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
+      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

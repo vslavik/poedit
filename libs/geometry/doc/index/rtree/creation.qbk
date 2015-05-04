@@ -164,7 +164,7 @@ stored in another container.
 [h4 Additional interface]
 
 The __rtree__ allows creation, inserting and removing of Values from a range. The range may be passed as
-[first, last) Iterators pair or as a Range.
+`[first, last)` Iterators pair or as a Range adapted to one of the Boost.Range Concepts.
 
  namespace bgi = boost::geometry::index;
  typedef std::pair<Box, int> __value__;
@@ -184,13 +184,13 @@ The __rtree__ allows creation, inserting and removing of Values from a range. Th
 
  // create R-tree with default constructor and insert values with insert(Range)
  RTree rt3;
- rt3.insert(values);
+ rt3.insert(values_range);
 
  // create R-tree with constructor taking Iterators
  RTree rt4(values.begin(), values.end());
 
  // create R-tree with constructor taking Range
- RTree rt5(values);
+ RTree rt5(values_range);
 
  // remove values with remove(Value const&)
  BOOST_FOREACH(__value__ const& v, values)
@@ -200,7 +200,13 @@ The __rtree__ allows creation, inserting and removing of Values from a range. Th
  rt2.remove(values.begin(), values.end());
 
  // remove values with remove(Range)
- rt3.remove(values);
+ rt3.remove(values_range);
+
+Furthermore, it's possible to pass a Range adapted by one of the Boost.Range adaptors into the rtree (more complete example can be found in the *Examples* section).
+
+ // create Rtree containing `std::pair<Box, int>` from a container of Boxes on the fly.
+ RTree rt6(boxes | boost::adaptors::indexed()
+                 | boost::adaptors::transformed(pair_maker()));
 
 [h4 Insert iterator]
 

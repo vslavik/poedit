@@ -11,23 +11,32 @@
 #ifndef BOOST_CONTAINER_DUMMY_TEST_ALLOCATOR_HPP
 #define BOOST_CONTAINER_DUMMY_TEST_ALLOCATOR_HPP
 
-#if defined(_MSC_VER)
+#ifndef BOOST_CONFIG_HPP
+#  include <boost/config.hpp>
+#endif
+
+#if defined(BOOST_HAS_PRAGMA_ONCE)
 #  pragma once
 #endif
 
 #include <boost/container/detail/config_begin.hpp>
 #include <boost/container/detail/workaround.hpp>
-
 #include <boost/container/container_fwd.hpp>
-#include <boost/container/detail/allocation_type.hpp>
-#include <boost/assert.hpp>
-#include <boost/container/detail/utilities.hpp>
-#include <boost/container/detail/type_traits.hpp>
-#include <boost/container/detail/mpl.hpp>
-#include <boost/container/detail/version_type.hpp>
-#include <boost/container/detail/multiallocation_chain.hpp>
+
 #include <boost/container/throw_exception.hpp>
-#include <boost/move/utility.hpp>
+
+#include <boost/container/detail/addressof.hpp>
+#include <boost/container/detail/allocation_type.hpp>
+#include <boost/container/detail/mpl.hpp>
+#include <boost/container/detail/multiallocation_chain.hpp>
+#include <boost/container/detail/type_traits.hpp>
+#include <boost/container/detail/version_type.hpp>
+
+#include <boost/move/utility_core.hpp>
+#include <boost/move/adl_move_swap.hpp>
+
+#include <boost/assert.hpp>
+
 #include <memory>
 #include <algorithm>
 #include <cstddef>
@@ -135,12 +144,8 @@ class dummy_test_allocator
 
    //Experimental version 2 dummy_test_allocator functions
 
-   std::pair<pointer, bool>
-      allocation_command(boost::container::allocation_type,
-                         size_type,
-                         size_type,
-                         size_type &, const pointer & = 0)
-   {  return std::pair<pointer, bool>(pointer(), true); }
+   pointer allocation_command(boost::container::allocation_type, size_type, size_type &, pointer &p)
+   {  p = pointer();   return pointer();  }
 
    //!Returns maximum the number of objects the previously allocated memory
    //!pointed by p can hold.
@@ -233,7 +238,7 @@ class propagation_test_allocator
    {  return CopyOnPropagateOnContSwap ? propagation_test_allocator(*this) : propagation_test_allocator();  }
 
    explicit propagation_test_allocator()
-      : id_(unique_id_++)
+      : id_(++unique_id_)
       , ctr_copies_(0)
       , ctr_moves_(0)
       , assign_copies_(0)
@@ -258,7 +263,7 @@ class propagation_test_allocator
                                        , PropagateOnContSwap
                                        , CopyOnPropagateOnContSwap> &x)
       : id_(x.id_)
-      , ctr_copies_(0)
+      , ctr_copies_(x.ctr_copies_+1)
       , ctr_moves_(0)
       , assign_copies_(0)
       , assign_moves_(0)
@@ -296,8 +301,8 @@ class propagation_test_allocator
       return *this;
    }
 
-   static void reset_unique_id()
-   {  unique_id_ = 0;  }
+   static void reset_unique_id(unsigned id = 0)
+   {  unique_id_ = id;  }
 
    T* allocate(std::size_t n)
    {  return (T*)::new char[sizeof(T)*n];  }
@@ -314,12 +319,12 @@ class propagation_test_allocator
    void swap(propagation_test_allocator &r)
    {
       ++this->swaps_; ++r.swaps_;
-      boost::container::swap_dispatch(this->id_, r.id_);
-      boost::container::swap_dispatch(this->ctr_copies_, r.ctr_copies_);
-      boost::container::swap_dispatch(this->ctr_moves_, r.ctr_moves_);
-      boost::container::swap_dispatch(this->assign_copies_, r.assign_copies_);
-      boost::container::swap_dispatch(this->assign_moves_, r.assign_moves_);
-      boost::container::swap_dispatch(this->swaps_, r.swaps_);
+      boost::adl_move_swap(this->id_, r.id_);
+      boost::adl_move_swap(this->ctr_copies_, r.ctr_copies_);
+      boost::adl_move_swap(this->ctr_moves_, r.ctr_moves_);
+      boost::adl_move_swap(this->assign_copies_, r.assign_copies_);
+      boost::adl_move_swap(this->assign_moves_, r.assign_moves_);
+      boost::adl_move_swap(this->swaps_, r.swaps_);
    }
 
    friend void swap(propagation_test_allocator &l, propagation_test_allocator &r)

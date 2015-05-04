@@ -7,14 +7,15 @@
 // Tests swapping an array of integers by means of boost::swap.
 
 #include <boost/utility/swap.hpp>
-#define BOOST_INCLUDE_MAIN
-#include <boost/test/test_tools.hpp>
+#include <boost/core/lightweight_test.hpp>
+#define BOOST_CHECK BOOST_TEST
+#define BOOST_CHECK_EQUAL BOOST_TEST_EQ
 
 #include <algorithm> //for std::copy and std::equal
 #include <cstddef> //for std::size_t
 
 
-int test_main(int, char*[])
+int main()
 {
   const std::size_t array_size = 3;
   const int initial_array1[array_size] = { 1, 2, 3 };
@@ -31,5 +32,5 @@ int test_main(int, char*[])
   BOOST_CHECK(std::equal(array1, array1 + array_size, initial_array2));
   BOOST_CHECK(std::equal(array2, array2 + array_size, initial_array1));
 
-  return 0;
+  return boost::report_errors();
 }

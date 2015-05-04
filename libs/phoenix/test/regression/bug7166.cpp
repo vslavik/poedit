@@ -9,7 +9,7 @@
 
 #define BOOST_PROTO_MAX_ARITY 10
 #define BOOST_PHOENIX_LIMIT 20
-#include <boost/phoenix.hpp>
+#include <boost/phoenix/core.hpp>
  
 int main()
 {

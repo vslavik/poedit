@@ -1,4 +1,4 @@
-// Copyright (C) 2014 Andrzej Krzemienski.
+// Copyright (C) 2014 - 2015 Andrzej Krzemienski.
 //
 // Use, modification, and distribution is subject to the Boost Software
 // License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -8,19 +8,7 @@
 //
 // You are welcome to contact the author at:
 //  akrzemi1@gmail.com
-//
-// Revisions:
-//
-#include<iostream>
-#include<stdexcept>
-#include<string>
 
-#define BOOST_ENABLE_ASSERT_HANDLER
-
-#include "boost/bind/apply.hpp" // Included just to test proper interaction with boost::apply<> as reported by Daniel Wallin
-#include "boost/mpl/bool.hpp"
-#include "boost/mpl/bool_fwd.hpp"  // For mpl::true_ and mpl::false_
-#include "boost/static_assert.hpp"
 
 #include "boost/optional/optional.hpp"
 
@@ -28,11 +16,10 @@
 #pragma hdrstop
 #endif
 
-#include "boost/none.hpp"
+#include "boost/core/lightweight_test.hpp"
 
-#include "boost/test/minimal.hpp"
-
-#include "optional_test_common.cpp"
+using boost::optional;
+using boost::none;
 
 //#ifndef BOOST_OPTIONAL_NO_CONVERTING_ASSIGNMENT
 //#ifndef BOOST_OPTIONAL_NO_CONVERTING_COPY_CTOR
@@ -86,37 +73,37 @@ bool operator!=( Oracle const& a, Oracle const& b ) { return a.val.i != b.val.i;
 void test_move_ctor_from_U()
 {
   optional<Oracle> o1 ((OracleVal()));
-  BOOST_CHECK(o1);
-  BOOST_CHECK(o1->s == sValueMoveConstructed || o1->s == sMoveConstructed);
+  BOOST_TEST(o1);
+  BOOST_TEST(o1->s == sValueMoveConstructed || o1->s == sMoveConstructed);
     
   OracleVal v1;
   optional<Oracle> o2 (v1);
-  BOOST_CHECK(o2);
-  BOOST_CHECK(o2->s == sValueCopyConstructed || o2->s == sCopyConstructed || o2->s == sMoveConstructed );
-  BOOST_CHECK(v1.s == sIntConstructed);
+  BOOST_TEST(o2);
+  BOOST_TEST(o2->s == sValueCopyConstructed || o2->s == sCopyConstructed || o2->s == sMoveConstructed );
+  BOOST_TEST(v1.s == sIntConstructed);
     
   optional<Oracle> o3 (boost::move(v1));
-  BOOST_CHECK(o3);
-  BOOST_CHECK(o3->s == sValueMoveConstructed || o3->s == sMoveConstructed);
-  BOOST_CHECK(v1.s == sMovedFrom);
+  BOOST_TEST(o3);
+  BOOST_TEST(o3->s == sValueMoveConstructed || o3->s == sMoveConstructed);
+  BOOST_TEST(v1.s == sMovedFrom);
 }
 
 void test_move_ctor_form_T()
 {
   optional<Oracle> o1 ((Oracle()));
-  BOOST_CHECK(o1);
-  BOOST_CHECK(o1->s == sMoveConstructed);
+  BOOST_TEST(o1);
+  BOOST_TEST(o1->s == sMoveConstructed);
   
   Oracle v1;
   optional<Oracle> o2 (v1);
-  BOOST_CHECK(o2);
-  BOOST_CHECK(o2->s == sCopyConstructed);
-  BOOST_CHECK(v1.s == sDefaultConstructed);
+  BOOST_TEST(o2);
+  BOOST_TEST(o2->s == sCopyConstructed);
+  BOOST_TEST(v1.s == sDefaultConstructed);
     
   optional<Oracle> o3 (boost::move(v1));
-  BOOST_CHECK(o3);
-  BOOST_CHECK(o3->s == sMoveConstructed);
-  BOOST_CHECK(v1.s == sMovedFrom);
+  BOOST_TEST(o3);
+  BOOST_TEST(o3->s == sMoveConstructed);
+  BOOST_TEST(v1.s == sMovedFrom);
 }
 
 void test_move_ctor_from_optional_T()
@@ -124,22 +111,22 @@ void test_move_ctor_from_optional_T()
   optional<Oracle> o1;
   optional<Oracle> o2(boost::move(o1));
   
-  BOOST_CHECK(!o1);
-  BOOST_CHECK(!o2);
+  BOOST_TEST(!o1);
+  BOOST_TEST(!o2);
   
   optional<Oracle> o3((Oracle()));
   optional<Oracle> o4(boost::move(o3));
-  BOOST_CHECK(o3);
-  BOOST_CHECK(o4);
-  BOOST_CHECK(o3->s == sMovedFrom);
-  BOOST_CHECK(o4->s == sMoveConstructed);
+  BOOST_TEST(o3);
+  BOOST_TEST(o4);
+  BOOST_TEST(o3->s == sMovedFrom);
+  BOOST_TEST(o4->s == sMoveConstructed);
   
   optional<Oracle> o5((optional<Oracle>()));
-  BOOST_CHECK(!o5);
+  BOOST_TEST(!o5);
   
   optional<Oracle> o6((optional<Oracle>(Oracle())));
-  BOOST_CHECK(o6);
-  BOOST_CHECK(o6->s == sMoveConstructed);
+  BOOST_TEST(o6);
+  BOOST_TEST(o6->s == sMoveConstructed);
   
   optional<Oracle> o7(o6); // does copy ctor from non-const lvalue compile?
 }
@@ -149,59 +136,59 @@ void test_move_assign_from_U()
   optional<Oracle> o1 = boost::none; // test if additional ctors didn't break it
   o1 = boost::none;                  // test if additional assignments didn't break it
   o1 = OracleVal();
-  BOOST_CHECK(o1);
+  BOOST_TEST(o1);
   
-  BOOST_CHECK(o1->s == sValueMoveConstructed);  
+  BOOST_TEST(o1->s == sValueMoveConstructed);  
   
   o1 = OracleVal();
-  BOOST_CHECK(o1);
-  BOOST_CHECK(o1->s == sMoveAssigned); 
+  BOOST_TEST(o1);
+  BOOST_TEST(o1->s == sMoveAssigned); 
     
   OracleVal v1;
   optional<Oracle> o2;
   o2 = v1;
-  BOOST_CHECK(o2);
-  BOOST_CHECK(o2->s == sValueCopyConstructed);
-  BOOST_CHECK(v1.s == sIntConstructed);
+  BOOST_TEST(o2);
+  BOOST_TEST(o2->s == sValueCopyConstructed);
+  BOOST_TEST(v1.s == sIntConstructed);
   o2 = v1;
-  BOOST_CHECK(o2);
-  BOOST_CHECK(o2->s == sCopyAssigned || o2->s == sMoveAssigned);
-  BOOST_CHECK(v1.s == sIntConstructed);
+  BOOST_TEST(o2);
+  BOOST_TEST(o2->s == sCopyAssigned || o2->s == sMoveAssigned);
+  BOOST_TEST(v1.s == sIntConstructed);
     
   optional<Oracle> o3;
   o3 = boost::move(v1);
-  BOOST_CHECK(o3);
-  BOOST_CHECK(o3->s == sValueMoveConstructed);
-  BOOST_CHECK(v1.s == sMovedFrom);
+  BOOST_TEST(o3);
+  BOOST_TEST(o3->s == sValueMoveConstructed);
+  BOOST_TEST(v1.s == sMovedFrom);
 }
 
 void test_move_assign_from_T()
 {
   optional<Oracle> o1;
   o1 = Oracle();
-  BOOST_CHECK(o1);
-  BOOST_CHECK(o1->s == sMoveConstructed);  
+  BOOST_TEST(o1);
+  BOOST_TEST(o1->s == sMoveConstructed);  
   
   o1 = Oracle();
-  BOOST_CHECK(o1);
-  BOOST_CHECK(o1->s == sMoveAssigned); 
+  BOOST_TEST(o1);
+  BOOST_TEST(o1->s == sMoveAssigned); 
     
   Oracle v1;
   optional<Oracle> o2;
   o2 = v1;
-  BOOST_CHECK(o2);
-  BOOST_CHECK(o2->s == sCopyConstructed);
-  BOOST_CHECK(v1.s == sDefaultConstructed);
+  BOOST_TEST(o2);
+  BOOST_TEST(o2->s == sCopyConstructed);
+  BOOST_TEST(v1.s == sDefaultConstructed);
   o2 = v1;
-  BOOST_CHECK(o2);
-  BOOST_CHECK(o2->s == sCopyAssigned);
-  BOOST_CHECK(v1.s == sDefaultConstructed);
+  BOOST_TEST(o2);
+  BOOST_TEST(o2->s == sCopyAssigned);
+  BOOST_TEST(v1.s == sDefaultConstructed);
     
   optional<Oracle> o3;
   o3 = boost::move(v1);
-  BOOST_CHECK(o3);
-  BOOST_CHECK(o3->s == sMoveConstructed);
-  BOOST_CHECK(v1.s == sMovedFrom);
+  BOOST_TEST(o3);
+  BOOST_TEST(o3->s == sMoveConstructed);
+  BOOST_TEST(v1.s == sMovedFrom);
 }
 
 void test_move_assign_from_optional_T()
@@ -209,23 +196,23 @@ void test_move_assign_from_optional_T()
     optional<Oracle> o1;
     optional<Oracle> o2;
     o1 = optional<Oracle>();
-    BOOST_CHECK(!o1);
+    BOOST_TEST(!o1);
     optional<Oracle> o3((Oracle()));
     o1 = o3;
-    BOOST_CHECK(o3);
-    BOOST_CHECK(o3->s == sMoveConstructed);
-    BOOST_CHECK(o1);
-    BOOST_CHECK(o1->s == sCopyConstructed);
+    BOOST_TEST(o3);
+    BOOST_TEST(o3->s == sMoveConstructed);
+    BOOST_TEST(o1);
+    BOOST_TEST(o1->s == sCopyConstructed);
     
     o2 = boost::move(o3);
-    BOOST_CHECK(o3);
-    BOOST_CHECK(o3->s == sMovedFrom);
-    BOOST_CHECK(o2);
-    BOOST_CHECK(o2->s == sMoveConstructed);
+    BOOST_TEST(o3);
+    BOOST_TEST(o3->s == sMovedFrom);
+    BOOST_TEST(o2);
+    BOOST_TEST(o2->s == sMoveConstructed);
     
     o2 = optional<Oracle>((Oracle()));
-    BOOST_CHECK(o2);
-    BOOST_CHECK(o2->s == sMoveAssigned);
+    BOOST_TEST(o2);
+    BOOST_TEST(o2->s == sMoveAssigned);
 }
 
 class MoveOnly
@@ -247,21 +234,21 @@ void test_with_move_only()
 {
     optional<MoveOnly> o1;
     optional<MoveOnly> o2((MoveOnly(1)));
-    BOOST_CHECK(o2);
-    BOOST_CHECK(o2->val == 1);
+    BOOST_TEST(o2);
+    BOOST_TEST(o2->val == 1);
     optional<MoveOnly> o3 (boost::move(o1));
-    BOOST_CHECK(!o3);
+    BOOST_TEST(!o3);
     optional<MoveOnly> o4 (boost::move(o2));
-    BOOST_CHECK(o4);
-    BOOST_CHECK(o4->val == 1);
-    BOOST_CHECK(o2);
-    BOOST_CHECK(o2->val == 0);
+    BOOST_TEST(o4);
+    BOOST_TEST(o4->val == 1);
+    BOOST_TEST(o2);
+    BOOST_TEST(o2->val == 0);
     
     o3 = boost::move(o4);
-    BOOST_CHECK(o3);
-    BOOST_CHECK(o3->val == 1);
-    BOOST_CHECK(o4);
-    BOOST_CHECK(o4->val == 0);
+    BOOST_TEST(o3);
+    BOOST_TEST(o3->val == 1);
+    BOOST_TEST(o4);
+    BOOST_TEST(o4->val == 0);
 }
 
 class MoveOnlyB
@@ -287,15 +274,15 @@ void test_move_assign_from_optional_U()
     optional<MoveOnlyB> b1;
     b1 = boost::move(a);
     
-    BOOST_CHECK(b1);
-    BOOST_CHECK(b1->val == 2);
-    BOOST_CHECK(a);
-    BOOST_CHECK(a->val == 0);
+    BOOST_TEST(b1);
+    BOOST_TEST(b1->val == 2);
+    BOOST_TEST(a);
+    BOOST_TEST(a->val == 0);
     
     b1 = MoveOnly(4);
     
-    BOOST_CHECK(b1);
-    BOOST_CHECK(b1->val == 4);
+    BOOST_TEST(b1);
+    BOOST_TEST(b1->val == 4);
 }
 
 void test_move_ctor_from_optional_U()
@@ -303,15 +290,15 @@ void test_move_ctor_from_optional_U()
     optional<MoveOnly> a((MoveOnly(2)));
     optional<MoveOnlyB> b1(boost::move(a));
     
-    BOOST_CHECK(b1);
-    BOOST_CHECK(b1->val == 2);
-    BOOST_CHECK(a);
-    BOOST_CHECK(a->val == 0);
+    BOOST_TEST(b1);
+    BOOST_TEST(b1->val == 2);
+    BOOST_TEST(a);
+    BOOST_TEST(a->val == 0);
     
     optional<MoveOnlyB> b2(( optional<MoveOnly>(( MoveOnly(4) )) ));
     
-    BOOST_CHECK(b2);
-    BOOST_CHECK(b2->val == 4);
+    BOOST_TEST(b2);
+    BOOST_TEST(b2->val == 4);
 }
 
 void test_swap()
@@ -320,8 +307,8 @@ void test_swap()
     optional<MoveOnly> b((MoveOnly(3)));
     swap(a, b);
     
-    BOOST_CHECK(a->val == 3);
-    BOOST_CHECK(b->val == 2);
+    BOOST_TEST(a->val == 3);
+    BOOST_TEST(b->val == 2);
 }
 
 void test_optional_ref_to_movables()
@@ -329,66 +316,24 @@ void test_optional_ref_to_movables()
     MoveOnly m(3);
     optional<MoveOnly&> orm = m;
     orm->val = 2;
-    BOOST_CHECK(m.val == 2);
+    BOOST_TEST(m.val == 2);
     
     optional<MoveOnly&> orm2 = orm;
     orm2->val = 1;
-    BOOST_CHECK(m.val == 1);
-    BOOST_CHECK(orm->val == 1);
+    BOOST_TEST(m.val == 1);
+    BOOST_TEST(orm->val == 1);
     
     optional<MoveOnly&> orm3 = boost::move(orm);
     orm3->val = 4;
-    BOOST_CHECK(m.val == 4);
-    BOOST_CHECK(orm->val == 4);
-    BOOST_CHECK(orm2->val == 4);
+    BOOST_TEST(m.val == 4);
+    BOOST_TEST(orm->val == 4);
+    BOOST_TEST(orm2->val == 4);
 }
-
-// these 4 classes have different noexcept signatures in move operations
-struct NothrowBoth {
-  NothrowBoth(NothrowBoth&&) BOOST_NOEXCEPT_IF(true) {};
-  void operator=(NothrowBoth&&) BOOST_NOEXCEPT_IF(true) {};
-};
-struct NothrowCtor {
-  NothrowCtor(NothrowCtor&&) BOOST_NOEXCEPT_IF(true) {};
-  void operator=(NothrowCtor&&) BOOST_NOEXCEPT_IF(false) {};
-};
-struct NothrowAssign {
-  NothrowAssign(NothrowAssign&&) BOOST_NOEXCEPT_IF(false) {};
-  void operator=(NothrowAssign&&) BOOST_NOEXCEPT_IF(true) {};
-};
-struct NothrowNone {
-  NothrowNone(NothrowNone&&) BOOST_NOEXCEPT_IF(false) {};
-  void operator=(NothrowNone&&) BOOST_NOEXCEPT_IF(false) {};
-};
-
-#ifndef BOOST_NO_NOEXCEPT
-
-void test_noexcept() // this is a compile-time test
-{
-    BOOST_STATIC_ASSERT(::boost::is_nothrow_move_constructible<optional<NothrowBoth> >::value);
-    BOOST_STATIC_ASSERT(::boost::is_nothrow_move_assignable<optional<NothrowBoth> >::value);
-    BOOST_STATIC_ASSERT(BOOST_NOEXCEPT_EXPR(optional<NothrowBoth>()));
-    
-    BOOST_STATIC_ASSERT(::boost::is_nothrow_move_constructible<optional<NothrowCtor> >::value);
-    BOOST_STATIC_ASSERT(!::boost::is_nothrow_move_assignable<optional<NothrowCtor> >::value);
-    BOOST_STATIC_ASSERT(BOOST_NOEXCEPT_EXPR(optional<NothrowCtor>()));
-    
-    BOOST_STATIC_ASSERT(!::boost::is_nothrow_move_constructible<optional<NothrowAssign> >::value);
-    BOOST_STATIC_ASSERT(!::boost::is_nothrow_move_assignable<optional<NothrowAssign> >::value);
-    BOOST_STATIC_ASSERT(BOOST_NOEXCEPT_EXPR(optional<NothrowAssign>()));
-    
-    BOOST_STATIC_ASSERT(!::boost::is_nothrow_move_constructible<optional<NothrowNone> >::value);
-    BOOST_STATIC_ASSERT(!::boost::is_nothrow_move_assignable<optional<NothrowNone> >::value);
-    BOOST_STATIC_ASSERT(BOOST_NOEXCEPT_EXPR(optional<NothrowNone>()));
-}
-#endif // !defned BOOST_NO_NOEXCEPT
 
 #endif
 
-int test_main( int, char* [] )
+int main()
 {
-  try
-  {
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     test_move_ctor_from_U();
     test_move_ctor_form_T();
@@ -402,13 +347,6 @@ int test_main( int, char* [] )
     test_optional_ref_to_movables();
     test_swap();
 #endif
-  }
-  catch ( ... )
-  {
-    BOOST_ERROR("Unexpected Exception caught!");
-  }
 
-  return 0;
+  return boost::report_errors();
 }
-
-

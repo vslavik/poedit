@@ -15,8 +15,6 @@
 
 #include <vector>
 #include <iostream>
-#include <new>
-#include <utility>
 #include <cstring>
 #include <algorithm>    //std::remove
 #include <boost/container/detail/alloc_lib_auto_link.hpp>

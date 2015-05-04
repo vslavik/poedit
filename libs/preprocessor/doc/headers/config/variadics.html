@@ -1,19 +1,19 @@
 <html>
 <head>
-  <title>config/variadics.hpp</title>
+  <title>config/config.hpp</title>
   <link rel="stylesheet" type="text/css" href="../../styles.css">
 </head>
 <body>
 		<div style="margin-left: 0px;">
-			The <b>config/variadics.hpp</b>
-header defines a macro for determining variadic macro support. The file
-is automatically included when needed internally. The end-user can
-include it also in order to use the macro. </div>
+			The <b>config/config.hpp</b>
+header defines internal configuration macros as well as a macro for determining variadic macro support. The file
+is automatically included whenever any Boost PP macros are used. The end-user can manually
+include it in order to use the BOOST_PP_VARIADICS macro, but normally should never have to do so. </div>
 		<h4>
 			Usage
 		</h4>
 		<div class="code">
-			#include <b>&lt;boost/preprocessor/config/variadics.hpp&gt;</b>
+			#include <b>&lt;boost/preprocessor/config/config.hpp&gt;</b>
 		</div>
 		<h4>
 			Contents
@@ -21,7 +21,7 @@ include it also in order to use the macro. </div>
 		<ul>
 			<li><a href="../../ref/variadics.html">BOOST_PP_VARIADICS</a></li></ul>
 	<hr size="1">
-	<div style="margin-left: 0px;"><i>© Copyright Edward Diener 2011</i>
+	<div style="margin-left: 0px;"><i>© Copyright Edward Diener 2011,2014</i>
 	</div>
 	<div style="margin-left: 0px;">
 		<p><small>Distributed under the Boost Software License, Version 1.0. (See

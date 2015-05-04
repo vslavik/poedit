@@ -128,7 +128,7 @@ void test_variadic_templates() {
   );
   BOOST_TEST(a3 == 200);
   BOOST_TEST(a4 == true);
-  BOOST_TEST(res6 == 888);
+  BOOST_TEST_EQ(res6_move, 888);
 }
 #endif
 

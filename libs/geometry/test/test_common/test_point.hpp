@@ -106,6 +106,6 @@ template<> struct access<test::test_point, 2>
 BOOST_GEOMETRY_REGISTER_POINT_3D_CONST(test::test_const_point,
                                        float,
                                        boost::geometry::cs::cartesian,
-                                       c1, c2, c3);
+                                       c1, c2, c3)
 
 #endif // GEOMETRY_TEST_TEST_COMMON_TEST_POINT_HPP

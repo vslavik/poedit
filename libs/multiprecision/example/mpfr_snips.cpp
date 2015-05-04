@@ -3,15 +3,13 @@
 //  Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_
 
+//[mpfr_eg
 #include <boost/multiprecision/mpfr.hpp>
 #include <boost/math/special_functions/gamma.hpp>
 #include <iostream>
 
-void t1()
+int main()
 {
-   //[mpfr_eg
-   //=#include <boost/multiprecision/mpfr.hpp>
-
    using namespace boost::multiprecision;
 
    // Operations at variable precision and no numeric_limits support:
@@ -34,15 +32,9 @@ void t1()
    mpfr_t r;
    mpfr_init(r);
    mpfr_set(r, b.backend().data(), GMP_RNDN);
-   //]
    mpfr_clear(r);
-}
-
-int main()
-{
-   t1();
    return 0;
 }
-
+//]
 
 

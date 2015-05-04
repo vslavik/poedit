@@ -73,15 +73,15 @@ int main() {
 
     [table:id Table of names
         [[Type] [RTTI & raw_name] [RTTI & pretty_name] [noRTTI & raw_name]]
-	    [[User defined type][`17user_defined_type`] [`user_defined_type`] [`user_defined_type]`] ]
-	    [[In anonymous namespace][`N12_GLOBAL__N_112in_anon_typeE`] [`(anonymous namespace)::in_anon_type`] [`{anonymous}::in_anon_type]`] ]
-	    [[In ns3::{anonymous}::ns4 namespace][`N3ns312_GLOBAL__N_13ns412in_anon_typeE`] [`ns3::(anonymous namespace)::ns4::in_anon_type`] [`ns3::{anonymous}::ns4::in_anon_type]`] ]
-	    [[Template class][`5templIsiE`] [`templ<short, int>`] [`templ<short int, int>]`] ]
-	    [[Template class (full specialization)][`5templIiiE`] [`templ<int, int>`] [`templ<int, int>]`] ]
-	    [[Template class with templae classes][`5templIS_IcaES_Ii17user_defined_typeEE`] [`templ<templ<char, signed char>, templ<int, user_defined_type> >`] [`templ<templ<char, signed char>, templ<int, user_defined_type> >]`] ]
+        [[User defined type][`17user_defined_type`] [`user_defined_type`] [`user_defined_type]`] ]
+        [[In anonymous namespace][`N12_GLOBAL__N_112in_anon_typeE`] [`(anonymous namespace)::in_anon_type`] [`{anonymous}::in_anon_type]`] ]
+        [[In ns3::{anonymous}::ns4 namespace][`N3ns312_GLOBAL__N_13ns412in_anon_typeE`] [`ns3::(anonymous namespace)::ns4::in_anon_type`] [`ns3::{anonymous}::ns4::in_anon_type]`] ]
+        [[Template class][`5templIsiE`] [`templ<short, int>`] [`templ<short int, int>]`] ]
+        [[Template class (full specialization)][`5templIiiE`] [`templ<int, int>`] [`templ<int, int>]`] ]
+        [[Template class with template classes][`5templIS_IcaES_Ii17user_defined_typeEE`] [`templ<templ<char, signed char>, templ<int, user_defined_type> >`] [`templ<templ<char, signed char>, templ<int, user_defined_type> >]`] ]
     ]
 
-    We have not show the "noRTTI & pretty_name" column in the table becuse it is almost equal 
+    We have not show the "noRTTI & pretty_name" column in the table because it is almost equal
     to "noRTTI & raw_name" column.
 
     [warning With RTTI off different classes with same names in anonymous namespace may collapse. See 'RTTI emulation limitations'. ] 

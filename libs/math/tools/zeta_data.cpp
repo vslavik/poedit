@@ -3,24 +3,21 @@
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/math/bindings/rr.hpp>
-#include <boost/test/included/prg_exec_monitor.hpp>
 #include <boost/math/special_functions/zeta.hpp>
 #include <boost/math/constants/constants.hpp>
-#include <boost/math/tools/test.hpp>
 #include <fstream>
-
 #include <boost/math/tools/test_data.hpp>
+#include "mp_t.hpp"
 
 using namespace boost::math::tools;
 using namespace std;
 
 struct zeta_data_generator
 {
-   boost::math::ntl::RR operator()(boost::math::ntl::RR z)
+   mp_t operator()(mp_t z)
    {
       std::cout << z << " ";
-      boost::math::ntl::RR result = boost::math::zeta(z);
+      mp_t result = boost::math::zeta(z);
       std::cout << result << std::endl;
       return result;
    }
@@ -28,23 +25,20 @@ struct zeta_data_generator
 
 struct zeta_data_generator2
 {
-   boost::math::tuple<boost::math::ntl::RR, boost::math::ntl::RR> operator()(boost::math::ntl::RR z)
+   boost::math::tuple<mp_t, mp_t> operator()(mp_t z)
    {
       std::cout << -z << " ";
-      boost::math::ntl::RR result = boost::math::zeta(-z);
+      mp_t result = boost::math::zeta(-z);
       std::cout << result << std::endl;
       return boost::math::make_tuple(-z, result);
    }
 };
 
 
-int cpp_main(int argc, char*argv [])
+int main(int argc, char*argv [])
 {
-   boost::math::ntl::RR::SetPrecision(500);
-   boost::math::ntl::RR::SetOutputPrecision(40);
-
-   parameter_info<boost::math::ntl::RR> arg1;
-   test_data<boost::math::ntl::RR> data;
+   parameter_info<mp_t> arg1;
+   test_data<mp_t> data;
 
    bool cont;
    std::string line;
@@ -70,6 +64,7 @@ int cpp_main(int argc, char*argv [])
    if(line == "")
       line = "zeta_data.ipp";
    std::ofstream ofs(line.c_str());
+   ofs << std::scientific << std::setprecision(40);
    write_code(ofs, data, "zeta_data");
    
    return 0;

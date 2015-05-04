@@ -22,7 +22,7 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="5"
+				RuntimeLibrary="1"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
@@ -60,7 +60,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
-				RuntimeLibrary="4"
+				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
@@ -167,6 +167,9 @@
 				RelativePath="..\..\..\..\..\boost\intrusive\pointer_plus_bits.hpp">
 			</File>
 			<File
+				RelativePath="..\..\..\..\..\boost\intrusive\pointer_rebind.hpp">
+			</File>
+			<File
 				RelativePath="..\..\..\..\..\boost\intrusive\pointer_traits.hpp">
 			</File>
 			<File
@@ -227,10 +230,25 @@
 				Name="detail"
 				Filter="">
 				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\algo_type.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\algorithm.hpp">
+				</File>
+				<File
 					RelativePath="..\..\..\..\..\boost\intrusive\detail\any_node_and_algorithms.hpp">
 				</File>
 				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\array_initializer.hpp">
+				</File>
+				<File
 					RelativePath="..\..\..\..\..\boost\intrusive\detail\assert.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\avltree_node.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\bstree_algorithms_base.hpp">
 				</File>
 				<File
 					RelativePath="..\..\..\..\..\boost\intrusive\detail\common_slist_algorithms.hpp">
@@ -242,7 +260,19 @@
 					RelativePath="..\..\..\..\..\boost\intrusive\detail\config_end.hpp">
 				</File>
 				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\default_header_holder.hpp">
+				</File>
+				<File
 					RelativePath="..\..\..\..\..\boost\intrusive\detail\ebo_functor_holder.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\empty_node_checker.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\equal_to_value.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\exception_disposer.hpp">
 				</File>
 				<File
 					RelativePath="..\..\..\..\..\boost\intrusive\detail\function_detector.hpp">
@@ -251,43 +281,97 @@
 					RelativePath="..\..\..\..\..\boost\intrusive\detail\generic_hook.hpp">
 				</File>
 				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\get_value_traits.hpp">
+				</File>
+				<File
 					RelativePath="..\..\..\..\..\boost\intrusive\detail\has_member_function_callable_with.hpp">
 				</File>
 				<File
 					RelativePath="..\..\..\..\..\boost\intrusive\detail\hashtable_node.hpp">
 				</File>
 				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\hook_traits.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\iiterator.hpp">
+				</File>
+				<File
 					RelativePath="..\..\..\..\..\boost\intrusive\detail\is_stateful_value_traits.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\iterator.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\key_nodeptr_comp.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\list_iterator.hpp">
 				</File>
 				<File
 					RelativePath="..\..\..\..\..\boost\intrusive\detail\list_node.hpp">
 				</File>
 				<File
-					RelativePath="..\..\..\..\..\boost\intrusive\detail\memory_util.hpp">
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\math.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\minimal_less_equal_header.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\minimal_pair_header.hpp">
 				</File>
 				<File
 					RelativePath="..\..\..\..\..\boost\intrusive\detail\mpl.hpp">
 				</File>
 				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\node_cloner_disposer.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\node_holder.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\node_to_value.hpp">
+				</File>
+				<File
 					RelativePath="..\..\..\..\..\boost\intrusive\detail\parent_from_member.hpp">
 				</File>
 				<File
-					RelativePath="..\..\..\..\..\boost\intrusive\detail\preprocessor.hpp">
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\pointer_element.hpp">
 				</File>
 				<File
 					RelativePath="..\..\..\..\..\boost\intrusive\detail\rbtree_node.hpp">
 				</File>
 				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\reverse_iterator.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\simple_disposers.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\size_holder.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\slist_iterator.hpp">
+				</File>
+				<File
 					RelativePath="..\..\..\..\..\boost\intrusive\detail\slist_node.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\std_fwd.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\to_raw_pointer.hpp">
 				</File>
 				<File
 					RelativePath="..\..\..\..\..\boost\intrusive\detail\transform_iterator.hpp">
 				</File>
 				<File
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\tree_iterator.hpp">
+				</File>
+				<File
 					RelativePath="..\..\..\..\..\boost\intrusive\detail\tree_node.hpp">
 				</File>
 				<File
-					RelativePath="..\..\..\..\..\boost\intrusive\detail\utilities.hpp">
+					RelativePath="..\..\..\..\..\boost\intrusive\detail\uncast.hpp">
 				</File>
 				<File
 					RelativePath="..\..\..\..\..\boost\intrusive\detail\workaround.hpp">

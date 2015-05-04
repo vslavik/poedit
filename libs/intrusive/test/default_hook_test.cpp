@@ -78,7 +78,7 @@ int main()
    //Create several MyClass objects, each one with a different value
    std::vector<MyClass> values;
    for(int i = 0; i < 100; ++i)  values.push_back(MyClass(i));
-   
+
    {
       List  my_list;
       Slist my_slist;

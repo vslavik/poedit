@@ -30,7 +30,7 @@ template<typename T>
 struct test_bug_4530
 {
 	template<typename A>
-	test_bug_4530(A&&, typename boost::enable_if<::tt::is_convertible<A&&, T> >::type* =0);
+	test_bug_4530(A&&, typename boost::enable_if< ::tt::is_convertible<A&&, T> >::type* =0);
 };
 
 struct A4530

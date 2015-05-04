@@ -12,7 +12,7 @@
 using namespace std;
 namespace ublas = boost::numeric::ublas;
 
-int main(int argc, char* argv[])
+int main()
 {
     int sz = 4;
     ublas::symmetric_matrix<int, ublas::upper, ublas::column_major>  UpCol (sz, sz);

@@ -124,7 +124,7 @@ If we wouldn't specialize the `is_resizeable` template, the code would still
 compile but odeint would not adjust the size of temporary internal instances
 of my_vector and hence try to fill zero-sized vectors resulting in
 segmentation faults!
-The full example can be found in [github_link libs/numeric/odeint/examples/my_vector.cpp my_vector.cpp]
+The full example can be found in [github_link examples/my_vector.cpp my_vector.cpp]
 
 [endsect]
 
@@ -152,7 +152,7 @@ The following code shows the required template specializations:
 
 With these definitions odeint knows how to resize `std::list`s and so they can
 be used as state types.
-A complete example can be found in [github_link libs/numeric/odeint/examples/list_lattice.cpp list_lattice.cpp].
+A complete example can be found in [github_link examples/list_lattice.cpp list_lattice.cpp].
 
 [endsect]
 
@@ -407,7 +407,7 @@ The following code shows the corresponding definitions:
 Note again, that we haven't supported the requirements for controlled steppers,
 but only for simple Runge-Kutta methods.
 You can find the full example in [github_link
-libs/numeric/odeint/examples/ublas/lorenz_ublas.cpp lorenz_ublas.cpp].
+examples/ublas/lorenz_ublas.cpp lorenz_ublas.cpp].
 
 [endsect]
 /]
@@ -453,7 +453,7 @@ template argument list:
 [point3D_main]
 
 The whole example can be found in [github_link
-libs/numeric/odeint/examples/lorenz_point.cpp lorenz_point.cpp]
+examples/lorenz_point.cpp lorenz_point.cpp]
 
 [note For the most `state_types`, odeint is able to automatically determine
 the correct algebra and operations. But if you want to use your own `state_type`, as in this

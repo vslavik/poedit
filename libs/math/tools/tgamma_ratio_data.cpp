@@ -3,44 +3,38 @@
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/math/bindings/rr.hpp>
-#include <boost/test/included/prg_exec_monitor.hpp>
 #include <boost/math/special_functions/gamma.hpp>
-#include <boost/math/tools/test.hpp>
 #include <fstream>
-
 #include <boost/math/tools/test_data.hpp>
+#include "mp_t.hpp"
 
 using namespace boost::math::tools;
 using namespace std;
 
-boost::math::tuple<boost::math::ntl::RR, boost::math::ntl::RR> 
-   tgamma_ratio(const boost::math::ntl::RR& a, const boost::math::ntl::RR& delta)
+boost::math::tuple<mp_t, mp_t> 
+   tgamma_ratio(const mp_t& a, const mp_t& delta)
 {
    if(delta > a)
       throw std::domain_error("");
-   boost::math::ntl::RR tg = boost::math::tgamma(a);
-   boost::math::ntl::RR r1 = tg / boost::math::tgamma(a + delta);
-   boost::math::ntl::RR r2 = tg / boost::math::tgamma(a - delta);
+   mp_t tg = boost::math::tgamma(a);
+   mp_t r1 = tg / boost::math::tgamma(a + delta);
+   mp_t r2 = tg / boost::math::tgamma(a - delta);
    if((r1 > (std::numeric_limits<float>::max)()) || (r2 > (std::numeric_limits<float>::max)()))
       throw std::domain_error("");
 
    return boost::math::make_tuple(r1, r2);
 }
 
-boost::math::ntl::RR tgamma_ratio2(const boost::math::ntl::RR& a, const boost::math::ntl::RR& b)
+mp_t tgamma_ratio2(const mp_t& a, const mp_t& b)
 {
    return boost::math::tgamma(a) / boost::math::tgamma(b);
 }
 
 
-int cpp_main(int argc, char*argv [])
+int main(int argc, char*argv [])
 {
-   boost::math::ntl::RR::SetPrecision(1000);
-   boost::math::ntl::RR::SetOutputPrecision(40);
-
-   parameter_info<boost::math::ntl::RR> arg1, arg2;
-   test_data<boost::math::ntl::RR> data;
+   parameter_info<mp_t> arg1, arg2;
+   test_data<mp_t> data;
 
    bool cont;
    std::string line;
@@ -88,7 +82,7 @@ int cpp_main(int argc, char*argv [])
    if(line == "")
       line = "tgamma_ratio_data.ipp";
    std::ofstream ofs(line.c_str());
-   ofs << std::scientific;
+   ofs << std::scientific << std::setprecision(40);
    write_code(ofs, data, "tgamma_ratio_data");
    
    return 0;

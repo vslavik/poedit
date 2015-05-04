@@ -6,8 +6,8 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../property_tree/reference.html#header.boost.property_tree.stream_translator_hpp" title="Header &lt;boost/property_tree/stream_translator.hpp&gt;">
-<link rel="prev" href="customize_str_idp226812976.html" title="Struct template customize_stream&lt;Ch, Traits, unsigned char, void&gt;">
-<link rel="next" href="translator_be_idp214067536.html" title="Struct template translator_between&lt;std::basic_string&lt; Ch, Traits, Alloc &gt;, E&gt;">
+<link rel="prev" href="customize_str_idp212641280.html" title="Struct template customize_stream&lt;Ch, Traits, unsigned char, void&gt;">
+<link rel="next" href="translator_be_idp212571824.html" title="Struct template translator_between&lt;std::basic_string&lt; Ch, Traits, Alloc &gt;, E&gt;">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="customize_str_idp226812976.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../property_tree/reference.html#header.boost.property_tree.stream_translator_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="translator_be_idp214067536.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="customize_str_idp212641280.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../property_tree/reference.html#header.boost.property_tree.stream_translator_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="translator_be_idp212571824.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.property_tree.stream_translator"></a><div class="titlepage"></div>
@@ -39,34 +39,35 @@
   <span class="keyword">typedef</span> <span class="identifier">E</span>                                      <a name="boost.property_tree.stream_translator.external_type"></a><span class="identifier">external_type</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="stream_translator.html#boost.property_tree.stream_translatorconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">explicit</span> <a class="link" href="stream_translator.html#idp214066000-bb"><span class="identifier">stream_translator</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="stream_translator.html#idp212570288-bb"><span class="identifier">stream_translator</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="stream_translator.html#idp145567472-bb">public member functions</a></span>
-  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span> <span class="identifier">E</span> <span class="special">&gt;</span> <a class="link" href="stream_translator.html#idp145568032-bb"><span class="identifier">get_value</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">internal_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span> <span class="identifier">internal_type</span> <span class="special">&gt;</span> <a class="link" href="stream_translator.html#idp145569568-bb"><span class="identifier">put_value</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">E</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="stream_translator.html#idp148447136-bb">public member functions</a></span>
+  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span> <span class="identifier">E</span> <span class="special">&gt;</span> <a class="link" href="stream_translator.html#idp148447696-bb"><span class="identifier">get_value</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">internal_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span> <span class="identifier">internal_type</span> <span class="special">&gt;</span> <a class="link" href="stream_translator.html#idp148449232-bb"><span class="identifier">put_value</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">E</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp353522400"></a><h2>Description</h2>
+<a name="idp345590032"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp353522816"></a><h3>
+<a name="idp345590448"></a><h3>
 <a name="boost.property_tree.stream_translatorconstruct-copy-destruct"></a><code class="computeroutput">stream_translator</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">explicit</span> <a name="idp214066000-bb"></a><span class="identifier">stream_translator</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span> loc <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">explicit</span> <a name="idp212570288-bb"></a><span class="identifier">stream_translator</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span> loc <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp353534576"></a><h3>
-<a name="idp145567472-bb"></a><code class="computeroutput">stream_translator</code> public member functions</h3>
+<a name="idp345602224"></a><h3>
+<a name="idp148447136-bb"></a><code class="computeroutput">stream_translator</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span> <span class="identifier">E</span> <span class="special">&gt;</span> <a name="idp145568032-bb"></a><span class="identifier">get_value</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">internal_type</span> <span class="special">&amp;</span> v<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span> <span class="identifier">internal_type</span> <span class="special">&gt;</span> <a name="idp145569568-bb"></a><span class="identifier">put_value</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">E</span> <span class="special">&amp;</span> v<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span> <span class="identifier">E</span> <span class="special">&gt;</span> <a name="idp148447696-bb"></a><span class="identifier">get_value</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">internal_type</span> <span class="special">&amp;</span> v<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span> <span class="identifier">internal_type</span> <span class="special">&gt;</span> <a name="idp148449232-bb"></a><span class="identifier">put_value</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">E</span> <span class="special">&amp;</span> v<span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2008 Marcin Kalicinski<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2008-2010 Marcin Kalicinski<br>Copyright &#169; 2010-2013 Sebastian
+      Redl<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -74,7 +75,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="customize_str_idp226812976.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../property_tree/reference.html#header.boost.property_tree.stream_translator_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="translator_be_idp214067536.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="customize_str_idp212641280.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../property_tree/reference.html#header.boost.property_tree.stream_translator_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="translator_be_idp212571824.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

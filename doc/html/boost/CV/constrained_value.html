@@ -38,53 +38,53 @@
   <span class="keyword">typedef</span> <span class="identifier">value_policies</span><span class="special">::</span><span class="identifier">value_type</span> <a name="boost.CV.constrained_value.value_type"></a><span class="identifier">value_type</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="constrained_value.html#boost.CV.constrained_valueconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="constrained_value.html#idp104802304-bb"><span class="identifier">constrained_value</span></a><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="constrained_value.html" title="Class template constrained_value">constrained_value</a> <span class="special">&amp;</span> <a class="link" href="constrained_value.html#idp99936160-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="constrained_value.html#idp32817488-bb"><span class="identifier">constrained_value</span></a><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="constrained_value.html" title="Class template constrained_value">constrained_value</a> <span class="special">&amp;</span> <a class="link" href="constrained_value.html#idp42521792-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="constrained_value.html#idp47548000-bb">public member functions</a></span>
-  <a class="link" href="constrained_value.html#idp39242176-bb"><span class="keyword">operator</span> <span class="identifier">value_type</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="constrained_value.html#idp32769776-bb">public member functions</a></span>
+  <a class="link" href="constrained_value.html#idp91101328-bb"><span class="keyword">operator</span> <span class="identifier">value_type</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="constrained_value.html#idp74395344-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">value_type</span> <span class="identifier">max</span> <a class="link" href="constrained_value.html#idp74395904-bb"><span class="identifier">BOOST_PREVENT_MACRO_SUBSTITUTION</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="identifier">value_type</span> <span class="identifier">min</span> <a class="link" href="constrained_value.html#idp91607376-bb"><span class="identifier">BOOST_PREVENT_MACRO_SUBSTITUTION</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="constrained_value.html#idp62468752-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">value_type</span> <span class="identifier">max</span> <a class="link" href="constrained_value.html#idp32431344-bb"><span class="identifier">BOOST_PREVENT_MACRO_SUBSTITUTION</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="identifier">value_type</span> <span class="identifier">min</span> <a class="link" href="constrained_value.html#idp34504000-bb"><span class="identifier">BOOST_PREVENT_MACRO_SUBSTITUTION</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="constrained_value.html#idp37821584-bb">private member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="constrained_value.html#idp51426096-bb"><span class="identifier">assign</span></a><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="constrained_value.html#idp95874000-bb">private member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="constrained_value.html#idp95874528-bb"><span class="identifier">assign</span></a><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp186462192"></a><h2>Description</h2>
+<a name="idp175816656"></a><h2>Description</h2>
 <p>This template provides a quick way to generate an integer type with a constrained range. The type provides for the ability to specify the min, max, and and error handling policy.</p>
 <p><span class="bold"><strong>value policies</strong></span> A class that provides the range limits via the min and max functions as well as a function on_error that determines how errors are handled. A common strategy would be to assert or throw and exception. The on_error is passed both the current value and the new value that is in error. </p>
 <div class="refsect2">
-<a name="idp186464176"></a><h3>
+<a name="idp175818640"></a><h3>
 <a name="boost.CV.constrained_valueconstruct-copy-destruct"></a><code class="computeroutput">constrained_value</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><a name="idp104802304-bb"></a><span class="identifier">constrained_value</span><span class="special">(</span><span class="identifier">value_type</span> value<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a class="link" href="constrained_value.html" title="Class template constrained_value">constrained_value</a> <span class="special">&amp;</span> <a name="idp99936160-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="identifier">value_type</span> v<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp32817488-bb"></a><span class="identifier">constrained_value</span><span class="special">(</span><span class="identifier">value_type</span> value<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a class="link" href="constrained_value.html" title="Class template constrained_value">constrained_value</a> <span class="special">&amp;</span> <a name="idp42521792-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="identifier">value_type</span> v<span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp186477248"></a><h3>
-<a name="idp47548000-bb"></a><code class="computeroutput">constrained_value</code> public member functions</h3>
+<a name="idp175831712"></a><h3>
+<a name="idp32769776-bb"></a><code class="computeroutput">constrained_value</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp39242176-bb"></a><span class="keyword">operator</span> <span class="identifier">value_type</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Coerce into the representation type. </li></ol></div>
+<pre class="literallayout"><a name="idp91101328-bb"></a><span class="keyword">operator</span> <span class="identifier">value_type</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Coerce into the representation type. </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp186484560"></a><h3>
-<a name="idp74395344-bb"></a><code class="computeroutput">constrained_value</code> public static functions</h3>
+<a name="idp175839072"></a><h3>
+<a name="idp62468752-bb"></a><code class="computeroutput">constrained_value</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">value_type</span> <span class="identifier">max</span> <a name="idp74395904-bb"></a><span class="identifier">BOOST_PREVENT_MACRO_SUBSTITUTION</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Return the max allowed value (traits method) </li>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">value_type</span> <span class="identifier">max</span> <a name="idp32431344-bb"></a><span class="identifier">BOOST_PREVENT_MACRO_SUBSTITUTION</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Return the max allowed value (traits method) </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">value_type</span> <span class="identifier">min</span> <a name="idp91607376-bb"></a><span class="identifier">BOOST_PREVENT_MACRO_SUBSTITUTION</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Return the min allowed value (traits method) </li>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">value_type</span> <span class="identifier">min</span> <a name="idp34504000-bb"></a><span class="identifier">BOOST_PREVENT_MACRO_SUBSTITUTION</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Return the min allowed value (traits method) </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp186498528"></a><h3>
-<a name="idp37821584-bb"></a><code class="computeroutput">constrained_value</code> private member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="idp51426096-bb"></a><span class="identifier">assign</span><span class="special">(</span><span class="identifier">value_type</span> value<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp175853040"></a><h3>
+<a name="idp95874000-bb"></a><code class="computeroutput">constrained_value</code> private member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="idp95874528-bb"></a><span class="identifier">assign</span><span class="special">(</span><span class="identifier">value_type</span> value<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>

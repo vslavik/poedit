@@ -35,16 +35,16 @@ namespace archive {
 
 namespace detail {
     template<class CharType>
-    bool is_whitespace(CharType c);
+    static inline bool is_whitespace(CharType c);
 
     template<>
-    bool is_whitespace(char t){
+    inline bool is_whitespace(char t){
         return 0 != std::isspace(t);
     }
 
     #ifndef BOOST_NO_CWCHAR
     template<>
-    bool is_whitespace(wchar_t t){
+    inline bool is_whitespace(wchar_t t){
         return 0 != std::iswspace(t);
     }
     #endif
@@ -121,17 +121,16 @@ basic_text_iprimitive<IStream>::basic_text_iprimitive(
     is(is_),
     flags_saver(is_),
     precision_saver(is_),
-    archive_locale(NULL),
     locale_saver(* is_.rdbuf())
 {
     if(! no_codecvt){
         archive_locale.reset(
             add_facet(
-                std::locale::classic(), 
-                new codecvt_null<typename IStream::char_type>
+                std::locale::classic(),
+                new boost::archive::codecvt_null<typename IStream::char_type>
             )
         );
-        is.imbue(* archive_locale);
+        //is.imbue(* archive_locale);
     }
     is >> std::noboolalpha;
 }

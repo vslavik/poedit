@@ -17,8 +17,8 @@
 -->
 
   <para>
-    This section will guide you though the most basic features of Boost.Build
-    V2. We will start with the &#x201C;Hello, world&#x201D; example, learn how
+    This section will guide you though the most basic features of Boost.Build.
+    We will start with the &#x201C;Hello, world&#x201D; example, learn how
     to use libraries, and finish with testing and installing features.
   </para>
 
@@ -556,12 +556,12 @@ exe app : app.cpp core ;</programlisting>
 
       <programlisting language="jam">
 lib network : network.cpp
-    : <emphasis role="bold">&lt;link&gt;shared:&lt;define&gt;NEWORK_LIB_SHARED</emphasis>
+    : <emphasis role="bold">&lt;link&gt;shared:&lt;define&gt;NETWORK_LIB_SHARED</emphasis>
      &lt;variant&gt;release:&lt;define&gt;EXTRA_FAST
     ;</programlisting>
 
       In the example above, whenever <filename>network</filename> is built with
-      <code language="jam">&lt;link&gt;shared</code>, <code language="jam">&lt;define&gt;NEWORK_LIB_SHARED
+      <code language="jam">&lt;link&gt;shared</code>, <code language="jam">&lt;define&gt;NETWORK_LIB_SHARED
       </code> will be in its properties, too. Also, whenever its release variant
       is built, <code>&lt;define&gt;EXTRA_FAST</code> will appear in its
       properties.

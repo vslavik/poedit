@@ -148,7 +148,7 @@ void test_conversion_from_integral_to_integral()
     T t = 0;
     BOOST_CHECK(lexical_cast<T>(t) == t);
 
-    // Next two variables are used to supress warnings.
+    // Next two variables are used to suppress warnings.
     int st = 32767; unsigned int ut = st;
     t = st;
     BOOST_CHECK(lexical_cast<short>(t) == st);
@@ -221,7 +221,7 @@ void test_conversion_from_integral_to_string(CharT)
         T const min_val = (limits::min)();
         T const max_val = (limits::max)();
         T const half_max_val = max_val / 2;
-        T const cnt = lcast_integral_test_counter; // to supress warnings
+        T const cnt = lcast_integral_test_counter; // to suppress warnings
         unsigned int const counter = cnt < half_max_val ? cnt : half_max_val;
 
         unsigned int i;
@@ -317,7 +317,7 @@ void test_conversion_from_string_to_integral(CharT)
     else
     {
         T const half_max_val = max_val / 2;
-        T const cnt = lcast_integral_test_counter; // to supress warnings
+        T const cnt = lcast_integral_test_counter; // to suppress warnings
         unsigned int const counter = cnt < half_max_val ? cnt : half_max_val;
 
         T t;

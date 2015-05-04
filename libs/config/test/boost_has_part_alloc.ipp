@@ -12,6 +12,12 @@
 
 #include <memory>
 
+#if defined(__GNUC__) && ((__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)))
+#  define BOOST_UNUSED_ATTRIBUTE __attribute__((unused))
+#else
+#  define BOOST_UNUSED_ATTRIBUTE
+#endif
+
 namespace boost_has_partial_std_allocator{
 
 //
@@ -23,12 +29,12 @@ int test_allocator(const T& i)
 {
    typedef std::allocator<int> alloc1_t;
    typedef typename alloc1_t::size_type           size_type;
-   typedef typename alloc1_t::difference_type     difference_type;
+   typedef typename alloc1_t::difference_type     difference_type BOOST_UNUSED_ATTRIBUTE;
    typedef typename alloc1_t::pointer             pointer;
    typedef typename alloc1_t::const_pointer       const_pointer;
    typedef typename alloc1_t::reference           reference;
    typedef typename alloc1_t::const_reference     const_reference;
-   typedef typename alloc1_t::value_type          value_type;
+   typedef typename alloc1_t::value_type          value_type BOOST_UNUSED_ATTRIBUTE;
 
    alloc1_t a1;
 
@@ -55,8 +61,5 @@ int test()
 
 }
 
-
-
-
-
+#undef BOOST_UNUSED_ATTRIBUTE
 

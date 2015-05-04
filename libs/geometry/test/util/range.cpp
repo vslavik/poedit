@@ -1,7 +1,7 @@
 // Boost.Geometry
 // Unit Test
 
-// Copyright (c) 2014 Oracle and/or its affiliates.
+// Copyright (c) 2014-2015 Oracle and/or its affiliates.
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -12,6 +12,7 @@
 
 #include <geometry_test_common.hpp>
 
+#include <iterator>
 #include <vector>
 #include <boost/geometry/util/range.hpp>
 
@@ -135,35 +136,35 @@ void test_all()
     BOOST_CHECK(bgr::at(v, 1) == 1);
     BOOST_CHECK(bgr::at(v, 2) == 3);
     BOOST_CHECK(bgr::back(v) == 9);
-    BOOST_CHECK(it == begin(v) + 2);
+    BOOST_CHECK(it == bgr::pos(v, 2));
 
     it = bgr::erase(v, begin(v) + 2, begin(v) + 2);
     BOOST_CHECK(boost::size(v) == 9); // {0,1,3..9}
     BOOST_CHECK(bgr::at(v, 1) == 1);
     BOOST_CHECK(bgr::at(v, 2) == 3);
     BOOST_CHECK(bgr::back(v) == 9);
-    BOOST_CHECK(it == begin(v) + 2);
+    BOOST_CHECK(it == bgr::pos(v, 2));
 
     it = bgr::erase(v, begin(v) + 2, begin(v) + 5);
     BOOST_CHECK(boost::size(v) == 6); // {0,1,6..9}
     BOOST_CHECK(bgr::at(v, 1) == 1);
     BOOST_CHECK(bgr::at(v, 2) == 6);
     BOOST_CHECK(bgr::back(v) == 9);
-    BOOST_CHECK(it == begin(v) + 2);
+    BOOST_CHECK(it == bgr::pos(v, 2));
 
     it = bgr::erase(v, begin(v));
     BOOST_CHECK(boost::size(v) == 5); // {1,6..9}
     BOOST_CHECK(bgr::at(v, 0) == 1);
     BOOST_CHECK(bgr::at(v, 1) == 6);
     BOOST_CHECK(bgr::back(v) == 9);
-    BOOST_CHECK(it == begin(v));
+    BOOST_CHECK(it == bgr::pos(v, 0));
 
     it = bgr::erase(v, begin(v), begin(v) + 3);
     BOOST_CHECK(boost::size(v) == 2); // {8,9}
     BOOST_CHECK(bgr::at(v, 0) == 8);
     BOOST_CHECK(bgr::at(v, 1) == 9);
     BOOST_CHECK(bgr::back(v) == 9);
-    BOOST_CHECK(it == begin(v));
+    BOOST_CHECK(it == bgr::pos(v, 0));
 
     it = bgr::erase(v, begin(v), end(v));
     BOOST_CHECK(boost::size(v) == 0);
@@ -198,6 +199,22 @@ void test_detail()
 #endif
 }
 
+template <class Iterator>
+void test_pointers()
+{
+    int arr[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+    boost::iterator_range<Iterator> r1(arr, arr + 10);
+    std::pair<Iterator, Iterator> r2(arr, arr + 10);
+
+    BOOST_CHECK(bgr::front(r1) == 0);
+    BOOST_CHECK(bgr::front(r2) == 0);
+    BOOST_CHECK(bgr::back(r1) == 9);
+    BOOST_CHECK(bgr::back(r2) == 9);
+    BOOST_CHECK(bgr::at(r1, 5) == 5);
+    BOOST_CHECK(bgr::at(r2, 5) == 5);
+}
+
 int test_main(int, char* [])
 {
     test_all<int, true>();
@@ -211,6 +228,8 @@ int test_main(int, char* [])
     test_all<bgt::CopyableAndMovable, false>();
 
     test_detail();
+    test_pointers<int*>();
+    test_pointers<int const*>();
 
     return 0;
 }

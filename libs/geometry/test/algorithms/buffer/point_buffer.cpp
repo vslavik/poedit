@@ -7,29 +7,15 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-//#define BOOST_GEOMETRY_DEBUG_WITH_MAPPER
-//#define BOOST_GEOMETRY_DEBUG_ASSEMBLE
-//#define BOOST_GEOMETRY_DEBUG_IDENTIFIER
-
-#include <geometry_test_common.hpp>
-
-#include <boost/geometry/algorithms/buffer.hpp>
-#include <boost/geometry/core/coordinate_type.hpp>
-
-#include <boost/geometry/strategies/strategies.hpp>
-
-#include <boost/geometry/geometries/point.hpp>
-#include <boost/geometry/geometries/box.hpp>
-
 #include <test_buffer.hpp>
 
 
 static std::string const simplex = "POINT(5 5)";
 
-template <typename P>
+template <bool Clockwise, typename P>
 void test_all()
 {
-    typedef bg::model::polygon<P> polygon;
+    typedef bg::model::polygon<P, Clockwise> polygon;
 
     bg::strategy::buffer::join_miter join_miter;
     bg::strategy::buffer::end_flat end_flat;
@@ -44,8 +30,7 @@ void test_all()
 
 int test_main(int, char* [])
 {
-    //std::cout << std::setprecision(6);
-    //test_all<bg::model::point<float, 2, bg::cs::cartesian> >();
-    test_all<bg::model::point<double, 2, bg::cs::cartesian> >();
+    test_all<true, bg::model::point<double, 2, bg::cs::cartesian> >();
+    test_all<false, bg::model::point<double, 2, bg::cs::cartesian> >();
     return 0;
 }

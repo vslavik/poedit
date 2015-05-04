@@ -45,6 +45,12 @@ help-output-file = help ;
 #
 .option.debug ?= ;
 
+# These are all the options available for enabling or disabling to control the 
+# help system in various ways. Options can be enabled or disabled with 
+# '--help-enable-<option>', and '--help-disable-<option>' respectively.
+#
+.option-description = Help Options ;
+
 # Enable or disable a documentation option.
 #
 local rule set-option (
@@ -258,7 +264,7 @@ local rule print-help-top ( )
     print.list-item "-a Rebuild everything" ;
     print.list-item "-n Don't execute the commands, only print them" ;
     print.list-item "-d+2 Show commands as they are executed" ;
-    print.list-item "-d0 Supress all informational messages" ;
+    print.list-item "-d0 Suppress all informational messages" ;
     print.list-item "-q Stop at first error" ;
     print.list-item "--reconfigure Rerun all configuration checks" ;
     print.list-item "--debug-configuration Diagnose configuration" ;
@@ -358,31 +364,32 @@ local rule print-help-usage ( )
     print.list-end ;
 }
 
-
 # Generates description of options controlling the help system. This
-# automatically reads the options as all variables in the doc module of the form
-# ".option.*".
+# automatically reads the options as all variables in the module given 
+# with the name `module-name` of the form  ".option.*".
 #
 local rule print-help-options (
-    module-name  # The doc module.
+    module-name
 )
 {
-    print.section "Help Options"
-        These are all the options available for enabling or disabling to control
-        the help system in various ways. Options can be enabled or disabled with
-        '"--help-enable-<option>"', and "'--help-disable-<option>'"
-        respectively.
-        ;
     local options-to-list = [ MATCH ^[.]option[.](.*) : $($(module-name).variables) ] ;
     if $(options-to-list)
     {
+        local option-title = $($(module-name)..option-description.initial) ;
+        if ! $(option-title) || $(option-title) = "(empty)"
+        {
+            option-title = "$(module-name) Options" ;
+        }
+        local option-description = $(option-title)
+                                   $($(module-name)..option-description.docs) ;
+        print.section $(option-description) ;
         print.list-start ;
         for local option in [ sequence.insertion-sort $(options-to-list) ]
         {
             local def = disabled ;
             if $($(module-name)..option.$(option).default) != "(empty)"
             {
-                def = enabled ;
+                def = $($(module-name)..option.$(option).default) ;
             }
             print.list-item $(option): $($(module-name)..option.$(option).docs)
                 Default is $(def). ;

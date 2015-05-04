@@ -2,6 +2,7 @@
 //
 // Copyright (c) 2012-2013 Adam Wulkiewicz, Lodz, Poland.
 // Copyright (c) 2011-2013 Andrew Hundt.
+// Copyright (c) 2014-2014 Ion Gaztanaga
 //
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -10,14 +11,18 @@
 #ifndef BOOST_CONTAINER_VARRAY_HPP
 #define BOOST_CONTAINER_VARRAY_HPP
 
-#if defined(_MSC_VER)
+#ifndef BOOST_CONFIG_HPP
+#  include <boost/config.hpp>
+#endif
+
+#if defined(BOOST_HAS_PRAGMA_ONCE)
 #  pragma once
 #endif
 
 #include <boost/container/detail/config_begin.hpp>
 
 #include "detail/varray.hpp"
-#include <boost/move/move.hpp>
+#include <boost/move/utility_core.hpp>
 
 namespace boost { namespace container {
 

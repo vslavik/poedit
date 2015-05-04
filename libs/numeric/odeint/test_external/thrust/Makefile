@@ -1,36 +1,34 @@
-# Copyright 2010-2013 Mario Mulansky
+# Copyright 2010-2014 Mario Mulansky
 # Copyright 2010-2012 Karsten Ahnert
 #
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or
 # copy at http://www.boost.org/LICENSE_1_0.txt)
 
+# make sure BOOST_ROOT is pointing to your boost directory
+# otherwise, set it here:
+# BOOST_ROOT = /path/to/boost
 
+# path to the cuda installation
+CUDA_ROOT = /usr/local/cuda
+# target architecture
+ARCH = sm_13
 
-CUDA_ROOT = /usr/local/cuda-5.0
-
-CC = gcc
-CXX = gcc
 NVCC = $(CUDA_ROOT)/bin/nvcc
 
-INCLUDES += -I$(BOOST_ROOT) -I$(THRUST_ROOT) -I$(CUDA_ROOT)/include -I../../../../..
+INCLUDES += -I../../include/ -I$(BOOST_ROOT)
 
-NVCCFLAGS = -O3 $(INCLUDES) --compiler-bindir=/opt/gcc4.6.2/bin/
+NVCCFLAGS = -O3 $(INCLUDES) -arch $(ARCH)
 
-LDLIBS = -lcudart -lstdc++
-LDFLAGS = -L$(CUDA_ROOT)/lib64
+%.o : %.cu
+	$(NVCC) $(NVCCFLAGS) -c $< -o $@
 
-%.co : %.cu
-	$(NVCC) $(NVCCFLAGS) -o $@ -c $<
+% : %.o
+	$(NVCC) $(NVCCFLAGS) -o $@ $<
 
 
 all : check_thrust
 
 
-check_thrust : check_thrust.co
-	$(CC) -o check_thrust $(LDFLAGS) $(LDLIBS) check_thrust.co
-check_thrust.co : check_thrust.cu
-
 clean :
-	-rm *~ *.o *.co check_thrust
-
+	-rm *~ *.o check_thrust

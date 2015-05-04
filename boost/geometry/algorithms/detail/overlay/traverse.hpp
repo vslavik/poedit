@@ -149,7 +149,9 @@ inline bool assign_next_ip(G1 const& g1, G2 const& g2,
 }
 
 
-inline bool select_source(operation_type operation, int source1, int source2)
+inline bool select_source(operation_type operation,
+                          signed_index_type source1,
+                          signed_index_type source2)
 {
     return (operation == operation_intersection && source1 != source2)
         || (operation == operation_union && source1 == source2)
@@ -324,7 +326,7 @@ public :
                                 detail::overlay::debug_traverse(*current, *current_iit, "Selected  ");
 
 
-                                unsigned int i = 0;
+                                typename boost::range_size<Turns>::type i = 0;
 
                                 while (current_iit != iit && state.good())
                                 {

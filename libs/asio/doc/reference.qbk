@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2003-2014 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+ / Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -45199,7 +45199,7 @@ The initiating function (async\_read\_some in the above example) suspends the cu
 
 ['Header: ][^boost/asio/spawn.hpp]
 
-['Convenience header: ][^boost/asio.hpp]
+['Convenience header: ]None
 
 
 [section:basic_yield_context basic_yield_context::basic_yield_context]
@@ -45247,7 +45247,7 @@ When using Boost.Coroutine v2 (unidirectional coroutines), this type is:
 
 ['Header: ][^boost/asio/spawn.hpp]
 
-['Convenience header: ][^boost/asio.hpp]
+['Convenience header: ]None
 
 
 [endsect]
@@ -45280,7 +45280,7 @@ When using Boost.Coroutine v2 (unidirectional coroutines), this type is:
 
 ['Header: ][^boost/asio/spawn.hpp]
 
-['Convenience header: ][^boost/asio.hpp]
+['Convenience header: ]None
 
 
 [endsect]
@@ -54944,6 +54944,7 @@ The time traits type.
 [indexterm2 no_memory..error::basic_errors]
 [indexterm2 no_permission..error::basic_errors]
 [indexterm2 no_protocol_option..error::basic_errors]
+[indexterm2 no_such_device..error::basic_errors]
 [indexterm2 not_connected..error::basic_errors]
 [indexterm2 not_socket..error::basic_errors]
 [indexterm2 operation_aborted..error::basic_errors]
@@ -55079,6 +55080,11 @@ The time traits type.
   [
     [no_protocol_option]
     [Protocol not available. ]
+  ]
+
+  [
+    [no_such_device]
+    [No such device. ]
   ]
 
   [
@@ -88153,7 +88159,7 @@ The `spawn()` function is a high-level wrapper over the Boost.Coroutine library.
 
 ['Header: ][^boost/asio/spawn.hpp]
 
-['Convenience header: ][^boost/asio.hpp]
+['Convenience header: ]None
 
 
 [section:overload1 spawn (1 of 4 overloads)]
@@ -88546,6 +88552,16 @@ This function is used to launch a new coroutine.
   [
     [[link boost_asio.reference.ssl__context.no_tlsv1 [*no_tlsv1]]]
     [Disable TLS v1. ]
+  ]
+
+  [
+    [[link boost_asio.reference.ssl__context.no_tlsv1_1 [*no_tlsv1_1]]]
+    [Disable TLS v1.1. ]
+  ]
+
+  [
+    [[link boost_asio.reference.ssl__context.no_tlsv1_2 [*no_tlsv1_2]]]
+    [Disable TLS v1.2. ]
   ]
 
   [
@@ -89350,6 +89366,34 @@ Disable TLS v1.
 
 
   static const long no_tlsv1 = implementation_defined;
+
+
+
+[endsect]
+
+
+
+[section:no_tlsv1_1 ssl::context::no_tlsv1_1]
+
+[indexterm2 no_tlsv1_1..ssl::context] 
+Disable TLS v1.1. 
+
+
+  static const long no_tlsv1_1 = implementation_defined;
+
+
+
+[endsect]
+
+
+
+[section:no_tlsv1_2 ssl::context::no_tlsv1_2]
+
+[indexterm2 no_tlsv1_2..ssl::context] 
+Disable TLS v1.2. 
+
+
+  static const long no_tlsv1_2 = implementation_defined;
 
 
 
@@ -91207,6 +91251,16 @@ The [link boost_asio.reference.ssl__context_base `ssl::context_base`] class is u
   ]
 
   [
+    [[link boost_asio.reference.ssl__context_base.no_tlsv1_1 [*no_tlsv1_1]]]
+    [Disable TLS v1.1. ]
+  ]
+
+  [
+    [[link boost_asio.reference.ssl__context_base.no_tlsv1_2 [*no_tlsv1_2]]]
+    [Disable TLS v1.2. ]
+  ]
+
+  [
     [[link boost_asio.reference.ssl__context_base.single_dh_use [*single_dh_use]]]
     [Always create a new key when using tmp_dh parameters. ]
   ]
@@ -91443,6 +91497,34 @@ Disable TLS v1.
 
 
   static const long no_tlsv1 = implementation_defined;
+
+
+
+[endsect]
+
+
+
+[section:no_tlsv1_1 ssl::context_base::no_tlsv1_1]
+
+[indexterm2 no_tlsv1_1..ssl::context_base] 
+Disable TLS v1.1. 
+
+
+  static const long no_tlsv1_1 = implementation_defined;
+
+
+
+[endsect]
+
+
+
+[section:no_tlsv1_2 ssl::context_base::no_tlsv1_2]
+
+[indexterm2 no_tlsv1_2..ssl::context_base] 
+Disable TLS v1.2. 
+
+
+  static const long no_tlsv1_2 = implementation_defined;
 
 
 
@@ -93875,7 +93957,7 @@ This typedef uses the C++11 `<chrono>` standard library facility, if available. 
 [section:strand strand]
 
 [indexterm1 strand] 
-Typedef for backwards compatibility. 
+(Deprecated: Use [link boost_asio.reference.io_service__strand `io_service::strand`].) Typedef for backwards compatibility. 
 
 
   typedef boost::asio::io_service::strand strand;
@@ -95725,7 +95807,7 @@ See the documentation for [link boost_asio.reference.use_future_t `use_future_t`
 
 ['Header: ][^boost/asio/use_future.hpp]
 
-['Convenience header: ][^boost/asio.hpp]
+['Convenience header: ]None
 
 
 [endsect]
@@ -95794,7 +95876,7 @@ The initiating function (async\_read\_some in the above example) returns a futur
 
 ['Header: ][^boost/asio/use_future.hpp]
 
-['Convenience header: ][^boost/asio.hpp]
+['Convenience header: ]None
 
 
 [section:allocator_type use_future_t::allocator_type]
@@ -95811,7 +95893,7 @@ The allocator type. The allocator is used when constructing the `std::promise` o
 
 ['Header: ][^boost/asio/use_future.hpp]
 
-['Convenience header: ][^boost/asio.hpp]
+['Convenience header: ]None
 
 
 [endsect]
@@ -105369,7 +105451,7 @@ The initiating function (async\_read\_some in the above example) suspends the cu
 
 ['Header: ][^boost/asio/spawn.hpp]
 
-['Convenience header: ][^boost/asio.hpp]
+['Convenience header: ]None
 
 
 [endsect]

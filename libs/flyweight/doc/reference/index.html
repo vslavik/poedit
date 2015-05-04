@@ -53,6 +53,7 @@ Boost.Flyweight comprises the following public headers:
     <ul>
       <li><a href="flyweight.html#flyweight_fwd_synopsis"><code>"boost/flyweight/flyweight_fwd.hpp"</code></a></li>
       <li><a href="flyweight.html#synopsis"><code>"boost/flyweight/flyweight.hpp"</code></a></li>
+      <li><a href="flyweight.html#serialize_synopsis"><code>"boost/flyweight/flyweight_serialize.hpp"</code></a></li>
     </ul>
   </li>
   <li>Key-value flyweights
@@ -110,7 +111,9 @@ Boost.Flyweight comprises the following public headers:
 <h2><a name="dependencies">Dependencies</a></h2>
 
 <p>
-Boost.Flyweight is a header-only library, requiring no additional
+In order to use the serialization capabilities of Boost.Flyweight,
+the appropriate Boost.Serialization library module must be linked. Other
+than that, Boost.Flyweight is a header-only library, requiring no additional
 object modules. The default <a href="locking.html#simple_locking"><code>simple_locking</code></a>
 locking policy introduces a dependency on the Pthreads library on those POSIX-compliant
 environments where the <a href="../../../config/doc/html/index.html">Boost.Config</a> macro
@@ -151,7 +154,7 @@ Index
 
 <br>
 
-<p>Revised April 4th 2014</p>
+<p>Revised September 1st 2014</p>
 
 <p>&copy; Copyright 2006-2014 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 

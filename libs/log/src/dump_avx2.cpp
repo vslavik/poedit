@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2014.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -34,8 +34,7 @@ BOOST_LOG_OPEN_NAMESPACE
 
 namespace aux {
 
-extern const char g_lowercase_dump_char_table[];
-extern const char g_uppercase_dump_char_table[];
+extern const char g_hex_char_table[2][16];
 
 template< typename CharT >
 extern void dump_data_generic(const void* data, std::size_t size, std::basic_ostream< CharT >& strm);
@@ -139,7 +138,7 @@ static BOOST_FORCEINLINE void dump_pack
 {
     // Split half-bytes
     __m128i mm_input_hi = _mm_srli_epi16(mm_input, 4);
-    __m256i mm = _mm256_insertf128_si256(_mm256_castsi128_si256(_mm_unpacklo_epi8(mm_input_hi, mm_input)), _mm_unpackhi_epi8(mm_input_hi, mm_input), 1);
+    __m256i mm = _mm256_inserti128_si256(_mm256_castsi128_si256(_mm_unpacklo_epi8(mm_input_hi, mm_input)), _mm_unpackhi_epi8(mm_input_hi, mm_input), 1);
     mm = _mm256_and_si256(mm, mm_15);
 
     // Stringize the halves
@@ -151,12 +150,12 @@ static BOOST_FORCEINLINE void dump_pack
 
     // Insert spaces between stringized bytes:
     __m256i mm_out13 = _mm256_shuffle_epi8(mm, mm_shuffle_pattern13.as_mm);
-    __m128i mm_out2 = _mm_shuffle_epi8(_mm_alignr_epi8(_mm256_extractf128_si256(mm, 1), _mm256_castsi256_si128(mm), 10), _mm256_castsi256_si128(mm_shuffle_pattern2.as_mm));
+    __m128i mm_out2 = _mm_shuffle_epi8(_mm_alignr_epi8(_mm256_extracti128_si256(mm, 1), _mm256_castsi256_si128(mm), 10), _mm256_castsi256_si128(mm_shuffle_pattern2.as_mm));
 
     mm_out13 = _mm256_max_epu8(mm_out13, mm_char_space);
     mm_output2 = _mm_max_epu8(mm_out2, _mm256_castsi256_si128(mm_char_space));
     mm_output1 = _mm256_castsi256_si128(mm_out13);
-    mm_output3 = _mm256_extractf128_si256(mm_out13, 1);
+    mm_output3 = _mm256_extracti128_si256(mm_out13, 1);
 }
 
 template< typename CharT >
@@ -274,7 +273,7 @@ BOOST_FORCEINLINE void dump_data_avx2(const void* data, std::size_t size, std::b
         }
 
         _mm256_zeroall(); // need to zero all ymm registers to avoid register spills/restores the compler generates around the function call
-        const char* const char_table = (strm.flags() & std::ios_base::uppercase) ? g_uppercase_dump_char_table : g_lowercase_dump_char_table;
+        const char* const char_table = g_hex_char_table[(strm.flags() & std::ios_base::uppercase) != 0];
         for (unsigned int i = 0; i < tail_size; ++i, ++p, b += 3u)
         {
             uint32_t n = *p;

@@ -22,7 +22,7 @@ void bind_to_processor( unsigned int n)
     CPU_ZERO( & cpuset);
     CPU_SET( n, & cpuset);
 
-    int errno_( ::pthread_setaffinity_np( ::pthread_yield(), sizeof( cpuset), & cpuset) );
+    int errno_( ::pthread_setaffinity_np( ::pthread_self(), sizeof( cpuset), & cpuset) );
     if ( errno_ != 0)
         throw std::runtime_error("::pthread_setaffinity_np() failed");
 }

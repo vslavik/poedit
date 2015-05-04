@@ -6,8 +6,8 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../mpi/reference.html#header.boost.mpi.skeleton_and_content_hpp" title="Header &lt;boost/mpi/skeleton_and_content.hpp&gt;">
-<link rel="prev" href="request.html" title="Class request">
-<link rel="next" href="content.html" title="Class content">
+<link rel="prev" href="packed_skeleton_oarchive.html" title="Class packed_skeleton_oarchive">
+<link rel="next" href="skeleton.html" title="Function template skeleton">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="request.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/reference.html#header.boost.mpi.skeleton_and_content_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="content.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="packed_skeleton_oarchive.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/reference.html#header.boost.mpi.skeleton_and_content_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="skeleton.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.mpi.skeleton_proxy"></a><div class="titlepage"></div>
@@ -34,21 +34,21 @@
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a> <span class="special">{</span>
   <span class="comment">// <a class="link" href="skeleton_proxy.html#boost.mpi.skeleton_proxyconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="skeleton_proxy.html#idp223682752-bb"><span class="identifier">skeleton_proxy</span></a><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="skeleton_proxy.html#idp143458384-bb"><span class="identifier">skeleton_proxy</span></a><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
   <span class="comment">// public data members</span>
   <span class="identifier">T</span> <span class="special">&amp;</span> <span class="identifier">object</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp343432208"></a><h2>Description</h2>
+<a name="idp336133632"></a><h2>Description</h2>
 <p>The <code class="computeroutput"><a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a></code> is a lightweight proxy object used to indicate that the skeleton of an object, not the object itself, should be transmitted. It can be used with the <code class="computeroutput">send</code> and <code class="computeroutput">recv</code> operations of communicators or the <code class="computeroutput">broadcast</code> collective. When a <code class="computeroutput"><a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a></code> is sent, Boost.MPI generates a description containing the structure of the stored object. When that skeleton is received, the receiving object is reshaped to match the structure. Once the skeleton of an object as been transmitted, its <code class="computeroutput">content</code> can be transmitted separately (often several times) without changing the structure of the object. </p>
 <div class="refsect2">
-<a name="idp343438816"></a><h3>
+<a name="idp336140240"></a><h3>
 <a name="boost.mpi.skeleton_proxyconstruct-copy-destruct"></a><code class="computeroutput">skeleton_proxy</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp223682752-bb"></a><span class="identifier">skeleton_proxy</span><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span> x<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp143458384-bb"></a><span class="identifier">skeleton_proxy</span><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span> x<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructs a <code class="computeroutput"><code class="computeroutput"><a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a></code></code> that references object <code class="computeroutput">x</code>.</p>
 <p>
 </p>
@@ -87,7 +87,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="request.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/reference.html#header.boost.mpi.skeleton_and_content_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="content.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="packed_skeleton_oarchive.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/reference.html#header.boost.mpi.skeleton_and_content_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="skeleton.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

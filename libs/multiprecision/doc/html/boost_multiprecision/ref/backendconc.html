@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Backend Requirements</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../ref.html" title="Reference">
 <link rel="prev" href="internals.html" title="Internal Support Code">
@@ -960,7 +960,6 @@
 <col>
 <col>
 <col>
-<col>
 </colgroup>
 <thead><tr>
 <th>
@@ -991,7 +990,6 @@
                   <span class="emphasis"><em>Construct and assign:</em></span>
                 </p>
               </td>
-<td class="auto-generated">&#160;</td>
 <td class="auto-generated">&#160;</td>
 <td class="auto-generated">&#160;</td>
 </tr>
@@ -1177,7 +1175,6 @@
                   <span class="emphasis"><em>Comparisons:</em></span>
                 </p>
               </td>
-<td class="auto-generated">&#160;</td>
 <td class="auto-generated">&#160;</td>
 <td class="auto-generated">&#160;</td>
 </tr>
@@ -1476,7 +1473,6 @@
                   <span class="emphasis"><em>Basic arithmetic:</em></span>
                 </p>
               </td>
-<td class="auto-generated">&#160;</td>
 <td class="auto-generated">&#160;</td>
 <td class="auto-generated">&#160;</td>
 </tr>
@@ -2232,7 +2228,6 @@
                   <span class="emphasis"><em>Integer specific operations:</em></span>
                 </p>
               </td>
-<td class="auto-generated">&#160;</td>
 <td class="auto-generated">&#160;</td>
 <td class="auto-generated">&#160;</td>
 </tr>
@@ -3293,7 +3288,6 @@
               </td>
 <td class="auto-generated">&#160;</td>
 <td class="auto-generated">&#160;</td>
-<td class="auto-generated">&#160;</td>
 </tr>
 <tr>
 <td>
@@ -3359,7 +3353,6 @@
                   <span class="emphasis"><em>Floating point functions:</em></span>
                 </p>
               </td>
-<td class="auto-generated">&#160;</td>
 <td class="auto-generated">&#160;</td>
 <td class="auto-generated">&#160;</td>
 </tr>
@@ -3867,6 +3860,72 @@
 <td>
                 <p>
                   &#160;
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_scalbn</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">,</span>
+                  <span class="identifier">e</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Scales value <code class="computeroutput"><span class="identifier">cb</span></code>
+                  by <span class="emphasis"><em>r<sup>e</sup></em></span>, where <span class="emphasis"><em>r</em></span> is the
+                  radix of the type. The default version of this function is implemented
+                  in terms of eval_ldexp, consequently this function must be provided
+                  for types with a radix other than 2.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_ilogb</span><span class="special">(</span><span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">B</span><span class="special">::</span><span class="identifier">exponent_type</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Returns the exponent <span class="emphasis"><em>e</em></span> of value <code class="computeroutput"><span class="identifier">cb</span></code> such that <span class="emphasis"><em>1 &lt;=
+                  cb*r<sup>-e</sup> &lt; r</em></span>, where <span class="emphasis"><em>r</em></span> is the radix
+                  of type B. The default version of this function is implemented
+                  in terms of eval_frexp, consequently this function must be provided
+                  for types with a radix other than 2.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_logb</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">B</span><span class="special">::</span><span class="identifier">exponent_type</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets <code class="computeroutput"><span class="identifier">b</span></code> to the exponent
+                  <span class="emphasis"><em>e</em></span> of value <code class="computeroutput"><span class="identifier">cb</span></code>
+                  such that <span class="emphasis"><em>1 &lt;= cb*r<sup>-b</sup> &lt; r</em></span>, where <span class="emphasis"><em>r</em></span>
+                  is the radix of type B. The default version of this function is
+                  implemented in terms of <code class="computeroutput"><span class="identifier">eval_ilogb</span></code>.
                 </p>
               </td>
 </tr>

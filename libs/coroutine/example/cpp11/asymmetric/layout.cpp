@@ -44,7 +44,7 @@ int main(int argc,char* argv[]){
             }
         });
 
-    std::copy(std::begin(words),std::end(words),std::begin(writer));
+    std::copy(std::begin(words),std::end(words),boost::begin(writer));
 
     return 0;
 }

@@ -95,7 +95,7 @@ main()
 #endif
 
     {
-        boost::array<std::size_t, 2> a = { 10, 50 };
+        boost::array<std::size_t, 2> a = {{ 10, 50 }};
         BOOST_TEST(back(pop_back(a)) == 10);
     }
 

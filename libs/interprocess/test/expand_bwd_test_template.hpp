@@ -12,10 +12,11 @@
 #define BOOST_INTERPROCESS_TEST_ALLOCATION_TEST_TEMPLATE_HEADER
 
 #include <boost/interprocess/detail/config_begin.hpp>
-#include <vector>
 #include "expand_bwd_test_allocator.hpp"
-#include <algorithm>
-#include <boost/type_traits/remove_volatile.hpp>
+#include <boost/interprocess/detail/type_traits.hpp>
+#include <algorithm> //std::equal
+#include <vector>
+#include <iostream>
 
 namespace boost { namespace interprocess { namespace test {
 
@@ -108,7 +109,7 @@ template<class VectorWithExpandBwdAllocator>
 bool test_insert_with_expand_bwd()
 {
    typedef typename VectorWithExpandBwdAllocator::value_type value_type;
-   typedef typename boost::remove_volatile<value_type>::type non_volatile_value_type;
+   typedef typename boost::interprocess::ipcdetail::remove_volatile<value_type>::type non_volatile_value_type;
    typedef std::vector<non_volatile_value_type> Vect;
    const int MemorySize = 1000;
 
@@ -180,7 +181,7 @@ template<class VectorWithExpandBwdAllocator>
 bool test_assign_with_expand_bwd()
 {
    typedef typename VectorWithExpandBwdAllocator::value_type value_type;
-   typedef typename boost::remove_volatile<value_type>::type non_volatile_value_type;
+   typedef typename boost::interprocess::ipcdetail::remove_volatile<value_type>::type non_volatile_value_type;
    const int MemorySize = 200;
 
    const int Offset[]      = { 50, 50, 50};
@@ -226,10 +227,10 @@ bool test_assign_with_expand_bwd()
          }
       }
       catch(...){
-         delete [](const_cast<typename boost::remove_volatile<value_type>::type*>(memory));
+         delete [](const_cast<typename boost::interprocess::ipcdetail::remove_volatile<value_type>::type*>(memory));
          throw;
       }
-      delete [](const_cast<typename boost::remove_volatile<value_type>::type*>(memory));
+      delete [](const_cast<typename boost::interprocess::ipcdetail::remove_volatile<value_type>::type*>(memory));
    }
 
    return true;

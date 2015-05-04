@@ -91,6 +91,8 @@ ALIASES                = qbk{1}="\xmlonly <qbk>\1</qbk> \endxmlonly" \
 			param_z="Third coordinate (usually z-coordinate)" \
 			constructor_default{1}="Default constructor, creating an empty \1" \
 			constructor_begin_end{1}="Constructor with begin and end,  filling the \1" \
+			constructor_initializer_list{1}="Constructor taking std::initializer_list, filling the \1" \
+			assignment_initializer_list{1}="Assignment operator taking std::initializer_list, assigning values to the \1" \
 			details_calc{2}="The free function \1 calculates the \2 of a geometry" \
 			details_calc{1}="The free function \1 calculates the \1 of a geometry" \
 			details_calc2{2}="The free function \1 calculates the \2 of two geometries" \
@@ -177,10 +179,12 @@ WARN_LOGFILE           =
 INPUT                  = . .. ../../../../boost/geometry/core \
 			../../../../boost/geometry/algorithms \
 			../../../../boost/geometry/algorithms/detail \
+                        ../../../../boost/geometry/algorithms/detail/buffer \
 			../../../../boost/geometry/algorithms/detail/comparable_distance \
 			../../../../boost/geometry/algorithms/detail/disjoint \
 			../../../../boost/geometry/algorithms/detail/distance \
 			../../../../boost/geometry/algorithms/detail/equals \
+                        ../../../../boost/geometry/algorithms/detail/intersection \
 			../../../../boost/geometry/algorithms/detail/is_simple \
 			../../../../boost/geometry/algorithms/detail/is_valid \
 			../../../../boost/geometry/algorithms/detail/overlay \

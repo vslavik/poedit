@@ -67,8 +67,15 @@ void expected_results()
       ".*",                          // stdlib
       ".*",                          // platform
       largest_type,                  // test type(s)
+      ".*Integer.*",                 // test data group
+      ".*", 30, 15);                 // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
+      ".*",                          // platform
+      largest_type,                  // test type(s)
       ".*",                          // test data group
-      ".*", 3, 1);                   // test function
+      ".*", 3, 3);                   // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib

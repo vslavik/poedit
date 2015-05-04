@@ -38,7 +38,7 @@
           Access Sequence</a> that is passed to the target function object.
         </p>
 <p>
-          The call operators of esulting function objects are strictly typed (in
+          The call operators of resulting function objects are strictly typed (in
           other words, non-templatized) with the types from a <a class="link" href="../../sequence.html" title="Sequence">Sequence</a>.
         </p>
 <p>
@@ -48,23 +48,28 @@
           if the target function object is const - or, in case the target function
           object is held by value, the adapter is const).
         </p>
-<div class="sidebar">
-<div class="titlepage"></div>
-<p>
-          <span class="inlinemediaobject"><img src="../../../images/note.png" alt="note"></span> For Microsoft Visual C++ 7.1 (Visual Studio 2003)
-          the detection of the Function Object's const qualification easily causes
-          an internal error. Therefore the adapter is always treated as if it was
-          const.
-        </p>
-</div>
-<div class="sidebar">
-<div class="titlepage"></div>
-<p>
-          <span class="inlinemediaobject"><img src="../../../images/tip.png" alt="tip"></span> If the type sequence passed to this template contains
-          non-reference elements, the element is copied only once - the call operator's
-          signature is optimized automatically to avoid by-value parameters.
-        </p>
-</div>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            For Microsoft Visual C++ 7.1 (Visual Studio 2003) the detection of the
+            Function Object's const qualification easily causes an internal error.
+            Therefore the adapter is always treated as if it was const.
+          </p></td></tr>
+</table></div>
+<div class="tip"><table border="0" summary="Tip">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../../../../../doc/src/images/tip.png"></td>
+<th align="left">Tip</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            If the type sequence passed to this template contains non-reference elements,
+            the element is copied only once - the call operator's signature is optimized
+            automatically to avoid by-value parameters.
+          </p></td></tr>
+</table></div>
 <h6>
 <a name="fusion.functional.adapters.unfused_typed.h1"></a>
           <span class="phrase"><a name="fusion.functional.adapters.unfused_typed.header"></a></span><a class="link" href="unfused_typed.html#fusion.functional.adapters.unfused_typed.header">Header</a>

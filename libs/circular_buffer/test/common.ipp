@@ -2113,7 +2113,6 @@ void move_container_on_cpp11() {
 
 
 struct noncopyable_movable_except_t
-    : private boost::noncopyable // required, until there will be no support for is_copy_constructible added to Boost.Move
 {
 private:
     BOOST_MOVABLE_BUT_NOT_COPYABLE(noncopyable_movable_except_t)
@@ -2152,7 +2151,6 @@ public:
 };
 
 struct noncopyable_movable_noexcept_t
-    : private boost::noncopyable // required, until there will be no support for is_copy_constructible added to Boost.Move
 {
 private:
     BOOST_MOVABLE_BUT_NOT_COPYABLE(noncopyable_movable_noexcept_t)

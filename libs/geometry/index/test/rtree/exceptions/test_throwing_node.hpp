@@ -1,9 +1,9 @@
 // Boost.Geometry Index
 //
-// R-tree nodes based on runtime-polymorphism, storing static-size containers
+// R-tree nodes storing static-size containers
 // test version throwing exceptions on creation
 //
-// Copyright (c) 2011-2013 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2011-2014 Adam Wulkiewicz, Lodz, Poland.
 //
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -11,8 +11,6 @@
 
 #ifndef BOOST_GEOMETRY_INDEX_TEST_RTREE_THROWING_NODE_HPP
 #define BOOST_GEOMETRY_INDEX_TEST_RTREE_THROWING_NODE_HPP
-
-#include <boost/geometry/index/detail/rtree/node/dynamic_visitor.hpp>
 
 #include <rtree/exceptions/test_throwing.hpp>
 
@@ -41,7 +39,7 @@ namespace detail { namespace rtree {
 
 // options implementation (from options.hpp)
 
-struct node_throwing_d_mem_static_tag {};
+struct node_throwing_static_tag {};
 
 template <size_t MaxElements, size_t MinElements>
 struct options_type< linear_throwing<MaxElements, MinElements> >
@@ -49,7 +47,7 @@ struct options_type< linear_throwing<MaxElements, MinElements> >
     typedef options<
         linear_throwing<MaxElements, MinElements>,
         insert_default_tag, choose_by_content_diff_tag, split_default_tag, linear_tag,
-        node_throwing_d_mem_static_tag
+        node_throwing_static_tag
     > type;
 };
 
@@ -59,7 +57,7 @@ struct options_type< quadratic_throwing<MaxElements, MinElements> >
     typedef options<
         quadratic_throwing<MaxElements, MinElements>,
         insert_default_tag, choose_by_content_diff_tag, split_default_tag, quadratic_tag,
-        node_throwing_d_mem_static_tag
+        node_throwing_static_tag
     > type;
 };
 
@@ -69,7 +67,7 @@ struct options_type< rstar_throwing<MaxElements, MinElements, OverlapCostThresho
     typedef options<
         rstar_throwing<MaxElements, MinElements, OverlapCostThreshold, ReinsertedElements>,
         insert_reinsert_tag, choose_by_overlap_diff_tag, split_default_tag, rstar_tag,
-        node_throwing_d_mem_static_tag
+        node_throwing_static_tag
     > type;
 };
 
@@ -80,97 +78,108 @@ struct options_type< rstar_throwing<MaxElements, MinElements, OverlapCostThresho
 namespace detail { namespace rtree {
 
 template <typename Value, typename Parameters, typename Box, typename Allocators>
-struct dynamic_internal_node<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag>
-    : public dynamic_node<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag>
+struct variant_internal_node<Value, Parameters, Box, Allocators, node_throwing_static_tag>
 {
     typedef throwing_varray<
         rtree::ptr_pair<Box, typename Allocators::node_pointer>,
         Parameters::max_elements + 1
     > elements_type;
 
-    template <typename Dummy>
-    inline dynamic_internal_node(Dummy const&) { throwing_nodes_stats::get_internal_nodes_counter_ref()++; }
-    inline ~dynamic_internal_node() { throwing_nodes_stats::get_internal_nodes_counter_ref()--; }
+    template <typename Alloc>
+    inline variant_internal_node(Alloc const&) { throwing_nodes_stats::get_internal_nodes_counter_ref()++; }
+    inline ~variant_internal_node() { throwing_nodes_stats::get_internal_nodes_counter_ref()--; }
 
-    void apply_visitor(dynamic_visitor<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag, false> & v) { v(*this); }
-    void apply_visitor(dynamic_visitor<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag, true> & v) const { v(*this); }
+    // required because variants are initialized using node object
+    // temporary must be taken into account
+    inline variant_internal_node(variant_internal_node const& n)
+        : elements(n.elements)
+    {
+        throwing_nodes_stats::get_internal_nodes_counter_ref()++;
+    }
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    inline variant_internal_node(variant_internal_node && n)
+        : elements(boost::move(n.elements))
+    {
+        throwing_nodes_stats::get_internal_nodes_counter_ref()++;
+    }
+#endif
 
     elements_type elements;
 
 private:
-    dynamic_internal_node(dynamic_internal_node const&);
-    dynamic_internal_node & operator=(dynamic_internal_node const&);
+    variant_internal_node & operator=(variant_internal_node const& n);
 };
 
 template <typename Value, typename Parameters, typename Box, typename Allocators>
-struct dynamic_leaf<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag>
-    : public dynamic_node<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag>
+struct variant_leaf<Value, Parameters, Box, Allocators, node_throwing_static_tag>
 {
     typedef throwing_varray<Value, Parameters::max_elements + 1> elements_type;
 
-    template <typename Dummy>
-    inline dynamic_leaf(Dummy const&) { throwing_nodes_stats::get_leafs_counter_ref()++; }
-    inline ~dynamic_leaf() { throwing_nodes_stats::get_leafs_counter_ref()--; }
+    template <typename Alloc>
+    inline variant_leaf(Alloc const&) { throwing_nodes_stats::get_leafs_counter_ref()++; }
+    inline ~variant_leaf() { throwing_nodes_stats::get_leafs_counter_ref()--; }
 
-    void apply_visitor(dynamic_visitor<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag, false> & v) { v(*this); }
-    void apply_visitor(dynamic_visitor<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag, true> & v) const { v(*this); }
+    // required because variants are initialized using node object
+    // temporary must be taken into account
+    inline variant_leaf(variant_leaf const& n)
+        : elements(n.elements)
+    {
+        throwing_nodes_stats::get_leafs_counter_ref()++;
+    }
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    inline variant_leaf(variant_leaf && n)
+        : elements(boost::move(n.elements))
+    {
+        throwing_nodes_stats::get_leafs_counter_ref()++;
+    }
+#endif
 
     elements_type elements;
 
 private:
-    dynamic_leaf(dynamic_leaf const&);
-    dynamic_leaf & operator=(dynamic_leaf const&);
-};
-
-// elements derived type
-template <typename OldValue, size_t N, typename NewValue>
-struct container_from_elements_type<throwing_varray<OldValue, N>, NewValue>
-{
-    typedef throwing_varray<NewValue, N> type;
+    variant_leaf & operator=(variant_leaf const& n);
 };
 
 // nodes traits
 
 template <typename Value, typename Parameters, typename Box, typename Allocators>
-struct node<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag>
+struct node<Value, Parameters, Box, Allocators, node_throwing_static_tag>
 {
-    typedef dynamic_node<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag> type;
+    typedef boost::variant<
+        variant_leaf<Value, Parameters, Box, Allocators, node_throwing_static_tag>,
+        variant_internal_node<Value, Parameters, Box, Allocators, node_throwing_static_tag>
+    > type;
 };
 
 template <typename Value, typename Parameters, typename Box, typename Allocators>
-struct internal_node<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag>
+struct internal_node<Value, Parameters, Box, Allocators, node_throwing_static_tag>
 {
-    typedef dynamic_internal_node<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag> type;
+    typedef variant_internal_node<Value, Parameters, Box, Allocators, node_throwing_static_tag> type;
 };
 
 template <typename Value, typename Parameters, typename Box, typename Allocators>
-struct leaf<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag>
+struct leaf<Value, Parameters, Box, Allocators, node_throwing_static_tag>
 {
-    typedef dynamic_leaf<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag> type;
+    typedef variant_leaf<Value, Parameters, Box, Allocators, node_throwing_static_tag> type;
 };
+
+// visitor traits
 
 template <typename Value, typename Parameters, typename Box, typename Allocators, bool IsVisitableConst>
-struct visitor<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag, IsVisitableConst>
+struct visitor<Value, Parameters, Box, Allocators, node_throwing_static_tag, IsVisitableConst>
 {
-    typedef dynamic_visitor<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag, IsVisitableConst> type;
+    typedef static_visitor<> type;
 };
 
 // allocators
 
 template <typename Allocator, typename Value, typename Parameters, typename Box>
-class allocators<Allocator, Value, Parameters, Box, node_throwing_d_mem_static_tag>
+class allocators<Allocator, Value, Parameters, Box, node_throwing_static_tag>
     : public Allocator::template rebind<
-        typename internal_node<
+        typename node<
             Value, Parameters, Box,
-            allocators<Allocator, Value, Parameters, Box, node_throwing_d_mem_static_tag>,
-            node_throwing_d_mem_static_tag
-        >::type
-    >::other
-    , Allocator::template rebind<
-        typename leaf<
-            Value, Parameters, Box,
-            allocators<Allocator, Value, Parameters, Box, node_throwing_d_mem_static_tag>,
-            node_throwing_d_mem_static_tag
+            allocators<Allocator, Value, Parameters, Box, node_throwing_static_tag>,
+            node_throwing_static_tag
         >::type
     >::other
 {
@@ -190,69 +199,57 @@ public:
     typedef typename value_allocator_type::const_pointer const_pointer;
 
     typedef typename Allocator::template rebind<
-        typename node<Value, Parameters, Box, allocators, node_throwing_d_mem_static_tag>::type
+        typename node<Value, Parameters, Box, allocators, node_throwing_static_tag>::type
     >::other::pointer node_pointer;
 
-    typedef typename Allocator::template rebind<
-        typename internal_node<Value, Parameters, Box, allocators, node_throwing_d_mem_static_tag>::type
-    >::other::pointer internal_node_pointer;
+//    typedef typename Allocator::template rebind<
+//        typename internal_node<Value, Parameters, Box, allocators, node_throwing_static_tag>::type
+//    >::other::pointer internal_node_pointer;
 
     typedef typename Allocator::template rebind<
-        typename internal_node<Value, Parameters, Box, allocators, node_throwing_d_mem_static_tag>::type
-    >::other internal_node_allocator_type;
-
-    typedef typename Allocator::template rebind<
-        typename leaf<Value, Parameters, Box, allocators, node_throwing_d_mem_static_tag>::type
-    >::other leaf_allocator_type;
+        typename node<Value, Parameters, Box, allocators, node_throwing_static_tag>::type
+    >::other node_allocator_type;
 
     inline allocators()
-        : internal_node_allocator_type()
-        , leaf_allocator_type()
+        : node_allocator_type()
     {}
 
     template <typename Alloc>
     inline explicit allocators(Alloc const& alloc)
-        : internal_node_allocator_type(alloc)
-        , leaf_allocator_type(alloc)
+        : node_allocator_type(alloc)
     {}
 
     inline allocators(BOOST_FWD_REF(allocators) a)
-        : internal_node_allocator_type(boost::move(a.internal_node_allocator()))
-        , leaf_allocator_type(boost::move(a.leaf_allocator()))
+        : node_allocator_type(boost::move(a.node_allocator()))
     {}
 
     inline allocators & operator=(BOOST_FWD_REF(allocators) a)
     {
-        internal_node_allocator() = ::boost::move(a.internal_node_allocator());
-        leaf_allocator() = ::boost::move(a.leaf_allocator());
+        node_allocator() = boost::move(a.node_allocator());
         return *this;
     }
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     inline allocators & operator=(allocators const& a)
     {
-        internal_node_allocator() = a.internal_node_allocator();
-        leaf_allocator() = a.leaf_allocator();
+        node_allocator() = a.node_allocator();
         return *this;
     }
 #endif
 
     void swap(allocators & a)
     {
-        boost::swap(internal_node_allocator(), a.internal_node_allocator());
-        boost::swap(leaf_allocator(), a.leaf_allocator());
+        boost::swap(node_allocator(), a.node_allocator());
     }
 
-    bool operator==(allocators const& a) const { return leaf_allocator() == a.leaf_allocator(); }
+    bool operator==(allocators const& a) const { return node_allocator() == a.node_allocator(); }
     template <typename Alloc>
-    bool operator==(Alloc const& a) const { return leaf_allocator() == leaf_allocator_type(a); }
+    bool operator==(Alloc const& a) const { return node_allocator() == node_allocator_type(a); }
 
-    Allocator allocator() const { return Allocator(leaf_allocator()); }
+    Allocator allocator() const { return Allocator(node_allocator()); }
 
-    internal_node_allocator_type & internal_node_allocator() { return *this; }
-    internal_node_allocator_type const& internal_node_allocator() const { return *this; }
-    leaf_allocator_type & leaf_allocator() { return *this; }
-    leaf_allocator_type const& leaf_allocator() const { return *this; }
+    node_allocator_type & node_allocator() { return *this; }
+    node_allocator_type const& node_allocator() const { return *this; }
 };
 
 struct node_bad_alloc : public std::exception
@@ -283,7 +280,7 @@ struct throwing_node_settings
 template <typename Allocators, typename Value, typename Parameters, typename Box>
 struct create_node<
     Allocators,
-    dynamic_internal_node<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag>
+    variant_internal_node<Value, Parameters, Box, Allocators, node_throwing_static_tag>
 >
 {
     static inline typename Allocators::node_pointer
@@ -292,17 +289,17 @@ struct create_node<
         // throw if counter meets max count
         throwing_node_settings::throw_if_required();
 
-        return create_dynamic_node<
+        return create_variant_node<
             typename Allocators::node_pointer,
-            dynamic_internal_node<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag>
-        >::apply(allocators.internal_node_allocator());
+            variant_internal_node<Value, Parameters, Box, Allocators, node_throwing_static_tag>
+        >::apply(allocators.node_allocator());
     }
 };
 
 template <typename Allocators, typename Value, typename Parameters, typename Box>
 struct create_node<
     Allocators,
-    dynamic_leaf<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag>
+    variant_leaf<Value, Parameters, Box, Allocators, node_throwing_static_tag>
 >
 {
     static inline typename Allocators::node_pointer
@@ -311,10 +308,10 @@ struct create_node<
         // throw if counter meets max count
         throwing_node_settings::throw_if_required();
 
-        return create_dynamic_node<
+        return create_variant_node<
             typename Allocators::node_pointer,
-            dynamic_leaf<Value, Parameters, Box, Allocators, node_throwing_d_mem_static_tag>
-        >::apply(allocators.leaf_allocator());
+            variant_leaf<Value, Parameters, Box, Allocators, node_throwing_static_tag>
+        >::apply(allocators.node_allocator());
     }
 };
 

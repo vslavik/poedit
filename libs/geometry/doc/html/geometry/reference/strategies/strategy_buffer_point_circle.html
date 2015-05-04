@@ -27,7 +27,7 @@
 <a name="geometry.reference.strategies.strategy_buffer_point_circle"></a><a class="link" href="strategy_buffer_point_circle.html" title="strategy::buffer::point_circle">strategy::buffer::point_circle</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp126035504"></a><a class="indexterm" name="idp126036192"></a><a class="indexterm" name="idp126036880"></a>
+          <a class="indexterm" name="idp132519072"></a><a class="indexterm" name="idp132519760"></a><a class="indexterm" name="idp132520448"></a>
 Create a circular buffer around a point.
         </p>
 <h6>
@@ -97,7 +97,8 @@ Create a circular buffer around a point.
 <td>
                   <p>
                     <span class="bold"><strong>std::size_t</strong></span>: <span class="emphasis"><em>count</em></span>:
-                    number of points for the created circle
+                    number of points for the created circle (if count is smaller
+                    than 3, count is internally set to 3)
                   </p>
                 </td>
 </tr></tbody>
@@ -178,8 +179,8 @@ Create a circular buffer around a point.
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2014 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam
-      Wulkiewicz, Oracle and/or its affiliates<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
+      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

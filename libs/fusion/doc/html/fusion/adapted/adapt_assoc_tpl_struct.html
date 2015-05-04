@@ -44,8 +44,8 @@
 <pre class="programlisting"><span class="identifier">BOOST_FUSION_ADAPT_ASSOC_TPL_STRUCT</span><span class="special">(</span>
     <span class="special">(</span><span class="identifier">template_param0</span><span class="special">)(</span><span class="identifier">template_param1</span><span class="special">)...,</span>
     <span class="special">(</span><span class="identifier">struct_name</span><span class="special">)</span> <span class="special">(</span><span class="identifier">specialization_param0</span><span class="special">)(</span><span class="identifier">specialization_param1</span><span class="special">)...,</span>
-    <span class="special">(</span><span class="identifier">member_type0</span><span class="special">,</span> <span class="identifier">member_name0</span><span class="special">,</span> <span class="identifier">key_type0</span><span class="special">)</span>
-    <span class="special">(</span><span class="identifier">member_type1</span><span class="special">,</span> <span class="identifier">member_name1</span><span class="special">,</span> <span class="identifier">key_type1</span><span class="special">)</span>
+    <span class="special">([</span><span class="identifier">member_type0</span><span class="special">,]</span> <span class="identifier">member_name0</span><span class="special">,</span> <span class="identifier">key_type0</span><span class="special">)</span>
+    <span class="special">([</span><span class="identifier">member_type1</span><span class="special">,]</span> <span class="identifier">member_name1</span><span class="special">,</span> <span class="identifier">key_type1</span><span class="special">)</span>
     <span class="special">...</span>
     <span class="special">)</span>
 </pre>
@@ -61,11 +61,15 @@
         Sequence</a>. The sequence <code class="computeroutput"><span class="special">(</span><span class="identifier">template_param0</span><span class="special">)(</span><span class="identifier">template_param1</span><span class="special">)...</span></code>
         declares the names of the template type parameters used. The sequence <code class="computeroutput"><span class="special">(</span><span class="identifier">specialization_param0</span><span class="special">)(</span><span class="identifier">specialization_param1</span><span class="special">)...</span></code> declares the template parameters of the
         actual specialization of <code class="computeroutput"><span class="identifier">struct_name</span></code>
-        that is adapted as a fusion sequence. The sequence of <code class="computeroutput"><span class="special">(</span><span class="identifier">member_typeN</span><span class="special">,</span>
+        that is adapted as a fusion sequence. The sequence of <code class="computeroutput"><span class="special">([</span><span class="identifier">member_typeN</span><span class="special">,]</span>
         <span class="identifier">member_nameN</span><span class="special">,</span>
         <span class="identifier">key_typeN</span><span class="special">)</span></code>
-        triples declares the type, name and key type of each of the struct members
+        tuples declares the type, name and key type of each of the struct members
         that are part of the sequence.
+      </p>
+<p>
+        When member_typeN is omitted or set to BOOST_FUSION_ADAPT_AUTO, the type
+        is infered with Boost.TypeOf.
       </p>
 <p>
         The macro should be used at global scope, and <code class="computeroutput"><span class="identifier">struct_name</span></code>
@@ -101,6 +105,13 @@
 <span class="comment">// Any instantiated demo::employee is now a Fusion sequence.</span>
 <span class="comment">// It is also an associative sequence with</span>
 <span class="comment">// keys keys::name and keys::age present.</span>
+<span class="identifier">BOOST_FUSION_ADAPT_ASSOC_TPL_STRUCT</span><span class="special">(</span>
+    <span class="special">(</span><span class="identifier">Name</span><span class="special">)(</span><span class="identifier">Age</span><span class="special">),</span>
+    <span class="special">(</span><span class="identifier">demo</span><span class="special">::</span><span class="identifier">employee</span><span class="special">)</span> <span class="special">(</span><span class="identifier">Name</span><span class="special">)(</span><span class="identifier">Age</span><span class="special">),</span>
+    <span class="special">(</span><span class="identifier">name</span><span class="special">,</span> <span class="identifier">keys</span><span class="special">::</span><span class="identifier">name</span><span class="special">)</span>
+    <span class="special">(</span><span class="identifier">age</span><span class="special">,</span> <span class="identifier">keys</span><span class="special">::</span><span class="identifier">age</span><span class="special">))</span>
+
+<span class="comment">// Without BOOST_PP_VARIADICS support :</span>
 <span class="identifier">BOOST_FUSION_ADAPT_ASSOC_TPL_STRUCT</span><span class="special">(</span>
     <span class="special">(</span><span class="identifier">Name</span><span class="special">)(</span><span class="identifier">Age</span><span class="special">),</span>
     <span class="special">(</span><span class="identifier">demo</span><span class="special">::</span><span class="identifier">employee</span><span class="special">)</span> <span class="special">(</span><span class="identifier">Name</span><span class="special">)(</span><span class="identifier">Age</span><span class="special">),</span>

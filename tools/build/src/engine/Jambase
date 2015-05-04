@@ -855,6 +855,18 @@ else if $(OS) = BEOS
     NOARSCAN    ?= true ;
     STDHDRS     ?= /boot/develop/headers/posix ;
 }
+else if $(OS) = HAIKU
+{
+    BINDIR      ?= /boot/system/non-packaged/bin ;
+    CC          ?= gcc ;
+    C++         ?= $(CC) ;
+    FORTRAN     ?= "" ;
+    LIBDIR      ?= /boot/system/non-packaged/lib ;
+    LINK        ?= gcc ;
+    LINKLIBS    ?= -lnetwork ;
+    NOARSCAN    ?= true ;
+    STDHDRS     ?= /boot/system/develop/headers/posix ;
+}
 else if $(UNIX)
 {
     switch $(OS)

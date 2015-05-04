@@ -13,6 +13,7 @@ import toolset ;
 import path ;
 import feature : feature ;
 import property ;
+import errors ;
 
 .initialized = ;
 
@@ -65,6 +66,19 @@ rule html ( target : source : properties *  )
     if ! [ on $(target) return $(RST2XXX) ]
     {
         local python-cmd = [ property.select <python.interpreter> : $(properties) ] ;
+        if ! $(.tools-dir) {
+            errors.user-error
+            "The docutils module is used, but not configured. "
+            : ""
+            : "Please modify your user-config.jam or project-config.jam to contain:"
+            : ""
+            : "    using docutils : <docutils-dir> ;"
+            : ""
+            : "On Ubuntu, 'docutils-common' package will create /usr/share/docutils."
+            : "Other flavours of Linux likely have docutils as package as well."
+            : "On Windows, you can install from http://docutils.sourceforge.net/."
+            ;
+        }
         RST2XXX on $(target) = $(python-cmd:G=:E="python") $(.tools-dir)/rst2html.py ;
     }
 }

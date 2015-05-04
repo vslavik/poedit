@@ -27,6 +27,10 @@ namespace std{
 #include <string>
 #include <vector>
 
+// this test uses a special string (my_string) whose contents are shared
+// and hence saved in the archive only once.  We need a helper in order
+// to convert my_string into a serializable type
+
 class my_string:public std::string
 {
     typedef std::string super;
@@ -43,7 +47,7 @@ public:
 struct my_string_helper
 {
   typedef std::vector<my_string> table;
-  table t;
+  table m_t;
 };
 
 BOOST_SERIALIZATION_SPLIT_FREE(my_string)
@@ -52,31 +56,36 @@ namespace boost {
 namespace serialization {
 
 template<class Archive>
-void save(Archive & ar, const my_string & str, unsigned int /* version */)
+void save(Archive & ar, const my_string & str, const unsigned int /* version */)
 {
-    typedef my_string_helper::table table;
-    table& t = ar.get_helper(static_cast<my_string_helper *>(NULL)).t;
+    void (* const idx)(Archive &, const my_string &, const unsigned int) = & save;
+    void * const id = reinterpret_cast<void * const>(idx);
+    my_string_helper & msh = ar.template get_helper<my_string_helper>(id);
 
-    table::iterator it = std::find(t.begin(), t.end(), str);
+    my_string_helper::table t = msh.m_t;
+    my_string_helper::table::iterator it = std::find(t.begin(), t.end(), str);
     if(it == t.end()){
-        table::size_type s = t.size();
+        my_string_helper::table::size_type s = t.size();
         ar << make_nvp("index", s);
         t.push_back(str);
         ar << make_nvp("string", static_cast<const std::string &>(str));
     }
     else{
-        table::size_type s = (table::size_type)(it - t.begin());
+        my_string_helper::table::size_type s = it - t.begin();
         ar << make_nvp("index", s);
     }
 }
 
 template<class Archive>
-void load(Archive & ar, my_string & str, unsigned int /* version */)
+void load(Archive & ar, my_string & str, const unsigned int /* version */)
 {
-    typedef my_string_helper::table table;
-    table& t = ar.get_helper(static_cast<my_string_helper *>(NULL)).t;
+    void (* const idx)(Archive &, my_string &, const unsigned int) = & load;
+    void * const id = reinterpret_cast<void * const>(idx);
+    my_string_helper & msh = ar.template get_helper<my_string_helper>(id);
 
-    table::size_type s = 0;
+    my_string_helper::table t = msh.m_t;
+
+    my_string_helper::table::size_type s;
     ar >> make_nvp("index", s);
     t.reserve(s);
     if(s >= t.size()){

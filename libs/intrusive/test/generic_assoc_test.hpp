@@ -129,9 +129,9 @@ void test_generic_assoc<ValueTraits, ContainerDefiner>::test_insert_erase_burst(
    typedef typename ValueTraits::value_type value_type;
 
    //value_cont_type values;
-   const int MaxValues = 100;
+   const std::size_t MaxValues = 200;
    value_cont_type values(MaxValues);
-   for(int i = 0; i != MaxValues; ++i){
+   for(std::size_t i = 0; i != MaxValues; ++i){
       (&values[i])->value_ = i;
    }
 
@@ -146,15 +146,16 @@ void test_generic_assoc<ValueTraits, ContainerDefiner>::test_insert_erase_burst(
    {  //Ordered insertion + erasure
       assoc_type testset (values.begin(), values.begin() + values.size());
       TEST_INTRUSIVE_SEQUENCE_EXPECTED(testset, testset.begin());
-
+      testset.check();
       iterator it(testset.begin()), itend(testset.end());
-      for(int i = 0; it != itend; ++i){
+      for(std::size_t i = 0; it != itend; ++i){
          BOOST_TEST(&*it == &values[i]);
          it = testset.erase(it);
+         testset.check();
       }
       BOOST_TEST(testset.empty());
    }
-  
+
    {  //Now random insertions + erasure
       assoc_type testset;
       typedef typename value_cont_type::iterator vec_iterator;
@@ -165,14 +166,16 @@ void test_generic_assoc<ValueTraits, ContainerDefiner>::test_insert_erase_burst(
          ; ++it){
          it_vector.push_back(it);
       }
-      for(int i = 0; i != MaxValues; ++i){
+      for(std::size_t i = 0; i != MaxValues; ++i){
          testset.insert(*it_vector[i]);
+         testset.check();
       }
       TEST_INTRUSIVE_SEQUENCE_EXPECTED(testset, testset.begin());
       //Random erasure
       std::random_shuffle(it_vector.begin(), it_vector.end());
-      for(int i = 0; i != MaxValues; ++i){
+      for(std::size_t i = 0; i != MaxValues; ++i){
          testset.erase(testset.iterator_to(*it_vector[i]));
+         testset.check();
       }
       BOOST_TEST(testset.empty());
    }

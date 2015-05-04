@@ -93,7 +93,7 @@ the result is ready, it is returned from __unique_future_get__ by rvalue-referen
 appropriate for the type.
 
 On the other hand, many instances of __shared_future__ may reference the same result. Instances can be freely copied and assigned,
-and __shared_future_get__ returns a non `const` reference so that multiple calls to __shared_future_get__ are safe. You can move an
+and __shared_future_get__ returns a `const` reference so that multiple calls to __shared_future_get__ are safe. You can move an
 instance of __unique_future__ into an instance of __shared_future__, thus transferring ownership of the associated asynchronous
 result, but not vice-versa.
 

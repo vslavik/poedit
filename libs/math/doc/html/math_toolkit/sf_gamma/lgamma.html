@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Log Gamma</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 1.9.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
 <link rel="up" href="../sf_gamma.html" title="Gamma Functions">
 <link rel="prev" href="tgamma.html" title="Gamma">
 <link rel="next" href="digamma.html" title="Digamma">
@@ -57,7 +57,7 @@
         is defined by:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/lgamm1.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/lgamm1.svg"></span>
       </p>
 <p>
         The second form of the function takes a pointer to an integer, which if non-null
@@ -70,7 +70,7 @@
         documentation for more details</a>.
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../graphs/lgamma.png" align="middle"></span>
+        <span class="inlinemediaobject"><img src="../../../graphs/lgamma.svg" align="middle"></span>
       </p>
 <p>
         There are effectively two versions of this function internally: a fully generic
@@ -359,7 +359,7 @@
         for large arguments:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/gamma6.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/gamma6.svg"></span>
       </p>
 <p>
         For small arguments, the logarithm of tgamma is used.
@@ -369,7 +369,7 @@
         formula is used:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/lgamm3.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/lgamm3.svg"></span>
       </p>
 <p>
         For types of known precision, the <a class="link" href="../lanczos.html" title="The Lanczos Approximation">Lanczos
@@ -378,7 +378,7 @@
         <a class="link" href="../lanczos.html" title="The Lanczos Approximation">Lanczos approximation</a> is:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/lgamm4.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/lgamm4.svg"></span>
       </p>
 <p>
         Where L<sub>e,g</sub> &#160; is the Lanczos sum, scaled by e<sup>g</sup>.
@@ -447,7 +447,7 @@
         -&gt; 1</em></span>:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/lgamm5.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/lgamm5.svg"></span>
       </p>
 <p>
         The C<sub>k</sub> &#160; terms in the above are the same as in the <a class="link" href="../lanczos.html" title="The Lanczos Approximation">Lanczos
@@ -457,15 +457,15 @@
         A similar rearrangement can be performed at <span class="emphasis"><em>z = 2</em></span>:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/lgamm6.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/lgamm6.svg"></span>
       </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012, 2013 Nikhar Agrawal, Anton Bikineev,
-      Paul A. Bristow, Christopher Kormanyos, Hubert Holin, Bruno Lalande, John Maddock,
-      Johan R&#229;de, Gautam Sewani, Benjamin Sobotta, Thijs van den Berg, Daryle Walker
-      and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
+      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
+      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
+      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

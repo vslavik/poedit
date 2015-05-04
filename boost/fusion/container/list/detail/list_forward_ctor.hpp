@@ -34,13 +34,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 #define N BOOST_PP_ITERATION()
 
-    BOOST_FUSION_GPU_ENABLED
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
 #if N == 1
     explicit
 #endif
     list(BOOST_PP_ENUM_BINARY_PARAMS(
-        N, typename detail::call_param<T, >::type _))
-        : inherited_type(list_to_cons::call(BOOST_PP_ENUM_PARAMS(N, _)))
+        N, typename detail::call_param<T, >::type arg))
+        : inherited_type(list_to_cons::call(BOOST_PP_ENUM_PARAMS(N, arg)))
     {}
 
 #undef N

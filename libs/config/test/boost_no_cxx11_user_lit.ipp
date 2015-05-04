@@ -16,10 +16,10 @@ namespace boost_no_cxx11_user_defined_literals {
 
 struct my_literal
 {
-   constexpr my_literal() : val(0) {}
-   constexpr my_literal(int i) : val(i) {}
-   constexpr my_literal(const my_literal& a) : val(a.val) {}
-   constexpr bool operator==(const my_literal& a) const { return val == a.val; }
+   my_literal() : val(0) {}
+   my_literal(int i) : val(i) {}
+   my_literal(const my_literal& a) : val(a.val) {}
+   bool operator==(const my_literal& a) const { return val == a.val; }
    int val;
 };
 
@@ -47,20 +47,20 @@ struct parse_int<base, val, c, Digits...>
 char_value, Digits...>::value };
 };
 
-constexpr my_literal operator "" _suf1(unsigned long long v)
+my_literal operator "" _suf1(unsigned long long v)
 {
    return my_literal(v);
 }
 template <char...PACK>
-constexpr my_literal operator "" _bin()
+my_literal operator "" _bin()
 {
    return parse_int<2, 0, PACK...>::value;
 }
 
 int test()
 {
-   constexpr my_literal a = 0x23_suf1;
-   constexpr my_literal b = 1001_bin;
+   my_literal a = 0x23_suf1;
+   my_literal b = 1001_bin;
    return ((a == my_literal(0x23)) && (b == my_literal(9))) ? 0 : 1;
 }
 

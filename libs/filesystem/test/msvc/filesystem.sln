@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Windows Desktop
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.22310.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "path_unit_test", "path_unit_test\path_unit_test.vcxproj", "{3C77F610-2E31-4087-9DF2-7CD45198A02D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{0EA788CA-FA52-4290-A4D0-F616390B203B} = {0EA788CA-FA52-4290-A4D0-F616390B203B}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "operations_unit_test", "operations_unit_test\operations_unit_test.vcxproj", "{5DAF595A-4640-4F86-8A5F-E54E3E4CE7D0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "operations_test", "operations_test\operations_test.vcxproj", "{8BB7E604-46EF-42BE-ABB5-D7044B3E8A40}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "path_test", "path_test\path_test.vcxproj", "{F3D230C4-9185-4C2B-AB0E-0F0D28D8268C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{0EA788CA-FA52-4290-A4D0-F616390B203B} = {0EA788CA-FA52-4290-A4D0-F616390B203B}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "system_dll", "system_dll\system_dll.vcxproj", "{F94CCADD-A90B-480C-A304-C19D015D36B1}"
 EndProject
@@ -36,9 +30,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tut4", "tut4\tut4.vcxproj", "{256EA89A-E073-4CE8-B675-BE2FBC6B2691}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "windows_attributes", "windows_attributes\windows_attributes.vcxproj", "{FC5C770F-3017-4021-8DAF-C5DCA3FDF005}"
-	ProjectSection(ProjectDependencies) = postProject
-		{0EA788CA-FA52-4290-A4D0-F616390B203B} = {0EA788CA-FA52-4290-A4D0-F616390B203B}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tut5", "tut5\tut5.vcxproj", "{5C9B3380-3C6E-45CC-986A-16D245E27E58}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -92,13 +83,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "filesystem_lib", "filesyste
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "path_test_static", "path_test_static\path_test_static.vcxproj", "{3B3010C5-D6D7-4320-A992-4EA61F256279}"
-	ProjectSection(ProjectDependencies) = postProject
-		{272DFC15-6292-49DF-B457-6784A183EAC3} = {272DFC15-6292-49DF-B457-6784A183EAC3}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "exec_monitor_dll", "exec_monitor_dll\exec_monitor_dll.vcxproj", "{0EA788CA-FA52-4290-A4D0-F616390B203B}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "exec_monitor_lib", "exec_monitor_lib\exec_monitor_lib.vcxproj", "{272DFC15-6292-49DF-B457-6784A183EAC3}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "macro_default_test", "macro_default_test\macro_default_test.vcxproj", "{36E2032D-F9E6-4FBA-9630-3D4AC518DC6C}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -114,10 +98,19 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "path_timings", "path_timing
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "recurse_dir_iter_test", "recurse_dir_iter_test\recurse_dir_iter_test.vcxproj", "{C6594EC2-1BDA-41A1-B2C0-7FB8AE713CF8}"
 	ProjectSection(ProjectDependencies) = postProject
-		{0EA788CA-FA52-4290-A4D0-F616390B203B} = {0EA788CA-FA52-4290-A4D0-F616390B203B}
 		{F94CCADD-A90B-480C-A304-C19D015D36B1} = {F94CCADD-A90B-480C-A304-C19D015D36B1}
 		{FFD738F7-96F0-445C-81EA-551665EF53D1} = {FFD738F7-96F0-445C-81EA-551665EF53D1}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "odr_test", "odr_test\odr_test.vcxproj", "{1F1C209D-105B-4C8A-8DFC-ABCC4D9A0014}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hello_filesystem", "hello_filesystem\hello_filesystem.vcxproj", "{3D74D9C5-31B1-4D5B-B49C-8725E26CF768}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "issue_test", "issue_test\issue_test.vcxproj", "{3B1AF12C-25AB-44F7-A80B-8BBA0D3D08CE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "headers", "headers\headers.vcxproj", "{5FFA4555-E967-4632-A3E6-ED8826E9FDED}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bug-reporting", "bug-reporting\bug-reporting.vcxproj", "{534B6F8A-B899-4C68-A10C-BB98FFCB35D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -225,14 +218,6 @@ Global
 		{3B3010C5-D6D7-4320-A992-4EA61F256279}.Debug|Win32.Build.0 = Debug|Win32
 		{3B3010C5-D6D7-4320-A992-4EA61F256279}.Release|Win32.ActiveCfg = Release|Win32
 		{3B3010C5-D6D7-4320-A992-4EA61F256279}.Release|Win32.Build.0 = Release|Win32
-		{0EA788CA-FA52-4290-A4D0-F616390B203B}.Debug|Win32.ActiveCfg = Debug|Win32
-		{0EA788CA-FA52-4290-A4D0-F616390B203B}.Debug|Win32.Build.0 = Debug|Win32
-		{0EA788CA-FA52-4290-A4D0-F616390B203B}.Release|Win32.ActiveCfg = Release|Win32
-		{0EA788CA-FA52-4290-A4D0-F616390B203B}.Release|Win32.Build.0 = Release|Win32
-		{272DFC15-6292-49DF-B457-6784A183EAC3}.Debug|Win32.ActiveCfg = Debug|Win32
-		{272DFC15-6292-49DF-B457-6784A183EAC3}.Debug|Win32.Build.0 = Debug|Win32
-		{272DFC15-6292-49DF-B457-6784A183EAC3}.Release|Win32.ActiveCfg = Release|Win32
-		{272DFC15-6292-49DF-B457-6784A183EAC3}.Release|Win32.Build.0 = Release|Win32
 		{36E2032D-F9E6-4FBA-9630-3D4AC518DC6C}.Debug|Win32.ActiveCfg = Debug|Win32
 		{36E2032D-F9E6-4FBA-9630-3D4AC518DC6C}.Debug|Win32.Build.0 = Debug|Win32
 		{36E2032D-F9E6-4FBA-9630-3D4AC518DC6C}.Release|Win32.ActiveCfg = Release|Win32
@@ -245,6 +230,24 @@ Global
 		{C6594EC2-1BDA-41A1-B2C0-7FB8AE713CF8}.Debug|Win32.Build.0 = Debug|Win32
 		{C6594EC2-1BDA-41A1-B2C0-7FB8AE713CF8}.Release|Win32.ActiveCfg = Release|Win32
 		{C6594EC2-1BDA-41A1-B2C0-7FB8AE713CF8}.Release|Win32.Build.0 = Release|Win32
+		{1F1C209D-105B-4C8A-8DFC-ABCC4D9A0014}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1F1C209D-105B-4C8A-8DFC-ABCC4D9A0014}.Debug|Win32.Build.0 = Debug|Win32
+		{1F1C209D-105B-4C8A-8DFC-ABCC4D9A0014}.Release|Win32.ActiveCfg = Release|Win32
+		{1F1C209D-105B-4C8A-8DFC-ABCC4D9A0014}.Release|Win32.Build.0 = Release|Win32
+		{3D74D9C5-31B1-4D5B-B49C-8725E26CF768}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3D74D9C5-31B1-4D5B-B49C-8725E26CF768}.Debug|Win32.Build.0 = Debug|Win32
+		{3D74D9C5-31B1-4D5B-B49C-8725E26CF768}.Release|Win32.ActiveCfg = Release|Win32
+		{3D74D9C5-31B1-4D5B-B49C-8725E26CF768}.Release|Win32.Build.0 = Release|Win32
+		{3B1AF12C-25AB-44F7-A80B-8BBA0D3D08CE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3B1AF12C-25AB-44F7-A80B-8BBA0D3D08CE}.Debug|Win32.Build.0 = Debug|Win32
+		{3B1AF12C-25AB-44F7-A80B-8BBA0D3D08CE}.Release|Win32.ActiveCfg = Release|Win32
+		{3B1AF12C-25AB-44F7-A80B-8BBA0D3D08CE}.Release|Win32.Build.0 = Release|Win32
+		{5FFA4555-E967-4632-A3E6-ED8826E9FDED}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5FFA4555-E967-4632-A3E6-ED8826E9FDED}.Release|Win32.ActiveCfg = Release|Win32
+		{534B6F8A-B899-4C68-A10C-BB98FFCB35D6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{534B6F8A-B899-4C68-A10C-BB98FFCB35D6}.Debug|Win32.Build.0 = Debug|Win32
+		{534B6F8A-B899-4C68-A10C-BB98FFCB35D6}.Release|Win32.ActiveCfg = Release|Win32
+		{534B6F8A-B899-4C68-A10C-BB98FFCB35D6}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

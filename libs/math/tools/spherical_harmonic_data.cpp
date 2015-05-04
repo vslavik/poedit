@@ -3,13 +3,11 @@
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/math/bindings/rr.hpp>
-#include <boost/math/tools/test_data.hpp>
-#include <boost/test/included/prg_exec_monitor.hpp>
 #include <boost/math/special_functions/spherical_harmonic.hpp>
 #include <fstream>
 #include <boost/math/tools/test_data.hpp>
-#include <boost/tr1/random.hpp>
+#include <boost/random.hpp>
+#include "mp_t.hpp"
 
 using namespace boost::math::tools;
 using namespace boost::math;
@@ -28,13 +26,13 @@ float truncate_to_float(float const * pf)
 template<class T>
 boost::math::tuple<T, T, T, T, T, T> spherical_harmonic_data(T i)
 {
-   static tr1::mt19937 r;
+   static boost::mt19937 r;
 
    int n = real_cast<int>(floor(i));
-   std::tr1::uniform_int<> ui(0, (std::min)(n, 40));
+   boost::uniform_int<> ui(0, (std::min)(n, 40));
    int m = ui(r);
    
-   std::tr1::uniform_real<float> ur(-2*constants::pi<float>(), 2*constants::pi<float>());
+   boost::uniform_real<float> ur(-2*constants::pi<float>(), 2*constants::pi<float>());
    float _theta = ur(r);
    float _phi = ur(r);
    T theta = truncate_to_float(&_theta);
@@ -45,15 +43,12 @@ boost::math::tuple<T, T, T, T, T, T> spherical_harmonic_data(T i)
    return boost::math::make_tuple(n, m, theta, phi, r1, r2);
 }
 
-int cpp_main(int argc, char*argv [])
+int main(int argc, char*argv [])
 {
    using namespace boost::math::tools;
 
-   boost::math::ntl::RR::SetOutputPrecision(50);
-   boost::math::ntl::RR::SetPrecision(1000);
-
-   parameter_info<boost::math::ntl::RR> arg1, arg2, arg3;
-   test_data<boost::math::ntl::RR> data;
+   parameter_info<mp_t> arg1, arg2, arg3;
+   test_data<mp_t> data;
 
    bool cont;
    std::string line;
@@ -68,7 +63,7 @@ int cpp_main(int argc, char*argv [])
       arg2.type |= dummy_param;
       arg3 = arg2;
 
-      data.insert(&spherical_harmonic_data<boost::math::ntl::RR>, arg1);
+      data.insert(&spherical_harmonic_data<mp_t>, arg1);
 
       std::cout << "Any more data [y/n]?";
       std::getline(std::cin, line);
@@ -83,7 +78,7 @@ int cpp_main(int argc, char*argv [])
       line = "spherical_harmonic.ipp";
    std::ofstream ofs(line.c_str());
    line.erase(line.find('.'));
-   ofs << std::scientific;
+   ofs << std::scientific << std::setprecision(40);
    write_code(ofs, data, line.c_str());
 
    return 0;

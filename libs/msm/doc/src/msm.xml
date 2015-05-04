@@ -3299,8 +3299,10 @@ BOOST_MSM_BACK_GENERATE_PROCESS_EVENT(mysubmachine)</programlisting>
                     <para>Calling <code>process_event(Event const&amp;)</code> will immediately
                         process the event with run-to-completion semantics. You can also enqueue the
                         events and delay their processing by calling <code>enqueue_event(Event
-                            const&amp;)</code> instead. Calling <code>execute_queued_events()</code> will then
-                        process all enqueued events (in FIFO order).</para>
+                            const&amp;)</code> instead. Calling <code>execute_queued_events()</code>
+                        will then process all enqueued events (in FIFO order). Calling
+                            <code>execute_single_queued_event()</code> will execute the oldest
+                        enqueued event.</para>
                     <para>You can query the queue size by calling <code>get_message_queue_size()</code>.</para>
                 </sect2>  
                 <sect2>
@@ -4034,6 +4036,24 @@ typename ::boost::enable_if&lt;
         </chapter>
         <chapter>
             <title>Version history</title>
+            <sect1>
+                <title>From V2.27 to V2.28 (Boost 1.57)</title>
+                <para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>Fixed BOOST_MSM_EUML_EVENT_WITH_ATTRIBUTES (broken in
+                                1.56).</para>
+                        </listitem>
+                        <listitem>
+                            <para>Fixed execute_queued_events, added
+                                execute_single_queued_event</para>
+                        </listitem>
+                        <listitem>
+                            <para>Fixed warnings for unused variables</para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </sect1>
             <sect1>
                 <title>From V2.26 to V2.27 (Boost 1.56)</title>
                 <para>

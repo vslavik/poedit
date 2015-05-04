@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE header PUBLIC "-//Boost//DTD BoostBook XML V1.0//EN"
   "http://www.boost.org/tools/boostbook/dtd/boostbook.dtd">
+<!--
+    Copyright 2003, Eric Friedman, Itay Maman.
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+-->
 <header name="boost/variant/variant.hpp">
   <namespace name="boost">
     <class name="variant">
@@ -502,6 +508,12 @@
         <method name="type" cv="const">
           <type>const std::type_info &amp;</type>
 
+          <notes>
+            <simpara><code>boost::variant</code> usues Boost.TypeIndex library so actually
+            <code>const boost::typeindex::type_info &amp;</code> is returned.
+            This method is available even if RTTI is off.</simpara>
+          </notes>
+
           <returns>
             <simpara><code>typeid(x)</code>, where <code>x</code> is the the
               content of <code>*this</code>.</simpara>
@@ -509,10 +521,6 @@
 
           <throws>Will not throw.</throws>
           
-          <notes>
-            <simpara>Not available when <code>BOOST_NO_TYPEID</code> is
-              defined.</simpara>
-          </notes>
         </method>
 
       </method-group>
@@ -528,7 +536,7 @@
               <paramtype>const variant &amp;</paramtype>
             </parameter>
           </signature>
-          
+
           <signature cv="const">
             <type>void</type>
             <template>
@@ -554,14 +562,60 @@
           </requires>
 
           <returns>
-            <simpara><code>true</code> iff <code>which() == rhs.which()</code>
+            <simpara><code>true</code> if <code>which() == rhs.which()</code>
               <emphasis>and</emphasis>
               <code>content_this == content_rhs</code>, where
               <code>content_this</code> is the content of <code>*this</code>
               and <code>content_rhs</code> is the content of
               <code>rhs</code>.</simpara>
           </returns>
-          
+
+          <throws>
+            <simpara>If <code>which() == rhs.which()</code> then may fail with
+              any exceptions arising from <code>operator==(T,T)</code>, where
+              <code>T</code> is the contained type of
+              <code>*this</code>.</simpara>
+          </throws>
+        </overloaded-method>
+
+        <overloaded-method name="operator!=" cv="const">
+          <purpose>InEquality comparison.</purpose>
+
+          <signature cv="const">
+            <type>bool</type>
+            <parameter name="rhs">
+              <paramtype>const variant &amp;</paramtype>
+            </parameter>
+          </signature>
+
+          <signature cv="const">
+            <type>void</type>
+            <template>
+              <template-type-parameter name="U"/>
+            </template>
+            <parameter>
+              <paramtype>const U &amp;</paramtype>
+            </parameter>
+          </signature>
+
+          <notes>
+            <simpara>The overload returning <code>void</code> exists only to
+              prohibit implicit conversion of the operator's right-hand side
+              to <code>variant</code>; thus, its use will (purposefully)
+              result in a compile-time error.</simpara>
+          </notes>
+
+          <requires>
+            <simpara>Every bounded type of the <code>variant</code> must
+              fulfill the requirements of the
+              <conceptname>EqualityComparable</conceptname>
+              concept.</simpara>
+          </requires>
+
+          <returns>
+            <simpara><code>true</code> if <code>!(*this == rhs)</code>.</simpara>
+          </returns>
+
           <throws>
             <simpara>If <code>which() == rhs.which()</code> then may fail with
               any exceptions arising from <code>operator==(T,T)</code>, where
@@ -579,7 +633,7 @@
               <paramtype>const variant &amp;</paramtype>
             </parameter>
           </signature>
-          
+
           <signature cv="const">
             <type>void</type>
             <template>
@@ -614,6 +668,147 @@
 
           <throws>
             <simpara>If <code>which() == rhs.which()</code> then may fail with
+              any exceptions arising from <code>operator&lt;(T,T)</code>,
+              where <code>T</code> is the contained type of
+              <code>*this</code>.</simpara>
+          </throws>
+        </overloaded-method>
+
+
+        <overloaded-method name="operator&gt;">
+          <purpose>GreaterThan comparison.</purpose>
+
+          <signature cv="const">
+            <type>bool</type>
+            <parameter name="rhs">
+              <paramtype>const variant &amp;</paramtype>
+            </parameter>
+          </signature>
+
+          <signature cv="const">
+            <type>void</type>
+            <template>
+              <template-type-parameter name="U"/>
+            </template>
+            <parameter>
+              <paramtype>const U &amp;</paramtype>
+            </parameter>
+          </signature>
+
+          <notes>
+            <simpara>The overload returning <code>void</code> exists only to
+              prohibit implicit conversion of the operator's right-hand side
+              to <code>variant</code>; thus, its use will (purposefully)
+              result in a compile-time error.</simpara>
+          </notes>
+
+          <requires>
+            <simpara>Every bounded type of the <code>variant</code> must
+              fulfill the requirements of the
+              <conceptname>LessThanComparable</conceptname>
+              concept.</simpara>
+          </requires>
+
+          <returns>
+            <simpara>true if <code>rhs &lt; *this</code>.</simpara>
+          </returns>
+
+          <throws>
+            <simpara>May fail with
+              any exceptions arising from <code>operator&lt;(T,T)</code>,
+              where <code>T</code> is the contained type of
+              <code>*this</code>.</simpara>
+          </throws>
+        </overloaded-method>
+
+
+        <overloaded-method name="operator&lt;=">
+          <purpose>LessThan or Equal comparison.</purpose>
+
+          <signature cv="const">
+            <type>bool</type>
+            <parameter name="rhs">
+              <paramtype>const variant &amp;</paramtype>
+            </parameter>
+          </signature>
+
+          <signature cv="const">
+            <type>void</type>
+            <template>
+              <template-type-parameter name="U"/>
+            </template>
+            <parameter>
+              <paramtype>const U &amp;</paramtype>
+            </parameter>
+          </signature>
+
+          <notes>
+            <simpara>The overload returning <code>void</code> exists only to
+              prohibit implicit conversion of the operator's right-hand side
+              to <code>variant</code>; thus, its use will (purposefully)
+              result in a compile-time error.</simpara>
+          </notes>
+
+          <requires>
+            <simpara>Every bounded type of the <code>variant</code> must
+              fulfill the requirements of the
+              <conceptname>LessThanComparable</conceptname>
+              concept.</simpara>
+          </requires>
+
+          <returns>
+            <simpara>true if <code>!(*this > rhs)</code>.</simpara>
+          </returns>
+
+          <throws>
+            <simpara>May fail with
+              any exceptions arising from <code>operator&lt;(T,T)</code>,
+              where <code>T</code> is the contained type of
+              <code>*this</code>.</simpara>
+          </throws>
+        </overloaded-method>
+
+
+        <overloaded-method name="operator&gt;=">
+          <purpose>GreaterThan or Equal comparison.</purpose>
+
+          <signature cv="const">
+            <type>bool</type>
+            <parameter name="rhs">
+              <paramtype>const variant &amp;</paramtype>
+            </parameter>
+          </signature>
+
+          <signature cv="const">
+            <type>void</type>
+            <template>
+              <template-type-parameter name="U"/>
+            </template>
+            <parameter>
+              <paramtype>const U &amp;</paramtype>
+            </parameter>
+          </signature>
+
+          <notes>
+            <simpara>The overload returning <code>void</code> exists only to
+              prohibit implicit conversion of the operator's right-hand side
+              to <code>variant</code>; thus, its use will (purposefully)
+              result in a compile-time error.</simpara>
+          </notes>
+
+          <requires>
+            <simpara>Every bounded type of the <code>variant</code> must
+              fulfill the requirements of the
+              <conceptname>LessThanComparable</conceptname>
+              concept.</simpara>
+          </requires>
+
+          <returns>
+            <simpara>true if <code>!(*this &lt; lhs)</code>.</simpara>
+          </returns>
+
+          <throws>
+            <simpara>May fail with
               any exceptions arising from <code>operator&lt;(T,T)</code>,
               where <code>T</code> is the contained type of
               <code>*this</code>.</simpara>

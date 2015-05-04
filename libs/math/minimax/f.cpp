@@ -194,42 +194,13 @@ boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant)
    case 13:
       // K(k):
       {
-         // x = k^2
-         boost::math::ntl::RR k2 = x;
-         if(k2 > boost::math::ntl::RR(1) - 1e-40)
-            k2 = boost::math::ntl::RR(1) - 1e-40;
-         /*if(k < 1e-40)
-            k = 1e-40;*/
-         boost::math::ntl::RR p2 = boost::math::constants::pi<boost::math::ntl::RR>() / 2;
-         return (boost::math::ellint_1(sqrt(k2))) / (p2 - boost::math::log1p(-k2));
+      return boost::math::ellint_1(x);
       }
    case 14:
       // K(k)
       {
-         static double P[] =
-         {
-            1.38629436111989062502E0,
-            9.65735902811690126535E-2,
-            3.08851465246711995998E-2,
-            1.49380448916805252718E-2,
-            8.79078273952743772254E-3,
-            6.18901033637687613229E-3,
-            6.87489687449949877925E-3,
-            9.85821379021226008714E-3,
-            7.97404013220415179367E-3,
-            2.28025724005875567385E-3,
-            1.37982864606273237150E-4
-         };
-
-         // x = 1 - k^2
-         boost::math::ntl::RR mp = x;
-         if(mp < 1e-20)
-            mp = 1e-20;
-         if(mp == 1)
-            mp -= 1e-20;
-         boost::math::ntl::RR k = sqrt(1 - mp);
-         return (boost::math::ellint_1(k) - mp/*boost::math::tools::evaluate_polynomial(P, mp)*/) / -log(mp);
-      }
+      return boost::math::ellint_1(1-x) / log(x);
+   }
    case 15:
       // E(k)
       {
@@ -323,6 +294,20 @@ boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant)
          // cbrt over [0.5, 1]
          return boost::math::cbrt(x);
       }
+   case 30:
+   {
+      // trigamma over [x,y]
+      boost::math::ntl::RR y = x;
+      y = sqrt(y);
+      return boost::math::trigamma(x) * (x * x);
+   }
+   case 31:
+   {
+      // trigamma over [x, INF]
+      if(x == 0) return 1;
+      boost::math::ntl::RR y = (x == 0) ? (std::numeric_limits<double>::max)() / 2 : 1/x;
+      return boost::math::trigamma(y) * y;
+   }
    }
    return 0;
 }

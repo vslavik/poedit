@@ -49,12 +49,6 @@ basic arithmetic operations.  Maybe this is telling us something, or maybe not
 
 [h4 Elliptic Integrals]
 
-* Carlson's algorithms are essentially unchanged from Xiaogang Zhang's
-Google Summer of Code student project, and are based on Carlson's
-original papers.  However, Carlson has revised his algorithms since then
-(refer to the references in the elliptic integral docs for a list), to
-improve performance and accuracy, we may be able to take advantage
-of these improvements too (Low Priority).
 * [para Carlson's algorithms (mainly R[sub J]) are somewhat prone to
 internal overflow/underflow when the arguments are very large or small.
 The homogeneity relations:]
@@ -63,23 +57,11 @@ The homogeneity relations:]
 [para R[sub J](ka, kb, kc, kr) = k[super -3/2] R[sub J](a, b, c, r)]
 [para could be used to sidestep trouble here: provided the problem domains
 can be accurately identified. (Medium Priority).]
-* Carlson's R[sub C] can be reduced to elementary funtions (asin and log),
-would it be more efficient evaluated this way, rather than by Carlson's
-algorithms? (Low Priority).
-* Should we add an implementation of Carlson's R[sub G]?  It's not
-required for the Legendre form integrals, but some people may find it
-useful (Low Priority).
-* There are a several other integrals: D([phi], k), Z([beta], k),
-[Lambda][sub 0]([beta], k) and Bulirsch's ['el] functions that could
+* There are a several other integrals: Bulirsch's ['el] functions that could
 be implemented using Carlson's integrals (Low Priority).
 * The integrals K(k) and E(k) could be implemented using rational
 approximations (both for efficiency and accuracy),
 assuming we can find them. (Medium Priority).
-* There is a sub-domain of __ellint_3 that is unimplemented (see the docs
-for details), currently
-it's not clear how to solve this issue, or if it's ever likely
-to be an real problem in practice - especially as most other implementations
-don't support this domain either (Medium Priority).
 
 [h4 Owen's T Function]
 
@@ -100,6 +82,8 @@ These are useful in engineering applications - we have had a request to add thes
 as a better approximation for very large degrees of freedom?
 
 [h4 Feature Requests]
+
+We have a request for the Lambert W function, see [@https://svn.boost.org/trac/boost/ticket/11027 #11027].
 
 The following table lists distributions that are found in other packages
 but which are not yet present here, the more frequently the distribution

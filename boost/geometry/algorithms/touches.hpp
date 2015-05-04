@@ -23,6 +23,10 @@
 
 #include <deque>
 
+#include <boost/variant/apply_visitor.hpp>
+#include <boost/variant/static_visitor.hpp>
+#include <boost/variant/variant_fwd.hpp>
+
 #include <boost/geometry/geometries/concepts/check.hpp>
 #include <boost/geometry/algorithms/detail/for_each_range.hpp>
 #include <boost/geometry/algorithms/detail/overlay/overlay.hpp>
@@ -32,9 +36,6 @@
 #include <boost/geometry/algorithms/num_geometries.hpp>
 #include <boost/geometry/algorithms/detail/sub_range.hpp>
 #include <boost/geometry/policies/robustness/no_rescale_policy.hpp>
-#include <boost/variant/static_visitor.hpp>
-#include <boost/variant/apply_visitor.hpp>
-#include <boost/variant/variant_fwd.hpp>
 
 #include <boost/geometry/algorithms/detail/relate/relate.hpp>
 

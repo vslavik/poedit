@@ -9,7 +9,6 @@
 // See http://www.boost.org/libs/intrusive for documentation.
 //
 /////////////////////////////////////////////////////////////////////////////
-#include <boost/intrusive/detail/config_begin.hpp>
 #include <boost/intrusive/splay_set.hpp>
 #include "itestvalue.hpp"
 #include "bptr_value.hpp"
@@ -151,8 +150,7 @@ class test_main_template
                 , GetContainer_With_Holder< Default_Holder >::template GetContainer
                 >::test_all();
       test::test_generic_set < typename detail::get_member_value_traits
-                  < value_type
-                  , member_hook< value_type
+                  < member_hook< value_type
                                , typename hooks<VoidPointer>::member_hook_type
                                , &value_type::node_
                                >
@@ -187,8 +185,7 @@ class test_main_template<VoidPointer, false, Default_Holder>
                 >::test_all();
 
       test::test_generic_set < typename detail::get_member_value_traits
-                  < value_type
-                  , member_hook< value_type
+                  < member_hook< value_type
                                , typename hooks<VoidPointer>::member_hook_type
                                , &value_type::node_
                                >
@@ -204,8 +201,7 @@ class test_main_template<VoidPointer, false, Default_Holder>
                 >::test_all();
 
       test::test_generic_set < typename detail::get_member_value_traits
-                  < value_type
-                  , member_hook< value_type
+                  < member_hook< value_type
                                , typename hooks<VoidPointer>::auto_member_hook_type
                                , &value_type::auto_node_
                                >
@@ -268,13 +264,9 @@ int main()
    test_main_template<boost::intrusive::smart_ptr<void>, false, true>()();
    test_main_template<void*, true, true>()();
    test_main_template<boost::intrusive::smart_ptr<void>, true, true>()();
-   // test (plain pointers) x (nonconst/const size) x (standard node allocator)
-   test_main_template<void*, false, false>()();
-   test_main_template<void*, true, false>()();
    // test (bounded pointers) x (nonconst/const size) x (special node allocator)
    test_main_template_bptr< true >()();
    test_main_template_bptr< false >()();
 
    return boost::report_errors();
 }
-#include <boost/intrusive/detail/config_end.hpp>

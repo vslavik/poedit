@@ -44,6 +44,7 @@ template <typename T>
 class ringbuffer_base
 {
 #ifndef BOOST_DOXYGEN_INVOKED
+protected:
     typedef std::size_t size_t;
     static const int padding_size = BOOST_LOCKFREE_CACHELINE_BYTES - sizeof(size_t);
     atomic<size_t> write_index_;
@@ -322,6 +323,18 @@ protected:
         read_index_.store(new_read_index, memory_order_release);
         return avail;
     }
+
+    const T& front(const T * internal_buffer) const
+    {
+        const size_t read_index = read_index_.load(memory_order_relaxed); // only written from pop thread
+        return *(internal_buffer + read_index);
+    }
+
+    T& front(T * internal_buffer)
+    {
+        const size_t read_index = read_index_.load(memory_order_relaxed); // only written from pop thread
+        return *(internal_buffer + read_index);
+    }
 #endif
 
 
@@ -420,6 +433,11 @@ class compile_time_sized_ringbuffer:
         return static_cast<T*>(storage_.address());
     }
 
+    const T * data() const
+    {
+        return static_cast<const T*>(storage_.address());
+    }
+
 protected:
     size_type max_number_of_elements() const
     {
@@ -445,13 +463,13 @@ public:
     }
 
     template <typename Functor>
-    bool consume_all(Functor & f)
+    size_type consume_all(Functor & f)
     {
         return ringbuffer_base<T>::consume_all(f, data(), max_size);
     }
 
     template <typename Functor>
-    bool consume_all(Functor const & f)
+    size_type consume_all(Functor const & f)
     {
         return ringbuffer_base<T>::consume_all(f, data(), max_size);
     }
@@ -482,6 +500,16 @@ public:
     size_type pop_to_output_iterator(OutputIterator it)
     {
         return ringbuffer_base<T>::pop_to_output_iterator(it, data(), max_size);
+    }
+
+    const T& front(void) const
+    {
+        return ringbuffer_base<T>::front(data());
+    }
+
+    T& front(void)
+    {
+        return ringbuffer_base<T>::front(data());
     }
 };
 
@@ -585,6 +613,16 @@ public:
     size_type pop_to_output_iterator(OutputIterator it)
     {
         return ringbuffer_base<T>::pop_to_output_iterator(it, array_, max_elements_);
+    }
+
+    const T& front(void) const
+    {
+        return ringbuffer_base<T>::front(array_);
+    }
+
+    T& front(void)
+    {
+        return ringbuffer_base<T>::front(array_);
     }
 };
 
@@ -721,6 +759,20 @@ public:
     bool push(T const & t)
     {
         return base_type::push(t);
+    }
+
+    /** Pops one object from ringbuffer.
+     *
+     * \pre only one thread is allowed to pop data to the spsc_queue
+     * \post if ringbuffer is not empty, object will be discarded.
+     * \return true, if the pop operation is successful, false if ringbuffer was empty.
+     *
+     * \note Thread-safe and wait-free
+     */
+    bool pop ()
+    {
+        detail::consume_noop consume_functor;
+        return consume_one( consume_functor );
     }
 
     /** Pops one object from ringbuffer.
@@ -879,6 +931,47 @@ public:
     {
         return base_type::write_available(base_type::max_number_of_elements());
     }
+
+    /** get reference to element in the front of the queue
+     *
+     * Availability of front element can be checked using read_available().
+     *
+     * \pre only one thread is allowed to check front element
+     * \pre read_available() > 0. If ringbuffer is empty, it's undefined behaviour to invoke this method.
+     * \return reference to the first element in the queue
+     *
+     * \note Thread-safe and wait-free
+     */
+    const T& front() const
+    {
+        BOOST_ASSERT(read_available() > 0);
+        return base_type::front();
+    }
+
+    /// \copydoc boost::lockfree::spsc_queue::front() const
+    T& front()
+    {
+        BOOST_ASSERT(read_available() > 0);
+        return base_type::front();
+    }
+
+    /** reset the ringbuffer
+     *
+     * \note Not thread-safe
+     * */
+    void reset(void)
+    {
+        if ( !boost::has_trivial_destructor<T>::value ) {
+            // make sure to call all destructors!
+
+            T dummy_element;
+            while (pop(dummy_element))
+            {}
+        } else {
+            base_type::write_index_.store(0, memory_order_relaxed);
+            base_type::read_index_.store(0, memory_order_release);
+        }
+   }
 };
 
 } /* namespace lockfree */

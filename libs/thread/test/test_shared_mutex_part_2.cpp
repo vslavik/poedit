@@ -4,6 +4,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #define BOOST_THREAD_VERSION 2
+#define BOOST_TEST_MODULE Boost.Threads: shared_mutex_part2 test suite
 
 #include <boost/test/unit_test.hpp>
 #include <boost/thread/thread.hpp>
@@ -49,7 +50,7 @@ public:
 };
 
 
-void test_only_one_upgrade_lock_permitted()
+BOOST_AUTO_TEST_CASE(test_only_one_upgrade_lock_permitted)
 {
     unsigned const number_of_threads=2;
 
@@ -91,7 +92,7 @@ void test_only_one_upgrade_lock_permitted()
     CHECK_LOCKED_VALUE_EQUAL(unblocked_count_mutex,max_simultaneous_running,1u);
 }
 
-void test_can_lock_upgrade_if_currently_locked_shared()
+BOOST_AUTO_TEST_CASE(test_can_lock_upgrade_if_currently_locked_shared)
 {
     boost::thread_group pool;
 
@@ -140,7 +141,7 @@ void test_can_lock_upgrade_if_currently_locked_shared()
     CHECK_LOCKED_VALUE_EQUAL(unblocked_count_mutex,max_simultaneous_running,reader_count+1);
 }
 
-void test_can_lock_upgrade_to_unique_if_currently_locked_upgrade()
+BOOST_AUTO_TEST_CASE(test_can_lock_upgrade_to_unique_if_currently_locked_upgrade)
 {
     boost::shared_mutex mtx;
     boost::upgrade_lock<boost::shared_mutex> l(mtx);
@@ -148,7 +149,7 @@ void test_can_lock_upgrade_to_unique_if_currently_locked_upgrade()
     BOOST_CHECK(ul.owns_lock());
 }
 
-void test_if_other_thread_has_write_lock_try_lock_shared_returns_false()
+BOOST_AUTO_TEST_CASE(test_if_other_thread_has_write_lock_try_lock_shared_returns_false)
 {
 
     boost::shared_mutex rw_mutex;
@@ -171,7 +172,7 @@ void test_if_other_thread_has_write_lock_try_lock_shared_returns_false()
     writer.join();
 }
 
-void test_if_other_thread_has_write_lock_try_lock_upgrade_returns_false()
+BOOST_AUTO_TEST_CASE(test_if_other_thread_has_write_lock_try_lock_upgrade_returns_false)
 {
 
     boost::shared_mutex rw_mutex;
@@ -194,7 +195,7 @@ void test_if_other_thread_has_write_lock_try_lock_upgrade_returns_false()
     writer.join();
 }
 
-void test_if_no_thread_has_lock_try_lock_shared_returns_true()
+BOOST_AUTO_TEST_CASE(test_if_no_thread_has_lock_try_lock_shared_returns_true)
 {
     boost::shared_mutex rw_mutex;
     bool const try_succeeded=rw_mutex.try_lock_shared();
@@ -205,7 +206,7 @@ void test_if_no_thread_has_lock_try_lock_shared_returns_true()
     }
 }
 
-void test_if_no_thread_has_lock_try_lock_upgrade_returns_true()
+BOOST_AUTO_TEST_CASE(test_if_no_thread_has_lock_try_lock_upgrade_returns_true)
 {
     boost::shared_mutex rw_mutex;
     bool const try_succeeded=rw_mutex.try_lock_upgrade();
@@ -216,7 +217,7 @@ void test_if_no_thread_has_lock_try_lock_upgrade_returns_true()
     }
 }
 
-void test_if_other_thread_has_shared_lock_try_lock_shared_returns_true()
+BOOST_AUTO_TEST_CASE(test_if_other_thread_has_shared_lock_try_lock_shared_returns_true)
 {
 
     boost::shared_mutex rw_mutex;
@@ -239,7 +240,7 @@ void test_if_other_thread_has_shared_lock_try_lock_shared_returns_true()
     writer.join();
 }
 
-void test_if_other_thread_has_shared_lock_try_lock_upgrade_returns_true()
+BOOST_AUTO_TEST_CASE(test_if_other_thread_has_shared_lock_try_lock_upgrade_returns_true)
 {
 
     boost::shared_mutex rw_mutex;
@@ -262,7 +263,7 @@ void test_if_other_thread_has_shared_lock_try_lock_upgrade_returns_true()
     writer.join();
 }
 
-void test_if_other_thread_has_upgrade_lock_try_lock_upgrade_returns_false()
+BOOST_AUTO_TEST_CASE(test_if_other_thread_has_upgrade_lock_try_lock_upgrade_returns_false)
 {
 
     boost::shared_mutex rw_mutex;
@@ -285,18 +286,4 @@ void test_if_other_thread_has_upgrade_lock_try_lock_upgrade_returns_false()
     writer.join();
 }
 
-boost::unit_test::test_suite* init_unit_test_suite(int, char*[])
-{
-    boost::unit_test::test_suite* test =
-        BOOST_TEST_SUITE("Boost.Threads: shared_mutex test suite");
-
-    test->add(BOOST_TEST_CASE(&test_only_one_upgrade_lock_permitted));
-    test->add(BOOST_TEST_CASE(&test_can_lock_upgrade_if_currently_locked_shared));
-    test->add(BOOST_TEST_CASE(&test_can_lock_upgrade_to_unique_if_currently_locked_upgrade));
-    test->add(BOOST_TEST_CASE(&test_if_other_thread_has_write_lock_try_lock_shared_returns_false));
-    test->add(BOOST_TEST_CASE(&test_if_no_thread_has_lock_try_lock_shared_returns_true));
-    test->add(BOOST_TEST_CASE(&test_if_other_thread_has_shared_lock_try_lock_shared_returns_true));
-
-    return test;
-}
 

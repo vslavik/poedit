@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../function.html" title="Chapter&#160;12.&#160;Boost.Function">
+<link rel="up" href="../function.html" title="Chapter&#160;11.&#160;Boost.Function">
 <link rel="prev" href="../boost/function_equal.html" title="Function template function_equal">
 <link rel="next" href="misc.html" title="Miscellaneous Notes">
 </head>
@@ -26,19 +26,19 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="function.faq"></a>Frequently Asked Questions</h2></div></div></div>
 <div class="qandaset">
-<a name="idp214836928"></a><dl>
-<dt>1. <a href="faq.html#idp214837184">Why can't I compare
+<a name="idp106260144"></a><dl>
+<dt>1. <a href="faq.html#idp106260400">Why can't I compare
     boost::function objects with
     operator== or
     operator!=?</a>
 </dt>
-<dt>2. <a href="faq.html#idp214877744">I see void pointers; is this [mess] type safe?</a>
+<dt>2. <a href="faq.html#idp106300304">I see void pointers; is this [mess] type safe?</a>
 </dt>
-<dt>3. <a href="faq.html#idp214880800">Why are there workarounds for void returns? C++ allows them!</a>
+<dt>3. <a href="faq.html#idp106303296">Why are there workarounds for void returns? C++ allows them!</a>
 </dt>
-<dt>4. <a href="faq.html#idp214886480">Why (function) cloning?</a>
+<dt>4. <a href="faq.html#idp106308912">Why (function) cloning?</a>
 </dt>
-<dt>5. <a href="faq.html#idp214888528">How much overhead does a call through boost::function incur?</a>
+<dt>5. <a href="faq.html#idp106310960">How much overhead does a call through boost::function incur?</a>
 </dt>
 </dl>
 <table border="0" style="width: 100%;">
@@ -49,7 +49,7 @@
 <tbody>
 <tr class="question">
 <td align="left" valign="top">
-<a name="idp214837184"></a><a name="idp214837440"></a><p><b>1.</b></p>
+<a name="idp106260400"></a><a name="idp106260656"></a><p><b>1.</b></p>
 </td>
 <td align="left" valign="top"><p>Why can't I compare
     <code class="computeroutput"><a class="link" href="../boost/function.html" title="Class template function">boost::function</a></code> objects with
@@ -121,13 +121,13 @@
       <code class="computeroutput">operator==</code>. This essentially negates the usefulness
       of <code class="computeroutput">operator==</code> in the context in which it is most
       desired: multitarget callbacks. The
-      <a class="link" href="../signals.html" title="Chapter&#160;28.&#160;Boost.Signals">Signals</a> library has a way around
+      <a class="link" href="../signals.html" title="Chapter&#160;26.&#160;Boost.Signals">Signals</a> library has a way around
       this.</p>
 </td>
 </tr>
 <tr class="question">
 <td align="left" valign="top">
-<a name="idp214877744"></a><a name="idp214878000"></a><p><b>2.</b></p>
+<a name="idp106300304"></a><a name="idp106300560"></a><p><b>2.</b></p>
 </td>
 <td align="left" valign="top"><p>I see void pointers; is this [mess] type safe?</p></td>
 </tr>
@@ -146,7 +146,7 @@ invoke a function pointer with the wrong type).  </p></td>
 </tr>
 <tr class="question">
 <td align="left" valign="top">
-<a name="idp214880800"></a><a name="idp214881056"></a><p><b>3.</b></p>
+<a name="idp106303296"></a><a name="idp106303552"></a><p><b>3.</b></p>
 </td>
 <td align="left" valign="top"><p>Why are there workarounds for void returns? C++ allows them!</p></td>
 </tr>
@@ -173,7 +173,7 @@ function objects with parameters that don't exactly match.</p>
 </tr>
 <tr class="question">
 <td align="left" valign="top">
-<a name="idp214886480"></a><a name="idp214886736"></a><p><b>4.</b></p>
+<a name="idp106308912"></a><a name="idp106309168"></a><p><b>4.</b></p>
 </td>
 <td align="left" valign="top"><p>Why (function) cloning?</p></td>
 </tr>
@@ -187,7 +187,7 @@ function objects with parameters that don't exactly match.</p>
 </tr>
 <tr class="question">
 <td align="left" valign="top">
-<a name="idp214888528"></a><a name="idp214888784"></a><p><b>5.</b></p>
+<a name="idp106310960"></a><a name="idp106311216"></a><p><b>5.</b></p>
 </td>
 <td align="left" valign="top"><p>How much overhead does a call through <code class="computeroutput"><a class="link" href="../boost/function.html" title="Class template function">boost::function</a></code> incur?</p></td>
 </tr>

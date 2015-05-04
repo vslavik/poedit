@@ -31,6 +31,6 @@ void foo() {}
 """)
 
 t.run_build_system(["--no-error-backtrace"], status=1)
-t.fail_test(string.find(t.stdout(), "Duplicate name of actual target") == -1)
+t.fail_test(string.find(t.stdout(), "Tried to build the target twice") == -1)
 
 t.cleanup()

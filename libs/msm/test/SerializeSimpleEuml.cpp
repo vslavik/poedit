@@ -12,7 +12,9 @@
 #include <boost/msm/back/state_machine.hpp>
 #include <boost/msm/front/euml/euml.hpp>
 
+#ifndef BOOST_MSM_NONSTANDALONE_TEST
 #define BOOST_TEST_MODULE MyTest
+#endif
 #include <boost/test/unit_test.hpp>
 // include headers that implement a archive in simple text format
 #include <boost/archive/text_oarchive.hpp>

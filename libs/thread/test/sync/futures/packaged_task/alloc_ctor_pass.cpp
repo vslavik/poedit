@@ -64,10 +64,23 @@ public:
     ++n_instances;
     ++n_moves; BOOST_THREAD_RV(a).data_ = -1;
   }
+  A& operator=(BOOST_THREAD_RV_REF(A) a)
+  {
+    data_ = BOOST_THREAD_RV(a).data_;
+    BOOST_THREAD_RV(a).data_ = -1;
+    ++n_moves;
+    return *this;
+  }
   A(const A& a) : data_(a.data_)
   {
     ++n_instances;
     ++n_copies;
+  }
+  A& operator=(BOOST_THREAD_COPY_ASSIGN_REF(A) a)
+  {
+    data_ = a.data_;
+    ++n_copies;
+    return *this;
   }
   ~A()
   {

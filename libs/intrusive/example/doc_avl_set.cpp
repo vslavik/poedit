@@ -12,7 +12,7 @@
 //[doc_avl_set_code
 #include <boost/intrusive/avl_set.hpp>
 #include <vector>
-#include <algorithm>
+#include <functional>
 #include <cassert>
 
 using namespace boost::intrusive;

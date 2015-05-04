@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../interprocess.html" title="Chapter&#160;15.&#160;Boost.Interprocess">
+<link rel="up" href="../interprocess.html" title="Chapter&#160;14.&#160;Boost.Interprocess">
 <link rel="prev" href="synchronization_mechanisms.html" title="Synchronization mechanisms">
 <link rel="next" href="allocators_containers.html" title="Allocators, containers and memory allocation algorithms">
 </head>
@@ -379,13 +379,13 @@
 <p>
           Windows users might also want to use native windows shared memory instead
           of the portable <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_memory_object.html" title="Class shared_memory_object">shared_memory_object</a></code>
-          managed memory. This is achieved through the <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp50047728.html" title="Class template basic_managed_windows_shared_memory">basic_managed_windows_shared_memory</a></code>
+          managed memory. This is achieved through the <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp55409488.html" title="Class template basic_managed_windows_shared_memory">basic_managed_windows_shared_memory</a></code>
           class. To use it just include:
         </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">managed_windows_shared_memory</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          This class has the same interface as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp49505024.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
+          This class has the same interface as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp55351744.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
           but uses native windows shared memory. Note that this managed class has
           the same lifetime issues as the windows shared memory: when the last process
           attached to the windows shared memory is detached from the memory (or ends/crashes)
@@ -406,18 +406,18 @@
 <p>
           Unix users might also want to use XSI (system V) instead of the portable
           <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_memory_object.html" title="Class shared_memory_object">shared_memory_object</a></code>
-          managed memory. This is achieved through the <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp49545728.html" title="Class template basic_managed_xsi_shared_memory">basic_managed_xsi_shared_memory</a></code>
+          managed memory. This is achieved through the <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp55458208.html" title="Class template basic_managed_xsi_shared_memory">basic_managed_xsi_shared_memory</a></code>
           class. To use it just include:
         </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">managed_xsi_shared_memory</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          This class has nearly the same interface as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp49505024.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
+          This class has nearly the same interface as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp55351744.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
           but uses XSI shared memory as backend.
         </p>
 </div>
 <p>
-        For more information about managed XSI shared memory capabilities, see <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp49545728.html" title="Class template basic_managed_xsi_shared_memory">basic_managed_xsi_shared_memory</a></code>
+        For more information about managed XSI shared memory capabilities, see <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp55458208.html" title="Class template basic_managed_xsi_shared_memory">basic_managed_xsi_shared_memory</a></code>
         class reference.
       </p>
 </div>
@@ -809,7 +809,7 @@
           That is, the mutex type used to synchronize named/unique allocations is
           defined by the <code class="computeroutput"><span class="identifier">MemoryAlgorithm</span><span class="special">::</span><span class="identifier">mutex_family</span><span class="special">::</span><span class="identifier">recursive_mutex_type</span></code>
           type. For shared memory, and memory mapped file based managed segments
-          this recursive mutex is defined as <code class="computeroutput"><a class="link" href="../boost/interprocess/interprocess_r_idp50817792.html" title="Class interprocess_recursive_mutex">interprocess_recursive_mutex</a></code>.
+          this recursive mutex is defined as <code class="computeroutput"><a class="link" href="../boost/interprocess/interprocess_r_idp56590896.html" title="Class interprocess_recursive_mutex">interprocess_recursive_mutex</a></code>.
         </p>
 <p>
           If two processes can call:
@@ -1129,7 +1129,7 @@
           fit the managed segment.
         </p>
 <p>
-          Here we have an example showing how to grow and shrink to fit <code class="computeroutput"><a class="link" href="acknowledgements_notes.html#boost.interprocess.managed_shared_memory">managed_shared_memory</a></code>:
+          Here we have an example showing how to grow and shrink to fit <code class="computeroutput"><a class="link" href="../boost/interprocess/managed_shared_memory.html" title="Type definition managed_shared_memory">managed_shared_memory</a></code>:
         </p>
 <p>
 </p>
@@ -1194,7 +1194,7 @@
 <p>
         </p>
 <p>
-          <code class="computeroutput"><a class="link" href="acknowledgements_notes.html#boost.interprocess.managed_mapped_file">managed_mapped_file</a></code>
+          <code class="computeroutput"><a class="link" href="../boost/interprocess/managed_mapped_file.html" title="Type definition managed_mapped_file">managed_mapped_file</a></code>
           also offers a similar function to grow or shrink_to_fit the managed file.
           Please, remember that <span class="bold"><strong>no process should be modifying
           the file/shared memory while the growing/shrinking process is performed</strong></span>.
@@ -1444,7 +1444,7 @@
 <p>
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">managed_shared_memory</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">detail</span><span class="special">/</span><span class="identifier">move</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span> <span class="comment">//boost::move</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">move</span><span class="special">/</span><span class="identifier">utility_core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span> <span class="comment">//boost::move</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cassert</span><span class="special">&gt;//</span><span class="identifier">assert</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cstring</span><span class="special">&gt;//</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">memset</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="keyword">new</span><span class="special">&gt;</span>    <span class="comment">//std::nothrow</span>
@@ -1584,9 +1584,8 @@
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">T</span> <span class="special">*,</span> <span class="keyword">bool</span><span class="special">&gt;</span>
    <span class="identifier">allocation_command</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">::</span><span class="identifier">allocation_type</span> <span class="identifier">command</span>
                      <span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">limit_size</span>
-                     <span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">preferred_size</span>
-                     <span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">&amp;</span><span class="identifier">received_size</span>
-                     <span class="special">,</span> <span class="identifier">T</span> <span class="special">*</span><span class="identifier">reuse_ptr</span> <span class="special">=</span> <span class="number">0</span><span class="special">);</span>
+                     <span class="special">,</span> <span class="identifier">size_type</span> <span class="special">&amp;</span><span class="identifier">prefer_in_recvd_out_size</span>
+                     <span class="special">,</span> <span class="identifier">T</span> <span class="special">*&amp;</span><span class="identifier">reuse_ptr</span><span class="special">);</span>
 </pre>
 <p>
           <span class="bold"><strong>Preconditions for the function</strong></span>:
@@ -1782,51 +1781,53 @@
    <span class="identifier">managed_shared_memory</span> <span class="identifier">managed_shm</span><span class="special">(</span><span class="identifier">create_only</span><span class="special">,</span> <span class="string">"MySharedMemory"</span><span class="special">,</span> <span class="number">10000</span><span class="special">*</span><span class="keyword">sizeof</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">));</span>
 
    <span class="comment">//Allocate at least 100 bytes, 1000 bytes if possible</span>
-   <span class="identifier">managed_shared_memory</span><span class="special">::</span><span class="identifier">size_type</span> <span class="identifier">min_size</span> <span class="special">=</span> <span class="number">100</span><span class="special">,</span> <span class="identifier">preferred_size</span> <span class="special">=</span> <span class="number">1000</span><span class="special">;</span>
-   <span class="identifier">managed_shared_memory</span><span class="special">::</span><span class="identifier">size_type</span> <span class="identifier">received_size</span><span class="special">;</span>
+   <span class="identifier">managed_shared_memory</span><span class="special">::</span><span class="identifier">size_type</span> <span class="identifier">min_size</span> <span class="special">=</span> <span class="number">100</span><span class="special">;</span>
+   <span class="identifier">managed_shared_memory</span><span class="special">::</span><span class="identifier">size_type</span> <span class="identifier">first_received_size</span> <span class="special">=</span> <span class="number">1000</span><span class="special">;</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">*</span><span class="identifier">hint</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
    <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">*</span><span class="identifier">ptr</span> <span class="special">=</span> <span class="identifier">managed_shm</span><span class="special">.</span><span class="identifier">allocation_command</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">&gt;</span>
-      <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">::</span><span class="identifier">allocate_new</span><span class="special">,</span> <span class="identifier">min_size</span><span class="special">,</span> <span class="identifier">preferred_size</span><span class="special">,</span> <span class="identifier">received_size</span><span class="special">).</span><span class="identifier">first</span><span class="special">;</span>
+      <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">::</span><span class="identifier">allocate_new</span><span class="special">,</span> <span class="identifier">min_size</span><span class="special">,</span> <span class="identifier">first_received_size</span><span class="special">,</span> <span class="identifier">hint</span><span class="special">);</span>
 
    <span class="comment">//Received size must be bigger than min_size</span>
-   <span class="identifier">assert</span><span class="special">(</span><span class="identifier">received_size</span> <span class="special">&gt;=</span> <span class="identifier">min_size</span><span class="special">);</span>
+   <span class="identifier">assert</span><span class="special">(</span><span class="identifier">first_received_size</span> <span class="special">&gt;=</span> <span class="identifier">min_size</span><span class="special">);</span>
 
    <span class="comment">//Get free memory</span>
    <span class="identifier">managed_shared_memory</span><span class="special">::</span><span class="identifier">size_type</span> <span class="identifier">free_memory_after_allocation</span> <span class="special">=</span> <span class="identifier">managed_shm</span><span class="special">.</span><span class="identifier">get_free_memory</span><span class="special">();</span>
 
    <span class="comment">//Now write the data</span>
-   <span class="keyword">for</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">received_size</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="identifier">ptr</span><span class="special">[</span><span class="identifier">i</span><span class="special">]</span> <span class="special">=</span> <span class="identifier">i</span><span class="special">;</span>
+   <span class="keyword">for</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">first_received_size</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="identifier">ptr</span><span class="special">[</span><span class="identifier">i</span><span class="special">]</span> <span class="special">=</span> <span class="identifier">i</span><span class="special">;</span>
 
    <span class="comment">//Now try to triplicate the buffer. We won't admit an expansion</span>
    <span class="comment">//lower to the double of the original buffer.</span>
    <span class="comment">//This "should" be successful since no other class is allocating</span>
    <span class="comment">//memory from the segment</span>
-   <span class="identifier">managed_shared_memory</span><span class="special">::</span><span class="identifier">size_type</span> <span class="identifier">expanded_size</span><span class="special">;</span>
-   <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">*,</span> <span class="keyword">bool</span><span class="special">&gt;</span> <span class="identifier">ret</span> <span class="special">=</span> <span class="identifier">managed_shm</span><span class="special">.</span><span class="identifier">allocation_command</span>
-      <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">::</span><span class="identifier">expand_fwd</span><span class="special">,</span> <span class="identifier">received_size</span><span class="special">*</span><span class="number">2</span><span class="special">,</span> <span class="identifier">received_size</span><span class="special">*</span><span class="number">3</span><span class="special">,</span> <span class="identifier">expanded_size</span><span class="special">,</span> <span class="identifier">ptr</span><span class="special">);</span>
+   <span class="identifier">min_size</span> <span class="special">=</span> <span class="identifier">first_received_size</span><span class="special">*</span><span class="number">2</span><span class="special">;</span>
+   <span class="identifier">managed_shared_memory</span><span class="special">::</span><span class="identifier">size_type</span> <span class="identifier">expanded_size</span> <span class="special">=</span> <span class="identifier">first_received_size</span><span class="special">*</span><span class="number">3</span><span class="special">;</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">*</span> <span class="identifier">ret</span> <span class="special">=</span> <span class="identifier">managed_shm</span><span class="special">.</span><span class="identifier">allocation_command</span>
+      <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">::</span><span class="identifier">expand_fwd</span><span class="special">,</span> <span class="identifier">min_size</span><span class="special">,</span> <span class="identifier">expanded_size</span><span class="special">,</span> <span class="identifier">ptr</span><span class="special">);</span>
 
    <span class="comment">//Check invariants</span>
-   <span class="identifier">assert</span><span class="special">(</span><span class="identifier">ret</span><span class="special">.</span><span class="identifier">second</span> <span class="special">==</span> <span class="keyword">true</span><span class="special">);</span>
-   <span class="identifier">assert</span><span class="special">(</span><span class="identifier">ret</span><span class="special">.</span><span class="identifier">first</span> <span class="special">==</span> <span class="identifier">ptr</span><span class="special">);</span>
-   <span class="identifier">assert</span><span class="special">(</span><span class="identifier">expanded_size</span> <span class="special">&gt;=</span> <span class="identifier">received_size</span><span class="special">*</span><span class="number">2</span><span class="special">);</span>
+   <span class="identifier">assert</span><span class="special">(</span><span class="identifier">ptr</span> <span class="special">!=</span> <span class="number">0</span><span class="special">);</span>
+   <span class="identifier">assert</span><span class="special">(</span><span class="identifier">ret</span> <span class="special">==</span> <span class="identifier">ptr</span><span class="special">);</span>
+   <span class="identifier">assert</span><span class="special">(</span><span class="identifier">expanded_size</span> <span class="special">&gt;=</span> <span class="identifier">first_received_size</span><span class="special">*</span><span class="number">2</span><span class="special">);</span>
 
    <span class="comment">//Get free memory and compare</span>
    <span class="identifier">managed_shared_memory</span><span class="special">::</span><span class="identifier">size_type</span> <span class="identifier">free_memory_after_expansion</span> <span class="special">=</span> <span class="identifier">managed_shm</span><span class="special">.</span><span class="identifier">get_free_memory</span><span class="special">();</span>
    <span class="identifier">assert</span><span class="special">(</span><span class="identifier">free_memory_after_expansion</span> <span class="special">&lt;</span> <span class="identifier">free_memory_after_allocation</span><span class="special">);</span>
 
    <span class="comment">//Write new values</span>
-   <span class="keyword">for</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">i</span> <span class="special">=</span> <span class="identifier">received_size</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">expanded_size</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>  <span class="identifier">ptr</span><span class="special">[</span><span class="identifier">i</span><span class="special">]</span> <span class="special">=</span> <span class="identifier">i</span><span class="special">;</span>
+   <span class="keyword">for</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">i</span> <span class="special">=</span> <span class="identifier">first_received_size</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">expanded_size</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>  <span class="identifier">ptr</span><span class="special">[</span><span class="identifier">i</span><span class="special">]</span> <span class="special">=</span> <span class="identifier">i</span><span class="special">;</span>
 
    <span class="comment">//Try to shrink approximately to min_size, but the new size</span>
    <span class="comment">//should be smaller than min_size*2.</span>
    <span class="comment">//This "should" be successful since no other class is allocating</span>
    <span class="comment">//memory from the segment</span>
-   <span class="identifier">managed_shared_memory</span><span class="special">::</span><span class="identifier">size_type</span> <span class="identifier">shrunk_size</span><span class="special">;</span>
+   <span class="identifier">managed_shared_memory</span><span class="special">::</span><span class="identifier">size_type</span> <span class="identifier">shrunk_size</span> <span class="special">=</span> <span class="identifier">min_size</span><span class="special">;</span>
    <span class="identifier">ret</span> <span class="special">=</span> <span class="identifier">managed_shm</span><span class="special">.</span><span class="identifier">allocation_command</span>
-      <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">::</span><span class="identifier">shrink_in_place</span><span class="special">,</span> <span class="identifier">min_size</span><span class="special">*</span><span class="number">2</span><span class="special">,</span> <span class="identifier">min_size</span><span class="special">,</span> <span class="identifier">shrunk_size</span><span class="special">,</span> <span class="identifier">ptr</span><span class="special">);</span>
+      <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">::</span><span class="identifier">shrink_in_place</span><span class="special">,</span> <span class="identifier">min_size</span><span class="special">*</span><span class="number">2</span><span class="special">,</span> <span class="identifier">shrunk_size</span><span class="special">,</span> <span class="identifier">ptr</span><span class="special">);</span>
 
    <span class="comment">//Check invariants</span>
-   <span class="identifier">assert</span><span class="special">(</span><span class="identifier">ret</span><span class="special">.</span><span class="identifier">second</span> <span class="special">==</span> <span class="keyword">true</span><span class="special">);</span>
-   <span class="identifier">assert</span><span class="special">(</span><span class="identifier">ret</span><span class="special">.</span><span class="identifier">first</span> <span class="special">==</span> <span class="identifier">ptr</span><span class="special">);</span>
+   <span class="identifier">assert</span><span class="special">(</span><span class="identifier">ptr</span> <span class="special">!=</span> <span class="number">0</span><span class="special">);</span>
+   <span class="identifier">assert</span><span class="special">(</span><span class="identifier">ret</span> <span class="special">==</span> <span class="identifier">ptr</span><span class="special">);</span>
    <span class="identifier">assert</span><span class="special">(</span><span class="identifier">shrunk_size</span> <span class="special">&lt;=</span> <span class="identifier">min_size</span><span class="special">*</span><span class="number">2</span><span class="special">);</span>
    <span class="identifier">assert</span><span class="special">(</span><span class="identifier">shrunk_size</span> <span class="special">&gt;=</span> <span class="identifier">min_size</span><span class="special">);</span>
 
@@ -1944,7 +1945,7 @@
          <span class="identifier">std</span><span class="special">::</span><span class="identifier">fstream</span> <span class="identifier">file</span><span class="special">(</span><span class="identifier">ManagedFile2</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">out</span> <span class="special">|</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">binary</span><span class="special">);</span>
          <span class="keyword">if</span><span class="special">(!</span><span class="identifier">file</span><span class="special">)</span>
             <span class="keyword">throw</span> <span class="keyword">int</span><span class="special">(</span><span class="number">0</span><span class="special">);</span>
-		 <span class="identifier">file</span><span class="special">.</span><span class="identifier">write</span><span class="special">(</span><span class="keyword">static_cast</span><span class="special">&lt;</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*&gt;(</span><span class="identifier">managed_file_cow</span><span class="special">.</span><span class="identifier">get_address</span><span class="special">()),</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">streamsize</span><span class="special">)</span><span class="identifier">managed_file_cow</span><span class="special">.</span><span class="identifier">get_size</span><span class="special">());</span>
+       <span class="identifier">file</span><span class="special">.</span><span class="identifier">write</span><span class="special">(</span><span class="keyword">static_cast</span><span class="special">&lt;</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*&gt;(</span><span class="identifier">managed_file_cow</span><span class="special">.</span><span class="identifier">get_address</span><span class="special">()),</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">streamsize</span><span class="special">)</span><span class="identifier">managed_file_cow</span><span class="special">.</span><span class="identifier">get_size</span><span class="special">());</span>
       <span class="special">}</span>
 
       <span class="comment">//Now open the modified file and test changes</span>
@@ -2168,7 +2169,7 @@
           can also be used to place STL compatible containers in the user segment.
         </p>
 <p>
-          <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp49486928.html" title="Class template basic_managed_external_buffer">basic_managed_external_buffer</a></code>
+          <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp55243232.html" title="Class template basic_managed_external_buffer">basic_managed_external_buffer</a></code>
           can be also useful to build small databases for embedded systems limiting
           the size of the used memory to a predefined memory chunk, instead of letting
           the database fragment the heap memory.
@@ -2226,7 +2227,7 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">managed_heap_memory</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          The use is exactly the same as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp49486928.html" title="Class template basic_managed_external_buffer">basic_managed_external_buffer</a></code>,
+          The use is exactly the same as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp55243232.html" title="Class template basic_managed_external_buffer">basic_managed_external_buffer</a></code>,
           except that memory is created by the managed memory segment itself using
           dynamic (new/delete) memory.
         </p>
@@ -2412,15 +2413,15 @@
       <span class="comment">//through mq2 to the second buffer</span>
       <span class="keyword">while</span><span class="special">(</span><span class="number">1</span><span class="special">){</span>
          <span class="comment">//Send a fragment of buffer1 through mq1</span>
-		 <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">bytes_to_send</span> <span class="special">=</span> <span class="identifier">MaxMsgSize</span> <span class="special">&lt;</span> <span class="special">(</span><span class="identifier">db_origin</span><span class="special">.</span><span class="identifier">get_size</span><span class="special">()</span> <span class="special">-</span> <span class="identifier">sent</span><span class="special">)</span> <span class="special">?</span>
+       <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">bytes_to_send</span> <span class="special">=</span> <span class="identifier">MaxMsgSize</span> <span class="special">&lt;</span> <span class="special">(</span><span class="identifier">db_origin</span><span class="special">.</span><span class="identifier">get_size</span><span class="special">()</span> <span class="special">-</span> <span class="identifier">sent</span><span class="special">)</span> <span class="special">?</span>
                                        <span class="identifier">MaxMsgSize</span> <span class="special">:</span> <span class="special">(</span><span class="identifier">db_origin</span><span class="special">.</span><span class="identifier">get_size</span><span class="special">()</span> <span class="special">-</span> <span class="identifier">sent</span><span class="special">);</span>
          <span class="identifier">mq1</span><span class="special">.</span><span class="identifier">send</span><span class="special">(</span> <span class="special">&amp;</span><span class="keyword">static_cast</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">*&gt;(</span><span class="identifier">db_origin</span><span class="special">.</span><span class="identifier">get_address</span><span class="special">())[</span><span class="identifier">sent</span><span class="special">]</span>
                <span class="special">,</span> <span class="identifier">bytes_to_send</span>
                <span class="special">,</span> <span class="number">0</span><span class="special">);</span>
          <span class="identifier">sent</span> <span class="special">+=</span> <span class="identifier">bytes_to_send</span><span class="special">;</span>
          <span class="comment">//Receive the fragment through mq2 to buffer_destiny</span>
-		 <span class="identifier">mq2</span><span class="special">.</span><span class="identifier">receive</span><span class="special">(</span> <span class="special">&amp;</span><span class="identifier">buffer_destiny</span><span class="special">[</span><span class="identifier">total_recvd</span><span class="special">]</span>
-		          <span class="special">,</span> <span class="identifier">BufferSize</span> <span class="special">-</span> <span class="identifier">recvd</span>
+       <span class="identifier">mq2</span><span class="special">.</span><span class="identifier">receive</span><span class="special">(</span> <span class="special">&amp;</span><span class="identifier">buffer_destiny</span><span class="special">[</span><span class="identifier">total_recvd</span><span class="special">]</span>
+                <span class="special">,</span> <span class="identifier">BufferSize</span> <span class="special">-</span> <span class="identifier">recvd</span>
                   <span class="special">,</span> <span class="identifier">recvd</span>
                   <span class="special">,</span> <span class="identifier">priority</span><span class="special">);</span>
          <span class="identifier">total_recvd</span> <span class="special">+=</span> <span class="identifier">recvd</span><span class="special">;</span>
@@ -2455,8 +2456,8 @@
       <span class="special">}</span>
 
       <span class="comment">//Now let's compare all db values</span>
-	  <span class="identifier">MyMap</span><span class="special">::</span><span class="identifier">size_type</span> <span class="identifier">num_elements</span> <span class="special">=</span> <span class="identifier">map1</span><span class="special">-&gt;</span><span class="identifier">size</span><span class="special">();</span>
-	  <span class="keyword">for</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">num_elements</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">){</span>
+     <span class="identifier">MyMap</span><span class="special">::</span><span class="identifier">size_type</span> <span class="identifier">num_elements</span> <span class="special">=</span> <span class="identifier">map1</span><span class="special">-&gt;</span><span class="identifier">size</span><span class="special">();</span>
+     <span class="keyword">for</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">num_elements</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">){</span>
          <span class="keyword">if</span><span class="special">((*</span><span class="identifier">map1</span><span class="special">)[</span><span class="identifier">i</span><span class="special">]</span> <span class="special">!=</span> <span class="special">(*</span><span class="identifier">map2</span><span class="special">)[</span><span class="identifier">i</span><span class="special">]){</span>
             <span class="keyword">return</span> <span class="keyword">false</span><span class="special">;</span>
          <span class="special">}</span>

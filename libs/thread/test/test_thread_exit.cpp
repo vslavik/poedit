@@ -12,6 +12,8 @@
 #include <memory>
 #include <string>
 
+#define BOOST_TEST_MODULE Boost.Threads: thread exit test suite
+
 #include <boost/test/unit_test.hpp>
 
 boost::thread::id exit_func_thread_id;
@@ -27,7 +29,7 @@ void tf1()
     BOOST_CHECK(exit_func_thread_id!=boost::this_thread::get_id());
 }
 
-void test_thread_exit_func_runs_when_thread_exits()
+BOOST_AUTO_TEST_CASE(test_thread_exit_func_runs_when_thread_exits)
 {
     exit_func_thread_id=boost::thread::id();
     boost::thread t(tf1);
@@ -51,7 +53,7 @@ void tf2()
 }
 
 
-void test_can_use_function_object_for_exit_func()
+BOOST_AUTO_TEST_CASE(test_can_use_function_object_for_exit_func)
 {
     exit_func_thread_id=boost::thread::id();
     boost::thread t(tf2);
@@ -59,17 +61,3 @@ void test_can_use_function_object_for_exit_func()
     t.join();
     BOOST_CHECK(exit_func_thread_id==t_id);
 }
-
-
-boost::unit_test::test_suite* init_unit_test_suite(int, char*[])
-{
-    boost::unit_test::test_suite* test =
-        BOOST_TEST_SUITE("Boost.Threads: futures test suite");
-
-    test->add(BOOST_TEST_CASE(test_thread_exit_func_runs_when_thread_exits));
-    test->add(BOOST_TEST_CASE(test_can_use_function_object_for_exit_func));
-
-    return test;
-}
-
-

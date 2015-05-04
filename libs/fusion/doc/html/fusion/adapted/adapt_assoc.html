@@ -42,8 +42,8 @@
       </h5>
 <pre class="programlisting"><span class="identifier">BOOST_FUSION_ADAPT_ASSOC_STRUCT</span><span class="special">(</span>
     <span class="identifier">struct_name</span><span class="special">,</span>
-    <span class="special">(</span><span class="identifier">member_type0</span><span class="special">,</span> <span class="identifier">member_name0</span><span class="special">,</span> <span class="identifier">key_type0</span><span class="special">)</span>
-    <span class="special">(</span><span class="identifier">member_type1</span><span class="special">,</span> <span class="identifier">member_name1</span><span class="special">,</span> <span class="identifier">key_type1</span><span class="special">)</span>
+    <span class="special">([</span><span class="identifier">member_type0</span><span class="special">,]</span> <span class="identifier">member_name0</span><span class="special">,</span> <span class="identifier">key_type0</span><span class="special">)</span>
+    <span class="special">([</span><span class="identifier">member_type1</span><span class="special">,]</span> <span class="identifier">member_name1</span><span class="special">,</span> <span class="identifier">key_type1</span><span class="special">)</span>
     <span class="special">...</span>
     <span class="special">)</span>
 </pre>
@@ -55,11 +55,15 @@
         The above macro generates the necessary code to adapt <code class="computeroutput"><span class="identifier">struct_name</span></code>
         as a model of <a class="link" href="../sequence/concepts/random_access_sequence.html" title="Random Access Sequence">Random
         Access Sequence</a> and <a class="link" href="../sequence/concepts/associative_sequence.html" title="Associative Sequence">Associative
-        Sequence</a>. The sequence of <code class="computeroutput"><span class="special">(</span><span class="identifier">member_typeN</span><span class="special">,</span>
+        Sequence</a>. The sequence of <code class="computeroutput"><span class="special">([</span><span class="identifier">member_typeN</span><span class="special">,]</span>
         <span class="identifier">member_nameN</span><span class="special">,</span>
         <span class="identifier">key_typeN</span><span class="special">)</span></code>
-        triples declares the type, name and key type of each of the struct members
+        tuples declares the type, name and key type of each of the struct members
         that are part of the sequence.
+      </p>
+<p>
+        When member_typeN is omitted or set to BOOST_FUSION_ADAPT_AUTO, the type
+        is infered with Boost.TypeOf.
       </p>
 <p>
         The macro should be used at global scope, and <code class="computeroutput"><span class="identifier">struct_name</span></code>
@@ -96,8 +100,14 @@
 <span class="comment">// keys keys::name and keys::age present.</span>
 <span class="identifier">BOOST_FUSION_ADAPT_ASSOC_STRUCT</span><span class="special">(</span>
     <span class="identifier">demo</span><span class="special">::</span><span class="identifier">employee</span><span class="special">,</span>
-    <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="identifier">name</span><span class="special">,</span> <span class="identifier">keys</span><span class="special">::</span><span class="identifier">name</span><span class="special">)</span>
-    <span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="identifier">age</span><span class="special">,</span> <span class="identifier">keys</span><span class="special">::</span><span class="identifier">age</span><span class="special">))</span>
+    <span class="special">(</span><span class="identifier">name</span><span class="special">,</span> <span class="identifier">keys</span><span class="special">::</span><span class="identifier">name</span><span class="special">)</span>
+    <span class="special">(</span><span class="identifier">age</span><span class="special">,</span> <span class="identifier">keys</span><span class="special">::</span><span class="identifier">age</span><span class="special">))</span>
+
+<span class="comment">// Without BOOST_PP_VARIADICS support :</span>
+<span class="identifier">BOOST_FUSION_ADAPT_ASSOC_STRUCT</span><span class="special">(</span>
+    <span class="identifier">demo</span><span class="special">::</span><span class="identifier">employee</span><span class="special">,</span>
+    <span class="special">(</span><span class="identifier">BOOST_FUSION_ADAPT_AUTO</span><span class="special">,</span> <span class="identifier">name</span><span class="special">,</span> <span class="identifier">keys</span><span class="special">::</span><span class="identifier">name</span><span class="special">),</span>
+    <span class="special">(</span><span class="identifier">BOOST_FUSION_ADAPT_AUTO</span><span class="special">,</span> <span class="identifier">age</span><span class="special">,</span> <span class="identifier">keys</span><span class="special">::</span><span class="identifier">name</span><span class="special">))</span>
 </pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

@@ -192,6 +192,17 @@ void test_spots(RealType)
       BOOST_CHECK_EQUAL(cdf(complement(extreme_value_distribution<RealType>(), -inf)), 1);
       BOOST_CHECK_EQUAL(cdf(complement(extreme_value_distribution<RealType>(), inf)), 0);
    }
+   //
+   // Bug reports:
+   //
+   // https://svn.boost.org/trac/boost/ticket/10938:
+   BOOST_CHECK_CLOSE(
+   ::boost::math::pdf(
+      extreme_value_distribution<RealType>(0, 1),
+      static_cast<RealType>(-1000)),              // x
+      static_cast<RealType>(0),                // probability.
+      tolerance); // %
+
 } // template <class RealType>void test_spots(RealType)
 
 BOOST_AUTO_TEST_CASE( test_main )

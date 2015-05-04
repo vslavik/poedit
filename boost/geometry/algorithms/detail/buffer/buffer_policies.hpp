@@ -35,7 +35,7 @@ namespace detail { namespace buffer
 
 enum intersection_location_type
 {
-    location_ok, inside_buffer, inside_original
+    location_ok, inside_buffer, location_discard
 };
 
 class backtrack_for_buffer
@@ -120,12 +120,21 @@ struct buffer_turn_info
         return robust_point;
     }
 
-
     intersection_location_type location;
 
     int count_within;
+
+    bool within_original;
+    int count_on_original_boundary;
+    int count_in_original; // increased by +1 for in ext.ring, -1 for int.ring
+
     int count_on_offsetted;
     int count_on_helper;
+    int count_within_near_offsetted;
+
+    bool remove_on_multi;
+
+    // Obsolete:
     int count_on_occupied;
     int count_on_multi;
 
@@ -133,8 +142,13 @@ struct buffer_turn_info
         : turn_index(-1)
         , location(location_ok)
         , count_within(0)
+        , within_original(false)
+        , count_on_original_boundary(0)
+        , count_in_original(0)
         , count_on_offsetted(0)
         , count_on_helper(0)
+        , count_within_near_offsetted(0)
+        , remove_on_multi(false)
         , count_on_occupied(0)
         , count_on_multi(0)
     {}

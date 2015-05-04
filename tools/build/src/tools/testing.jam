@@ -1,6 +1,6 @@
 # Copyright 2005 Dave Abrahams
 # Copyright 2002, 2003, 2004, 2005, 2006 Vladimir Prus
-# Copyright 2014 Rene Rivera
+# Copyright 2014-2015 Rene Rivera
 # Copyright 2014 Microsoft Corporation
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt)
@@ -433,7 +433,7 @@ rule capture-output ( target : source : properties * : targets-to-remove * )
     # OK if it cannot find the target or updating rule.
     NOCARE $(target:S=.output) ;
 
-    # This has two-fold effect. First it adds input files to the dependendency
+    # This has two-fold effect. First it adds input files to the dependency
     # graph, preventing a warning. Second, it causes input files to be bound
     # before target is created. Therefore, they are bound using SEARCH setting
     # on them and not LOCATE setting of $(target), as in other case (due to jam
@@ -537,6 +537,7 @@ if [ os.name ] = NT
     .SHELL_SET     = "set " ;
     .CATENATE      = type ;
     .CP            = copy ;
+    .NULLIN        = ;
 }
 else
 {
@@ -550,6 +551,7 @@ else
     .SHELL_SET     = "" ;
     .CATENATE      = cat ;
     .CP            = cp ;
+    .NULLIN        = "<" "/dev/null" ;
 }
 
 
@@ -571,7 +573,7 @@ actions capture-output bind INPUT_FILES output-file
         echo Skipping test execution due to testing.execute=off
         exit 0
     $(.ENDIF)
-    $(LAUNCHER) "$(>)" $(ARGS) "$(INPUT_FILES)" > "$(output-file)" 2>&1
+    $(LAUNCHER) "$(>)" $(ARGS) "$(INPUT_FILES)" > "$(output-file)" 2>&1 $(.NULLIN)
     $(.SET_STATUS)
     $(.RUN_OUTPUT_NL) >> "$(output-file)"
     echo EXIT STATUS: $(.STATUS) >> "$(output-file)"

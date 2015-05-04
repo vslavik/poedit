@@ -1,15 +1,15 @@
 [book Math Toolkit
     [quickbook 1.6]
-    [copyright 2006, 2007, 2008, 2009, 2010, 2012, 2013 Nikhar Agrawal, Anton Bikineev, Paul A. Bristow, Christopher Kormanyos, Hubert Holin, Bruno Lalande, John Maddock, Johan Råde, Gautam Sewani, Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang]
+    [copyright 2006, 2007, 2008, 2009, 2010, 2012, 2013, 2014 Nikhar Agrawal, Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert Holin, Bruno Lalande, John Maddock, Johan Råde, Gautam Sewani, Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang]
     [/purpose ISBN 0-9504833-2-X  978-0-9504833-2-0, Classification 519.2-dc22]
     [license
         Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
         [@http://www.boost.org/LICENSE_1_0.txt])
     ]
-    [authors [Agrawal, Nikhar], [Bikineev, Anton], [Bristow, Paul A.], [Holin, Hubert], [Kormanyos, Christopher], [Lalande, Bruno], [Maddock, John], [Råde, Johan], [Sobotta, Benjamin], [Sewani, Gautam], [van den Berg, Thijs], [Walker, Daryle], [Zhang, Xiaogang]]
+    [authors [Agrawal, Nikhar], [Bikineev, Anton], [Bristow, Paul A.], [Holin, Hubert], [Guazzone, Marco], [Kormanyos, Christopher], [Lalande, Bruno], [Maddock, John], [Råde, Johan], [Sobotta, Benjamin], [Sewani, Gautam], [van den Berg, Thijs], [Walker, Daryle], [Zhang, Xiaogang]]
     [/last-revision $Date$]
-    [version 1.9.0]
+    [version 2.2.0]
 ]
 
 [template mathpart[id title]
@@ -21,7 +21,7 @@
 
 [template equation[name]  '''<inlinemediaobject>
 <imageobject role="html">
-<imagedata fileref="../equations/'''[name]'''.png"></imagedata>
+<imagedata fileref="../equations/'''[name]'''.svg"></imagedata>
 </imageobject>
 <imageobject role="print">
 <imagedata fileref="../equations/'''[name]'''.svg"></imagedata>
@@ -30,7 +30,7 @@
 
 [template graph[name]  '''<inlinemediaobject>
 <imageobject role="html">
-<imagedata align="center" fileref="../graphs/'''[name]'''.png"></imagedata>
+<imagedata align="center" fileref="../graphs/'''[name]'''.svg"></imagedata>
 </imageobject>
 <imageobject role="print">
 <imagedata align="center" fileref="../graphs/'''[name]'''.svg"></imagedata>
@@ -99,6 +99,8 @@ and use the function's name as the link text.]
 [/gammas]
 [def __lgamma [link math_toolkit.sf_gamma.lgamma lgamma]]
 [def __digamma [link math_toolkit.sf_gamma.digamma digamma]]
+[def __trigamma [link math_toolkit.sf_gamma.trigamma trigamma]]
+[def __polygamma [link math_toolkit.sf_gamma.polygamma polygamma]]
 [def __tgamma_ratio [link math_toolkit.sf_gamma.gamma_ratios tgamma_ratio]]
 [def __tgamma_delta_ratio [link math_toolkit.sf_gamma.gamma_ratios tgamma_delta_ratio]]
 [def __tgamma [link math_toolkit.sf_gamma.tgamma tgamma]]
@@ -148,6 +150,9 @@ and use the function's name as the link text.]
 [def __ellint_1  [link math_toolkit.ellint.ellint_1 ellint_1]]
 [def __ellint_2  [link math_toolkit.ellint.ellint_2 ellint_2]]
 [def __ellint_3  [link math_toolkit.ellint.ellint_3 ellint_3]]
+[def __ellint_d  [link math_toolkit.ellint.ellint_d ellint_d]]
+[def __jacobi_zeta  [link math_toolkit.ellint.jacobi_zeta jacobi_zeta]]
+[def __heuman_lambda  [link math_toolkit.ellint.heuman_lambda heuman_lambda]]
 
 [/ Bernoulli functions and numbers]
 [def __bernoulli_numbers  [link math_toolkit.number_series.bernoulli_numbers Bernoulli numbers]]
@@ -237,6 +242,9 @@ and use the function's name as the link text.]
 [/polynomials]
 [def __laguerre [link math_toolkit.sf_poly.laguerre laguerre]]
 [def __legendre [link math_toolkit.sf_poly.legendre legendre_p]]
+[def __legendre_p [link math_toolkit.sf_poly.legendre legendre_p]]
+[def __legendre_q [link math_toolkit.sf_poly.legendre legendre_q]]
+[def __legendre_next [link math_toolkit.sf_poly.legendre legendre_next]]
 [def __hermite [link math_toolkit.sf_poly.hermite hermite]]
 
 [/Misc]
@@ -268,8 +276,8 @@ and use the function's name as the link text.]
 [def __support [link math_toolkit.dist_ref.nmp.support support]]
 [def __algorithms [link math_toolkit.dist_ref.dist_algorithms algorithms]]
 
-
 [/ distribution def names end in distrib to avoid clashes]
+[def __arcsine_distrib [link math_toolkit.dist_ref.dists.arcsine_dist Arcsine Distribution]]
 [def __beta_distrib [link math_toolkit.dist_ref.dists.beta_dist Beta Distribution]]
 [def __binomial_distrib [link math_toolkit.dist_ref.dists.binomial_dist Binomial Distribution]]
 [def __cauchy_distrib [link math_toolkit.dist_ref.dists.cauchy_dist Cauchy Distribution]]
@@ -279,6 +287,7 @@ and use the function's name as the link text.]
 [def __F_distrib [link math_toolkit.dist_ref.dists.f_dist Fisher F Distribution]]
 [def __gamma_distrib [link math_toolkit.dist_ref.dists.gamma_dist Gamma Distribution]]
 [def __geometric_distrib [link math_toolkit.dist_ref.dists.geometric_dist Geometric Distribution]]
+[def __hyperexponential_distrib [link math_toolkit.dist_ref.dists.hyperexponential_dist Hyperexponential Distribution]]
 [def __hypergeometric_distrib [link math_toolkit.dist_ref.dists.hypergeometric_dist hypergeometric Distribution]]
 [def __inverse_gamma_distrib [link math_toolkit.dist_ref.dists.inverse_gamma_dist Inverse Gamma Distribution]]
 [def __inverse_gaussian_distrib [link math_toolkit.dist_ref.dists.inverse_gaussian_dist Inverse Gaussian Distribution]]
@@ -352,6 +361,7 @@ and use the function's name as the link text.]
 [def __e_float [@http://calgo.acm.org/910.zip e_float (TOMS Algorithm 910)]]
 [def __Abramowitz_Stegun M. Abramowitz and I. A. Stegun, Handbook of Mathematical Functions, NBS  (1964)]
 [def _DMLF [@http://dlmf.nist.gov/ NIST Digital Library of Mathematical Functions]]
+[def __epsilon [@http://en.wikipedia.org/wiki/Machine_epsilon machine epsilon]]
 
 [/ Some composite templates]
 [template super[x]'''<superscript>'''[x]'''</superscript>''']
@@ -463,6 +473,8 @@ and as a CD ISBN 0-9504833-2-X  978-0-9504833-2-0, Classification 519.2-dc22.
 [include sf/tgamma.qbk]
 [include sf/lgamma.qbk]
 [include sf/digamma.qbk]
+[include sf/trigamma.qbk]
+[include sf/polygamma.qbk]
 [include sf/gamma_ratios.qbk]
 [include sf/igamma.qbk]
 [include sf/igamma_inv.qbk]

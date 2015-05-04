@@ -274,7 +274,7 @@ Issues with cross module type comparison on a bugged compilers are bypassed by d
 
 [section Making a custom type_index]
 
-Sometimes there may be a need to create your own type info system. This may be usefull if you wish to store some more info about types (PODness, size of a type, pointers to common functions...) or if you have an idea of a more compact types representations.
+Sometimes there may be a need to create your own type info system. This may be useful if you wish to store some more info about types (PODness, size of a type, pointers to common functions...) or if you have an idea of a more compact types representations.
 
 [import ../examples/user_defined_typeinfo.hpp]
 [import ../examples/user_defined_typeinfo.cpp]
@@ -353,7 +353,9 @@ TypeIndex has been tested and successfully work on many compilers.
     assert(foo_a() != foo_b()); // will fail on some compilers
     ```
     
-    *Compilers that have that limitation:* GCC, CLANG. 
+    *Compilers that have that limitation:* GCC, CLANG, Intel.
+
+    *Test:* you can test this issue by runing the `testing_crossmodule_anonymous_no_rtti` that can be build if you run `../../../b2` in `type_index/test/` folder.
 ]
 
 [section Define the BOOST_TYPE_INDEX_FUNCTION_SIGNATURE macro]
@@ -378,7 +380,7 @@ function signature including template parameters.
 If the output of `boost::typeindex::ctti_type_index::type_id<int>().name()` 
 * returns not just `int` but also a lot of text around the `int` 
 * or does not return type at all
-then you are usng a compiler that was not tested with this library and you need to setup the 
+then you are using a compiler that was not tested with this library and you need to setup the
 [macroref BOOST_TYPE_INDEX_CTTI_USER_DEFINED_PARSING] macro.
 
 Here is a short instruction:
@@ -394,7 +396,7 @@ Here is a short instruction:
     * `skip_at_begin` is equal to `skip_at_begin` at step 2
     * `skip_at_end` is equal to `skip_at_end` at step 2
     * `"T = "` is equal to characters that are right before the `int` in output
-# (optional, but highly recomended) [@http://www.boost.org/support/bugs.html create ticket] with
+# (optional, but highly recommended) [@http://www.boost.org/support/bugs.html create ticket] with
 feature request to add your compiler to supported compilers list. Include
 parameters provided to `BOOST_TYPE_INDEX_CTTI_USER_DEFINED_PARSING` macro.
 
@@ -415,7 +417,7 @@ Another example:
 `boost::typeindex::ctti_type_index::type_id<int>().raw_name()` returns
 "static const char *boost::detail::ctti<int>::n() [T = int]"". Then you shall set
 `skip_at_begin` to `sizeof("static const char *boost::detail::ctti<") - 1`
-and `skip_at_end` to `sizeof("]") - 1` and last parameter of macto to "T = ".
+and `skip_at_end` to `sizeof("]") - 1` and last parameter of macro to "T = ".
 
 ``
 #define BOOST_TYPE_INDEX_CTTI_USER_DEFINED_PARSING (39, 1, true, "T = ")
@@ -463,5 +465,6 @@ In order of helping and advising:
 * Peter Dimov for writing source codes in late 2007, that gave me an idea of how to emulate RTTI.
 * Agustín Bergé K-ballo for helping with docs and fixing a lot of typos.
 * Niall Douglas for generating a lot of great ideas, reviewing the sources and being the review manager for the library.
+* All the library reviewers, especially Andrey Semashev, for making good notes and proposing improvements to the library.
 
 [endsect]

@@ -26,43 +26,141 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="align.rationale"></a><a class="link" href="rationale.html" title="Rationale">Rationale</a>
 </h2></div></div></div>
+<h4>
+<a name="align.rationale.h0"></a>
+      <span class="phrase"><a name="align.rationale.dynamic_allocation"></a></span><a class="link" href="rationale.html#align.rationale.dynamic_allocation">Dynamic
+      allocation</a>
+    </h4>
 <p>
       C++11 added the ability to specify increased alignment (over-alignment) for
       class types. Unfortunately, <code class="computeroutput"><span class="special">::</span><span class="keyword">operator</span> <span class="keyword">new</span></code>
       allocation functions, <code class="computeroutput"><span class="keyword">new</span></code> expressions,
       and the default allocator, <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">allocator</span></code>,
-      do not support dynamic memory allocation of over-aligned data.
+      do not support dynamic memory allocation of over-aligned data. This library
+      provides allocation functions, allocators, allocator adaptors, and deleters,
+      that are alignment aware.
     </p>
+<div class="table">
+<a name="align.rationale.boost_align_solutions"></a><p class="title"><b>Table&#160;2.2.&#160;Boost.Align solutions</b></p>
+<div class="table-contents"><table class="table" summary="Boost.Align solutions">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+              <p>
+                Problem
+              </p>
+            </th>
+<th>
+              <p>
+                Solution
+              </p>
+            </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+              <p>
+                <code class="computeroutput"><span class="special">::</span><span class="keyword">operator</span>
+                <span class="keyword">new</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">,</span>
+                <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">no_throw_t</span><span class="special">&amp;)</span></code>
+              </p>
+            </td>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">aligned_alloc</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">,</span>
+                <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">)</span></code>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                <code class="computeroutput"><span class="special">::</span><span class="keyword">operator</span>
+                <span class="keyword">delete</span><span class="special">(</span><span class="keyword">void</span><span class="special">*)</span></code>
+              </p>
+            </td>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">aligned_free</span><span class="special">(</span><span class="keyword">void</span><span class="special">*)</span></code>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">allocator</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>
+              </p>
+            </td>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">aligned_allocator</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">Allocator</span></code>
+              </p>
+            </td>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">aligned_allocator_adaptor</span><span class="special">&lt;</span><span class="identifier">Allocator</span><span class="special">&gt;</span></code>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">default_delete</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>
+              </p>
+            </td>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">aligned_delete</span></code>
+              </p>
+            </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><h4>
+<a name="align.rationale.h1"></a>
+      <span class="phrase"><a name="align.rationale.alignment_functions"></a></span><a class="link" href="rationale.html#align.rationale.alignment_functions">Alignment
+      functions</a>
+    </h4>
 <p>
-      The <span class="bold"><strong>align</strong></span> function can be used to align a
-      pointer and is provided for implementations which do not yet provide <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">align</span></code>.
+      C++11 provided <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">align</span></code> in the standard library to align a
+      pointer value. Unfortunately some C++ standard library implementations do not
+      support it yet (libstdc++ as far as gcc 4.8.0) and other standard library implementations
+      implement it incorrectly (dinkumware in msvc 11.0). This library provides it
+      for those implementations and also for C++03 compilers where it is equally
+      useful.
     </p>
+<h4>
+<a name="align.rationale.h2"></a>
+      <span class="phrase"><a name="align.rationale.alignment_traits"></a></span><a class="link" href="rationale.html#align.rationale.alignment_traits">Alignment
+      traits</a>
+    </h4>
 <p>
-      The <span class="bold"><strong>aligned_alloc</strong></span> function can be used in
-      place of <code class="computeroutput"><span class="special">::</span><span class="keyword">operator</span>
-      <span class="keyword">new</span></code> to specify the alignment of the
-      memory allocated.
+      C++11 provided the <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">alignment_of</span></code> trait in the standard library
+      to query the alignment requirement of a type. Unfortunately some C++ standard
+      library vendors do not implement it in an entirely standard conforming manner,
+      such as for array types (libc++ as far as clang 3.4). This library provides
+      it for those implementations and also for C++03 compilers where it is equally
+      useful.
     </p>
+<h4>
+<a name="align.rationale.h3"></a>
+      <span class="phrase"><a name="align.rationale.alignment_testing"></a></span><a class="link" href="rationale.html#align.rationale.alignment_testing">Alignment
+      testing</a>
+    </h4>
 <p>
-      The <span class="bold"><strong>aligned_allocator</strong></span> class template can be
-      used in place of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">allocator</span></code> as an alignment-aware default allocator.
-    </p>
-<p>
-      The <span class="bold"><strong>aligned_allocator_adaptor</strong></span> class template
-      can be used to adapt any allocator into an alignment-aware allocator.
-    </p>
-<p>
-      The <span class="bold"><strong>aligned_delete</strong></span> class can be used in place
-      of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">default_delete</span></code> to destroy and free objects
-      allocated with <code class="computeroutput"><span class="identifier">aligned_alloc</span></code>.
-    </p>
-<p>
-      The <span class="bold"><strong>alignment_of</strong></span> type trait gets the alignment
-      of a type, and is provided for implementations without <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">alignment_of</span></code>.
-    </p>
-<p>
-      The <span class="bold"><strong>is_aligned</strong></span> function can be used to compare
-      the alignment value of a pointer.
+      This library provides a function to test the alignment of a pointer value.
+      It is generally useful in assertions to validate that memory is correctly aligned.
     </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

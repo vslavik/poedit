@@ -317,7 +317,7 @@ separately allocated reference counter).
         };
 
         template< typename Pointer, 
-            class Allocator = boost::none_t,
+            class Allocator = void,
             factory_alloc_propagation AllocProp =
                 factory_alloc_for_pointee_and_deleter >
         class factory;
@@ -348,6 +348,19 @@ The macro BOOST_FUNCTIONAL_FACTORY_MAX_ARITY can be defined to set the
 maximum arity. It defaults to 10.
 
 [endsect]
+
+[endsect]
+
+[section Changes]
+
+[heading Boost 1.58.0]
+
+In order to remove the dependency on Boost.Optional, the default parameter
+for allocators has been changed from `boost::none_t` to `void`.
+If you have code that has stopped working because it uses `boost::none_t`,
+a quick fix is to define `BOOST_FUNCTIONAL_FACTORY_SUPPORT_NONE_T`, which will
+restore support, but this will be removed in a future release.
+It should be be relatively easy to fix this properly.
 
 [endsect]
 

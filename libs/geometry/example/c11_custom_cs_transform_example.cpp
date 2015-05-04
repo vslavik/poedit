@@ -90,7 +90,7 @@ namespace boost { namespace geometry { namespace strategy { namespace distance {
     };
 
     template <>
-    struct default_strategy<point_tag, point1, point2, cartesian_tag, cartesian_tag>
+    struct default_strategy<point_tag, point_tag, point1, point2, cartesian_tag, cartesian_tag>
     {
         typedef shift_and_calc_distance type;
     };

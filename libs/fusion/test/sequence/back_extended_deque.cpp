@@ -24,6 +24,45 @@ int main()
 {
     using namespace boost::fusion;
     {
+        typedef deque<> initial_deque_type;
+        initial_deque_type initial_deque;
+        typedef back_extended_deque<initial_deque_type, long> extended_type;
+        extended_type extended(initial_deque, 101L);
+
+        BOOST_TEST(size(extended) == 1);
+        BOOST_TEST(extended == make_vector(101L));
+        BOOST_TEST(*begin(extended) == 101L);
+        BOOST_TEST(*prior(end(extended)) == 101L);
+        BOOST_TEST(distance(begin(extended), end(extended)) == 1);
+    }
+    {
+        namespace mpl = boost::mpl;
+        typedef deque<> initial_deque_type;
+        typedef back_extended_deque<initial_deque_type, long> extended_type;
+
+        BOOST_MPL_ASSERT((boost::is_same<mpl::at_c<extended_type, 0>::type, long>));
+        BOOST_MPL_ASSERT((boost::is_same<mpl::deref<mpl::begin<extended_type>::type>::type, long>));
+        BOOST_MPL_ASSERT((mpl::equal_to<mpl::size<extended_type>::type, mpl::int_<1> >));
+    }
+    {
+        long l(101L);
+        typedef deque<> initial_deque_type;
+        initial_deque_type initial_deque;
+        typedef back_extended_deque<initial_deque_type, long&> extended_type;
+        extended_type extended(initial_deque, l);
+        BOOST_TEST(extended == make_vector(101L));
+
+        long l2(202L);
+        extended_type extended2(initial_deque_type(), l2);
+
+        extended = extended2;
+
+        BOOST_TEST(extended == make_vector(202L));
+
+        BOOST_TEST(l == l2);
+    }
+
+    {
         typedef deque<int, char> initial_deque_type;
         initial_deque_type initial_deque(1, 'a');
         typedef back_extended_deque<initial_deque_type, long> extended_type;

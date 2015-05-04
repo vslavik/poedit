@@ -2,7 +2,7 @@
 //
 //  See http://www.boost.org for most recent version, including documentation.
 //
-//  Copyright Antony Polukhin, 2012.
+//  Copyright Antony Polukhin, 2012-2014.
 //
 //  Distributed under the Boost
 //  Software License, Version 1.0. (See accompanying file
@@ -10,7 +10,7 @@
 
 #include <boost/config.hpp>
 
-#include <boost/lexical_cast.hpp>
+#include <boost/lexical_cast/detail/converter_lexical.hpp>
 
 #include <boost/test/unit_test.hpp>
 
@@ -95,10 +95,6 @@ void test_metafunctions()
 #elif defined(BOOST_HAS_MS_INT64)
     test_optimized_types_to_string<unsigned __int64>();
     test_optimized_types_to_string<__int64>();
-#endif
-
-#if !defined(BOOST_NO_SWPRINTF) && !defined(__MINGW32__)
-    test_optimized_types_to_string<float>();
 #endif
     
     test_optimized_types_to_string<std::string>();

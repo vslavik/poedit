@@ -66,14 +66,32 @@ bool minus_n_test(RandomAccessIterator first, RandomAccessIterator last, Bidirec
     return std::distance(i, last) == std::distance(j, last2);
 }
 
+template<class Iterator, class Distance>
+bool minus_n_unsigned_test(Iterator first, Iterator last, Distance size)
+{
+    Iterator i = boost::prior(last, size);
+    return i == first;
+}
+
 int test_main(int, char*[])
 {
     std::vector<int> x(8);
     std::list<int> y(x.begin(), x.end());
 
+    // Tests with iterators
     BOOST_REQUIRE(plus_one_test(x.begin(), x.end(), y.begin()));
     BOOST_REQUIRE(plus_n_test(x.begin(), x.end(), y.begin()));
     BOOST_REQUIRE(minus_one_test(x.begin(), x.end(), y.end()));
     BOOST_REQUIRE(minus_n_test(x.begin(), x.end(), y.end()));
+    BOOST_REQUIRE(minus_n_unsigned_test(x.begin(), x.end(), x.size()));
+    BOOST_REQUIRE(minus_n_unsigned_test(y.begin(), y.end(), y.size()));
+
+    // Tests with integers
+    BOOST_REQUIRE(boost::next(5) == 6);
+    BOOST_REQUIRE(boost::next(5, 7) == 12);
+    BOOST_REQUIRE(boost::prior(5) == 4);
+    BOOST_REQUIRE(boost::prior(5, 7) == -2);
+    BOOST_REQUIRE(boost::prior(5, 7u) == -2);
+
     return 0;
 }

@@ -1,0 +1,141 @@
+# Copyright Rene Rivera 2015
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+
+#alias library
+#    :
+#    : : : <include>include
+#    ;
+
+import path ;
+import project ;
+import modules ;
+import regex ;
+
+rule find ( target-refs + )
+{
+    process-args ;
+    
+    local caller-mod = [ CALLER_MODULE ] ;
+    local caller-dir = [ modules.peek $(caller-mod) : __file__ ] ;
+    caller-dir = $(caller-dir:D) ;
+    caller-dir = [ path.root $(caller-dir) [ path.pwd ] ] ;
+    
+    for local target-ref in $(target-refs)
+    {
+        local ref = [ MATCH ^(.*)//.* : $(target-ref:G=) ] ;
+        local search-prefix ;
+        local search-sub ;
+        for local prefix in $(.search-path-prefix)
+        {
+            if ! $(search-prefix)
+            {
+                local search-match = [ MATCH ^($(prefix))/(.*)$ : $(ref) ] ;
+                search-prefix = $(search-match[1]) ;
+                search-sub = $(search-match[2]) ;
+            }
+        }
+        local found = [ path.glob $(.search-path.$(search-prefix)) : $(search-sub) ] ;
+        found = $(found[1]) ;
+        if $(found)
+        {
+            local lib-ref = [ regex.split $(search-sub) / ] ;
+            lib-ref = $(search-prefix)/$(lib-ref[1]) ;
+            local lib-path = [ path.relative-to $(caller-dir) $(found) ] ;
+            library $(lib-ref) $(caller-mod) : $(lib-path) ;
+        }
+    }
+    
+    return $(target-refs) ;
+}
+
+rule library ( name caller-module ? : root )
+{
+    process-args ;
+    
+    # Dir path of caller to base paths from.
+    caller-module ?= [ CALLER_MODULE ] ;
+    local caller-dir = [ modules.peek $(caller-module) : __file__ ] ;
+    caller-dir = $(caller-dir:D) ;
+    
+    # Find the various parts of the library.
+    local lib-dir = [ path.root [ path.root $(root) $(caller-dir) ] [ path.pwd ] ] ;
+    local lib-contents = [ path.glob $(lib-dir) : "include" "build" ] ;
+    lib-contents = $(lib-contents:D=) ;
+    # "include" dir for library..
+    local include-dir ;
+    if "include" in $(lib-contents)
+    {
+        include-dir = include ;
+    }
+    
+    # Does it look like a library?
+    if $(include-dir)
+    {
+        # Load/create/declare library project.
+        local lib-module = [ project.find $(root) : $(caller-dir) ] ;
+        if ! $(lib-module)
+        {
+            lib-module = [ project.load
+                [ path.root [ path.make $(root) ] $(caller-dir) ] : synthesize ] ;
+        }
+        local lib-target = [ project.target $(lib-module) ] ;
+        
+        # We move to the library project module to define the various
+        # targets others use for the library.
+        if ! [ modules.peek $(lib-module) : __library__ ]
+        {
+            modules.poke $(lib-module) : __library__ : $(name) ;
+            project.push-current $(lib-target) ;
+            
+            # Declare the library alias.
+            modules.call-in $(lib-module) : alias library
+                : # Sources
+                : # Requirements
+                : # Default Build
+                : # Usage Requirements
+                	<include>$(include-dir)
+                ;
+            
+            project.pop-current ;
+        }
+        
+        # Declare project alternate ID.
+        modules.call-in $(caller-module) : use-project $(name) : $(root) ;
+    }
+}
+
+# Add a location, i.e. directory, where to search for libraries.
+# The optional 'prefix' indicates which rooted-prefixes the new
+# search dir applies to. The prefix defaults to '/'.
+rule add-location ( dir prefix ? : base-dir ? )
+{
+    process-args ;
+    
+    prefix ?= "/" ;
+    
+    # Dir path of caller to base paths from.
+    caller-module ?= [ CALLER_MODULE ] ;
+    local caller-dir = [ modules.peek $(caller-module) : __file__ ] ;
+    caller-dir = $(caller-dir:D) ;
+    
+    base-dir ?= $(caller-dir) ;
+    
+    .search-path-prefix += $(prefix) ;
+    .search-path.$(prefix) += [ path.root [ path.root $(dir) $(base-dir) ] [ path.pwd ] ] ;
+}
+
+local rule process-args ( )
+{
+    if ! $(.did-process-args)
+    {
+        .did-process-args = yes ;
+        local argv = [ modules.peek : ARGV ] ;
+        local dirs = [ MATCH ^--modular-search-dir=(.*)$ : $(argv) ] ;
+        for local dir in $(dirs)
+        {
+            add-location $(dir) : [ path.pwd ] ;
+        }
+    }
+}

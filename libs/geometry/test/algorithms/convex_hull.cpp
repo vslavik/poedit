@@ -5,6 +5,11 @@
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
+// This file was modified by Oracle on 2015.
+// Modifications copyright (c) 2015 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
 
@@ -45,6 +50,24 @@ void test_all()
                 12, 8, 5.245);
 
     test_geometry<bg::model::box<P> >("box(0 0,2 2)", 4, 5, 4);
+
+    // https://svn.boost.org/trac/boost/ticket/6443
+    {
+        test_geometry<bg::model::ring<P> >(
+            "polygon((0 0, 2 0))", // note that this polygon is very invalid
+            2, 4, 0, 4);
+    }
+
+    // degenerated hulls
+    test_geometry<bg::model::multi_point<P> >(
+        "multipoint(0 0)",
+        1, 4, 0, 0);
+    test_geometry<bg::model::multi_point<P> >(
+        "multipoint(0 0, 2 0)",
+        2, 4, 0, 4);
+    test_geometry<bg::model::linestring<P> >(
+        "linestring(0 0, 2 0)",
+        2, 4, 0, 4);
 
     test_empty_input<bg::model::linestring<P> >();
     test_empty_input<bg::model::ring<P> >();

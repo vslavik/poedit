@@ -12,6 +12,7 @@
 
 #include <boost/foreach.hpp>
 #include <boost/thread.hpp>
+#include <boost/scoped_ptr.hpp>
 
 #define BOOST_TEST_MAIN
 #ifdef BOOST_LOCKFREE_INCLUDE_TESTS
@@ -19,8 +20,6 @@
 #else
 #include <boost/test/unit_test.hpp>
 #endif
-
-#include <boost/foreach.hpp>
 
 #include <set>
 

@@ -639,6 +639,7 @@ local rule system-library-dependencies ( target-os )
         case qnx* : return ;
         case darwin : return ;
         case windows : return ;
+        case haiku : return ;
 
         case hpux : return  <library>rt ;
         case *bsd : return  <library>pthread <toolset>gcc:<library>util ;
@@ -1057,14 +1058,14 @@ IMPORT python : python-extension : : python-extension ;
 
 rule py2to3
 {
-    common.copy $(>) $(<) ;
+    common.copy $(<) : $(>) ;
     2to3 $(<) ;
 }
 
 actions 2to3
 {
-    2to3 -wn "$(<)"
-    2to3 -dwn "$(<)"
+    2to3 -wn --no-diffs "$(<)"
+    2to3 -dwn --no-diffs "$(<)"
 }
 
 

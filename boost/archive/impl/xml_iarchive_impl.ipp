@@ -31,7 +31,7 @@ namespace std{
 #include <boost/archive/dinkumware.hpp>
 #endif
 
-#include <boost/detail/no_exceptions_support.hpp>
+#include <boost/core/no_exceptions_support.hpp>
 
 #include <boost/archive/xml_archive_exception.hpp>
 #include <boost/archive/iterators/dataflow_exception.hpp>
@@ -174,18 +174,8 @@ xml_iarchive_impl<Archive>::xml_iarchive_impl(
     basic_xml_iarchive<Archive>(flags),
     gimpl(new xml_grammar())
 {
-    if(0 == (flags & no_header)){
-        BOOST_TRY{
-            init();
-        }
-        BOOST_CATCH(...){
-            delete gimpl;
-            #ifndef BOOST_NO_EXCEPTIONS
-                throw; // re-throw
-            #endif
-        }
-        BOOST_CATCH_END
-    }
+    if(0 == (flags & no_header))
+        init();
 }
 
 template<class Archive>
@@ -198,7 +188,6 @@ xml_iarchive_impl<Archive>::~xml_iarchive_impl(){
         BOOST_CATCH(...){}
         BOOST_CATCH_END
     }
-    delete gimpl;
 }
 } // namespace archive
 } // namespace boost

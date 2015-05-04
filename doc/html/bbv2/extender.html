@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../bbv2.html" title="Chapter&#160;45.&#160;Boost.Build V2 User Manual">
+<link rel="up" href="../bbv2.html" title="Chapter&#160;43.&#160;Boost.Build User Manual">
 <link rel="prev" href="reference.html" title="Reference">
 <link rel="next" href="faq.html" title="Frequently Asked Questions">
 </head>
@@ -94,7 +94,7 @@
         and can be called with specific properties to generate concrete
         targets. At the code level it is represented by an instance of
         class derived from <a class="link" href="reference.html#bbv2.reference.class.abstract-target" title="Class abstract-target">abstract-target</a>. 
-        <a href="#ftn.idp550179584" class="footnote" name="idp550179584"><sup class="footnote">[16]</sup></a>
+        <a href="#ftn.idp546209248" class="footnote" name="idp546209248"><sup class="footnote">[16]</sup></a>
         </p>
 <p>The <a class="link" href="reference.html#bbv2.reference.class.abstract-target.generate">generate</a>
         method takes the build properties
@@ -186,7 +186,7 @@ local t = [ new file-target $(name) : CPP : $(project) : $(a) ] ;
         returning targets you should pass them via the <code class="computeroutput">virtual-target.register</code>
         function, besides allowing Boost.Build to track which virtual targets
         got created for each metatarget, this will also replace targets with previously created identical
-        ones, as necessary.<a href="#ftn.idp550219760" class="footnote" name="idp550219760"><sup class="footnote">[17]</sup></a>
+        ones, as necessary.<a href="#ftn.idp546249408" class="footnote" name="idp546249408"><sup class="footnote">[17]</sup></a>
         Here are a couple of examples:
 </p>
 <pre class="programlisting">
@@ -208,7 +208,7 @@ return [ sequence.transform virtual-target.register : $(targets) ] ;
 <p>In practice, most files have specific types, and most tools
         consume and produce files of specific type. To take advantage of this
         fact, Boost.Build defines concept of target type and
-        <a class="indexterm" name="idp550225968"></a>
+        <a class="indexterm" name="idp546255616"></a>
         <em class="firstterm">generators</em>, and has special metatarget class
         <a class="link" href="reference.html#bbv2.reference.class.typed-target" title="Class typed-target">typed-target</a>.  Target type is merely an
         identifier. It is associated with a set of file extensions that
@@ -314,7 +314,7 @@ exe codegen : codegen.cpp class_template.verbatim usage.verbatim ;
 <div class="titlepage"><div><div><h3 class="title">
 <a name="bbv2.extending.targets"></a>Target types</h3></div></div></div>
 <div class="toc"><dl class="toc"><dt><span class="section"><a href="extender.html#bbv2.extending.scanners">Scanners</a></span></dt></dl></div>
-<p>The first thing we did in the <a class="link" href="extender.html#bbv2.extender.intro" title="Introduction">intruduction</a> was declaring a
+<p>The first thing we did in the <a class="link" href="extender.html#bbv2.extender.intro" title="Introduction">introduction</a> was declaring a
       new target type:
 </p>
 <pre class="programlisting">
@@ -493,7 +493,7 @@ generators.register-composing mex.mex : CPP LIB : MEX ;
       </p>
 <p>(Need a note about UNIX)</p>
 <h4>
-<a name="idp550298992"></a>Custom generator classes</h4>
+<a name="idp546328640"></a>Custom generator classes</h4>
 <p>The standard generators allows you to specify source and target
         types, an action, and a set of flags. If you need anything more complex,
         
@@ -701,7 +701,7 @@ actions inline-file
 <p>
     </p>
 <h4>
-<a name="idp550331200"></a>Steps for adding a feauture</h4>
+<a name="idp546361232"></a>Steps for adding a feauture</h4>
 <p>Adding a feature requires three steps:
 
         </p>
@@ -742,7 +742,7 @@ actions inline-file
 <p>
       </p>
 <h4>
-<a name="idp550342224"></a>Another example</h4>
+<a name="idp546372256"></a>Another example</h4>
 <p>Here's another example.
         Let's see how we can make a feature that refers to a target. For example,
         when linking dynamic libraries on Windows, one sometimes needs to
@@ -823,7 +823,7 @@ rule link
 </li>
 </ol></div>
 <h4>
-<a name="idp550354720"></a>Variants and composite features.</h4>
+<a name="idp546384704"></a>Variants and composite features.</h4>
 <p>Sometimes you want to create a shortcut for some set of
         features. For example, <code class="computeroutput">release</code> is a value of
         <code class="computeroutput">&lt;variant&gt;</code> and is a shortcut for a set of features.
@@ -1021,19 +1021,15 @@ using yfc ;
 </div>
 <div class="footnotes">
 <br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.idp550179584" class="footnote"><p><a href="#idp550179584" class="para"><sup class="para">[16] </sup></a>This name is historic, and will be eventuall changed to 
+<div id="ftn.idp546209248" class="footnote"><p><a href="#idp546209248" class="para"><sup class="para">[16] </sup></a>This name is historic, and will be eventuall changed to 
         <code class="computeroutput">metatarget</code></p></div>
-<div id="ftn.idp550219760" class="footnote"><p><a href="#idp550219760" class="para"><sup class="para">[17] </sup></a>This create-then-register pattern is caused by limitations 
+<div id="ftn.idp546249408" class="footnote"><p><a href="#idp546249408" class="para"><sup class="para">[17] </sup></a>This create-then-register pattern is caused by limitations 
         of the Boost.Jam language. Python port is likely to never create duplicate targets.</p></div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2009, 2014 Vladimir Prus<p>Distributed under the Boost Software License, Version 1.0.
-      (See accompanying file <code class="filename">LICENSE_1_0.txt</code> or copy at 
-      <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
-      </p>
-</div></td>
+<td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

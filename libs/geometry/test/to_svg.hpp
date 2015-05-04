@@ -31,6 +31,8 @@
 template <typename G, typename Turns, typename Mapper>
 inline void turns_to_svg(Turns const& turns, Mapper & mapper, bool /*enrich*/ = false)
 {
+    namespace bg = boost::geometry;
+
     // turn points in orange, + enrichment/traversal info
     typedef typename bg::coordinate_type<G>::type coordinate_type;
     typedef typename boost::range_value<Turns>::type turn_info;
@@ -85,10 +87,10 @@ inline void turns_to_svg(Turns const& turns, Mapper & mapper, bool /*enrich*/ = 
                 << ' ' << turn.operations[0].seg_id.multi_index
                 << ' ' << turn.operations[0].seg_id.ring_index
                 << ' ' << turn.operations[0].seg_id.segment_index << ", ";
-            out << "other: " << turn.operations[0].other_id.source_index
-                << ' ' << turn.operations[0].other_id.multi_index
-                << ' ' << turn.operations[0].other_id.ring_index
-                << ' ' << turn.operations[0].other_id.segment_index;
+            out << "other: " << turn.operations[1].seg_id.source_index
+                << ' ' << turn.operations[1].seg_id.multi_index
+                << ' ' << turn.operations[1].seg_id.ring_index
+                << ' ' << turn.operations[1].seg_id.segment_index;
 
             /*if ( enrich )
             {
@@ -111,10 +113,10 @@ inline void turns_to_svg(Turns const& turns, Mapper & mapper, bool /*enrich*/ = 
                 << ' ' << turn.operations[1].seg_id.multi_index
                 << ' ' << turn.operations[1].seg_id.ring_index
                 << ' ' << turn.operations[1].seg_id.segment_index << ", ";
-            out << "other: " << turn.operations[1].other_id.source_index
-                << ' ' << turn.operations[1].other_id.multi_index
-                << ' ' << turn.operations[1].other_id.ring_index
-                << ' ' << turn.operations[1].other_id.segment_index;
+            out << "other: " << turn.operations[0].seg_id.source_index
+                << ' ' << turn.operations[0].seg_id.multi_index
+                << ' ' << turn.operations[0].seg_id.ring_index
+                << ' ' << turn.operations[0].seg_id.segment_index;
 
             /*if ( enrich )
             {
@@ -187,8 +189,77 @@ inline void turns_to_svg(Turns const& turns, Mapper & mapper, bool /*enrich*/ = 
     }
 }
 
+template <typename G1, typename P>
+inline void geom_to_svg(G1 const& g1,
+                        boost::geometry::svg_mapper<P> & mapper)
+{
+    mapper.add(g1);
+
+    mapper.map(g1, "fill-opacity:0.5;fill:rgb(153,204,0);"
+        "stroke:rgb(153,204,0);stroke-width:3");
+}
+
+template <typename G1, typename G2, typename P>
+inline void geom_to_svg(G1 const& g1, G2 const& g2,
+                        boost::geometry::svg_mapper<P> & mapper)
+{
+    mapper.add(g1);
+    mapper.add(g2);
+
+    mapper.map(g1, "fill-opacity:0.5;fill:rgb(153,204,0);"
+        "stroke:rgb(153,204,0);stroke-width:3");
+    mapper.map(g2, "fill-opacity:0.3;fill:rgb(51,51,153);"
+        "stroke:rgb(51,51,153);stroke-width:3");
+}
+
+template <typename G1>
+inline void geom_to_svg(G1 const& g1, std::string const& filename)
+{
+    namespace bg = boost::geometry;
+    typedef typename bg::point_type<G1>::type mapper_point_type;
+
+    std::ofstream svg(filename.c_str(), std::ios::trunc);
+    bg::svg_mapper<mapper_point_type> mapper(svg, 500, 500);
+
+    geom_to_svg(g1, mapper);
+}
+
+template <typename G1, typename G2>
+inline void geom_to_svg(G1 const& g1, G2 const& g2, std::string const& filename)
+{
+    namespace bg = boost::geometry;
+    typedef typename bg::point_type<G1>::type mapper_point_type;
+
+    std::ofstream svg(filename.c_str(), std::ios::trunc);
+    bg::svg_mapper<mapper_point_type> mapper(svg, 500, 500);
+
+    geom_to_svg(g1, g2, mapper);
+}
+
+template <typename G1>
+inline void geom_to_svg(std::string const& wkt1, std::string const& filename)
+{
+    namespace bg = boost::geometry;
+
+    G1 g1;
+    bg::read_wkt(wkt1, g1);
+    geom_to_svg(g1, filename);
+}
+
+template <typename G1, typename G2>
+inline void geom_to_svg(std::string const& wkt1, std::string const& wkt2, std::string const& filename)
+{
+    namespace bg = boost::geometry;
+
+    G1 g1;
+    G2 g2;
+    bg::read_wkt(wkt1, g1);
+    bg::read_wkt(wkt2, g2);
+    geom_to_svg(g1, g2, filename);
+}
+
 struct to_svg_assign_policy
-    : bg::detail::overlay::assign_null_policy
+    : boost::geometry::detail::overlay::assign_null_policy
 {
     static bool const include_no_turn = false;
     static bool const include_degenerate = false;

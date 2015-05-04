@@ -12,6 +12,7 @@
 #include <boost/intrusive/unordered_set.hpp>
 #include <boost/intrusive/detail/mpl.hpp>
 #include <boost/functional/hash.hpp>
+#include <boost/static_assert.hpp>
 #include <vector>
 
 using namespace boost::intrusive;
@@ -55,16 +56,19 @@ struct uset_value_traits
 //Base
 typedef base_hook< unordered_set_base_hook<> >  BaseHook;
 typedef unordered_bucket<BaseHook>::type        BaseBucketType;
+typedef unordered_bucket_ptr<BaseHook>::type    BaseBucketPtrType;
 typedef unordered_set<MyClass, BaseHook>        BaseUset;
 //Member
 typedef member_hook
    < MyClass, unordered_set_member_hook<>
    , &MyClass::member_hook_ >                   MemberHook;
 typedef unordered_bucket<MemberHook>::type      MemberBucketType;
+typedef unordered_bucket_ptr<MemberHook>::type  MemberBucketPtrType;
 typedef unordered_set<MyClass, MemberHook>      MemberUset;
 //Explicit
 typedef value_traits< uset_value_traits >       Traits;
 typedef unordered_bucket<Traits>::type          TraitsBucketType;
+typedef unordered_bucket_ptr<Traits>::type      TraitsBucketPtrType;
 typedef unordered_set<MyClass, Traits>          TraitsUset;
 
 struct uset_bucket_traits
@@ -95,16 +99,14 @@ typedef unordered_set
 
 int main()
 {
-   if(!detail::is_same<BaseUset::bucket_type, BaseBucketType>::value)
-      return 1;
-   if(!detail::is_same<MemberUset::bucket_type, MemberBucketType>::value)
-      return 1;
-   if(!detail::is_same<TraitsUset::bucket_type, TraitsBucketType>::value)
-      return 1;
-   if(!detail::is_same<BaseBucketType, MemberBucketType>::value)
-      return 1;
-   if(!detail::is_same<BaseBucketType, TraitsBucketType>::value)
-      return 1;
+   BOOST_STATIC_ASSERT((detail::is_same<BaseUset::bucket_type, BaseBucketType>::value));
+   BOOST_STATIC_ASSERT((detail::is_same<MemberUset::bucket_type, MemberBucketType>::value));
+   BOOST_STATIC_ASSERT((detail::is_same<TraitsUset::bucket_type, TraitsBucketType>::value));
+   BOOST_STATIC_ASSERT((detail::is_same<BaseBucketType, MemberBucketType>::value));
+   BOOST_STATIC_ASSERT((detail::is_same<BaseBucketType, TraitsBucketType>::value));
+   BOOST_STATIC_ASSERT((detail::is_same<BaseBucketPtrType, TraitsBucketPtrType>::value));
+   BOOST_STATIC_ASSERT((detail::is_same<BaseBucketPtrType, MemberBucketPtrType>::value));
+   BOOST_STATIC_ASSERT((detail::is_same<BaseBucketPtrType, BaseBucketType*>::value));
 
    typedef std::vector<MyClass>::iterator VectIt;
    typedef std::vector<MyClass>::reverse_iterator VectRit;

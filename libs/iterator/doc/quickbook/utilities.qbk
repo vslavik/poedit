@@ -49,11 +49,40 @@ proxy references or return the pointee by value.  When that
 information is needed, call on `indirect_reference`.
 
 Both of these templates are essential to the correct functioning of
-[link indirecct `indirect_iterator`].
+[link boost_iterator.indirect `indirect_iterator`].
+
+[h2 `minimum_category`]
+
+`minimum_category` takes two iterator categories or two iterator traversal tags
+and returns the one that is the weakest (i.e. least advanced). For example:
+
+  static_assert(
+      is_same<
+          minimum_category<
+              std::forward_iterator_tag,
+              std::random_access_iterator_tag
+          >::type,
+          std::forward_iterator_tag
+      >::value,
+      "Unexpected minimum_category result"
+  );
+
+[h2 Iterator category and traversal tags manipulation]
+
+The library provides several utilities to simplify conversions between iterator categories
+and traversal tags:
+
+* `iterator_category_to_traversal<C>::type` - the metafunction takes an iterator category `C` and returns
+the corresponding traversal tag.
+* `iterator_traversal<T>::type` - a shorthand for `iterator_category_to_traversal<iterator_category<T>::type>::type`.
+* `pure_traversal_tag<T>::type` - the metafunction takes a tag `T` which derives from one of the iterator traversal tags
+and returns that traversal tag. `T` may also derive from other tags describing the iterator (e.g. whether this is a `const`-iterator
+or not), these additional tags are not considered.
+* `pure_iterator_traversal<T>::type` - a shorthand for `pure_traversal_tag<iterator_traversal<T>::type>::type`.
 
 [h2 Reference]
 
-[h3 `pointeee`]
+[h3 `pointee`]
 
   template <class Dereferenceable>
   struct pointee
@@ -110,6 +139,77 @@ Both of these templates are essential to the correct functioning of
   else
       std::iterator_traits<Dereferenceable>::reference
 
+[h3 `minimum_category`]
+
+  template <typename C1, typename C2>
+  struct minimum_category
+  {
+      typedef /* see below */ type;
+  };
+
+[*Requires:] Both `C1` and `C2` shall be standard iterator categories or
+  iterator traversal tags.
+
+`type` is determined according to the following algorithm, where `c1` is an
+object of type `C1` and `c2` is an object of type `C2`:
+
+  if (c1 is convertible to c2)
+      return C2;
+  else
+      return C1;
+
+[note The above definition relies on the fact that the more restricting categories
+and traversal tags are convertible to the less restricting ones.]
+
+[h3 `iterator_category_to_traversal`]
+
+  template <typename C>
+  struct iterator_category_to_traversal
+  {
+      typedef /* see below */ type;
+  };
+
+[*Requires:] `C` shall be a standard iterator category or an
+  iterator traversal tag.
+
+If `C` is an iterator traversal tag or convertible to one, `type` equivalent to `C`.
+Otherwise, `type` is defined to the closest iterator traversal tag matching `C`.
+
+[h3 `iterator_traversal`]
+
+  template <typename Iterator>
+  struct iterator_traversal
+  {
+      typedef typename iterator_category_to_traversal<
+          typename iterator_category<Iterator>::type
+      >::type type;
+  };
+
+[*Requires:] `Iterator` shall be an iterator.
+
+[h3 `pure_traversal_tag`]
+
+  template <typename T>
+  struct pure_traversal_tag
+  {
+      typedef /* see below */ type;
+  };
+
+[*Requires:] `T` shall be convertible to an iterator traversal tag.
+
+`type` is defined to be the most advanced traversal tag `Tag` so that `T` is convertible to `Tag`.
+
+[h3 `pure_iterator_traversal`]
+
+  template <typename Iterator>
+  struct pure_iterator_traversal
+  {
+      typedef typename pure_traversal_tag<
+          typename iterator_traversal<Iterator>::type
+      >::type type;
+  };
+
+[*Requires:] `Iterator` shall be an iterator.
 
 [endsect]
 

@@ -70,7 +70,7 @@ Note, that you can specify the OpenMP scheduling by calling `omp_set_schedule`
 in the beginning of your program:
 [phase_chain_scheduling]
 
-See [github_link libs/numeric/odeint/examples/openmp/phase_chain.cpp
+See [github_link examples/openmp/phase_chain.cpp
 openmp/phase_chain.cpp] for the complete example.
 
 [heading Split state]
@@ -109,7 +109,7 @@ back together into a single vector.
 and supports any model of Random Access Range as the outer, parallel state type,
 and will use the given algebra on its elements.]
 
-See [github_link libs/numeric/odeint/examples/openmp/phase_chain_omp_state.cpp
+See [github_link examples/openmp/phase_chain_omp_state.cpp
 openmp/phase_chain_omp_state.cpp] for the complete example.
 
 [endsect]
@@ -165,7 +165,7 @@ guarded by any barriers either, so if you don't manually place any (for example
 in parameter studies cases where the elements are completely independent) you
 might see the nodes diverging, returning from this call at different times.]
 
-See [github_link libs/numeric/odeint/examples/mpi/phase_chain.cpp
+See [github_link examples/mpi/phase_chain.cpp
 mpi/phase_chain.cpp] for the complete example.
 
 [endsect]

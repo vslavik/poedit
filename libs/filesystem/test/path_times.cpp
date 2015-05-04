@@ -25,12 +25,7 @@
 #   error Configuration not supported: Boost.Filesystem V3 and later requires std::wstring support
 # endif
 
-#define BOOST_LIGHTWEIGHT_MAIN
-#ifndef BOOST_LIGHTWEIGHT_MAIN
-#  include <boost/test/prg_exec_monitor.hpp>
-#else
-#  include <boost/detail/lightweight_main.hpp>
-#endif
+#include <boost/detail/lightweight_main.hpp>
 
 namespace fs = boost::filesystem;
 using namespace boost::timer;

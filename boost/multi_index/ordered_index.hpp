@@ -987,6 +987,7 @@ private:
 
   struct link_info
   {
+    /* coverity[uninit_ctor]: suppress warning */
     link_info():side(to_left){}
 
     ordered_index_side side;

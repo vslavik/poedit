@@ -80,7 +80,10 @@ struct ar_hdr  /* archive file member header - printable ascii */
 };
 #endif
 
-#if defined( OS_QNX ) || defined( OS_BEOS ) || defined( OS_MPEIX )
+#if defined( OS_QNX ) || \
+    defined( OS_BEOS ) || \
+    defined( OS_HAIKU ) || \
+    defined( OS_MPEIX )
 # define NO_AR
 # define HAVE_AR
 #endif

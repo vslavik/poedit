@@ -7,8 +7,9 @@
 // Tests swapping an array of arrays of swap_test_class objects by means of boost::swap.
 
 #include <boost/utility/swap.hpp>
-#define BOOST_INCLUDE_MAIN
-#include <boost/test/test_tools.hpp>
+#include <boost/core/lightweight_test.hpp>
+#define BOOST_CHECK BOOST_TEST
+#define BOOST_CHECK_EQUAL BOOST_TEST_EQ
 
 //Put test class in the global namespace
 #include "./swap_test_class.hpp"
@@ -36,7 +37,7 @@ namespace std
 }
 
 
-int test_main(int, char*[])
+int main()
 {
   const std::size_t array_size = 2;
   const swap_test_class initial_array1[array_size] = { swap_test_class(1), swap_test_class(2) };
@@ -57,5 +58,5 @@ int test_main(int, char*[])
   BOOST_CHECK_EQUAL(swap_test_class::swap_count(), array_size);
   BOOST_CHECK_EQUAL(swap_test_class::copy_count(), 0);
 
-  return 0;
+  return boost::report_errors();
 }

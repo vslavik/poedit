@@ -50,7 +50,7 @@
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">container</span><span class="special">/</span><span class="identifier">deque</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">deque</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">container</span><span class="special">/</span><span class="identifier">list</span><span class="special">/</span><span class="identifier">deque_fwd</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">container</span><span class="special">/</span><span class="identifier">deque</span><span class="special">/</span><span class="identifier">deque_fwd</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">deque_fwd</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h5>
@@ -253,24 +253,27 @@
 </tr>
 </tbody>
 </table></div>
-<div class="sidebar">
-<div class="titlepage"></div>
-<p>
-        <span class="inlinemediaobject"><img src="../../images/note.png" alt="note"></span> <code class="computeroutput"><a class="link" href="../sequence/intrinsic/functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;(</span><span class="identifier">d</span><span class="special">)</span></code> is provided
-        for convenience, despite <code class="computeroutput"><span class="identifier">deque</span></code>
-        being a <a class="link" href="../sequence/concepts/bidirectional_sequence.html" title="Bidirectional Sequence">Bidirectional
-        Sequence</a> only (<code class="computeroutput"><span class="identifier">at</span></code>
-        is supposed to be a <a class="link" href="../sequence/concepts/random_access_sequence.html" title="Random Access Sequence">Random
-        Access Sequence</a> requirement). The runtime complexity of <a class="link" href="../sequence/intrinsic/functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a> is constant (see <a class="link" href="../notes.html#fusion.notes.recursive_inlined_functions">Recursive
-        Inlined Functions</a>). <code class="computeroutput"><span class="identifier">deque</span></code>
-        element access utilizes operator overloading with argument dependent lookup
-        (ADL) of the proper element getter function given a static constant index
-        parameter. Interestingly, with modern C++ compilers, this lookup is very
-        fast and rivals recursive template instantiations in compile time-speed,
-        so much so that <code class="computeroutput"><span class="identifier">deque</span></code> relies
-        on ADL for all element access (indexing) as well as iteration.
-      </p>
-</div>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          <code class="computeroutput"><a class="link" href="../sequence/intrinsic/functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;(</span><span class="identifier">d</span><span class="special">)</span></code> is
+          provided for convenience, despite <code class="computeroutput"><span class="identifier">deque</span></code>
+          being a <a class="link" href="../sequence/concepts/bidirectional_sequence.html" title="Bidirectional Sequence">Bidirectional
+          Sequence</a> only (<code class="computeroutput"><span class="identifier">at</span></code>
+          is supposed to be a <a class="link" href="../sequence/concepts/random_access_sequence.html" title="Random Access Sequence">Random
+          Access Sequence</a> requirement). The runtime complexity of <a class="link" href="../sequence/intrinsic/functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a> is constant (see <a class="link" href="../notes.html#fusion.notes.recursive_inlined_functions">Recursive
+          Inlined Functions</a>). <code class="computeroutput"><span class="identifier">deque</span></code>
+          element access utilizes operator overloading with argument dependent lookup
+          (ADL) of the proper element getter function given a static constant index
+          parameter. Interestingly, with modern C++ compilers, this lookup is very
+          fast and rivals recursive template instantiations in compile time-speed,
+          so much so that <code class="computeroutput"><span class="identifier">deque</span></code> relies
+          on ADL for all element access (indexing) as well as iteration.
+        </p></td></tr>
+</table></div>
 <h5>
 <a name="fusion.container.deque.h6"></a>
         <span class="phrase"><a name="fusion.container.deque.example"></a></span><a class="link" href="deque.html#fusion.container.deque.example">Example</a>

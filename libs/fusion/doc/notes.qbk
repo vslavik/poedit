@@ -58,10 +58,10 @@ In the case:
 
 [heading Extensibility]
 
-Unlike __mpl__, there is no extensibe sequence concept in fusion. This does
+Unlike __mpl__, there is no extensible sequence concept in fusion. This does
 not mean that Fusion sequences are not extensible. In fact, all Fusion
 sequences are inherently extensible. It is just that the manner of sequence
-extension in Fusion is diferent from both __stl__ and __mpl__ on account of
+extension in Fusion is different from both __stl__ and __mpl__ on account of
 the lazy nature of fusion __algorithms__. __stl__ containers extend
 themselves in place though member functions such as __push_back__ and
 __insert__. __mpl__ sequences, on the other hand, are extended through
@@ -100,7 +100,7 @@ Array arguments are deduced to reference to const types. For example
 [footnote Note that the type of a string literal is an array of const
 characters, not `const char*`. To get __make_list__ to create a __list__
 with an element of a non-const array type one must use the `ref` wrapper
-(see __note_boost_ref__).]:
+(see __note_ref_wrappers__).]:
 
     __make_list__("Donald", "Daisy")
 
@@ -121,7 +121,7 @@ creates a __list__ of type
 
     __list__<void (*)(int)>
 
-[heading boost::ref]
+[heading Reference Wrappers]
 
 Fusion's generation functions (e.g. __make_list__) by default stores the
 element types as plain non-reference types. Example:
@@ -150,6 +150,8 @@ For example:
     __make_list__(ref(ca));             // creates list<const A&>
 
 See __boost_ref__ for details.
+
+Since C++11, the standard reference wrappers (`std::ref` and `std::cref`) work as well.
 
 [heading adt_attribute_proxy]
 

@@ -25,7 +25,7 @@
 namespace std{ using ::strcmp; }
 #endif
 
-#include <boost/detail/no_exceptions_support.hpp>
+#include <boost/core/no_exceptions_support.hpp>
 #include <boost/serialization/singleton.hpp>
 #include <boost/serialization/force_include.hpp>
 

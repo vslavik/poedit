@@ -26,7 +26,7 @@
 <span class="firstname">Fernando Luis</span> <span class="surname">Cacciola Carballal</span>
 </h3></div></div>
 <div><p class="copyright">Copyright &#169; 2003-2007 Fernando Luis Cacciola Carballal</p></div>
-<div><p class="copyright">Copyright &#169; 2014 Andrzej Krzemie&#324;ski</p></div>
+<div><p class="copyright">Copyright &#169; 2014, 2015 Andrzej Krzemie&#324;ski</p></div>
 <div><div class="legalnotice">
 <a name="optional.legal"></a><p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -59,6 +59,7 @@
       use Optional</a></span></dt>
 <dt><span class="section"><a href="boost_optional/tutorial/relational_operators.html">Relational
       operators</a></span></dt>
+<dt><span class="section"><a href="boost_optional/tutorial/io_operators.html">IO operators</a></span></dt>
 <dt><span class="section"><a href="boost_optional/tutorial/optional_references.html">Optional
       references</a></span></dt>
 <dt><span class="section"><a href="boost_optional/tutorial/rebinding_semantics_for_assignment_of_optional_references.html">Rebinding
@@ -70,12 +71,22 @@
 <dt><span class="section"><a href="boost_optional/tutorial/exception_safety_guarantees.html">Exception
       Safety Guarantees</a></span></dt>
 <dt><span class="section"><a href="boost_optional/tutorial/type_requirements.html">Type requirements</a></span></dt>
+<dt><span class="section"><a href="boost_optional/tutorial/performance_considerations.html">Performance
+      considerations</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="optional/reference.html">Reference</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="optional/reference.html#boost_optional.reference.synopsis">Synopsis</a></span></dt>
-<dt><span class="section"><a href="boost_optional/reference/detailed_semantics.html">Detailed
-      Semantics</a></span></dt>
+<dt><span class="section"><a href="optional/reference.html#boost_optional.reference.header__boost_none_hpp_">Header
+      &lt;boost/none.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_optional/reference/header__boost_optional_bad_optional_access_hpp_.html">Header
+      &lt;boost/optional/bad_optional_access.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_optional/reference/io_header.html">Header &lt;boost/optional/optional_io.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_optional/reference/header__boost_optional_optional_fwd_hpp_.html">Header
+      &lt;boost/optional/optional_fwd.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="optional/reference/header__boost_optional_optional_hpp_.html">Header
+      &lt;boost/optional/optional.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_optional/reference/header__boost_optional_hpp_.html">Header
+      &lt;boost/optional.hpp&gt;</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="boost_optional/dependencies_and_portability.html">Dependencies
     and Portability</a></span></dt>
@@ -84,6 +95,7 @@
 <dt><span class="section"><a href="boost_optional/dependencies_and_portability/optional_reference_binding.html">Optional
       Reference Binding</a></span></dt>
 </dl></dd>
+<dt><span class="section"><a href="boost_optional/relnotes.html">Release Notes</a></span></dt>
 <dt><span class="section"><a href="boost_optional/acknowledgements.html">Acknowledgements</a></span></dt>
 </dl>
 </div>
@@ -107,9 +119,10 @@
       integral value, let's call it <code class="computeroutput"><span class="string">"MaxValue"</span></code>.
       It is possible that this parameter is not specified; such situation is no error.
       It is valid to not specify the parameter and in that case the program is supposed
-      to behave slightly different. Also suppose that any possible value of type
-      <code class="computeroutput"><span class="keyword">int</span></code> is a valid value for <code class="computeroutput"><span class="string">"MaxValue"</span></code>, so we cannot jut use <code class="computeroutput"><span class="special">-</span><span class="number">1</span></code> to represent
-      the absence of the parameter in the config file.
+      to behave slightly differently. Also, suppose that any possible value of type
+      <code class="computeroutput"><span class="keyword">int</span></code> is a valid value for <code class="computeroutput"><span class="string">"MaxValue"</span></code>, so we cannot just use
+      <code class="computeroutput"><span class="special">-</span><span class="number">1</span></code>
+      to represent the absence of the parameter in the config file.
     </p>
 <h4>
 <a name="optional.introduction.h1"></a>
@@ -133,7 +146,7 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: July 10, 2014 at 11:41:49 GMT</small></p></td>
+<td align="left"><p><small>Last revised: March 13, 2015 at 21:52:15 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

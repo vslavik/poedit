@@ -15,7 +15,7 @@
 #include <typeinfo>
 #include <cstddef> // NULL
 
-#include <boost/detail/no_exceptions_support.hpp>
+#include <boost/core/no_exceptions_support.hpp>
 
 #include <boost/serialization/singleton.hpp>
 

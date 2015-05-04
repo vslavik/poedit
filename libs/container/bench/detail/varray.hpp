@@ -2,6 +2,7 @@
 //
 // Copyright (c) 2012-2013 Adam Wulkiewicz, Lodz, Poland.
 // Copyright (c) 2011-2013 Andrew Hundt.
+// Copyright (c) 2014-2014 Ion Gaztanaga
 //
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -10,37 +11,40 @@
 #ifndef BOOST_CONTAINER_DETAIL_VARRAY_HPP
 #define BOOST_CONTAINER_DETAIL_VARRAY_HPP
 
-#if defined(_MSC_VER)
+#ifndef BOOST_CONFIG_HPP
+#  include <boost/config.hpp>
+#endif
+
+#if defined(BOOST_HAS_PRAGMA_ONCE)
 #  pragma once
 #endif
 
 #include <boost/container/detail/config_begin.hpp>
 #include <boost/container/detail/workaround.hpp>
-#include <boost/container/detail/preprocessor.hpp>
+
+#include <boost/container/detail/addressof.hpp>
+#include <boost/container/detail/algorithm.hpp> //algo_equal(), algo_lexicographical_compare
+#if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+#include <boost/move/detail/fwd_macros.hpp>
+#endif
+#include <boost/container/detail/iterator.hpp>
+#include <boost/container/detail/iterators.hpp>
+#include <boost/container/detail/mpl.hpp>
+#include <boost/container/detail/type_traits.hpp>
+#include <boost/move/adl_move_swap.hpp> //adl_move_swap
+
 
 #include "varray_util.hpp"
-//#include "varray_concept.hpp"
-//#include <boost/iterator/iterator_concepts.hpp>
+
+#include <boost/assert.hpp>
+#include <boost/config.hpp>
+
+#include <boost/static_assert.hpp>
 
 #ifndef BOOST_NO_EXCEPTIONS
 #include <stdexcept>
 #endif // BOOST_NO_EXCEPTIONS
 
-#include <boost/assert.hpp>
-#include <boost/config.hpp>
-#include <boost/swap.hpp>
-#include <boost/integer.hpp>
-
-#include <boost/mpl/assert.hpp>
-
-#include <boost/type_traits/is_unsigned.hpp>
-#include <boost/type_traits/alignment_of.hpp>
-#include <boost/type_traits/aligned_storage.hpp>
-
-// TODO - use std::reverse_iterator and std::iterator_traits
-// instead Boost.Iterator to remove dependency?
-// or boost/detail/iterator.hpp ?
-#include <boost/iterator/reverse_iterator.hpp>
 
 /**
  * @defgroup varray_non_member varray non-member functions
@@ -177,9 +181,9 @@ struct varray_traits
 
     typedef varray_error_handler error_handler;
 
-    typedef boost::false_type use_memop_in_swap_and_move;
-    typedef boost::false_type use_optimized_swap;
-    typedef boost::false_type disable_trivial_init;
+    typedef false_type use_memop_in_swap_and_move;
+    typedef false_type use_optimized_swap;
+    typedef false_type disable_trivial_init;
 };
 
 /**
@@ -221,20 +225,10 @@ class varray
     > vt;
 
     typedef typename vt::error_handler errh;
-
-    BOOST_MPL_ASSERT_MSG(
-        ( boost::is_unsigned<typename vt::size_type>::value &&
-          sizeof(typename boost::uint_value_t<Capacity>::least) <= sizeof(typename vt::size_type) ),
-        SIZE_TYPE_IS_TOO_SMALL_FOR_SPECIFIED_CAPACITY,
-        (varray)
-    );
-
-    //BOOST_CONCEPT_ASSERT((concept::VArrayStrategy<Strategy>));
-
-    typedef boost::aligned_storage<
+    typedef typename aligned_storage<
         sizeof(Value[Capacity]),
-        boost::alignment_of<Value[Capacity]>::value
-    > aligned_storage_type;
+        boost::container::container_detail::alignment_of<Value[Capacity]>::value
+    >::type aligned_storage_type;
 
     template <typename V, std::size_t C, typename S>
     friend class varray;
@@ -273,9 +267,9 @@ public:
     //! @brief The const iterator type.
     typedef const_pointer const_iterator;
     //! @brief The reverse iterator type.
-    typedef boost::reverse_iterator<iterator> reverse_iterator;
+    typedef boost::container::reverse_iterator<iterator> reverse_iterator;
     //! @brief The const reverse iterator.
-    typedef boost::reverse_iterator<const_iterator> const_reverse_iterator;
+    typedef boost::container::reverse_iterator<const_iterator> const_reverse_iterator;
 
     //! @brief The type of a strategy used by the varray.
     typedef Strategy strategy_type;
@@ -334,7 +328,7 @@ public:
 
     //! @pre
     //!  @li <tt>distance(first, last) <= capacity()</tt>
-    //!  @li Iterator must meet the \c ForwardTraversalIterator concept.
+    //!  @li Iterator must meet the \c ForwardIterator.
     //!
     //! @brief Constructs a varray containing copy of a range <tt>[first, last)</tt>.
     //!
@@ -353,8 +347,6 @@ public:
     varray(Iterator first, Iterator last)
         : m_size(0)
     {
-        //BOOST_CONCEPT_ASSERT((boost_concepts::ForwardTraversal<Iterator>)); // Make sure you passed a ForwardIterator
-
         this->assign(first, last);                                                    // may throw
     }
 
@@ -843,7 +835,7 @@ public:
         {
             namespace sv = varray_detail;
 
-            difference_type to_move = std::distance(position, this->end());
+            difference_type to_move = boost::container::iterator_distance(position, this->end());
 
             // TODO - should following lines check for exception and revert to the old size?
 
@@ -870,7 +862,7 @@ public:
     //! @pre
     //!  @li \c position must be a valid iterator of \c *this in range <tt>[begin(), end()]</tt>.
     //!  @li <tt>distance(first, last) <= capacity()</tt>
-    //!  @li \c Iterator must meet the \c ForwardTraversalIterator concept.
+    //!  @li \c Iterator must meet the \c ForwardIterator.
     //!
     //! @brief Inserts a copy of a range <tt>[first, last)</tt> at position.
     //!
@@ -890,11 +882,7 @@ public:
     template <typename Iterator>
     iterator insert(iterator position, Iterator first, Iterator last)
     {
-        //BOOST_CONCEPT_ASSERT((boost_concepts::ForwardTraversal<Iterator>)); // Make sure you passed a ForwardIterator
-
-        typedef typename boost::iterator_traversal<Iterator>::type traversal;
-        this->insert_dispatch(position, first, last, traversal());
-
+        this->insert_dispatch(position, first, last);
         return position;
     }
 
@@ -946,7 +934,7 @@ public:
         errh::check_iterator_end_eq(*this, first);
         errh::check_iterator_end_eq(*this, last);
 
-        difference_type n = std::distance(first, last);
+        difference_type n = boost::container::iterator_distance(first, last);
 
         //TODO - add invalid range check?
         //BOOST_ASSERT_MSG(0 <= n, "invalid range");
@@ -975,10 +963,7 @@ public:
     template <typename Iterator>
     void assign(Iterator first, Iterator last)
     {
-        //BOOST_CONCEPT_ASSERT((boost_concepts::ForwardTraversal<Iterator>)); // Make sure you passed a ForwardIterator
-
-        typedef typename boost::iterator_traversal<Iterator>::type traversal;
-        this->assign_dispatch(first, last, traversal());                            // may throw
+        this->assign_dispatch(first, last);                            // may throw
     }
 
     //! @pre <tt>count <= capacity()</tt>
@@ -1013,7 +998,7 @@ public:
     }
 
 #if !defined(BOOST_CONTAINER_VARRAY_DISABLE_EMPLACE)
-#if defined(BOOST_CONTAINER_PERFECT_FORWARDING) || defined(BOOST_CONTAINER_DOXYGEN_INVOKED)
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) || defined(BOOST_CONTAINER_DOXYGEN_INVOKED)
     //! @pre <tt>size() < capacity()</tt>
     //!
     //! @brief Inserts a Value constructed with
@@ -1084,8 +1069,9 @@ public:
             ++m_size; // update end
             sv::move_backward(position, this->end() - 2, this->end() - 1);          // may throw
 
-            aligned_storage<sizeof(value_type), alignment_of<value_type>::value> temp_storage;
-            value_type * val_p = static_cast<value_type *>(temp_storage.address());
+            typename aligned_storage
+               <sizeof(value_type), alignment_of<value_type>::value>::type temp_storage;
+            value_type * val_p = static_cast<value_type*>(static_cast<void*>(&temp_storage));
             sv::construct(dti(), val_p, ::boost::forward<Args>(args)...);                  // may throw
             sv::scoped_destructor<value_type> d(val_p);
             sv::assign(position, ::boost::move(*val_p));                            // may throw
@@ -1094,63 +1080,51 @@ public:
         return position;
     }
 
-#else // BOOST_CONTAINER_PERFECT_FORWARDING || BOOST_CONTAINER_DOXYGEN_INVOKED
+#else //  !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) || BOOST_CONTAINER_DOXYGEN_INVOKED
 
-    #define BOOST_PP_LOCAL_MACRO(n)                                                              \
-    BOOST_PP_EXPR_IF(n, template<) BOOST_PP_ENUM_PARAMS(n, class P) BOOST_PP_EXPR_IF(n, >)       \
-    void emplace_back(BOOST_PP_ENUM(n, BOOST_CONTAINER_PP_PARAM_LIST, _))                        \
-    {                                                                                            \
-        typedef typename vt::disable_trivial_init dti;                                           \
-                                                                                                 \
-        errh::check_capacity(*this, m_size + 1);                                    /*may throw*/\
-                                                                                                 \
-        namespace sv = varray_detail;                                                     \
-        sv::construct(dti(), this->end() BOOST_PP_ENUM_TRAILING(n, BOOST_CONTAINER_PP_PARAM_FORWARD, _) ); /*may throw*/\
-        ++m_size; /*update end*/                                                                 \
-    }                                                                                            \
-    //
-    #define BOOST_PP_LOCAL_LIMITS (0, BOOST_CONTAINER_MAX_CONSTRUCTOR_PARAMETERS)
-    #include BOOST_PP_LOCAL_ITERATE()
+   #define BOOST_CONTAINER_VARRAY_EMPLACE_CODE(N) \
+   BOOST_MOVE_TMPL_LT##N BOOST_MOVE_CLASS##N BOOST_MOVE_GT##N \
+   void emplace_back(BOOST_MOVE_UREF##N)\
+   {\
+      typedef typename vt::disable_trivial_init dti;\
+      errh::check_capacity(*this, m_size + 1);/*may throw*/\
+      \
+      namespace sv = varray_detail;\
+      sv::construct(dti(), this->end() BOOST_MOVE_I##N BOOST_MOVE_FWD##N ); /*may throw*/\
+      ++m_size; /*update end*/\
+   }\
+   \
+   BOOST_MOVE_TMPL_LT##N BOOST_MOVE_CLASS##N BOOST_MOVE_GT##N \
+   iterator emplace(iterator position BOOST_MOVE_I##N BOOST_MOVE_UREF##N)\
+   {\
+      typedef typename vt::disable_trivial_init dti;\
+      namespace sv = varray_detail;\
+      errh::check_iterator_end_eq(*this, position);\
+      errh::check_capacity(*this, m_size + 1); /*may throw*/\
+      if ( position == this->end() ){\
+         sv::construct(dti(), position BOOST_MOVE_I##N BOOST_MOVE_FWD##N ); /*may throw*/\
+         ++m_size; /*update end*/\
+      }\
+      else{\
+         /* TODO - should following lines check for exception and revert to the old size? */\
+         /* TODO - should move be used only if it's nonthrowing? */\
+         value_type & r = *(this->end() - 1);\
+         sv::construct(dti(), this->end(), boost::move(r));/*may throw*/\
+         ++m_size; /*update end*/\
+         sv::move_backward(position, this->end() - 2, this->end() - 1);/*may throw*/\
+         typename aligned_storage\
+            <sizeof(value_type), alignment_of<value_type>::value>::type temp_storage;\
+         value_type * val_p = static_cast<value_type*>(static_cast<void*>(&temp_storage));\
+         sv::construct(dti(), val_p BOOST_MOVE_I##N BOOST_MOVE_FWD##N ); /*may throw*/\
+         sv::scoped_destructor<value_type> d(val_p);\
+         sv::assign(position, ::boost::move(*val_p));/*may throw*/\
+      }\
+      return position;\
+   }\
+   BOOST_MOVE_ITERATE_0TO9(BOOST_CONTAINER_VARRAY_EMPLACE_CODE)
+   #undef BOOST_CONTAINER_VARRAY_EMPLACE_CODE
 
-    #define BOOST_PP_LOCAL_MACRO(n)                                                                 \
-    BOOST_PP_EXPR_IF(n, template<) BOOST_PP_ENUM_PARAMS(n, class P) BOOST_PP_EXPR_IF(n, >)          \
-    iterator emplace(iterator position BOOST_PP_ENUM_TRAILING(n, BOOST_CONTAINER_PP_PARAM_LIST, _)) \
-    {                                                                                               \
-        typedef typename vt::disable_trivial_init dti;                                              \
-        namespace sv = varray_detail;                                                               \
-                                                                                                    \
-        errh::check_iterator_end_eq(*this, position);                                               \
-        errh::check_capacity(*this, m_size + 1);                                       /*may throw*/\
-                                                                                                    \
-        if ( position == this->end() )                                                              \
-        {                                                                                           \
-            sv::construct(dti(), position BOOST_PP_ENUM_TRAILING(n, BOOST_CONTAINER_PP_PARAM_FORWARD, _) ); /*may throw*/\
-            ++m_size; /*update end*/                                                                \
-        }                                                                                           \
-        else                                                                                        \
-        {                                                                                           \
-            /* TODO - should following lines check for exception and revert to the old size? */     \
-            /* TODO - should move be used only if it's nonthrowing? */                              \
-                                                                                                    \
-            value_type & r = *(this->end() - 1);                                                    \
-            sv::construct(dti(), this->end(), boost::move(r));                                /*may throw*/\
-            ++m_size; /*update end*/                                                                \
-            sv::move_backward(position, this->end() - 2, this->end() - 1);             /*may throw*/\
-                                                                                                    \
-            aligned_storage<sizeof(value_type), alignment_of<value_type>::value> temp_storage;      \
-            value_type * val_p = static_cast<value_type *>(temp_storage.address());                 \
-            sv::construct(dti(), val_p BOOST_PP_ENUM_TRAILING(n, BOOST_CONTAINER_PP_PARAM_FORWARD, _) ); /*may throw*/\
-            sv::scoped_destructor<value_type> d(val_p);                                             \
-            sv::assign(position, ::boost::move(*val_p));                               /*may throw*/\
-        }                                                                                           \
-                                                                                                    \
-        return position;                                                                            \
-    }                                                                                               \
-    //
-    #define BOOST_PP_LOCAL_LIMITS (0, BOOST_CONTAINER_MAX_CONSTRUCTOR_PARAMETERS)
-    #include BOOST_PP_LOCAL_ITERATE()
-
-#endif // BOOST_CONTAINER_PERFECT_FORWARDING || BOOST_CONTAINER_DOXYGEN_INVOKED
+#endif //  !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) || BOOST_CONTAINER_DOXYGEN_INVOKED
 #endif // !BOOST_CONTAINER_VARRAY_DISABLE_EMPLACE
 
     //! @brief Removes all elements from the container.
@@ -1330,7 +1304,7 @@ public:
     //!   Constant O(1).
     Value * data()
     {
-        return boost::addressof(*(this->ptr()));
+        return (addressof)(*(this->ptr()));
     }
 
     //! @brief Const pointer such that <tt>[data(), data() + size())</tt> is a valid range.
@@ -1343,7 +1317,7 @@ public:
     //!   Constant O(1).
     const Value * data() const
     {
-        return boost::addressof(*(this->ptr()));
+        return (addressof)(*(this->ptr()));
     }
 
 
@@ -1537,7 +1511,7 @@ private:
     // @par Complexity
     //   Linear O(N).
     template <std::size_t C, typename S>
-    void move_ctor_dispatch(varray<value_type, C, S> & other, boost::true_type /*use_memop*/)
+    void move_ctor_dispatch(varray<value_type, C, S> & other, true_type /*use_memop*/)
     {
         ::memcpy(this->data(), other.data(), sizeof(Value) * other.m_size);
         m_size = other.m_size;
@@ -1549,7 +1523,7 @@ private:
     // @par Complexity
     //   Linear O(N).
     template <std::size_t C, typename S>
-    void move_ctor_dispatch(varray<value_type, C, S> & other, boost::false_type /*use_memop*/)
+    void move_ctor_dispatch(varray<value_type, C, S> & other, false_type /*use_memop*/)
     {
         namespace sv = varray_detail;
         sv::uninitialized_move_if_noexcept(other.begin(), other.end(), this->begin());                  // may throw
@@ -1561,12 +1535,12 @@ private:
     // @par Complexity
     //   Linear O(N).
     template <std::size_t C, typename S>
-    void move_assign_dispatch(varray<value_type, C, S> & other, boost::true_type /*use_memop*/)
+    void move_assign_dispatch(varray<value_type, C, S> & other, true_type /*use_memop*/)
     {
         this->clear();
 
         ::memcpy(this->data(), other.data(), sizeof(Value) * other.m_size);
-        boost::swap(m_size, other.m_size);
+        boost::adl_move_swap(m_size, other.m_size);
     }
 
     // @par Throws
@@ -1575,7 +1549,7 @@ private:
     // @par Complexity
     //   Linear O(N).
     template <std::size_t C, typename S>
-    void move_assign_dispatch(varray<value_type, C, S> & other, boost::false_type /*use_memop*/)
+    void move_assign_dispatch(varray<value_type, C, S> & other, false_type /*use_memop*/)
     {
         namespace sv = varray_detail;
         if ( m_size <= static_cast<size_type>(other.size()) )
@@ -1597,24 +1571,24 @@ private:
     // @par Complexity
     //   Linear O(N).
     template <std::size_t C, typename S>
-    void swap_dispatch(varray<value_type, C, S> & other, boost::true_type const& /*use_optimized_swap*/)
+    void swap_dispatch(varray<value_type, C, S> & other, true_type const& /*use_optimized_swap*/)
     {
         typedef typename
-        boost::mpl::if_c<
+        if_c<
             Capacity < C,
             aligned_storage_type,
             typename varray<value_type, C, S>::aligned_storage_type
         >::type
         storage_type;
 
-        storage_type temp;
-        Value * temp_ptr = reinterpret_cast<Value*>(temp.address());
+        storage_type temp_storage;
+        value_type * temp_ptr = static_cast<value_type*>(static_cast<void*>(&temp_storage));
 
         ::memcpy(temp_ptr, this->data(), sizeof(Value) * this->size());
         ::memcpy(this->data(), other.data(), sizeof(Value) * other.size());
         ::memcpy(other.data(), temp_ptr, sizeof(Value) * this->size());
 
-        boost::swap(m_size, other.m_size);
+        boost::adl_move_swap(m_size, other.m_size);
     }
 
     // @par Throws
@@ -1623,7 +1597,7 @@ private:
     // @par Complexity
     //   Linear O(N).
     template <std::size_t C, typename S>
-    void swap_dispatch(varray<value_type, C, S> & other, boost::false_type const& /*use_optimized_swap*/)
+    void swap_dispatch(varray<value_type, C, S> & other, false_type const& /*use_optimized_swap*/)
     {
         namespace sv = varray_detail;
 
@@ -1634,46 +1608,45 @@ private:
             swap_dispatch_impl(this->begin(), this->end(), other.begin(), other.end(), use_memop_in_swap_and_move()); // may throw
         else
             swap_dispatch_impl(other.begin(), other.end(), this->begin(), this->end(), use_memop_in_swap_and_move()); // may throw
-        boost::swap(m_size, other.m_size);
+        boost::adl_move_swap(m_size, other.m_size);
     }
 
     // @par Throws
     //   Nothing.
     // @par Complexity
     //   Linear O(N).
-    void swap_dispatch_impl(iterator first_sm, iterator last_sm, iterator first_la, iterator last_la, boost::true_type const& /*use_memop*/)
+    void swap_dispatch_impl(iterator first_sm, iterator last_sm, iterator first_la, iterator last_la, true_type const& /*use_memop*/)
     {
-        //BOOST_ASSERT_MSG(std::distance(first_sm, last_sm) <= std::distance(first_la, last_la));
+        //BOOST_ASSERT_MSG(boost::container::iterator_distance(first_sm, last_sm) <= boost::container::iterator_distance(first_la, last_la));
 
         namespace sv = varray_detail;
         for (; first_sm != last_sm ; ++first_sm, ++first_la)
         {
-            boost::aligned_storage<
+            typename aligned_storage<
                 sizeof(value_type),
-                boost::alignment_of<value_type>::value
-            > temp_storage;
-            value_type * temp_ptr = reinterpret_cast<value_type*>(temp_storage.address());
-
-            ::memcpy(temp_ptr, boost::addressof(*first_sm), sizeof(value_type));
-            ::memcpy(boost::addressof(*first_sm), boost::addressof(*first_la), sizeof(value_type));
-            ::memcpy(boost::addressof(*first_la), temp_ptr, sizeof(value_type));
+                alignment_of<value_type>::value
+            >::type temp_storage;
+            value_type * temp_ptr = static_cast<value_type*>(static_cast<void*>(&temp_storage));
+            ::memcpy(temp_ptr, (addressof)(*first_sm), sizeof(value_type));
+            ::memcpy((addressof)(*first_sm), (addressof)(*first_la), sizeof(value_type));
+            ::memcpy((addressof)(*first_la), temp_ptr, sizeof(value_type));
         }
 
-        ::memcpy(first_sm, first_la, sizeof(value_type) * std::distance(first_la, last_la));
+        ::memcpy(first_sm, first_la, sizeof(value_type) * boost::container::iterator_distance(first_la, last_la));
     }
 
     // @par Throws
     //   If Value's move constructor or move assignment throws.
     // @par Complexity
     //   Linear O(N).
-    void swap_dispatch_impl(iterator first_sm, iterator last_sm, iterator first_la, iterator last_la, boost::false_type const& /*use_memop*/)
+    void swap_dispatch_impl(iterator first_sm, iterator last_sm, iterator first_la, iterator last_la, false_type const& /*use_memop*/)
     {
-        //BOOST_ASSERT_MSG(std::distance(first_sm, last_sm) <= std::distance(first_la, last_la));
+        //BOOST_ASSERT_MSG(boost::container::iterator_distance(first_sm, last_sm) <= boost::container::iterator_distance(first_la, last_la));
 
         namespace sv = varray_detail;
         for (; first_sm != last_sm ; ++first_sm, ++first_la)
         {
-            //boost::swap(*first_sm, *first_la);                                    // may throw
+            //boost::adl_move_swap(*first_sm, *first_la);                                    // may throw
             value_type temp(boost::move(*first_sm));                                // may throw
             *first_sm = boost::move(*first_la);                                     // may throw
             *first_la = boost::move(temp);                                          // may throw
@@ -1726,14 +1699,12 @@ private:
     // @par Complexity
     //   Linear O(N).
     template <typename Iterator>
-    void insert_dispatch(iterator position, Iterator first, Iterator last, boost::random_access_traversal_tag const&)
+    typename iterator_enable_if_tag<Iterator, std::random_access_iterator_tag>::type
+       insert_dispatch(iterator position, Iterator first, Iterator last)
     {
-        //BOOST_CONCEPT_ASSERT((boost_concepts::RandomAccessTraversal<Iterator>)); // Make sure you passed a RandomAccessIterator
-
         errh::check_iterator_end_eq(*this, position);
 
-        typename boost::iterator_difference<Iterator>::type
-            count = std::distance(first, last);
+        size_type count = boost::container::iterator_distance(first, last);
 
         errh::check_capacity(*this, m_size + count);                                             // may throw
 
@@ -1755,8 +1726,9 @@ private:
     //   or if Value's copy constructor or copy assignment throws.
     // @par Complexity
     //   Linear O(N).
-    template <typename Iterator, typename Traversal>
-    void insert_dispatch(iterator position, Iterator first, Iterator last, Traversal const& /*not_random_access*/)
+    template <typename Iterator, typename Category>
+    typename iterator_disable_if_tag<Iterator, std::random_access_iterator_tag>::type
+        insert_dispatch(iterator position, Iterator first, Iterator last)
     {
         errh::check_iterator_end_eq(*this, position);
 
@@ -1764,7 +1736,7 @@ private:
         {
             namespace sv = varray_detail;
 
-            std::ptrdiff_t d = std::distance(position, this->begin() + Capacity);
+            std::ptrdiff_t d = boost::container::iterator_distance(position, this->begin() + Capacity);
             std::size_t count = sv::uninitialized_copy_s(first, last, position, d);                     // may throw
 
             errh::check_capacity(*this, count <= static_cast<std::size_t>(d) ? m_size + count : Capacity + 1);  // may throw
@@ -1773,8 +1745,7 @@ private:
         }
         else
         {
-            typename boost::iterator_difference<Iterator>::type
-                count = std::distance(first, last);
+            size_type count = boost::container::iterator_distance(first, last);
 
             errh::check_capacity(*this, m_size + count);                                                // may throw
 
@@ -1792,7 +1763,7 @@ private:
     {
         namespace sv = varray_detail;
 
-        difference_type to_move = std::distance(position, this->end());
+        difference_type to_move = boost::container::iterator_distance(position, this->end());
 
         // TODO - should following lines check for exception and revert to the old size?
 
@@ -1806,7 +1777,7 @@ private:
         else
         {
             Iterator middle_iter = first;
-            std::advance(middle_iter, to_move);
+            boost::container::iterator_advance(middle_iter, to_move);
 
             sv::uninitialized_copy(middle_iter, last, this->end());                             // may throw
             m_size += count - to_move; // update end
@@ -1823,12 +1794,12 @@ private:
     // @par Complexity
     //   Linear O(N).
     template <typename Iterator>
-    void assign_dispatch(Iterator first, Iterator last, boost::random_access_traversal_tag const& /*not_random_access*/)
+    typename iterator_enable_if_tag<Iterator, std::random_access_iterator_tag>::type
+       assign_dispatch(Iterator first, Iterator last)
     {
         namespace sv = varray_detail;
 
-        typename boost::iterator_difference<Iterator>::type
-            s = std::distance(first, last);
+        size_type s = boost::container::iterator_distance(first, last);
 
         errh::check_capacity(*this, s);                                     // may throw
 
@@ -1850,8 +1821,9 @@ private:
     //   If Value's constructor or assignment taking dereferenced Iterator throws.
     // @par Complexity
     //   Linear O(N).
-    template <typename Iterator, typename Traversal>
-    void assign_dispatch(Iterator first, Iterator last, Traversal const& /*not_random_access*/)
+    template <typename Iterator, typename Category>
+    typename iterator_disable_if_tag<Iterator, std::random_access_iterator_tag>::type
+       assign_dispatch(Iterator first, Iterator last)
     {
         namespace sv = varray_detail;
 
@@ -1863,7 +1835,7 @@ private:
 
         sv::destroy(it, this->end());
 
-        std::ptrdiff_t d = std::distance(it, this->begin() + Capacity);
+        std::ptrdiff_t d = boost::container::iterator_distance(it, this->begin() + Capacity);
         std::size_t count = sv::uninitialized_copy_s(first, last, it, d);                                   // may throw
         s += count;
 
@@ -1874,12 +1846,12 @@ private:
 
     pointer ptr()
     {
-        return pointer(static_cast<Value*>(m_storage.address()));
+        return pointer(static_cast<Value*>(static_cast<void*>(&m_storage)));
     }
 
     const_pointer ptr() const
     {
-        return const_pointer(static_cast<const Value*>(m_storage.address()));
+        return pointer(static_cast<const Value*>(static_cast<const void*>(&m_storage)));
     }
 
     size_type m_size;
@@ -1909,8 +1881,8 @@ public:
 
     typedef pointer iterator;
     typedef const_pointer const_iterator;
-    typedef boost::reverse_iterator<iterator> reverse_iterator;
-    typedef boost::reverse_iterator<const_iterator> const_reverse_iterator;
+    typedef boost::container::reverse_iterator<iterator> reverse_iterator;
+    typedef boost::container::reverse_iterator<const_iterator> const_reverse_iterator;
 
     // nothrow
     varray() {}
@@ -1944,7 +1916,7 @@ public:
     template <typename Iterator>
     varray(Iterator first, Iterator last)
     {
-        errh::check_capacity(*this, std::distance(first, last));                    // may throw
+        errh::check_capacity(*this, boost::container::iterator_distance(first, last));                    // may throw
     }
 
     // basic
@@ -2014,9 +1986,7 @@ public:
     template <typename Iterator>
     void insert(iterator, Iterator first, Iterator last)
     {
-        // TODO - add MPL_ASSERT, check if Iterator is really an iterator
-        //typedef typename boost::iterator_traversal<Iterator>::type traversal;
-        errh::check_capacity(*this, std::distance(first, last));                    // may throw
+        errh::check_capacity(*this, boost::container::iterator_distance(first, last));                    // may throw
     }
 
     // basic
@@ -2038,9 +2008,7 @@ public:
     template <typename Iterator>
     void assign(Iterator first, Iterator last)
     {
-        // TODO - add MPL_ASSERT, check if Iterator is really an iterator
-        //typedef typename boost::iterator_traversal<Iterator>::type traversal;
-        errh::check_capacity(*this, std::distance(first, last));                    // may throw
+        errh::check_capacity(*this, boost::container::iterator_distance(first, last));                    // may throw
     }
 
     // basic
@@ -2109,8 +2077,8 @@ public:
     }
 
     // nothrow
-    Value * data() { return boost::addressof(*(this->ptr())); }
-    const Value * data() const { return boost::addressof(*(this->ptr())); }
+    Value * data() { return (addressof)(*(this->ptr())); }
+    const Value * data() const { return (addressof)(*(this->ptr())); }
 
     // nothrow
     iterator begin() { return this->ptr(); }
@@ -2162,7 +2130,7 @@ private:
 template<typename V, std::size_t C1, typename S1, std::size_t C2, typename S2>
 bool operator== (varray<V, C1, S1> const& x, varray<V, C2, S2> const& y)
 {
-    return x.size() == y.size() && std::equal(x.begin(), x.end(), y.begin());
+    return x.size() == y.size() && ::boost::container::algo_equal(x.begin(), x.end(), y.begin());
 }
 
 //! @brief Checks if contents of two varrays are not equal.
@@ -2196,7 +2164,7 @@ bool operator!= (varray<V, C1, S1> const& x, varray<V, C2, S2> const& y)
 template<typename V, std::size_t C1, typename S1, std::size_t C2, typename S2>
 bool operator< (varray<V, C1, S1> const& x, varray<V, C2, S2> const& y)
 {
-    return std::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());
+    return ::boost::container::algo_lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());
 }
 
 //! @brief Lexicographically compares varrays.

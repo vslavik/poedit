@@ -1,5 +1,5 @@
 [/
-              Copyright Andrey Semashev 2007 - 2014.
+              Copyright Andrey Semashev 2007 - 2015.
      Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
               http://www.boost.org/LICENSE_1_0.txt)
@@ -8,6 +8,25 @@
 /]
 
 [section:changelog Changelog]
+
+[heading 2.5, Boost 1.58]
+
+[*Bug fixes:]
+
+* Fixed thread id formatting. The thread identifiers could be presented as zeros on big-endian platforms. Also the lower 4 bits of the ids were lost in the output.
+* Fixed process id formatting. Process ids could have misplaced filler zeros. ([ticket 10926])
+* Fixed build failure on GNU Hurd.
+* Fixed incorrect behavior of [link log.detailed.sink_backends.text_file text file sink backend] in case if free space on the file system gets exhausted. The sink will no longer create lots of empty files in attempt to recover. ([ticket 11016])
+* Fixed incorrect behavior of `attribute_set::insert()` in some cases. The inserted elements could have made some previously inserted elements not findable. ([ticket 11106])
+* Fixed incorrect behavior of `attribute_value_set::size()` if a large number of attribute values are inserted into the set. ([ticket 11148])
+
+[heading 2.4, Boost 1.57]
+
+[*Bug fixes:]
+
+* [link log.detailed.expressions.formatters.decorators XML character decorator] now escapes quote (\") characters.
+* The exceptions thrown by asynchronous sinks created as a result of [link log.detailed.utilities.setup.settings initialization from settings] are now silently suppressed instead of terminating the application. If special error handling is needed, it is recommended to [link log.extension.settings.adding_support_for_user_defined_sinks register a user-defined sink factory]. ([ticket 10638])
+* Corrected syslog message composition on MSVC, if message length exceeds 1025 bytes. ([ticket 10700])
 
 [heading 2.3, Boost 1.56]
 

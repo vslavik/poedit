@@ -1,7 +1,7 @@
 /* Boost numeric test of the adams-bashforth steppers test file
 
  Copyright 2013 Karsten Ahnert
- Copyright 2013 Mario Mulansky
+ Copyright 2013-2015 Mario Mulansky
 
  Distributed under the Boost Software License, Version 1.0.
  (See accompanying file LICENSE_1_0.txt or
@@ -34,7 +34,6 @@ namespace mpl = boost::mpl;
 typedef double value_type;
 
 typedef boost::array< double , 2 > state_type;
-typedef runge_kutta_fehlberg78<state_type> initializing_stepper;
 
 // harmonic oscillator, analytic solution x[0] = sin( t )
 struct osc
@@ -56,7 +55,6 @@ struct perform_adams_bashforth_test
     void operator()( void )
     {
         Stepper stepper;
-        initializing_stepper init_stepper;
         const int o = stepper.order()+1; //order of the error is order of approximation + 1
 
         const state_type x0 = {{ 0.0 , 1.0 }};
@@ -64,8 +62,7 @@ struct perform_adams_bashforth_test
         double t = 0.0;
         double dt = 0.2;
         // initialization, does a number of steps already to fill internal buffer, t is increased
-        // we use the rk78 as initializing stepper
-        stepper.initialize( boost::ref(init_stepper) , osc() , x1 , t , dt );
+        stepper.initialize( osc() , x1 , t , dt );
         double A = std::sqrt( x1[0]*x1[0] + x1[1]*x1[1] );
         double phi = std::asin(x1[0]/A) - t;
         // do a number of steps to fill the buffer with results from adams bashforth
@@ -79,14 +76,16 @@ struct perform_adams_bashforth_test
         // only examine the error of the adams-bashforth step, not the initialization
         const double f = 2.0 * std::abs( A*sin(t+dt+phi) - x1[0] ) / std::pow( dt , o ); // upper bound
         
-        std::cout << o << " , " << f << std::endl;
+        std::cout << o << " , " 
+                  << Stepper::initializing_stepper_type::order_value+1 << " , "
+                  << f << std::endl;
 
         /* as long as we have errors above machine precision */
         while( f*std::pow( dt , o ) > 1E-16 )
         {
             x1 = x0;
             t = 0.0;
-            stepper.initialize( boost::ref(init_stepper) , osc() , x1 , t , dt );
+            stepper.initialize( osc() , x1 , t , dt );
             A = std::sqrt( x1[0]*x1[0] + x1[1]*x1[1] );
             phi = std::asin(x1[0]/A) - t;
             // now we do the actual step

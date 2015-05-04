@@ -322,7 +322,7 @@ get_manager().engine().register_bjam_action("testing.capture-output",
                                             capture_output_setup)
 
 
-path = os.path.dirname(get_manager().projects().loaded_tool_module_path_[__name__])
+path = os.path.dirname(__file__)
 import b2.util.os_j
 get_manager().projects().project_rules()._import_rule("testing", "os.name",
                                                       b2.util.os_j.name)

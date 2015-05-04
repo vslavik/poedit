@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>High Level Class RegEx (Deprecated)</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../index.html" title="Boost.Regex 5.0.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="../../../index.html" title="Boost.Regex 5.0.1">
 <link rel="up" href="../deprecated_interfaces.html" title="Deprecated Interfaces">
 <link rel="prev" href="regex_split.html" title="regex_split (deprecated)">
 <link rel="next" href="../internal_details.html" title="Internal Details">
@@ -232,10 +232,9 @@
 <td>
                   <p>
                     <code class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">int</span>
-                    <span class="identifier">SetExpression</span><span class="special">(</span><span class="identifier">constchar</span><span class="special">*</span>
-                    <span class="identifier">p</span><span class="special">,</span>
-                    <span class="keyword">bool</span> <span class="identifier">icase</span>
-                    <span class="special">=</span> <span class="keyword">false</span><span class="special">);</span></code>
+                    <span class="identifier">SetExpression</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">p</span><span class="special">,</span> <span class="keyword">bool</span>
+                    <span class="identifier">icase</span> <span class="special">=</span>
+                    <span class="keyword">false</span><span class="special">);</span></code>
                   </p>
                 </td>
 <td>
@@ -488,7 +487,7 @@
                 </td>
 <td>
                   <p>
-                    Finds all matches of the current expression in the files files
+                    Finds all matches of the current expression in the files <span class="emphasis"><em>files</em></span>
                     using the <a class="link" href="../match_flag_type.html" title="match_flag_type"><code class="computeroutput"><span class="identifier">match_flag_type</span></code></a> <span class="emphasis"><em>flags</em></span>.
                     For each match calls the call-back function cb. If the call-back
                     returns false then the algorithm returns without considering
@@ -523,7 +522,7 @@
                 </td>
 <td>
                   <p>
-                    Finds all matches of the current expression in the files files
+                    Finds all matches of the current expression in the files <span class="emphasis"><em>files</em></span>
                     using the <a class="link" href="../match_flag_type.html" title="match_flag_type"><code class="computeroutput"><span class="identifier">match_flag_type</span></code></a> <span class="emphasis"><em>flags</em></span>.
                     For each match calls the call-back function cb.
                   </p>
@@ -641,9 +640,9 @@
                     be treated. If <span class="emphasis"><em>copy</em></span> is true then all unmatched
                     sections of input are copied unchanged to output, if the flag
                     <span class="emphasis"><em>format_first_only</em></span> is set then only the first
-                    occurance of the pattern found is replaced. Returns the new string.
-                    See also <a class="link" href="../../format.html" title="Search and Replace Format String Syntax">format string syntax</a>,
-                    and <a class="link" href="../match_flag_type.html" title="match_flag_type"><code class="computeroutput"><span class="identifier">match_flag_type</span></code></a>.
+                    occurrence of the pattern found is replaced. Returns the new
+                    string. See also <a class="link" href="../../format.html" title="Search and Replace Format String Syntax">format string
+                    syntax</a>, and <a class="link" href="../match_flag_type.html" title="match_flag_type"><code class="computeroutput"><span class="identifier">match_flag_type</span></code></a>.
                   </p>
                 </td>
 </tr>
@@ -670,9 +669,9 @@
                     be treated. If <span class="emphasis"><em>copy</em></span> is true then all unmatched
                     sections of input are copied unchanged to output, if the flag
                     <span class="emphasis"><em>format_first_only</em></span> is set then only the first
-                    occurance of the pattern found is replaced. Returns the new string.
-                    See also <a class="link" href="../../format.html" title="Search and Replace Format String Syntax">format string syntax</a>,
-                    and <a class="link" href="../match_flag_type.html" title="match_flag_type"><code class="computeroutput"><span class="identifier">match_flag_type</span></code></a>.
+                    occurrence of the pattern found is replaced. Returns the new
+                    string. See also <a class="link" href="../../format.html" title="Search and Replace Format String Syntax">format string
+                    syntax</a>, and <a class="link" href="../match_flag_type.html" title="match_flag_type"><code class="computeroutput"><span class="identifier">match_flag_type</span></code></a>.
                   </p>
                 </td>
 </tr>

@@ -23,6 +23,8 @@ rule test_all
         <toolset>gcc,<target-os>windows:<linkflags>"-lole32 -loleaut32 -lpsapi -ladvapi32" 
         <host-os>windows,<toolset>clang:<linkflags>"-lole32 -loleaut32 -lpsapi -ladvapi32"
         <toolset>msvc:<cxxflags>/bigobj
+        <host-os>windows,<toolset>intel:<cxxflags>/bigobj
+        <host-os>linux:<linkflags>"-lrt"
       ] ;
    }
 

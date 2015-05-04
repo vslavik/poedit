@@ -20,15 +20,10 @@
 
 #include <boost/interprocess/interprocess_fwd.hpp>
 #include <boost/interprocess/containers/allocation_type.hpp>
-#include <boost/assert.hpp>
 #include <boost/interprocess/detail/utilities.hpp>
 #include <boost/interprocess/containers/version_type.hpp>
 #include <boost/interprocess/exceptions.hpp>
-#include <memory>
-#include <algorithm>
 #include <cstddef>
-#include <stdexcept>
-#include <cassert>
 
 //!\file
 //!Describes an allocator to test expand capabilities
@@ -110,12 +105,9 @@ class dummy_test_allocator
 
    //Experimental version 2 dummy_test_allocator functions
 
-   std::pair<pointer, bool>
-      allocation_command(boost::interprocess::allocation_type,
-                         size_type,
-                         size_type,
-                         size_type &, const pointer & = 0)
-   {  return std::pair<pointer, bool>(pointer(0), true); }
+   pointer allocation_command(boost::interprocess::allocation_type,
+                         size_type, size_type &, pointer &)
+   {  return pointer(); }
 
    //!Returns maximum the number of objects the previously allocated memory
    //!pointed by p can hold.
@@ -126,7 +118,7 @@ class dummy_test_allocator
    //!must be deallocated only with deallocate_one().
    //!Throws boost::interprocess::bad_alloc if there is no enough memory
    pointer allocate_one()
-   {  return pointer(0);  }
+   {  return pointer();  }
 
    //!Deallocates memory previously allocated with allocate_one().
    //!You should never use deallocate_one to deallocate memory allocated

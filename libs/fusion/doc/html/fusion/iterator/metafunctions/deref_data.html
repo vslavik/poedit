@@ -36,7 +36,7 @@
         </p>
 <h6>
 <a name="fusion.iterator.metafunctions.deref_data.h1"></a>
-          <span class="phrase"><a name="fusion.iterator.metafunctions.deref_data.synposis"></a></span><a class="link" href="deref_data.html#fusion.iterator.metafunctions.deref_data.synposis">Synposis</a>
+          <span class="phrase"><a name="fusion.iterator.metafunctions.deref_data.synopsis"></a></span><a class="link" href="deref_data.html#fusion.iterator.metafunctions.deref_data.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
     <span class="keyword">typename</span> <span class="identifier">I</span>
@@ -47,7 +47,7 @@
 <span class="special">};</span>
 </pre>
 <div class="table">
-<a name="fusion.iterator.metafunctions.deref_data.t0"></a><p class="title"><b>Table&#160;1.22.&#160;Parameters</b></p>
+<a name="fusion.iterator.metafunctions.deref_data.t0"></a><p class="title"><b>Table&#160;1.21.&#160;Parameters</b></p>
 <div class="table-contents"><table class="table" summary="Parameters">
 <colgroup>
 <col>
@@ -109,17 +109,17 @@
 <a name="fusion.iterator.metafunctions.deref_data.h3"></a>
           <span class="phrase"><a name="fusion.iterator.metafunctions.deref_data.header"></a></span><a class="link" href="deref_data.html#fusion.iterator.metafunctions.deref_data.header">Header</a>
         </h6>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boosta</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">iterator</span><span class="special">/</span><span class="identifier">deref_data</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">iterator</span><span class="special">/</span><span class="identifier">deref_data</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">deref_data</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h6>
 <a name="fusion.iterator.metafunctions.deref_data.h4"></a>
           <span class="phrase"><a name="fusion.iterator.metafunctions.deref_data.example"></a></span><a class="link" href="deref_data.html#fusion.iterator.metafunctions.deref_data.example">Example</a>
         </h6>
-<pre class="programlisting"><span class="keyword">typedef</span> <a class="link" href="../../container/map.html" title="map"><code class="computeroutput"><span class="identifier">map</span></code></a><span class="special">&lt;</span><a class="link" href="../../support/pair.html" title="pair"><code class="computeroutput"><span class="identifier">pair</span></code></a><span class="special">&lt;</span><span class="keyword">float</span><span class="special">,</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">map</span><span class="special">;</span>
-<span class="keyword">typedef</span> <a class="link" href="../../sequence/intrinsic/metafunctions/begin.html" title="begin"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">begin</span></code></a><span class="special">&lt;</span><span class="identifier">vec</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">first</span><span class="special">;</span>
-
-<span class="identifier">BOOST_MPL_ASSERT</span><span class="special">((</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">is_same</span><span class="special">&lt;</span><a class="link" href="deref_data.html" title="deref_data"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">deref_data</span></code></a><span class="special">&lt;</span><span class="identifier">first</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&amp;&gt;));</span>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">map</span><span class="special">&lt;</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="keyword">float</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">map_type</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">begin</span><span class="special">&lt;</span><span class="identifier">map_type</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">i_type</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">deref_data</span><span class="special">&lt;</span><span class="identifier">i_type</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">r_type</span><span class="special">;</span>
+<span class="identifier">BOOST_STATIC_ASSERT</span><span class="special">((</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">is_same</span><span class="special">&lt;</span><span class="identifier">r_type</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&amp;&gt;::</span><span class="identifier">value</span><span class="special">));</span>
 </pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

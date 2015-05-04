@@ -1,7 +1,13 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 //
-// Copyright (c) 2010-2013 Barend Gehrels, Amsterdam, the Netherlands.
-// Copyright (c) 2012-2013 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2010-2015 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2012-2015 Adam Wulkiewicz, Lodz, Poland.
+
+// This file was modified by Oracle on 2014, 2015.
+// Modifications copyright (c) 2014-2015, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -166,9 +172,27 @@ void quickbook_synopsis(enumeration const& e, std::ostream& out)
 {
     out << "``enum " << e.name;
     bool first = true;
+
+    bool has_many_values = e.enumeration_values.size() > 4;
+
     BOOST_FOREACH(enumeration_value const& value, e.enumeration_values)
     {
-        out << (first ? " {" : ", ") << value.name;
+        if (has_many_values)
+        {
+            if (first)
+            {
+                out << std::endl << "{";
+            }
+            else
+            {
+                out << ",";
+            }
+            out << std::endl << "    " << value.name;
+        }
+        else
+        {
+            out << (first ? " {" : ", ") << value.name;
+        }
         if (! value.initializer.empty())
         {
             // Doxygen 1.6 does not include "=" in the <initializer> tag, Doxygen 1.8 does.
@@ -179,6 +203,10 @@ void quickbook_synopsis(enumeration const& e, std::ostream& out)
     }
     if (! first)
     {
+        if (has_many_values)
+        {
+            out << std::endl;
+        }
         out << "};";
     }
     out << "``"
@@ -945,7 +973,11 @@ void quickbook_template_parameter_list_alt(std::vector<parameter> const& paramet
             if ( !p.default_value.empty() )
             {
                 out << " = ";
-                inline_str_with_links(p.default_value, out);
+                // don't display default values from details
+                if ( p.default_value.find("detail") != std::string::npos )
+                    out << "/default/";
+                else
+                    inline_str_with_links(p.default_value, out);
             }
 
             first = false;
@@ -968,13 +1000,20 @@ void quickbook_synopsis_alt(function const& f, std::ostream& out)
             offset += f.name.size();
             break;
         case function_member :
-            inline_str_with_links(f.return_type, out);
-            out << " `" << f.name << "`";
-            offset += f.return_type_without_links.size() + 1 + f.name.size();
-            break;
         case function_free :
-            inline_str_with_links(f.definition, out);
-            offset += f.definition.size();
+            // don't display return types from details
+            if ( f.return_type.find("detail") != std::string::npos )
+            {
+                out << "/unspecified/";
+                offset += 11;
+            }
+            else
+            {
+                inline_str_with_links(f.return_type, out);
+                offset += f.return_type_without_links.size();
+            }
+            out << " `" << f.name << "`";
+            offset += 1 + f.name.size();
             break;
         case function_define :
             out << "`#define " << f.name << "`";
@@ -1008,7 +1047,11 @@ void quickbook_synopsis_alt(function const& f, std::ostream& out)
                 if ( !p.default_value.empty() )
                 {
                     out << " = ";
-                    inline_str_with_links(p.default_value, out);
+                    // don't display default values from details
+                    if ( p.default_value.find("detail") != std::string::npos )
+                        out << "/default/";
+                    else
+                        inline_str_with_links(p.default_value, out);
                 }
                 first = false;
             }
@@ -1048,20 +1091,24 @@ void quickbook_synopsis_alt(class_or_struct const& cos, configuration const& con
 
     if (! cos.base_classes.empty())
     {
-        out << "`      : ";
         bool first = true;
         BOOST_FOREACH(base_class const& bc, cos.base_classes)
         {
-            if (! first)
-            {
+            // don't display base classes from details
+            if ( bc.name.find("detail") != std::string::npos )
+                continue;
+
+            if (first)
+                out << "`      : ";
+            else
                 out << std::endl << "      , ";
-            }
             out << output_if_different(bc.derivation, "private")
                 << output_if_different(bc.virtuality, "non-virtual")
                 << namespace_skipped(bc.name, config);
             first = false;
         }
-        out << "`" << std::endl;
+        if (!first)
+            out << "`" << std::endl;
     }
 
     out << "`{`" << std::endl

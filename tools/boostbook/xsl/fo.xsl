@@ -216,7 +216,7 @@
       </xsl:choose>
     </fo:list-item-label>
     <fo:list-item-body start-indent="body-start()">
-      <xsl:apply-templates select="*[local-name(.)!='label']"/>text-align
+      <xsl:apply-templates select="*[local-name(.)!='label']"/>
     </fo:list-item-body>
   </fo:list-item>
 </xsl:template>

@@ -252,4 +252,21 @@ C++11 support has resulted in some breaking changes:
   uses slower ([ticket 9282]).
 * Only construct elements using allocators, as specified in C++11 standard.
 
+[h2 Boost 1.57.0]
+
+* Fix the `pointer` typedef in iterators ([ticket 10672]).
+* Fix Coverity warning
+  ([@https://github.com/boostorg/unordered/pull/2 GitHub #2]).
+
+[h2 Boost 1.58.0]
+
+* Remove unnecessary template parameter from const iterators.
+* Rename private `iterator` typedef in some iterator classes, as it
+  confuses some traits classes.
+* Fix move assignment with stateful, propagate_on_container_move_assign
+  allocators ([ticket 10777]).
+* Fix rare exception safety issue in move assignment.
+* Fix potential overflow when calculating number of buckets to allocate
+  ([@https://github.com/boostorg/unordered/pull/4 GitHub #4]).
+
 [endsect]

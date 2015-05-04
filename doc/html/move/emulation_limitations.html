@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../move.html" title="Chapter&#160;20.&#160;Boost.Move">
+<link rel="up" href="../move.html" title="Chapter&#160;19.&#160;Boost.Move">
 <link rel="prev" href="move_algorithms.html" title="Move algorithms">
 <link rel="next" href="how_the_library_works.html" title="How the library works">
 </head>
@@ -48,24 +48,31 @@
 </h3></div></div></div>
 <p>
         When initializing base classes in move constructors, users must cast the
-        reference to a base class reference before moving it. Example:
+        reference to a base class reference before moving it or just use <code class="computeroutput"><span class="identifier">BOOST_MOVE_BASE</span></code>. Example:
       </p>
-<pre class="programlisting"><span class="comment">//Portable and efficient</span>
-<span class="identifier">Derived</span><span class="special">(</span><span class="identifier">BOOST_RV_REF</span><span class="special">(</span><span class="identifier">Derived</span><span class="special">)</span> <span class="identifier">x</span><span class="special">)</span>             <span class="comment">// Move ctor</span>
-   <span class="special">:</span> <span class="identifier">Base</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">move</span><span class="special">(</span><span class="keyword">static_cast</span><span class="special">&lt;</span><span class="identifier">Base</span><span class="special">&amp;&gt;(</span><span class="identifier">x</span><span class="special">))),</span>
-     <span class="identifier">mem_</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">move</span><span class="special">(</span><span class="identifier">x</span><span class="special">.</span><span class="identifier">mem_</span><span class="special">))</span> <span class="special">{</span> <span class="special">}</span>
+<pre class="programlisting"><span class="identifier">Derived</span><span class="special">(</span><span class="identifier">BOOST_RV_REF</span><span class="special">(</span><span class="identifier">Derived</span><span class="special">)</span> <span class="identifier">x</span><span class="special">)</span>             <span class="comment">// Move ctor</span>
+   <span class="special">:</span> <span class="identifier">Base</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">move</span><span class="special">(</span><span class="keyword">static_cast</span><span class="special">&lt;</span><span class="identifier">Base</span><span class="special">&amp;&gt;(</span><span class="identifier">x</span><span class="special">)))</span>
+     <span class="comment">//...</span>
+</pre>
+<p>
+        or
+      </p>
+<pre class="programlisting"><span class="identifier">Derived</span><span class="special">(</span><span class="identifier">BOOST_RV_REF</span><span class="special">(</span><span class="identifier">Derived</span><span class="special">)</span> <span class="identifier">x</span><span class="special">)</span>             <span class="comment">// Move ctor</span>
+   <span class="special">:</span> <span class="identifier">Base</span><span class="special">(</span><span class="identifier">BOOST_MOVE_BASE</span><span class="special">(</span><span class="identifier">Base</span><span class="special">,</span> <span class="identifier">x</span><span class="special">))</span>
+     <span class="comment">//...</span>
 </pre>
 <p>
         If casting is not performed the emulation will not move construct the base
         class, because no conversion is available from <code class="computeroutput"><span class="identifier">BOOST_RV_REF</span><span class="special">(</span><span class="identifier">Derived</span><span class="special">)</span></code> to <code class="computeroutput"><span class="identifier">BOOST_RV_REF</span><span class="special">(</span><span class="identifier">Base</span><span class="special">)</span></code>.
-        Without the cast we might obtain a compilation error (for non-copyable types)
-        or a less-efficient move constructor (for copyable types):
+        Without the cast or <code class="computeroutput"><span class="identifier">BOOST_MOVE_BASE</span></code>
+        we might obtain a compilation error (for non-copyable types) or a less-efficient
+        move constructor (for copyable types):
       </p>
 <pre class="programlisting"><span class="comment">//If Derived is copyable, then Base is copy-constructed.</span>
 <span class="comment">//If not, a compilation error is issued</span>
 <span class="identifier">Derived</span><span class="special">(</span><span class="identifier">BOOST_RV_REF</span><span class="special">(</span><span class="identifier">Derived</span><span class="special">)</span> <span class="identifier">x</span><span class="special">)</span>             <span class="comment">// Move ctor</span>
-   <span class="special">:</span> <span class="identifier">Base</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">move</span><span class="special">(</span><span class="identifier">x</span><span class="special">)),</span>
-     <span class="identifier">mem_</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">move</span><span class="special">(</span><span class="identifier">x</span><span class="special">.</span><span class="identifier">mem_</span><span class="special">))</span> <span class="special">{</span> <span class="special">}</span>
+   <span class="special">:</span> <span class="identifier">Base</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">move</span><span class="special">(</span><span class="identifier">x</span><span class="special">))</span>
+     <span class="comment">//...</span>
 </pre>
 </div>
 <div class="section">
@@ -159,7 +166,7 @@
 </pre>
 <p>
         This limitation forces the user to define a const version of the copy assignment,
-        in all classes holding copyable and movable classes which might annoying
+        in all classes holding copyable and movable classes which might be annoying
         in some cases.
       </p>
 <p>

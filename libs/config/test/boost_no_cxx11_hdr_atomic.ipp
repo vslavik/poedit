@@ -25,6 +25,7 @@ int test()
 {
    std::memory_order m = static_cast<std::memory_order>(std::memory_order_relaxed | std::memory_order_consume | std::memory_order_acquire | std::memory_order_release 
                            | std::memory_order_acq_rel | std::memory_order_seq_cst);
+   (void)m;
 
    std::atomic<int> a1;
    std::atomic<unsigned> a2;

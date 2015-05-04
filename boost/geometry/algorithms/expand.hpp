@@ -20,6 +20,10 @@
 
 #include <boost/numeric/conversion/cast.hpp>
 
+#include <boost/variant/apply_visitor.hpp>
+#include <boost/variant/static_visitor.hpp>
+#include <boost/variant/variant_fwd.hpp>
+
 #include <boost/geometry/algorithms/not_implemented.hpp>
 #include <boost/geometry/core/coordinate_dimension.hpp>
 #include <boost/geometry/geometries/concepts/check.hpp>
@@ -28,9 +32,6 @@
 
 #include <boost/geometry/strategies/compare.hpp>
 #include <boost/geometry/policies/compare.hpp>
-
-#include <boost/variant/static_visitor.hpp>
-#include <boost/variant/apply_visitor.hpp>
 
 
 namespace boost { namespace geometry

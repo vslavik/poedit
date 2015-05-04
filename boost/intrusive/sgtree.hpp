@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2007-2013
+// (C) Copyright Ion Gaztanaga 2007-2014
 //
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -20,26 +20,31 @@
 
 #include <boost/intrusive/detail/config_begin.hpp>
 #include <boost/intrusive/intrusive_fwd.hpp>
-#include <algorithm>
-#include <cstddef>
-#include <functional>
-#include <iterator>
-#include <utility>
-#include <cmath>
-#include <cstddef>
 #include <boost/intrusive/detail/assert.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/intrusive/bs_set_hook.hpp>
 #include <boost/intrusive/bstree.hpp>
 #include <boost/intrusive/detail/tree_node.hpp>
-#include <boost/intrusive/detail/ebo_functor_holder.hpp>
 #include <boost/intrusive/pointer_traits.hpp>
 #include <boost/intrusive/detail/mpl.hpp>
-#include <boost/intrusive/detail/utilities.hpp>
-#include <boost/intrusive/options.hpp>
+#include <boost/intrusive/detail/math.hpp>
+#include <boost/intrusive/detail/get_value_traits.hpp>
 #include <boost/intrusive/sgtree_algorithms.hpp>
+#include <boost/intrusive/detail/key_nodeptr_comp.hpp>
 #include <boost/intrusive/link_mode.hpp>
-#include <boost/move/move.hpp>
+
+#include <boost/move/utility_core.hpp>
+#include <boost/move/adl_move_swap.hpp>
+
+#include <cstddef>
+#include <boost/intrusive/detail/minimal_less_equal_header.hpp>
+#include <boost/intrusive/detail/minimal_pair_header.hpp>   //std::pair
+#include <cmath>
+#include <cstddef>
+
+#if defined(BOOST_HAS_PRAGMA_ONCE)
+#  pragma once
+#endif
 
 namespace boost {
 namespace intrusive {
@@ -102,7 +107,6 @@ struct h_alpha_t
       //    floor(log2(n)/-log2(alpha))
       //    floor(log2(n)*(1/-log2(alpha)))
       ////////////////////////////////////////////////////////////
-      //return static_cast<std::size_t>(std::log(float(n))*inv_minus_logalpha_);
       return static_cast<std::size_t>(detail::fast_log2(float(n))*inv_minus_logalpha_);
    }
 
@@ -147,7 +151,7 @@ struct alpha_holder
    }
 
    h_alpha_t get_h_alpha_t() const
-   {  return h_alpha_t(/*alpha_, */inv_minus_logalpha_);  }
+   {  return h_alpha_t(inv_minus_logalpha_);  }
 
    multiply_by_alpha_t get_multiply_by_alpha_t() const
    {  return multiply_by_alpha_t(alpha_);  }
@@ -192,7 +196,7 @@ struct alpha_holder<false, SizeType>
 
 struct sgtree_defaults
 {
-   typedef detail::default_bstree_hook proto_value_traits;
+   typedef default_bstree_hook_applier proto_value_traits;
    static const bool constant_time_size = true;
    typedef std::size_t size_type;
    typedef void compare;
@@ -230,7 +234,7 @@ class sgtree_impl
    typedef ValueTraits                                               value_traits;
    /// @cond
    typedef bstree_impl< ValueTraits, VoidOrKeyComp, SizeType
-                      , true, SgTreeAlgorithms, HeaderHolder>       tree_type;
+                      , true, SgTreeAlgorithms, HeaderHolder>        tree_type;
    typedef tree_type                                                 implementation_defined;
 
    /// @endcond
@@ -301,14 +305,14 @@ class sgtree_impl
 
    //! @copydoc ::boost::intrusive::bstree::bstree(bstree &&)
    sgtree_impl(BOOST_RV_REF(sgtree_impl) x)
-      :  tree_type(::boost::move(static_cast<tree_type&>(x))), alpha_traits(x.get_alpha_traits())
-   {  std::swap(this->get_alpha_traits(), x.get_alpha_traits());   }
+      :  tree_type(BOOST_MOVE_BASE(tree_type, x)), alpha_traits(x.get_alpha_traits())
+   {  ::boost::adl_move_swap(this->get_alpha_traits(), x.get_alpha_traits());   }
 
    //! @copydoc ::boost::intrusive::bstree::operator=(bstree &&)
    sgtree_impl& operator=(BOOST_RV_REF(sgtree_impl) x)
    {
       this->get_alpha_traits() = x.get_alpha_traits();
-      return static_cast<sgtree_impl&>(tree_type::operator=(::boost::move(static_cast<tree_type&>(x))));
+      return static_cast<sgtree_impl&>(tree_type::operator=(BOOST_MOVE_BASE(tree_type, x)));
    }
 
    /// @cond
@@ -400,9 +404,8 @@ class sgtree_impl
    void swap(sgtree_impl& other)
    {
       //This can throw
-      using std::swap;
       this->tree_type::swap(static_cast<tree_type&>(other));
-      swap(this->get_alpha_traits(), other.get_alpha_traits());
+      ::boost::adl_move_swap(this->get_alpha_traits(), other.get_alpha_traits());
    }
 
    //! @copydoc ::boost::intrusive::bstree::clone_from
@@ -689,7 +692,7 @@ class sgtree_impl
 
    //! @copydoc ::boost::intrusive::bstree::lower_bound(const_reference)
    iterator lower_bound(const_reference value);
-   
+
    //! @copydoc ::boost::intrusive::bstree::lower_bound(const KeyType&,KeyValueCompare)
    template<class KeyType, class KeyValueCompare>
    iterator lower_bound(const KeyType& key, KeyValueCompare comp);
@@ -895,15 +898,13 @@ struct make_sgtree
 
    typedef typename detail::get_value_traits
       <T, typename packed_options::proto_value_traits>::type value_traits;
-   typedef typename detail::get_header_holder_type
-      < value_traits, typename packed_options::header_holder_type >::type header_holder_type;
 
    typedef sgtree_impl
          < value_traits
          , typename packed_options::compare
          , typename packed_options::size_type
          , packed_options::floating_point
-         , header_holder_type
+         , typename packed_options::header_holder_type
          > implementation_defined;
    /// @endcond
    typedef implementation_defined type;
@@ -960,11 +961,11 @@ class sgtree
    {}
 
    sgtree(BOOST_RV_REF(sgtree) x)
-      :  Base(::boost::move(static_cast<Base&>(x)))
+      :  Base(BOOST_MOVE_BASE(Base, x))
    {}
 
    sgtree& operator=(BOOST_RV_REF(sgtree) x)
-   {  return static_cast<sgtree &>(this->Base::operator=(::boost::move(static_cast<Base&>(x))));  }
+   {  return static_cast<sgtree &>(this->Base::operator=(BOOST_MOVE_BASE(Base, x)));  }
 
    static sgtree &container_from_end_iterator(iterator end_iterator)
    {  return static_cast<sgtree &>(Base::container_from_end_iterator(end_iterator));   }

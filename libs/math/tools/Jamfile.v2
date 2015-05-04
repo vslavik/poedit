@@ -10,8 +10,6 @@
 import modules ;
 import path ;
 
-local ntl-path = [ modules.peek : NTL_PATH ] ;
-
 project  
     : requirements 
       <toolset>gcc:<cxxflags>-Wno-missing-braces
@@ -34,22 +32,12 @@ project
       <define>BOOST_UBLAS_UNSUPPORTED_COMPILER=0
       <include>.
       <include>../include_private
-      <include>$(ntl-path)/include
     ;
 
 
-if $(ntl-path)
-{
-   lib ntl : [ GLOB $(ntl-path)/src : *.cpp ] ;
-}
-else
-{
-   lib ntl ;
-}
-
 for local source in [ glob *_data.cpp ] generate_test_values.cpp igamma_temme_large_coef.cpp lanczos_generator.cpp factorial_tables.cpp generate_rational_test.cpp
 {
-   exe $(source:B) : $(source) ntl ;
+   exe $(source:B) : $(source) ;
    install $(source:B)_bin : $(source:B) : <location>bin ;
 }
 

@@ -29,24 +29,24 @@
 <span class="keyword">class</span> <a class="link" href="bounded_ordering_queue.html" title="Class template bounded_ordering_queue">bounded_ordering_queue</a> <span class="special">:</span> <span class="keyword">private</span> <span class="identifier">OverflowStrategyT</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="bounded_ordering_queue.html#boost.log.sinks.bounded_ordering_queueconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="bounded_ordering_queue.html#idp36948912-bb"><span class="identifier">bounded_ordering_queue</span></a><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="bounded_ordering_queue.html#idp44391248-bb"><span class="identifier">bounded_ordering_queue</span></a><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="bounded_ordering_queue.html#idp36932480-bb">public member functions</a></span>
-  <span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">time_duration</span> <a class="link" href="bounded_ordering_queue.html#idp36933040-bb"><span class="identifier">get_ordering_window</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="bounded_ordering_queue.html#idp44374816-bb">public member functions</a></span>
+  <span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">time_duration</span> <a class="link" href="bounded_ordering_queue.html#idp44375376-bb"><span class="identifier">get_ordering_window</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="bounded_ordering_queue.html#idp36934800-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">time_duration</span> <a class="link" href="bounded_ordering_queue.html#idp36935360-bb"><span class="identifier">get_default_ordering_window</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="bounded_ordering_queue.html#idp44377136-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">time_duration</span> <a class="link" href="bounded_ordering_queue.html#idp44377696-bb"><span class="identifier">get_default_ordering_window</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="bounded_ordering_queue.html#idp36937200-bb">protected member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="bounded_ordering_queue.html#idp36937776-bb"><span class="identifier">enqueue</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="bounded_ordering_queue.html#idp36939616-bb"><span class="identifier">try_enqueue</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="bounded_ordering_queue.html#idp36941472-bb"><span class="identifier">try_dequeue_ready</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="bounded_ordering_queue.html#idp36943392-bb"><span class="identifier">try_dequeue</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="bounded_ordering_queue.html#idp36945280-bb"><span class="identifier">dequeue_ready</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="bounded_ordering_queue.html#idp36947152-bb"><span class="identifier">interrupt_dequeue</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="bounded_ordering_queue.html#idp44379536-bb">protected member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="bounded_ordering_queue.html#idp44380112-bb"><span class="identifier">enqueue</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="bounded_ordering_queue.html#idp44381952-bb"><span class="identifier">try_enqueue</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="bounded_ordering_queue.html#idp44383808-bb"><span class="identifier">try_dequeue_ready</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="bounded_ordering_queue.html#idp44385728-bb"><span class="identifier">try_dequeue</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="bounded_ordering_queue.html#idp44387616-bb"><span class="identifier">dequeue_ready</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="bounded_ordering_queue.html#idp44389488-bb"><span class="identifier">interrupt_dequeue</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp138152288"></a><h2>Description</h2>
+<a name="idp123975952"></a><h2>Description</h2>
 <p>The <code class="computeroutput"><a class="link" href="bounded_ordering_queue.html" title="Class template bounded_ordering_queue">bounded_ordering_queue</a></code> class is intended to be used with the <code class="computeroutput"><a class="link" href="asynchronous_sink.html" title="Class template asynchronous_sink">asynchronous_sink</a></code> frontend as a log record queueing strategy.</p>
 <p>This strategy provides the following properties to the record queueing mechanism:</p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
@@ -58,52 +58,53 @@
 <p>
 </p>
 <div class="refsect2">
-<a name="idp138163776"></a><h3>
+<a name="idp123987536"></a><h3>
 <a name="boost.log.sinks.bounded_ordering_queueconstruct-copy-destruct"></a><code class="computeroutput">bounded_ordering_queue</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idp36948912-bb"></a><span class="identifier">bounded_ordering_queue</span><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre>Initializing constructor. </li></ol></div>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ArgsT<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idp44391248-bb"></a><span class="identifier">bounded_ordering_queue</span><span class="special">(</span><span class="identifier">ArgsT</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre>Initializing constructor. </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp138175136"></a><h3>
-<a name="idp36932480-bb"></a><code class="computeroutput">bounded_ordering_queue</code> public member functions</h3>
+<a name="idp123999024"></a><h3>
+<a name="idp44374816-bb"></a><code class="computeroutput">bounded_ordering_queue</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">time_duration</span> <a name="idp36933040-bb"></a><span class="identifier">get_ordering_window</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">time_duration</span> <a name="idp44375376-bb"></a><span class="identifier">get_ordering_window</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Returns ordering window size specified during initialization </p>
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp138183792"></a><h3>
-<a name="idp36934800-bb"></a><code class="computeroutput">bounded_ordering_queue</code> public static functions</h3>
+<a name="idp124007536"></a><h3>
+<a name="idp44377136-bb"></a><code class="computeroutput">bounded_ordering_queue</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">time_duration</span> <a name="idp36935360-bb"></a><span class="identifier">get_default_ordering_window</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">time_duration</span> <a name="idp44377696-bb"></a><span class="identifier">get_default_ordering_window</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Returns default ordering window size. The default window size is specific to the operating system thread scheduling mechanism. </p>
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp138192464"></a><h3>
-<a name="idp36937200-bb"></a><code class="computeroutput">bounded_ordering_queue</code> protected member functions</h3>
+<a name="idp124016208"></a><h3>
+<a name="idp44379536-bb"></a><code class="computeroutput">bounded_ordering_queue</code> protected member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp36937776-bb"></a><span class="identifier">enqueue</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Enqueues log record to the queue. </li>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp44380112-bb"></a><span class="identifier">enqueue</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Enqueues log record to the queue. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp36939616-bb"></a><span class="identifier">try_enqueue</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Attempts to enqueue log record to the queue. </li>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp44381952-bb"></a><span class="identifier">try_enqueue</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Attempts to enqueue log record to the queue. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp36941472-bb"></a><span class="identifier">try_dequeue_ready</span><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Attempts to dequeue a log record ready for processing from the queue, does not block if the queue is empty. </li>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp44383808-bb"></a><span class="identifier">try_dequeue_ready</span><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Attempts to dequeue a log record ready for processing from the queue, does not block if the queue is empty. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp36943392-bb"></a><span class="identifier">try_dequeue</span><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Attempts to dequeue log record from the queue, does not block if the queue is empty. </li>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp44385728-bb"></a><span class="identifier">try_dequeue</span><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Attempts to dequeue log record from the queue, does not block if the queue is empty. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp36945280-bb"></a><span class="identifier">dequeue_ready</span><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Dequeues log record from the queue, blocks if the queue is empty. </li>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp44387616-bb"></a><span class="identifier">dequeue_ready</span><span class="special">(</span><span class="identifier">record_view</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>Dequeues log record from the queue, blocks if the queue is empty. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp36947152-bb"></a><span class="identifier">interrupt_dequeue</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Wakes a thread possibly blocked in the <code class="computeroutput">dequeue</code> method. </li>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp44389488-bb"></a><span class="identifier">interrupt_dequeue</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Wakes a thread possibly blocked in the <code class="computeroutput">dequeue</code> method. </li>
 </ol></div>
 </div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2014 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2015 Andrey
+      Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

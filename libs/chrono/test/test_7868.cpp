@@ -29,7 +29,7 @@ int main()
       strm<<atnow<<std::endl;
       time_t t = boost::chrono::system_clock::to_time_t(atnow);
       std::cout << "A:" << std::endl;
-      puts(ctime(&t));
+      std::puts(ctime(&t));
       std::cout << "A:" << std::endl;
       std::cout << "A:" << strm.str()<< std::endl;
       std::cout << "A:" << atnow.time_since_epoch().count() << std::endl;

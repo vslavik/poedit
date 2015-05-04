@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../intrusive.html" title="Chapter&#160;16.&#160;Boost.Intrusive">
+<link rel="up" href="../intrusive.html" title="Chapter&#160;15.&#160;Boost.Intrusive">
 <link rel="prev" href="performance.html" title="Performance">
 <link rel="next" href="tested_compilers.html" title="Tested compilers">
 </head>
@@ -27,6 +27,10 @@
 <a name="intrusive.release_notes"></a><a class="link" href="release_notes.html" title="Release Notes">Release Notes</a>
 </h2></div></div></div>
 <div class="toc"><dl class="toc">
+<dt><span class="section"><a href="release_notes.html#intrusive.release_notes.release_notes_boost_1_58_00">Boost
+      1.58 Release</a></span></dt>
+<dt><span class="section"><a href="release_notes.html#intrusive.release_notes.release_notes_boost_1_57_00">Boost
+      1.57 Release</a></span></dt>
 <dt><span class="section"><a href="release_notes.html#intrusive.release_notes.release_notes_boost_1_56_00">Boost
       1.56 Release</a></span></dt>
 <dt><span class="section"><a href="release_notes.html#intrusive.release_notes.release_notes_boost_1_55_00">Boost
@@ -56,6 +60,76 @@
 <dt><span class="section"><a href="release_notes.html#intrusive.release_notes.release_notes_boost_1_36_00">Boost
       1.36 Release</a></span></dt>
 </dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="intrusive.release_notes.release_notes_boost_1_58_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_58_00" title="Boost 1.58 Release">Boost
+      1.58 Release</a>
+</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            Reduced compile-time dependencies, headers, and the use of Boost.Preprocessor,
+            specially for hooks and iterators.
+          </li>
+<li class="listitem">
+            Fixed bugs:
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/6720" target="_top">Boost
+                  Trac #6720: <span class="emphasis"><em>intrusive::unordered_set::clear_and_dispose
+                  does not compile on VC11 Beta when passed a stateless lambda</em></span></a>
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/10771" target="_top">Boost
+                  Trac #10771: <span class="emphasis"><em>remove_if is broken for slist</em></span></a>
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/10853" target="_top">Boost
+                  Trac #10853: <span class="emphasis"><em>problem with detection of const_cast_from</em></span></a>
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/10987" target="_top">Boost
+                  Trac #10987: <span class="emphasis"><em>bug in any_xxx_node_traits, returning by
+                  reference</em></span></a>
+                </li>
+</ul></div>
+          </li>
+</ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="intrusive.release_notes.release_notes_boost_1_57_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_57_00" title="Boost 1.57 Release">Boost
+      1.57 Release</a>
+</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            Experimental version of node checkers, contributed by Matei David. Many
+            thanks!
+          </li>
+<li class="listitem">
+            Implemented <a href="http://www.open-std.org/JTC1/sc22/WG21/docs/papers/2013/n3644.pdf" target="_top">N3644:
+            Null Forward Iterators</a> from C++14.
+          </li>
+<li class="listitem">
+            Fixed bugs:
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                  <a href="https://github.com/boostorg/intrusive/pull/12" target="_top">GitHub
+                  Pull #12: <span class="emphasis"><em>Fix MSVC14 warning C4456: declaration of 'x_parent_right'
+                  hides previous local declaration</em></span></a>
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/10520" target="_top">Boost
+                  Trac #10520: <span class="emphasis"><em>Conversion warning in intrusive/detail/utilities.hpp</em></span></a>
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/10469" target="_top">Boost
+                  Trac #10469: <span class="emphasis"><em>Erasing from intrusive unordered_multiset
+                  with optimize_multikey goes into an infinite loop</em></span></a>
+                </li>
+</ul></div>
+          </li>
+</ul></div>
+</div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="intrusive.release_notes.release_notes_boost_1_56_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_56_00" title="Boost 1.56 Release">Boost

@@ -39,7 +39,7 @@
                  <span class="keyword">const</span> <span class="identifier">basic_regex</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">RegexTraitsT</span> <span class="special">&gt;</span> <span class="special">&amp;</span> Rx<span class="special">,</span> 
                  <span class="identifier">match_flag_type</span> Flags <span class="special">=</span> <span class="identifier">match_default</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp438484400"></a><h2>Description</h2>
+<a name="idp430900528"></a><h2>Description</h2>
 <p>This algorithm finds all substrings matching the give regex in the input.</p>
 <p>Each part is copied and added as a new element to the output container. Thus the result container must be able to hold copies of the matches (in a compatible structure like std::string) or a reference to it (e.g. using the iterator range class). Examples of such a container are <code class="computeroutput">std::vector&lt;std::string&gt;</code> or <code class="computeroutput">std::list&lt;boost::iterator_range&lt;std::string::iterator&gt;&gt;</code> </p>
 <p>
@@ -50,10 +50,16 @@
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../doc/src/images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td align="left" valign="top">
-<p>Prior content of the result will be overwritten.</p>
-<p>This function provides the strong exception-safety guarantee </p>
-</td></tr>
+<tr><td align="left" valign="top"><p>Prior content of the result will be overwritten.</p></td></tr>
+</table></div>
+<p>
+</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>This function provides the strong exception-safety guarantee </p></td></tr>
 </table></div>
 <p>
 </p>

@@ -91,7 +91,7 @@ _jump_fcontext:
     add  sp, sp, #64
 
     @ restore SjLj handler
-    pop  v1
+    pop  {v1}
     @ store SjLj handler in TLS
     str  v1, [v2, #72]
 

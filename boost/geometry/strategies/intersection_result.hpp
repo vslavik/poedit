@@ -90,7 +90,7 @@ struct de9im
 
     static inline char as_char(int v)
     {
-        return v >= 0 && v < 10 ? ('0' + char(v)) : '-';
+        return v >= 0 && v < 10 ? static_cast<char>('0' + v) : '-';
     }
 
 #if defined(HAVE_MATRIX_AS_STRING)

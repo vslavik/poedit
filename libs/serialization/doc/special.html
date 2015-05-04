@@ -159,61 +159,92 @@ BOOST_CLASS_TRACKING(my_virtual_base_class, boost::serialization::track_always)
 <h3><a name="helpersupport">Helper Support</a></h3>
 Some types, specially those with complicated lifetime behavior or limited
 access to their internal state, might need or benefit from elaborate serialization
-algorithms. In these cases, it can be advantageous to have a <i>helper object</i>
+algorithms.  The prinicple motivating case is that of shared_ptr.  As instances
+are loaded, they have to be "matched up" with any other instances which have
+already been loaded.  Thus, a table of previously loaded instances has to be
+maintained while the archive containing the shared_ptr instances is being loaded.
+Without maintaining such a table, the shared_ptr would be a serializable type.
+<p>
+To implement this facility, one declares a <i>helper object</i>
 associated to the current archive that can be used to store contextual
 information relevant to the particular type serialization algorithm.
 
 <pre><code>
-class complex_type
+template<class T>
+class shared_ptr
 {
    ...
 };
 
-BOOST_SERIALIZATION_SPLIT_FREE(complex_type)
+BOOST_SERIALIZATION_SPLIT_FREE(shared_ptr)
 
-class complex_type_serialization_helper
+class shared_ptr_serialization_helper
 {
-  // maintain contextual information for complex_type
-  // serialization algorithm
+  // table of previously loaded shared_ptr
+  // lookup a shared_ptr from the object address
+  shared_ptr<T> lookup(const T *);
+  // insert a new shared_ptr
+  void insert<shared_ptr<T> >(const shared_ptr<T> *);
 };
 
 namespace boost {
 namespace serialization {
 
 template&lt;class Archive&gt;
-void save(Archive &amp; ar, const complex_type &amp; x, unsigned int /* version */)
+void save(Archive &amp; ar, const shared_ptr &amp; x, const unsigned int /* version */)
 {
-    complex_type_serialization_helper &amp; hlp =
-        ar.template get_helper&lt;complex_type_serialization_helper&gt;();
-        
-    // implement complex_type save algorithm with the aid of hlp
+    // save shared ptr
+    ...
 }
 
 template&lt;class Archive&gt;
-void load(Archive &amp; ar, complex_type &amp; x, unsigned int /* version */)
+void load(Archive &amp; ar, shared_ptr &amp; x, const unsigned int /* version */)
 {
-    complex_type_serialization_helper &amp; hlp =
-        ar.template get_helper&lt;complex_type_serialization_helper&gt;();
-        
-    // implement complex_type load algorithm with the aid of hlp
+    // get a unique identifier.  Using a constant means that all shared pointers
+    // are held in the same set.  Thus we detect handle multiple pointers to the
+    // same value instances in the archive.
+    const void * shared_ptr_helper_id = 0;
+
+    shared_ptr_serialization_helper &amp; hlp =
+        ar.template get_helper&lt;shared_ptr_serialization_helper&gt;(helper_instance_id);
+
+    // load shared pointer object
+    ...
+
+    shared_ptr_serialization_helper &amp; hlp =
+        ar.template get_helper&lt;shared_ptr_serialization_helper&gt;(shared_ptr_helper_id);
+
+    // look up object in helper object
+    T * shared_object hlp.lookup(...);
+
+    // if found, return the one from the table
+
+    // load the shared_ptr data
+    shared_ptr<T> sp = ...
+
+    // and add it to the table
+    hlp.insert(sp);
+    // implement shared_ptr_serialization_helper load algorithm with the aid of hlp
 }
 
 } // namespace serialization
 } // namespace boost
 </code></pre>
-<code style="white-space: normal">get_helper&lt;complex_type_serialization_helper&gt;();</code>
+<code style="white-space: normal">get_helper&lt;shared_ptr_serialization_helper&gt;();</code>
 creates a helper object associated to the archive the first time it is invoked;
 subsequent invocations return a reference to the object created in the first
 place, so that <code style="white-space: normal">hlp</code> can effectively be
 used to store contextual information persisting through the serialization
 of different <code style="white-space: normal">complex_type</code> objects on
 the same archive.
-Although the example code does not show it, the helper types used for saving and loading
-can be different. A notable example of a type whose serialization routines use helper support
-is <code style="white-space: normal">boost::shared_ptr</code>. The test
-program <a href="../test/test_helper_support.cpp" target="test_helper_support_cpp"><code style="white-space: normal">test_helper_support.cpp</code></a>
-shows how to use helper support to implement a serialization algorithm
-for a string type that avoids emitting duplicate contents.
+
+<p>
+Helpers may be created for saving and loading archives.
+The same program might have several different helpers or the same helper instantiated
+separately from different parts of the program.  This is what makes the helper_instance_id
+necessary.  In principle it could be any unique integer. In practice it seems
+easiest to use the address of the serialization function which contains it. The
+above example uses this technique.
 
 <h3><a name="classinfo">Class Information</a></h3>
 By default, for each class serialized, class information is written to the archive.

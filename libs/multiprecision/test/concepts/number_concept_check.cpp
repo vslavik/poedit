@@ -169,6 +169,16 @@ void test_extra(T)
    t = frexp(t*t, &i);
    t = frexp(t, &e);
    t = frexp(t*t, &e);
+
+   t = scalbn(t, i);
+   t = scalbn(t*t, i);
+   t = scalbn(t, e);
+   t = scalbn(t*t, e);
+
+   t = logb(t);
+   t = logb(t*t);
+   e = ilogb(t);
+   e = ilogb(t*t);
 }
 
 void foo()

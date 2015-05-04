@@ -1,4 +1,4 @@
-// Copyright (C) 2014 Andrzej Krzemienski.
+// Copyright (C) 2014-2015 Andrzej Krzemienski.
 //
 // Use, modification, and distribution is subject to the Boost Software
 // License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -8,19 +8,6 @@
 //
 // You are welcome to contact the author at:
 //  akrzemi1@gmail.com
-//
-// Revisions:
-//
-#include<iostream>
-#include<stdexcept>
-#include<string>
-
-#define BOOST_ENABLE_ASSERT_HANDLER
-
-#include "boost/bind/apply.hpp" // Included just to test proper interaction with boost::apply<> as reported by Daniel Wallin
-#include "boost/mpl/bool.hpp"
-#include "boost/mpl/bool_fwd.hpp"  // For mpl::true_ and mpl::false_
-#include "boost/static_assert.hpp"
 
 #include "boost/optional/optional.hpp"
 
@@ -28,11 +15,8 @@
 #pragma hdrstop
 #endif
 
+#include "boost/core/lightweight_test.hpp"
 #include "boost/none.hpp"
-
-#include "boost/test/minimal.hpp"
-
-#include "optional_test_common.cpp"
 
 class NonConstructible
 {
@@ -46,16 +30,10 @@ private:
 
 void test_non_constructible()
 {
-    optional<NonConstructible> o;
-    BOOST_CHECK(!o);
-    BOOST_CHECK(o == boost::none);
-    try { 
-        o.value();
-        BOOST_CHECK(false);
-    }
-    catch(...) {
-        BOOST_CHECK(true);
-    }
+  boost::optional<NonConstructible> o;
+  BOOST_TEST(!o);
+  BOOST_TEST(o == boost::none);
+  BOOST_TEST_THROWS(o.value(), boost::bad_optional_access);
 }
 
 class Guard
@@ -72,33 +50,26 @@ private:
 
 void test_guard()
 {
-    optional<Guard> o;
+    boost::optional<Guard> o;
     o.emplace(1);
-    BOOST_CHECK(o);
+    BOOST_TEST(o);
+    BOOST_TEST(o != boost::none);
 }
 
 void test_non_assignable()
 {
-    optional<const std::string> o;
+    boost::optional<const std::string> o;
     o.emplace("cat");
-    BOOST_CHECK(o);
-    BOOST_CHECK(*o == "cat");
+    BOOST_TEST(o);
+    BOOST_TEST(o != boost::none);
+    BOOST_TEST_EQ(*o, std::string("cat"));
 }
 
-int test_main( int, char* [] )
+int main()
 {
-  try
-  {
-    test_non_constructible();
-    test_guard();
-    test_non_assignable();
-  }
-  catch ( ... )
-  {
-    BOOST_ERROR("Unexpected Exception caught!");
-  }
+  test_non_constructible();
+  test_guard();
+  test_non_assignable();
 
-  return 0;
+  return boost::report_errors();
 }
-
-

@@ -6,18 +6,25 @@
 
 # bring in rules for testing
 
-
 import testing ;
+
+# make sure you are using a new version of boost.build, otherwise the local
+# odeint will not be included properly
+# you can fix older boost.build versions by applying the patch provided in
+# odeint's root, e.g.:
+# cd ~/odeint-v2
+# sudo patch /usr/share/boost-build/build/toolset.jam toolset.jam.patch
 
 use-project boost : $(BOOST_ROOT) ;
 
 project
     : requirements
-      <library>/boost/test//boost_unit_test_framework
       <define>BOOST_ALL_NO_LIB=1
+      # use test library
+      <library>/boost//unit_test_framework
       <link>static
       <toolset>clang:<cxxflags>-Wno-unused-variable
-# <cxxflags>-D_SCL_SECURE_NO_WARNINGS
+      # <cxxflags>-D_SCL_SECURE_NO_WARNINGS
     ;
 
 test-suite "odeint"
@@ -74,11 +81,15 @@ test-suite "odeint"
     [ compile unwrap_boost_reference.cpp ]
     [ compile unwrap_reference.cpp : <cxxflags>-std=c++0x : unwrap_reference_C++11 ]
     [ compile-fail unwrap_reference.cpp : <cxxflags>-std=c++98 : unwrap_reference_C++98 ]
-    : <testing.launcher>valgrind
+    [ compile std_array.cpp : <cxxflags>-std=c++0x ]
+    : 
+        <testing.launcher>valgrind
     ;
     
 # also run numeric tests
 build-project numeric ;
+
+build-project regression ;
 
 # test-suite "odeint-iterator_integrate"
 #    :

@@ -8,18 +8,6 @@
 //
 // You are welcome to contact the author at:
 //  akrzemi1@gmail.com
-//
-// Revisions:
-//
-#include<iostream>
-#include<stdexcept>
-#include<string>
-
-#define BOOST_ENABLE_ASSERT_HANDLER
-
-#include "boost/bind/apply.hpp" // Included just to test proper interaction with boost::apply<> as reported by Daniel Wallin
-#include "boost/mpl/bool.hpp"
-#include "boost/mpl/bool_fwd.hpp"  // For mpl::true_ and mpl::false_
 
 #include "boost/optional/optional.hpp"
 
@@ -27,11 +15,9 @@
 #pragma hdrstop
 #endif
 
+#include "boost/core/lightweight_test.hpp"
 #include "boost/none.hpp"
 
-#include "boost/test/minimal.hpp"
-
-#include "optional_test_common.cpp"
 
 struct SemiRegular // no operator==
 { 
@@ -41,28 +27,17 @@ private: void operator!=(SemiRegular const&) const {}
 
 void test_equal_to_none_of_noncomparable_T()
 {
-    optional<SemiRegular> i = SemiRegular();
-    optional<SemiRegular> o;
-    
-    BOOST_CHECK(i != boost::none);
-    BOOST_CHECK(boost::none != i);
-    BOOST_CHECK(o == boost::none);
-    BOOST_CHECK(boost::none == o);
+  boost::optional<SemiRegular> i = SemiRegular();
+  boost::optional<SemiRegular> o;
+  
+  BOOST_TEST(i != boost::none);
+  BOOST_TEST(boost::none != i);
+  BOOST_TEST(o == boost::none);
+  BOOST_TEST(boost::none == o);
 }
 
-int test_main( int, char* [] )
+int main()
 {
-  try
-  {
-    test_equal_to_none_of_noncomparable_T();
-
-  }
-  catch ( ... )
-  {
-    BOOST_ERROR("Unexpected Exception caught!");
-  }
-
-  return 0;
+  test_equal_to_none_of_noncomparable_T();
+  return boost::report_errors();
 }
-
-

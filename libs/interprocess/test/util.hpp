@@ -26,8 +26,6 @@
 #include <boost/interprocess/detail/os_thread_functions.hpp>
 
 #include <boost/date_time/posix_time/posix_time_types.hpp>
-#include <algorithm>
-#include <iostream>
 #include <boost/version.hpp>
 
 namespace boost {

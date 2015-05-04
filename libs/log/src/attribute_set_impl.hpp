@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2014.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -283,18 +283,18 @@ public:
             b.first = b.last = n;
             it = m_Nodes.end();
         }
-        else if (p == b.first)
-        {
-            // The new element should become the first element of the bucket
-            it = m_Nodes.iterator_to(*p);
-            b.first = n;
-        }
         else if (p == b.last && key.id() > p->m_Value.first.id())
         {
             // The new element should become the last element of the bucket
             it = m_Nodes.iterator_to(*p);
             ++it;
             b.last = n;
+        }
+        else if (p == b.first)
+        {
+            // The new element should become the first element of the bucket
+            it = m_Nodes.iterator_to(*p);
+            b.first = n;
         }
         else
         {

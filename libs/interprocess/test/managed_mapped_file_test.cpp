@@ -8,6 +8,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
+#if defined(BOOST_INTERPROCESS_MAPPED_FILES)
+
 #include <boost/interprocess/detail/config_begin.hpp>
 #include <boost/interprocess/allocators/allocator.hpp>
 #include <boost/interprocess/containers/vector.hpp>
@@ -224,3 +226,12 @@ int main ()
 }
 
 #include <boost/interprocess/detail/config_end.hpp>
+
+#else //#if defined(BOOST_INTERPROCESS_MAPPED_FILES)
+
+int main()
+{
+   return 0;
+}
+
+#endif//#if defined(BOOST_INTERPROCESS_MAPPED_FILES)

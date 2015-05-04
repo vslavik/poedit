@@ -2,6 +2,7 @@
     Copyright (C) 2001-2010 Joel de Guzman
     Copyright (C) 2001-2005 Dan Marsden
     Copyright (C) 2001-2010 Thomas Heller
+    Copyright (C) 2015 John Fletcher
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -120,11 +121,9 @@ The object (reference or pointer) can be lazily bound. Examples:
 
 [section Compatibility with Boost.Bind]
 
-`phoenix::bind` passes all testcases of the Boost.Bind library. It is therefore
-completely compatible and interchangeable.
+`phoenix::bind` passes the older testcases of the Boost.Bind library. For those cases it is completely compatible and interchangeable. Some newer cases have been added to Boost.Bind in 2015 and compatibility in those cases is not guaranteed.
 
-Given the compatibility with Boost.Bind, we also assume compatibility with
-std::tr1::bind and std::bind from the upcoming C++0x standard.
+Further tests are needed to check compatibility with std::tr1::bind and std::bind from the C++11 standard.
 
 [endsect]
 

@@ -20,7 +20,7 @@ feature.feature log-address-model : : free ;
 feature.feature log-instruction-set : : free ;
 
 project.push-current [ project.current ] ;
-project.load [ path.join [ path.make $(here:D) ] ../../context/config ] ;
+project.load [ path.join [ path.make $(here:D) ] ../../config/checks/architecture ] ;
 project.pop-current ;
 
 rule deduce-address-model ( properties * )

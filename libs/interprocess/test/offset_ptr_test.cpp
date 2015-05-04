@@ -302,13 +302,13 @@ int main()
 #include <cstddef>
 
 template<class InIt,
-	class Ty> inline
-	Ty accumulate2(InIt First, InIt Last, Ty Val)
-	{	// return sum of Val and all in [First, Last)
-	for (; First != Last; ++First) //First = First + 1)
-		Val = Val + *First;
-	return (Val);
-	}
+   class Ty> inline
+   Ty accumulate2(InIt First, InIt Last, Ty Val)
+   {   // return sum of Val and all in [First, Last)
+   for (; First != Last; ++First) //First = First + 1)
+      Val = Val + *First;
+   return (Val);
+   }
 
 template <typename Vector>
 void time_test(const Vector& vec, std::size_t iterations, const char* label) {

@@ -5,8 +5,10 @@
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
-// This file was modified by Oracle on 2014.
-// Modifications copyright (c) 2014 Oracle and/or its affiliates.
+// This file was modified by Oracle on 2014, 2015.
+// Modifications copyright (c) 2014-2015 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -14,8 +16,6 @@
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
-
-// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 #include "test_get_turns.hpp"
 #include <boost/geometry/geometries/geometries.hpp>
@@ -214,6 +214,144 @@ void test_all()
     test_geometry<ls, ls>("LINESTRING(0 0,4 4,2 2)", "LINESTRING(0 4,5 4)",
                           expected("muu++"));
     
+    // 29.01.2015
+    if ( BOOST_GEOMETRY_CONDITION((boost::is_same<T, double>::value)) )
+    {
+        // FAILING - possibly wrong IPs
+        test_geometry<ls, ls>("LINESTRING(3 -0.6,0 -0.9)",
+                              "LINESTRING(4 2.232432,1 -0.8,9 0)",
+                              expected("mui=+")("miu+="));
+
+        test_geometry<ls, ls>("LINESTRING(3 -0.6,1 -0.8,0 -0.9)",
+                              "LINESTRING(4 2.232432,1 -0.8,9 0)",
+                              expected("tui=+")("miu+="));
+
+        test_geometry<ls, ls>("LINESTRING(3 -0.6, 0 -0.9, -1 -1)",
+                              "LINESTRING(4 2.232432, 0 -0.9, 9 0)",
+                              expected("tui=+")("miu+="));
+
+        test_geometry<ls, ls>("LINESTRING(3 -0.6, 0 -0.9, -1 -1, -2 -2)",
+                              "LINESTRING(4 2.232432,-1 -1, 0 -0.9, 9 0)",
+                              expected("tui=+")("ecc==")("miu+="));
+    }
+
+    test_geometry<ls, ls>("LINESTRING(3 0,0 0)",
+                          "LINESTRING(4 2,1 0,9 0)",
+                          expected("mui=+")("miu+="));
+
+
+    // 01.02.2015
+    test_geometry<ls, ls>("LINESTRING(6 0,0 0,5 0)",
+                          "LINESTRING(2 0,0 0,-10 0)",
+                          expected("mii++")("txu==")("tiu==")("mui=+"));
+    // the reversal could be automatic...
+    test_geometry<ls, ls>("LINESTRING(2 0,0 0,-10 0)",
+                          "LINESTRING(6 0,0 0,5 0)",
+                          expected("mii++")("tux==")("tui==")("miu+="));
+    // sanity check
+    test_geometry<ls, ls>("LINESTRING(6 0,0 0)",
+                          "LINESTRING(2 0,0 0,-10 0)",
+                          expected("mii++")("txu=="));
+    test_geometry<ls, ls>("LINESTRING(0 0,5 0)",
+                          "LINESTRING(2 0,0 0,-10 0)",
+                          expected("tiu+=")("mui=+"));
+
+    // 03.02.2015
+    test_geometry<ls, ls>("LINESTRING(-7 -8,3 0,4 -1,-7 10)",
+                          "LINESTRING(-5 -4,3 0,4 -1,7 -4,2 -1)",
+                          expected("tii++")("txu==")("tiu==")("mui=+"));
+    test_geometry<ls, ls>("LINESTRING(-7 -8,3 0,4 -1,-7 10)",
+                          "LINESTRING(-5 -4,3 0,7 -4,2 -1)",
+                          expected("tii++")("mxu==")("miu==")("mui=+"));
+
+    if ( BOOST_GEOMETRY_CONDITION((boost::is_same<T, double>::value)) )
+    {
+        // BUG - the operations are correct but IP coordinates are wrong
+        // ok now also the 3rd turn is wrong
+#ifdef BOOST_GEOMETRY_TEST_ENABLE_FAILING
+        test_geometry<ls, ls>("LINESTRING(8 5,5 1,-2 3,1 10)",
+                              "LINESTRING(1.9375 1.875, 1.7441860465116283 1.9302325581395348, -0.7692307692307692 2.6483516483516487, -2 3, -1.0071942446043165 5.316546762589928)",
+                              expected("mii++")("ccc==")("ccc==")("mux=="));
+                              // Now tii++ is generated instead of ccc==
+
+        test_geometry<ls, ls>("LINESTRING(8 5,5 1,-2 3,1 10)",
+                              "LINESTRING(1.9375 1.875, 1.7441860465116283 1.9302325581395348, -0.7692307692307692 2.6483516483516487, -2 3, -0.5 6.5)",
+                              expected("mii++")("ccc==")("ccc==")("mux=="));
+                              // Now tii++ is generated instead of ccc==
+
+#endif
+
+        test_geometry<ls, ls>("LINESTRING(-0.5 7,8 1,0 -0.2)",
+                              "LINESTRING(2 8,4 0.4,8 1,0 5)",
+                              expected("iuu++")("mui=+")("tiu+="));
+
+        // assertion failure in 1.57
+        // FAILING - no assertion failure but the result is not very good
+        test_geometry<ls, ls>("LINESTRING(-2305843009213693956 4611686018427387906, -33 -92, 78 83)",
+                              "LINESTRING(31 -97, -46 57, -20 -4)",
+                              expected("")(""));
+        test_geometry<ls, ls>("LINESTRING(31 -97, -46 57, -20 -4)",
+                              "LINESTRING(-2305843009213693956 4611686018427387906, -33 -92, 78 83)",
+                              expected("")(""));
+    }
+
+    // In 1.57 the results of those combinations was different for MinGW
+    // (probably also QCC and GCC5.0) and MSVC/GCC. The results was depending
+    // on the instructions generated by the compiler when calculating the
+    // determinants.
+    // See also: https://svn.boost.org/trac/boost/ticket/8379
+    //           https://github.com/boostorg/geometry/pull/259
+    if ( BOOST_GEOMETRY_CONDITION((boost::is_same<T, double>::value)) )
+    {
+        test_geometry<ls, ls>("LINESTRING(0 0, 10 0, 20 1)",
+                              "LINESTRING(12 10, 13 0.3, 14 0.4, 15 0.5)",
+                              expected("mii++")("ccc==")("mux=="));
+        test_geometry<ls, ls>("LINESTRING(0 0, 10 0, 110 1)",
+                              "LINESTRING(12 10, 13 0.03, 14 0.04, 15 0.05)",
+                              expected("mii++")("ccc==")("mux=="));
+        test_geometry<ls, ls>("LINESTRING(0 0, 10 0, 110 1)",
+                              "LINESTRING(102 10, 103 0.93, 104 0.94, 105 0.95)",
+                              expected("mii++")("ccc==")("mux=="));
+        test_geometry<ls, ls>("LINESTRING(100 0, 110 0, 120 1)",
+                              "LINESTRING(112 10, 113 0.3, 114 0.4, 115 0.5)",
+                              expected("mii++")("ccc==")("mux=="));
+        test_geometry<ls, ls>("LINESTRING(0 0, 10 0, 20 1)",
+                              "LINESTRING(15 0.5, 14 0.4, 13 0.3, 12 10)",
+                              expected("miu+=")("mui=+"));
+        test_geometry<ls, ls>("LINESTRING(20 1, 10 0, 0 0)",
+                              "LINESTRING(12 10, 13 0.3, 14 0.4, 15 0.5)",
+                              expected("mui=+")("mix+="));
+        test_geometry<ls, ls>("LINESTRING(20 1, 10 0, 0 0)",
+                              "LINESTRING(15 0.5, 14 0.4, 13 0.3, 12 10)",
+                              expected("muu==")("ccc==")("mii++"));
+
+        test_geometry<ls, ls>("LINESTRING(0 0, 10 0, 20 1)",
+                              "LINESTRING(13 0.3, 14 0.4, 15 0.5)",
+                              expected("mii++")("ccc==")("mux=="));
+        test_geometry<ls, ls>("LINESTRING(0 0, 10 0, 20 1)",
+                              "LINESTRING(15 0.5, 14 0.4, 13 0.3)",
+                              expected("mix+=")("mui=+"));
+        test_geometry<ls, ls>("LINESTRING(20 1, 10 0, 0 0)",
+                              "LINESTRING(13 0.3, 14 0.4, 15 0.5)",
+                              expected("mui=+")("mix+="));
+        test_geometry<ls, ls>("LINESTRING(20 1, 10 0, 0 0)",
+                              "LINESTRING(15 0.5, 14 0.4, 13 0.3)",
+                              expected("mux==")("ccc==")("mii++"));
+
+        test_geometry<ls, ls>("LINESTRING(0 0, 10 0, 20 1)",
+                              "LINESTRING(12 10, 13 0.3, 14 0.4)",
+                              expected("mii++")("mux=="));
+        test_geometry<ls, ls>("LINESTRING(0 0, 10 0, 20 1)",
+                              "LINESTRING(14 0.4, 13 0.3, 12 10)",
+                              expected("miu+=")("mui=+"));
+        test_geometry<ls, ls>("LINESTRING(20 1, 10 0, 0 0)",
+                              "LINESTRING(12 10, 13 0.3, 14 0.4)",
+                              expected("mui=+")("mix+="));
+        test_geometry<ls, ls>("LINESTRING(20 1, 10 0, 0 0)",
+                              "LINESTRING(14 0.4, 13 0.3, 12 10)",
+                              expected("muu==")("mii++"));
+    }
+
     // TODO:
     //test_geometry<ls, ls>("LINESTRING(0 0,2 0,1 0)", "LINESTRING(0 1,0 0,2 0)", "1FF00F102");
     //test_geometry<ls, ls>("LINESTRING(2 0,0 0,1 0)", "LINESTRING(0 1,0 0,2 0)", "1FF00F102");

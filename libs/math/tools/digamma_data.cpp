@@ -3,12 +3,11 @@
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/math/bindings/rr.hpp>
 #include <boost/math/special_functions/digamma.hpp>
 #include <boost/test/included/prg_exec_monitor.hpp>
 #include <fstream>
-
 #include <boost/math/tools/test_data.hpp>
+#include "mp_t.hpp"
 
 using namespace boost::math::tools;
 using namespace std;
@@ -20,7 +19,7 @@ float force_truncate(const float* f)
    return external_f;
 }
 
-float truncate_to_float(boost::math::ntl::RR r)
+float truncate_to_float(mp_t r)
 {
    float f = boost::math::tools::real_cast<float>(r);
    return force_truncate(&f);
@@ -28,11 +27,8 @@ float truncate_to_float(boost::math::ntl::RR r)
 
 int cpp_main(int argc, char*argv [])
 {
-   boost::math::ntl::RR::SetPrecision(1000);
-   boost::math::ntl::RR::SetOutputPrecision(40);
-
-   parameter_info<boost::math::ntl::RR> arg1;
-   test_data<boost::math::ntl::RR> data;
+   parameter_info<mp_t> arg1;
+   test_data<mp_t> data;
 
    bool cont;
    std::string line;
@@ -44,7 +40,7 @@ int cpp_main(int argc, char*argv [])
    do{
       if(0 == get_user_parameter_info(arg1, "z"))
          return 1;
-      data.insert(&boost::math::digamma<boost::math::ntl::RR>, arg1);
+      data.insert(&boost::math::digamma<mp_t>, arg1);
 
       std::cout << "Any more data [y/n]?";
       std::getline(std::cin, line);
@@ -58,6 +54,7 @@ int cpp_main(int argc, char*argv [])
    if(line == "")
       line = "digamma_data.ipp";
    std::ofstream ofs(line.c_str());
+   ofs << std::scientific << std::setprecision(40);
    write_code(ofs, data, "digamma_data");
    
    return 0;

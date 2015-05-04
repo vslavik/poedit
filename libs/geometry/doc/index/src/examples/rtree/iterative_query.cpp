@@ -22,7 +22,7 @@
 namespace bg = boost::geometry;
 namespace bgi = boost::geometry::index;
 
-int main(void)
+int main()
 {
     typedef bg::model::point<double, 2, bg::cs::cartesian> point;
     typedef point value;

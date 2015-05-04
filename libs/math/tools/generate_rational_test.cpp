@@ -6,11 +6,11 @@
 #define BOOST_MATH_POLY_METHOD 0
 #define BOOST_MATH_RATIONAL_METHOD 0
 
-#include <boost/math/bindings/rr.hpp>
-#include <boost/tr1/random.hpp>
+#include <boost/random.hpp>
 #include <boost/math/tools/rational.hpp>
 #include <iostream>
 #include <fstream>
+#include "mp_t.hpp"
 
 int main()
 {
@@ -18,14 +18,12 @@ int main()
    using namespace boost::math::tools;
 
    static const unsigned max_order = 20;
+   std::cout << std::scientific << std::setprecision(40);
 
-   boost::math::ntl::RR::SetPrecision(500);
-   boost::math::ntl::RR::SetOutputPrecision(40);
-
-   std::tr1::mt19937 rnd;
-   std::tr1::variate_generator<
-      std::tr1::mt19937, 
-      std::tr1::uniform_int<> > gen(rnd, std::tr1::uniform_int<>(1, 12));
+   boost::mt19937 rnd;
+   boost::variate_generator<
+      boost::mt19937, 
+      boost::uniform_int<> > gen(rnd, boost::uniform_int<>(1, 12));
 
    for(unsigned i = 1; i < max_order; ++i)
    {
@@ -57,12 +55,12 @@ int main()
       }
       std::cout << " };\n";
 
-      boost::math::ntl::RR r1 = boost::math::tools::evaluate_polynomial(&coef[0], boost::math::ntl::RR(0.125), i);
-      boost::math::ntl::RR r2 = boost::math::tools::evaluate_polynomial(&coef[0], boost::math::ntl::RR(0.25), i);
-      boost::math::ntl::RR r3 = boost::math::tools::evaluate_polynomial(&coef[0], boost::math::ntl::RR(0.75), i);
-      boost::math::ntl::RR r4 = boost::math::tools::evaluate_polynomial(&coef[0], boost::math::ntl::RR(1) - boost::math::ntl::RR(1) / 64, i);
-      boost::math::ntl::RR r5 = boost::math::tools::evaluate_polynomial(&coef[0], boost::math::ntl::RR(6.5), i);
-      boost::math::ntl::RR r6 = boost::math::tools::evaluate_polynomial(&coef[0], boost::math::ntl::RR(10247.25), i);
+      mp_t r1 = boost::math::tools::evaluate_polynomial(&coef[0], mp_t(0.125), i);
+      mp_t r2 = boost::math::tools::evaluate_polynomial(&coef[0], mp_t(0.25), i);
+      mp_t r3 = boost::math::tools::evaluate_polynomial(&coef[0], mp_t(0.75), i);
+      mp_t r4 = boost::math::tools::evaluate_polynomial(&coef[0], mp_t(1) - mp_t(1) / 64, i);
+      mp_t r5 = boost::math::tools::evaluate_polynomial(&coef[0], mp_t(6.5), i);
+      mp_t r6 = boost::math::tools::evaluate_polynomial(&coef[0], mp_t(10247.25), i);
 
       std::cout <<
          "   BOOST_CHECK_CLOSE(\n"
@@ -163,12 +161,12 @@ int main()
             "      static_cast<T>(" << r6 << "L),\n"
             "      tolerance);\n\n";
 
-      r1 = boost::math::tools::evaluate_even_polynomial(&coef[0], boost::math::ntl::RR(0.125), i);
-      r2 = boost::math::tools::evaluate_even_polynomial(&coef[0], boost::math::ntl::RR(0.25), i);
-      r3 = boost::math::tools::evaluate_even_polynomial(&coef[0], boost::math::ntl::RR(0.75), i);
-      r4 = boost::math::tools::evaluate_even_polynomial(&coef[0], boost::math::ntl::RR(1) - boost::math::ntl::RR(1) / 64, i);
-      r5 = boost::math::tools::evaluate_even_polynomial(&coef[0], boost::math::ntl::RR(6.5), i);
-      r6 = boost::math::tools::evaluate_even_polynomial(&coef[0], boost::math::ntl::RR(10247.25), i);
+      r1 = boost::math::tools::evaluate_even_polynomial(&coef[0], mp_t(0.125), i);
+      r2 = boost::math::tools::evaluate_even_polynomial(&coef[0], mp_t(0.25), i);
+      r3 = boost::math::tools::evaluate_even_polynomial(&coef[0], mp_t(0.75), i);
+      r4 = boost::math::tools::evaluate_even_polynomial(&coef[0], mp_t(1) - mp_t(1) / 64, i);
+      r5 = boost::math::tools::evaluate_even_polynomial(&coef[0], mp_t(6.5), i);
+      r6 = boost::math::tools::evaluate_even_polynomial(&coef[0], mp_t(10247.25), i);
 
       std::cout <<
          "   BOOST_CHECK_CLOSE(\n"
@@ -271,12 +269,12 @@ int main()
 
       if(i > 1)
       {
-         r1 = boost::math::tools::evaluate_odd_polynomial(&coef[0], boost::math::ntl::RR(0.125), i);
-         r2 = boost::math::tools::evaluate_odd_polynomial(&coef[0], boost::math::ntl::RR(0.25), i);
-         r3 = boost::math::tools::evaluate_odd_polynomial(&coef[0], boost::math::ntl::RR(0.75), i);
-         r4 = boost::math::tools::evaluate_odd_polynomial(&coef[0], boost::math::ntl::RR(1) - boost::math::ntl::RR(1) / 64, i);
-         r5 = boost::math::tools::evaluate_odd_polynomial(&coef[0], boost::math::ntl::RR(6.5), i);
-         r6 = boost::math::tools::evaluate_odd_polynomial(&coef[0], boost::math::ntl::RR(10247.25), i);
+         r1 = boost::math::tools::evaluate_odd_polynomial(&coef[0], mp_t(0.125), i);
+         r2 = boost::math::tools::evaluate_odd_polynomial(&coef[0], mp_t(0.25), i);
+         r3 = boost::math::tools::evaluate_odd_polynomial(&coef[0], mp_t(0.75), i);
+         r4 = boost::math::tools::evaluate_odd_polynomial(&coef[0], mp_t(1) - mp_t(1) / 64, i);
+         r5 = boost::math::tools::evaluate_odd_polynomial(&coef[0], mp_t(6.5), i);
+         r6 = boost::math::tools::evaluate_odd_polynomial(&coef[0], mp_t(10247.25), i);
 
          std::cout <<
             "   BOOST_CHECK_CLOSE(\n"
@@ -378,12 +376,12 @@ int main()
                "      tolerance);\n\n";
       }
 
-      r1 = boost::math::tools::evaluate_polynomial(&coef[0], boost::math::ntl::RR(0.125), i);
-      r2 = boost::math::tools::evaluate_polynomial(&coef[0], boost::math::ntl::RR(0.25), i);
-      r3 = boost::math::tools::evaluate_polynomial(&coef[0], boost::math::ntl::RR(0.75), i);
-      r4 = boost::math::tools::evaluate_polynomial(&coef[0], boost::math::ntl::RR(1) - boost::math::ntl::RR(1) / 64, i);
-      r5 = boost::math::tools::evaluate_polynomial(&coef[0], boost::math::ntl::RR(6.5), i);
-      r6 = boost::math::tools::evaluate_polynomial(&coef[0], boost::math::ntl::RR(10247.25), i);
+      r1 = boost::math::tools::evaluate_polynomial(&coef[0], mp_t(0.125), i);
+      r2 = boost::math::tools::evaluate_polynomial(&coef[0], mp_t(0.25), i);
+      r3 = boost::math::tools::evaluate_polynomial(&coef[0], mp_t(0.75), i);
+      r4 = boost::math::tools::evaluate_polynomial(&coef[0], mp_t(1) - mp_t(1) / 64, i);
+      r5 = boost::math::tools::evaluate_polynomial(&coef[0], mp_t(6.5), i);
+      r6 = boost::math::tools::evaluate_polynomial(&coef[0], mp_t(10247.25), i);
 
       coef.clear();
       for(unsigned j = 0; j < i; ++j)
@@ -412,12 +410,12 @@ int main()
       }
       std::cout << " };\n";
 
-      boost::math::ntl::RR r1d = boost::math::tools::evaluate_polynomial(&coef[0], boost::math::ntl::RR(0.125), i);
-      boost::math::ntl::RR r2d = boost::math::tools::evaluate_polynomial(&coef[0], boost::math::ntl::RR(0.25), i);
-      boost::math::ntl::RR r3d = boost::math::tools::evaluate_polynomial(&coef[0], boost::math::ntl::RR(0.75), i);
-      boost::math::ntl::RR r4d = boost::math::tools::evaluate_polynomial(&coef[0], boost::math::ntl::RR(1) - boost::math::ntl::RR(1) / 64, i);
-      boost::math::ntl::RR r5d = boost::math::tools::evaluate_polynomial(&coef[0], boost::math::ntl::RR(6.5), i);
-      boost::math::ntl::RR r6d = boost::math::tools::evaluate_polynomial(&coef[0], boost::math::ntl::RR(10247.25), i);
+      mp_t r1d = boost::math::tools::evaluate_polynomial(&coef[0], mp_t(0.125), i);
+      mp_t r2d = boost::math::tools::evaluate_polynomial(&coef[0], mp_t(0.25), i);
+      mp_t r3d = boost::math::tools::evaluate_polynomial(&coef[0], mp_t(0.75), i);
+      mp_t r4d = boost::math::tools::evaluate_polynomial(&coef[0], mp_t(1) - mp_t(1) / 64, i);
+      mp_t r5d = boost::math::tools::evaluate_polynomial(&coef[0], mp_t(6.5), i);
+      mp_t r6d = boost::math::tools::evaluate_polynomial(&coef[0], mp_t(10247.25), i);
 
       std::cout <<
          "   BOOST_CHECK_CLOSE(\n"

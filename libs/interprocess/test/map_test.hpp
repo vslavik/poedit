@@ -14,12 +14,18 @@
 #include <boost/interprocess/detail/config_begin.hpp>
 #include "check_equal_containers.hpp"
 #include <map>
-#include <functional>
-#include <utility>
-#include "print_container.hpp"
-#include <boost/interprocess/detail/utilities.hpp>
+
+// interprocess
 #include <boost/interprocess/containers/pair.hpp>
+// interprocess/detail
+#include <boost/interprocess/detail/utilities.hpp>
+// intrusive/detail
+#include <boost/intrusive/detail/minimal_pair_header.hpp>
+#include <boost/intrusive/detail/minimal_less_equal_header.hpp>
+// std
 #include <string>
+
+#include "print_container.hpp"
 #include "get_process_id_name.hpp"
 
 template<class T1, class T2, class T3, class T4>

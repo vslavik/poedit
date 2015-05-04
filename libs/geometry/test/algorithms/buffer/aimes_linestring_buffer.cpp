@@ -7,8 +7,6 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#define BOOST_GEOMETRY_BUFFER_SIMPLIFY_WITH_AX
-
 #include <test_buffer.hpp>
 
 #include <boost/geometry/algorithms/buffer.hpp>
@@ -430,6 +428,8 @@ void test_aimes()
     int const ne = sizeof(expectations) / sizeof(expectations[0]);
     BOOST_ASSERT(n == ne);
 
+    boost::ignore_unused(n, ne);
+
 #if 0
     // Create PostGIS query to verify results
     {
@@ -479,19 +479,6 @@ void test_aimes()
         double aimes_width = static_cast<double>(width) / 1000000.0;
         for (int i = 0; i < n; i++)
         {
-#if! defined(BOOST_GEOMETRY_BUFFER_INCLUDE_FAILING_TESTS)
-            if (i == 167)
-            {
-                // Failes because of flat-end/helper segment intersection
-                continue;
-            }
-            if (width == 36 && (i == 112 || i == 131 || i == 152))
-            {
-                // Failes (most probably) because of flat-end/helper segment intersection
-                continue;
-            }
-#endif
-
             std::ostringstream name;
             try
             {
@@ -517,7 +504,12 @@ void test_aimes()
             }
         }
     }
-    std::cout << "Total self-ips: " << self_ip_count << std::endl;
+
+    BOOST_CHECK_MESSAGE
+        (
+            self_ip_count == 0,
+            "There are self-intersections: " << self_ip_count
+        );
 }
 
 

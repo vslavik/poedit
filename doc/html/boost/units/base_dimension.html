@@ -39,9 +39,9 @@
   <span class="keyword">typedef</span> <span class="identifier">Derived</span>     <a name="boost.units.base_dimension.type"></a><span class="identifier">type</span><span class="special">;</span>            <span class="comment">// Provided for mpl compatability. </span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp492095808"></a><h2>Description</h2>
+<a name="idp486621552"></a><h2>Description</h2>
 <p>Defines a base dimension. To define a dimension you need to provide the derived class (CRTP) and a unique integer. </p>
-<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">my_dimension</span> <span class="special">:</span> <a class="link" href="base_dimension.html" title="Class template base_dimension">boost::units::base_dimension</a><span class="special">&lt;</span><span class="identifier">my_dimension</span><span class="special">,</span> <span class="number">1</span><span class="special">&gt;</span> <span class="special">{</span><span class="special">}</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">my_dimension</span> <span class="special">:</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">units</span><span class="special">::</span><span class="identifier">base_dimension</span><span class="special">&lt;</span><span class="identifier">my_dimension</span><span class="special">,</span> <span class="number">1</span><span class="special">&gt;</span> <span class="special">{</span><span class="special">}</span><span class="special">;</span>
 </pre>
 <p> It is designed so that you will get an error message if you try to use the same value in multiple definitions. </p>
 </div>

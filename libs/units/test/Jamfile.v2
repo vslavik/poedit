@@ -17,7 +17,6 @@ warning-compilers =
 project boost/units/test :
     requirements
         <implicit-dependency>/boost//headers
-        <include>../../..
         <toolset>msvc:<asynch-exceptions>on
         $(warning-compilers):$(warning-options)
         # This warning comes from the test library.
@@ -52,8 +51,9 @@ run test_custom_unit.cpp ;
 run test_scaled_conversion.cpp ;
 run test_lambda.cpp ;
 run test_scaled_unit.cpp test_framework ;
-run test_output.cpp test_framework /boost//regex ;
+run test_output.cpp test_framework /boost//regex/<warnings-as-errors>off : : : <test-info>always_show_run_output ;
 run test_trig.cpp test_framework ;
+run test_information_units.cpp test_framework ;
 
 compile-fail fail_implicit_conversion.cpp ;
 compile-fail fail_quantity_construct.cpp ;

@@ -774,7 +774,7 @@ void test_all(bool test_self_tangencies = true, bool test_mixed = false)
         test_traverse<polygon, polygon, operation_intersection>::apply("hv3", 1, 1623.8265057282042, hv_3[0], hv_3[1], deviation);
 
 
-        if (! is_float)
+        if ( BOOST_GEOMETRY_CONDITION(! is_float) )
         {
             test_traverse<polygon, polygon, operation_union>::apply("hv4", 1, 1626.5146964146334, hv_4[0], hv_4[1], deviation);
             test_traverse<polygon, polygon, operation_intersection>::apply("hv4", 1, 1626.2580370864305, hv_4[0], hv_4[1], deviation);
@@ -798,7 +798,7 @@ void test_all(bool test_self_tangencies = true, bool test_mixed = false)
     // the chance is 50% that the segments are not sorted correctly and the wrong
     // decision is taken.
     // Solved now (by sorting on sides in those cases)
-    if (! is_float_on_non_msvc)
+    if ( BOOST_GEOMETRY_CONDITION(! is_float_on_non_msvc) )
     {
         test_traverse<polygon, polygon, operation_intersection>::apply("dz_1",
                 2, 16.887537949472005, dz_1[0], dz_1[1]);
@@ -844,7 +844,7 @@ void test_all(bool test_self_tangencies = true, bool test_mixed = false)
                 float_might_deviate_more);
     }
 
-    if (! is_float)
+    if ( BOOST_GEOMETRY_CONDITION(! is_float) )
     {
 
 /* TODO check this BSG 2013-09-24

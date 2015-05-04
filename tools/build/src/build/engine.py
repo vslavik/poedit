@@ -81,7 +81,32 @@ class Engine:
         for target in targets:
             for source in sources:
                 self.do_add_dependency (target, source)
-    
+
+    def get_target_variable(self, targets, variable):
+        """Gets the value of `variable` on set on the first target in `targets`.
+
+        Args:
+            targets (str or list): one or more targets to get the variable from.
+            variable (str): the name of the variable
+
+        Returns:
+             the value of `variable` set on `targets` (list)
+
+        Example:
+
+            >>> ENGINE = get_manager().engine()
+            >>> ENGINE.set_target_variable(targets, 'MY-VAR', 'Hello World')
+            >>> ENGINE.get_target_variable(targets, 'MY-VAR')
+            ['Hello World']
+
+        Equivalent Jam code:
+
+            MY-VAR on $(targets) = "Hello World" ;
+            echo [ on $(targets) return $(MY-VAR) ] ;
+            "Hello World"
+        """
+        return bjam_interface.call('get-target-variable', targets, variable)
+
     def set_target_variable (self, targets, variable, value, append=0):
         """ Sets a target variable.
 

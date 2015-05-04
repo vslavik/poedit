@@ -2,14 +2,14 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
-// This file was modified by Oracle on 2013, 2014.
-// Modifications copyright (c) 2013, 2014, Oracle and/or its affiliates.
+// This file was modified by Oracle on 2013, 2014, 2015.
+// Modifications copyright (c) 2013-2015 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
-
-// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_RELATE_POINT_GEOMETRY_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_RELATE_POINT_GEOMETRY_HPP
@@ -19,6 +19,8 @@
 //#include <boost/geometry/algorithms/covered_by.hpp>
 
 #include <boost/geometry/algorithms/detail/relate/topology_check.hpp>
+
+#include <boost/geometry/util/condition.hpp>
 
 namespace boost { namespace geometry
 {
@@ -54,7 +56,7 @@ struct point_geometry
 
         set<exterior, exterior, result_dimension<Point>::value, Transpose>(result);
 
-        if ( result.interrupt )
+        if ( BOOST_GEOMETRY_CONDITION(result.interrupt) )
             return;
 
         // the point is on the boundary

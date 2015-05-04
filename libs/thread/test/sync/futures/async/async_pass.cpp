@@ -70,38 +70,38 @@ public:
 
   int value;
 
-BOOST_THREAD_MOVABLE_ONLY(MoveOnly)
+  BOOST_THREAD_MOVABLE_ONLY(MoveOnly)
   MoveOnly()
   {
     value = 0;
   }
   MoveOnly( BOOST_THREAD_RV_REF(MoveOnly))
-      {
-        value = 1;
-      }
-      MoveOnly& operator=(BOOST_THREAD_RV_REF(MoveOnly))
-      {
-        value = 2;
-        return *this;
-      }
-
-      int operator()()
-      {
-        boost::this_thread::sleep_for(ms(200));
-        return 3;
-      }
-      template <typename OS>
-      friend OS& operator<<(OS& os, MoveOnly const& v)
-      {
-        os << v.value;
-        return os;
-      }
-    };
-
-    namespace boost
-    {
-BOOST_THREAD_DCL_MOVABLE    (MoveOnly)
+  {
+    value = 1;
   }
+  MoveOnly& operator=(BOOST_THREAD_RV_REF(MoveOnly))
+  {
+    value = 2;
+    return *this;
+  }
+
+  int operator()() const
+  {
+    boost::this_thread::sleep_for(ms(200));
+    return 3;
+  }
+  template <typename OS>
+  friend OS& operator<<(OS& os, MoveOnly const& v)
+  {
+    os << v.value;
+    return os;
+  }
+};
+
+namespace boost
+{
+  BOOST_THREAD_DCL_MOVABLE    (MoveOnly)
+}
 
 int f0()
 {
@@ -167,6 +167,48 @@ struct check_timer {
 
 int main()
 {
+  {
+    try {
+      boost::async(f0);
+    } catch (std::exception& ex)
+    {
+      std::cout << __FILE__ << "[" << __LINE__ << "]" << ex.what() << std::endl;
+      BOOST_TEST(false && "exception thrown");
+    }
+    catch (...)
+    {
+      BOOST_TEST(false && "exception thrown");
+    }
+  }
+  {
+    try {
+      boost::async(boost::launch::async, f0);
+    } catch (std::exception& ex)
+    {
+      std::cout << __FILE__ << "[" << __LINE__ << "]" << ex.what() << std::endl;
+      BOOST_TEST(false && "exception thrown");
+    }
+    catch (...)
+    {
+      BOOST_TEST(false && "exception thrown");
+    }
+  }
+#if defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+  std::cout << __FILE__ << "[" << __LINE__ << "]" << std::endl;
+  {
+    try {
+      boost::async(boost::launch::deferred, f0);
+    } catch (std::exception& ex)
+    {
+      std::cout << __FILE__ << "[" << __LINE__ << "]" << ex.what() << std::endl;
+      BOOST_TEST(false && "exception thrown");
+    }
+    catch (...)
+    {
+      BOOST_TEST(false && "exception thrown");
+    }
+  }
+#endif
   std::cout << __FILE__ << "[" << __LINE__ << "]" << std::endl;
   {
     try
@@ -263,6 +305,32 @@ int main()
     }
 
   }
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+  std::cout << __FILE__ << "[" << __LINE__ << "]" << std::endl;
+  {
+    try
+    {
+      boost::future<long> f = boost::async(boost::launch::deferred, A(3));
+      //boost::this_thread::sleep_for(ms(300));
+      int res;
+      {
+        check_timer timer(ms(500));
+        res = f.get();
+      }
+      BOOST_TEST(res == 3);
+    }
+    catch (std::exception& ex)
+    {
+      std::cout << __FILE__ << "[" << __LINE__ << "]" << ex.what() << std::endl;
+      BOOST_TEST(false && "exception thrown");
+    }
+    catch (...)
+    {
+      BOOST_TEST(false && "exception thrown");
+    }
+
+  }
+#endif
 #if defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
   std::cout << __FILE__ << "[" << __LINE__ << "]" << std::endl;
   {
@@ -270,6 +338,31 @@ int main()
     {
       A a(3);
       boost::future<long> f = boost::async(boost::launch::async, &A::doit, &a);
+      boost::this_thread::sleep_for(ms(300));
+      int res;
+      {
+        check_timer timer(ms(500));
+        res = f.get();
+      }
+      BOOST_TEST(res == 3);
+    }
+    catch (std::exception& ex)
+    {
+      std::cout << __FILE__ << "[" << __LINE__ << "]" << ex.what() << std::endl;
+      BOOST_TEST(false && "exception thrown");
+    }
+    catch (...)
+    {
+      BOOST_TEST(false && "exception thrown");
+    }
+
+  }
+  std::cout << __FILE__ << "[" << __LINE__ << "]" << std::endl;
+  {
+    try
+    {
+      A a(3);
+      boost::future<long> f = boost::async(boost::launch::deferred, &A::doit, &a);
       boost::this_thread::sleep_for(ms(300));
       int res;
       {
@@ -313,6 +406,31 @@ int main()
       BOOST_TEST(false && "exception thrown");
     }
   }
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+  std::cout << __FILE__ << "[" << __LINE__ << "]" << std::endl;
+  {
+    try
+    {
+      boost::future<int> f = boost::async(boost::launch::deferred, BOOST_THREAD_MAKE_RV_REF(MoveOnly()));
+      boost::this_thread::sleep_for(ms(300));
+      int res;
+      {
+        check_timer timer(ms(500));
+        res = f.get();
+      }
+      BOOST_TEST(res == 3);
+    }
+    catch (std::exception& ex)
+    {
+      std::cout << __FILE__ << "[" << __LINE__ << "]" << ex.what() << std::endl;
+      BOOST_TEST(false && "exception thrown");
+    }
+    catch (...)
+    {
+      BOOST_TEST(false && "exception thrown");
+    }
+  }
+#endif
   std::cout << __FILE__ << "[" << __LINE__ << "]" << std::endl;
   {
     try
@@ -342,7 +460,7 @@ int main()
     try
     {
       boost::future<int> f = boost::async(boost::launch::deferred, f0);
-      boost::this_thread::sleep_for(ms(300));
+      //boost::this_thread::sleep_for(ms(300));
       int res;
       {
         check_timer timer(ms(500));
@@ -436,7 +554,7 @@ int main()
     try
     {
       boost::future<int&> f = boost::async(boost::launch::deferred, f1);
-      boost::this_thread::sleep_for(ms(300));
+      //boost::this_thread::sleep_for(ms(300));
       int* res;
       {
         check_timer timer(ms(500));
@@ -524,7 +642,7 @@ int main()
     try
     {
       boost::future<void> f = boost::async(boost::launch::deferred, f2);
-      boost::this_thread::sleep_for(ms(300));
+      //boost::this_thread::sleep_for(ms(300));
       {
         check_timer timer(ms(500));
         f.get();
@@ -565,6 +683,31 @@ int main()
       BOOST_TEST(false && "exception thrown");
     }
   }
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+  std::cout << __FILE__ << "[" << __LINE__ << "]" << std::endl;
+  {
+    try
+    {
+      boost::future<MoveOnly> f = boost::async(boost::launch::deferred, &f3_1);
+      //boost::this_thread::sleep_for(ms(300));
+      MoveOnly res;
+      {
+        check_timer timer(ms(500));
+        res = f.get();
+      }
+      BOOST_TEST_EQ(res.value, 2);
+    }
+    catch (std::exception& ex)
+    {
+      std::cout << __FILE__ << "[" << __LINE__ << "]" << ex.what() << std::endl;
+      BOOST_TEST(false && "exception thrown");
+    }
+    catch (...)
+    {
+      BOOST_TEST(false && "exception thrown");
+    }
+  }
+#endif
   std::cout << __FILE__ << "[" << __LINE__ << "]" << std::endl;
   {
     try
@@ -641,6 +784,29 @@ int main()
   {
     try
     {
+      boost::future<boost::csbl::unique_ptr<int> > f = boost::async(boost::launch::deferred, &f3, 3);
+      //boost::this_thread::sleep_for(ms(300));
+      boost::csbl::unique_ptr<int> res;
+      {
+        check_timer timer(ms(500));
+        res = f.get();
+      }
+      BOOST_TEST(*res == 3);
+    }
+    catch (std::exception& ex)
+    {
+      std::cout << __FILE__ <<"["<<__LINE__<<"]"<<ex.what() << std::endl;
+      BOOST_TEST(false && "exception thrown");
+    }
+    catch (...)
+    {
+      BOOST_TEST(false && "exception thrown");
+    }
+  }
+  std::cout << __FILE__ <<"["<<__LINE__<<"]"<<std::endl;
+  {
+    try
+    {
       boost::future<boost::csbl::unique_ptr<int> > f = boost::async(&f3, 3);
       boost::this_thread::sleep_for(ms(300));
       boost::csbl::unique_ptr<int> res;
@@ -669,6 +835,29 @@ int main()
     {
       boost::future<boost::csbl::unique_ptr<int> > f = boost::async(boost::launch::async, &f4, boost::csbl::unique_ptr<int>(new int(3)));
       boost::this_thread::sleep_for(ms(300));
+      boost::csbl::unique_ptr<int> res;
+      {
+        check_timer timer(ms(500));
+        res = f.get();
+      }
+      BOOST_TEST(*res == 3);
+    }
+    catch (std::exception& ex)
+    {
+      std::cout << __FILE__ <<"["<<__LINE__<<"]"<<ex.what() << std::endl;
+      BOOST_TEST(false && "exception thrown");
+    }
+    catch (...)
+    {
+      BOOST_TEST(false && "exception thrown");
+    }
+  }
+  std::cout << __FILE__ <<"["<<__LINE__<<"]"<<std::endl;
+  {
+    try
+    {
+      boost::future<boost::csbl::unique_ptr<int> > f = boost::async(boost::launch::deferred, &f4, boost::csbl::unique_ptr<int>(new int(3)));
+      //boost::this_thread::sleep_for(ms(300));
       boost::csbl::unique_ptr<int> res;
       {
         check_timer timer(ms(500));

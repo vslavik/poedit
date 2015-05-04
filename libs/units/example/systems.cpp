@@ -229,34 +229,6 @@ BOOST_UNITS_DEFINE_SINGLE_UNIT_SYSTEM(us,pint,volume)
 BOOST_UNITS_DEFINE_SINGLE_UNIT_SYSTEM(us,quart,volume)
 BOOST_UNITS_DEFINE_SINGLE_UNIT_SYSTEM(us,gallon,volume)
 
-#ifdef __GNUC__
-#include <cxxabi.h>
-#endif
-
-inline std::string demangle(const char* name)
-{
-    #ifdef __GNUC__
-    // need to demangle C++ symbols
-    char*       realname;
-    std::size_t len; 
-    int         stat;
-     
-    realname = abi::__cxa_demangle(name,NULL,&len,&stat);
-    
-    if (realname != NULL)
-    {
-        const std::string    out(realname);
-        free(realname);
-        
-        return out;
-    }
-    
-    return std::string("demangle :: error - unable to demangle specified symbol");
-    #else
-    return name;
-    #endif
-}
-
 int main(void)
 {
     using namespace boost::units;

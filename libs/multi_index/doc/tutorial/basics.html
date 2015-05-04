@@ -474,6 +474,18 @@ means of user-defined <code>typedef</code>s:
   <span class=identifier>es</span><span class=special>.</span><span class=identifier>get</span><span class=special>&lt;</span><span class=number>1</span><span class=special>&gt;().</span><span class=identifier>find</span><span class=special>(</span><span class=string>&quot;Judy Smith&quot;</span><span class=special>);</span>
 </pre></blockquote>
 
+<p>
+The iterators provided by every index are <i>constant</i>, that is, the elements they point to
+cannot be mutated directly. This  follows the interface of <code>std::set</code> for ordered
+indices but might come as a surprise for other types such as sequenced indices, which are modeled after
+<code>std::list</code>, where this limitation does not happen. This seemingly odd behavior
+is imposed by the way <code>multi_index_container</code>s work; if elements were
+allowed to be mutated indiscriminately, we could introduce inconsistencies
+in the ordered indices of the <code>multi_index_container</code> without the container
+being notified about it. Element modification is properly done by means of
+<a href="#ord_updating">update operations</a> on any index.
+</p>
+
 <h2>
 <a name="index_types">Index types</a>
 </h2>
@@ -1060,9 +1072,9 @@ same way as <code>std::list</code> permits. The interface of sequenced indices
 is thus designed upon that of <code>std::list</code>; nearly every operation
 provided in the standard container is replicated here, occasionally with changes
 in the syntax and/or semantics to cope with the constraints imposed by
-Boost.MultiIndex. In particular, there is an important limitation of sequenced
-indices with respect to <code>std::list</code>s, namely that elements of an
-<code>multi_index_container</code> are not mutable through an iterator:
+Boost.MultiIndex. An important difference, commented <a href="#iterator_access">above</a>,
+is the fact that the values pointed to by sequenced index iterators are treated
+as <i>constant</i>:
 </p>
 
 <blockquote><pre>
@@ -1076,11 +1088,7 @@ indices with respect to <code>std::list</code>s, namely that elements of an
 </pre></blockquote>
 
 <p>
-That is, iterators of a sequenced index (of all types of indices, actually)
-point to constant elements. This limitation might come as a surprise, but
-it is imposed by the way <code>multi_index_container</code>s work; if elements were
-allowed to be changed in this manner, we could introduce inconsistencies
-in other ordered indices of the <code>multi_index_container</code>. Element modification
+As with any other type of index, element modification
 can nevertheless be done by means of
 <a href="#seq_updating">update operations</a>.
 </p>
@@ -1240,9 +1248,9 @@ Index types
 
 <br>
 
-<p>Revised November 7th 2008</p>
+<p>Revised November 11th 2014</p>
 
-<p>&copy; Copyright 2003-2008 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2003-2014 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

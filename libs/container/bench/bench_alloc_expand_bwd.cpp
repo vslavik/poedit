@@ -74,6 +74,9 @@ class MyInt
 };
 namespace boost{
 
+template<class T>
+struct has_trivial_destructor_after_move;
+
 template<>
 struct has_trivial_destructor_after_move<MyInt>
 {

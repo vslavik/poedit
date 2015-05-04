@@ -21,7 +21,7 @@
 //   wait_for(const chrono::duration<Rep, Period>& rel_time) const;
 
 #define BOOST_THREAD_VERSION 4
-#define BOOST_THREAD_USES_LOG
+//#define BOOST_THREAD_USES_LOG
 #define BOOST_THREAD_USES_LOG_THREAD_ID
 #include <boost/thread/detail/log.hpp>
 

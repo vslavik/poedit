@@ -27,6 +27,13 @@ void expected_results()
       ".*",                          // stdlib
       ".*",                          // platform
       ".*",                          // test type(s)
+      ".*Mathworld.*",               // test data group
+      ".*", 600, 200);               // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
+      ".*",                          // platform
+      ".*",                          // test type(s)
       ".*",                          // test data group
       ".*", 60, 30);                 // test function
    //

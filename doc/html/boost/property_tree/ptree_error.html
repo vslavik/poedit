@@ -6,8 +6,8 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../property_tree/reference.html#header.boost.property_tree.exceptions_hpp" title="Header &lt;boost/property_tree/exceptions.hpp&gt;">
-<link rel="prev" href="../../property_tree/reference.html" title="Reference">
-<link rel="next" href="ptree_bad_data.html" title="Class ptree_bad_data">
+<link rel="prev" href="ptree_bad_path.html" title="Class ptree_bad_path">
+<link rel="next" href="id_translator.html" title="Struct template id_translator">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../../property_tree/reference.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../property_tree/reference.html#header.boost.property_tree.exceptions_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="ptree_bad_data.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="ptree_bad_path.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../property_tree/reference.html#header.boost.property_tree.exceptions_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="id_translator.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.property_tree.ptree_error"></a><div class="titlepage"></div>
@@ -35,19 +35,19 @@
 <span class="keyword">class</span> <a class="link" href="ptree_error.html" title="Class ptree_error">ptree_error</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">runtime_error</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="ptree_error.html#boost.property_tree.ptree_errorconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="ptree_error.html#idp157104480-bb"><span class="identifier">ptree_error</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="ptree_error.html#idp92568224-bb"><span class="special">~</span><span class="identifier">ptree_error</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="ptree_error.html#idp223835568-bb"><span class="identifier">ptree_error</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="ptree_error.html#idp156843440-bb"><span class="special">~</span><span class="identifier">ptree_error</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp349802320"></a><h2>Description</h2>
+<a name="idp342298384"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp349802736"></a><h3>
+<a name="idp342298800"></a><h3>
 <a name="boost.property_tree.ptree_errorconstruct-copy-destruct"></a><code class="computeroutput">ptree_error</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp157104480-bb"></a><span class="identifier">ptree_error</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> what<span class="special">)</span><span class="special">;</span></pre>Instantiate a <code class="computeroutput"><a class="link" href="ptree_error.html" title="Class ptree_error">ptree_error</a></code> instance with the given message. <p>
+<pre class="literallayout"><a name="idp223835568-bb"></a><span class="identifier">ptree_error</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> what<span class="special">)</span><span class="special">;</span></pre>Instantiate a <code class="computeroutput"><a class="link" href="ptree_error.html" title="Class ptree_error">ptree_error</a></code> instance with the given message. <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
@@ -69,14 +69,15 @@
 </tr></tbody>
 </table></div>
 </li>
-<li class="listitem"><pre class="literallayout"><a name="idp92568224-bb"></a><span class="special">~</span><span class="identifier">ptree_error</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp156843440-bb"></a><span class="special">~</span><span class="identifier">ptree_error</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2008 Marcin Kalicinski<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2008-2010 Marcin Kalicinski<br>Copyright &#169; 2010-2013 Sebastian
+      Redl<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -84,7 +85,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../../property_tree/reference.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../property_tree/reference.html#header.boost.property_tree.exceptions_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="ptree_bad_data.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="ptree_bad_path.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../property_tree/reference.html#header.boost.property_tree.exceptions_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="id_translator.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

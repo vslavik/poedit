@@ -84,17 +84,16 @@ basic_text_oprimitive<OStream>::basic_text_oprimitive(
     os(os_),
     flags_saver(os_),
     precision_saver(os_),
-    archive_locale(NULL),
     locale_saver(* os_.rdbuf())
 {
     if(! no_codecvt){
         archive_locale.reset(
             add_facet(
-                std::locale::classic(), 
-                new codecvt_null<typename OStream::char_type>
+                std::locale::classic(),
+                new boost::archive::codecvt_null<typename OStream::char_type>
             )
         );
-        os.imbue(* archive_locale);
+        //os.imbue(* archive_locale);
     }
     os << std::noboolalpha;
 }

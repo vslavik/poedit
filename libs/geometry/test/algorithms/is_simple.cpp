@@ -1,7 +1,7 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
-// Copyright (c) 2014, Oracle and/or its affiliates.
+// Copyright (c) 2014-2015, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 
@@ -36,7 +36,7 @@
 #include <boost/geometry/algorithms/is_valid.hpp>
 #include <boost/geometry/algorithms/is_simple.hpp>
 
-#include "from_wkt.hpp"
+#include <from_wkt.hpp>
 
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
 #include "pretty_print_geometry.hpp"
@@ -161,6 +161,7 @@ BOOST_AUTO_TEST_CASE( test_is_simple_linestring )
     // simple closed linestrings
     test_simple(from_wkt<G>("LINESTRING(0 0,1 0,1 1,0 0)"), true);
     test_simple(from_wkt<G>("LINESTRING(0 0,1 0,1 1,0 1,0 0)"), true);
+    test_simple(from_wkt<G>("LINESTRING(0 0,10 0,10 10,0 10,0 0)"), true);
 
     // non-simple linestrings
     test_simple(from_wkt<G>("LINESTRING(0 0,1 0,0 0)"), false);
@@ -173,6 +174,22 @@ BOOST_AUTO_TEST_CASE( test_is_simple_linestring )
     test_simple(from_wkt<G>("LINESTRING(0 0,3 0,5 0,4 0,2 0)"), false);
     test_simple(from_wkt<G>("LINESTRING(0 0,3 0,2 0,5 0)"), false);
     test_simple(from_wkt<G>("LINESTRING(0 0,2 0,2 2,1 0,0 0)"), false);
+    test_simple(from_wkt<G>("LINESTRING(0 0,1 0,2 0,2 2,1 0,0 0)"), false);
+    test_simple(from_wkt<G>("LINESTRING(0 0,10 0,10 10,0 10,0 0,0 0)"), false);
+    test_simple(from_wkt<G>("LINESTRING(0 0,0 10,5 10,0 0,10 10,10 5,10 0,0 0)"), false);
+    test_simple(from_wkt<G>("LINESTRING(0 0,0 0,10 0,10 10,0 10,0 0,0 0)"),
+                false);
+    test_simple(from_wkt<G>("LINESTRING(0 0,0 0,0 0,10 0,10 10,0 10,0 0,0 0,0 0,0 0)"),
+                false);
+    test_simple(from_wkt<G>("LINESTRING(0 0,0 0,10 0,10 10,10 10,10 10,10 10,10 10,0 10,0 0,0 0)"),
+                false);
+    test_simple(from_wkt<G>("LINESTRING(0 0,1 0,2 0,2 2,1 0)"), false);
+    test_simple(from_wkt<G>("LINESTRING(1 0,2 2,2 0,1 0,0 0)"), false);
+    test_simple(from_wkt<G>("LINESTRING(0 0,1 0,2 0,2 2,1 0,1 4,0 0)"), false);
+    test_simple(from_wkt<G>("LINESTRING(4 1,10 8,4 6,4 1,10 5,10 3)"),
+                false);
+    test_simple(from_wkt<G>("LINESTRING(10 3,10 5,4 1,4 6,10 8,4 1)"),
+                false);
 }
 
 BOOST_AUTO_TEST_CASE( test_is_simple_multilinestring )
@@ -208,6 +225,7 @@ BOOST_AUTO_TEST_CASE( test_is_simple_multilinestring )
                 true);
     test_simple(from_wkt<G>("MULTILINESTRING((0 0,1 0),(0 0,0 1),(0 0,-1 0),(0 0,0 -1))"),
                 true);
+    test_simple(from_wkt<G>("MULTILINESTRING((0 0,10 0,10 10,0 10,0 0))"), true);
 
     // non-simple multilinestrings
     test_simple(from_wkt<G>("MULTILINESTRING((0 0,2 2),(0 0,2 2))"), false);
@@ -245,6 +263,12 @@ BOOST_AUTO_TEST_CASE( test_is_simple_multilinestring )
     test_simple(from_wkt<G>("MULTILINESTRING((0 0,1 0,1 1,0 1,0 0),(0 0,-1 0,-1 -1,0 -1,0 0))"),
                 false);
     test_simple(from_wkt<G>("MULTILINESTRING((0 0,1 0,1 1,0 1,0 0),(-1 -1,-1 0,0 0,0 -1,-1 -1))"),
+                false);
+    test_simple(from_wkt<G>("MULTILINESTRING((0 0,0 10,5 10,0 0,10 10,10 5,10 0,0 0))"),
+                false);
+    test_simple(from_wkt<G>("MULTILINESTRING((4 1,10 8,4 6,4 1,10 5,10 3))"),
+                false);
+    test_simple(from_wkt<G>("MULTILINESTRING((10 3,10 5,4 1,4 6,10 8,4 1))"),
                 false);
 }
 

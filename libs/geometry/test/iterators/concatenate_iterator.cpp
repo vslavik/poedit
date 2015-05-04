@@ -27,6 +27,8 @@
 #include <boost/assign/std/vector.hpp>
 #include <boost/assign/std/list.hpp>
 
+#include <boost/core/ignore_unused.hpp>
+
 #include "test_iterator_common.hpp"
 
 #include <boost/geometry/iterators/concatenate_iterator.hpp>
@@ -106,6 +108,8 @@ struct test_concatenate_iterator
                              std::string const& case_id,
                              std::string const& containers_id)
     {
+        boost::ignore_unused(case_id, containers_id);
+
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
         std::stringstream sstream;
         sstream << case_id << " [" << containers_id << "]";

@@ -1,7 +1,7 @@
 // Boost.Geometry.Index varray
 // Unit Test
 
-// Copyright (c) 2012-2013 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2012-2014 Adam Wulkiewicz, Lodz, Poland.
 // Copyright (c) 2012-2013 Andrew Hundt.
 
 // Use, modification and distribution is subject to the Boost Software License,
@@ -283,8 +283,15 @@ void test_iterators_nd()
 
     s.assign(v.rbegin(), v.rend());
 
-    test_compare_ranges(s.begin(), s.end(), v.rbegin(), v.rend());
-    test_compare_ranges(s.rbegin(), s.rend(), v.begin(), v.end());
+    test_compare_ranges(s.cbegin(), s.cend(), v.rbegin(), v.rend());
+    test_compare_ranges(s.crbegin(), s.crend(), v.begin(), v.end());
+
+    varray<T, N> const& cs = s;
+    std::vector<T> const& cv = v;
+    s.assign(cv.rbegin(), cv.rend());
+
+    test_compare_ranges(cs.begin(), cs.end(), cv.rbegin(), cv.rend());
+    test_compare_ranges(cs.rbegin(), cs.rend(), cv.begin(), cv.end());
 }
 
 template <typename T, size_t N>

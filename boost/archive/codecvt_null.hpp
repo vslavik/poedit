@@ -87,6 +87,10 @@ class codecvt_null<wchar_t> : public std::codecvt<wchar_t, char, std::mbstate_t>
     virtual int do_max_length( ) const throw( ){
         return do_encoding();
     }
+public:
+    explicit codecvt_null(std::size_t no_locale_manage = 0) :
+        std::codecvt<wchar_t, char, std::mbstate_t>(no_locale_manage)
+    {}
 };
 
 } // namespace archive

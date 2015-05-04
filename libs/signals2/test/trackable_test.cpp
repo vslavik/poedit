@@ -45,6 +45,27 @@ struct max_or_default {
   }
 };
 
+struct self_deleting : public boost::signals2::trackable {
+    void delete_myself(boost::signals2::connection connection)
+    {
+      BOOST_CHECK(connection.connected());
+      delete this;
+      BOOST_CHECK(connection.connected() == false);
+    }
+};
+
+// test that slot assocated with signals2::trackable
+// gets disconnected immediately upon deletion of the
+// signals2::trackable, even when a signal invocation
+// is in progress.
+void test_immediate_disconnect_on_delete()
+{
+  boost::signals2::signal<void () > sig;
+  self_deleting *obj = new self_deleting();
+  sig.connect_extended(boost::bind(&self_deleting::delete_myself, obj, _1));
+  sig();
+}
+
 int test_main(int, char*[])
 {
   typedef boost::signals2::signal<int (int), max_or_default<int> > sig_type;
@@ -83,5 +104,8 @@ int test_main(int, char*[])
 
     BOOST_CHECK(s1(5) == 0);
   }
+  
+  test_immediate_disconnect_on_delete();
+  
   return 0;
 }

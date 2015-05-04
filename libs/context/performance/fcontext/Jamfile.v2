@@ -18,9 +18,15 @@ project boost/context/performance/fcontext
       <library>/boost/chrono//boost_chrono
       <library>/boost/context//boost_context
       <library>/boost/program_options//boost_program_options
+      <toolset>gcc,<segmented-stacks>on:<cxxflags>-fsplit-stack
+      <toolset>gcc,<segmented-stacks>on:<cxxflags>-DBOOST_USE_SEGMENTED_STACKS
+      <toolset>clang,<segmented-stacks>on:<cxxflags>-fsplit-stack
+      <toolset>clang,<segmented-stacks>on:<cxxflags>-DBOOST_USE_SEGMENTED_STACKS
       <link>static
-      <linkflags>"-lrt" 
+      <optimization>speed
       <threading>multi
+      <variant>release
+      <cxxflags>-DBOOST_DISABLE_ASSERTS
     ;
 
 alias sources

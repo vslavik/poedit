@@ -44,12 +44,19 @@ struct is_int<int>
    static const bool value = true;
 };
 
+#if defined(__GNUC__) && ((__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)))
+#  define BOOST_UNUSED_ATTRIBUTE __attribute__((unused))
+#else
+#  define BOOST_UNUSED_ATTRIBUTE
+#endif
+
+
 int test()
 {
-   typedef int a1[ice_or< is_int<int>::value, is_int<UDT>::value>::value ? 1 : -1];
+   typedef int a1[ice_or< is_int<int>::value, is_int<UDT>::value>::value ? 1 : -1] BOOST_UNUSED_ATTRIBUTE;
    return 0;
 }
 
 }
 
-
+#undef BOOST_UNUSED_ATTRIBUTE

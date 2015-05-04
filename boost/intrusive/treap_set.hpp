@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2007-2013
+// (C) Copyright Ion Gaztanaga 2007-2014
 //
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -9,15 +9,19 @@
 // See http://www.boost.org/libs/intrusive for documentation.
 //
 /////////////////////////////////////////////////////////////////////////////
-#ifndef BOOST_INTRUSIVE_TRIE_SET_HPP
-#define BOOST_INTRUSIVE_TRIE_SET_HPP
+#ifndef BOOST_INTRUSIVE_TREAP_SET_HPP
+#define BOOST_INTRUSIVE_TREAP_SET_HPP
 
 #include <boost/intrusive/detail/config_begin.hpp>
 #include <boost/intrusive/intrusive_fwd.hpp>
 #include <boost/intrusive/treap.hpp>
 #include <boost/intrusive/detail/mpl.hpp>
-#include <boost/move/move.hpp>
-#include <iterator>
+#include <boost/move/utility_core.hpp>
+#include <boost/static_assert.hpp>
+
+#if defined(BOOST_HAS_PRAGMA_ONCE)
+#  pragma once
+#endif
 
 namespace boost {
 namespace intrusive {
@@ -97,7 +101,7 @@ class treap_set_impl
    //!   [b, e).
    //!
    //! <b>Complexity</b>: Linear in N if [b, e) is already sorted using
-   //!   comp and otherwise N * log N, where N is std::distance(last, first).
+   //!   comp and otherwise N * log N, where N is distance(last, first).
    //!
    //! <b>Throws</b>: If value_traits::node_traits::node
    //!   constructor throws (this does not happen with predefined Boost.Intrusive hooks)
@@ -113,13 +117,13 @@ class treap_set_impl
    //! <b>Effects</b>: to-do
    //!
    treap_set_impl(BOOST_RV_REF(treap_set_impl) x)
-      :  tree_type(::boost::move(static_cast<tree_type&>(x)))
+      :  tree_type(BOOST_MOVE_BASE(tree_type, x))
    {}
 
    //! <b>Effects</b>: to-do
    //!
    treap_set_impl& operator=(BOOST_RV_REF(treap_set_impl) x)
-   {  return static_cast<treap_set_impl&>(tree_type::operator=(::boost::move(static_cast<tree_type&>(x))));  }
+   {  return static_cast<treap_set_impl&>(tree_type::operator=(BOOST_MOVE_BASE(tree_type, x)));  }
 
    #ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
    //! @copydoc ::boost::intrusive::treap::~treap()
@@ -307,7 +311,7 @@ class treap_set_impl
 
    //! @copydoc ::boost::intrusive::treap::lower_bound(const_reference)
    iterator lower_bound(const_reference value);
-   
+
    //! @copydoc ::boost::intrusive::treap::lower_bound(const KeyType&,KeyValueCompare)
    template<class KeyType, class KeyValueCompare>
    iterator lower_bound(const KeyType& key, KeyValueCompare comp);
@@ -439,8 +443,6 @@ struct make_treap_set
 
    typedef typename detail::get_value_traits
       <T, typename packed_options::proto_value_traits>::type value_traits;
-   typedef typename detail::get_header_holder_type
-      < value_traits, typename packed_options::header_holder_type >::type header_holder_type;
 
    typedef treap_set_impl
          < value_traits
@@ -448,7 +450,7 @@ struct make_treap_set
          , typename packed_options::priority
          , typename packed_options::size_type
          , packed_options::constant_time_size
-         , header_holder_type
+         , typename packed_options::header_holder_type
          > implementation_defined;
    /// @endcond
    typedef implementation_defined type;
@@ -505,11 +507,11 @@ class treap_set
    {}
 
    treap_set(BOOST_RV_REF(treap_set) x)
-      :  Base(::boost::move(static_cast<Base&>(x)))
+      :  Base(BOOST_MOVE_BASE(Base, x))
    {}
 
    treap_set& operator=(BOOST_RV_REF(treap_set) x)
-   {  return static_cast<treap_set &>(this->Base::operator=(::boost::move(static_cast<Base&>(x))));  }
+   {  return static_cast<treap_set &>(this->Base::operator=(BOOST_MOVE_BASE(Base, x)));  }
 
    static treap_set &container_from_end_iterator(iterator end_iterator)
    {  return static_cast<treap_set &>(Base::container_from_end_iterator(end_iterator));   }
@@ -600,7 +602,7 @@ class treap_multiset_impl
    //!   [b, e).
    //!
    //! <b>Complexity</b>: Linear in N if [b, e) is already sorted using
-   //!   comp and otherwise N * log N, where N is std::distance(last, first).
+   //!   comp and otherwise N * log N, where N is distance(last, first).
    //!
    //! <b>Throws</b>: If value_traits::node_traits::node
    //!   constructor throws (this does not happen with predefined Boost.Intrusive hooks)
@@ -616,13 +618,13 @@ class treap_multiset_impl
    //! <b>Effects</b>: to-do
    //!
    treap_multiset_impl(BOOST_RV_REF(treap_multiset_impl) x)
-      :  tree_type(::boost::move(static_cast<tree_type&>(x)))
+      :  tree_type(BOOST_MOVE_BASE(tree_type, x))
    {}
 
    //! <b>Effects</b>: to-do
    //!
    treap_multiset_impl& operator=(BOOST_RV_REF(treap_multiset_impl) x)
-   {  return static_cast<treap_multiset_impl&>(tree_type::operator=(::boost::move(static_cast<tree_type&>(x))));  }
+   {  return static_cast<treap_multiset_impl&>(tree_type::operator=(BOOST_MOVE_BASE(tree_type, x)));  }
 
    #ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
    //! @copydoc ::boost::intrusive::treap::~treap()
@@ -782,10 +784,10 @@ class treap_multiset_impl
    //! @copydoc ::boost::intrusive::treap::count(const KeyType&,KeyValueCompare)const
    template<class KeyType, class KeyValueCompare>
    size_type count(const KeyType& key, KeyValueCompare comp) const;
-   
+
    //! @copydoc ::boost::intrusive::treap::lower_bound(const_reference)
    iterator lower_bound(const_reference value);
-   
+
    //! @copydoc ::boost::intrusive::treap::lower_bound(const KeyType&,KeyValueCompare)
    template<class KeyType, class KeyValueCompare>
    iterator lower_bound(const KeyType& key, KeyValueCompare comp);
@@ -909,8 +911,6 @@ struct make_treap_multiset
 
    typedef typename detail::get_value_traits
       <T, typename packed_options::proto_value_traits>::type value_traits;
-   typedef typename detail::get_header_holder_type
-      < value_traits, typename packed_options::header_holder_type >::type header_holder_type;
 
    typedef treap_multiset_impl
          < value_traits
@@ -918,7 +918,7 @@ struct make_treap_multiset
          , typename packed_options::priority
          , typename packed_options::size_type
          , packed_options::constant_time_size
-         , header_holder_type
+         , typename packed_options::header_holder_type
          > implementation_defined;
    /// @endcond
    typedef implementation_defined type;
@@ -975,11 +975,11 @@ class treap_multiset
    {}
 
    treap_multiset(BOOST_RV_REF(treap_multiset) x)
-      :  Base(::boost::move(static_cast<Base&>(x)))
+      :  Base(BOOST_MOVE_BASE(Base, x))
    {}
 
    treap_multiset& operator=(BOOST_RV_REF(treap_multiset) x)
-   {  return static_cast<treap_multiset &>(this->Base::operator=(::boost::move(static_cast<Base&>(x))));  }
+   {  return static_cast<treap_multiset &>(this->Base::operator=(BOOST_MOVE_BASE(Base, x)));  }
 
    static treap_multiset &container_from_end_iterator(iterator end_iterator)
    {  return static_cast<treap_multiset &>(Base::container_from_end_iterator(end_iterator));   }
@@ -1001,4 +1001,4 @@ class treap_multiset
 
 #include <boost/intrusive/detail/config_end.hpp>
 
-#endif //BOOST_INTRUSIVE_TRIE_SET_HPP
+#endif //BOOST_INTRUSIVE_TREAP_SET_HPP

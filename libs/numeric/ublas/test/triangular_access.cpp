@@ -117,7 +117,7 @@ test_iterator3( const MAT & A ) {
 }
 
 
-int main (int argc, char * argv[]) {
+int main () {
     using namespace boost::numeric::ublas;
 
     typedef double VALUE_TYPE;

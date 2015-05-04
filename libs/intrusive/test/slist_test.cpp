@@ -11,7 +11,6 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-#include <boost/intrusive/detail/config_begin.hpp>
 #include <boost/intrusive/slist.hpp>
 #include <boost/intrusive/pointer_traits.hpp>
 #include "itestvalue.hpp"
@@ -31,12 +30,12 @@ struct my_tag;
 template<class VoidPointer>
 struct hooks
 {
-   typedef slist_base_hook<void_pointer<VoidPointer> >                base_hook_type;
+   typedef slist_base_hook<void_pointer<VoidPointer> >                  base_hook_type;
    typedef slist_base_hook< link_mode<auto_unlink>
-                         , void_pointer<VoidPointer>, tag<my_tag> >  auto_base_hook_type;
-   typedef slist_member_hook<void_pointer<VoidPointer>, tag<my_tag> > member_hook_type;
+                         , void_pointer<VoidPointer>, tag<my_tag> >     auto_base_hook_type;
+   typedef slist_member_hook<void_pointer<VoidPointer>, tag<my_tag> >   member_hook_type;
    typedef slist_member_hook< link_mode<auto_unlink>
-                           , void_pointer<VoidPointer> >             auto_member_hook_type;
+                           , void_pointer<VoidPointer> >                auto_member_hook_type;
    typedef nonhook_node_member< slist_node_traits< VoidPointer >,
                                 circular_slist_algorithms
                               > nonhook_node_member_type;
@@ -157,6 +156,24 @@ void test_slist< List_Type, Value_Container >
       list_type list(values.begin(), values.end());
       list.remove_if(is_even());
       int init_values [] = { 1, 3, 5 };
+      TEST_INTRUSIVE_SEQUENCE( init_values, list.begin() );
+   }
+   {
+      list_type list(values.begin(), values.end());
+      list.remove_if(is_odd());
+      int init_values [] = { 2, 4 };
+      TEST_INTRUSIVE_SEQUENCE( init_values, list.begin() );
+   }
+   {
+      list_type list(values.begin(), values.end());
+      list.remove_and_dispose_if(is_even(), test::empty_disposer());
+      int init_values [] = { 1, 3, 5 };
+      TEST_INTRUSIVE_SEQUENCE( init_values, list.begin() );
+   }
+   {
+      list_type list(values.begin(), values.end());
+      list.remove_and_dispose_if(is_odd(), test::empty_disposer());
+      int init_values [] = { 2, 4 };
       TEST_INTRUSIVE_SEQUENCE( init_values, list.begin() );
    }
    {
@@ -476,8 +493,7 @@ class test_main_template
                  , std::vector< value_type >
                 >::test_all(data);
       make_and_test_slist < typename detail::get_member_value_traits
-                  < value_type
-                  , member_hook< value_type
+                  < member_hook< value_type
                                , typename hooks<VoidPointer>::member_hook_type
                                , &value_type::node_
                                >
@@ -513,8 +529,7 @@ class test_main_template
                 >::test_all(data);
 
       make_and_test_slist < typename detail::get_member_value_traits
-                  < value_type
-                  , member_hook< value_type
+                  < member_hook< value_type
                                , typename hooks<VoidPointer>::member_hook_type
                                , &value_type::node_
                                >
@@ -538,8 +553,7 @@ class test_main_template
                  , std::vector< value_type >
                 >::test_all(data);
       make_and_test_slist < typename detail::get_member_value_traits
-                  < value_type
-                  , member_hook< value_type
+                  < member_hook< value_type
                                , typename hooks<VoidPointer>::member_hook_type
                                , &value_type::node_
                                >
@@ -564,8 +578,7 @@ class test_main_template
                 >::test_all(data);
 
       make_and_test_slist < typename detail::get_member_value_traits
-                  < value_type
-                  , member_hook< value_type
+                  < member_hook< value_type
                                , typename hooks<VoidPointer>::member_hook_type
                                , &value_type::node_
                                >
@@ -603,8 +616,7 @@ class test_main_template<VoidPointer, false, Default_Holder>
                 >::test_all(data);
 
       make_and_test_slist < typename detail::get_member_value_traits
-                  < value_type
-                  , member_hook< value_type
+                  < member_hook< value_type
                                , typename hooks<VoidPointer>::member_hook_type
                                , &value_type::node_
                                >
@@ -628,8 +640,7 @@ class test_main_template<VoidPointer, false, Default_Holder>
                 >::test_all(data);
 
       make_and_test_slist < typename detail::get_member_value_traits
-                  < value_type
-                  , member_hook< value_type
+                  < member_hook< value_type
                                , typename hooks<VoidPointer>::auto_member_hook_type
                                , &value_type::auto_node_
                                >
@@ -653,8 +664,7 @@ class test_main_template<VoidPointer, false, Default_Holder>
                 >::test_all(data);
 
       make_and_test_slist < typename detail::get_member_value_traits
-                  < value_type
-                  , member_hook< value_type
+                  < member_hook< value_type
                                , typename hooks<VoidPointer>::member_hook_type
                                , &value_type::node_
                                >
@@ -679,8 +689,7 @@ class test_main_template<VoidPointer, false, Default_Holder>
                 >::test_all(data);
 
       make_and_test_slist < typename detail::get_member_value_traits
-                  < value_type
-                  , member_hook< value_type
+                  < member_hook< value_type
                                , typename hooks<VoidPointer>::member_hook_type
                                , &value_type::node_
                                >
@@ -704,8 +713,7 @@ class test_main_template<VoidPointer, false, Default_Holder>
                 >::test_all(data);
 
       make_and_test_slist < typename detail::get_member_value_traits
-                  < value_type
-                  , member_hook< value_type
+                  < member_hook< value_type
                                , typename hooks<VoidPointer>::member_hook_type
                                , &value_type::node_
                                >
@@ -765,9 +773,6 @@ int main(int, char* [])
    test_main_template<boost::intrusive::smart_ptr<void>, false, true>()();
    test_main_template<void*, true, true>()();
    test_main_template<boost::intrusive::smart_ptr<void>, true, true>()();
-   // test (plain pointers) x (nonconst/const size) x (standard node allocator)
-   test_main_template<void*, false, false>()();
-   test_main_template<void*, true, false>()();
    // test (bounded pointers) x ((nonconst/const size) x (special node allocator)
    test_main_template_bptr< true >()();
    test_main_template_bptr< false >()();
@@ -775,4 +780,3 @@ int main(int, char* [])
 
    return boost::report_errors();
 }
-#include <boost/intrusive/detail/config_end.hpp>

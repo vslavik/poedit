@@ -1,11 +1,11 @@
 [/
-          Copyright Oliver Kowalke 2009.
+          Copyright Oliver Kowalke 2014.
  Distributed under the Boost Software License, Version 1.0.
     (See accompanying file LICENSE_1_0.txt or copy at
           http://www.boost.org/LICENSE_1_0.txt
 ]
 
-[section:context Context]
+[section:context Struct fcontext_t]
 
 Each instance of __fcontext__ represents a context (CPU registers and stack
 space). Together with its related functions __jump_fcontext__ and
@@ -70,7 +70,6 @@ new state of the original context.
             BOOST_ASSERT(false&&!"f2: never returns");
         }
 
-        boost::context::guarded_stack_allocator alloc;
         std::size_t size(8192);
         void* sp1(std::malloc(size));
         void* sp2(std::malloc(size));
@@ -125,9 +124,8 @@ other context.
             boost::context::jump_fcontext(&fc,fcm,(intptr_t)(p->first+p->second));
         }
 
-        boost::context::guarded_stack_allocator alloc;
         std::size_t size(8192);
-        void* sp(size);
+        void* sp(std::malloc(size));
 
         pair_t p(std::make_pair(2,7));
         fc=boost::context::make_fcontext(sp,size,f);
@@ -171,7 +169,7 @@ destroy local stack variables so they can release allocated resources (RAII
 pattern). The user is responsible for this task.
 
 
-[section:boost_fcontext Struct `fcontext_t` and related functions]
+[heading `fcontext_t` and related functions]
 
         struct stack_t
         {
@@ -220,7 +218,5 @@ have to be preserved.]]
 to execute the __context_fn__ `fn`.]]
 [[Returns:][Returns a fcontext_t which is placed on the stack.]]
 ]
-
-[endsect]
 
 [endsect]

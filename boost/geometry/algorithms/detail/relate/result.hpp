@@ -2,14 +2,14 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
-// This file was modified by Oracle on 2013, 2014.
-// Modifications copyright (c) 2013, 2014 Oracle and/or its affiliates.
+// This file was modified by Oracle on 2013, 2014, 2015.
+// Modifications copyright (c) 2013-2015 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
-
-// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_RELATE_RESULT_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_RELATE_RESULT_HPP
@@ -24,6 +24,7 @@
 #include <boost/mpl/vector_c.hpp>
 
 #include <boost/geometry/core/topological_dimension.hpp>
+#include <boost/geometry/util/condition.hpp>
 
 // TEMP - move this header to geometry/detail
 #include <boost/geometry/index/detail/tuples.hpp>
@@ -235,17 +236,17 @@ struct interrupt_dispatch<Mask, true>
     static inline bool apply(Mask const& mask)
     {
         char m = mask.template get<F1, F2>();
-        return check<V>(m);            
+        return check_element<V>(m);
     }
 
     template <char V>
-    static inline bool check(char m)
+    static inline bool check_element(char m)
     {
-        if ( V >= '0' && V <= '9' )
+        if ( BOOST_GEOMETRY_CONDITION(V >= '0' && V <= '9') )
         {
             return m == 'F' || ( m < V && m >= '0' && m <= '9' );
         }
-        else if ( V == 'T' )
+        else if ( BOOST_GEOMETRY_CONDITION(V == 'T') )
         {
             return m == 'F';
         }
@@ -394,7 +395,7 @@ inline bool may_update(Mask const& mask, Matrix const& matrix)
                 ::template apply<F1, F2, D>(mask, matrix);
 }
 
-// check()
+// check_matrix()
 
 template <typename Mask>
 struct check_dispatch
@@ -485,7 +486,7 @@ struct check_dispatch< boost::tuples::cons<Head, Tail> >
 };
 
 template <typename Mask, typename Matrix>
-inline bool check(Mask const& mask, Matrix const& matrix)
+inline bool check_matrix(Mask const& mask, Matrix const& matrix)
 {
     return check_dispatch<Mask>::apply(mask, matrix);
 }
@@ -546,7 +547,7 @@ public:
     result_type result() const
     {
         return !interrupt
-            && check(m_mask, static_cast<base_t const&>(*this));
+            && check_matrix(m_mask, static_cast<base_t const&>(*this));
     }
 
     template <field F1, field F2, char D>
@@ -964,7 +965,7 @@ struct static_check_dispatch<StaticMask, true>
 };
 
 template <typename StaticMask>
-struct static_check
+struct static_check_matrix
 {
     template <typename Matrix>
     static inline bool apply(Matrix const& matrix)
@@ -997,7 +998,7 @@ public:
     result_type result() const
     {
         return (!Interrupt || !interrupt)
-            && static_check<StaticMask>::
+            && static_check_matrix<StaticMask>::
                     apply(static_cast<base_t const&>(*this));
     }
 

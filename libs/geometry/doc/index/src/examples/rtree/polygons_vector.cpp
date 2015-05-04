@@ -25,7 +25,7 @@
 namespace bg = boost::geometry;
 namespace bgi = boost::geometry::index;
 
-int main(void)
+int main()
 {
     typedef bg::model::point<float, 2, bg::cs::cartesian> point;
     typedef bg::model::box<point> box;

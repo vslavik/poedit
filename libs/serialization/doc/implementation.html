@@ -197,16 +197,6 @@ void register_type(T * t = NULL);
 </code></pre>
 so that one may write <code style="white-space: normal">ar.register_type(static_cast&lt;T *&gt;(NULL))</code> instead of
 the syntax described above.
-<p>
-Similarly, the expression
-<pre><code>
-ar.template get_helper&lt;Helper&gt;();
-</code></pre>
-that recovers a helper object of type <code>Helper</code> might pose problems,
-in which case the following alternative syntax can be used:
-<pre><code>
-ar.get_helper(static_cast&lt;Helper *&gt;(NULL));
-</code></pre>
 </ul>
 <h3><a name="othercompilerissues">Specific Compiler/Library Issues</a></h3>
 <h4><a name="gcc3x">GCC 3.X, 4.X</a></h4>

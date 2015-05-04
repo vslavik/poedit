@@ -341,3 +341,67 @@ BOOST_AUTO_TEST_CASE( spsc_queue_buffer_pop_test )
     spsc_queue_buffer_pop<reference_to_array, 7, 16, 64>();
     spsc_queue_buffer_pop<output_iterator_, 7, 16, 64>();
 }
+
+// Test front() and pop()
+template < typename Queue >
+void spsc_queue_front_pop(Queue& queue)
+{
+    queue.push(1);
+    queue.push(2);
+    queue.push(3);
+
+    // front as ref and const ref
+    int& rfront = queue.front();
+    const int& crfront = queue.front();
+
+    BOOST_REQUIRE_EQUAL(1, rfront);
+    BOOST_REQUIRE_EQUAL(1, crfront);
+
+    int front = 0;
+
+    // access element pushed first
+    front = queue.front();
+    BOOST_REQUIRE_EQUAL(1, front);
+
+    // front is still the same
+    front = queue.front();
+    BOOST_REQUIRE_EQUAL(1, front);
+
+    queue.pop();
+
+    front = queue.front();
+    BOOST_REQUIRE_EQUAL(2, front);
+
+    queue.pop(); // pop 2
+
+    bool pop_ret = queue.pop(); // pop 3
+    BOOST_REQUIRE(pop_ret);
+
+    pop_ret = queue.pop(); // pop on empty queue
+    BOOST_REQUIRE( ! pop_ret);
+}
+
+BOOST_AUTO_TEST_CASE( spsc_queue_buffer_front_and_pop_runtime_sized_test )
+{
+    spsc_queue<int, capacity<64> > queue;
+    spsc_queue_front_pop(queue);
+}
+
+BOOST_AUTO_TEST_CASE( spsc_queue_buffer_front_and_pop_compiletime_sized_test )
+{
+    spsc_queue<int> queue(64);
+    spsc_queue_front_pop(queue);
+}
+
+BOOST_AUTO_TEST_CASE( spsc_queue_reset_test )
+{
+    spsc_queue<int, capacity<64> > f;
+
+    BOOST_REQUIRE(f.empty());
+    f.push(1);
+    f.push(2);
+
+    f.reset();
+
+    BOOST_REQUIRE(f.empty());
+}

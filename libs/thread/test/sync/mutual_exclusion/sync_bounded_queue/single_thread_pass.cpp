@@ -129,7 +129,7 @@ int main()
   {
     // empty queue try_push value succeeds
       boost::sync_bounded_queue<int> q(2);
-      int i;
+      int i=1;
       BOOST_TEST(q.try_push(i));
       BOOST_TEST(! q.empty());
       BOOST_TEST(! q.full());
@@ -357,7 +357,7 @@ int main()
   {
     // empty queue try_push value succeeds
       boost::sync_bounded_queue<int> q(2);
-      int i;
+      int i=1;
       BOOST_TEST(boost::queue_op_status::success == q.try_push_back(i));
       BOOST_TEST(! q.empty());
       BOOST_TEST(! q.full());

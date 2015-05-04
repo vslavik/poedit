@@ -161,6 +161,9 @@ pending __forced_unwind__ exception.]
             // possibly not re-throw pending exception
         }
 
+[important Do not jump from inside a catch block and than re-throw the
+exception in another execution context.]
+
 
 [heading Stack unwinding]
 Sometimes it is necessary to unwind the stack of an unfinished coroutine to

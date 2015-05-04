@@ -63,6 +63,7 @@ project boost/thread
         <toolset>gcc:<cxxflags>-Wno-variadic-macros
         #<toolset>gcc:<cxxflags>-Wunused-local-typedefs
         <toolset>gcc:<cxxflags>-Wunused-function
+        <toolset>gcc:<cxxflags>-Wno-unused-parameter
 
         <toolset>darwin:<cxxflags>-Wextra
         <toolset>darwin:<cxxflags>-pedantic
@@ -72,18 +73,20 @@ project boost/thread
         <toolset>darwin:<cxxflags>-Wno-variadic-macros
         #<toolset>darwin:<cxxflags>-Wunused-local-typedefs
         <toolset>darwin:<cxxflags>-Wunused-function
+        <toolset>darwin:<cxxflags>-Wno-unused-parameter
 
         #<toolset>pathscale:<cxxflags>-Wextra
         <toolset>pathscale:<cxxflags>-Wno-long-long
         <toolset>pathscale:<cxxflags>-pedantic
 
+        <toolset>clang:<warnings>on
         <toolset>clang:<cxxflags>-Wextra
-        <toolset>clang:<cxxflags>-pedantic
         #<toolset>clang:<cxxflags>-ansi
         #<toolset>clang:<cxxflags>-fpermissive
         <toolset>clang:<cxxflags>-Wno-long-long
         <toolset>clang:<cxxflags>-Wunused-function
         <toolset>clang:<cxxflags>-Wno-variadic-macros
+        <toolset>clang:<cxxflags>-Wno-unused-parameter
 
         #<toolset>gcc-mingw-4.4.0:<cxxflags>-fdiagnostics-show-option
         #<toolset>gcc-mingw-4.5.0:<cxxflags>-fdiagnostics-show-option
@@ -116,7 +119,9 @@ project boost/thread
         <toolset>intel:<cxxflags>-wd1418
         <toolset>intel:<cxxflags>-wd2415
 
+        <toolset>msvc:<cxxflags>/wd4100
         <toolset>msvc:<cxxflags>/wd4512
+        <toolset>msvc:<cxxflags>/wd6246
 
 
     # : default-build <threading>multi

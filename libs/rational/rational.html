@@ -55,9 +55,11 @@ public:
     typedef I int_type;
 
     // Constructors
-    rational();          // Zero
-    rational(I n);       // Equal to n/1
-    rational(I n, I d);  // General case (n/d)
+    constexpr rational();          // Zero
+    constexpr rational(I n);       // Equal to n/1
+              rational(I n, I d);  // General case (n/d)
+   template&lt;typename J&gt;
+    constexpr explicit rational(const rational&lt;J&gt; &amp;r);  // Cross-instantiation
 
     // Normal copy constructors and assignment operators
 
@@ -68,8 +70,8 @@ public:
     rational&amp; assign(I n, I d);
 
     // Representation
-    I numerator() const;
-    I denominator() const;
+    constexpr I numerator() const;
+    constexpr I denominator() const;
 
     // In addition to the following operators, all of the "obvious" derived
     // operators are available - see <a href="../utility/operators.htm">operators.hpp</a>
@@ -91,24 +93,24 @@ public:
     const rational&amp; operator--();
 
     // Operator not
-    bool operator!() const;
+    constexpr bool operator!() const;
 
     // Boolean conversion
-    operator bool_type() const;
+    constexpr operator bool_type() const;
 
     // Comparison operators
-    bool operator&lt; (const rational&amp; r) const;
-    bool operator== (const rational&amp; r) const;
+              bool operator&lt; (const rational&amp; r) const;
+    constexpr bool operator== (const rational&amp; r) const;
 
     // Comparison with integers
-    bool operator&lt; (I i) const;
-    bool operator&gt; (I i) const;
-    bool operator== (I i) const;
+              bool operator&lt; (I i) const;
+              bool operator&gt; (I i) const;
+    constexpr bool operator== (I i) const;
 };
 
 // Unary operators
-template &lt;typename I&gt; rational&lt;I&gt; operator+ (const rational&lt;I&gt;&amp; r);
-template &lt;typename I&gt; rational&lt;I&gt; operator- (const rational&lt;I&gt;&amp; r);
+template &lt;typename I&gt; constexpr rational&lt;I&gt; operator+ (const rational&lt;I&gt;&amp; r);
+template &lt;typename I&gt;           rational&lt;I&gt; operator- (const rational&lt;I&gt;&amp; r);
 
 // Reversed order operators for - and / between (types convertible to) I and rational
 template &lt;typename I, typename II&gt; inline rational&lt;I&gt; operator- (II i, const rational&lt;I&gt;&amp; r);
@@ -122,7 +124,7 @@ template &lt;typename I&gt; std::istream&amp; operator&gt;&gt; (std::istream&amp
 template &lt;typename I&gt; std::ostream&amp; operator&lt;&lt; (std::ostream&amp; os, const rational&lt;I&gt;&amp; r);
 
 // Type conversion
-template &lt;typename T, typename I&gt; T rational_cast (const rational&lt;I&gt;&amp; r);
+template &lt;typename T, typename I&gt; constexpr T rational_cast (const rational&lt;I&gt;&amp; r);
 </pre>
 
 <h2><a name="Rationale">Rationale</a></h2>
@@ -167,8 +169,8 @@ these bounds, overflow occurs and the results are undefined.
 <p>
 The rational number class is a template to allow the programmer to control the
 overflow behaviour somewhat. If an unlimited precision integer type is
-available, rational numbers based on it will never overflow and will provide
-exact calculations in all circumstances.
+available, rational numbers based on it will never overflow (modulo resource
+limits) and will provide exact calculations in all circumstances.
 
 <h2><a name="Integer Type Requirements">Integer Type Requirements</a></h2>
 
@@ -267,7 +269,7 @@ href="#Integer%20Type%20Requirements">any type that can be used</a> with the
 </table>
 
 <p>These function templates now forward calls to their equivalents in the <a
-href="../math/">Boost.Math library</a>.  Their presence can be controlled at
+href="../integer/">Boost.Integer library</a>.  Their presence can be controlled at
 compile time with the <code>BOOST_CONTROL_RATIONAL_HAS_GCD</code> preprocessor
 constant.
 
@@ -280,18 +282,37 @@ the rational's integer type, or implicitly convertible to that type.  (For the
 two-argument constructor, any needed conversions are evaluated independently,
 of course.)  The components are stored in normalized form.
 
-<p>This implies that the following statements are valid:
+<p>Rationals can also be constructed from another rational.  When the source and
+destination underlying integer types match, the automatically-defined copy- or
+move-constructor is used.  Otherwise, a converting constructor template is used.
+The constructor does member-wise initialization of the numerator and denominator.
+Component-level conversions that are marked <code>explicit</code> are fine.  When
+the conversion ends up value-preserving, it is already normalized; but a check
+for normalization is performed in case value-preservation is violated.
+
+<p>These imply that the following statements are valid:
 
 <pre>
     I n, d;
     rational&lt;I&gt; zero;
     rational&lt;I&gt; r1(n);
     rational&lt;I&gt; r2(n, d);
+    rational&lt;J&gt; r3(r2);  // assuming J(n) and J(d) are well-formed
 </pre>
+
+<p>The no-argument constructor, single-argument constructor, and cross-version
+constructor template are marked as <code>constexpr</code>, making them viable in
+constant-expressions when the initializers (if any) are also constant
+expressions (and the necessary operations from the underlying integer type(s)
+are <code>constexpr</code>-enabled).
 
 <p>The single-argument constructor is <em>not</em> declared as explicit, so
 there is an implicit conversion from the underlying integer type to the
-rational type.
+rational type.  The two-argument constructor can be considered an implicit
+conversion with C++11's uniform initialization syntax, since it is also not
+declared explicit.  The cross-version constructor template is declared explicit,
+so the direction of conversion between two rational instantiations must be
+specified.
 
 <h3><a name="Arithmetic operations">Arithmetic operations</a></h3>
 All of the standard numeric operators are defined for the <b>rational</b>
@@ -307,7 +328,12 @@ class. These include:
     ==   !=
     &lt;    &gt;
     &lt;=   &gt;=
+
+    Unary: + - !
 </pre>
+
+<p>So far, only <code>operator ==</code>, unary <code>operator +</code>, and
+<code>operator !</code> are <code>constexpr</code>-enabled.
 
 <h3><a name="Input and Output">Input and Output</a></h3>
 Input and output operators <tt>&lt;&lt;</tt> and <tt>&gt;&gt;</tt>
@@ -319,11 +345,18 @@ external representation of an integer is defined by the undelying integer
 type.
 
 <h3><a name="In-place assignment">In-place assignment</a></h3>
-For any <tt>rational&lt;I&gt; r</tt>, <tt>r.assign(n, m)</tt> provides a
-fast equivalent of <tt>r = rational&lt;I&gt;(n, m);</tt>, without the
+For any <tt>rational&lt;I&gt; r</tt>, <tt>r.assign(n, m)</tt> provides an
+alternate to <tt>r = rational&lt;I&gt;(n, m);</tt>, without a user-specified
 construction of a temporary. While this is probably unnecessary for rationals
 based on machine integer types, it could offer a saving for rationals based on
 unlimited-precision integers, for example.
+
+<p>The function will throw if the given components cannot be formed into a valid
+rational number.  Otherwise, it could throw only if the component-level move
+assignment (in C++11; copy-assignment for earlier C++ versions) can throw.  The
+strong guarantee is kept if throwing happens in the first part, but there is a
+risk of neither the strong nor basic guarantees happening if an exception is
+thrown during the component assignments.
 
 <h3><a name="Conversions">Conversions</a></h3>
 <p>There is a conversion operator to an unspecified Boolean type (most likely a
@@ -339,11 +372,12 @@ for that nature are kept private, should prevent any inappropriate non-Boolean
 use like numeric or pointer operations or as a <code>switch</code> condition.
 
 <p>There are <em>no other</em> implicit conversions from a rational
-type. However, there is an explicit type-conversion function,
-<tt>rational_cast&lt;T&gt;(r)</tt>. This can be used as follows:
+type. Besides the explicit cross-version constructor template, there is an
+explicit type-conversion function, <tt>rational_cast&lt;T&gt;(r)</tt>. This can
+be used as follows:
 
 <pre>
-    rational r(22,7);
+    rational&lt;int&gt; r(22,7);
     double nearly_pi = boost::rational_cast&lt;double&gt;(r);
 </pre>
 
@@ -351,10 +385,15 @@ type. However, there is an explicit type-conversion function,
 source rational's numerator or denominator cannot be safely cast to the
 appropriate floating point type, or if the division of the numerator and
 denominator (in the target floating point type) does not evaluate correctly.
+Also, since this function has a custom name, it cannot be called in generic code
+for trading between two instantiations of the same class template, unlike the
+cross-version constructor.
 
 <p>In essence, all required conversions should be value-preserving, and all
 operations should behave "sensibly". If these constraints cannot be met, a
 separate user-defined conversion will be more appropriate.
+
+<p>Boolean conversion and <tt>rational_cast</tt> are <code>constexpr</code>-enabled.
 
 <p><em>Implementation note:</em>
 
@@ -376,6 +415,7 @@ href="#Integer%20Type%20Requirements">Integer Type Requirements</a>.)
 <h3><a name="Numerator and Denominator">Numerator and Denominator</a></h3>
 Finally, access to the internal representation of rationals is provided by
 the two member functions <tt>numerator()</tt> and <tt>denominator()</tt>.
+These functions are <code>constexpr</code>-enabled.
 
 <p>These functions allow user code to implement any additional required
 functionality. In particular, it should be noted that there may be cases where
@@ -466,13 +506,17 @@ Specifically, it is likely that performance will be severely sub-optimal.
 <h2><a name="Exceptions">Exceptions</a></h2>
 Rationals can never have a denominator of zero. (This library does not support
 representations for infinity or NaN). Should a rational result ever generate a
-denominator of zero, the exception <tt>boost::bad_rational</tt> (a subclass of
-<tt>std::domain_error</tt>) is thrown. This should only occur if the user
-attempts to explicitly construct a rational with a denominator of zero, or to
-divide a rational by a zero value.
+denominator of zero, or otherwise fail during normalization, the exception
+<tt>boost::bad_rational</tt> (a subclass of <tt>std::domain_error</tt>) is
+thrown. This should only occur if the user attempts to explicitly construct a
+rational with a denominator of zero, to divide a rational by a zero value, or
+generate a negative denominator too large to be normalized.  The exception can
+be thrown during a cross-instantiation conversion, when at least one of the
+components ends up not being value-preserved and the new combination is not
+considered normalized.
 
 <p>In addition, if operations on the underlying integer type can generate
-exceptions, these will be propogated out of the operations on the rational
+exceptions, these will be propagated out of the operations on the rational
 class. No particular assumptions should be made - it is only safe to assume
 that any exceptions which can be thrown by the integer class could be thrown
 by any rational operation. In particular, the rational constructor may throw
@@ -480,6 +524,11 @@ exceptions from the underlying integer type as a result of the normalization
 step.  The only exception to this rule is that the rational destructor will
 only throw exceptions which can be thrown by the destructor of the underlying
 integer type (usually none).
+
+<p>If the component-level assignment operator(s) can throw, then a rational
+object's invariants may be violated if an exception happens during the second
+component's assignment.  (The <code>assign</code> member function counts here
+too.)  This violates both the strong and basic guarantees.
 
 <h2><a name="Internal representation">Internal representation</a></h2>
 <em>Note:</em> This information is for information only. Programs should not
@@ -513,8 +562,8 @@ The rational number class is designed for use in conjunction with an
 unlimited precision integer class. With such a class, rationals are always
 exact, and no problems arise with precision loss, overflow or underflow.
 
-<p>Unfortunately, the C++ standard does not offer such a class (and neither
-does boost, at the present time). It is therefore likely that the rational
+<p>Unfortunately, the C++ standard does not offer such a class <s>(and neither
+does boost, at the present time)</s>. It is therefore likely that the rational
 number class will in many cases be used with limited-precision integer types,
 such as the built-in <tt>int</tt> type.
 
@@ -534,6 +583,13 @@ next lower representable rational&lt;int&gt; is <tt>0x7FFFFFFE/1</tt>. Thus,
 at this end of the representable range, the granularity ia 1. This type of
 magnitude-dependent granularity is typical of floating point representations.
 However, it does not "feel" natural when using a rational number class.
+
+<p>Limited-precision integer types may raise issues with the range sizes of
+their allowable negative values and positive values.  If the negative range is
+larger, then the extremely-negative numbers will not have an additive inverse in
+the positive range, making them unusable as denominator values since they cannot
+be normalized to positive values (unless the user is lucky enough that the input
+components are not relatively prime pre-normalization).
 
 <p>It is up to the user of a rational type based on a limited-precision integer
 type to be aware of, and code in anticipation of, such issues.
@@ -632,8 +688,8 @@ required elsewhere, the calculation is performed inline.
 <h2><a name="References">References</a></h2>
 <ul>
 <li>The rational number header itself: <a href="../../boost/rational.hpp">rational.hpp</a>
-<li>Some example code: <a href="rational_example.cpp">rational_example.cpp</a>
-<li>The regression test: <a href="rational_test.cpp">rational_test.cpp</a>
+<li>Some example code: <a href="test/rational_example.cpp">rational_example.cpp</a>
+<li>The regression test: <a href="test/rational_test.cpp">rational_test.cpp</a>
 </ul>
 
 <h2><a name="History and Acknowledgements">History and Acknowledgements</a></h2>
@@ -667,14 +723,15 @@ on the boost list in January 2001.
 
 <p>Daryle Walker provided a Boolean conversion operator, so that a rational can
 be used in the same Boolean contexts as the built-in numeric types, in December
-2005.
+2005.  He added the cross-instantiation constructor template in August 2013.
 
-<p>Revised November 5, 2006</p>
+<p>Revised August 30, 2013</p>
 
-<p>© Copyright Paul Moore 1999-2001; &copy; Daryle Walker 2005. Permission to
-copy, use, modify, sell and distribute this document is granted provided this
-copyright notice appears in all copies. This document is provided &quot;as
-is&quot; without express or implied warranty, and with no claim as to its
-suitability for any purpose.</p>
+<p>&copy; Copyright Paul Moore 1999-2001; &copy; Daryle Walker 2005, 2013.
+Permission to copy, use, modify, sell and distribute this document is granted
+provided this copyright notice appears in all copies. This document is provided
+&quot;as is&quot; without express or implied warranty, and with no claim as to
+its suitability for any purpose.</p>
+<!-- boostinspect:nolicense (can't find Paul Moore to change license) -->
 </body>
 </html>

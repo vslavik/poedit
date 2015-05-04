@@ -44,7 +44,7 @@
       wchar_t* to, wchar_t* to_end, wchar_t*& to_next) const
     {
       for (; from != from_end && to != to_end; ++from, ++to)
-        *to = *from + 1;
+        *to = wchar_t(*from + 1);
       if (to == to_end)
         return error;
       *to = L'\0';

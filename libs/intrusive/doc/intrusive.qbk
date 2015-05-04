@@ -1527,7 +1527,7 @@ guarantees, this caching effect is not updated when const versions of
 search functions like `find()`, `lower_bound()`, `upper_bound()`, `equal_range()`,
 `count()`... are called. This means that using splay-tree based associative containers as drop-in
 replacements of [classref boost::intrusive::set set]/
-[classref boost::intrusive::multiset multiset], specially for const search functions, 
+[classref boost::intrusive::multiset multiset], specially for const search functions,
 might not result in desired performance improvements.
 
 If element searches are randomized, the tree will be continuously srebalanced
@@ -1577,7 +1577,7 @@ And they also can receive an additional option:
 
 [section:splay_set_multiset_example Example]
 
-Now let's see a small example using 
+Now let's see a small example using
 [classref boost::intrusive::splay_set splay_set]/
 [classref boost::intrusive::splay_multiset splay_multiset]
 containers:
@@ -3261,8 +3261,8 @@ Thus [*Boost.Intrusive] offers its own `SCARY iterator` implementation, where it
 change when the container is configured with an option that does not alter the value <-> node transformation.
 More concretely, the following options and conditions guarantee that iterator types are unchanged:
 
-* [*All containers]: `size_type<>`, `constant_time_size<>`, 
-* [*`slist`]: `cache_last<>`, `linear<>`, 
+* [*All containers]: `size_type<>`, `constant_time_size<>`,
+* [*`slist`]: `cache_last<>`, `linear<>`,
 * [*`unordered_[multi]set`]: `hash<>`, `equal<>`, `power_2_buckets<>`, `cache_begin<>`.
 * [*All tree-like containers] (`[multi]set`, `avl_[multi]set`, `sg_[multi]set`, `bs_[multi]set`,
    `splay_[multi]set`, `treap_[multi]set`): `compare<>`.
@@ -3752,7 +3752,7 @@ The disperse list is again the slowest.
 Intrusive containers can offer performance benefits that cannot be achieved with
 equivalent non-intrusive containers. Memory locality improvements are noticeable
 when the objects to be inserted are small. Minimizing memory allocation/deallocation calls is also
-an important factor and intrusive containers make this simple if all objects 
+an important factor and intrusive containers make this simple if all objects
 to be inserted in intrusive containers are allocated using `std::vector` or `std::deque`.
 
 [endsect]
@@ -3760,6 +3760,28 @@ to be inserted in intrusive containers are allocated using `std::vector` or `std
 [endsect]
 
 [section:release_notes Release Notes]
+
+[section:release_notes_boost_1_58_00 Boost 1.58 Release]
+
+*  Reduced compile-time dependencies, headers, and the use of Boost.Preprocessor, specially for hooks and iterators.
+*  Fixed bugs:
+   *  [@https://svn.boost.org/trac/boost/ticket/6720  Boost Trac #6720: ['intrusive::unordered_set::clear_and_dispose does not compile on VC11 Beta when passed a stateless lambda]]
+   *  [@https://svn.boost.org/trac/boost/ticket/10771 Boost Trac #10771: ['remove_if is broken for slist]]
+   *  [@https://svn.boost.org/trac/boost/ticket/10853 Boost Trac #10853: ['problem with detection of const_cast_from]]
+   *  [@https://svn.boost.org/trac/boost/ticket/10987 Boost Trac #10987: ['bug in any_xxx_node_traits, returning by reference]]
+
+[endsect]
+
+[section:release_notes_boost_1_57_00 Boost 1.57 Release]
+
+*  Experimental version of node checkers, contributed by Matei David. Many thanks!
+*  Implemented [@http://www.open-std.org/JTC1/sc22/WG21/docs/papers/2013/n3644.pdf N3644: Null Forward Iterators] from C++14.
+*  Fixed bugs:
+   *  [@https://github.com/boostorg/intrusive/pull/12 GitHub Pull #12: ['Fix MSVC14 warning C4456: declaration of 'x_parent_right' hides previous local declaration]]
+   *  [@https://svn.boost.org/trac/boost/ticket/10520 Boost Trac #10520: ['Conversion warning in intrusive/detail/utilities.hpp]]
+   *  [@https://svn.boost.org/trac/boost/ticket/10469 Boost Trac #10469: ['Erasing from intrusive unordered_multiset with optimize_multikey goes into an infinite loop]]
+
+[endsect]
 
 [section:release_notes_boost_1_56_00 Boost 1.56 Release]
 

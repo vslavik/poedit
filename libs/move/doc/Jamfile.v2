@@ -21,7 +21,16 @@ doxygen autodoc
    <doxygen:param>EXTRACT_PRIVATE=NO
    <doxygen:param>ENABLE_PREPROCESSING=YES
    <doxygen:param>MACRO_EXPANSION=YES
-   <doxygen:param>"PREDEFINED=\"BOOST_MOVE_DOXYGEN_INVOKED\""
+   <doxygen:param>"PREDEFINED=\"BOOST_MOVE_DOXYGEN_INVOKED\" \\
+                              \"BOOST_MOVE_SEEDOC(T)=see_documentation\" \\
+                              \"BOOST_RV_REF(T)=T&&\" \\
+                              \"BOOST_RV_REF_BEG=\" \\
+                              \"BOOST_RV_REF_END=&&\" \\
+                              \"BOOST_FWD_REF(T)=T&&\" \\
+                              \"BOOST_MOVE_DOC0PTR(T)=std::nullptr_t\" \\
+                              \"BOOST_MOVE_DOC1ST(T1, T2)=T1\" \\
+                              \"BOOST_MOVE_DOCIGN(T1) \"\\
+                  "
    ;
 
 xml move : move.qbk ;

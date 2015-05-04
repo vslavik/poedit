@@ -78,6 +78,9 @@ private:
 
 namespace boost {
 
+template <class T>
+struct has_nothrow_move;
+
 template <>
 struct has_nothrow_move<counting_value>
 {

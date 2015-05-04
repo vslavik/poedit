@@ -14,10 +14,6 @@
 
 #include <boost/geometry/geometry.hpp>
 
-#ifdef OPTIONALLY_ELLIPSOIDAL  // see below
-#include <boost/geometry/extensions/gis/geographic/strategies/andoyer.hpp>
-#endif
-
 // 1: declare a coordinate system. For example for Mars
 //    Like for the Earth, we let the use choose between degrees or radians
 //    (Unfortunately, in real life Mars has two coordinate systems:
@@ -54,7 +50,7 @@ namespace boost { namespace geometry { namespace strategy { namespace distance {
 {
 
 template <typename Point1, typename Point2>
-struct default_strategy<point_tag, Point1, Point2, martian_tag, martian_tag>
+struct default_strategy<point_tag, point_tag, Point1, Point2, martian_tag, martian_tag>
 {
     typedef haversine<double> type;
 };
@@ -98,7 +94,7 @@ int main()
     // giving 834.444 km
     d = boost::geometry::distance(viking1, pathfinder,
         boost::geometry::strategy::distance::andoyer<mars_point>
-            (boost::geometry::detail::ellipsoid<double>(3396.2, 3376.2)));
+            (boost::geometry::srs::spheroid<double>(3396.2, 3376.2)));
     std::cout << "Ellipsoidal distance: " << d << " km" << std::endl;
 #endif
 

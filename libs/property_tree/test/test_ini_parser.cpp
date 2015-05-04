@@ -12,6 +12,8 @@
 #include <boost/property_tree/ini_parser.hpp>
 #include <sstream>
 
+using namespace boost::property_tree;
+
 ///////////////////////////////////////////////////////////////////////////////
 // Test data
 
@@ -70,7 +72,7 @@ struct ReadFunc
     template<class Ptree>
     void operator()(const std::string &filename, Ptree &pt) const
     {
-        boost::property_tree::read_ini(filename, pt);
+        read_ini(filename, pt);
     }
 };
 
@@ -79,13 +81,12 @@ struct WriteFunc
     template<class Ptree>
     void operator()(const std::string &filename, const Ptree &pt) const
     {
-        boost::property_tree::write_ini(filename, pt);
+        write_ini(filename, pt);
     }
 };
 
 void test_erroneous_write(const boost::property_tree::ptree &pt)
 {
-    using namespace boost::property_tree;
     std::stringstream stream;
     try
     {
@@ -105,9 +106,6 @@ void test_erroneous_write(const boost::property_tree::ptree &pt)
 template<class Ptree>
 void test_ini_parser()
 {
-    
-    using namespace boost::property_tree;
-
     generic_parser_test_ok<Ptree, ReadFunc, WriteFunc>
     (
         ReadFunc(), WriteFunc(), ok_data_1, NULL, 
@@ -155,24 +153,10 @@ void test_ini_parser()
         ReadFunc(), WriteFunc(), error_data_2, NULL,
         "testerr2.ini", NULL, "testerr2out.ini", 3
     );
-
 }
 
-int test_main(int argc, char *argv[])
+void test_unmappable_trees()
 {
-
-    using namespace boost::property_tree;
-
-    test_ini_parser<ptree>();
-    test_ini_parser<iptree>();
-#ifndef BOOST_NO_CWCHAR
-    test_ini_parser<wptree>();
-    test_ini_parser<wiptree>();
-#endif
-
-    ///////////////////////////////////////////////////////////////////////////
-    // Too rich property tree tests
-
     // Test too deep ptrees
     {
         ptree pt;
@@ -205,7 +189,38 @@ int test_main(int argc, char *argv[])
         child.push_back(std::make_pair("key", ptree()));
         test_erroneous_write(pt);
     }
+}
 
+void test_other_trees()
+{
+    // Top-level keys must be written before any section.
+    {
+        ptree pt;
+        pt.put("section.innerkey", "v1");
+        pt.put("nosection", "v2");
+        std::stringstream s;
+        write_ini(s, pt);
+        s.clear();
+        s.seekg(0, std::ios_base::beg);
+        ptree result;
+        read_ini(s, result);
+        BOOST_CHECK(result.get("section.innerkey", "bad") == "v1");
+        BOOST_CHECK(result.get("nosection", "bad") == "v2");
+    }
+}
+
+int test_main(int argc, char *argv[])
+{
+    test_ini_parser<ptree>();
+    test_ini_parser<iptree>();
+#ifndef BOOST_NO_CWCHAR
+    test_ini_parser<wptree>();
+    test_ini_parser<wiptree>();
+#endif
+
+    test_unmappable_trees();
+    test_other_trees();
+ 
     return 0;
 
 }

@@ -237,12 +237,15 @@ rule as-path ( properties * )
         local components ;
         for local p in $(properties)
         {
-            if $(p:G)
+            if ! hidden in [ feature.attributes $(p:G) ]
             {
-                local f = [ utility.ungrist $(p:G) ] ;
-                p = $(f)-$(p:G=) ;
+                if $(p:G)
+                {
+                    local f = [ utility.ungrist $(p:G) ] ;
+                    p = $(f)-$(p:G=) ;
+                 }
+                 components += [ $(.abbrev) $(p) ] ;
             }
-            components += [ $(.abbrev) $(p) ] ;
         }
 
         $(entry) = $(components:J=/) ;
@@ -766,7 +769,7 @@ class property-map
             errors.error "Ambiguous key $(properties:J= :E=)" ;
         }
         local original = $($(best)[1]) ;
-        if $(value)
+        if $(value)-is-set
         {
             $(best) = $(value) $($(best)[2-]) ;
         }

@@ -3,15 +3,13 @@
 //  Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_
 
+//[mpfi_eg
 #include <boost/multiprecision/mpfi.hpp>
 #include <boost/math/special_functions/gamma.hpp>
 #include <iostream>
 
-void t1()
+int main()
 {
-   //[mpfi_eg
-   //=#include <boost/multiprecision/mpfi.hpp>
-
    using namespace boost::multiprecision;
 
    // Operations at variable precision and no numeric_limits support:
@@ -37,15 +35,8 @@ void t1()
    std::cout << hull(i1, i2) << std::endl;
    std::cout << overlap(i1, i2) << std::endl;
    std::cout << subset(i1, i2) << std::endl;
-   //]
    mpfi_clear(r);
-}
-
-int main()
-{
-   t1();
    return 0;
 }
-
-
+//]
 

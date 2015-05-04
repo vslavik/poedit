@@ -220,10 +220,10 @@ double find_end_point(F f, double x0, double target, bool rising, double x_off =
 {
    boost::math::tools::eps_tolerance<double> tol(50);
    boost::uintmax_t max_iter = 1000;
-   return boost::math::tools::bracket_and_solve_root(
+   return x_off + boost::math::tools::bracket_and_solve_root(
       location_finder<F>(f, target, x_off), 
       x0, 
-      double(1.5), 
+      1.5, 
       rising, 
       tol, 
       max_iter).first;
@@ -248,10 +248,11 @@ int main()
    double (*f2i)(int, double);
    double (*f3)(double, double, double);
    double (*f4)(double, double, double, double);
+   double max_val;
 
    f = boost::math::zeta;
-   plot.add(f, 1 + find_end_point(f, 0.1, 40.0, false, 1.0), 10, "");
-   plot.add(f, -20, 1 + find_end_point(f, -0.1, -40.0, false, 1.0), "");
+   plot.add(f, find_end_point(f, 0.1, 40.0, false, 1.0), 10, "");
+   plot.add(f, -20, find_end_point(f, -0.1, -40.0, false, 1.0), "");
    plot.plot("Zeta Function Over [-20,10]", "zeta1.svg", "z", "zeta(z)");
 
    plot.clear();
@@ -259,34 +260,34 @@ int main()
    plot.plot("Zeta Function Over [-14,0]", "zeta2.svg", "z", "zeta(z)");
 
    f = boost::math::tgamma;
-   double max_val = f(6);
+   max_val = f(6);
    plot.clear();
    plot.add(f, find_end_point(f, 0.1, max_val, false), 6, "");
-   plot.add(f, -1 + find_end_point(f, 0.1, -max_val, true, -1), find_end_point(f, -0.1, -max_val, false), "");
-   plot.add(f, -2 + find_end_point(f, 0.1, max_val, false, -2), -1 + find_end_point(f, -0.1, max_val, true, -1), "");
-   plot.add(f, -3 + find_end_point(f, 0.1, -max_val, true, -3), -2 + find_end_point(f, -0.1, -max_val, false, -2), "");
-   plot.add(f, -4 + find_end_point(f, 0.1, max_val, false, -4), -3 + find_end_point(f, -0.1, max_val, true, -3), "");
+   plot.add(f, find_end_point(f, 0.1, -max_val, true, -1), find_end_point(f, -0.1, -max_val, false), "");
+   plot.add(f, find_end_point(f, 0.1, max_val, false, -2), find_end_point(f, -0.1, max_val, true, -1), "");
+   plot.add(f, find_end_point(f, 0.1, -max_val, true, -3), find_end_point(f, -0.1, -max_val, false, -2), "");
+   plot.add(f, find_end_point(f, 0.1, max_val, false, -4), find_end_point(f, -0.1, max_val, true, -3), "");
    plot.plot("tgamma", "tgamma.svg", "z", "tgamma(z)");
 
    f = boost::math::lgamma;
    max_val = f(10);
    plot.clear();
    plot.add(f, find_end_point(f, 0.1, max_val, false), 10, "");
-   plot.add(f, -1 + find_end_point(f, 0.1, max_val, false, -1), find_end_point(f, -0.1, max_val, true), "");
-   plot.add(f, -2 + find_end_point(f, 0.1, max_val, false, -2), -1 + find_end_point(f, -0.1, max_val, true, -1), "");
-   plot.add(f, -3 + find_end_point(f, 0.1, max_val, false, -3), -2 + find_end_point(f, -0.1, max_val, true, -2), "");
-   plot.add(f, -4 + find_end_point(f, 0.1, max_val, false, -4), -3 + find_end_point(f, -0.1, max_val, true, -3), "");
-   plot.add(f, -5 + find_end_point(f, 0.1, max_val, false, -5), -4 + find_end_point(f, -0.1, max_val, true, -4), "");
+   plot.add(f, find_end_point(f, 0.1, max_val, false, -1), find_end_point(f, -0.1, max_val, true), "");
+   plot.add(f, find_end_point(f, 0.1, max_val, false, -2), find_end_point(f, -0.1, max_val, true, -1), "");
+   plot.add(f, find_end_point(f, 0.1, max_val, false, -3), find_end_point(f, -0.1, max_val, true, -2), "");
+   plot.add(f, find_end_point(f, 0.1, max_val, false, -4), find_end_point(f, -0.1, max_val, true, -3), "");
+   plot.add(f, find_end_point(f, 0.1, max_val, false, -5), find_end_point(f, -0.1, max_val, true, -4), "");
    plot.plot("lgamma", "lgamma.svg", "z", "lgamma(z)");
 
    f = boost::math::digamma;
    max_val = 10;
    plot.clear();
    plot.add(f, find_end_point(f, 0.1, -max_val, true), 10, "");
-   plot.add(f, -1 + find_end_point(f, 0.1, -max_val, true, -1), find_end_point(f, -0.1, max_val, true), "");
-   plot.add(f, -2 + find_end_point(f, 0.1, -max_val, true, -2), -1 + find_end_point(f, -0.1, max_val, true, -1), "");
-   plot.add(f, -3 + find_end_point(f, 0.1, -max_val, true, -3), -2 + find_end_point(f, -0.1, max_val, true, -2), "");
-   plot.add(f, -4 + find_end_point(f, 0.1, -max_val, true, -4), -3 + find_end_point(f, -0.1, max_val, true, -3), "");
+   plot.add(f, find_end_point(f, 0.1, -max_val, true, -1), find_end_point(f, -0.1, max_val, true), "");
+   plot.add(f, find_end_point(f, 0.1, -max_val, true, -2), find_end_point(f, -0.1, max_val, true, -1), "");
+   plot.add(f, find_end_point(f, 0.1, -max_val, true, -3), find_end_point(f, -0.1, max_val, true, -2), "");
+   plot.add(f, find_end_point(f, 0.1, -max_val, true, -4), find_end_point(f, -0.1, max_val, true, -3), "");
    plot.plot("digamma", "digamma.svg", "z", "digamma(z)");
 
    f = boost::math::erf;
@@ -300,16 +301,16 @@ int main()
 
    f = boost::math::erf_inv;
    plot.clear();
-   plot.add(f, -1 + find_end_point(f, 0.1, -3, true, -1), 1 + find_end_point(f, -0.1, 3, true, 1), "");
+   plot.add(f, find_end_point(f, 0.1, -3, true, -1), find_end_point(f, -0.1, 3, true, 1), "");
    plot.plot("erf_inv", "erf_inv.svg", "z", "erf_inv(z)");
    f = boost::math::erfc_inv;
    plot.clear();
-   plot.add(f, find_end_point(f, 0.1, 3, false), 2 + find_end_point(f, -0.1, -3, false, 2), "");
+   plot.add(f, find_end_point(f, 0.1, 3, false), find_end_point(f, -0.1, -3, false, 2), "");
    plot.plot("erfc_inv", "erfc_inv.svg", "z", "erfc_inv(z)");
 
    f = boost::math::log1p;
    plot.clear();
-   plot.add(f, -1 + find_end_point(f, 0.1, -10, true, -1), 10, "");
+   plot.add(f, find_end_point(f, 0.1, -10, true, -1), 10, "");
    plot.plot("log1p", "log1p.svg", "z", "log1p(z)");
 
    f = boost::math::expm1;
@@ -324,7 +325,7 @@ int main()
 
    f = sqrt1pm1;
    plot.clear();
-   plot.add(f, -1 + find_end_point(f, 0.1, -10, true, -1), 5, "");
+   plot.add(f, find_end_point(f, 0.1, -10, true, -1), 5, "");
    plot.plot("sqrt1pm1", "sqrt1pm1.svg", "z", "sqrt1pm1(z)");
 
    f2 = boost::math::powm1;
@@ -359,7 +360,7 @@ int main()
 
    f = boost::math::atanh;
    plot.clear();
-   plot.add(f, -1 + find_end_point(f, 0.1, -5, true, -1), 1 + find_end_point(f, -0.1, 5, true, 1), "");
+   plot.add(f, find_end_point(f, 0.1, -5, true, -1), find_end_point(f, -0.1, 5, true, 1), "");
    plot.plot("atanh", "atanh.svg", "z", "atanh(z)");
 
    f2 = boost::math::tgamma_delta_ratio;
@@ -450,15 +451,15 @@ int main()
       "n = 2");
    plot.add(boost::bind(f2u, 3, _1), 
       find_end_point(boost::bind(f2u, 3, _1), -2, 20, false), 
-      8 + find_end_point(boost::bind(f2u, 3, _1), 1, 20, false, 8), 
+      find_end_point(boost::bind(f2u, 3, _1), 1, 20, false, 8), 
       "n = 3");
    plot.add(boost::bind(f2u, 4, _1), 
       find_end_point(boost::bind(f2u, 4, _1), -2, 20, false), 
-      8 + find_end_point(boost::bind(f2u, 4, _1), 1, 20, true, 8), 
+      find_end_point(boost::bind(f2u, 4, _1), 1, 20, true, 8), 
       "n = 4");
    plot.add(boost::bind(f2u, 5, _1), 
       find_end_point(boost::bind(f2u, 5, _1), -2, 20, false), 
-      8 + find_end_point(boost::bind(f2u, 5, _1), 1, 20, true, 8), 
+      find_end_point(boost::bind(f2u, 5, _1), 1, 20, true, 8), 
       "n = 5");
    plot.plot("Laguerre Polynomials", "laguerre.svg", "x", "laguerre(n, x)");
 
@@ -555,17 +556,17 @@ int main()
    plot.add(boost::bind(f3, _1, 0.25, boost::math::constants::pi<double>() / 2), 
       find_end_point(
          boost::bind(f3, _1, 0.25, boost::math::constants::pi<double>() / 2), 
-         0.5, 4, false, -1) - 1, 
+         0.5, 4, false, -1), 
       find_end_point(
          boost::bind(f3, _1, 0.25, boost::math::constants::pi<double>() / 2), 
-         -0.5, 4, true, 1) + 1, "n=0.25 &#x3C6;=&#x3C0;/2");
+         -0.5, 4, true, 1), "n=0.25 &#x3C6;=&#x3C0;/2");
    plot.add(boost::bind(f3, _1, 0.75, boost::math::constants::pi<double>() / 2), 
       find_end_point(
          boost::bind(f3, _1, 0.75, boost::math::constants::pi<double>() / 2), 
-         0.5, 4, false, -1) - 1, 
+         0.5, 4, false, -1), 
       find_end_point(
          boost::bind(f3, _1, 0.75, boost::math::constants::pi<double>() / 2), 
-         -0.5, 4, true, 1) + 1, "n=0.75 &#x3C6;=&#x3C0;/2");
+         -0.5, 4, true, 1), "n=0.75 &#x3C6;=&#x3C0;/2");
    plot.plot("Elliptic Of the Third Kind", "ellint_3.svg", "k", "ellint_3(k, n, phi)");
 
    f2 = boost::math::jacobi_sn;
@@ -696,6 +697,39 @@ int main()
    plot.add(f, -20, 3, "");
    plot.plot("Bi'", "airy_bip.svg", "z", "airy_bi_prime(z)");
 
+   f = boost::math::trigamma;
+   max_val = 30;
+   plot.clear();
+   plot.add(f, find_end_point(f, 0.1, max_val, false), 5, "");
+   plot.add(f, find_end_point(f, 0.1, max_val, false, -1), find_end_point(f, -0.1, max_val, true), "");
+   plot.add(f, find_end_point(f, 0.1, max_val, false, -2), find_end_point(f, -0.1, max_val, true, -1), "");
+   plot.add(f, find_end_point(f, 0.1, max_val, false, -3), find_end_point(f, -0.1, max_val, true, -2), "");
+   plot.add(f, find_end_point(f, 0.1, max_val, false, -4), find_end_point(f, -0.1, max_val, true, -3), "");
+   plot.add(f, find_end_point(f, 0.1, max_val, false, -5), find_end_point(f, -0.1, max_val, true, -4), "");
+   plot.plot("Trigamma", "trigamma.svg", "x", "trigamma(x)");
+
+   f2i = boost::math::polygamma;
+   max_val = -50;
+   plot.clear();
+   plot.add(boost::bind(f2i, 2, _1), find_end_point(boost::bind(f2i, 2, _1), 0.1, max_val, true), 5, "");
+   plot.add(boost::bind(f2i, 2, _1), find_end_point(boost::bind(f2i, 2, _1), 0.1, max_val, true, -1), find_end_point(boost::bind(f2i, 2, _1), -0.1, -max_val, true), "");
+   plot.add(boost::bind(f2i, 2, _1), find_end_point(boost::bind(f2i, 2, _1), 0.1, max_val, true, -2), find_end_point(boost::bind(f2i, 2, _1), -0.1, -max_val, true, -1), "");
+   plot.add(boost::bind(f2i, 2, _1), find_end_point(boost::bind(f2i, 2, _1), 0.1, max_val, true, -3), find_end_point(boost::bind(f2i, 2, _1), -0.1, -max_val, true, -2), "");
+   plot.add(boost::bind(f2i, 2, _1), find_end_point(boost::bind(f2i, 2, _1), 0.1, max_val, true, -4), find_end_point(boost::bind(f2i, 2, _1), -0.1, -max_val, true, -3), "");
+   plot.add(boost::bind(f2i, 2, _1), find_end_point(boost::bind(f2i, 2, _1), 0.1, max_val, true, -5), find_end_point(boost::bind(f2i, 2, _1), -0.1, -max_val, true, -4), "");
+   plot.add(boost::bind(f2i, 2, _1), find_end_point(boost::bind(f2i, 2, _1), 0.1, max_val, true, -6), find_end_point(boost::bind(f2i, 2, _1), -0.1, -max_val, true, -5), "");
+   plot.plot("Polygamma", "polygamma2.svg", "x", "polygamma(2, x)");
+
+   max_val = 800;
+   plot.clear();
+   plot.add(boost::bind(f2i, 3, _1), find_end_point(boost::bind(f2i, 3, _1), 0.1, max_val, false), 5, "");
+   plot.add(boost::bind(f2i, 3, _1), find_end_point(boost::bind(f2i, 3, _1), 0.1, max_val, false, -1), find_end_point(boost::bind(f2i, 3, _1), -0.1, max_val, true), "");
+   plot.add(boost::bind(f2i, 3, _1), find_end_point(boost::bind(f2i, 3, _1), 0.1, max_val, false, -2), find_end_point(boost::bind(f2i, 3, _1), -0.1, max_val, true, -1), "");
+   plot.add(boost::bind(f2i, 3, _1), find_end_point(boost::bind(f2i, 3, _1), 0.1, max_val, false, -3), find_end_point(boost::bind(f2i, 3, _1), -0.1, max_val, true, -2), "");
+   plot.add(boost::bind(f2i, 3, _1), find_end_point(boost::bind(f2i, 3, _1), 0.1, max_val, false, -4), find_end_point(boost::bind(f2i, 3, _1), -0.1, max_val, true, -3), "");
+   plot.add(boost::bind(f2i, 3, _1), find_end_point(boost::bind(f2i, 3, _1), 0.1, max_val, false, -5), find_end_point(boost::bind(f2i, 3, _1), -0.1, max_val, true, -4), "");
+   plot.add(boost::bind(f2i, 3, _1), find_end_point(boost::bind(f2i, 3, _1), 0.1, max_val, false, -6), find_end_point(boost::bind(f2i, 3, _1), -0.1, max_val, true, -5), "");
+   plot.plot("Polygamma", "polygamma3.svg", "x", "polygamma(3, x)");
    return 0;
 }
 

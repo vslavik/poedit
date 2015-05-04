@@ -9,7 +9,6 @@
 // See http://www.boost.org/libs/intrusive for documentation.
 //
 /////////////////////////////////////////////////////////////////////////////
-#include <boost/intrusive/detail/config_begin.hpp>
 #include <boost/intrusive/sg_set.hpp>
 #include "itestvalue.hpp"
 #include "bptr_value.hpp"
@@ -211,8 +210,7 @@ class test_main_template
                 , GetContainer_With_Holder< Default_Holder >::template GetContainer
                 >::test_all();
       test::test_generic_set < typename detail::get_member_value_traits
-                  < value_type
-                  , member_hook< value_type
+                  < member_hook< value_type
                                , typename hooks<VoidPointer>::member_hook_type
                                , &value_type::node_
                                >
@@ -227,8 +225,7 @@ class test_main_template
                 , GetContainerFixedAlpha_With_Holder< Default_Holder >::template GetContainerFixedAlpha
                 >::test_all();
       test::test_generic_set < typename detail::get_member_value_traits
-                  < value_type
-                  , member_hook< value_type
+                  < member_hook< value_type
                                , typename hooks<VoidPointer>::member_hook_type
                                , &value_type::node_
                                >
@@ -271,7 +268,6 @@ struct Get_Preset_Container
     };
 };
 
-template < bool ConstantTimeSize >
 struct test_main_template_bptr
 {
     void operator () ()
@@ -282,8 +278,8 @@ struct test_main_template_bptr
 
         allocator_type::init();
         test::test_generic_set< value_traits,
-                                Get_Preset_Container< value_traits, ConstantTimeSize,
-                                                      bounded_pointer_holder< value_type > >::template GetContainer
+                                Get_Preset_Container< value_traits, true,
+                                                      bounded_pointer_holder< value_type > >::GetContainer
                               >::test_all();
         assert(allocator_type::is_clear());
         allocator_type::destroy();
@@ -298,9 +294,7 @@ int main()
    // test (plain pointers) x (const size) x (standard node allocator)
    test_main_template<void*, false>()();
    // test (bounded pointers) x (nonconst/const size) x (special node allocator)
-   test_main_template_bptr< true >()();
-   test_main_template_bptr< false >()();
+   test_main_template_bptr()();
 
    return boost::report_errors();
 }
-#include <boost/intrusive/detail/config_end.hpp>

@@ -35,6 +35,8 @@ namespace strategy { namespace buffer
     their length. The miter is not changed to a bevel form (as done in some
     other software), it is just adapted to the specified miter_limit but keeps
     its miter form.
+    If the buffer distance is 5.0, and the miter limit is 2.0, generated points
+    will be located at a distance of at most 10.0 (2*5) units.
     This strategy is only applicable for Cartesian coordinate systems.
 
 \qbk{

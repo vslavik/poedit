@@ -34,16 +34,6 @@
 #include <boost/test/unit_test.hpp> // Boost.Test
 #include <boost/test/floating_point_comparison.hpp>
 
-
-
-template<class RealType>
-bool nearly_equal(RealType a, RealType b)
-{
-    const RealType tolerance = 3 * std::numeric_limits<T>::epsilon();
-    return (a - tolerance * std::abs(a) <= b + tolerance * std::abs(b)) //
-        && (a + tolerance * std::abs(a) >= b - tolerance * std::abs(b));
-}
-
 int test_main(int argc, char**const argv)
 {
   try

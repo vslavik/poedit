@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>gmp_float</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../floats.html" title="Floating Point Numbers">
 <link rel="prev" href="cpp_dec_float.html" title="cpp_dec_float">
@@ -146,29 +146,36 @@
           <span class="phrase"><a name="boost_multiprecision.tut.floats.gmp_float.gmp_example"></a></span><a class="link" href="gmp_float.html#boost_multiprecision.tut.floats.gmp_float.gmp_example"> GMP example:</a>
         </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">multiprecision</span><span class="special">/</span><span class="identifier">gmp</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">special_functions</span><span class="special">/</span><span class="identifier">gamma</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 
-<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">;</span>
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+   <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">;</span>
 
-<span class="comment">// Operations at variable precision and limited standard library support:</span>
-<span class="identifier">mpf_float</span> <span class="identifier">a</span> <span class="special">=</span> <span class="number">2</span><span class="special">;</span>
-<span class="identifier">mpf_float</span><span class="special">::</span><span class="identifier">default_precision</span><span class="special">(</span><span class="number">1000</span><span class="special">);</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">mpf_float</span><span class="special">::</span><span class="identifier">default_precision</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">sqrt</span><span class="special">(</span><span class="identifier">a</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// print root-2</span>
+   <span class="comment">// Operations at variable precision and limited standard library support:</span>
+   <span class="identifier">mpf_float</span> <span class="identifier">a</span> <span class="special">=</span> <span class="number">2</span><span class="special">;</span>
+   <span class="identifier">mpf_float</span><span class="special">::</span><span class="identifier">default_precision</span><span class="special">(</span><span class="number">1000</span><span class="special">);</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">mpf_float</span><span class="special">::</span><span class="identifier">default_precision</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">sqrt</span><span class="special">(</span><span class="identifier">a</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// print root-2</span>
 
-<span class="comment">// Operations at fixed precision and full standard library support:</span>
-<span class="identifier">mpf_float_100</span> <span class="identifier">b</span> <span class="special">=</span> <span class="number">2</span><span class="special">;</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">mpf_float_100</span><span class="special">&gt;::</span><span class="identifier">digits</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-<span class="comment">// We can use any C++ std lib function:</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">log</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// print log(2)</span>
-<span class="comment">// We can also use any function from Boost.Math:</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-<span class="comment">// These even work when the argument is an expression template:</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">b</span> <span class="special">*</span> <span class="identifier">b</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+   <span class="comment">// Operations at fixed precision and full standard library support:</span>
+   <span class="identifier">mpf_float_100</span> <span class="identifier">b</span> <span class="special">=</span> <span class="number">2</span><span class="special">;</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">mpf_float_100</span><span class="special">&gt;::</span><span class="identifier">digits</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+   <span class="comment">// We can use any C++ std lib function:</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">log</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// print log(2)</span>
+   <span class="comment">// We can also use any function from Boost.Math:</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+   <span class="comment">// These even work when the argument is an expression template:</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">b</span> <span class="special">*</span> <span class="identifier">b</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 
-<span class="comment">// Access the underlying representation:</span>
-<span class="identifier">mpf_t</span> <span class="identifier">f</span><span class="special">;</span>
-<span class="identifier">mpf_init</span><span class="special">(</span><span class="identifier">f</span><span class="special">);</span>
-<span class="identifier">mpf_set</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span> <span class="identifier">a</span><span class="special">.</span><span class="identifier">backend</span><span class="special">().</span><span class="identifier">data</span><span class="special">());</span>
+   <span class="comment">// Access the underlying representation:</span>
+   <span class="identifier">mpf_t</span> <span class="identifier">f</span><span class="special">;</span>
+   <span class="identifier">mpf_init</span><span class="special">(</span><span class="identifier">f</span><span class="special">);</span>
+   <span class="identifier">mpf_set</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span> <span class="identifier">a</span><span class="special">.</span><span class="identifier">backend</span><span class="special">().</span><span class="identifier">data</span><span class="special">());</span>
+   <span class="identifier">mpf_clear</span><span class="special">(</span><span class="identifier">f</span><span class="special">);</span>
+   <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
 </pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

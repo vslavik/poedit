@@ -35,13 +35,13 @@ import message ;
 import convert ;
 
 # FIXME: the following generate module import is not needed here but removing it
-# too hastly will break using code (e.g. the main Boost library Jamroot file)
+# too hastily will break using code (e.g. the main Boost library Jamroot file)
 # that forgot to import the generate module before calling the generate rule.
 import generate ;
 
 
-.os-names = aix android bsd cygwin darwin freebsd hpux iphone linux netbsd openbsd osf
-    qnx qnxnto sgi solaris unix unixware windows
+.os-names = aix android bsd cygwin darwin freebsd haiku hpux iphone linux netbsd
+    openbsd osf qnx qnxnto sgi solaris unix unixware windows
     elf  # Not actually an OS -- used for targeting bare metal where object
          # format is ELF.  This catches both -elf and -eabi gcc targets and well
          # as other compilers targeting ELF. It is not clear how often we need
@@ -76,6 +76,7 @@ local rule default-host-os ( )
             case COHERENT     : host-os = unix    ;
             case DRAGONFLYBSD : host-os = bsd     ;
             case IRIX         : host-os = sgi     ;
+            case HAIKU        : host-os = haiku   ;
             case MACOSX       : host-os = darwin  ;
             case KFREEBSD     : host-os = freebsd ;
             case LINUX        : host-os = linux   ;
@@ -127,7 +128,7 @@ feature.feature debug-symbols      : on off          : propagated ;
 # everything not necessary to running removed. This option should
 # not be very often needed. Also, this feature will show up in
 # target paths of everything, not just binaries. Should fix that
-# when impelementing feature relevance.
+# when implementing feature relevance.
 feature.feature strip              : off on          : propagated ;
 feature.feature define             :                 : free ;
 feature.feature undef              :                 : free ;
@@ -812,7 +813,7 @@ class linking-generator : generator
         local result = [ property-set.empty ] ;
         local extra ;
 
-        # Add appropricate <xdll-path> usage requirements.
+        # Add appropriate <xdll-path> usage requirements.
         local raw = [ $(property-set).raw ] ;
         if <link>shared in $(raw)
         {
@@ -833,9 +834,9 @@ class linking-generator : generator
         # to other shared libraries this one depends on in order to be able to
         # find them all at runtime.
 
-        # Just pass all features in property-set, it is theorically possible
+        # Just pass all features in property-set, it is theoretically possible
         # that we will propagate <xdll-path> features explicitly specified by
-        # the user, but then the user is to blaim for using an internal feature.
+        # the user, but then the user is to blame for using an internal feature.
         local values = [ $(property-set).get <xdll-path> ] ;
         extra += $(values:G=<xdll-path>) ;
 

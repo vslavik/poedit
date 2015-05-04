@@ -16,7 +16,9 @@
 #include <boost/msm/front/functor_row.hpp>
 #include <boost/msm/front/euml/common.hpp>
 
+#ifndef BOOST_MSM_NONSTANDALONE_TEST
 #define BOOST_TEST_MODULE MyTest
+#endif
 #include <boost/test/unit_test.hpp>
 
 using namespace std;
@@ -81,7 +83,7 @@ namespace
             struct internal_guard_fct 
             {
                 template <class EVT,class FSM,class SourceState,class TargetState>
-                bool operator()(EVT const& evt ,FSM&,SourceState& src,TargetState& )
+                bool operator()(EVT const& ,FSM&,SourceState& src,TargetState& )
                 {
                     ++src.empty_internal_guard_counter;
                     return false;
@@ -159,7 +161,7 @@ namespace
         struct internal_action 
         {
             template <class EVT,class FSM,class SourceState,class TargetState>
-            void operator()(EVT const& evt ,FSM& fsm,SourceState& ,TargetState& )
+            void operator()(EVT const& ,FSM& fsm,SourceState& ,TargetState& )
             {            
                 ++fsm.internal_action_counter;
             }
@@ -167,7 +169,7 @@ namespace
         struct internal_guard 
         {
             template <class EVT,class FSM,class SourceState,class TargetState>
-            bool operator()(EVT const& evt ,FSM& fsm,SourceState& ,TargetState& )
+            bool operator()(EVT const& ,FSM& fsm,SourceState& ,TargetState& )
             {            
                 ++fsm.internal_guard_counter;
                 return false;
@@ -176,7 +178,7 @@ namespace
         struct internal_guard2 
         {
             template <class EVT,class FSM,class SourceState,class TargetState>
-            bool operator()(EVT const& evt ,FSM& fsm,SourceState& ,TargetState& )
+            bool operator()(EVT const& ,FSM& fsm,SourceState& ,TargetState& )
             {            
                 ++fsm.internal_guard_counter;
                 return true;

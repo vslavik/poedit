@@ -53,7 +53,7 @@
 
 
 template <typename Geometry>
-inline void test_remove_spikes(std::string const& id,
+inline void test_remove_spikes(std::string const& /*id*/,
             Geometry& geometry,
             double expected_area, double expected_perimeter)
 {

@@ -75,8 +75,9 @@ toolset.flags clang-linux.compile OPTIONS <optimization>space : -Os ;
 
 # note: clang silently ignores some of these inlining options
 toolset.flags clang-linux.compile OPTIONS <inlining>off  : -fno-inline ;
+# For clang, 'on' and 'full' are identical.
 toolset.flags clang-linux.compile OPTIONS <inlining>on   : -Wno-inline ;
-toolset.flags clang-linux.compile OPTIONS <inlining>full : -finline-functions -Wno-inline ;
+toolset.flags clang-linux.compile OPTIONS <inlining>full : -Wno-inline ;
 
 toolset.flags clang-linux.compile OPTIONS <warnings>off : -w ;
 toolset.flags clang-linux.compile OPTIONS <warnings>on  : -Wall ;
@@ -91,7 +92,7 @@ toolset.flags clang-linux.compile OPTIONS <rtti>off : -fno-rtti ;
 # C and C++ compilation
 
 rule compile.c++ ( targets * : sources * : properties * ) {
-  gcc.setup-threading $(targets) : $(sources) : $(properties) ;
+  setup-threading $(targets) : $(sources) : $(properties) ;
   gcc.setup-fpic $(targets) : $(sources) : $(properties) ;
   gcc.setup-address-model $(targets) : $(sources) : $(properties) ;
 
@@ -117,7 +118,7 @@ actions compile.c++.with-pch bind PCH_FILE
 
 rule compile.c ( targets * : sources * : properties * )
 {
-  gcc.setup-threading $(targets) : $(sources) : $(properties) ;
+  setup-threading $(targets) : $(sources) : $(properties) ;
   gcc.setup-fpic $(targets) : $(sources) : $(properties) ;
   gcc.setup-address-model $(targets) : $(sources) : $(properties) ;    
 
@@ -146,7 +147,7 @@ actions compile.c.with-pch bind PCH_FILE
 # PCH emission
 
 rule compile.c++.pch ( targets * : sources * : properties * ) {
-  gcc.setup-threading $(targets) : $(sources) : $(properties) ;
+  setup-threading $(targets) : $(sources) : $(properties) ;
   gcc.setup-fpic $(targets) : $(sources) : $(properties) ;
   gcc.setup-address-model $(targets) : $(sources) : $(properties) ;    
 }
@@ -156,7 +157,7 @@ actions compile.c++.pch {
 }
 
 rule compile.c.pch ( targets * : sources * : properties * ) {
-  gcc.setup-threading $(targets) : $(sources) : $(properties) ;
+  setup-threading $(targets) : $(sources) : $(properties) ;
   gcc.setup-fpic $(targets) : $(sources) : $(properties) ;
   gcc.setup-address-model $(targets) : $(sources) : $(properties) ;    
 }
@@ -172,7 +173,7 @@ actions compile.c.pch
 SPACE = " " ;
 
 rule link ( targets * : sources * : properties * ) {
-  gcc.setup-threading $(targets) : $(sources) : $(properties) ;
+  setup-threading $(targets) : $(sources) : $(properties) ;
   gcc.setup-address-model $(targets) : $(sources) : $(properties) ;    
   SPACE on $(targets) = " " ;
   JAM_SEMAPHORE on $(targets) = <s>clang-linux-link-semaphore ;
@@ -183,10 +184,27 @@ actions link bind LIBRARIES {
 }
 
 rule link.dll ( targets * : sources * : properties * ) {
-  gcc.setup-threading $(targets) : $(sources) : $(properties) ;
+  setup-threading $(targets) : $(sources) : $(properties) ;
   gcc.setup-address-model $(targets) : $(sources) : $(properties) ;    
   SPACE on $(targets) = " " ;
   JAM_SEMAPHORE on $(targets) = <s>clang-linux-link-semaphore ;
+}
+
+rule setup-threading ( targets * : sources * : properties * )
+{
+
+    local target = [ feature.get-values target-os : $(properties) ] ;
+        
+    switch $(target)
+    {
+        case windows : 
+            local threading = [ feature.get-values threading : $(properties) ] ;
+            if $(threading) = multi
+                {
+                OPTIONS on $(targets) += -pthread ;
+                }
+        case * : gcc.setup-threading $(targets) : $(sources) : $(properties) ;
+    }
 }
 
 # Differ from 'link' above only by -shared.

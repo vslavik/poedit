@@ -224,7 +224,7 @@ void do_test_hypergeometric_quantile(const T& data, const char* type_name, const
          value_type cp = data[i][5];
          value_type ccp = data[i][6];
          //
-         // A bit of warning supression:
+         // A bit of warning suppression:
          //
          (void)x;
          (void)n;
@@ -335,7 +335,7 @@ void test_spot(unsigned x, unsigned n, unsigned r, unsigned N,
                RealType p, RealType cp, RealType ccp, RealType tol)
 {
    //
-   // A bit of warning supression:
+   // A bit of warning suppression:
    //
    (void)x;
    (void)n;

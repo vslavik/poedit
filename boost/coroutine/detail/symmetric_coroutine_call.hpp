@@ -75,7 +75,7 @@ public:
         BOOST_ASSERT( 0 < internal_stack_ctx.size);
         // placement new for internal coroutine
         impl_ = new ( internal_stack_ctx.sp) object_t(
-                    forward< coroutine_fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
+                    boost::forward< coroutine_fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
         BOOST_ASSERT( impl_);
     }
 
@@ -100,7 +100,7 @@ public:
         BOOST_ASSERT( 0 < internal_stack_ctx.size);
         // placement new for internal coroutine
         impl_ = new ( internal_stack_ctx.sp) object_t(
-                    forward< coroutine_fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
+                    boost::forward< coroutine_fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
         BOOST_ASSERT( impl_);
     }
 # endif
@@ -125,7 +125,7 @@ public:
         BOOST_ASSERT( 0 < internal_stack_ctx.size);
         // placement new for internal coroutine
         impl_ = new ( internal_stack_ctx.sp) object_t(
-                    forward< Fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
+                    boost::forward< Fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
         BOOST_ASSERT( impl_);
     }
 
@@ -150,7 +150,7 @@ public:
         BOOST_ASSERT( 0 < internal_stack_ctx.size);
         // placement new for internal coroutine
         impl_ = new ( internal_stack_ctx.sp) object_t(
-                    forward< Fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
+                    boost::forward< Fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
         BOOST_ASSERT( impl_);
     }
 #else
@@ -335,7 +335,7 @@ public:
         BOOST_ASSERT( 0 < internal_stack_ctx.size);
         // placement new for internal coroutine
         impl_ = new ( internal_stack_ctx.sp) object_t(
-                    forward< coroutine_fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
+                    boost::forward< coroutine_fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
         BOOST_ASSERT( impl_);
     }
 
@@ -360,7 +360,7 @@ public:
         BOOST_ASSERT( 0 < internal_stack_ctx.size);
         // placement new for internal coroutine
         impl_ = new ( internal_stack_ctx.sp) object_t(
-                    forward< coroutine_fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
+                    boost::forward< coroutine_fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
         BOOST_ASSERT( impl_);
     }
 # endif
@@ -385,7 +385,7 @@ public:
         BOOST_ASSERT( 0 < internal_stack_ctx.size);
         // placement new for internal coroutine
         impl_ = new ( internal_stack_ctx.sp) object_t(
-                    forward< Fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
+                    boost::forward< Fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
         BOOST_ASSERT( impl_);
     }
 
@@ -410,7 +410,7 @@ public:
         BOOST_ASSERT( 0 < internal_stack_ctx.size);
         // placement new for internal coroutine
         impl_ = new ( internal_stack_ctx.sp) object_t(
-                    forward< Fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
+                    boost::forward< Fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
         BOOST_ASSERT( impl_);
     }
 #else
@@ -595,7 +595,7 @@ public:
         BOOST_ASSERT( 0 < internal_stack_ctx.size);
         // placement new for internal coroutine
         impl_ = new ( internal_stack_ctx.sp) object_t(
-                    forward< coroutine_fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
+                    boost::forward< coroutine_fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
         BOOST_ASSERT( impl_);
     }
 
@@ -620,7 +620,7 @@ public:
         BOOST_ASSERT( 0 < internal_stack_ctx.size);
         // placement new for internal coroutine
         impl_ = new ( internal_stack_ctx.sp) object_t(
-                    forward< coroutine_fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
+                    boost::forward< coroutine_fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
         BOOST_ASSERT( impl_);
     }
 # endif
@@ -645,7 +645,7 @@ public:
         BOOST_ASSERT( 0 < internal_stack_ctx.size);
         // placement new for internal coroutine
         impl_ = new ( internal_stack_ctx.sp) object_t(
-                    forward< Fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
+                    boost::forward< Fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
         BOOST_ASSERT( impl_);
     }
 
@@ -670,7 +670,7 @@ public:
         BOOST_ASSERT( 0 < internal_stack_ctx.size);
         // placement new for internal coroutine
         impl_ = new ( internal_stack_ctx.sp) object_t(
-                    forward< Fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
+                    boost::forward< Fn >( fn), attrs, stack_ctx, internal_stack_ctx, stack_alloc); 
         BOOST_ASSERT( impl_);
     }
 #else
@@ -780,11 +780,11 @@ public:
         }
     }
 
-    symmetric_coroutine_call( BOOST_RV_REF( symmetric_coroutine_call) other) BOOST_NOEXCEPT :
+    inline symmetric_coroutine_call( BOOST_RV_REF( symmetric_coroutine_call) other) BOOST_NOEXCEPT :
         impl_( 0)
     { swap( other); }
 
-    symmetric_coroutine_call & operator=( BOOST_RV_REF( symmetric_coroutine_call) other) BOOST_NOEXCEPT
+    inline symmetric_coroutine_call & operator=( BOOST_RV_REF( symmetric_coroutine_call) other) BOOST_NOEXCEPT
     {
         symmetric_coroutine_call tmp( boost::move( other) );
         swap( tmp);
@@ -793,13 +793,13 @@ public:
 
     BOOST_EXPLICIT_OPERATOR_BOOL();
 
-    bool operator!() const BOOST_NOEXCEPT
+    inline bool operator!() const BOOST_NOEXCEPT
     { return 0 == impl_ || impl_->is_complete() || impl_->is_running(); }
 
-    void swap( symmetric_coroutine_call & other) BOOST_NOEXCEPT
+    inline void swap( symmetric_coroutine_call & other) BOOST_NOEXCEPT
     { std::swap( impl_, other.impl_); }
 
-    symmetric_coroutine_call & operator()() BOOST_NOEXCEPT
+    inline symmetric_coroutine_call & operator()() BOOST_NOEXCEPT
     {
         BOOST_ASSERT( * this);
 

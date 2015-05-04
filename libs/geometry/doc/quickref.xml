@@ -5,13 +5,13 @@
 <!--
   Boost.Geometry (aka GGL, Generic Geometry Library)
 
-  Copyright (c) 2009-2014 Mateusz Loskot, London, UK.
-  Copyright (c) 2009-2014 Barend Gehrels, Amsterdam, the Netherlands.
-  Copyright (c) 2009-2014 Bruno Lalande, Paris, France.
-  Copyright (c) 2013-2014 Adam Wulkiewicz, Lodz, Poland.
+  Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
+  Copyright (c) 2009-2015 Barend Gehrels, Amsterdam, the Netherlands.
+  Copyright (c) 2009-2015 Bruno Lalande, Paris, France.
+  Copyright (c) 2013-2015 Adam Wulkiewicz, Lodz, Poland.
 
-  This file was modified by Oracle on 2014.
-  Modifications copyright (c) 2014, Oracle and/or its affiliates.
+  This file was modified by Oracle on 2014, 2015.
+  Modifications copyright (c) 2014-2015, Oracle and/or its affiliates.
 
   Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 
@@ -243,6 +243,7 @@
     <member><link linkend="geometry.reference.constants.min_corner">min_corner</link></member>
     <member><link linkend="geometry.reference.enumerations.order_selector">order_selector</link></member>
     <member><link linkend="geometry.reference.enumerations.closure_selector">closure_selector</link></member>
+    <member><link linkend="geometry.reference.enumerations.validity_failure_type">validity_failure_type</link></member>
     </simplelist>
    </entry>
    <entry valign="top">
@@ -424,6 +425,7 @@
      <member><link linkend="geometry.reference.algorithms.num_interior_rings">num_interior_rings</link></member>
      <member><link linkend="geometry.reference.algorithms.num_geometries">num_geometries</link></member>
      <member><link linkend="geometry.reference.algorithms.num_points">num_points</link></member>
+     <member><link linkend="geometry.reference.algorithms.num_segments">num_segments</link></member>
     </simplelist>
     
     
@@ -732,10 +734,10 @@
 	 <member><link linkend="geometry.reference.spatial_indexes.boost__geometry__index__rtree.swap_rtree___">swap(rtree &amp;)</link></member>	 
 	 <member><link linkend="geometry.reference.spatial_indexes.boost__geometry__index__rtree.insert_value_type_const___">insert(value_type const &amp;)</link></member>
 	 <member><link linkend="geometry.reference.spatial_indexes.boost__geometry__index__rtree.insert_iterator__iterator_">insert(Iterator, Iterator)</link></member>
-	 <member><link linkend="geometry.reference.spatial_indexes.boost__geometry__index__rtree.insert_range_const___">insert(Range const &amp;)</link></member>
+         <member><link linkend="geometry.reference.spatial_indexes.boost__geometry__index__rtree.insert_convertibleorrange_const___">insert(ConvertibleOrRange const &amp;)</link></member>
 	 <member><link linkend="geometry.reference.spatial_indexes.boost__geometry__index__rtree.remove_value_type_const___">remove(value_type const &amp;)</link></member>
 	 <member><link linkend="geometry.reference.spatial_indexes.boost__geometry__index__rtree.remove_iterator__iterator_">remove(Iterator, Iterator)</link></member>
-	 <member><link linkend="geometry.reference.spatial_indexes.boost__geometry__index__rtree.remove_range_const___">remove(Range const &amp;)</link></member>
+         <member><link linkend="geometry.reference.spatial_indexes.boost__geometry__index__rtree.remove_convertibleorrange_const___">remove(ConvertibleOrRange const &amp;)</link></member>
 	 <member><link linkend="geometry.reference.spatial_indexes.boost__geometry__index__rtree.query_predicates_const____outiter_">query(Predicates const &amp;, OutIter)</link></member>
      <member><link linkend="geometry.reference.spatial_indexes.boost__geometry__index__rtree.qbegin_predicates_const___">qbegin(Predicates const &amp;)</link></member>
      <member><link linkend="geometry.reference.spatial_indexes.boost__geometry__index__rtree.qend__">qend()</link></member>
@@ -755,10 +757,10 @@
     <simplelist type="vert" columns="1">
 	 <member><link linkend="geometry.reference.spatial_indexes.group__rtree__functions.insert_rtree_________value_const___">insert(rtree&lt;...&gt; &amp;, Value const &amp;)</link></member>
 	 <member><link linkend="geometry.reference.spatial_indexes.group__rtree__functions.insert_rtree_________iterator__iterator_">insert(rtree&lt;...&gt; &amp;, Iterator, Iterator)</link></member>
-     <member><link linkend="geometry.reference.spatial_indexes.group__rtree__functions.insert_rtree_________range_const___">insert(rtree&lt;...&gt; &amp;, Range const &amp;)</link></member> 
+     <member><link linkend="geometry.reference.spatial_indexes.group__rtree__functions.insert_rtree_________convertibleorrange_const___">insert(rtree&lt;...&gt; &amp;, ConvertibleOrRange const &amp;)</link></member>
 	 <member><link linkend="geometry.reference.spatial_indexes.group__rtree__functions.remove_rtree_________value_const___">remove(rtree&lt;...&gt; &amp;, Value const &amp;)</link></member>
 	 <member><link linkend="geometry.reference.spatial_indexes.group__rtree__functions.remove_rtree_________iterator__iterator_">remove(rtree&lt;...&gt; &amp;, Iterator, Iterator)</link></member>
-	 <member><link linkend="geometry.reference.spatial_indexes.group__rtree__functions.remove_rtree_________range_const___">remove(rtree&lt;...&gt; &amp;, Range const &amp;)</link></member>
+         <member><link linkend="geometry.reference.spatial_indexes.group__rtree__functions.remove_rtree_________convertibleorrange_const___">remove(rtree&lt;...&gt; &amp;, ConvertibleOrRange const &amp;)</link></member>
 	 <member><link linkend="geometry.reference.spatial_indexes.group__rtree__functions.query_rtree______const____predicates_const____outiter_">query(rtree&lt;...&gt; const &amp;, Predicates const &amp;, OutIter)</link></member>
      <member><link linkend="geometry.reference.spatial_indexes.group__rtree__functions.qbegin_rtree______const____predicates_const___">qbegin(rtree&lt;...&gt; const &amp;, Predicates const &amp;)</link></member>
      <member><link linkend="geometry.reference.spatial_indexes.group__rtree__functions.qend_rtree______const___">qend(rtree&lt;...&gt; const &amp;)</link></member>

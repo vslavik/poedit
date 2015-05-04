@@ -394,7 +394,7 @@ class project-target : abstract-target
                 if ! [ path.is-rooted $(project-part) ]
                 {
                     local rooted = [ path.root $(project-part) / ] ;
-                    if [ project.is-registered-id $(rooted) ]
+                    if $(rooted) && [ project.is-registered-id $(rooted) ]
                     {
                         extra-error-message += - possibly missing a leading
                             slash ('/') character. ;
@@ -830,6 +830,10 @@ rule resolve-reference ( target-reference : project )
     # Separate target name from properties override.
     local split = [ MATCH "^([^<]*)(/(<.*))?$" : $(target-reference) ] ;
     local id = $(split[1]) ;
+    if ! $(split) || ! $(id)
+    {
+        error "Malformed target reference $(target-reference)" ;
+    }
     local sproperties = ;
     if $(split[3])
     {

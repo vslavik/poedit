@@ -39,27 +39,42 @@ namespace ns
     struct y_member;
     struct z_member;
 
-    template<typename X, typename Y>
+    struct non_member;
+
+    template<typename X, typename Y, typename Z>
     struct point
     {
         X x;
         Y y;
+        Z z;
     };
 }
 
-BOOST_FUSION_ADAPT_ASSOC_TPL_STRUCT(
-    (X)(Y),
-    (ns::point)(X)(Y),
-    (int, x, ns::x_member)
-    (int, y, ns::y_member)
-)
+#if BOOST_PP_VARIADICS
+  BOOST_FUSION_ADAPT_ASSOC_TPL_STRUCT(
+        (X)(Y)(Z),
+        (ns::point)(X)(Y)(Z),
+        (int, x, ns::x_member)
+        (Y, y, ns::y_member)
+        (z, ns::z_member)
+    )
+
+#else // BOOST_PP_VARIADICS
+  BOOST_FUSION_ADAPT_ASSOC_TPL_STRUCT(
+      (X)(Y)(Z),
+      (ns::point)(X)(Y)(Z),
+      (int, x, ns::x_member)
+      (Y, y, ns::y_member)
+      (BOOST_FUSION_ADAPT_AUTO, z, ns::z_member)
+  )
+#endif
 
 int
 main()
 {
     using namespace boost::fusion;
 
-    typedef ns::point<int,int> point;
+    typedef ns::point<int,int,float> point;
 
     std::cout << tuple_open('[');
     std::cout << tuple_close(']');
@@ -67,28 +82,30 @@ main()
 
     {
         BOOST_MPL_ASSERT_NOT((traits::is_view<point>));
-        point p = {123, 456};
+        point p = {123, 456, 789.43f};
 
         std::cout << at_c<0>(p) << std::endl;
         std::cout << at_c<1>(p) << std::endl;
+        std::cout << at_c<2>(p) << std::endl;
         std::cout << p << std::endl;
-        BOOST_TEST(p == make_vector(123, 456));
+        BOOST_TEST(p == make_vector(123, 456, 789.43f));
 
         at_c<0>(p) = 6;
         at_c<1>(p) = 9;
-        BOOST_TEST(p == make_vector(6, 9));
+        at_c<2>(p) = 12;
+        BOOST_TEST(p == make_vector(6, 9, 12));
 
-        BOOST_STATIC_ASSERT(boost::fusion::result_of::size<point>::value == 2);
+        BOOST_STATIC_ASSERT(boost::fusion::result_of::size<point>::value == 3);
         BOOST_STATIC_ASSERT(!boost::fusion::result_of::empty<point>::value);
 
         BOOST_TEST(front(p) == 6);
-        BOOST_TEST(back(p) == 9);
+        BOOST_TEST(back(p) == 12);
     }
 
     {
-        vector<int, float> v1(4, 2);
-        point v2 = {5, 3};
-        vector<long, double> v3(5, 4);
+        vector<int, float, int> v1(4, 2, 2);
+        point v2 = {5, 3, 3};
+        vector<long, double, float> v3(5, 4, 4.13f);
         BOOST_TEST(v1 < v2);
         BOOST_TEST(v1 <= v2);
         BOOST_TEST(v2 > v1);
@@ -101,15 +118,15 @@ main()
 
     {
         // conversion from point to vector
-        point p = {5, 3};
-        vector<int, long> v(p);
+        point p = {5, 3, 3};
+        vector<int, long, int> v(p);
         v = p;
     }
 
     {
         // conversion from point to list
-        point p = {5, 3};
-        list<int, long> l(p);
+        point p = {5, 3, 3};
+        list<int, long, int> l(p);
         l = p;
     }
 
@@ -117,15 +134,18 @@ main()
         // assoc stuff
         BOOST_MPL_ASSERT((boost::fusion::result_of::has_key<point, ns::x_member>));
         BOOST_MPL_ASSERT((boost::fusion::result_of::has_key<point, ns::y_member>));
-        BOOST_MPL_ASSERT((boost::mpl::not_<boost::fusion::result_of::has_key<point, ns::z_member> >));
+        BOOST_MPL_ASSERT((boost::fusion::result_of::has_key<point, ns::z_member>));
+        BOOST_MPL_ASSERT((boost::mpl::not_<boost::fusion::result_of::has_key<point, ns::non_member> >));
 
         BOOST_MPL_ASSERT((boost::is_same<boost::fusion::result_of::value_at_key<point, ns::x_member>::type, int>));
         BOOST_MPL_ASSERT((boost::is_same<boost::fusion::result_of::value_at_key<point, ns::y_member>::type, int>));
+        BOOST_MPL_ASSERT((boost::is_same<boost::fusion::result_of::value_at_key<point, ns::z_member>::type, float>));
 
-        point p = {5, 3};
+        point p = {5, 3, 9};
         
         BOOST_TEST(at_key<ns::x_member>(p) == 5);
         BOOST_TEST(at_key<ns::y_member>(p) == 3);
+        BOOST_TEST(at_key<ns::z_member>(p) == 9);
     }
 
     return boost::report_errors();

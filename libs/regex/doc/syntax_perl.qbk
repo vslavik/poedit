@@ -115,6 +115,11 @@ But neither of:
    a
    aaaa
 
+Note that the "{" and "}" characters will treated as ordinary literals when used
+in a context that is not a repeat: this matches Perl 5.x behavior.  For example in
+the expressions "ab{1", "ab1}" and "a{b}c" the curly brackets are all treated as
+literals and ['no error will be raised].
+
 It is an error to use a repeat operator, if the preceding construct can not 
 be repeated, for example:
 

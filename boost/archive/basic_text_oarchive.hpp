@@ -24,11 +24,9 @@
 // in such cases.   So we can't use basic_ostream<OStream::char_type> but rather
 // use two template parameters
 
-#include <boost/assert.hpp>
 #include <boost/config.hpp>
 #include <boost/serialization/pfto.hpp>
 #include <boost/detail/workaround.hpp>
-
 #include <boost/archive/detail/common_oarchive.hpp>
 #include <boost/serialization/string.hpp>
 

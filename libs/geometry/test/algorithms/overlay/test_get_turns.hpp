@@ -87,9 +87,11 @@ struct equal_turn<1>
     template <typename T>
     bool operator()(T const& t) const
     {
-        unsigned count = turn_ptr->size();
-        BOOST_ASSERT(turn_ptr && count >= 1);
-        return bg::method_char(t.method) == (*turn_ptr)[0]
+        std::string::size_type count = turn_ptr->size();
+        //BOOST_ASSERT(turn_ptr && count >= 1);
+        return ( count > 0
+               ? bg::method_char(t.method) == (*turn_ptr)[0]
+               : true )
             && ( count > 1
                ? bg::operation_char(t.operations[0].operation) == (*turn_ptr)[1]
                : true )
@@ -154,6 +156,10 @@ void check_geometry_range(
 
     bool ok = boost::size(expected) == turns.size();
 
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
+    std::vector<turn_info> turns_dbg = turns;
+#endif
+
     BOOST_CHECK_MESSAGE(ok,
         "get_turns: " << wkt1 << " and " << wkt2
         << " -> Expected turns #: " << boost::size(expected) << " detected turns #: " << turns.size());
@@ -168,11 +174,43 @@ void check_geometry_range(
             turns.erase(it);
         else
         {
+            ok = false;
             BOOST_CHECK_MESSAGE(false,
                 "get_turns: " << wkt1 << " and " << wkt2
                 << " -> Expected turn: " << *sit << " not found");
         }
     }
+
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
+    if ( !ok )
+    {
+        std::cout << "Coordinates: "
+                  << typeid(typename bg::coordinate_type<Geometry1>::type).name()
+                  << ", "
+                  << typeid(typename bg::coordinate_type<Geometry2>::type).name()
+                  << std::endl;
+        std::cout << "Detected: ";
+        if ( turns_dbg.empty() )
+        {
+            std::cout << "{empty}";
+        }
+        else
+        {
+            for ( typename std::vector<turn_info>::const_iterator it = turns_dbg.begin() ;
+                  it != turns_dbg.end() ; ++it )
+            {
+                if ( it != turns_dbg.begin() )
+                    std::cout << ", ";
+                std::cout << bg::method_char(it->method);
+                std::cout << bg::operation_char(it->operations[0].operation);
+                std::cout << bg::operation_char(it->operations[1].operation);
+                std::cout << equal_turn<1>::is_colinear_char(it->operations[0].is_collinear);
+                std::cout << equal_turn<1>::is_colinear_char(it->operations[1].is_collinear);
+            }
+        }
+        std::cout << std::endl;
+    }
+#endif
 }
 
 template <typename Geometry1, typename Geometry2, typename Expected>

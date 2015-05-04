@@ -96,7 +96,7 @@
 #include <exception>
 #endif
 #include <typeinfo>
-#if ( (!_HAS_EXCEPTIONS && !defined(__ghs__)) || (!_HAS_NAMESPACE && defined(__ghs__)) ) && !defined(__TI_COMPILER_VERSION__)
+#if ( (!_HAS_EXCEPTIONS && !defined(__ghs__)) || (!_HAS_NAMESPACE && defined(__ghs__)) ) && !defined(__TI_COMPILER_VERSION__) && !defined(__VISUALDSPVERSION__)
 #  define BOOST_NO_STD_TYPEINFO
 #endif  
 
@@ -146,6 +146,12 @@
 // 540 has std::align but it is not a conforming implementation
 #  define BOOST_NO_CXX11_STD_ALIGN
 #endif
+
+#if defined(BOOST_INTEL) && (BOOST_INTEL <= 1400)
+// Intel's compiler can't handle this header yet:
+#  define BOOST_NO_CXX11_HDR_ATOMIC
+#endif
+
 
 //  520..610 have std::addressof, but it doesn't support functions
 //

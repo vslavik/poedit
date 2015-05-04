@@ -9,6 +9,7 @@
 #define BOOST_MATH_OVERFLOW_ERROR_POLICY ignore_error
 #include <boost/math/special_functions/gamma.hpp>
 #include <boost/math/special_functions/digamma.hpp>
+#include <boost/math/special_functions/polygamma.hpp>
 #endif
 
 #ifndef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS

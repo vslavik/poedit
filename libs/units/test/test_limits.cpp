@@ -80,10 +80,16 @@ void do_check() {
     CHECK_FUNCTION(round_error);
     CHECK_FUNCTION(infinity);
     CHECK_FUNCTION(denorm_min);
+    #ifndef BOOST_NO_CXX11_NUMERIC_LIMITS
+    CHECK_FUNCTION(lowest);
+    #endif
 
     CHECK_CONSTANT(is_specialized);
     CHECK_CONSTANT(digits);
     CHECK_CONSTANT(digits10);
+    #ifndef BOOST_NO_CXX11_NUMERIC_LIMITS
+    CHECK_CONSTANT(max_digits10);
+    #endif
     CHECK_CONSTANT(is_signed);
     CHECK_CONSTANT(is_integer);
     CHECK_CONSTANT(is_exact);

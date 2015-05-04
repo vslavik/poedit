@@ -1,4 +1,12 @@
-<?xml version="1.0" encoding="utf-8" ?> 
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE header PUBLIC "-//Boost//DTD BoostBook XML V1.0//EN"
+  "http://www.boost.org/tools/boostbook/dtd/boostbook.dtd">
+<!--
+    Copyright 2003, Eric Friedman, Itay Maman.
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+-->
 <section id="variant.concepts">
   <title>Concepts</title>
 
@@ -74,7 +82,9 @@
       <listitem>Must allow invocation as a function by overloading
         <code>operator()</code>, unambiguously accepting any value of type
         <code>T</code>.</listitem>
-      <listitem>Must expose inner type <code>result_type</code>. (See 
+      <listitem>Must expose inner type <code>result_type</code>. C++14 compatible compilers
+        could detect <code>result_type</code> automatically, but will stick to
+        <code>result_type</code> if it is defined. (See 
         <code><functionname>boost::visitor_ptr</functionname></code> for a
         solution to using functions as visitors.)</listitem>
       <listitem>If <code>result_type</code> is not <code>void</code>, then
@@ -122,6 +132,18 @@ public:
         std::cout &lt;&lt; t &lt;&lt; std::endl;
     }
 };</programlisting>
+
+      <para>C++14 compatible compilers detect <code>result_type</code> automatically:</para>
+
+<programlisting>
+    <classname>boost::variant</classname>&lt;int, float&gt; v;
+    // ...
+
+    <functionname>boost::apply_visitor</functionname>(
+        [](auto val) { return std::to_string(val); },
+        v
+    );
+</programlisting>
 
     </section>
   </section>

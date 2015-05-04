@@ -3,6 +3,9 @@ import bjam
 import re
 import types
 
+from itertools import groupby
+
+
 # Decorator the specifies bjam-side prototype for a Python function
 def bjam_signature(s):
 
@@ -134,3 +137,46 @@ def stem(filename):
         return filename[0:i]
     else:
         return filename
+
+
+def abbreviate_dashed(s):
+    """Abbreviates each part of string that is delimited by a '-'."""
+    r = []
+    for part in s.split('-'):
+        r.append(abbreviate(part))
+    return '-'.join(r)
+
+
+def abbreviate(s):
+    """Apply a set of standard transformations to string to produce an
+    abbreviation no more than 4 characters long.
+    """
+    if not s:
+        return ''
+    # check the cache
+    if s in abbreviate.abbreviations:
+        return abbreviate.abbreviations[s]
+    # anything less than 4 characters doesn't need
+    # an abbreviation
+    if len(s) < 4:
+        # update cache
+        abbreviate.abbreviations[s] = s
+        return s
+    # save the first character in case it's a vowel
+    s1 = s[0]
+    s2 = s[1:]
+    if s.endswith('ing'):
+        # strip off the 'ing'
+        s2 = s2[:-3]
+    # reduce all doubled characters to one
+    s2 = ''.join(c for c, _ in groupby(s2))
+    # remove all vowels
+    s2 = s2.translate(None, "AEIOUaeiou")
+    # shorten remaining consonants to 4 characters
+    # and add the first char back to the front
+    s2 = s1 + s2[:4]
+    # update cache
+    abbreviate.abbreviations[s] = s2
+    return s2
+# maps key to its abbreviated form
+abbreviate.abbreviations = {}

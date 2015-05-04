@@ -181,7 +181,7 @@ where
 
 [variablelist
 
-[[Requires:] [Q::value_type is no throw copy movable. This is needed to ensure the exception safety.]]
+[[Requires:] [Q::value_type is no throw move constructible. This is needed to ensure the exception safety.]]
 
 [[Effects:] [Waits until the queue is not empty and not closed. If the queue is empty and closed throws sync_queue_is_closed. Otherwise pull the element from the queue `q` and moves the pulled element.]]
 
@@ -206,7 +206,7 @@ where
 
 [variablelist
 
-[/[Requires:] [Q::value_type is no throw copy movable. This is needed to ensure the exception safety. ]]
+[/[Requires:] [Q::value_type is no throw move assignable. This is needed to ensure the exception safety. ]]
 
 [[Effects:] [Waits until the queue is not empty and not closed. If the queue is empty and closed throws sync_queue_is_closed. Otherwise pull the element from the queue `q` and moves the pulled element into a shared_ptr.]]
 
@@ -229,12 +229,12 @@ where
 [endsect]
 
 [/////////////////////////////////////]
-[section:non_waaiting Non-waiting Concurrent Queue Operations]
+[section:non_waiting Non-waiting Concurrent Queue Operations]
 
-The ConcurrentQueue concept models a queue with .
+The ConcurrentQueue concept models a queue with Non-waiting operations.
 
  
-A type `Q` meets the ConcurrentQueue requirements if the following expressions are well-formed and have the specified semantics 
+A type `Q` meets the ConcurrentQueue requirements if is a model of a BasicConcurrentQueue and the following expressions are well-formed and have the specified semantics 
 
 * `s = q.try_push_back(e);`
 * `s = q.try_push_back(rve);`
@@ -281,7 +281,7 @@ where
 
 [endsect]
 [/////////////////////////////////////]
-[section:try_push_back_m `s = q.try_push_back(rve());`]
+[section:try_push_back_m `s = q.try_push_back(rve);`]
 
 [variablelist
 
@@ -314,7 +314,7 @@ where
 
 [variablelist
 
-[[Effects:] [Waits until the queue is not empty and then pull the element from the queue `q` and moves the pulled element into `lve` (this could need an allocation for unbounded queues).]]
+[[Effects:] [If the queue is not empty pulls the element from the queue `q` and moves the pulled element into `lve` (this could need an allocation for unbounded queues).]]
 
 [[Synchronization:] [Prior pull-like operations on the same object synchronizes with this operation.]]
 
@@ -345,7 +345,7 @@ For cases when blocking for mutual exclusion is undesirable, we have non-blockin
 The interface is the same as the try operations but is allowed to also return queue_op_status::busy 
 in case the operation is unable to complete without blocking. 
 
-Non-blocking operations are provided only for BlockingQueues
+Non-blocking operations are provided only for lock based queues
 
 * `s = q.nonblocking_push_back(nb, e);`
 * `s = q.nonblocking_push_back(nb, rve);`
@@ -393,7 +393,7 @@ where
 
 [endsect]
 [/////////////////////////////////////]
-[section:nonblocking_push_back_m `s = q.nonblocking_push_back(rve());`]
+[section:nonblocking_push_back_m `s = q.nonblocking_push_back(rve);`]
 
 [variablelist
 
@@ -427,7 +427,7 @@ where
 
 [variablelist
 
-[[Effects:] [Waits until the queue is not empty and then pull the element from the queue `q` and moves the pulled element into `lve` (this could need an allocation for unbounded queues).]]
+[[Effects:] [If the queue is not empty pulls the element from the queue `q` and moves the pulled element into `lve` (this could need an allocation for unbounded queues).]]
 
 [[Synchronization:] [Prior pull-like operations on the same object synchronizes with this operation.]]
 
@@ -617,6 +617,226 @@ Closed queues add the following valid expressions
 [endsect]
 
 [endsect]
+
+[/////////////////////////////////////]
+[section:queue_op_status Queue Operation Status]
+
+  #include <boost/thread/concurrent_queues/queue_op_status.hpp>
+
+  namespace boost
+  {
+     enum class queue_op_status { success = 0, empty, full, closed, busy }
+  }
+
+[endsect]
+[/////////////////////////////////////]
+[section:queue_base Queue Base]
+
+  #include <boost/thread/concurrent_queues/queue_base.hpp>
+
+  namespace boost
+  {
+    template <typename ValueType, class SizeType=std::size_t>
+    class queue_base
+    {
+    public:
+      typedef ValueType value_type;
+      typedef SizeType size_type;
+  
+      // Constructors/Assignment/Destructors
+      virtual ~queue_base() {};
+  
+      // Observers
+      virtual bool empty() const = 0;
+      virtual bool full() const = 0;
+      virtual size_type size() const = 0;
+      virtual bool closed() const = 0;
+  
+      // Modifiers
+      virtual void close() = 0;
+  
+      virtual void push_back(const value_type& x) = 0;
+      virtual void push_back(BOOST_THREAD_RV_REF(value_type) x) = 0;
+  
+      virtual void pull_front(value_type&) = 0;
+      virtual value_type pull_front() = 0;
+  
+      virtual queue_op_status try_push_back(const value_type& x) = 0;
+      virtual queue_op_status try_push_back(BOOST_THREAD_RV_REF(value_type) x) = 0;
+      virtual queue_op_status try_pull_front(value_type&) = 0;
+  
+      virtual queue_op_status nonblocking_push_back(const value_type& x) = 0;
+      virtual queue_op_status nonblocking_push_back(BOOST_THREAD_RV_REF(value_type) x) = 0;
+      virtual queue_op_status nonblocking_pull_front(value_type&) = 0;
+  
+      virtual queue_op_status wait_push_back(const value_type& x) = 0;
+      virtual queue_op_status wait_push_back(BOOST_THREAD_RV_REF(value_type) x) = 0;
+      virtual queue_op_status wait_pull_front(value_type& elem) = 0;
+  
+    };
+  }
+
+[endsect]
+[/////////////////////////////////////]
+[section:queue_adaptor Queue Adaptor]
+
+  #include <boost/thread/concurrent_queues/queue_adaptor.hpp>
+
+  namespace boost
+  {
+    template <typename Queue>
+    class queue_adaptor : public queue_base<typename Queue::value_type, typename Queue::size_type>
+    {
+    public:
+      typedef typename Queue::value_type value_type;
+      typedef typename Queue::size_type size_type;
+  
+      // Constructors/Assignment/Destructors
+  
+      queue_adaptor();
+  
+      // Observers
+      bool empty() const;
+      bool full() const;
+      size_type size() const { return queue.size(); }
+      bool closed() const;
+  
+      // Modifiers
+      void close();
+  
+      void push_back(const value_type& x);
+      void push_back(BOOST_THREAD_RV_REF(value_type) x);
+  
+      void pull_front(value_type& x);
+      value_type pull_front();
+  
+      queue_op_status try_push_back(const value_type& x);
+      queue_op_status try_push_back(BOOST_THREAD_RV_REF(value_type) x);
+      queue_op_status try_pull_front(value_type& x);
+  
+      queue_op_status nonblocking_push_back(const value_type& x);
+      queue_op_status nonblocking_push_back(BOOST_THREAD_RV_REF(value_type) x);
+      queue_op_status nonblocking_pull_front(value_type& x);
+  
+      queue_op_status wait_push_back(const value_type& x);
+      queue_op_status wait_push_back(BOOST_THREAD_RV_REF(value_type) x);
+      queue_op_status wait_pull_front(value_type& x);
+  
+    };
+  }
+
+[endsect]
+[/////////////////////////////////////]
+[section:queue_views Queue Views]
+
+  #include <boost/thread/concurrent_queues/queue_views.hpp>
+
+  namespace boost
+  {
+    template <typename Queue>
+    class queue_back_view;
+    template <typename Queue>
+    class queue_front_view
+
+    template <class T>
+    using queue_back = queue_back_view<queue_base<T>>;
+    template <class T>
+    using queue_front = queue_front_view<queue_base<T>>;
+  }
+
+[/////////////////////////////////////]
+[section:queue_back_view Class template `queue_back_view<>`]
+
+    template <typename Queue>
+    class queue_back_view
+    {
+    public:
+      typedef typename Queue::value_type value_type;
+      typedef typename Queue::size_type size_type;
+  
+      // Constructors/Assignment/Destructors
+      queue_back_view(Queue& q) noexcept;
+  
+      // Observers
+      bool empty() const;
+      bool full() const;
+      size_type size() const;
+      bool closed() const;
+  
+      // Modifiers
+      void close();
+  
+      void push(const value_type& x);
+      void push(BOOST_THREAD_RV_REF(value_type) x);
+  
+      void pull(value_type& x);
+      value_type pull();
+  
+      queue_op_status try_push(const value_type& x);
+      queue_op_status try_push(BOOST_THREAD_RV_REF(value_type) x);
+  
+      queue_op_status try_pull(value_type& x);
+  
+      queue_op_status nonblocking_push(const value_type& x);
+      queue_op_status nonblocking_push(BOOST_THREAD_RV_REF(value_type) x);
+  
+      queue_op_status nonblocking_pull(value_type& x);
+  
+      queue_op_status wait_push(const value_type& x);
+      queue_op_status wait_push(BOOST_THREAD_RV_REF(value_type) x);
+      queue_op_status wait_pull_front(value_type& x);
+  
+    };
+
+[endsect]
+[/////////////////////////////////////]
+[section:queue_front_view Class template `queue_front_view<>`]
+
+  
+    template <typename Queue>
+    class queue_front_view
+    {
+    public:
+      typedef typename Queue::value_type value_type;
+      typedef typename Queue::size_type size_type;
+  
+      // Constructors/Assignment/Destructors
+      queue_front_view(Queue& q) BOOST_NOEXCEPT;
+  
+      // Observers
+      bool empty() const;
+      bool full() const;
+      size_type size() const;
+      bool closed() const;
+  
+      // Modifiers
+      void close();
+  
+      void push(const value_type& x);
+      void push(BOOST_THREAD_RV_REF(value_type) x);
+  
+      void pull(value_type& x);
+      value_type pull();
+  
+      queue_op_status try_push(const value_type& x);
+      queue_op_status try_push(BOOST_THREAD_RV_REF(value_type) x);
+  
+      queue_op_status try_pull(value_type& x);
+  
+      queue_op_status nonblocking_push(const value_type& x);
+      queue_op_status nonblocking_push(BOOST_THREAD_RV_REF(value_type) x);
+  
+      queue_op_status nonblocking_pull(value_type& x);
+  
+      queue_op_status wait_push(const value_type& x);
+      queue_op_status wait_push(BOOST_THREAD_RV_REF(value_type) x);
+      queue_op_status wait_pull(value_type& x);
+  
+    };
+  
+
+[endsect]
+[endsect]
 [/////////////////////////////////////]
 [section:sync_bounded_queue_ref Synchronized Bounded Queue]
 
@@ -782,13 +1002,13 @@ Closed queues add the following valid expressions
 
   namespace boost
   {
-    template <typename ValueType>
+    template <typename ValueType, class Container = csbl::devector<ValueType>>
     class sync_queue
     {
     public:
       typedef ValueType value_type;
-      typedef csbl::deque<ValueType> underlying_queue_type;
-      typedef std::size_t size_type;
+      typedef Container underlying_queue_type;
+      typedef typename Container::size_type size_type;
 
       sync_queue(sync_queue const&) = delete;
       sync_queue& operator=(sync_queue const&) = delete;
@@ -830,7 +1050,7 @@ Closed queues add the following valid expressions
   
 
 [/////////////////////////////////////]
-[section:constructor Constructor `sync_bounded_queue(size_type)`]
+[section:constructor Constructor `sync_queue(size_type)`]
 
       explicit sync_queue();
 
@@ -842,21 +1062,6 @@ Closed queues add the following valid expressions
 
 ]
 
-
-[endsect]
-[/////////////////////////////////////]
-[section:constructort Template Constructor `sync_bounded_queue(size_type, Range)`]
-
-      template <typename Range>
-      sync_bounded_queue(size_type max_elems, Range range);
-
-[variablelist
-
-[[Effects:] [Constructs an sync_queue with all the elements of the range. ]]
-
-[[Throws:] [any exception that can be throw because of resources unavailable. ]]
-
-]
 
 [endsect]
 [/////////////////////////////////////]

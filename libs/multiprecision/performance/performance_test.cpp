@@ -318,7 +318,7 @@ struct tester
    }
    double test_gcd()
    {
-      using boost::math::gcd;
+      using boost::integer::gcd;
       stopwatch<boost::chrono::high_resolution_clock> w;
       for(unsigned i = 0; i < 1000; ++i)
       {

@@ -88,6 +88,16 @@ rule process (
 
         case --help-options :
         print-help-usage ;
+        local BOOST_BUILD_PATH = [ modules.peek : BOOST_BUILD_PATH ] ;
+        local plugin-dir = options ;
+        local option-files = [ GLOB $(plugin-dir:D=$(BOOST_BUILD_PATH)) : *.jam ] ;
+        if $(option-files)
+        {
+            for local file in $(option-files) 
+            {
+                do-scan $(file) : print-help-options ;
+            }
+        }
         did-help = true ;
 
         case --help :

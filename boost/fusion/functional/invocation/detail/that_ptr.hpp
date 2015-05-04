@@ -25,13 +25,13 @@ namespace boost { namespace fusion { namespace detail
         typedef typename remove_reference<Wanted>::type pointee;
 
         template <typename T> 
-        BOOST_FUSION_GPU_ENABLED
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         static inline pointee * do_get_pointer(T &, pointee * x) 
         {
             return x;
         }
         template <typename T> 
-        BOOST_FUSION_GPU_ENABLED
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         static inline pointee * do_get_pointer(T & x, void const *) 
         {
             return get_pointer(x); 
@@ -39,20 +39,20 @@ namespace boost { namespace fusion { namespace detail
 
       public:
 
-        BOOST_FUSION_GPU_ENABLED
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         static inline pointee * get(pointee * x)
         {
             return x; 
         }
 
-        BOOST_FUSION_GPU_ENABLED
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         static inline pointee * get(pointee & x)
         {
             return boost::addressof(x); 
         }
 
         template <typename T>
-        BOOST_FUSION_GPU_ENABLED
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         static inline pointee * get(T & x)
         {
             return do_get_pointer(x, boost::addressof(x)); 

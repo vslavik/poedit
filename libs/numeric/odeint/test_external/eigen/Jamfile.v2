@@ -17,10 +17,9 @@ project
     : requirements
       <library>/boost/test//boost_unit_test_framework
       <define>BOOST_ALL_NO_LIB=1
-      <include>../../../../..
       <include>$(EIGEN_ROOT)
+      <include>../../test
       <link>static
-      <toolset>clang:<cxxflags>-Wno-unused-variable
       # <cxxflags>-D_SCL_SECURE_NO_WARNINGS
     ;
 
@@ -31,5 +30,7 @@ test-suite "odeint"
     [ run resize.cpp ]
     [ run runge_kutta4.cpp ]
     [ run runge_kutta_dopri5.cpp ]
+    [ run integrate.cpp ]
+    [ compile-fail fail_integrate.cpp ]
     : <testing.launcher>valgrind
     ;

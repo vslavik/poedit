@@ -202,6 +202,8 @@ by the user. The only requisite retained on <code>T</code> is that it must be
 constructible from <code>K</code>; only in the case that a flyweight is directly
 assigned a <code>T</code> object is also <code>T</code> required to be
 <a href="http://www.sgi.com/tech/stl/Assignable.html"><code>Assignable</code></a>.
+To serialize objects of type <code>flyweight&lt;key_value&lt;K,T&gt; &gt;</code>
+only <code>K</code> needs to be serializable.
 </p>
 
 <hr>
@@ -218,9 +220,9 @@ Configuring Boost.Flyweight
 
 <br>
 
-<p>Revised February 21st 2009</p>
+<p>Revised September 1st 2014</p>
 
-<p>&copy; Copyright 2006-2009 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2006-2014 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

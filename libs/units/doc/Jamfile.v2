@@ -91,12 +91,13 @@ make_base_units_doc angle : Angle ;
 make_base_units_doc astronomical : Astronomical ;
 make_base_units_doc cgs : CGS ;
 make_base_units_doc imperial : Imperial ;
+make_base_units_doc information : Information ;
 make_base_units_doc metric : Metric ;
 make_base_units_doc si : SI ;
 make_base_units_doc temperature : Temperature ;
 make_base_units_doc us : US ;
 
-all_base_units_doc = angle astronomical cgs imperial metric si temperature us ;
+all_base_units_doc = angle astronomical cgs imperial information metric si temperature us ;
 all_base_units_doc = $(all_base_units_doc)_base_units_reference ;
 
 run_doxygen dimensions_reference
@@ -120,6 +121,14 @@ run_doxygen temperature_reference
     [ path.glob-tree $(here)/../../../boost/units/systems/temperature : *.hpp : detail ]
   :
     "Temperature System Reference"
+  ;
+
+run_doxygen information_reference
+  :
+    $(here)/../../../boost/units/systems/information.hpp
+    [ path.glob-tree $(here)/../../../boost/units/systems/information : *.hpp : detail prefixes.hpp ]
+  :
+    "Information System Reference"
   ;
 
 run_doxygen abstract_reference
@@ -168,7 +177,7 @@ rule generate-qbk ( target : sources * : properties * )
             local dir-name = [ path.basename [ path.parent $(file) ] ] ;
             base_unit = "$(base_unit) ($(dir-name))" ;
         }
-        print.text "[headerref $(output_filename) $(base_unit)]\\n" : overwrite ;
+        print.text "[headerref $(output_filename) $(base_unit)][br]" : overwrite ;
     }
 }
 
@@ -189,6 +198,7 @@ xml units
     <dependency>dimensions_reference
     <dependency>trig_reference
     <dependency>temperature_reference
+    <dependency>information_reference
     <dependency>abstract_reference
 ;
 

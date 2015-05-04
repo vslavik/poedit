@@ -176,6 +176,13 @@ def init(version = None, command = None, options = None):
     if debug():
         print 'notice: using gcc archiver ::', condition, '::', archiver
 
+    # - Ranlib
+    ranlib = common.get_invocation_command('gcc',
+            'ranlib', feature.get_values('<ranlib>', options), [bin], path_last=True)
+    toolset.flags('gcc.archive', '.RANLIB', condition, [ranlib])
+    if debug():
+        print 'notice: using gcc archiver ::', condition, '::', ranlib
+
     # - The resource compiler.
     rc_command = common.get_invocation_command_nodefault('gcc',
             'windres', feature.get_values('<rc>', options), [bin], path_last=True)
@@ -639,7 +646,9 @@ def gcc_archive(targets, sources, properties):
 # The letter 'c' suppresses the warning in case the archive does not exists yet.
 # That warning is produced only on some platforms, for whatever reasons.
 engine.register_action('gcc.archive',
-                       '"$(.AR)" $(AROPTIONS) rc "$(<)" "$(>)"',
+                       '''"$(.AR)" $(AROPTIONS) rc "$(<)" "$(>)"
+                       "$(.RANLIB)" "$(<)"
+                       ''',
                        function=gcc_archive,
                        flags=['piecemeal'])
 
@@ -677,6 +686,9 @@ elif bjam.variable('UNIX'):
     elif host_os_name == 'BeOS':
         # BeOS has no threading options, don't set anything here.
         pass
+    elif host_os_name == 'Haiku':
+        flags('gcc', 'OPTIONS', ['<threading>multi'], ['-lroot'])
+        # there is no -lrt on Haiku, and -pthread is implicit
     elif host_os_name.endswith('BSD'):
         flags('gcc', 'OPTIONS', ['<threading>multi'], ['-pthread'])
         # there is no -lrt on BSD
@@ -830,4 +842,4 @@ cpu_flags('gcc', 'OPTIONS', 'power', 'rs64a', ['-mcpu=rs64'])
 # AIX variant of RS/6000 & PowerPC
 flags('gcc', 'OPTIONS', ['<architecture>power/<address-model>32/<target-os>aix'], ['-maix32'])
 flags('gcc', 'OPTIONS', ['<architecture>power/<address-model>64/<target-os>aix'], ['-maix64'])
-flags('gcc', 'AROPTIONS', ['<architecture>power/<address-model>64/<target-os>aix'], ['-X 64'])
+flags('gcc', 'AROPTIONS', ['<architecture>power/<address-model>64/<target-os>aix'], ['-X64'])

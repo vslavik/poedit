@@ -43,9 +43,9 @@
 #include <boost/geometry/algorithms/detail/overlay/linear_linear.hpp>
 #include <boost/geometry/algorithms/detail/overlay/pointlike_pointlike.hpp>
 
-
 #if defined(BOOST_GEOMETRY_DEBUG_FOLLOW)
-#include <boost/foreach.hpp>
+#include <boost/geometry/algorithms/detail/overlay/debug_turn_info.hpp>
+#include <boost/geometry/io/wkt/wkt.hpp>
 #endif
 
 namespace boost { namespace geometry
@@ -254,9 +254,10 @@ struct intersection_of_linestring_with_areal
 
 #if defined(BOOST_GEOMETRY_DEBUG_FOLLOW)
         int index = 0;
-        BOOST_FOREACH(turn_info const& turn, turns)
+        for(typename std::deque<turn_info>::const_iterator
+            it = turns.begin(); it != turns.end(); ++it)
         {
-            debug_follow(turn, turn.operations[0], index++);
+            debug_follow(*it, it->operations[0], index++);
         }
 #endif
 

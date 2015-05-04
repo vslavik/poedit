@@ -365,6 +365,16 @@ void test_spots(RealType)
       static_cast<RealType>(1-0.179292265426085),           // Q = 1 - P
       tolerance);
 
+   // From https://svn.boost.org/trac/boost/ticket/10480.
+   // Test value from Mathematica N[CDF[NoncentralStudentTDistribution[2, 4], 5], 35]:
+   test_spot(
+      static_cast<RealType>(2),   // degrees of freedom
+      static_cast<RealType>(4),   // non centrality
+      static_cast<RealType>(5),   // T
+      static_cast<RealType>(0.53202069866995310466912357978934321L),       // Probability of result (CDF), P
+      static_cast<RealType>(1 - 0.53202069866995310466912357978934321L),           // Q = 1 - P
+      tolerance);
+
    /* This test fails
    "Result of tgamma is too large to represent" at naive_mean check for max and infinity.
    if (std::numeric_limits<RealType>::has_infinity)
@@ -828,9 +838,12 @@ BOOST_AUTO_TEST_CASE( test_main )
   
 #ifdef TEST_FLOAT
    test_accuracy(0.0F, "float"); // Test float.
+   test_big_df(0.F); // float
 #endif
 #ifdef TEST_DOUBLE
    test_accuracy(0.0, "double"); // Test double.
+   test_big_df(0.); // double
+   test_ignore_policy(0.0);
 #endif
 #ifndef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
 #ifdef TEST_LDOUBLE
@@ -843,9 +856,6 @@ BOOST_AUTO_TEST_CASE( test_main )
 #endif
 #endif
   /* */
-   test_ignore_policy(0.0);
-   test_big_df(0.F); // float
-   test_big_df(0.); // double
 
    
 } // BOOST_AUTO_TEST_CASE( test_main )

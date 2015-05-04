@@ -18,6 +18,11 @@
 # include <boost/geometry/io/svg/svg_mapper.hpp>
 #endif
 
+
+NOTE: this unit test is out of date.
+get_left_turns is used by buffer and might be used in the future by solving self-tangencies in overlays.
+it is currently being changed by buffer.
+
 namespace bglt = boost::geometry::detail::left_turns;
 
 #if defined(TEST_WITH_SVG)

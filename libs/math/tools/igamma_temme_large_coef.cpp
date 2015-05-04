@@ -3,16 +3,15 @@
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/math/bindings/rr.hpp>
 #include <boost/math/special_functions/log1p.hpp>
 #include <boost/math/special_functions/erf.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <map>
 #include <iostream>
 #include <iomanip>
+#include "mp_t.hpp"
 
 using namespace std;
-using namespace NTL;
 using namespace boost::math;
 
 //
@@ -30,21 +29,21 @@ using namespace boost::math;
 //
 // Alpha:
 //
-RR alpha(unsigned k)
+mp_t alpha(unsigned k)
 {
-   static map<unsigned, RR> data;
+   static map<unsigned, mp_t> data;
    if(data.empty())
    {
       data[1] = 1;
    }
 
-   map<unsigned, RR>::const_iterator pos = data.find(k);
+   map<unsigned, mp_t>::const_iterator pos = data.find(k);
    if(pos != data.end())
       return (*pos).second;
    //
    // OK try and calculate the value:
    //
-   RR result = alpha(k-1);
+   mp_t result = alpha(k-1);
    for(unsigned j = 2; j <= k-1; ++j)
    {
       result -= j * alpha(j) * alpha(k-j+1);
@@ -54,15 +53,15 @@ RR alpha(unsigned k)
    return result;
 }
 
-boost::math::ntl::RR gamma(unsigned k)
+mp_t gamma(unsigned k)
 {
-   static map<unsigned, boost::math::ntl::RR> data;
+   static map<unsigned, mp_t> data;
 
-   map<unsigned, boost::math::ntl::RR>::const_iterator pos = data.find(k);
+   map<unsigned, mp_t>::const_iterator pos = data.find(k);
    if(pos != data.end())
       return (*pos).second;
 
-   boost::math::ntl::RR result = (k&1) ? -1 : 1;
+   mp_t result = (k&1) ? -1 : 1;
 
    for(unsigned i = 1; i <= (2 * k + 1); i += 2)
       result *= i;
@@ -71,16 +70,16 @@ boost::math::ntl::RR gamma(unsigned k)
    return result;
 }
 
-boost::math::ntl::RR Coeff(unsigned n, unsigned k)
+mp_t Coeff(unsigned n, unsigned k)
 {
-   map<unsigned, map<unsigned, boost::math::ntl::RR> > data;
+   map<unsigned, map<unsigned, mp_t> > data;
    if(data.empty())
-      data[0][0] = boost::math::ntl::RR(-1) / 3;
+      data[0][0] = mp_t(-1) / 3;
 
-   map<unsigned, map<unsigned, boost::math::ntl::RR> >::const_iterator p1 = data.find(n);
+   map<unsigned, map<unsigned, mp_t> >::const_iterator p1 = data.find(n);
    if(p1 != data.end())
    {
-      map<unsigned, boost::math::ntl::RR>::const_iterator p2 = p1->second.find(k);
+      map<unsigned, mp_t>::const_iterator p2 = p1->second.find(k);
       if(p2 != p1->second.end())
       {
          return p2->second;
@@ -93,12 +92,12 @@ boost::math::ntl::RR Coeff(unsigned n, unsigned k)
    if(k == 0)
    {
       // special case:
-      boost::math::ntl::RR result = (n+2) * alpha(n+2);
+      mp_t result = (n+2) * alpha(n+2);
       data[n][k] = result;
       return result;
    }
    // general case:
-   boost::math::ntl::RR result = gamma(k) * Coeff(n, 0) + (n+2) * Coeff(n+2, k-1);
+   mp_t result = gamma(k) * Coeff(n, 0) + (n+2) * Coeff(n+2, k-1);
    data[n][k] = result;
    return result;
 }
@@ -152,7 +151,7 @@ void calculate_terms(double sigma, double a, unsigned bits)
    cin >> code;
 
    int prec = 2 + (static_cast<double>(bits) * 3010LL)/10000;
-   RR::SetOutputPrecision(prec);
+   std::cout << std::scientific << std::setprecision(40);
 
    if(code)
    {
@@ -181,9 +180,6 @@ void calculate_terms(double sigma, double a, unsigned bits)
 
 int main()
 {
-   RR::SetOutputPrecision(50);
-   RR::SetPrecision(1000);
-
    bool cont;
    do{
       cont  = false;

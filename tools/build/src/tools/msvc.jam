@@ -5,6 +5,7 @@
 # Copyright (c) 2006 Ilya Sokolov
 # Copyright (c) 2007 Rene Rivera
 # Copyright (c) 2008 Jurko Gospodnetic
+# Copyright (c) 2014 Microsoft Corporation
 #
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
@@ -32,12 +33,14 @@ import path ;
 import pch ;
 import property ;
 import rc ;
+import set ;
 import toolset ;
 import type ;
 
 
 type.register MANIFEST : manifest ;
 feature.feature embed-manifest : on off : incidental propagated ;
+feature.feature embed-manifest-file : : free dependency ;
 
 type.register PDB : pdb ;
 
@@ -127,9 +130,19 @@ rule init (
     #   <setup-i386>
     #   <setup-ia64>
     #   <setup-arm>
+    #   <setup-phone-i386>
+    #   <setup-phone-arm>
     #       Platform specific setup command to invoke before running any of the
     #     msvc tools used when builing a target for a specific platform, e.g.
     #     when building a 32 or 64 bit executable.
+    #
+    #   <rewrite-setup-scripts>
+    #       Whether to rewrite setup scripts. New scripts will be output in
+    #     TEMP directory and will be used instead of originals in build actions.
+    #     Possible values:
+    #       * on - rewrite scripts, if they do not already exist (default)
+    #       * always - always rewrite scripts, even if they already exist
+    #       * off - use original setup scripts
     : options *
 )
 {
@@ -268,8 +281,28 @@ rule configure-version-specific ( toolset : version : conditions )
         # dependencies to put there.
         toolset.flags $(toolset).link LINKFLAGS $(conditions) : /MANIFEST ;
     }
+    
+    # Starting with Visual Studio 2013 the CRT is split into a desktop and app dll.
+    #If targeting WinRT and 12.0 set lib path to link against app CRT.
+    if [ MATCH "(12)" : $(version) ]
+    {
+        local VCPath = [ path.parent [ path.make [ default-path $(version) ] ] ] ;
+        local storeLibPath = [ path.join [ path.join $(VCPath) "lib" ] "store" ] ;
+        toolset.flags $(toolset).link LINKPATH $(conditions)/<windows-api>store/$(.cpu-arch-i386) : [ path.native $(storeLibPath) ] ;
+        toolset.flags $(toolset).link LINKPATH $(conditions)/<windows-api>store/$(.cpu-arch-amd64) : [ path.native [ path.join $(storeLibPath) "amd64" ] ] ;
+        toolset.flags $(toolset).link LINKPATH $(conditions)/<windows-api>store/$(.cpu-arch-arm) : [ path.native [ path.join $(storeLibPath) "arm" ] ] ;
+    }
+    
     toolset.pop-checking-for-flags-module ;
 }
+
+# Feature for handling targeting different Windows API sets.
+feature.feature windows-api : desktop store phone : propagated composite link-incompatible ;
+feature.compose <windows-api>store : <define>WINAPI_FAMILY=WINAPI_FAMILY_APP <define>_WIN32_WINNT=0x0602 
+    <linkflags>/APPCONTAINER ;
+feature.compose <windows-api>phone : <define>WINAPI_FAMILY=WINAPI_FAMILY_PHONE_APP <define>_WIN32_WINNT=0x0602 
+    <linkflags>/APPCONTAINER <linkflags>/NODEFAULTLIB:ole32.lib <linkflags>/NODEFAULTLIB:kernel32.lib <linkflags>WindowsPhoneCore.lib ;
+feature.set-default windows-api : desktop ;
 
 
 # Registers this toolset including all of its flags, features & generators. Does
@@ -281,6 +314,15 @@ rule register-toolset ( )
     {
         register-toolset-really ;
     }
+}
+
+rule resolve-possible-msvc-version-alias ( version )
+{
+    if $(.version-alias-$(version))
+    {
+        version = $(.version-alias-$(version)) ;
+    }
+    return $(version) ;
 }
 
 
@@ -475,7 +517,15 @@ rule link ( targets + : sources * : properties * )
 {
     if <embed-manifest>on in $(properties)
     {
-        msvc.manifest $(targets) : $(sources) : $(properties) ;
+        if [ feature.get-values <embed-manifest-file> : $(properties) ]
+        {
+            DEPENDS $(<) : [ on $(<) return $(EMBED_MANIFEST_FILE) ] ;
+            msvc.manifest.user $(targets) $(EMBED_MANIFEST_FILE) : $(sources) : $(properties) ;
+        }
+        else 
+        {
+            msvc.manifest $(targets) : $(sources) : $(properties) ;
+        }
     }
 }
 
@@ -484,7 +534,15 @@ rule link.dll ( targets + : sources * : properties * )
     DEPENDS $(<) : [ on $(<) return $(DEF_FILE) ] ;
     if <embed-manifest>on in $(properties)
     {
-        msvc.manifest.dll $(targets) : $(sources) : $(properties) ;
+        if [ feature.get-values <embed-manifest-file> : $(properties) ]
+        {
+            DEPENDS $(<) : [ on $(<) return $(EMBED_MANIFEST_FILE) ] ;
+            msvc.manifest.dll.user $(targets) $(EMBED_MANIFEST_FILE) : $(sources) : $(properties) ;
+        }
+        else 
+        {
+            msvc.manifest.dll $(targets) : $(sources) : $(properties) ;
+        }
     }
 }
 
@@ -513,6 +571,11 @@ if [ os.name ] in NT
         )
     }
 
+    actions manifest.user bind EMBED_MANIFEST_FILE
+    {
+        $(.MT) -manifest "$(EMBED_MANIFEST_FILE)" "-outputresource:$(<[1]);1"
+    }
+
     actions link.dll bind DEF_FILE LIBRARIES_MENTIONED_BY_FILE
     {
         $(.LD) /DLL $(LINKFLAGS) /out:"$(<[1]:W)" /IMPLIB:"$(<[2]:W)" /LIBPATH:"$(LINKPATH:W)" /def:"$(DEF_FILE)" $(OPTIONS) @"@($(<[1]:W).rsp:E=$(.nl)"$(>)" $(.nl)$(LIBRARIES_MENTIONED_BY_FILE) $(.nl)$(LIBRARIES) $(.nl)"$(LIBRARY_OPTION)$(FINDLIBS_ST).lib" $(.nl)"$(LIBRARY_OPTION)$(FINDLIBS_SA).lib")"
@@ -524,6 +587,10 @@ if [ os.name ] in NT
         if exist "$(<[1]).manifest" (
             $(.MT) -manifest "$(<[1]).manifest" "-outputresource:$(<[1]);2"
         )
+    }
+    actions manifest.dll.user bind EMBED_MANIFEST_FILE
+    {
+        $(.MT) -manifest "$(EMBED_MANIFEST_FILE)" "-outputresource:$(<[1]);2"
     }
 }
 else
@@ -550,6 +617,11 @@ else
         if test -e "$(<[1]).manifest"; then
             $(.MT) -manifest "$(<[1]:W).manifest" "-outputresource:$(<[1]:W);2"
         fi
+    }
+
+    actions manifest.dll.user bind EMBED_MANIFEST_FILE
+    {
+        $(.MT) -manifest "$(EMBED_MANIFEST_FILE)" "-outputresource:$(<[1]);2"
     }
 }
 
@@ -676,6 +748,106 @@ local rule auto-detect-toolset-versions ( )
     }
 }
 
+# Helper rule to generate a faster alternative to MSVC setup scripts.
+# We used to call MSVC setup scripts directly in every action, however in
+# newer MSVC versions (10.0+) they make long-lasting registry queries 
+# which have a significant impact on build time.
+rule maybe-rewrite-setup ( toolset : setup-script : setup-options : version : rewrite-setup ? )
+{
+    local result = $(setup-script)" "$(setup-options) ;
+    # At the moment we only know how to rewrite scripts with cmd shell.
+    if ( [ os.name ] in NT ) && ( $(rewrite-setup) != off )
+    {
+        setup-script-id = b2_$(toolset)_$(version)_$(setup-script:B) ;
+        if $(setup-options)-is-not-empty
+        {
+            setup-script-id = $(setup-script-id)_$(setup-options) ;
+        }
+
+        if $(.$(setup-script-id))
+        {
+            errors.error rewriting setup script for the second time ;
+        }
+
+        local tmpdir = [ os.environ TEMP ] ;
+        local replacement = [ path.native $(tmpdir)/$(setup-script-id).cmd ] ;
+        if ( $(rewrite-setup) = always ) || ( ! [ path.exists $(replacement) ] )
+        {
+            local original-vars = [ SPLIT_BY_CHARACTERS [ SHELL set ] : "\n" ] ;
+            local new-vars = [ SPLIT_BY_CHARACTERS [ SHELL "$(setup-script) $(setup-options)>nul && set" ] : "\n" ] ;
+            local diff-vars = [ set.difference $(new-vars) : $(original-vars) ] ;
+            if $(diff-vars)
+            {
+                local target = <new-setup-script>$(replacement) ;
+                FILE_CONTENTS on $(target) = "SET "$(diff-vars) ;
+                ALWAYS $(target) ;
+                msvc.write-setup-script $(target) ;
+                UPDATE_NOW $(target) : : ignore-minus-n ;
+                .$(setup-script-id) = $(replacement) ;
+                result = "\""$(replacement)"\"" ;
+            }
+        }
+        else
+        {
+            result = "\""$(replacement)"\"" ;
+        }
+    }
+    return $(result) ;
+}
+
+actions write-setup-script
+{
+    @($(STDOUT):E=$(FILE_CONTENTS:J=$(.nl))) > "$(<)"
+}
+
+
+# Local helper rule to create the vcvars setup command for given architecture
+# and options.
+#
+local rule generate-setup-cmd ( version : command : parent : options * : cpu : global-setup : default-global-setup-options : default-setup )
+{
+    local setup-prefix = "call " ;
+    local setup-suffix = " >nul"$(.nl) ;
+    if ! [ os.name ] in NT
+    {
+        setup-prefix = "cmd.exe /S /C call " ;
+        setup-suffix = " \">nul\" \"&&\" " ;
+    }
+
+    local setup-options ;
+    local setup = [ feature.get-values <setup-$(cpu)> : $(options) ] ;
+    
+    if ! $(setup)-is-defined
+    {
+        if $(global-setup)-is-defined
+        {
+            setup = $(global-setup) ;
+                        
+            # If needed we can easily add using configuration flags
+            # here for overriding which options get passed to the
+            # global setup command for which target platform:
+            # setup-options = [ feature.get-values <setup-options-$(c)> : $(options) ] ;
+            setup-options ?= $(default-global-setup-options) ;
+        }
+        else
+        {
+            setup = [ locate-default-setup $(command) : $(parent) : $(default-setup) ] ;
+        }
+    }
+    
+    # Cygwin to Windows path translation.
+    setup = "\""$(setup:W)"\"" ;
+
+    # Append setup options to the setup name and add the final setup
+    # prefix & suffix.
+    setup-options ?= "" ;
+    local rewrite = [ feature.get-values <rewrite-setup-scripts> : $(options) ] ;
+    setup = [ maybe-rewrite-setup msvc : $(setup:J=" ") : $(setup-options:J=" ") : $(version) : $(rewrite) ] ;
+    setup = $(setup-prefix)$(setup)$(setup-suffix) ;
+    
+    return $(setup) ;
+}
+
 
 # Worker rule for toolset version configuration. Takes an explicit version id or
 # nothing in case it should configure the default toolset version (the first
@@ -700,10 +872,7 @@ local rule configure-really ( version ? : options * )
     }
 
     # Version alias -> real version number.
-    if $(.version-alias-$(version))
-    {
-        version = $(.version-alias-$(version)) ;
-    }
+    version = [ resolve-possible-msvc-version-alias $(version) ] ;
 
     # Check whether the selected configuration is already in use.
     if $(version) in [ $(.versions).used ]
@@ -795,17 +964,24 @@ local rule configure-really ( version ? : options * )
         # Generate and register setup command.
 
         local below-8.0 = [ MATCH ^([67]\\.) : $(version) ] ;
-
+        local below-11.0 = [ MATCH ^([6789]\\.|10\\.) : $(version) ] ;
+        
         local cpu = i386 amd64 ia64 arm ;
         if $(below-8.0)
         {
             cpu = i386 ;
         }
-
+        if $(below-11.0)
+        {
+            cpu = i386 amd64 ia64 ;
+        }
+        
         local setup-amd64 ;
         local setup-i386 ;
         local setup-ia64 ;
         local setup-arm ;
+        local setup-phone-i386 ;
+        local setup-phone-arm ;
 
         if $(command)
         {
@@ -828,7 +1004,7 @@ local rule configure-really ( version ? : options * )
 
             # Setup will be used if the command name has been specified. If
             # setup is not specified explicitly then a default setup script will
-            # be used instead. Setup scripts may be global or arhitecture/
+            # be used instead. Setup scripts may be global or architecture/
             # /platform/cpu specific. Setup options are used only in case of
             # global setup scripts.
 
@@ -850,6 +1026,7 @@ local rule configure-really ( version ? : options * )
 
             local global-setup = [ feature.get-values <setup> : $(options) ] ;
             global-setup = $(global-setup[1]) ;
+            local global-setup-phone = $(global-setup) ;
             if ! $(below-8.0)
             {
                 global-setup ?= [ locate-default-setup $(command) : $(parent) :
@@ -860,6 +1037,8 @@ local rule configure-really ( version ? : options * )
             local default-setup-i386  = vcvars32.bat ;
             local default-setup-ia64  = vcvarsx86_ia64.bat ;
             local default-setup-arm   = vcvarsx86_arm.bat ;
+            local default-setup-phone-i386 = vcvarsphonex86.bat ;
+            local default-setup-phone-arm = vcvarsphonex86_arm.bat ;
 
             # http://msdn2.microsoft.com/en-us/library/x4d2c09s(VS.80).aspx and
             # http://msdn2.microsoft.com/en-us/library/x4d2c09s(vs.90).aspx
@@ -891,47 +1070,35 @@ local rule configure-really ( version ? : options * )
                 default-global-setup-options-ia64 = ia64 ;
             }
 
-            local setup-prefix = "call " ;
-            local setup-suffix = " >nul"$(.nl) ;
-            if ! [ os.name ] in NT
-            {
-                setup-prefix = "cmd.exe /S /C call " ;
-                setup-suffix = " \">nul\" \"&&\" " ;
-            }
-
             for local c in $(cpu)
             {
-                local setup-options ;
-
-                setup-$(c) = [ feature.get-values <setup-$(c)> : $(options) ] ;
-
-                if ! $(setup-$(c))-is-defined
+                setup-$(c) = [ generate-setup-cmd $(version) : $(command) : $(parent) : $(options) : $(c) : $(global-setup) : $(default-global-setup-options-$(c)) : $(default-setup-$(c)) ] ;
+            }
+            
+            # Windows phone has different setup scripts, located in a different directory hierarchy.
+            # The 11.0 toolset can target Windows Phone 8.0 and the 12.0 toolset can target Windows Phone 8.1,
+            # each of which have a different directory for their vcvars setup scripts.
+            local phone-parent = [ path.native [ path.join $(parent) WPSDK ] ] ;
+            local phone-directory = $(phone-parent) ;
+            if [ MATCH "(11.0)" : $(version) ]
+            {
+                phone-directory = [ path.native [ path.join $(phone-directory) WP80 ] ] ;
+            }
+            else if [ MATCH "(12.0)" : $(version) ]
+            {
+                phone-directory = [ path.native [ path.join $(phone-directory) WP81 ] ] ;
+            }
+            global-setup-phone ?= [ locate-default-setup $(phone-directory) : $(phone-parent) : vcvarsphoneall.bat ] ;
+                
+            # If can't locate default phone setup script then this VS version doesn't support Windows Phone.
+            if $(global-setup-phone)-is-defined
+            {
+                # i386 CPU is for the Windows Phone emulator in Visual Studio.
+                local phone-cpu = i386 arm ;
+                for local c in $(phone-cpu)
                 {
-                    if $(global-setup)-is-defined
-                    {
-                        setup-$(c) = $(global-setup) ;
-
-                        # If needed we can easily add using configuration flags
-                        # here for overriding which options get passed to the
-                        # global setup command for which target platform:
-                        # setup-options = [ feature.get-values <setup-options-$(c)> : $(options) ] ;
-
-                        setup-options ?= $(default-global-setup-options-$(c)) ;
-                    }
-                    else
-                    {
-                        setup-$(c) = [ locate-default-setup $(command) :
-                            $(parent) : $(default-setup-$(c)) ] ;
-                    }
+                    setup-phone-$(c) = [ generate-setup-cmd $(version) : $(phone-directory) : $(phone-parent) : $(options) : $(c) : $(global-setup-phone) : $(default-global-setup-options-$(c)) : $(default-setup-phone-$(c)) ] ;
                 }
-
-                # Cygwin to Windows path translation.
-                setup-$(c) = "\""$(setup-$(c):W)"\"" ;
-
-                # Append setup options to the setup name and add the final setup
-                # prefix & suffix.
-                setup-options ?= "" ;
-                setup-$(c) = $(setup-prefix)$(setup-$(c):J=" ")" "$(setup-options:J=" ")$(setup-suffix) ;
             }
         }
 
@@ -985,15 +1152,23 @@ local rule configure-really ( version ? : options * )
             local cpu-assembler = $(assembler) ;
             cpu-assembler ?= $(default-assembler-$(c)) ;
 
-            toolset.flags msvc.compile .CC  $(cpu-conditions) : $(setup-$(c))$(compiler) /Zm800 -nologo ;
-            toolset.flags msvc.compile .RC  $(cpu-conditions) : $(setup-$(c))$(resource-compiler) ;
-            toolset.flags msvc.compile .ASM $(cpu-conditions) : $(setup-$(c))$(cpu-assembler) -nologo ;
-            toolset.flags msvc.link    .LD  $(cpu-conditions) : $(setup-$(c))$(linker) /NOLOGO /INCREMENTAL:NO ;
-            toolset.flags msvc.archive .LD  $(cpu-conditions) : $(setup-$(c))$(linker) /lib /NOLOGO  ;
-            toolset.flags msvc.compile .IDL $(cpu-conditions) : $(setup-$(c))$(idl-compiler) ;
-            toolset.flags msvc.compile .MC  $(cpu-conditions) : $(setup-$(c))$(mc-compiler) ;
+            toolset.flags msvc.compile .RC  <windows-api>$(api)/$(cpu-conditions) : $(setup-$(c))$(resource-compiler) ;
+            toolset.flags msvc.compile .IDL <windows-api>$(api)/$(cpu-conditions) : $(setup-$(c))$(idl-compiler) ;
+            toolset.flags msvc.compile .MC  <windows-api>$(api)/$(cpu-conditions) : $(setup-$(c))$(mc-compiler) ;
+            toolset.flags msvc.link    .MT  <windows-api>$(api)/$(cpu-conditions) : $(setup-$(c))$(manifest-tool) -nologo ;
 
-            toolset.flags msvc.link .MT $(cpu-conditions) : $(setup-$(c))$(manifest-tool) -nologo ;
+            for api in desktop store phone
+            {
+                local setup-script = $(setup-$(c)) ;
+                if $(api) = phone
+                {
+                    setup-script = $(setup-phone-$(c)) ;
+                }
+                toolset.flags msvc.compile .CC  <windows-api>$(api)/$(cpu-conditions) : $(setup-script)$(compiler) /Zm800 -nologo ;
+                toolset.flags msvc.compile .ASM <windows-api>$(api)/$(cpu-conditions) : $(setup-script)$(cpu-assembler) -nologo ;
+                toolset.flags msvc.link    .LD  <windows-api>$(api)/$(cpu-conditions) : $(setup-script)$(linker) /NOLOGO /INCREMENTAL:NO ;
+                toolset.flags msvc.archive .LD  <windows-api>$(api)/$(cpu-conditions) : $(setup-script)$(linker) /lib /NOLOGO  ;
+            }
 
             if $(cc-filter)
             {
@@ -1168,7 +1343,10 @@ local rule register-toolset-really ( )
             OBJ SEARCHED_LIB STATIC_LIB IMPORT_LIB : EXE : <toolset>msvc ] ;
         generators.register [ new msvc-linking-generator msvc.link.dll :
             OBJ SEARCHED_LIB STATIC_LIB IMPORT_LIB : SHARED_LIB IMPORT_LIB :
-            <toolset>msvc ] ;
+            <toolset>msvc <suppress-import-lib>false ] ;
+        generators.register [ new msvc-linking-generator msvc.link.dll :
+            OBJ SEARCHED_LIB STATIC_LIB IMPORT_LIB : SHARED_LIB :
+            <toolset>msvc <suppress-import-lib>true ] ;
 
         generators.register-archiver msvc.archive : OBJ : STATIC_LIB : <toolset>msvc ;
         generators.register-c-compiler msvc.compile.c++ : CPP : OBJ : <toolset>msvc ;
@@ -1283,6 +1461,8 @@ local rule register-toolset-really ( )
         toolset.flags msvc.link FINDLIBS_SA <find-shared-library> ;
         toolset.flags msvc.link LIBRARY_OPTION <toolset>msvc : "" : unchecked ;
         toolset.flags msvc.link LIBRARIES_MENTIONED_BY_FILE : <library-file> ;
+        
+        toolset.flags msvc.link.dll LINKFLAGS <suppress-import-lib>true : /NOENTRY ;
     }
 
     toolset.flags msvc.archive AROPTIONS <archiveflags> ;
@@ -1371,6 +1551,7 @@ if [ MATCH (--debug-configuration) : [ modules.peek : ARGV ] ]
     <architecture>ia64/<address-model>64 ;
 
 .cpu-arch-arm =
+    <architecture>arm/<address-model>
     <architecture>arm/<address-model>32 ;
 
 
@@ -1392,7 +1573,8 @@ if [ MATCH (--debug-configuration) : [ modules.peek : ARGV ] ]
                      athlon-mp $(.cpu-type-em64t) $(.cpu-type-amd64) ;
 .cpu-type-itanium  = itanium itanium1 merced ;
 .cpu-type-itanium2 = itanium2 mckinley ;
-
+.cpu-type-arm      = armv2 armv2a armv3 armv3m armv4 armv4t armv5 armv5t armv5te armv6 armv6j iwmmxt ep9312
+                     armv7 armv7s ;
 
 # Known toolset versions, in order of preference.
 .known-versions = 14.0 12.0 11.0 10.0 10.0express 9.0 9.0express 8.0 8.0express 7.1

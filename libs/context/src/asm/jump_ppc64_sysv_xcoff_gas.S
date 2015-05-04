@@ -1,227 +1,134 @@
-/*
-            Copyright Oliver Kowalke 2009.
-   Distributed under the Boost Software License, Version 1.0.
-      (See accompanying file LICENSE_1_0.txt or copy at
-          http://www.boost.org/LICENSE_1_0.txt)
-*/
-
-/*******************************************************
- *                                                     *
- *  -------------------------------------------------  *
- *  |  0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  *
- *  -------------------------------------------------  *
- *  |  0  |  4  |  8  |  12 |  16 |  20 |  24 |  28 |  *
- *  -------------------------------------------------  *
- *  |    F14    |    F15    |    F16    |    F17    |  *
- *  -------------------------------------------------  *
- *  -------------------------------------------------  *
- *  |  8  |  9  |  10 |  11 |  12 |  13 |  14 |  15 |  *
- *  -------------------------------------------------  *
- *  |  32 |  36 |  40 |  44 |  48 |  52 |  56 |  60 |  *
- *  -------------------------------------------------  *
- *  |    F18    |    F19    |    F20    |    F21    |  *
- *  -------------------------------------------------  *
- *  -------------------------------------------------  *
- *  |  16 |  17 |  18 |  19 |  20 |  21 |  22 |  23 |  *
- *  -------------------------------------------------  *
- *  |  64 |  68 |  72 |  76 |  80 |  84 |  88 |  92 |  *
- *  -------------------------------------------------  *
- *  |    F22    |    F23    |    F24    |    F25    |  *
- *  -------------------------------------------------  *
- *  -------------------------------------------------  *
- *  |  24 |  25 |  26 |  27 |  28 |  29 |  30 |  31 |  *
- *  -------------------------------------------------  *
- *  |  96 | 100 | 104 | 108 | 112 | 116 | 120 | 124 |  *
- *  -------------------------------------------------  *
- *  |    F26    |    F27    |    F28    |    F29    |  *
- *  -------------------------------------------------  *
- *  -------------------------------------------------  *
- *  |  32 |  33 |  34 |  35 |  36 |  37 |  38 |  39 |  *
- *  -------------------------------------------------  *
- *  | 128 | 132 | 136 | 140 | 144 | 148 | 152 | 156 |  *
- *  -------------------------------------------------  *
- *  |    F30    |    F31    |   fpscr   |    R13    |  *
- *  -------------------------------------------------  *
- *  -------------------------------------------------  *
- *  |  40 |  41 |  42 |  43 |  44 |  45 |  46 |  47 |  *
- *  -------------------------------------------------  *
- *  | 160 | 164 | 168 | 172 | 176 | 180 | 184 | 188 |  *
- *  -------------------------------------------------  *
- *  |    R14    |    R15    |     R16   |    R17    |  *
- *  -------------------------------------------------  *
- *  -------------------------------------------------  *
- *  |  48 |  49 |  50 |  51 |  52 |  53 |  54 |  55 |  *
- *  -------------------------------------------------  *
- *  | 192 | 196 | 200 | 204 | 208 | 212 | 216 | 220 |  *
- *  -------------------------------------------------  *
- *  |    R18    |    R19    |    R20    |    R21    |  *
- *  -------------------------------------------------  *
- *  -------------------------------------------------  *
- *  |  56 |  57 |  58 |  59 |  60 |  61 |  62 |  63 |  *
- *  -------------------------------------------------  *
- *  | 224 | 228 | 232 | 236 | 240 | 244 | 248 | 252 |  *
- *  -------------------------------------------------  *
- *  |    R22    |    R23    |    R24    |    R25    |  *
- *  -------------------------------------------------  *
- *  -------------------------------------------------  *
- *  |  64 |  65 |  66 |  67 |  68 |  69 |  70 |  71 |  *
- *  -------------------------------------------------  *
- *  | 256 | 260 | 264 | 268 | 272 | 276 | 280 | 284 |  *
- *  -------------------------------------------------  *
- *  |    R26    |    R27    |    R28    |    R29    |  *
- *  -------------------------------------------------  *
- *  -------------------------------------------------  *
- *  |  72 |  73 |  74 |  75 |  76 |  77 |  78 |  79 |  *
- *  -------------------------------------------------  *
- *  | 288 | 292 | 296 | 300 | 304 | 308 | 312 | 316 |  *
- *  -------------------------------------------------  *
- *  -------------------------------------------------  *
- *  |    R30    |    R31    |     CR    |     LR    |  *
- *  -------------------------------------------------  *
- *  -------------------------------------------------  *
- *  |  80 |  81 |                                   |  *
- *  -------------------------------------------------  *
- *  | 320 | 324 |                                   |  *
- *  -------------------------------------------------  *
- *  |    PC     |                                   |  *
- *  -------------------------------------------------  *
- *                                                     *
- *******************************************************/
-
-.section .text
 .align 2
-.globl _jump_fcontext
-.def ._jump_fcontext; .scl 2; .type 32; .endef
-.globl ._jump_fcontext
-._jump_fcontext:
+.globl .jump_fcontext
+.jump_fcontext:
     # reserve space on stack
-    subi  %r1, %r1, 328
+    subi  1, 1, 328
 
-    std  %r13, 152(%r1)  # save R13
-    std  %r14, 160(%r1)  # save R14
-    std  %r15, 168(%r1)  # save R15
-    std  %r16, 176(%r1)  # save R16
-    std  %r17, 184(%r1)  # save R17
-    std  %r18, 192(%r1)  # save R18
-    std  %r19, 200(%r1)  # save R19
-    std  %r20, 208(%r1)  # save R20
-    std  %r21, 216(%r1)  # save R21
-    std  %r22, 224(%r1)  # save R22
-    std  %r23, 232(%r1)  # save R23
-    std  %r24, 240(%r1)  # save R24
-    std  %r25, 248(%r1)  # save R25
-    std  %r26, 256(%r1)  # save R26
-    std  %r27, 264(%r1)  # save R27
-    std  %r28, 272(%r1)  # save R28
-    std  %r29, 280(%r1)  # save R29
-    std  %r30, 288(%r1)  # save R30
-    std  %r31, 296(%r1)  # save R31
+    std  13, 152(1)  # save R13
+    std  14, 160(1)  # save R14
+    std  15, 168(1)  # save R15
+    std  16, 176(1)  # save R16
+    std  17, 184(1)  # save R17
+    std  18, 192(1)  # save R18
+    std  19, 200(1)  # save R19
+    std  20, 208(1)  # save R20
+    std  21, 216(1)  # save R21
+    std  22, 224(1)  # save R22
+    std  23, 232(1)  # save R23
+    std  24, 240(1)  # save R24
+    std  25, 248(1)  # save R25
+    std  26, 256(1)  # save R26
+    std  27, 264(1)  # save R27
+    std  28, 272(1)  # save R28
+    std  29, 280(1)  # save R29
+    std  30, 288(1)  # save R30
+    std  31, 296(1)  # save R31
 
     # save CR
-    mfcr  %r0
-    std  %r0, 304(%r1)
+    mfcr  0
+    std  0, 304(1)
     # save LR
-    mflr  %r0
-    std  %r0, 312(%r1)
+    mflr  0
+    std  0, 312(1)
     # save LR as PC
-    std  %r0, 320(%r1)
+    std  0, 320(1)
 
     # test if fpu env should be preserved
-    cmpwi  cr7, %r6, 0
-    beq  cr7, 1f
+    cmpwi  7, 6, 0
+    beq  7, label1
 
-    stfd  %f14, 0(%r1)  # save F14
-    stfd  %f15, 8(%r1)  # save F15
-    stfd  %f16, 16(%r1)  # save F16
-    stfd  %f17, 24(%r1)  # save F17
-    stfd  %f18, 32(%r1)  # save F18
-    stfd  %f19, 40(%r1)  # save F19
-    stfd  %f20, 48(%r1)  # save F20
-    stfd  %f21, 56(%r1)  # save F21
-    stfd  %f22, 64(%r1)  # save F22
-    stfd  %f23, 72(%r1)  # save F23
-    stfd  %f24, 80(%r1)  # save F24
-    stfd  %f25, 88(%r1)  # save F25
-    stfd  %f26, 96(%r1)  # save F26
-    stfd  %f27, 104(%r1)  # save F27
-    stfd  %f28, 112(%r1)  # save F28
-    stfd  %f29, 120(%r1)  # save F29
-    stfd  %f30, 128(%r1)  # save F30
-    stfd  %f31, 136(%r1)  # save F31
-    mffs  %f0  # load FPSCR
-    stfd  %f0, 144(%r1)  # save FPSCR
+    stfd  14, 0(1)  # save F14
+    stfd  15, 8(1)  # save F15
+    stfd  16, 16(1)  # save F16
+    stfd  17, 24(1)  # save F17
+    stfd  18, 32(1)  # save F18
+    stfd  19, 40(1)  # save F19
+    stfd  20, 48(1)  # save F20
+    stfd  21, 56(1)  # save F21
+    stfd  22, 64(1)  # save F22
+    stfd  23, 72(1)  # save F23
+    stfd  24, 80(1)  # save F24
+    stfd  25, 88(1)  # save F25
+    stfd  26, 96(1)  # save F26
+    stfd  27, 104(1)  # save F27
+    stfd  28, 112(1)  # save F28
+    stfd  29, 120(1)  # save F29
+    stfd  30, 128(1)  # save F30
+    stfd  31, 136(1)  # save F31
+    mffs  0  # load FPSCR
+    stfd  0, 144(1)  # save FPSCR
 
-1:
+label1:
     # store RSP (pointing to context-data) in R3
-    stw  %r1, 0(%r3)
+    stw  1, 0(3)
 
     # restore RSP (pointing to context-data) from R4
-    mr  %r1, %r4
+    mr  1, 4
 
     # test if fpu env should be preserved
-    cmpwi  cr7, %r6, 0
-    beq  cr7, 2f
+    cmpwi  7, 6, 0
+    beq  7, label2
 
-    lfd  %f14, 0(%r1)  # restore F14
-    lfd  %f15, 8(%r1)  # restore F15
-    lfd  %f16, 16(%r1)  # restore F16
-    lfd  %f17, 24(%r1)  # restore F17
-    lfd  %f18, 32(%r1)  # restore F18
-    lfd  %f19, 40(%r1)  # restore F19
-    lfd  %f20, 48(%r1)  # restore F20
-    lfd  %f21, 56(%r1)  # restore F21
-    lfd  %f22, 64(%r1)  # restore F22
-    lfd  %f23, 72(%r1)  # restore F23
-    lfd  %f24, 80(%r1)  # restore F24
-    lfd  %f25, 88(%r1)  # restore F25
-    lfd  %f26, 96(%r1)  # restore F26
-    lfd  %f27, 104(%r1)  # restore F27
-    lfd  %f28, 112(%r1)  # restore F28
-    lfd  %f29, 120(%r1)  # restore F29
-    lfd  %f30, 128(%r1)  # restore F30
-    lfd  %f31, 136(%r1)  # restore F31
-    lfd  %f0,  144(%r1)  # load FPSCR
-    mtfsf  0xff, %f0  # restore FPSCR
+    lfd  14, 0(1)  # restore F14
+    lfd  15, 8(1)  # restore F15
+    lfd  16, 16(1)  # restore F16
+    lfd  17, 24(1)  # restore F17
+    lfd  18, 32(1)  # restore F18
+    lfd  19, 40(1)  # restore F19
+    lfd  20, 48(1)  # restore F20
+    lfd  21, 56(1)  # restore F21
+    lfd  22, 64(1)  # restore F22
+    lfd  23, 72(1)  # restore F23
+    lfd  24, 80(1)  # restore F24
+    lfd  25, 88(1)  # restore F25
+    lfd  26, 96(1)  # restore F26
+    lfd  27, 104(1)  # restore F27
+    lfd  28, 112(1)  # restore F28
+    lfd  29, 120(1)  # restore F29
+    lfd  30, 128(1)  # restore F30
+    lfd  31, 136(1)  # restore F31
+    lfd  0,  144(1)  # load FPSCR
+    mtfsf  0xff, 0  # restore FPSCR
 
-2:
-    ld  %r13, 152(%r1)  # restore R13
-    ld  %r14, 160(%r1)  # restore R14
-    ld  %r15, 168(%r1)  # restore R15
-    ld  %r16, 176(%r1)  # restore R16
-    ld  %r17, 184(%r1)  # restore R17
-    ld  %r18, 192(%r1)  # restore R18
-    ld  %r19, 200(%r1)  # restore R19
-    ld  %r20, 208(%r1)  # restore R20
-    ld  %r21, 216(%r1)  # restore R21
-    ld  %r22, 224(%r1)  # restore R22
-    ld  %r23, 232(%r1)  # restore R23
-    ld  %r24, 240(%r1)  # restore R24
-    ld  %r25, 248(%r1)  # restore R25
-    ld  %r26, 256(%r1)  # restore R26
-    ld  %r27, 264(%r1)  # restore R27
-    ld  %r28, 272(%r1)  # restore R28
-    ld  %r29, 280(%r1)  # restore R29
-    ld  %r30, 288(%r1)  # restore R30
-    ld  %r31, 296(%r1)  # restore R31
+label2:
+    ld  13, 152(1)  # restore R13
+    ld  14, 160(1)  # restore R14
+    ld  15, 168(1)  # restore R15
+    ld  16, 176(1)  # restore R16
+    ld  17, 184(1)  # restore R17
+    ld  18, 192(1)  # restore R18
+    ld  19, 200(1)  # restore R19
+    ld  20, 208(1)  # restore R20
+    ld  21, 216(1)  # restore R21
+    ld  22, 224(1)  # restore R22
+    ld  23, 232(1)  # restore R23
+    ld  24, 240(1)  # restore R24
+    ld  25, 248(1)  # restore R25
+    ld  26, 256(1)  # restore R26
+    ld  27, 264(1)  # restore R27
+    ld  28, 272(1)  # restore R28
+    ld  29, 280(1)  # restore R29
+    ld  30, 288(1)  # restore R30
+    ld  31, 296(1)  # restore R31
 
     # restore CR
-    ld  %r0, 304(%r1)
-    mtcr  %r0
+    ld  0, 304(1)
+    mtcr  0
     # restore LR
-    ld  %r0, 312(%r1)
-    mtlr  %r0
+    ld  0, 312(1)
+    mtlr  0
 
     # load PC
-    ld  %r0, 320(%r1)
+    ld  0, 320(1)
     # restore CTR
-    mtctr  %r0
+    mtctr  0
 
     # adjust stack
-    addi  %r1, %r1, 328
+    addi  1, 1, 328
 
     # use third arg as return value after jump
     # use third arg as first arg in context function
-    mr  %r3, %r5
+    mr  3, 5
 
     # jump to context
     bctr

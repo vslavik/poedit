@@ -102,7 +102,7 @@ void test_bessel_zeros(RealType)
 
   // Parameter RealType is only used to communicate the RealType, float, double...
   // and is an arbitrary zero for all tests.
-   RealType tolerance = (std::max)(
+   RealType tolerance = 5 * (std::max)(
      static_cast<RealType>(boost::math::tools::epsilon<long double>()),
      boost::math::tools::epsilon<RealType>());
    std::cout << "Tolerance for type " << typeid(RealType).name()  << " is " << tolerance << "." << std::endl;

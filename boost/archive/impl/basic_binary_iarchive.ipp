@@ -53,7 +53,7 @@ basic_binary_iarchive<Archive>::init(){
     std::string file_signature;
     
     #if 0 // commented out since it interfers with derivation
-    try {
+    BOOST_TRY {
         std::size_t l;
         this->This()->load(l);
         if(l == std::strlen(BOOST_ARCHIVE_SIGNATURE())) {
@@ -67,10 +67,11 @@ basic_binary_iarchive<Archive>::init(){
                 this->This()->load_binary(&(*file_signature.begin()), l);
         }
     }
-    catch(archive_exception const &) {  // catch stream_error archive exceptions
+    BOOST_CATCH(archive_exception const &) {  // catch stream_error archive exceptions
         // will cause invalid_signature archive exception to be thrown below
         file_signature = "";   
     }
+    BOOST_CATCH_END
     #else
     // https://svn.boost.org/trac/boost/ticket/7301
     * this->This() >> file_signature;

@@ -129,6 +129,43 @@ void test_recursive_variant()
     std::cout << "result1: " << result1 << '\n';
     BOOST_CHECK(result1 == "( 3 5 ( 3 5 ) 7 ) ");
 
+    std::vector<var1_t> vec1_copy = vec1;
+    vec1_copy.erase(vec1_copy.begin() + 2);
+    vec1_copy.insert(vec1_copy.begin() + 2, vec1_copy);
+    var1 = vec1_copy;
+    result1 = printer()(var1);
+    std::cout << "result1+: " << result1 << '\n';
+    BOOST_CHECK(result1 == "( 3 5 ( 3 5 7 ) 7 ) ");
+
+    // Uses move construction on compilers with rvalue references support
+    result1 = printer()(
+        var1_t(
+            std::vector<var1_t>(vec1_copy)
+        )
+    );
+    std::cout << "result1++: " << result1 << '\n';
+    BOOST_CHECK(result1 == "( 3 5 ( 3 5 7 ) 7 ) ");
+
+
+    var1_t vec1_another_copy(vec1_copy);
+    vec1_copy[2].swap(vec1_another_copy);
+    result1 = printer()(
+        var1_t(vec1_copy)
+    );
+    std::cout << "result1+++1: " << result1 << '\n';
+    BOOST_CHECK(result1 == "( 3 5 ( 3 5 ( 3 5 7 ) 7 ) 7 ) ");
+
+    result1 = printer()(vec1_another_copy);
+    std::cout << "result1++2: " << result1 << '\n';
+    BOOST_CHECK(result1 == "( 3 5 7 ) ");
+
+    vec1_copy[2].swap(vec1_copy[2]);
+    result1 = printer()(
+        var1_t(vec1_copy)
+    );
+    std::cout << "result1.2: " << result1 << '\n';
+    BOOST_CHECK(result1 == "( 3 5 ( 3 5 ( 3 5 7 ) 7 ) 7 ) ");
+
     typedef boost::make_recursive_variant<
           boost::variant<int, double>
         , std::vector<boost::recursive_variant_>
@@ -230,6 +267,36 @@ void test_recursive_variant_over()
 
     std::cout << "result1: " << result1 << '\n';
     BOOST_CHECK(result1 == "( 3 5 ( 3 5 ) 7 ) ");
+
+    std::vector<var1_t> vec1_copy = vec1;
+    vec1_copy.erase(vec1_copy.begin() + 2);
+    vec1_copy.insert(vec1_copy.begin() + 2, vec1_copy);
+    var1 = vec1_copy;
+    result1 = printer()(var1);
+    std::cout << "result1+: " << result1 << '\n';
+    BOOST_CHECK(result1 == "( 3 5 ( 3 5 7 ) 7 ) ");
+
+    // Uses move construction on compilers with rvalue references support
+    result1 = printer()(
+        var1_t(
+            std::vector<var1_t>(vec1_copy)
+        )
+    );
+    std::cout << "result1++: " << result1 << '\n';
+    BOOST_CHECK(result1 == "( 3 5 ( 3 5 7 ) 7 ) ");
+
+
+    var1_t vec1_another_copy(vec1_copy);
+    vec1_copy[2].swap(vec1_another_copy);
+    result1 = printer()(
+        var1_t(vec1_copy)
+    );
+    std::cout << "result1+++1: " << result1 << '\n';
+    BOOST_CHECK(result1 == "( 3 5 ( 3 5 ( 3 5 7 ) 7 ) 7 ) ");
+
+    result1 = printer()(vec1_another_copy);
+    std::cout << "result1++2: " << result1 << '\n';
+    BOOST_CHECK(result1 == "( 3 5 7 ) ");
 
     typedef boost::make_recursive_variant_over<
           boost::mpl::vector<

@@ -68,6 +68,10 @@
       that describe C++11 features not supported</a></span></dt>
 <dt><span class="section"><a href="boost_config/boost_macro_reference.html#boost_config.boost_macro_reference.macros_that_allow_use_of_c__11_features_with_c__03_compilers">Macros
       that allow use of C++11 features with C++03 compilers</a></span></dt>
+<dt><span class="section"><a href="boost_config/boost_macro_reference.html#boost_config.boost_macro_reference.macros_that_describe_c__14_features_not_supported">Macros
+      that describe C++14 features not supported</a></span></dt>
+<dt><span class="section"><a href="boost_config/boost_macro_reference.html#boost_config.boost_macro_reference.macros_that_allow_use_of_c__14_features_with_c__11_or_earlier_compilers">Macros
+      that allow use of C++14 features with C++11 or earlier compilers</a></span></dt>
 <dt><span class="section"><a href="boost_config/boost_macro_reference.html#boost_config.boost_macro_reference.boost_helper_macros">Boost
       Helper Macros</a></span></dt>
 <dt><span class="section"><a href="boost_config/boost_macro_reference.html#boost_config.boost_macro_reference.boost_informational_macros">Boost
@@ -77,6 +81,7 @@
 <dt><span class="section"><a href="boost_config/boost_macro_reference.html#boost_config.boost_macro_reference.macros_for_libraries_with_separate_source_code">Macros
       for libraries with separate source code</a></span></dt>
 </dl></dd>
+<dt><span class="section"><a href="boost_config/build_config.html">Build Time Configuration</a></span></dt>
 <dt><span class="section"><a href="boost_config/cstdint.html">Standard Integer Types</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="boost_config/cstdint.html#boost_config.cstdint.overview">Overview</a></span></dt>
@@ -681,6 +686,22 @@
 <tr>
 <td>
                 <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_LIB_BUILDID</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  If you built Boost using the <code class="computeroutput"><span class="special">--</span><span class="identifier">buildid</span></code> option then set this
+                  macro to the same value as you passed to bjam. For example if you
+                  built using <code class="computeroutput"><span class="identifier">bjam</span> <span class="identifier">address</span><span class="special">-</span><span class="identifier">model</span><span class="special">=</span><span class="number">64</span> <span class="special">--</span><span class="identifier">buildid</span><span class="special">=</span><span class="identifier">amd64</span></code> then compile your code
+                  with <code class="computeroutput"><span class="special">-</span><span class="identifier">DBOOST_LIB_BUILDID</span><span class="special">=</span><span class="identifier">amd64</span></code>
+                  to ensure the correct libraries are selected at link time.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
                   <code class="computeroutput"><span class="identifier">BOOST_LIB_TOOLSET</span></code>
                 </p>
               </td>
@@ -967,7 +988,7 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: June 01, 2014 at 09:50:01 GMT</small></p></td>
+<td align="left"><p><small>Last revised: October 21, 2014 at 11:37:59 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

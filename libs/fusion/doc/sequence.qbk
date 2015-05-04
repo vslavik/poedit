@@ -1,6 +1,7 @@
 [/==============================================================================
     Copyright (C) 2001-2011 Joel de Guzman
     Copyright (C) 2006 Dan Marsden
+    Copyright (C) 2014 Christoph Weiss
 
     Use, modification and distribution is subject to the Boost Software
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -248,15 +249,18 @@ any Random Access Sequence the following must be met:
     [[Expression]                           [Compile Time Complexity]]
     [[`__result_of_begin__<S>::type`]          [Amortized constant time]]
     [[`__result_of_end__<S>::type`]            [Amortized constant time]]
-    [[`__result_of_at__<S, N>::type`]          [Amortized constant time]]
-    [[`__result_of_value_at__<S, N>::type`]    [Amortized constant time]]
+    [[`__result_of_at__<S, M>::type`]          [Amortized constant time]]
+    [[`__result_of_at_c__<S, N>::type`]        [Amortized constant time]]
+    [[`__result_of_value_at__<S, M>::type`]    [Amortized constant time]]
+    [[`__result_of_value_at_c__<S, N>::type`]  [Amortized constant time]]
 ]
 
-[blurb __note__ `__result_of_at__<S, N>` returns the actual type returned by
-`__at__<N>(s)`. In most cases, this is a reference. Hence, there is no way to
-know the exact element type using `__result_of_at__<S, N>`.The element at `N`
+[note `__result_of_at__<S, M>` returns the actual type returned by
+`__at__<M>(s)`. In most cases, this is a reference. Hence, there is no way to
+know the exact element type using `__result_of_at__<S, M>`.The element at `M`
 may actually be a reference to begin with. For this purpose, you can use
-`__result_of_value_at__<S, N>`.]
+`__result_of_value_at__<S, M>` (Note that, `__result_of_value_at_c__<S, N>`
+is a counterpart of `__result_of_at_c__<S, N>` as well).]
 
 [heading Expression Semantics]
 
@@ -326,11 +330,11 @@ For any Associative Sequence the following expressions must be valid:
     [[`__result_of_value_at_key__<S, K>::type`]    [Amortized constant time]]
 ]
 
-[blurb __note__ `__result_of_at_key__<S, K>` returns the actual type returned
+[note `__result_of_at_key__<S, K>` returns the actual type returned
 by `__at_key__<K>(s)`. In most cases, this is a reference. Hence, there is no
 way to know the exact element type using `__result_of_at_key__<S, K>`.The
 element at `K` may actually be a reference to begin with. For this purpose,
-you can use `__result_of_value_at_key__<S, N>`.]
+you can use `__result_of_value_at_key__<S, K>`.]
 
 [heading Expression Semantics]
 
@@ -540,7 +544,7 @@ Returns the first element in the sequence.
 
 [*Return type]: Returns a reference to the first element in the sequence
 `seq` if `seq` is mutable and `e = o`, where `e` is the first element in
-the sequence, is a valid expression. Else, returns a type convertable to
+the sequence, is a valid expression. Else, returns a type convertible to
 the first element in the sequence.
 
 [*Precondition]: `__empty__(seq) == false`
@@ -588,7 +592,7 @@ Returns the last element in the sequence.
 
 [*Return type]: Returns a reference to the last element in the sequence
 `seq` if `seq` is mutable and `e = o`, where `e` is the last element in the
-sequence, is a valid expression. Else, returns a type convertable to the
+sequence, is a valid expression. Else, returns a type convertible to the
 last element in the sequence.
 
 [*Precondition]: `__empty__(seq) == false`
@@ -679,7 +683,7 @@ Returns the M-th element from the beginning of the sequence.
 [*Return type]: Returns a reference to the M-th element from the beginning
 of the sequence `seq` if `seq` is mutable and `e = o`, where `e` is the M-th
 element from the beginning of the sequence, is a valid expression. Else,
-returns a type convertable to the M-th element from the beginning of the
+returns a type convertible to the M-th element from the beginning of the
 sequence.
 
 [*Precondition]: `0 <= M::value < __size__(s)`
@@ -732,7 +736,7 @@ Returns the N-th element from the beginning of the sequence.
 [*Return type]: Returns a reference to the N-th element from the beginning
 of the sequence `seq` if `seq` is mutable and `e = o`, where `e` is the N-th
 element from the beginning of the sequence, is a valid expression. Else,
-returns a type convertable to the N-th element from the beginning of the
+returns a type convertible to the N-th element from the beginning of the
 sequence.
 
 [*Precondition]: `0 <= N < __size__(s)`
@@ -827,7 +831,7 @@ Returns the element associated with a Key from the sequence.
 [*Return type]: Returns a reference to the element associated with Key from
 the sequence `seq` if `seq` is mutable and `e = o`, where `e` is the
 element associated with Key, is a valid expression. Else, returns a type
-convertable to the element associated with Key.
+convertible to the element associated with Key.
 
 [*Precondition]: `has_key<Key>(seq) == true`
 
@@ -853,13 +857,14 @@ Performs an element by element swap of the elements in 2 sequences.
 
 [heading Synopsis]
     template<typename Seq1, typename Seq2>
-    void swap(Seq1& seq1, Seq2& seq2);
+    typename __result_of_swap__<Seq1, Seq2>::type
+    swap(Seq1& seq1, Seq2& seq2);
 
 [heading Parameters]
 
 [table
     [[Parameters]    [Requirement]                           [Description]]
-    [[`seq1`, `seq2`][Models of __forward_sequence__][The sequences whos elements we wish to swap.]]
+    [[`seq1`, `seq2`][Models of __forward_sequence__][The sequences whose elements we wish to swap.]]
 ]
 
 [heading Expression Semantics]
@@ -872,7 +877,10 @@ Performs an element by element swap of the elements in 2 sequences.
 
 [*Semantics]: Calls `swap(a1, b1)` for corresponding elements in `seq1` and `seq2`.
 
-/sequence/intrinsic/swap.hpp>
+[heading Header]
+
+    #include <boost/fusion/sequence/intrinsic/swap.hpp>
+    #include <boost/fusion/include/swap.hpp>
 
 [heading Example]
     __vector__<int, std::string> v1(1, "hello"), v2(2, "world");
@@ -1318,7 +1326,7 @@ Returns the result type of __has_key__.
 [heading Description]
 
 Returns the result type of __at_key__[footnote __result_of_at_key__
-reflects the actual return type of the function __at_key__. __sequence__s
+reflects the actual return type of the function __at_key__. __sequence__(s)
 typically return references to its elements via the __at_key__ function. If
 you want to get the actual element type, use __result_of_value_at_key__].
 
@@ -1390,7 +1398,7 @@ Returns the actual element type associated with a Key from the __sequence__.
 
 [heading Example]
     typedef __map__<__pair__<int, char>, __pair__<char, char>, __pair__<double, char> > mymap;
-    BOOST_MPL_ASSERT((boost::is_same<__result_of_at_key__<mymap, int>::type, char>));
+    BOOST_MPL_ASSERT((boost::is_same<__result_of_value_at_key__<mymap, int>::type, char>));
 
 [endsect]
 
@@ -1414,9 +1422,10 @@ Returns the return type of swap.
 [heading Expression Semantics]
     result_of::swap<Seq1, Seq2>::type
 
-[*Return type]: `void`.
+[*Return type]: `void` iff both of `Seq1` and `Seq2` are sequence.
+Otherwise, none.
 
-[*Semantics]: Always returns `void`.
+[*Semantics]: Returns the return type of __swap__ for 2 sequences of types `Seq1` and `Seq2`.
 
 [heading Header]
 
@@ -1439,7 +1448,7 @@ operators for free.
 
 The I/O operators: `<<` and `>>` work generically on all Fusion
 sequences. The I/O operators are overloaded in namespace `boost::fusion`
-[footnote __sequences__ and __views__ residing in different namespaces
+[footnote __sequence__(s) and __views__ residing in different namespaces
 will have to either provide their own I/O operators (possibly forwarding
 to fusion's I/O operators) or hoist fusion's I/O operators (using
 declaration), in their own namespaces for proper argument dependent
@@ -1487,7 +1496,7 @@ The code:
     __vector__<int, int> j;
 
     std::cin >> i;
-    std::cin >> set_open('[') >> set_close(']') >> set_delimiter(':');
+    std::cin >> tuple_open('[') >> tuple_close(']') >> tuple_delimiter(':');
     std::cin >> j;
 
 reads the data into the __vector__(s) `i` and `j`.
@@ -1631,7 +1640,7 @@ compile time error.
 [*Semantics]:
 
 For each element, `e1`, in  sequence `a`, and for each element, `e2`, in
-sequence `b`, `e1 == e2` returns true. For any 2 zero length __sequence__s,
+sequence `b`, `e1 == e2` returns true. For any 2 zero length __sequence__(s),
 e and f, e == f  returns true.
 
 [heading Header]
@@ -1893,6 +1902,91 @@ compile time error.
     assert(v3 >= v2);
 
 [endsect]
+
+[endsect]
+
+[section Hashing]
+
+Automatically create a `boost::hash` conforming `hash_value` function.
+
+[heading Synopsis]
+
+    template <typename Seq>
+    std::size_t
+    hash_value(Seq const& seq);
+
+[heading Parameters]
+
+[table
+    [[Parameter]    [Requirement]                       [Description]]
+    [[`seq`]        [Instance of __sequence__]          [__sequence__ to compute hash value of]]
+]
+
+[*Return type]: `std::size_t`
+
+[*Requirements]:
+
+For each element `e` in sequence `seq`, `hash_value(seq)` is a valid expression
+returning a type that is convertible to `std::size_t`.
+
+[*Semantics]: Returns a combined hash value for all elements of `seq`.
+
+[heading Header]
+
+    #include <boost/fusion/sequence/hash.hpp>
+    #include <boost/fusion/include/hash.hpp>
+
+[heading Example]
+
+    #include <boost/fusion/include/equal_to.hpp>
+    #include <boost/fusion/include/hash.hpp>
+    #include <boost/fusion/include/vector.hpp>
+    #include <boost/unordered_map.hpp>
+    
+    void foo()
+    {
+        typedef boost::fusion::vector<int, std::string, char> Vec;
+        const Vec v = {42, "Hello World", 't'};
+        // Compute a hash value directly.
+        std::cout << "hash_value(v) = " << boost::fusion::hash_value(v) << '\n';
+        // Or use it to create an unordered_map.
+        boost::unordered_map<Vec, bool> map;
+        map[v] = true;
+        assert(map.size() == 1 && map.count(v) == 1);
+    }
+
+[heading Example]
+
+    #include <boost/fusion/include/define_struct.hpp>
+    #include <boost/fusion/include/equal_to.hpp>
+    #include <boost/fusion/include/hash.hpp>
+    #include <boost/unordered_set.hpp>
+    
+    // We would like to define a struct that we can form unordered_sets of.
+    BOOST_FUSION_DEFINE_STRUCT(
+        (demo), Key,
+        (bool, b)
+        (std::string, s)
+        (int, i)
+    )
+    
+    namespace demo {
+        // Make operator== and hash_value ADL accessible.
+        using boost::fusion::operator==;
+        using boost::fusion::hash_value;
+        typedef boost::unordered_set<demo::Key> Set;
+    }
+    
+    void foo()
+    {
+        demo::Set set;
+        demo::Key key;
+        assert(set.count(key) == 0);
+    }
+
+[heading See also]
+
+__boost_func_hash__
 
 [endsect]
 

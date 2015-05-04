@@ -16,6 +16,8 @@
 #include <boost/ref.hpp>
 #include <boost/utility.hpp>
 
+#define BOOST_TEST_MODULE Boost.Threads: thread test suite
+
 #include <boost/test/unit_test.hpp>
 
 #define DEFAULT_EXECUTION_MONITOR_TYPE execution_monitor::use_sleep_only
@@ -40,7 +42,7 @@ void comparison_thread(boost::thread::id parent)
     BOOST_CHECK(my_id != no_thread_id);
 }
 
-void test_sleep()
+BOOST_AUTO_TEST_CASE(test_sleep)
 {
     boost::xtime xt = delay(3);
     boost::thread::sleep(xt);
@@ -58,7 +60,7 @@ void do_test_creation()
     BOOST_CHECK_EQUAL(test_value, 999);
 }
 
-void test_creation()
+BOOST_AUTO_TEST_CASE(test_creation)
 {
     timed_test(&do_test_creation, 1);
 }
@@ -70,7 +72,7 @@ void do_test_id_comparison()
     thrd.join();
 }
 
-void test_id_comparison()
+BOOST_AUTO_TEST_CASE(test_id_comparison)
 {
     timed_test(&do_test_id_comparison, 1);
 }
@@ -94,7 +96,7 @@ void do_test_thread_interrupts_at_interruption_point()
     BOOST_CHECK(!failed);
 }
 
-void test_thread_interrupts_at_interruption_point()
+BOOST_AUTO_TEST_CASE(test_thread_interrupts_at_interruption_point)
 {
     timed_test(&do_test_thread_interrupts_at_interruption_point, 1);
 }
@@ -119,7 +121,7 @@ void do_test_thread_no_interrupt_if_interrupts_disabled_at_interruption_point()
     BOOST_CHECK(!failed);
 }
 
-void test_thread_no_interrupt_if_interrupts_disabled_at_interruption_point()
+BOOST_AUTO_TEST_CASE(test_thread_no_interrupt_if_interrupts_disabled_at_interruption_point)
 {
     timed_test(&do_test_thread_no_interrupt_if_interrupts_disabled_at_interruption_point, 1);
 }
@@ -148,7 +150,7 @@ void do_test_creation_through_reference_wrapper()
     BOOST_CHECK_EQUAL(f.value, 999u);
 }
 
-void test_creation_through_reference_wrapper()
+BOOST_AUTO_TEST_CASE(test_creation_through_reference_wrapper)
 {
     timed_test(&do_test_creation_through_reference_wrapper, 1);
 }
@@ -197,12 +199,12 @@ void do_test_timed_join()
     BOOST_CHECK(!thrd.joinable());
 }
 
-void test_timed_join()
+BOOST_AUTO_TEST_CASE(test_timed_join)
 {
     timed_test(&do_test_timed_join, 10);
 }
 
-void test_swap()
+BOOST_AUTO_TEST_CASE(test_swap)
 {
     boost::thread t(simple_thread);
     boost::thread t2(simple_thread);
@@ -216,23 +218,5 @@ void test_swap()
     swap(t,t2);
     BOOST_CHECK(t.get_id()==id1);
     BOOST_CHECK(t2.get_id()==id2);
-}
-
-
-boost::unit_test::test_suite* init_unit_test_suite(int, char*[])
-{
-    boost::unit_test::test_suite* test =
-        BOOST_TEST_SUITE("Boost.Threads: thread test suite");
-
-    test->add(BOOST_TEST_CASE(test_sleep));
-    test->add(BOOST_TEST_CASE(test_creation));
-    test->add(BOOST_TEST_CASE(test_id_comparison));
-    test->add(BOOST_TEST_CASE(test_thread_interrupts_at_interruption_point));
-    test->add(BOOST_TEST_CASE(test_thread_no_interrupt_if_interrupts_disabled_at_interruption_point));
-    test->add(BOOST_TEST_CASE(test_creation_through_reference_wrapper));
-    test->add(BOOST_TEST_CASE(test_timed_join));
-    test->add(BOOST_TEST_CASE(test_swap));
-
-    return test;
 }
 

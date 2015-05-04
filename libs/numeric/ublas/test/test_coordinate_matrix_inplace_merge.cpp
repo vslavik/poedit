@@ -13,25 +13,13 @@
 #include <boost/numeric/ublas/matrix_sparse.hpp>
 #include <boost/numeric/ublas/matrix_expression.hpp>
 #include <boost/numeric/ublas/io.hpp>
-
-#include "libs/numeric/ublas/test/utils.hpp"
+#include "common/testhelper.hpp"
+#include "utils.hpp"
 
 using std::cout;
 using std::endl;
 
 const double TOL = 1e-15;
-
-template <class AE>
-typename AE::value_type mean_square(const boost::numeric::ublas::matrix_expression<AE> &me) {
-    typename AE::value_type s(0);
-    typename AE::size_type i, j;
-    for (i=0; i!= me().size1(); i++) {
-        for (j=0; j!= me().size2(); j++) {
-          s += boost::numeric::ublas::scalar_traits<typename AE::value_type>::type_abs(me()(i,j));
-        }
-    }
-    return s/me().size1()*me().size2();
-}
 
 template<typename T>
 bool check_sortedness(const boost::numeric::ublas::coordinate_matrix<T>& matrix) {
@@ -79,7 +67,7 @@ BOOST_UBLAS_TEST_DEF( test_coordinate_matrix_inplace_merge_random )
       matrix_coord.sort();
 
       std::vector<std::pair<size_t, size_t> > entries;
-      for (int entry = 0; entry < nr_entries; ++ entry) {
+      for (size_t entry = 0; entry < nr_entries; ++ entry) {
         int x = rand() % size_x;
         int y = rand() % size_y;
         entries.push_back(std::make_pair(x, y));
@@ -90,15 +78,15 @@ BOOST_UBLAS_TEST_DEF( test_coordinate_matrix_inplace_merge_random )
 
       {
         bool sorted = check_sortedness(matrix_coord);
-        bool identical = mean_square(matrix_coord - matrix_dense) < TOL;
+        bool identical = compare_to(matrix_coord, matrix_dense, TOL);
         if (!(sorted && identical)) {
           print_entries(size_x, size_y, entries);
         }
         BOOST_UBLAS_TEST_CHECK( check_sortedness(matrix_coord) );
-        BOOST_UBLAS_TEST_CHECK( mean_square(matrix_coord - matrix_dense) < TOL);
+        BOOST_UBLAS_TEST_CHECK( compare_to(matrix_coord, matrix_dense, TOL) );
       }
 
-      for (int entry = 0; entry < nr_entries; ++ entry) {
+      for (size_t entry = 0; entry < nr_entries; ++ entry) {
         int x = rand() % size_x;
         int y = rand() % size_y;
         entries.push_back(std::make_pair(x, y));
@@ -109,7 +97,7 @@ BOOST_UBLAS_TEST_DEF( test_coordinate_matrix_inplace_merge_random )
 
       {
         bool sorted = check_sortedness(matrix_coord);
-        bool identical = mean_square(matrix_coord - matrix_dense) < TOL;
+        bool identical = compare_to(matrix_coord, matrix_dense, TOL);
         if (!(sorted && identical)) {
           print_entries(size_x, size_y, entries);
         }

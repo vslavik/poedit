@@ -7,7 +7,7 @@
 <link rel="home" href="../../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../../accumulators/reference.html#header.boost.accumulators.statistics_fwd_hpp" title="Header &lt;boost/accumulators/statistics_fwd.hpp&gt;">
 <link rel="prev" href="pot_quantile_impl.html" title="Struct template pot_quantile_impl">
-<link rel="next" href="p_square_cumul_idp66848816.html" title="Struct template p_square_cumulative_distribution_impl">
+<link rel="next" href="rolling_count_impl.html" title="Struct template rolling_count_impl">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="pot_quantile_impl.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../accumulators/reference.html#header.boost.accumulators.statistics_fwd_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="p_square_cumul_idp66848816.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="pot_quantile_impl.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../accumulators/reference.html#header.boost.accumulators.statistics_fwd_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="rolling_count_impl.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.accumulators.impl.pot_tail_mean_impl"></a><div class="titlepage"></div>
@@ -34,30 +34,30 @@
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sample<span class="special">,</span> <span class="keyword">typename</span> Impl<span class="special">,</span> <span class="keyword">typename</span> LeftRight<span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="pot_tail_mean_impl.html" title="Struct template pot_tail_mean_impl">pot_tail_mean_impl</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">accumulator_base</span> <span class="special">{</span>
   <span class="comment">// <a class="link" href="pot_tail_mean_impl.html#boost.accumulators.impl.pot_tail_mean_implconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="pot_tail_mean_impl.html#idp66847840-bb"><span class="identifier">pot_tail_mean_impl</span></a><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="pot_tail_mean_impl.html#idp59651488-bb"><span class="identifier">pot_tail_mean_impl</span></a><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="pot_tail_mean_impl.html#idp66844464-bb">public member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="identifier">result_type</span> <a class="link" href="pot_tail_mean_impl.html#idp66845024-bb"><span class="identifier">result</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="pot_tail_mean_impl.html#idp59648112-bb">public member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="identifier">result_type</span> <a class="link" href="pot_tail_mean_impl.html#idp59648672-bb"><span class="identifier">result</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp116056368"></a><h2>Description</h2>
+<a name="idp101454928"></a><h2>Description</h2>
 <p>Computes an estimate for the (coherent) tail mean </p>
 <div class="equation">
-<a name="idp116057104"></a><p class="title"><b>Equation&#160;1.18.&#160;</b></p>
-<div class="equation-contents"><div class="mediaobject" align="center"><img src="../../../images/accumulators//form_28.png" align="middle"></div></div>
+<a name="idp101455664"></a><p class="title"><b>Equation&#160;1.29.&#160;</b></p>
+<div class="equation-contents"><div class="mediaobject" align="center"><img src="../../../images/accumulators//form_37.png" align="middle"></div></div>
 </div>
-<p><br class="equation-break"> where <span class="inlinemediaobject"><img src="../../../images/accumulators//form_41.png"></span>, <span class="inlinemediaobject"><img src="../../../images/accumulators//form_42.png"></span> and <span class="inlinemediaobject"><img src="../../../images/accumulators//form_9.png"></span> are the parameters of the generalized Pareto distribution that approximates the right tail of the distribution (or the mirrored left tail, in case the left tail is used). In the latter case, the result is mirrored back, yielding the correct result. </p>
+<p><br class="equation-break"> where <span class="inlinemediaobject"><img src="../../../images/accumulators//form_11.png"></span>, <span class="inlinemediaobject"><img src="../../../images/accumulators//form_12.png"></span> and <span class="inlinemediaobject"><img src="../../../images/accumulators//form_13.png"></span> are the parameters of the generalized Pareto distribution that approximates the right tail of the distribution (or the mirrored left tail, in case the left tail is used). In the latter case, the result is mirrored back, yielding the correct result. </p>
 <div class="refsect2">
-<a name="idp116067536"></a><h3>
+<a name="idp101466096"></a><h3>
 <a name="boost.accumulators.impl.pot_tail_mean_implconstruct-copy-destruct"></a><code class="computeroutput">pot_tail_mean_impl</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp66847840-bb"></a><span class="identifier">pot_tail_mean_impl</span><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp59651488-bb"></a><span class="identifier">pot_tail_mean_impl</span><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp116074064"></a><h3>
-<a name="idp66844464-bb"></a><code class="computeroutput">pot_tail_mean_impl</code> public member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="identifier">result_type</span> <a name="idp66845024-bb"></a><span class="identifier">result</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp101472624"></a><h3>
+<a name="idp59648112-bb"></a><code class="computeroutput">pot_tail_mean_impl</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="identifier">result_type</span> <a name="idp59648672-bb"></a><span class="identifier">result</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>
@@ -71,7 +71,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="pot_quantile_impl.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../accumulators/reference.html#header.boost.accumulators.statistics_fwd_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="p_square_cumul_idp66848816.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="pot_quantile_impl.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../accumulators/reference.html#header.boost.accumulators.statistics_fwd_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="rolling_count_impl.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

@@ -211,7 +211,10 @@ public :
 #if defined(BOOST_GEOMETRY_DEFINE_STREAM_OPERATOR_SEGMENT_RATIO)
     friend std::ostream& operator<<(std::ostream &os, segment_ratio const& ratio)
     {
-        os << ratio.m_numerator << "/" << ratio.m_denominator;
+        os << ratio.m_numerator << "/" << ratio.m_denominator
+           << " (" << (static_cast<double>(ratio.m_numerator)
+                        / static_cast<double>(ratio.m_denominator))
+           << ")";
         return os;
     }
 #endif

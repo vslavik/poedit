@@ -28,6 +28,27 @@
 
 
 // The closing iterator should also work on normal std:: containers
+void test_empty_non_geometry()
+{
+    std::vector<int> v;
+
+    typedef bg::closing_iterator
+        <
+            std::vector<int> const
+        > closing_iterator;
+
+
+    closing_iterator it(v);
+    closing_iterator end(v, true);
+
+    std::ostringstream out;
+    for (; it != end; ++it)
+    {
+        out << *it;
+    }
+    BOOST_CHECK_EQUAL(out.str(), "");
+}
+
 void test_non_geometry()
 {
     std::vector<int> v;
@@ -106,6 +127,7 @@ void test_geometry(std::string const& wkt)
 template <typename P>
 void test_all()
 {
+    test_empty_non_geometry();
     test_non_geometry();
     test_geometry<bg::model::ring<P> >("POLYGON((1 1,1 4,4 4,4 1))");
 }

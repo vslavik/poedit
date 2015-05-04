@@ -19,6 +19,8 @@
 #include <boost/container/vector.hpp>
 #include <boost/intrusive/detail/mpl.hpp>
 #include <boost/intrusive/pointer_traits.hpp>
+#include <boost/core/no_exceptions_support.hpp>
+#include <boost/move/adl_move_swap.hpp>
 
 template < typename T >
 class bounded_pointer;
@@ -38,7 +40,7 @@ class bounded_pointer
    typedef void (bounded_pointer::*unspecified_bool_type)() const;
 
    public:
-   typedef typename boost::remove_const< T >::type mut_val_t;
+   typedef typename boost::intrusive::detail::remove_const< T >::type mut_val_t;
    typedef const mut_val_t const_val_t;
 
    typedef bounded_reference<T>  reference;
@@ -66,10 +68,10 @@ class bounded_pointer
       operator= (const bounded_pointer<T2> & other)
    {  m_offset = other.m_offset;  return *this;  }
 
-   const bounded_pointer< typename boost::intrusive::detail::remove_const< T >::type >& unconst() const 
-   { return *reinterpret_cast< const bounded_pointer< typename boost::intrusive::detail::remove_const< T >::type >* >(this); } 
+   const bounded_pointer< typename boost::intrusive::detail::remove_const< T >::type >& unconst() const
+   { return *reinterpret_cast< const bounded_pointer< typename boost::intrusive::detail::remove_const< T >::type >* >(this); }
 
-   bounded_pointer< typename boost::intrusive::detail::remove_const< T >::type >& unconst() 
+   bounded_pointer< typename boost::intrusive::detail::remove_const< T >::type >& unconst()
    { return *reinterpret_cast< bounded_pointer< typename boost::intrusive::detail::remove_const< T >::type >* >(this); }
 
    static mut_val_t* base()
@@ -140,7 +142,7 @@ template < typename T >
 class bounded_reference
 {
    public:
-   typedef typename boost::remove_const< T >::type mut_val_t;
+   typedef typename boost::intrusive::detail::remove_const< T >::type mut_val_t;
    typedef const mut_val_t const_val_t;
    typedef bounded_pointer< T > pointer;
    static const unsigned char max_offset = pointer::max_offset;
@@ -149,7 +151,7 @@ class bounded_reference
    bounded_reference()
       : m_offset(max_offset)
    {}
-   
+
    bounded_reference(const bounded_reference& other)
       : m_offset(other.m_offset)
    {}
@@ -189,7 +191,7 @@ class bounded_reference
 
    // the copy asop is shallow; we need swap overload to shuffle a vector of references
    friend void swap(bounded_reference& lhs, bounded_reference& rhs)
-   {  std::swap(lhs.m_offset, rhs.m_offset); }
+   {  ::boost::adl_move_swap(lhs.m_offset, rhs.m_offset); }
 
    private:
    template <typename> friend class bounded_reference;
@@ -211,7 +213,7 @@ class bounded_allocator
    pointer allocate(size_t n)
    {
       assert(inited());
-      assert(n == 1);
+      assert(n == 1);(void)n;
       pointer p;
       unsigned char i;
       for (i = 0; i < max_offset && m_in_use[i]; ++i);
@@ -220,11 +222,11 @@ class bounded_allocator
       m_in_use[p.m_offset] = true;
       return p;
    }
-   
+
    void deallocate(pointer p, size_t n)
    {
       assert(inited());
-      assert(n == 1);
+      assert(n == 1);(void)n;
       assert(m_in_use[p.m_offset]);
       m_in_use[p.m_offset] = false;
    }
@@ -237,12 +239,12 @@ class bounded_allocator
       // allocate non-constructed storage
       m_base = static_cast< T* >(::operator new [] (max_offset * sizeof(T)));
    }
-   
+
    static bool inited()
    {
       return m_in_use.size() == max_offset;
    }
-   
+
    static bool is_clear()
    {
       assert(inited());
@@ -255,7 +257,7 @@ class bounded_allocator
       }
       return true;
    }
-   
+
    static void destroy()
    {
       // deallocate storage without destructors

@@ -1,10 +1,10 @@
 /*
- Copyright (c) 2014 Glen Joseph Fernandes
- glenfe at live dot com
+ (c) 2014 Glen Joseph Fernandes
+ glenjofe at gmail dot com
 
- Distributed under the Boost Software License,
- Version 1.0. (See accompanying file LICENSE_1_0.txt
- or copy at http://boost.org/LICENSE_1_0.txt)
+ Distributed under the Boost Software
+ License, Version 1.0.
+ http://boost.org/LICENSE_1_0.txt
 */
 #ifndef BOOST_ALIGN_DETAIL_ALIGNED_ALLOC_HPP
 #define BOOST_ALIGN_DETAIL_ALIGNED_ALLOC_HPP
@@ -22,11 +22,8 @@ namespace boost {
             std::size_t size) BOOST_NOEXCEPT
         {
             BOOST_ASSERT(detail::is_alignment(alignment));
-            enum {
-                void_align = alignment_of<void*>::value,
-            };
-            if (alignment < void_align) {
-                alignment = void_align;
+            if (alignment < alignment_of<void*>::value) {
+                alignment = alignment_of<void*>::value;
             }
             std::size_t n = size + alignment - 1;
             void* p1 = 0;

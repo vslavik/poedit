@@ -21,55 +21,56 @@ namespace boost { namespace fusion
             T0 , T1 , T2 , T3 , T4 , T5 , T6 , T7 , T8 , T9>
         storage_type;
         typedef typename storage_type::size size;
-        BOOST_FUSION_GPU_ENABLED
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         set()
             : data() {}
         template <typename Sequence>
-        BOOST_FUSION_GPU_ENABLED
-        set(Sequence const& rhs)
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+        set(Sequence const& rhs
+            , typename boost::enable_if<traits::is_sequence<Sequence> >::type* = 0)
             : data(rhs) {}
-    BOOST_FUSION_GPU_ENABLED
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
     explicit
-    set(typename detail::call_param<T0 >::type _0)
-        : data(_0) {}
-    BOOST_FUSION_GPU_ENABLED
-    set(typename detail::call_param<T0 >::type _0 , typename detail::call_param<T1 >::type _1)
-        : data(_0 , _1) {}
-    BOOST_FUSION_GPU_ENABLED
-    set(typename detail::call_param<T0 >::type _0 , typename detail::call_param<T1 >::type _1 , typename detail::call_param<T2 >::type _2)
-        : data(_0 , _1 , _2) {}
-    BOOST_FUSION_GPU_ENABLED
-    set(typename detail::call_param<T0 >::type _0 , typename detail::call_param<T1 >::type _1 , typename detail::call_param<T2 >::type _2 , typename detail::call_param<T3 >::type _3)
-        : data(_0 , _1 , _2 , _3) {}
-    BOOST_FUSION_GPU_ENABLED
-    set(typename detail::call_param<T0 >::type _0 , typename detail::call_param<T1 >::type _1 , typename detail::call_param<T2 >::type _2 , typename detail::call_param<T3 >::type _3 , typename detail::call_param<T4 >::type _4)
-        : data(_0 , _1 , _2 , _3 , _4) {}
-    BOOST_FUSION_GPU_ENABLED
-    set(typename detail::call_param<T0 >::type _0 , typename detail::call_param<T1 >::type _1 , typename detail::call_param<T2 >::type _2 , typename detail::call_param<T3 >::type _3 , typename detail::call_param<T4 >::type _4 , typename detail::call_param<T5 >::type _5)
-        : data(_0 , _1 , _2 , _3 , _4 , _5) {}
-    BOOST_FUSION_GPU_ENABLED
-    set(typename detail::call_param<T0 >::type _0 , typename detail::call_param<T1 >::type _1 , typename detail::call_param<T2 >::type _2 , typename detail::call_param<T3 >::type _3 , typename detail::call_param<T4 >::type _4 , typename detail::call_param<T5 >::type _5 , typename detail::call_param<T6 >::type _6)
-        : data(_0 , _1 , _2 , _3 , _4 , _5 , _6) {}
-    BOOST_FUSION_GPU_ENABLED
-    set(typename detail::call_param<T0 >::type _0 , typename detail::call_param<T1 >::type _1 , typename detail::call_param<T2 >::type _2 , typename detail::call_param<T3 >::type _3 , typename detail::call_param<T4 >::type _4 , typename detail::call_param<T5 >::type _5 , typename detail::call_param<T6 >::type _6 , typename detail::call_param<T7 >::type _7)
-        : data(_0 , _1 , _2 , _3 , _4 , _5 , _6 , _7) {}
-    BOOST_FUSION_GPU_ENABLED
-    set(typename detail::call_param<T0 >::type _0 , typename detail::call_param<T1 >::type _1 , typename detail::call_param<T2 >::type _2 , typename detail::call_param<T3 >::type _3 , typename detail::call_param<T4 >::type _4 , typename detail::call_param<T5 >::type _5 , typename detail::call_param<T6 >::type _6 , typename detail::call_param<T7 >::type _7 , typename detail::call_param<T8 >::type _8)
-        : data(_0 , _1 , _2 , _3 , _4 , _5 , _6 , _7 , _8) {}
-    BOOST_FUSION_GPU_ENABLED
-    set(typename detail::call_param<T0 >::type _0 , typename detail::call_param<T1 >::type _1 , typename detail::call_param<T2 >::type _2 , typename detail::call_param<T3 >::type _3 , typename detail::call_param<T4 >::type _4 , typename detail::call_param<T5 >::type _5 , typename detail::call_param<T6 >::type _6 , typename detail::call_param<T7 >::type _7 , typename detail::call_param<T8 >::type _8 , typename detail::call_param<T9 >::type _9)
-        : data(_0 , _1 , _2 , _3 , _4 , _5 , _6 , _7 , _8 , _9) {}
+    set(typename detail::call_param<T0 >::type arg0)
+        : data(arg0) {}
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+    set(typename detail::call_param<T0 >::type arg0 , typename detail::call_param<T1 >::type arg1)
+        : data(arg0 , arg1) {}
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+    set(typename detail::call_param<T0 >::type arg0 , typename detail::call_param<T1 >::type arg1 , typename detail::call_param<T2 >::type arg2)
+        : data(arg0 , arg1 , arg2) {}
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+    set(typename detail::call_param<T0 >::type arg0 , typename detail::call_param<T1 >::type arg1 , typename detail::call_param<T2 >::type arg2 , typename detail::call_param<T3 >::type arg3)
+        : data(arg0 , arg1 , arg2 , arg3) {}
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+    set(typename detail::call_param<T0 >::type arg0 , typename detail::call_param<T1 >::type arg1 , typename detail::call_param<T2 >::type arg2 , typename detail::call_param<T3 >::type arg3 , typename detail::call_param<T4 >::type arg4)
+        : data(arg0 , arg1 , arg2 , arg3 , arg4) {}
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+    set(typename detail::call_param<T0 >::type arg0 , typename detail::call_param<T1 >::type arg1 , typename detail::call_param<T2 >::type arg2 , typename detail::call_param<T3 >::type arg3 , typename detail::call_param<T4 >::type arg4 , typename detail::call_param<T5 >::type arg5)
+        : data(arg0 , arg1 , arg2 , arg3 , arg4 , arg5) {}
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+    set(typename detail::call_param<T0 >::type arg0 , typename detail::call_param<T1 >::type arg1 , typename detail::call_param<T2 >::type arg2 , typename detail::call_param<T3 >::type arg3 , typename detail::call_param<T4 >::type arg4 , typename detail::call_param<T5 >::type arg5 , typename detail::call_param<T6 >::type arg6)
+        : data(arg0 , arg1 , arg2 , arg3 , arg4 , arg5 , arg6) {}
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+    set(typename detail::call_param<T0 >::type arg0 , typename detail::call_param<T1 >::type arg1 , typename detail::call_param<T2 >::type arg2 , typename detail::call_param<T3 >::type arg3 , typename detail::call_param<T4 >::type arg4 , typename detail::call_param<T5 >::type arg5 , typename detail::call_param<T6 >::type arg6 , typename detail::call_param<T7 >::type arg7)
+        : data(arg0 , arg1 , arg2 , arg3 , arg4 , arg5 , arg6 , arg7) {}
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+    set(typename detail::call_param<T0 >::type arg0 , typename detail::call_param<T1 >::type arg1 , typename detail::call_param<T2 >::type arg2 , typename detail::call_param<T3 >::type arg3 , typename detail::call_param<T4 >::type arg4 , typename detail::call_param<T5 >::type arg5 , typename detail::call_param<T6 >::type arg6 , typename detail::call_param<T7 >::type arg7 , typename detail::call_param<T8 >::type arg8)
+        : data(arg0 , arg1 , arg2 , arg3 , arg4 , arg5 , arg6 , arg7 , arg8) {}
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+    set(typename detail::call_param<T0 >::type arg0 , typename detail::call_param<T1 >::type arg1 , typename detail::call_param<T2 >::type arg2 , typename detail::call_param<T3 >::type arg3 , typename detail::call_param<T4 >::type arg4 , typename detail::call_param<T5 >::type arg5 , typename detail::call_param<T6 >::type arg6 , typename detail::call_param<T7 >::type arg7 , typename detail::call_param<T8 >::type arg8 , typename detail::call_param<T9 >::type arg9)
+        : data(arg0 , arg1 , arg2 , arg3 , arg4 , arg5 , arg6 , arg7 , arg8 , arg9) {}
         template <typename T>
-        BOOST_FUSION_GPU_ENABLED
+        BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         set&
         operator=(T const& rhs)
         {
             data = rhs;
             return *this;
         }
-        BOOST_FUSION_GPU_ENABLED
+        BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         storage_type& get_data() { return data; }
-        BOOST_FUSION_GPU_ENABLED
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         storage_type const& get_data() const { return data; }
     private:
         storage_type data;

@@ -26,6 +26,10 @@ typedef boost::random::detail::seed_type<result_type>::type seed_type;
 #pragma warning(disable:4244)
 #endif
 
+#ifndef BOOST_RANDOM_DISCARD_COUNT1
+#define BOOST_RANDOM_DISCARD_COUNT1 9307
+#endif
+
 template<class Converted, class URNG, class T>
 void test_seed_conversion(URNG & urng, const T & t)
 {
@@ -157,12 +161,41 @@ BOOST_AUTO_TEST_CASE(test_discard)
     BOOST_RANDOM_URNG urng;
     BOOST_RANDOM_URNG urng2;
     BOOST_CHECK_EQUAL(urng, urng2);
-    for(int i = 0; i < 9307; ++i)
+    for(int i = 0; i < BOOST_RANDOM_DISCARD_COUNT1; ++i)
         urng();
     BOOST_CHECK_NE(urng, urng2);
-    urng2.discard(9307);
+    urng2.discard(BOOST_RANDOM_DISCARD_COUNT1);
     BOOST_CHECK_EQUAL(urng, urng2);
 }
+
+#ifdef BOOST_RANDOM_DISCARD_COUNT2
+BOOST_AUTO_TEST_CASE(test_discard2)
+{
+    BOOST_RANDOM_URNG urng;
+    BOOST_RANDOM_URNG urng2;
+    BOOST_CHECK_EQUAL(urng, urng2);
+    for(int i = 0; i < BOOST_RANDOM_DISCARD_COUNT2; ++i)
+        urng();
+    BOOST_CHECK_NE(urng, urng2);
+    urng2.discard(BOOST_RANDOM_DISCARD_COUNT2);
+    BOOST_CHECK_EQUAL(urng, urng2);
+}
+#endif
+
+#ifdef BOOST_RANDOM_DISCARD_MAX
+BOOST_AUTO_TEST_CASE(test_discard_max)
+{
+    boost::uintmax_t val = (std::numeric_limits<boost::uintmax_t>::max)();
+    boost::uintmax_t half = val / 2;
+    BOOST_RANDOM_URNG urng;
+    BOOST_RANDOM_URNG urng2;
+    urng.discard(half);
+    urng.discard(half);
+    urng.discard(val - 2*half);
+    urng2.discard(val);
+    BOOST_CHECK_EQUAL(urng, urng2);
+}
+#endif
 
 BOOST_AUTO_TEST_CASE(test_copy)
 {

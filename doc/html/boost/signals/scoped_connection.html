@@ -36,23 +36,23 @@
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="scoped_connection.html#boost.signals.scoped_connectionconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="scoped_connection.html#idp215745920-bb"><span class="identifier">scoped_connection</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="scoped_connection.html#idp47721632-bb"><span class="special">~</span><span class="identifier">scoped_connection</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="scoped_connection.html#idp221070688-bb"><span class="identifier">scoped_connection</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="scoped_connection.html#idp94514240-bb"><span class="special">~</span><span class="identifier">scoped_connection</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="scoped_connection.html#idp158264960-bb">connection management</a></span>
-  <span class="keyword">void</span> <a class="link" href="scoped_connection.html#idp158265520-bb"><span class="identifier">disconnect</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="scoped_connection.html#idp41435296-bb"><span class="identifier">connected</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="scoped_connection.html#idp44384480-bb">connection management</a></span>
+  <span class="keyword">void</span> <a class="link" href="scoped_connection.html#idp44385040-bb"><span class="identifier">disconnect</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="scoped_connection.html#idp144954560-bb"><span class="identifier">connected</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp427805456"></a><h2>Description</h2>
+<a name="idp420228736"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp427805872"></a><h3>
+<a name="idp420229152"></a><h3>
 <a name="boost.signals.scoped_connectionconstruct-copy-destruct"></a><code class="computeroutput">scoped_connection</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp215745920-bb"></a><span class="identifier">scoped_connection</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp221070688-bb"></a><span class="identifier">scoped_connection</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -73,7 +73,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp47721632-bb"></a><span class="special">~</span><span class="identifier">scoped_connection</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp94514240-bb"></a><span class="special">~</span><span class="identifier">scoped_connection</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -82,7 +82,7 @@
 <tbody><tr>
 <td><p><span class="term">Effects:</span></p></td>
 <td><p>If
-          <code class="computeroutput">this-&gt;<a class="link" href="scoped_connection.html#idp41435296-bb">connected</a>()</code>,
+          <code class="computeroutput">this-&gt;<a class="link" href="scoped_connection.html#idp144954560-bb">connected</a>()</code>,
           disconnects the signal-slot connection.</p></td>
 </tr></tbody>
 </table></div>
@@ -90,11 +90,11 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp427824512"></a><h3>
-<a name="idp158264960-bb"></a><code class="computeroutput">scoped_connection</code> connection management</h3>
+<a name="idp420247664"></a><h3>
+<a name="idp44384480-bb"></a><code class="computeroutput">scoped_connection</code> connection management</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp158265520-bb"></a><span class="identifier">disconnect</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp44385040-bb"></a><span class="identifier">disconnect</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -104,19 +104,19 @@
 <tr>
 <td><p><span class="term">Effects:</span></p></td>
 <td><p>If
-             <code class="computeroutput">this-&gt;<a class="link" href="scoped_connection.html#idp41435296-bb">connected</a>()</code>,
+             <code class="computeroutput">this-&gt;<a class="link" href="scoped_connection.html#idp144954560-bb">connected</a>()</code>,
              disconnects the signal and slot referenced by this;
              otherwise, this operation is a no-op.</p></td>
 </tr>
 <tr>
 <td><p><span class="term">Postconditions:</span></p></td>
-<td><p><code class="computeroutput">!this-&gt;<a class="link" href="scoped_connection.html#idp41435296-bb">connected</a>()</code>.</p></td>
+<td><p><code class="computeroutput">!this-&gt;<a class="link" href="scoped_connection.html#idp144954560-bb">connected</a>()</code>.</p></td>
 </tr>
 </tbody>
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp41435296-bb"></a><span class="identifier">connected</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp144954560-bb"></a><span class="identifier">connected</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">

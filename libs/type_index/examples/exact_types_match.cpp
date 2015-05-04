@@ -50,7 +50,7 @@ int main() {
         int i = 100; 
         
         // An attempt to convert stored function to a function accepting reference
-        func.call<int&>(i); // Will throw, because types `int&` and `int` missmatch
+        func.call<int&>(i); // Will throw, because types `int&` and `int` mismatch
 
         assert(false);
     } catch (const std::runtime_error& /*e*/) {}

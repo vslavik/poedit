@@ -15,7 +15,9 @@
 
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/intrusive/detail/mpl.hpp>
-#include <boost/move/move.hpp>
+#include <boost/intrusive/detail/simple_disposers.hpp>
+#include <boost/intrusive/detail/iterator.hpp>
+#include <boost/move/utility_core.hpp>
 
 namespace boost {
 namespace intrusive {
@@ -73,6 +75,7 @@ void test_container( Container & c )
       BOOST_TEST( it == itend );
       BOOST_TEST( c.size() == i );
    }
+   static_cast<const Container&>(c).check();
 }
 
 
@@ -384,14 +387,14 @@ void test_unordered_associative_container_invariants(Container & c, Data & d)
       di != de ; ++di ){
       const_iterator i = c.find(*di);
       size_type nb = c.bucket(*i);
-      size_type bucket_elem = std::distance(c.begin(nb), c.end(nb));
+      size_type bucket_elem = boost::intrusive::iterator_distance(c.begin(nb), c.end(nb));
       BOOST_TEST( bucket_elem ==  c.bucket_size(nb) );
       BOOST_TEST( &*c.local_iterator_to(*c.find(*di)) == &*i );
       BOOST_TEST( &*c.local_iterator_to(*const_cast<const Container &>(c).find(*di)) == &*i );
       BOOST_TEST( &*Container::s_local_iterator_to(*c.find(*di)) == &*i );
       BOOST_TEST( &*Container::s_local_iterator_to(*const_cast<const Container &>(c).find(*di)) == &*i );
       std::pair<const_iterator, const_iterator> er = c.equal_range(*di);
-      size_type cnt = std::distance(er.first, er.second);
+      size_type cnt = boost::intrusive::iterator_distance(er.first, er.second);
       BOOST_TEST( cnt == c.count(*di));
       if(cnt > 1){
          const_iterator n = er.first;

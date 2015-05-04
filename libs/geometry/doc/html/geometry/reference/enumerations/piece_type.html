@@ -7,7 +7,7 @@
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../enumerations.html" title="Enumerations">
 <link rel="prev" href="order_selector.html" title="order_selector">
-<link rel="next" href="../exceptions.html" title="Exceptions">
+<link rel="next" href="validity_failure_type.html" title="validity_failure_type">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,20 +20,20 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="order_selector.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../enumerations.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../exceptions.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="order_selector.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../enumerations.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="validity_failure_type.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="geometry.reference.enumerations.piece_type"></a><a class="link" href="piece_type.html" title="piece_type">piece_type</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp116796224"></a>
-<a class="indexterm" name="idp116797040"></a>
-<a class="indexterm" name="idp116797856"></a>
-<a class="indexterm" name="idp116798672"></a>
-<a class="indexterm" name="idp116799488"></a>
-<a class="indexterm" name="idp116800304"></a>
-<a class="indexterm" name="idp116801120"></a>
+          <a class="indexterm" name="idp123339936"></a>
+<a class="indexterm" name="idp123340752"></a>
+<a class="indexterm" name="idp123341568"></a>
+<a class="indexterm" name="idp123342384"></a>
+<a class="indexterm" name="idp123343200"></a>
+<a class="indexterm" name="idp123344016"></a>
+<a class="indexterm" name="idp123344832"></a>
 Enumerates types of pieces (parts of buffer) around geometries.
         </p>
 <h6>
@@ -42,7 +42,15 @@ Enumerates types of pieces (parts of buffer) around geometries.
         </h6>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">enum</span> <span class="identifier">piece_type</span> <span class="special">{</span><span class="identifier">buffered_segment</span><span class="special">,</span> <span class="identifier">buffered_join</span><span class="special">,</span> <span class="identifier">buffered_round_end</span><span class="special">,</span> <span class="identifier">buffered_flat_end</span><span class="special">,</span> <span class="identifier">buffered_point</span><span class="special">,</span> <span class="identifier">buffered_concave</span><span class="special">};</span></pre>
+<pre class="programlisting"><span class="keyword">enum</span> <span class="identifier">piece_type</span>
+<span class="special">{</span>
+    <span class="identifier">buffered_segment</span><span class="special">,</span>
+    <span class="identifier">buffered_join</span><span class="special">,</span>
+    <span class="identifier">buffered_round_end</span><span class="special">,</span>
+    <span class="identifier">buffered_flat_end</span><span class="special">,</span>
+    <span class="identifier">buffered_point</span><span class="special">,</span>
+    <span class="identifier">buffered_concave</span>
+<span class="special">};</span></pre>
 <p>
         </p>
 <h6>
@@ -133,8 +141,8 @@ Enumerates types of pieces (parts of buffer) around geometries.
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2014 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam
-      Wulkiewicz, Oracle and/or its affiliates<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
+      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -142,7 +150,7 @@ Enumerates types of pieces (parts of buffer) around geometries.
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="order_selector.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../enumerations.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../exceptions.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="order_selector.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../enumerations.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="validity_failure_type.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

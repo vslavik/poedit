@@ -8,6 +8,82 @@
 
 import BoostBuild
 
+def test_default_order():
+    tester = BoostBuild.Tester(use_test_config=False)
+    tester.write("jamroot.jam", """
+
+    import order ;
+    import "class" : new ;
+
+    obj test : test.cpp : <include>b <include>a ;
+    """)
+
+    tester.write("test.cpp", """
+    #include <test.hpp>
+    int main() { f(); }
+    """)
+    
+    tester.write("a/test.hpp", """
+    void f();
+    """)
+    
+    tester.write("b/test.hpp", """
+    """)
+    
+    tester.run_build_system()
+    
+    tester.expect_addition("bin/$toolset/debug/test.obj")
+    
+    # Check that the dependencies are correct
+    tester.touch("a/test.hpp")
+    tester.run_build_system()
+    tester.expect_touch("bin/$toolset/debug/test.obj")
+    tester.expect_nothing_more()
+    
+    tester.touch("b/test.hpp")
+    tester.run_build_system()
+    tester.expect_nothing_more()
+
+    tester.cleanup()
+
+def test_default_order_mixed():
+    tester = BoostBuild.Tester(use_test_config=False)
+    tester.write("jamroot.jam", """
+
+    import order ;
+    import "class" : new ;
+
+    obj test : test.cpp : <include>b <include>a <include>c&&d ;
+    """)
+
+    tester.write("test.cpp", """
+    #include <test.hpp>
+    int main() { f(); }
+    """)
+    
+    tester.write("a/test.hpp", """
+    void f();
+    """)
+    
+    tester.write("b/test.hpp", """
+    """)
+    
+    tester.run_build_system()
+    
+    tester.expect_addition("bin/$toolset/debug/test.obj")
+    
+    # Check that the dependencies are correct
+    tester.touch("a/test.hpp")
+    tester.run_build_system()
+    tester.expect_touch("bin/$toolset/debug/test.obj")
+    tester.expect_nothing_more()
+    
+    tester.touch("b/test.hpp")
+    tester.run_build_system()
+    tester.expect_nothing_more()
+
+    tester.cleanup()
+
 def test_basic():
     tester = BoostBuild.Tester(use_test_config=False)
     tester.write("jamroot.jam", """
@@ -167,6 +243,8 @@ def test_order_graph():
 
     t.cleanup()
 
+test_default_order()
+test_default_order_mixed()
 test_basic()
 test_order1()
 test_order2()

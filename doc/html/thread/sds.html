@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../thread.html" title="Chapter&#160;32.&#160;Thread 4.3.0">
+<link rel="up" href="../thread.html" title="Chapter&#160;30.&#160;Thread 4.5.0">
 <link rel="prev" href="thread_local_storage.html" title="Thread Local Storage">
-<link rel="next" href="time.html" title="Time Requirements">
+<link rel="next" href="parallel.html" title="Parallel - Fork-Join -- EXPERIMENTAL">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="thread_local_storage.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../thread.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="time.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="thread_local_storage.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../thread.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="parallel.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
@@ -347,9 +347,9 @@
     <span class="keyword">typedef</span> <span class="identifier">T</span> <span class="identifier">value_type</span><span class="special">;</span>
     <span class="keyword">typedef</span> <span class="identifier">Lockable</span> <span class="identifier">mutex_type</span><span class="special">;</span>
 
-    <span class="identifier">synchronized_value</span><span class="special">()</span> <span class="identifier">noexept</span><span class="special">(</span><span class="identifier">is_nothrow_default_constructible</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">);</span>
-    <span class="identifier">synchronized_value</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="identifier">noexept</span><span class="special">(</span><span class="identifier">is_nothrow_copy_constructible</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">);</span>
-    <span class="identifier">synchronized_value</span><span class="special">(</span><span class="identifier">T</span><span class="special">&amp;&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="identifier">noexept</span><span class="special">(</span><span class="identifier">is_nothrow_move_constructible</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">);</span>
+    <span class="identifier">synchronized_value</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">(</span><span class="identifier">is_nothrow_default_constructible</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">);</span>
+    <span class="identifier">synchronized_value</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">(</span><span class="identifier">is_nothrow_copy_constructible</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">);</span>
+    <span class="identifier">synchronized_value</span><span class="special">(</span><span class="identifier">T</span><span class="special">&amp;&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">(</span><span class="identifier">is_nothrow_move_constructible</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">);</span>
     <span class="identifier">synchronized_value</span><span class="special">(</span><span class="identifier">synchronized_value</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">rhs</span><span class="special">);</span>
     <span class="identifier">synchronized_value</span><span class="special">(</span><span class="identifier">synchronized_value</span><span class="special">&amp;&amp;</span> <span class="identifier">other</span><span class="special">);</span>
 
@@ -392,7 +392,7 @@
 <div class="titlepage"><div><div><h6 class="title">
 <a name="thread.sds.synchronized_valuesxxx.synchronized_value_ref.synchronized_value.constructor"></a><a class="link" href="sds.html#thread.sds.synchronized_valuesxxx.synchronized_value_ref.synchronized_value.constructor" title="synchronized_value()"><code class="computeroutput"><span class="identifier">synchronized_value</span><span class="special">()</span></code></a>
 </h6></div></div></div>
-<pre class="programlisting"><span class="identifier">synchronized_value</span><span class="special">()</span> <span class="identifier">noexept</span><span class="special">(</span><span class="identifier">is_nothrow_default_constructible</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">);</span>
+<pre class="programlisting"><span class="identifier">synchronized_value</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">(</span><span class="identifier">is_nothrow_default_constructible</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">);</span>
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
@@ -416,7 +416,7 @@
 <div class="titlepage"><div><div><h6 class="title">
 <a name="thread.sds.synchronized_valuesxxx.synchronized_value_ref.synchronized_value.constructor_vt"></a><a class="link" href="sds.html#thread.sds.synchronized_valuesxxx.synchronized_value_ref.synchronized_value.constructor_vt" title="synchronized_value(T const&amp;)"><code class="computeroutput"><span class="identifier">synchronized_value</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;)</span></code></a>
 </h6></div></div></div>
-<pre class="programlisting"><span class="identifier">synchronized_value</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="identifier">noexept</span><span class="special">(</span><span class="identifier">is_nothrow_copy_constructible</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">);</span>
+<pre class="programlisting"><span class="identifier">synchronized_value</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">(</span><span class="identifier">is_nothrow_copy_constructible</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">);</span>
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
@@ -465,14 +465,14 @@
 <div class="titlepage"><div><div><h6 class="title">
 <a name="thread.sds.synchronized_valuesxxx.synchronized_value_ref.synchronized_value.move_vt"></a><a class="link" href="sds.html#thread.sds.synchronized_valuesxxx.synchronized_value_ref.synchronized_value.move_vt" title="synchronized_value(T&amp;&amp;)"><code class="computeroutput"><span class="identifier">synchronized_value</span><span class="special">(</span><span class="identifier">T</span><span class="special">&amp;&amp;)</span></code></a>
 </h6></div></div></div>
-<pre class="programlisting"><span class="identifier">synchronized_value</span><span class="special">(</span><span class="identifier">T</span><span class="special">&amp;&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="identifier">noexept</span><span class="special">(</span><span class="identifier">is_nothrow_move_constructible</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">);</span>
+<pre class="programlisting"><span class="identifier">synchronized_value</span><span class="special">(</span><span class="identifier">T</span><span class="special">&amp;&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">(</span><span class="identifier">is_nothrow_move_constructible</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">);</span>
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
 <dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
-                    <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">CopyMovable</span> </code>.
+                    <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">MoveConstructible</span> </code>.
                   </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
@@ -496,7 +496,7 @@
 <dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
-                    <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">CopyMovable</span> </code>.
+                    <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">MoveConstructible</span> </code>.
                   </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
@@ -520,7 +520,7 @@
 <dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
-                    <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">Assignale</span></code>.
+                    <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">Assignable</span></code>.
                   </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
@@ -555,7 +555,7 @@
 <dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
-                    <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">Assignale</span></code>.
+                    <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">Assignable</span></code>.
                   </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
@@ -651,7 +651,7 @@
 <dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
-                    <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">Assignale</span></code>.
+                    <code class="computeroutput"><span class="identifier">T</span></code> is <code class="computeroutput"><span class="identifier">Assignable</span></code>.
                   </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
@@ -966,6 +966,14 @@
 <div class="toc"><dl class="toc">
 <dt><span class="section"><a href="sds.html#thread.sds.synchronized_queues.ref.sync_queue_req">Synchronized
           Queue Model</a></span></dt>
+<dt><span class="section"><a href="sds.html#thread.sds.synchronized_queues.ref.queue_op_status">Queue
+          Operation Status</a></span></dt>
+<dt><span class="section"><a href="sds.html#thread.sds.synchronized_queues.ref.queue_base">Queue
+          Base</a></span></dt>
+<dt><span class="section"><a href="sds.html#thread.sds.synchronized_queues.ref.queue_adaptor">Queue
+          Adaptor</a></span></dt>
+<dt><span class="section"><a href="sds.html#thread.sds.synchronized_queues.ref.queue_views">Queue
+          Views</a></span></dt>
 <dt><span class="section"><a href="sds.html#thread.sds.synchronized_queues.ref.sync_bounded_queue_ref">Synchronized
           Bounded Queue</a></span></dt>
 <dt><span class="section"><a href="sds.html#thread.sds.synchronized_queues.ref.sync_queue_ref">Synchronized
@@ -1272,8 +1280,8 @@
 <dl class="variablelist">
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
-                      Q::value_type is no throw copy movable. This is needed to ensure
-                      the exception safety.
+                      Q::value_type is no throw move constructible. This is needed
+                      to ensure the exception safety.
                     </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
@@ -1313,16 +1321,17 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h6 class="title">
-<a name="thread.sds.synchronized_queues.ref.sync_queue_req.non_waaiting"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.sync_queue_req.non_waaiting" title="Non-waiting Concurrent Queue Operations">Non-waiting
+<a name="thread.sds.synchronized_queues.ref.sync_queue_req.non_waiting"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.sync_queue_req.non_waiting" title="Non-waiting Concurrent Queue Operations">Non-waiting
             Concurrent Queue Operations</a>
 </h6></div></div></div>
 <p>
-              The ConcurrentQueue concept models a queue with .
+              The ConcurrentQueue concept models a queue with Non-waiting operations.
             </p>
 <p>
               A type <code class="computeroutput"><span class="identifier">Q</span></code> meets the
-              ConcurrentQueue requirements if the following expressions are well-formed
-              and have the specified semantics
+              ConcurrentQueue requirements if is a model of a BasicConcurrentQueue
+              and the following expressions are well-formed and have the specified
+              semantics
             </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
@@ -1369,7 +1378,7 @@
 </ul></div>
 <div class="section">
 <div class="titlepage"><div><div><h6 class="title">
-<a name="thread.sds.synchronized_queues.ref.sync_queue_req.non_waaiting.try_push_back"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.sync_queue_req.non_waaiting.try_push_back" title="s = q.try_push_back(e);"><code class="computeroutput"><span class="identifier">s</span> <span class="special">=</span> <span class="identifier">q</span><span class="special">.</span><span class="identifier">try_push_back</span><span class="special">(</span><span class="identifier">e</span><span class="special">);</span></code></a>
+<a name="thread.sds.synchronized_queues.ref.sync_queue_req.non_waiting.try_push_back"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.sync_queue_req.non_waiting.try_push_back" title="s = q.try_push_back(e);"><code class="computeroutput"><span class="identifier">s</span> <span class="special">=</span> <span class="identifier">q</span><span class="special">.</span><span class="identifier">try_push_back</span><span class="special">(</span><span class="identifier">e</span><span class="special">);</span></code></a>
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
@@ -1421,7 +1430,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h6 class="title">
-<a name="thread.sds.synchronized_queues.ref.sync_queue_req.non_waaiting.try_push_back_m"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.sync_queue_req.non_waaiting.try_push_back_m" title="s = q.try_push_back(rve());"><code class="computeroutput"><span class="identifier">s</span> <span class="special">=</span> <span class="identifier">q</span><span class="special">.</span><span class="identifier">try_push_back</span><span class="special">(</span><span class="identifier">rve</span><span class="special">());</span></code></a>
+<a name="thread.sds.synchronized_queues.ref.sync_queue_req.non_waiting.try_push_back_m"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.sync_queue_req.non_waiting.try_push_back_m" title="s = q.try_push_back(rve);"><code class="computeroutput"><span class="identifier">s</span> <span class="special">=</span> <span class="identifier">q</span><span class="special">.</span><span class="identifier">try_push_back</span><span class="special">(</span><span class="identifier">rve</span><span class="special">);</span></code></a>
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
@@ -1472,16 +1481,16 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h6 class="title">
-<a name="thread.sds.synchronized_queues.ref.sync_queue_req.non_waaiting.try_pull_front_lv"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.sync_queue_req.non_waaiting.try_pull_front_lv" title="s = q.try_pull_front(lve)"><code class="computeroutput"><span class="identifier">s</span> <span class="special">=</span> <span class="identifier">q</span><span class="special">.</span><span class="identifier">try_pull_front</span><span class="special">(</span><span class="identifier">lve</span><span class="special">)</span></code></a>
+<a name="thread.sds.synchronized_queues.ref.sync_queue_req.non_waiting.try_pull_front_lv"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.sync_queue_req.non_waiting.try_pull_front_lv" title="s = q.try_pull_front(lve)"><code class="computeroutput"><span class="identifier">s</span> <span class="special">=</span> <span class="identifier">q</span><span class="special">.</span><span class="identifier">try_pull_front</span><span class="special">(</span><span class="identifier">lve</span><span class="special">)</span></code></a>
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
 <dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
-                      Waits until the queue is not empty and then pull the element
-                      from the queue <code class="computeroutput"><span class="identifier">q</span></code>
-                      and moves the pulled element into <code class="computeroutput"><span class="identifier">lve</span></code>
+                      If the queue is not empty pulls the element from the queue
+                      <code class="computeroutput"><span class="identifier">q</span></code> and moves
+                      the pulled element into <code class="computeroutput"><span class="identifier">lve</span></code>
                       (this could need an allocation for unbounded queues).
                     </p></dd>
 <dt><span class="term">Synchronization:</span></dt>
@@ -1531,7 +1540,7 @@
               is unable to complete without blocking.
             </p>
 <p>
-              Non-blocking operations are provided only for BlockingQueues
+              Non-blocking operations are provided only for lock based queues
             </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
@@ -1632,7 +1641,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h6 class="title">
-<a name="thread.sds.synchronized_queues.ref.sync_queue_req.non_blocking.nonblocking_push_back_m"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.sync_queue_req.non_blocking.nonblocking_push_back_m" title="s = q.nonblocking_push_back(rve());"><code class="computeroutput"><span class="identifier">s</span> <span class="special">=</span> <span class="identifier">q</span><span class="special">.</span><span class="identifier">nonblocking_push_back</span><span class="special">(</span><span class="identifier">rve</span><span class="special">());</span></code></a>
+<a name="thread.sds.synchronized_queues.ref.sync_queue_req.non_blocking.nonblocking_push_back_m"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.sync_queue_req.non_blocking.nonblocking_push_back_m" title="s = q.nonblocking_push_back(rve);"><code class="computeroutput"><span class="identifier">s</span> <span class="special">=</span> <span class="identifier">q</span><span class="special">.</span><span class="identifier">nonblocking_push_back</span><span class="special">(</span><span class="identifier">rve</span><span class="special">);</span></code></a>
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
@@ -1693,9 +1702,9 @@
 <dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
-                      Waits until the queue is not empty and then pull the element
-                      from the queue <code class="computeroutput"><span class="identifier">q</span></code>
-                      and moves the pulled element into <code class="computeroutput"><span class="identifier">lve</span></code>
+                      If the queue is not empty pulls the element from the queue
+                      <code class="computeroutput"><span class="identifier">q</span></code> and moves
+                      the pulled element into <code class="computeroutput"><span class="identifier">lve</span></code>
                       (this could need an allocation for unbounded queues).
                     </p></dd>
 <dt><span class="term">Synchronization:</span></dt>
@@ -2030,6 +2039,235 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
+<a name="thread.sds.synchronized_queues.ref.queue_op_status"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.queue_op_status" title="Queue Operation Status">Queue
+          Operation Status</a>
+</h5></div></div></div>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">thread</span><span class="special">/</span><span class="identifier">concurrent_queues</span><span class="special">/</span><span class="identifier">queue_op_status</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">namespace</span> <span class="identifier">boost</span>
+<span class="special">{</span>
+   <span class="keyword">enum</span> <span class="keyword">class</span> <span class="identifier">queue_op_status</span> <span class="special">{</span> <span class="identifier">success</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">empty</span><span class="special">,</span> <span class="identifier">full</span><span class="special">,</span> <span class="identifier">closed</span><span class="special">,</span> <span class="identifier">busy</span> <span class="special">}</span>
+<span class="special">}</span>
+</pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="thread.sds.synchronized_queues.ref.queue_base"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.queue_base" title="Queue Base">Queue
+          Base</a>
+</h5></div></div></div>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">thread</span><span class="special">/</span><span class="identifier">concurrent_queues</span><span class="special">/</span><span class="identifier">queue_base</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">namespace</span> <span class="identifier">boost</span>
+<span class="special">{</span>
+  <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">ValueType</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">SizeType</span><span class="special">=</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">&gt;</span>
+  <span class="keyword">class</span> <span class="identifier">queue_base</span>
+  <span class="special">{</span>
+  <span class="keyword">public</span><span class="special">:</span>
+    <span class="keyword">typedef</span> <span class="identifier">ValueType</span> <span class="identifier">value_type</span><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">SizeType</span> <span class="identifier">size_type</span><span class="special">;</span>
+
+    <span class="comment">// Constructors/Assignment/Destructors</span>
+    <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">queue_base</span><span class="special">()</span> <span class="special">{};</span>
+
+    <span class="comment">// Observers</span>
+    <span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="identifier">empty</span><span class="special">()</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="identifier">full</span><span class="special">()</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="identifier">size_type</span> <span class="identifier">size</span><span class="special">()</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="identifier">closed</span><span class="special">()</span> <span class="keyword">const</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+
+    <span class="comment">// Modifiers</span>
+    <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="identifier">close</span><span class="special">()</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+
+    <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="identifier">push_back</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="identifier">push_back</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+
+    <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="identifier">pull_front</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="identifier">value_type</span> <span class="identifier">pull_front</span><span class="special">()</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+
+    <span class="keyword">virtual</span> <span class="identifier">queue_op_status</span> <span class="identifier">try_push_back</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="identifier">queue_op_status</span> <span class="identifier">try_push_back</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="identifier">queue_op_status</span> <span class="identifier">try_pull_front</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+
+    <span class="keyword">virtual</span> <span class="identifier">queue_op_status</span> <span class="identifier">nonblocking_push_back</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="identifier">queue_op_status</span> <span class="identifier">nonblocking_push_back</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="identifier">queue_op_status</span> <span class="identifier">nonblocking_pull_front</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+
+    <span class="keyword">virtual</span> <span class="identifier">queue_op_status</span> <span class="identifier">wait_push_back</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="identifier">queue_op_status</span> <span class="identifier">wait_push_back</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+    <span class="keyword">virtual</span> <span class="identifier">queue_op_status</span> <span class="identifier">wait_pull_front</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">elem</span><span class="special">)</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+
+  <span class="special">};</span>
+<span class="special">}</span>
+</pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="thread.sds.synchronized_queues.ref.queue_adaptor"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.queue_adaptor" title="Queue Adaptor">Queue
+          Adaptor</a>
+</h5></div></div></div>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">thread</span><span class="special">/</span><span class="identifier">concurrent_queues</span><span class="special">/</span><span class="identifier">queue_adaptor</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">namespace</span> <span class="identifier">boost</span>
+<span class="special">{</span>
+  <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Queue</span><span class="special">&gt;</span>
+  <span class="keyword">class</span> <span class="identifier">queue_adaptor</span> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">queue_base</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Queue</span><span class="special">::</span><span class="identifier">value_type</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Queue</span><span class="special">::</span><span class="identifier">size_type</span><span class="special">&gt;</span>
+  <span class="special">{</span>
+  <span class="keyword">public</span><span class="special">:</span>
+    <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">Queue</span><span class="special">::</span><span class="identifier">value_type</span> <span class="identifier">value_type</span><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">Queue</span><span class="special">::</span><span class="identifier">size_type</span> <span class="identifier">size_type</span><span class="special">;</span>
+
+    <span class="comment">// Constructors/Assignment/Destructors</span>
+
+    <span class="identifier">queue_adaptor</span><span class="special">();</span>
+
+    <span class="comment">// Observers</span>
+    <span class="keyword">bool</span> <span class="identifier">empty</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+    <span class="keyword">bool</span> <span class="identifier">full</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+    <span class="identifier">size_type</span> <span class="identifier">size</span><span class="special">()</span> <span class="keyword">const</span> <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">queue</span><span class="special">.</span><span class="identifier">size</span><span class="special">();</span> <span class="special">}</span>
+    <span class="keyword">bool</span> <span class="identifier">closed</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+
+    <span class="comment">// Modifiers</span>
+    <span class="keyword">void</span> <span class="identifier">close</span><span class="special">();</span>
+
+    <span class="keyword">void</span> <span class="identifier">push_back</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+    <span class="keyword">void</span> <span class="identifier">push_back</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
+
+    <span class="keyword">void</span> <span class="identifier">pull_front</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+    <span class="identifier">value_type</span> <span class="identifier">pull_front</span><span class="special">();</span>
+
+    <span class="identifier">queue_op_status</span> <span class="identifier">try_push_back</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+    <span class="identifier">queue_op_status</span> <span class="identifier">try_push_back</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
+    <span class="identifier">queue_op_status</span> <span class="identifier">try_pull_front</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+
+    <span class="identifier">queue_op_status</span> <span class="identifier">nonblocking_push_back</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+    <span class="identifier">queue_op_status</span> <span class="identifier">nonblocking_push_back</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
+    <span class="identifier">queue_op_status</span> <span class="identifier">nonblocking_pull_front</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+
+    <span class="identifier">queue_op_status</span> <span class="identifier">wait_push_back</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+    <span class="identifier">queue_op_status</span> <span class="identifier">wait_push_back</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
+    <span class="identifier">queue_op_status</span> <span class="identifier">wait_pull_front</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+
+  <span class="special">};</span>
+<span class="special">}</span>
+</pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="thread.sds.synchronized_queues.ref.queue_views"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.queue_views" title="Queue Views">Queue
+          Views</a>
+</h5></div></div></div>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">thread</span><span class="special">/</span><span class="identifier">concurrent_queues</span><span class="special">/</span><span class="identifier">queue_views</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">namespace</span> <span class="identifier">boost</span>
+<span class="special">{</span>
+  <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Queue</span><span class="special">&gt;</span>
+  <span class="keyword">class</span> <span class="identifier">queue_back_view</span><span class="special">;</span>
+  <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Queue</span><span class="special">&gt;</span>
+  <span class="keyword">class</span> <span class="identifier">queue_front_view</span>
+
+  <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
+  <span class="keyword">using</span> <span class="identifier">queue_back</span> <span class="special">=</span> <span class="identifier">queue_back_view</span><span class="special">&lt;</span><span class="identifier">queue_base</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;&gt;;</span>
+  <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
+  <span class="keyword">using</span> <span class="identifier">queue_front</span> <span class="special">=</span> <span class="identifier">queue_front_view</span><span class="special">&lt;</span><span class="identifier">queue_base</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;&gt;;</span>
+<span class="special">}</span>
+</pre>
+<div class="section">
+<div class="titlepage"><div><div><h6 class="title">
+<a name="thread.sds.synchronized_queues.ref.queue_views.queue_back_view"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.queue_views.queue_back_view" title="Class template queue_back_view&lt;&gt;">Class
+            template <code class="computeroutput"><span class="identifier">queue_back_view</span><span class="special">&lt;&gt;</span></code></a>
+</h6></div></div></div>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Queue</span><span class="special">&gt;</span>
+<span class="keyword">class</span> <span class="identifier">queue_back_view</span>
+<span class="special">{</span>
+<span class="keyword">public</span><span class="special">:</span>
+  <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">Queue</span><span class="special">::</span><span class="identifier">value_type</span> <span class="identifier">value_type</span><span class="special">;</span>
+  <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">Queue</span><span class="special">::</span><span class="identifier">size_type</span> <span class="identifier">size_type</span><span class="special">;</span>
+
+  <span class="comment">// Constructors/Assignment/Destructors</span>
+  <span class="identifier">queue_back_view</span><span class="special">(</span><span class="identifier">Queue</span><span class="special">&amp;</span> <span class="identifier">q</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
+
+  <span class="comment">// Observers</span>
+  <span class="keyword">bool</span> <span class="identifier">empty</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">bool</span> <span class="identifier">full</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">size_type</span> <span class="identifier">size</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">bool</span> <span class="identifier">closed</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+
+  <span class="comment">// Modifiers</span>
+  <span class="keyword">void</span> <span class="identifier">close</span><span class="special">();</span>
+
+  <span class="keyword">void</span> <span class="identifier">push</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+  <span class="keyword">void</span> <span class="identifier">push</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
+
+  <span class="keyword">void</span> <span class="identifier">pull</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+  <span class="identifier">value_type</span> <span class="identifier">pull</span><span class="special">();</span>
+
+  <span class="identifier">queue_op_status</span> <span class="identifier">try_push</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+  <span class="identifier">queue_op_status</span> <span class="identifier">try_push</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
+
+  <span class="identifier">queue_op_status</span> <span class="identifier">try_pull</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+
+  <span class="identifier">queue_op_status</span> <span class="identifier">nonblocking_push</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+  <span class="identifier">queue_op_status</span> <span class="identifier">nonblocking_push</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
+
+  <span class="identifier">queue_op_status</span> <span class="identifier">nonblocking_pull</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+
+  <span class="identifier">queue_op_status</span> <span class="identifier">wait_push</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+  <span class="identifier">queue_op_status</span> <span class="identifier">wait_push</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
+  <span class="identifier">queue_op_status</span> <span class="identifier">wait_pull_front</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+
+<span class="special">};</span>
+</pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h6 class="title">
+<a name="thread.sds.synchronized_queues.ref.queue_views.queue_front_view"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.queue_views.queue_front_view" title="Class template queue_front_view&lt;&gt;">Class
+            template <code class="computeroutput"><span class="identifier">queue_front_view</span><span class="special">&lt;&gt;</span></code></a>
+</h6></div></div></div>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Queue</span><span class="special">&gt;</span>
+<span class="keyword">class</span> <span class="identifier">queue_front_view</span>
+<span class="special">{</span>
+<span class="keyword">public</span><span class="special">:</span>
+  <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">Queue</span><span class="special">::</span><span class="identifier">value_type</span> <span class="identifier">value_type</span><span class="special">;</span>
+  <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">Queue</span><span class="special">::</span><span class="identifier">size_type</span> <span class="identifier">size_type</span><span class="special">;</span>
+
+  <span class="comment">// Constructors/Assignment/Destructors</span>
+  <span class="identifier">queue_front_view</span><span class="special">(</span><span class="identifier">Queue</span><span class="special">&amp;</span> <span class="identifier">q</span><span class="special">)</span> <span class="identifier">BOOST_NOEXCEPT</span><span class="special">;</span>
+
+  <span class="comment">// Observers</span>
+  <span class="keyword">bool</span> <span class="identifier">empty</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">bool</span> <span class="identifier">full</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">size_type</span> <span class="identifier">size</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">bool</span> <span class="identifier">closed</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+
+  <span class="comment">// Modifiers</span>
+  <span class="keyword">void</span> <span class="identifier">close</span><span class="special">();</span>
+
+  <span class="keyword">void</span> <span class="identifier">push</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+  <span class="keyword">void</span> <span class="identifier">push</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
+
+  <span class="keyword">void</span> <span class="identifier">pull</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+  <span class="identifier">value_type</span> <span class="identifier">pull</span><span class="special">();</span>
+
+  <span class="identifier">queue_op_status</span> <span class="identifier">try_push</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+  <span class="identifier">queue_op_status</span> <span class="identifier">try_push</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
+
+  <span class="identifier">queue_op_status</span> <span class="identifier">try_pull</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+
+  <span class="identifier">queue_op_status</span> <span class="identifier">nonblocking_push</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+  <span class="identifier">queue_op_status</span> <span class="identifier">nonblocking_push</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
+
+  <span class="identifier">queue_op_status</span> <span class="identifier">nonblocking_pull</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+
+  <span class="identifier">queue_op_status</span> <span class="identifier">wait_push</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+  <span class="identifier">queue_op_status</span> <span class="identifier">wait_push</span><span class="special">(</span><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">)</span> <span class="identifier">x</span><span class="special">);</span>
+  <span class="identifier">queue_op_status</span> <span class="identifier">wait_pull</span><span class="special">(</span><span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">);</span>
+
+<span class="special">};</span>
+</pre>
+</div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
 <a name="thread.sds.synchronized_queues.ref.sync_bounded_queue_ref"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.sync_bounded_queue_ref" title="Synchronized Bounded Queue">Synchronized
           Bounded Queue</a>
 </h5></div></div></div>
@@ -2219,13 +2457,13 @@
 
 <span class="keyword">namespace</span> <span class="identifier">boost</span>
 <span class="special">{</span>
-  <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">ValueType</span><span class="special">&gt;</span>
+  <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">ValueType</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Container</span> <span class="special">=</span> <span class="identifier">csbl</span><span class="special">::</span><span class="identifier">devector</span><span class="special">&lt;</span><span class="identifier">ValueType</span><span class="special">&gt;&gt;</span>
   <span class="keyword">class</span> <span class="identifier">sync_queue</span>
   <span class="special">{</span>
   <span class="keyword">public</span><span class="special">:</span>
     <span class="keyword">typedef</span> <span class="identifier">ValueType</span> <span class="identifier">value_type</span><span class="special">;</span>
-    <span class="keyword">typedef</span> <span class="identifier">csbl</span><span class="special">::</span><span class="identifier">deque</span><span class="special">&lt;</span><span class="identifier">ValueType</span><span class="special">&gt;</span> <span class="identifier">underlying_queue_type</span><span class="special">;</span>
-    <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">size_type</span><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">Container</span> <span class="identifier">underlying_queue_type</span><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">::</span><span class="identifier">size_type</span> <span class="identifier">size_type</span><span class="special">;</span>
 
     <span class="identifier">sync_queue</span><span class="special">(</span><span class="identifier">sync_queue</span> <span class="keyword">const</span><span class="special">&amp;)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
     <span class="identifier">sync_queue</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">sync_queue</span> <span class="keyword">const</span><span class="special">&amp;)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
@@ -2264,8 +2502,8 @@
 </pre>
 <div class="section">
 <div class="titlepage"><div><div><h6 class="title">
-<a name="thread.sds.synchronized_queues.ref.sync_queue_ref.sync_queue.constructor"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.sync_queue_ref.sync_queue.constructor" title="Constructor sync_bounded_queue(size_type)">Constructor
-              <code class="computeroutput"><span class="identifier">sync_bounded_queue</span><span class="special">(</span><span class="identifier">size_type</span><span class="special">)</span></code></a>
+<a name="thread.sds.synchronized_queues.ref.sync_queue_ref.sync_queue.constructor"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.sync_queue_ref.sync_queue.constructor" title="Constructor sync_queue(size_type)">Constructor
+              <code class="computeroutput"><span class="identifier">sync_queue</span><span class="special">(</span><span class="identifier">size_type</span><span class="special">)</span></code></a>
 </h6></div></div></div>
 <pre class="programlisting"><span class="keyword">explicit</span> <span class="identifier">sync_queue</span><span class="special">();</span>
 </pre>
@@ -2275,28 +2513,6 @@
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                       Constructs an empty sync_queue.
-                    </p></dd>
-<dt><span class="term">Throws:</span></dt>
-<dd><p>
-                      any exception that can be throw because of resources unavailable.
-                    </p></dd>
-</dl>
-</div>
-</div>
-<div class="section">
-<div class="titlepage"><div><div><h6 class="title">
-<a name="thread.sds.synchronized_queues.ref.sync_queue_ref.sync_queue.constructort"></a><a class="link" href="sds.html#thread.sds.synchronized_queues.ref.sync_queue_ref.sync_queue.constructort" title="Template Constructor sync_bounded_queue(size_type, Range)">Template
-              Constructor <code class="computeroutput"><span class="identifier">sync_bounded_queue</span><span class="special">(</span><span class="identifier">size_type</span><span class="special">,</span> <span class="identifier">Range</span><span class="special">)</span></code></a>
-</h6></div></div></div>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Range</span><span class="special">&gt;</span>
-<span class="identifier">sync_bounded_queue</span><span class="special">(</span><span class="identifier">size_type</span> <span class="identifier">max_elems</span><span class="special">,</span> <span class="identifier">Range</span> <span class="identifier">range</span><span class="special">);</span>
-</pre>
-<div class="variablelist">
-<p class="title"><b></b></p>
-<dl class="variablelist">
-<dt><span class="term">Effects:</span></dt>
-<dd><p>
-                      Constructs an sync_queue with all the elements of the range.
                     </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -2374,7 +2590,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -11 Anthony Williams<br>Copyright &#169; 2011 -14 Vicente J. Botet Escriba<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -11 Anthony Williams<br>Copyright &#169; 2011 -15 Vicente J. Botet Escriba<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -2382,7 +2598,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="thread_local_storage.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../thread.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="time.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="thread_local_storage.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../thread.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="parallel.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

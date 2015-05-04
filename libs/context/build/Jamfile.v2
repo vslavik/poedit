@@ -12,13 +12,25 @@ import indirect ;
 import modules ;
 import os ;
 import toolset ;
-import architecture ;
+
+feature.feature segmented-stacks : on : optional propagated composite ;
+feature.compose <segmented-stacks>on : <define>BOOST_USE_SEGMENTED_STACKS ;
+
+feature.feature valgrind : on : optional propagated composite ;
+feature.compose <valgrind>on : <define>BOOST_USE_VALGRIND ;
 
 project boost/context
     : requirements
-      <os>SOLARIS:<define>_XOPEN_SOURCE=600
+      <library>/boost/thread//boost_thread
+      <toolset>gcc,<segmented-stacks>on:<cxxflags>-fsplit-stack
+      <toolset>gcc,<segmented-stacks>on:<cxxflags>-DBOOST_USE_SEGMENTED_STACKS
+      <toolset>gcc,<segmented-stacks>on:<linkflags>"-static-libgcc"
+      <toolset>clang,<segmented-stacks>on:<cxxflags>-fsplit-stack
+      <toolset>clang,<segmented-stacks>on:<cxxflags>-DBOOST_USE_SEGMENTED_STACKS
+      <toolset>clang,<segmented-stacks>on:<linkflags>"-static-libgcc"
       <link>shared:<define>BOOST_CONTEXT_DYN_LINK=1
       <define>BOOST_CONTEXT_SOURCE
+      <threading>multi
     : usage-requirements
       <link>shared:<define>BOOST_CONTEXT_DYN_LINK=1
     : source-location ../src
@@ -209,6 +221,67 @@ alias asm_context_sources
      <toolset>msvc
    ;
 
+# ARM64
+# ARM64/AAPCS/ELF
+alias asm_context_sources
+   : [ make asm/make_arm64_aapcs_elf_gas.o : asm/make_arm64_aapcs_elf_gas.S : @gas64 ]
+     [ make asm/jump_arm64_aapcs_elf_gas.o : asm/jump_arm64_aapcs_elf_gas.S : @gas64 ]
+   : <abi>aapcs
+     <address-model>64
+     <architecture>arm
+     <binary-format>elf
+   ;
+
+alias asm_context_sources
+   : asm/make_arm64_aapcs_elf_gas.S
+     asm/jump_arm64_aapcs_elf_gas.S
+   : <abi>aapcs
+     <address-model>64
+     <architecture>arm
+     <binary-format>elf
+     <toolset>clang
+   ;
+
+alias asm_context_sources
+   : asm/make_arm64_aapcs_elf_gas.S
+     asm/jump_arm64_aapcs_elf_gas.S
+   : <abi>aapcs
+     <address-model>64
+     <architecture>arm
+     <binary-format>elf
+     <toolset>gcc
+   ;
+
+# ARM64/AAPCS/MACH-O
+alias asm_context_sources
+   : [ make asm/make_arm64_aapcs_macho_gas.o : asm/make_arm64_aapcs_macho_gas.S : @gas64 ]
+     [ make asm/jump_arm64_aapcs_macho_gas.o : asm/jump_arm64_aapcs_macho_gas.S : @gas64 ]
+   : <abi>aapcs
+     <address-model>64
+     <architecture>arm
+     <binary-format>mach-o
+   ;
+
+alias asm_context_sources
+   : asm/make_arm64_aapcs_macho_gas.S
+     asm/jump_arm64_aapcs_macho_gas.S
+   : <abi>aapcs
+     <address-model>64
+     <architecture>arm
+     <binary-format>mach-o
+     <toolset>clang
+   ;
+
+alias asm_context_sources
+   : asm/make_arm64_aapcs_macho_gas.S
+     asm/jump_arm64_aapcs_macho_gas.S
+   : <abi>aapcs
+     <address-model>64
+     <architecture>arm
+     <binary-format>mach-o
+     <toolset>darwin
+   ;
+
 # MIPS
 # MIPS/O32/ELF
 alias asm_context_sources
@@ -303,7 +376,6 @@ alias asm_context_sources
 alias asm_context_sources
    : [ make asm/make_ppc32_sysv_xcoff_gas.o : asm/make_ppc32_sysv_xcoff_gas.S : @gas ]
      [ make asm/jump_ppc32_sysv_xcoff_gas.o : asm/jump_ppc32_sysv_xcoff_gas.S : @gas ]
-     untested.cpp
    : <abi>sysv
      <address-model>32
      <architecture>power
@@ -313,7 +385,6 @@ alias asm_context_sources
 alias asm_context_sources
    : asm/make_ppc32_sysv_xcoff_gas.S
      asm/jump_ppc32_sysv_xcoff_gas.S
-     untested.cpp
    : <abi>sysv
      <address-model>32
      <architecture>power
@@ -324,7 +395,6 @@ alias asm_context_sources
 alias asm_context_sources
    : asm/make_ppc32_sysv_xcoff_gas.S
      asm/jump_ppc32_sysv_xcoff_gas.S
-     untested.cpp
    : <abi>sysv
      <address-model>32
      <architecture>power
@@ -398,7 +468,6 @@ alias asm_context_sources
 alias asm_context_sources
    : [ make asm/make_ppc64_sysv_xcoff_gas.o : asm/make_ppc64_sysv_xcoff_gas.S : @gas ]
      [ make asm/jump_ppc64_sysv_xcoff_gas.o : asm/jump_ppc64_sysv_xcoff_gas.S : @gas ]
-     untested.cpp
    : <abi>sysv
      <address-model>64
      <architecture>power
@@ -408,7 +477,6 @@ alias asm_context_sources
 alias asm_context_sources
    : asm/make_ppc64_sysv_xcoff_gas.S
      asm/jump_ppc64_sysv_xcoff_gas.S
-     untested.cpp
    : <abi>sysv
      <address-model>64
      <architecture>power
@@ -419,7 +487,6 @@ alias asm_context_sources
 alias asm_context_sources
    : asm/make_ppc64_sysv_xcoff_gas.S
      asm/jump_ppc64_sysv_xcoff_gas.S
-     untested.cpp
    : <abi>sysv
      <address-model>64
      <architecture>power
@@ -768,14 +835,22 @@ alias asm_context_sources
 
 explicit asm_context_sources ;
 
-alias select_asm_context_sources
-  : asm_context_sources
-  : [ architecture.architecture ]
-    [ architecture.address-model ]
-  ;
+alias stack_traits_sources
+    : windows/stack_traits.cpp
+    : <target-os>windows
+    ;
+
+alias stack_traits_sources
+    : posix/stack_traits.cpp
+    ;
+
+explicit stack_traits_sources ;
+
 
 lib boost_context
-   : select_asm_context_sources
+   : asm_context_sources
+     stack_traits_sources
+     execution_context.cpp
    ;
 
 boost-install boost_context ;

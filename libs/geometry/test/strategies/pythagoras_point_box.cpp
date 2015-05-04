@@ -29,7 +29,6 @@
 
 #include <boost/core/ignore_unused.hpp>
 #include <boost/timer.hpp>
-#include <boost/typeof/typeof.hpp>
 
 #include <boost/concept/requires.hpp>
 #include <boost/concept_check.hpp>
@@ -336,21 +335,28 @@ inline void test_integer(bool check_types)
     bg::assign_values(b, 0, 0, 12345678, 23456789);
     bg::assign_values(p, 98765432, 87654321);
 
-    typedef bg::strategy::distance::pythagoras_point_box<> pythagoras_pb_type;
-    pythagoras_pb_type pythagoras_pb;
-    BOOST_AUTO(distance, pythagoras_pb.apply(p, b));
-    BOOST_CHECK_CLOSE(distance, 107655455.02347542, 0.001);
-
+    typedef bg::strategy::distance::pythagoras_point_box<> pythagoras_type;
     typedef typename bg::strategy::distance::services::comparable_type
         <
-            pythagoras_pb_type
+            pythagoras_type
         >::type comparable_type;
-    comparable_type comparable;
-    BOOST_AUTO(cdistance, comparable.apply(p, b));
-    BOOST_CHECK_EQUAL(cdistance, 11589696996311540);
 
-    typedef BOOST_TYPEOF(cdistance) cdistance_type;
-    typedef BOOST_TYPEOF(distance) distance_type;
+    typedef typename bg::strategy::distance::services::return_type
+        <
+            pythagoras_type, point_type, box_type
+        >::type distance_type;
+    typedef typename bg::strategy::distance::services::return_type
+        <
+            comparable_type, point_type, box_type
+        >::type cdistance_type;
+    
+    pythagoras_type pythagoras;
+    distance_type distance = pythagoras.apply(p, b);
+    BOOST_CHECK_CLOSE(distance, 107655455.02347542, 0.001);
+
+    comparable_type comparable;
+    cdistance_type cdistance = comparable.apply(p, b);
+    BOOST_CHECK_EQUAL(cdistance, 11589696996311540);
 
     distance_type distance2 = sqrt(distance_type(cdistance));
     BOOST_CHECK_CLOSE(distance, distance2, 0.001);

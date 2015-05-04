@@ -196,11 +196,11 @@ int test_main(int argc, char * argv[]);
 
 int
 main(int argc, char * argv[]){
-    
     boost::serialization::singleton_module::lock();
 
+    int retval = 1;
     BOOST_TRY{
-        test_main(argc, argv);
+        retval = test_main(argc, argv);
     }
     #ifndef BOOST_NO_EXCEPTION_STD_NAMESPACE
         BOOST_CATCH(const std::exception & e){
@@ -214,7 +214,10 @@ main(int argc, char * argv[]){
 
     boost::serialization::singleton_module::unlock();
 
-    return boost::report_errors();
+    int error_count = boost::report_errors();
+    if(error_count > 0)
+        retval = error_count;
+    return retval;
 }
 
 // the following is to ensure that when one of the libraries changes

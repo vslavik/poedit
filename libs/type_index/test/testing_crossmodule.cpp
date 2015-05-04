@@ -44,7 +44,9 @@ void comparing_types_between_modules()
     BOOST_CHECK_NE(t_int, test_lib::get_user_defined_class());
     BOOST_CHECK_NE(t_const_int, test_lib::get_const_user_defined_class());
 
-    test_lib::accept_typeindex(t_int);
+    #ifndef BOOST_HAS_PRAGMA_DETECT_MISMATCH
+        test_lib::accept_typeindex(t_int);
+    #endif
 }
 
 

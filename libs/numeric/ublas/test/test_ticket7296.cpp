@@ -17,7 +17,7 @@
 #include <boost/numeric/ublas/vector.hpp>
 #include <complex>
 #include <cstddef>
-#include <libs/numeric/ublas/test/utils.hpp>
+#include "utils.hpp"
 
 
 namespace ublas = boost::numeric::ublas;

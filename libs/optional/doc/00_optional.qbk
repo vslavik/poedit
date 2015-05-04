@@ -2,7 +2,7 @@
     [quickbook 1.4]
     [authors [Cacciola Carballal, Fernando Luis]]
     [copyright 2003-2007 Fernando Luis Cacciola Carballal]
-    [copyright 2014 Andrzej Krzemie&#324;ski]
+    [copyright 2014-2015 Andrzej Krzemie&#324;ski]
     [category miscellaneous]
     [id optional]
     [dirname optional]
@@ -54,7 +54,7 @@ Distributed under the Boost Software License, Version 1.0.
 Class template `optional` is a wrapper for representing 'optional' (or 'nullable') objects who may not (yet) contain a valid value. Optional objects offer full value semantics; they are good for passing by value and usage inside STL containers. This is a header-only library.
 
 [heading Problem]
-Suppose we want to read a parameter form a config file which represents some integral value, let's call it `"MaxValue"`. It is possible that this parameter is not specified; such situation is no error. It is valid to not specify the parameter and in that case the program is supposed to behave slightly different. Also suppose that any possible value of type `int` is a valid value for `"MaxValue"`, so we cannot jut use `-1` to represent the absence of the parameter in the config file.
+Suppose we want to read a parameter form a config file which represents some integral value, let's call it `"MaxValue"`. It is possible that this parameter is not specified; such situation is no error. It is valid to not specify the parameter and in that case the program is supposed to behave slightly differently. Also, suppose that any possible value of type `int` is a valid value for `"MaxValue"`, so we cannot just use `-1` to represent the absence of the parameter in the config file.
 
 [heading Solution]
 
@@ -80,16 +80,27 @@ This is how you solve it with `boost::optional`:
 [include 11_development.qbk]
 [include 12_when_to_use.qbk]
 [include 13_relational_operators.qbk]
-[include 14_optional_references.qbk]
-[include 15_in_place_factories.qbk]
-[include 16_optional_bool.qbk]
-[include 17_exception_safety.qbk]
-[include 18_type_requirements.qbk]
+[include 14_io.qbk]
+[include 15_optional_references.qbk]
+[include 16_in_place_factories.qbk]
+[include 17_optional_bool.qbk]
+[include 18_exception_safety.qbk]
+[include 19_type_requirements.qbk]
+[include 1A_on_performance.qbk]
 [endsect]
-[section Reference]
-[include 20_reference.qbk]
+[section:reference Reference]
+[include 21_ref_none.qbk]
+[include 22_ref_bad_optional_access.qbk]
+[include 23_ref_optional_io.qbk]
+[include 24_ref_optional_fwd.qbk]
+[section Header <boost/optional/optional.hpp>]
+[include 27_ref_optional_synopsis.qbk]
+[include 28_ref_optional_semantics.qbk]
+[endsect]
+[include 29_ref_optional_convenience.qbk]
 [endsect]
 [include 90_dependencies.qbk]
-[include 91_acknowledgments.qbk]
+[include 91_relnotes.qbk]
+[include 92_acknowledgments.qbk]
 
 

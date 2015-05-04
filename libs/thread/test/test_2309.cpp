@@ -5,7 +5,7 @@
 
 #define BOOST_THREAD_VERSION 2
 #define BOOST_THREAD_PROVIDES_INTERRUPTIONS
-
+#define BOOST_TEST_MODULE Boost.Threads: 2309
 #include <boost/test/unit_test.hpp>
 
 #include <iostream>
@@ -40,7 +40,7 @@
      }
   }
 
-  void test()
+  BOOST_AUTO_TEST_CASE(test)
   {
     try
     {
@@ -61,14 +61,5 @@
     }
   }
 
-boost::unit_test_framework::test_suite* init_unit_test_suite(int, char*[])
-{
-    boost::unit_test_framework::test_suite* tests =
-        BOOST_TEST_SUITE("Boost.Threads: 2309");
-
-    tests->add(BOOST_TEST_CASE(&test));
-
-    return tests;
-}
 
 

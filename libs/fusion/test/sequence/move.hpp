@@ -38,12 +38,12 @@ namespace test_detail
             return *this;
         }
 
-        x(x const& rhs)
+        x(x const& /*rhs*/)
         {
             incr_copy();
         }
 
-        x& operator=(x const& rhs)
+        x& operator=(x const& /*rhs*/)
         {
             incr_copy();
             return *this;

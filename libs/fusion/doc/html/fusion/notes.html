@@ -108,9 +108,9 @@
     </h4>
 <p>
       Unlike <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>, there
-      is no extensibe sequence concept in fusion. This does not mean that Fusion
+      is no extensible sequence concept in fusion. This does not mean that Fusion
       sequences are not extensible. In fact, all Fusion sequences are inherently
-      extensible. It is just that the manner of sequence extension in Fusion is diferent
+      extensible. It is just that the manner of sequence extension in Fusion is different
       from both <a href="http://en.wikipedia.org/wiki/Standard_Template_Library" target="_top">STL</a>
       and <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a> on account
       of the lazy nature of fusion <a class="link" href="algorithm.html" title="Algorithm">Algorithms</a>.
@@ -160,7 +160,7 @@
       <span class="bold"><strong>Arrays:</strong></span>
     </p>
 <p>
-      Array arguments are deduced to reference to const types. For example <a href="#ftn.fusion.notes.f0" class="footnote" name="fusion.notes.f0"><sup class="footnote">[13]</sup></a>:
+      Array arguments are deduced to reference to const types. For example <a href="#ftn.fusion.notes.f0" class="footnote" name="fusion.notes.f0"><sup class="footnote">[14]</sup></a>:
     </p>
 <pre class="programlisting"><a class="link" href="container/generation/functions/make_list.html" title="make_list"><code class="computeroutput"><span class="identifier">make_list</span></code></a><span class="special">(</span><span class="string">"Donald"</span><span class="special">,</span> <span class="string">"Daisy"</span><span class="special">)</span>
 </pre>
@@ -189,7 +189,8 @@
 </pre>
 <h4>
 <a name="fusion.notes.h5"></a>
-      <span class="phrase"><a name="fusion.notes.boost__ref"></a></span><a class="link" href="notes.html#fusion.notes.boost__ref">boost::ref</a>
+      <span class="phrase"><a name="fusion.notes.reference_wrappers"></a></span><a class="link" href="notes.html#fusion.notes.reference_wrappers">Reference
+      Wrappers</a>
     </h4>
 <p>
       Fusion's generation functions (e.g. <a class="link" href="container/generation/functions/make_list.html" title="make_list"><code class="computeroutput"><span class="identifier">make_list</span></code></a>) by default stores the element
@@ -225,6 +226,10 @@
 <p>
       See <a href="http://www.boost.org/doc/html/ref.html" target="_top">Boost.Ref</a> for
       details.
+    </p>
+<p>
+      Since C++11, the standard reference wrappers (<code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ref</span></code> and
+      <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">cref</span></code>) work as well.
     </p>
 <h4>
 <a name="fusion.notes.h6"></a>
@@ -459,11 +464,11 @@
 </table></div>
 <div class="footnotes">
 <br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.fusion.notes.f0" class="footnote"><p><a href="#fusion.notes.f0" class="para"><sup class="para">[13] </sup></a>
+<div id="ftn.fusion.notes.f0" class="footnote"><p><a href="#fusion.notes.f0" class="para"><sup class="para">[14] </sup></a>
         Note that the type of a string literal is an array of const characters, not
         <code class="computeroutput"><span class="keyword">const</span> <span class="keyword">char</span><span class="special">*</span></code>. To get <a class="link" href="container/generation/functions/make_list.html" title="make_list"><code class="computeroutput"><span class="identifier">make_list</span></code></a> to create a <a class="link" href="container/list.html" title="list"><code class="computeroutput"><span class="identifier">list</span></code></a> with an element of a non-const
         array type one must use the <code class="computeroutput"><span class="identifier">ref</span></code>
-        wrapper (see <a class="link" href="notes.html#fusion.notes.boost__ref"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">ref</span></code></a>).
+        wrapper (see <a class="link" href="notes.html#fusion.notes.reference_wrappers"><code class="computeroutput"><span class="identifier">Reference</span> <span class="identifier">Wrappers</span></code></a>).
       </p></div>
 </div>
 </div>

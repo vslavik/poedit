@@ -17,7 +17,12 @@ project boost/context/test
     : requirements
       <library>../../test/build//boost_unit_test_framework
       <library>/boost/context//boost_context
+      <toolset>gcc,<segmented-stacks>on:<cxxflags>-fsplit-stack
+      <toolset>gcc,<segmented-stacks>on:<cxxflags>-DBOOST_USE_SEGMENTED_STACKS
+      <toolset>clang,<segmented-stacks>on:<cxxflags>-fsplit-stack
+      <toolset>clang,<segmented-stacks>on:<cxxflags>-DBOOST_USE_SEGMENTED_STACKS
       <link>static
+      <threading>multi
     ;
 
 test-suite "context" :

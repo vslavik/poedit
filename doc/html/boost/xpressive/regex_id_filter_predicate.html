@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../../xpressive/reference.html#header.boost.xpressive.xpressive_fwd_hpp" title="Header &lt;boost/xpressive/xpressive_fwd.hpp&gt;">
-<link rel="prev" href="regex_token_iterator.html" title="Struct template regex_token_iterator">
-<link rel="next" href="compiler_traits.html" title="Struct template compiler_traits">
+<link rel="up" href="../../xpressive/reference.html#header.boost.xpressive.match_results_hpp" title="Header &lt;boost/xpressive/match_results.hpp&gt;">
+<link rel="prev" href="match_results.html" title="Struct template match_results">
+<link rel="next" href="op/as.html" title="Struct template as">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="regex_token_iterator.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../xpressive/reference.html#header.boost.xpressive.xpressive_fwd_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="compiler_traits.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="match_results.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../xpressive/reference.html#header.boost.xpressive.match_results_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="op/as.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.xpressive.regex_id_filter_predicate"></a><div class="titlepage"></div>
@@ -29,31 +29,31 @@
 <p>boost::xpressive::regex_id_filter_predicate</p>
 </div>
 <h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../xpressive/reference.html#header.boost.xpressive.xpressive_fwd_hpp" title="Header &lt;boost/xpressive/xpressive_fwd.hpp&gt;">boost/xpressive/xpressive_fwd.hpp</a>&gt;
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../xpressive/reference.html#header.boost.xpressive.match_results_hpp" title="Header &lt;boost/xpressive/match_results.hpp&gt;">boost/xpressive/match_results.hpp</a>&gt;
 
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> BidiIter<span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="regex_id_filter_predicate.html" title="Struct template regex_id_filter_predicate">regex_id_filter_predicate</a> <span class="special">:</span>
   <span class="keyword">public</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">unary_function</span><span class="special">&lt;</span> <span class="identifier">match_results</span><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">&gt;</span>
 <span class="special">{</span>
   <span class="comment">// <a class="link" href="regex_id_filter_predicate.html#boost.xpressive.regex_id_filter_predicateconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="regex_id_filter_predicate.html#idp352373744-bb"><span class="identifier">regex_id_filter_predicate</span></a><span class="special">(</span><span class="identifier">regex_id_type</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="regex_id_filter_predicate.html#idp352602560-bb"><span class="identifier">regex_id_filter_predicate</span></a><span class="special">(</span><span class="identifier">regex_id_type</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="regex_id_filter_predicate.html#idp352370928-bb">public member functions</a></span>
-  <span class="keyword">bool</span> <a class="link" href="regex_id_filter_predicate.html#idp352371488-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><a class="link" href="match_results.html" title="Struct template match_results">match_results</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="regex_id_filter_predicate.html#idp352599744-bb">public member functions</a></span>
+  <span class="keyword">bool</span> <a class="link" href="regex_id_filter_predicate.html#idp352600304-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><a class="link" href="match_results.html" title="Struct template match_results">match_results</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp541939264"></a><h2>Description</h2>
+<a name="idp528167584"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp541939680"></a><h3>
+<a name="idp528168000"></a><h3>
 <a name="boost.xpressive.regex_id_filter_predicateconstruct-copy-destruct"></a><code class="computeroutput">regex_id_filter_predicate</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp352373744-bb"></a><span class="identifier">regex_id_filter_predicate</span><span class="special">(</span><span class="identifier">regex_id_type</span> regex_id<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp352602560-bb"></a><span class="identifier">regex_id_filter_predicate</span><span class="special">(</span><span class="identifier">regex_id_type</span> regex_id<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp541946288"></a><h3>
-<a name="idp352370928-bb"></a><code class="computeroutput">regex_id_filter_predicate</code> public member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">bool</span> <a name="idp352371488-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><a class="link" href="match_results.html" title="Struct template match_results">match_results</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> res<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp528174672"></a><h3>
+<a name="idp352599744-bb"></a><code class="computeroutput">regex_id_filter_predicate</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">bool</span> <a name="idp352600304-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><a class="link" href="match_results.html" title="Struct template match_results">match_results</a><span class="special">&lt;</span> <span class="identifier">BidiIter</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> res<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>
@@ -67,7 +67,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="regex_token_iterator.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../xpressive/reference.html#header.boost.xpressive.xpressive_fwd_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="compiler_traits.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="match_results.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../xpressive/reference.html#header.boost.xpressive.match_results_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="op/as.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

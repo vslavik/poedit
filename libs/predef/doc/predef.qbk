@@ -1,6 +1,6 @@
 [article Predef
     [quickbook 1.7]
-    [version 1.1]
+    [version 1.2]
     [authors [Rivera, Rene]]
     [copyright 2005, 2008-2014 Rene Rivera]
     [purpose Identification and specification of predefined macros.]
@@ -555,6 +555,133 @@ and "Y", "M", "D" for dates.
 [include ../include/boost/predef/version_number.h]
 [include ../include/boost/predef/make.h]
 [endsect]
+
+[endsect]
+
+[section Check Utilities]
+
+The `predef_check` utility provides a facility for building a
+program that will check a given set of expressions against
+the definitions it detected when it was built.
+
+[heading [^predef_check] programs]
+
+Even though there is only one `predef_check` program, there
+are variations for each of the languages that are detected
+by Predef to match the convention for sources files. For all
+of them one invokes with a list of expression arguments. The
+expressions are evaluated within the context of the particular
+[^predef_check] program and if they all are true zero (0) is returned.
+Otherwise the index of the first false expression is returned.
+
+The expression syntax is simple:
+
+[teletype]
+``
+predef-definition [ relational-operator version-value ]
+``
+[c++]
+
+[~predef-definition] can be any of the Predef definitions. For
+example `BOOST_COMP_GCC`.
+
+[~relational-operator] can be any of: [^>], [^<], [^>=], [^<=],
+[^==] and [^!=].
+
+[~version-number] can be a full or partial version triplet value.
+If it's a partial version triple it is completed with zeros. That
+is [^x.y] is equivalent to [^x.y.0] and [^x] is equivalent to
+[^x.0.0].
+
+The [~relations-operator] and [~version-number] can be ommited. In
+which case it is equivalent to:
+
+[teletype]
+``
+predef-definition > 0.0.0
+``
+[c++]
+
+[heading Using with Boost.Build]
+
+You can use the [^predef_check] programs directly from Boost Build
+to configure target requirements. This is useful for controlling
+what gets built as part of your project based on the detailed
+version information available in Predef. The basic use is simple:
+
+[teletype]
+``
+import path-to-predef-src/check/predef
+    : check require
+    : predef-check predef-require ;
+
+exe my_windows_program : windows_source.cpp
+    : [ predef-require "BOOST_OS_WINDOWS" ] ;
+``
+[c++]
+
+That simple use case will skip building the [^my_windows_program]
+unless one is building for Windows. Like the direct [^predef_check]
+you can pass mutiple expressions using relational comparisons.
+For example:
+
+[teletype]
+``
+import path-to-predef-src/check/predef
+    : check require
+    : predef-check predef-require ;
+
+lib my_special_lib : source.cpp
+    : [ predef-require "BOOST_OS_WINDOWS != 0" "BOOST_OS_VMS != 0"] ;
+``
+[c++]
+
+And in that case the [^my_special_lib] is built only when the OS is
+not Windows or VMS. The [^requires] rule is a special case of the
+[^check] rule. And is defined in terms of it:
+
+[teletype]
+``
+rule require ( expressions + : language ? )
+{
+    return [ check $(expressions) : $(language) : : <build>no ] ;
+}
+``
+[c++]
+
+You can use the [^check] rule for more control and to implement
+something other than control of what gets built. The definition
+for the [^check] rule is:
+
+[teletype]
+``
+rule check ( expressions + : language ? : true-properties * : false-properties * )
+``
+[c++]
+
+When invoked as a reuirement of a Boost Build target this rule
+will add the [^true-properties] to the target if all the [^expressions]
+evaluate to true. Otherwise the [^false-properties] get added as
+requirements. For example you could use it to enable or disable
+features in your programs:
+
+[teletype]
+``
+import path-to-predef-src/check/predef
+    : check require
+    : predef-check predef-require ;
+
+exe my_special_exe : source.cpp
+    : [ predef-check "BOOST_OS_WINDOWS == 0"
+        : <define>ENABLE_WMF=0
+        : <define>ENABLE_WMF=1 ] ;
+``
+[c++]
+
+For both [^check] and [^require] the [^language] argument controls
+which variant of the [^predef_check] program is used to check the
+expressions. It defaults to "c++", but can be any of: "c", "cpp",
+"objc", and "objcpp".
 
 [endsect]
 

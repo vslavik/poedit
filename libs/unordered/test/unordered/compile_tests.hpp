@@ -180,6 +180,28 @@ void unordered_set_test(X&, Key const&)
     typedef BOOST_DEDUCED_TYPENAME X::key_type key_type;
 
     BOOST_STATIC_ASSERT((boost::is_same<value_type, key_type>::value));
+
+    // iterator pointer / const_pointer_type
+
+    typedef BOOST_DEDUCED_TYPENAME X::iterator iterator;
+    typedef BOOST_DEDUCED_TYPENAME X::const_iterator const_iterator;
+    typedef BOOST_DEDUCED_TYPENAME X::local_iterator local_iterator;
+    typedef BOOST_DEDUCED_TYPENAME X::const_local_iterator const_local_iterator;
+    typedef BOOST_DEDUCED_TYPENAME
+        boost::iterator_pointer<iterator>::type iterator_pointer;
+    typedef BOOST_DEDUCED_TYPENAME
+        boost::iterator_pointer<const_iterator>::type
+            const_iterator_pointer;
+    typedef BOOST_DEDUCED_TYPENAME
+        boost::iterator_pointer<local_iterator>::type local_iterator_pointer;
+    typedef BOOST_DEDUCED_TYPENAME
+        boost::iterator_pointer<const_local_iterator>::type
+            const_local_iterator_pointer;
+
+    BOOST_STATIC_ASSERT((boost::is_same<value_type const*, iterator_pointer>::value));
+    BOOST_STATIC_ASSERT((boost::is_same<value_type const*, const_iterator_pointer>::value));
+    BOOST_STATIC_ASSERT((boost::is_same<value_type const*, local_iterator_pointer>::value));
+    BOOST_STATIC_ASSERT((boost::is_same<value_type const*, const_local_iterator_pointer>::value));
 }
 
 template <class X, class Key, class T>
@@ -190,6 +212,30 @@ void unordered_map_test(X& r, Key const& k, T const& v)
 
     BOOST_STATIC_ASSERT((
         boost::is_same<value_type, std::pair<key_type const, T> >::value));
+
+    // iterator pointer / const_pointer_type
+
+    typedef BOOST_DEDUCED_TYPENAME X::iterator iterator;
+    typedef BOOST_DEDUCED_TYPENAME X::const_iterator const_iterator;
+    typedef BOOST_DEDUCED_TYPENAME X::local_iterator local_iterator;
+    typedef BOOST_DEDUCED_TYPENAME X::const_local_iterator const_local_iterator;
+    typedef BOOST_DEDUCED_TYPENAME
+        boost::iterator_pointer<iterator>::type iterator_pointer;
+    typedef BOOST_DEDUCED_TYPENAME
+        boost::iterator_pointer<const_iterator>::type
+            const_iterator_pointer;
+    typedef BOOST_DEDUCED_TYPENAME
+        boost::iterator_pointer<local_iterator>::type local_iterator_pointer;
+    typedef BOOST_DEDUCED_TYPENAME
+        boost::iterator_pointer<const_local_iterator>::type
+            const_local_iterator_pointer;
+
+    BOOST_STATIC_ASSERT((boost::is_same<value_type*, iterator_pointer>::value));
+    BOOST_STATIC_ASSERT((boost::is_same<value_type const*, const_iterator_pointer>::value));
+    BOOST_STATIC_ASSERT((boost::is_same<value_type*, local_iterator_pointer>::value));
+    BOOST_STATIC_ASSERT((boost::is_same<value_type const*, const_local_iterator_pointer>::value));
+
+    // Calling functions
 
     r.insert(std::pair<Key const, T>(k, v));
 
@@ -507,4 +553,24 @@ void unordered_movable_test(X& x, Key& k, T& /* t */, Hash& hf, Pred& eq)
     sink(a7);
     sink(a8);
     sink(a10);
+}
+
+template <class X, class T>
+void unordered_set_member_test(X& x, T& t)
+{
+    X x1(x);
+    x1.insert(t);
+    x1.begin()->dummy_member();
+    x1.cbegin()->dummy_member();
+}
+
+template <class X, class T>
+void unordered_map_member_test(X& x, T& t)
+{
+    X x1(x);
+    x1.insert(t);
+    x1.begin()->first.dummy_member();
+    x1.cbegin()->first.dummy_member();
+    x1.begin()->second.dummy_member();
+    x1.cbegin()->second.dummy_member();
 }

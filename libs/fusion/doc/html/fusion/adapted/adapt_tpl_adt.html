@@ -39,8 +39,8 @@
 <pre class="programlisting"><span class="identifier">BOOST_FUSION_ADAPT_TPL_ADT</span><span class="special">(</span>
     <span class="special">(</span><span class="identifier">template_param0</span><span class="special">)(</span><span class="identifier">template_param1</span><span class="special">)...,</span>
     <span class="special">(</span><span class="identifier">type_name</span><span class="special">)</span> <span class="special">(</span><span class="identifier">specialization_param0</span><span class="special">)(</span><span class="identifier">specialization_param1</span><span class="special">)...,</span>
-    <span class="special">(</span><span class="identifier">attribute_type0</span><span class="special">,</span> <span class="identifier">attribute_const_type0</span><span class="special">,</span> <span class="identifier">get_expr0</span><span class="special">,</span> <span class="identifier">set_expr0</span><span class="special">)</span>
-    <span class="special">(</span><span class="identifier">attribute_type1</span><span class="special">,</span> <span class="identifier">attribute_const_type1</span><span class="special">,</span> <span class="identifier">get_expr1</span><span class="special">,</span> <span class="identifier">set_expr1</span><span class="special">)</span>
+    <span class="special">([</span><span class="identifier">attribute_type0</span><span class="special">,</span> <span class="identifier">attribute_const_type0</span><span class="special">,]</span> <span class="identifier">get_expr0</span><span class="special">,</span> <span class="identifier">set_expr0</span><span class="special">)</span>
+    <span class="special">([</span><span class="identifier">attribute_type1</span><span class="special">,</span> <span class="identifier">attribute_const_type1</span><span class="special">,]</span> <span class="identifier">get_expr1</span><span class="special">,</span> <span class="identifier">set_expr1</span><span class="special">)</span>
     <span class="special">...</span>
     <span class="special">)</span>
 </pre>
@@ -69,10 +69,12 @@
         of <code class="computeroutput"><span class="identifier">type_name</span></code>. <code class="literal">attribute_type<span class="emphasis"><em>N</em></span></code>
         and <code class="literal">attribute_const_type<span class="emphasis"><em>N</em></span></code> may specify
         the types that <code class="literal">get_expr<span class="emphasis"><em>N</em></span></code> denotes
-        to. <code class="literal">set_expr<span class="emphasis"><em>N</em></span></code> is the expression that
-        is invoked to set the <span class="emphasis"><em>N</em></span>th element of an instance of
-        <code class="computeroutput"><span class="identifier">type_name</span></code>. This expression
-        may access variables named <code class="computeroutput"><span class="identifier">obj</span></code>
+        to, when omitted the type is deduced from [get_expr<span class="emphasis"><em>N</em></span>]
+        return type via BOOST_TYPEOF. On compiler missing support for variadic macros
+        BOOST_FUSION_ADAPT_AUTO can be used to avoid repeating the type. <code class="literal">set_expr<span class="emphasis"><em>N</em></span></code>
+        is the expression that is invoked to set the <span class="emphasis"><em>N</em></span>th element
+        of an instance of <code class="computeroutput"><span class="identifier">type_name</span></code>.
+        This expression may access variables named <code class="computeroutput"><span class="identifier">obj</span></code>
         of type <code class="computeroutput"><span class="identifier">type_name</span><span class="special">&amp;</span></code>,
         which represent the corresponding instance of <code class="computeroutput"><span class="identifier">type_name</span></code>,
         and <code class="computeroutput"><span class="identifier">val</span></code> of an arbitrary const-qualified

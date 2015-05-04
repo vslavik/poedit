@@ -117,7 +117,7 @@ static void test_with_modofiers() {
     BOOST_CHECK(t1 < t2.type_info() || t2 < t1.type_info());
     BOOST_CHECK(t1 > t2.type_info() || t2 > t1.type_info());
 
-    // Chaecking that comparisom operators overloads compile
+    // Chaecking that comparison operators overloads compile
     BOOST_CHECK(t1 <= t2 || t2 <= t1);
     BOOST_CHECK(t1 >= t2 || t2 >= t1);
     BOOST_CHECK(t1.type_info() <= t2 || t2.type_info() <= t1);

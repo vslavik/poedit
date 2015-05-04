@@ -3,15 +3,13 @@
 //  Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_
 
+   //[cpp_dec_float_eg
 #include <boost/multiprecision/cpp_dec_float.hpp>
 #include <boost/math/special_functions/gamma.hpp>
 #include <iostream>
 
-void t1()
+int main()
 {
-   //[cpp_dec_float_eg
-   //=#include <boost/multiprecision/cpp_dec_float.hpp>
-
    using namespace boost::multiprecision;
 
    // Operations at fixed precision and full numeric_limits support:
@@ -29,12 +27,7 @@ void t1()
    // And since we have an extended exponent range we can generate some really large 
    // numbers here (4.0238726007709377354370243e+2564):
    std::cout << boost::math::tgamma(cpp_dec_float_100(1000)) << std::endl;
-   //]
-}
-
-int main()
-{
-   t1();
    return 0;
 }
+//]
 
