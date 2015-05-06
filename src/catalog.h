@@ -613,6 +613,11 @@ class Catalog
         /**
             Returns true if the source code to update the PO from is available.
          */
+        bool HasSourcesConfigured() const;
+
+        /**
+            Returns true if the source code to update the PO from is available.
+         */
         bool HasSourcesAvailable() const;
 
         /** Updates the catalog from sources.
