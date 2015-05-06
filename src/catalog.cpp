@@ -1901,6 +1901,49 @@ bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
     return f.Write(crlf, wxCSConv(m_header.Charset));
 }
 
+
+bool Catalog::HasDuplicateItems() const
+{
+    typedef std::pair<wxString, wxString> MsgId;
+    std::set<MsgId> ids;
+    for (auto& item: m_items)
+    {
+        if (!ids.emplace(std::make_pair(item->GetContext(), item->GetString())).second)
+            return true;
+    }
+    return false;
+}
+
+bool Catalog::FixDuplicateItems()
+{
+    auto oldname = m_fileName;
+
+    TempDirectory tmpdir;
+    if ( !tmpdir.IsOk() )
+        return false;
+
+    wxString po_file_temp = tmpdir.CreateFileName("catalog.po");
+    wxString po_file_fixed = tmpdir.CreateFileName("fixed.po");
+
+    if ( !DoSaveOnly(po_file_temp, wxTextFileType_Unix) )
+    {
+        wxLogError(_("Couldn't save file %s."), po_file_temp.c_str());
+        return false;
+    }
+
+    ExecuteGettext(wxString::Format("msguniq -o %s %s",
+                                    QuoteCmdlineArg(po_file_fixed),
+                                    QuoteCmdlineArg(po_file_temp)));
+
+    if (!wxFileName::FileExists(po_file_fixed))
+        return false;
+
+    bool ok = Load(po_file_fixed);
+    m_fileName = oldname;
+    return ok;
+}
+
+
 namespace
 {
 

@@ -2337,43 +2337,74 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
 {
     wxASSERT( cat && cat->IsOk() );
 
+    {
 #ifdef __WXMSW__
-    wxWindowUpdateLocker no_updates(this);
+        wxWindowUpdateLocker no_updates(this);
 #endif
 
-    m_catalog = cat;
-    m_pendingHumanEditedItem.reset();
+        m_catalog = cat;
+        m_pendingHumanEditedItem.reset();
 
-    if (m_catalog->empty())
-    {
-        EnsureContentView(Content::Empty_PO);
-    }
-    else
-    {
-        EnsureAppropriateContentView();
-        // This must be done as soon as possible, otherwise the list would be
-        // confused. GetCurrentItem() could return nullptr or something invalid,
-        // causing crash in UpdateToTextCtrl() called from
-        // RecreatePluralTextCtrls() just few lines below.
-        NotifyCatalogChanged(m_catalog);
-    }
+        if (m_catalog->empty())
+        {
+            EnsureContentView(Content::Empty_PO);
+        }
+        else
+        {
+            EnsureAppropriateContentView();
+            // This must be done as soon as possible, otherwise the list would be
+            // confused. GetCurrentItem() could return nullptr or something invalid,
+            // causing crash in UpdateToTextCtrl() called from
+            // RecreatePluralTextCtrls() just few lines below.
+            NotifyCatalogChanged(m_catalog);
+        }
 
-    m_fileExistsOnDisk = true;
-    m_modified = false;
+        m_fileExistsOnDisk = true;
+        m_modified = false;
 
-    RecreatePluralTextCtrls();
-    RefreshControls(Refresh_NoCatalogChanged /*done right above*/);
-    UpdateTitle();
-    UpdateTextLanguage();
+        RecreatePluralTextCtrls();
+        RefreshControls(Refresh_NoCatalogChanged /*done right above*/);
+        UpdateTitle();
+        UpdateTextLanguage();
 
 #ifdef HAVE_HTTP_CLIENT
-    m_toolbar->EnableSyncWithCrowdin(m_catalog->IsFromCrowdin());
+        m_toolbar->EnableSyncWithCrowdin(m_catalog->IsFromCrowdin());
 #endif
 
-    NoteAsRecentFile();
+        NoteAsRecentFile();
 
-    if (cat->HasCapability(Catalog::Cap::Translations))
-        WarnAboutLanguageIssues();
+        if (cat->HasCapability(Catalog::Cap::Translations))
+            WarnAboutLanguageIssues();
+    }
+
+    FixDuplicatesIfPresent();
+}
+
+void PoeditFrame::FixDuplicatesIfPresent()
+{
+    // Poedit always produces good files, so don't bother:
+    if (m_catalog->Header().GetHeader("X-Generator").StartsWith("Poedit "))
+        return;
+
+    if (!m_catalog->HasDuplicateItems())
+        return; // good
+
+    // Fix duplicates and explain the changes to the user:
+    m_catalog->FixDuplicateItems();
+    NotifyCatalogChanged(m_catalog);
+
+    wxWindowPtr<wxMessageDialog> dlg(
+        new wxMessageDialog
+            (
+                this,
+                wxString::Format(_(L"Poedit automatically fixed invalid content in the file “%s”."), wxFileName(GetFileName()).GetFullName()),
+                _("Invalid file"),
+                wxOK | wxICON_INFORMATION
+            )
+    );
+    dlg->SetExtendedMessage(_("The file contained duplicate items, which is not allowed in PO files and would prevent the file from being used. Poedit fixed the issue, but you should review translations of any items marked as fuzzy and correct them if necessary."));
+    dlg->ShowWindowModalThenDo([dlg](int){});
+
 }
 
 void PoeditFrame::WarnAboutLanguageIssues()

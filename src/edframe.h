@@ -117,6 +117,7 @@ class PoeditFrame : public wxFrame
         template<typename TFunctor>
         void WriteCatalog(const wxString& catalog, TFunctor completionHandler);
 
+        void FixDuplicatesIfPresent();
         void WarnAboutLanguageIssues();
 
         /// Did the user modify the catalog?
