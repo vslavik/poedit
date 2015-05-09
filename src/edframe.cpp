@@ -2765,7 +2765,8 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     wxBusyCursor bcur;
 
     concurrency_queue::future<void> tmUpdateThread;
-    if (wxConfig::Get()->ReadBool("use_tm", true))
+    if (wxConfig::Get()->ReadBool("use_tm", true) &&
+        m_catalog->HasCapability(Catalog::Cap::Translations))
     {
         tmUpdateThread = concurrency_queue::add([=]{
             try
