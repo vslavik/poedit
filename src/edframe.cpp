@@ -2604,19 +2604,26 @@ void PoeditFrame::UpdateStatusBar()
         int all, fuzzy, untranslated, errors, unfinished;
         m_catalog->GetStatistics(&all, &fuzzy, &errors, &untranslated, &unfinished);
 
-        int percent = (all == 0) ? 0 : (100 * (all - unfinished) / all);
-
         wxString text;
-        text.Printf(_("Translated: %d of %d (%d %%)"), all - unfinished, all, percent);
-        if (unfinished > 0)
+        if (m_catalog->HasCapability(Catalog::Cap::Translations))
         {
-            text += L"  •  ";
-            text += wxString::Format(_("Remaining: %d"), unfinished);
+            int percent = (all == 0) ? 0 : (100 * (all - unfinished) / all);
+
+            text.Printf(_("Translated: %d of %d (%d %%)"), all - unfinished, all, percent);
+            if (unfinished > 0)
+            {
+                text += L"  •  ";
+                text += wxString::Format(_("Remaining: %d"), unfinished);
+            }
+            if (errors > 0)
+            {
+                text += L"  •  ";
+                text += wxString::Format(wxPLURAL("%d error", "%d errors", errors), errors);
+            }
         }
-        if (errors > 0)
+        else
         {
-            text += L"  •  ";
-            text += wxString::Format(wxPLURAL("%d error", "%d errors", errors), errors);
+            text.Printf(wxPLURAL("%d entry", "%d entries", all), all);
         }
 
         GetStatusBar()->SetStatusText(text);
