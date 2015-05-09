@@ -194,7 +194,7 @@ wxString GetCharsetFromCombobox(wxComboBox *ctrl)
     return c;
 }
 
-void GetStringsFromControl(wxEditableListBox *box, wxArrayString& output)
+void GetKeywordsFromControl(wxEditableListBox *box, wxArrayString& output)
 {
     wxArrayString arr;
     box->GetStrings(arr);
@@ -202,8 +202,12 @@ void GetStringsFromControl(wxEditableListBox *box, wxArrayString& output)
     output.clear();
     for (auto x: arr)
     {
-        if (!x.empty())
-            output.push_back(x);
+        if (x.empty())
+            continue;
+        wxString rest;
+        if (x.EndsWith(" ()", &rest) || x.EndsWith("()", &rest))
+            x = rest;
+        output.push_back(x);
     }
 }
 
@@ -293,14 +297,12 @@ void PropertiesDialog::TransferFrom(const CatalogPtr& cat)
         cat->Header().SetHeaderNotEmpty("Plural-Forms", pluralForms);
     }
 
-    GetStringsFromControl(m_keywords, cat->Header().Keywords);
+    GetKeywordsFromControl(m_keywords, cat->Header().Keywords);
     GetPathsFromControl(m_paths, cat->Header().SearchPaths);
     GetPathsFromControl(m_excludedPaths, cat->Header().SearchPathsExcluded);
 
     if (!cat->Header().SearchPaths.empty() && cat->Header().BasePath.empty())
         cat->Header().BasePath = ".";
-
-    m_keywords->GetStrings(cat->Header().Keywords);
 }
 
 
