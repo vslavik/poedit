@@ -2796,7 +2796,8 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     Catalog::CompilationStatus mo_compilation_status = Catalog::CompilationStatus::NotDone;
     if ( !m_catalog->Save(catalog, true, validation_errors, mo_compilation_status) )
     {
-        tmUpdateThread.wait();
+        if (is_future_valid(tmUpdateThread))
+            tmUpdateThread.wait();
         completionHandler(false);
         return;
     }
@@ -2817,7 +2818,8 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     if (ManagerFrame::Get())
         ManagerFrame::Get()->NotifyFileChanged(GetFileName());
 
-    tmUpdateThread.wait();
+    if (is_future_valid(tmUpdateThread))
+        tmUpdateThread.wait();
 
     if (validation_errors)
     {

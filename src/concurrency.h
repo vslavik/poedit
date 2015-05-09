@@ -57,7 +57,7 @@ public:
 
     /**
         Enqueue an operation for background processing.
-        
+
         Return future for it.
      */
     template<class F>
@@ -70,6 +70,20 @@ public:
     static void cleanup() {}
 };
 
+template<typename T>
+inline bool is_future_valid(const concurrency_queue::future<T>& f)
+{
+    try
+    {
+        f.is_done();
+        return true;
+    }
+    catch (Concurrency::invalid_operation)
+    {
+        return false;
+    }
+}
+
 #else // generic version
 
 class concurrency_queue
@@ -80,7 +94,7 @@ public:
 
     /**
         Enqueue an operation for background processing.
-        
+
         Return future for it.
      */
     template<class F>
@@ -99,6 +113,12 @@ public:
 private:
     static void enqueue(std::function<void()>&& f);
 };
+
+template<typename T>
+inline bool is_future_valid(const concurrency_queue::future<T>& f)
+{
+    return f.valid();
+}
 
 #endif // !HAVE_PPL
 
