@@ -297,6 +297,8 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("sort_errors_first"), PoeditFrame::OnSortErrorsFirst)
    EVT_MENU           (XRCID("show_sidebar"),      PoeditFrame::OnShowHideSidebar)
    EVT_UPDATE_UI      (XRCID("show_sidebar"),      PoeditFrame::OnUpdateShowHideSidebar)
+   EVT_MENU           (XRCID("show_statusbar"),    PoeditFrame::OnShowHideStatusbar)
+   EVT_UPDATE_UI      (XRCID("show_statusbar"),    PoeditFrame::OnUpdateShowHideStatusbar)
    EVT_MENU           (XRCID("menu_copy_from_src"), PoeditFrame::OnCopyFromSource)
    EVT_MENU           (XRCID("menu_clear"),       PoeditFrame::OnClearTranslation)
    EVT_MENU           (XRCID("menu_references"),  PoeditFrame::OnReferencesMenu)
@@ -532,7 +534,8 @@ PoeditFrame::PoeditFrame() :
 
     GetMenuBar()->Check(XRCID("menu_ids"), m_displayIDs);
 
-    CreateStatusBar(1, wxST_SIZEGRIP);
+    if (wxConfigBase::Get()->ReadBool("/statusbar_shown", true))
+        CreateStatusBar(1, wxST_SIZEGRIP);
 
     m_contentWrappingSizer = new wxBoxSizer(wxVERTICAL);
     SetSizer(m_contentWrappingSizer);
@@ -2599,7 +2602,8 @@ void PoeditFrame::NotifyCatalogChanged(const CatalogPtr& cat)
 
 void PoeditFrame::UpdateStatusBar()
 {
-    if (m_catalog)
+    auto bar = GetStatusBar();
+    if (m_catalog && bar)
     {
         int all, fuzzy, untranslated, errors, unfinished;
         m_catalog->GetStatistics(&all, &fuzzy, &errors, &untranslated, &unfinished);
@@ -2626,7 +2630,7 @@ void PoeditFrame::UpdateStatusBar()
             text.Printf(wxPLURAL("%d entry", "%d entries", all), all);
         }
 
-        GetStatusBar()->SetStatusText(text);
+        bar->SetStatusText(text);
     }
 }
 
@@ -3575,6 +3579,7 @@ void PoeditFrame::OnShowHideSidebar(wxCommandEvent&)
     wxConfigBase::Get()->Write("/sidebar_shown", toShow);
 
 }
+
 void PoeditFrame::OnUpdateShowHideSidebar(wxUpdateUIEvent& event)
 {
     event.Enable(m_sidebar != nullptr);
@@ -3588,6 +3593,39 @@ void PoeditFrame::OnUpdateShowHideSidebar(wxUpdateUIEvent& event)
         event.SetText(_("Hide Sidebar") + shortcut);
     else
         event.SetText(_("Show Sidebar") + shortcut);
+#else
+    event.Check(shown);
+#endif
+}
+
+void PoeditFrame::OnShowHideStatusbar(wxCommandEvent&)
+{
+    auto bar = GetStatusBar();
+    bool toShow = (bar == nullptr);
+
+    if (toShow)
+    {
+        CreateStatusBar(1, wxST_SIZEGRIP);
+        UpdateStatusBar();
+    }
+    else
+    {
+        SetStatusBar(nullptr);
+        bar->Destroy();
+    }
+
+    wxConfigBase::Get()->Write("/statusbar_shown", toShow);
+}
+
+void PoeditFrame::OnUpdateShowHideStatusbar(wxUpdateUIEvent& event)
+{
+    bool shown = GetStatusBar() != nullptr;
+#ifdef __WXOSX__
+    auto shortcut = "\tCtrl+/";
+    if (shown)
+        event.SetText(_("Hide Status Bar") + shortcut);
+    else
+        event.SetText(_("Show Status Bar") + shortcut);
 #else
     event.Check(shown);
 #endif

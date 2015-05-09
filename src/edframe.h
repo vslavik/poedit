@@ -297,6 +297,8 @@ private:
 
         void OnShowHideSidebar(wxCommandEvent& event);
         void OnUpdateShowHideSidebar(wxUpdateUIEvent& event);
+        void OnShowHideStatusbar(wxCommandEvent& event);
+        void OnUpdateShowHideStatusbar(wxUpdateUIEvent& event);
 
         void OnSelectionUpdate(wxUpdateUIEvent& event);
         void OnSelectionUpdateEditable(wxUpdateUIEvent& event);
