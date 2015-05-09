@@ -3410,7 +3410,7 @@ void PoeditFrame::OnListRightClick(wxMouseEvent& event)
 
 void PoeditFrame::OnListFocus(wxFocusEvent& event)
 {
-    if (g_focusToText)
+    if (g_focusToText && m_textTrans != nullptr)
     {
         if (m_textTrans->IsShown())
             m_textTrans->SetFocus();
