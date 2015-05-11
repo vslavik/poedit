@@ -524,7 +524,7 @@ class Catalog
         static const int DEFAULT_WRAPPING = -2;
 
         /// Default ctor. Creates empty catalog, you have to call Load.
-        Catalog();
+        Catalog(Type type = Type::PO);
 
         /// Ctor that loads the catalog from \a po_file with Load.
         /// \a flags is CreationFlags combination.

@@ -1079,10 +1079,10 @@ bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
 // Catalog class
 // ----------------------------------------------------------------------
 
-Catalog::Catalog()
+Catalog::Catalog(Type type)
 {
     m_sourceLanguage = Language::English();
-    m_fileType = Type::PO;
+    m_fileType = type;
 
     m_fileCRLF = wxTextFileType_None;
     m_fileWrappingWidth = DEFAULT_WRAPPING;
