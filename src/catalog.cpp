@@ -2451,6 +2451,11 @@ bool Catalog::HasPluralItems() const
     return false;
 }
 
+void Catalog::SetLanguage(Language lang)
+{
+    m_header.Lang = lang;
+    m_header.SetHeaderNotEmpty("Plural-Forms", lang.DefaultPluralFormsExpr());
+}
 
 void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens,
                             int *untranslated, int *unfinished)

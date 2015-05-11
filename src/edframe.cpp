@@ -1421,8 +1421,7 @@ void PoeditFrame::NewFromPOT(const wxString& pot_file, Language language)
     {
         if (lang.IsValid())
         {
-            catalog->Header().Lang = lang;
-            catalog->Header().SetHeaderNotEmpty("Plural-Forms", lang.DefaultPluralFormsExpr());
+            catalog->SetLanguage(lang);
 
             // Derive save location for the file from the location of the POT
             // file (same directory, language-based name). This doesn't always
@@ -1489,9 +1488,7 @@ void PoeditFrame::NewFromScratch()
     dlg->ShowWindowModalThenDo([=](int retcode){
         if (retcode == wxID_OK)
         {
-            Language lang = dlg->GetLang();
-            catalog->Header().Lang = lang;
-            catalog->Header().SetHeaderNotEmpty("Plural-Forms", lang.DefaultPluralFormsExpr());
+            catalog->SetLanguage(dlg->GetLang());
         }
     });
 }

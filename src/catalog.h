@@ -683,6 +683,9 @@ class Catalog
         /// Returns catalog's language (may be invalid).
         Language GetLanguage() const { return m_header.Lang; }
 
+        /// Change the catalog's language and update headers accordingly
+        void SetLanguage(Language lang);
+
         /// Is the PO file from Crowdin, i.e. sync-able?
         bool IsFromCrowdin() const
             { return m_header.HasHeader("X-Crowdin-Project") && m_header.HasHeader("X-Crowdin-File"); }
