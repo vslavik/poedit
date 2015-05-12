@@ -670,12 +670,12 @@ private:
             if (retcode == wxID_OK)
             {
                 Extractor& nfo = m_extractors.Data[num];
-                nfo.Name = extractor_language->GetValue();
-                nfo.Extensions = extractor_extensions->GetValue();
-                nfo.Command = extractor_command->GetValue();
-                nfo.KeywordItem = extractor_keywords->GetValue();
-                nfo.FileItem = extractor_files->GetValue();
-                nfo.CharsetItem = extractor_charset->GetValue();
+                nfo.Name = extractor_language->GetValue().Strip(wxString::both);
+                nfo.Extensions = extractor_extensions->GetValue().Strip(wxString::both);
+                nfo.Command = extractor_command->GetValue().Strip(wxString::both);
+                nfo.KeywordItem = extractor_keywords->GetValue().Strip(wxString::both);
+                nfo.FileItem = extractor_files->GetValue().Strip(wxString::both);
+                nfo.CharsetItem = extractor_charset->GetValue().Strip(wxString::both);
                 m_list->SetString(num, nfo.Name);
             }
             completionHandler(retcode == wxID_OK);
