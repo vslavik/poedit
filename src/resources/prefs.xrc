@@ -2,7 +2,9 @@
 <resource xmlns="http://www.wxwidgets.org/wxxrc" version="2.5.3.0">
   <object class="wxDialog" name="edit_extractor">
     <title>Extractor setup</title>
+    <variant platform="mac">small</variant>
     <object class="wxBoxSizer">
+      <minsize>300,-1d</minsize>
       <orient>wxVERTICAL</orient>
       <object class="sizeritem">
         <object class="wxStaticBoxSizer">
@@ -132,6 +134,7 @@
         <object class="wxBoxSizer">
           <object class="sizeritem">
             <object class="wxButton" name="wxID_OK">
+              <variant>normal</variant>
               <label>OK</label>
               <default>1</default>
             </object>
@@ -140,6 +143,7 @@
           </object>
           <object class="sizeritem">
             <object class="wxButton" name="wxID_CANCEL">
+              <variant>normal</variant>
               <label>Cancel</label>
             </object>
             <flag>wxRIGHT|wxTOP|wxBOTTOM</flag>
