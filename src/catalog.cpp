@@ -2042,6 +2042,13 @@ int Catalog::DoValidate(const wxString& po_file)
     return (int)err.size();
 }
 
+void Catalog::SetFileName(const wxString& fn)
+{
+    wxFileName f(fn);
+    f.Normalize();
+    m_fileName = f.GetFullPath();
+}
+
 
 namespace
 {
