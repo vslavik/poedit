@@ -71,6 +71,7 @@ class PropertiesDialog : public wxDialog
         wxComboBox *m_charset, *m_sourceCodeCharset;
         wxRadioButton *m_pluralFormsDefault, *m_pluralFormsCustom;
         wxTextCtrl *m_pluralFormsExpr;
+        wxTextCtrl *m_basePath;
         std::shared_ptr<PathsData> m_pathsData;
         PathsList *m_paths, *m_excludedPaths;
         wxEditableListBox *m_keywords;

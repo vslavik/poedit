@@ -382,7 +382,7 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
 #else
     m_pluralFormsExpr->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
-    auto *basePath = XRCCTRL(*this, "basepath", wxTextCtrl);
+    m_basePath = XRCCTRL(*this, "basepath", wxTextCtrl);
 
     if (!m_hasLang)
     {
@@ -404,7 +404,7 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
     m_paths = new SourcePathsList(this, m_pathsData);
     m_excludedPaths = new ExcludedPathsList(this, m_pathsData);
     m_pathsData->RefreshView = [=]{
-        basePath->SetValue(RelativePath(m_pathsData->basepath, m_pathsData->filedir));
+        m_basePath->SetValue(RelativePath(m_pathsData->basepath, m_pathsData->filedir));
         m_paths->UpdateFromData();
         m_excludedPaths->UpdateFromData();
     };
