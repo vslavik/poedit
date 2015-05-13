@@ -2053,24 +2053,6 @@ void Catalog::SetFileName(const wxString& fn)
 namespace
 {
 
-wxFileName CommonDirectory(const wxFileName& a, const wxFileName& b)
-{
-    const auto& dirs_a = a.GetDirs();
-    const auto& dirs_b = b.GetDirs();
-
-    wxFileName d(a);
-    const auto count = std::min(dirs_a.size(), dirs_b.size());
-    size_t i = 0;
-    for (i = 0; i < count; i++)
-    {
-        if (dirs_a[i] != dirs_b[i])
-            break;
-    }
-    while (d.GetDirCount() != i)
-        d.RemoveLastDir();
-    return d;
-}
-
 enum class SourcesPath
 {
     Base,
@@ -2107,15 +2089,7 @@ wxString GetSourcesPath(const wxString& fileName, const Catalog::HeaderData& hea
         for (auto& p : header.SearchPaths)
         {
             wxString path = (p == ".") ? basepath : basepath + wxFILE_SEP_PATH + p;
-
-            wxFileName fn;
-            if (wxDirExists(path))
-                fn.AssignDir(path);
-            else
-                fn.Assign(path);
-            fn.Normalize();
-
-            root = CommonDirectory(root, fn);
+            root = CommonDirectory(root, MakeFileName(path));
         }
     }
 

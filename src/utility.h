@@ -33,6 +33,7 @@
 #endif
 
 #include <wx/arrstr.h>
+#include <wx/filename.h>
 #include <wx/string.h>
 
 #if wxUSE_GUI
@@ -144,6 +145,27 @@ inline T UnescapeCString(const T& str)
     }
     return out;
 }
+
+
+wxFileName MakeFileName(const wxString& path);
+
+inline wxFileName MakeFileName(wxFileName fn)
+{
+    fn.Normalize();
+    return fn;
+}
+
+wxFileName CommonDirectory(const wxFileName& a, const wxFileName& b);
+
+template<typename T>
+inline wxFileName CommonDirectory(const T& a)
+{
+    wxFileName root;
+    for (auto& i: a)
+        root = CommonDirectory(root, MakeFileName(i));
+    return root;
+}
+
 
 
 // ----------------------------------------------------------------------
