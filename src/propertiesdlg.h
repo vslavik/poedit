@@ -29,6 +29,8 @@
 #include <wx/dialog.h>
 #include <wx/notebook.h>
 
+#include <memory>
+
 #include "catalog.h"
 #include "languagectrl.h"
 
@@ -59,13 +61,19 @@ class PropertiesDialog : public wxDialog
         void OnPluralFormsDefault(wxCommandEvent& event);
         void OnPluralFormsCustom(wxCommandEvent& event);
 
+        struct PathsData;
+        class PathsList;
+        class SourcePathsList;
+        class ExcludedPathsList;
+
         wxTextCtrl *m_team, *m_teamEmail, *m_project;
         LanguageCtrl *m_language;
         wxComboBox *m_charset, *m_sourceCodeCharset;
         wxRadioButton *m_pluralFormsDefault, *m_pluralFormsCustom;
         wxTextCtrl *m_pluralFormsExpr;
-        wxTextCtrl *m_basePath;
-        wxEditableListBox *m_paths, *m_excludedPaths, *m_keywords;
+        std::shared_ptr<PathsData> m_pathsData;
+        PathsList *m_paths, *m_excludedPaths;
+        wxEditableListBox *m_keywords;
         wxString m_rememberedPluralForm;
 
         bool m_hasLang;
