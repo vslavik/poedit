@@ -157,12 +157,16 @@
                     <object class="sizeritem">
                       <object class="wxStaticText">
                         <label>Base path:</label>
+                        <variant platform="mac">small</variant>
                       </object>
                       <border>5d</border>
                       <flag>wxLEFT|wxTOP|wxALIGN_CENTER_VERTICAL</flag>
                     </object>
                     <object class="sizeritem">
-                      <object class="wxTextCtrl" name="basepath"/>
+                      <object class="wxTextCtrl" name="basepath">
+                        <variant platform="mac">small</variant>
+                        <style>wxTE_READONLY</style>
+                      </object>
                       <flag>wxLEFT|wxRIGHT|wxTOP</flag>
                       <border>5d</border>
                       <option>1</option>

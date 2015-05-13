@@ -50,6 +50,42 @@ wxString EscapeMarkup(const wxString& str)
 }
 
 
+wxFileName CommonDirectory(const wxFileName& a, const wxFileName& b)
+{
+    if (!a.IsOk())
+        return wxFileName::DirName(b.GetPath());;
+    if (!b.IsOk())
+        return wxFileName::DirName(a.GetPath());;
+
+    const auto& dirs_a = a.GetDirs();
+    const auto& dirs_b = b.GetDirs();
+
+    wxFileName d = wxFileName::DirName(a.GetPath());
+    const auto count = std::min(dirs_a.size(), dirs_b.size());
+    size_t i = 0;
+    for (i = 0; i < count; i++)
+    {
+        if (dirs_a[i] != dirs_b[i])
+            break;
+    }
+    while (d.GetDirCount() != i)
+        d.RemoveLastDir();
+    return d;
+}
+
+wxFileName MakeFileName(const wxString& path)
+{
+    wxFileName fn;
+    if (path.empty())
+        return fn;
+    if (wxFileName::DirExists(path) || path.Last() == wxFILE_SEP_PATH)
+        fn.AssignDir(path);
+    else
+        fn.Assign(path);
+    fn.Normalize();
+    return fn;
+}
+
 // ----------------------------------------------------------------------
 // TempDirectory
 // ----------------------------------------------------------------------

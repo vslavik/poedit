@@ -595,6 +595,11 @@ class Catalog
         /// Fixes a common invalid kind of entries, when msgids aren't unique.
         bool FixDuplicateItems();
 
+        Type GetFileType() const { return m_fileType; }
+
+        wxString GetFileName() const { return m_fileName; }
+        void SetFileName(const wxString& fn);
+
         /**
             Return base path to source code for extraction, or empty string if not configured.
             
@@ -721,11 +726,6 @@ class Catalog
         /// Validates correctness of the translation by running msgfmt
         /// Returns number of errors (i.e. 0 if no errors).
         int Validate();
-
-        Type GetFileType() const { return m_fileType; }
-
-        wxString GetFileName() const { return m_fileName; }
-        void SetFileName(const wxString& fn) { m_fileName = fn; }
 
     protected:
         /// Fix commonly encountered fixable problems with loaded files
