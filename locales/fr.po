@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2015-04-30 20:06+0200\n"
-"PO-Revision-Date: 2015-04-30 13:54-0400\n"
+"POT-Creation-Date: 2015-05-13 18:47+0200\n"
+"PO-Revision-Date: 2015-05-13 12:41-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -53,11 +53,11 @@ msgid ""
 "corrupted as the result."
 msgstr ""
 "Il y a eu des erreurs lors du chargement du catalogue. Il se pourrait que "
-"des données manquent ou soient corrompues."
+"des données soient manquantes ou corrompues."
 
 #, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
-msgstr "Échec au chargement du fichier %s : il est probablement corrompu."
+msgstr "Échec du chargement du fichier %s : il est probablement corrompu."
 
 #, c-format
 msgid ""
@@ -99,7 +99,7 @@ msgid "POT Translation Templates"
 msgstr "Modèles de traduction POT"
 
 msgid "All Translation Files"
-msgstr ""
+msgstr "Tous les fichiers de traduction"
 
 msgid "Merging differences..."
 msgstr "Intégration des changements..."
@@ -124,7 +124,7 @@ msgid "Downloading translations is disabled in this project."
 msgstr "Le téléchargement des traductions est désactivé dans ce projet."
 
 msgid "Not authorized, please sign in again."
-msgstr "Non autorisé, veuillez-vous connecter à nouveau."
+msgstr "Non autorisé, veuillez vous connecter à nouveau."
 
 msgid "Sign in to Crowdin"
 msgstr "Connectez-vous sur Crowdin"
@@ -185,6 +185,7 @@ msgstr ""
 
 msgid "This file can only be edited in Crowdin’s web interface."
 msgstr ""
+"Ce fichier ne peut être modifié qu'à partir de l'interface web de Crowdin."
 
 msgid "Downloading latest translations…"
 msgstr "Téléchargement des dernières traductions..."
@@ -199,7 +200,7 @@ msgid "Crowdin error"
 msgstr "Erreur Crowdin"
 
 msgid "Uploading translations…"
-msgstr "Téléchargement de traductions..."
+msgstr "Téléchargement des traductions..."
 
 msgid "&Copy"
 msgstr "&Copier"
@@ -223,7 +224,7 @@ msgstr "Analyse des fichiers..."
 #. TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
 #, c-format
 msgid "Parsing %s files..."
-msgstr "Analyse fichiers %s..."
+msgstr "Analyse des fichiers %s..."
 
 msgid "Failed to load extracted catalog."
 msgstr "Échec du chargement du catalogue extrait."
@@ -283,7 +284,7 @@ msgid "Catalogs Manager"
 msgstr "Gestionnaire de catalogues"
 
 msgid "Check for Updates..."
-msgstr "Vérifier les mises à jour..."
+msgstr "Recherche des mises à jour..."
 
 msgid "&Edit"
 msgstr "&Modifier"
@@ -495,9 +496,12 @@ msgid ""
 "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
 msgstr ""
+"Les fichiers POT ne sont que des modèles et ne contiennent pas de "
+"traductions. \n"
+"Pour écrire une traduction, créez un nouveau fichier PO à partir du modèle."
 
 msgid "Create New Translation"
-msgstr ""
+msgstr "Créer une nouvelle traduction"
 
 msgid "Create new translation"
 msgstr "Créer une nouvelle traduction"
@@ -640,6 +644,22 @@ msgstr "La traduction est prête à être utilisée."
 msgid "Context:"
 msgstr "Texte original :"
 
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr ""
+"Poedit a automatiquement corrigé le contenu non valide du fichier \"%s\"."
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as fuzzy and correct them if "
+"necessary."
+msgstr ""
+"Le fichier contenait des éléments en double, ce qui n'est pas permis dans "
+"les fichiers PO et empêcherait son utilisation. Poedit a réglé ce problème, "
+"mais vous devrez réviser les traductions de tous les éléments marqués comme "
+"approximatifs et les corriger si nécessaire."
+
 msgid "Language of the translation isn't set."
 msgstr "La langue de traduction n’est pas définie."
 
@@ -724,6 +744,12 @@ msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d erreur"
 msgstr[1] "%d erreurs"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "%d entrée"
+msgstr[1] "%d entrées"
 
 msgid " (unsaved)"
 msgstr " (non sauvegardé)"
@@ -854,7 +880,7 @@ msgid "Form %i"
 msgstr "Formulaire %i"
 
 msgid "Singular"
-msgstr ""
+msgstr "Singulier"
 
 msgid "Zero"
 msgstr "Zéro"
@@ -866,7 +892,7 @@ msgid "Two"
 msgstr "Deux"
 
 msgid "Plural"
-msgstr ""
+msgstr "Pluriel"
 
 msgid "Other"
 msgstr "Autre"
@@ -896,6 +922,12 @@ msgstr "Masquer le panneau latéral"
 msgid "Show Sidebar"
 msgstr "Afficher le panneau latéral"
 
+msgid "Hide Status Bar"
+msgstr "Masquer la barre d'état"
+
+msgid "Show Status Bar"
+msgstr "Afficher la barre d'état"
+
 msgid "Source text"
 msgstr "Texte original"
 
@@ -918,14 +950,6 @@ msgstr "Traduction — %s"
 
 msgid "Error:"
 msgstr "Erreur :"
-
-#, c-format
-msgid "%d entries"
-msgstr ""
-
-#, c-format
-msgid "%d entry"
-msgstr ""
 
 msgid "Source file"
 msgstr "Fichier source"
@@ -1255,14 +1279,50 @@ msgstr "Préserver le formatage des fichiers existants"
 msgid "Advanced"
 msgstr "Avancés"
 
-msgid "Additional keywords"
-msgstr "Mots clés supplémentaires"
+msgid ""
+"<big>Drag and Drop Folders Here</big>\n"
+"\n"
+"or use the + button"
+msgstr ""
+"<big>Glissez-déposez les dossiers ici</big>\n"
+"\n"
+"ou utilisez le bouton +"
+
+msgid ""
+"<big>Drag and drop folders here</big>\n"
+"\n"
+"or use the + button"
+msgstr ""
+"<big>Glissez-déposez les dossiers ici</big>\n"
+"\n"
+"ou utilisez le bouton +"
+
+msgid "Add Folders..."
+msgstr "Ajouter des dossiers..."
+
+msgid "Add folders..."
+msgstr "Ajouter des dossiers..."
+
+msgid "Add Files..."
+msgstr "Ajouter des fichiers..."
+
+msgid "Add files..."
+msgstr "Ajouter des fichiers..."
+
+msgid "Add Wildcard..."
+msgstr "Ajout du caractère générique..."
+
+msgid "Add wildcard..."
+msgstr "Ajout du caractère générique..."
 
 msgid "Paths"
 msgstr "Chemins"
 
 msgid "Excluded paths"
 msgstr "Chemins exclus"
+
+msgid "Additional keywords"
+msgstr "Mots clés supplémentaires"
 
 msgid "Name of the project the translation is for"
 msgstr "Nom du projet pour lequel sont les traductions"
@@ -1360,7 +1420,7 @@ msgid "Save &As..."
 msgstr "Enregistrer sous..."
 
 msgid "Compile to MO..."
-msgstr "Compiler le Mo..."
+msgstr "Compiler le MO..."
 
 msgid "E&xport as HTML..."
 msgstr "Exporter en HTML…"
@@ -1463,6 +1523,9 @@ msgstr "Entrées &non traduites en premier"
 
 msgid "Show sidebar"
 msgstr "Afficher le panneau latéral"
+
+msgid "Show status bar"
+msgstr "Afficher la barre d'état"
 
 msgid "C&atalog"
 msgstr "C&atalogue"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2015-04-30 20:06+0200\n"
-"PO-Revision-Date: 2015-04-30 13:54-0400\n"
+"POT-Creation-Date: 2015-05-13 18:47+0200\n"
+"PO-Revision-Date: 2015-05-13 12:41-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -91,7 +91,7 @@ msgid "POT Translation Templates"
 msgstr "POT 翻譯模板"
 
 msgid "All Translation Files"
-msgstr ""
+msgstr "所有翻譯檔"
 
 msgid "Merging differences..."
 msgstr "正合併差異..."
@@ -174,7 +174,7 @@ msgid "This project has no files that can be translated in Poedit."
 msgstr "這個專案沒有可在 Poedit 中翻譯的檔案。"
 
 msgid "This file can only be edited in Crowdin’s web interface."
-msgstr ""
+msgstr "這份檔案僅能在 Crowdin 的網頁介面中編輯。"
 
 msgid "Downloading latest translations…"
 msgstr "正在下載最新的翻譯⋯"
@@ -256,7 +256,7 @@ msgstr "「%s」檔不存在。"
 #. ("Poedit" here, but please use "%s")
 #, c-format
 msgid "About %s"
-msgstr "有關 %s"
+msgstr "關於 %s"
 
 #. TRANSLATORS: This is version information in about dialog, "%s" will be
 #. version number when used
@@ -479,9 +479,11 @@ msgid ""
 "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
 msgstr ""
+"POT 檔僅只是翻譯模板，檔案內並不包含任何翻譯。\n"
+"若要翻譯，請根據該模板建立新的 PO 檔。"
 
 msgid "Create New Translation"
-msgstr ""
+msgstr "建立新翻譯"
 
 msgid "Create new translation"
 msgstr "建立新翻譯"
@@ -603,6 +605,19 @@ msgstr "譯文已準備好可供使用。"
 msgid "Context:"
 msgstr "情境："
 
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr "Poedit 已自動修正「%s」檔中的無效內容。"
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as fuzzy and correct them if "
+"necessary."
+msgstr ""
+"檔案包含重複項目，然而 PO 檔並不允許重複，進而使檔案無法使用。Poedit 已修正這"
+"個問題，但您應該校閱任何標記為模糊翻譯的項目，如有需要也請校正其內容。"
+
 msgid "Language of the translation isn't set."
 msgstr "尚未設定譯文的語言。"
 
@@ -679,6 +694,11 @@ msgstr "剩餘：%d"
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d 項錯誤"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "%d 條"
 
 msgid " (unsaved)"
 msgstr " (未儲存)"
@@ -800,7 +820,7 @@ msgid "Form %i"
 msgstr "形式 %i"
 
 msgid "Singular"
-msgstr ""
+msgstr "單數"
 
 msgid "Zero"
 msgstr "零"
@@ -812,7 +832,7 @@ msgid "Two"
 msgstr "貳"
 
 msgid "Plural"
-msgstr ""
+msgstr "複數"
 
 msgid "Other"
 msgstr "其他"
@@ -842,6 +862,12 @@ msgstr "隱藏側邊欄"
 msgid "Show Sidebar"
 msgstr "顯示側邊欄"
 
+msgid "Hide Status Bar"
+msgstr "隱藏狀態列"
+
+msgid "Show Status Bar"
+msgstr "顯示狀態列"
+
 msgid "Source text"
 msgstr "來源文字"
 
@@ -864,14 +890,6 @@ msgstr "譯文 — %s"
 
 msgid "Error:"
 msgstr "錯誤："
-
-#, c-format
-msgid "%d entries"
-msgstr ""
-
-#, c-format
-msgid "%d entry"
-msgstr ""
 
 msgid "Source file"
 msgstr "來源檔案"
@@ -1189,14 +1207,50 @@ msgstr "保留既有檔案的格式化處理方式"
 msgid "Advanced"
 msgstr "進階"
 
-msgid "Additional keywords"
-msgstr "額外的關鍵字"
+msgid ""
+"<big>Drag and Drop Folders Here</big>\n"
+"\n"
+"or use the + button"
+msgstr ""
+"<big>請將資料夾拖放到這裡</big>\n"
+"\n"
+"或是使用 + 鈕"
+
+msgid ""
+"<big>Drag and drop folders here</big>\n"
+"\n"
+"or use the + button"
+msgstr ""
+"<big>請將資料夾拖放到這裡</big>\n"
+"\n"
+"或是使用 + 鈕"
+
+msgid "Add Folders..."
+msgstr "加入資料夾..."
+
+msgid "Add folders..."
+msgstr "加入資料夾..."
+
+msgid "Add Files..."
+msgstr "加入檔案..."
+
+msgid "Add files..."
+msgstr "加入檔案..."
+
+msgid "Add Wildcard..."
+msgstr "加入萬用字符..."
+
+msgid "Add wildcard..."
+msgstr "加入萬用字符..."
 
 msgid "Paths"
 msgstr "路徑"
 
 msgid "Excluded paths"
 msgstr "排除的路徑"
+
+msgid "Additional keywords"
+msgstr "額外的關鍵字"
 
 msgid "Name of the project the translation is for"
 msgstr "翻譯的目標專案名稱"
@@ -1395,6 +1449,9 @@ msgstr "先顯示未翻譯的條目(&U)"
 
 msgid "Show sidebar"
 msgstr "顯示側邊欄"
+
+msgid "Show status bar"
+msgstr "顯示狀態列"
 
 msgid "C&atalog"
 msgstr "編目檔(&A)"

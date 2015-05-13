@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2015-04-30 20:06+0200\n"
-"PO-Revision-Date: 2015-04-30 13:54-0400\n"
+"POT-Creation-Date: 2015-05-13 18:47+0200\n"
+"PO-Revision-Date: 2015-05-13 12:41-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -103,7 +103,7 @@ msgid "POT Translation Templates"
 msgstr "Шаблоны перевода POT"
 
 msgid "All Translation Files"
-msgstr ""
+msgstr "Все файлы переводов"
 
 msgid "Merging differences..."
 msgstr "Объединение различий..."
@@ -188,7 +188,7 @@ msgstr ""
 "Poedit."
 
 msgid "This file can only be edited in Crowdin’s web interface."
-msgstr ""
+msgstr "Этот файл можно редактировать только в веб-интерфейсе Crowdin."
 
 msgid "Downloading latest translations…"
 msgstr "Загрузка новейших переводов…"
@@ -496,9 +496,11 @@ msgid ""
 "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
 msgstr ""
+"Файлы POT являются шаблонами и не содержат в себе никаких переводов.\n"
+"Чтобы сделать перевод создайте файл PO из шаблона."
 
 msgid "Create New Translation"
-msgstr ""
+msgstr "Создать новый перевод"
 
 msgid "Create new translation"
 msgstr "Создать новый перевод"
@@ -579,8 +581,8 @@ msgstr ""
 msgid "%d issue with the translation found."
 msgid_plural "%d issues with the translation found."
 msgstr[0] "В переводе найдена %d проблема."
-msgstr[1] "В переводы найдены %d проблемы."
-msgstr[2] "В переводы найдены %d проблемы."
+msgstr[1] "В переводе найдены %d проблемы."
+msgstr[2] "В переводе найдено %d проблем."
 
 msgid "Validation results"
 msgstr "Результаты проверки"
@@ -637,6 +639,21 @@ msgstr "Перевод готов к использованию."
 
 msgid "Context:"
 msgstr "Контекст:"
+
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr "Poedit автоматически исправил неверное содержимое в файле «%s»."
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as fuzzy and correct them if "
+"necessary."
+msgstr ""
+"Этот файл содержал в себе повторяющиеся элементы, которые не разрешаются в "
+"PO-файлах и предотвращают файл от использования. Poedit исправил их, но "
+"следует просмотреть переводы всех элементов, помеченные как неточные и "
+"исправить их при необходимости."
 
 msgid "Language of the translation isn't set."
 msgstr "Язык перевода ещё не указан."
@@ -722,6 +739,13 @@ msgid_plural "%d errors"
 msgstr[0] "%d ошибка"
 msgstr[1] "%d ошибок"
 msgstr[2] "%d ошибок"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "%d запись"
+msgstr[1] "%d записи"
+msgstr[2] "%d записей"
 
 msgid " (unsaved)"
 msgstr " (не сохранён)"
@@ -850,7 +874,7 @@ msgid "Form %i"
 msgstr "Форма %i"
 
 msgid "Singular"
-msgstr ""
+msgstr "Единственное"
 
 msgid "Zero"
 msgstr "Ноль"
@@ -862,7 +886,7 @@ msgid "Two"
 msgstr "Два"
 
 msgid "Plural"
-msgstr ""
+msgstr "Множественное"
 
 msgid "Other"
 msgstr "Другое"
@@ -892,6 +916,12 @@ msgstr "Скрыть боковую панель"
 msgid "Show Sidebar"
 msgstr "Показать боковую панель"
 
+msgid "Hide Status Bar"
+msgstr "Скрыть строку состояния"
+
+msgid "Show Status Bar"
+msgstr "Показать строку состояния"
+
 msgid "Source text"
 msgstr "Исходный текст"
 
@@ -914,14 +944,6 @@ msgstr "Перевод — %s"
 
 msgid "Error:"
 msgstr "Ошибка:"
-
-#, c-format
-msgid "%d entries"
-msgstr ""
-
-#, c-format
-msgid "%d entry"
-msgstr ""
 
 msgid "Source file"
 msgstr "Исходный файл"
@@ -1247,14 +1269,50 @@ msgstr "Использовать форматирование существую
 msgid "Advanced"
 msgstr "Расширенные параметры"
 
-msgid "Additional keywords"
-msgstr "Дополнительные ключевые слова"
+msgid ""
+"<big>Drag and Drop Folders Here</big>\n"
+"\n"
+"or use the + button"
+msgstr ""
+"<big>Перетащите папки сюда</big>\n"
+"\n"
+"или используйте кнопку +"
+
+msgid ""
+"<big>Drag and drop folders here</big>\n"
+"\n"
+"or use the + button"
+msgstr ""
+"<big>Перетащите папки сюда</big>\n"
+"\n"
+"или используйте кнопку +"
+
+msgid "Add Folders..."
+msgstr "Добавить папки..."
+
+msgid "Add folders..."
+msgstr "Добавить папки..."
+
+msgid "Add Files..."
+msgstr "Добавить файлы..."
+
+msgid "Add files..."
+msgstr "Добавить файлы..."
+
+msgid "Add Wildcard..."
+msgstr "Добавить по шаблону..."
+
+msgid "Add wildcard..."
+msgstr "Добавить по шаблону..."
 
 msgid "Paths"
 msgstr "Папки"
 
 msgid "Excluded paths"
 msgstr "Исключенные пути"
+
+msgid "Additional keywords"
+msgstr "Дополнительные ключевые слова"
 
 msgid "Name of the project the translation is for"
 msgstr "Название проекта перевода для"
@@ -1453,6 +1511,9 @@ msgstr "Сначала &непереведённые записи"
 
 msgid "Show sidebar"
 msgstr "Показать боковую панель"
+
+msgid "Show status bar"
+msgstr "Показать строку состояния"
 
 msgid "C&atalog"
 msgstr "&Каталог"

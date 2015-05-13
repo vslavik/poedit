@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2015-04-30 20:06+0200\n"
-"PO-Revision-Date: 2015-04-30 13:54-0400\n"
+"POT-Creation-Date: 2015-05-13 18:47+0200\n"
+"PO-Revision-Date: 2015-05-13 12:41-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -98,7 +98,7 @@ msgid "POT Translation Templates"
 msgstr "POT fordítási sablonok"
 
 msgid "All Translation Files"
-msgstr ""
+msgstr "Minden fordítási fájl"
 
 msgid "Merging differences..."
 msgstr "Eltérések összefésülése…"
@@ -184,7 +184,7 @@ msgstr ""
 "lehetne."
 
 msgid "This file can only be edited in Crowdin’s web interface."
-msgstr ""
+msgstr "Ez a fájl csak a Crowdin webes felületén szerkeszthető."
 
 msgid "Downloading latest translations…"
 msgstr "A legújabb fordítások letöltése…"
@@ -492,9 +492,11 @@ msgid ""
 "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
 msgstr ""
+"A POT fájl csak egy sablon és nem  tartalmaz fordításokat.\n"
+"Fordítás készítéséhez hozzon létre egy új PO fájlt a sablon alapján."
 
 msgid "Create New Translation"
-msgstr ""
+msgstr "Új fordítás létrehozása"
 
 msgid "Create new translation"
 msgstr "Új fordítási projekt létrehozása"
@@ -629,6 +631,23 @@ msgstr "A fordítás használatra kész."
 msgid "Context:"
 msgstr "Kontextus:"
 
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr ""
+"A Poedit a(z) “%s” fájlban automatikusan kijavította a nem megfelelő "
+"tartalmat."
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as fuzzy and correct them if "
+"necessary."
+msgstr ""
+"A fájl PO fájlokban nem engedélyezett és a fájl használatát megakadályozó "
+"ismétlődő elemeket tartalmaz. A Poedit kijavította ezt a problémát, de "
+"minden bizonytalannak jelölt fordítási bejegyzés felülvizsgálata és estleges "
+"javítása szükséges."
+
 msgid "Language of the translation isn't set."
 msgstr "A fordítás nyelve nincs beállítva."
 
@@ -712,6 +731,12 @@ msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d hiba"
 msgstr[1] "%d hiba"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "%d bejegyzés"
+msgstr[1] "%d bejegyzés"
 
 msgid " (unsaved)"
 msgstr " (nincs mentve)"
@@ -841,7 +866,7 @@ msgid "Form %i"
 msgstr "%i. alak"
 
 msgid "Singular"
-msgstr ""
+msgstr "Egyes szám"
 
 msgid "Zero"
 msgstr "Nulla"
@@ -853,7 +878,7 @@ msgid "Two"
 msgstr "Kettő"
 
 msgid "Plural"
-msgstr ""
+msgstr "Többes szám"
 
 msgid "Other"
 msgstr "Egyéb"
@@ -883,6 +908,12 @@ msgstr "Oldalsáv elrejtése"
 msgid "Show Sidebar"
 msgstr "Oldalsáv megjelenítése"
 
+msgid "Hide Status Bar"
+msgstr "Állapotsor elrejtése"
+
+msgid "Show Status Bar"
+msgstr "Állapotsor megjelenítése"
+
 msgid "Source text"
 msgstr "Forrásszöveg"
 
@@ -905,14 +936,6 @@ msgstr "Fordítás — %s"
 
 msgid "Error:"
 msgstr "Hiba:"
-
-#, c-format
-msgid "%d entries"
-msgstr ""
-
-#, c-format
-msgid "%d entry"
-msgstr ""
 
 msgid "Source file"
 msgstr "Forrásfájl"
@@ -1240,14 +1263,50 @@ msgstr "A meglévő fájlok formázásának megőrzése"
 msgid "Advanced"
 msgstr "Haladó"
 
-msgid "Additional keywords"
-msgstr "Kiegészítő kulcsszavak"
+msgid ""
+"<big>Drag and Drop Folders Here</big>\n"
+"\n"
+"or use the + button"
+msgstr ""
+"<big>Húzza ide a mappákat</big>\n"
+"\n"
+"vagy használja a + gombot"
+
+msgid ""
+"<big>Drag and drop folders here</big>\n"
+"\n"
+"or use the + button"
+msgstr ""
+"<big>Húzza ide a mappákat</big>\n"
+"\n"
+"vagy használja a + gombot"
+
+msgid "Add Folders..."
+msgstr "Mappák hozzáadása..."
+
+msgid "Add folders..."
+msgstr "Mappák hozzáadása..."
+
+msgid "Add Files..."
+msgstr "Fájlok hozzáadása..."
+
+msgid "Add files..."
+msgstr "Fájlok hozzáadása..."
+
+msgid "Add Wildcard..."
+msgstr "Joker karakter hozzáadása..."
+
+msgid "Add wildcard..."
+msgstr "Helyettesítő karakter hozzáadása..."
 
 msgid "Paths"
 msgstr "Útvonalak"
 
 msgid "Excluded paths"
 msgstr "Kizárt elérési utak"
+
+msgid "Additional keywords"
+msgstr "Kiegészítő kulcsszavak"
 
 msgid "Name of the project the translation is for"
 msgstr "A projekt megnevezése, és aminek a fordítása:"
@@ -1447,6 +1506,9 @@ msgstr "&Lefordítatlan bejegyzések előre"
 
 msgid "Show sidebar"
 msgstr "Oldalsáv megjelenítése"
+
+msgid "Show status bar"
+msgstr "Állapotsor megjelenítése"
 
 msgid "C&atalog"
 msgstr "&Katalógus"
@@ -1798,8 +1860,8 @@ msgstr "Együttműködés a Crowdin-nel egy fordításban"
 msgid ""
 "Download a file from Crowdin project, translate and sync your changes back."
 msgstr ""
-"Töltsön le egy fájl egy Crowdin projektből, fordítsa le, majd szinkronizálja "
-"Crowdin-en lévőkkel."
+"Töltsön le egy fájlt egy Crowdin projektből, fordítsa le, majd "
+"szinkronizálja Crowdin-en lévőkkel."
 
 msgid "What is Crowdin?"
 msgstr "Mi az a Crowdin?"

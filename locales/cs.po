@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2015-04-30 20:06+0200\n"
-"PO-Revision-Date: 2015-04-30 13:54-0400\n"
+"POT-Creation-Date: 2015-05-13 18:47+0200\n"
+"PO-Revision-Date: 2015-05-13 12:41-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -96,7 +96,7 @@ msgid "POT Translation Templates"
 msgstr "Šablony překladů POT"
 
 msgid "All Translation Files"
-msgstr ""
+msgstr "Všechny překladové soubory"
 
 msgid "Merging differences..."
 msgstr "Slučování rozdílů..."
@@ -183,6 +183,7 @@ msgstr ""
 
 msgid "This file can only be edited in Crowdin’s web interface."
 msgstr ""
+"Tento soubor lze upravit pouze prostřednictvím webového rozhraní Crowdin."
 
 msgid "Downloading latest translations…"
 msgstr "Stahování nejnovějších překladů…"
@@ -489,9 +490,11 @@ msgid ""
 "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
 msgstr ""
+"Soubory POT jsou jen šablony a sami o sobě neobsahují žádné překlady.\n"
+"Pro vytvoření překladu vytvořte na základě šablony nový PO soubor."
 
 msgid "Create New Translation"
-msgstr ""
+msgstr "Vytvořit nový překlad"
 
 msgid "Create new translation"
 msgstr "Vytvořit nový překlad"
@@ -634,6 +637,21 @@ msgstr "Překlad je připraven k použití."
 msgid "Context:"
 msgstr "Kontext:"
 
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr "Poedit automaticky opravil chybný obsah souboru „%s“."
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as fuzzy and correct them if "
+"necessary."
+msgstr ""
+"Soubor obsahoval duplicitní položky, což není v PO souborech povoleno a "
+"zabránilo by to jejich použití. Poedit tento problém opravil, ale měli byste "
+"zkontrolovat všechny překlady označené jako přibližné a v případě potřeby je "
+"opravit."
+
 msgid "Language of the translation isn't set."
 msgstr "Jazyk překladu není nastaven."
 
@@ -715,6 +733,13 @@ msgid_plural "%d errors"
 msgstr[0] "%d chyba"
 msgstr[1] "%d chyby"
 msgstr[2] "%d chyb"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "%d položka"
+msgstr[1] "%d položky"
+msgstr[2] "%d položek"
 
 msgid " (unsaved)"
 msgstr " (neuloženo)"
@@ -846,7 +871,7 @@ msgid "Form %i"
 msgstr "Forma %i"
 
 msgid "Singular"
-msgstr ""
+msgstr "Singulár"
 
 msgid "Zero"
 msgstr "Nula"
@@ -858,7 +883,7 @@ msgid "Two"
 msgstr "Dva"
 
 msgid "Plural"
-msgstr ""
+msgstr "Plurál"
 
 msgid "Other"
 msgstr "Ostatní"
@@ -888,6 +913,12 @@ msgstr "Skrýt postranní panel"
 msgid "Show Sidebar"
 msgstr "Zobrazit postranní panel"
 
+msgid "Hide Status Bar"
+msgstr "Skrýt stavový řádek"
+
+msgid "Show Status Bar"
+msgstr "Zobrazit stavový řádek"
+
 msgid "Source text"
 msgstr "Originál"
 
@@ -911,14 +942,6 @@ msgstr "Překlad — %s"
 msgid "Error:"
 msgstr "Chyba:"
 
-#, c-format
-msgid "%d entries"
-msgstr ""
-
-#, c-format
-msgid "%d entry"
-msgstr ""
-
 msgid "Source file"
 msgstr "Zdrojový soubor"
 
@@ -932,7 +955,7 @@ msgid "Open in editor"
 msgstr "Otevřít v editoru"
 
 msgid "No references for the selected item."
-msgstr "Nejsou zde odkazy pro vybranou položku."
+msgstr "Žádné výskyty vybrané položky."
 
 #, c-format
 msgid "Error opening file %s!"
@@ -952,7 +975,7 @@ msgid "Ignore case"
 msgstr "Ignorovat velikost písmen"
 
 msgid "Wrap around"
-msgstr "Obtékání"
+msgstr "Po dosažení konce hledat od začátku"
 
 msgid "Whole words only"
 msgstr "Jen celá slova"
@@ -1243,14 +1266,50 @@ msgstr "Zachovat stávající formátování souboru"
 msgid "Advanced"
 msgstr "Pokročilé"
 
-msgid "Additional keywords"
-msgstr "Další klíčová slova"
+msgid ""
+"<big>Drag and Drop Folders Here</big>\n"
+"\n"
+"or use the + button"
+msgstr ""
+"<big>Sem přetáhněte adresáře</big>\n"
+"\n"
+"nebo použijte tlačítko +"
+
+msgid ""
+"<big>Drag and drop folders here</big>\n"
+"\n"
+"or use the + button"
+msgstr ""
+"<big>Sem přetáhněte adresáře</big>\n"
+"\n"
+"nebo použijte tlačítko +"
+
+msgid "Add Folders..."
+msgstr "Přidat adresáře..."
+
+msgid "Add folders..."
+msgstr "Přidat adresáře..."
+
+msgid "Add Files..."
+msgstr "Přidat soubory..."
+
+msgid "Add files..."
+msgstr "Přidat soubory..."
+
+msgid "Add Wildcard..."
+msgstr "Přidat zástupný řetězec..."
+
+msgid "Add wildcard..."
+msgstr "Přidat zástupný řetězec..."
 
 msgid "Paths"
 msgstr "Cesty"
 
 msgid "Excluded paths"
 msgstr "Ignorovat cesty"
+
+msgid "Additional keywords"
+msgstr "Další klíčová slova"
 
 msgid "Name of the project the translation is for"
 msgstr "Název projektu, pro který je překlad určen"
@@ -1449,6 +1508,9 @@ msgstr "&Nepřeložené položky jako první"
 
 msgid "Show sidebar"
 msgstr "Zobrazit postranní panel"
+
+msgid "Show status bar"
+msgstr "Zobrazit stavový řádek"
 
 msgid "C&atalog"
 msgstr "&Katalog"

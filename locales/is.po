@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2015-04-30 20:06+0200\n"
-"PO-Revision-Date: 2015-04-30 13:54-0400\n"
+"POT-Creation-Date: 2015-05-13 18:47+0200\n"
+"PO-Revision-Date: 2015-05-13 12:41-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Icelandic\n"
 "Language: is_IS\n"
@@ -23,13 +23,13 @@ msgid "Don't Show Again"
 msgstr "Ekki birta þetta aftur"
 
 msgid "Don't show again"
-msgstr "Ekki sýna aftur"
+msgstr "Ekki birta aftur"
 
 #, c-format
 msgid "%i line of file '%s' was not loaded correctly."
 msgid_plural "%i lines of file '%s' were not loaded correctly."
-msgstr[0] "%i lína úr skránni '%s' hlóðst ekki rétt inn."
-msgstr[1] "%i línur úr skránni '%s' hlóðust ekki rétt inn."
+msgstr[0] "%i lína úr skránni '%s' var ekki lesin rétt inn."
+msgstr[1] "%i línur úr skránni '%s' voru ekki lesnar rétt inn."
 
 #, c-format
 msgid "Line %d of file '%s' is corrupted (not valid %s data)."
@@ -55,15 +55,15 @@ msgstr ""
 
 #, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
-msgstr "Gat ekki hlaðið inn skránni %s, hún er líklega skemmd."
+msgstr "Gat ekki lesið skrána %s, hún er líklega skemmd."
 
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
 "Please save it under different name."
 msgstr ""
-"Skráin '%s' er aðeins lesanleg og er ekki hægt að vista.\n"
-"Vistaðu hana með öðru heiti."
+"Aðeins er hægt að lesa skrá %s en ekki hægt að vista.\n"
+"Vistaðu hana undir öðru heiti."
 
 #, c-format
 msgid "Couldn't save file %s."
@@ -96,7 +96,7 @@ msgid "POT Translation Templates"
 msgstr "POT þýðingasniðmát"
 
 msgid "All Translation Files"
-msgstr ""
+msgstr "Allar þýðingaskrár"
 
 msgid "Merging differences..."
 msgstr "Samþætti mismun..."
@@ -118,7 +118,7 @@ msgid "You must restart Poedit for this change to take effect."
 msgstr "Þú þarft að endurræsa Poedit til að þessi breyting taki gildi."
 
 msgid "Downloading translations is disabled in this project."
-msgstr "Downloading translations is disabled in this project."
+msgstr "Ekki er hægt að sækja þýðingar í þessu verki."
 
 msgid "Not authorized, please sign in again."
 msgstr "Ekki leyfilegt, skráðu þig aftur inn."
@@ -173,13 +173,13 @@ msgid "File:"
 msgstr "File:"
 
 msgid "No translation projects listed in your Crowdin account."
-msgstr "No translation projects listed in your Crowdin account."
+msgstr "Engin þýðingarverkefni eru skráð á þínu Crowdin svæði."
 
 msgid "This project has no files that can be translated in Poedit."
 msgstr "Þetta verkefni er ekki með neinar skrár sem hægt er að þýða í Poedit."
 
 msgid "This file can only be edited in Crowdin’s web interface."
-msgstr ""
+msgstr "Þessari skrá er aðeins hægt að breyta á vefsvæði Crowdin."
 
 msgid "Downloading latest translations…"
 msgstr "Næ í nýjustu þýðingar…"
@@ -486,9 +486,11 @@ msgid ""
 "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
 msgstr ""
+"POT skrár eru aðeins þýðingasniðmát og innihalda engar þýðingar.\n"
+"Til að þýða verður að búa til nýja PO skrá byggða á sniðmátinu."
 
 msgid "Create New Translation"
-msgstr ""
+msgstr "Búa til nýja þýðingu"
 
 msgid "Create new translation"
 msgstr "Búa til nýja þýðingu"
@@ -623,6 +625,17 @@ msgstr "Þýðingaminnið er tilbúið til notkunar."
 msgid "Context:"
 msgstr "Samhengi:"
 
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr ""
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as fuzzy and correct them if "
+"necessary."
+msgstr ""
+
 msgid "Language of the translation isn't set."
 msgstr "Tungumál þýðingar er ekki stillt."
 
@@ -704,6 +717,12 @@ msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d villa"
 msgstr[1] "%d villur"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid " (unsaved)"
 msgstr " (óvistað)"
@@ -831,7 +850,7 @@ msgid "Form %i"
 msgstr "Form %i"
 
 msgid "Singular"
-msgstr ""
+msgstr "Eintala"
 
 msgid "Zero"
 msgstr "Núll"
@@ -843,7 +862,7 @@ msgid "Two"
 msgstr "Tveir"
 
 msgid "Plural"
-msgstr ""
+msgstr "Fleirtala"
 
 msgid "Other"
 msgstr "Annað"
@@ -873,6 +892,12 @@ msgstr "Fela hliðarspjald"
 msgid "Show Sidebar"
 msgstr "Birta hliðarspjald"
 
+msgid "Hide Status Bar"
+msgstr ""
+
+msgid "Show Status Bar"
+msgstr ""
+
 msgid "Source text"
 msgstr "Frumtexti"
 
@@ -895,14 +920,6 @@ msgstr "Þýðing — %s"
 
 msgid "Error:"
 msgstr "Villa:"
-
-#, c-format
-msgid "%d entries"
-msgstr ""
-
-#, c-format
-msgid "%d entry"
-msgstr ""
 
 msgid "Source file"
 msgstr "Upprunaskrá"
@@ -1108,7 +1125,7 @@ msgid "Reset"
 msgstr "Endurstilla"
 
 msgid "Consult TM when updating from sources"
-msgstr "Fletta upp í þýpingaminni við uppfærslu ú frumskrám"
+msgstr "Fletta upp í þýðingaminni við uppfærslu úr frumskrám"
 
 msgid ""
 "If enabled, Poedit will try to fill in new entries using your previous\n"
@@ -1230,14 +1247,44 @@ msgstr "Vernda snið fyrirliggjandi skráa"
 msgid "Advanced"
 msgstr "Ítarlegt"
 
-msgid "Additional keywords"
-msgstr "Aukaleg stikkorð:"
+msgid ""
+"<big>Drag and Drop Folders Here</big>\n"
+"\n"
+"or use the + button"
+msgstr ""
+
+msgid ""
+"<big>Drag and drop folders here</big>\n"
+"\n"
+"or use the + button"
+msgstr ""
+
+msgid "Add Folders..."
+msgstr ""
+
+msgid "Add folders..."
+msgstr ""
+
+msgid "Add Files..."
+msgstr ""
+
+msgid "Add files..."
+msgstr ""
+
+msgid "Add Wildcard..."
+msgstr ""
+
+msgid "Add wildcard..."
+msgstr ""
 
 msgid "Paths"
 msgstr "Slóðir"
 
 msgid "Excluded paths"
 msgstr "Slóðir sem á að sleppa"
+
+msgid "Additional keywords"
+msgstr "Aukaleg stikkorð:"
 
 msgid "Name of the project the translation is for"
 msgstr "Heiti þýðingaverkefnis sem þýðingin er ætluð"
@@ -1257,7 +1304,7 @@ msgid "Comment:"
 msgstr "Athugasemd:"
 
 msgid "OK"
-msgstr "OK"
+msgstr "Í lagi"
 
 msgid "C&lear"
 msgstr "&Hreinsa"
@@ -1439,6 +1486,9 @@ msgstr "Óþýddar &færslur fyrst"
 msgid "Show sidebar"
 msgstr "Birta hliðarspjald"
 
+msgid "Show status bar"
+msgstr ""
+
 msgid "C&atalog"
 msgstr "Þýðing&askrá"
 
@@ -1571,7 +1621,7 @@ msgstr ""
 "fyrir hverja inntaksskrá. %f kemur í stað skráarheitisins."
 
 msgid "Source code charset:"
-msgstr "Stafasett frumkóða:"
+msgstr "Stafatafla frumkóða:"
 
 #, c-format
 msgid ""
@@ -1579,8 +1629,8 @@ msgid ""
 "only if source codecharset was given. %c expands to charset value."
 msgstr ""
 "Þetta mun verða viðhengt á skipanalínu, einungis\n"
-"ef upprunastafasett hefur verið gefið upp. %c kemur í stað gildis "
-"stafasettsins."
+"ef upprunaleg stafatafla hefur verið gefið upp. %c kemur í stað gildis "
+"stafatöflunnar."
 
 msgid "Catalog properties"
 msgstr "Eiginleikar þýðingaskrár"
@@ -1601,7 +1651,7 @@ msgid "Learn about plural forms"
 msgstr "Vita meira um fleirtöluform"
 
 msgid "Charset:"
-msgstr "Stafasett:"
+msgstr "Stafatafla:"
 
 msgid "Team:"
 msgstr "Teymi:"

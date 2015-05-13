@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2015-04-30 20:06+0200\n"
-"PO-Revision-Date: 2015-04-30 13:54-0400\n"
+"POT-Creation-Date: 2015-05-13 18:47+0200\n"
+"PO-Revision-Date: 2015-05-13 12:41-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -100,7 +100,7 @@ msgid "POT Translation Templates"
 msgstr "POT Çeviri Şablonları"
 
 msgid "All Translation Files"
-msgstr ""
+msgstr "Tüm Çeviri Dosyaları"
 
 msgid "Merging differences..."
 msgstr "Farklılıklar birleştiriliyor..."
@@ -185,7 +185,7 @@ msgid "This project has no files that can be translated in Poedit."
 msgstr "Bu proje, Poedit içinde çevrilebilir hiç bir dosyaya sahip değil."
 
 msgid "This file can only be edited in Crowdin’s web interface."
-msgstr ""
+msgstr "Bu dosya sadece Crowdin'in web arayüzünde düzenlenebilir."
 
 msgid "Downloading latest translations…"
 msgstr "En son çeviriler indiriliyor…"
@@ -492,9 +492,12 @@ msgid ""
 "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
 msgstr ""
+"POT dosyaları sadece şablonlardır ve kendiliğinden herhangi bir çeviri "
+"içermezler.\n"
+"Bir çeviri yapmak için şablonu temel alan yeni bir PO dosyası oluşturun."
 
 msgid "Create New Translation"
-msgstr ""
+msgstr "Yeni Çeviri Oluştur"
 
 msgid "Create new translation"
 msgstr "Yeni çeviri oluştur"
@@ -628,6 +631,21 @@ msgstr "Çeviri kullanıma hazır."
 msgid "Context:"
 msgstr "Bağlam:"
 
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr "Poedit, “%s” dosyasındaki geçersiz içeriği otomatik olarak düzeltti."
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as fuzzy and correct them if "
+"necessary."
+msgstr ""
+"Dosya, PO dosyalarında izin verilmeyen ve dosyanın kullanılmasını engelleyen "
+"kopya öğeleri içermekte. Poedit sorunu düzeltti, ancak belirsiz olarak "
+"işaretlenen her bir öğenin çevirisini gözden geçirmeli ve gerekirse "
+"düzeltmelisiniz."
+
 msgid "Language of the translation isn't set."
 msgstr "Çeviri dili ayarlanmamış."
 
@@ -709,6 +727,12 @@ msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d hata"
 msgstr[1] "%d hata"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "%d giriş"
+msgstr[1] "%d giriş"
 
 msgid " (unsaved)"
 msgstr " (kaydedilmedi)"
@@ -839,7 +863,7 @@ msgid "Form %i"
 msgstr "Biçim %i"
 
 msgid "Singular"
-msgstr ""
+msgstr "Tekil"
 
 msgid "Zero"
 msgstr "Sıfır"
@@ -851,7 +875,7 @@ msgid "Two"
 msgstr "İki"
 
 msgid "Plural"
-msgstr ""
+msgstr "Çoğul"
 
 msgid "Other"
 msgstr "Diğer"
@@ -881,6 +905,12 @@ msgstr "Kenar çubuğunu gizle"
 msgid "Show Sidebar"
 msgstr "Kenar çubuğunu göster"
 
+msgid "Hide Status Bar"
+msgstr "Durum Çubuğunu Gizle"
+
+msgid "Show Status Bar"
+msgstr "Durum Çubuğunu Göster"
+
 msgid "Source text"
 msgstr "Kaynak metin"
 
@@ -903,14 +933,6 @@ msgstr "Çeviri — %s"
 
 msgid "Error:"
 msgstr "Hata:"
-
-#, c-format
-msgid "%d entries"
-msgstr ""
-
-#, c-format
-msgid "%d entry"
-msgstr ""
 
 msgid "Source file"
 msgstr "Kaynak dosyası"
@@ -1237,14 +1259,50 @@ msgstr "Varolan dosyaların biçimini koru"
 msgid "Advanced"
 msgstr "Gelişmiş"
 
-msgid "Additional keywords"
-msgstr "Ek anahtar kelimeler"
+msgid ""
+"<big>Drag and Drop Folders Here</big>\n"
+"\n"
+"or use the + button"
+msgstr ""
+"<big>Klasörleri Buraya Sürükleyin ve Bırakın</big>\n"
+"\n"
+"ya da + düğmesini kullanın"
+
+msgid ""
+"<big>Drag and drop folders here</big>\n"
+"\n"
+"or use the + button"
+msgstr ""
+"<big>Klasörleri buraya sürükleyin ve bırakın</big>\n"
+"\n"
+"ya da + düğmesini kullanın"
+
+msgid "Add Folders..."
+msgstr "Klasörleri Ekle..."
+
+msgid "Add folders..."
+msgstr "Klasörleri ekle..."
+
+msgid "Add Files..."
+msgstr "Dosyaları Ekle..."
+
+msgid "Add files..."
+msgstr "Dosyaları ekle..."
+
+msgid "Add Wildcard..."
+msgstr "Joker Karakter Ekle..."
+
+msgid "Add wildcard..."
+msgstr "Joker karakter ekle..."
 
 msgid "Paths"
 msgstr "Yollar"
 
 msgid "Excluded paths"
 msgstr "Katılmayacak yollar"
+
+msgid "Additional keywords"
+msgstr "Ek anahtar kelimeler"
 
 msgid "Name of the project the translation is for"
 msgstr "Çevirisi yapılan projenin adı:"
@@ -1444,6 +1502,9 @@ msgstr "Ç&evrilmemiş Dizgeler En Üstte Görüntülensin"
 msgid "Show sidebar"
 msgstr "Kenar çubuğunu göster"
 
+msgid "Show status bar"
+msgstr "Durum çubuğunu göster"
+
 msgid "C&atalog"
 msgstr "&Katalog"
 
@@ -1460,7 +1521,7 @@ msgid "Update from &POT File..."
 msgstr "&POT Dosyasından Güncelle..."
 
 msgid "Sync with Crowdin"
-msgstr "Crowdin ile Eşitle"
+msgstr "Crowdin ile eşitle"
 
 msgid "Fill missing translations from &TM..."
 msgstr "Eksik çevirileri çeviri belleğinden &doldur..."
