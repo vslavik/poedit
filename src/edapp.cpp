@@ -504,7 +504,10 @@ void PoeditApp::SetupLanguage()
     {
         auto langinfo = wxLocale::FindLanguageInfo(uilang);
         if (langinfo)
+        {
             language = langinfo->Language;
+            uilang.clear(); // will go through locale
+        }
     }
 #endif
 
@@ -517,13 +520,12 @@ void PoeditApp::SetupLanguage()
         wxLogNull null;
         m_locale.reset(new wxLocale());
         if (!m_locale->Init(language, wxLOCALE_DONT_LOAD_DEFAULT))
-        {
             m_locale.reset();
+
 #if NEED_CHOOSELANG_UI
-            if (!uilang.empty())
-                trans->SetLanguage(uilang);
+        if (!uilang.empty())
+            trans->SetLanguage(uilang);
 #endif
-        }
     }
 
     trans->AddStdCatalog();
