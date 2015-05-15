@@ -64,11 +64,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wxWidgets_xrc", "deps\custo
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wxWidgets_stc", "deps\custom_build\wx_stc.vcxproj", "{23E1C437-A951-5943-8639-A17F3CF2E606}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0A6C3046-D3F1-4643-92D3-29901288587E}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dump-legacy-tm", "src\tm\dump-legacy-tm.vcxproj", "{BE217246-3AB2-4D0E-B278-4472C3545261}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Boost", "Boost", "{FD35F78A-8B65-4C1C-9BE2-A3EA2708B481}"
@@ -103,10 +98,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cld2", "deps\custom_build\c
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "casablanca", "deps\custom_build\casablanca.vcxproj", "{15F3B200-1AED-4B57-AF37-B21CD67914B1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{52CC1903-F534-4563-95A5-1C222C727A44}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		deps\casablanca\Release\src\build\common.vcxitems*{15f3b200-1aed-4b57-af37-b21cd67914b1}*SharedItemsImports = 4
 		deps\casablanca\Release\src\build\win32.vcxitems*{15f3b200-1aed-4b57-af37-b21cd67914b1}*SharedItemsImports = 4
+		deps\casablanca\Release\src\build\common.vcxitems*{15f3b200-1aed-4b57-af37-b21cd67914b1}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
