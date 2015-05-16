@@ -239,6 +239,32 @@ wxString PoeditApp::GetAppVersion() const
     return wxString::FromAscii(POEDIT_VERSION);
 }
 
+wxString PoeditApp::GetAppBuildNumber() const
+{
+#if defined(__WXOSX__)
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString *ver = [infoDict objectForKey:@"CFBundleVersion"];
+    return str::to_wx(ver);
+#elif defined(__WXMSW__)
+    auto exe = wxStandardPaths::Get().GetExecutablePath();
+    DWORD unusedHandle;
+    DWORD fiSize = GetFileVersionInfoSize(exe.wx_str(), &unusedHandle);
+    if (fiSize == 0)
+        return "";
+    wxCharBuffer fi(fiSize);
+    if (!GetFileVersionInfo(exe.wx_str(), unusedHandle, fiSize, fi.data()))
+        return "";
+    void *ver;
+    UINT sizeInfo;
+    if (!VerQueryValue(fi.data(), L"\\", &ver, &sizeInfo))
+        return "";
+    VS_FIXEDFILEINFO *info = (VS_FIXEDFILEINFO*)ver;
+    return wxString::Format("%d", LOWORD(info->dwFileVersionLS));
+#else
+    return "";
+#endif
+}
+
 bool PoeditApp::IsBetaVersion() const
 {
     wxString v = GetAppVersion();
@@ -436,6 +462,9 @@ bool PoeditApp::OnInit()
     win_sparkle_set_appcast_url(appcast.utf8_str());
     win_sparkle_set_can_shutdown_callback(&PoeditApp::WinSparkle_CanShutdown);
     win_sparkle_set_shutdown_request_callback(&PoeditApp::WinSparkle_Shutdown);
+    auto buildnum = GetAppBuildNumber();
+    if (!buildnum.empty())
+        win_sparkle_set_app_build_version(buildnum.wc_str());
     win_sparkle_init();
 #endif
 

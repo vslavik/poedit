@@ -31,6 +31,8 @@ appicon ICON   "../artwork/windows/Poedit.ico"
 
 #include "wx/msw/wx.rc"
 #include "version.h"
+#include  "git_build_number.h"
+#define POEDIT_VERSION_WIN_FULL POEDIT_VERSION_WIN,POEDIT_GIT_BUILD_NUMBER
 
 #ifndef NDEBUG
 #define VER_DEBUG    VS_FF_DEBUG
@@ -39,8 +41,8 @@ appicon ICON   "../artwork/windows/Poedit.ico"
 #endif
 
 1 VERSIONINFO
- FILEVERSION     POEDIT_VERSION_WIN
- PRODUCTVERSION  POEDIT_VERSION_WIN
+ FILEVERSION     POEDIT_VERSION_WIN_FULL
+ PRODUCTVERSION  POEDIT_VERSION_WIN_FULL
  FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
  FILEFLAGS       VER_DEBUG
  FILEOS          VOS_NT_WINDOWS32

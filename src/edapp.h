@@ -56,6 +56,7 @@ class PoeditApp : public wxApp
 
         /// Returns Poedit version string.
         wxString GetAppVersion() const;
+        wxString GetAppBuildNumber() const;
         bool IsBetaVersion() const;
         bool CheckForBetaUpdates() const;
 

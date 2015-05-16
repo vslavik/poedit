@@ -2,6 +2,14 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
          ToolsVersion="4.0">
 
+  <PropertyGroup>
+    <MSBuildCommunityTasksPath>$(MSBuildProjectDirectory)\packages\MSBuildTasks.1.4.0.88\tools</MSBuildCommunityTasksPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets"
+          Condition="Exists('$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets')" />
+  <UsingTask AssemblyFile="$(MSBuildCommunityTasksLib)" TaskName="MSBuild.Community.Tasks.Git.GitCommits"
+             Condition="Exists('$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets')" />
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <DebugSuffix>d</DebugSuffix>
   </PropertyGroup>
@@ -53,6 +61,24 @@
     <GettextFiles Include="$(GettextBinDir)\*.dll" />
   </ItemGroup>
 
+
+  <PropertyGroup>
+    <GitBuildNumberFile>$(MSBuildProjectDirectory)\$(IntermediateOutputPath)\git_build_number.h</GitBuildNumberFile>
+    <GitBuildNumberOldDefine Condition="Exists('$(GitBuildNumberFile)')">$([System.IO.File]::ReadAllText($(GitBuildNumberFile)).Trim())</GitBuildNumberOldDefine>
+  </PropertyGroup>
+  <Target Name="GetGitVersion" BeforeTargets="ClCompile">
+    <GitCommits>
+      <Output TaskParameter="CommitsCount" PropertyName="GitBuildNumber" />
+    </GitCommits>
+    <CreateProperty Value="#define POEDIT_GIT_BUILD_NUMBER $(GitBuildNumber)">
+      <Output TaskParameter="Value" PropertyName="GitBuildNumberDefine"/>
+    </CreateProperty>
+    <Message Importance="High" Text="Updating git build number to $(GitBuildNumber)..."
+             Condition="$(GitBuildNumberDefine)!=$(GitBuildNumberOldDefine)" />
+    <WriteLinesToFile File="$(GitBuildNumberFile)" Lines="$(GitBuildNumberDefine)" Overwrite="true"
+                      Condition="$(GitBuildNumberDefine)!=$(GitBuildNumberOldDefine)" />
+    </Target>
+    
 
   <Target Name="CopyDLLs" AfterTargets="Link">
     <Message Importance="High" Text="Copying 3rd party DLLs to $(OutDir)" />
