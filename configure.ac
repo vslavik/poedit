@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
 
-AC_INIT([poedit], [1.7.6], [poedit@googlegroups.com])
+AC_INIT([poedit], [1.7.6], [help@poedit.net])
 PACKAGE_SHORT_VERSION=1.7.6
 AC_SUBST(PACKAGE_SHORT_VERSION)
 
