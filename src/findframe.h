@@ -56,7 +56,8 @@ class FindFrame : public wxFrame
             \param catalog Catalog to search in
          */
         FindFrame(PoeditFrame *owner, PoeditListCtrl *list, const CatalogPtr& c,
-                  CustomizedTextCtrl *textCtrlOrig, CustomizedTextCtrl *textCtrlTrans);
+                  CustomizedTextCtrl *textCtrlOrig, CustomizedTextCtrl *textCtrlTrans,
+                  wxNotebook *pluralNotebook);
         ~FindFrame();
 
         /** Resets the search to starting position and changes
@@ -96,6 +97,7 @@ class FindFrame : public wxFrame
         CatalogItemPtr m_lastItem;
         wxButton *m_btnClose, *m_btnReplaceAll, *m_btnReplace, *m_btnPrev, *m_btnNext;
         CustomizedTextCtrl *m_textCtrlOrig, *m_textCtrlTrans;
+        wxNotebook *m_pluralNotebook;
 
         // NB: this is static so that last search term is remembered
         static wxString ms_text;

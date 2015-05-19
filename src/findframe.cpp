@@ -32,6 +32,7 @@
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 #include <wx/checkbox.h>
+#include <wx/notebook.h>
 
 #ifdef __WXOSX__
 #include <AppKit/AppKit.h>
@@ -75,14 +76,16 @@ FindFrame::FindFrame(PoeditFrame *owner,
                      PoeditListCtrl *list,
                      const CatalogPtr& c,
                      CustomizedTextCtrl *textCtrlOrig,
-                     CustomizedTextCtrl *textCtrlTrans)
+                     CustomizedTextCtrl *textCtrlTrans,
+                     wxNotebook *pluralNotebook)
         : wxFrame(owner, wxID_ANY, _("Find"), wxDefaultPosition, wxDefaultSize, FRAME_STYLE),
           m_owner(owner),
           m_listCtrl(list),
           m_catalog(c),
           m_position(-1),
           m_textCtrlOrig(textCtrlOrig),
-          m_textCtrlTrans(textCtrlTrans)
+          m_textCtrlTrans(textCtrlTrans),
+          m_pluralNotebook(pluralNotebook)
 {
     auto panel = new wxPanel(this, wxID_ANY);
     wxBoxSizer *panelsizer = new wxBoxSizer(wxVERTICAL);
@@ -389,10 +392,31 @@ bool FindTextInStringAndDo(S& str, const wxString& text, bool wholeWords, F&& ha
     return found;
 }
 
-bool IsTextInString(const wxString& str, const wxString& text, bool wholeWords)
+bool IsTextInString(wxString str, const wxString& text,
+                    bool ignoreCase, bool wholeWords, bool ignoreAmp, bool ignoreUnderscore)
 {
+    if (ignoreCase)
+        str.MakeLower();
+    if (ignoreAmp)
+        str.Replace("&", "");
+    if (ignoreUnderscore)
+        str.Replace("_", "");
+
     return FindTextInStringAndDo(str, text, wholeWords,
                                  [=](const wxString&,size_t,size_t){ return wxString::npos;/*just 1 hit*/ });
+}
+
+size_t IsTextInStrings(const wxArrayString& strs, const wxString& text,
+                     bool ignoreCase, bool wholeWords, bool ignoreAmp, bool ignoreUnderscore)
+{
+    // loop through all strings and search for the substring in them
+    for (size_t i = 0; i < strs.GetCount(); i++)
+    {
+        if (IsTextInString(strs[i], text, ignoreCase, wholeWords, ignoreAmp, ignoreUnderscore))
+            return i;
+    }
+
+    return -1;
 }
 
 bool ReplaceTextInString(wxString& str, const wxString& text, bool wholeWords, const wxString& replacement)
@@ -431,6 +455,7 @@ bool FindFrame::DoFind(int dir)
     bool wholeWords = m_wholeWords->GetValue();
     bool wrapAround = m_wrapAround->GetValue();
     int posOrig = m_position;
+    size_t trans;
 
     FoundState found = Found_Not;
     CatalogItemPtr lastItem;
@@ -445,8 +470,8 @@ bool FindFrame::DoFind(int dir)
     // doesn't contain them. That's a reasonable heuristics: most of the time,
     // ignoring them is the right thing to do and provides better results. But
     // sometimes, people want to search for them.
-    const bool ignoreMnemonicsAmp = (mode == Mode_Find) && (text.Find(_T('&')) == wxNOT_FOUND);
-    const bool ignoreMnemonicsUnderscore = (mode == Mode_Find) && (text.Find(_T('_')) == wxNOT_FOUND);
+    const bool ignoreAmp = (mode == Mode_Find) && (text.Find(_T('&')) == wxNOT_FOUND);
+    const bool ignoreUnderscore = (mode == Mode_Find) && (text.Find(_T('_')) == wxNOT_FOUND);
 
     int oldPosition = m_position;
     m_position = oldPosition + dir;
@@ -471,22 +496,8 @@ bool FindFrame::DoFind(int dir)
 
         if (inTrans)
         {
-            // concatenate all translations:
-            unsigned cntTrans = dt->GetNumberOfTranslations();
-            textc = wxEmptyString;
-            for (unsigned i = 0; i < cntTrans; i++)
-            {
-                textc += dt->GetTranslation(i);
-            }
-            // and search for the substring in them:
-            if (ignoreCase)
-                textc.MakeLower();
-            if (ignoreMnemonicsAmp)
-                textc.Replace("&", "");
-            if (ignoreMnemonicsUnderscore)
-                textc.Replace("_", "");
-
-            if (IsTextInString(textc, text, wholeWords))
+            trans = IsTextInStrings(dt->GetTranslations(), text, ignoreCase, wholeWords, ignoreAmp, ignoreUnderscore);
+            if (trans != (size_t)-1)
             {
                 found = Found_InTrans;
                 break;
@@ -494,14 +505,7 @@ bool FindFrame::DoFind(int dir)
         }
         if (inSource)
         {
-            textc = dt->GetString();
-            if (ignoreCase)
-                textc.MakeLower();
-            if (ignoreMnemonicsAmp)
-                textc.Replace("&", "");
-            if (ignoreMnemonicsUnderscore)
-                textc.Replace("_", "");
-            if (IsTextInString(textc, text, wholeWords))
+            if (IsTextInString(dt->GetString(), text, ignoreCase, wholeWords, ignoreAmp, ignoreUnderscore))
             {
                 found = Found_InOrig;
                 break;
@@ -509,25 +513,12 @@ bool FindFrame::DoFind(int dir)
         }
         if (inComments)
         {
-            textc = dt->GetComment();
-            if (ignoreCase)
-                textc.MakeLower();
-
-            if (IsTextInString(textc, text, wholeWords))
+            if (IsTextInString(dt->GetComment(), text, ignoreCase, wholeWords, false, false))
             {
                 found = Found_InComments;
                 break;
             }
-
-            wxArrayString extractedComments = dt->GetExtractedComments();
-            textc = wxEmptyString;
-            for (unsigned i = 0; i < extractedComments.GetCount(); i++)
-                textc += extractedComments[i];
-
-            if (ignoreCase)
-                textc.MakeLower();
-
-            if (IsTextInString(textc, text, wholeWords))
+            if (IsTextInStrings(dt->GetExtractedComments(), text, ignoreCase, wholeWords, false, false) != (size_t)-1)
             {
                 found = Found_InExtractedComments;
                 break;
@@ -551,7 +542,15 @@ bool FindFrame::DoFind(int dir)
               txt = m_textCtrlOrig;
               break;
             case Found_InTrans:
-              txt = m_textCtrlTrans;
+              if (lastItem->GetNumberOfTranslations() == 1)
+              {
+                  txt = m_textCtrlTrans;
+              }
+              else
+              {
+                  m_pluralNotebook->SetSelection(trans);
+                  txt = (CustomizedTextCtrl*)m_pluralNotebook->GetCurrentPage();
+              }
               break;
             case Found_InComments:
             case Found_InExtractedComments:
