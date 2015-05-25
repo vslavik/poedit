@@ -2701,6 +2701,7 @@ void PoeditFrame::UpdateMenu()
 
     menubar->Enable(XRCID("menu_references"), nonEmpty);
     menubar->Enable(wxID_FIND, nonEmpty);
+    menubar->Enable(wxID_REPLACE, nonEmpty);
     menubar->Enable(XRCID("menu_find_next"), nonEmpty);
     menubar->Enable(XRCID("menu_find_prev"), nonEmpty);
 
