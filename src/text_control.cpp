@@ -279,12 +279,18 @@ bool CustomizedTextCtrl::DoCopy()
 
 void CustomizedTextCtrl::OnCopy(wxClipboardTextEvent&)
 {
+    if (!CanCopy())
+        return;
+
     DoCopy();
 }
 
 void CustomizedTextCtrl::OnCut(wxClipboardTextEvent&)
 {
-    if ( !DoCopy() )
+    if (!CanCut())
+        return;
+
+    if (!DoCopy())
         return;
 
     long from, to;
@@ -294,6 +300,9 @@ void CustomizedTextCtrl::OnCut(wxClipboardTextEvent&)
 
 void CustomizedTextCtrl::OnPaste(wxClipboardTextEvent&)
 {
+    if (!CanPaste())
+        return;
+
     wxClipboardLocker lock;
     wxCHECK_RET( !!lock, "failed to lock clipboard" );
 
