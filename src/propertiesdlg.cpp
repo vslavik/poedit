@@ -409,7 +409,7 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
         m_excludedPaths->UpdateFromData();
     };
 
-    m_paths->SetMinSize(wxSize(-1, PX(90)));
+    m_paths->SetMinSize(wxSize(PX(450), PX(90)));
     m_excludedPaths->SetMinSize(wxSize(-1, PX(90)));
 
 #ifdef __WXOSX__
