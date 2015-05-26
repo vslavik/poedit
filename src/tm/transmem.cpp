@@ -68,6 +68,9 @@
 
 using namespace Lucene;
 
+namespace
+{
+
 #define CATCH_AND_RETHROW_EXCEPTION                                 \
     catch (LuceneException& e)                                      \
     {                                                               \
@@ -78,6 +81,106 @@ using namespace Lucene;
     {                                                               \
         throw Exception(e.what());                                  \
     }
+
+
+// Manages IndexReader and Searcher instances in multi-threaded environment.
+// Curiously, Lucene uses shared_ptr-based refcounting *and* explicit one as
+// well, with a crucial part not well protected.
+//
+// See https://issues.apache.org/jira/browse/LUCENE-3567 for the exact issue
+// encountered by Poedit's use as well. For an explanation of the manager
+// class, see
+// http://blog.mikemccandless.com/2011/09/lucenes-searchermanager-simplifies.html
+// http://blog.mikemccandless.com/2011/11/near-real-time-readers-with-lucenes.html
+class SearcherManager
+{
+public:
+    SearcherManager(IndexWriterPtr writer)
+    {
+        m_reader = writer->getReader();
+        m_searcher = newLucene<IndexSearcher>(m_reader);
+    }
+
+    ~SearcherManager()
+    {
+        m_searcher.reset();
+        m_reader->decRef();
+    }
+
+    // Safe, properly ref-counting (in Lucene way, not just shared_ptr) holder.
+    template<typename T>
+    class SafeRef
+    {
+    public:
+        typedef boost::shared_ptr<T> TPtr;
+
+        SafeRef(SafeRef&& other) : m_mng(other.m_mng) { std::swap(m_ptr, other.m_ptr); }
+        ~SafeRef() { if (m_ptr) m_mng.DecRef(m_ptr); }
+
+        TPtr ptr() { return m_ptr; }
+        T* operator->() const { return m_ptr.get(); }
+
+        SafeRef(const SafeRef&) = delete;
+        SafeRef& operator=(const SafeRef&) = delete;
+
+    private:
+        friend class SearcherManager;
+        explicit SafeRef(SearcherManager& m, TPtr ptr) : m_mng(m), m_ptr(ptr) {}
+
+        boost::shared_ptr<T> m_ptr;
+        SearcherManager& m_mng;
+    };
+
+    SafeRef<IndexReader> Reader()
+    {
+        std::lock_guard<std::mutex> guard(m_mutex);
+        ReloadReaderIfNeeded();
+        m_reader->incRef();
+        return SafeRef<IndexReader>(*this, m_reader);
+    }
+
+    SafeRef<IndexSearcher> Searcher()
+    {
+        std::lock_guard<std::mutex> guard(m_mutex);
+        ReloadReaderIfNeeded();
+        m_searcher->getIndexReader()->incRef();
+        return SafeRef<IndexSearcher>(*this, m_searcher);
+    }
+
+private:
+    void ReloadReaderIfNeeded()
+    {
+        // contract: m_mutex is locked when this function is called
+        if (m_reader->isCurrent())
+            return; // nothing to do
+
+        auto newReader = m_reader->reopen();
+        auto newSearcher = newLucene<IndexSearcher>(newReader);
+
+        m_reader->decRef();
+
+        m_reader = newReader;
+        m_searcher = newSearcher;
+    }
+
+    void DecRef(IndexReaderPtr& r)
+    {
+        std::lock_guard<std::mutex> guard(m_mutex);
+        r->decRef();
+    }
+    void DecRef(IndexSearcherPtr& s)
+    {
+        std::lock_guard<std::mutex> guard(m_mutex);
+        s->getIndexReader()->decRef();
+    }
+
+    IndexReaderPtr   m_reader;
+    IndexSearcherPtr m_searcher;
+    std::mutex       m_mutex;
+};
+
+
+} // anonymous namespace
 
 // ----------------------------------------------------------------
 // TranslationMemoryImpl
@@ -96,7 +199,7 @@ public:
 
     ~TranslationMemoryImpl()
     {
-        m_reader->close();
+        m_mng.reset();
         m_writer->close();
     }
 
@@ -111,14 +214,11 @@ private:
     void Init();
 
     static std::wstring GetDatabaseDir();
-    IndexReaderPtr Reader();
-    SearcherPtr Searcher();
 
 private:
     AnalyzerPtr      m_analyzer;
     IndexWriterPtr   m_writer;
-    IndexReaderPtr   m_reader;
-    std::mutex       m_readerMutex;
+    std::shared_ptr<SearcherManager> m_mng;
 
     std::shared_ptr<TranslationMemory::Writer> m_writerAPI;
 };
@@ -142,21 +242,6 @@ std::wstring TranslationMemoryImpl::GetDatabaseDir()
     data += "TranslationMemory";
 
     return data.ToStdWstring();
-}
-
-
-IndexReaderPtr TranslationMemoryImpl::Reader()
-{
-    std::lock_guard<std::mutex> guard(m_readerMutex);
-
-    if (!m_reader->isCurrent())
-    {
-        auto newReader = m_reader->reopen();
-        m_reader->close();
-        m_reader = newReader;
-    }
-
-    return m_reader;
 }
 
 
@@ -323,17 +408,17 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& srclang,
             phraseQ->add(term);
         }
 
-        auto searcher = newLucene<IndexSearcher>(Reader());
+        auto searcher = m_mng->Searcher();
 
         // Try exact phrase first:
-        PerformSearch(searcher, srclangQ, langQ, source, phraseQ, results,
+        PerformSearch(searcher.ptr(), srclangQ, langQ, source, phraseQ, results,
                       QUALITY_THRESHOLD, /*scoreScaling=*/1.0);
         if (!results.empty())
             return results;
 
         // Then, if no matches were found, permit being a bit sloppy:
         phraseQ->setSlop(1);
-        PerformSearch(searcher, srclangQ, langQ, source, phraseQ, results,
+        PerformSearch(searcher.ptr(), srclangQ, langQ, source, phraseQ, results,
                       QUALITY_THRESHOLD, /*scoreScaling=*/0.9);
 
         if (!results.empty())
@@ -344,7 +429,7 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& srclang,
         boolQ->setMinimumNumberShouldMatch(std::max(1, boolQ->getClauses().size() - MAX_ALLOWED_LENGTH_DIFFERENCE));
         PerformSearchWithBlock
         (
-            searcher, srclangQ, langQ, source, boolQ,
+            searcher.ptr(), srclangQ, langQ, source, boolQ,
             QUALITY_THRESHOLD, /*scoreScaling=*/0.8,
             [=,&results](DocumentPtr doc, double score)
             {
@@ -379,7 +464,7 @@ void TranslationMemoryImpl::GetStats(long& numDocs, long& fileSize)
 {
     try
     {
-        auto reader = Reader();
+        auto reader = m_mng->Reader();
         numDocs = reader->numDocs();
         fileSize = wxDir::GetTotalSize(GetDatabaseDir()).GetValue();
     }
@@ -519,8 +604,8 @@ void TranslationMemoryImpl::Init()
         m_writer = newLucene<IndexWriter>(dir, m_analyzer, IndexWriter::MaxFieldLengthLIMITED);
         m_writer->setMergeScheduler(newLucene<SerialMergeScheduler>());
 
-        // get the associated realtime reader:
-        m_reader = m_writer->getReader();
+        // get the associated realtime reader & searcher:
+        m_mng.reset(new SearcherManager(m_writer));
 
         m_writerAPI = std::make_shared<TranslationMemoryWriterImpl>(m_writer);
     }
