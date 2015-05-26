@@ -398,11 +398,14 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
     }
 
     // my custom controls:
-    m_keywords = new wxEditableListBox(this, -1, _("Additional keywords"));
+    auto page_paths = XRCCTRL(*this, "page_paths", wxWindow);
+    auto page_keywords = XRCCTRL(*this, "page_keywords", wxWindow);
+
+    m_keywords = new wxEditableListBox(page_keywords, -1, _("Additional keywords"));
 
     m_pathsData.reset(new PathsData);
-    m_paths = new SourcePathsList(this, m_pathsData);
-    m_excludedPaths = new ExcludedPathsList(this, m_pathsData);
+    m_paths = new SourcePathsList(page_paths, m_pathsData);
+    m_excludedPaths = new ExcludedPathsList(page_paths, m_pathsData);
     m_pathsData->RefreshView = [=]{
         m_basePath->SetValue(RelativePath(m_pathsData->basepath, m_pathsData->filedir));
         m_paths->UpdateFromData();
