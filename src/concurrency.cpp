@@ -25,6 +25,9 @@
 
 #include "concurrency.h"
 
+#include "errors.h"
+#include <wx/log.h>
+
 #if defined(HAVE_DISPATCH)
 
 
@@ -33,14 +36,36 @@
 void call_on_main_thread_impl(std::function<void()>&& f)
 {
     std::function<void()> func(std::move(f));
-    dispatch_async(dispatch_get_main_queue(), [func]{ func(); });
+    dispatch_async(dispatch_get_main_queue(), [func]{
+        try
+        {
+            func();
+        }
+        catch (...)
+        {
+            // FIXME: This is gross. Should be reported better and properly, but this
+            //        is consistent with pplx/ConcurrencyRT/futures, so do it for now.
+            wxLogDebug("uncaught exception: %s", DescribeCurrentException());
+        }
+    });
 }
 
 void concurrency_queue::enqueue(std::function<void()>&& f)
 {
     std::function<void()> func(std::move(f));
     dispatch_queue_t q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(q, [func]{ func(); });
+    dispatch_async(q, [func]{
+        try
+        {
+            func();
+        }
+        catch (...)
+        {
+            // FIXME: This is gross. Should be reported better and properly, but this
+            //        is consistent with pplx/ConcurrencyRT/futures, so do it for now.
+            wxLogDebug("uncaught exception: %s", DescribeCurrentException());
+        }
+    });
 }
 
 void concurrency_queue::cleanup()
