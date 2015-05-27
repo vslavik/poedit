@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2015-05-13 18:47+0200\n"
-"PO-Revision-Date: 2015-05-13 12:41-0400\n"
+"POT-Creation-Date: 2015-05-27 11:31+0200\n"
+"PO-Revision-Date: 2015-05-27 05:17-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -243,6 +243,9 @@ msgstr "(디버깅을 위해) 임시 파일을 지우지 않음"
 
 msgid "handle a poedit:// URI"
 msgstr "poedit:// URI 처리"
+
+msgid "Failed to communicate with Poedit process."
+msgstr "Poedit 프로세스와의 통신에 실패했습니다."
 
 #, c-format
 msgid "Unhandled exception occurred: %s"
@@ -619,7 +622,7 @@ msgstr "문맥:"
 
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
-msgstr ""
+msgstr "Poedit가 “%s” 파일의 잘못된 내용을 자동으로 수정했습니다."
 
 msgid ""
 "The file contained duplicate items, which is not allowed in PO files and "
@@ -627,6 +630,9 @@ msgid ""
 "should review translations of any items marked as fuzzy and correct them if "
 "necessary."
 msgstr ""
+"PO 파일에서 허용하지 않는 중복 항목이 있으며, 이 때문에 파일을 사용하지 못합"
+"니다. Poedit에서 이 문제를 해결했지만 모호함 상태로 나타난 일부 항목의 번역"
+"을 검토해야 하며, 필요한 경우 해당 항목을 수정해야합니다."
 
 msgid "Language of the translation isn't set."
 msgstr "번역 언어를 설정하지 않았습니다."
@@ -712,7 +718,7 @@ msgstr[0] "오류 %d개"
 #, c-format
 msgid "%d entry"
 msgid_plural "%d entries"
-msgstr[0] ""
+msgstr[0] "항목 %d개"
 
 msgid " (unsaved)"
 msgstr " (저장하지 않음)"
@@ -880,10 +886,10 @@ msgid "Show Sidebar"
 msgstr "가장자리 표시줄 표시"
 
 msgid "Hide Status Bar"
-msgstr ""
+msgstr "상태 표시줄 숨기기"
 
 msgid "Show Status Bar"
-msgstr ""
+msgstr "상태 표시줄 표시"
 
 msgid "Source text"
 msgstr "소스 텍스트"
@@ -1235,30 +1241,36 @@ msgid ""
 "\n"
 "or use the + button"
 msgstr ""
+"<big>여기에 폴더를 끌어 놓거나</big>,\n"
+"\n"
+"+ 단추를 사용하십시오."
 
 msgid ""
 "<big>Drag and drop folders here</big>\n"
 "\n"
 "or use the + button"
 msgstr ""
+"<big>여기에 폴더를 끌어 놓거나</big>,\n"
+"\n"
+"+ 단추를 사용하십시오."
 
 msgid "Add Folders..."
-msgstr ""
+msgstr "폴더 추가..."
 
 msgid "Add folders..."
-msgstr ""
+msgstr "폴더 추가..."
 
 msgid "Add Files..."
-msgstr ""
+msgstr "파일 추가..."
 
 msgid "Add files..."
-msgstr ""
+msgstr "파일 추가..."
 
 msgid "Add Wildcard..."
-msgstr ""
+msgstr "와일드카드 추가..."
 
 msgid "Add wildcard..."
-msgstr ""
+msgstr "와일드카드 추가..."
 
 msgid "Paths"
 msgstr "경로"
@@ -1468,7 +1480,7 @@ msgid "Show sidebar"
 msgstr "가장자리 표시줄 표시"
 
 msgid "Show status bar"
-msgstr ""
+msgstr "상태 표시줄 표시"
 
 msgid "C&atalog"
 msgstr "카탈로그(&A)"
@@ -1642,14 +1654,17 @@ msgstr "팀 전자메일:"
 msgid "Translation properties"
 msgstr "번역 속성"
 
+msgid "Sources paths"
+msgstr "소스 경로"
+
 msgid "Extract text from source files in the following directories:"
 msgstr "다음 디렉터리의 소스 파일에서 텍스트를 추출합니다:"
 
 msgid "Base path:"
 msgstr "기본 경로:"
 
-msgid "Sources paths"
-msgstr "소스 경로"
+msgid "Sources keywords"
+msgstr "소스 키워드"
 
 msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
@@ -1660,9 +1675,6 @@ msgstr ""
 
 msgid "Learn about gettext keywords"
 msgstr "gettext 키워드에 대해 알아보기"
-
-msgid "Sources keywords"
-msgstr "소스 키워드"
 
 msgid "Update summary"
 msgstr "업데이트 요약"
