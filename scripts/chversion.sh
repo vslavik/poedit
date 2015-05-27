@@ -18,7 +18,10 @@ replace_ver()
 
 VER_FULL=$1
 VER_SHORT="`echo $VER_FULL | sed -e 's/\(pre\|beta\|rc\)[0-9]//g'`"
-VER_WIN="`echo $VER_SHORT | tr '.' ','`,0"
+VER_WIN="`echo $VER_SHORT | tr '.' ','`"
+if [ `echo $VER_WIN | awk 'BEGIN{FS=","} {print NF}'` = 2 ] ; then
+    VER_WIN="$VER_WIN,0"
+fi
 
 replace_ver win32/poedit.iss \
             '\(#define VERSION_FULL *"\).*\("\)' "\1$VER_FULL\2"
