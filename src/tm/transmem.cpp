@@ -127,8 +127,8 @@ public:
         friend class SearcherManager;
         explicit SafeRef(SearcherManager& m, TPtr ptr) : m_mng(m), m_ptr(ptr) {}
 
-        boost::shared_ptr<T> m_ptr;
         SearcherManager& m_mng;
+        boost::shared_ptr<T> m_ptr;
     };
 
     SafeRef<IndexReader> Reader()
