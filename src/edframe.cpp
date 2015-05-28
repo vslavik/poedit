@@ -1352,6 +1352,7 @@ bool PoeditFrame::ExportCatalog(const wxString& filename)
     std::ofstream f;
     f.open(tempfile.FileName().fn_str());
     m_catalog->ExportToHTML(f);
+    f.close();
     if (!tempfile.Commit())
     {
         wxLogError(_("Couldn't save file %s."), filename);
