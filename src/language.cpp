@@ -508,10 +508,20 @@ Language Language::TryDetectFromText(const char *buffer, size_t len, Language pr
                         /*resultchunkvector=*/nullptr,
                         &text_bytes,
                         &is_reliable);
-    if (lang != UNKNOWN_LANGUAGE && is_reliable)
-        return Language::TryParse(LanguageCode(lang));
-    else
+
+    if (lang == UNKNOWN_LANGUAGE || !is_reliable)
         return Language();
+
+    // CLD2 penalizes English in bilingual content in some cases as "boilerplate"
+    // because it is tailored for the web. So e.g. 66% English, 33% Italian is
+    // tagged as Italian.
+    //
+    // Poedit's bias is the opposite: English is almost always the correct answer
+    // for PO source language. Fix this up manually.
+    if (lang != language3[0] && language3[0] == CLD2::ENGLISH && language3[1] == lang)
+        lang = language3[0];
+
+    return Language::TryParse(LanguageCode(lang));
 #else
     (void)buffer;
     (void)len;
