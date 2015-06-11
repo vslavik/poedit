@@ -423,7 +423,8 @@ public:
 
         wxFileName f(files[0]);
 
-        if ( f.GetExt().Lower() != "po" )
+        auto ext = f.GetExt().Lower();
+        if ( ext != "po" && ext != "pot" )
         {
             wxLogError(_("File '%s' is not a message catalog."),
                        f.GetFullPath().c_str());
