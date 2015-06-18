@@ -56,21 +56,30 @@
 namespace
 {
 
-inline wxString NormalizedPath(const wxString& fn)
+inline wxString NormalizedPath(const wxString& fn, wxPathFormat format)
 {
     auto f = MakeFileName(fn);
     f.Normalize();
-    return f.GetFullPath();
+    return f.GetFullPath(format);
 }
 
-inline wxString RelativePath(const wxString& fn, const wxString& to)
+inline wxString RelativePath(const wxString& fn, const wxString& to, wxPathFormat format)
 {
     if (fn == to)
         return ".";
     auto f = MakeFileName(fn);
     f.MakeRelativeTo(to);
-    return f.GetFullPath();
+    return f.GetFullPath(format);
 }
+
+inline wxString RelativePathForPO(const wxString& fn, const wxString& to)
+{
+    auto rel = RelativePath(fn, to, wxPATH_UNIX);
+    if (rel.Last() == '/')
+        rel.RemoveLast();
+    return rel;
+}
+
 
 } // anonymous namespace
 
@@ -107,7 +116,7 @@ struct PropertiesDialog::PathsData
         {
             if (p.empty())
                 continue;
-            paths.push_back(NormalizedPath(basepath + p));
+            paths.push_back(NormalizedPath(basepath + p, wxPATH_NATIVE));
         }
         for (auto& p: hdr.SearchPathsExcluded)
         {
@@ -116,21 +125,19 @@ struct PropertiesDialog::PathsData
             if (wxIsWild(p))
                 excluded.push_back(p);
             else
-                excluded.push_back(NormalizedPath(basepath + p));
+                excluded.push_back(NormalizedPath(basepath + p, wxPATH_NATIVE));
         }
     }
 
     void SetToCatalog(CatalogPtr cat) const
     {
         auto& hdr = cat->Header();
-        hdr.BasePath = RelativePath(basepath, filedir);
+        hdr.BasePath = RelativePathForPO(basepath, filedir);
         hdr.SearchPaths.clear();
         hdr.SearchPathsExcluded.clear();
         for (auto& p: paths)
         {
-            auto rel = RelativePath(p, basepath);
-            if (rel.Last() == wxFILE_SEP_PATH)
-                rel.RemoveLast();
+            auto rel = RelativePathForPO(p, basepath);
             hdr.SearchPaths.push_back(rel);
         }
         for (auto& p: excluded)
@@ -141,9 +148,7 @@ struct PropertiesDialog::PathsData
             }
             else
             {
-                auto rel = RelativePath(p, basepath);
-                if (rel.Last() == wxFILE_SEP_PATH)
-                    rel.RemoveLast();
+                auto rel = RelativePathForPO(p, basepath);
                 hdr.SearchPathsExcluded.push_back(rel);
             }
         }
@@ -225,7 +230,7 @@ public:
             if (wxIsWild(p))
                 m_list->Append(p);
             else
-                m_list->Append(RelativePath(p, m_data->basepath));
+                m_list->Append(RelativePath(p, m_data->basepath, wxPATH_NATIVE));
         }
     }
 
@@ -237,7 +242,7 @@ public:
             if (wxIsWild(f))
                 a.push_back(f);
             else
-                a.push_back(NormalizedPath(f));
+                a.push_back(NormalizedPath(f, wxPATH_NATIVE));
         }
         m_data->Changed = true;
         m_data->UpdateBasePath();
@@ -407,7 +412,7 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
     m_paths = new SourcePathsList(page_paths, m_pathsData);
     m_excludedPaths = new ExcludedPathsList(page_paths, m_pathsData);
     m_pathsData->RefreshView = [=]{
-        m_basePath->SetValue(RelativePath(m_pathsData->basepath, m_pathsData->filedir));
+        m_basePath->SetValue(RelativePath(m_pathsData->basepath, m_pathsData->filedir, wxPATH_NATIVE));
         m_paths->UpdateFromData();
         m_excludedPaths->UpdateFromData();
     };
