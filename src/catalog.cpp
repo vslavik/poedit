@@ -182,6 +182,19 @@ wxTextFileType GetDesiredCRLFFormat(wxTextFileType existingCRLF)
     }
 }
 
+// Fixup some common issues with filepaths in PO files, due to old Poedit versions,
+// user misunderstanding or Poedit bugs:
+wxString FixBrokenSearchPathValue(wxString p)
+{
+    if (p.empty())
+        return p;
+    // no DOS paths please:
+    p.Replace("\\", "/");
+    if (p.Last() == '/')
+        p.RemoveLast();
+    return p;
+}
+
 } // anonymous namespace
 
 
@@ -406,7 +419,7 @@ void Catalog::HeaderData::ParseDict()
 
     // Parse extended information:
     SourceCodeCharset = GetHeader("X-Poedit-SourceCharset");
-    BasePath = GetHeader("X-Poedit-Basepath");
+    BasePath = FixBrokenSearchPathValue(GetHeader("X-Poedit-Basepath"));
 
     Keywords.Clear();
     wxString kwlist = GetHeader("X-Poedit-KeywordsList");
@@ -461,7 +474,7 @@ void Catalog::HeaderData::ParseDict()
         path.Printf("X-Poedit-SearchPath-%i", i);
         if (!HasHeader(path))
             break;
-        wxString p = GetHeader(path);
+        wxString p = FixBrokenSearchPathValue(GetHeader(path));
         if (!p.empty())
             SearchPaths.push_back(p);
         i++;
@@ -475,7 +488,7 @@ void Catalog::HeaderData::ParseDict()
         path.Printf("X-Poedit-SearchPathExcluded-%i", i);
         if (!HasHeader(path))
             break;
-        wxString p = GetHeader(path);
+        wxString p = FixBrokenSearchPathValue(GetHeader(path));
         if (!p.empty())
             SearchPathsExcluded.push_back(p);
         i++;
