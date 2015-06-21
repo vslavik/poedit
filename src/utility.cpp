@@ -182,6 +182,8 @@ TempOutputFileFor::TempOutputFileFor(const wxString& filename) : m_filenameFinal
 {
     wxString path, name, ext;
     wxFileName::SplitPath(filename, &path, &name, &ext);
+    if (path.empty())
+        path = ".";
     if (!ext.empty())
         ext = "." + ext;
 
@@ -259,6 +261,8 @@ wxString CliSafeFileName(const wxString& fn)
     {
         wxString path, name, ext;
         wxFileName::SplitPath(fn, &path, &name, &ext);
+        if (path.empty())
+            path = ".";
         if (wxDirExists(path))
         {
             auto p = wxFileName(path).GetShortPath() + wxFILE_SEP_PATH + name;
