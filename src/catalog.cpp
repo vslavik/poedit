@@ -1138,23 +1138,16 @@ bool Catalog::HasCapability(Catalog::Cap cap) const
 }
 
 
-static wxString GetCurrentTimeRFC822()
+static inline wxString GetCurrentTimeString()
 {
-    wxDateTime timenow = wxDateTime::Now();
-    int offs = (int)wxDateTime::TimeZone(wxDateTime::Local).GetOffset();
-    wxString s;
-    s.Printf("%s%s%02i%02i",
-             timenow.Format("%Y-%m-%d %H:%M").c_str(),
-             (offs > 0) ? "+" : "-",
-             abs(offs) / 3600, (abs(offs) / 60) % 60);
-    return s;
+    return wxDateTime::Now().Format("%Y-%m-%d %H:%M%z");
 }
 
 void Catalog::CreateNewHeader()
 {
     HeaderData &dt = Header();
 
-    dt.CreationDate = GetCurrentTimeRFC822();
+    dt.CreationDate = GetCurrentTimeString();
     dt.RevisionDate = dt.CreationDate;
 
     dt.Lang = Language();
@@ -1807,7 +1800,7 @@ bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
     // was empty previously, the author apparently doesn't want this header
     // set, so don't mess with it. See https://sourceforge.net/tracker/?func=detail&atid=389156&aid=1900298&group_id=27043
     // for motivation:
-    auto currentTime = GetCurrentTimeRFC822();
+    auto currentTime = GetCurrentTimeString();
     switch (m_fileType)
     {
         case Type::PO:
