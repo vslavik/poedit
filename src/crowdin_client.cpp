@@ -37,13 +37,6 @@
 #include <wx/translation.h>
 #include <wx/utils.h>
 
-#ifndef __WXOSX__
-    #define NEEDS_IN_APP_BROWSER
-    #include <wx/dialog.h>
-    #include <wx/webview.h>
-    #include "hidpi.h"
-#endif
-
 // GCC's libstdc++ didn't have functional std::regex implementation until 4.9
 #if (defined(__GNUC__) && !defined(__clang__) && !wxCHECK_GCC_VERSION(4,9))
     #include <boost/regex.hpp>
@@ -140,51 +133,6 @@ void CrowdinClient::Authenticate(std::function<void()> callback)
 {
     auto url = WrapLink(OAUTH_AUTHORIZE_URL);
     m_authCallback = callback;
-
-#ifdef NEEDS_IN_APP_BROWSER
-  // Windows XP has broken wxWebViewHandler and it's not worth fixing. Use external browser
-  // on XP, even though its user experience is suboptimal. Use in-app browser on other
-  // platforms and Windows versions.
-  #ifdef __WXMSW__
-    if (wxPlatformInfo::Get().CheckOSVersion(6, 0))
-  #endif
-    {
-        auto win = new wxDialog(nullptr, wxID_ANY, _("Sign in to Crowdin"), wxDefaultPosition, wxSize(PX(800), PX(600)), wxDIALOG_NO_PARENT | wxDEFAULT_FRAME_STYLE);
-        auto web = wxWebView::New(win, wxID_ANY);
-
-        // Protocol handler that simply calls a callback and doesn't return any data.
-        // We have to use this hack, because wxEVT_WEBVIEW_NAVIGATING is unreliable
-        // with IE on Windows 8 and is not sent at all or sent one navigation event too
-        // late, possibly due to the custom protocol used, possibly not.
-        class PoeditURIHandler : public wxWebViewHandler
-        {
-        public:
-            PoeditURIHandler(std::function<void(std::string)> cb) : wxWebViewHandler("poedit"), m_cb(cb) {}
-            wxFSFile* GetFile(const wxString &uri) override
-            {
-                m_cb(uri.ToStdString());
-                return nullptr;
-            }
-            std::function<void(std::string)> m_cb;
-        };
-
-        std::string auth_uri;
-        web->RegisterHandler(wxSharedPtr<wxWebViewHandler>(new PoeditURIHandler([=, &auth_uri](std::string uri){
-            if (!this->IsOAuthCallback(uri))
-                return;
-            auth_uri = uri;
-            win->CallAfter([=]{ win->EndModal(wxID_OK); });
-        })));
-
-        win->CallAfter([=]{ web->LoadURL(url); });
-        win->ShowModal();
-        win->Destroy();
-        if (!auth_uri.empty())
-            HandleOAuthCallback(auth_uri);
-        return;
-    }
-    // else: fall through
-#endif
     wxLaunchDefaultBrowser(url);
 }
 
