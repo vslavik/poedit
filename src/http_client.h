@@ -218,7 +218,7 @@ protected:
         Extract more detailed, client specific error response from the
         JSON body of error response, if available.
         
-        Does nothing by default, but can be overriden in derived class.
+        Does nothing by default, but can be overridden in derived class.
      */
     virtual std::string parse_json_error(const json_dict& /*response*/) const
         { return std::string(); }

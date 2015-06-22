@@ -46,7 +46,7 @@ class PoeditApp : public wxApp
         PoeditApp();
         ~PoeditApp();
 
-        /** wxWin initalization hook. Shows PoeditFrame and initializes
+        /** wxWin initialization hook. Shows PoeditFrame and initializes
             configuration entries to default values if they were missing.
          */
         virtual bool OnInit();

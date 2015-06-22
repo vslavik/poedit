@@ -733,7 +733,7 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
     GetMenuBar()->Check(XRCID("sort_untrans_first"), m_list->sortOrder.untransFirst);
     GetMenuBar()->Check(XRCID("sort_errors_first"), m_list->sortOrder.errorsFirst);
 
-    // Call splitter splitting later, when the window is layed out, otherwise
+    // Call splitter splitting later, when the window is laid out, otherwise
     // the sizes would get truncated immediately:
     CallAfter([=]{
         // This is a hack -- windows are not maximized immediately and so we can't
@@ -2211,7 +2211,7 @@ void PoeditFrame::OnNewTranslationEntered(const CatalogItemPtr& item)
                 // Note: do *not* call tm->Commit() here, because Lucene commit is
                 // expensive. Instead, wait until the file is saved with committing
                 // the changes. This way TM updates are available immediately for use
-                // in futher translations within the file, but per-item updates
+                // in further translations within the file, but per-item updates
                 // remain inexpensive.
             }
             catch (const Exception&)

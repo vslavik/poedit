@@ -109,7 +109,7 @@ public:
         m_suppressDataTransfer--;
 
         // This is a "bit" of a hack: we take advantage of being in the last point before
-        // showing the window and re-layout it on the off chance that some data transfered
+        // showing the window and re-layout it on the off chance that some data transferred
         // into the window affected its size. And, currently more importantly, to reflect
         // ExplanationLabel instances' rewrapping.
         Fit();
@@ -619,7 +619,7 @@ public:
     }
 
 private:
-    /// Called to launch dialog for editting parser properties.
+    /// Called to launch dialog for editing parser properties.
     template<typename TFunctor>
     void EditExtractor(int num, TFunctor completionHandler)
     {

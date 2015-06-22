@@ -76,7 +76,7 @@ public:
 /** 
     Longer, often multiline, explanation label used to provide more information
     about the effects of some less obvious settings. Typeset using smaller font
-    on OS X and grey appearence. Auto-wraps itself to fit surrounding control's
+    on OS X and grey appearance. Auto-wraps itself to fit surrounding control's
     width.
  */
 class ExplanationLabel : public AutoWrappingText
