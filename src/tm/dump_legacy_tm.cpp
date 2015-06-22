@@ -43,7 +43,7 @@
     For the purposes of algorithm description, let's say that TM is a 
     database that stores original string-translation pairs (where both 
     original string and translation are strings consisting of words 
-    delimined by spaces and/or interpunction) and supports inexact 
+    delimited by spaces and/or interpunction) and supports inexact 
     retrieval with original string as primary key. Inexact retrieval means
     that TM will return non-empty response even though there's no record
     with given key. In such case, TM will return \e similar records, that is
@@ -108,7 +108,7 @@
     word separators, converting to lowercase and removing bad words that
     are too common, such as "a", "the" or "will"). Number of words is used
     as sentence length and the ID is added to (word,length) records in 
-    DbWords for all words in the sentence (adding new records as neccessary).
+    DbWords for all words in the sentence (adding new records as necessary).
     (IDs are added to the end of list; this ensures, together with ID=index
     property, that IDs in DbWords are always sorted.)
     

@@ -572,7 +572,7 @@ void PoeditApp::SetupLanguage()
     // other things. It's also the common thing to do, so don't break
     // expectations needlessly:
     {
-        // supress error logging because setting locale may fail and we want to
+        // suppress error logging because setting locale may fail and we want to
         // handle that gracefully and invisibly:
         wxLogNull null;
         m_locale.reset(new wxLocale());

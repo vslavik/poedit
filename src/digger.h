@@ -116,7 +116,7 @@ class SourceDigger
                                  ExtractorsDB& pdb);
 
         /** Finds all files in given directory.
-            \return false if an error occured.
+            \return false if an error occurred.
          */
         int FindInDir(const wxString& dirname,
                       const PathsToMatch& excludePaths,

@@ -1458,7 +1458,7 @@ void SaveMultiLines(wxTextBuffer &f, const wxString& text)
         f.AddLine(tkn.GetNextToken());
 }
 
-/** Adds \n characters as neccesary for good-looking output
+/** Adds \n characters as necessary for good-looking output
  */
 wxString FormatStringForFile(const wxString& text)
 {

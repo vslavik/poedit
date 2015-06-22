@@ -739,7 +739,7 @@ class Catalog
             (in the sense of msgmerge -- this catalog is old one with
             translations, \a refcat is reference catalog created by Update().)
 
-            \return true if the merge was successfull, false otherwise.
+            \return true if the merge was successful, false otherwise.
                     Note that if it returns false, the catalog was
                     \em not modified!
          */
@@ -808,7 +808,7 @@ class CatalogParser
         int GetWrappingWidth() const;
 
     protected:
-        // Read one line from file, remove all \r and \n characters, ignore empty linesed:
+        // Read one line from file, remove all \r and \n characters, ignore empty lines:
         wxString ReadTextLine();
 
         void PossibleWrappedLine()
