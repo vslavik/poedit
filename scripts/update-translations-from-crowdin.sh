@@ -16,6 +16,7 @@ remove_unsupported_languages()
     rm -rf */osx/an.lproj
 
     rm -rf */osx/fy_NL.lproj
+    rm -rf */osx/oc.lproj
 
     rm -f locales/win/windows_strings-Esperanto.rc
 }
