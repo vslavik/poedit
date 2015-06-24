@@ -2105,6 +2105,27 @@ CatalogItemPtr PoeditFrame::GetCurrentItem() const
 }
 
 
+namespace
+{
+
+// does some basic processing of user input, e.g. to remove trailing \n
+wxString PreprocessEnteredTextForItem(CatalogItemPtr item, wxString t)
+{
+    auto& orig = item->GetString();
+
+    if (!t.empty() && !orig.empty())
+    {
+        if (orig.Last() == '\n' && t.Last() != '\n')
+            t.append(1, '\n');
+        else if (orig.Last() != '\n' && t.Last() == '\n')
+            t.RemoveLast();
+    }
+
+    return t;
+}
+
+} // anonymous namespace
+
 void PoeditFrame::UpdateFromTextCtrl()
 {
     if (!m_list || !m_list->HasSingleSelection())
@@ -2126,7 +2147,7 @@ void PoeditFrame::UpdateFromTextCtrl()
         wxArrayString str;
         for (unsigned i = 0; i < m_textTransPlural.size(); i++)
         {
-            auto val = m_textTransPlural[i]->GetPlainText();
+            auto val = PreprocessEnteredTextForItem(entry, m_textTransPlural[i]->GetPlainText());
             str.Add(val);
             if ( val.empty() )
                 allTranslated = false;
@@ -2140,7 +2161,7 @@ void PoeditFrame::UpdateFromTextCtrl()
     }
     else
     {
-        auto newval = m_textTrans->GetPlainText();
+        auto newval = PreprocessEnteredTextForItem(entry, m_textTrans->GetPlainText());
 
         if ( newval.empty() )
             allTranslated = false;
