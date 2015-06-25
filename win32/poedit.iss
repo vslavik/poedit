@@ -24,8 +24,8 @@
 ;   Inno Setup installer script
 ;
 
-#define VERSION          "1.8.1"
-#define VERSION_FULL     "1.8.1"
+#define VERSION          "1.8.2"
+#define VERSION_FULL     "1.8.2"
 
 #ifndef CONFIG
 #define Config           "Release"
