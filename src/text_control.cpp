@@ -733,7 +733,17 @@ void TranslationTextCtrl::OnText(wxCommandEvent& e)
         long pos = GetInsertionPoint();
         auto range = GetRange(std::max(0l, pos - 3), pos);
         if (range.Last() == '\n' && range != "\\n\n")
+        {
+          #ifdef __WXGTK__
+            // GTK+ doesn't like modifying the content in the "changed" signal:
+            CallAfter([=]{
+                Replace(pos - 1, pos, "\\n\n");
+                HighlightText();
+            });
+          #else
             Replace(pos - 1, pos, "\\n\n");
+          #endif
+        }
     }
 
     e.Skip();

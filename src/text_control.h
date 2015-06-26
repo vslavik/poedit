@@ -132,7 +132,7 @@ protected:
     void DoSetValue(const wxString& value, int flags) override;
 #endif
 
-private:
+protected:
     void HighlightText();
 
     class Attributes;
