@@ -2132,7 +2132,7 @@ bool Catalog::HasSourcesAvailable() const
 
     for (auto& p: m_header.SearchPaths)
     {
-        if (!wxFileName::DirExists(basepath + p))
+        if (!wxFileName::Exists(basepath + p))
             return false;
     }
 
