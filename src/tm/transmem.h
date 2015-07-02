@@ -26,6 +26,7 @@
 #ifndef _TRANSMEM_H_
 #define _TRANSMEM_H_
 
+#include <exception>
 #include <string>
 #include <vector>
 #include <memory>
@@ -142,6 +143,7 @@ private:
     ~TranslationMemory();
 
     TranslationMemoryImpl *m_impl;
+    std::exception_ptr m_error;
     static TranslationMemory *ms_instance;
 };
 

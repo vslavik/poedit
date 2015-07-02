@@ -624,11 +624,7 @@ TranslationMemory *TranslationMemory::ms_instance = nullptr;
 TranslationMemory& TranslationMemory::Get()
 {
     std::call_once(initializationFlag, []() {
-        try
-        {
-            ms_instance = new TranslationMemory;
-        }
-        CATCH_AND_RETHROW_EXCEPTION
+        ms_instance = new TranslationMemory;
     });
     return *ms_instance;
 }
@@ -642,7 +638,18 @@ void TranslationMemory::CleanUp()
     }
 }
 
-TranslationMemory::TranslationMemory() : m_impl(new TranslationMemoryImpl) {}
+TranslationMemory::TranslationMemory() : m_impl(nullptr)
+{
+    try
+    {
+        m_impl = new TranslationMemoryImpl;
+    }
+    catch (...)
+    {
+        m_error = std::current_exception();
+    }
+}
+
 TranslationMemory::~TranslationMemory() { delete m_impl; }
 
 
@@ -654,7 +661,10 @@ SuggestionsList TranslationMemory::Search(const Language& srclang,
                                           const Language& lang,
                                           const std::wstring& source)
 {
-    return m_impl->Search(srclang, lang, source);
+    if (m_impl)
+        return m_impl->Search(srclang, lang, source);
+    else
+        std::rethrow_exception(m_error);
 }
 
 void TranslationMemory::SuggestTranslation(const Language& srclang,
@@ -675,10 +685,16 @@ void TranslationMemory::SuggestTranslation(const Language& srclang,
 
 std::shared_ptr<TranslationMemory::Writer> TranslationMemory::GetWriter()
 {
-    return m_impl->GetWriter();
+    if (m_impl)
+        return m_impl->GetWriter();
+    else
+        std::rethrow_exception(m_error);
 }
 
 void TranslationMemory::GetStats(long& numDocs, long& fileSize)
 {
-    m_impl->GetStats(numDocs, fileSize);
+    if (m_impl)
+        m_impl->GetStats(numDocs, fileSize);
+    else
+        std::rethrow_exception(m_error);
 }
