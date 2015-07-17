@@ -1179,7 +1179,8 @@ void Catalog::CreateNewHeader(const Catalog::HeaderData& pot_header)
     if (dt.TeamEmail == "LL@li.org")
         dt.TeamEmail.clear();
 
-    // translator should be pre-filled
+    // translator should be pre-filled & not the default "FULL NAME <EMAIL@ADDRESS>"
+    dt.DeleteHeader("Last-Translator");
     dt.Translator = wxConfig::Get()->Read("translator_name", wxEmptyString);
     dt.TranslatorEmail = wxConfig::Get()->Read("translator_email", wxEmptyString);
 
