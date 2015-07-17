@@ -24,6 +24,7 @@
  */
 
 #include <wx/wx.h>
+#include <wx/clipbrd.h>
 #include <wx/config.h>
 #include <wx/fs_zip.h>
 #include <wx/image.h>
@@ -514,6 +515,9 @@ int PoeditApp::OnExit()
     m_instanceChecker.reset();
     m_remoteServer.reset();
 #endif
+
+    // Keep any clipboard data available on Windows after the app terminates:
+    wxTheClipboard->Flush();
 
     // Make sure PoeditFrame instances schedules for deletion are deleted
     // early -- e.g. before wxConfig is destroyed, so they can save changes
