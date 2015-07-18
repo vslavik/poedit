@@ -24,12 +24,15 @@
 ;   Inno Setup installer script
 ;
 
+#ifndef CONFIG
+#define CONFIG           "Release"
+#endif
+
+#include "../" + CONFIG + "/git_build_number.h"
+
 #define VERSION          "1.8.2"
 #define VERSION_FULL     "1.8.2"
-
-#ifndef CONFIG
-#define Config           "Release"
-#endif
+#define VERSION_WIN      VERSION + "." + Str(POEDIT_GIT_BUILD_NUMBER)
 
 #ifndef CRT_REDIST
 #define CRT_REDIST       GetEnv("PROGRAMFILES") + "\Microsoft Visual Studio 12.0\VC\redist\x86\Microsoft.VC120.CRT"
@@ -62,7 +65,7 @@ DisableWelcomePage=true
 AllowUNCPath=true
 InternalCompressLevel=ultra
 AppID={{68EB2C37-083A-4303-B5D8-41FA67E50B8F}
-VersionInfoVersion={#VERSION}
+VersionInfoVersion={#VERSION_WIN}
 VersionInfoTextVersion={#VERSION_FULL}
 AppCopyright=Copyright © 1999-2015 Vaclav Slavik
 AppPublisher=Vaclav Slavik
@@ -84,7 +87,7 @@ VersionInfoCompany=Vaclav Slavik
 VersionInfoDescription=Poedit Installer
 VersionInfoCopyright=Copyright © 1999-2015 Vaclav Slavik
 VersionInfoProductName=Poedit
-VersionInfoProductVersion={#VERSION}
+VersionInfoProductVersion={#VERSION_WIN}
 VersionInfoProductTextVersion={#VERSION_FULL}
 DisableDirPage=auto
 
