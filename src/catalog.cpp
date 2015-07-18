@@ -1824,6 +1824,8 @@ bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
     SaveMultiLines(f, pohdr);
     f.AddLine(wxEmptyString);
 
+    auto pluralsCount = GetPluralFormsCount();
+
     for (auto& data: m_items)
     {
         data->SetLineNumber(int(f.GetLineCount()+1));
@@ -1853,7 +1855,7 @@ bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
             dummy = FormatStringForFile(data->GetPluralString());
             SaveMultiLines(f, _T("msgid_plural \"") + dummy + _T("\""));
 
-            for (unsigned i = 0; i < data->GetNumberOfTranslations(); i++)
+            for (unsigned i = 0; i < pluralsCount; i++)
             {
                 dummy = FormatStringForFile(data->GetTranslation(i));
                 wxString hdr = wxString::Format(_T("msgstr[%u] \""), i);
