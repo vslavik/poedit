@@ -1,4 +1,4 @@
-/* Copyright (C) 1995-1999, 2000-2007 Free Software Foundation, Inc.
+/* Copyright (C) 1995-2015 Free Software Foundation, Inc.
    Contributed by Ulrich Drepper <drepper@gnu.ai.mit.edu>, 1995.
 
    This program is free software: you can redistribute it and/or modify
@@ -80,9 +80,7 @@ static char *stpcpy (char *dest, const char *src);
 
 /* Define function which are usually not available.  */
 
-#ifdef _LIBC
-# define __argz_count(argz, len) INTUSE(__argz_count) (argz, len)
-#elif defined HAVE_ARGZ_COUNT
+#if defined HAVE_ARGZ_COUNT
 # undef __argz_count
 # define __argz_count argz_count
 #else
@@ -104,10 +102,7 @@ argz_count__ (const char *argz, size_t len)
 # define __argz_count(argz, len) argz_count__ (argz, len)
 #endif	/* !_LIBC && !HAVE_ARGZ_COUNT */
 
-#ifdef _LIBC
-# define __argz_stringify(argz, len, sep) \
-  INTUSE(__argz_stringify) (argz, len, sep)
-#elif defined HAVE_ARGZ_STRINGIFY
+#if defined HAVE_ARGZ_STRINGIFY
 # undef __argz_stringify
 # define __argz_stringify argz_stringify
 #else
@@ -154,8 +149,8 @@ argz_next__ (char *argz, size_t argz_len, const char *entry)
 # define __argz_next(argz, len, entry) argz_next__ (argz, len, entry)
 #endif	/* !_LIBC && !HAVE_ARGZ_NEXT */
 
-
 /* Return number of bits set in X.  */
+#ifndef ARCH_POP
 static inline int
 pop (int x)
 {
@@ -167,6 +162,7 @@ pop (int x)
 
   return x;
 }
+#endif
 
 
 struct loaded_l10nfile *

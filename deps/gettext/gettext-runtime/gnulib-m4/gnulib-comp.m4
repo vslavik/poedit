@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2014 Free Software Foundation, Inc.
+# Copyright (C) 2002-2015 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -78,6 +78,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module iswblank:
   # Code from module java:
   # Code from module javacomp-script:
+  # Code from module langinfo:
   # Code from module largefile:
   AC_REQUIRE([AC_SYS_LARGEFILE])
   # Code from module localcharset:
@@ -254,6 +255,7 @@ AC_DEFUN([gl_INIT],
   gt_JAVA_CHOICE
   # You need to invoke gt_JAVACOMP yourself, possibly with arguments.
   AC_CONFIG_FILES([javacomp.sh:../build-aux/javacomp.sh.in])
+  gl_LANGINFO_H
   AC_REQUIRE([gl_LARGEFILE])
   gl_LOCALCHARSET
   LOCALCHARSET_TESTS_ENVIRONMENT="CHARSETALIASDIR=\"\$(abs_top_builddir)/$gl_source_base\""
@@ -409,14 +411,14 @@ AC_DEFUN([gl_INIT],
   gl_THREADLIB
   gl_HEADER_TIME_H
   gl_UNISTD_H
-  gl_LIBUNISTRING_LIBHEADER([0.9.2], [unistr.h])
+  gl_LIBUNISTRING_LIBHEADER([0.9.4], [unistr.h])
   gl_MODULE_INDICATOR([unistr/u8-mbtoucr])
   gl_LIBUNISTRING_MODULE([0.9], [unistr/u8-mbtoucr])
   gl_MODULE_INDICATOR([unistr/u8-uctomb])
   gl_LIBUNISTRING_MODULE([0.9], [unistr/u8-uctomb])
-  gl_LIBUNISTRING_LIBHEADER([0.9], [unitypes.h])
-  gl_LIBUNISTRING_LIBHEADER([0.9], [uniwidth.h])
-  gl_LIBUNISTRING_MODULE([0.9.4], [uniwidth/width])
+  gl_LIBUNISTRING_LIBHEADER([0.9.4], [unitypes.h])
+  gl_LIBUNISTRING_LIBHEADER([0.9.4], [uniwidth.h])
+  gl_LIBUNISTRING_MODULE([0.9.6], [uniwidth/width])
   gl_FUNC_GLIBC_UNLOCKED_IO
   gl_WCHAR_H
   gl_WCTYPE_H
@@ -622,6 +624,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/iconv_open.c
   lib/intprops.h
   lib/iswblank.c
+  lib/langinfo.in.h
   lib/localcharset.c
   lib/localcharset.h
   lib/locale.in.h
@@ -746,6 +749,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/iswblank.m4
   m4/java.m4
   m4/javacomp.m4
+  m4/langinfo_h.m4
   m4/largefile.m4
   m4/lcmessage.m4
   m4/lib-ld.m4

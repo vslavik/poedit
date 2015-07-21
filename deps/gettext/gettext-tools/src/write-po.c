@@ -1,5 +1,6 @@
 /* GNU gettext - internationalization aids
-   Copyright (C) 1995-1998, 2000-2010, 2012 Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2010, 2012, 2015 Free Software
+   Foundation, Inc.
 
    This file was written by Peter Miller <millerp@canb.auug.org.au>
 
@@ -400,7 +401,7 @@ message_print_comment_filepos (const message_ty *mp, ostream_t stream,
               else
                 sprintf (buffer, ":%ld", (long) pp->line_number);
               len = strlen (cp) + strlen (buffer) + 1;
-              if (column > 2 && column + len >= page_width)
+              if (column > 2 && column + len > page_width)
                 {
                   ostream_write_str (stream, "\n#:");
                   column = 2;

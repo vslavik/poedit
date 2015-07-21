@@ -1,5 +1,5 @@
 /* Temporary directories and temporary files with automatic cleanup.
-   Copyright (C) 2001, 2003, 2006-2007, 2009-2014 Free Software Foundation,
+   Copyright (C) 2001, 2003, 2006-2007, 2009-2015 Free Software Foundation,
    Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
@@ -575,6 +575,9 @@ static bool
 supports_delete_on_close ()
 {
   static int known; /* 1 = yes, -1 = no, 0 = unknown */
+  /* M4 wants to close and later reopen a temporary file, so
+     delete-on-close must not be used.  */
+  known = -1;
   if (!known)
     {
       OSVERSIONINFO v;

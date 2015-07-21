@@ -1,5 +1,5 @@
 /* Checking of messages in PO files.
-   Copyright (C) 2005, 2008, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2008, 2010, 2015 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2005.
 
    This program is free software: you can redistribute it and/or modify
@@ -60,6 +60,9 @@ extern int check_message_list (message_list_ty *mlp,
                                int check_compatibility,
                                int check_accelerators, char accelerator_char);
 
+/* Perform all syntax checks on a message list.
+   Return the number of errors that were seen.  */
+extern int syntax_check_message_list (message_list_ty *mlp);
 
 #ifdef __cplusplus
 }

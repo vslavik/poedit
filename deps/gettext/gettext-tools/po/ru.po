@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gettext-tools 0.19.3\n"
 "Report-Msgid-Bugs-To: bug-gnu-gettext@gnu.org\n"
-"POT-Creation-Date: 2014-12-24 16:27+0900\n"
+"POT-Creation-Date: 2015-07-15 10:37+0900\n"
 "PO-Revision-Date: 2014-11-19 09:30+0200\n"
 "Last-Translator: Pavel Maryanov <acid@jack.kiev.ua>\n"
 "Language-Team: Russian <gnu@mx.ru>\n"
@@ -89,10 +89,10 @@ msgstr "ошибка записи %s"
 msgid "error after reading %s"
 msgstr "ошибка после чтения %s"
 
-#: gnulib-lib/csharpcomp.c:310 gnulib-lib/javaversion.c:76 src/msginit.c:898
-#: src/msginit.c:973 src/msginit.c:1133 src/msginit.c:1232
-#: src/read-csharp.c:72 src/read-java.c:70 src/read-resources.c:73
-#: src/read-tcl.c:110 src/write-resources.c:77
+#: gnulib-lib/csharpcomp.c:310 gnulib-lib/javaversion.c:76 src/msginit.c:897
+#: src/msginit.c:972 src/msginit.c:1132 src/msginit.c:1231 src/msginit.c:1396
+#: src/read-csharp.c:73 src/read-java.c:71 src/read-resources.c:74
+#: src/read-tcl.c:111 src/write-resources.c:78
 #, c-format
 msgid "fdopen() failed"
 msgstr "ошибка при вызовы fdopen()"
@@ -118,58 +118,63 @@ msgstr "Неизвестная системная ошибка"
 msgid "%s subprocess failed"
 msgstr "дочерний процесс %s завершился неуспехом"
 
-#: gnulib-lib/getopt.c:547 gnulib-lib/getopt.c:576
+#: gnulib-lib/getopt.c:575 gnulib-lib/getopt.c:604
 #, c-format
 msgid "%s: option '%s' is ambiguous; possibilities:"
 msgstr "%s: двусмысленный параметр «%s»; возможные варианты:"
 
-#: gnulib-lib/getopt.c:624 gnulib-lib/getopt.c:628
+#: gnulib-lib/getopt.c:619
+#, fuzzy, c-format
+msgid "%s: option '%s' is ambiguous\n"
+msgstr "%s: двусмысленный параметр «-W %s»\n"
+
+#: gnulib-lib/getopt.c:654 gnulib-lib/getopt.c:658
 #, c-format
 msgid "%s: option '--%s' doesn't allow an argument\n"
 msgstr "%s: у параметра «--%s» не может быть аргумента\n"
 
-#: gnulib-lib/getopt.c:637 gnulib-lib/getopt.c:642
+#: gnulib-lib/getopt.c:667 gnulib-lib/getopt.c:672
 #, c-format
 msgid "%s: option '%c%s' doesn't allow an argument\n"
 msgstr "%s: у параметра «%c%s» не может быть аргумента\n"
 
-#: gnulib-lib/getopt.c:685 gnulib-lib/getopt.c:704
+#: gnulib-lib/getopt.c:715 gnulib-lib/getopt.c:734
 #, c-format
 msgid "%s: option '--%s' requires an argument\n"
 msgstr "%s: для параметра «--%s» требуется аргумент\n"
 
-#: gnulib-lib/getopt.c:742 gnulib-lib/getopt.c:745
+#: gnulib-lib/getopt.c:772 gnulib-lib/getopt.c:775
 #, c-format
 msgid "%s: unrecognized option '--%s'\n"
 msgstr "%s: неизвестный параметр «--%s»\n"
 
-#: gnulib-lib/getopt.c:753 gnulib-lib/getopt.c:756
+#: gnulib-lib/getopt.c:783 gnulib-lib/getopt.c:786
 #, c-format
 msgid "%s: unrecognized option '%c%s'\n"
 msgstr "%s: неизвестный параметр «%c%s»\n"
 
-#: gnulib-lib/getopt.c:805 gnulib-lib/getopt.c:808
+#: gnulib-lib/getopt.c:835 gnulib-lib/getopt.c:838
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: недопустимый параметр — «%c»\n"
 
-#: gnulib-lib/getopt.c:861 gnulib-lib/getopt.c:878 gnulib-lib/getopt.c:1088
-#: gnulib-lib/getopt.c:1106
+#: gnulib-lib/getopt.c:891 gnulib-lib/getopt.c:908 gnulib-lib/getopt.c:1118
+#: gnulib-lib/getopt.c:1136
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: для параметра требуется аргумент — «%c»\n"
 
-#: gnulib-lib/getopt.c:934 gnulib-lib/getopt.c:950
+#: gnulib-lib/getopt.c:964 gnulib-lib/getopt.c:980
 #, c-format
 msgid "%s: option '-W %s' is ambiguous\n"
 msgstr "%s: двусмысленный параметр «-W %s»\n"
 
-#: gnulib-lib/getopt.c:974 gnulib-lib/getopt.c:992
+#: gnulib-lib/getopt.c:1004 gnulib-lib/getopt.c:1022
 #, c-format
 msgid "%s: option '-W %s' doesn't allow an argument\n"
 msgstr "%s: у параметра «-W %s» не может быть аргумента\n"
 
-#: gnulib-lib/getopt.c:1013 gnulib-lib/getopt.c:1031
+#: gnulib-lib/getopt.c:1043 gnulib-lib/getopt.c:1061
 #, c-format
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "%s: для параметра «-W %s» требуется аргумент\n"
@@ -185,15 +190,15 @@ msgstr "неправильный аргумент source_version для compile_
 msgid "invalid target_version argument to compile_java_class"
 msgstr "неправильный аргумент target_version для compile_java_class"
 
-#: gnulib-lib/javacomp.c:498 src/write-csharp.c:739 src/write-java.c:1140
-#: src/write-java.c:1148 src/write-java.c:1176 src/write-java.c:1188
+#: gnulib-lib/javacomp.c:498 src/write-csharp.c:739 src/write-java.c:1141
+#: src/write-java.c:1149 src/write-java.c:1177 src/write-java.c:1189
 #, c-format
 msgid "failed to create \"%s\""
 msgstr "ошибка при создании «%s»"
 
-#: gnulib-lib/javacomp.c:505 src/write-catalog.c:255 src/write-catalog.c:319
-#: src/write-csharp.c:748 src/write-java.c:1156 src/write-java.c:1197
-#: src/write-mo.c:811 src/write-qt.c:748 src/write-tcl.c:222
+#: gnulib-lib/javacomp.c:505 src/write-catalog.c:256 src/write-catalog.c:320
+#: src/write-csharp.c:748 src/write-java.c:1157 src/write-java.c:1198
+#: src/write-mo.c:812 src/write-qt.c:749 src/write-tcl.c:223
 #, c-format
 msgid "error while writing \"%s\" file"
 msgstr "ошибка записи файла «%s»"
@@ -211,15 +216,16 @@ msgstr ""
 "Не найдена виртуальная машина Java, поставьте gij или установите переменную "
 "$JAVA"
 
-#: gnulib-lib/javaversion.c:84 src/msginit.c:906 src/msginit.c:981
-#: src/msginit.c:1141
+#: gnulib-lib/javaversion.c:84 src/msginit.c:905 src/msginit.c:980
+#: src/msginit.c:1140 src/msginit.c:1404
 #, c-format
 msgid "%s subprocess I/O error"
 msgstr "ошибка ввода/вывода в дочернем процессе %s"
 
-#: gnulib-lib/obstack.c:338 gnulib-lib/obstack.c:340 gnulib-lib/xmalloc.c:37
-#: gnulib-lib/xsetenv.c:37 src/msgl-check.c:559 src/po-lex.c:83
-#: src/po-lex.c:102 src/x-glade.c:548 libgettextpo/gettext-po.c:1326
+#: gnulib-lib/obstack.c:338 gnulib-lib/obstack.c:340 gnulib-lib/xmalloc.c:38
+#: gnulib-lib/xsetenv.c:37 src/format-kde-kuit.c:239 src/msgl-check.c:564
+#: src/po-lex.c:83 src/po-lex.c:102 src/x-glade.c:549
+#: libgettextpo/gettext-po.c:1326
 #, c-format
 msgid "memory exhausted"
 msgstr "память исчерпана"
@@ -230,7 +236,7 @@ msgid "creation of threads failed"
 msgstr "ошибка при создании нитей"
 
 #: gnulib-lib/pipe-filter-ii.c:224 gnulib-lib/pipe-filter-ii.c:381
-#: src/msgexec.c:405
+#: src/msgexec.c:427
 #, c-format
 msgid "write to %s subprocess failed"
 msgstr "ошибка при записи в дочерний процесс %s"
@@ -317,53 +323,55 @@ msgstr "дочерний процесс %s"
 msgid "%s subprocess got fatal signal %d"
 msgstr "дочерний процесс %s получил фатальный сигнал %d"
 
-#: src/file-list.c:53 src/msggrep.c:247 src/open-catalog.c:122
-#: src/read-mo.c:258 src/read-tcl.c:125 src/urlget.c:216 src/xgettext.c:1974
-#: src/xgettext.c:1987 src/xgettext.c:1997
+#: src/file-list.c:54 src/msggrep.c:248 src/open-catalog.c:123
+#: src/read-mo.c:262 src/read-tcl.c:126 src/urlget.c:217 src/xgettext.c:2036
+#: src/xgettext.c:2049 src/xgettext.c:2059
 #, c-format
 msgid "error while opening \"%s\" for reading"
 msgstr "ошибка открытия файла «%s» для чтения"
 
-#: src/format.c:151
+#: src/format.c:152
 #, c-format
 msgid "'%s' is not a valid %s format string, unlike '%s'. Reason: %s"
 msgstr ""
 "Строка «%s» не подходит под формат %s, в отличие от исходной «%s». Причина: "
 "%s"
 
-#: src/format-awk.c:509 src/format-boost.c:617 src/format-elisp.c:348
-#: src/format-gcc-internal.c:627 src/format-librep.c:312 src/format-lua.c:228
-#: src/format-pascal.c:397 src/format-perl.c:584 src/format-php.c:350
-#: src/format-qt.c:173 src/format-tcl.c:390 src/format-ycp.c:147
+#: src/format-awk.c:510 src/format-boost.c:618 src/format-elisp.c:349
+#: src/format-gcc-internal.c:627 src/format-kde.c:224 src/format-librep.c:313
+#: src/format-lua.c:228 src/format-pascal.c:398 src/format-perl.c:585
+#: src/format-php.c:351 src/format-qt.c:174 src/format-tcl.c:391
+#: src/format-ycp.c:148
 #, c-format
 msgid ""
 "a format specification for argument %u, as in '%s', doesn't exist in '%s'"
 msgstr "спецификация формата аргумента %u в «%s» не существует в «%s»"
 
-#: src/format-awk.c:520 src/format-boost.c:628 src/format-elisp.c:359
-#: src/format-gcc-internal.c:638 src/format-librep.c:323 src/format-lua.c:235
-#: src/format-pascal.c:408 src/format-perl.c:595 src/format-php.c:361
-#: src/format-qt.c:170 src/format-tcl.c:401 src/format-ycp.c:144
+#: src/format-awk.c:521 src/format-boost.c:629 src/format-elisp.c:360
+#: src/format-gcc-internal.c:638 src/format-kde.c:235 src/format-librep.c:324
+#: src/format-lua.c:235 src/format-pascal.c:409 src/format-perl.c:596
+#: src/format-php.c:362 src/format-qt.c:171 src/format-tcl.c:402
+#: src/format-ycp.c:145
 #, c-format
 msgid "a format specification for argument %u doesn't exist in '%s'"
 msgstr "спецификация формата аргумента %u не существует в «%s»"
 
-#: src/format-awk.c:540 src/format-boost.c:648 src/format-c.c:146
-#: src/format-elisp.c:379 src/format-gcc-internal.c:658
-#: src/format-gfc-internal.c:372 src/format-javascript.c:227
-#: src/format-librep.c:343 src/format-lua.c:242 src/format-pascal.c:428
-#: src/format-perl.c:615 src/format-php.c:381 src/format-python.c:527
-#: src/format-tcl.c:421
+#: src/format-awk.c:541 src/format-boost.c:649 src/format-c.c:147
+#: src/format-elisp.c:380 src/format-gcc-internal.c:658
+#: src/format-gfc-internal.c:372 src/format-javascript.c:228
+#: src/format-librep.c:344 src/format-lua.c:242 src/format-pascal.c:429
+#: src/format-perl.c:616 src/format-php.c:382 src/format-python.c:528
+#: src/format-tcl.c:422
 #, c-format
 msgid "format specifications in '%s' and '%s' for argument %u are not the same"
 msgstr "спецификации формата в «%s» и «%s» не совпадают для аргумента %u"
 
-#: src/format-boost.c:449
+#: src/format-boost.c:450
 #, c-format
 msgid "The directive number %u starts with | but does not end with |."
 msgstr "Директива номер %u начинается с |, но не заканчивается на |."
 
-#: src/format-c.c:36
+#: src/format-c.c:37
 #, c-format
 msgid ""
 "In the directive number %u, the token after '<' is not the name of a format "
@@ -373,60 +381,60 @@ msgstr ""
 "спецификации формата. Допустимые имена макросов перечислены в ISO C 99, "
 "раздел 7.8.1."
 
-#: src/format-c.c:39
+#: src/format-c.c:40
 #, c-format
 msgid "In the directive number %u, the token after '<' is not followed by '>'."
 msgstr ""
 "В директиве номер %u после лексемы, стоящей за «<», нет закрывающего «>»."
 
-#: src/format-c.c:42 src/format-gfc-internal.c:289
+#: src/format-c.c:43 src/format-gfc-internal.c:289
 #, c-format
 msgid "The string refers to argument number %u but ignores argument number %u."
 msgstr ""
 "Строка ссылается на аргумент номер %u, но игнорирует аргумент номер %u."
 
-#: src/format-c.c:137 src/format-csharp.c:206 src/format-gfc-internal.c:363
-#: src/format-javascript.c:215 src/format-python.c:515
-#: src/format-qt-plural.c:110
+#: src/format-c.c:138 src/format-csharp.c:207 src/format-gfc-internal.c:363
+#: src/format-javascript.c:216 src/format-python.c:516
+#: src/format-qt-plural.c:111
 #, c-format
 msgid "number of format specifications in '%s' and '%s' does not match"
 msgstr "не совпадает количество спецификаций формата в «%s» и «%s»"
 
-#: src/format-csharp.c:88 src/format-java.c:205
+#: src/format-csharp.c:89 src/format-java.c:206
 #, c-format
 msgid "In the directive number %u, '{' is not followed by an argument number."
 msgstr "В директиве номер %u после «{» не стоит номер аргумента."
 
-#: src/format-csharp.c:109
+#: src/format-csharp.c:110
 #, c-format
 msgid "In the directive number %u, ',' is not followed by a number."
 msgstr "В директиве номер %u после «,» не стоит число."
 
-#: src/format-csharp.c:130 src/format-java.c:191
+#: src/format-csharp.c:131 src/format-java.c:192
 msgid ""
 "The string ends in the middle of a directive: found '{' without matching '}'."
 msgstr ""
 "Строка обрывается посреди директивы: найдена «{» без соответствующей «}»."
 
-#: src/format-csharp.c:139
+#: src/format-csharp.c:140
 #, c-format
 msgid ""
 "The directive number %u ends with an invalid character '%c' instead of '}'."
 msgstr "Директива номер %u заканчивается на неверный символ «%c», а не на «}»."
 
-#: src/format-csharp.c:140
+#: src/format-csharp.c:141
 #, c-format
 msgid "The directive number %u ends with an invalid character instead of '}'."
 msgstr "Директива номер %u заканчивается на неверный символ, а не на «}»."
 
-#: src/format-csharp.c:161 src/format-java.c:346
+#: src/format-csharp.c:162 src/format-java.c:347
 msgid ""
 "The string starts in the middle of a directive: found '}' without matching "
 "'{'."
 msgstr ""
 "Строка начинается посреди директивы: найдена «}» без соответствующей «{»."
 
-#: src/format-csharp.c:162
+#: src/format-csharp.c:163
 #, c-format
 msgid "The string contains a lone '}' after directive number %u."
 msgstr "Строка содержит непарную «}» после директивы номер %u."
@@ -548,7 +556,7 @@ msgstr ""
 msgid "The string refers to argument number %u in incompatible ways."
 msgstr "Строка ссылается на аргумент номер %u несовместимым образом."
 
-#: src/format-java.c:240
+#: src/format-java.c:241
 #, c-format
 msgid ""
 "In the directive number %u, the substring \"%s\" is not a valid date/time "
@@ -556,18 +564,18 @@ msgid ""
 msgstr ""
 "В директиве номер %u подстрока «%s» не является верным стилем даты/времени."
 
-#: src/format-java.c:251 src/format-java.c:285 src/format-java.c:314
+#: src/format-java.c:252 src/format-java.c:286 src/format-java.c:315
 #, c-format
 msgid "In the directive number %u, \"%s\" is not followed by a comma."
 msgstr "В директиве номер %u после «%s» не стоит запятая."
 
-#: src/format-java.c:274
+#: src/format-java.c:275
 #, c-format
 msgid ""
 "In the directive number %u, the substring \"%s\" is not a valid number style."
 msgstr "В директиве номер %u подстрока «%s» не является верным стилем числа."
 
-#: src/format-java.c:323
+#: src/format-java.c:324
 #, c-format
 msgid ""
 "In the directive number %u, the argument number is not followed by a comma "
@@ -576,12 +584,12 @@ msgstr ""
 "В директиве номер %u после номера аргумента не стоит запятая и одно из «%s», "
 "«%s», «%s», «%s»."
 
-#: src/format-java.c:572
+#: src/format-java.c:573
 #, c-format
 msgid "In the directive number %u, a choice contains no number."
 msgstr "В директиве номер %u оператор выбора не содержит номера."
 
-#: src/format-java.c:583
+#: src/format-java.c:584
 #, c-format
 msgid ""
 "In the directive number %u, a choice contains a number that is not followed "
@@ -590,24 +598,43 @@ msgstr ""
 "В директиве номер %u оператор выбора содержит число, за которым не следует "
 "«<», «#» или «%s»."
 
-#: src/format-java.c:745
+#: src/format-java.c:746
 #, c-format
 msgid ""
 "a format specification for argument {%u}, as in '%s', doesn't exist in '%s'"
 msgstr "спецификация формата аргумента {%u} в «%s» не существует в «%s»"
 
-#: src/format-java.c:756
+#: src/format-java.c:757
 #, c-format
 msgid "a format specification for argument {%u} doesn't exist in '%s'"
 msgstr "для аргумента {%u} нет спецификации формата в «%s»"
 
-#: src/format-java.c:776
+#: src/format-java.c:777
 #, c-format
 msgid ""
 "format specifications in '%s' and '%s' for argument {%u} are not the same"
 msgstr "в «%s» и «%s» не совпадают спецификации формата для аргумента {%u}"
 
-#: src/format-lisp.c:2339 src/format-lisp.c:2351 src/format-scheme.c:2365
+#: src/format-kde.c:159
+#, fuzzy, c-format
+msgid ""
+"The string refers to argument number %u but ignores the arguments %u and %u."
+msgstr ""
+"Строка ссылается на аргумент номер %u, но игнорирует аргумент номер %u."
+
+#: src/format-kde.c:243
+#, fuzzy, c-format
+msgid ""
+"a format specification for arguments %u and %u doesn't exist in '%s', only "
+"one argument may be ignored"
+msgstr "спецификация формата аргумента %u в «%s» не существует в «%s»"
+
+#: src/format-kde-kuit.c:251 src/format-kde-kuit.c:261
+#, fuzzy, c-format
+msgid "error while parsing: %s"
+msgstr "ошибка чтения «%s»"
+
+#: src/format-lisp.c:2340 src/format-lisp.c:2352 src/format-scheme.c:2365
 #: src/format-scheme.c:2377
 #, c-format
 msgid ""
@@ -617,7 +644,7 @@ msgstr ""
 "В директиве номер %u параметр %u принадлежит типу «%s», но ожидается "
 "параметр типа «%s»."
 
-#: src/format-lisp.c:2374 src/format-scheme.c:2400
+#: src/format-lisp.c:2375 src/format-scheme.c:2400
 #, c-format
 msgid ""
 "In the directive number %u, too many parameters are given; expected at most "
@@ -635,33 +662,33 @@ msgstr[2] ""
 "В директиве номер %u указано слишком много параметров; ожидалось не более %u "
 "параметров"
 
-#: src/format-lisp.c:2498 src/format-scheme.c:2501
+#: src/format-lisp.c:2499 src/format-scheme.c:2501
 #, c-format
 msgid "In the directive number %u, '%c' is not followed by a digit."
 msgstr "В директиве номер %u после «%c» не стоит цифра."
 
-#: src/format-lisp.c:2738 src/format-scheme.c:2756
+#: src/format-lisp.c:2739 src/format-scheme.c:2756
 #, c-format
 msgid "In the directive number %u, the argument %d is negative."
 msgstr "В директиве номер %u аргумент %d отрицателен."
 
-#: src/format-lisp.c:2807
+#: src/format-lisp.c:2808
 msgid "The string ends in the middle of a ~/.../ directive."
 msgstr "Строка обрывается посреди директивы ~/.../."
 
-#: src/format-lisp.c:2845 src/format-lisp.c:3110 src/format-lisp.c:3227
-#: src/format-lisp.c:3287 src/format-lisp.c:3399 src/format-scheme.c:2842
+#: src/format-lisp.c:2846 src/format-lisp.c:3111 src/format-lisp.c:3228
+#: src/format-lisp.c:3288 src/format-lisp.c:3400 src/format-scheme.c:2842
 #: src/format-scheme.c:3107 src/format-scheme.c:3224 src/format-scheme.c:3322
 #, c-format
 msgid "Found '~%c' without matching '~%c'."
 msgstr "Встречено «~%c» без соответствующего «~%c»."
 
-#: src/format-lisp.c:2865 src/format-scheme.c:2862
+#: src/format-lisp.c:2866 src/format-scheme.c:2862
 #, c-format
 msgid "In the directive number %u, both the @ and the : modifiers are given."
 msgstr "В директиве номер %u одновременно заданы модификаторы @ и :."
 
-#: src/format-lisp.c:2978 src/format-scheme.c:2975
+#: src/format-lisp.c:2979 src/format-scheme.c:2975
 #, c-format
 msgid ""
 "In the directive number %u, '~:[' is not followed by two clauses, separated "
@@ -669,27 +696,27 @@ msgid ""
 msgstr ""
 "В директиве номер %u после «~:[» не стоят два предложения, разделенные «~;»."
 
-#: src/format-lisp.c:3328 src/format-scheme.c:3265
+#: src/format-lisp.c:3329 src/format-scheme.c:3265
 #, c-format
 msgid "In the directive number %u, '~;' is used in an invalid position."
 msgstr "В директиве номер %u «~;» использована в неверном месте."
 
-#: src/format-lisp.c:3434 src/format-scheme.c:3357
+#: src/format-lisp.c:3435 src/format-scheme.c:3357
 msgid "The string refers to some argument in incompatible ways."
 msgstr "Строка ссылается на какой-то аргумент несовместимым образом."
 
-#: src/format-lisp.c:3476 src/format-scheme.c:3399
+#: src/format-lisp.c:3477 src/format-scheme.c:3399
 #, c-format
 msgid "format specifications in '%s' and '%s' are not equivalent"
 msgstr "спецификации формата в «%s» и «%s» не эквивалентны"
 
-#: src/format-lisp.c:3492 src/format-scheme.c:3415
+#: src/format-lisp.c:3493 src/format-scheme.c:3415
 #, c-format
 msgid "format specifications in '%s' are not a subset of those in '%s'"
 msgstr ""
 "спецификации формата в «%s» не являются подмножеством спецификаций из «%s»"
 
-#: src/format-perl.c:433
+#: src/format-perl.c:434
 #, c-format
 msgid ""
 "In the directive number %u, the size specifier is incompatible with the "
@@ -698,14 +725,14 @@ msgstr ""
 "В директиве номер %u спецификатор размера несовместим со спецификатором "
 "преобразования «%c»."
 
-#: src/format-perl-brace.c:199 src/format-python.c:471
-#: src/format-python-brace.c:434 src/format-python-brace.c:447
-#: src/format-sh.c:308
+#: src/format-perl-brace.c:199 src/format-python.c:472
+#: src/format-python-brace.c:435 src/format-python-brace.c:448
+#: src/format-sh.c:309
 #, c-format
 msgid "a format specification for argument '%s' doesn't exist in '%s'"
 msgstr "для аргумента «%s» нет спецификации формата в «%s»"
 
-#: src/format-python.c:115
+#: src/format-python.c:116
 msgid ""
 "The string refers to arguments both through argument names and through "
 "unnamed argument specifications."
@@ -713,51 +740,51 @@ msgstr ""
 "Строка ссылается на аргументы как по именам, так и по безымянным "
 "спецификациям аргументов."
 
-#: src/format-python.c:354
+#: src/format-python.c:355
 #, c-format
 msgid "The string refers to the argument named '%s' in incompatible ways."
 msgstr "Строка ссылается на аргумент по имени «%s» несовместимым образом."
 
-#: src/format-python.c:430
+#: src/format-python.c:431
 #, c-format
 msgid ""
 "format specifications in '%s' expect a mapping, those in '%s' expect a tuple"
 msgstr "спецификация формата в «%s» ожидает отображение, а в «%s» — кортеж"
 
-#: src/format-python.c:437
+#: src/format-python.c:438
 #, c-format
 msgid ""
 "format specifications in '%s' expect a tuple, those in '%s' expect a mapping"
 msgstr "спецификация формата в «%s» ожидает кортеж, а в «%s» — отображение"
 
-#: src/format-python.c:460 src/format-sh.c:297
+#: src/format-python.c:461 src/format-sh.c:298
 #, c-format
 msgid ""
 "a format specification for argument '%s', as in '%s', doesn't exist in '%s'"
 msgstr "спецификация формата аргумента «%s» в «%s» не существует в «%s»"
 
-#: src/format-python.c:494
+#: src/format-python.c:495
 #, c-format
 msgid ""
 "format specifications in '%s' and '%s' for argument '%s' are not the same"
 msgstr "в «%s» и «%s» не совпадают спецификации формата для аргумента «%s»"
 
-#: src/format-python-brace.c:137
+#: src/format-python-brace.c:138
 #, c-format
 msgid "In the directive number %u, '%c' cannot start a field name."
 msgstr "В директиве номер %u с «%c» не может начинаться имя поля."
 
-#: src/format-python-brace.c:150
+#: src/format-python-brace.c:151
 #, c-format
 msgid "In the directive number %u, '%c' cannot start a getattr argument."
 msgstr "В директиве номер %u с «%c» не может начинаться аргумент getattr."
 
-#: src/format-python-brace.c:165
+#: src/format-python-brace.c:166
 #, c-format
 msgid "In the directive number %u, '%c' cannot start a getitem argument."
 msgstr "В директиве номер %u с «%c» не может начинаться аргумент getitem."
 
-#: src/format-python-brace.c:185
+#: src/format-python-brace.c:186
 #, c-format
 msgid ""
 "In the directive number %u, no more nesting is allowed in a format specifier."
@@ -765,12 +792,12 @@ msgstr ""
 "В директиве номер %u в спецификаторе формата невозможно указать большую "
 "вложенность."
 
-#: src/format-python-brace.c:270
+#: src/format-python-brace.c:271
 #, c-format
 msgid "In the directive number %u, there is an unterminated format directive."
 msgstr "В директиве номер %u есть незавершённая директива формата."
 
-#: src/format-qt.c:152
+#: src/format-qt.c:153
 #, c-format
 msgid ""
 "'%s' is a simple format string, but '%s' is not: it contains an 'L' flag or "
@@ -779,12 +806,12 @@ msgstr ""
 "«%s» является простой строкой формата, но «%s» нет: в ней содержится флаг "
 "«L» или аргумент с числом из двух цифр"
 
-#: src/format-sh.c:79
+#: src/format-sh.c:80
 msgid "The string refers to a shell variable with a non-ASCII name."
 msgstr ""
 "Строка ссылается на переменную оболочки с именем, не представимым в ASCII."
 
-#: src/format-sh.c:81
+#: src/format-sh.c:82
 msgid ""
 "The string refers to a shell variable with complex shell brace syntax. This "
 "syntax is unsupported here due to security reasons."
@@ -793,7 +820,7 @@ msgstr ""
 "скобок.  Этот синтактис не поддерживается в этой программе по соображениям "
 "безопасности."
 
-#: src/format-sh.c:83
+#: src/format-sh.c:84
 msgid ""
 "The string refers to a shell variable whose value may be different inside "
 "shell functions."
@@ -801,29 +828,29 @@ msgstr ""
 "Строка ссылается на переменную оболочки, чье значение может оказаться иным "
 "внутри функций оболочки."
 
-#: src/format-sh.c:85
+#: src/format-sh.c:86
 msgid "The string refers to a shell variable with an empty name."
 msgstr "Строка ссылается на переменную оболочки с пустым именем."
 
-#: src/format-ycp.c:90
+#: src/format-ycp.c:91
 #, c-format
 msgid ""
 "In the directive number %u, the character '%c' is not a digit between 1 and "
 "9."
 msgstr "В директиве номер %u символ «%c» не является цифрой между 1 и 9."
 
-#: src/format-ycp.c:91
+#: src/format-ycp.c:92
 #, c-format
 msgid ""
 "The character that terminates the directive number %u is not a digit between "
 "1 and 9."
 msgstr "Символ, завершающий директиву номер %u не является цифрой между 1 и 9."
 
-#: src/hostname.c:180 src/msgattrib.c:355 src/msgcat.c:294 src/msgcmp.c:172
-#: src/msgcomm.c:285 src/msgconv.c:244 src/msgen.c:241 src/msgexec.c:180
-#: src/msgfilter.c:282 src/msgfmt.c:416 src/msggrep.c:419 src/msginit.c:269
-#: src/msgmerge.c:356 src/msgunfmt.c:262 src/msguniq.c:264
-#: src/recode-sr-latin.c:110 src/urlget.c:143 src/xgettext.c:615
+#: src/hostname.c:181 src/msgattrib.c:356 src/msgcat.c:295 src/msgcmp.c:173
+#: src/msgcomm.c:286 src/msgconv.c:245 src/msgen.c:242 src/msgexec.c:187
+#: src/msgfilter.c:289 src/msgfmt.c:417 src/msggrep.c:420 src/msginit.c:269
+#: src/msgmerge.c:357 src/msgunfmt.c:263 src/msguniq.c:265
+#: src/recode-sr-latin.c:111 src/urlget.c:144 src/xgettext.c:646
 #, c-format, no-wrap
 msgid ""
 "Copyright (C) %s Free Software Foundation, Inc.\n"
@@ -836,58 +863,58 @@ msgstr ""
 "Это свободное ПО: вы можете продавать и распространять его.\n"
 "Нет НИКАКИХ ГАРАНТИЙ до степени, разрешённой законом.\n"
 
-#: src/hostname.c:186 src/msgattrib.c:361 src/msgcat.c:300 src/msgcmp.c:178
-#: src/msgcomm.c:291 src/msgconv.c:250 src/msgen.c:247 src/msgexec.c:186
-#: src/msgfilter.c:288 src/msgfmt.c:422 src/msggrep.c:425 src/msginit.c:275
-#: src/msgmerge.c:362 src/msgunfmt.c:268 src/msguniq.c:270 src/urlget.c:149
-#: src/xgettext.c:621
+#: src/hostname.c:187 src/msgattrib.c:362 src/msgcat.c:301 src/msgcmp.c:179
+#: src/msgcomm.c:292 src/msgconv.c:251 src/msgen.c:248 src/msgexec.c:193
+#: src/msgfilter.c:295 src/msgfmt.c:423 src/msggrep.c:426 src/msginit.c:275
+#: src/msgmerge.c:363 src/msgunfmt.c:269 src/msguniq.c:271 src/urlget.c:150
+#: src/xgettext.c:652
 #, c-format
 msgid "Written by %s.\n"
 msgstr "Автор программы — %s.\n"
 
 #. This is a proper name. See the gettext manual, section Names.
-#: src/hostname.c:186 src/msgattrib.c:361 src/msgcat.c:300 src/msgconv.c:250
-#: src/msgen.c:247 src/msgexec.c:186 src/msgfilter.c:288 src/msggrep.c:425
-#: src/msginit.c:275 src/msguniq.c:270 src/recode-sr-latin.c:121
-#: src/urlget.c:149
+#: src/hostname.c:187 src/msgattrib.c:362 src/msgcat.c:301 src/msgconv.c:251
+#: src/msgen.c:248 src/msgexec.c:193 src/msgfilter.c:295 src/msggrep.c:426
+#: src/msginit.c:275 src/msguniq.c:271 src/recode-sr-latin.c:122
+#: src/urlget.c:150
 msgid "Bruno Haible"
 msgstr "Бруно Хайбл"
 
-#: src/hostname.c:196 src/msginit.c:285 src/recode-sr-latin.c:130
+#: src/hostname.c:197 src/msginit.c:285 src/recode-sr-latin.c:131
 #, c-format
 msgid "too many arguments"
 msgstr "слишком много аргументов"
 
-#: src/hostname.c:209 src/msgattrib.c:417 src/msgcat.c:363 src/msgcmp.c:209
-#: src/msgcomm.c:355 src/msgconv.c:303 src/msgen.c:300 src/msgexec.c:253
-#: src/msgfilter.c:403 src/msgfmt.c:770 src/msggrep.c:512 src/msginit.c:359
-#: src/msgmerge.c:494 src/msgunfmt.c:423 src/msguniq.c:322
-#: src/recode-sr-latin.c:143 src/urlget.c:172 src/xgettext.c:851
+#: src/hostname.c:210 src/msgattrib.c:418 src/msgcat.c:364 src/msgcmp.c:210
+#: src/msgcomm.c:356 src/msgconv.c:304 src/msgen.c:301 src/msgexec.c:260
+#: src/msgfilter.c:410 src/msgfmt.c:771 src/msggrep.c:513 src/msginit.c:359
+#: src/msgmerge.c:495 src/msgunfmt.c:424 src/msguniq.c:323
+#: src/recode-sr-latin.c:144 src/urlget.c:173 src/xgettext.c:900
 #, c-format
 msgid "Try '%s --help' for more information.\n"
 msgstr "По команде «%s --help» можно получить дополнительную информацию.\n"
 
-#: src/hostname.c:213 src/msginit.c:363 src/recode-sr-latin.c:148
+#: src/hostname.c:214 src/msginit.c:363 src/recode-sr-latin.c:149
 #, c-format, no-wrap
 msgid "Usage: %s [OPTION]\n"
 msgstr "Использование: %s [ПАРАМЕТР]\n"
 
-#: src/hostname.c:217
+#: src/hostname.c:218
 #, c-format
 msgid "Print the machine's hostname.\n"
 msgstr "Печатает имя данной машины.\n"
 
-#: src/hostname.c:220
+#: src/hostname.c:221
 #, c-format
 msgid "Output format:\n"
 msgstr "Формат вывода:\n"
 
-#: src/hostname.c:222
+#: src/hostname.c:223
 #, c-format
 msgid "  -s, --short                 short host name\n"
 msgstr "  -s, --short                 короткое имя машины\n"
 
-#: src/hostname.c:224
+#: src/hostname.c:225
 #, c-format
 msgid ""
 "  -f, --fqdn, --long          long host name, includes fully qualified "
@@ -897,34 +924,34 @@ msgstr ""
 "  -f, --fqdn, --long          длинное имя машины, включает полностью\n"
 "                                заданное доменное имя и псевдонимы\n"
 
-#: src/hostname.c:227
+#: src/hostname.c:228
 #, c-format
 msgid "  -i, --ip-address            addresses for the hostname\n"
 msgstr "  -i, --ip-address            адреса для заданного имени машины\n"
 
-#: src/hostname.c:230 src/msgattrib.c:534 src/msgcat.c:469 src/msgcmp.c:258
-#: src/msgcomm.c:455 src/msgconv.c:385 src/msgen.c:381 src/msgexec.c:295
-#: src/msgfilter.c:495 src/msgfmt.c:916 src/msggrep.c:628 src/msginit.c:421
-#: src/msgmerge.c:619 src/msgunfmt.c:527 src/msguniq.c:417
-#: src/recode-sr-latin.c:161 src/urlget.c:186 src/xgettext.c:1023
+#: src/hostname.c:231 src/msgattrib.c:535 src/msgcat.c:470 src/msgcmp.c:259
+#: src/msgcomm.c:456 src/msgconv.c:386 src/msgen.c:382 src/msgexec.c:307
+#: src/msgfilter.c:508 src/msgfmt.c:917 src/msggrep.c:629 src/msginit.c:421
+#: src/msgmerge.c:620 src/msgunfmt.c:528 src/msguniq.c:418
+#: src/recode-sr-latin.c:162 src/urlget.c:187 src/xgettext.c:1080
 #, c-format, no-wrap
 msgid "Informative output:\n"
 msgstr "Информационный вывод:\n"
 
-#: src/hostname.c:232 src/msgattrib.c:536 src/msgcat.c:471 src/msgcmp.c:260
-#: src/msgcomm.c:457 src/msgconv.c:387 src/msgen.c:383 src/msgexec.c:297
-#: src/msgfilter.c:497 src/msgfmt.c:918 src/msggrep.c:630 src/msginit.c:423
-#: src/msgmerge.c:621 src/msgunfmt.c:529 src/msguniq.c:419
-#: src/recode-sr-latin.c:164 src/urlget.c:188 src/xgettext.c:1025
+#: src/hostname.c:233 src/msgattrib.c:537 src/msgcat.c:472 src/msgcmp.c:261
+#: src/msgcomm.c:458 src/msgconv.c:388 src/msgen.c:384 src/msgexec.c:309
+#: src/msgfilter.c:510 src/msgfmt.c:919 src/msggrep.c:631 src/msginit.c:423
+#: src/msgmerge.c:622 src/msgunfmt.c:530 src/msguniq.c:420
+#: src/recode-sr-latin.c:165 src/urlget.c:189 src/xgettext.c:1082
 #, c-format, no-wrap
 msgid "  -h, --help                  display this help and exit\n"
 msgstr "  -h, --help                  показать эту справку и выйти\n"
 
-#: src/hostname.c:234 src/msgattrib.c:538 src/msgcat.c:473 src/msgcmp.c:262
-#: src/msgcomm.c:459 src/msgconv.c:389 src/msgen.c:385 src/msgexec.c:299
-#: src/msgfilter.c:499 src/msgfmt.c:920 src/msggrep.c:632 src/msginit.c:425
-#: src/msgmerge.c:623 src/msgunfmt.c:531 src/msguniq.c:421
-#: src/recode-sr-latin.c:167 src/urlget.c:190 src/xgettext.c:1027
+#: src/hostname.c:235 src/msgattrib.c:539 src/msgcat.c:474 src/msgcmp.c:263
+#: src/msgcomm.c:460 src/msgconv.c:390 src/msgen.c:386 src/msgexec.c:311
+#: src/msgfilter.c:512 src/msgfmt.c:921 src/msggrep.c:633 src/msginit.c:425
+#: src/msgmerge.c:624 src/msgunfmt.c:532 src/msguniq.c:422
+#: src/recode-sr-latin.c:168 src/urlget.c:191 src/xgettext.c:1084
 #, c-format, no-wrap
 msgid "  -V, --version               output version information and exit\n"
 msgstr "  -V, --version               показать информацию о версии и выйти\n"
@@ -933,41 +960,41 @@ msgstr "  -V, --version               показать информацию о �
 #. for this package.  Please add _another line_ saying
 #. "Report translation bugs to <...>\n" with the address for translation
 #. bugs (typically your translation team's web or email address).
-#: src/hostname.c:241 src/msgattrib.c:545 src/msgcat.c:480 src/msgcmp.c:269
-#: src/msgcomm.c:466 src/msgconv.c:396 src/msgen.c:392 src/msgexec.c:306
-#: src/msgfilter.c:506 src/msgfmt.c:931 src/msggrep.c:639 src/msginit.c:432
-#: src/msgmerge.c:634 src/msgunfmt.c:540 src/msguniq.c:428
-#: src/recode-sr-latin.c:174 src/urlget.c:199 src/xgettext.c:1034
+#: src/hostname.c:242 src/msgattrib.c:546 src/msgcat.c:481 src/msgcmp.c:270
+#: src/msgcomm.c:467 src/msgconv.c:397 src/msgen.c:393 src/msgexec.c:318
+#: src/msgfilter.c:519 src/msgfmt.c:932 src/msggrep.c:640 src/msginit.c:432
+#: src/msgmerge.c:635 src/msgunfmt.c:541 src/msguniq.c:429
+#: src/recode-sr-latin.c:175 src/urlget.c:200 src/xgettext.c:1091
 msgid "Report bugs to <bug-gnu-gettext@gnu.org>.\n"
 msgstr "Об ошибках сообщайте по адресу <bug-gnu-gettext@gnu.org>.\n"
 
-#: src/hostname.c:257 src/hostname.c:263 src/hostname.c:270
+#: src/hostname.c:258 src/hostname.c:264 src/hostname.c:271
 #, c-format
 msgid "could not get host name"
 msgstr "невозможно получить имя машины"
 
-#: src/msgattrib.c:376 src/msgconv.c:265 src/msgexec.c:152 src/msgfilter.c:194
-#: src/msggrep.c:440 src/msginit.c:198 src/msguniq.c:285
+#: src/msgattrib.c:377 src/msgconv.c:266 src/msgexec.c:155 src/msgfilter.c:197
+#: src/msggrep.c:441 src/msginit.c:198 src/msguniq.c:286
 #, c-format
 msgid "at most one input file allowed"
 msgstr "принимается не более одного входного файла"
 
-#: src/msgattrib.c:382 src/msgcat.c:316 src/msgcomm.c:301 src/msgconv.c:271
-#: src/msgen.c:269 src/msgfilter.c:303 src/msgfmt.c:470 src/msgfmt.c:478
-#: src/msgfmt.c:493 src/msgfmt.c:515 src/msggrep.c:446 src/msgmerge.c:387
-#: src/msgmerge.c:392 src/msgmerge.c:397 src/msgmerge.c:418 src/msgunfmt.c:299
-#: src/msguniq.c:291 src/xgettext.c:631 src/xgettext.c:638 src/xgettext.c:641
-#: src/xgettext.c:644
+#: src/msgattrib.c:383 src/msgcat.c:317 src/msgcomm.c:302 src/msgconv.c:272
+#: src/msgen.c:270 src/msgfilter.c:310 src/msgfmt.c:471 src/msgfmt.c:479
+#: src/msgfmt.c:494 src/msgfmt.c:516 src/msggrep.c:447 src/msgmerge.c:388
+#: src/msgmerge.c:393 src/msgmerge.c:398 src/msgmerge.c:419 src/msgunfmt.c:300
+#: src/msguniq.c:292 src/xgettext.c:662 src/xgettext.c:669 src/xgettext.c:672
+#: src/xgettext.c:675
 #, c-format
 msgid "%s and %s are mutually exclusive"
 msgstr "%s и %s взаимно исключают друг друга"
 
-#: src/msgattrib.c:421 src/msgconv.c:307 src/msggrep.c:516 src/msguniq.c:326
+#: src/msgattrib.c:422 src/msgconv.c:308 src/msggrep.c:517 src/msguniq.c:327
 #, c-format
 msgid "Usage: %s [OPTION] [INPUTFILE]\n"
 msgstr "Использование: %s [ПАРАМЕТР] [ВХОДНОЙ-ФАЙЛ]\n"
 
-#: src/msgattrib.c:426
+#: src/msgattrib.c:427
 #, c-format, no-wrap
 msgid ""
 "Filters the messages of a translation catalog according to their attributes,\n"
@@ -976,64 +1003,64 @@ msgstr ""
 "Фильтрует сообщения каталога переводов в соответствии с их атрибутами\n"
 "и манипулирует этими атрибутами.\n"
 
-#: src/msgattrib.c:430 src/msgcat.c:384 src/msgcmp.c:227 src/msgcomm.c:375
-#: src/msgconv.c:315 src/msgen.c:316 src/msgexec.c:276 src/msgfilter.c:415
-#: src/msggrep.c:526 src/msginit.c:373 src/msgmerge.c:515 src/msgunfmt.c:435
-#: src/msguniq.c:342
+#: src/msgattrib.c:431 src/msgcat.c:385 src/msgcmp.c:228 src/msgcomm.c:376
+#: src/msgconv.c:316 src/msgen.c:317 src/msgexec.c:288 src/msgfilter.c:422
+#: src/msggrep.c:527 src/msginit.c:373 src/msgmerge.c:516 src/msgunfmt.c:436
+#: src/msguniq.c:343
 #, c-format
 msgid ""
 "Mandatory arguments to long options are mandatory for short options too.\n"
 msgstr ""
 "Аргументы, обязательные для длинных параметров, обязательны и для коротких.\n"
 
-#: src/msgattrib.c:433 src/msgcat.c:387 src/msgcmp.c:230 src/msgcomm.c:378
-#: src/msgconv.c:318 src/msgen.c:319 src/msgexec.c:279 src/msgfilter.c:418
-#: src/msgfmt.c:788 src/msggrep.c:529 src/msginit.c:376 src/msgmerge.c:518
-#: src/msgunfmt.c:449 src/msguniq.c:345 src/xgettext.c:869
+#: src/msgattrib.c:434 src/msgcat.c:388 src/msgcmp.c:231 src/msgcomm.c:379
+#: src/msgconv.c:319 src/msgen.c:320 src/msgexec.c:291 src/msgfilter.c:425
+#: src/msgfmt.c:789 src/msggrep.c:530 src/msginit.c:376 src/msgmerge.c:519
+#: src/msgunfmt.c:450 src/msguniq.c:346 src/xgettext.c:918
 #, c-format
 msgid "Input file location:\n"
 msgstr "Нахождение входного файла:\n"
 
-#: src/msgattrib.c:435 src/msgconv.c:320 src/msggrep.c:531 src/msguniq.c:347
+#: src/msgattrib.c:436 src/msgconv.c:321 src/msggrep.c:532 src/msguniq.c:348
 #, c-format
 msgid "  INPUTFILE                   input PO file\n"
 msgstr "  ВХОДНОЙ-ФАЙЛ                входной PO-файл\n"
 
-#: src/msgattrib.c:437 src/msgcat.c:393 src/msgcmp.c:236 src/msgcomm.c:384
-#: src/msgconv.c:322 src/msgen.c:323 src/msgexec.c:283 src/msgfilter.c:422
-#: src/msgfmt.c:792 src/msggrep.c:533 src/msgmerge.c:524 src/msguniq.c:349
-#: src/xgettext.c:875
+#: src/msgattrib.c:438 src/msgcat.c:394 src/msgcmp.c:237 src/msgcomm.c:385
+#: src/msgconv.c:323 src/msgen.c:324 src/msgexec.c:295 src/msgfilter.c:429
+#: src/msgfmt.c:793 src/msggrep.c:534 src/msgmerge.c:525 src/msguniq.c:350
+#: src/xgettext.c:924
 #, c-format
 msgid ""
 "  -D, --directory=DIRECTORY   add DIRECTORY to list for input files search\n"
 msgstr ""
 "  -D, --directory=КАТАЛОГ     добавить КАТАЛОГ к пути поиска входных файлов\n"
 
-#: src/msgattrib.c:439 src/msgconv.c:324 src/msgexec.c:285 src/msgfilter.c:424
-#: src/msggrep.c:535 src/msgunfmt.c:453 src/msguniq.c:351
+#: src/msgattrib.c:440 src/msgconv.c:325 src/msgexec.c:297 src/msgfilter.c:431
+#: src/msggrep.c:536 src/msgunfmt.c:454 src/msguniq.c:352
 #, c-format
 msgid "If no input file is given or if it is -, standard input is read.\n"
 msgstr ""
 "Если входной файл не задан или задан как -, читается стандартный ввод.\n"
 
-#: src/msgattrib.c:442 src/msgcat.c:398 src/msgcomm.c:389 src/msgconv.c:327
-#: src/msgen.c:328 src/msgfilter.c:427 src/msgfmt.c:814 src/msggrep.c:538
-#: src/msginit.c:384 src/msgmerge.c:536 src/msgunfmt.c:489 src/msguniq.c:354
-#: src/xgettext.c:880
+#: src/msgattrib.c:443 src/msgcat.c:399 src/msgcomm.c:390 src/msgconv.c:328
+#: src/msgen.c:329 src/msgfilter.c:434 src/msgfmt.c:815 src/msggrep.c:539
+#: src/msginit.c:384 src/msgmerge.c:537 src/msgunfmt.c:490 src/msguniq.c:355
+#: src/xgettext.c:929
 #, c-format
 msgid "Output file location:\n"
 msgstr "Нахождение выходного файла:\n"
 
-#: src/msgattrib.c:444 src/msgcat.c:400 src/msgcomm.c:391 src/msgconv.c:329
-#: src/msgen.c:330 src/msgfilter.c:429 src/msgfmt.c:816 src/msgfmt.c:865
-#: src/msggrep.c:540 src/msgmerge.c:538 src/msgunfmt.c:491 src/msguniq.c:356
+#: src/msgattrib.c:445 src/msgcat.c:401 src/msgcomm.c:392 src/msgconv.c:330
+#: src/msgen.c:331 src/msgfilter.c:436 src/msgfmt.c:817 src/msgfmt.c:866
+#: src/msggrep.c:541 src/msgmerge.c:539 src/msgunfmt.c:492 src/msguniq.c:357
 #, c-format
 msgid "  -o, --output-file=FILE      write output to specified file\n"
 msgstr "  -o, --output-file=ФАЙЛ      записать вывод в указанный файл\n"
 
-#: src/msgattrib.c:446 src/msgcat.c:402 src/msgcomm.c:393 src/msgconv.c:331
-#: src/msgen.c:332 src/msgfilter.c:431 src/msggrep.c:542 src/msgmerge.c:540
-#: src/msgunfmt.c:493 src/msguniq.c:358
+#: src/msgattrib.c:447 src/msgcat.c:403 src/msgcomm.c:394 src/msgconv.c:332
+#: src/msgen.c:333 src/msgfilter.c:438 src/msggrep.c:543 src/msgmerge.c:541
+#: src/msgunfmt.c:494 src/msguniq.c:359
 #, c-format
 msgid ""
 "The results are written to standard output if no output file is specified\n"
@@ -1042,12 +1069,12 @@ msgstr ""
 "Результаты выводятся на стандартный вывод, если выходной файл не задан\n"
 "или задан как -.\n"
 
-#: src/msgattrib.c:450 src/msgcat.c:406 src/msgcomm.c:397 src/msguniq.c:362
+#: src/msgattrib.c:451 src/msgcat.c:407 src/msgcomm.c:398 src/msguniq.c:363
 #, c-format
 msgid "Message selection:\n"
 msgstr "Выбор сообщений:\n"
 
-#: src/msgattrib.c:452
+#: src/msgattrib.c:453
 #, c-format
 msgid ""
 "      --translated            keep translated, remove untranslated messages\n"
@@ -1055,7 +1082,7 @@ msgstr ""
 "      --translated            сохранить переведенные, удалить "
 "непереведённые\n"
 
-#: src/msgattrib.c:454
+#: src/msgattrib.c:455
 #, c-format
 msgid ""
 "      --untranslated          keep untranslated, remove translated messages\n"
@@ -1063,56 +1090,56 @@ msgstr ""
 "      --untranslated          сохранить непереведённые, удалить "
 "переведенные\n"
 
-#: src/msgattrib.c:456
+#: src/msgattrib.c:457
 #, c-format
 msgid "      --no-fuzzy              remove 'fuzzy' marked messages\n"
 msgstr ""
 "      --no-fuzzy              удалить сообщения помеченные как «неточные»\n"
 
-#: src/msgattrib.c:458
+#: src/msgattrib.c:459
 #, c-format
 msgid "      --only-fuzzy            keep 'fuzzy' marked messages\n"
 msgstr ""
 "      --only-fuzzy            сохранить сообщения помеченные как «неточные»\n"
 
-#: src/msgattrib.c:460
+#: src/msgattrib.c:461
 #, c-format
 msgid "      --no-obsolete           remove obsolete #~ messages\n"
 msgstr ""
 "      --no-obsolete           удалить сообщения, помеченные как «старые»\n"
 
-#: src/msgattrib.c:462
+#: src/msgattrib.c:463
 #, c-format
 msgid "      --only-obsolete         keep obsolete #~ messages\n"
 msgstr ""
 "      --only-obsolete         сохранить сообщения, помеченные как «старые»\n"
 
-#: src/msgattrib.c:465
+#: src/msgattrib.c:466
 #, c-format
 msgid "Attribute manipulation:\n"
 msgstr "Операции с атрибутами:\n"
 
-#: src/msgattrib.c:467
+#: src/msgattrib.c:468
 #, c-format
 msgid "      --set-fuzzy             set all messages 'fuzzy'\n"
 msgstr "      --set-fuzzy             пометить все сообщения как «неточные»\n"
 
-#: src/msgattrib.c:469
+#: src/msgattrib.c:470
 #, c-format
 msgid "      --clear-fuzzy           set all messages non-'fuzzy'\n"
 msgstr "      --clear-fuzzy           снять все пометки «неточное»\n"
 
-#: src/msgattrib.c:471
+#: src/msgattrib.c:472
 #, c-format
 msgid "      --set-obsolete          set all messages obsolete\n"
 msgstr "      --set-obsolete          пометить все сообщения как «старые»\n"
 
-#: src/msgattrib.c:473
+#: src/msgattrib.c:474
 #, c-format
 msgid "      --clear-obsolete        set all messages non-obsolete\n"
 msgstr "      --clear-obsolete        снять все пометки «старое»\n"
 
-#: src/msgattrib.c:475
+#: src/msgattrib.c:476
 #, c-format
 msgid ""
 "      --previous              when setting 'fuzzy', keep previous msgids\n"
@@ -1121,7 +1148,7 @@ msgstr ""
 "      --previous              если пометка «неточное», то сохранить\n"
 "                              предыдущие msgid переведённых сообщений\n"
 
-#: src/msgattrib.c:478
+#: src/msgattrib.c:479
 #, c-format
 msgid ""
 "      --clear-previous        remove the \"previous msgid\" from all "
@@ -1129,7 +1156,7 @@ msgid ""
 msgstr ""
 "      --clear-previous        удалить «предыдущий msgid» из всех сообщений\n"
 
-#: src/msgattrib.c:480
+#: src/msgattrib.c:481
 #, c-format
 msgid ""
 "      --empty                 when removing 'fuzzy', also set msgstr empty\n"
@@ -1137,7 +1164,7 @@ msgstr ""
 "      --empty                 при удалении «неточных», также делать\n"
 "                              msgstr пустой\n"
 
-#: src/msgattrib.c:482
+#: src/msgattrib.c:483
 #, c-format
 msgid ""
 "      --only-file=FILE.po     manipulate only entries listed in FILE.po\n"
@@ -1145,7 +1172,7 @@ msgstr ""
 "      --only-file=ФАЙЛ.po     обработать сообщения, перечисленные в ФАЙЛЕ."
 "po\n"
 
-#: src/msgattrib.c:484
+#: src/msgattrib.c:485
 #, c-format
 msgid ""
 "      --ignore-file=FILE.po   manipulate only entries not listed in FILE.po\n"
@@ -1153,36 +1180,36 @@ msgstr ""
 "      --ignore-file=ФАЙЛ.po   обработать сообщения, не перечисленные\n"
 "                              в ФАЙЛЕ.po\n"
 
-#: src/msgattrib.c:486
+#: src/msgattrib.c:487
 #, c-format
 msgid "      --fuzzy                 synonym for --only-fuzzy --clear-fuzzy\n"
 msgstr "      --fuzzy                 синоним для --only-fuzzy --clear-fuzzy\n"
 
-#: src/msgattrib.c:488
+#: src/msgattrib.c:489
 #, c-format
 msgid ""
 "      --obsolete              synonym for --only-obsolete --clear-obsolete\n"
 msgstr ""
 "      --obsolete              синоним для --only-obsolete --clear-obsolete\n"
 
-#: src/msgattrib.c:491 src/msgcat.c:418 src/msgcmp.c:250 src/msgcomm.c:409
-#: src/msgconv.c:342 src/msgen.c:336 src/msgexec.c:288 src/msgfilter.c:450
-#: src/msgfmt.c:878 src/msggrep.c:585 src/msginit.c:392 src/msgmerge.c:573
-#: src/msguniq.c:369
+#: src/msgattrib.c:492 src/msgcat.c:419 src/msgcmp.c:251 src/msgcomm.c:410
+#: src/msgconv.c:343 src/msgen.c:337 src/msgexec.c:300 src/msgfilter.c:463
+#: src/msgfmt.c:879 src/msggrep.c:586 src/msginit.c:392 src/msgmerge.c:574
+#: src/msguniq.c:370
 #, c-format
 msgid "Input file syntax:\n"
 msgstr "Синтаксис входного файла:\n"
 
-#: src/msgattrib.c:493 src/msgconv.c:344 src/msgen.c:338 src/msgexec.c:290
-#: src/msgfilter.c:452 src/msggrep.c:587 src/msginit.c:394 src/msguniq.c:371
+#: src/msgattrib.c:494 src/msgconv.c:345 src/msgen.c:339 src/msgexec.c:302
+#: src/msgfilter.c:465 src/msggrep.c:588 src/msginit.c:394 src/msguniq.c:372
 #, c-format
 msgid ""
 "  -P, --properties-input      input file is in Java .properties syntax\n"
 msgstr ""
 "  -P, --properties-input      входной файл имеет синтаксис Java .properties\n"
 
-#: src/msgattrib.c:495 src/msgconv.c:346 src/msgen.c:340 src/msgexec.c:292
-#: src/msgfilter.c:454 src/msggrep.c:589 src/msginit.c:396 src/msguniq.c:373
+#: src/msgattrib.c:496 src/msgconv.c:347 src/msgen.c:341 src/msgexec.c:304
+#: src/msgfilter.c:467 src/msggrep.c:590 src/msginit.c:396 src/msguniq.c:374
 #, c-format
 msgid ""
 "      --stringtable-input     input file is in NeXTstep/GNUstep .strings "
@@ -1191,17 +1218,17 @@ msgstr ""
 "      --stringtable-input     входной файл имеет синтаксис NeXTstep/GNUstep ."
 "strings\n"
 
-#: src/msgattrib.c:498 src/msgcat.c:426 src/msgcomm.c:417 src/msgconv.c:349
-#: src/msgen.c:343 src/msgfilter.c:457 src/msgfmt.c:906 src/msggrep.c:592
-#: src/msginit.c:399 src/msgmerge.c:581 src/msgunfmt.c:497 src/msguniq.c:376
-#: src/xgettext.c:969
+#: src/msgattrib.c:499 src/msgcat.c:427 src/msgcomm.c:418 src/msgconv.c:350
+#: src/msgen.c:344 src/msgfilter.c:470 src/msgfmt.c:907 src/msggrep.c:593
+#: src/msginit.c:399 src/msgmerge.c:582 src/msgunfmt.c:498 src/msguniq.c:377
+#: src/xgettext.c:1026
 #, c-format
 msgid "Output details:\n"
 msgstr "Подробности выходного формата:\n"
 
-#: src/msgattrib.c:500 src/msgcat.c:435 src/msgcomm.c:419 src/msgconv.c:351
-#: src/msgen.c:347 src/msgfilter.c:459 src/msggrep.c:594 src/msginit.c:405
-#: src/msgmerge.c:585 src/msgunfmt.c:499 src/msguniq.c:383 src/xgettext.c:971
+#: src/msgattrib.c:501 src/msgcat.c:436 src/msgcomm.c:420 src/msgconv.c:352
+#: src/msgen.c:348 src/msgfilter.c:472 src/msggrep.c:595 src/msginit.c:405
+#: src/msgmerge.c:586 src/msgunfmt.c:500 src/msguniq.c:384 src/xgettext.c:1028
 #, c-format
 msgid ""
 "      --color                 use colors and other text attributes always\n"
@@ -1216,17 +1243,17 @@ msgstr ""
 "                              КОГДА может быть: «always» (всегда),\n"
 "                              «never» (никогда), «auto» или «html»\n"
 
-#: src/msgattrib.c:504 src/msgcat.c:439 src/msgcomm.c:423 src/msgconv.c:355
-#: src/msgen.c:351 src/msgfilter.c:463 src/msggrep.c:598 src/msginit.c:409
-#: src/msgmerge.c:589 src/msgunfmt.c:503 src/msguniq.c:387 src/xgettext.c:975
+#: src/msgattrib.c:505 src/msgcat.c:440 src/msgcomm.c:424 src/msgconv.c:356
+#: src/msgen.c:352 src/msgfilter.c:476 src/msggrep.c:599 src/msginit.c:409
+#: src/msgmerge.c:590 src/msgunfmt.c:504 src/msguniq.c:388 src/xgettext.c:1032
 #, c-format
 msgid "      --style=STYLEFILE       specify CSS style rule file for --color\n"
 msgstr ""
 "      --style=ФАЙЛ_СТИЛЯ      указать файл правил стилей CSS для --color\n"
 
-#: src/msgattrib.c:506 src/msgcat.c:441 src/msgcomm.c:425 src/msgconv.c:357
-#: src/msgen.c:353 src/msgmerge.c:591 src/msgunfmt.c:505 src/msguniq.c:389
-#: src/xgettext.c:977
+#: src/msgattrib.c:507 src/msgcat.c:442 src/msgcomm.c:426 src/msgconv.c:358
+#: src/msgen.c:354 src/msgmerge.c:592 src/msgunfmt.c:506 src/msguniq.c:390
+#: src/xgettext.c:1034
 #, c-format
 msgid ""
 "  -e, --no-escape             do not use C escapes in output (default)\n"
@@ -1234,9 +1261,9 @@ msgstr ""
 "  -e, --no-escape             не использовать при выводе экранирующие\n"
 "                              последовательности языка C (по умолчанию)\n"
 
-#: src/msgattrib.c:508 src/msgcat.c:443 src/msgcomm.c:427 src/msgconv.c:359
-#: src/msgen.c:355 src/msgfilter.c:467 src/msgmerge.c:593 src/msgunfmt.c:507
-#: src/msguniq.c:391 src/xgettext.c:979
+#: src/msgattrib.c:509 src/msgcat.c:444 src/msgcomm.c:428 src/msgconv.c:360
+#: src/msgen.c:356 src/msgfilter.c:480 src/msgmerge.c:594 src/msgunfmt.c:508
+#: src/msguniq.c:392 src/xgettext.c:1036
 #, c-format
 msgid ""
 "  -E, --escape                use C escapes in output, no extended chars\n"
@@ -1244,28 +1271,28 @@ msgstr ""
 "  -E, --escape                использовать экранирующие последовательности,\n"
 "                              а не расширенные символы\n"
 
-#: src/msgattrib.c:510 src/msgcat.c:445 src/msgcomm.c:429 src/msgconv.c:361
-#: src/msgen.c:357 src/msgfilter.c:469 src/msggrep.c:604 src/msgmerge.c:595
-#: src/msgunfmt.c:509 src/msguniq.c:393 src/xgettext.c:981
+#: src/msgattrib.c:511 src/msgcat.c:446 src/msgcomm.c:430 src/msgconv.c:362
+#: src/msgen.c:358 src/msgfilter.c:482 src/msggrep.c:605 src/msgmerge.c:596
+#: src/msgunfmt.c:510 src/msguniq.c:394 src/xgettext.c:1038
 #, c-format
 msgid "      --force-po              write PO file even if empty\n"
 msgstr "      --force-po              записать PO-файл, даже если он пуст\n"
 
-#: src/msgattrib.c:512 src/msgcat.c:447 src/msgcomm.c:431 src/msguniq.c:395
-#: src/xgettext.c:983
+#: src/msgattrib.c:513 src/msgcat.c:448 src/msgcomm.c:432 src/msguniq.c:396
+#: src/xgettext.c:1040
 #, c-format
 msgid "  -i, --indent                write the .po file using indented style\n"
 msgstr ""
 "  -i, --indent                форматировать PO-файл, используя отступы\n"
 
-#: src/msgattrib.c:514 src/msgcat.c:449 src/msgcomm.c:433 src/msguniq.c:397
-#: src/xgettext.c:985
+#: src/msgattrib.c:515 src/msgcat.c:450 src/msgcomm.c:434 src/msguniq.c:398
+#: src/xgettext.c:1042
 #, c-format
 msgid "      --no-location           do not write '#: filename:line' lines\n"
 msgstr "      --no-location           не писать строки «#: файл:строка»\n"
 
-#: src/msgattrib.c:516 src/msgcat.c:451 src/msgcomm.c:435 src/msguniq.c:399
-#: src/xgettext.c:987
+#: src/msgattrib.c:517 src/msgcat.c:452 src/msgcomm.c:436 src/msguniq.c:400
+#: src/xgettext.c:1044
 #, c-format
 msgid ""
 "  -n, --add-location          generate '#: filename:line' lines (default)\n"
@@ -1273,8 +1300,8 @@ msgstr ""
 "  -n, --add-location          генерировать строки «#: файл:строка»\n"
 "                              (по умолчанию)\n"
 
-#: src/msgattrib.c:518 src/msgcat.c:453 src/msgcomm.c:437 src/msguniq.c:401
-#: src/xgettext.c:989
+#: src/msgattrib.c:519 src/msgcat.c:454 src/msgcomm.c:438 src/msguniq.c:402
+#: src/xgettext.c:1046
 #, c-format
 msgid ""
 "      --strict                write out strict Uniforum conforming .po file\n"
@@ -1283,32 +1310,32 @@ msgstr ""
 "стандарту\n"
 "                                Uniforum\n"
 
-#: src/msgattrib.c:520 src/msgcat.c:455 src/msgcomm.c:439 src/msgconv.c:371
-#: src/msgen.c:367 src/msgfilter.c:481 src/msggrep.c:614 src/msginit.c:411
-#: src/msgmerge.c:605 src/msgunfmt.c:515 src/msguniq.c:403
+#: src/msgattrib.c:521 src/msgcat.c:456 src/msgcomm.c:440 src/msgconv.c:372
+#: src/msgen.c:368 src/msgfilter.c:494 src/msggrep.c:615 src/msginit.c:411
+#: src/msgmerge.c:606 src/msgunfmt.c:516 src/msguniq.c:404
 #, c-format
 msgid "  -p, --properties-output     write out a Java .properties file\n"
 msgstr "  -p, --properties-output     записать .properties-файл Java\n"
 
-#: src/msgattrib.c:522 src/msgcat.c:457 src/msgcomm.c:441 src/msgconv.c:373
-#: src/msgen.c:369 src/msgfilter.c:483 src/msggrep.c:616 src/msginit.c:413
-#: src/msgmerge.c:607 src/msgunfmt.c:517 src/msguniq.c:405 src/xgettext.c:993
+#: src/msgattrib.c:523 src/msgcat.c:458 src/msgcomm.c:442 src/msgconv.c:374
+#: src/msgen.c:370 src/msgfilter.c:496 src/msggrep.c:617 src/msginit.c:413
+#: src/msgmerge.c:608 src/msgunfmt.c:518 src/msguniq.c:406 src/xgettext.c:1050
 #, c-format
 msgid ""
 "      --stringtable-output    write out a NeXTstep/GNUstep .strings file\n"
 msgstr ""
 "      --stringtable-output    записать .strings-файл NeXTstep/GNUstep\n"
 
-#: src/msgattrib.c:524 src/msgcat.c:459 src/msgcomm.c:443 src/msgconv.c:375
-#: src/msgen.c:371 src/msgfilter.c:485 src/msggrep.c:618 src/msginit.c:415
-#: src/msgmerge.c:609 src/msgunfmt.c:519 src/msguniq.c:407 src/xgettext.c:995
+#: src/msgattrib.c:525 src/msgcat.c:460 src/msgcomm.c:444 src/msgconv.c:376
+#: src/msgen.c:372 src/msgfilter.c:498 src/msggrep.c:619 src/msginit.c:415
+#: src/msgmerge.c:610 src/msgunfmt.c:520 src/msguniq.c:408 src/xgettext.c:1052
 #, c-format
 msgid "  -w, --width=NUMBER          set output page width\n"
 msgstr "  -w, --width=ЧИСЛО           задает ширину выходной страницы\n"
 
-#: src/msgattrib.c:526 src/msgcat.c:461 src/msgcomm.c:445 src/msgconv.c:377
-#: src/msgen.c:373 src/msgfilter.c:487 src/msggrep.c:620 src/msginit.c:417
-#: src/msgmerge.c:611 src/msgunfmt.c:521 src/msguniq.c:409 src/xgettext.c:997
+#: src/msgattrib.c:527 src/msgcat.c:462 src/msgcomm.c:446 src/msgconv.c:378
+#: src/msgen.c:374 src/msgfilter.c:500 src/msggrep.c:621 src/msginit.c:417
+#: src/msgmerge.c:612 src/msgunfmt.c:522 src/msguniq.c:410 src/xgettext.c:1054
 #, c-format
 msgid ""
 "      --no-wrap               do not break long message lines, longer than\n"
@@ -1317,31 +1344,31 @@ msgstr ""
 "      --no-wrap               не разбивать длинные строки, которые длиннее\n"
 "                              ширины выходной страницы\n"
 
-#: src/msgattrib.c:529 src/msgcat.c:464 src/msgcomm.c:448 src/msgconv.c:380
-#: src/msgen.c:376 src/msgfilter.c:490 src/msgmerge.c:614 src/msgunfmt.c:524
-#: src/msguniq.c:412 src/xgettext.c:1000
+#: src/msgattrib.c:530 src/msgcat.c:465 src/msgcomm.c:449 src/msgconv.c:381
+#: src/msgen.c:377 src/msgfilter.c:503 src/msgmerge.c:615 src/msgunfmt.c:525
+#: src/msguniq.c:413 src/xgettext.c:1057
 #, c-format
 msgid "  -s, --sort-output           generate sorted output\n"
 msgstr "  -s, --sort-output           сортировать вывод\n"
 
-#: src/msgattrib.c:531 src/msgcat.c:466 src/msgcomm.c:450 src/msgconv.c:382
-#: src/msgen.c:378 src/msgfilter.c:492 src/msgmerge.c:616 src/msguniq.c:414
-#: src/xgettext.c:1002
+#: src/msgattrib.c:532 src/msgcat.c:467 src/msgcomm.c:451 src/msgconv.c:383
+#: src/msgen.c:379 src/msgfilter.c:505 src/msgmerge.c:617 src/msguniq.c:415
+#: src/xgettext.c:1059
 #, c-format
 msgid "  -F, --sort-by-file          sort output by file location\n"
 msgstr "  -F, --sort-by-file          сортировать вывод по именам файлов\n"
 
-#: src/msgcat.c:322 src/msgcomm.c:327
+#: src/msgcat.c:323 src/msgcomm.c:328
 #, c-format
 msgid "impossible selection criteria specified (%d < n < %d)"
 msgstr "задан недопустимый критерий выбора (%d < n < %d)"
 
-#: src/msgcat.c:367 src/msgcomm.c:359 src/xgettext.c:855
+#: src/msgcat.c:368 src/msgcomm.c:360 src/xgettext.c:904
 #, c-format
 msgid "Usage: %s [OPTION] [INPUTFILE]...\n"
 msgstr "Использование: %s [ПАРАМЕТР] [ВХОДНОЙ-ФАЙЛ]…\n"
 
-#: src/msgcat.c:372
+#: src/msgcat.c:373
 #, c-format, no-wrap
 msgid ""
 "Concatenates and merges the specified PO files.\n"
@@ -1364,24 +1391,24 @@ msgstr ""
 "но если задан параметр --use-first, то они берутся из первого PO-файла,\n"
 "в котором были определены.\n"
 
-#: src/msgcat.c:389 src/msgcomm.c:380 src/xgettext.c:871
+#: src/msgcat.c:390 src/msgcomm.c:381 src/xgettext.c:920
 #, c-format
 msgid "  INPUTFILE ...               input files\n"
 msgstr "  ВХОДНОЙ-ФАЙЛ...             входные файлы\n"
 
-#: src/msgcat.c:391 src/msgcomm.c:382 src/xgettext.c:873
+#: src/msgcat.c:392 src/msgcomm.c:383 src/xgettext.c:922
 #, c-format
 msgid "  -f, --files-from=FILE       get list of input files from FILE\n"
 msgstr ""
 "  -f, --files-from=ФАЙЛ       получить список входных файлов из ФАЙЛА\n"
 
-#: src/msgcat.c:395 src/msgcomm.c:386 src/msgen.c:325 src/msgfmt.c:794
-#: src/xgettext.c:877
+#: src/msgcat.c:396 src/msgcomm.c:387 src/msgen.c:326 src/msgfmt.c:795
+#: src/xgettext.c:926
 #, c-format
 msgid "If input file is -, standard input is read.\n"
 msgstr "Если входной файл задан как -, читается стандартный ввод.\n"
 
-#: src/msgcat.c:408 src/msgcomm.c:399
+#: src/msgcat.c:409 src/msgcomm.c:400
 #, c-format
 msgid ""
 "  -<, --less-than=NUMBER      print messages with less than this many\n"
@@ -1391,7 +1418,7 @@ msgstr ""
 "                              определений меньше заданного ЧИСЛА\n"
 "                              (по умолчанию не ограничено)\n"
 
-#: src/msgcat.c:411
+#: src/msgcat.c:412
 #, c-format
 msgid ""
 "  ->, --more-than=NUMBER      print messages with more than this many\n"
@@ -1401,7 +1428,7 @@ msgstr ""
 "                              определений больше заданного ЧИСЛА\n"
 "                              (по умолчанию больше нуля)\n"
 
-#: src/msgcat.c:414 src/msgcomm.c:405
+#: src/msgcat.c:415 src/msgcomm.c:406
 #, c-format
 msgid ""
 "  -u, --unique                shorthand for --less-than=2, requests\n"
@@ -1410,8 +1437,8 @@ msgstr ""
 "  -u, --unique                сокращение для --less-than=2, запрашивает\n"
 "                              печать только уникальных сообщений\n"
 
-#: src/msgcat.c:420 src/msgcmp.c:252 src/msgcomm.c:411 src/msgfmt.c:880
-#: src/msgmerge.c:575
+#: src/msgcat.c:421 src/msgcmp.c:253 src/msgcomm.c:412 src/msgfmt.c:881
+#: src/msgmerge.c:576
 #, c-format
 msgid ""
 "  -P, --properties-input      input files are in Java .properties syntax\n"
@@ -1419,8 +1446,8 @@ msgstr ""
 "  -P, --properties-input      входные файлы имеют синтаксис Java ."
 "properties\n"
 
-#: src/msgcat.c:422 src/msgcmp.c:254 src/msgcomm.c:413 src/msgfmt.c:882
-#: src/msgmerge.c:577
+#: src/msgcat.c:423 src/msgcmp.c:255 src/msgcomm.c:414 src/msgfmt.c:883
+#: src/msgmerge.c:578
 #, c-format
 msgid ""
 "      --stringtable-input     input files are in NeXTstep/GNUstep .strings\n"
@@ -1430,12 +1457,12 @@ msgstr ""
 "GNUstep\n"
 "                              .strings\n"
 
-#: src/msgcat.c:428 src/msgconv.c:337 src/msguniq.c:378
+#: src/msgcat.c:429 src/msgconv.c:338 src/msguniq.c:379
 #, c-format
 msgid "  -t, --to-code=NAME          encoding for output\n"
 msgstr "  -t, --to-code=ИМЯ           выходная кодировка\n"
 
-#: src/msgcat.c:430 src/msguniq.c:380
+#: src/msgcat.c:431 src/msguniq.c:381
 #, c-format
 msgid ""
 "      --use-first             use first available translation for each\n"
@@ -1444,33 +1471,33 @@ msgstr ""
 "      --use-first             использовать первый доступный перевод для\n"
 "                              каждого сообщения, не объединять переводы\n"
 
-#: src/msgcat.c:433 src/msgen.c:345 src/msgmerge.c:583
+#: src/msgcat.c:434 src/msgen.c:346 src/msgmerge.c:584
 #, c-format
 msgid ""
 "      --lang=CATALOGNAME      set 'Language' field in the header entry\n"
 msgstr "      --lang=ИМЯ_КАТАЛОГА     задать поле «Language» в заголовке\n"
 
 #. This is a proper name. See the gettext manual, section Names.
-#: src/msgcmp.c:178 src/msgcomm.c:291 src/msgmerge.c:362
+#: src/msgcmp.c:179 src/msgcomm.c:292 src/msgmerge.c:363
 msgid "Peter Miller"
 msgstr "Питер Миллер"
 
-#: src/msgcmp.c:189 src/msgmerge.c:373
+#: src/msgcmp.c:190 src/msgmerge.c:374
 #, c-format
 msgid "no input files given"
 msgstr "не заданы входные файлы"
 
-#: src/msgcmp.c:194 src/msgmerge.c:378
+#: src/msgcmp.c:195 src/msgmerge.c:379
 #, c-format
 msgid "exactly 2 input files required"
 msgstr "необходимо задать два входных файла"
 
-#: src/msgcmp.c:213 src/msgmerge.c:498
+#: src/msgcmp.c:214 src/msgmerge.c:499
 #, c-format
 msgid "Usage: %s [OPTION] def.po ref.pot\n"
 msgstr "Использование: %s [ПАРАМЕТР] def.po ref.pot\n"
 
-#: src/msgcmp.c:218
+#: src/msgcmp.c:219
 #, c-format, no-wrap
 msgid ""
 "Compare two Uniforum style .po files to check that both contain the same\n"
@@ -1488,22 +1515,22 @@ msgstr ""
 "Для улучшения диагностики используется приблизительное сравнение, если\n"
 "нельзя найти точное совпадение.\n"
 
-#: src/msgcmp.c:232
+#: src/msgcmp.c:233
 #, c-format
 msgid "  def.po                      translations\n"
 msgstr "  def.po                      переводы\n"
 
-#: src/msgcmp.c:234
+#: src/msgcmp.c:235
 #, c-format
 msgid "  ref.pot                     references to the sources\n"
 msgstr "  ref.pot                     ссылки на исходники\n"
 
-#: src/msgcmp.c:239 src/msgmerge.c:564
+#: src/msgcmp.c:240 src/msgmerge.c:565
 #, c-format
 msgid "Operation modifiers:\n"
 msgstr "Модификаторы режима работы:\n"
 
-#: src/msgcmp.c:241 src/msgmerge.c:566
+#: src/msgcmp.c:242 src/msgmerge.c:567
 #, c-format
 msgid ""
 "  -m, --multi-domain          apply ref.pot to each of the domains in def."
@@ -1511,52 +1538,52 @@ msgid ""
 msgstr ""
 "  -m, --multi-domain          применить ref.pot ко всем доменам из def.po\n"
 
-#: src/msgcmp.c:243 src/msgmerge.c:568
+#: src/msgcmp.c:244 src/msgmerge.c:569
 #, c-format
 msgid "  -N, --no-fuzzy-matching     do not use fuzzy matching\n"
 msgstr "  -N, --no-fuzzy-matching     не применять нечеткое сопоставление\n"
 
-#: src/msgcmp.c:245
+#: src/msgcmp.c:246
 #, c-format
 msgid "      --use-fuzzy             consider fuzzy entries\n"
 msgstr "      --use-fuzzy             использовать неточные записи\n"
 
-#: src/msgcmp.c:247
+#: src/msgcmp.c:248
 #, c-format
 msgid "      --use-untranslated      consider untranslated entries\n"
 msgstr "      --use-untranslated      использовать непереведённые записи\n"
 
-#: src/msgcmp.c:324
+#: src/msgcmp.c:325
 #, c-format
 msgid "this message is untranslated"
 msgstr "это сообщение не переведено"
 
-#: src/msgcmp.c:330
+#: src/msgcmp.c:331
 #, c-format
 msgid "this message needs to be reviewed by the translator"
 msgstr "это сообщение должно быть проверено переводчиком"
 
-#: src/msgcmp.c:369 src/msgmerge.c:1518
+#: src/msgcmp.c:370 src/msgmerge.c:1523
 #, c-format
 msgid "this message is used but not defined..."
 msgstr "это сообщение используется программой, но не было определено..."
 
-#: src/msgcmp.c:372 src/msgmerge.c:1521
+#: src/msgcmp.c:373 src/msgmerge.c:1526
 #, c-format
 msgid "...but this definition is similar"
 msgstr "...однако здесь определено похожее сообщение"
 
-#: src/msgcmp.c:377 src/msgmerge.c:1549
+#: src/msgcmp.c:378 src/msgmerge.c:1554
 #, c-format
 msgid "this message is used but not defined in %s"
 msgstr "это сообщение не было определено в %s"
 
-#: src/msgcmp.c:546
+#: src/msgcmp.c:547
 #, c-format
 msgid "warning: this message is not used"
 msgstr "предупреждение: это сообщение не используется"
 
-#: src/msgcmp.c:553 src/msgfmt.c:652 src/msgfmt.c:1443
+#: src/msgcmp.c:554 src/msgfmt.c:653 src/msgfmt.c:1444 src/xgettext.c:883
 #, c-format
 msgid "found %d fatal error"
 msgid_plural "found %d fatal errors"
@@ -1564,12 +1591,12 @@ msgstr[0] "найдена %d критическая ошибка"
 msgstr[1] "найдено %d критические ошибки"
 msgstr[2] "найдено %d критических ошибок"
 
-#: src/msgcomm.c:316
+#: src/msgcomm.c:317
 #, c-format
 msgid "at least two files must be specified"
 msgstr "необходимо задать не менее двух файлов"
 
-#: src/msgcomm.c:364
+#: src/msgcomm.c:365
 #, c-format, no-wrap
 msgid ""
 "Find messages which are common to two or more of the specified PO files.\n"
@@ -1589,7 +1616,7 @@ msgstr ""
 "комментарии сохраняются, но только из первого PO-файла, в котором они\n"
 "были определены. Положения в файлах сохраняются из всех PO-файлов.\n"
 
-#: src/msgcomm.c:402
+#: src/msgcomm.c:403
 #, c-format
 msgid ""
 "  ->, --more-than=NUMBER      print messages with more than this many\n"
@@ -1599,41 +1626,41 @@ msgstr ""
 "                              определений больше заданного ЧИСЛА\n"
 "                              (по умолчанию больше одного)\n"
 
-#: src/msgcomm.c:452 src/xgettext.c:1004
+#: src/msgcomm.c:453 src/xgettext.c:1061
 #, c-format
 msgid ""
 "      --omit-header           don't write header with 'msgid \"\"' entry\n"
 msgstr ""
 "      --omit-header           не выводить заголовок с полем «msgid \"\"»\n"
 
-#: src/msgconv.c:311
+#: src/msgconv.c:312
 #, c-format
 msgid "Converts a translation catalog to a different character encoding.\n"
 msgstr "Преобразует каталог переводов в другую кодировку.\n"
 
-#: src/msgconv.c:335
+#: src/msgconv.c:336
 #, c-format
 msgid "Conversion target:\n"
 msgstr "Цель преобразования:\n"
 
-#: src/msgconv.c:339
+#: src/msgconv.c:340
 #, c-format
 msgid "The default encoding is the current locale's encoding.\n"
 msgstr "По умолчанию используется кодировка текущей локали.\n"
 
-#: src/msgconv.c:363 src/msgen.c:359 src/msgmerge.c:597
+#: src/msgconv.c:364 src/msgen.c:360 src/msgmerge.c:598
 #, c-format
 msgid "  -i, --indent                indented output style\n"
 msgstr "  -i, --indent                использовать на выводе отступы\n"
 
-#: src/msgconv.c:365 src/msgen.c:361 src/msgfilter.c:475 src/msggrep.c:608
-#: src/msgmerge.c:599
+#: src/msgconv.c:366 src/msgen.c:362 src/msgfilter.c:488 src/msggrep.c:609
+#: src/msgmerge.c:600
 #, c-format
 msgid "      --no-location           suppress '#: filename:line' lines\n"
 msgstr "      --no-location           убрать строки «#: файл:строка»\n"
 
-#: src/msgconv.c:367 src/msgen.c:363 src/msgfilter.c:477 src/msggrep.c:610
-#: src/msgmerge.c:601
+#: src/msgconv.c:368 src/msgen.c:364 src/msgfilter.c:490 src/msggrep.c:611
+#: src/msgmerge.c:602
 #, c-format
 msgid ""
 "  -n, --add-location          preserve '#: filename:line' lines (default)\n"
@@ -1641,30 +1668,30 @@ msgstr ""
 "  -n, --add-location          сохранять строки «#: файл:строка»\n"
 "                              (по умолчанию)\n"
 
-#: src/msgconv.c:369 src/msgen.c:365 src/msgfilter.c:479 src/msggrep.c:612
-#: src/msgmerge.c:603
+#: src/msgconv.c:370 src/msgen.c:366 src/msgfilter.c:492 src/msggrep.c:613
+#: src/msgmerge.c:604
 #, c-format
 msgid "      --strict                strict Uniforum output style\n"
 msgstr ""
 "      --strict                выводить в строгом соответствии\n"
 "                              стандарту Uniforum\n"
 
-#: src/msgen.c:258 src/msgfmt.c:433 src/xgettext.c:661
+#: src/msgen.c:259 src/msgfmt.c:434 src/xgettext.c:692
 #, c-format
 msgid "no input file given"
 msgstr "не задан входной файл"
 
-#: src/msgen.c:263
+#: src/msgen.c:264
 #, c-format
 msgid "exactly one input file required"
 msgstr "необходимо задать ровно один входной файл"
 
-#: src/msgen.c:304
+#: src/msgen.c:305
 #, c-format
 msgid "Usage: %s [OPTION] INPUTFILE\n"
 msgstr "Использование: %s [ПАРАМЕТР] ВХОДНОЙ-ФАЙЛ\n"
 
-#: src/msgen.c:309
+#: src/msgen.c:310
 #, c-format, no-wrap
 msgid ""
 "Creates an English translation catalog.  The input file is the last\n"
@@ -1677,22 +1704,22 @@ msgstr ""
 "программой xgettext).  Непереведённым сообщениям дается перевод,\n"
 "совпадающий с msgid.\n"
 
-#: src/msgen.c:321
+#: src/msgen.c:322
 #, c-format
 msgid "  INPUTFILE                   input PO or POT file\n"
 msgstr "  ВХОДНОЙ-ФАЙЛ                входной PO- или POT-файл\n"
 
-#: src/msgexec.c:196
+#: src/msgexec.c:203
 #, c-format
 msgid "missing command name"
 msgstr "не задана команда"
 
-#: src/msgexec.c:257
+#: src/msgexec.c:264
 #, c-format
 msgid "Usage: %s [OPTION] COMMAND [COMMAND-OPTION]\n"
 msgstr "Использование: %s [ПАРАМЕТР] КОМАНДА [ПАРАМЕТР-КОМАНДЫ]\n"
 
-#: src/msgexec.c:262
+#: src/msgexec.c:269
 #, c-format, no-wrap
 msgid ""
 "Applies a command to all translations of a translation catalog.\n"
@@ -1707,7 +1734,7 @@ msgstr ""
 "вывод отправляется на выход msgexec. Значение, возвращаемое msgexec —\n"
 "это максимальный код возврата среди всех вызовов.\n"
 
-#: src/msgexec.c:271
+#: src/msgexec.c:278
 #, c-format, no-wrap
 msgid ""
 "A special builtin command called '0' outputs the translation, followed by a\n"
@@ -1716,37 +1743,47 @@ msgstr ""
 "Специальная встроенная команда «0» выводит перевод и за ним нулевой\n"
 "байт.  Вывод «msgexec 0» подходит для передачи на вход «xargs -0».\n"
 
-#: src/msgexec.c:281 src/msgfilter.c:420
+#: src/msgexec.c:283
+#, fuzzy, c-format
+msgid "Command input:\n"
+msgstr "стандартный ввод"
+
+#: src/msgexec.c:285
+#, fuzzy, c-format
+msgid "  --newline                   add newline at the end of input\n"
+msgstr "  -h, --help                  показать эту справку и выйти\n"
+
+#: src/msgexec.c:293 src/msgfilter.c:427
 #, c-format
 msgid "  -i, --input=INPUTFILE       input PO file\n"
 msgstr "  -i, --input=ВХОДНОЙ-ФАЙЛ    входной PO-файл\n"
 
-#: src/msgexec.c:345
+#: src/msgexec.c:357
 #, c-format
 msgid "write to stdout failed"
 msgstr "запись на стандартный вывод завершилась с ошибкой"
 
-#: src/msgfilter.c:298
+#: src/msgfilter.c:305
 #, c-format
 msgid "missing filter name"
 msgstr "не задано имя фильтра"
 
-#: src/msgfilter.c:318
+#: src/msgfilter.c:325
 #, c-format
 msgid "at least one sed script must be specified"
 msgstr "необходимо задать хотя бы один сценарий sed"
 
-#: src/msgfilter.c:407
+#: src/msgfilter.c:414
 #, c-format
 msgid "Usage: %s [OPTION] FILTER [FILTER-OPTION]\n"
 msgstr "Использование: %s [ПАРАМЕТР] ФИЛЬТР [ПАРАМЕТР-ФИЛЬТРА]\n"
 
-#: src/msgfilter.c:411
+#: src/msgfilter.c:418
 #, c-format
 msgid "Applies a filter to all translations of a translation catalog.\n"
 msgstr "Применяет фильтр ко всем переводам каталога.\n"
 
-#: src/msgfilter.c:435
+#: src/msgfilter.c:442
 #, c-format
 msgid ""
 "The FILTER can be any program that reads a translation from standard input\n"
@@ -1756,18 +1793,30 @@ msgstr ""
 "и\n"
 "печатающей измененный перевод на стандартный вывод.\n"
 
-#: src/msgfilter.c:440
+#: src/msgfilter.c:447
+#, c-format
+msgid "Filter input and output:\n"
+msgstr ""
+
+#: src/msgfilter.c:449
+#, c-format
+msgid ""
+"  --newline                   add a newline at the end of input and\n"
+"                                remove a newline from the end of output"
+msgstr ""
+
+#: src/msgfilter.c:453
 #, c-format
 msgid "Useful FILTER-OPTIONs when the FILTER is 'sed':\n"
 msgstr "Полезные ПАРАМЕТРЫ-ФИЛЬТРА в случае, если ФИЛЬТРОМ является «sed»:\n"
 
-#: src/msgfilter.c:442
+#: src/msgfilter.c:455
 #, c-format
 msgid ""
 "  -e, --expression=SCRIPT     add SCRIPT to the commands to be executed\n"
 msgstr "  -e, --expression=СЦЕН       добавить СЦЕН к выполняемым командам\n"
 
-#: src/msgfilter.c:444
+#: src/msgfilter.c:457
 #, c-format
 msgid ""
 "  -f, --file=SCRIPTFILE       add the contents of SCRIPTFILE to the "
@@ -1777,14 +1826,14 @@ msgstr ""
 "  -f, --file=ФАЙЛ-СЦЕН        добавить содержимое файла ФАЙЛ-СЦЕН к\n"
 "                                выполняемым командам\n"
 
-#: src/msgfilter.c:447
+#: src/msgfilter.c:460
 #, c-format
 msgid ""
 "  -n, --quiet, --silent       suppress automatic printing of pattern space\n"
 msgstr ""
 "  -n, --quiet, --silent       выключить автоматическую печать образца\n"
 
-#: src/msgfilter.c:465 src/msggrep.c:600
+#: src/msgfilter.c:478 src/msggrep.c:601
 #, c-format
 msgid ""
 "      --no-escape             do not use C escapes in output (default)\n"
@@ -1793,12 +1842,12 @@ msgstr ""
 "                                escape-последовательности языка C (по "
 "умолчанию)\n"
 
-#: src/msgfilter.c:471 src/msggrep.c:606
+#: src/msgfilter.c:484 src/msggrep.c:607
 #, c-format
 msgid "      --indent                indented output style\n"
 msgstr "      --indent                использовать на выводе отступы\n"
 
-#: src/msgfilter.c:473
+#: src/msgfilter.c:486
 #, c-format
 msgid ""
 "      --keep-header           keep header entry unmodified, don't filter it\n"
@@ -1806,71 +1855,76 @@ msgstr ""
 "      --keep-header           сохранить заголовок как есть, не фильтровать "
 "его\n"
 
-#: src/msgfmt.c:345
+#: src/msgfilter.c:666
+#, fuzzy, c-format
+msgid "filter output is not terminated with a newline"
+msgstr "файл «%s» содержит строку, не завершённую нулем"
+
+#: src/msgfmt.c:346
 #, c-format
 msgid "the argument to %s should be a single punctuation character"
 msgstr "аргумент %s должен быть одиночным знаком пунктуации"
 
-#: src/msgfmt.c:392
+#: src/msgfmt.c:393
 #, c-format
 msgid "invalid endianness: %s"
 msgstr "неверный порядок байт: %s"
 
 #. This is a proper name. See the gettext manual, section Names.
-#: src/msgfmt.c:422 src/msgunfmt.c:268 src/xgettext.c:621
+#: src/msgfmt.c:423 src/msgunfmt.c:269 src/xgettext.c:652
 msgid "Ulrich Drepper"
 msgstr "Ульрих Дреппер"
 
-#: src/msgfmt.c:439
+#: src/msgfmt.c:440
 #, c-format
 msgid "no input file should be given if %s and %s are specified"
 msgstr "нельзя указывать входной файл, если задан %s или %s"
 
-#: src/msgfmt.c:484 src/msgfmt.c:506 src/msgfmt.c:528 src/msgunfmt.c:330
-#: src/msgunfmt.c:353
+#: src/msgfmt.c:485 src/msgfmt.c:507 src/msgfmt.c:529 src/msgunfmt.c:331
+#: src/msgunfmt.c:354
 #, c-format
 msgid "%s requires a \"-d directory\" specification"
 msgstr "для %s требуется указать «-d каталог»"
 
-#: src/msgfmt.c:499 src/msgfmt.c:521 src/msgfmt.c:556 src/msgunfmt.c:323
-#: src/msgunfmt.c:346
+#: src/msgfmt.c:500 src/msgfmt.c:522 src/msgfmt.c:557 src/msgunfmt.c:324
+#: src/msgunfmt.c:347
 #, c-format
 msgid "%s requires a \"-l locale\" specification"
 msgstr "для %s требуется указать «-l локаль»"
 
-#: src/msgfmt.c:538
+#: src/msgfmt.c:539
 #, c-format
 msgid "%s requires a \"--template template\" specification"
 msgstr "для %s требуется указать «--template шаблон»"
 
-#: src/msgfmt.c:545
+#: src/msgfmt.c:546
 #, c-format
 msgid "%s requires a \"-o file\" specification"
 msgstr "для %s требуется указать «-o файл»"
 
-#: src/msgfmt.c:551
+#: src/msgfmt.c:552
 #, c-format
 msgid "%s and %s are mutually exclusive in %s"
 msgstr "%s и %s взаимно исключают друг друга в %s"
 
-#: src/msgfmt.c:565 src/msgunfmt.c:362 src/msgunfmt.c:368
+#: src/msgfmt.c:566 src/msgunfmt.c:363 src/msgunfmt.c:369
 #, c-format
 msgid "%s is only valid with %s or %s"
 msgstr "%s допустимо только с %s или %s"
 
-#: src/msgfmt.c:571 src/msgfmt.c:577
+#: src/msgfmt.c:572 src/msgfmt.c:578
 #, c-format
 msgid "%s is only valid with %s, %s or %s"
 msgstr "%s допустимо только с %s, %s или %s"
 
 #. TRANSLATORS: The prefix before a statistics message.  The argument
 #. is a file name or a comma separated list of file names.
-#: src/msgfmt.c:740
+#: src/msgfmt.c:741
 #, c-format
 msgid "%s: "
 msgstr "%s: "
 
-#: src/msgfmt.c:744
+#: src/msgfmt.c:745
 #, c-format
 msgid "%d translated message"
 msgid_plural "%d translated messages"
@@ -1878,7 +1932,7 @@ msgstr[0] "%d переведённое сообщение"
 msgstr[1] "%d переведённых сообщения"
 msgstr[2] "%d переведённых сообщений"
 
-#: src/msgfmt.c:749
+#: src/msgfmt.c:750
 #, c-format
 msgid ", %d fuzzy translation"
 msgid_plural ", %d fuzzy translations"
@@ -1886,7 +1940,7 @@ msgstr[0] ", %d неточный перевод"
 msgstr[1] ", %d неточных перевода"
 msgstr[2] ", %d неточных переводов"
 
-#: src/msgfmt.c:754
+#: src/msgfmt.c:755
 #, c-format
 msgid ", %d untranslated message"
 msgid_plural ", %d untranslated messages"
@@ -1894,17 +1948,17 @@ msgstr[0] ", %d непереведённое сообщение"
 msgstr[1] ", %d непереведённых сообщения"
 msgstr[2] ", %d непереведённых сообщений"
 
-#: src/msgfmt.c:774
+#: src/msgfmt.c:775
 #, c-format
 msgid "Usage: %s [OPTION] filename.po ...\n"
 msgstr "Использование: %s [ПАРАМЕТР] имя-файла.po …\n"
 
-#: src/msgfmt.c:778
+#: src/msgfmt.c:779
 #, c-format
 msgid "Generate binary message catalog from textual translation description.\n"
 msgstr "Создаёт двоичный каталог сообщений из текстового описания переводов.\n"
 
-#: src/msgfmt.c:783 src/xgettext.c:864
+#: src/msgfmt.c:784 src/xgettext.c:913
 #, c-format, no-wrap
 msgid ""
 "Mandatory arguments to long options are mandatory for short options too.\n"
@@ -1913,17 +1967,17 @@ msgstr ""
 "Аргументы, обязательные для длинных параметров, обязательны и для коротких.\n"
 "То же и для необязательных аргументов.\n"
 
-#: src/msgfmt.c:790
+#: src/msgfmt.c:791
 #, c-format
 msgid "  filename.po ...             input files\n"
 msgstr "  имя-файл.po ...             входные файлы\n"
 
-#: src/msgfmt.c:797 src/msgmerge.c:530 src/msgunfmt.c:438 src/xgettext.c:913
+#: src/msgfmt.c:798 src/msgmerge.c:531 src/msgunfmt.c:439 src/xgettext.c:962
 #, c-format
 msgid "Operation mode:\n"
 msgstr "Режим работы:\n"
 
-#: src/msgfmt.c:799
+#: src/msgfmt.c:800
 #, c-format
 msgid ""
 "  -j, --java                  Java mode: generate a Java ResourceBundle "
@@ -1931,7 +1985,7 @@ msgid ""
 msgstr ""
 "  -j, --java                  режим Java: создает Java-класс ResourceBundle\n"
 
-#: src/msgfmt.c:801
+#: src/msgfmt.c:802
 #, c-format
 msgid ""
 "      --java2                 like --java, and assume Java2 (JDK 1.2 or "
@@ -1940,12 +1994,12 @@ msgstr ""
 "      --java2                 как --java, но предполагает Java2 (JDK 1.2 или "
 "выше)\n"
 
-#: src/msgfmt.c:803
+#: src/msgfmt.c:804
 #, c-format
 msgid "      --csharp                C# mode: generate a .NET .dll file\n"
 msgstr "      --csharp                режим C#: генерировать .dll-файл .NET\n"
 
-#: src/msgfmt.c:805
+#: src/msgfmt.c:806
 #, c-format
 msgid ""
 "      --csharp-resources      C# resources mode: generate a .NET .resources "
@@ -1954,19 +2008,19 @@ msgstr ""
 "      --csharp-resources    режим ресурсов C#: генерировать .resources-файл ."
 "NET\n"
 
-#: src/msgfmt.c:807
+#: src/msgfmt.c:808
 #, c-format
 msgid ""
 "      --tcl                   Tcl mode: generate a tcl/msgcat .msg file\n"
 msgstr ""
 "      --tcl                   режим Tcl: создает .msg-файл для tcl/msgcat\n"
 
-#: src/msgfmt.c:809
+#: src/msgfmt.c:810
 #, c-format
 msgid "      --qt                    Qt mode: generate a Qt .qm file\n"
 msgstr "      --qt                    режим Qt: генерировать .qm-файл Qt\n"
 
-#: src/msgfmt.c:811
+#: src/msgfmt.c:812
 #, c-format
 msgid ""
 "      --desktop               Desktop Entry mode: generate a .desktop file\n"
@@ -1974,30 +2028,30 @@ msgstr ""
 "      --desktop               режим Desktop Entry: генерировать файл ."
 "desktop\n"
 
-#: src/msgfmt.c:818
+#: src/msgfmt.c:819
 #, c-format
 msgid "      --strict                enable strict Uniforum mode\n"
 msgstr ""
 "      --strict                строго соответствовать стандарту Uniforum\n"
 
-#: src/msgfmt.c:820 src/xgettext.c:888
+#: src/msgfmt.c:821 src/xgettext.c:937
 #, c-format
 msgid "If output file is -, output is written to standard output.\n"
 msgstr ""
 "Если выходной файл задан как -, результаты выводятся на стандартный вывод.\n"
 
-#: src/msgfmt.c:823
+#: src/msgfmt.c:824
 #, c-format
 msgid "Output file location in Java mode:\n"
 msgstr "Нахождение выходного файла в режиме Java:\n"
 
-#: src/msgfmt.c:825 src/msgfmt.c:841 src/msgunfmt.c:458 src/msgunfmt.c:469
+#: src/msgfmt.c:826 src/msgfmt.c:842 src/msgunfmt.c:459 src/msgunfmt.c:470
 #, c-format
 msgid "  -r, --resource=RESOURCE     resource name\n"
 msgstr "  -r, --resource=РЕСУРС       имя ресурса\n"
 
-#: src/msgfmt.c:827 src/msgfmt.c:843 src/msgfmt.c:853 src/msgfmt.c:863
-#: src/msgunfmt.c:460 src/msgunfmt.c:471 src/msgunfmt.c:481
+#: src/msgfmt.c:828 src/msgfmt.c:844 src/msgfmt.c:854 src/msgfmt.c:864
+#: src/msgunfmt.c:461 src/msgunfmt.c:472 src/msgunfmt.c:482
 #, c-format
 msgid ""
 "  -l, --locale=LOCALE         locale name, either language or "
@@ -2005,7 +2059,7 @@ msgid ""
 msgstr ""
 "  -l, --locale=ЛОКАЛЬ         имя локали, это либо язык, либо язык_СТРАНА\n"
 
-#: src/msgfmt.c:829
+#: src/msgfmt.c:830
 #, c-format
 msgid ""
 "      --source                produce a .java file, instead of a .class "
@@ -2013,14 +2067,14 @@ msgid ""
 msgstr ""
 "      --source                создавать файл .java, вместо файла .class\n"
 
-#: src/msgfmt.c:831
+#: src/msgfmt.c:832
 #, c-format
 msgid ""
 "  -d DIRECTORY                base directory of classes directory hierarchy\n"
 msgstr ""
 "  -d КАТАЛОГ                  корневой каталог иерархии каталогов классов\n"
 
-#: src/msgfmt.c:833
+#: src/msgfmt.c:834
 #, c-format
 msgid ""
 "The class name is determined by appending the locale name to the resource "
@@ -2033,12 +2087,12 @@ msgstr ""
 "указанный\n"
 "каталог.\n"
 
-#: src/msgfmt.c:839
+#: src/msgfmt.c:840
 #, c-format
 msgid "Output file location in C# mode:\n"
 msgstr "Нахождение выходного файла в режиме C#:\n"
 
-#: src/msgfmt.c:845 src/msgunfmt.c:473
+#: src/msgfmt.c:846 src/msgunfmt.c:474
 #, c-format
 msgid ""
 "  -d DIRECTORY                base directory for locale dependent .dll "
@@ -2047,7 +2101,7 @@ msgstr ""
 "  -d КАТАТОГ                 базовый каталог для зависящих от локали .dll-"
 "файлов\n"
 
-#: src/msgfmt.c:847
+#: src/msgfmt.c:848
 #, c-format
 msgid ""
 "The -l and -d options are mandatory.  The .dll file is written in a\n"
@@ -2057,17 +2111,17 @@ msgstr ""
 "подкаталог указанного каталога, имя этого подкаталога зависит от\n"
 "локали.\n"
 
-#: src/msgfmt.c:851
+#: src/msgfmt.c:852
 #, c-format
 msgid "Output file location in Tcl mode:\n"
 msgstr "Нахождение входного файла в режиме Tcl:\n"
 
-#: src/msgfmt.c:855 src/msgunfmt.c:483
+#: src/msgfmt.c:856 src/msgunfmt.c:484
 #, c-format
 msgid "  -d DIRECTORY                base directory of .msg message catalogs\n"
 msgstr "  -d КАТАЛОГ                  корневой каталог иерархии .msg-файлов\n"
 
-#: src/msgfmt.c:857
+#: src/msgfmt.c:858
 #, c-format
 msgid ""
 "The -l and -d options are mandatory.  The .msg file is written in the\n"
@@ -2076,23 +2130,23 @@ msgstr ""
 "Параметры -l и -d обязательны. Выходной .msg-файл записывается в указанный "
 "каталог.\n"
 
-#: src/msgfmt.c:861
+#: src/msgfmt.c:862
 #, c-format
 msgid "Desktop Entry mode options:\n"
 msgstr "Параметры режима Desktop Entry:\n"
 
-#: src/msgfmt.c:867
+#: src/msgfmt.c:868
 #, c-format
 msgid "  --template=TEMPLATE         a .desktop file used as a template\n"
 msgstr ""
 "  --template=ШАБЛОН           в качестве шаблона использовать файл .desktop\n"
 
-#: src/msgfmt.c:869
+#: src/msgfmt.c:870
 #, c-format
 msgid "  -d DIRECTORY                base directory of .po files\n"
 msgstr "  -d КАТАЛОГ                  корневой каталог файлов .po\n"
 
-#: src/msgfmt.c:871 src/xgettext.c:934
+#: src/msgfmt.c:872 src/xgettext.c:991
 #, c-format
 msgid ""
 "  -kWORD, --keyword=WORD      look for WORD as an additional keyword\n"
@@ -2101,7 +2155,7 @@ msgstr ""
 "  -k, --keyword[=СЛОВО]       дополнительное ключевое слово для поиска\n"
 "  -k, --keyword               не использовать ключевые слова по умолчанию\n"
 
-#: src/msgfmt.c:874
+#: src/msgfmt.c:875
 #, c-format
 msgid ""
 "The -l, -o, and --template options are mandatory.  If -D is specified, "
@@ -2111,12 +2165,12 @@ msgstr ""
 "Параметры -l, -o и --template обязательны. Если указан -D, то входные\n"
 "файлы читаются из каталога, а не берутся из аргументов командной строки.\n"
 
-#: src/msgfmt.c:886 src/xgettext.c:905
+#: src/msgfmt.c:887 src/xgettext.c:954
 #, c-format
 msgid "Input file interpretation:\n"
 msgstr "Интерпретация входного файла:\n"
 
-#: src/msgfmt.c:888
+#: src/msgfmt.c:889
 #, c-format
 msgid ""
 "  -c, --check                 perform all the checks implied by\n"
@@ -2127,13 +2181,13 @@ msgstr ""
 "                              параметрами --check-format, --check-header,\n"
 "                              --check-domain\n"
 
-#: src/msgfmt.c:891
+#: src/msgfmt.c:892
 #, c-format
 msgid "      --check-format          check language dependent format strings\n"
 msgstr ""
 "      --check-format          проверить зависящие от языка форматные строки\n"
 
-#: src/msgfmt.c:893
+#: src/msgfmt.c:894
 #, c-format
 msgid ""
 "      --check-header          verify presence and contents of the header "
@@ -2141,7 +2195,7 @@ msgid ""
 msgstr ""
 "      --check-header          проверить наличие и содержимое заголовка\n"
 
-#: src/msgfmt.c:895
+#: src/msgfmt.c:896
 #, c-format
 msgid ""
 "      --check-domain          check for conflicts between domain directives\n"
@@ -2151,7 +2205,7 @@ msgstr ""
 "домена\n"
 "                                и параметром --output-file\n"
 
-#: src/msgfmt.c:898
+#: src/msgfmt.c:899
 #, c-format
 msgid ""
 "  -C, --check-compatibility   check that GNU msgfmt behaves like X/Open "
@@ -2160,7 +2214,7 @@ msgstr ""
 "  -C, --check-compatibility   проверить, что GNU msgfmt ведет себя так же, \n"
 "                                как X/Open msgfmt\n"
 
-#: src/msgfmt.c:900
+#: src/msgfmt.c:901
 #, c-format
 msgid ""
 "      --check-accelerators[=CHAR]  check presence of keyboard accelerators "
@@ -2171,13 +2225,13 @@ msgstr ""
 "                              проверить наличие клавиатурных\n"
 "                              эквивалентов для пунктов меню\n"
 
-#: src/msgfmt.c:903
+#: src/msgfmt.c:904
 #, c-format
 msgid "  -f, --use-fuzzy             use fuzzy entries in output\n"
 msgstr ""
 "  -f, --use-fuzzy             использовать при выводе неточные переводы\n"
 
-#: src/msgfmt.c:908
+#: src/msgfmt.c:909
 #, c-format
 msgid ""
 "  -a, --alignment=NUMBER      align strings to NUMBER bytes (default: %d)\n"
@@ -2185,7 +2239,7 @@ msgstr ""
 "  -a, --alignment=ЧИСЛО       выравнивать строки по ЧИСЛУ байт (по "
 "умолчанию: %d)\n"
 
-#: src/msgfmt.c:910
+#: src/msgfmt.c:911
 #, c-format
 msgid ""
 "      --endianness=BYTEORDER  write out 32-bit numbers in the given byte "
@@ -2197,100 +2251,99 @@ msgstr ""
 "                              порядке байт (big или little, значение по\n"
 "                              умолчанию зависит от платформы)\n"
 
-#: src/msgfmt.c:913
+#: src/msgfmt.c:914
 #, c-format
 msgid ""
 "      --no-hash               binary file will not include the hash table\n"
 msgstr ""
 "      --no-hash               двоичный файл не будет включать хэш-таблицу\n"
 
-#: src/msgfmt.c:922
+#: src/msgfmt.c:923
 #, c-format
 msgid "      --statistics            print statistics about translations\n"
 msgstr "      --statistics            напечатать статистику о переводах\n"
 
-#: src/msgfmt.c:924 src/msgmerge.c:625 src/msgunfmt.c:533
+#: src/msgfmt.c:925 src/msgmerge.c:626 src/msgunfmt.c:534
 #, c-format
 msgid "  -v, --verbose               increase verbosity level\n"
 msgstr ""
 "  -v, --verbose               увеличить подробность диагностических "
 "сообщений\n"
 
-#: src/msgfmt.c:1037
+#: src/msgfmt.c:1038
 #, c-format
 msgid "warning: PO file header missing or invalid\n"
 msgstr "предупреждение: заголовок PO-файла отсутствует или неправилен\n"
 
-#: src/msgfmt.c:1040
+#: src/msgfmt.c:1041
 #, c-format
 msgid "warning: charset conversion will not work\n"
 msgstr "предупреждение: преобразование кодировок не будет работать\n"
 
-#: src/msgfmt.c:1050
+#: src/msgfmt.c:1051
 #, c-format
 msgid "warning: PO file header fuzzy\n"
 msgstr "предупреждение: заголовок PO-файла помечен как неточный\n"
 
-#: src/msgfmt.c:1052
+#: src/msgfmt.c:1053
 #, c-format
 msgid "warning: older versions of msgfmt will give an error on this\n"
 msgstr "предупреждение: более старые версии msgfmt выдадут здесь ошибку\n"
 
-#: src/msgfmt.c:1076
+#: src/msgfmt.c:1077
 #, c-format
 msgid "domain name \"%s\" not suitable as file name"
 msgstr "имя домена «%s» не может быть использовано в качестве имени файла"
 
-#: src/msgfmt.c:1081
+#: src/msgfmt.c:1082
 #, c-format
 msgid "domain name \"%s\" not suitable as file name: will use prefix"
 msgstr ""
 "имя домена «%s» недопустимо в качестве имени файла, будет использовано\n"
 "частично усеченное имя домена"
 
-#: src/msgfmt.c:1095
+#: src/msgfmt.c:1096
 #, c-format
 msgid "'domain %s' directive ignored"
 msgstr "директива «domain %s» игнорируется"
 
-#: src/msgfmt.c:1155
+#: src/msgfmt.c:1156
 #, c-format
 msgid "empty 'msgstr' entry ignored"
 msgstr "пустая запись «msgstr» игнорируется"
 
-#: src/msgfmt.c:1156
+#: src/msgfmt.c:1157
 #, c-format
 msgid "fuzzy 'msgstr' entry ignored"
 msgstr "неточная запись «msgstr» игнорируется"
 
-#: src/msgfmt.c:1205
+#: src/msgfmt.c:1206
 #, c-format
 msgid "%s: warning: source file contains fuzzy translation"
 msgstr "%s: предупреждение: исходный файл содержит неточные переводы"
 
-#: src/msgfmt.c:1323
+#: src/msgfmt.c:1324
 #, c-format
 msgid "%s does not exist"
 msgstr "%s не существует"
 
-#: src/msgfmt.c:1334
+#: src/msgfmt.c:1335
 #, c-format
 msgid "%s exists but cannot read"
 msgstr "%s существует, но недоступен для чтения"
 
-#: src/msggrep.c:258 src/po-lex.c:657 src/read-mo.c:87
-#: src/read-properties.c:89 src/read-stringtable.c:98 src/x-awk.c:139
-#: src/x-c.c:486 src/x-csharp.c:163 src/x-elisp.c:145 src/x-glade.c:565
-#: src/x-java.c:181 src/x-javascript.c:171 src/x-librep.c:147 src/x-lisp.c:212
-#: src/x-lua.c:173 src/x-perl.c:227 src/x-perl.c:302 src/x-perl.c:395
-#: src/x-php.c:163 src/x-python.c:176 src/x-rst.c:233 src/x-scheme.c:171
-#: src/x-sh.c:155 src/x-smalltalk.c:91 src/x-tcl.c:150 src/x-vala.c:176
-#: src/x-ycp.c:91
+#: src/msggrep.c:259 src/po-lex.c:657 src/read-mo.c:88 src/read-properties.c:90
+#: src/read-stringtable.c:99 src/x-awk.c:140 src/x-c.c:583 src/x-csharp.c:164
+#: src/x-elisp.c:146 src/x-glade.c:566 src/x-java.c:181 src/x-javascript.c:172
+#: src/x-librep.c:148 src/x-lisp.c:213 src/x-lua.c:173 src/x-perl.c:227
+#: src/x-perl.c:302 src/x-perl.c:395 src/x-php.c:164 src/x-python.c:177
+#: src/x-rst.c:234 src/x-scheme.c:171 src/x-sh.c:155 src/x-smalltalk.c:92
+#: src/x-tcl.c:151 src/x-vala.c:176 src/x-ycp.c:92
 #, c-format
 msgid "error while reading \"%s\""
 msgstr "ошибка чтения «%s»"
 
-#: src/msggrep.c:501
+#: src/msggrep.c:502
 #, c-format
 msgid ""
 "option '%c' cannot be used before 'J' or 'K' or 'T' or 'C' or 'X' has been "
@@ -2299,7 +2352,7 @@ msgstr ""
 "параметр «%c» нельзя использовать до того, как заданы «J», «K», «T», «C» или "
 "«X»"
 
-#: src/msggrep.c:521
+#: src/msggrep.c:522
 #, c-format, no-wrap
 msgid ""
 "Extracts all messages of a translation catalog that match a given pattern\n"
@@ -2308,7 +2361,7 @@ msgstr ""
 "Извлекает из каталога переводов все сообщения, которые соответствуют\n"
 "заданному образцу или принадлежат заданным исходным файлам.\n"
 
-#: src/msggrep.c:547
+#: src/msggrep.c:548
 #, c-format, no-wrap
 msgid ""
 "Message selection:\n"
@@ -2395,7 +2448,7 @@ msgstr ""
 "  -v, --invert-match          выводить только сообщения, которые не\n"
 "                              соответствуют ни одному критерию выбора\n"
 
-#: src/msggrep.c:602
+#: src/msggrep.c:603
 #, c-format
 msgid ""
 "      --escape                use C escapes in output, no extended chars\n"
@@ -2403,12 +2456,12 @@ msgstr ""
 "      --escape                использовать экранирующие последовательности,\n"
 "                                а не расширенные символы\n"
 
-#: src/msggrep.c:623
+#: src/msggrep.c:624
 #, c-format
 msgid "      --sort-output           generate sorted output\n"
 msgstr "      --sort-output           сортировать вывод\n"
 
-#: src/msggrep.c:625
+#: src/msggrep.c:626
 #, c-format
 msgid "      --sort-by-file          sort output by file location\n"
 msgstr "      --sort-by-file          сортировать вывод по именам файлов\n"
@@ -2512,14 +2565,14 @@ msgstr ""
 "В текущем каталоге не найден pot-файл.\n"
 "Укажите входной pot-файл с помощью параметра --input.\n"
 
-#: src/msginit.c:919 src/msginit.c:994 src/msginit.c:1154 src/msginit.c:1249
-#: src/read-csharp.c:83 src/read-java.c:81 src/read-resources.c:84
-#: src/read-tcl.c:127 src/write-resources.c:104
+#: src/msginit.c:918 src/msginit.c:993 src/msginit.c:1153 src/msginit.c:1248
+#: src/msginit.c:1418 src/read-csharp.c:84 src/read-java.c:82
+#: src/read-resources.c:85 src/read-tcl.c:128 src/write-resources.c:105
 #, c-format
 msgid "%s subprocess failed with exit code %d"
 msgstr "дочерний процесс %s завершился аварийно с кодом выхода %d"
 
-#: src/msginit.c:1119
+#: src/msginit.c:1118
 msgid ""
 "The new message catalog should contain your email address, so that users "
 "can\n"
@@ -2535,28 +2588,28 @@ msgstr ""
 #. TRANSLATORS: "English" needs to be replaced by your language.
 #. For example in it.po write "Traduzioni italiani ...",
 #. *not* "Traduzioni inglesi ...".
-#: src/msginit.c:1535
+#: src/msginit.c:1615
 #, c-format
 msgid "English translations for %s package"
 msgstr "Английские переводы для пакета %s"
 
-#: src/msgl-cat.c:177 src/msgl-charset.c:86 src/msgl-iconv.c:247
+#: src/msgl-cat.c:178 src/msgl-charset.c:87 src/msgl-iconv.c:248
 #, c-format
 msgid "present charset \"%s\" is not a portable encoding name"
 msgstr "текущая кодировка «%s» не является переносимым именем кодировки"
 
-#: src/msgl-cat.c:188 src/msgl-iconv.c:259
+#: src/msgl-cat.c:189 src/msgl-iconv.c:260
 #, c-format
 msgid "two different charsets \"%s\" and \"%s\" in input file"
 msgstr "во входном файле две разные кодировки «%s» и «%s»"
 
-#: src/msgl-cat.c:203
+#: src/msgl-cat.c:204
 #, c-format
 msgid ""
 "input file '%s' doesn't contain a header entry with a charset specification"
 msgstr "входной файл «%s» не содержит запись заголовка с описанием кодировки"
 
-#: src/msgl-cat.c:207
+#: src/msgl-cat.c:208
 #, c-format
 msgid ""
 "domain \"%s\" in input file '%s' doesn't contain a header entry with a "
@@ -2565,19 +2618,19 @@ msgstr ""
 "домен «%s» во входном файле «%s» не содержит запись заголовка с описанием "
 "кодировки"
 
-#: src/msgl-cat.c:391 src/msgl-iconv.c:375
+#: src/msgl-cat.c:394 src/msgl-iconv.c:376
 #, c-format
 msgid "target charset \"%s\" is not a portable encoding name."
 msgstr "целевая кодировка «%s» не является переносимым именем кодировки."
 
-#: src/msgl-cat.c:442 src/msgl-cat.c:448 src/msgl-charset.c:92
-#: src/msgl-charset.c:127 src/po-xerror.c:122 src/po-xerror.c:147
-#: src/xgettext.c:544 src/xgettext.c:3426
+#: src/msgl-cat.c:445 src/msgl-cat.c:451 src/msgl-charset.c:93
+#: src/msgl-charset.c:128 src/po-xerror.c:122 src/po-xerror.c:147
+#: src/xgettext.c:554 src/xgettext.c:3532
 #, c-format
 msgid "warning: "
 msgstr "предупреждение: "
 
-#: src/msgl-cat.c:443
+#: src/msgl-cat.c:446
 #, c-format
 msgid ""
 "Input files contain messages in different encodings, UTF-8 among others.\n"
@@ -2586,7 +2639,7 @@ msgstr ""
 "Входные файлы содержат сообщения в разных кодировках, в том числе в\n"
 "UTF-8. Вывод преобразуется к UTF-8.\n"
 
-#: src/msgl-cat.c:449
+#: src/msgl-cat.c:452
 #, c-format
 msgid ""
 "Input files contain messages in different encodings, %s and %s among "
@@ -2599,7 +2652,7 @@ msgstr ""
 "Вывод преобразуется к UTF-8.  Чтобы выбрать другую выходную кодировку,\n"
 "используйте параметр --to-code.\n"
 
-#: src/msgl-cat.c:488
+#: src/msgl-cat.c:491
 #, c-format
 msgid ""
 "Conversion of file %s from %s encoding to %s encoding\n"
@@ -2613,7 +2666,7 @@ msgstr ""
 "они\n"
 "изначально представлены в UTF-8, например в исходных файлах программы.\n"
 
-#: src/msgl-charset.c:93
+#: src/msgl-charset.c:94
 #, c-format
 msgid ""
 "Locale charset \"%s\" is different from\n"
@@ -2625,12 +2678,12 @@ msgstr ""
 "Вывод «%s» может быть неправильным.\n"
 "Возможные методы обойти эту ситуацию:\n"
 
-#: src/msgl-charset.c:100
+#: src/msgl-charset.c:101
 #, c-format
 msgid "- Set LC_ALL to a locale with encoding %s.\n"
 msgstr "- Установить LC_ALL равной локали с кодировкой %s.\n"
 
-#: src/msgl-charset.c:105
+#: src/msgl-charset.c:106
 #, c-format
 msgid ""
 "- Convert the translation catalog to %s using 'msgconv',\n"
@@ -2641,7 +2694,7 @@ msgstr ""
 "  затем применить «%s»,\n"
 "  затем преобразовать обратно к %s с помощью «msgconv».\n"
 
-#: src/msgl-charset.c:114
+#: src/msgl-charset.c:115
 #, c-format
 msgid ""
 "- Set LC_ALL to a locale with encoding %s,\n"
@@ -2654,7 +2707,7 @@ msgstr ""
 "  затем применить «%s»,\n"
 "  затем преобразовать обратно к %s с помощью «msgconv».\n"
 
-#: src/msgl-charset.c:128
+#: src/msgl-charset.c:129
 #, c-format
 msgid ""
 "Locale charset \"%s\" is not a portable encoding name.\n"
@@ -2665,26 +2718,26 @@ msgstr ""
 "Вывод «%s» может быть неправильным.\n"
 "Возможный метод обойти эту ситуацию — установить LC_ALL=C.\n"
 
-#: src/msgl-check.c:130
+#: src/msgl-check.c:135
 msgid "plural expression can produce negative values"
 msgstr "выражение во множественном числе может давать отрицательные значения"
 
-#: src/msgl-check.c:141
+#: src/msgl-check.c:146
 #, c-format
 msgid "nplurals = %lu but plural expression can produce values as large as %lu"
 msgstr ""
 "nplurals = %lu, но выражение во множественном числе может давать значения до "
 "%lu"
 
-#: src/msgl-check.c:187
+#: src/msgl-check.c:192
 msgid "plural expression can produce division by zero"
 msgstr "выражение во множественном числе может давать деление на ноль"
 
-#: src/msgl-check.c:192
+#: src/msgl-check.c:197
 msgid "plural expression can produce integer overflow"
 msgstr "выражение во множественном числе может дать переполнение целого"
 
-#: src/msgl-check.c:197
+#: src/msgl-check.c:202
 msgid ""
 "plural expression can produce arithmetic exceptions, possibly division by "
 "zero"
@@ -2692,37 +2745,37 @@ msgstr ""
 "выражение во множественном числе может давать исключительные ситуации в "
 "арифметике, возможно, деление на ноль"
 
-#: src/msgl-check.c:266
+#: src/msgl-check.c:271
 #, c-format
 msgid "Try using the following, valid for %s:"
 msgstr "Попробуйте следующее, подходит для %s:"
 
-#: src/msgl-check.c:358 src/msgl-check.c:382
+#: src/msgl-check.c:363 src/msgl-check.c:387
 msgid "message catalog has plural form translations"
 msgstr "каталог сообщений содержит переводы во множественном числе"
 
-#: src/msgl-check.c:360
+#: src/msgl-check.c:365
 msgid "but header entry lacks a \"plural=EXPRESSION\" attribute"
 msgstr "но в заголовке нет атрибута «plural=ВЫРАЖЕНИЕ»"
 
-#: src/msgl-check.c:384
+#: src/msgl-check.c:389
 msgid "but header entry lacks a \"nplurals=INTEGER\" attribute"
 msgstr "но в заголовке нет атрибута «nplurals=ЦЕЛОЕ»"
 
-#: src/msgl-check.c:420
+#: src/msgl-check.c:425
 msgid "invalid nplurals value"
 msgstr "неверная значение nplurals"
 
-#: src/msgl-check.c:442
+#: src/msgl-check.c:447
 msgid "invalid plural expression"
 msgstr "неверное выражение во множественном числе"
 
-#: src/msgl-check.c:472 src/msgl-check.c:488
+#: src/msgl-check.c:477 src/msgl-check.c:493
 #, c-format
 msgid "nplurals = %lu"
 msgstr "nplurals = %lu"
 
-#: src/msgl-check.c:474
+#: src/msgl-check.c:479
 #, c-format
 msgid "but some messages have only one plural form"
 msgid_plural "but some messages have only %lu plural forms"
@@ -2730,7 +2783,7 @@ msgstr[0] "но в некоторых сообщениях только %lu фо
 msgstr[1] "но в некоторых сообщениях только %lu формы во множественном числе"
 msgstr[2] "но в некоторых сообщениях только %lu форм во множественном числе"
 
-#: src/msgl-check.c:490
+#: src/msgl-check.c:495
 #, c-format
 msgid "but some messages have one plural form"
 msgid_plural "but some messages have %lu plural forms"
@@ -2738,7 +2791,7 @@ msgstr[0] "но в некоторых сообщениях есть %lu форм
 msgstr[1] "но в некоторых сообщениях есть %lu формы во множественном числе"
 msgstr[2] "но в некоторых сообщениях есть %lu форм во множественном числе"
 
-#: src/msgl-check.c:514
+#: src/msgl-check.c:519
 msgid ""
 "message catalog has plural form translations, but lacks a header entry with "
 "\"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\""
@@ -2746,73 +2799,89 @@ msgstr ""
 "каталог сообщений содержит переводы во множественном числе, но в нем "
 "заголовка с «Plural-Forms: nplurals=ЦЕЛОЕ; plural=ВЫРАЖЕНИЕ;»"
 
-#: src/msgl-check.c:611
+#: src/msgl-check.c:616
 msgid "'msgid' and 'msgid_plural' entries do not both begin with '\\n'"
 msgstr "поля «msgid» и «msgid_plural» не начинаются с «\\n»"
 
-#: src/msgl-check.c:619
+#: src/msgl-check.c:624
 #, c-format
 msgid "'msgid' and 'msgstr[%u]' entries do not both begin with '\\n'"
 msgstr "поля «msgid» и «msgstr[%u]» не начинаются с «\\n»"
 
-#: src/msgl-check.c:634
+#: src/msgl-check.c:639
 msgid "'msgid' and 'msgstr' entries do not both begin with '\\n'"
 msgstr "поля «msgid» и «msgstr» не начинаются с «\\n»"
 
-#: src/msgl-check.c:652
+#: src/msgl-check.c:657
 msgid "'msgid' and 'msgid_plural' entries do not both end with '\\n'"
 msgstr "поля «msgid» и «msgid_plural» не заканчиваются «\\n»"
 
-#: src/msgl-check.c:660
+#: src/msgl-check.c:665
 #, c-format
 msgid "'msgid' and 'msgstr[%u]' entries do not both end with '\\n'"
 msgstr "поля «msgid» и «msgstr[%u]» не заканчиваются «\\n»"
 
-#: src/msgl-check.c:675
+#: src/msgl-check.c:680
 msgid "'msgid' and 'msgstr' entries do not both end with '\\n'"
 msgstr "поля «msgid» и «msgstr» не заканчиваются «\\n»"
 
-#: src/msgl-check.c:687
+#: src/msgl-check.c:692
 msgid "plural handling is a GNU gettext extension"
 msgstr "обработка форм во множественном числе является расширением GNU gettext"
 
-#: src/msgl-check.c:729
+#: src/msgl-check.c:734
 #, c-format
 msgid "msgstr lacks the keyboard accelerator mark '%c'"
 msgstr "в msgstr недостает отметки клавиатурного эквивалента «%c»"
 
-#: src/msgl-check.c:740
+#: src/msgl-check.c:745
 #, c-format
 msgid "msgstr has too many keyboard accelerator marks '%c'"
 msgstr "в msgstr слишком много отметок клавиатурных эквивалентов «%c»"
 
-#: src/msgl-check.c:814
+#: src/msgl-check.c:819
 #, c-format
 msgid "header field '%s' still has the initial default value\n"
 msgstr ""
 "поле заголовка «%s» всё ещё содержит первоначальное значение по умолчанию\n"
 
-#: src/msgl-check.c:831
+#: src/msgl-check.c:836
 #, c-format
 msgid "header field '%s' missing in header\n"
 msgstr "в заголовке отсутствует поле «%s»\n"
 
-#: src/msgl-iconv.c:65
+#: src/msgl-check.c:941
+msgid "ASCII ellipsis ('...') instead of Unicode"
+msgstr ""
+
+#: src/msgl-check.c:1014
+msgid "space before ellipsis found in user visible strings"
+msgstr ""
+
+#: src/msgl-check.c:1043
+msgid "ASCII double quote used instead of Unicode"
+msgstr ""
+
+#: src/msgl-check.c:1049
+msgid "ASCII single quote used instead of Unicode"
+msgstr ""
+
+#: src/msgl-iconv.c:66
 #, c-format
 msgid "%s: input is not valid in \"%s\" encoding"
 msgstr "%s: неверные данные для кодировки «%s»"
 
-#: src/msgl-iconv.c:69
+#: src/msgl-iconv.c:70
 #, c-format
 msgid "%s: error while converting from \"%s\" encoding to \"%s\" encoding"
 msgstr "%s: ошибка при преобразовании из кодировки «%s» в кодировку «%s»"
 
-#: src/msgl-iconv.c:290
+#: src/msgl-iconv.c:291
 msgid "input file doesn't contain a header entry with a charset specification"
 msgstr "входной файл не содержит поле заголовка с описанием кодировки"
 
-#: src/msgl-iconv.c:305 src/recode-sr-latin.c:288 src/recode-sr-latin.c:293
-#: src/x-python.c:665 src/xgettext.c:720
+#: src/msgl-iconv.c:306 src/recode-sr-latin.c:289 src/recode-sr-latin.c:294
+#: src/x-python.c:666 src/xgettext.c:751
 #, c-format
 msgid ""
 "Cannot convert from \"%s\" to \"%s\". %s relies on iconv(), and iconv() does "
@@ -2821,7 +2890,7 @@ msgstr ""
 "Невозможно преобразовать из «%s» в «%s». %s полагается на iconv(), но "
 "iconv() не поддерживает это преобразование."
 
-#: src/msgl-iconv.c:335
+#: src/msgl-iconv.c:336
 #, c-format
 msgid ""
 "Conversion from \"%s\" to \"%s\" introduces duplicates: some different "
@@ -2830,8 +2899,8 @@ msgstr ""
 "Преобразование из «%s» в «%s» порождает дубликаты: некоторые различающиеся "
 "оригиналы сообщений становятся одинаковыми."
 
-#: src/msgl-iconv.c:341 src/recode-sr-latin.c:302 src/x-python.c:672
-#: src/xgettext.c:727
+#: src/msgl-iconv.c:342 src/recode-sr-latin.c:303 src/x-python.c:673
+#: src/xgettext.c:758
 #, c-format
 msgid ""
 "Cannot convert from \"%s\" to \"%s\". %s relies on iconv(). This version was "
@@ -2840,16 +2909,16 @@ msgstr ""
 "Невозможно преобразовать из «%s» в «%s».  %s полагается на iconv(). Эта "
 "версия была собрана без iconv()."
 
-#: src/msgmerge.c:405 src/msgmerge.c:411
+#: src/msgmerge.c:406 src/msgmerge.c:412
 #, c-format
 msgid "%s is only valid with %s"
 msgstr "%s допустимо только с %s"
 
-#: src/msgmerge.c:466
+#: src/msgmerge.c:467
 msgid "backup type"
 msgstr "тип резервного копирования"
 
-#: src/msgmerge.c:503
+#: src/msgmerge.c:504
 #, c-format, no-wrap
 msgid ""
 "Merges two Uniforum style .po files together.  The def.po file is an\n"
@@ -2874,18 +2943,18 @@ msgstr ""
 "используется приблизительное сравнение, если нельзя найти точное\n"
 "совпадение.\n"
 
-#: src/msgmerge.c:520
+#: src/msgmerge.c:521
 #, c-format
 msgid "  def.po                      translations referring to old sources\n"
 msgstr ""
 "  def.po                      переводы, ссылающиеся на старые исходники\n"
 
-#: src/msgmerge.c:522
+#: src/msgmerge.c:523
 #, c-format
 msgid "  ref.pot                     references to new sources\n"
 msgstr "  ref.pot                     ссылки на новые исходники\n"
 
-#: src/msgmerge.c:526
+#: src/msgmerge.c:527
 #, c-format
 msgid ""
 "  -C, --compendium=FILE       additional library of message translations,\n"
@@ -2895,7 +2964,7 @@ msgstr ""
 "сообщений, \n"
 "                              можно указывать несколько раз\n"
 
-#: src/msgmerge.c:532
+#: src/msgmerge.c:533
 #, c-format
 msgid ""
 "  -U, --update                update def.po,\n"
@@ -2904,28 +2973,28 @@ msgstr ""
 "  -U, --update                обновить def.po,\n"
 "                              ничего не делать, если def.po уже обновлен\n"
 
-#: src/msgmerge.c:544
+#: src/msgmerge.c:545
 #, c-format
 msgid "Output file location in update mode:\n"
 msgstr "Нахождение выходного файла в режиме обновления:\n"
 
-#: src/msgmerge.c:546
+#: src/msgmerge.c:547
 #, c-format
 msgid "The result is written back to def.po.\n"
 msgstr "Результат записывается обратно в def.po.\n"
 
-#: src/msgmerge.c:548
+#: src/msgmerge.c:549
 #, c-format
 msgid "      --backup=CONTROL        make a backup of def.po\n"
 msgstr "      --backup=МЕТОД          сделать резервную копию def.po\n"
 
-#: src/msgmerge.c:550
+#: src/msgmerge.c:551
 #, c-format
 msgid "      --suffix=SUFFIX         override the usual backup suffix\n"
 msgstr ""
 "      --suffix=СУФФИКС        перекрыть обычный суффикс резервной копии\n"
 
-#: src/msgmerge.c:552
+#: src/msgmerge.c:553
 #, c-format
 msgid ""
 "The version control method may be selected via the --backup option or "
@@ -2945,7 +3014,7 @@ msgstr ""
 "  simple, never   всегда делать простые резервные копии\n"
 "\n"
 
-#: src/msgmerge.c:559
+#: src/msgmerge.c:560
 #, c-format
 msgid ""
 "The backup suffix is '~', unless set with --suffix or the "
@@ -2956,7 +3025,7 @@ msgstr ""
 "установлен иной с помощью параметра --suffix или переменной окружения\n"
 "SIMPLE_BACKUP_SUFFIX.\n"
 
-#: src/msgmerge.c:570
+#: src/msgmerge.c:571
 #, c-format
 msgid ""
 "      --previous              keep previous msgids of translated messages\n"
@@ -2964,22 +3033,22 @@ msgstr ""
 "      --previous              сохранить предыдущие msgid переведённых\n"
 "                              сообщений\n"
 
-#: src/msgmerge.c:627 src/urlget.c:192
+#: src/msgmerge.c:628 src/urlget.c:193
 #, c-format
 msgid "  -q, --quiet, --silent       suppress progress indicators\n"
 msgstr "  -q, --quiet, --silent       не выводить индикатор хода выполнения\n"
 
-#: src/msgmerge.c:1622
+#: src/msgmerge.c:1627
 #, c-format
 msgid "this message should define plural forms"
 msgstr "данное сообщение должно определять формы во множественном числе"
 
-#: src/msgmerge.c:1645
+#: src/msgmerge.c:1650
 #, c-format
 msgid "this message should not define plural forms"
 msgstr "данное сообщение не должно определять формы во множественном числе"
 
-#: src/msgmerge.c:2048
+#: src/msgmerge.c:2053
 #, c-format
 msgid ""
 "%sRead %ld old + %ld reference, merged %ld, fuzzied %ld, missing %ld, "
@@ -2988,28 +3057,28 @@ msgstr ""
 "%sПрочитано сообщений: старых %ld + новых %ld; объединено %ld, помечено "
 "неточными %ld, недостающих %ld, недействительных %ld.\n"
 
-#: src/msgmerge.c:2056 src/urlget.c:306 src/urlget.c:353 src/urlget.c:395
-#: src/urlget.c:437
+#: src/msgmerge.c:2061 src/urlget.c:307 src/urlget.c:354 src/urlget.c:396
+#: src/urlget.c:438
 #, c-format
 msgid " done.\n"
 msgstr " завершено.\n"
 
-#: src/msgunfmt.c:308 src/msgunfmt.c:317 src/msgunfmt.c:340
+#: src/msgunfmt.c:309 src/msgunfmt.c:318 src/msgunfmt.c:341
 #, c-format
 msgid "%s and explicit file names are mutually exclusive"
 msgstr "%s и явно заданное имя файла взаимно исключают друг друга"
 
-#: src/msgunfmt.c:427
+#: src/msgunfmt.c:428
 #, c-format
 msgid "Usage: %s [OPTION] [FILE]...\n"
 msgstr "Использование: %s [ПАРАМЕТР] [ФАЙЛ]…\n"
 
-#: src/msgunfmt.c:431
+#: src/msgunfmt.c:432
 #, c-format
 msgid "Convert binary message catalog to Uniforum style .po file.\n"
 msgstr "Преобразует двоичный каталог сообщений в .po-файл в стиле Uniforum.\n"
 
-#: src/msgunfmt.c:440
+#: src/msgunfmt.c:441
 #, c-format
 msgid ""
 "  -j, --java                  Java mode: input is a Java ResourceBundle "
@@ -3018,12 +3087,12 @@ msgstr ""
 "  -j, --java                  режим Java: на входе Java-класс "
 "ResourceBundle\n"
 
-#: src/msgunfmt.c:442
+#: src/msgunfmt.c:443
 #, c-format
 msgid "      --csharp                C# mode: input is a .NET .dll file\n"
 msgstr "      --csharp                режим C#: на входе .dll-файл .NET\n"
 
-#: src/msgunfmt.c:444
+#: src/msgunfmt.c:445
 #, c-format
 msgid ""
 "      --csharp-resources      C# resources mode: input is a .NET .resources "
@@ -3032,24 +3101,24 @@ msgstr ""
 "      --csharp-resources      режим ресурсов C#: на входе .resources-файл ."
 "NET\n"
 
-#: src/msgunfmt.c:446
+#: src/msgunfmt.c:447
 #, c-format
 msgid ""
 "      --tcl                   Tcl mode: input is a tcl/msgcat .msg file\n"
 msgstr ""
 "      --tcl                   режим Tcl: на входе .msg-файл для tcl/msgcat\n"
 
-#: src/msgunfmt.c:451
+#: src/msgunfmt.c:452
 #, c-format
 msgid "  FILE ...                    input .mo files\n"
 msgstr "  ФАЙЛ ...                    входные .mo-файлы\n"
 
-#: src/msgunfmt.c:456
+#: src/msgunfmt.c:457
 #, c-format
 msgid "Input file location in Java mode:\n"
 msgstr "Нахождение входного файла в режиме Java:\n"
 
-#: src/msgunfmt.c:462
+#: src/msgunfmt.c:463
 #, c-format
 msgid ""
 "The class name is determined by appending the locale name to the resource "
@@ -3059,12 +3128,12 @@ msgstr ""
 "Имя класса определяется путем добавления имени локали к имени ресурса после\n"
 "символа подчеркивания. Класс ищется с помощью CLASSPATH.\n"
 
-#: src/msgunfmt.c:467
+#: src/msgunfmt.c:468
 #, c-format
 msgid "Input file location in C# mode:\n"
 msgstr "Нахождение входного файла в режиме C#:\n"
 
-#: src/msgunfmt.c:475
+#: src/msgunfmt.c:476
 #, c-format
 msgid ""
 "The -l and -d options are mandatory.  The .dll file is located in a\n"
@@ -3073,12 +3142,12 @@ msgstr ""
 "Параметры -l и -d обязательны. Входной .dll-файл ищется в подкаталоге\n"
 "указанного каталога, имя этого подкаталога зависит от локали.\n"
 
-#: src/msgunfmt.c:479
+#: src/msgunfmt.c:480
 #, c-format
 msgid "Input file location in Tcl mode:\n"
 msgstr "Нахождение входного файла в режиме Tcl:\n"
 
-#: src/msgunfmt.c:485
+#: src/msgunfmt.c:486
 #, c-format
 msgid ""
 "The -l and -d options are mandatory.  The .msg file is located in the\n"
@@ -3087,19 +3156,19 @@ msgstr ""
 "Параметры -l и -d обязательны. Входной .msg-файл ищется в указанном "
 "каталоге.\n"
 
-#: src/msgunfmt.c:511
+#: src/msgunfmt.c:512
 #, c-format
 msgid "  -i, --indent                write indented output style\n"
 msgstr "  -i, --indent                использовать на выводе отступы\n"
 
-#: src/msgunfmt.c:513
+#: src/msgunfmt.c:514
 #, c-format
 msgid "      --strict                write strict uniforum style\n"
 msgstr ""
 "      --strict                выводить в строгом соответствии стандарту "
 "Uniforum\n"
 
-#: src/msguniq.c:331
+#: src/msguniq.c:332
 #, c-format, no-wrap
 msgid ""
 "Unifies duplicate translations in a translation catalog.\n"
@@ -3122,12 +3191,12 @@ msgstr ""
 "При использовании параметра --unique, отбрасываются дублированные\n"
 "сообщения.\n"
 
-#: src/msguniq.c:364
+#: src/msguniq.c:365
 #, c-format
 msgid "  -d, --repeated              print only duplicates\n"
 msgstr "  -d, --repeated              печатать только дубликаты\n"
 
-#: src/msguniq.c:366
+#: src/msguniq.c:367
 #, c-format
 msgid ""
 "  -u, --unique                print only unique messages, discard "
@@ -3136,7 +3205,7 @@ msgstr ""
 "  -u, --unique                печатать только уникальные, пропуская "
 "дубликаты\n"
 
-#: src/open-catalog.c:56 libgettextpo/gettext-po.c:102
+#: src/open-catalog.c:57 libgettextpo/gettext-po.c:102
 #: libgettextpo/gettext-po.c:150 libgettextpo/gettext-po.c:198
 msgid "<stdin>"
 msgstr "<стандартный ввод>"
@@ -3192,32 +3261,32 @@ msgstr ""
 "В заголовке не указана кодировка.\n"
 "Преобразование сообщений к кодировке пользователя не сработает.\n"
 
-#: src/po-gram-gen.y:93
+#: src/po-gram-gen.y:94
 #, c-format
 msgid "inconsistent use of #~"
 msgstr "непоследовательное применение #~"
 
-#: src/po-gram-gen.y:243
+#: src/po-gram-gen.y:244
 #, c-format
 msgid "missing 'msgstr[]' section"
 msgstr "пропущена секция «msgstr[]»"
 
-#: src/po-gram-gen.y:252
+#: src/po-gram-gen.y:253
 #, c-format
 msgid "missing 'msgid_plural' section"
 msgstr "пропущена секция «msgid_plural»"
 
-#: src/po-gram-gen.y:260
+#: src/po-gram-gen.y:261
 #, c-format
 msgid "missing 'msgstr' section"
 msgstr "пропущена секция «msgstr»"
 
-#: src/po-gram-gen.y:399
+#: src/po-gram-gen.y:400
 #, c-format
 msgid "first plural form has nonzero index"
 msgstr "первая форма множественного числа имеет ненулевой индекс"
 
-#: src/po-gram-gen.y:401
+#: src/po-gram-gen.y:402
 #, c-format
 msgid "plural form has wrong index"
 msgstr "форма множественного числа имеет неправильный индекс"
@@ -3227,7 +3296,7 @@ msgstr "форма множественного числа имеет непра
 msgid "too many errors, aborting"
 msgstr "слишком много ошибок, завершение"
 
-#: src/po-lex.c:437 src/po-lex.c:507 src/write-po.c:812 src/write-po.c:950
+#: src/po-lex.c:437 src/po-lex.c:507 src/write-po.c:813 src/write-po.c:951
 #, c-format
 msgid "invalid multibyte sequence"
 msgstr "неверная многобайтовая последовательность"
@@ -3272,65 +3341,65 @@ msgid "context separator <EOT> within string"
 msgstr "разделитель контекста <EOT> внутри строки"
 
 # это сообщение пока не используется
-#: src/read-catalog.c:318 src/xgettext.c:1046
+#: src/read-catalog.c:325 src/xgettext.c:1103
 #, c-format
 msgid "this file may not contain domain directives"
 msgstr "этот файл не может содержать директивы домена"
 
-#: src/read-catalog.c:363
+#: src/read-catalog.c:370
 msgid "duplicate message definition"
 msgstr "повторное определение сообщения"
 
-#: src/read-catalog.c:365
+#: src/read-catalog.c:372
 msgid "this is the location of the first definition"
 msgstr "место появления первого определения"
 
-#: src/read-mo.c:107 src/read-mo.c:129 src/read-mo.c:177 src/read-mo.c:205
+#: src/read-mo.c:108 src/read-mo.c:130 src/read-mo.c:168 src/read-mo.c:184
 #, c-format
 msgid "file \"%s\" is truncated"
 msgstr "файл «%s» усечён"
 
-#: src/read-mo.c:132
+#: src/read-mo.c:133
 #, c-format
 msgid "file \"%s\" contains a not NUL terminated string"
 msgstr "файл «%s» содержит строку, не завершённую нулем"
 
-#: src/read-mo.c:169 src/read-mo.c:280
+#: src/read-mo.c:176 src/read-mo.c:284
 #, c-format
 msgid "file \"%s\" is not in GNU .mo format"
 msgstr "файл «%s» не в соответствует формату GNU .mo"
 
-#: src/read-mo.c:183
+#: src/read-mo.c:190
 #, c-format
 msgid "file \"%s\" contains a not NUL terminated string, at %s"
 msgstr "файл «%s» содержит строку, не завершённую нулем, в позиции %s"
 
-#: src/read-properties.c:227
+#: src/read-properties.c:228
 msgid "warning: invalid \\uxxxx syntax for Unicode character"
 msgstr "предупреждение: неверный синтаксис \\uxxxx для символа Unicode"
 
-#: src/read-stringtable.c:802
+#: src/read-stringtable.c:803
 msgid "warning: unterminated string"
 msgstr "предупреждение: незавершенная строка"
 
-#: src/read-stringtable.c:810
+#: src/read-stringtable.c:811
 msgid "warning: syntax error"
 msgstr "предупреждение: синтаксическая ошибка"
 
-#: src/read-stringtable.c:871 src/read-stringtable.c:893
+#: src/read-stringtable.c:872 src/read-stringtable.c:894
 msgid "warning: unterminated key/value pair"
 msgstr "предупреждение: незавершенная пара ключ/значение"
 
-#: src/read-stringtable.c:939
+#: src/read-stringtable.c:940
 msgid "warning: syntax error, expected ';' after string"
 msgstr "предупреждение: синтаксическая ошибка, после строки ожидается «;»"
 
-#: src/read-stringtable.c:948
+#: src/read-stringtable.c:949
 msgid "warning: syntax error, expected '=' or ';' after string"
 msgstr ""
 "предупреждение: синтаксическая ошибка, после строки ожидается «=» или «;»"
 
-#: src/recode-sr-latin.c:116
+#: src/recode-sr-latin.c:117
 #, c-format
 msgid "Written by %s and %s.\n"
 msgstr "Авторы программы — %s и %s.\n"
@@ -3339,16 +3408,16 @@ msgstr "Авторы программы — %s и %s.\n"
 #. (with Unicode escapes) "\u0160egan" or (with HTML entities)
 #. "&Scaron;egan".
 #. This is a proper name. See the gettext manual, section Names.
-#: src/recode-sr-latin.c:120
+#: src/recode-sr-latin.c:121
 msgid "Danilo Segan"
 msgstr "Данило Шеган"
 
-#: src/recode-sr-latin.c:153
+#: src/recode-sr-latin.c:154
 #, c-format, no-wrap
 msgid "Recode Serbian text from Cyrillic to Latin script.\n"
 msgstr "Перекодирует сербский текст из кириллицы в латиницу.\n"
 
-#: src/recode-sr-latin.c:156
+#: src/recode-sr-latin.c:157
 #, c-format, no-wrap
 msgid ""
 "The input text is read from standard input.  The converted text is output to\n"
@@ -3357,27 +3426,27 @@ msgstr ""
 "Входной текст читается со стандартного ввода.  Преобразованный текст\n"
 "печатается на стандартный вывод.\n"
 
-#: src/recode-sr-latin.c:339
+#: src/recode-sr-latin.c:340
 #, c-format
 msgid "input is not valid in \"%s\" encoding"
 msgstr "неверный вход для кодировки «%s»"
 
-#: src/recode-sr-latin.c:367
+#: src/recode-sr-latin.c:368
 #, c-format
 msgid "error while converting from \"%s\" encoding to \"%s\" encoding"
 msgstr "ошибка при преобразовании из кодировки «%s» в кодировку «%s»"
 
-#: src/urlget.c:159
+#: src/urlget.c:160
 #, c-format
 msgid "expected two arguments"
 msgstr "ожидается два аргумента"
 
-#: src/urlget.c:176
+#: src/urlget.c:177
 #, c-format
 msgid "Usage: %s [OPTION] URL FILE\n"
 msgstr "Использование: %s [ПАРАМЕТР] URL ФАЙЛ\n"
 
-#: src/urlget.c:181
+#: src/urlget.c:182
 #, c-format, no-wrap
 msgid ""
 "Fetches and outputs the contents of an URL.  If the URL cannot be accessed,\n"
@@ -3386,37 +3455,37 @@ msgstr ""
 "Получает и выводит содержимое заданного URL.  Если к URL невозможно\n"
 "получить доступ, вместо него используется указанный локальный ФАЙЛ.\n"
 
-#: src/urlget.c:228
+#: src/urlget.c:229
 #, c-format
 msgid "error reading \"%s\""
 msgstr "ошибка чтения «%s»"
 
-#: src/urlget.c:234
+#: src/urlget.c:235
 #, c-format
 msgid "error writing stdout"
 msgstr "ошибка записи на стандартный вывод"
 
-#: src/urlget.c:238
+#: src/urlget.c:239
 #, c-format
 msgid "error after reading \"%s\""
 msgstr "ошибка после чтения «%s»"
 
-#: src/urlget.c:264
+#: src/urlget.c:265
 #, c-format
 msgid "Retrieving %s..."
 msgstr "Получение %s…"
 
-#: src/urlget.c:308
+#: src/urlget.c:309
 #, c-format
 msgid " timed out.\n"
 msgstr " время ожидания истекло.\n"
 
-#: src/urlget.c:445
+#: src/urlget.c:446
 #, c-format
 msgid " failed.\n"
 msgstr " завершилась с ошибкой.\n"
 
-#: src/write-catalog.c:126
+#: src/write-catalog.c:127
 msgid ""
 "Cannot output multiple translation domains into a single file with the "
 "specified output format. Try using PO file syntax instead."
@@ -3424,7 +3493,7 @@ msgstr ""
 "Невозможно вывести несколько доменов перевода в единый файл указанного "
 "формата.  Попробуйте применить синтаксис PO-файлов."
 
-#: src/write-catalog.c:129
+#: src/write-catalog.c:130
 msgid ""
 "Cannot output multiple translation domains into a single file with the "
 "specified output format."
@@ -3432,7 +3501,7 @@ msgstr ""
 "Невозможно вывести несколько доменов перевода в единый файл указанного "
 "формата."
 
-#: src/write-catalog.c:162
+#: src/write-catalog.c:163
 msgid ""
 "message catalog has context dependent translations, but the output format "
 "does not support them."
@@ -3440,7 +3509,7 @@ msgstr ""
 "каталог сообщений содержит переводы с контекстом, но выходной формат их не "
 "поддерживает."
 
-#: src/write-catalog.c:197
+#: src/write-catalog.c:198
 msgid ""
 "message catalog has plural form translations, but the output format does not "
 "support them. Try generating a Java class using \"msgfmt --java\", instead "
@@ -3450,7 +3519,7 @@ msgstr ""
 "формат не поддерживает их.  Попробуйте сгенерировать Java-класс с помощью "
 "«msgfmt --java», а не файл properties."
 
-#: src/write-catalog.c:202
+#: src/write-catalog.c:203
 msgid ""
 "message catalog has plural form translations, but the output format does not "
 "support them."
@@ -3458,12 +3527,12 @@ msgstr ""
 "каталог сообщений содержит переводы во множественном числе, но выходной "
 "формат их не поддерживает."
 
-#: src/write-catalog.c:231 src/write-catalog.c:275
+#: src/write-catalog.c:232 src/write-catalog.c:276
 #, c-format
 msgid "cannot create output file \"%s\""
 msgstr "невозможно создать файл вывода «%s»"
 
-#: src/write-catalog.c:239 src/write-catalog.c:283
+#: src/write-catalog.c:240 src/write-catalog.c:284
 msgid "standard output"
 msgstr "стандартный вывод"
 
@@ -3482,34 +3551,34 @@ msgstr "компиляция C#-класса завершилась неуспе
 msgid "compilation of C# class failed"
 msgstr "компиляция класса C# завершилась с ошибкой"
 
-#: src/write-java.c:1091
+#: src/write-java.c:1092
 #, c-format
 msgid "not a valid Java class name: %s"
 msgstr "%s не является верным именем класса Java"
 
-#: src/write-java.c:1210
+#: src/write-java.c:1211
 #, c-format
 msgid "compilation of Java class failed, please try --verbose or set $JAVAC"
 msgstr ""
 "компиляция класса Java завершилась с ошибкой, попробуйте --verbose или "
 "установите $JAVAC"
 
-#: src/write-java.c:1213
+#: src/write-java.c:1214
 #, c-format
 msgid "compilation of Java class failed, please try to set $JAVAC"
 msgstr ""
 "компиляция класса Java завершилась с ошибкой, попробуйте установить $JAVAC"
 
-#: src/write-mo.c:799 src/write-qt.c:736 src/write-tcl.c:212
+#: src/write-mo.c:800 src/write-qt.c:737 src/write-tcl.c:213
 #, c-format
 msgid "error while opening \"%s\" for writing"
 msgstr "ошибка открытия «%s» для записи"
 
-#: src/write-po.c:821
+#: src/write-po.c:822
 msgid "incomplete multibyte sequence"
 msgstr "неполная многобайтовая последовательность"
 
-#: src/write-po.c:884
+#: src/write-po.c:885
 #, c-format
 msgid ""
 "internationalized messages should not contain the '\\%c' escape sequence"
@@ -3517,7 +3586,7 @@ msgstr ""
 "переводимые сообщения не должны содержать экранирующую последовательность «\\"
 "%c»"
 
-#: src/write-po.c:1335 src/write-po.c:1459
+#: src/write-po.c:1336 src/write-po.c:1460
 #, c-format
 msgid ""
 "The following msgctxt contains non-ASCII characters.\n"
@@ -3530,7 +3599,7 @@ msgstr ""
 "кодировку, что и вы. Подумайте об использовании в msgctxt только ASCII.\n"
 "%s\n"
 
-#: src/write-po.c:1347 src/write-po.c:1471
+#: src/write-po.c:1348 src/write-po.c:1472
 #, c-format
 msgid ""
 "The following msgid contains non-ASCII characters.\n"
@@ -3543,7 +3612,7 @@ msgstr ""
 "кодировку, что и вы. Подумайте об использовании в msgid только ASCII.\n"
 "%s\n"
 
-#: src/write-qt.c:667
+#: src/write-qt.c:668
 msgid ""
 "message catalog has plural form translations\n"
 "but the Qt message catalog format doesn't support plural handling\n"
@@ -3552,7 +3621,7 @@ msgstr ""
 "каталогов сообщений Qt не поддерживает обработку множественного\n"
 "числа\n"
 
-#: src/write-qt.c:693
+#: src/write-qt.c:694
 msgid ""
 "message catalog has msgctxt strings containing characters outside "
 "ISO-8859-1\n"
@@ -3563,7 +3632,7 @@ msgstr ""
 "но формат каталога сообщений Qt поддерживает Unicode только в\n"
 "переведенных строках, но не в контекстах\n"
 
-#: src/write-qt.c:717
+#: src/write-qt.c:718
 msgid ""
 "message catalog has msgid strings containing characters outside ISO-8859-1\n"
 "but the Qt message catalog format supports Unicode only in the translated\n"
@@ -3573,12 +3642,12 @@ msgstr ""
 "но формат каталога сообщений Qt поддерживает Unicode только в\n"
 "переведенных строках, но не в оригиналах\n"
 
-#: src/write-resources.c:94
+#: src/write-resources.c:95
 #, c-format
 msgid "error while writing to %s subprocess"
 msgstr "ошибка при записи в дочерний процесс %s"
 
-#: src/write-resources.c:131
+#: src/write-resources.c:132
 msgid ""
 "message catalog has context dependent translations\n"
 "but the C# .resources format doesn't support contexts\n"
@@ -3586,7 +3655,7 @@ msgstr ""
 "каталог сообщений содержит переводы с контекстом, но формат\n"
 ".resources C# не поддерживает контексты\n"
 
-#: src/write-resources.c:150
+#: src/write-resources.c:151
 msgid ""
 "message catalog has plural form translations\n"
 "but the C# .resources format doesn't support plural handling\n"
@@ -3594,7 +3663,7 @@ msgstr ""
 "каталог сообщений содержит переводы во множественном числе, но формат\n"
 ".resources C# не поддерживает обработку множественного числа\n"
 
-#: src/write-tcl.c:157
+#: src/write-tcl.c:158
 msgid ""
 "message catalog has context dependent translations\n"
 "but the Tcl message catalog format doesn't support contexts\n"
@@ -3602,7 +3671,7 @@ msgstr ""
 "каталог сообщений содержит переводы с контекстом, но формат\n"
 "каталогов сообщений для Tcl не поддерживает контексты\n"
 
-#: src/write-tcl.c:176
+#: src/write-tcl.c:177
 msgid ""
 "message catalog has plural form translations\n"
 "but the Tcl message catalog format doesn't support plural handling\n"
@@ -3611,36 +3680,36 @@ msgstr ""
 "каталогов сообщений для Tcl не поддерживает обработку множественного\n"
 "числа\n"
 
-#: src/x-awk.c:341 src/x-javascript.c:795 src/x-python.c:931
+#: src/x-awk.c:342 src/x-javascript.c:796 src/x-python.c:932
 #, c-format
 msgid "%s:%d: warning: unterminated string"
 msgstr "%s:%d: предупреждение: незавершенная строка"
 
-#: src/x-awk.c:592
+#: src/x-awk.c:593
 #, c-format
 msgid "%s:%d: warning: unterminated regular expression"
 msgstr "%s:%d: предупреждение: незавершенное регулярное выражение"
 
-#: src/x-c.c:1052
+#: src/x-c.c:1161
 #, c-format
 msgid "warning: invalid Unicode character"
 msgstr "предупреждение: неверный символ Unicode"
 
-#: src/x-c.c:1344 src/x-csharp.c:1509 src/x-java.c:872 src/x-vala.c:619
+#: src/x-c.c:1475 src/x-csharp.c:1510 src/x-java.c:872 src/x-vala.c:619
 #, c-format
 msgid "%s:%d: warning: unterminated character constant"
 msgstr "%s:%d: предупреждение: незавершенная символьная константа"
 
-#: src/x-c.c:1390 src/x-c.c:1430 src/x-vala.c:729
+#: src/x-c.c:1531 src/x-c.c:1582 src/x-vala.c:729
 #, c-format
 msgid "%s:%d: warning: unterminated string literal"
 msgstr "%s:%d: предупреждение: незавершенная строка"
 
-#: src/x-csharp.c:224 src/xgettext.c:2106
+#: src/x-csharp.c:225 src/xgettext.c:2168
 msgid "Please specify the source encoding through --from-code."
 msgstr "Укажите входную кодировку с помощью параметра --from-code."
 
-#: src/x-csharp.c:269
+#: src/x-csharp.c:270
 #, c-format
 msgid ""
 "%s:%d: Invalid multibyte sequence.\n"
@@ -3649,7 +3718,7 @@ msgstr ""
 "%s:%d: Неверная многобайтовая последовательность.\n"
 "Укажите входную кодировку с помощью параметра --from-code.\n"
 
-#: src/x-csharp.c:285
+#: src/x-csharp.c:286
 #, c-format
 msgid ""
 "%s:%d: Long incomplete multibyte sequence.\n"
@@ -3658,7 +3727,7 @@ msgstr ""
 "%s:%d: Длинная неполная многобайтовая последовательность.\n"
 "Укажите входную кодировку с помощью параметра --from-code.\n"
 
-#: src/x-csharp.c:297
+#: src/x-csharp.c:298
 #, c-format
 msgid ""
 "%s:%d: Incomplete multibyte sequence at end of file.\n"
@@ -3667,7 +3736,7 @@ msgstr ""
 "%s:%d: Неполная многобайтовая последовательность в конце файла.\n"
 "Укажите входную кодировку с помощью параметра --from-code.\n"
 
-#: src/x-csharp.c:306
+#: src/x-csharp.c:307
 #, c-format
 msgid ""
 "%s:%d: Incomplete multibyte sequence at end of line.\n"
@@ -3676,12 +3745,12 @@ msgstr ""
 "%s:%d: Неполная многобайтовая последовательность в конце строки.\n"
 "Укажите входную кодировку с помощью параметра --from-code.\n"
 
-#: src/x-csharp.c:315 src/x-javascript.c:321 src/x-python.c:374
+#: src/x-csharp.c:316 src/x-javascript.c:322 src/x-python.c:375
 #, c-format
 msgid "%s:%d: iconv failure"
 msgstr "%s:%d: вызов iconv завершился с ошибкой"
 
-#: src/x-csharp.c:338
+#: src/x-csharp.c:339
 #, c-format
 msgid ""
 "%s:%d: Invalid multibyte sequence.\n"
@@ -3690,42 +3759,42 @@ msgstr ""
 "%s:%d: Неверная многобайтовая последовательность.\n"
 "Укажите входную кодировку с помощью параметра --from-code.\n"
 
-#: src/x-csharp.c:1390 src/x-python.c:1138
+#: src/x-csharp.c:1391 src/x-python.c:1139
 #, c-format
 msgid "%s:%d: warning: invalid Unicode character"
 msgstr "%s:%d: предупреждение: неверный символ Unicode"
 
-#: src/x-csharp.c:1512 src/x-java.c:875
+#: src/x-csharp.c:1513 src/x-java.c:875
 #, c-format
 msgid "%s:%d: warning: unterminated string constant"
 msgstr "%s:%d: предупреждение: незавершенная строковая константа"
 
-#: src/x-csharp.c:2018 src/x-java.c:1369
+#: src/x-csharp.c:2019 src/x-java.c:1369
 #, c-format
 msgid "%s:%d: warning: ')' found where '}' was expected"
 msgstr "%s:%d: предупреждение: встречена «)», где ожидается «}»"
 
-#: src/x-csharp.c:2052 src/x-java.c:1403
+#: src/x-csharp.c:2053 src/x-java.c:1403
 #, c-format
 msgid "%s:%d: warning: '}' found where ')' was expected"
 msgstr "%s:%d: предупреждение: встречена «}», где ожидается «)»"
 
-#: src/x-glade.c:295
+#: src/x-glade.c:296
 #, c-format
 msgid "Missing context for the string extracted from '%s' element"
 msgstr "Отсутствует контекст для строки, извлечённой из элемента «%s»"
 
-#: src/x-glade.c:417
+#: src/x-glade.c:418
 #, c-format
 msgid "The root element <%s> is not allowed in a valid Glade file"
 msgstr "Корневой элемент <%s> недопустим в корректном файле Glade"
 
-#: src/x-glade.c:572 src/x-glade.c:579
+#: src/x-glade.c:573 src/x-glade.c:580
 #, c-format
 msgid "%s:%lu:%lu: %s"
 msgstr "%s:%lu:%lu: %s"
 
-#: src/x-glade.c:606
+#: src/x-glade.c:607
 #, c-format
 msgid ""
 "Language \"glade\" is not supported. %s relies on expat.\n"
@@ -3739,11 +3808,11 @@ msgstr ""
 msgid "%s:%d: warning: lone surrogate U+%04X"
 msgstr "%s:%d: предупреждение: одиночный заменитель U+%04X"
 
-#: src/x-javascript.c:230
+#: src/x-javascript.c:231
 msgid "Please specify the source encoding through --from-code\n"
 msgstr "Укажите входную кодировку с помощью параметра --from-code\n"
 
-#: src/x-javascript.c:275
+#: src/x-javascript.c:276
 #, c-format
 msgid ""
 "%s:%d: Invalid multibyte sequence.\n"
@@ -3752,7 +3821,7 @@ msgstr ""
 "%s:%d: Неверная многобайтовая последовательность.\n"
 "Укажите входную кодировку с помощью параметра --from-code\n"
 
-#: src/x-javascript.c:291
+#: src/x-javascript.c:292
 #, c-format
 msgid ""
 "%s:%d: Long incomplete multibyte sequence.\n"
@@ -3761,7 +3830,7 @@ msgstr ""
 "%s:%d: Длинная неполная многобайтовая последовательность.\n"
 "Укажите входную кодировку с помощью параметра --from-code\n"
 
-#: src/x-javascript.c:303
+#: src/x-javascript.c:304
 #, c-format
 msgid ""
 "%s:%d: Incomplete multibyte sequence at end of file.\n"
@@ -3770,7 +3839,7 @@ msgstr ""
 "%s:%d: Неполная многобайтовая последовательность в конце файла.\n"
 "Укажите входную кодировку с помощью параметра --from-code\n"
 
-#: src/x-javascript.c:312
+#: src/x-javascript.c:313
 #, c-format
 msgid ""
 "%s:%d: Incomplete multibyte sequence at end of line.\n"
@@ -3779,7 +3848,7 @@ msgstr ""
 "%s:%d: Неполная многобайтовая последовательность в конце строки.\n"
 "Укажите входную кодировку с помощью параметра --from-code\n"
 
-#: src/x-javascript.c:344
+#: src/x-javascript.c:345
 #, c-format
 msgid ""
 "%s:%d: Invalid multibyte sequence.\n"
@@ -3788,17 +3857,17 @@ msgstr ""
 "%s:%d: Неверная многобайтовая последовательность.\n"
 "Укажите входную кодировку с помощью параметра --from-code\n"
 
-#: src/x-javascript.c:954
+#: src/x-javascript.c:955
 #, c-format
 msgid "%s:%d: warning: RegExp literal terminated too early"
 msgstr "%s:%d: предупреждение: литерал RegExp завершился слишком рано"
 
-#: src/x-javascript.c:1055
+#: src/x-javascript.c:1056
 #, c-format
 msgid "%s:%d: warning: %s is not allowed"
 msgstr "%s:%d: предупреждение: %s не допускается"
 
-#: src/x-javascript.c:1069
+#: src/x-javascript.c:1070
 #, c-format
 msgid "%s:%d: warning: unterminated XML markup"
 msgstr "%s:%d: предупреждение: незавершенная разметка XML"
@@ -3838,7 +3907,7 @@ msgstr "%s:%d: неверная интерполяция («\\L») восьми�
 msgid "%s:%d: invalid interpolation (\"\\U\") of 8bit character \"%c\""
 msgstr "%s:%d: неверная интерполяция («\\U») восьмибитного символа «%c»"
 
-#: src/x-python.c:278
+#: src/x-python.c:279
 msgid ""
 "Please specify the source encoding through --from-code or through a comment\n"
 "as specified in http://www.python.org/peps/pep-0263.html.\n"
@@ -3846,7 +3915,7 @@ msgstr ""
 "Укажите входную кодировку с помощью параметра --from-code или с помощью\n"
 "комментария, как описано на http://www.python.org/peps/pep-0263.html.\n"
 
-#: src/x-python.c:324
+#: src/x-python.c:325
 #, c-format
 msgid ""
 "%s:%d: Invalid multibyte sequence.\n"
@@ -3857,7 +3926,7 @@ msgstr ""
 "Укажите входную кодировку с помощью параметра --from-code или с помощью\n"
 "комментария, как описано на http://www.python.org/peps/pep-0263.html.\n"
 
-#: src/x-python.c:341
+#: src/x-python.c:342
 #, c-format
 msgid ""
 "%s:%d: Long incomplete multibyte sequence.\n"
@@ -3868,7 +3937,7 @@ msgstr ""
 "Укажите входную кодировку с помощью параметра --from-code или с помощью\n"
 "комментария, как описано на http://www.python.org/peps/pep-0263.html.\n"
 
-#: src/x-python.c:354
+#: src/x-python.c:355
 #, c-format
 msgid ""
 "%s:%d: Incomplete multibyte sequence at end of file.\n"
@@ -3879,7 +3948,7 @@ msgstr ""
 "Укажите входную кодировку с помощью параметра --from-code или с помощью\n"
 "комментария, как описано на http://www.python.org/peps/pep-0263.html.\n"
 
-#: src/x-python.c:364
+#: src/x-python.c:365
 #, c-format
 msgid ""
 "%s:%d: Incomplete multibyte sequence at end of line.\n"
@@ -3890,7 +3959,7 @@ msgstr ""
 "Укажите входную кодировку с помощью параметра --from-code или с помощью\n"
 "комментария, как описано на http://www.python.org/peps/pep-0263.html.\n"
 
-#: src/x-python.c:397
+#: src/x-python.c:398
 #, c-format
 msgid ""
 "%s:%d: Invalid multibyte sequence.\n"
@@ -3901,22 +3970,22 @@ msgstr ""
 "Укажите входную кодировку с помощью параметра --from-code или с помощью\n"
 "комментария, как описано на http://www.python.org/peps/pep-0263.html.\n"
 
-#: src/x-python.c:722
+#: src/x-python.c:723
 #, c-format
 msgid "Unknown encoding \"%s\". Proceeding with ASCII instead."
 msgstr "Кодировка «%s» неизвестна. Вместо неё используем ASCII."
 
-#: src/x-rst.c:108
+#: src/x-rst.c:109
 #, c-format
 msgid "%s:%d: invalid string definition"
 msgstr "%s:%d: неверное определение строки"
 
-#: src/x-rst.c:172
+#: src/x-rst.c:173
 #, c-format
 msgid "%s:%d: missing number after #"
 msgstr "%s:%d: пропущено число после #"
 
-#: src/x-rst.c:207
+#: src/x-rst.c:208
 #, c-format
 msgid "%s:%d: invalid string expression"
 msgstr "%s:%d: неверное строковое выражение"
@@ -3936,35 +4005,45 @@ msgid "%s:%d: warning: regular expression literal terminated too early"
 msgstr ""
 "%s:%d: предупреждение: литерал регулярного выражения завершился слишком рано"
 
-#: src/xgettext.c:545
+#: src/xgettext.c:555
 #, c-format
 msgid "'%s' is not a valid encoding name.  Using ASCII as fallback.\n"
 msgstr "«%s» не является корректным именем кодировки. Используется ASCII.\n"
 
-#: src/xgettext.c:648
+#: src/xgettext.c:624
+#, fuzzy, c-format
+msgid "syntax check '%s' unknown"
+msgstr "язык «%s» неизвестен"
+
+#: src/xgettext.c:633
+#, c-format
+msgid "sentence end type '%s' unknown"
+msgstr ""
+
+#: src/xgettext.c:679
 #, c-format
 msgid "--join-existing cannot be used when output is written to stdout"
 msgstr ""
 "параметр --join-existing не может быть использован при записи в стандартный "
 "вывод"
 
-#: src/xgettext.c:653
+#: src/xgettext.c:684
 #, c-format
 msgid "xgettext cannot work without keywords to look for"
 msgstr "xgettext не может работать, не зная искомых ключевых слов"
 
-#: src/xgettext.c:808
+#: src/xgettext.c:839
 #, c-format
 msgid "warning: file '%s' extension '%s' is unknown; will try C"
 msgstr ""
 "предупреждение: файл «%s» имеет неизвестное расширение «%s»; трактуется как C"
 
-#: src/xgettext.c:859
+#: src/xgettext.c:908
 #, c-format
 msgid "Extract translatable strings from given input files.\n"
 msgstr "Извлекает переводимые строки из указанных входных файлов.\n"
 
-#: src/xgettext.c:882
+#: src/xgettext.c:931
 #, c-format
 msgid ""
 "  -d, --default-domain=NAME   use NAME.po for output (instead of messages."
@@ -3972,23 +4051,23 @@ msgid ""
 msgstr ""
 "  -d, --default-domain=ИМЯ    выводить в файл ИМЯ.po (вместо messages.po)\n"
 
-#: src/xgettext.c:884
+#: src/xgettext.c:933
 #, c-format
 msgid "  -o, --output=FILE           write output to specified file\n"
 msgstr "  -o, --output=ФАЙЛ           записать вывод в указанный файл\n"
 
-#: src/xgettext.c:886
+#: src/xgettext.c:935
 #, c-format
 msgid ""
 "  -p, --output-dir=DIR        output files will be placed in directory DIR\n"
 msgstr "  -p, --output-dir=КАТ        поместить выходные файлы в каталог КАТ\n"
 
-#: src/xgettext.c:891
+#: src/xgettext.c:940
 #, c-format
 msgid "Choice of input file language:\n"
 msgstr "Выбор языка входного файла:\n"
 
-#: src/xgettext.c:893
+#: src/xgettext.c:942
 #, c-format
 msgid ""
 "  -L, --language=NAME         recognise the specified language\n"
@@ -4007,19 +4086,19 @@ msgstr ""
 "                              GCC-source, NXStringTable, RST, Glade, Lua,\n"
 "                              JavaScript, Vala, Desktop)\n"
 
-#: src/xgettext.c:900
+#: src/xgettext.c:949
 #, c-format
 msgid "  -C, --c++                   shorthand for --language=C++\n"
 msgstr "  -C, --c++                   синоним --language=C++\n"
 
-#: src/xgettext.c:902
+#: src/xgettext.c:951
 #, c-format
 msgid ""
 "By default the language is guessed depending on the input file name "
 "extension.\n"
 msgstr "По умолчанию язык определяется по расширению входного файла.\n"
 
-#: src/xgettext.c:907
+#: src/xgettext.c:956
 #, c-format
 msgid ""
 "      --from-code=NAME        encoding of input files\n"
@@ -4028,22 +4107,22 @@ msgstr ""
 "      --from-code=ИМЯ            кодировка входных файлов\n"
 "                                   (кроме Python, Tcl, Glade)\n"
 
-#: src/xgettext.c:910
+#: src/xgettext.c:959
 #, c-format
 msgid "By default the input files are assumed to be in ASCII.\n"
 msgstr "По умолчанию считается, что входные файлы содержат только ASCII.\n"
 
-#: src/xgettext.c:915
+#: src/xgettext.c:964
 #, c-format
 msgid "  -j, --join-existing         join messages with existing file\n"
 msgstr "  -j, --join-existing         слить сообщения с существующим файлом\n"
 
-#: src/xgettext.c:917
+#: src/xgettext.c:966
 #, c-format
 msgid "  -x, --exclude-file=FILE.po  entries from FILE.po are not extracted\n"
 msgstr "  -x, --exclude-file=ФАЙЛ.po  не извлекать вхождения из ФАЙЛА.po\n"
 
-#: src/xgettext.c:919
+#: src/xgettext.c:968
 #, c-format
 msgid ""
 "  -cTAG, --add-comments=TAG   place comment blocks starting with TAG and\n"
@@ -4057,17 +4136,33 @@ msgstr ""
 "  -c, --add-comments          записать все блоки комментариев, начиная с\n"
 "                              предшествующих ключевых строк в выходной файл\n"
 
-#: src/xgettext.c:925
+#: src/xgettext.c:973
+#, c-format
+msgid ""
+"      --check=NAME            perform syntax check on messages\n"
+"                                (ellipsis-unicode, space-ellipsis,\n"
+"                                 quote-unicode)\n"
+msgstr ""
+
+#: src/xgettext.c:977
+#, c-format
+msgid ""
+"      --sentence-end=TYPE     type describing the end of sentence\n"
+"                                (single-space, which is the default, \n"
+"                                 or double-space)\n"
+msgstr ""
+
+#: src/xgettext.c:982
 #, c-format
 msgid "Language specific options:\n"
 msgstr "Параметры для конкретных языков:\n"
 
-#: src/xgettext.c:927
+#: src/xgettext.c:984
 #, c-format
 msgid "  -a, --extract-all           extract all strings\n"
 msgstr "  -a, --extract-all           извлечь все строки\n"
 
-#: src/xgettext.c:929
+#: src/xgettext.c:986
 #, c-format
 msgid ""
 "                                (only languages C, C++, ObjectiveC, Shell,\n"
@@ -4082,7 +4177,7 @@ msgstr ""
 "                                C#, awk, Tcl, Perl, PHP, GCC-source, Glade,\n"
 "                                Lua, JavaScript, Vala)\n"
 
-#: src/xgettext.c:937
+#: src/xgettext.c:994
 #, c-format
 msgid ""
 "                                (only languages C, C++, ObjectiveC, Shell,\n"
@@ -4097,7 +4192,7 @@ msgstr ""
 "                                C#, awk, Tcl, Perl, PHP, GCC-source, Glade,\n"
 "                                Lua, JavaScript, Vala, Desktop)\n"
 
-#: src/xgettext.c:942
+#: src/xgettext.c:999
 #, c-format
 msgid ""
 "      --flag=WORD:ARG:FLAG    additional flag for strings inside the "
@@ -4108,7 +4203,7 @@ msgstr ""
 "аргумента\n"
 "                              номер АРГ ключевого слова СЛОВО\n"
 
-#: src/xgettext.c:945
+#: src/xgettext.c:1002
 #, c-format
 msgid ""
 "                                (only languages C, C++, ObjectiveC, Shell,\n"
@@ -4123,37 +4218,37 @@ msgstr ""
 "                                C#, awk, YCP, Tcl, Perl, PHP, GCC-source,\n"
 "                                Lua, JavaScript, Vala)\n"
 
-#: src/xgettext.c:950
+#: src/xgettext.c:1007
 #, c-format
 msgid "  -T, --trigraphs             understand ANSI C trigraphs for input\n"
 msgstr "  -T, --trigraphs             понимать на входе триграфы ANSI C\n"
 
-#: src/xgettext.c:952
+#: src/xgettext.c:1009
 #, c-format
 msgid "                                (only languages C, C++, ObjectiveC)\n"
 msgstr "                                (только языки C, C++, ObjectiveC)\n"
 
-#: src/xgettext.c:954
+#: src/xgettext.c:1011
 #, c-format
 msgid "      --qt                    recognize Qt format strings\n"
 msgstr "      --qt                    распознавать форматные строки Qt\n"
 
-#: src/xgettext.c:956 src/xgettext.c:960 src/xgettext.c:964
+#: src/xgettext.c:1013 src/xgettext.c:1017 src/xgettext.c:1021
 #, c-format
 msgid "                                (only language C++)\n"
 msgstr "                                (только язык C++)\n"
 
-#: src/xgettext.c:958
+#: src/xgettext.c:1015
 #, c-format
 msgid "      --kde                   recognize KDE 4 format strings\n"
 msgstr "      --kde                   распознавать форматные строки KDE 4\n"
 
-#: src/xgettext.c:962
+#: src/xgettext.c:1019
 #, c-format
 msgid "      --boost                 recognize Boost format strings\n"
 msgstr "      --boost                 распознавать форматные строки Boost\n"
 
-#: src/xgettext.c:966
+#: src/xgettext.c:1023
 #, c-format
 msgid ""
 "      --debug                 more detailed formatstring recognition result\n"
@@ -4161,19 +4256,19 @@ msgstr ""
 "      --debug                 более подробный результат разбора форматной "
 "строки\n"
 
-#: src/xgettext.c:991
+#: src/xgettext.c:1048
 #, c-format
 msgid "      --properties-output     write out a Java .properties file\n"
 msgstr "      --properties-output     записать .properties-файл Java\n"
 
-#: src/xgettext.c:1006
+#: src/xgettext.c:1063
 #, c-format
 msgid "      --copyright-holder=STRING  set copyright holder in output\n"
 msgstr ""
 "      --copyright-holder=СТРОКА\n"
 "                      задает наименование обладателя авторских прав\n"
 
-#: src/xgettext.c:1008
+#: src/xgettext.c:1065
 #, c-format
 msgid ""
 "      --foreign-user          omit FSF copyright in output for foreign user\n"
@@ -4181,19 +4276,19 @@ msgstr ""
 "      --foreign-user          не выводить уведомление об авторских правах "
 "FSF\n"
 
-#: src/xgettext.c:1010
+#: src/xgettext.c:1067
 #, c-format
 msgid "      --package-name=PACKAGE  set package name in output\n"
 msgstr "      --package-name=ПАКЕТ    задать имя пакета для вывода\n"
 
-#: src/xgettext.c:1012
+#: src/xgettext.c:1069
 #, c-format
 msgid "      --package-version=VERSION  set package version in output\n"
 msgstr ""
 "      --package-version=ВЕРСИЯ\n"
 "                              задать версию пакета для вывода\n"
 
-#: src/xgettext.c:1014
+#: src/xgettext.c:1071
 #, c-format
 msgid ""
 "      --msgid-bugs-address=EMAIL@ADDRESS  set report address for msgid bugs\n"
@@ -4202,7 +4297,7 @@ msgstr ""
 "                      задает адрес, куда следует отправлять отчет об "
 "ошибках\n"
 
-#: src/xgettext.c:1016
+#: src/xgettext.c:1073
 #, c-format
 msgid ""
 "  -m[STRING], --msgstr-prefix[=STRING]  use STRING or \"\" as prefix for "
@@ -4213,7 +4308,7 @@ msgstr ""
 "                              использовать СТРОКУ или «» как префикс\n"
 "                              к значениям msgstr\n"
 
-#: src/xgettext.c:1019
+#: src/xgettext.c:1076
 #, c-format
 msgid ""
 "  -M[STRING], --msgstr-suffix[=STRING]  use STRING or \"\" as suffix for "
@@ -4224,7 +4319,7 @@ msgstr ""
 "                              использовать СТРОКУ или «» как суффикс\n"
 "                              к значениям msgstr\n"
 
-#: src/xgettext.c:1840
+#: src/xgettext.c:1902
 #, c-format
 msgid ""
 "A --flag argument doesn't have the <keyword>:<argnum>:[pass-]<flag> syntax: "
@@ -4233,31 +4328,31 @@ msgstr ""
 "Аргумент --flag не соответствует синтаксису <ключевое-слово>:<номер-арг>:"
 "[pass-]<флаг>: %s"
 
-#: src/xgettext.c:1965
+#: src/xgettext.c:2027
 msgid "standard input"
 msgstr "стандартный ввод"
 
-#: src/xgettext.c:2071
+#: src/xgettext.c:2133
 #, c-format
 msgid "Non-ASCII character at %s%s."
 msgstr "Не ASCII-символ у %s%s."
 
-#: src/xgettext.c:2075
+#: src/xgettext.c:2137
 #, c-format
 msgid "Non-ASCII comment at or before %s%s."
 msgstr "Не ASCII-комментарий у или перед %s%s."
 
-#: src/xgettext.c:2080
+#: src/xgettext.c:2142
 #, c-format
 msgid "Non-ASCII string at %s%s."
 msgstr "Не ASCII-строка у %s%s."
 
-#: src/xgettext.c:2186 src/xgettext.c:2219 src/xgettext.c:2281
+#: src/xgettext.c:2248 src/xgettext.c:2281 src/xgettext.c:2346
 #, c-format
 msgid "%s%s: warning: "
 msgstr "%s%s: предупреждение: "
 
-#: src/xgettext.c:2189
+#: src/xgettext.c:2251
 #, c-format
 msgid ""
 "Although being used in a format string position, the %s is not a valid %s "
@@ -4266,7 +4361,7 @@ msgstr ""
 "Несмотря на использование в месте, где предполагается форматная строка, %s "
 "не является верной форматной строкой %s. Причина: %s\n"
 
-#: src/xgettext.c:2190
+#: src/xgettext.c:2252
 #, c-format
 msgid ""
 "Although declared as such, the %s is not a valid %s format string. Reason: "
@@ -4275,7 +4370,7 @@ msgstr ""
 "Строка %s не является верной форматной строкой %s, хотя и объявлена как "
 "таковая. Причина: %s\n"
 
-#: src/xgettext.c:2221
+#: src/xgettext.c:2283
 #, c-format
 msgid ""
 "'%s' format string with unnamed arguments cannot be properly localized:\n"
@@ -4289,7 +4384,7 @@ msgstr ""
 "Используйте форматную строку с именованными аргументами и\n"
 "отображение вместо кортежа для аргументов.\n"
 
-#: src/xgettext.c:2283
+#: src/xgettext.c:2348
 msgid ""
 "Empty msgid.  It is reserved by GNU gettext:\n"
 "gettext(\"\") returns the header entry with\n"
@@ -4299,29 +4394,29 @@ msgstr ""
 "gettext(\"\") возвращает текст заголовка с метаинформацией,\n"
 "а не пустую строку.\n"
 
-#: src/xgettext.c:2979
+#: src/xgettext.c:3085
 #, c-format
 msgid "ambiguous argument specification for keyword '%.*s'"
 msgstr "неоднозначная спецификация аргумента для ключевого слова «%.*s»"
 
-#: src/xgettext.c:3006
+#: src/xgettext.c:3112
 #, c-format
 msgid "warning: missing context for keyword '%.*s'"
 msgstr "предупреждение: не указан контекст для ключевого слова «%.*s»"
 
-#: src/xgettext.c:3031
+#: src/xgettext.c:3137
 #, c-format
 msgid "warning: missing context for plural argument of keyword '%.*s'"
 msgstr ""
 "предупреждение: не указан контекст для аргумента во множественном числе у "
 "ключевого слова «%.*s»"
 
-#: src/xgettext.c:3052
+#: src/xgettext.c:3158
 #, c-format
 msgid "context mismatch between singular and plural form"
 msgstr "не совпадают контексты у форм в единственном и множественном числе"
 
-#: src/xgettext.c:3427
+#: src/xgettext.c:3533
 msgid ""
 "The option --msgid-bugs-address was not specified.\n"
 "If you are using a 'Makevars' file, please specify\n"
@@ -4332,7 +4427,7 @@ msgstr ""
 "«Makevars», установите в нём переменную MSGID_BUGS_ADDRESS, в\n"
 "противном случае задайте в командной строке параметр --msgid-bugs-address.\n"
 
-#: src/xgettext.c:3646
+#: src/xgettext.c:3753
 #, c-format
 msgid "language '%s' unknown"
 msgstr "язык «%s» неизвестен"

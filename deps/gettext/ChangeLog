@@ -1,3 +1,80 @@
+2015-07-12  Daiki Ueno  <ueno@gnu.org>
+
+	build: Avoid link error on Mac OS X < 10.6
+	Reported by Ryan Schmidt in:
+	<http://savannah.gnu.org/bugs/?45527>.
+	* autogen.sh (GNULIB_MODULES_LIBGETTEXTPO): Add stpcpy and
+	stpncpy.
+
+2015-07-10  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.5 released.
+
+2015-06-22  Daiki Ueno  <ueno@gnu.org>
+
+	* NEWS: Mention msginit change.
+
+2015-05-08  Часлав Илић (Chusslove Illich)  <caslav.ilic@gmx.net>  (tiny change)
+
+	* NEWS: Mention --kde behavior change.
+
+2015-05-08  Daiki Ueno  <ueno@gnu.org>
+
+	* THANKS: Update.
+
+2015-03-09  Daiki Ueno  <ueno@gnu.org>
+
+	* NEWS: Mention KUIT format string support.
+
+2015-03-04  Daiki Ueno  <ueno@gnu.org>
+
+	build: Update libtool files to 2.4.6
+	* m4/libtool.m4: Update from libtool-2.4.6, with modifications.
+	2008-04-06  Bruno Haible  <bruno@clisp.org>
+		* m4/libtool.m4 (LT_INIT): When setting LIBTOOL, use
+		CONFIG_SHELL; don't assume that the Makefile.in will set SHELL
+		to ${CONFIG_SHELL}.
+	* m4/ltversion.m4: Likewise.
+	* build-aux/ltmain.sh: Likewise.
+
+2015-03-04  Daiki Ueno  <ueno@gnu.org>
+
+	* NEWS: Add 0.19.5 changes.
+
+2015-02-10  Daiki Ueno  <ueno@gnu.org>
+
+	* THANKS: Update.
+
+2015-02-06  Daiki Ueno  <ueno@gnu.org>
+
+	* THANKS: Update.
+
+2015-01-23  Daiki Ueno  <ueno@gnu.org>
+
+	build: Update libtool files to 2.4.5
+	* m4/libtool.m4: Update from libtool-2.4.5, with modifications.
+	2008-04-06  Bruno Haible  <bruno@clisp.org>
+		* m4/libtool.m4 (LT_INIT): When setting LIBTOOL, use
+		CONFIG_SHELL; don't assume that the Makefile.in will set SHELL
+		to ${CONFIG_SHELL}.
+	* m4/ltoptions.m4: Likewise.
+	* m4/ltversion.m4: Likewise.
+	* build-aux/ltmain.sh: Likewise.
+
+2015-01-21  Daiki Ueno  <ueno@gnu.org>
+
+	* THANKS: Update.
+
+2015-01-04  Daiki Ueno  <ueno@gnu.org>
+
+	* THANKS: Update.
+
+2014-12-25  Daiki Ueno  <ueno@gnu.org>
+
+	* build-aux/texinfo.tex: Update to 2014-12-03.16.  Needed because
+	the original texinfo does not allow @heading usage inside
+	@enumeration and texi2dvi fails due to this.
+
 2014-12-24  Daiki Ueno  <ueno@gnu.org>
 
 	* gettext 0.19.4 released.

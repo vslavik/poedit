@@ -621,8 +621,8 @@ g_parse_long_long (const gchar *nptr,
   /* this code is based on on the strtol(3) code from GNU libc released under
    * the GNU Lesser General Public License.
    *
-   * Copyright (C) 1991,92,94,95,96,97,98,99,2000,01,02
-   *        Free Software Foundation, Inc.
+   * Copyright (C) 1991-1992, 1994-2000, 1901-1902, 2015 Free Software
+   * Foundation, Inc.
    */
 #define ISSPACE(c)		((c) == ' ' || (c) == '\f' || (c) == '\n' || \
 				 (c) == '\r' || (c) == '\t' || (c) == '\v')

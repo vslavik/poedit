@@ -1,6 +1,6 @@
 # source this file; set up for tests
 
-# Copyright (C) 2009-2014 Free Software Foundation, Inc.
+# Copyright (C) 2009-2015 Free Software Foundation, Inc.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -93,6 +93,27 @@ skip_ () { warn_ "$ME_: skipped test: $@"; Exit 77; }
 fatal_ () { warn_ "$ME_: hard error: $@"; Exit 99; }
 framework_failure_ () { warn_ "$ME_: set-up failure: $@"; Exit 99; }
 
+# This is used to simplify checking of the return value
+# which is useful when ensuring a command fails as desired.
+# I.e., just doing `command ... &&fail=1` will not catch
+# a segfault in command for example.  With this helper you
+# instead check an explicit exit code like
+#   returns_ 1 command ... || fail
+returns_ () {
+  # Disable tracing so it doesn't interfere with stderr of the wrapped command
+  { set +x; } 2>/dev/null
+
+  local exp_exit="$1"
+  shift
+  "$@"
+  test $? -eq $exp_exit && ret_=0 || ret_=1
+
+  if test "$VERBOSE" = yes && test "$gl_set_x_corrupts_stderr_" = false; then
+    set -x
+  fi
+  { return $ret_; } 2>/dev/null
+}
+
 # Sanitize this shell to POSIX mode, if possible.
 DUALCASE=1; export DUALCASE
 if test -n "${ZSH_VERSION+set}" && (emulate sh) >/dev/null 2>&1; then
@@ -129,6 +150,7 @@ fi
 #  ? - not ok
 gl_shell_test_script_='
 test $(echo y) = y || exit 1
+f_local_() { local v=1; }; f_local_ || exit 1
 score_=10
 if test "$VERBOSE" = yes; then
   test -n "$( (exec 3>&1; set -x; P=1 true 2>&3) 2> /dev/null)" && score_=9

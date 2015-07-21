@@ -1,5 +1,5 @@
 /* Implementation of the internal dcigettext function.
-   Copyright (C) 1995-1999, 2000-2010, 2012 Free Software Foundation, Inc.
+   Copyright (C) 1995-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
@@ -157,7 +157,7 @@ static void *mempcpy (void *dest, const void *src, size_t n);
 
 /* Use a replacement if the system does not provide the `tsearch' function
    family.  */
-#if HAVE_TSEARCH || defined _LIBC
+#if defined HAVE_TSEARCH || defined _LIBC
 # include <search.h>
 #else
 # define tsearch libintl_tsearch
@@ -550,7 +550,7 @@ DCIGETTEXT (const char *domainname, const char *msgid1, const char *msgid2,
 #ifdef HAVE_PER_THREAD_LOCALE
 # ifndef IN_LIBGLOCALE
 #  ifdef _LIBC
-  localename = _strdupa (_current_locale_name (category));
+  localename = strdupa (__current_locale_name (category));
 #  else
   categoryname = category_to_name (category);
 #   define CATEGORYNAME_INITIALIZED

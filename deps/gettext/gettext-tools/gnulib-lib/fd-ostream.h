@@ -2,7 +2,7 @@
 
 #line 1 "fd-ostream.oo.h"
 /* Output stream referring to a file descriptor.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2015 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify

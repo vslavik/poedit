@@ -26,6 +26,19 @@ EOF
 
 (LANGUAGE= LC_ALL=C ${XGETTEXT} --add-comments -o - err3.desktop 2>&1; exit) | grep "invalid non-blank line" || exit 1
 
+cat <<\EOF >err4.desktop
+[Desktop Entry]a
+EOF
+
+(LANGUAGE= LC_ALL=C ${XGETTEXT} --add-comments -o - err4.desktop 2>&1; exit) | grep "invalid non-blank character" || exit 1
+
+# gettext 0.19.4 issued an baseless warning of this.
+cat <<\EOF >ok4.desktop
+[Desktop Entry]
+EOF
+
+(LANGUAGE= LC_ALL=C ${XGETTEXT} --add-comments -o - ok4.desktop 2>&1; exit) | grep "invalid non-blank character" && exit 1
+
 cat <<\EOF > xg.desktop
 [Desktop Entry]
 Type=Application

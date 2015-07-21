@@ -1,5 +1,6 @@
 /* xgettext C# backend.
-   Copyright (C) 2003, 2005-2009, 2011 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2005-2009, 2011, 2015 Free Software Foundation,
+   Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify

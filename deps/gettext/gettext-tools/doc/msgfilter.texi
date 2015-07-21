@@ -73,6 +73,14 @@ input and writes a modified translation to standard output.  A frequently
 used filter is @samp{sed}.  A few particular built-in filters are also
 recognized.
 
+@table @samp
+@item --newline
+@opindex --newline@r{, @code{msgfilter} option}
+Add newline at the end of each input line and also strip the ending
+newline from the output line.
+
+@end table
+
 @cindex @code{msgfilter} filter and catalog encoding
 Note: If the filter is not a built-in filter, you have to care about encodings:
 It is your responsibility to ensure that the @var{filter} can cope
@@ -86,13 +94,14 @@ you can first convert the translation catalog to UTF-8 using the
 locale, by using the @code{LC_ALL} environment variable.
 
 @cindex portability problems with @code{sed}
-Note: Most translations in a translation catalog don't end with a newline
-character.  For this reason, it is important that the @var{filter}
-recognizes its last input line even if it ends without a newline, and that
-it doesn't add an undesired trailing newline at the end.  The @samp{sed}
-program on some platforms is known to ignore the last line of input if it
-is not terminated with a newline.  You can use GNU @code{sed} instead; it
-does not have this limitation.
+Note: Most translations in a translation catalog don't end with a
+newline character.  For this reason, unless the @code{--newline}
+option is used, it is important that the @var{filter} recognizes its
+last input line even if it ends without a newline, and that it doesn't
+add an undesired trailing newline at the end.  The @samp{sed} program on
+some platforms is known to ignore the last line of input if it is not
+terminated with a newline.  You can use GNU @code{sed} instead; it does
+not have this limitation.
 
 @subsection Useful @var{filter-option}s when the @var{filter} is @samp{sed}
 

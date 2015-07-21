@@ -1,5 +1,5 @@
 /* Handle list of needed message catalogs
-   Copyright (C) 1995-1999, 2000-2001, 2003-2007 Free Software Foundation, Inc.
+   Copyright (C) 1995-2015 Free Software Foundation, Inc.
    Written by Ulrich Drepper <drepper@gnu.org>, 1995.
 
    This program is free software: you can redistribute it and/or modify
@@ -193,7 +193,7 @@ out:
 /* This is called from iconv/gconv_db.c's free_mem, as locales must
    be freed before freeing gconv steps arrays.  */
 void __libc_freeres_fn_section
-_nl_finddomain_subfreeres ()
+_nl_finddomain_subfreeres (void)
 {
   struct loaded_l10nfile *runp = _nl_loaded_domains;
 

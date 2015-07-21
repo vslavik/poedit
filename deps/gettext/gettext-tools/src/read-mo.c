@@ -1,5 +1,6 @@
 /* Reading binary .mo files.
-   Copyright (C) 1995-1998, 2000-2007 Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2007, 2015 Free Software Foundation,
+   Inc.
    Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, April 1995.
 
    This program is free software: you can redistribute it and/or modify
@@ -149,6 +150,7 @@ get_sysdep_string (const struct binary_mo_file *bfp, size_t offset,
   nls_uint32 s_offset;
 
   /* Compute the length.  */
+  s_offset = get_uint32 (bfp, offset);
   length = 0;
   for (i = 4; ; i += 8)
     {
@@ -158,9 +160,14 @@ get_sysdep_string (const struct binary_mo_file *bfp, size_t offset,
       nls_uint32 ss_length;
       nls_uint32 ss_offset;
       size_t ss_end;
+      size_t s_end;
       size_t n;
 
+      s_end = xsum (s_offset, segsize);
+      if (size_overflow_p (s_end) || s_end > bfp->size)
+        error (EXIT_FAILURE, 0, _("file \"%s\" is truncated"), bfp->filename);
       length += segsize;
+      s_offset += segsize;
 
       if (sysdepref == SEGMENTS_END)
         break;
@@ -175,7 +182,7 @@ get_sysdep_string (const struct binary_mo_file *bfp, size_t offset,
       ss_end = xsum (ss_offset, ss_length);
       if (size_overflow_p (ss_end) || ss_end > bfp->size)
         error (EXIT_FAILURE, 0, _("file \"%s\" is truncated"), bfp->filename);
-      if (!(ss_length > 0 && bfp->data[ss_offset + ss_length - 1] == '\0'))
+      if (!(ss_length > 0 && bfp->data[ss_end - 1] == '\0'))
         {
           char location[30];
           sprintf (location, "sysdep_segment[%u]", (unsigned int) sysdepref);
@@ -198,11 +205,8 @@ get_sysdep_string (const struct binary_mo_file *bfp, size_t offset,
       nls_uint32 sysdep_segment_offset;
       nls_uint32 ss_length;
       nls_uint32 ss_offset;
-      size_t s_end = xsum (s_offset, segsize);
       size_t n;
 
-      if (size_overflow_p (s_end) || s_end > bfp->size)
-        error (EXIT_FAILURE, 0, _("file \"%s\" is truncated"), bfp->filename);
       memcpy (p, bfp->data + s_offset, segsize);
       p += segsize;
       s_offset += segsize;
