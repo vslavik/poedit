@@ -661,10 +661,9 @@ SuggestionsList TranslationMemory::Search(const Language& srclang,
                                           const Language& lang,
                                           const std::wstring& source)
 {
-    if (m_impl)
-        return m_impl->Search(srclang, lang, source);
-    else
+    if (!m_impl)
         std::rethrow_exception(m_error);
+    return m_impl->Search(srclang, lang, source);
 }
 
 void TranslationMemory::SuggestTranslation(const Language& srclang,
@@ -685,16 +684,14 @@ void TranslationMemory::SuggestTranslation(const Language& srclang,
 
 std::shared_ptr<TranslationMemory::Writer> TranslationMemory::GetWriter()
 {
-    if (m_impl)
-        return m_impl->GetWriter();
-    else
+    if (!m_impl)
         std::rethrow_exception(m_error);
+    return m_impl->GetWriter();
 }
 
 void TranslationMemory::GetStats(long& numDocs, long& fileSize)
 {
-    if (m_impl)
-        m_impl->GetStats(numDocs, fileSize);
-    else
+    if (!m_impl)
         std::rethrow_exception(m_error);
+    m_impl->GetStats(numDocs, fileSize);
 }
