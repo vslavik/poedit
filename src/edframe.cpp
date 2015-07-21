@@ -2405,8 +2405,12 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
 
 void PoeditFrame::FixDuplicatesIfPresent()
 {
-    // Poedit always produces good files, so don't bother:
-    if (m_catalog->Header().GetHeader("X-Generator").StartsWith("Poedit "))
+    // Poedit always produces good files, so don't bother with it. Older
+    // versions would preserve bad files, though.
+    wxString generator = m_catalog->Header().GetHeader("X-Generator");
+    wxString gversion;
+    if (generator.StartsWith("Poedit ", &gversion) &&
+            !gversion.StartsWith("1.7") && !gversion.StartsWith("1.6") && !gversion.StartsWith("1.5"))
         return;
 
     if (!m_catalog->HasDuplicateItems())
