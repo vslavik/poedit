@@ -1,6 +1,6 @@
 /* A more-standard <time.h>.
 
-   Copyright (C) 2007-2014 Free Software Foundation, Inc.
+   Copyright (C) 2007-2015 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -55,6 +55,8 @@
 #   include <sys/time.h>
 #  elif @PTHREAD_H_DEFINES_STRUCT_TIMESPEC@
 #   include <pthread.h>
+#  elif @UNISTD_H_DEFINES_STRUCT_TIMESPEC@
+#   include <unistd.h>
 #  else
 
 #   ifdef __cplusplus

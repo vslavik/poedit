@@ -1,5 +1,5 @@
 /* Test of <locale.h> substitute.
-   Copyright (C) 2007, 2009-2014 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2009-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -33,11 +33,6 @@ int a[] =
     LC_TIME
   };
 
-#if HAVE_NEWLOCALE
-/* Check that the locale_t type and the LC_GLOBAL_LOCALE macro are defined.  */
-locale_t b = LC_GLOBAL_LOCALE;
-#endif
-
 /* Check that the 'struct lconv' type is defined.  */
 struct lconv l;
 int ls;
@@ -49,6 +44,12 @@ verify (sizeof NULL == sizeof (void *));
 int
 main ()
 {
+#if HAVE_NEWLOCALE
+  /* Check that the locale_t type and the LC_GLOBAL_LOCALE macro are defined.  */
+  locale_t b = LC_GLOBAL_LOCALE;
+  (void) b;
+#endif
+
   /* Check that 'struct lconv' has the ISO C and POSIX specified members.  */
   ls += sizeof (*l.decimal_point);
   ls += sizeof (*l.thousands_sep);

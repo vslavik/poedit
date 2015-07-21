@@ -1,5 +1,5 @@
 /* Provide relocatable packages.
-   Copyright (C) 2003-2006, 2008-2014 Free Software Foundation, Inc.
+   Copyright (C) 2003-2006, 2008-2015 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -45,6 +45,14 @@
 #if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
+#endif
+
+#ifdef __EMX__
+# define INCL_DOS
+# include <os2.h>
+
+# define strcmp  stricmp
+# define strncmp strnicmp
 #endif
 
 #if DEPENDS_ON_LIBCHARSET
@@ -335,6 +343,45 @@ DllMain (HINSTANCE module_handle, DWORD event, LPVOID reserved)
   return TRUE;
 }
 
+#elif defined __EMX__
+
+extern int  _CRT_init (void);
+extern void _CRT_term (void);
+extern void __ctordtorInit (void);
+extern void __ctordtorTerm (void);
+
+unsigned long _System
+_DLL_InitTerm (unsigned long hModule, unsigned long ulFlag)
+{
+  static char location[CCHMAXPATH];
+
+  switch (ulFlag)
+    {
+      case 0:
+        if (_CRT_init () == -1)
+          return 0;
+
+        __ctordtorInit();
+
+        /* See http://cyberkinetica.homeunix.net/os2tk45/cp1/1247_L2H_DosQueryModuleNameSy.html
+           for specification of DosQueryModuleName(). */
+        if (DosQueryModuleName (hModule, sizeof (location), location))
+          return 0;
+
+        _fnslashify (location);
+        shared_library_fullname = strdup (location);
+        break;
+
+      case 1:
+        __ctordtorTerm();
+
+        _CRT_term ();
+        break;
+    }
+
+  return 1;
+}
+
 #else /* Unix */
 
 static void
@@ -390,15 +437,16 @@ find_shared_library_fullname ()
 #endif
 }
 
-#endif /* Native Windows / Unix */
+#endif /* Native Windows / EMX / Unix */
 
 /* Return the full pathname of the current shared library.
    Return NULL if unknown.
-   Guaranteed to work only on Linux, Cygwin, and native Windows.  */
+   Guaranteed to work only on Linux, EMX, Cygwin, and native Windows.  */
 static char *
 get_shared_library_fullname ()
 {
-#if !((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__)
+#if (!((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) \
+     && !defined __EMX__)
   static bool tried_find_shared_library_fullname;
   if (!tried_find_shared_library_fullname)
     {
@@ -489,6 +537,27 @@ relocate (const char *pathname)
             }
         }
     }
+
+#ifdef __EMX__
+  if (pathname && ISSLASH (pathname[0]))
+    {
+      const char *unixroot = getenv ("UNIXROOT");
+
+      if (unixroot && HAS_DEVICE (unixroot) && !unixroot[2])
+        {
+          char *result = (char *) xmalloc (2 + strlen (pathname) + 1);
+#ifdef NO_XMALLOC
+          if (result != NULL)
+#endif
+            {
+              strcpy (result, unixroot);
+              strcpy (result + 2, pathname);
+              return result;
+            }
+        }
+    }
+#endif
+
   /* Nothing to relocate.  */
   return pathname;
 }

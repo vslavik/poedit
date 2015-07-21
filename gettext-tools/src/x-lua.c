@@ -1,5 +1,5 @@
 /* xgettext Lua backend.
-   Copyright (C) 2012-2013 Free Software Foundation, Inc.
+   Copyright (C) 2012-2015 Free Software Foundation, Inc.
 
    This file was written by Ľubomír Remák <lubomirr@lubomirr.eu>, 2012.
 

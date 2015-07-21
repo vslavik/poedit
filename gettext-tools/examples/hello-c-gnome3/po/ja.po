@@ -1,13 +1,13 @@
 # Translation of `hello-c-gnome3' messages to Japanese.
-# Copyright (C) 2005, 2006, 2014 Yoyodyne, Inc. (msgids)
+# Copyright (C) 2005, 2006, 2014, 2015 Yoyodyne, Inc. (msgids)
 # This file is distributed under the same license as the gettext package.
-# Masahito Yamaga <ma@yama-ga.com>, 2014.
+# Masahito Yamaga <ma@yama-ga.com>, 2015.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GNU hello-c-gnome3 0.19.4-rc1\n"
+"Project-Id-Version: GNU hello-c-gnome3 0.19.4.73\n"
 "Report-Msgid-Bugs-To: bug-gnu-gettext@gnu.org\n"
-"PO-Revision-Date: 2014-12-11 08:49+0900\n"
+"PO-Revision-Date: 2015-06-24 12:14+0900\n"
 "Last-Translator: Masahito Yamaga <ma@yama-ga.com>\n"
 "Language-Team: Japanese <translation-team-ja@lists.sourceforge.net>\n"
 "Language: ja\n"
@@ -15,16 +15,28 @@ msgstr ""
 "Content-Type: text/plain; charset=EUC-JP\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: hello.c:70
+#: hello.c:79
 #, c-format
-msgid "This program is running as process number %d."
-msgstr "このプログラムはプロセス番号 %d で動いています."
+msgid ""
+"<big>Hello world!</big>\n"
+"This program is running as process number <b>%d</b>."
+msgstr ""
+"<big>Hello world!</big>\n"
+"このプログラムはプロセス番号 <b>%d</b> で動いています."
+
+#: hello.c:84
+msgid "<big><u>This is another text</u></big>"
+msgstr "<big><u>これはもう一つのテキストです</u></big>"
+
+#: hello.c:86
+msgid "<big><i>This is yet another text</i></big>"
+msgstr "<big><i>これはさらにもう一つのテキストです</i></big>"
 
 #: hello.desktop.in.in:4
 msgid "Hello"
 msgstr "こんにちは"
 
-#: hello.desktop.in.in:5 hello.ui:22
+#: hello.desktop.in.in:5
 msgid "Hello, world!"
 msgstr "世界よ, こんにちは!"
 
@@ -32,10 +44,14 @@ msgstr "世界よ, こんにちは!"
 msgid "Example Application"
 msgstr "実例応用"
 
+#: hello.ui:33
+msgid "Update text"
+msgstr "テキストを更新"
+
 #: hello.gschema.xml:7
-msgid "Set label sensitive"
-msgstr "ラベルを慎重に扱うように設定"
+msgid "Use XML markup"
+msgstr "XMLマークアップを使用"
 
 #: hello.gschema.xml:8
-msgid "Whether to set the label sensitive."
-msgstr "そのラベルを慎重に扱うように設定するか否か"
+msgid "Whether to use XML markup in the text."
+msgstr "テキスト内でXMLマークアップを使うか否か"

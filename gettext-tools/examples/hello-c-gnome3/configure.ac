@@ -10,7 +10,7 @@ AM_INIT_AUTOMAKE(hello-c-gnome3, 0)
 AC_PROG_CC
 AC_CHECK_HEADERS([unistd.h])
 AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION(0.15)
+AM_GNU_GETTEXT_VERSION(0.19)
 
 dnl Check GNOME specific stuff.
 dnl

@@ -1,5 +1,6 @@
 /* Reading PO files.
-   Copyright (C) 1995-1998, 2000-2003, 2005-2006, 2008-2009 Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2003, 2005-2006, 2008-2009, 2015 Free
+   Software Foundation, Inc.
    This file was written by Bruno Haible <haible@clisp.cons.org>.
 
    This program is free software: you can redistribute it and/or modify
@@ -113,6 +114,7 @@ struct default_catalog_reader_class_ty
   enum is_format is_format[NFORMATS];                                   \
   struct argument_range range;                                          \
   enum is_wrap do_wrap;                                                 \
+  enum is_syntax_check do_syntax_check[NSYNTAXCHECKS];                  \
 
 typedef struct default_catalog_reader_ty default_catalog_reader_ty;
 struct default_catalog_reader_ty

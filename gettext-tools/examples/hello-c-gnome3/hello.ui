@@ -10,45 +10,34 @@
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
         <child>
-	  <object class="GtkAlignment" id="label1aligned">
+          <object class="GtkAlignment" id="alignment">
             <property name="visible">True</property>
-            <property name="xalign">0.0</property>
+            <property name="xalign">0.5</property>
             <property name="yalign">0.5</property>
             <property name="xscale">0</property>
             <property name="yscale">0</property>
+            <property name="vexpand">True</property>
             <child>
-	      <object class="GtkLabel" id="label1">
-		<property name="visible">True</property>
-                <property name="label" translatable="yes">Hello, world!</property>
-	      </object>
-	    </child>
-	  </object>
+              <object class="GtkLabel" id="label">
+                <property name="visible">True</property>
+              </object>
+            </child>
+          </object>
         </child>
         <child>
-	  <object class="GtkAlignment" id="label2aligned">
+          <object class="GtkHButtonBox" id="buttonbar">
             <property name="visible">True</property>
-            <property name="xalign">0.0</property>
-            <property name="yalign">0.5</property>
-            <property name="xscale">0</property>
-            <property name="yscale">0</property>
             <child>
-	      <object class="GtkLabel" id="label2">
-		<property name="visible">True</property>
-	      </object>
-	    </child>
-	  </object>
-        </child>
-        <child>
-	  <object class="GtkHButtonBox" id="buttonbar">
-            <property name="visible">True</property>
-	    <child>
-	      <object class="GtkButton" id="button">
-		<property name="visible">True</property>
-                <property name="label">gtk-ok</property>
-                <property name="use_stock">True</property>
-	      </object>
-	    </child>
-	  </object>
+              <object class="GtkButton" id="button">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Update text</property>
+                <property name="use_stock">False</property>
+              </object>
+              <packing>
+                <property name="pack-type">end</property>
+              </packing>
+            </child>
+          </object>
         </child>
       </object>
     </child>

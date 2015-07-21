@@ -36,19 +36,21 @@ resources.c: hello.gresource.xml hello.ui
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) $< --target=$@ \
 		--sourcedir=$(srcdir) --generate-source
 
-# Merge translations into a Desktop Entry file.
 desktopdir = $(datadir)/applications
 desktop_DATA = hello.desktop
 
+# Merge translations back into a Desktop Entry file.
+
+# Note that the resulting file should be included in EXTRA_DIST and
+# processed earlier than the variable substitution below.  Otherwise,
+# the 'msgfmt' command will be required at compile-time.
 hello.desktop.in: hello.desktop.in.in
 	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -o $@-t \
 	  -d $(top_srcdir)/po && mv $@-t $@
 
 hello.desktop: hello.desktop.in
 	@rm -f $@ $@-t
-	$(AM_V_GEN) srcdir=''; \
-	  test -f ./$< || srcdir=$(srcdir)/; \
-	  sed -e "s|@bindir[@]|$(bindir)|" $< > $@-t && mv $@-t $@
+	$(AM_V_GEN) sed -e 's|@bindir[@]|$(bindir)|g' $< > $@-t && mv $@-t $@
 
 CLEANFILES = $(BUILT_SOURCES) hello.desktop $(desktop_DATA)
 

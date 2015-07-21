@@ -1,5 +1,6 @@
 /* xgettext C/C++/ObjectiveC backend.
-   Copyright (C) 2001-2003, 2006, 2009 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006, 2009, 2015 Free Software Foundation,
+   Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -45,7 +46,7 @@ extern "C" {
                         &flag_table_c,                                  \
                         &formatstring_c, NULL,                          \
                         &literalstring_c },                             \
-  { "C++",              extract_c,                                      \
+  { "C++",              extract_cxx,                                    \
                         &flag_table_c,                                  \
                         &formatstring_c, NULL,                          \
                         &literalstring_c },                             \
@@ -58,11 +59,16 @@ extern "C" {
                         &formatstring_gcc_internal, &formatstring_gfc_internal, \
                         &literalstring_c },                             \
 
-/* Scan a C/C++ file and add its translatable strings to mdlp.  */
+/* Scan a C file and add its translatable strings to mdlp.  */
 extern void extract_c (FILE *fp, const char *real_filename,
                        const char *logical_filename,
                        flag_context_list_table_ty *flag_table,
                        msgdomain_list_ty *mdlp);
+/* Scan a C++ file and add its translatable strings to mdlp.  */
+extern void extract_cxx (FILE *fp, const char *real_filename,
+                         const char *logical_filename,
+                         flag_context_list_table_ty *flag_table,
+                         msgdomain_list_ty *mdlp);
 /* Scan an ObjectiveC file and add its translatable strings to mdlp.  */
 extern void extract_objc (FILE *fp, const char *real_filename,
                           const char *logical_filename,
@@ -79,9 +85,12 @@ extern void x_objc_keyword (const char *name);
 
 extern void x_c_trigraphs (void);
 
+extern void activate_additional_keywords_kde (void);
+
 extern void init_flag_table_c (void);
 extern void init_flag_table_objc (void);
 extern void init_flag_table_gcc_internal (void);
+extern void init_flag_table_kde (void);
 
 
 extern struct literalstring_parser literalstring_c;

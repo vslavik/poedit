@@ -1,5 +1,6 @@
 ## Makefile for the gettext-tools/tests subdirectory of GNU gettext
-## Copyright (C) 1995-1997, 2001-2010 Free Software Foundation, Inc.
+## Copyright (C) 1995-1997, 2001-2010, 2015 Free Software Foundation,
+## Inc.
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -40,9 +41,9 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	msgcomm-26 msgcomm-27 msgcomm-28 \
 	msgconv-1 msgconv-2 msgconv-3 msgconv-4 msgconv-5 msgconv-6 msgconv-7 \
 	msgen-1 msgen-2 msgen-3 msgen-4 \
-	msgexec-1 msgexec-2 msgexec-3 msgexec-4 msgexec-5 \
+	msgexec-1 msgexec-2 msgexec-3 msgexec-4 msgexec-5 msgexec-6 \
 	msgfilter-1 msgfilter-2 msgfilter-3 msgfilter-4 msgfilter-5 \
-	msgfilter-6 msgfilter-7 \
+	msgfilter-6 msgfilter-7 msgfilter-8 \
 	msgfilter-sr-latin-1 msgfilter-quote-1 \
 	msgfmt-1 msgfmt-2 msgfmt-3 msgfmt-4 msgfmt-5 msgfmt-6 msgfmt-7 \
 	msgfmt-8 msgfmt-9 msgfmt-10 msgfmt-11 msgfmt-12 msgfmt-13 msgfmt-14 \
@@ -52,7 +53,7 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	msgfmt-desktop-1 msgfmt-desktop-2 \
 	msggrep-1 msggrep-2 msggrep-3 msggrep-4 msggrep-5 msggrep-6 msggrep-7 \
 	msggrep-8 msggrep-9 msggrep-10 msggrep-11 \
-	msginit-1 msginit-2 msginit-3 \
+	msginit-1 msginit-2 msginit-3 msginit-4 \
 	msgmerge-1 msgmerge-2 msgmerge-3 msgmerge-4 msgmerge-5 msgmerge-6 \
 	msgmerge-7 msgmerge-8 msgmerge-9 msgmerge-10 msgmerge-11 msgmerge-12 \
 	msgmerge-13 msgmerge-14 msgmerge-15 msgmerge-16 msgmerge-17 \
@@ -72,11 +73,13 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	recode-sr-latin-1 recode-sr-latin-2 \
 	xgettext-2 xgettext-3 xgettext-4 xgettext-5 xgettext-6 \
 	xgettext-7 xgettext-8 xgettext-9 xgettext-10 xgettext-11 xgettext-12 \
+	xgettext-13 xgettext-14 \
 	xgettext-awk-1 xgettext-awk-2 \
 	xgettext-c-2 xgettext-c-3 xgettext-c-4 xgettext-c-5 \
 	xgettext-c-6 xgettext-c-7 xgettext-c-8 xgettext-c-9 xgettext-c-10 \
 	xgettext-c-11 xgettext-c-12 xgettext-c-13 xgettext-c-14 xgettext-c-15 \
 	xgettext-c-16 xgettext-c-17 xgettext-c-18 xgettext-c-19 xgettext-c-20 \
+	xgettext-c-21 \
 	xgettext-csharp-1 xgettext-csharp-2 xgettext-csharp-3 \
 	xgettext-csharp-4 xgettext-csharp-5 xgettext-csharp-6 \
 	xgettext-csharp-7 xgettext-csharp-8 \
@@ -118,6 +121,7 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	format-gfc-internal-1 format-gfc-internal-2 \
 	format-java-1 format-java-2 \
 	format-kde-1 format-kde-2 \
+	format-kde-kuit-1 format-kde-kuit-2 \
 	format-librep-1 format-librep-2 \
 	format-lisp-1 format-lisp-2 \
 	format-php-1 format-php-2 \
@@ -136,13 +140,13 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 gettext-7 \
 	format-lua-1 format-lua-2 \
 	format-javascript-1 format-javascript-2 \
 	plural-1 plural-2 \
-	gettextpo-1 \
+	gettextpo-1 sentence \
 	lang-c lang-c++ lang-objc lang-sh lang-bash lang-python-1 \
 	lang-python-2 lang-clisp lang-elisp lang-librep lang-guile \
 	lang-smalltalk lang-java lang-csharp lang-gawk lang-pascal \
 	lang-ycp lang-tcl lang-perl-1 lang-perl-2 lang-php lang-po lang-rst \
 	lang-lua lang-javascript lang-vala \
-	autopoint-1 autopoint-2 autopoint-3
+	autopoint-1 autopoint-2 autopoint-3 cldr-plurals-1
 
 EXTRA_DIST += init.sh init.cfg $(TESTS) \
 	test.mo overflow-1.mo overflow-2.mo overflow-3.mo overflow-4.mo \
@@ -157,7 +161,8 @@ EXTRA_DIST += init.sh init.cfg $(TESTS) \
 	gettext-6-1.po gettext-6-2.po gettext-7.po \
 	gettextpo-1.de.po \
 	xgettext-1 \
-	xgettext-c-1
+	xgettext-c-1 xg-c-21.c \
+	common/supplemental/plurals.xml
 
 XGETTEXT = ../src/xgettext
 
@@ -210,7 +215,7 @@ DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 LDADD = $(LDADD_@USE_INCLUDED_LIBINTL@) @INTL_MACOSX_LIBS@
 LDADD_yes = ../intl/libintl.la @LTLIBTHREAD@
 LDADD_no = ../intl/libgnuintl.la @LTLIBTHREAD@ @LTLIBINTL@
-noinst_PROGRAMS = tstgettext tstngettext testlocale gettext-3-prg gettext-4-prg gettext-5-prg gettext-6-prg gettext-7-prg gettext-8-prg cake fc3 fc4 fc5 gettextpo-1-prg
+noinst_PROGRAMS = tstgettext tstngettext testlocale gettext-3-prg gettext-4-prg gettext-5-prg gettext-6-prg gettext-7-prg gettext-8-prg cake fc3 fc4 fc5 gettextpo-1-prg sentence
 tstgettext_SOURCES = tstgettext.c setlocale.c
 tstgettext_CFLAGS = -DINSTALLDIR=\".\"
 tstgettext_LDADD = ../gnulib-lib/libgettextlib.la $(LDADD)
@@ -254,6 +259,9 @@ gettextpo_1_prg_CPPFLAGS = \
 # Don't add more libraries here. This test must check whether libgettextpo is
 # self contained.
 gettextpo_1_prg_LDADD = ../libgettextpo/libgettextpo.la $(LDADD)
+sentence_SOURCES = sentence.c
+sentence_CPPFLAGS = $(AM_CPPFLAGS) -I../src -I$(top_srcdir)/src
+sentence_LDADD = ../src/libgettextsrc.la $(LDADD)
 
 # Clean up after Solaris cc.
 clean-local:

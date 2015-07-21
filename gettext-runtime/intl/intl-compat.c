@@ -1,6 +1,7 @@
 /* intl-compat.c - Stub functions to call gettext functions from GNU gettext
    Library.
-   Copyright (C) 1995, 2000-2003, 2005 Free Software Foundation, Inc.
+   Copyright (C) 1995, 2000-2003, 2005, 2015 Free Software Foundation,
+   Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by

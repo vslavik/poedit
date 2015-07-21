@@ -1,5 +1,6 @@
 /* xgettext C/C++/ObjectiveC backend.
-   Copyright (C) 1995-1998, 2000-2009, 2012 Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2009, 2012, 2015 Free Software
+   Foundation, Inc.
 
    This file was written by Peter Miller <millerp@canb.auug.org.au>
 
@@ -143,6 +144,14 @@ x_objc_keyword (const char *name)
   add_keyword (name, &objc_keywords);
 }
 
+static bool additional_keywords_kde;
+
+void
+activate_additional_keywords_kde ()
+{
+  additional_keywords_kde = true;
+}
+
 /* Finish initializing the keywords hash tables.
    Called after argument processing, before each file is processed.  */
 static void
@@ -165,6 +174,50 @@ init_keywords ()
       x_c_keyword ("npgettext:1c,2,3");
       x_c_keyword ("dnpgettext:2c,3,4");
       x_c_keyword ("dcnpgettext:2c,3,4");
+
+      if (additional_keywords_kde)
+        {
+          x_c_keyword ("i18n:1");
+          x_c_keyword ("i18nc:1c,2");
+          x_c_keyword ("i18np:1,2");
+          x_c_keyword ("i18ncp:1c,2,3");
+          x_c_keyword ("i18nd:2");
+          x_c_keyword ("i18ndc:2c,3");
+          x_c_keyword ("i18ndp:2,3");
+          x_c_keyword ("i18ndcp:2c,3,4");
+          x_c_keyword ("ki18n:1");
+          x_c_keyword ("ki18nc:1c,2");
+          x_c_keyword ("ki18np:1,2");
+          x_c_keyword ("ki18ncp:1c,2,3");
+          x_c_keyword ("ki18nd:2");
+          x_c_keyword ("ki18ndc:2c,3");
+          x_c_keyword ("ki18ndp:2,3");
+          x_c_keyword ("ki18ndcp:2c,3,4");
+          x_c_keyword ("I18N_NOOP:1");
+          x_c_keyword ("I18NC_NOOP:1c,2");
+          x_c_keyword ("I18N_NOOP2:1c,2");
+          x_c_keyword ("I18N_NOOP2_NOSTRIP:1c,2");
+          x_c_keyword ("xi18n:1");
+          x_c_keyword ("xi18nc:1c,2");
+          x_c_keyword ("xi18np:1,2");
+          x_c_keyword ("xi18ncp:1c,2,3");
+          x_c_keyword ("xi18nd:2");
+          x_c_keyword ("xi18ndc:2c,3");
+          x_c_keyword ("xi18ndp:2,3");
+          x_c_keyword ("xi18ndcp:2c,3,4");
+          x_c_keyword ("kxi18n:1");
+          x_c_keyword ("kxi18nc:1c,2");
+          x_c_keyword ("kxi18np:1,2");
+          x_c_keyword ("kxi18ncp:1c,2,3");
+          x_c_keyword ("kxi18nd:2");
+          x_c_keyword ("kxi18ndc:2c,3");
+          x_c_keyword ("kxi18ndp:2,3");
+          x_c_keyword ("kxi18ndcp:2c,3,4");
+          x_c_keyword ("XI18N_NOOP:1");
+          x_c_keyword ("XI18NC_NOOP:1c,2");
+          x_c_keyword ("XI18N_NOOP2:1c,2");
+          x_c_keyword ("XI18N_NOOP2_NOSTRIP:1c,2");
+        }
 
       x_objc_keyword ("gettext");
       x_objc_keyword ("dgettext:2");
@@ -449,6 +502,50 @@ init_flag_table_gcc_internal ()
 #endif
 }
 
+void
+init_flag_table_kde ()
+{
+  xgettext_record_flag ("i18n:1:kde-format");
+  xgettext_record_flag ("i18nc:2:kde-format");
+  xgettext_record_flag ("i18np:1:kde-format");
+  xgettext_record_flag ("i18ncp:2:kde-format");
+  xgettext_record_flag ("i18nd:2:kde-format");
+  xgettext_record_flag ("i18ndc:3:kde-format");
+  xgettext_record_flag ("i18ndp:2:kde-format");
+  xgettext_record_flag ("i18ndcp:3:kde-format");
+  xgettext_record_flag ("ki18n:1:kde-format");
+  xgettext_record_flag ("ki18nc:2:kde-format");
+  xgettext_record_flag ("ki18np:1:kde-format");
+  xgettext_record_flag ("ki18ncp:2:kde-format");
+  xgettext_record_flag ("ki18nd:2:kde-format");
+  xgettext_record_flag ("ki18ndc:3:kde-format");
+  xgettext_record_flag ("ki18ndp:2:kde-format");
+  xgettext_record_flag ("ki18ndcp:3:kde-format");
+  xgettext_record_flag ("I18N_NOOP:1:kde-format");
+  xgettext_record_flag ("I18NC_NOOP:2:kde-format");
+  xgettext_record_flag ("I18N_NOOP2:2:kde-format");
+  xgettext_record_flag ("I18N_NOOP2_NOSTRIP:2:kde-format");
+  xgettext_record_flag ("xi18n:1:kde-kuit-format");
+  xgettext_record_flag ("xi18nc:2:kde-kuit-format");
+  xgettext_record_flag ("xi18np:1:kde-kuit-format");
+  xgettext_record_flag ("xi18ncp:2:kde-kuit-format");
+  xgettext_record_flag ("xi18nd:2:kde-kuit-format");
+  xgettext_record_flag ("xi18ndc:3:kde-kuit-format");
+  xgettext_record_flag ("xi18ndp:2:kde-kuit-format");
+  xgettext_record_flag ("xi18ndcp:3:kde-kuit-format");
+  xgettext_record_flag ("kxi18n:1:kde-kuit-format");
+  xgettext_record_flag ("kxi18nc:2:kde-kuit-format");
+  xgettext_record_flag ("kxi18np:1:kde-kuit-format");
+  xgettext_record_flag ("kxi18ncp:2:kde-kuit-format");
+  xgettext_record_flag ("kxi18nd:2:kde-kuit-format");
+  xgettext_record_flag ("kxi18ndc:3:kde-kuit-format");
+  xgettext_record_flag ("kxi18ndp:2:kde-kuit-format");
+  xgettext_record_flag ("kxi18ndcp:3:kde-kuit-format");
+  xgettext_record_flag ("XI18N_NOOP:1:kde-kuit-format");
+  xgettext_record_flag ("XI18NC_NOOP:2:kde-kuit-format");
+  xgettext_record_flag ("XI18N_NOOP2:2:kde-kuit-format");
+  xgettext_record_flag ("XI18N_NOOP2_NOSTRIP:2:kde-kuit-format");
+}
 
 /* ======================== Reading of characters.  ======================== */
 
@@ -829,6 +926,9 @@ phase4_ungetc (int c)
 /* True if ObjectiveC extensions are recognized.  */
 static bool objc_extensions;
 
+/* True if C++ extensions are recognized.  */
+static bool cxx_extensions;
+
 enum token_type_ty
 {
   token_type_character_constant,        /* 'x' */
@@ -855,6 +955,7 @@ struct token_ty
   char *string;         /* for token_type_name, token_type_string_literal */
   refcounted_string_list_ty *comment;   /* for token_type_string_literal,
                                            token_type_objc_special */
+  enum literalstring_escape_type escape; /* for token_type_string_literal */
   long number;
   int line_number;
 };
@@ -884,13 +985,16 @@ literalstring_parse (const char *string, lex_pos_ty *pos,
                                   logical_file_name,
                                   line_number);
 
-  for (p = string; *p != '\0'; p++)
+  for (p = string; ; )
     {
-      int c;
+      int c = *p++;
 
-      if (*p != '\\')
+      if (c == '\0')
+        break;
+
+      if (c != '\\')
         {
-          mixed_string_buffer_append_char (bp, *p);
+          mixed_string_buffer_append_char (bp, c);
           continue;
         }
 
@@ -900,7 +1004,9 @@ literalstring_parse (const char *string, lex_pos_ty *pos,
           continue;
         }
 
-      c = *++p;
+      c = *p++;
+      if (c == '\0')
+        break;
 
       if (type & LET_ANSI_C)
         switch (c)
@@ -940,7 +1046,9 @@ literalstring_parse (const char *string, lex_pos_ty *pos,
             continue;
 
           case 'x':
-            c = *++p;
+            c = *p++;
+            if (c == '\0')
+              break;
             switch (c)
               {
               default:
@@ -956,26 +1064,26 @@ literalstring_parse (const char *string, lex_pos_ty *pos,
                 {
                   int n;
 
-                  for (n = 0; ; ++p)
+                  for (n = 0; ; c = *p++)
                     {
-                      switch (*p)
+                      switch (c)
                         {
                         default:
                           break;
 
                         case '0': case '1': case '2': case '3': case '4':
                         case '5': case '6': case '7': case '8': case '9':
-                          n = n * 16 + *p - '0';
+                          n = n * 16 + c - '0';
                           continue;
 
                         case 'A': case 'B': case 'C': case 'D': case 'E':
                         case 'F':
-                          n = n * 16 + 10 + *p - 'A';
+                          n = n * 16 + 10 + c - 'A';
                           continue;
 
                         case 'a': case 'b': case 'c': case 'd': case 'e':
                         case 'f':
-                          n = n * 16 + 10 + *p - 'a';
+                          n = n * 16 + 10 + c - 'a';
                           continue;
                         }
                       break;
@@ -996,7 +1104,7 @@ literalstring_parse (const char *string, lex_pos_ty *pos,
               for (n = 0, j = 0; j < 3; ++j)
                 {
                   n = n * 8 + c - '0';
-                  c = *++p;
+                  c = *p++;
                   switch (c)
                     {
                     default:
@@ -1021,23 +1129,24 @@ literalstring_parse (const char *string, lex_pos_ty *pos,
           case 'U': case 'u':
             {
               unsigned char buf[8];
-              int length = c == 'u' ? 4 : 8;
+              int prefix = c;
+              int length = prefix == 'u' ? 4 : 8;
               int n, j;
 
               for (n = 0, j = 0; j < length; j++)
                 {
-                  int c1 = *++p;
+                  c = *p++;
 
-                  if (c1 >= '0' && c1 <= '9')
-                    n = (n << 4) + (c1 - '0');
-                  else if (c1 >= 'A' && c1 <= 'F')
-                    n = (n << 4) + (c1 - 'A' + 10);
-                  else if (c1 >= 'a' && c1 <= 'f')
-                    n = (n << 4) + (c1 - 'a' + 10);
+                  if (c >= '0' && c <= '9')
+                    n = (n << 4) + (c - '0');
+                  else if (c >= 'A' && c <= 'F')
+                    n = (n << 4) + (c - 'A' + 10);
+                  else if (c >= 'a' && c <= 'f')
+                    n = (n << 4) + (c - 'a' + 10);
                   else
                     break;
 
-                  buf[j] = c1;
+                  buf[j] = c;
                 }
 
               if (j == length)
@@ -1059,7 +1168,7 @@ warning: invalid Unicode character"));
                   int i;
 
                   mixed_string_buffer_append_char (bp, '\\');
-                  mixed_string_buffer_append_char (bp, c);
+                  mixed_string_buffer_append_char (bp, prefix);
 
                   for (i = 0; i < j; i++)
                     mixed_string_buffer_append_char (bp, buf[i]);
@@ -1069,6 +1178,9 @@ warning: invalid Unicode character"));
             }
             continue;
           }
+
+      if (c == '\0')
+        break;
 
       mixed_string_buffer_append_char (bp, c);
     }
@@ -1098,6 +1210,9 @@ phase5_get (token_ty *tp)
   int c;
   int last_was_backslash;
   bool raw_expected = false;
+  int delimiter_left_end;
+  int delimiter_right_start;
+  int last_rparen;
 
   if (phase5_pushback_length)
     {
@@ -1177,10 +1292,14 @@ phase5_get (token_ty *tp)
               continue;
 
             default:
-              /* Recognize C++ string literals prefixed by R, u8, u8R,
-                 u, uR, U, UR, L, or LR.  It is defined in ISO/IEC
-                 9899:2011 2.14.5.  Since gettext's argument is a byte
-                 sequence, we are only interested in u8, R, and u8R.  */
+              /* Recognize string literals prefixed by R, u8, u8R, u,
+                 uR, U, UR, L, or LR.  It is defined in the C standard
+                 ISO/IEC 9899:201x and the C++ standard ISO/IEC
+                 14882:2011.  The raw string literals prefixed by R,
+                 u8R, uR, UR, or LR are only valid in C++.
+
+                 Since gettext's argument is a byte sequence, we are
+                 only interested in u8, R, and u8R.  */
               if (c == '"')
                 {
                   bool is_prefix = false;
@@ -1188,8 +1307,11 @@ phase5_get (token_ty *tp)
                   switch (buffer[0])
                     {
                     case 'R':
-                      if (bufpos == 1)
-                        is_prefix = true;
+                      if (cxx_extensions && bufpos == 1)
+                        {
+                          is_prefix = true;
+                          raw_expected = true;
+                        }
                       break;
                     case 'u':
                       if (bufpos == 1)
@@ -1198,30 +1320,39 @@ phase5_get (token_ty *tp)
                         switch (buffer[1])
                           {
                           case 'R':
-                            if (bufpos == 2)
-                              is_prefix = true;
+                            if (cxx_extensions && bufpos == 2)
+                              {
+                                is_prefix = true;
+                                raw_expected = true;
+                              }
                             break;
                           case '8':
-                            if (bufpos == 2
-                                || (bufpos == 3 && buffer[2] == 'R'))
+                            if (bufpos == 2)
                               is_prefix = true;
+                            else if (cxx_extensions
+                                     && bufpos == 3 && buffer[2] == 'R')
+                              {
+                                is_prefix = true;
+                                raw_expected = true;
+                              }
                             break;
                           }
                       break;
                     case 'U':
                     case 'L':
-                      if (bufpos == 1
-                          || (bufpos == 2 && buffer[1] == 'R'))
+                      if (bufpos == 1)
                         is_prefix = true;
+                      else if (cxx_extensions
+                               && bufpos == 2 && buffer[1] == 'R')
+                        {
+                          is_prefix = true;
+                          raw_expected = true;
+                        }
                       break;
                     }
 
                   if (is_prefix)
-                    {
-                      raw_expected = buffer[bufpos - 1] == 'R';
-                      bufpos = 0;
-                      goto string;
-                    }
+                    goto string;
                 }
               phase4_ungetc (c);
               break;
@@ -1362,11 +1493,14 @@ phase5_get (token_ty *tp)
            let the compiler complain about the argument not matching the
            prototype.  Just pretend it won't happen.  */
         last_was_backslash = false;
+        delimiter_left_end = -1;
+        delimiter_right_start = -1;
+        last_rparen = -1;
         bufpos = 0;
         for (;;)
           {
             c = phase3_getc ();
-            if (last_was_backslash)
+            if (last_was_backslash && !raw_expected)
               {
                 last_was_backslash = false;
                 if (bufpos >= bufmax)
@@ -1383,7 +1517,14 @@ phase5_get (token_ty *tp)
                 last_was_backslash = true;
                 /* FALLTHROUGH */
               default:
-                if (c == '\n' && !raw_expected)
+                if (raw_expected)
+                  {
+                    if (c == '(' && delimiter_left_end < 0)
+                      delimiter_left_end = bufpos;
+                    else if (c == ')' && delimiter_left_end >= 0)
+                      last_rparen = bufpos;
+                  }
+                else if (c == '\n')
                   {
                     error_with_progname = false;
                     error (0, 0,
@@ -1393,18 +1534,35 @@ phase5_get (token_ty *tp)
                     phase3_ungetc ('\n');
                     break;
                   }
-                else
+                if (bufpos >= bufmax)
                   {
-                    if (bufpos >= bufmax)
-                      {
-                        bufmax = 2 * bufmax + 10;
-                        buffer = xrealloc (buffer, bufmax);
-                      }
-                    buffer[bufpos++] = c;
-                    continue;
+                    bufmax = 2 * bufmax + 10;
+                    buffer = xrealloc (buffer, bufmax);
                   }
+                buffer[bufpos++] = c;
+                continue;
 
-              case EOF: case '"':
+              case '"':
+                if (raw_expected && delimiter_left_end >= 0)
+                  {
+                    if (last_rparen < 0
+                        || delimiter_left_end != bufpos - (last_rparen + 1)
+                        || strncmp (buffer, buffer + last_rparen + 1,
+                                    delimiter_left_end) != 0)
+                      {
+                        if (bufpos >= bufmax)
+                          {
+                            bufmax = 2 * bufmax + 10;
+                            buffer = xrealloc (buffer, bufmax);
+                          }
+                        buffer[bufpos++] = c;
+                        continue;
+                      }
+                    delimiter_right_start = last_rparen;
+                  }
+                break;
+
+              case EOF:
                 break;
               }
             break;
@@ -1418,13 +1576,7 @@ phase5_get (token_ty *tp)
 
         if (raw_expected)
           {
-            char *delimiter_left_end;
-            char *delimiter_right_start;
-
-            if (!(delimiter_left_end = strchr (buffer, '('))
-                || !(delimiter_right_start = strrchr (buffer, ')'))
-                || strncmp (buffer, delimiter_right_start + 1,
-                            (delimiter_left_end - buffer)) != 0)
+            if (delimiter_left_end < 0 || delimiter_right_start < 0)
               {
                 error_with_progname = false;
                 error (0, 0, _("%s:%d: warning: unterminated string literal"),
@@ -1433,15 +1585,17 @@ phase5_get (token_ty *tp)
               }
             else
               {
-                *delimiter_right_start = '\0';
+                buffer[delimiter_right_start] = '\0';
                 tp->type = token_type_string_literal;
-                tp->string = xstrdup (delimiter_left_end + 1);
+                tp->string = xstrdup (&buffer[delimiter_left_end + 1]);
+                tp->escape = LET_NONE;
                 tp->comment = add_reference (savable_comment);
                 return;
               }
           }
         tp->type = token_type_string_literal;
         tp->string = xstrdup (buffer);
+        tp->escape = LET_ANSI_C | LET_UNICODE;
         tp->comment = add_reference (savable_comment);
         return;
       }
@@ -1695,6 +1849,7 @@ phase8a_get (token_ty *tp)
       tp->string = new_string;
       tp->comment = add_reference (savable_comment);
       tp->type = token_type_string_literal;
+      tp->escape = LET_ANSI_C | LET_UNICODE;
     }
 }
 
@@ -1775,7 +1930,10 @@ phase8c_unget (token_ty *tp)
 
 /* 8. Concatenate adjacent string literals to form single string
    literals (because we don't expand macros, there are a few things we
-   will miss).  */
+   will miss).
+
+   FIXME: handle the case when the string literals have different
+   tp->escape setting.  */
 
 static void
 phase8_get (token_ty *tp)
@@ -1830,6 +1988,9 @@ struct xgettext_token_ty
   /* This field is used only for xgettext_token_type_string_literal,
      xgettext_token_type_keyword, xgettext_token_type_symbol.  */
   char *string;
+
+  /* This field is used only for xgettext_token_type_string_literal.  */
+  enum literalstring_escape_type escape;
 
   /* This field is used only for xgettext_token_type_string_literal.  */
   refcounted_string_list_ty *comment;
@@ -1906,6 +2067,7 @@ x_c_lex (xgettext_token_ty *tp)
 
           tp->type = xgettext_token_type_string_literal;
           tp->string = token.string;
+          tp->escape = token.escape;
           tp->comment = token.comment;
           tp->pos.file_name = logical_file_name;
           tp->pos.line_number = token.line_number;
@@ -2067,7 +2229,7 @@ extract_parenthesized (message_list_ty *mlp,
               const char *encoding;
 
               string = literalstring_parse (token.string, &token.pos,
-                                            LET_ANSI_C | LET_UNICODE);
+                                            token.escape);
               free (token.string);
               token.string = string;
 
@@ -2094,7 +2256,7 @@ extract_parenthesized (message_list_ty *mlp,
                                              token.pos.file_name,
                                              token.pos.line_number,
                                              token.comment,
-                                             LET_ANSI_C | LET_UNICODE);
+                                             token.escape);
           drop_reference (token.comment);
           next_context_iter = null_context_list_iterator;
           selectorcall_context_iter = null_context_list_iterator;
@@ -2160,6 +2322,18 @@ extract_c (FILE *f,
            msgdomain_list_ty *mdlp)
 {
   objc_extensions = false;
+  cxx_extensions = false;
+  extract_whole_file (f, real_filename, logical_filename, flag_table, mdlp);
+}
+
+void
+extract_cxx (FILE *f,
+             const char *real_filename, const char *logical_filename,
+             flag_context_list_table_ty *flag_table,
+             msgdomain_list_ty *mdlp)
+{
+  objc_extensions = false;
+  cxx_extensions = true;
   extract_whole_file (f, real_filename, logical_filename, flag_table, mdlp);
 }
 
@@ -2170,5 +2344,6 @@ extract_objc (FILE *f,
               msgdomain_list_ty *mdlp)
 {
   objc_extensions = true;
+  cxx_extensions = false;
   extract_whole_file (f, real_filename, logical_filename, flag_table, mdlp);
 }

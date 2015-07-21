@@ -1,5 +1,6 @@
 /* Reading PO files, abstract class.
-   Copyright (C) 1995-1996, 1998, 2000-2009 Free Software Foundation, Inc.
+   Copyright (C) 1995-1996, 1998, 2000-2009, 2015 Free Software
+   Foundation, Inc.
 
    This file was written by Peter Miller <millerp@canb.auug.org.au>
 
@@ -262,7 +263,8 @@ po_callback_comment_special (const char *s)
 void
 po_parse_comment_special (const char *s,
                           bool *fuzzyp, enum is_format formatp[NFORMATS],
-                          struct argument_range *rangep, enum is_wrap *wrapp)
+                          struct argument_range *rangep, enum is_wrap *wrapp,
+                          enum is_syntax_check scp[NSYNTAXCHECKS])
 {
   size_t i;
 
@@ -272,6 +274,8 @@ po_parse_comment_special (const char *s,
   rangep->min = -1;
   rangep->max = -1;
   *wrapp = undecided;
+  for (i = 0; i < NSYNTAXCHECKS; i++)
+    scp[i] = undecided;
 
   while (*s != '\0')
     {
@@ -403,6 +407,36 @@ po_parse_comment_special (const char *s,
             {
               *wrapp = no;
               continue;
+            }
+
+          /* Accept syntax check description.  */
+          if (len >= 6 && memcmp (t + len - 6, "-check", 6) == 0)
+            {
+              const char *p;
+              size_t n;
+              enum is_syntax_check value;
+
+              p = t;
+              n = len - 6;
+
+              if (n >= 3 && memcmp (p, "no-", 3) == 0)
+                {
+                  p += 3;
+                  n -= 3;
+                  value = no;
+                }
+              else
+                value = yes;
+
+              for (i = 0; i < NSYNTAXCHECKS; i++)
+                if (strlen (syntax_check_name[i]) == n
+                    && memcmp (syntax_check_name[i], p, n) == 0)
+                  {
+                    scp[i] = value;
+                    break;
+                  }
+              if (i < NSYNTAXCHECKS)
+                continue;
             }
 
           /* Unknown special comment marker.  It may have been generated

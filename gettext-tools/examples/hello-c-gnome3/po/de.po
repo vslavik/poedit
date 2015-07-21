@@ -5,13 +5,14 @@
 # Karl Eichwalder <ke@gnu.franken.de>, 2003.
 # Jakob Kramer <jakob.kramer@gmx.de>, 2013.
 # Mario Blättermann <mario.blaettermann@gmail.com>, 2014.
+# Philipp Thomas <pth@suse.de>, 2015.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: hello-c-gnome3 0.19-rc1\n"
+"Project-Id-Version: hello-c-gnome3 0.19.4.73\n"
 "Report-Msgid-Bugs-To: bug-gnu-gettext@gnu.org\n"
-"PO-Revision-Date: 2014-05-10 17:47+0100\n"
-"Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
+"PO-Revision-Date: 2015-06-26 13:05+0200\n"
+"Last-Translator: Philipp Thomas <pth@suse.de>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,16 +21,28 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: hello.c:70
+#: hello.c:79
 #, c-format
-msgid "This program is running as process number %d."
-msgstr "Dieses Programm läuft mit der Prozess-Nummer %d."
+msgid ""
+"<big>Hello world!</big>\n"
+"This program is running as process number <b>%d</b>."
+msgstr ""
+"<big>Hallo Welt!</big>\n"
+"Dieses Programm läuft mit der Prozess-Nummer %d."
+
+#: hello.c:84
+msgid "<big><u>This is another text</u></big>"
+msgstr "<big><u>Dies ist ein weiterer Text</u></big>"
+
+#: hello.c:86
+msgid "<big><i>This is yet another text</i></big>"
+msgstr "<big<i>Dies ist noch ein weiterer Text</i></big>"
 
 #: hello.desktop.in.in:4
 msgid "Hello"
-msgstr ""
+msgstr "Hallo"
 
-#: hello.desktop.in.in:5 hello.ui:22
+#: hello.desktop.in.in:5
 msgid "Hello, world!"
 msgstr "Hallo Welt!"
 
@@ -37,10 +50,14 @@ msgstr "Hallo Welt!"
 msgid "Example Application"
 msgstr "Beispielanwendung"
 
+#: hello.ui:33
+msgid "Update text"
+msgstr "Text aktualisieren"
+
 #: hello.gschema.xml:7
-msgid "Set label sensitive"
-msgstr ""
+msgid "Use XML markup"
+msgstr "XML-Markup verwenden"
 
 #: hello.gschema.xml:8
-msgid "Whether to set the label sensitive."
-msgstr ""
+msgid "Whether to use XML markup in the text."
+msgstr "Ob XML-Markup im Text verwendet werden soll"

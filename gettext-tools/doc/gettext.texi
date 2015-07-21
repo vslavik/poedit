@@ -79,7 +79,7 @@ This file provides documentation for GNU @code{gettext} utilities.
 It also serves as a reference for the free Translation Project.
 
 @copying
-Copyright (C) 1995-1998, 2001-2012 Free Software Foundation, Inc.
+Copyright (C) 1995-1998, 2001-2015 Free Software Foundation, Inc.
 
 This manual is free documentation.  It is dually licensed under the
 GNU FDL and the GNU GPL.  This means that you can redistribute this
@@ -439,6 +439,7 @@ Individual Programming Languages
 * GCC-source::                  GNU Compiler Collection sources
 * Lua::                         Lua
 * JavaScript::                  JavaScript
+* Vala::                        Vala
 
 sh - Shell Script
 
@@ -6221,7 +6222,11 @@ The following rules are known at this point.  The language with families
 are listed.  But this does not necessarily mean the information can be
 generalized for the whole family (as can be easily seen in the table
 below).@footnote{Additions are welcome.  Send appropriate information to
-@email{bug-gnu-gettext@@gnu.org} and @email{bug-glibc-manual@@gnu.org}.}
+@email{bug-gnu-gettext@@gnu.org} and @email{bug-glibc-manual@@gnu.org}.
+The Unicode CLDR Project (@uref{http://cldr.unicode.org}) provides a
+comprehensive set of plural forms in a different format.  The
+@code{msginit} program has preliminary support for the format so you can
+use it as a baseline (@pxref{msginit Invocation}).}
 
 @table @asis
 @item Only one form:
@@ -6241,6 +6246,8 @@ Languages with this property include:
 Japanese, @c   122.1 million speakers
 Vietnamese, @c  68.6 million speakers
 Korean @c       66.3 million speakers
+@item Tai-Kadai family
+Thai @c         20.4 million speakers
 @end table
 
 @item Two forms, singular used for one only
@@ -6278,6 +6285,8 @@ Finnish, @c      5.0 million speakers
 Estonian @c      1.0 million speakers
 @item Semitic family
 Hebrew @c        5.3 million speakers
+@item Austronesian family
+Bahasa Indonesian @c 23.2 million speakers
 @item Artificial
 Esperanto @c       2 million speakers
 @end table
@@ -6452,6 +6461,23 @@ Languages with this property include:
 @table @asis
 @item Slavic family
 Slovenian @c   1.9 million speakers
+@end table
+
+@item Six forms, special cases for one, two, all numbers ending in 02, 03, @dots{} 10, all numbers ending in 11 @dots{} 99, and others
+The header entry would look like this:
+
+@smallexample
+Plural-Forms: nplurals=6; \
+    plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 \
+    : n%100>=11 ? 4 : 5;
+@end smallexample
+
+@noindent
+Languages with this property include:
+
+@table @asis
+@item Afroasiatic family
+Arabic @c    246.0 million speakers
 @end table
 @end table
 
@@ -7690,11 +7716,10 @@ changes needed in each.
 So, here comes a list of files, each one followed by a description of
 all alterations it needs.  Many examples are taken out from the GNU
 @code{gettext} @value{VERSION} distribution itself, or from the GNU
-@code{hello} distribution (@uref{http://www.franken.de/users/gnu/ke/hello}
-or @uref{http://www.gnu.franken.de/ke/hello/})  You may indeed
-refer to the source code of the GNU @code{gettext} and GNU @code{hello}
-packages, as they are intended to be good examples for using GNU
-gettext functionality.
+@code{hello} distribution (@uref{http://www.gnu.org/software/hello}).
+You may indeed refer to the source code of the GNU @code{gettext} and
+GNU @code{hello} packages, as they are intended to be good examples for
+using GNU gettext functionality.
 
 @menu
 * po/POTFILES.in::              @file{POTFILES.in} in @file{po/}
@@ -9041,6 +9066,7 @@ strings.
 * qt-format::                   Qt Format Strings
 * qt-plural-format::            Qt Plural Format Strings
 * kde-format::                  KDE Format Strings
+* kde-kuit-format::             KUIT Format Strings
 * boost-format::                Boost Format Strings
 * lua-format::                  Lua Format Strings
 * javascript-format::           JavaScript Format Strings
@@ -9127,11 +9153,10 @@ of the @samp{str} object.
 
 Python @code{%} format strings are described in
 @w{Python Library reference} /
-@w{2. Built-in Types, Exceptions and Functions} /
-@w{2.2. Built-in Types} /
-@w{2.2.6. Sequence Types} /
-@w{2.2.6.2. String Formatting Operations}.
-@uref{http://www.python.org/doc/2.2.1/lib/typesseq-strings.html}.
+@w{5. Built-in Types} /
+@w{5.6. Sequence Types} /
+@w{5.6.2. String Formatting Operations}.
+@uref{http://docs.python.org/2/library/stdtypes.html#string-formatting-operations}.
 
 Python brace format strings are described in @w{PEP 3101 -- Advanced
 String Formatting}, @uref{http://www.python.org/dev/peps/pep-3101/}.
@@ -9289,7 +9314,7 @@ Qt format strings are described in the documentation of the QObject::tr method
 @uref{file:/usr/lib/qt-4.3.0/doc/html/qobject.html}.
 In summary, the only allowed directive is @samp{%n}.
 
-@node kde-format, boost-format, qt-plural-format, Translators for other Languages
+@node kde-format, kde-kuit-format, qt-plural-format, Translators for other Languages
 @subsection KDE Format Strings
 
 KDE 4 format strings are defined as follows:
@@ -9297,7 +9322,19 @@ A directive consists of a @samp{%} followed by a non-zero decimal number.
 If a @samp{%n} occurs in a format strings, all of @samp{%1}, ..., @samp{%(n-1)}
 must occur as well, except possibly one of them.
 
-@node boost-format, lua-format, kde-format, Translators for other Languages
+@node kde-kuit-format, boost-format, kde-format, Translators for other Languages
+@subsection KUIT Format Strings
+
+KUIT (KDE User Interface Text) is compatible with KDE 4 format strings,
+while it also allows programmers to add semantic information to a format
+string, through XML markup tags.  For example, if the first format
+directive in a string is a filename, programmers could indicate that
+with a @samp{filename} tag, like @samp{<filename>%1</filename>}.
+
+KUIT format strings are described in
+@uref{http://api.kde.org/frameworks-api/frameworks5-apidocs/ki18n/html/prg_guide.html#kuit_markup}.
+
+@node boost-format, lua-format, kde-kuit-format, Translators for other Languages
 @subsection Boost Format Strings
 
 Boost format strings are described in the documentation of the
@@ -9434,6 +9471,7 @@ that language, and to combine the resulting files using @code{msgcat}.
 * GCC-source::                  GNU Compiler Collection sources
 * Lua::                         Lua
 * JavaScript::                  JavaScript
+* Vala::                        Vala
 @end menu
 
 @node C, sh, List of Programming Languages, List of Programming Languages
@@ -10649,7 +10687,9 @@ with a single-letter name.
 gawk 3.1 or newer
 
 @item File extension
-@code{awk}
+@code{awk}, @code{gawk}, @code{twjr}.
+The file extension @code{twjr} is used by TexiWeb Jr
+(@uref{https://github.com/arnoldrobbins/texiwebjr}).
 
 @item String syntax
 @code{"abc"}
@@ -11956,7 +11996,7 @@ On platforms without gettext, the functions are not available.
 ---
 @end table
 
-@node JavaScript,  , Lua, List of Programming Languages
+@node JavaScript, Vala, Lua, List of Programming Languages
 @subsection JavaScript
 
 @table @asis
@@ -12008,6 +12048,60 @@ On platforms without gettext, the functions are not available.
 
 @item po-mode marking
 ---
+@end table
+
+@node Vala,  , JavaScript, List of Programming Languages
+@subsection Vala
+
+@table @asis
+@item RPMs
+vala
+
+@item File extension
+@code{vala}
+
+@item String syntax
+@itemize @bullet
+
+@item @code{"abc"}
+
+@item @code{"""abc"""}
+
+@end itemize
+
+@item gettext shorthand
+@code{_("abc")}
+
+@item gettext/ngettext functions
+@code{gettext}, @code{dgettext}, @code{dcgettext}, @code{ngettext},
+@code{dngettext}, @code{dpgettext}, @code{dpgettext2}
+
+@item textdomain
+@code{textdomain} function, defined under the @code{Intl} namespace
+
+@item bindtextdomain
+@code{bindtextdomain} function, defined under the @code{Intl} namespace
+
+@item setlocale
+Programmer must call @code{Intl.setlocale (LocaleCategory.ALL, "")}
+
+@item Prerequisite
+---
+
+@item Use or emulate GNU gettext
+Use
+
+@item Extractor
+@code{xgettext}
+
+@item Formatting with positions
+Same as for the C language.
+
+@item Portability
+autoconf (gettext.m4) and #if ENABLE_NLS
+
+@item po-mode marking
+yes
 @end table
 
 @c This is the template for new languages.
@@ -12369,19 +12463,19 @@ A copy of the license is included in @ref{GNU GPL}.
 @end menu
 
 @page
-@node GNU GPL
+@node GNU GPL, GNU LGPL, Licenses, Licenses
 @appendixsec GNU GENERAL PUBLIC LICENSE
 @cindex GPL, GNU General Public License
 @cindex License, GNU GPL
 @include gpl.texi
 @page
-@node GNU LGPL
+@node GNU LGPL, GNU FDL, GNU GPL, Licenses
 @appendixsec GNU LESSER GENERAL PUBLIC LICENSE
 @cindex LGPL, GNU Lesser General Public License
 @cindex License, GNU LGPL
 @include lgpl.texi
 @page
-@node GNU FDL
+@node GNU FDL,  , GNU LGPL, Licenses
 @appendixsec GNU Free Documentation License
 @cindex FDL, GNU Free Documentation License
 @cindex License, GNU FDL

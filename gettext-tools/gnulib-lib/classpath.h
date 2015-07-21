@@ -1,5 +1,5 @@
 /* Java CLASSPATH handling.
-   Copyright (C) 2003, 2009-2014 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2009-2015 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify

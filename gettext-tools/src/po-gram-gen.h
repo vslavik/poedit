@@ -82,7 +82,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 143 "po-gram-gen.y" /* yacc.c:1909  */
+#line 144 "po-gram-gen.y" /* yacc.c:1909  */
 
   struct { char *string; lex_pos_ty pos; bool obsolete; } string;
   struct { string_list_ty stringlist; lex_pos_ty pos; bool obsolete; } stringlist;

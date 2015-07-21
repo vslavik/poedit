@@ -1,6 +1,6 @@
 /* Determine a canonical name for the current locale's character encoding.
 
-   Copyright (C) 2000-2006, 2008-2014 Free Software Foundation, Inc.
+   Copyright (C) 2000-2006, 2008-2015 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -128,7 +128,7 @@ get_charset_aliases (void)
   cp = charset_aliases;
   if (cp == NULL)
     {
-#if !(defined DARWIN7 || defined VMS || defined WINDOWS_NATIVE || defined __CYGWIN__)
+#if !(defined DARWIN7 || defined VMS || defined WINDOWS_NATIVE || defined __CYGWIN__ || defined OS2)
       const char *dir;
       const char *base = "charset.alias";
       char *file_name;
@@ -342,6 +342,36 @@ get_charset_aliases (void)
            "CP54936" "\0" "GB18030" "\0"
            "CP65001" "\0" "UTF-8" "\0";
 # endif
+# if defined OS2
+      /* To avoid the troubles of installing a separate file in the same
+         directory as the DLL and of retrieving the DLL's directory at
+         runtime, simply inline the aliases here.  */
+
+      /* The list of encodings is taken from "List of OS/2 Codepages"
+         by Alex Taylor:
+         <http://altsan.org/os2/toolkits/uls/index.html#codepages>.
+         See also "IBM Globalization - Code page identifiers":
+         <http://www-01.ibm.com/software/globalization/cp/cp_cpgid.html>.  */
+      cp = "CP813" "\0" "ISO-8859-7" "\0"
+           "CP878" "\0" "KOI8-R" "\0"
+           "CP819" "\0" "ISO-8859-1" "\0"
+           "CP912" "\0" "ISO-8859-2" "\0"
+           "CP913" "\0" "ISO-8859-3" "\0"
+           "CP914" "\0" "ISO-8859-4" "\0"
+           "CP915" "\0" "ISO-8859-5" "\0"
+           "CP916" "\0" "ISO-8859-8" "\0"
+           "CP920" "\0" "ISO-8859-9" "\0"
+           "CP921" "\0" "ISO-8859-13" "\0"
+           "CP923" "\0" "ISO-8859-15" "\0"
+           "CP954" "\0" "EUC-JP" "\0"
+           "CP964" "\0" "EUC-TW" "\0"
+           "CP970" "\0" "EUC-KR" "\0"
+           "CP1089" "\0" "ISO-8859-6" "\0"
+           "CP1208" "\0" "UTF-8" "\0"
+           "CP1381" "\0" "GB2312" "\0"
+           "CP1386" "\0" "GBK" "\0"
+           "CP3372" "\0" "EUC-JP" "\0";
+# endif
 #endif
 
       charset_aliases = cp;
@@ -499,6 +529,8 @@ locale_charset (void)
   ULONG cp[3];
   ULONG cplen;
 
+  codeset = NULL;
+
   /* Allow user to override the codeset, as set in the operating system,
      with standard language environment variables.  */
   locale = getenv ("LC_ALL");
@@ -530,10 +562,12 @@ locale_charset (void)
             }
         }
 
-      /* Resolve through the charset.alias file.  */
-      codeset = locale;
+      /* For the POSIX locale, don't use the system's codepage.  */
+      if (strcmp (locale, "C") == 0 || strcmp (locale, "POSIX") == 0)
+        codeset = "";
     }
-  else
+
+  if (codeset == NULL)
     {
       /* OS/2 has a function returning the locale's codepage as a number.  */
       if (DosQueryCp (sizeof (cp), cp, &cplen))

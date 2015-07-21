@@ -1,5 +1,5 @@
 /* c-strstr.c -- substring search in C locale
-   Copyright (C) 2005-2014 Free Software Foundation, Inc.
+   Copyright (C) 2005-2015 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2005, 2007.
 
    This program is free software: you can redistribute it and/or modify

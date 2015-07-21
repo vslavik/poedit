@@ -1,5 +1,5 @@
 /* Error handler for noninteractive utilities
-   Copyright (C) 1990-1998, 2000-2007, 2009-2014 Free Software Foundation, Inc.
+   Copyright (C) 1990-1998, 2000-2007, 2009-2015 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -379,10 +379,10 @@ error_at_line (int status, int errnum, const char *file_name,
     }
 
 #if _LIBC
-  __fxprintf (NULL, file_name != NULL ? "%s:%d: " : " ",
+  __fxprintf (NULL, file_name != NULL ? "%s:%u: " : " ",
               file_name, line_number);
 #else
-  fprintf (stderr, file_name != NULL ? "%s:%d: " : " ",
+  fprintf (stderr, file_name != NULL ? "%s:%u: " : " ",
            file_name, line_number);
 #endif
 

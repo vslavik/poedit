@@ -33,7 +33,7 @@ iconv -f UTF-8 -t EUC-JP < xg-c-19.in.c > xg-c-19.c \
 
 ${XGETTEXT} --from-code=EUC-JP --add-comments --no-location --no-wrap \
 	    -o - xg-c-19.c | grep -v 'POT-Creation-Date' > xg-c-19.tmp.po \
-	    || { cp core* ..; exit 1; }
+	    || exit 1
 LC_ALL=C tr -d '\r' < xg-c-19.tmp.po > xg-c-19.po || exit 1
 
 cat <<\EOF > xg-c-19.ok

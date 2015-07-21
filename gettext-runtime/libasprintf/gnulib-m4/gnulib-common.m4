@@ -1,5 +1,5 @@
 # gnulib-common.m4 serial 36
-dnl Copyright (C) 2007-2014 Free Software Foundation, Inc.
+dnl Copyright (C) 2007-2015 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -278,12 +278,12 @@ Amsterdam
       dnl but prefer ${host}-ar over ar (useful for cross-compiling).
       AC_CHECK_TOOL([AR], [ar], [ar])
       if test -z "$ARFLAGS"; then
-        ARFLAGS='cru'
+        ARFLAGS='cr'
       fi
     fi
   else
     if test -z "$ARFLAGS"; then
-      ARFLAGS='cru'
+      ARFLAGS='cr'
     fi
   fi
   AC_SUBST([AR])

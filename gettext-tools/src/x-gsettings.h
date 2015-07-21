@@ -1,5 +1,6 @@
 /* xgettext GSettings schema file backend.
-   Copyright (C) 2002-2003, 2006, 2013 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2006, 2013, 2015 Free Software Foundation,
+   Inc.
    Written by Daiki Ueno <ueno@gnu.org>, 2013.
 
    This program is free software: you can redistribute it and/or modify

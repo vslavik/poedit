@@ -1,3 +1,31 @@
+2015-07-10  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.5 released.
+
+2015-06-23  Daiki Ueno  <ueno@gnu.org>
+
+	* m4/codeset.m4: Update copyright year.
+	* m4/gettext.m4: Likewise.
+	* m4/iconv.m4: Likewise.
+	* m4/intl.m4: Likewise.
+	* m4/intldir.m4: Likewise.
+	* m4/intlmacosx.m4: Likewise.
+	* m4/lcmessage.m4: Likewise.
+	* m4/nls.m4: Likewise.
+	* m4/po.m4: Likewise.
+	* m4/extern-inline.m4: Likewise.  Port the following change:
+	    2015-04-29  Paul Eggert  <eggert@cs.ucla.edu>
+	      extern-inline: no need for workaround in GCC 5.1
+	      * doc/extern-inline.texi (extern inline):
+	      * m4/extern-inline.m4 (gl_EXTERN_INLINE):
+	      GCC bugs 54113 and 63877 are fixed in GCC 5.1, so don't work
+	      around these bugs in GCC 5.1 and later.  Maybe in a decade or
+	      two we can remove these workarounds.
+
+2015-06-23  Daiki Ueno  <ueno@gnu.org>
+
+	* ABOUT-NLS: Regenerate for 0.19.5.
+
 2014-12-24  Daiki Ueno  <ueno@gnu.org>
 
 	* gettext 0.19.4 released.

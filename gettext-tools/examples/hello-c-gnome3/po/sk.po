@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GNU hello-c-gnome3 0.19.4-rc1\n"
+"Project-Id-Version: GNU hello-c-gnome3 0.19.4.73\n"
 "Report-Msgid-Bugs-To: bug-gnu-gettext@gnu.org\n"
-"PO-Revision-Date: 2014-15-10 20:44+0100\n"
+"PO-Revision-Date: 2015-06-23 20:17+0200\n"
 "Last-Translator: Marcel Telka <marcel@telka.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "Language: sk\n"
@@ -15,16 +15,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: hello.c:70
+#: hello.c:79
 #, c-format
-msgid "This program is running as process number %d."
-msgstr "Tento program beží ako proces s číslom %d."
+msgid ""
+"<big>Hello world!</big>\n"
+"This program is running as process number <b>%d</b>."
+msgstr ""
+"<big>Ahoj svet!</big>\n"
+"Tento program beží ako proces s číslom <b>%d</b>."
+
+#: hello.c:84
+msgid "<big><u>This is another text</u></big>"
+msgstr "<big><u>Toto je ďalší text</u></big>"
+
+#: hello.c:86
+msgid "<big><i>This is yet another text</i></big>"
+msgstr "<big><u>Toto je ešte ďalší text</u></big>"
 
 #: hello.desktop.in.in:4
 msgid "Hello"
 msgstr "Ahoj"
 
-#: hello.desktop.in.in:5 hello.ui:22
+#: hello.desktop.in.in:5
 msgid "Hello, world!"
 msgstr "Ahoj svet!"
 
@@ -32,10 +44,14 @@ msgstr "Ahoj svet!"
 msgid "Example Application"
 msgstr "Ukážková aplikácia"
 
+#: hello.ui:33
+msgid "Update text"
+msgstr "Aktualizovať text"
+
 #: hello.gschema.xml:7
-msgid "Set label sensitive"
-msgstr "Nastaviť titulok ako citlivý"
+msgid "Use XML markup"
+msgstr "Použiť značky XML"
 
 #: hello.gschema.xml:8
-msgid "Whether to set the label sensitive."
-msgstr "Či nastaviť titulok ako citlivý."
+msgid "Whether to use XML markup in the text."
+msgstr "Či v texte použiť značky XML."

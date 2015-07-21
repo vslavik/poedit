@@ -1,5 +1,5 @@
 /* Edit translations using a subprocess.
-   Copyright (C) 2001-2010, 2012 Free Software Foundation, Inc.
+   Copyright (C) 2001-2010, 2012, 2015 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -81,6 +81,8 @@ static const char *sub_path;
 static const char **sub_argv;
 static int sub_argc;
 
+static bool newline;
+
 /* Filter function.  */
 static void (*filter) (const char *str, size_t len, char **resultp, size_t *lengthp);
 
@@ -96,6 +98,7 @@ static const struct option long_options[] =
   { "indent", no_argument, NULL, CHAR_MAX + 1 },
   { "input", required_argument, NULL, 'i' },
   { "keep-header", no_argument, &keep_header, 1 },
+  { "newline", no_argument, NULL, CHAR_MAX + 9 },
   { "no-escape", no_argument, NULL, CHAR_MAX + 2 },
   { "no-location", no_argument, NULL, CHAR_MAX + 8 },
   { "no-wrap", no_argument, NULL, CHAR_MAX + 3 },
@@ -269,6 +272,10 @@ main (int argc, char **argv)
         message_print_style_filepos (filepos_comment_none);
         break;
 
+      case CHAR_MAX + 9: /* --newline */
+        newline = true;
+        break;
+
       default:
         usage (EXIT_FAILURE);
         break;
@@ -436,6 +443,12 @@ or if it is -.\n"));
 The FILTER can be any program that reads a translation from standard input\n\
 and writes a modified translation to standard output.\n\
 "));
+      printf ("\n");
+      printf (_("\
+Filter input and output:\n"));
+      printf (_("\
+  --newline                   add a newline at the end of input and\n\
+                                remove a newline from the end of output"));
       printf ("\n");
       printf (_("\
 Useful FILTER-OPTIONs when the FILTER is 'sed':\n"));
@@ -628,6 +641,35 @@ process_string (const char *str, size_t len, char **resultp, size_t *lengthp)
 }
 
 
+/* Do the same thing as process_string but append a newline to STR
+   before processing, and remove a newline from the result.
+ */
+static void
+process_string_with_newline (const char *str, size_t len, char **resultp,
+                             size_t *lengthp)
+{
+  char *newstr;
+  char *result;
+  size_t length;
+
+  newstr = XNMALLOC (len + 1, char);
+  memcpy (newstr, str, len);
+  newstr[len] = '\n';
+
+  process_string (newstr, len + 1, &result, &length);
+
+  free (newstr);
+
+  if (length > 0 && result[length - 1] == '\n')
+    result[--length] = '\0';
+  else
+    error (0, 0, _("filter output is not terminated with a newline"));
+
+  *resultp = result;
+  *lengthp = length;
+}
+
+
 static void
 process_message (message_ty *mp)
 {
@@ -705,7 +747,12 @@ process_message (message_ty *mp)
         }
       else
         unsetenv ("MSGFILTER_PLURAL_FORM");
-      process_string (p, strlen (p), &result, &length);
+
+      if (newline)
+        process_string_with_newline (p, strlen (p), &result, &length);
+      else
+        process_string (p, strlen (p), &result, &length);
+
       result = (char *) xrealloc (result, length + 1);
       result[length] = '\0';
       substrings[k] = result;

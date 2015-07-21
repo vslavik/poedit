@@ -1,7 +1,7 @@
 <HTML>
 <HEAD>
 <!-- This HTML file has been created by texi2html 1.52b
-     from gettext.texi on 24 December 2014 -->
+     from gettext.texi on 15 July 2015 -->
 
 <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=UTF-8">
 <TITLE>GNU gettext utilities - 8  Editing PO Files</TITLE>
@@ -13,7 +13,7 @@ Go to the <A HREF="gettext_1.html">first</A>, <A HREF="gettext_7.html">previous<
 
 <H1><A NAME="SEC55" HREF="gettext_toc.html#TOC55">8  Editing PO Files</A></H1>
 <P>
-<A NAME="IDX334"></A>
+<A NAME="IDX338"></A>
 
 </P>
 
@@ -21,21 +21,21 @@ Go to the <A HREF="gettext_1.html">first</A>, <A HREF="gettext_7.html">previous<
 
 <H2><A NAME="SEC56" HREF="gettext_toc.html#TOC56">8.1  KDE's PO File Editor</A></H2>
 <P>
-<A NAME="IDX335"></A>
+<A NAME="IDX339"></A>
 
 </P>
 
 
 <H2><A NAME="SEC57" HREF="gettext_toc.html#TOC57">8.2  GNOME's PO File Editor</A></H2>
 <P>
-<A NAME="IDX336"></A>
+<A NAME="IDX340"></A>
 
 </P>
 
 
 <H2><A NAME="SEC58" HREF="gettext_toc.html#TOC58">8.3  Emacs's PO File Editor</A></H2>
 <P>
-<A NAME="IDX337"></A>
+<A NAME="IDX341"></A>
 
 </P>
 
@@ -64,8 +64,8 @@ For the beginning, besides main PO mode commands
 <H3><A NAME="SEC59" HREF="gettext_toc.html#TOC59">8.3.1  Completing GNU <CODE>gettext</CODE> Installation</A></H3>
 
 <P>
-<A NAME="IDX338"></A>
-<A NAME="IDX339"></A>
+<A NAME="IDX342"></A>
+<A NAME="IDX343"></A>
 Once you have received, unpacked, configured and compiled the GNU
 <CODE>gettext</CODE> distribution, the <SAMP>&lsquo;make install&rsquo;</SAMP> command puts in
 place the programs <CODE>xgettext</CODE>, <CODE>msgfmt</CODE>, <CODE>gettext</CODE>, and
@@ -75,8 +75,8 @@ PO mode available to your Emacs users.
 
 </P>
 <P>
-<A NAME="IDX340"></A>
-<A NAME="IDX341"></A>
+<A NAME="IDX344"></A>
+<A NAME="IDX345"></A>
 During the installation of the PO mode, you might want to modify your
 file <TT>&lsquo;.emacs&rsquo;</TT>, once and for all, so it contains a few lines looking
 like:
@@ -126,8 +126,8 @@ button 1).
 <H3><A NAME="SEC60" HREF="gettext_toc.html#TOC60">8.3.2  Main PO mode Commands</A></H3>
 
 <P>
-<A NAME="IDX342"></A>
-<A NAME="IDX343"></A>
+<A NAME="IDX346"></A>
+<A NAME="IDX347"></A>
 After setting up Emacs with something similar to the lines in
 section <A HREF="gettext_8.html#SEC59">8.3.1  Completing GNU <CODE>gettext</CODE> Installation</A>, PO mode is activated for a window when Emacs finds a
 PO file in that window.  This puts the window read-only and establishes a
@@ -159,47 +159,47 @@ in special ways.
 
 <DT><KBD>_</KBD>
 <DD>
-<A NAME="IDX344"></A>
+<A NAME="IDX348"></A>
 Undo last modification to the PO file (<CODE>po-undo</CODE>).
 
 <DT><KBD>Q</KBD>
 <DD>
-<A NAME="IDX345"></A>
+<A NAME="IDX349"></A>
 Quit processing and save the PO file (<CODE>po-quit</CODE>).
 
 <DT><KBD>q</KBD>
 <DD>
-<A NAME="IDX346"></A>
+<A NAME="IDX350"></A>
 Quit processing, possibly after confirmation (<CODE>po-confirm-and-quit</CODE>).
 
 <DT><KBD>0</KBD>
 <DD>
-<A NAME="IDX347"></A>
+<A NAME="IDX351"></A>
 Temporary leave the PO file window (<CODE>po-other-window</CODE>).
 
 <DT><KBD>?</KBD>
 <DD>
 <DT><KBD>h</KBD>
 <DD>
-<A NAME="IDX348"></A>
-<A NAME="IDX349"></A>
+<A NAME="IDX352"></A>
+<A NAME="IDX353"></A>
 Show help about PO mode (<CODE>po-help</CODE>).
 
 <DT><KBD>=</KBD>
 <DD>
-<A NAME="IDX350"></A>
+<A NAME="IDX354"></A>
 Give some PO file statistics (<CODE>po-statistics</CODE>).
 
 <DT><KBD>V</KBD>
 <DD>
-<A NAME="IDX351"></A>
+<A NAME="IDX355"></A>
 Batch validate the format of the whole PO file (<CODE>po-validate</CODE>).
 
 </DL>
 
 <P>
-<A NAME="IDX352"></A>
-<A NAME="IDX353"></A>
+<A NAME="IDX356"></A>
+<A NAME="IDX357"></A>
 The command <KBD>_</KBD> (<CODE>po-undo</CODE>) interfaces to the Emacs
 <EM>undo</EM> facility.  See section ‘Undoing Changes’ in <CITE>The Emacs Editor</CITE>.  Each time <KBD>_</KBD> is typed, modifications which the translator
 did to the PO file are undone a little more.  For the purpose of
@@ -211,10 +211,10 @@ can undo the edition work quite parsimoniously.
 
 </P>
 <P>
-<A NAME="IDX354"></A>
-<A NAME="IDX355"></A>
-<A NAME="IDX356"></A>
-<A NAME="IDX357"></A>
+<A NAME="IDX358"></A>
+<A NAME="IDX359"></A>
+<A NAME="IDX360"></A>
+<A NAME="IDX361"></A>
 The commands <KBD>Q</KBD> (<CODE>po-quit</CODE>) and <KBD>q</KBD>
 (<CODE>po-confirm-and-quit</CODE>) are used when the translator is done with the
 PO file.  The former is a bit less verbose than the latter.  If the file
@@ -227,8 +227,8 @@ of an Emacs PO file buffer.  Merely killing it through the usual command
 
 </P>
 <P>
-<A NAME="IDX358"></A>
-<A NAME="IDX359"></A>
+<A NAME="IDX362"></A>
+<A NAME="IDX363"></A>
 The command <KBD>0</KBD> (<CODE>po-other-window</CODE>) is another, softer way,
 to leave PO mode, temporarily.  It just moves the cursor to some other
 Emacs window, and pops one if necessary.  For example, if the translator
@@ -242,9 +242,9 @@ PO mode is then recovered.
 
 </P>
 <P>
-<A NAME="IDX360"></A>
-<A NAME="IDX361"></A>
-<A NAME="IDX362"></A>
+<A NAME="IDX364"></A>
+<A NAME="IDX365"></A>
+<A NAME="IDX366"></A>
 The command <KBD>h</KBD> (<CODE>po-help</CODE>) displays a summary of all available PO
 mode commands.  The translator should then type any character to resume
 normal PO mode operations.  The command <KBD>?</KBD> has the same effect
@@ -252,8 +252,8 @@ as <KBD>h</KBD>.
 
 </P>
 <P>
-<A NAME="IDX363"></A>
-<A NAME="IDX364"></A>
+<A NAME="IDX367"></A>
+<A NAME="IDX368"></A>
 The command <KBD>=</KBD> (<CODE>po-statistics</CODE>) computes the total number of
 entries in the PO file, the ordinal of the current entry (counted from
 1), the number of untranslated entries, the number of obsolete entries,
@@ -261,8 +261,8 @@ and displays all these numbers.
 
 </P>
 <P>
-<A NAME="IDX365"></A>
-<A NAME="IDX366"></A>
+<A NAME="IDX369"></A>
+<A NAME="IDX370"></A>
 The command <KBD>V</KBD> (<CODE>po-validate</CODE>) launches <CODE>msgfmt</CODE> in
 checking and verbose
 mode over the current PO file.  This command first offers to save the
@@ -273,7 +273,7 @@ as well as all individual entries.
 
 </P>
 <P>
-<A NAME="IDX367"></A>
+<A NAME="IDX371"></A>
 The program <CODE>msgfmt</CODE> runs asynchronously with Emacs, so the
 translator regains control immediately while her PO file is being studied.
 Error output is collected in the Emacs <SAMP>&lsquo;*compilation*&rsquo;</SAMP> buffer,
@@ -289,7 +289,7 @@ any PO mode action which would help correcting the error.
 <H3><A NAME="SEC61" HREF="gettext_toc.html#TOC61">8.3.3  Entry Positioning</A></H3>
 
 <P>
-<A NAME="IDX368"></A>
+<A NAME="IDX372"></A>
 The cursor in a PO file window is almost always part of
 an entry.  The only exceptions are the special case when the cursor
 is after the last entry in the file, or when the PO file is
@@ -300,7 +300,7 @@ the PO file, this also selects on which entry commands operate.
 
 </P>
 <P>
-<A NAME="IDX369"></A>
+<A NAME="IDX373"></A>
 Some PO mode commands alter the position of the cursor in a specialized
 way.  A few of those special purpose positioning are described here,
 the others are described in following sections (for a complete list try
@@ -311,51 +311,51 @@ the others are described in following sections (for a complete list try
 
 <DT><KBD>.</KBD>
 <DD>
-<A NAME="IDX370"></A>
+<A NAME="IDX374"></A>
 Redisplay the current entry (<CODE>po-current-entry</CODE>).
 
 <DT><KBD>n</KBD>
 <DD>
-<A NAME="IDX371"></A>
+<A NAME="IDX375"></A>
 Select the entry after the current one (<CODE>po-next-entry</CODE>).
 
 <DT><KBD>p</KBD>
 <DD>
-<A NAME="IDX372"></A>
+<A NAME="IDX376"></A>
 Select the entry before the current one (<CODE>po-previous-entry</CODE>).
 
 <DT><KBD>&#60;</KBD>
 <DD>
-<A NAME="IDX373"></A>
+<A NAME="IDX377"></A>
 Select the first entry in the PO file (<CODE>po-first-entry</CODE>).
 
 <DT><KBD>&#62;</KBD>
 <DD>
-<A NAME="IDX374"></A>
+<A NAME="IDX378"></A>
 Select the last entry in the PO file (<CODE>po-last-entry</CODE>).
 
 <DT><KBD>m</KBD>
 <DD>
-<A NAME="IDX375"></A>
+<A NAME="IDX379"></A>
 Record the location of the current entry for later use
 (<CODE>po-push-location</CODE>).
 
 <DT><KBD>r</KBD>
 <DD>
-<A NAME="IDX376"></A>
+<A NAME="IDX380"></A>
 Return to a previously saved entry location (<CODE>po-pop-location</CODE>).
 
 <DT><KBD>x</KBD>
 <DD>
-<A NAME="IDX377"></A>
+<A NAME="IDX381"></A>
 Exchange the current entry location with the previously saved one
 (<CODE>po-exchange-location</CODE>).
 
 </DL>
 
 <P>
-<A NAME="IDX378"></A>
-<A NAME="IDX379"></A>
+<A NAME="IDX382"></A>
+<A NAME="IDX383"></A>
 Any Emacs command able to reposition the cursor may be used
 to select the current entry in PO mode, including commands which
 move by characters, lines, paragraphs, screens or pages, and search
@@ -384,10 +384,10 @@ how <EM>others</EM> should do translation.
 
 </P>
 <P>
-<A NAME="IDX380"></A>
-<A NAME="IDX381"></A>
-<A NAME="IDX382"></A>
-<A NAME="IDX383"></A>
+<A NAME="IDX384"></A>
+<A NAME="IDX385"></A>
+<A NAME="IDX386"></A>
+<A NAME="IDX387"></A>
 The commands <KBD>n</KBD> (<CODE>po-next-entry</CODE>) and <KBD>p</KBD>
 (<CODE>po-previous-entry</CODE>) move the cursor the entry following,
 or preceding, the current one.  If <KBD>n</KBD> is given while the
@@ -396,10 +396,10 @@ is given while the cursor is on the first entry, no move is done.
 
 </P>
 <P>
-<A NAME="IDX384"></A>
-<A NAME="IDX385"></A>
-<A NAME="IDX386"></A>
-<A NAME="IDX387"></A>
+<A NAME="IDX388"></A>
+<A NAME="IDX389"></A>
+<A NAME="IDX390"></A>
+<A NAME="IDX391"></A>
 The commands <KBD>&#60;</KBD> (<CODE>po-first-entry</CODE>) and <KBD>&#62;</KBD>
 (<CODE>po-last-entry</CODE>) move the cursor to the first entry, or last
 entry, of the PO file.  When the cursor is located past the last
@@ -422,10 +422,10 @@ register for getting back, or else, use the location ring.
 
 </P>
 <P>
-<A NAME="IDX388"></A>
-<A NAME="IDX389"></A>
-<A NAME="IDX390"></A>
-<A NAME="IDX391"></A>
+<A NAME="IDX392"></A>
+<A NAME="IDX393"></A>
+<A NAME="IDX394"></A>
+<A NAME="IDX395"></A>
 PO mode offers another approach, by which cursor locations may be saved
 onto a special stack.  The command <KBD>m</KBD> (<CODE>po-push-location</CODE>)
 merely adds the location of current entry to the stack, pushing
@@ -445,8 +445,8 @@ ought to use <KBD>m</KBD> immediately after <KBD>r</KBD>.
 
 </P>
 <P>
-<A NAME="IDX392"></A>
-<A NAME="IDX393"></A>
+<A NAME="IDX396"></A>
+<A NAME="IDX397"></A>
 The command <KBD>x</KBD> (<CODE>po-exchange-location</CODE>) simultaneously
 repositions the cursor to the entry associated with the top element of
 the stack of saved locations, and replaces that top element with the
@@ -461,7 +461,7 @@ merely use <KBD>x</KBD> for making the switch.
 
 <H3><A NAME="SEC62" HREF="gettext_toc.html#TOC62">8.3.4  Normalizing Strings in Entries</A></H3>
 <P>
-<A NAME="IDX394"></A>
+<A NAME="IDX398"></A>
 
 </P>
 <P>
@@ -495,12 +495,12 @@ command is available:
 
 </P>
 <P>
-<A NAME="IDX395"></A>
+<A NAME="IDX399"></A>
 <DL COMPACT>
 
 <DT><KBD>M-x po-normalize</KBD>
 <DD>
-<A NAME="IDX396"></A>
+<A NAME="IDX400"></A>
 Tidy the whole PO file by making entries more uniform.
 
 </DL>
@@ -532,7 +532,7 @@ for continued lines.
 
 </P>
 <P>
-<A NAME="IDX397"></A>
+<A NAME="IDX401"></A>
 Having such an explicit normalizing command allows for importing PO
 files from other sources, but also eases the evolution of the current
 convention, evolution driven mostly by aesthetic concerns, as of now.
@@ -545,7 +545,7 @@ their PO files in nice ways.
 
 </P>
 <P>
-<A NAME="IDX398"></A>
+<A NAME="IDX402"></A>
 Right now, in PO mode, strings are single line or multi-line.  A string
 goes multi-line if and only if it has <EM>embedded</EM> newlines, that
 is, if it matches <SAMP>&lsquo;[^\n]\n+[^\n]&rsquo;</SAMP>.  So, we would have:
@@ -598,7 +598,7 @@ to be documented in this manual, once these questions settle.
 
 <H3><A NAME="SEC63" HREF="gettext_toc.html#TOC63">8.3.5  Translated Entries</A></H3>
 <P>
-<A NAME="IDX399"></A>
+<A NAME="IDX403"></A>
 
 </P>
 <P>
@@ -610,7 +610,7 @@ Other entry types will be excluded; translation will not occur for them.
 
 </P>
 <P>
-<A NAME="IDX400"></A>
+<A NAME="IDX404"></A>
 Some commands are more specifically related to translated entry processing.
 
 </P>
@@ -618,21 +618,21 @@ Some commands are more specifically related to translated entry processing.
 
 <DT><KBD>t</KBD>
 <DD>
-<A NAME="IDX401"></A>
+<A NAME="IDX405"></A>
 Find the next translated entry (<CODE>po-next-translated-entry</CODE>).
 
 <DT><KBD>T</KBD>
 <DD>
-<A NAME="IDX402"></A>
+<A NAME="IDX406"></A>
 Find the previous translated entry (<CODE>po-previous-translated-entry</CODE>).
 
 </DL>
 
 <P>
-<A NAME="IDX403"></A>
-<A NAME="IDX404"></A>
-<A NAME="IDX405"></A>
-<A NAME="IDX406"></A>
+<A NAME="IDX407"></A>
+<A NAME="IDX408"></A>
+<A NAME="IDX409"></A>
+<A NAME="IDX410"></A>
 The commands <KBD>t</KBD> (<CODE>po-next-translated-entry</CODE>) and <KBD>T</KBD>
 (<CODE>po-previous-translated-entry</CODE>) move forwards or backwards, chasing
 for an translated entry.  If none is found, the search is extended and
@@ -640,7 +640,7 @@ wraps around in the PO file buffer.
 
 </P>
 <P>
-<A NAME="IDX407"></A>
+<A NAME="IDX411"></A>
 Translated entries usually result from the translator having edited in
 a translation for them, section <A HREF="gettext_8.html#SEC67">8.3.9  Modifying Translations</A>.  However, if the
 variable <CODE>po-auto-fuzzy-on-edit</CODE> is not <CODE>nil</CODE>, the entry having
@@ -653,12 +653,12 @@ See section <A HREF="gettext_8.html#SEC64">8.3.6  Fuzzy Entries</A>.
 
 <H3><A NAME="SEC64" HREF="gettext_toc.html#TOC64">8.3.6  Fuzzy Entries</A></H3>
 <P>
-<A NAME="IDX408"></A>
+<A NAME="IDX412"></A>
 
 </P>
 <P>
-<A NAME="IDX409"></A>
-<A NAME="IDX410"></A>
+<A NAME="IDX413"></A>
+<A NAME="IDX414"></A>
 Each PO file entry may have a set of <EM>attributes</EM>, which are
 qualities given a name and explicitly associated with the translation,
 using a special system comment.  One of these attributes
@@ -681,7 +681,7 @@ might mark some entries as being fuzzy.
 
 </P>
 <P>
-<A NAME="IDX411"></A>
+<A NAME="IDX415"></A>
 Also, the translator may decide herself to mark an entry as fuzzy
 for her own convenience, when she wants to remember that the entry
 has to be later revisited.  So, some commands are more specifically
@@ -692,26 +692,26 @@ related to fuzzy entry processing.
 
 <DT><KBD>f</KBD>
 <DD>
-<A NAME="IDX412"></A>
+<A NAME="IDX416"></A>
 Find the next fuzzy entry (<CODE>po-next-fuzzy-entry</CODE>).
 
 <DT><KBD>F</KBD>
 <DD>
-<A NAME="IDX413"></A>
+<A NAME="IDX417"></A>
 Find the previous fuzzy entry (<CODE>po-previous-fuzzy-entry</CODE>).
 
 <DT><KBD><KBD>TAB</KBD></KBD>
 <DD>
-<A NAME="IDX414"></A>
+<A NAME="IDX418"></A>
 Remove the fuzzy attribute of the current entry (<CODE>po-unfuzzy</CODE>).
 
 </DL>
 
 <P>
-<A NAME="IDX415"></A>
-<A NAME="IDX416"></A>
-<A NAME="IDX417"></A>
-<A NAME="IDX418"></A>
+<A NAME="IDX419"></A>
+<A NAME="IDX420"></A>
+<A NAME="IDX421"></A>
+<A NAME="IDX422"></A>
 The commands <KBD>f</KBD> (<CODE>po-next-fuzzy-entry</CODE>) and <KBD>F</KBD>
 (<CODE>po-previous-fuzzy-entry</CODE>) move forwards or backwards, chasing for
 a fuzzy entry.  If none is found, the search is extended and wraps
@@ -719,9 +719,9 @@ around in the PO file buffer.
 
 </P>
 <P>
-<A NAME="IDX419"></A>
-<A NAME="IDX420"></A>
-<A NAME="IDX421"></A>
+<A NAME="IDX423"></A>
+<A NAME="IDX424"></A>
+<A NAME="IDX425"></A>
 The command <KBD><KBD>TAB</KBD></KBD> (<CODE>po-unfuzzy</CODE>) removes the fuzzy
 attribute associated with an entry, usually leaving it translated.
 Further, if the variable <CODE>po-auto-select-on-unfuzzy</CODE> has not
@@ -743,8 +743,8 @@ to chase another entry, leaving the entry fuzzy.
 
 </P>
 <P>
-<A NAME="IDX422"></A>
-<A NAME="IDX423"></A>
+<A NAME="IDX426"></A>
+<A NAME="IDX427"></A>
 The translator may also use the <KBD><KBD>DEL</KBD></KBD> command
 (<CODE>po-fade-out-entry</CODE>) over any translated entry to mark it as being
 fuzzy, when she wants to easily leave a trace she wants to later return
@@ -761,7 +761,7 @@ still exists.
 
 <H3><A NAME="SEC65" HREF="gettext_toc.html#TOC65">8.3.7  Untranslated Entries</A></H3>
 <P>
-<A NAME="IDX424"></A>
+<A NAME="IDX428"></A>
 
 </P>
 <P>
@@ -781,7 +781,7 @@ are easily recognizable by the fact they end with <SAMP>&lsquo;msgstr ""&rsquo;<
 
 </P>
 <P>
-<A NAME="IDX425"></A>
+<A NAME="IDX429"></A>
 The work of the translator might be (quite naively) seen as the process
 of seeking for an untranslated entry, editing a translation for
 it, and repeating these actions until no untranslated entries remain.
@@ -793,26 +793,26 @@ processing.
 
 <DT><KBD>u</KBD>
 <DD>
-<A NAME="IDX426"></A>
+<A NAME="IDX430"></A>
 Find the next untranslated entry (<CODE>po-next-untranslated-entry</CODE>).
 
 <DT><KBD>U</KBD>
 <DD>
-<A NAME="IDX427"></A>
+<A NAME="IDX431"></A>
 Find the previous untranslated entry (<CODE>po-previous-untransted-entry</CODE>).
 
 <DT><KBD>k</KBD>
 <DD>
-<A NAME="IDX428"></A>
+<A NAME="IDX432"></A>
 Turn the current entry into an untranslated one (<CODE>po-kill-msgstr</CODE>).
 
 </DL>
 
 <P>
-<A NAME="IDX429"></A>
-<A NAME="IDX430"></A>
-<A NAME="IDX431"></A>
-<A NAME="IDX432"></A>
+<A NAME="IDX433"></A>
+<A NAME="IDX434"></A>
+<A NAME="IDX435"></A>
+<A NAME="IDX436"></A>
 The commands <KBD>u</KBD> (<CODE>po-next-untranslated-entry</CODE>) and <KBD>U</KBD>
 (<CODE>po-previous-untransted-entry</CODE>) move forwards or backwards,
 chasing for an untranslated entry.  If none is found, the search is
@@ -820,8 +820,8 @@ extended and wraps around in the PO file buffer.
 
 </P>
 <P>
-<A NAME="IDX433"></A>
-<A NAME="IDX434"></A>
+<A NAME="IDX437"></A>
+<A NAME="IDX438"></A>
 An entry can be turned back into an untranslated entry by
 merely emptying its translation, using the command <KBD>k</KBD>
 (<CODE>po-kill-msgstr</CODE>).  See section <A HREF="gettext_8.html#SEC67">8.3.9  Modifying Translations</A>.
@@ -837,7 +837,7 @@ if some untranslated string still exists.
 
 <H3><A NAME="SEC66" HREF="gettext_toc.html#TOC66">8.3.8  Obsolete Entries</A></H3>
 <P>
-<A NAME="IDX435"></A>
+<A NAME="IDX439"></A>
 
 </P>
 <P>
@@ -863,7 +863,7 @@ after the fact.
 
 </P>
 <P>
-<A NAME="IDX436"></A>
+<A NAME="IDX440"></A>
 Moreover, some commands are more specifically related to obsolete
 entry processing.
 
@@ -872,27 +872,27 @@ entry processing.
 
 <DT><KBD>o</KBD>
 <DD>
-<A NAME="IDX437"></A>
+<A NAME="IDX441"></A>
 Find the next obsolete entry (<CODE>po-next-obsolete-entry</CODE>).
 
 <DT><KBD>O</KBD>
 <DD>
-<A NAME="IDX438"></A>
+<A NAME="IDX442"></A>
 Find the previous obsolete entry (<CODE>po-previous-obsolete-entry</CODE>).
 
 <DT><KBD><KBD>DEL</KBD></KBD>
 <DD>
-<A NAME="IDX439"></A>
+<A NAME="IDX443"></A>
 Make an active entry obsolete, or zap out an obsolete entry
 (<CODE>po-fade-out-entry</CODE>).
 
 </DL>
 
 <P>
-<A NAME="IDX440"></A>
-<A NAME="IDX441"></A>
-<A NAME="IDX442"></A>
-<A NAME="IDX443"></A>
+<A NAME="IDX444"></A>
+<A NAME="IDX445"></A>
+<A NAME="IDX446"></A>
+<A NAME="IDX447"></A>
 The commands <KBD>o</KBD> (<CODE>po-next-obsolete-entry</CODE>) and <KBD>O</KBD>
 (<CODE>po-previous-obsolete-entry</CODE>) move forwards or backwards,
 chasing for an obsolete entry.  If none is found, the search is
@@ -908,10 +908,10 @@ introducing useless <CODE>msgid</CODE> values.
 
 </P>
 <P>
-<A NAME="IDX444"></A>
-<A NAME="IDX445"></A>
-<A NAME="IDX446"></A>
-<A NAME="IDX447"></A>
+<A NAME="IDX448"></A>
+<A NAME="IDX449"></A>
+<A NAME="IDX450"></A>
+<A NAME="IDX451"></A>
 However, it is possible to comment out an active entry, so making
 it obsolete.  GNU <CODE>gettext</CODE> utilities will later react to the
 disappearance of a translation by using the untranslated string.
@@ -941,8 +941,8 @@ merely tries to provide handy tools for helping her to do so.
 
 <H3><A NAME="SEC67" HREF="gettext_toc.html#TOC67">8.3.9  Modifying Translations</A></H3>
 <P>
-<A NAME="IDX448"></A>
-<A NAME="IDX449"></A>
+<A NAME="IDX452"></A>
+<A NAME="IDX453"></A>
 
 </P>
 <P>
@@ -968,40 +968,40 @@ using the following commands for modifying the translations.
 
 <DT><KBD><KBD>RET</KBD></KBD>
 <DD>
-<A NAME="IDX450"></A>
+<A NAME="IDX454"></A>
 Interactively edit the translation (<CODE>po-edit-msgstr</CODE>).
 
 <DT><KBD><KBD>LFD</KBD></KBD>
 <DD>
 <DT><KBD>C-j</KBD>
 <DD>
-<A NAME="IDX451"></A>
-<A NAME="IDX452"></A>
+<A NAME="IDX455"></A>
+<A NAME="IDX456"></A>
 Reinitialize the translation with the original, untranslated string
 (<CODE>po-msgid-to-msgstr</CODE>).
 
 <DT><KBD>k</KBD>
 <DD>
-<A NAME="IDX453"></A>
+<A NAME="IDX457"></A>
 Save the translation on the kill ring, and delete it (<CODE>po-kill-msgstr</CODE>).
 
 <DT><KBD>w</KBD>
 <DD>
-<A NAME="IDX454"></A>
+<A NAME="IDX458"></A>
 Save the translation on the kill ring, without deleting it
 (<CODE>po-kill-ring-save-msgstr</CODE>).
 
 <DT><KBD>y</KBD>
 <DD>
-<A NAME="IDX455"></A>
+<A NAME="IDX459"></A>
 Replace the translation, taking the new from the kill ring
 (<CODE>po-yank-msgstr</CODE>).
 
 </DL>
 
 <P>
-<A NAME="IDX456"></A>
-<A NAME="IDX457"></A>
+<A NAME="IDX460"></A>
+<A NAME="IDX461"></A>
 The command <KBD><KBD>RET</KBD></KBD> (<CODE>po-edit-msgstr</CODE>) opens a new Emacs
 window meant to edit in a new translation, or to modify an already existing
 translation.  The new window contains a copy of the translation taken from
@@ -1014,9 +1014,9 @@ for more information.
 
 </P>
 <P>
-<A NAME="IDX458"></A>
-<A NAME="IDX459"></A>
-<A NAME="IDX460"></A>
+<A NAME="IDX462"></A>
+<A NAME="IDX463"></A>
+<A NAME="IDX464"></A>
 The command <KBD><KBD>LFD</KBD></KBD> (<CODE>po-msgid-to-msgstr</CODE>) initializes, or
 reinitializes the translation with the original string.  This command is
 normally used when the translator wants to redo a fresh translation of
@@ -1024,7 +1024,7 @@ the original string, disregarding any previous work.
 
 </P>
 <P>
-<A NAME="IDX461"></A>
+<A NAME="IDX465"></A>
 It is possible to arrange so, whenever editing an untranslated
 entry, the <KBD><KBD>LFD</KBD></KBD> command be automatically executed.  If you set
 <CODE>po-auto-edit-with-msgid</CODE> to <CODE>t</CODE>, the translation gets
@@ -1033,7 +1033,7 @@ The default value for <CODE>po-auto-edit-with-msgid</CODE> is <CODE>nil</CODE>.
 
 </P>
 <P>
-<A NAME="IDX462"></A>
+<A NAME="IDX466"></A>
 In fact, whether it is best to start a translation with an empty
 string, or rather with a copy of the original string, is a matter of
 taste or habit.  Sometimes, the source language and the
@@ -1047,11 +1047,11 @@ if this requires some extra editing work to get rid of the original.
 
 </P>
 <P>
-<A NAME="IDX463"></A>
-<A NAME="IDX464"></A>
-<A NAME="IDX465"></A>
-<A NAME="IDX466"></A>
 <A NAME="IDX467"></A>
+<A NAME="IDX468"></A>
+<A NAME="IDX469"></A>
+<A NAME="IDX470"></A>
+<A NAME="IDX471"></A>
 The command <KBD>k</KBD> (<CODE>po-kill-msgstr</CODE>) merely empties the
 translation string, so turning the entry into an untranslated
 one.  But while doing so, its previous contents is put apart in
@@ -1083,8 +1083,8 @@ entries, the translation is also uncommented prior to saving.
 
 </P>
 <P>
-<A NAME="IDX468"></A>
-<A NAME="IDX469"></A>
+<A NAME="IDX472"></A>
+<A NAME="IDX473"></A>
 The command <KBD>y</KBD> (<CODE>po-yank-msgstr</CODE>) completely replaces the
 translation of the current entry by a string taken from the kill ring.
 Following Emacs terminology, we then say that the replacement
@@ -1118,7 +1118,7 @@ yanking commands themselves.
 
 </P>
 <P>
-<A NAME="IDX470"></A>
+<A NAME="IDX474"></A>
 To better illustrate the operation of killing and yanking, let's
 use an actual example, taken from a common situation.  When the
 programmer slightly modifies some string right in the program, his
@@ -1158,8 +1158,8 @@ See section ‘Keyboard Macros’ in <CITE>The Emacs Editor</CITE>.
 
 <H3><A NAME="SEC68" HREF="gettext_toc.html#TOC68">8.3.10  Modifying Comments</A></H3>
 <P>
-<A NAME="IDX471"></A>
-<A NAME="IDX472"></A>
+<A NAME="IDX475"></A>
+<A NAME="IDX476"></A>
 
 </P>
 <P>
@@ -1188,24 +1188,24 @@ so the general indications given for those apply here.  See section <A HREF="get
 
 <DT><KBD>#</KBD>
 <DD>
-<A NAME="IDX473"></A>
+<A NAME="IDX477"></A>
 Interactively edit the translator comments (<CODE>po-edit-comment</CODE>).
 
 <DT><KBD>K</KBD>
 <DD>
-<A NAME="IDX474"></A>
+<A NAME="IDX478"></A>
 Save the translator comments on the kill ring, and delete it
 (<CODE>po-kill-comment</CODE>).
 
 <DT><KBD>W</KBD>
 <DD>
-<A NAME="IDX475"></A>
+<A NAME="IDX479"></A>
 Save the translator comments on the kill ring, without deleting it
 (<CODE>po-kill-ring-save-comment</CODE>).
 
 <DT><KBD>Y</KBD>
 <DD>
-<A NAME="IDX476"></A>
+<A NAME="IDX480"></A>
 Replace the translator comments, taking the new from the kill ring
 (<CODE>po-yank-comment</CODE>).
 
@@ -1221,8 +1221,8 @@ See section <A HREF="gettext_8.html#SEC67">8.3.9  Modifying Translations</A>.
 
 </P>
 <P>
-<A NAME="IDX477"></A>
-<A NAME="IDX478"></A>
+<A NAME="IDX481"></A>
+<A NAME="IDX482"></A>
 The command <KBD>#</KBD> (<CODE>po-edit-comment</CODE>) opens a new Emacs window
 containing a copy of the translator comments on the current PO file entry.
 If there are no such comments, PO mode understands that the translator wants
@@ -1236,18 +1236,18 @@ See section <A HREF="gettext_8.html#SEC69">8.3.11  Details of Sub Edition</A>, f
 
 </P>
 <P>
-<A NAME="IDX479"></A>
+<A NAME="IDX483"></A>
 Functions found on <CODE>po-subedit-mode-hook</CODE>, if any, are executed after
 the string has been inserted in the edit buffer.
 
 </P>
 <P>
-<A NAME="IDX480"></A>
-<A NAME="IDX481"></A>
-<A NAME="IDX482"></A>
-<A NAME="IDX483"></A>
 <A NAME="IDX484"></A>
 <A NAME="IDX485"></A>
+<A NAME="IDX486"></A>
+<A NAME="IDX487"></A>
+<A NAME="IDX488"></A>
+<A NAME="IDX489"></A>
 The command <KBD>K</KBD> (<CODE>po-kill-comment</CODE>) gets rid of all
 translator comments, while saving those comments on the kill ring.
 The command <KBD>W</KBD> (<CODE>po-kill-ring-save-comment</CODE>) takes
@@ -1288,7 +1288,7 @@ regular Emacs commands <KBD>C-y</KBD> (<CODE>yank</CODE>) and <KBD>M-y</KBD>
 
 <H3><A NAME="SEC69" HREF="gettext_toc.html#TOC69">8.3.11  Details of Sub Edition</A></H3>
 <P>
-<A NAME="IDX486"></A>
+<A NAME="IDX490"></A>
 
 </P>
 <P>
@@ -1301,25 +1301,25 @@ of Emacs, which are described below.
 
 <DT><KBD>C-c C-c</KBD>
 <DD>
-<A NAME="IDX487"></A>
+<A NAME="IDX491"></A>
 Complete edition (<CODE>po-subedit-exit</CODE>).
 
 <DT><KBD>C-c C-k</KBD>
 <DD>
-<A NAME="IDX488"></A>
+<A NAME="IDX492"></A>
 Abort edition (<CODE>po-subedit-abort</CODE>).
 
 <DT><KBD>C-c C-a</KBD>
 <DD>
-<A NAME="IDX489"></A>
+<A NAME="IDX493"></A>
 Consult auxiliary PO files (<CODE>po-subedit-cycle-auxiliary</CODE>).
 
 </DL>
 
 <P>
-<A NAME="IDX490"></A>
-<A NAME="IDX491"></A>
-<A NAME="IDX492"></A>
+<A NAME="IDX494"></A>
+<A NAME="IDX495"></A>
+<A NAME="IDX496"></A>
 The window's contents represents a translation for a given message,
 or a translator comment.  The translator may modify this window to
 her heart's content.  Once this is done, the command <KBD>C-c C-c</KBD>
@@ -1329,8 +1329,8 @@ sight or if buffers were switched.
 
 </P>
 <P>
-<A NAME="IDX493"></A>
-<A NAME="IDX494"></A>
+<A NAME="IDX497"></A>
+<A NAME="IDX498"></A>
 If the translator becomes unsatisfied with her translation or comment,
 to the extent she prefers keeping what was existent prior to the
 <KBD><KBD>RET</KBD></KBD> or <KBD>#</KBD> command, she may use the command <KBD>C-c C-k</KBD>
@@ -1341,8 +1341,8 @@ whole effect of last edition.
 
 </P>
 <P>
-<A NAME="IDX495"></A>
-<A NAME="IDX496"></A>
+<A NAME="IDX499"></A>
+<A NAME="IDX500"></A>
 The command <KBD>C-c C-a</KBD> (<CODE>po-subedit-cycle-auxiliary</CODE>)
 allows for glancing through translations
 already achieved in other languages, directly while editing the current
@@ -1376,7 +1376,7 @@ in the editing window, as ending with two <CODE>&#60;</CODE> in a row.
 
 </P>
 <P>
-<A NAME="IDX497"></A>
+<A NAME="IDX501"></A>
 When a translation (or a comment) is being edited, the translator may move
 the cursor back into the PO file buffer and freely move to other entries,
 browsing at will.  If, with an edition pending, the translator wanders in the
@@ -1389,7 +1389,7 @@ the translator should better be comfortable at handling many Emacs windows!
 
 </P>
 <P>
-<A NAME="IDX498"></A>
+<A NAME="IDX502"></A>
 Pending subedits may be completed or aborted in any order, regardless
 of how or when they were started.  When many subedits are pending and the
 translator asks for quitting the PO file (with the <KBD>q</KBD> command), subedits
@@ -1400,9 +1400,9 @@ are automatically resumed one at a time, so she may decide for each of them.
 
 <H3><A NAME="SEC70" HREF="gettext_toc.html#TOC70">8.3.12  C Sources Context</A></H3>
 <P>
-<A NAME="IDX499"></A>
-<A NAME="IDX500"></A>
-<A NAME="IDX501"></A>
+<A NAME="IDX503"></A>
+<A NAME="IDX504"></A>
+<A NAME="IDX505"></A>
 
 </P>
 <P>
@@ -1439,7 +1439,7 @@ overall organization, than to the program code itself.
 
 </P>
 <P>
-<A NAME="IDX502"></A>
+<A NAME="IDX506"></A>
 The following commands are meant to help the translator at getting
 program source context for a PO file entry.
 
@@ -1448,35 +1448,35 @@ program source context for a PO file entry.
 
 <DT><KBD>s</KBD>
 <DD>
-<A NAME="IDX503"></A>
+<A NAME="IDX507"></A>
 Resume the display of a program source context, or cycle through them
 (<CODE>po-cycle-source-reference</CODE>).
 
 <DT><KBD>M-s</KBD>
 <DD>
-<A NAME="IDX504"></A>
+<A NAME="IDX508"></A>
 Display of a program source context selected by menu
 (<CODE>po-select-source-reference</CODE>).
 
 <DT><KBD>S</KBD>
 <DD>
-<A NAME="IDX505"></A>
+<A NAME="IDX509"></A>
 Add a directory to the search path for source files
 (<CODE>po-consider-source-path</CODE>).
 
 <DT><KBD>M-S</KBD>
 <DD>
-<A NAME="IDX506"></A>
+<A NAME="IDX510"></A>
 Delete a directory from the search path for source files
 (<CODE>po-ignore-source-path</CODE>).
 
 </DL>
 
 <P>
-<A NAME="IDX507"></A>
-<A NAME="IDX508"></A>
-<A NAME="IDX509"></A>
-<A NAME="IDX510"></A>
+<A NAME="IDX511"></A>
+<A NAME="IDX512"></A>
+<A NAME="IDX513"></A>
+<A NAME="IDX514"></A>
 The commands <KBD>s</KBD> (<CODE>po-cycle-source-reference</CODE>) and <KBD>M-s</KBD>
 (<CODE>po-select-source-reference</CODE>) both open another window displaying
 some source program file, and already positioned in such a way that
@@ -1521,10 +1521,10 @@ available for a single string to translate.
 
 </P>
 <P>
-<A NAME="IDX511"></A>
-<A NAME="IDX512"></A>
-<A NAME="IDX513"></A>
-<A NAME="IDX514"></A>
+<A NAME="IDX515"></A>
+<A NAME="IDX516"></A>
+<A NAME="IDX517"></A>
+<A NAME="IDX518"></A>
 Program source files are usually found relative to where the PO
 file stands.  As a special provision, when this fails, the file is
 also looked for, but relative to the directory immediately above it.
@@ -1544,7 +1544,7 @@ one of the directories she does not want anymore on the search path.
 
 <H3><A NAME="SEC71" HREF="gettext_toc.html#TOC71">8.3.13  Consulting Auxiliary PO Files</A></H3>
 <P>
-<A NAME="IDX515"></A>
+<A NAME="IDX519"></A>
 
 </P>
 <P>
@@ -1557,8 +1557,8 @@ at once, for translators preferring to work in this way.
 
 </P>
 <P>
-<A NAME="IDX516"></A>
-<A NAME="IDX517"></A>
+<A NAME="IDX520"></A>
+<A NAME="IDX521"></A>
 An <EM>auxiliary</EM> PO file is an existing PO file meant for the same
 package the translator is working on, but targeted to a different mother
 tongue language.  Commands exist for declaring and handling auxiliary
@@ -1573,41 +1573,41 @@ Here are the auxiliary file commands available in PO mode.
 
 <DT><KBD>a</KBD>
 <DD>
-<A NAME="IDX518"></A>
+<A NAME="IDX522"></A>
 Seek auxiliary files for another translation for the same entry
 (<CODE>po-cycle-auxiliary</CODE>).
 
 <DT><KBD>C-c C-a</KBD>
 <DD>
-<A NAME="IDX519"></A>
+<A NAME="IDX523"></A>
 Switch to a particular auxiliary file (<CODE>po-select-auxiliary</CODE>).
 
 <DT><KBD>A</KBD>
 <DD>
-<A NAME="IDX520"></A>
+<A NAME="IDX524"></A>
 Declare this PO file as an auxiliary file (<CODE>po-consider-as-auxiliary</CODE>).
 
 <DT><KBD>M-A</KBD>
 <DD>
-<A NAME="IDX521"></A>
+<A NAME="IDX525"></A>
 Remove this PO file from the list of auxiliary files
 (<CODE>po-ignore-as-auxiliary</CODE>).
 
 </DL>
 
 <P>
-<A NAME="IDX522"></A>
-<A NAME="IDX523"></A>
-<A NAME="IDX524"></A>
-<A NAME="IDX525"></A>
+<A NAME="IDX526"></A>
+<A NAME="IDX527"></A>
+<A NAME="IDX528"></A>
+<A NAME="IDX529"></A>
 Command <KBD>A</KBD> (<CODE>po-consider-as-auxiliary</CODE>) adds the current
 PO file to the list of auxiliary files, while command <KBD>M-A</KBD>
 (<CODE>po-ignore-as-auxiliary</CODE> just removes it.
 
 </P>
 <P>
-<A NAME="IDX526"></A>
-<A NAME="IDX527"></A>
+<A NAME="IDX530"></A>
+<A NAME="IDX531"></A>
 The command <KBD>a</KBD> (<CODE>po-cycle-auxiliary</CODE>) seeks all auxiliary PO
 files, round-robin, searching for a translated entry in some other language
 having an <CODE>msgid</CODE> field identical as the one for the current entry.
@@ -1619,8 +1619,8 @@ so repeating <KBD>a</KBD> will eventually yield back the original PO file.
 
 </P>
 <P>
-<A NAME="IDX528"></A>
-<A NAME="IDX529"></A>
+<A NAME="IDX532"></A>
+<A NAME="IDX533"></A>
 The command <KBD>C-c C-a</KBD> (<CODE>po-select-auxiliary</CODE>) asks the translator
 for her choice of a particular auxiliary file, with completion, and
 then switches to that selected PO file.  The command also checks if
@@ -1640,7 +1640,7 @@ their <CODE>msgid</CODE> entries written by the same GNU <CODE>gettext</CODE> to
 
 </P>
 <P>
-<A NAME="IDX530"></A>
+<A NAME="IDX534"></A>
 However, PO files initially created by PO mode itself, while marking
 strings in source files, are normalised differently.  So are PO
 files resulting of the <SAMP>&lsquo;M-x normalize&rsquo;</SAMP> command.  Until these
@@ -1652,11 +1652,11 @@ fully resolved, the translator should stay aware of normalisation issues.
 
 <H2><A NAME="SEC72" HREF="gettext_toc.html#TOC72">8.4  Using Translation Compendia</A></H2>
 <P>
-<A NAME="IDX531"></A>
+<A NAME="IDX535"></A>
 
 </P>
 <P>
-<A NAME="IDX532"></A>
+<A NAME="IDX536"></A>
 A <EM>compendium</EM> is a special PO file containing a set of
 translations recurring in many different packages.  The translator can
 use gettext tools to build a new compendium, to add entries to her
@@ -1669,8 +1669,8 @@ already translated entries, from translations kept in the compendium.
 
 <H3><A NAME="SEC73" HREF="gettext_toc.html#TOC73">8.4.1  Creating Compendia</A></H3>
 <P>
-<A NAME="IDX533"></A>
-<A NAME="IDX534"></A>
+<A NAME="IDX537"></A>
+<A NAME="IDX538"></A>
 
 </P>
 <P>
@@ -1685,8 +1685,8 @@ files</CITE> and <CITE>extracting a message subset from a PO file</CITE>.
 <H4><A NAME="SEC74" HREF="gettext_toc.html#TOC74">8.4.1.1  Concatenate PO Files</A></H4>
 
 <P>
-<A NAME="IDX535"></A>
-<A NAME="IDX536"></A>
+<A NAME="IDX539"></A>
+<A NAME="IDX540"></A>
 To concatenate several valid PO files into one compendium file you can
 use <SAMP>&lsquo;msgcomm&rsquo;</SAMP> or <SAMP>&lsquo;msgcat&rsquo;</SAMP> (the latter preferred):
 
@@ -1767,7 +1767,7 @@ files or postprocess the result using <SAMP>&lsquo;msgattrib --translated --no-f
 
 <H4><A NAME="SEC75" HREF="gettext_toc.html#TOC75">8.4.1.2  Extract a Message Subset from a PO File</A></H4>
 <P>
-<A NAME="IDX537"></A>
+<A NAME="IDX541"></A>
 
 </P>
 <P>
@@ -1798,7 +1798,7 @@ or to update an already existing translation.
 
 <H4><A NAME="SEC77" HREF="gettext_toc.html#TOC77">8.4.2.1  Initialize a New Translation File</A></H4>
 <P>
-<A NAME="IDX538"></A>
+<A NAME="IDX542"></A>
 
 </P>
 <P>
@@ -1815,7 +1815,7 @@ msgmerge --compendium compendium.po -o file.po /dev/null file.pot
 
 <H4><A NAME="SEC78" HREF="gettext_toc.html#TOC78">8.4.2.2  Update an Existing Translation File</A></H4>
 <P>
-<A NAME="IDX539"></A>
+<A NAME="IDX543"></A>
 
 </P>
 <P>

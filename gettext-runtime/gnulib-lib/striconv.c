@@ -1,5 +1,5 @@
 /* Charset conversion.
-   Copyright (C) 2001-2007, 2010-2014 Free Software Foundation, Inc.
+   Copyright (C) 2001-2007, 2010-2015 Free Software Foundation, Inc.
    Written by Bruno Haible and Simon Josefsson.
 
    This program is free software; you can redistribute it and/or modify

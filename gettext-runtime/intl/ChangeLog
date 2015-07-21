@@ -1,3 +1,101 @@
+2015-07-10  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.5 released.
+
+2015-07-10  Daiki Ueno  <ueno@gnu.org>
+
+	intl: Update from gnulib
+	* localename.c: Update from gnulib.
+
+2015-06-23  Daiki Ueno  <ueno@gnu.org>
+
+	* locale.alias: Update from glibc:
+	2015-05-22  Paul Eggert  <eggert@cs.ucla.edu>
+	  Remove obsolete aliases that broke 'locale -a'
+	  [BZ #18412]
+	  * intl/locale.alias: Remove obsolete aliases "bokmål" and "français"
+	  which caused 'locale -a' to output Latin-1 data in UTF-8 locales,
+	  breaking some applications that use 'locale -a' output.
+	  Change the encoding of this file from Latin-1 to ASCII to avoid
+	  other potential problems with people grepping this file.
+
+2015-03-12  Daiki Ueno  <ueno@gnu.org>
+
+	intl: Update from gnulib
+	* localename.c, vasnprintf.c: Update from gnulib.
+
+2015-01-22  Daiki Ueno  <ueno@gnu.org>
+
+	intl: Update from gnulib
+	* config.charset, localcharset.c, relocatable.c, vasnprintf.c:
+	Update from gnulib.
+	* codeset.m4, extern-inline.m4, fcntl-o.m4, gettext.m4, glibc2.m4:
+	* glibc21.m4, iconv.m4, intdiv0.m4, intldir.m4, intlmacosx.m4:
+	* intmax.m4, inttypes-pri.m4, inttypes_h.m4, lcmessage.m4, lock.m4:
+	* longlong.m4, nls.m4, printf-posix.m4, progtest.m4:
+	* size_max.m4, stdint_h.m4, threadlib.m4, uintmax_t.m4:
+	* visibility.m4, wchar_t.m4, wint_t.m4, xsize.m4: Update copyright
+	year.
+
+2015-01-21  Will Newton  <will.newton@linaro.org>
+
+	intl: Merge from glibc
+	* bindtextdom.c: Update copyright to use year ranges.
+	* dcgettext.c: Update copyright to use year ranges.
+	[_LIBC]: Use libc_hidden_def instead of INTDEF.
+	* dcigettext.c: Update copyright to use year ranges.
+	Test HAVE_TSEARCH with #ifdef rather than #if.
+	(DCIGETTEXT) [_LIBC]: Use __current_locale_name instead of
+	_current_locale_name.
+	* dcngettext.c: Update copyright to use year ranges.
+	* dgettext.c: Update copyright to use year ranges.
+	[_LIBC]: Remove use of INTUSE macro.
+	* dngettext.c: Update copyright to use year ranges.
+	* explodename.c: Likewise.
+	* finddomain.c: Update copyright to use year ranges.
+	(_nl_finddomain_subfreeres): Use void in no-arguments function
+	definition.
+	* gettext.c: Update copyright to use year ranges.
+	[_LIBC]: Remove use of INTUSE macro.
+	* gettextP.h: Update copyright to use year ranges.
+	[_LIBC]: Forward declaration of struct loaded_domain.
+	* gmo.h: Update copyright to use year ranges.
+	* hash-string.c: Likewise.
+	* hash-string.h: Likewise.
+	* l10nflist.c: Update copyright to use year ranges.
+	[_LIBC]: Remove use of INTUSE macro.
+	Wrap pop function in [!ARCH_POP].
+	* loadinfo.h: Update copyright to use year ranges.
+	* loadmsgcat.c: Likewise.
+	* localealias.c: Update copyright to use year ranges.
+	Test ENABLE_RELOCATABLE with #ifdef rather than #if.
+	[_LIBC]: Use __strcasecmp_l for strcasecmp.
+	[_LIBC]: Use __fgets_unlocked for FGETS.
+	Test HAVE_DECL_FGETS_UNLOCKED with #ifdef rather than #if.
+	Test HAVE_DECL_FEOF_UNLOCKED with #ifdef rather than #if.
+	(read_alias_file) [_LIBC]: Open file with O_CLOEXEC.
+	(extend_alias_table): Use void in no-arguments function
+	definition.
+	* ngettext.c: Update copyright to use year ranges.
+	* plural-exp.c: Update copyright to use year ranges.
+	Test __APPLE_CC__ with #ifdef rather than #if.
+	(GERMANIC_PLURAL): Make const.
+	(init_germanic_plural): Use void in no-arguments function
+	definition.
+	* plural-exp.h: Update copyright to use year ranges.
+	(GERMANIC_PLURAL): Make const.
+	* plural.y: Update copyright to use year ranges.
+	* textdomain.c: Likewise.
+
+2015-01-04  Václav Slavík  <vaclav@slavik.io>  (tiny change)
+
+	intl: Add missing libintl.h dependency from pluralx.$lo
+	plural(x).c depends on libintl.h if ENABLE_NLS, but the makefile
+	didn't have corresponding dependency for pluralx.c, because
+	d2d04ba forgot to add it.  Fix by using $(PLURAL_OBJECT) for the
+	dependency rule too.
+	* Makefile.in ($(PLURAL_OBJECT)): Depend on libintl.h.
+
 2014-12-24  Daiki Ueno  <ueno@gnu.org>
 
 	* gettext 0.19.4 released.

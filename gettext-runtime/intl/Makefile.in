@@ -1,5 +1,6 @@
 # Makefile for directory with message catalog handling library of GNU gettext
-# Copyright (C) 1995-1998, 2000-2007, 2009-2012 Free Software Foundation, Inc.
+# Copyright (C) 1995-1998, 2000-2007, 2009-2015 Free Software
+# Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -605,7 +606,7 @@ printf.$lo: $(srcdir)/printf-args.h $(srcdir)/printf-args.c $(srcdir)/printf-par
 # A bison-2.1 generated plural.c includes <libintl.h> if ENABLE_NLS.
 PLURAL_DEPS_yes = libintl.h
 PLURAL_DEPS_no =
-plural.$lo: $(PLURAL_DEPS_@USE_INCLUDED_LIBINTL@)
+$(PLURAL_OBJECT): $(PLURAL_DEPS_@USE_INCLUDED_LIBINTL@)
 
 tags: TAGS
 
