@@ -1,5 +1,5 @@
 #!/bin/sh
-# Copyright (C) 2003-2014 Free Software Foundation, Inc.
+# Copyright (C) 2003-2015 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -245,6 +245,7 @@ if ! $skip_gnulib; then
       sys_stat
       sys_time
       term-styled-ostream
+      unictype/ctype-space
       unilbrk/ulc-width-linebreaks
       uniname/uniname
       unistd
@@ -349,8 +350,11 @@ if ! $skip_gnulib; then
       stdbool
       stdio
       stdlib
+      stpcpy
+      stpncpy
       strchrnul
       strerror
+      unictype/ctype-space
       unilbrk/ulc-width-linebreaks
       unistr/u8-mbtouc
       unistr/u8-mbtoucr

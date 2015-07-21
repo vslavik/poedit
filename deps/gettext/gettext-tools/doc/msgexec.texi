@@ -17,6 +17,13 @@ A special builtin command called @samp{0} outputs the translation, followed
 by a null byte.  The output of @samp{msgexec 0} is suitable as input for
 @samp{xargs -0}.
 
+@table @samp
+@item --newline
+@opindex --newline@r{, @code{msgfilter} option}
+Add newline at the end of each input line.
+
+@end table
+
 @vindex MSGEXEC_MSGCTXT@r{, environment variable}
 @vindex MSGEXEC_MSGID@r{, environment variable}
 @vindex MSGEXEC_MSGID_PLURAL@r{, environment variable}

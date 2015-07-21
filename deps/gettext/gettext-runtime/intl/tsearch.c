@@ -1,4 +1,5 @@
-/* Copyright (C) 1995, 1996, 1997, 2000, 2006 Free Software Foundation, Inc.
+/* Copyright (C) 1995-1997, 2000, 2006, 2015 Free Software Foundation,
+   Inc.
    Contributed by Bernd Schmidt <crux@Pool.Informatik.RWTH-Aachen.DE>, 1997.
 
    NOTE: The canonical source of this file is maintained with the GNU C

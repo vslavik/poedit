@@ -1,5 +1,6 @@
 /* xgettext libexpat compatibility.
-   Copyright (C) 2002-2003, 2005-2009, 2013 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2005-2009, 2013, 2015 Free Software
+   Foundation, Inc.
 
    This file was written by Bruno Haible <haible@clisp.cons.org>, 2002.
 

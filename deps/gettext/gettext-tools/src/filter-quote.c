@@ -1,5 +1,5 @@
 /* Convert ASCII quotations to Unicode quotations.
-   Copyright (C) 2014 Free Software Foundation, Inc.
+   Copyright (C) 2014-2015 Free Software Foundation, Inc.
    Written by Daiki Ueno <ueno@gnu.org>, 2014.
 
    This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 /* Specification.  */
 #include "filters.h"
 
+#include "quote.h"
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,28 +31,83 @@
 #define BOLD_START "\x1b[1m"
 #define BOLD_END "\x1b[0m"
 
+struct result
+{
+  char *output;
+  char *offset;
+  bool bold;
+};
+
+static void
+convert_quote_callback (char quote, const char *quoted, size_t quoted_length,
+                        void *data)
+{
+  struct result *result = data;
+
+  switch (quote)
+    {
+    case '\0':
+      memcpy (result->offset, quoted, quoted_length);
+      result->offset += quoted_length;
+      break;
+
+    case '"':
+      /* U+201C: LEFT DOUBLE QUOTATION MARK */
+      memcpy (result->offset, "\xe2\x80\x9c", 3);
+      result->offset += 3;
+      if (result->bold)
+        {
+          memcpy (result->offset, BOLD_START, 4);
+          result->offset += 4;
+        }
+      memcpy (result->offset, quoted, quoted_length);
+      result->offset += quoted_length;
+      if (result->bold)
+        {
+          memcpy (result->offset, BOLD_END, 4);
+          result->offset += 4;
+        }
+      /* U+201D: RIGHT DOUBLE QUOTATION MARK */
+      memcpy (result->offset, "\xe2\x80\x9d", 3);
+      result->offset += 3;
+      break;
+
+    case '\'':
+      /* U+2018: LEFT SINGLE QUOTATION MARK */
+      memcpy (result->offset, "\xe2\x80\x98", 3);
+      result->offset += 3;
+      if (result->bold)
+        {
+          memcpy (result->offset, BOLD_START, 4);
+          result->offset += 4;
+        }
+      memcpy (result->offset, quoted, quoted_length);
+      result->offset += quoted_length;
+      if (result->bold)
+        {
+          memcpy (result->offset, BOLD_END, 4);
+          result->offset += 4;
+        }
+      /* U+2019: RIGHT SINGLE QUOTATION MARK */
+      memcpy (result->offset, "\xe2\x80\x99", 3);
+      result->offset += 3;
+      break;
+    }
+}
+
 /* This is a direct translation of po/quot.sed and po/boldquot.sed.  */
 static void
 convert_ascii_quote_to_unicode (const char *input, size_t input_len,
                                 char **output_p, size_t *output_len_p,
                                 bool bold)
 {
-  const char *start, *end, *p;
-  char *output, *r;
-  bool state;
+  const char *p;
   size_t quote_count;
-
-  start = input;
-  end = &input[input_len - 1];
-
-  /* True if we have seen a character which could be an opening
-     quotation mark.  Note that we can't determine if it is really an
-     opening quotation mark until we see a closing quotation mark.  */
-  state = false;
+  struct result result;
 
   /* Count the number of quotation characters.  */
   quote_count = 0;
-  for (p = start; p <= end; p++)
+  for (p = input; p < input + input_len; p++)
     {
       size_t len;
 
@@ -65,144 +121,16 @@ convert_ascii_quote_to_unicode (const char *input, size_t input_len,
     }
 
   /* Large enough.  */
-  r = output = XNMALLOC (input_len - quote_count
-                         + (bold ? 7 : 3) * quote_count + 1,
-                         char);
+  result.output = XNMALLOC (input_len - quote_count
+                            + (bold ? 7 : 3) * quote_count + 1,
+                            char);
+  result.offset = result.output;
+  result.bold = bold;
 
-#undef COPY_SEEN
-#define COPY_SEEN                             \
-  do                                            \
-    {                                           \
-      memcpy (r, start, p - start);             \
-      r += p - start;                           \
-      start = p;                                \
-    }                                           \
-  while (0)
+  scan_quoted (input, input_len, convert_quote_callback, &result);
 
-  for (p = start; p <= end; p++)
-    {
-      switch (*p)
-        {
-        case '"':
-          if (state)
-            {
-              if (*start == '"')
-                {
-                  if (p > start + 1)
-                    {
-                      /* U+201C: LEFT DOUBLE QUOTATION MARK */
-                      memcpy (r, "\xe2\x80\x9c", 3);
-                      r += 3;
-                      if (bold)
-                        {
-                          memcpy (r, BOLD_START, 4);
-                          r += 4;
-                        }
-                      memcpy (r, start + 1, p - start - 1);
-                      r += p - start - 1;
-                      if (bold)
-                        {
-                          memcpy (r, BOLD_END, 4);
-                          r += 4;
-                        }
-                      /* U+201D: RIGHT DOUBLE QUOTATION MARK */
-                      memcpy (r, "\xe2\x80\x9d", 3);
-                      r += 3;
-                    }
-                  else
-                    {
-                      /* Consider "" as "".  */
-                      memcpy (r, "\"\"", 2);
-                      r += 2;
-                    }
-                  start = p + 1;
-                  state = false;
-                }
-            }
-          else
-            {
-              COPY_SEEN;
-              state = true;
-            }
-          break;
-
-        case '`':
-          if (state)
-            {
-              if (*start == '`')
-                COPY_SEEN;
-            }
-          else
-            {
-              COPY_SEEN;
-              state = true;
-            }
-          break;
-
-        case '\'':
-          if (state)
-            {
-              if (/* `...' */
-                  *start == '`'
-                  /* '...', where:
-                     - The left quote is preceded by a space, and the
-                       right quote is followed by a space.
-                     - The left quote is preceded by a space, and the
-                       right quote is at the end of line.
-                     - The left quote is at the beginning of the line, and
-                       the right quote is followed by a space.
-                   */
-                  || (*start == '\''
-                      && (((start > input && *(start - 1) == ' ')
-                           && (p == end || *(p + 1) == '\n' || *(p + 1) == ' '))
-                          || ((start == input || *(start - 1) == '\n')
-                              && p < end && *(p + 1) == ' '))))
-                {
-                  /* U+2018: LEFT SINGLE QUOTATION MARK */
-                  memcpy (r, "\xe2\x80\x98", 3);
-                  r += 3;
-                  if (bold)
-                    {
-                      memcpy (r, BOLD_START, 4);
-                      r += 4;
-                    }
-                  memcpy (r, start + 1, p - start - 1);
-                  r += p - start - 1;
-                  if (bold)
-                    {
-                      memcpy (r, BOLD_END, 4);
-                      r += 4;
-                    }
-                  /* U+2019: RIGHT SINGLE QUOTATION MARK */
-                  memcpy (r, "\xe2\x80\x99", 3);
-                  r += 3;
-                  start = p + 1;
-                }
-              else
-                COPY_SEEN;
-              state = false;
-            }
-          else if (p == input || *(p - 1) == '\n' || *(p - 1) == ' ')
-            {
-              COPY_SEEN;
-              state = true;
-            }
-          break;
-        }
-    }
-
-#undef COPY_SEEN
-
-  /* Copy the rest to R.  */
-  if (p > start)
-    {
-      memcpy (r, start, p - start);
-      r += p - start;
-    }
-  *r = '\0';
-
-  *output_p = output;
-  *output_len_p = r - output;
+  *output_p = result.output;
+  *output_len_p = result.offset - result.output;
 }
 
 void

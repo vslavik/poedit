@@ -1,6 +1,6 @@
 /* Analyze differences between two vectors.
 
-   Copyright (C) 1988-1989, 1992-1995, 2001-2004, 2006-2014 Free Software
+   Copyright (C) 1988-1989, 1992-1995, 2001-2004, 2006-2015 Free Software
    Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -41,8 +41,8 @@
      EQUAL                   A two-argument macro that tests two elements for
                              equality.
      OFFSET                  A signed integer type sufficient to hold the
-                             difference between two indices. Usually
-                             something like ssize_t.
+                             difference between two indices.  Usually
+                             something like ptrdiff_t.
      EXTRA_CONTEXT_FIELDS    Declarations of fields for 'struct context'.
      NOTE_DELETE(ctxt, xoff) Record the removal of the object xvec[xoff].
      NOTE_INSERT(ctxt, yoff) Record the insertion of the object yvec[yoff].

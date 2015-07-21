@@ -1,4 +1,4 @@
-# Copyright (C) 2002-2014 Free Software Foundation, Inc.
+# Copyright (C) 2002-2015 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 
 
 # Specification in the form of a command-line invocation:
-#   gnulib-tool --import --dir=gettext-tools --local-dir=gnulib-local --lib=libgettextlib --source-base=gnulib-lib --m4-base=gnulib-m4 --doc-base=doc --tests-base=gnulib-tests --aux-dir=../build-aux --with-tests --avoid=hash-tests --avoid=unilbrk/u8-possible-linebreaks-tests --avoid=unilbrk/ulc-width-linebreaks-tests --avoid=unistr/u8-mbtouc-tests --avoid=unistr/u8-mbtouc-unsafe-tests --avoid=uniwidth/width-tests --makefile-name=Makefile.gnulib --no-conditional-dependencies --libtool --macro-prefix=gl alloca-opt ansi-c++-opt atexit backupfile basename binary-io bison-i18n byteswap c-ctype c-strcase c-strcasestr c-strstr clean-temp closedir closeout copy-file csharpcomp csharpcomp-script csharpexec csharpexec-script error error-progname execute extensions fd-ostream file-ostream filename findprog fnmatch fopen fstrcmp full-write fwriteerror gcd gcj getline getopt-gnu gettext-h gettext-tools-misc hash html-styled-ostream iconv include_next java javacomp javacomp-script javaexec javaexec-script libunistring-optional localcharset locale localename lock malloc-posix mbrtowc mbsinit memmove memset minmax multiarch obstack open opendir openmp ostream pipe-filter-ii progname propername readdir relocatable-prog relocatable-script setlocale sh-quote sigpipe sigprocmask snippet/arg-nonnull snippet/c++defs snippet/warn-on-use spawn-pipe ssize_t stdbool stddef stdint stdio stdlib stpcpy stpncpy strcspn streq strerror strpbrk strtol strtoul styled-ostream sys_select sys_stat sys_time term-styled-ostream unilbrk/ulc-width-linebreaks uniname/uniname unistd unistr/u16-mbtouc unistr/u8-mbtouc unistr/u8-mbtoucr unistr/u8-uctomb uniwidth/width unlocked-io vasprintf verify wait-process wchar wctype-h write xalloc xconcat-filename xerror xmalloca xsetenv xstriconv xstriconveh xvasprintf
+#   gnulib-tool --import --dir=gettext-tools --local-dir=gnulib-local --lib=libgettextlib --source-base=gnulib-lib --m4-base=gnulib-m4 --doc-base=doc --tests-base=gnulib-tests --aux-dir=../build-aux --with-tests --avoid=hash-tests --avoid=unilbrk/u8-possible-linebreaks-tests --avoid=unilbrk/ulc-width-linebreaks-tests --avoid=unistr/u8-mbtouc-tests --avoid=unistr/u8-mbtouc-unsafe-tests --avoid=uniwidth/width-tests --makefile-name=Makefile.gnulib --no-conditional-dependencies --libtool --macro-prefix=gl alloca-opt ansi-c++-opt atexit backupfile basename binary-io bison-i18n byteswap c-ctype c-strcase c-strcasestr c-strstr clean-temp closedir closeout copy-file csharpcomp csharpcomp-script csharpexec csharpexec-script error error-progname execute extensions fd-ostream file-ostream filename findprog fnmatch fopen fstrcmp full-write fwriteerror gcd gcj getline getopt-gnu gettext-h gettext-tools-misc hash html-styled-ostream iconv include_next java javacomp javacomp-script javaexec javaexec-script libunistring-optional localcharset locale localename lock malloc-posix mbrtowc mbsinit memmove memset minmax multiarch obstack open opendir openmp ostream pipe-filter-ii progname propername readdir relocatable-prog relocatable-script setlocale sh-quote sigpipe sigprocmask snippet/arg-nonnull snippet/c++defs snippet/warn-on-use spawn-pipe ssize_t stdbool stddef stdint stdio stdlib stpcpy stpncpy strcspn streq strerror strpbrk strtol strtoul styled-ostream sys_select sys_stat sys_time term-styled-ostream unictype/ctype-space unilbrk/ulc-width-linebreaks uniname/uniname unistd unistr/u16-mbtouc unistr/u8-mbtouc unistr/u8-mbtoucr unistr/u8-uctomb uniwidth/width unlocked-io vasprintf verify wait-process wchar wctype-h write xalloc xconcat-filename xerror xmalloca xsetenv xstriconv xstriconveh xvasprintf
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_LOCAL_DIR([../gnulib-local])
@@ -130,6 +130,7 @@ gl_MODULES([
   sys_stat
   sys_time
   term-styled-ostream
+  unictype/ctype-space
   unilbrk/ulc-width-linebreaks
   uniname/uniname
   unistd

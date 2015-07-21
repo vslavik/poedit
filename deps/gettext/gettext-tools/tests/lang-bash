@@ -116,6 +116,19 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   exit 77
 fi
 
+case "$host_os" in
+  darwin*)
+    if test $LOCALE_FR != none; then
+      LC_ALL=$LOCALE_FR bash --help \
+        | grep '^Utilisation' > /dev/null 2>&1 || exit 77
+    fi
+    if test $LOCALE_FR_UTF8 != none; then
+      LC_ALL=$LOCALE_FR_UTF8 bash --help \
+        | grep '^Utilisation' > /dev/null 2>&1 || exit 77
+    fi
+  ;;
+esac
+
 # Expected result when bash is built without i18n support.
 cat <<\EOF > prog.nok
 'Your command, please?', asked the waiter.

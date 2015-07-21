@@ -17,16 +17,26 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
-#: hello.c:70
-#, c-format
-msgid "This program is running as process number %d."
+#: hello.c:79
+#, fuzzy, c-format
+msgid ""
+"<big>Hello world!</big>\n"
+"This program is running as process number <b>%d</b>."
 msgstr "Ovaj program je pokrenut kao proces broj %d."
+
+#: hello.c:84
+msgid "<big><u>This is another text</u></big>"
+msgstr ""
+
+#: hello.c:86
+msgid "<big><i>This is yet another text</i></big>"
+msgstr ""
 
 #: hello.desktop.in.in:4
 msgid "Hello"
 msgstr ""
 
-#: hello.desktop.in.in:5 hello.ui:22
+#: hello.desktop.in.in:5
 msgid "Hello, world!"
 msgstr "Pozdrav, svijete!"
 
@@ -34,10 +44,14 @@ msgstr "Pozdrav, svijete!"
 msgid "Example Application"
 msgstr ""
 
+#: hello.ui:33
+msgid "Update text"
+msgstr ""
+
 #: hello.gschema.xml:7
-msgid "Set label sensitive"
+msgid "Use XML markup"
 msgstr ""
 
 #: hello.gschema.xml:8
-msgid "Whether to set the label sensitive."
+msgid "Whether to use XML markup in the text."
 msgstr ""

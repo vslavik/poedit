@@ -1,5 +1,5 @@
 /* Expression parsing for plural form selection.
-   Copyright (C) 2000-2001, 2003, 2005-2007 Free Software Foundation, Inc.
+   Copyright (C) 2000-2015 Free Software Foundation, Inc.
    Written by Ulrich Drepper <drepper@cygnus.com>, 2000.
 
    This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,8 @@
 
 #include "plural-exp.h"
 
-#if (defined __GNUC__ && !(__APPLE_CC__ > 1) && !defined __cplusplus) \
+#if (defined __GNUC__ && !(defined __APPLE_CC_ && __APPLE_CC__ > 1) \
+     && !defined __cplusplus)                                       \
     || (defined __STDC_VERSION__ && __STDC_VERSION__ >= 199901L)
 
 /* These structs are the constant expression for the germanic plural
@@ -44,7 +45,7 @@ static const struct expression plone =
     .num = 1
   }
 };
-struct expression GERMANIC_PLURAL =
+const struct expression GERMANIC_PLURAL =
 {
   .nargs = 2,
   .operation = not_equal,
@@ -70,7 +71,7 @@ static struct expression plone;
 struct expression GERMANIC_PLURAL;
 
 static void
-init_germanic_plural ()
+init_germanic_plural (void)
 {
   if (plone.val.num == 0)
     {

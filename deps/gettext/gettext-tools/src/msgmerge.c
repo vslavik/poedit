@@ -1,5 +1,6 @@
 /* GNU gettext - internationalization aids
-   Copyright (C) 1995-1998, 2000-2010, 2012 Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2010, 2012, 2015 Free Software
+   Foundation, Inc.
    This file was written by Peter Miller <millerp@canb.auug.org.au>
 
    This program is free software: you can redistribute it and/or modify
@@ -1025,8 +1026,9 @@ message_merge (message_ty *def, message_ty *ref, bool force_fuzzy,
               char *extended =
                 (char *) obstack_alloc (&pool,
                                         header_fields[UNKNOWN].len + len + 1);
-              memcpy (extended, header_fields[UNKNOWN].string,
-                      header_fields[UNKNOWN].len);
+              if (header_fields[UNKNOWN].string)
+                memcpy (extended, header_fields[UNKNOWN].string,
+                        header_fields[UNKNOWN].len);
               memcpy (&extended[header_fields[UNKNOWN].len], cp, len);
               extended[header_fields[UNKNOWN].len + len] = '\0';
               header_fields[UNKNOWN].string = extended;
@@ -1328,6 +1330,9 @@ message_merge (message_ty *def, message_ty *ref, bool force_fuzzy,
     result->is_fuzzy = true;
 
   result->do_wrap = ref->do_wrap;
+
+  for (i = 0; i < NSYNTAXCHECKS; i++)
+    result->do_syntax_check[i] = ref->do_syntax_check[i];
 
   /* Insert previous msgid, commented out with "#|".
      Do so only when --previous is specified, for backward compatibility.

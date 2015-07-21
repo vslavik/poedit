@@ -1,3 +1,113 @@
+2015-07-10  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.5 released.
+
+2015-06-24  Daiki Ueno  <ueno@gnu.org>
+
+	* autopoint-2 (required_gettext_version): Update to 0.19.5.
+	* autopoint-3 (required_gettext_version): Likewise.
+
+2015-06-24  Daiki Ueno  <ueno@gnu.org>
+
+	* lang-bash: Skip if "bash --help" isn't localized on Mac OS X.
+
+2015-06-24  Daiki Ueno  <ueno@gnu.org>
+
+	* msgfilter-8: Port the "echo -n" equivalent from gettext-2.
+	Reported by Paul Zimmermann in:
+	<https://lists.gnu.org/archive/html/bug-gettext/2015-06/msg00019.html>.
+
+2015-06-24  Daiki Ueno  <ueno@gnu.org>
+
+	* cldr-plurals-1: Skip if XML is not supported.
+	* msginit-4: Likewise.
+
+2015-06-24  Daiki Ueno  <ueno@gnu.org>
+
+	* format-kde-kuit-1: Skip if KDE KUIT format is not supported.
+	* format-kde-kuit-2: Likewise.
+	Suggested by Chusslove Illich.
+
+2015-06-23  Daiki Ueno  <ueno@gnu.org>
+
+	* msginit-4: Don't check the Project-Id-Version: field, which
+	cannot be generated since we can't rely on the project-id script
+	when $builddir != $srcdir.
+
+2015-06-23  Daiki Ueno  <ueno@gnu.org>
+
+	* msginit-4: New file.
+	* common/supplemental/plurals.xml: New data file.
+	* Makefile.am (TESTS): Add new tests.
+	(EXTRA_DIST): Add new data file.
+
+2015-06-22  Daiki Ueno  <ueno@gnu.org>
+
+	* cldr-plurals-1: New file.
+	* Makefile.am (TESTS): Add new tests.
+
+2015-03-12  Daiki Ueno  <ueno@gnu.org>
+
+	* Makefile.am (sentence_CPPFLAGS): Add -I$(top_srcdir)/src and
+	$(AM_CPPFLAGS).
+
+2015-03-05  Daiki Ueno  <ueno@gnu.org>
+
+	* format-kde-kuit-1: New file.
+	* format-kde-kuit-2: New file.
+	* Makefile.am (TESTS): Add new tests.
+
+2015-03-03  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext-14: New file.
+	* sentence.c: New file
+	* Makefile.am (TESTS): Add new tests.
+	(noinst_PROGRAMS): Add 'sentence'.
+	(sentence_SOURCES): New variable.
+	(sentence_CPPFLAGS): New variable.
+	(sentence_LDADD): New variable.
+
+2015-02-06  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Fix "broken pipe" error in msgfilter-7
+	* msgfilter-7: Eat up filter input to avoid EPIPE in the parent
+	msgfilter process, which was exposed on AIX 5.
+	Reported by Michael Felt.
+
+2015-02-05  Alex Henrie  <alexhenrie24@gmail.com>  (tiny change)
+
+	* xgettext-13: New file.
+	* Makefile.am (TESTS): Add new test.
+	* mm-viet.out: Adjust to the recent line-wrapping behavior change.
+
+2015-01-29  Daiki Ueno  <ueno@gnu.org>
+
+	* msgexec-6: New file.
+	* Makefile.am (TESTS): Add new test.
+
+2015-01-28  Daiki Ueno  <ueno@gnu.org>
+
+	* msgfilter-8: New file.
+	* Makefile.am (TESTS): Add new test.
+
+2015-01-16  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext-desktop-1: Check "invalid non-blank character" warning.
+
+2015-01-13  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext-c-20: Improve test coverage of raw string tests.
+
+2015-01-13  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext-c-20: Adjust to the latest xgettext C++ scanner change;
+	don't accept unbalanced prefix in raw string literal.
+
+2015-01-13  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext-c-20: Adjust the source file name from *.c to *.cc to
+	enable handling of raw string literals.
+
 2014-12-24  Daiki Ueno  <ueno@gnu.org>
 
 	* gettext 0.19.4 released.

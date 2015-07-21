@@ -1,5 +1,5 @@
 diff --git a/unistd.in.h b/unistd.in.h
-index b4a3f5b..dd0d2c2 100644
+index b82be83..9df3f13 100644
 --- a/unistd.in.h
 +++ b/unistd.in.h
 @@ -125,7 +125,11 @@
@@ -15,12 +15,3 @@ index b4a3f5b..dd0d2c2 100644
  # define __need_getopt
  # include <getopt.h>
  #endif
-@@ -402,7 +406,7 @@ _GL_WARN_ON_USE (dup3, "dup3 is unportable - "
-    "VARIABLE=VALUE", terminated with a NULL.  */
- #  if defined __APPLE__ && defined __MACH__
- #   include <TargetConditionals.h>
--#   if !defined TARGET_OS_IPHONE && !defined TARGET_IPHONE_SIMULATOR
-+#   if !TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR
- #    define _GL_USE_CRT_EXTERNS
- #   endif
- #  endif

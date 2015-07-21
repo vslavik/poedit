@@ -9,6 +9,42 @@ msginit [@var{option}]
 The @code{msginit} program creates a new PO file, initializing the meta
 information with values from the user's environment.
 
+Here are more details.  The following header fields of a PO file are
+automatically filled, when possible.
+
+@table @samp
+@item Project-Id-Version
+The value is guessed from the @code{configure} script or any other files
+in the current directory.
+
+@item PO-Revision-Date
+The value is taken from the @code{PO-Creation-Data} in the input POT
+file, or the current date is used.
+
+@item Last-Translator
+The value is taken from user's password file entry and the mailer
+configuration files.
+
+@item Language-Team, Language
+These values are set according to the current locale and the predefined
+list of translation teams.
+
+@item MIME-Version, Content-Type, Content-Transfer-Encoding
+These values are set according to the content of the POT file and the
+current locale.  If the POT file contains charset=UTF-8, it means that
+the POT file contains non-ASCII characters, and we keep the UTF-8
+encoding.  Otherwise, when the POT file is plain ASCII, we use the
+locale's encoding.
+
+@item Plural-Forms
+The value is first looked up from the embedded table.
+
+As an experimental feature, you can instruct @code{msginit} to use the
+information from Unicode CLDR, by setting the @code{GETTEXTCLDRDIR}
+environment variable.
+
+@end table
+
 @subsection Input file location
 
 @table @samp

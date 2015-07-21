@@ -17,12 +17,6 @@
 #define APPLICATION_ID "org.gnu.gettext.examples.hello"
 #define GSETTINGS_SCHEMA "org.gnu.gettext.examples.hello"
 
-static void
-quit_callback (GtkWidget *widget, void *data)
-{
-  g_application_quit (G_APPLICATION (data));
-}
-
 /* Forward declaration of GObject types.  */
 
 #define HELLO_TYPE_APPLICATION_WINDOW (hello_application_window_get_type ())
@@ -48,9 +42,11 @@ typedef struct _HelloApplicationClass HelloApplicationClass;
 struct _HelloApplicationWindow
 {
   GtkApplicationWindow parent;
-  GtkWidget *label2;
+  GtkWidget *label;
   GtkWidget *button;
   GSettings *settings;
+  gsize label_id;
+  gchar *labels[3];
 };
 
 struct _HelloApplicationWindowClass
@@ -62,20 +58,34 @@ G_DEFINE_TYPE (HelloApplicationWindow, hello_application_window,
                GTK_TYPE_APPLICATION_WINDOW);
 
 static void
+update_content (HelloApplicationWindow *window)
+{
+  gtk_label_set_label (GTK_LABEL (window->label),
+                       window->labels[window->label_id]);
+  window->label_id = (window->label_id + 1) % G_N_ELEMENTS (window->labels);
+}
+
+static void
 hello_application_window_init (HelloApplicationWindow *window)
 {
-  char *label;
-
   gtk_widget_init_template (GTK_WIDGET (window));
-  label = g_strdup_printf (_("This program is running as process number %d."),
-                           getpid ());
-  gtk_label_set_label (GTK_LABEL (window->label2), label);
-  g_free (label);
 
   window->settings = g_settings_new (GSETTINGS_SCHEMA);
-  g_settings_bind (window->settings, "label-sensitive",
-                   window->label2, "sensitive",
+  g_settings_bind (window->settings, "use-markup",
+                   window->label, "use-markup",
                    G_SETTINGS_BIND_DEFAULT);
+
+  window->labels[0]
+    = g_strdup_printf (_("<big>Hello world!</big>\n"
+                         "This program is running as "
+                         "process number <b>%d</b>."),
+                       getpid ());
+  window->labels[1]
+    = g_strdup (_("<big><u>This is another text</u></big>"));
+  window->labels[2]
+    = g_strdup (_("<big><i>This is yet another text</i></big>"));
+
+  update_content (window);
 }
 
 static void
@@ -95,7 +105,7 @@ hello_application_window_class_init (HelloApplicationWindowClass *klass)
   gtk_widget_class_set_template_from_resource (GTK_WIDGET_CLASS (klass),
                                                UI_PATH);
   gtk_widget_class_bind_template_child (GTK_WIDGET_CLASS (klass),
-                                        HelloApplicationWindow, label2);
+                                        HelloApplicationWindow, label);
   gtk_widget_class_bind_template_child (GTK_WIDGET_CLASS (klass),
                                         HelloApplicationWindow, button);
 }
@@ -128,13 +138,19 @@ hello_application_init (HelloApplication *application)
 }
 
 static void
+clicked_callback (GtkWidget *widget, void *data)
+{
+  update_content (HELLO_APPLICATION_WINDOW (data));
+}
+
+static void
 hello_application_activate (GApplication *application)
 {
   HelloApplicationWindow *window;
 
   window = hello_application_window_new (HELLO_APPLICATION (application));
   g_signal_connect (window->button, "clicked",
-                    G_CALLBACK (quit_callback), application);
+                    G_CALLBACK (clicked_callback), window);
   gtk_window_present (GTK_WINDOW (window));
 }
 

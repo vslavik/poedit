@@ -54,9 +54,19 @@ msgstr ""
 #~ msgstr "das einen verheirateten Mann liebt"
 EOF
 
+cat <<\EOF > mf-test7.sh
+#! /bin/sh
+
+# Eat up filter input to avoid EPIPE in the parent process.
+cat > /dev/null
+
+echo testing
+EOF
+chmod +x mf-test7.sh
+
 : ${MSGFILTER=msgfilter}
 LC_ALL=C ${MSGFILTER} -i mfi-test7.po -o mfi-test7.out \
-      echo testing >mfi-test7.err 2>&1
+      ./mf-test7.sh >mfi-test7.err 2>&1
 result=$?
 cat mfi-test7.err | grep -v 'warning: Locale charset' | grep -v '^ '
 test $result = 0 || { exit 1; }

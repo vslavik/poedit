@@ -1,5 +1,5 @@
-# printf.m4 serial 51
-dnl Copyright (C) 2003, 2007-2014 Free Software Foundation, Inc.
+# printf.m4 serial 52
+dnl Copyright (C) 2003, 2007-2015 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -365,66 +365,51 @@ int main ()
   { /* Pseudo-NaN.  */
     static union { unsigned int word[4]; long double value; } x =
       { LDBL80_WORDS (0xFFFF, 0x40000001, 0x00000000) };
-    if (sprintf (buf, "%Lf", x.value) < 0
-        || !strisnan (buf, 0, strlen (buf)))
+    if (sprintf (buf, "%Lf", x.value) <= 0)
       result |= 4;
-    if (sprintf (buf, "%Le", x.value) < 0
-        || !strisnan (buf, 0, strlen (buf)))
+    if (sprintf (buf, "%Le", x.value) <= 0)
       result |= 4;
-    if (sprintf (buf, "%Lg", x.value) < 0
-        || !strisnan (buf, 0, strlen (buf)))
+    if (sprintf (buf, "%Lg", x.value) <= 0)
       result |= 4;
   }
   { /* Pseudo-Infinity.  */
     static union { unsigned int word[4]; long double value; } x =
       { LDBL80_WORDS (0xFFFF, 0x00000000, 0x00000000) };
-    if (sprintf (buf, "%Lf", x.value) < 0
-        || !strisnan (buf, 0, strlen (buf)))
+    if (sprintf (buf, "%Lf", x.value) <= 0)
       result |= 8;
-    if (sprintf (buf, "%Le", x.value) < 0
-        || !strisnan (buf, 0, strlen (buf)))
+    if (sprintf (buf, "%Le", x.value) <= 0)
       result |= 8;
-    if (sprintf (buf, "%Lg", x.value) < 0
-        || !strisnan (buf, 0, strlen (buf)))
+    if (sprintf (buf, "%Lg", x.value) <= 0)
       result |= 8;
   }
   { /* Pseudo-Zero.  */
     static union { unsigned int word[4]; long double value; } x =
       { LDBL80_WORDS (0x4004, 0x00000000, 0x00000000) };
-    if (sprintf (buf, "%Lf", x.value) < 0
-        || !strisnan (buf, 0, strlen (buf)))
+    if (sprintf (buf, "%Lf", x.value) <= 0)
       result |= 16;
-    if (sprintf (buf, "%Le", x.value) < 0
-        || !strisnan (buf, 0, strlen (buf)))
+    if (sprintf (buf, "%Le", x.value) <= 0)
       result |= 16;
-    if (sprintf (buf, "%Lg", x.value) < 0
-        || !strisnan (buf, 0, strlen (buf)))
+    if (sprintf (buf, "%Lg", x.value) <= 0)
       result |= 16;
   }
   { /* Unnormalized number.  */
     static union { unsigned int word[4]; long double value; } x =
       { LDBL80_WORDS (0x4000, 0x63333333, 0x00000000) };
-    if (sprintf (buf, "%Lf", x.value) < 0
-        || !strisnan (buf, 0, strlen (buf)))
+    if (sprintf (buf, "%Lf", x.value) <= 0)
       result |= 32;
-    if (sprintf (buf, "%Le", x.value) < 0
-        || !strisnan (buf, 0, strlen (buf)))
+    if (sprintf (buf, "%Le", x.value) <= 0)
       result |= 32;
-    if (sprintf (buf, "%Lg", x.value) < 0
-        || !strisnan (buf, 0, strlen (buf)))
+    if (sprintf (buf, "%Lg", x.value) <= 0)
       result |= 32;
   }
   { /* Pseudo-Denormal.  */
     static union { unsigned int word[4]; long double value; } x =
       { LDBL80_WORDS (0x0000, 0x83333333, 0x00000000) };
-    if (sprintf (buf, "%Lf", x.value) < 0
-        || !strisnan (buf, 0, strlen (buf)))
+    if (sprintf (buf, "%Lf", x.value) <= 0)
       result |= 64;
-    if (sprintf (buf, "%Le", x.value) < 0
-        || !strisnan (buf, 0, strlen (buf)))
+    if (sprintf (buf, "%Le", x.value) <= 0)
       result |= 64;
-    if (sprintf (buf, "%Lg", x.value) < 0
-        || !strisnan (buf, 0, strlen (buf)))
+    if (sprintf (buf, "%Lg", x.value) <= 0)
       result |= 64;
   }
 #endif

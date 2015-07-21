@@ -1,3 +1,45 @@
+Version 0.19.5 - July 2015
+
+* xgettext now has a feature to perform syntax checks on msgid, which
+  could enforce common styles of translatable strings, such as to
+  prefer Unicode characters to the corresponding ASCII characters.
+  They can be enabled with --check option or special "xgettext: "
+  comment in the source code.  By default, no syntax checks are
+  enabled.
+
+* msgfilter and msgexec now have an option --newline, which appends a
+  newline character to filter input and trims it from the filter
+  output.  This would allow filter programs to be more POSIX friendly.
+
+* The base Unicode standard is now updated to 8.0.0.  This
+  particularly improves "\N{...}" notation handling of xgettext for
+  Perl and Python.
+
+* msginit is now capable of generating "Plural-Forms:" from Unicode
+  CLDR.  This feature is still experimental, but you can try it by
+  setting the GETTEXTCLDRDIR environment variable pointing to the the
+  directory where the CLDR archive is extracted.  The actual
+  conversion is done by a helper program 'cldr-plural', which can be
+  used as a generic converter and evaluator of CLDR plural forms.
+
+* Programming languages support:
+  - C++ with KDE: xgettext and msgfmt can now recognize KUIT (KDE User
+    Interface Text) markup.  See the documentation section "KUIT
+    Format Strings" for more info.
+  - C++ with KDE: xgettext now recognizes all default KDE keywords.
+    This removes the need for a long list of --keyword and --flag
+    options to perform a reasonable extraction.
+
+* Bug fixes:
+  - xgettext C++11 raw string recognition is now stricter and don't
+    accept unbalanced delimiters.
+  - Suppress baseless warnings which msgfmt emits when processing a
+    .desktop file.
+  - xgettext line wrapping behaviour is now consistent between comment
+    lines and non-comment lines.
+  - Fix msgfilter-7 test failure on some platforms.
+  - Fix VPATH build.
+
 Version 0.19.4 - December 2014
 
 * The --keyword option of xgettext now accepts same argument number

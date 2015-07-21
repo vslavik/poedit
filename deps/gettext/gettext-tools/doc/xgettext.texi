@@ -144,6 +144,60 @@ gettext (
 The second comment line will not be extracted, because there is one
 blank line between the comment line and the keyword.
 
+@item --check[=@var{CHECK}]
+@opindex --check@r{, @code{xgettext} option}
+@cindex supported syntax checks, @code{xgettext}
+Perform a syntax check on msgid and msgid_plural.  The supported checks
+are:
+
+@table @samp
+@item ellipsis-unicode
+Prefer Unicode ellipsis character over ASCII @code{...}
+
+@item space-ellipsis
+Prohibit whitespace before an ellipsis character
+
+@item quote-unicode
+Prefer Unicode quotation marks over ASCII @code{"'`}
+
+@end table
+
+The option has an effect on all input files.  To enable or disable
+checks for a certain string, you can mark it with an @code{xgettext:}
+special comment in the source file.  For example, if you specify the
+@code{--check=space-ellipsis} option, but want to suppress the check on
+a particular string, add the following comment:
+
+@example
+/* xgettext: no-space-ellipsis-check */
+gettext ("We really want a space before ellipsis here ...");
+@end example
+
+The @code{xgettext:} comment can be followed by flags separated with a
+comma.  The possible flags are of the form @samp{[no-]@var{name}-check},
+where @var{name} is the name of a valid syntax check.  If a flag is
+prefixed by @code{no-}, the meaning is negated.
+
+Some tests apply the checks to each sentence within the msgid, rather
+than the whole string.  xgettext detects the end of sentence by
+performing a pattern match, which usually looks for a period followed by
+a certain number of spaces.  The number is specified with the
+@code{--sentence-end} option.
+
+@item --sentence-end[=@var{TYPE}]
+@opindex --sentence-end@r{, @code{xgettext} option}
+@cindex sentence end markers, @code{xgettext}
+The supported values are:
+
+@table @samp
+@item single-space
+Expect at least one whitespace after a period
+
+@item double-space
+Expect at least two whitespaces after a period
+
+@end table
+
 @end table
 
 @subsection Language specific options
@@ -373,7 +427,7 @@ This option has an effect only with the language C++.
 @cindex debugging messages marked as format strings
 Use the flags @code{c-format} and @code{possible-c-format} to show who was
 responsible for marking a message as a format string.  The latter form is
-used if the @code{xgettext} program decided, the format form is used if
+used if the @code{xgettext} program decided, the former form is used if
 the programmer prescribed it.
 
 By default only the @code{c-format} form is used.  The translator should
@@ -523,7 +577,7 @@ Set the reporting address for msgid bugs.  This is the email address or URL
 to which the translators shall report bugs in the untranslated strings:
 
 @itemize -
-@item Strings which are not entire sentences, see the maintainer guidelines
+@item Strings which are not entire sentences; see the maintainer guidelines
 in @ref{Preparing Strings}.
 @item Strings which use unclear terms or require additional context to be
 understood.

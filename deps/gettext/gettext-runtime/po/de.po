@@ -4,6 +4,7 @@
 # Karl Eichwalder <ke@suse.de>, 2001, 2002, 2003, 2004, 2005, 2006, 2009.
 # Ulrich Drepper <drepper@gnu.org>, 1995-1997.
 # Jakob Kramer <jakob.kramer@gmx.de>, 2012, 2013.
+# Philipp Thomas <pth@suse.com>, 2015.
 #
 # Wörterbuch:
 # message catalog     - Katalog (mit Meldungen)
@@ -76,11 +77,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gettext-runtime 0.18.2\n"
+"Project-Id-Version: gettext-runtime 0.19.4.73\n"
 "Report-Msgid-Bugs-To: bug-gnu-gettext@gnu.org\n"
-"POT-Creation-Date: 2014-12-24 16:27+0900\n"
-"PO-Revision-Date: 2013-04-09 22:17+0200\n"
-"Last-Translator: Jakob Kramer <jakob.kramer@gmx.de>\n"
+"POT-Creation-Date: 2015-07-15 10:37+0900\n"
+"PO-Revision-Date: 2015-06-25 12:17+0200\n"
+"Last-Translator: Philipp Thomas <pth@suse.de>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -96,68 +97,73 @@ msgstr "Fehler beim Schreiben"
 msgid "Unknown system error"
 msgstr "Unbekannter Systemfehler"
 
-#: gnulib-lib/getopt.c:547 gnulib-lib/getopt.c:576
+#: gnulib-lib/getopt.c:575 gnulib-lib/getopt.c:604
 #, c-format
 msgid "%s: option '%s' is ambiguous; possibilities:"
 msgstr "%s: Option »%s« ist mehrdeutig; Möglichkeiten:"
 
-#: gnulib-lib/getopt.c:624 gnulib-lib/getopt.c:628
+#: gnulib-lib/getopt.c:619
+#, c-format
+msgid "%s: option '%s' is ambiguous\n"
+msgstr "%s: Option „%s“ ist mehrdeutig\n"
+
+#: gnulib-lib/getopt.c:654 gnulib-lib/getopt.c:658
 #, c-format
 msgid "%s: option '--%s' doesn't allow an argument\n"
 msgstr "%s: Option »--%s« erwartet kein Argument\n"
 
-#: gnulib-lib/getopt.c:637 gnulib-lib/getopt.c:642
+#: gnulib-lib/getopt.c:667 gnulib-lib/getopt.c:672
 #, c-format
 msgid "%s: option '%c%s' doesn't allow an argument\n"
 msgstr "%s: Option »%c%s« erwartet kein Argument\n"
 
-#: gnulib-lib/getopt.c:685 gnulib-lib/getopt.c:704
+#: gnulib-lib/getopt.c:715 gnulib-lib/getopt.c:734
 #, c-format
 msgid "%s: option '--%s' requires an argument\n"
 msgstr "%s: Option »--%s« erwartet ein Argument\n"
 
-#: gnulib-lib/getopt.c:742 gnulib-lib/getopt.c:745
+#: gnulib-lib/getopt.c:772 gnulib-lib/getopt.c:775
 #, c-format
 msgid "%s: unrecognized option '--%s'\n"
 msgstr "%s: unbekannte Option »--%s«\n"
 
-#: gnulib-lib/getopt.c:753 gnulib-lib/getopt.c:756
+#: gnulib-lib/getopt.c:783 gnulib-lib/getopt.c:786
 #, c-format
 msgid "%s: unrecognized option '%c%s'\n"
 msgstr "%s: unbekannte Option »%c%s«\n"
 
-#: gnulib-lib/getopt.c:805 gnulib-lib/getopt.c:808
+#: gnulib-lib/getopt.c:835 gnulib-lib/getopt.c:838
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: ungültige Option -- »%c«\n"
 
-#: gnulib-lib/getopt.c:861 gnulib-lib/getopt.c:878 gnulib-lib/getopt.c:1088
-#: gnulib-lib/getopt.c:1106
+#: gnulib-lib/getopt.c:891 gnulib-lib/getopt.c:908 gnulib-lib/getopt.c:1118
+#: gnulib-lib/getopt.c:1136
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: Option erwartet ein Argument -- »%c«\n"
 
-#: gnulib-lib/getopt.c:934 gnulib-lib/getopt.c:950
+#: gnulib-lib/getopt.c:964 gnulib-lib/getopt.c:980
 #, c-format
 msgid "%s: option '-W %s' is ambiguous\n"
 msgstr "%s: Option »-W %s« ist mehrdeutig\n"
 
-#: gnulib-lib/getopt.c:974 gnulib-lib/getopt.c:992
+#: gnulib-lib/getopt.c:1004 gnulib-lib/getopt.c:1022
 #, c-format
 msgid "%s: option '-W %s' doesn't allow an argument\n"
 msgstr "%s: Option »-W %s« erwartet kein Argument\n"
 
-#: gnulib-lib/getopt.c:1013 gnulib-lib/getopt.c:1031
+#: gnulib-lib/getopt.c:1043 gnulib-lib/getopt.c:1061
 #, c-format
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "%s: Option »-W %s« erwartet ein Argument\n"
 
-#: gnulib-lib/xmalloc.c:37
+#: gnulib-lib/xmalloc.c:38
 #, c-format
 msgid "memory exhausted"
 msgstr "virtueller Speicher aufgebraucht"
 
-#: src/envsubst.c:112 src/gettext.c:133 src/ngettext.c:123
+#: src/envsubst.c:112 src/gettext.c:134 src/ngettext.c:124
 #, c-format, no-wrap
 msgid ""
 "Copyright (C) %s Free Software Foundation, Inc.\n"
@@ -172,7 +178,7 @@ msgstr ""
 "weiterzugeben.\n"
 "Es gibt KEINE GARANTIE, soweit als vom Gesetz erlaubt.\n"
 
-#: src/envsubst.c:118 src/gettext.c:139 src/ngettext.c:129
+#: src/envsubst.c:118 src/gettext.c:140 src/ngettext.c:130
 #, c-format
 msgid "Written by %s.\n"
 msgstr "Geschrieben von %s.\n"
@@ -182,17 +188,17 @@ msgstr "Geschrieben von %s.\n"
 msgid "Bruno Haible"
 msgstr "Bruno Haible"
 
-#: src/envsubst.c:127 src/gettext.c:157 src/ngettext.c:141
+#: src/envsubst.c:127 src/gettext.c:158 src/ngettext.c:142
 #, c-format
 msgid "too many arguments"
 msgstr "zu viele Argumente"
 
-#: src/envsubst.c:138 src/gettext.c:167 src/ngettext.c:153
+#: src/envsubst.c:138 src/gettext.c:168 src/ngettext.c:154
 #, c-format
 msgid "missing arguments"
 msgstr "Argumente fehlen"
 
-#: src/envsubst.c:171 src/gettext.c:238 src/ngettext.c:207
+#: src/envsubst.c:171 src/gettext.c:239 src/ngettext.c:208
 #, c-format
 msgid "Try '%s --help' for more information.\n"
 msgstr "»%s --help« gibt weitere Informationen.\n"
@@ -263,7 +269,7 @@ msgstr ""
 #. for this package.  Please add _another line_ saying
 #. "Report translation bugs to <...>\n" with the address for translation
 #. bugs (typically your translation team's web or email address).
-#: src/envsubst.c:219 src/gettext.c:279 src/ngettext.c:245
+#: src/envsubst.c:219 src/gettext.c:280 src/ngettext.c:246
 msgid "Report bugs to <bug-gnu-gettext@gnu.org>.\n"
 msgstr ""
 "Fehler bitte auf Englisch an <bug-gnu-gettext@gnu.org> melden.\n"
@@ -281,11 +287,11 @@ msgid "standard input"
 msgstr "Standardeingabe"
 
 #. This is a proper name. See the gettext manual, section Names.
-#: src/gettext.c:139 src/ngettext.c:129
+#: src/gettext.c:140 src/ngettext.c:130
 msgid "Ulrich Drepper"
 msgstr "Ulrich Drepper"
 
-#: src/gettext.c:243
+#: src/gettext.c:244
 #, c-format, no-wrap
 msgid ""
 "Usage: %s [OPTION] [[TEXTDOMAIN] MSGID]\n"
@@ -295,12 +301,12 @@ msgstr ""
 "oder:   %s [OPTION] -s [SCHLÜSSEL]...\n"
 
 # CHECKIT
-#: src/gettext.c:249
+#: src/gettext.c:250
 #, c-format, no-wrap
 msgid "Display native language translation of a textual message.\n"
 msgstr "Übersetzung einer textuellen Meldung in einer nativen Sprache anzeigen.\n"
 
-#: src/gettext.c:253
+#: src/gettext.c:254
 #, c-format, no-wrap
 msgid ""
 "  -d, --domain=TEXTDOMAIN   retrieve translated messages from TEXTDOMAIN\n"
@@ -321,7 +327,7 @@ msgstr ""
 "  [TEXTBEREICH] SCHLÜSSEL    die Übersetzung zu SCHLÜSSEL aus TEXTBEREICH\n"
 "                               anfordern\n"
 
-#: src/gettext.c:264
+#: src/gettext.c:265
 #, c-format, no-wrap
 msgid ""
 "If the TEXTDOMAIN parameter is not given, the domain is determined from the\n"
@@ -344,13 +350,13 @@ msgstr ""
 "\n"
 "Standardverzeichnis: %s\n"
 
-#: src/ngettext.c:212
+#: src/ngettext.c:213
 #, c-format, no-wrap
 msgid "Usage: %s [OPTION] [TEXTDOMAIN] MSGID MSGID-PLURAL COUNT\n"
 msgstr "Aufruf: %s [OPTION] [TEXTBEREICH] SCHLÜSSEL SCHLÜSSEL-PLURAL ZAHL\n"
 
 # CHECKIT
-#: src/ngettext.c:217
+#: src/ngettext.c:218
 #, c-format, no-wrap
 msgid ""
 "Display native language translation of a textual message whose grammatical\n"
@@ -359,7 +365,7 @@ msgstr ""
 "Übersetzung einer textuellen Meldung, deren grammatische Form von einer Zahl\n"
 "abhängt, in einer nativen Sprache anzeigen.\n"
 
-#: src/ngettext.c:222
+#: src/ngettext.c:223
 #, c-format, no-wrap
 msgid ""
 "  -d, --domain=TEXTDOMAIN   retrieve translated message from TEXTDOMAIN\n"
@@ -382,7 +388,7 @@ msgstr ""
 "  ZAHL                         Singular-/Pluralform anhand des Wertes ZAHL\n"
 "                                 wählen\n"
 
-#: src/ngettext.c:233
+#: src/ngettext.c:234
 #, c-format, no-wrap
 msgid ""
 "If the TEXTDOMAIN parameter is not given, the domain is determined from the\n"

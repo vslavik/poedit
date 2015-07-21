@@ -1,5 +1,5 @@
 /* Determine name of the currently selected locale.
-   Copyright (C) 1995-2014 Free Software Foundation, Inc.
+   Copyright (C) 1995-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
@@ -41,6 +41,10 @@
 # include <langinfo.h>
 # if !defined IN_LIBINTL
 #  include "glthread/lock.h"
+# endif
+# if defined __sun && HAVE_GETLOCALENAME_L
+/* Solaris >= 12.  */
+extern char * getlocalename_l(int, locale_t);
 # endif
 #endif
 
@@ -2584,7 +2588,7 @@ get_lcid (const char *locale_name)
 #endif
 
 
-#if HAVE_USELOCALE /* glibc or Mac OS X */
+#if HAVE_USELOCALE /* glibc, Solaris >= 12 or Mac OS X */
 
 /* Simple hash set of strings.  We don't want to drag in lots of hash table
    code here.  */
@@ -2723,6 +2727,11 @@ gl_locale_name_thread_unsafe (int category, const char *categoryname)
             return "";
           }
         return querylocale (mask, thread_locale);
+#  elif defined __sun && HAVE_GETLOCALENAME_L
+        /* Solaris >= 12.  */
+        return getlocalename_l (category, thread_locale);
+#  elif defined __ANDROID__
+        return MB_CUR_MAX == 4 ? "C.UTF-8" : "C";
 #  endif
       }
   }

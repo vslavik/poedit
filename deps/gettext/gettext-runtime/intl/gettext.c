@@ -1,5 +1,5 @@
 /* Implementation of gettext(3) function.
-   Copyright (C) 1995, 1997, 2000-2003 Free Software Foundation, Inc.
+   Copyright (C) 1995-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
@@ -40,7 +40,7 @@
    prefix.  So we have to make a difference here.  */
 #ifdef _LIBC
 # define GETTEXT __gettext
-# define DCGETTEXT INTUSE(__dcgettext)
+# define DCGETTEXT __dcgettext
 #else
 # define GETTEXT libintl_gettext
 # define DCGETTEXT libintl_dcgettext

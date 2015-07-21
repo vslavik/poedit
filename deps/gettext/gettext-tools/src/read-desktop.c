@@ -1,5 +1,6 @@
 /* Reading Desktop Entry files.
-   Copyright (C) 1995-1998, 2000-2003, 2005-2006, 2008-2009, 2014 Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2003, 2005-2006, 2008-2009, 2014-2015
+   Free Software Foundation, Inc.
    This file was written by Daiki Ueno <ueno@gnu.org>.
 
    This program is free software: you can redistribute it and/or modify
@@ -271,16 +272,13 @@ desktop_lex (token_ty *tp)
                 break;
               }
             /* Skip until newline.  */
-            if (c != '\n')
+            while (c != '\n' && c != EOF)
               {
-                for (;;)
-                  {
-                    if (c == '\n' || c == EOF)
-                      break;
-                    if (!c_isspace (c))
-                      non_blank = true;
-                    c = phase2_getc ();
-                  }
+                c = phase2_getc ();
+                if (c == EOF)
+                  break;
+                if (!c_isspace (c))
+                  non_blank = true;
               }
             if (non_blank)
               po_xerror (PO_SEVERITY_WARNING, NULL,
