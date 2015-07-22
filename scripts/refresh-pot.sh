@@ -14,6 +14,10 @@ XGETTEXT_ARGS="-C -k_ -kwxGetTranslation -kwxTRANSLATE -kwxPLURAL:1,2 -F \
 # remove changes that only touch refresh header and do nothing else:
 remove_date_only_changes()
 {
+    if ! git ls-files $1 --error-unmatch >/dev/null 2>&1 ; then
+        return
+    fi
+
     changes=$(git diff $1 | grep '^[+-][^+-]' | grep -v '\(PO-Revision\|POT-Creation\)-Date' | wc -l)
     if [ $changes -eq 0 ] ; then
         git checkout $1
