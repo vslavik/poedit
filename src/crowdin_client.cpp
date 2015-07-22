@@ -83,8 +83,10 @@ void ExtractFilesFromInfo(std::vector<std::wstring>& out, const json_dict& r, co
 
 std::string CrowdinClient::WrapLink(const std::string& page)
 {
-    return "https://secure.payproglobal.com/r.ashx?s=12569&a=62761&u=" +
-            http_client::url_encode("https://crowdin.com" + page);
+    std::string url("https://poedit.net/crowdin");
+    if (!page.empty() && page != "/")
+        url += "?u=" + http_client::url_encode(page);
+    return url;
 }
 
 
