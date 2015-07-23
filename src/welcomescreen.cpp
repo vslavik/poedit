@@ -165,10 +165,10 @@ WelcomeScreenBase::WelcomeScreenBase(wxWindow *parent)
     SetBackgroundColour(wxColour("#fffcf5"));
 
 #if defined(__WXOSX__)
-    #define HEADER_FACE "Helvetica Neue"
-    m_fntHeader = wxFont(wxFontInfo(30).FaceName(HEADER_FACE).Light());
-    m_fntNorm = wxFont(wxFontInfo(13).FaceName(HEADER_FACE).Light());
-    m_fntSub = wxFont(wxFontInfo(11).FaceName(HEADER_FACE).Light());
+    auto guiface = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetFaceName();
+    m_fntHeader = wxFont(wxFontInfo(30).FaceName(guiface).Light());
+    m_fntNorm = wxFont(wxFontInfo(13).FaceName(guiface).Light());
+    m_fntSub = wxFont(wxFontInfo(11).FaceName(guiface).Light());
 #elif defined(__WXMSW__)
     #define HEADER_FACE "Segoe UI"
     m_fntHeader = wxFont(wxFontInfo(20).FaceName("Segoe UI Light").AntiAliased());
