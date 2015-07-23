@@ -280,7 +280,7 @@ public:
         m_useFontText->SetValue(cfg.ReadBool("custom_font_text_use", false));
 
         #if defined(__WXOSX__)
-            #define DEFAULT_FONT "Helvetica"
+            #define DEFAULT_FONT "Helvetica Neue"
         #elif defined(__WXMSW__)
             #define DEFAULT_FONT "Arial"
         #elif defined(__WXGTK__)
