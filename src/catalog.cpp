@@ -1151,6 +1151,9 @@ void Catalog::CreateNewHeader()
     dt.RevisionDate = dt.CreationDate;
 
     dt.Lang = Language();
+    if (m_fileType == Type::POT)
+        dt.SetHeader("Plural-Forms", "nplurals=INTEGER; plural=EXPRESSION;"); // default invalid value
+
     dt.Project = wxEmptyString;
     dt.Team = wxEmptyString;
     dt.TeamEmail = wxEmptyString;
