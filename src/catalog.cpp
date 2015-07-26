@@ -2393,13 +2393,17 @@ static unsigned GetCountFromPluralFormsHeader(const Catalog::HeaderData& header)
         form = form.BeforeFirst(_T(';'));
         if (form.BeforeFirst(_T('=')) == "nplurals")
         {
+            wxString vals = form.AfterFirst('=');
+            if (vals == "INTEGER") // POT default
+                return 2;
             long val;
-            if (form.AfterFirst(_T('=')).ToLong(&val))
+            if (vals.ToLong(&val))
                 return (unsigned)val;
         }
     }
 
-    return 0;
+    // fallback value for plural forms count should be 2, as in English:
+    return 2;
 }
 
 unsigned Catalog::GetPluralFormsCount() const
