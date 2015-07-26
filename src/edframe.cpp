@@ -1620,6 +1620,7 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
     }
 
     m_modified = succ || m_modified;
+    UpdateStatusBar();
 
     if (!succ)
     {
