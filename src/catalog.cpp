@@ -1573,8 +1573,18 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
         //      do anything about.
         wxLogNull null;
         msgcat_ok = ExecuteGettext(msgcatCmd) &&
-                    wxFileExists(po_file_temp2) &&
-                    wxRenameFile(po_file_temp2, po_file, /*overwrite=*/true);
+                    wxFileExists(po_file_temp2);
+
+        // msgcat always outputs Unix line endings, so we need to reformat the file
+        if (msgcat_ok && outputCrlf == wxTextFileType_Dos)
+        {
+            wxTextFile finalFile(po_file_temp2);
+            if (finalFile.Open())
+                finalFile.Write(outputCrlf);
+        }
+
+        if (!wxRenameFile(po_file_temp2, po_file, /*overwrite=*/true))
+            msgcat_ok = false;
     }
 
     if ( msgcat_ok )
@@ -1600,15 +1610,6 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
     }
 
     
-    // msgcat always outputs Unix line endings, so we need to reformat the file
-    if (outputCrlf == wxTextFileType_Dos)
-    {
-        wxTextFile finalFile(po_file);
-        if (finalFile.Open())
-            finalFile.Write(outputCrlf);
-    }
-
-
     /* If the user wants it, compile .mo file right now: */
 
     if (m_fileType == Type::PO && save_mo && wxConfig::Get()->Read("compile_mo", (long)true))
