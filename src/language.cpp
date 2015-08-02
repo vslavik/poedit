@@ -501,7 +501,7 @@ Language Language::TryDetectFromText(const char *buffer, size_t len, Language pr
 
     auto lang = CLD2::ExtDetectLanguageSummary(
                         buffer, (int)len,
-                        /*is_plain_text=*/false, // may have embedded HTML markup
+                        /*is_plain_text=*/false, // any embedded HTML markup should be insignificant
                         &hints,
                         /*flags=*/0,
                         language3, percent3, normalized_score3,
