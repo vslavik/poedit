@@ -632,7 +632,9 @@ void SuggestionsSidebarBlock::Update(const CatalogItemPtr& item)
     ClearMessage();
     ClearSuggestions();
 
-    if (m_parent->GetCurrentSourceLanguage() == m_parent->GetCurrentLanguage())
+    auto srclang = m_parent->GetCurrentSourceLanguage();
+    auto lang = m_parent->GetCurrentLanguage();
+    if (!srclang.IsValid() || !lang.IsValid() || srclang == lang)
     {
         OnQueriesFinished();
         return;
