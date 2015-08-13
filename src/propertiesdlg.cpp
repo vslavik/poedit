@@ -300,7 +300,7 @@ protected:
         menu->Bind(wxEVT_MENU, [=](wxCommandEvent&){
             wxDirDialog dlg(this,
                             OSX_OR_OTHER("", _("Select directory")),
-                            m_data->filedir,
+                            m_data->basepath,
                             wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
             if (dlg.ShowModal() == wxID_OK)
                 Add(dlg.GetPath());
@@ -310,7 +310,7 @@ protected:
         menu->Bind(wxEVT_MENU, [=](wxCommandEvent&){
             wxFileDialog dlg(this,
                              "",
-                             m_data->filedir,
+                             m_data->basepath,
                              "",
                              wxFileSelectorDefaultWildcardStr,
                              wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE);
