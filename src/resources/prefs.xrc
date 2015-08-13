@@ -131,26 +131,23 @@
         <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
       </object>
       <object class="sizeritem">
-        <object class="wxBoxSizer">
-          <object class="sizeritem">
+        <object class="wxStdDialogButtonSizer">
+          <object class="button">
             <object class="wxButton" name="wxID_OK">
-              <variant>normal</variant>
-              <label>OK</label>
+              <variant platform="mac">normal</variant>
               <default>1</default>
             </object>
-            <border>5d</border>
-            <flag>wxALL</flag>
           </object>
-          <object class="sizeritem">
+          <object class="button">
             <object class="wxButton" name="wxID_CANCEL">
-              <variant>normal</variant>
-              <label>Cancel</label>
+              <variant platform="mac">normal</variant>
             </object>
-            <flag>wxRIGHT|wxTOP|wxBOTTOM</flag>
-            <border>5d</border>
           </object>
         </object>
-        <flag>wxALIGN_RIGHT</flag>
+        <flag platform="mac">wxALIGN_RIGHT</flag>
+        <flag platform="win">wxALIGN_RIGHT|wxALL</flag>
+        <flag platform="unix">wxALIGN_RIGHT|wxTOP|wxBOTTOM</flag>
+        <border>5d</border>
       </object>
     </object>
   </object>
