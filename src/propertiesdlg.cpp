@@ -396,7 +396,8 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
                        (wxWindow*)m_pluralFormsCustom,
                        (wxWindow*)m_pluralFormsExpr,
                        XRCCTRL(*this, "language_label", wxWindow),
-                       XRCCTRL(*this, "plural_forms_label", wxWindow) })
+                       XRCCTRL(*this, "plural_forms_label", wxWindow),
+                       XRCCTRL(*this, "plural_forms_help", wxWindow) })
         {
             w->GetContainingSizer()->Hide(w);
         }

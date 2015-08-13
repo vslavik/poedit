@@ -232,7 +232,7 @@ SecondaryLabel::SecondaryLabel(wxWindow *parent, const wxString& label)
 }
 
 
-LearnMoreLink::LearnMoreLink(wxWindow *parent, const wxString& url, wxString label)
+LearnMoreLink::LearnMoreLink(wxWindow *parent, const wxString& url, wxString label, wxWindowID winid)
 {
     if (label.empty())
     {
@@ -243,7 +243,7 @@ LearnMoreLink::LearnMoreLink(wxWindow *parent, const wxString& url, wxString lab
 #endif
     }
 
-    wxHyperlinkCtrl::Create(parent, wxID_ANY, label, url);
+    wxHyperlinkCtrl::Create(parent, winid, label, url);
     SetNormalColour("#2F79BE");
     SetVisitedColour("#2F79BE");
     SetHoverColour("#3D8DD5");
@@ -257,7 +257,8 @@ LearnMoreLink::LearnMoreLink(wxWindow *parent, const wxString& url, wxString lab
 
 wxObject *LearnMoreLinkXmlHandler::DoCreateResource()
 {
-    auto w = new LearnMoreLink(m_parentAsWindow, GetText("url"), GetText("label"));
+    auto w = new LearnMoreLink(m_parentAsWindow, GetText("url"), GetText("label"), GetID());
+    w->SetName(GetName());
     SetupWindow(w);
     return w;
 }

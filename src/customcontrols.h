@@ -109,7 +109,7 @@ public:
 class LearnMoreLink : public wxHyperlinkCtrl
 {
 public:
-    LearnMoreLink(wxWindow *parent, const wxString& url, wxString label = wxString());
+    LearnMoreLink(wxWindow *parent, const wxString& url, wxString label = wxString(), wxWindowID winid = wxID_ANY);
 
 #if defined(__WXOSX__)
     static const int EXTRA_INDENT = 2;
