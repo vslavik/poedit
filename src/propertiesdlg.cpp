@@ -65,7 +65,7 @@ inline wxString NormalizedPath(const wxString& fn, wxPathFormat format)
 
 inline wxString RelativePath(const wxString& fn, const wxString& to, wxPathFormat format)
 {
-    if (fn == to)
+    if (fn == to || fn + wxFILE_SEP_PATH == to)
         return ".";
     auto f = MakeFileName(fn);
     f.MakeRelativeTo(to);
