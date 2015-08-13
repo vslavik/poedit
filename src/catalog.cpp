@@ -2139,7 +2139,8 @@ bool Catalog::HasSourcesAvailable() const
 
     for (auto& p: m_header.SearchPaths)
     {
-        if (!wxFileName::Exists(basepath + p))
+        auto fullp = wxIsAbsolutePath(p) ? p : basepath + p;
+        if (!wxFileName::Exists(fullp))
             return false;
     }
 
