@@ -13,7 +13,9 @@ endif
 
 WX_BACKPORT_SRC = wx_backports/wx_gtk_activityindicator.cpp \
                   wx_backports/activityindicator.h \
-                  wx_backports/gtk_activityindicator.h
+                  wx_backports/gtk_activityindicator.h \
+                  wx_backports/nativewin.h \
+                  wx_backports/wx_gtk_nativewin.cpp
 
 if HAVE_CPPREST
 CROWDIN_SUPPORT_SRC = \

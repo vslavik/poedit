@@ -145,6 +145,7 @@
 		B2F287C4170DCC92004C1F41 /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C2170DCC92004C1F41 /* AUTHORS */; };
 		B2F287C5170DCC92004C1F41 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C3170DCC92004C1F41 /* COPYING */; };
 		B2FE296B1AC85FFF005588E4 /* keytar_mac.cc in Sources */ = {isa = PBXBuildFile; fileRef = B2FE29691AC85FFF005588E4 /* keytar_mac.cc */; };
+		B2FF21B11B790772009466AF /* wx_nativewin.mm in Sources */ = {isa = PBXBuildFile; fileRef = B2FF21B01B790772009466AF /* wx_nativewin.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -523,6 +524,7 @@
 		B2F672E1197A843F00DBFDB0 /* zh_Hans */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = zh_Hans; path = zh_Hans.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B2FE29691AC85FFF005588E4 /* keytar_mac.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = keytar_mac.cc; path = keychain/keytar_mac.cc; sourceTree = "<group>"; };
 		B2FE296A1AC85FFF005588E4 /* keytar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = keytar.h; path = keychain/keytar.h; sourceTree = "<group>"; };
+		B2FF21B01B790772009466AF /* wx_nativewin.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = wx_nativewin.mm; path = src/wx_backports/wx_nativewin.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -863,6 +865,7 @@
 			isa = PBXGroup;
 			children = (
 				B263ED911AC1DC3B0012EEA8 /* wx_activityindicator.mm */,
+				B2FF21B01B790772009466AF /* wx_nativewin.mm */,
 			);
 			name = wxBackports;
 			sourceTree = "<group>";
@@ -1365,6 +1368,7 @@
 				B28F1D0016F629D30018AF7E /* export_html.cpp in Sources */,
 				B230E2281A73F81400FB1E57 /* hidpi.cpp in Sources */,
 				B263ED921AC1DC3B0012EEA8 /* wx_activityindicator.mm in Sources */,
+				B2FF21B11B790772009466AF /* wx_nativewin.mm in Sources */,
 				B280E84D1A92776D009F4A98 /* http_client_osx.mm in Sources */,
 				B28F1D0116F629D30018AF7E /* pl_evaluate.cpp in Sources */,
 				B22C5F0A17DDC67400ECAFD1 /* language.cpp in Sources */,
