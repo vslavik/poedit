@@ -129,6 +129,11 @@ inline NSString *to_NS(const std::string& utf8str)
     return [NSString stringWithUTF8String:utf8str.c_str()];
 }
 
+inline NSString *to_NS(const char *utf8str)
+{
+    return [NSString stringWithUTF8String:utf8str];
+}
+
 inline std::string to_utf8(NSString *str)
 {
     return std::string([str UTF8String]);
