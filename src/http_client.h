@@ -171,6 +171,13 @@ public:
      */
     void post(const std::string& url, const multipart_form_data& data, response_func_t handler);
 
+    /// Perform a POST request at the given URL and ignore the response.
+    void post(const std::string& url, const multipart_form_data& data)
+    {
+        post(url, data, [](const http_response&){});
+    }
+
+
     // Variants that have separate error and success handlers:
     template <typename T1, typename T2>
     void get(const std::string& url, const T1& onResult, const T2& onError)
