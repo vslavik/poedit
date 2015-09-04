@@ -93,17 +93,7 @@ std::wstring json_dict::wstring(const char *name) const
 
 int json_dict::number(const char *name) const
 {
-    auto& val = m_native->get(name);
-    if (val.is_integer())
-    {
-        return val.as_integer();
-    }
-    else
-    {
-        // Some broken APIs may return strings instead of numbers, so lets try
-        // that too as a fallback
-        return std::stoi(val.as_string());
-    }
+    return m_native->get(name).as_integer();
 }
 
 double json_dict::double_number(const char *name) const

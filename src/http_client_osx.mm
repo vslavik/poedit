@@ -90,17 +90,8 @@ std::wstring json_dict::wstring(const char *name) const
 
 int json_dict::number(const char *name) const
 {
-    try
-    {
-        NSNumber *n = m_native->get(name, [NSNumber class]);
-        return [n intValue];
-    }
-    catch (std::exception&)
-    {
-        // Some broken APIs may return strings instead of numbers, so lets try
-        // that too as a fallback
-        return std::stoi(native_string(name));
-    }
+    NSNumber *n = m_native->get(name, [NSNumber class]);
+    return [n intValue];
 }
 
 double json_dict::double_number(const char *name) const
@@ -132,9 +123,6 @@ public:
 
         [m_native registerHTTPOperationClass:[AFJSONRequestOperation class]];
         [m_native setDefaultHeader:@"Accept" value:@"application/json"];
-
-        // Some APIs return text/plain content with JSON data
-        [AFJSONRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"text/plain"]];
     }
 
     ~impl()
