@@ -72,7 +72,8 @@ library boost_iostreams {
     libs/iostreams/src/file_descriptor.cpp
     libs/iostreams/src/mapped_file.cpp
     libs/iostreams/src/zlib.cpp
-    // NOTE: omitting gzip.cpp, bzip2.cpp, because we don't need them and they carry extra dependencies
+    libs/iostreams/src/gzip.cpp
+    // NOTE: omitting bzip2.cpp, because we don't need them and they carry extra dependencies
   }
 
   vs2013.option.ClCompile.WarningLevel = Level2;
