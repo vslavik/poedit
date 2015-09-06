@@ -30,6 +30,12 @@
 
 #include <boost/algorithm/string/predicate.hpp>
 
+#include <boost/iostreams/copy.hpp>
+#include <boost/iostreams/device/array.hpp>
+#include <boost/iostreams/device/back_inserter.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/filtering_stream.hpp>
+
 #include <cpprest/asyncrt_utils.h>
 #include <cpprest/http_client.h>
 #include <cpprest/http_msg.h>
@@ -51,6 +57,43 @@ using utility::conversions::to_string_t;
 #ifndef _UTF16_STRINGS
 inline string_t to_string_t(const std::wstring& s) { return str::to_utf8(s); }
 #endif
+
+class gzip_compression_support : public http::http_pipeline_stage
+{
+public:
+    pplx::task<http::http_response> propagate(http::http_request request) override
+    {
+        request.headers().add(http::header_names::accept_encoding, L"gzip");
+
+        return next_stage()->propagate(request).then([](http::http_response response) -> pplx::task<http::http_response>
+        {
+            std::wstring encoding;
+            if (response.headers().match(http::header_names::content_encoding, encoding) && encoding == L"gzip")
+            {
+                return response.extract_vector().then([response](std::vector<unsigned char> compressed) mutable -> http::http_response
+                {
+                    namespace io = boost::iostreams;
+
+                    io::array_source source(reinterpret_cast<char*>(compressed.data()), compressed.size());
+                    io::filtering_istream in;
+                    in.push(io::gzip_decompressor());
+                    in.push(source);
+
+                    std::vector<char> decompressed;
+                    io::back_insert_device<std::vector<char>> sink(decompressed);
+                    io::copy(in, sink);
+
+                    response.set_body(concurrency::streams::bytestream::open_istream(std::move(decompressed)), decompressed.size());
+                    return response;
+                });
+            }
+            else
+            {
+                return pplx::task_from_result(response);
+            }
+        });
+    }
+};
 
 } // anonymous namespace
 
@@ -132,6 +175,9 @@ public:
             #define USER_AGENT_PLATFORM
         #endif
         m_userAgent = L"Poedit/" make_wide_str(POEDIT_VERSION) USER_AGENT_PLATFORM;
+
+        std::shared_ptr<http::http_pipeline_stage> gzip_stage = std::make_shared<gzip_compression_support>();
+        m_native.add_handler(gzip_stage);
     }
 
     ~impl()
