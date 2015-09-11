@@ -280,7 +280,7 @@ public:
         .then([=](http::http_response response)
         {
             handle_error(response);
-            handler(json_dict());
+            handler(make_json_dict(response.extract_json().get()));
         })
         .then([=](pplx::task<void> t)
         {

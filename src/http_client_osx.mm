@@ -195,12 +195,10 @@ public:
         [request setValue:[NSString stringWithFormat:@"%lu", body.size()] forHTTPHeaderField:@"Content-Length"];
         [request setHTTPBody:[NSData dataWithBytes:body.data() length:body.size()]];
 
-        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-
-        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *op, id responseObject)
+        AFHTTPRequestOperation *operation = [m_native HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *op, id responseObject)
         {
-            #pragma unused(op,responseObject)
-            handler(json_dict());
+            #pragma unused(op)
+            handler(make_json_dict(responseObject));
         }
         failure:^(AFHTTPRequestOperation *op, NSError *e)
         {
