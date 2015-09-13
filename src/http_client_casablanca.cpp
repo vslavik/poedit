@@ -44,6 +44,8 @@
 #ifdef _WIN32
     #include <windows.h>
     #include <wininet.h>
+    #include <netlistmgr.h>
+    #pragma comment(lib, "ole32.lib")
 #endif
 
 using namespace web;
@@ -178,15 +180,32 @@ public:
 
         std::shared_ptr<http::http_pipeline_stage> gzip_stage = std::make_shared<gzip_compression_support>();
         m_native.add_handler(gzip_stage);
+
+    #ifdef _WIN32
+        m_networkListManager = nullptr;
+        CoCreateInstance(CLSID_NetworkListManager, NULL, CLSCTX_ALL, IID_INetworkListManager, (LPVOID *)&m_networkListManager);
+    #endif
     }
 
     ~impl()
     {
+    #ifdef _WIN32
+        if (m_networkListManager)
+            m_networkListManager->Release();
+    #endif
     }
 
     bool is_reachable() const
     {
     #ifdef _WIN32
+        if (m_networkListManager)
+        {
+            NLM_CONNECTIVITY result;
+            HRESULT hr = m_networkListManager->GetConnectivity(&result);
+            if (SUCCEEDED(hr))
+                return result & (NLM_CONNECTIVITY_IPV4_INTERNET|NLM_CONNECTIVITY_IPV6_INTERNET);
+        }
+        // XP or manager fallback (IPv6 ignorant):
         DWORD flags;
         return ::InternetGetConnectedState(&flags, 0);
     #else
@@ -327,11 +346,7 @@ private:
             // hosts that use it. The use of SNI is increasingly common and some
             // APIs Poedit needs to connect to use it. To keep things simple, just
             // disable SSL on Windows XP.
-            OSVERSIONINFOEX info;
-            ZeroMemory(&info, sizeof(info));
-            info.dwOSVersionInfoSize = sizeof(info);
-            GetVersionEx(reinterpret_cast<OSVERSIONINFO*>(&info));
-            if (info.dwMajorVersion < 6) // XP
+            if (is_windows_xp())
             {
                 if (boost::starts_with(url, "https://"))
                     return U("http://") + string_t(url.begin() + 8, url.end());
@@ -342,6 +357,19 @@ private:
     }
 
 private:
+#ifdef _WIN32
+    static bool is_windows_xp()
+    {
+        OSVERSIONINFOEX info;
+        ZeroMemory(&info, sizeof(info));
+        info.dwOSVersionInfoSize = sizeof(info);
+        GetVersionEx(reinterpret_cast<OSVERSIONINFO*>(&info));
+        return (info.dwMajorVersion < 6); // XP
+    }
+
+    INetworkListManager *m_networkListManager;
+#endif
+
     http_client& m_owner;
     http::client::http_client m_native;
     std::wstring m_userAgent;
