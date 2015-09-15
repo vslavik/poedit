@@ -96,6 +96,10 @@ std::string http_client::url_encode(const std::string& s)
         {
             escaped << c;
         }
+        else if (c == ' ')
+        {
+            escaped << '+';
+        }
         else
         {
             escaped << '%' << std::setw(2) << int((unsigned char)c);
