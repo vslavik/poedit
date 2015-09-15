@@ -282,7 +282,7 @@ public:
         });
     }
 
-    void post(const std::string& url, const multipart_form_data& data, response_func_t handler)
+    void post(const std::string& url, const http_body_data& data, response_func_t handler)
     {
         http::http_request req(http::methods::POST);
         req.headers().add(http::header_names::accept,     L"application/json");
@@ -408,7 +408,7 @@ void http_client::download(const std::string& url, const std::wstring& output_fi
     m_impl->download(url, output_file, handler);
 }
 
-void http_client::post(const std::string& url, const multipart_form_data& data, response_func_t handler)
+void http_client::post(const std::string& url, const http_body_data& data, response_func_t handler)
 {
     m_impl->post(url, data, handler);
 }

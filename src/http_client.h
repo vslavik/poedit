@@ -64,8 +64,22 @@ private:
 };
 
 
+/// Abstract base class for encoded body data
+class http_body_data
+{
+public:
+    http_body_data() {}
+    virtual ~http_body_data() {}
+
+    /// Content-Type header to use with the data.
+    virtual std::string content_type() const = 0;
+
+    /// Returns generated body of the request.
+    virtual std::string body() const = 0;
+};
+
 /// Stores POSTed data (RFC 1867)
-class multipart_form_data
+class multipart_form_data : public http_body_data
 {
 public:
     multipart_form_data();
@@ -76,14 +90,25 @@ public:
     /// Add file upload.
     void add_file(const std::string& name, const std::string& filename, const std::string& file_content);
 
-    /// Content-Type header to use with the data.
-    std::string content_type() const;
-
-    /// Returns generated body of the request.
-    std::string body() const;
+    std::string content_type() const override;
+    std::string body() const override;
 
 private:
     std::string m_boundary;
+    std::string m_body;
+};
+
+/// Stores application/x-www-form-urlencoded data
+class urlencoded_data : public http_body_data
+{
+public:
+    /// Add a form value.
+    void add_value(const std::string& name, const std::string& value);
+
+    std::string content_type() const override { return "application/x-www-form-urlencoded"; }
+    std::string body() const override { return m_body; }
+
+private:
     std::string m_body;
 };
 
@@ -169,10 +194,10 @@ public:
     /**
         Perform a POST request with multipart/form-data formatted @a params.
      */
-    void post(const std::string& url, const multipart_form_data& data, response_func_t handler);
+    void post(const std::string& url, const http_body_data& data, response_func_t handler);
 
     /// Perform a POST request at the given URL and ignore the response.
-    void post(const std::string& url, const multipart_form_data& data)
+    void post(const std::string& url, const http_body_data& data)
     {
         post(url, data, [](const http_response&){});
     }

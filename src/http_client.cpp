@@ -71,6 +71,16 @@ std::string multipart_form_data::body() const
 }
 
 
+void urlencoded_data::add_value(const std::string& name, const std::string& value)
+{
+    if (!m_body.empty())
+        m_body += '&';
+    m_body += name;
+    m_body += '=';
+    m_body += http_client::url_encode(value);
+}
+
+
 std::string http_client::url_encode(const std::string& s)
 {
     std::ostringstream escaped;
