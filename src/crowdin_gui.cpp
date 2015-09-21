@@ -33,6 +33,7 @@
 #include "customcontrols.h"
 #include "errors.h"
 #include "hidpi.h"
+#include "languagectrl.h"
 #include "str_helpers.h"
 #include "utility.h"
 
@@ -414,7 +415,25 @@ private:
         m_activity->Stop();
 
         if (m_info.languages.size() == 1)
+        {
             m_language->SetSelection(1);
+        }
+        else
+        {
+            auto preferred = LanguageDialog::GetLastChosen();
+            if (preferred.IsValid())
+            {
+                for (size_t i = 0; i < m_info.languages.size(); i++)
+                {
+                    if (m_info.languages[i] == preferred)
+                    {
+                        m_language->SetSelection(1 + int(i));
+                        break;
+                    }
+                }
+            }
+        }
+
         if (m_supportedFilesCount == 1)
             m_file->SetSelection(1);
 
@@ -449,6 +468,7 @@ private:
         auto crowdin_prj = m_info.identifier;
         auto crowdin_file = m_info.files[m_file->GetSelection() - 1];
         auto crowdin_lang = m_info.languages[m_language->GetSelection() - 1];
+        LanguageDialog::SetLastChosen(crowdin_lang);
         OutLocalFilename = CreateLocalFilename(crowdin_file, crowdin_lang);
 
         m_activity->Start(_(L"Downloading latest translations…"));

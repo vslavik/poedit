@@ -125,10 +125,7 @@ LanguageDialog::LanguageDialog(wxWindow *parent)
     : wxDialog(parent, wxID_ANY, _("Translation Language")),
       m_validatedLang(-1)
 {
-    wxString langcode = wxConfigBase::Get()->Read("/last_translation_lang", "");
-    Language lang;
-    if (!langcode.empty())
-        lang = Language::TryParse(langcode.ToStdWstring());
+    auto lang = GetLastChosen();
 
     auto sizer = new wxBoxSizer(wxVERTICAL);
 
@@ -180,7 +177,7 @@ void LanguageDialog::EndModal(int retval)
 {
     if (retval == wxID_OK)
     {
-        wxConfigBase::Get()->Write("/last_translation_lang", GetLang().Code().c_str());
+        SetLastChosen(GetLang());
     }
     wxDialog::EndModal(retval);
 }
@@ -191,3 +188,18 @@ void LanguageDialog::SetLang(const Language& lang)
     m_validatedLang = -1;
     m_language->SetLang(lang);
 }
+
+Language LanguageDialog::GetLastChosen()
+{
+    wxString langcode = wxConfigBase::Get()->Read("/last_translation_lang", "");
+    Language lang;
+    if (!langcode.empty())
+        lang = Language::TryParse(langcode.ToStdWstring());
+    return lang;
+}
+
+void LanguageDialog::SetLastChosen(Language lang)
+{
+    wxConfigBase::Get()->Write("/last_translation_lang", lang.Code().c_str());
+}
+

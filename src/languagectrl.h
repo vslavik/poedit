@@ -72,6 +72,9 @@ public:
     virtual bool Validate();
     virtual void EndModal(int retval);
 
+    static Language GetLastChosen();
+    static void SetLastChosen(Language lang);
+
 private:
     LanguageCtrl *m_language;
     int m_validatedLang;
