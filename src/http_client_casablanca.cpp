@@ -69,8 +69,8 @@ public:
 
         return next_stage()->propagate(request).then([](http::http_response response) -> pplx::task<http::http_response>
         {
-            std::wstring encoding;
-            if (response.headers().match(http::header_names::content_encoding, encoding) && encoding == L"gzip")
+            string_t encoding;
+            if (response.headers().match(http::header_names::content_encoding, encoding) && encoding == _XPLATSTR("gzip"))
             {
                 return response.extract_vector().then([response](std::vector<unsigned char> compressed) mutable -> http::http_response
                 {
