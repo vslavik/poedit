@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 # Fetch translations updates:
@@ -19,6 +19,7 @@ remove_unsupported_languages()
     rm -rf */osx/oc.lproj
 
     rm -f locales/win/windows_strings-Esperanto.rc
+    rm -f locales/win/windows_strings-Kabyle.rc  # Win10 supports, but no LCID
 }
 
 # Crowdin tools create empty .strings files for all translations, even the ones
@@ -47,6 +48,7 @@ fixup_windows_rc_files()
     for i in locales/win/*-*.rc ; do
         stripped=`basename "$i" .rc | cut -d- -f2 | tr [a-z] [A-Z]`
         lang=`echo $stripped | cut -d_ -f1`
+        lang="${lang/KAZAKH/KAZAK}"
         sublang=`echo $stripped | cut -s -d_ -f2`
         if [ -n "$sublang" ] ; then
             code="LANG_${lang}, SUBLANG_${lang}_${sublang}"
