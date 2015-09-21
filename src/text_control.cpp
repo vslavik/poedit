@@ -732,7 +732,7 @@ void TranslationTextCtrl::OnText(wxCommandEvent& e)
         m_lastKeyWasReturn = false;
         long pos = GetInsertionPoint();
         auto range = GetRange(std::max(0l, pos - 3), pos);
-        if (range.Last() == '\n' && range != "\\n\n")
+        if (range.empty() || (range.Last() == '\n' && range != "\\n\n"))
         {
           #ifdef __WXGTK__
             // GTK+ doesn't like modifying the content in the "changed" signal:
