@@ -2455,7 +2455,11 @@ void PoeditFrame::WarnAboutLanguageIssues()
         m_attentionBar->ShowMessage(msg);
     }
 
-    if (lang.IsValid() && srclang.IsValid() && lang == srclang)
+    // Check if the language is set wrongly. This is typically done in such a way that
+    // both languages are English, so check explicitly for the common case of "translating"
+    // from en to en_US too:
+    if (lang.IsValid() && srclang.IsValid() &&
+        (lang == srclang || (srclang == Language::English() && lang.Code() == "en_US")))
     {
         AttentionMessage msg
             (
@@ -2466,6 +2470,8 @@ void PoeditFrame::WarnAboutLanguageIssues()
         msg.SetExplanation(_("Suggestions are not available if the translation language is not set correctly. Other features, such as plural forms, may be affected as well."));
         msg.AddAction(MSW_OR_OTHER(_("Fix language"), _("Fix Language")),
                       [=]{ EditCatalogProperties(); });
+        if (lang != srclang)
+            msg.AddDontShowAgain(); // possible that Poedit misjudged the intent
 
         m_attentionBar->ShowMessage(msg);
     }
