@@ -150,7 +150,7 @@ private:
 #ifndef __WXGTK__
     wxStaticBitmap *m_icon;
 #endif
-    wxStaticText *m_label;
+    AutoWrappingText *m_label;
     AutoWrappingText *m_explanation;
     wxCheckBox *m_checkbox;
     wxSizer *m_buttons;

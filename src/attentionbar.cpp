@@ -68,7 +68,7 @@ AttentionBar::AttentionBar(wxWindow *parent)
 #ifndef __WXGTK__
     m_icon = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
 #endif
-    m_label = new wxStaticText(this, wxID_ANY, "");
+    m_label = new AutoWrappingText(this, "");
 
     m_explanation = new AutoWrappingText(this, "");
     m_explanation->SetForegroundColour(GetBackgroundColour().ChangeLightness(40));
@@ -200,7 +200,7 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
     m_icon->SetBitmap(wxArtProvider::GetBitmap(iconName, wxART_MENU, wxSize(PX(16), PX(16))));
 #endif
 
-    m_label->SetLabelText(msg.m_text);
+    m_label->SetAndWrapLabel(msg.m_text);
     m_explanation->SetAndWrapLabel(msg.m_explanation);
     m_explanation->GetContainingSizer()->Show(m_explanation, !msg.m_explanation.empty());
     m_checkbox->SetLabel(msg.m_checkbox);

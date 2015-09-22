@@ -148,7 +148,7 @@ void AutoWrappingText::SetAndWrapLabel(const wxString& label)
     wxWindowUpdateLocker lock(this);
     m_text = label;
     m_wrapWidth = GetSize().x;
-    SetLabel(WrapTextAtWidth(label, m_wrapWidth, this));
+    SetLabelText(WrapTextAtWidth(label, m_wrapWidth, this));
 
     InvalidateBestSize();
     SetMinSize(wxDefaultSize);
