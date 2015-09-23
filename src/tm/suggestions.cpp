@@ -42,8 +42,8 @@ public:
     {
         auto bck = &backend;
         concurrency_queue::add([=](){
-            // don't bother asking the backend if the language is invalid:
-            if (!lang.IsValid())
+            // don't bother asking the backend if the language or query is invalid:
+            if (!srclang.IsValid() || !lang.IsValid() || srclang == lang || source.empty())
             {
                 onSuccess(SuggestionsList());
                 return;
