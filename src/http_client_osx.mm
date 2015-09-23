@@ -228,6 +228,9 @@ private:
         if (desc.empty())
         {
             desc = str::to_utf8([e localizedDescription]);
+            // Fixup some common cases to be more readable
+            if (status_code == 503 && desc == "Expected status code in (200-299), got 503")
+                desc = "Service Unavailable";
         }
 
         m_owner.on_error_response(status_code, desc);
