@@ -287,6 +287,7 @@ private:
         void OnFindAndReplace(wxCommandEvent& event);
         void OnFindNext(wxCommandEvent& event);
         void OnFindPrev(wxCommandEvent& event);
+        void OnUpdateFind(wxUpdateUIEvent& event);
         void OnEditComment(wxCommandEvent& event);
         void OnSortByFileOrder(wxCommandEvent&);
         void OnSortBySource(wxCommandEvent&);

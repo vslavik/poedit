@@ -72,6 +72,8 @@ class FindFrame : public wxFrame
         void ShowForFind();
         void ShowForReplace();
 
+        bool HasText() const { return !ms_text.empty(); }
+
     private:
         void DoShowFor(int mode);
         void OnClose(wxCommandEvent &event);
