@@ -862,9 +862,9 @@ wxString CatalogParser::ReadTextLine()
         // read next line and strip insignificant whitespace from it:
         auto ln = m_textFile->GetNextLine();
 
-        // gettext tools don't include extracted comments in wrapping, so they can't
+        // gettext tools don't include (extracted) comments in wrapping, so they can't
         // be reliably used to detect file's wrapping either; just skip them.
-        if (!ln.StartsWith(wxS("#. ")))
+        if (!ln.StartsWith(wxS("#. ")) && !ln.StartsWith(wxS("# ")))
         {
             if (ln.EndsWith(wxS("\\n\"")))
             {
