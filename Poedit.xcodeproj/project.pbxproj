@@ -1073,7 +1073,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = PO;
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Václav Slavík";
 				TargetAttributes = {
 					B2CE6D191ACFCD95007E6863 = {
@@ -1617,6 +1617,7 @@
 				);
 				INFOPLIST_FILE = "macosx/GettextTools-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.Poedit.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = bundle;
@@ -1634,6 +1635,7 @@
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "macosx/GettextTools-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.Poedit.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = bundle;
@@ -1654,6 +1656,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEPS_BUILD_DIR = "$(OBJROOT)/Deps.build/$(CONFIGURATION)";
+				ENABLE_TESTABILITY = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
@@ -1770,6 +1773,7 @@
 					"-ldb_cxx",
 				);
 				POEDIT_FEATURES = "USE_SPARKLE HAVE_CLD2 HAVE_HTTP_CLIENT";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1792,6 +1796,7 @@
 					"-ldb_cxx",
 				);
 				POEDIT_FEATURES = "USE_SPARKLE HAVE_CLD2 HAVE_HTTP_CLIENT";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1852,6 +1857,7 @@
 					"-licui18n",
 				);
 				POEDIT_FEATURES = HAVE_CLD2;
+				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = qlgenerator;
@@ -1890,6 +1896,7 @@
 					"-licui18n",
 				);
 				POEDIT_FEATURES = HAVE_CLD2;
+				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = qlgenerator;
