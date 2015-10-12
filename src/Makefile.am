@@ -40,7 +40,7 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  manager.h manager.cpp chooselang.cpp chooselang.h \
                  export_html.cpp icons.h icons.cpp \
                  pluralforms/pl_evaluate.cpp pluralforms/pl_evaluate.h \
-                 edlistctrl.cpp edlistctrl.h digits.h \
+                 edlistctrl.cpp edlistctrl.h \
                  cat_sorting.cpp cat_sorting.h \
                  utility.cpp utility.h ThreadPool.h concurrency.cpp concurrency.h \
                  version.h errors.h \

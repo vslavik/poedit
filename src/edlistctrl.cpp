@@ -28,7 +28,6 @@
 
 #include "hidpi.h"
 #include "language.h"
-#include "digits.h"
 #include "cat_sorting.h"
 
 #include <wx/wx.h>
