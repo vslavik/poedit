@@ -196,7 +196,8 @@ public:
         Create(parent, wxID_ANY, m_path);
         SetWindowVariant(wxWINDOW_VARIANT_SMALL);
         // Do native configuration *after* Create() to undo some of what it did:
-        m_path.editable = NO;
+        if ([m_path respondsToSelector:@selector(setEditable:)])
+            [m_path setEditable:NO];
         [m_path setTarget:m_ctrl];
         [m_path setAction:@selector(pathClicked:)];
         [m_path setDoubleAction:@selector(pathClicked:)];
