@@ -48,6 +48,8 @@
             depends="compile-gettext,compile-db,compile-icu">
     </target>
 
+    <target name="install" depends="compile" description="Dummy target to make Xcode 7 happy"/>
+
     <target name="compile-gettext" depends="osx-gettext"
             description="compile GNU gettext"/>
     <target name="compile-db" depends="osx-db"
