@@ -12,6 +12,11 @@
         <os family="mac"/>
     </condition>
 
+    <exec executable="sysctl" outputproperty="cores.count" osfamily="mac">
+        <arg value="-n"/>
+        <arg value="hw.ncpu"/>
+    </exec>
+
     <condition property="cflags.optimize" value="-O2" else="-O2">
         <equals arg1="${config}" arg2="Release"/>
     </condition>
@@ -122,7 +127,7 @@
         </exec>
         <exec dir="${intdir}/db" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
-            <arg value="make"/>
+            <arg value="make ${osx.makeflags}"/>
         </exec>
         <exec dir="${intdir}/db" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
@@ -169,7 +174,7 @@
         </exec>
         <exec dir="${intdir}/icu" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
-            <arg value="make"/>
+            <arg value="make ${osx.makeflags}"/>
         </exec>
         <exec dir="${intdir}/icu" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
@@ -251,7 +256,7 @@
         <touch file="${intdir}/gettext/gettext-tools/misc/archive.cvs.tar.gz"/>
         <exec dir="${intdir}/gettext" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
-            <arg value="make"/>
+            <arg value="make ${osx.makeflags}"/>
         </exec>
         <exec dir="${intdir}/gettext" executable="/bin/sh" failonerror="true">
             <arg value="-c"/>
