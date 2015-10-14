@@ -170,7 +170,7 @@ public:
         #define make_wide_str_(x) L ## x
 
         #if defined(_WIN32)
-            #define USER_AGENT_PLATFORM L" (Windows)"
+            #define USER_AGENT_PLATFORM L" (Windows NT " + windows_version() + L")"
         #elif defined(__unix__)
             #define USER_AGENT_PLATFORM L" (Unix)"
         #else
@@ -365,6 +365,15 @@ private:
         info.dwOSVersionInfoSize = sizeof(info);
         GetVersionEx(reinterpret_cast<OSVERSIONINFO*>(&info));
         return (info.dwMajorVersion < 6); // XP
+    }
+
+    static std::wstring windows_version()
+    {
+        OSVERSIONINFOEX info;
+        ZeroMemory(&info, sizeof(info));
+        info.dwOSVersionInfoSize = sizeof(info);
+        GetVersionEx(reinterpret_cast<OSVERSIONINFO*>(&info));
+        return std::to_wstring(info.dwMajorVersion) + L"." + std::to_wstring(info.dwMinorVersion);
     }
 
     INetworkListManager *m_networkListManager;
