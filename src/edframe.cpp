@@ -942,7 +942,26 @@ void PoeditFrame::SetAccelerators()
 void PoeditFrame::InitSpellchecker()
 {
     if (!IsSpellcheckingAvailable())
+    {
+#ifdef __WXMSW__
+        int osmajor = 0, osminor = 0;
+        if (wxGetOsVersion(&osmajor, &osminor) == wxOS_WINDOWS_NT && osmajor == 6 && osminor == 1 &&
+            wxDateTime::Now() < wxDateTime(29, wxDateTime::Jul, 2016))
+        {
+            AttentionMessage msg
+                (
+                "windows10-spellchecking",
+                AttentionMessage::Info,
+                _("Upgrade to Windows 10 (for free) to enable spellchecking in Poedit.")
+                );
+            msg.SetExplanation(_("Poedit needs Windows 8 or newer for spellchecking, but you only have Windows 7. Microsoft is offering free upgrades to Windows 10 until July 29, 2016."));
+            msg.AddAction(_("Learn more"), []{ wxLaunchDefaultBrowser("https://www.microsoft.com/en-us/windows/windows-10-upgrade"); });
+            msg.AddDontShowAgain();
+            m_attentionBar->ShowMessage(msg);
+        }
+#endif // __WXMSW__
         return;
+    }
 
     if (!m_catalog || !m_textTrans)
         return;
