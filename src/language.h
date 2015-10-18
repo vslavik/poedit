@@ -151,6 +151,7 @@ public:
 
     bool operator==(const Language& other) const { return m_code == other.m_code; }
     bool operator!=(const Language& other) const { return m_code != other.m_code; }
+    bool operator<(const Language& other) const { return m_code < other.m_code; }
 
 protected:
     Language(const std::string& code) : m_code(code) {}
