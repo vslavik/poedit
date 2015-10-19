@@ -43,6 +43,7 @@
 #include <wx/sizer.h>
 #include <wx/statbmp.h>
 #include <wx/stattext.h>
+#include <wx/time.h>
 #include <wx/wupdlock.h>
 
 #include <algorithm>
@@ -393,7 +394,8 @@ SuggestionsSidebarBlock::SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu)
       m_suggestionsMenu(menu),
       m_msgPresent(false),
       m_pendingQueries(0),
-      m_latestQueryId(0)
+      m_latestQueryId(0),
+      m_lastUpdateTime(0)
 {
     m_provider.reset(new SuggestionsProvider);
 
@@ -428,6 +430,11 @@ SuggestionsSidebarBlock::SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu)
     m_innerSizer->Add(m_iGotNothing, wxSizerFlags().Center().Border(wxTOP|wxBOTTOM, PX(100)));
 
     BuildSuggestionsMenu();
+
+    m_suggestionsTimer.SetOwner(parent);
+    parent->Bind(wxEVT_TIMER,
+                 &SuggestionsSidebarBlock::OnDelayedShowSuggestionsForItem, this,
+                 m_suggestionsTimer.GetId());
 }
 
 SuggestionsSidebarBlock::~SuggestionsSidebarBlock()
@@ -627,10 +634,32 @@ bool SuggestionsSidebarBlock::ShouldShowForItem(const CatalogItemPtr&) const
 
 void SuggestionsSidebarBlock::Update(const CatalogItemPtr& item)
 {
-    // FIXME: Cancel previous pending async operation if any
-
     ClearMessage();
     ClearSuggestions();
+
+    UpdateSuggestionsForItem(item);
+}
+
+void SuggestionsSidebarBlock::UpdateSuggestionsForItem(CatalogItemPtr item)
+{
+    if (!item)
+        return;
+
+    long long now = wxGetUTCTimeMillis().GetValue();
+    long long delta = now - m_lastUpdateTime;
+    m_lastUpdateTime = now;
+
+    if (delta < 100)
+    {
+        // User is probably holding arrow down and going through the list as crazy
+        // and not really caring for the suggestions. Throttle them a bit and call
+        // this code after a small delay. Notice that this may repeat itself several
+        // times, only continuing through to show suggestions after the dust settled
+        // and the user didn't change the selection for a few milliseconds.
+        if (!m_suggestionsTimer.IsRunning())
+            m_suggestionsTimer.StartOnce(110);
+        return;
+    }
 
     auto srclang = m_parent->GetCurrentSourceLanguage();
     auto lang = m_parent->GetCurrentLanguage();
@@ -641,6 +670,11 @@ void SuggestionsSidebarBlock::Update(const CatalogItemPtr& item)
     }
 
     QueryAllProviders(item);
+}
+
+void SuggestionsSidebarBlock::OnDelayedShowSuggestionsForItem(wxTimerEvent&)
+{
+    UpdateSuggestionsForItem(m_parent->GetSelectedItem());
 }
 
 void SuggestionsSidebarBlock::QueryAllProviders(const CatalogItemPtr& item)

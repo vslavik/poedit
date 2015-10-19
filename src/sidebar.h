@@ -32,6 +32,7 @@
 
 #include <wx/event.h>
 #include <wx/panel.h>
+#include <wx/timer.h>
 
 #include "catalog.h"
 #include "language.h"
@@ -124,6 +125,10 @@ protected:
     virtual void QueryAllProviders(const CatalogItemPtr& item);
     void QueryProvider(SuggestionsBackend& backend, const CatalogItemPtr& item, uint64_t queryId);
 
+    // Handle showing of suggestions
+    void UpdateSuggestionsForItem(CatalogItemPtr item);
+    void OnDelayedShowSuggestionsForItem(wxTimerEvent& e);
+
 protected:
     std::unique_ptr<SuggestionsProvider> m_provider;
 
@@ -144,6 +149,10 @@ protected:
     std::vector<wxMenuItem*> m_suggestionMenuItems;
     int m_pendingQueries;
     uint64_t m_latestQueryId;
+
+    // delayed showing of suggestions:
+    long long m_lastUpdateTime;
+    wxTimer m_suggestionsTimer;
 };
 
 /**
