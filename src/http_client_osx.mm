@@ -130,10 +130,24 @@ public:
         // to the server.
         [m_native.operationQueue setMaxConcurrentOperationCount:NSIntegerMax];
 
-        NSOperatingSystemVersion osx = [[NSProcessInfo processInfo] operatingSystemVersion];
-        NSString *osx_str = (osx.patchVersion == 0)
-                            ? [NSString stringWithFormat:@"%d.%d", (int)osx.majorVersion, (int)osx.minorVersion]
-                            : [NSString stringWithFormat:@"%d.%d.%d", (int)osx.majorVersion, (int)osx.minorVersion, (int)osx.patchVersion];
+        int majorVersion, minorVersion, patchVersion;
+        NSProcessInfo *process = [NSProcessInfo processInfo];
+        if ([process respondsToSelector:@selector(operatingSystemVersion)])
+        {
+            NSOperatingSystemVersion osx = [process operatingSystemVersion];
+            majorVersion = (int)osx.majorVersion;
+            minorVersion = (int)osx.minorVersion;
+            patchVersion = (int)osx.patchVersion;
+        }
+        else
+        {
+            Gestalt(gestaltSystemVersionMajor, &majorVersion);
+            Gestalt(gestaltSystemVersionMinor, &minorVersion);
+            Gestalt(gestaltSystemVersionBugFix, &patchVersion);
+        }
+        NSString *osx_str = (patchVersion == 0)
+                            ? [NSString stringWithFormat:@"%d.%d", majorVersion, minorVersion]
+                            : [NSString stringWithFormat:@"%d.%d.%d", majorVersion, minorVersion, patchVersion];
         [m_native setDefaultHeader:@"User-Agent" value:[NSString stringWithFormat:@"Poedit/%s (Mac OS X %@)", POEDIT_VERSION, osx_str]];
     }
 
