@@ -475,7 +475,6 @@ void SuggestionsSidebarBlock::ReportError(SuggestionsBackend*, std::exception_pt
 
 void SuggestionsSidebarBlock::ClearSuggestions()
 {
-    m_pendingQueries = 0;
     m_suggestions.clear();
     UpdateSuggestionsMenu();
     UpdateVisibility();
@@ -660,6 +659,8 @@ void SuggestionsSidebarBlock::UpdateSuggestionsForItem(CatalogItemPtr item)
             m_suggestionsTimer.StartOnce(110);
         return;
     }
+
+    m_pendingQueries = 0;
 
     auto srclang = m_parent->GetCurrentSourceLanguage();
     auto lang = m_parent->GetCurrentLanguage();
