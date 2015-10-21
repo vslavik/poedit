@@ -898,7 +898,12 @@ public:
         auto crlfbox = new wxBoxSizer(wxHORIZONTAL);
         sizer->Add(crlfbox, wxSizerFlags().Expand().PXBorder(wxTOP));
         crlfbox->Add(new wxStaticText(this, wxID_ANY, _("Line endings:")), wxSizerFlags().Center().BORDER_WIN(wxTOP, PX(1)));
+#if defined(__WXGTK__)
+        // Make the height of wxChoice slightly larger under GTK
+        m_crlf = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxSize(-1,PX(34)));
+#else
         m_crlf = new wxChoice(this, wxID_ANY);
+#endif
         m_crlf->Append(_("Unix (recommended)"));
         m_crlf->Append(_("Windows"));
         crlfbox->Add(m_crlf, wxSizerFlags(1).Center().BORDER_OSX(wxLEFT, PX(3)).BORDER_WIN(wxLEFT, PX(5)));
@@ -907,7 +912,12 @@ public:
         m_wrap = new wxCheckBox(this, wxID_ANY, _("Wrap at:"));
         crlfbox->AddSpacer(PX(10));
         crlfbox->Add(m_wrap, wxSizerFlags().Center().BORDER_WIN(wxTOP, PX(1)));
+#if defined(__WXGTK__)
+        // Make the width of wxSpinCtrl larger under GTK
+        m_wrapWidth = new wxSpinCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(PX(120),-1));
+#else
         m_wrapWidth = new wxSpinCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(PX(50),-1));
+#endif
         m_wrapWidth->SetRange(10, 1000);
         crlfbox->Add(m_wrapWidth, wxSizerFlags().Center().BORDER_OSX(wxLEFT, PX(3)));
 
