@@ -201,8 +201,14 @@ SelectableAutoWrappingText::SelectableAutoWrappingText(wxWindow *parent, const w
 ExplanationLabel::ExplanationLabel(wxWindow *parent, const wxString& label)
     : AutoWrappingText(parent, label)
 {
-#if defined(__WXOSX__) || defined(__WXGTK__)
+#if defined(__WXOSX__)
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#elif defined(__WXGTK__)
+    #if wxCHECK_VERSION(3,1,0)
+        SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+    #else
+        SetFont(GetFont().Smaller());
+    #endif
 #endif
 #ifndef __WXGTK__
     SetForegroundColour(GetTextColor());
@@ -223,8 +229,14 @@ wxColour ExplanationLabel::GetTextColor()
 SecondaryLabel::SecondaryLabel(wxWindow *parent, const wxString& label)
     : wxStaticText(parent, wxID_ANY, label)
 {
-#if defined(__WXOSX__) || defined(__WXGTK__)
+#if defined(__WXOSX__)
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#elif defined(__WXGTK__)
+    #if wxCHECK_VERSION(3,1,0)
+        SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+    #else
+        SetFont(GetFont().Smaller());
+    #endif
 #endif
 #ifndef __WXGTK__
     SetForegroundColour(GetTextColor());
