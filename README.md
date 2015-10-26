@@ -1,0 +1,118 @@
+
+                                 ------------
+                                    Poedit
+                                 ------------
+
+                a cross-platform gettext catalogs editing tool
+
+
+ About
+=======
+
+This program is GUI frontend to GNU gettext utilities (win32 version is part of the distribution) and catalogs editor/source code parser. It helps with translating application into another language. For details on principles of the solution used, see GNU gettext documentation or wxWidgets' wxLocale class reference.
+
+
+ Installing
+============
+
+Binary easily-installable packages are provided for Windows and OS X and are part of many Linux distributions.
+
+
+ Installing from sources
+=========================
+
+Requirements:
+
+  * Boost
+  * Unicode build of wxWidgets library, version >= 3.0 (see http://www.wxwidgets.org)
+  * ICU
+  * LucenePlusPlus
+  * If on Unix, GtkSpell for spell checking support
+
+Optional dependencies:
+
+  * cld2 (better language autodetection and non-English source languages)
+  * Expat and Berkeley DB >= 4.7 (legacy translation memory migration)
+  * C++REST SDK >= 2.5 (Crowdin integration)
+
+
+ Unix
+------
+
+Do the usual thing:
+
+    ./configure
+    make
+    make install
+
+You must have the dependencies installed in a location configure will find, e.g. by setting CPPFLAGS and LDFLAGS appropriately.
+
+
+ OS X
+------
+
+You need a full git checkout to build on OS X; see below for details.
+
+After checkout, use the Poedit.xcworkspace workspace and Xcode 6 to build Poedit.
+
+There are some additional dependencies on tools not included with OS X. They can be installed with Homebrew and macosx/Brewfile:
+
+    brew bundle macosx/
+
+
+ Windows using Visual Studio 2013
+----------------------------------
+
+You need a full git checkout to build on Windows; see below for details.
+
+After checkout, use the Poedit.sln solution.
+
+
+ Installing from Git repository
+--------------------------------
+
+Get the sources from [http://github.com/vslavik/poedit](http://github.com/vslavik/poedit):
+
+    git clone git://github.com/vslavik/poedit.git
+
+If you are on Windows or OSX, you probably want the dependencies too. They are at git://github.com/vslavik/poedit-deps.git, but as it's a git submodule, you can get them by just doing
+
+    git submodule init
+    git submodule update --recursive
+
+If you get the sources directly from the Git repository, some generated files are not present. You have to run the ./bootstrap script to create them. After that, continue according to the instructions above.
+
+The ./bootstrap script requires some additional tools to be installed:
+
+ * AsciiDoc, xsltproc and xmlto to generate the manual page
+ * Bakefile, to generate Windows makefiles/projects
+ * ImageMagick and png2icns from libicns to generate icons in Windows and
+   OS X native formats
+
+If you don't have any of the dependencies, ./bootstrap will print errors, but will continue to run. In other words, if you don't need e.g. Windows stuff, you can ignore Windows-specific dependencies.
+
+
+ License
+=========
+
+Poedit is released under the MIT license and you're free to do  whatever you want with it and its source code (well, almost :-) -- see the license text).
+
+See the COPYING file for details on program's licensing and the icons/README file for details on the icons.
+
+Win32 and Mac OS X versions contain GNU gettext binaries. They are distributed under the GNU General Public License and their source code is available from http://www.gnu.org/software/gettext or, if you have difficulties getting them from there, email me for a copy of the sources.
+
+
+ Author
+========
+
+Vaclav Slavik <vaclav@slavik.io>
+Please see the AUTHORS file for information about other contributors.
+
+
+ Links
+=======
+
+http://poedit.net/
+        - Poedit homepage
+http://www.gnu.org/software/gettext/
+        - GNU project homepage, contains gettext and documentation
