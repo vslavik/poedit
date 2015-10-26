@@ -907,7 +907,11 @@ public:
         m_wrap = new wxCheckBox(this, wxID_ANY, _("Wrap at:"));
         crlfbox->AddSpacer(PX(10));
         crlfbox->Add(m_wrap, wxSizerFlags().Center().BORDER_WIN(wxTOP, PX(1)));
+    #ifdef __WXGTK3__
+        m_wrapWidth = new wxSpinCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(PX(100),-1));
+    #else
         m_wrapWidth = new wxSpinCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(PX(50),-1));
+    #endif
         m_wrapWidth->SetRange(10, 1000);
         crlfbox->Add(m_wrapWidth, wxSizerFlags().Center().BORDER_OSX(wxLEFT, PX(3)));
 
