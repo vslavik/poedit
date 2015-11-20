@@ -3815,6 +3815,8 @@ long PoeditFrame::NavigateGetNextItem(const long start,
 
 void PoeditFrame::Navigate(int step, NavigatePredicate predicate, bool wrap)
 {
+    if (!m_list)
+        return;
     auto i = NavigateGetNextItem(m_list->GetFirstSelected(), step, predicate, wrap, nullptr);
     if (i == -1)
         return;
