@@ -214,6 +214,12 @@ public:
     /// Renames temp file to the final one (passed to ctor).
     bool Commit();
 
+    /// Rename file to replace another *while preserving destination
+    /// file's permissions*.
+    /// Make this helper publicly accessible for code that can't
+    /// use TempOutputFileFor directly.
+    static bool ReplaceFile(const wxString& temp, const wxString& dest);
+
 #ifdef __WXOSX__
     wxString m_tempDir;
 #endif

@@ -26,6 +26,7 @@
 #include "utility.h"
 
 #include <stdio.h>
+
 #include <wx/filename.h>
 #include <wx/log.h>
 #include <wx/config.h>
@@ -36,6 +37,11 @@
 
 #ifdef __WXOSX__
     #include <Foundation/Foundation.h>
+#endif
+#ifdef __UNIX__
+    #include <sys/types.h>
+    #include <sys/stat.h>
+    #include <unistd.h>
 #endif
 
 #include "str_helpers.h"
@@ -168,7 +174,7 @@ wxString TempDirectory::CreateFileName(const wxString& suffix)
 
 
 // ----------------------------------------------------------------------
-// TempOutputFile
+// TempOutputFileFor
 // ----------------------------------------------------------------------
 
 TempOutputFileFor::TempOutputFileFor(const wxString& filename) : m_filenameFinal(filename)
@@ -225,7 +231,44 @@ TempOutputFileFor::TempOutputFileFor(const wxString& filename) : m_filenameFinal
 
 bool TempOutputFileFor::Commit()
 {
-    return wxRenameFile(m_filenameTmp, m_filenameFinal, /*overwrite=*/true);
+    return ReplaceFile(m_filenameTmp, m_filenameFinal);
+}
+
+bool TempOutputFileFor::ReplaceFile(const wxString& temp, const wxString& dest)
+{
+#ifdef __WXOSX__
+    NSURL *tempURL = [NSURL fileURLWithPath:str::to_NS(temp)];
+    NSURL *destURL = [NSURL fileURLWithPath:str::to_NS(dest)];
+    NSURL *resultingURL = nil;
+    return [[NSFileManager defaultManager] replaceItemAtURL:destURL
+                                              withItemAtURL:tempURL
+                                             backupItemName:nil
+                                                    options:0
+                                           resultingItemURL:&resultingURL
+                                                     error:nil];
+#else // !__WXOSX__
+  #ifdef __UNIX__
+    auto destPath = dest.fn_str();
+    bool overwrite = false;
+    struct stat st;
+
+    if ((overwrite = wxFileExists(dest)) == true)
+    {
+        if (stat(destPath, &st) != 0)
+            overwrite = false;
+    }
+  #endif
+
+    if (!wxRenameFile(temp, dest, /*overwrite=*/true))
+        return false;
+
+  #ifdef __UNIX__
+    chown(destPath, st.st_uid, st.st_gid);
+    chmod(destPath, st.st_mode);
+  #endif
+
+    return true;
+#endif // !__WXOSX__
 }
 
 TempOutputFileFor::~TempOutputFileFor()

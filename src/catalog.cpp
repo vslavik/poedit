@@ -1583,7 +1583,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
                 finalFile.Write(outputCrlf);
         }
 
-        if (!wxRenameFile(po_file_temp2, po_file, /*overwrite=*/true))
+        if (!TempOutputFileFor::ReplaceFile(po_file_temp2, po_file))
             msgcat_ok = false;
     }
 
@@ -1593,7 +1593,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
     }
     else
     {
-        if ( !wxRenameFile(po_file_temp, po_file, /*overwrite=*/true) )
+        if ( !po_file_temp_obj.Commit() )
         {
             wxLogError(_("Couldn't save file %s."), po_file.c_str());
         }
@@ -1685,7 +1685,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
                 [NSFileCoordinator removeFilePresenter:presenter];
             }
 #else // !__WXOSX__
-            if ( !wxRenameFile(mo_file_temp, mo_file, /*overwrite=*/true) )
+            if ( !mo_file_temp_obj.Commit() )
             {
                 wxLogError(_("Couldn't save file %s."), mo_file.c_str());
                 mo_compilation_status = CompilationStatus::Error;
@@ -1774,7 +1774,7 @@ bool Catalog::CompileToMO(const wxString& mo_file,
         mo_compilation_status = CompilationStatus::Success;
     }
 
-    if ( !wxRenameFile(mo_file_temp, mo_file, /*overwrite=*/true) )
+    if ( !mo_file_temp_obj.Commit() )
     {
         wxLogError(_("Couldn't save file %s."), mo_file.c_str());
         return false;
