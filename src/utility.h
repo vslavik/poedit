@@ -195,7 +195,6 @@ public:
 private:
     int m_counter;
     wxString m_dir;
-    wxArrayString m_files;
 
     static bool ms_keepFiles;
 };
