@@ -1064,6 +1064,16 @@ void PoeditApp::OnManager(wxCommandEvent&)
 
 void PoeditApp::OnQuit(wxCommandEvent&)
 {
+#ifdef __WXOSX__
+    // Native apps don't quit if there's any modal window or a sheet open; wx
+    // only refuses to quit if a app-modal window is open:
+    for (NSWindow *w in [NSApp windows])
+    {
+        if (w.sheet && w.preventsApplicationTerminationWhenModal)
+            return;
+    }
+#endif
+
     // The Close() calls below may not terminate immediately, they may ask for
     // confirmation window-modally on OS X. So change the behavior to terminate
     // the app when the last window is closed now, instead of calling
