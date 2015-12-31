@@ -1305,6 +1305,9 @@ void PoeditApp::OSXOnWillFinishLaunching()
 {
     wxApp::OSXOnWillFinishLaunching();
     CreateFakeOpenRecentMenu();
+    // We already create the menu item, this would cause duplicates "thanks" to the weird
+    // way wx's menubar works on OS X:
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"NSFullScreenMenuItemEverywhere"];
 }
 
 // Handle Cmd+W closure of windows globally here
