@@ -313,6 +313,11 @@ extern void InitXmlResource();
 
 bool PoeditApp::OnInit()
 {
+#ifdef __WXMSW__
+    // remove the current directory from the default DLL search order
+    SetDllDirectory(L"");
+#endif
+
     SetVendorName("Vaclav Slavik");
     SetAppName("Poedit");
 
