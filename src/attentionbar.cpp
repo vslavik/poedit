@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2008-2013 Vaclav Slavik
+ *  Copyright (C) 2008-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -25,6 +25,9 @@
 
 #include "attentionbar.h"
 
+#include "utility.h"
+
+#include <wx/checkbox.h>
 #include <wx/sizer.h>
 #include <wx/settings.h>
 #include <wx/artprov.h>
@@ -34,16 +37,19 @@
 #include <wx/config.h>
 #include <wx/dcclient.h>
 
-#ifdef __WXMAC__
+#include "customcontrols.h"
+#include "hidpi.h"
+
+#ifdef __WXOSX__
 #include "osx_helpers.h"
 #endif
 
-#ifdef __WXMAC__
-    #define SMALL_BORDER   5
-    #define BUTTONS_SPACE 10
+#ifdef __WXOSX__
+    #define SMALL_BORDER   PX(7)
+    #define BUTTONS_SPACE PX(10)
 #else
-    #define SMALL_BORDER   3
-    #define BUTTONS_SPACE  3
+    #define SMALL_BORDER   PX(3)
+    #define BUTTONS_SPACE  PX(5)
 #endif
 
 BEGIN_EVENT_TABLE(AttentionBar, wxPanel)
@@ -55,18 +61,21 @@ AttentionBar::AttentionBar(wxWindow *parent)
     : wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
               wxTAB_TRAVERSAL | wxBORDER_NONE)
 {
-#ifdef __WXMSW__
-    wxColour bg("#FFF499"); // match Visual Studio 2012+'s aesthetics
-#else
-    wxColour bg = wxSystemSettings::GetColour(wxSYS_COLOUR_INFOBK);
+#ifdef __WXOSX__
+    SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
-    SetBackgroundColour(bg);
-    SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_INFOTEXT));
 
+#ifndef __WXGTK__
     m_icon = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
-    m_label = new wxStaticText(this, wxID_ANY, wxEmptyString);
+#endif
+    m_label = new AutoWrappingText(this, "");
+
+    m_explanation = new AutoWrappingText(this, "");
+    m_explanation->SetForegroundColour(GetBackgroundColour().ChangeLightness(40));
 
     m_buttons = new wxBoxSizer(wxHORIZONTAL);
+
+    m_checkbox = new wxCheckBox(this, wxID_ANY, "");
 
     wxButton *btnClose =
             new wxBitmapButton
@@ -78,24 +87,34 @@ AttentionBar::AttentionBar(wxWindow *parent)
                 );
     btnClose->SetToolTip(_("Hide this notification message"));
 #ifdef __WXMSW__
-    btnClose->SetBackgroundColour(bg);
+    btnClose->SetBackgroundColour(GetBackgroundColour());
 #endif
-#ifdef __WXMAC__
-    SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-#endif
-#if defined(__WXMAC__) || defined(__WXMSW__)
-    Bind(wxEVT_PAINT, &AttentionBar::OnPaint, this);
+
+#if defined(__WXOSX__) || defined(__WXMSW__)
     wxFont boldFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
     boldFont.SetWeight(wxFONTWEIGHT_BOLD);
     m_label->SetFont(boldFont);
-#endif //
+#endif
+
+    Bind(wxEVT_PAINT, &AttentionBar::OnPaint, this);
 
     wxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
-    sizer->AddSpacer(wxSizerFlags::GetDefaultBorder());
-    sizer->Add(m_icon, wxSizerFlags().Center().Border(wxRIGHT, SMALL_BORDER));
-    sizer->Add(m_label, wxSizerFlags(1).Center().Border(wxALL, SMALL_BORDER));
+    sizer->AddSpacer(PXDefaultBorder);
+#ifndef __WXGTK__
+    sizer->Add(m_icon, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
+#endif
+
+    auto labelSizer = new wxBoxSizer(wxVERTICAL);
+    labelSizer->Add(m_label, wxSizerFlags().Expand());
+    labelSizer->Add(m_explanation, wxSizerFlags().Expand().Border(wxTOP|wxRIGHT, PX(4)));
+    sizer->Add(labelSizer, wxSizerFlags(1).Center().PXDoubleBorder(wxALL));
+    sizer->AddSpacer(PX(20));
     sizer->Add(m_buttons, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
+    sizer->Add(m_checkbox, wxSizerFlags().Center().Border(wxRIGHT, BUTTONS_SPACE));
     sizer->Add(btnClose, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
+#ifdef __WXMSW__
+    sizer->AddSpacer(PX(4));
+#endif
 
     SetSizer(sizer);
 
@@ -104,40 +123,19 @@ AttentionBar::AttentionBar(wxWindow *parent)
 }
 
 
-#ifdef __WXMAC__
 void AttentionBar::OnPaint(wxPaintEvent&)
 {
     wxPaintDC dc(this);
-
     wxRect rect(dc.GetSize());
 
-    dc.SetPen(wxColour(254,230,93));
-    dc.DrawLine(rect.GetTopLeft(), rect.GetTopRight());
-    dc.SetPen(wxColour(176,120,7));
-    dc.DrawLine(rect.GetBottomLeft(), rect.GetBottomRight());
-
-    rect.Deflate(0,1);
-    dc.GradientFillLinear
-       (
-         rect,
-         wxColour(254,220,48),
-         wxColour(253,188,11),
-         wxDOWN
-       );
-}
-#endif // __WXMAC__
-
-#ifdef __WXMSW__
-void AttentionBar::OnPaint(wxPaintEvent&)
-{
-    wxPaintDC dc(this);
-
-    wxRect rect(dc.GetSize());
+    auto bg = GetBackgroundColour();
     dc.SetBrush(*wxTRANSPARENT_BRUSH);
-    dc.SetPen(wxColour("#e5dd8c"));
-    dc.DrawRoundedRectangle(rect, 1);
+    dc.SetPen(bg.ChangeLightness(90));
+#ifndef __WXOSX__
+    dc.DrawLine(rect.GetTopLeft(), rect.GetTopRight());
+#endif
+    dc.DrawLine(rect.GetBottomLeft(), rect.GetBottomRight());
 }
-#endif // __WXMSW__
 
 
 void AttentionBar::ShowMessage(const AttentionMessage& msg)
@@ -145,8 +143,45 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
     if ( msg.IsBlacklisted() )
         return;
 
-    wxString iconName;
+#ifdef __WXGTK__
+    switch ( msg.m_kind )
+    {
+        case AttentionMessage::Info:
+            SetBackgroundColour(wxColour(252,252,189));
+            break;
+        case AttentionMessage::Warning:
+            SetBackgroundColour(wxColour(250,173,61));
+            break;
+        case AttentionMessage::Question:
+            SetBackgroundColour(wxColour(138,173,212));
+            break;
+        case AttentionMessage::Error:
+            SetBackgroundColour(wxColour(237,54,54));
+            break;
+    }
+#else
 
+    switch ( msg.m_kind )
+    {
+        case AttentionMessage::Question:
+            SetBackgroundColour("#ABE887");
+            break;
+        default:
+    #ifdef __WXMSW__
+            SetBackgroundColour("#FFF499"); // match Visual Studio 2012+'s aesthetics
+    #else
+            SetBackgroundColour("#FCDE59");
+    #endif
+            break;
+    }
+
+#ifdef __WXMSW__
+    auto bg = GetBackgroundColour();
+    for (auto w : GetChildren())
+        w->SetBackgroundColour(bg);
+#endif
+
+    wxString iconName;
     switch ( msg.m_kind )
     {
         case AttentionMessage::Info:
@@ -155,13 +190,21 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
         case AttentionMessage::Warning:
             iconName = wxART_WARNING;
             break;
+        case AttentionMessage::Question:
+            iconName = wxART_QUESTION;
+            break;
         case AttentionMessage::Error:
             iconName = wxART_ERROR;
             break;
     }
+    m_icon->SetBitmap(wxArtProvider::GetBitmap(iconName, wxART_MENU, wxSize(PX(16), PX(16))));
+#endif
 
-    m_icon->SetBitmap(wxArtProvider::GetBitmap(iconName, wxART_MENU, wxSize(16, 16)));
-    m_label->SetLabelText(msg.m_text);
+    m_label->SetAndWrapLabel(msg.m_text);
+    m_explanation->SetAndWrapLabel(msg.m_explanation);
+    m_explanation->GetContainingSizer()->Show(m_explanation, !msg.m_explanation.empty());
+    m_checkbox->SetLabel(msg.m_checkbox);
+    m_checkbox->GetContainingSizer()->Show(m_checkbox, !msg.m_checkbox.empty());
 
     m_buttons->Clear(true/*delete_windows*/);
     m_actions.clear();
@@ -170,7 +213,7 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
           i != msg.m_actions.end(); ++i )
     {
         wxButton *b = new wxButton(this, wxID_ANY, i->first);
-#ifdef __WXMAC__
+#ifdef __WXOSX__
         MakeButtonRounded(b->GetHandle());
 #endif
         m_buttons->Add(b, wxSizerFlags().Center().Border(wxRIGHT, BUTTONS_SPACE));
@@ -179,10 +222,10 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
 
     // we need to size the control correctly _and_ lay out the controls if this
     // is the first time it's being shown, otherwise we can get garbled look:
-    SetSize(GetParent()->GetClientSize().x,
-            GetBestSize().y);
+    SetSize(GetParent()->GetClientSize().x, GetBestSize().y);
     Layout();
 
+    Refresh();
     Show();
     GetParent()->Layout();
 }
@@ -208,7 +251,9 @@ void AttentionBar::OnAction(wxCommandEvent& event)
     }
 
     // first perform the action...
-    i->second();
+    AttentionMessage::ActionInfo info;
+    info.checkbox = m_checkbox->IsShown() && m_checkbox->IsChecked();
+    i->second(info);
 
     // ...then hide the message
     HideMessage();
@@ -237,6 +282,9 @@ bool AttentionMessage::IsBlacklisted(const wxString& id)
 
 void AttentionMessage::AddDontShowAgain()
 {
-    AddAction(_("Don't show again"),
-              std::bind(&AttentionMessage::AddToBlacklist, m_id));
+    auto id = m_id;
+    AddAction(
+        MSW_OR_OTHER(_("Don't show again"), _("Don't Show Again")), [id]{
+        AddToBlacklist(id);
+    });
 }

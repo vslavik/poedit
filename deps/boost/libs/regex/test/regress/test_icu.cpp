@@ -205,7 +205,10 @@ void test_icu(const wchar_t&, const test_regex_search_tag& )
    std::copy(test_info<wchar_t>::expression().begin(), test_info<wchar_t>::expression().end(), std::back_inserter(expression));
 #endif
    boost::regex_constants::syntax_option_type syntax_options = test_info<UChar32>::syntax_options();
-   try{
+#ifndef BOOST_NO_EXCEPTIONS
+   try
+#endif
+   {
 #if !defined(BOOST_NO_MEMBER_TEMPLATES) && !defined(__IBMCPP__)
       r.assign(expression.begin(), expression.end(), syntax_options);
 #else
@@ -338,6 +341,7 @@ void test_icu(const wchar_t&, const test_regex_search_tag& )
       //
       test_icu_grep(r, search_text);
    }
+#ifndef BOOST_NO_EXCEPTIONS
    catch(const boost::bad_expression& e)
    {
       BOOST_REGEX_TEST_ERROR("Expression did not compile when it should have done: " << e.what(), UChar32);
@@ -354,6 +358,7 @@ void test_icu(const wchar_t&, const test_regex_search_tag& )
    {
       BOOST_REGEX_TEST_ERROR("Received an unexpected exception of unknown type", UChar32);
    }
+#endif
 }
 
 void test_icu(const wchar_t&, const test_invalid_regex_tag&)
@@ -377,7 +382,9 @@ void test_icu(const wchar_t&, const test_invalid_regex_tag&)
    //
    // try it with exceptions disabled first:
    //
+#ifndef BOOST_NO_EXCEPTIONS
    try
+#endif
    {
 #if !defined(BOOST_NO_MEMBER_TEMPLATES) && !defined(__IBMCPP__)
       if(0 == r.assign(expression.begin(), expression.end(), syntax_options | boost::regex_constants::no_except).status())
@@ -392,15 +399,20 @@ void test_icu(const wchar_t&, const test_invalid_regex_tag&)
          BOOST_REGEX_TEST_ERROR("Expression compiled when it should not have done so.", wchar_t);
       }
    }
+#ifndef BOOST_NO_EXCEPTIONS
    catch(...)
    {
       BOOST_REGEX_TEST_ERROR("Unexpected exception thrown.", wchar_t);
    }
+#endif
    //
    // now try again with exceptions:
    //
    bool have_catch = false;
-   try{
+#ifndef BOOST_NO_EXCEPTIONS
+   try
+#endif
+   {
 #if !defined(BOOST_NO_MEMBER_TEMPLATES) && !defined(__IBMCPP__)
       r.assign(expression.begin(), expression.end(), syntax_options);
 #else
@@ -414,6 +426,7 @@ void test_icu(const wchar_t&, const test_invalid_regex_tag&)
          have_catch = true;
 #endif
    }
+#ifndef BOOST_NO_EXCEPTIONS
    catch(const boost::bad_expression&)
    {
       have_catch = true;
@@ -433,6 +446,7 @@ void test_icu(const wchar_t&, const test_invalid_regex_tag&)
       have_catch = true;
       BOOST_REGEX_TEST_ERROR("Expected a bad_expression exception, but got an exception of unknown type instead", wchar_t);
    }
+#endif
    if(!have_catch)
    {
       // oops expected exception was not thrown:
@@ -498,7 +512,10 @@ void test_icu(const wchar_t&, const test_regex_replace_tag&)
 #endif
    boost::regex_constants::syntax_option_type syntax_options = test_info<UChar32>::syntax_options();
    boost::u32regex r;
-   try{
+#ifndef BOOST_NO_EXCEPTIONS
+   try
+#endif
+   {
 #if !defined(BOOST_NO_MEMBER_TEMPLATES) && !defined(__IBMCPP__)
       r.assign(expression.begin(), expression.end(), syntax_options);
 #else
@@ -620,6 +637,7 @@ void test_icu(const wchar_t&, const test_regex_replace_tag&)
          }
       }
    }
+#ifndef BOOST_NO_EXCEPTIONS
    catch(const boost::bad_expression& e)
    {
       BOOST_REGEX_TEST_ERROR("Expression did not compile when it should have done: " << e.what(), UChar32);
@@ -636,6 +654,7 @@ void test_icu(const wchar_t&, const test_regex_replace_tag&)
    {
       BOOST_REGEX_TEST_ERROR("Received an unexpected exception of unknown type", UChar32);
    }
+#endif
 }
 
 #else
@@ -647,3 +666,4 @@ void test_icu(const wchar_t&, const test_invalid_regex_tag&){}
 void test_icu(const wchar_t&, const test_regex_replace_tag&){}
 
 #endif
+

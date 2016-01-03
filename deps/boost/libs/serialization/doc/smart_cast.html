@@ -33,9 +33,9 @@ operators:
   <dt><code>static_cast&lt;T *<&gt;(U *)<br>static_cast&lt;T &<&gt;(U &)</code></dt>
   <dd>
     <ul>
-      <li>required if neither T nor U are not polymorphic
+      <li>required if neither T nor U are polymorphic
       <li>permitted in other cases.
-      <li>fails to detect erroneas casts of polymophic pointers/references at runtime.
+      <li>fails to detect erroneous casts of polymophic pointers/references at runtime.
       <li>does not permit "cross casting"
       <li>inline function calls can be optimized away during compile time.
     </ul>
@@ -46,7 +46,7 @@ operators:
     <ul>
       <li>permitted if either T or U are polymorphic
       <li>prohibited in other cases.
-      <li>throws exception on detecting erroneas casts of polymorphic pointers/references
+      <li>throws exception on detecting erroneous casts of polymorphic pointers/references
           at runtime.
       <li>permits "cross casting"
       <li>cannot optimise inline virtual functions at compile time.
@@ -91,14 +91,14 @@ template&lt;class T&gt;
 bool is_storable(T &amp;t){
     // what type of cast to use here?
 
-    // this fails at compiler time when T == base2
+    // this fails at compile time when T == base2
     // return static_cast&lt;base1 &amp;&gt;(t).is_storable();
 
-    // this fails at compiler time when T == top
+    // this fails at compile time when T == top
     // otherwise it works but cannot optimize inline function call
     // return dynamic_cast&lt;base1 &amp;&gt;(t).is_storable();
 
-    // this always works - and is guarenteed to generate the fastest code !
+    // this always works - and is guaranteed to generate the fastest code !
     return (boost::smart_cast_reference&lt;base1 &amp;&gt;(t)).is_storable();
 }
 
@@ -121,7 +121,7 @@ The serialization library includes a mix of classes which use
 both static polymorphism (<strong>CRTP</strong>) and dynamic
 polymorphism via virtual functions.  <code style="white-space: normal">smart_cast</code> 
 was written to address the more problematic manifestations of the
-situation exmplified above.
+situation exemplified above.
 
 <h3>Usage</h3>
 The following syntax is supported:
@@ -134,14 +134,14 @@ Note that the above syntax doesn't include
 <pre><code>
 smart_cast&lt;Target &amp; &gt(Source &amp; s)
 </code></pre>
-but the same functionality is supported the the following special syntax
+but the same functionality is supported with the following special syntax
 <pre><code>
 smart_cast_reference&lt;Target &amp;&gt(Source &amp; s)
 </code></pre>
 
 <h3>Requirements</h3>
 <code style="white-space: normal">smart_cast</code> can be used only on compilers that support partial
-template specialization or on types for which have be specified with the
+template specialization or on types for which the
 macro <code style="white-space: normal">
 BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION(&lt;type&gt;)</code>
 has been applied.

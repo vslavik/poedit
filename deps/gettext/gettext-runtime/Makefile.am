@@ -1,5 +1,6 @@
 ## Makefile for the gettext-runtime directory of GNU gettext
-## Copyright (C) 1995-1999, 2000-2006, 2010, 2012 Free Software Foundation, Inc.
+## Copyright (C) 1995-2006, 2010, 2012, 2015 Free Software Foundation,
+## Inc.
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -40,3 +41,8 @@ EXTRA_DIST += gnulib-m4/gnulib-cache.m4
 # Woe32 support.
 
 EXTRA_DIST += README.woe32
+
+maintainer-update-po: $(top_builddir)/config.status
+	$(SHELL) ./config.status --recheck
+	$(SHELL) ./config.status po/Makefile.in po-directories
+	cd po && $(MAKE) update-po

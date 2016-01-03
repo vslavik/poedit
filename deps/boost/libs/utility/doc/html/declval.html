@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Declval</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="declval.html" title="Declval">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -31,9 +31,10 @@
 </h3></div>
 </div></div>
 <div><p class="copyright">Copyright &#169; 2008 Howard Hinnant</p></div>
-<div><p class="copyright">Copyright &#169; 2009 -2012 Vicente J. Botet Escriba</p></div>
+<div><p class="copyright">Copyright &#169; 2009-2012 Vicente
+      J. Botet Escriba</p></div>
 <div><div class="legalnotice">
-<a name="idp13449552"></a><p>
+<a name="declval.legal"></a><p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -43,7 +44,7 @@
 </div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl>
+<dl class="toc">
 <dt><span class="section"><a href="declval.html#declval.overview">Overview</a></span></dt>
 <dt><span class="section"><a href="declval.html#declval.reference">Reference </a></span></dt>
 <dt><span class="section"><a href="declval.html#declval.history">History</a></span></dt>
@@ -66,13 +67,13 @@
       in a non-using context, e.g. given the declaration
     </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
-<span class="identifier">T</span><span class="special">&amp;&amp;</span> <span class="identifier">declval</span><span class="special">();</span> <span class="comment">// not used
-</span></pre>
+<span class="identifier">T</span><span class="special">&amp;&amp;</span> <span class="identifier">declval</span><span class="special">();</span> <span class="comment">// not used</span>
+</pre>
 <p>
       as part of the function template declaration
     </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">To</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">From</span><span class="special">&gt;</span>
-<span class="identifier">decltype</span><span class="special">(</span><span class="keyword">static_cast</span><span class="special">&lt;</span><span class="identifier">To</span><span class="special">&gt;(</span><span class="identifier">declval</span><span class="special">&lt;</span><span class="identifier">From</span><span class="special">&gt;()))</span> <span class="identifier">convert</span><span class="special">(</span><span class="identifier">From</span><span class="special">&amp;&amp;);</span>
+<span class="keyword">decltype</span><span class="special">(</span><span class="keyword">static_cast</span><span class="special">&lt;</span><span class="identifier">To</span><span class="special">&gt;(</span><span class="identifier">declval</span><span class="special">&lt;</span><span class="identifier">From</span><span class="special">&gt;()))</span> <span class="identifier">convert</span><span class="special">(</span><span class="identifier">From</span><span class="special">&amp;&amp;);</span>
 </pre>
 <p>
       or as part of a class template definition
@@ -80,9 +81,9 @@
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span><span class="special">&gt;</span> <span class="keyword">class</span> <span class="identifier">result_of</span><span class="special">;</span>
 
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Fn</span><span class="special">,</span> <span class="keyword">class</span><span class="special">...</span> <span class="identifier">ArgTypes</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">result_of</span><span class="special">&lt;</span><span class="identifier">Fn</span><span class="special">(</span><span class="identifier">ArgTypes</span><span class="special">...)&gt;</span> 
+<span class="keyword">struct</span> <span class="identifier">result_of</span><span class="special">&lt;</span><span class="identifier">Fn</span><span class="special">(</span><span class="identifier">ArgTypes</span><span class="special">...)&gt;</span>
 <span class="special">{</span>
-  <span class="keyword">typedef</span> <span class="identifier">decltype</span><span class="special">(</span><span class="identifier">declval</span><span class="special">&lt;</span><span class="identifier">Fn</span><span class="special">&gt;()(</span><span class="identifier">declval</span><span class="special">&lt;</span><span class="identifier">ArgTypes</span><span class="special">&gt;()...))</span> <span class="identifier">type</span><span class="special">;</span>
+  <span class="keyword">typedef</span> <span class="keyword">decltype</span><span class="special">(</span><span class="identifier">declval</span><span class="special">&lt;</span><span class="identifier">Fn</span><span class="special">&gt;()(</span><span class="identifier">declval</span><span class="special">&lt;</span><span class="identifier">ArgTypes</span><span class="special">&gt;()...))</span> <span class="identifier">type</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
 <p>
@@ -94,8 +95,8 @@
       to
     </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
-<span class="keyword">typename</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">add_rvalue_reference</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">declval</span><span class="special">();</span> <span class="comment">// not used
-</span></pre>
+<span class="keyword">typename</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">add_rvalue_reference</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">declval</span><span class="special">();</span> <span class="comment">// not used</span>
+</pre>
 <p>
       which ensures that we can also use cv void as template parameter. The careful
       reader might have noticed that <code class="computeroutput"><span class="identifier">declval</span><span class="special">()</span></code> already exists under the name create() as
@@ -119,10 +120,10 @@
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
 
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
-    <span class="keyword">typename</span> <span class="identifier">add_rvalue_reference</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">declval</span><span class="special">()</span> <span class="identifier">noexcept</span><span class="special">;</span> <span class="comment">// as unevaluated operand
-</span>
-<span class="special">}</span>  <span class="comment">// namespace boost
-</span></pre>
+    <span class="keyword">typename</span> <span class="identifier">add_rvalue_reference</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">declval</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">;</span> <span class="comment">// as unevaluated operand</span>
+
+<span class="special">}</span>  <span class="comment">// namespace boost</span>
+</pre>
 <p>
       The library provides the function template declval to simplify the definition
       of expressions which occur as unevaluated operands.
@@ -142,7 +143,7 @@
       <span class="bold"><strong>Example:</strong></span>
     </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">To</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">From</span><span class="special">&gt;</span>
-<span class="identifier">decltype</span><span class="special">(</span><span class="keyword">static_cast</span><span class="special">&lt;</span><span class="identifier">To</span><span class="special">&gt;(</span><span class="identifier">declval</span><span class="special">&lt;</span><span class="identifier">From</span><span class="special">&gt;()))</span> <span class="identifier">convert</span><span class="special">(</span><span class="identifier">From</span><span class="special">&amp;&amp;);</span>
+<span class="keyword">decltype</span><span class="special">(</span><span class="keyword">static_cast</span><span class="special">&lt;</span><span class="identifier">To</span><span class="special">&gt;(</span><span class="identifier">declval</span><span class="special">&lt;</span><span class="identifier">From</span><span class="special">&gt;()))</span> <span class="identifier">convert</span><span class="special">(</span><span class="identifier">From</span><span class="special">&amp;&amp;);</span>
 </pre>
 <p>
       Declares a function template convert which only participates in overloading
@@ -153,21 +154,22 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="declval.history"></a><a class="link" href="declval.html#declval.history" title="History">History</a>
 </h2></div></div></div>
-<a name="declval.history.boost_1_50"></a><h4>
-<a name="idp13553216"></a>
-      <a class="link" href="declval.html#declval.history.boost_1_50">boost 1.50</a>
+<h4>
+<a name="declval.history.h0"></a>
+      <span class="phrase"><a name="declval.history.boost_1_50"></a></span><a class="link" href="declval.html#declval.history.boost_1_50">boost
+      1.50</a>
     </h4>
 <p>
       Fixes:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           <a href="http://svn.boost.org/trac/boost/ticket/6570" target="_top">#6570</a>
           Adding noexcept to boost::declval.
         </li></ul></div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: May 28, 2012 at 18:59:06 GMT</small></p></td>
+<td align="left"><p><small>Last revised: April 07, 2015 at 22:46:51 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2013 Vaclav Slavik
+ *  Copyright (C) 2013-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -37,9 +37,6 @@ protected:
 
     wxFont m_fntHeader, m_fntNorm, m_fntSub;
     wxColour m_clrHeader, m_clrNorm, m_clrSub;
-
-private:
-    void OnPaint(wxPaintEvent&);
 };
 
 /// Content view for initially opened Poedit, without a file

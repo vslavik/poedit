@@ -16,7 +16,7 @@ A couple of classes and metafunctions provide basic support for Fusion.
 
 Metafunction that evaluates to `mpl::true_` if a certain type `T` is a
 conforming Fusion __sequence__, `mpl::false_` otherwise. This may be
-specialized to accomodate clients which provide Fusion conforming sequences.
+specialized to accommodate clients which provide Fusion conforming sequences.
 
 [heading Synopsis]
 
@@ -70,7 +70,7 @@ conforming Fusion __view__, `mpl::false_` otherwise. A view is a
 specialized sequence that does not actually contain data. Views hold
 sequences which may be other views. In general, views are held by other
 views by value, while non-views are held by other views by reference. `is_view`
-may be specialized to accomodate clients providing Fusion conforming views.
+may be specialized to accommodate clients providing Fusion conforming views.
 
 [heading Synopsis]
 
@@ -125,7 +125,7 @@ All conforming Fusion sequences and iterators have an associated tag type. The
 purpose of the tag is to enable __tag_dispatching__ from  __intrinsic__
 functions to implementations appropriate for the type.
 
-This metafunction may be specialized to accomodate clients providing Fusion
+This metafunction may be specialized to accommodate clients providing Fusion
 conforming sequences.
 
 [heading Synopsis]
@@ -254,7 +254,8 @@ Metafunction to apply __element_conversion__ to the full argument type.
 
 It removes references to `const`, references to array types are kept, even
 if the array is `const`. Reference wrappers are removed (see
-__note_boost_ref__).
+__note_ref_wrappers__)[footnote Since C++11, the standard reference wrappers
+are also removed.].
 
 [heading Header]
 

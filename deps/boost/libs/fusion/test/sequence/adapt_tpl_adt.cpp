@@ -39,27 +39,45 @@ namespace ns
     {
     public:
     
-        point() : x(0), y(0) {}
-        point(X x_, Y y_) : x(x_), y(y_) {}
+        point() : x(0), y(0), z(0) {}
+        point(X x_, Y y_, int z_) : x(x_), y(y_), z(z_) {}
             
         X get_x() const { return x; }
         Y get_y() const { return y; }
+        int get_z() const { return z; }
         void set_x(X x_) { x = x_; }
         void set_y(Y y_) { y = y_; }
+        void set_z(int z_) { z = z_; }
         
     private:
         
         X x;
         Y y;
+        int z;
     };
 }
 
-BOOST_FUSION_ADAPT_TPL_ADT(
-    (X)(Y),
-    (ns::point)(X)(Y),
-    (X, X, obj.get_x(), obj.set_x(val))
-    (Y, Y, obj.get_y(), obj.set_y(val))
-)
+
+#if BOOST_PP_VARIADICS
+
+  BOOST_FUSION_ADAPT_TPL_ADT(
+      (X)(Y),
+      (ns::point)(X)(Y),
+      (X, X, obj.get_x(), obj.set_x(val))
+      (Y, Y, obj.get_y(), obj.set_y(val))
+      (obj.get_z(), obj.set_z(val))
+  )
+
+#else // BOOST_PP_VARIADICS
+
+  BOOST_FUSION_ADAPT_TPL_ADT(
+      (X)(Y),
+      (ns::point)(X)(Y),
+      (X, X, obj.get_x(), obj.set_x(val))
+      (Y, Y, obj.get_y(), obj.set_y(val))
+      (BOOST_FUSION_ADAPT_AUTO, BOOST_FUSION_ADAPT_AUTO, obj.get_z(), obj.set_z(val))
+  )
+#endif
 
 int
 main()
@@ -75,28 +93,30 @@ main()
 
     {
         BOOST_MPL_ASSERT_NOT((traits::is_view<point>));
-        point p(123, 456);
+        point p(123, 456, 789);
 
         std::cout << at_c<0>(p) << std::endl;
         std::cout << at_c<1>(p) << std::endl;
+        std::cout << at_c<2>(p) << std::endl;
         std::cout << p << std::endl;
-        BOOST_TEST(p == make_vector(123, 456));
+        BOOST_TEST(p == make_vector(123, 456, 789));
 
         at_c<0>(p) = 6;
         at_c<1>(p) = 9;
-        BOOST_TEST(p == make_vector(6, 9));
+        at_c<2>(p) = 12;
+        BOOST_TEST(p == make_vector(6, 9, 12));
 
-        BOOST_STATIC_ASSERT(boost::fusion::result_of::size<point>::value == 2);
+        BOOST_STATIC_ASSERT(boost::fusion::result_of::size<point>::value == 3);
         BOOST_STATIC_ASSERT(!boost::fusion::result_of::empty<point>::value);
 
         BOOST_TEST(front(p) == 6);
-        BOOST_TEST(back(p) == 9);
+        BOOST_TEST(back(p) == 12);
     }
 
     {
-        boost::fusion::vector<int, float> v1(4, 2);
-        point v2(5, 3);
-        boost::fusion::vector<long, double> v3(5, 4);
+        boost::fusion::vector<int, float, int> v1(4, 2, 2);
+        point v2(5, 3, 3);
+        boost::fusion::vector<long, double, int> v3(5, 4, 4);
         BOOST_TEST(v1 < v2);
         BOOST_TEST(v1 <= v2);
         BOOST_TEST(v2 > v1);
@@ -108,9 +128,9 @@ main()
     }
 
     {
-        boost::fusion::vector<std::string, std::string> v1("Lincoln", "Abraham");
-        name v2("Roosevelt", "Franklin");
-        name v3("Roosevelt", "Theodore");
+        boost::fusion::vector<std::string, std::string, int> v1("Lincoln", "Abraham", 3);
+        name v2("Roosevelt", "Franklin", 3);
+        name v3("Roosevelt", "Theodore", 3);
         BOOST_TEST(v1 < v2);
         BOOST_TEST(v1 <= v2);
         BOOST_TEST(v2 > v1);
@@ -123,15 +143,15 @@ main()
     
     {
         // conversion from point to vector
-        point p(5, 3);
-        boost::fusion::vector<int, long> v(p);
+        point p(5, 3, 3);
+        boost::fusion::vector<int, long, int> v(p);
         v = p;
     }
 
     {
         // conversion from point to list
-        point p(5, 3);
-        boost::fusion::list<int, long> l(p);
+        point p(5, 3, 3);
+        boost::fusion::list<int, long, int> l(p);
         l = p;
     }
 

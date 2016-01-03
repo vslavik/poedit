@@ -5,7 +5,7 @@
 :Authors:       David Abrahams, Daniel Wallin
 :Contact:       dave@boost-consulting.com, daniel@boostpro.com
 :organization:  `BoostPro Computing`_
-:date:          $Date: 2010-05-27 10:58:58 -0700 (Thu, 27 May 2010) $
+:date:          $Date$
 
 :copyright:     Copyright David Abrahams, Daniel Wallin
                 2005-2009. Distributed under the Boost Software License,

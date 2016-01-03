@@ -112,6 +112,18 @@ required for R(z-n) is not full machine precision, but an absolute error
 of: [epsilon]/R(0).  This saves us quite a few digits when dealing with large 
 z, especially when [epsilon] is small.
 
+Finally, there are some special cases for integer arguments, there are
+closed forms for negative or even integers:
+
+[equation zeta7]
+
+[equation zeta8]
+
+[equation zeta9]
+
+and for positive odd integers we simply cache pre-computed values as these are of great
+benefit to some infinite series calculations.
+
 [endsect]
 [/ :error_function The Error Functions]
 

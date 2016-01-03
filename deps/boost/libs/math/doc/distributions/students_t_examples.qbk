@@ -274,15 +274,15 @@ can be summarised in the following table:
 
 [[The Alternative-hypothesis: the sample mean *is less* than
 the true mean.]
-[Reject if CDF of t > significance level:
+[Reject if CDF of t > 1 - significance level:
 
-`cdf(dist, t) > alpha`]]
+`cdf(complement(dist, t)) < alpha`]]
 
 [[The Alternative-hypothesis: the sample mean *is greater* than
 the true mean.]
-[Reject if complement of CDF of t > significance level:
+[Reject if complement of CDF of t < significance level:
 
-`cdf(complement(dist, t)) > alpha`]]
+`cdf(dist, t) < alpha`]]
 ]
 
 [note
@@ -299,27 +299,27 @@ output for this test can be found in
 [@http://www.itl.nist.gov/div898/handbook/eda/section3/eda352.htm
 section 3.5.2] of the __handbook.
 
-[pre'''
-   __________________________________
-   Student t test for a single sample
-   __________________________________
+[pre
+__________________________________
+Student t test for a single sample
+__________________________________
 
-   Number of Observations                                 =  195
-   Sample Mean                                            =  9.26146
-   Sample Standard Deviation                              =  0.02279
-   Expected True Mean                                     =  5.00000
+Number of Observations                                 =  195
+Sample Mean                                            =  9.26146
+Sample Standard Deviation                              =  0.02279
+Expected True Mean                                     =  5.00000
 
-   Sample Mean - Expected Test Mean                       =  4.26146
-   Degrees of Freedom                                     =  194
-   T Statistic                                            =  2611.28380
-   Probability that difference is due to chance           =  0.000e+000
+Sample Mean - Expected Test Mean                       =  4.26146
+Degrees of Freedom                                     =  194
+T Statistic                                            =  2611.28380
+Probability that difference is due to chance           =  0.000e+000
 
-   Results for Alternative Hypothesis and alpha           =  0.0500'''
+Results for Alternative Hypothesis and alpha           =  0.0500
 
-   Alternative Hypothesis     Conclusion
-   Mean != 5.000              NOT REJECTED
-   Mean  < 5.000              REJECTED
-   Mean  > 5.000              NOT REJECTED
+Alternative Hypothesis     Conclusion
+Mean != 5.000            NOT REJECTED
+Mean  < 5.000            REJECTED
+Mean  > 5.000            NOT REJECTED
 ]
 
 You will note the line that says the probability that the difference is
@@ -337,37 +337,7 @@ J. C. Miller and J. N. Miller, Ellis Horwood ISBN 0 13 0309907.]
 The values result from the determination of mercury by cold-vapour
 atomic absorption.
 
-[pre'''
-   __________________________________
-   Student t test for a single sample
-   __________________________________
-
-   Number of Observations                                 =  3
-   Sample Mean                                            =  37.80000
-   Sample Standard Deviation                              =  0.96437
-   Expected True Mean                                     =  38.90000
-
-   Sample Mean - Expected Test Mean                       =  -1.10000
-   Degrees of Freedom                                     =  2
-   T Statistic                                            =  -1.97566
-   Probability that difference is due to chance           =  1.869e-001
-
-   Results for Alternative Hypothesis and alpha           =  0.0500'''
-
-   Alternative Hypothesis     Conclusion
-   Mean != 38.900             REJECTED
-   Mean  < 38.900             REJECTED
-   Mean  > 38.900             REJECTED
-]
-
-As you can see the small number of measurements (3) has led to a large uncertainty
-in the location of the true mean.  So even though there appears to be a difference
-between the sample mean and the expected true mean, we conclude that there
-is no significant difference, and are unable to reject the null hypothesis.
-However, if we were to lower the bar for acceptance down to alpha = 0.1
-(a 90% confidence level) we see a different output:
-
-[pre'''
+[pre
 __________________________________
 Student t test for a single sample
 __________________________________
@@ -382,7 +352,37 @@ Degrees of Freedom                                     =  2
 T Statistic                                            =  -1.97566
 Probability that difference is due to chance           =  1.869e-001
 
-Results for Alternative Hypothesis and alpha           =  0.1000'''
+Results for Alternative Hypothesis and alpha           =  0.0500
+
+Alternative Hypothesis     Conclusion
+Mean != 38.900            REJECTED
+Mean  < 38.900            NOT REJECTED
+Mean  > 38.900            NOT REJECTED
+]
+
+As you can see the small number of measurements (3) has led to a large uncertainty
+in the location of the true mean.  So even though there appears to be a difference
+between the sample mean and the expected true mean, we conclude that there
+is no significant difference, and are unable to reject the null hypothesis.
+However, if we were to lower the bar for acceptance down to alpha = 0.1
+(a 90% confidence level) we see a different output:
+
+[pre
+__________________________________
+Student t test for a single sample
+__________________________________
+
+Number of Observations                                 =  3
+Sample Mean                                            =  37.80000
+Sample Standard Deviation                              =  0.96437
+Expected True Mean                                     =  38.90000
+
+Sample Mean - Expected Test Mean                       =  -1.10000
+Degrees of Freedom                                     =  2
+T Statistic                                            =  -1.97566
+Probability that difference is due to chance           =  1.869e-001
+
+Results for Alternative Hypothesis and alpha           =  0.1000
 
 Alternative Hypothesis     Conclusion
 Mean != 38.900            REJECTED

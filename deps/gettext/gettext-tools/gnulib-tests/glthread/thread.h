@@ -1,5 +1,5 @@
 /* Creating and controlling threads.
-   Copyright (C) 2005-2013 Free Software Foundation, Inc.
+   Copyright (C) 2005-2015 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -74,6 +74,9 @@
 #include <errno.h>
 #include <stdlib.h>
 
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef _GLTHREAD_THREAD_INLINE
 # define _GLTHREAD_THREAD_INLINE _GL_INLINE

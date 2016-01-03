@@ -17,6 +17,13 @@
         <label>_Open...</label>
         <accel>Ctrl+O</accel>
       </object>
+      <object class="wxMenuItem" name="open_recent" platform="mac">
+        <label>Open Recent</label>
+      </object>
+      <object class="wxMenuItem" name="menu_open_crowdin">
+        <label platform="win">Open from Crowdin...</label>
+        <label platform="unix|mac">Open From Crowdin...</label>
+      </object>
       <object class="separator"/>
       <object class="wxMenuItem" name="wxID_CLOSE" platform="mac">
         <label>_Close</label>
@@ -30,6 +37,10 @@
         <label platform="win">Save _as...</label>
         <label platform="unix|mac">Save _As...</label>
         <accel platform="mac">Shift+Ctrl+S</accel>
+      </object>
+      <object class="separator" platform="mac"/>
+      <object class="wxMenuItem" name="menu_compile_mo">
+        <label>Compile to MO...</label>
       </object>
       <object class="wxMenuItem" name="menu_export">
         <label>E_xport as HTML...</label>
@@ -58,16 +69,20 @@
     </object>
     <object class="wxMenu" name="menu_edit">
       <label>_Edit</label>
-      <object class="wxMenuItem" name="wxID_CUT" platform="mac"/>
-      <object class="wxMenuItem" name="wxID_COPY" platform="mac"/>
-      <object class="wxMenuItem" name="wxID_PASTE" platform="mac"/>
+      <object class="wxMenuItem" name="wxID_UNDO" platform="unix|win"/>
+      <object class="wxMenuItem" name="wxID_REDO" platform="unix|win"/>
+      <object class="separator" platform="unix|win"/>
+      <object class="wxMenuItem" name="wxID_CUT"/>
+      <object class="wxMenuItem" name="wxID_COPY"/>
+      <object class="wxMenuItem" name="wxID_PASTE"/>
+      <object class="wxMenuItem" name="wxID_DELETE" platform="unix|win"/>
+      <object class="wxMenuItem" name="wxID_SELECTALL"/>
+      <object class="separator"/>
       <object class="wxMenuItem" name="menu_clear" >
-        <label platform="win">Clear translation</label>
-        <label platform="unix|mac">Clear Translation</label>
-        <accel>Ctrl+K</accel>
+          <label platform="win">Clear translation</label>
+          <label platform="unix|mac">Clear Translation</label>
+          <accel>Ctrl+K</accel>
       </object>
-      <object class="wxMenuItem" name="wxID_SELECTALL" platform="mac"/>
-      <object class="separator" platform="mac"/>
       <object class="wxMenuItem" name="menu_copy_from_src">
         <label platform="win">Copy from source text</label>
         <label platform="unix|mac">Copy from Source Text</label>
@@ -82,16 +97,24 @@
       <object class="wxMenuItem" name="menu_comment">
         <label platform="win">Edit _comment</label>
         <label platform="unix|mac">Edit _Comment</label>
-        <accel>Ctrl+M</accel>
+        <accel platform="unix|win">Ctrl+M</accel>
       </object>
       <object class="separator"/>
+      <object class="wxMenu" name="menu_suggestions">
+        <label>Suggestions</label>
+      </object>
       <object class="wxMenuItem" name="menu_references">
         <label platform="win">_Show references</label>
         <label platform="unix|mac">_Show References</label>
       </object>
+      <object class="separator"/>
       <object class="wxMenuItem" name="wxID_FIND" platform="unix|win">
         <label>_Find...</label>
         <accel>Ctrl+F</accel>
+      </object>
+      <object class="wxMenuItem" name="wxID_REPLACE" platform="unix|win">
+        <label>Replace...</label>
+        <accel>Ctrl+H</accel>
       </object>
       <object class="wxMenuItem" name="menu_find_next" platform="unix|win">
         <label>Find next</label>
@@ -106,6 +129,10 @@
         <object class="wxMenuItem" name="wxID_FIND">
           <label>_Find...</label>
           <accel>Ctrl+F</accel>
+        </object>
+        <object class="wxMenuItem" name="wxID_REPLACE">
+          <label>Find and Replace...</label>
+          <accel>Ctrl+Alt+F</accel>
         </object>
         <object class="wxMenuItem" name="menu_find_next">
           <label>Find Next</label>
@@ -122,10 +149,64 @@
       </object>
       <style>wxMENU_TEAROFF</style>
     </object>
+    <object class="wxMenu" name="menu_view">
+      <label>_View</label>
+      <object class="wxMenuItem" name="menu_ids">
+        <label platform="win">Display entry _IDs</label>
+        <label platform="unix|mac">Display Entry _IDs</label>
+        <checkable>1</checkable>
+      </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="sort_by_order">
+        <label platform="win">Sort by _file order</label>
+        <label platform="unix|mac">Sort by _File Order</label>
+        <radio>1</radio>
+      </object>
+      <object class="wxMenuItem" name="sort_by_source">
+        <label platform="win">Sort by _source</label>
+        <label platform="unix|mac">Sort by _Source</label>
+        <radio>1</radio>
+      </object>
+      <object class="wxMenuItem" name="sort_by_translation">
+        <label platform="win">Sort by _translation</label>
+        <label platform="unix|mac">Sort by _Translation</label>
+        <radio>1</radio>
+      </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="sort_group_by_context">
+        <label platform="win">_Group by context</label>
+        <label platform="unix|mac">_Group By Context</label>
+        <checkable>1</checkable>
+      </object>
+      <object class="wxMenuItem" name="sort_errors_first">
+        <label platform="win">Entries with errors first</label>
+        <label platform="unix|mac">Entries with Errors First</label>
+        <checkable>1</checkable>
+      </object>
+      <object class="wxMenuItem" name="sort_untrans_first">
+        <label platform="win">_Untranslated entries first</label>
+        <label platform="unix|mac">_Untranslated Entries First</label>
+        <checkable>1</checkable>
+      </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="show_sidebar">
+        <label platform="win">Show sidebar</label>
+        <label platform="mac|unix">Show Sidebar</label>
+        <checkable platform="win|unix">1</checkable>
+        <accel>Ctrl+Alt+S</accel>
+      </object>
+      <object class="wxMenuItem" name="show_statusbar">
+        <label platform="win">Show status bar</label>
+        <label platform="mac|unix">Show Status Bar</label>
+        <checkable platform="win|unix">1</checkable>
+        <accel platform="mac">Ctrl+/</accel>
+      </object>
+      <style>wxMENU_TEAROFF</style>
+    </object>
     <object class="wxMenu" name="menu_catalog">
       <label>C_atalog</label>
       <style>wxMENU_TEAROFF</style>
-      <object class="wxMenuItem" name="menu_update">
+      <object class="wxMenuItem" name="menu_update_from_src">
         <label platform="win">_Update from sources</label>
         <label platform="unix|mac">_Update from Sources</label>
       </object>
@@ -133,9 +214,13 @@
         <label platform="win">Update from _POT file...</label>
         <label platform="unix|mac">Update from _POT File...</label>
       </object>
+      <object class="wxMenuItem" name="menu_update_from_crowdin">
+        <label>Sync with Crowdin</label>
+      </object>
+      <object class="separator"/>
       <object class="wxMenuItem" name="menu_auto_translate">
-        <label platform="win">Translate using _TM</label>
-        <label platform="unix|mac">Translate Using _TM</label>
+        <label platform="win">Fill missing translations from _TM...</label>
+        <label platform="unix|mac">Fill Missing Translations from _TM...</label>
       </object>
       <object class="wxMenuItem" name="menu_purge_deleted">
         <label platform="win">_Purge deleted translations</label>
@@ -164,13 +249,13 @@
       </object>
       <object class="separator"/>
       <object class="wxMenuItem" name="go_prev">
-        <label platform="win">_Previous message</label>
-        <label platform="unix|mac">_Previous Message</label>
+        <label platform="win">_Previous translation</label>
+        <label platform="unix|mac">_Previous Translation</label>
         <accel>Ctrl+Up</accel>
       </object>
       <object class="wxMenuItem" name="go_next">
-        <label platform="win">_Next message</label>
-        <label platform="unix|mac">_Next Message</label>
+        <label platform="win">_Next translation</label>
+        <label platform="unix|mac">_Next Translation</label>
         <accel>Ctrl+Down</accel>
       </object>
       <object class="wxMenuItem" name="go_prev_unfinished">
@@ -184,52 +269,8 @@
         <accel>Ctrl+Shift+Down</accel>
       </object>
     </object>
-    <object class="wxMenu" name="menu_view">
-      <label>_View</label>
-      <object class="wxMenuItem" name="menu_quotes">
-        <label platform="win">Display _quotes</label>
-        <label platform="unix|mac">Display _Quotes</label>
-        <checkable>1</checkable>
-      </object>
-      <object class="wxMenuItem" name="menu_ids">
-        <label platform="win">Display entry _IDs</label>
-        <label platform="unix|mac">Display Entry _IDs</label>
-        <checkable>1</checkable>
-      </object>
-      <object class="wxMenuItem" name="menu_auto_comments_win">
-        <label platform="win">Display _notes for translators</label>
-        <label platform="unix|mac">Display _Notes for Translators</label>
-        <checkable>1</checkable>
-      </object>
-      <object class="separator"/>
-      <object class="wxMenuItem" name="menu_comment_win">
-        <label platform="win">_Comment window</label>
-        <label platform="unix|mac">_Comment Window</label>
-        <checkable>1</checkable>
-      </object>
-      <object class="separator"/>
-      <object class="wxMenuItem" name="sort_by_order">
-        <label platform="win">Sort by _file order</label>
-        <label platform="unix|mac">Sort by _File Order</label>
-        <radio>1</radio>
-      </object>
-      <object class="wxMenuItem" name="sort_by_source">
-        <label platform="win">Sort by _source</label>
-        <label platform="unix|mac">Sort by _Source</label>
-        <radio>1</radio>
-      </object>
-      <object class="wxMenuItem" name="sort_by_translation">
-        <label platform="win">Sort by _translation</label>
-        <label platform="unix|mac">Sort by _Translation</label>
-        <radio>1</radio>
-      </object>
-      <object class="separator"/>
-      <object class="wxMenuItem" name="sort_untrans_first">
-        <label platform="win">_Untranslated entries first</label>
-        <label platform="unix|mac">_Untranslated Entries First</label>
-        <checkable>1</checkable>
-      </object>
-      <style>wxMENU_TEAROFF</style>
+    <object class="wxMenu" name="menu_window" platform="mac">
+      <label>Window</label>
     </object>
     <object class="wxMenu" name="menu_help">
       <object class="wxMenuItem" name="wxID_HELP">
@@ -270,6 +311,18 @@
       <object class="wxMenuItem" name="wxID_OPEN">
         <label>_Open...</label>
         <accel>Ctrl+O</accel>
+      </object>
+      <object class="wxMenuItem" name="open_recent" platform="mac">
+        <label>Open Recent</label>
+      </object>
+      <object class="wxMenuItem" name="menu_open_crowdin">
+        <label platform="win">Open from Crowdin...</label>
+        <label platform="unix|mac">Open From Crowdin...</label>
+      </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="wxID_CLOSE" platform="mac">
+        <label>_Close</label>
+        <accel>Ctrl+W</accel>
       </object>
       <object class="wxMenuItem" name="wxID_PREFERENCES" platform="win|mac">
         <label>_Preferences...</label>

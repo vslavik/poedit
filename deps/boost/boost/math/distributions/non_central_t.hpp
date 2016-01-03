@@ -647,7 +647,7 @@ namespace boost
             RealType result = ir.first + (ir.second - ir.first) / 2;
             if(max_iter >= policies::get_max_root_iterations<Policy>())
             {
-               policies::raise_evaluation_error<RealType>(function, "Unable to locate solution in a reasonable time:"
+               return policies::raise_evaluation_error<RealType>(function, "Unable to locate solution in a reasonable time:"
                   " or there is no answer to problem.  Current best guess is %1%", result, Policy());
             }
             return result;
@@ -705,7 +705,7 @@ namespace boost
             RealType result = ir.first + (ir.second - ir.first) / 2;
             if(max_iter >= policies::get_max_root_iterations<Policy>())
             {
-               policies::raise_evaluation_error<RealType>(function, "Unable to locate solution in a reasonable time:"
+               return policies::raise_evaluation_error<RealType>(function, "Unable to locate solution in a reasonable time:"
                   " or there is no answer to problem.  Current best guess is %1%", result, Policy());
             }
             return result;

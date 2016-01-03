@@ -66,25 +66,45 @@ namespace quickbook { namespace detail
         return static_cast<char>(std::tolower(static_cast<unsigned char>(ch)));
     }
 
-    std::string escape_uri(std::string uri_param)
+    static std::string escape_uri_impl(std::string& uri_param, char const* mark)
     {
+        // Extra capital characters for validating percent escapes.
+        static char const hex[] = "0123456789abcdefABCDEF";
+
         std::string uri;
         uri.swap(uri_param);
 
         for (std::string::size_type n = 0; n < uri.size(); ++n)
         {
-            static char const mark[] = "-_.!~*'()?\\/";
-            if((!std::isalnum(static_cast<unsigned char>(uri[n])) || 127 < static_cast<unsigned char>(uri[n]))
-              && 0 == std::strchr(mark, uri[n]))
+            if (static_cast<unsigned char>(uri[n]) > 127 ||
+                    (!std::isalnum(static_cast<unsigned char>(uri[n])) &&
+                     !std::strchr(mark, uri[n])) ||
+                    (uri[n] == '%' && !(n + 2 < uri.size() &&
+                                        std::strchr(hex, uri[n+1]) &&
+                                        std::strchr(hex, uri[n+2]))))
             {
-                static char const hex[] = "0123456789abcdef";
                 char escape[] = { hex[uri[n] / 16], hex[uri[n] % 16] };
                 uri.insert(n + 1, escape, 2);
                 uri[n] = '%';
                 n += 2;
             }
+            else if (uri[n] == '%')
+            {
+                n += 2;
+            }
         }
 
         return uri;
+    }
+
+    std::string escape_uri(std::string uri_param)
+    {
+        // TODO: I don't understand this choice of characters.....
+        return escape_uri_impl(uri_param, "-_.!~*'()?\\/");
+    }
+
+    std::string partially_escape_uri(std::string uri_param)
+    {
+        return escape_uri_impl(uri_param, "-_.!~*'()?\\/:&=#%+");
     }
 }}

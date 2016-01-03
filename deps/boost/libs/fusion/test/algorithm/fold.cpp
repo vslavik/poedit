@@ -2,7 +2,7 @@
     Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2007 Dan Marsden
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
@@ -120,6 +120,26 @@ int add(int lhs, int rhs)
     return lhs + rhs;
 }
 
+struct functor
+{
+    template<typename T>
+    int
+    operator() (int hitherho, T const& cur) const
+    {
+        return int(hitherho + cur);
+    }
+};
+
+struct visitor
+{
+    typedef int result_type;
+
+    int operator()(int sum, long&)
+    {
+        return sum;
+    }
+};
+
 int
 main()
 {
@@ -217,6 +237,21 @@ main()
         BOOST_TEST(fusion::accumulate(vec, 0, add) == 3);
     }
 
+    {
+#if !defined(BOOST_FUSION_NO_DECLTYPE_BASED_RESULT_OF)
+        {
+            boost::fusion::vector<int, double, long> container{1, 2, 3};
+            functor f;
+            boost::fusion::fold(container, 0, f);
+        }
+#endif
+
+        {
+            boost::fusion::vector<long> vec;
+            visitor v;
+            boost::fusion::fold(vec, 0, v);
+        }
+    }
+
     return boost::report_errors();
 }
-

@@ -27,7 +27,7 @@
 <a name="boost_asio.reference.basic_streambuf.commit"></a><a class="link" href="commit.html" title="basic_streambuf::commit">basic_streambuf::commit</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp76052152"></a> 
+          <a class="indexterm" name="idp127362960"></a> 
 Move characters from the output sequence to the input
           sequence.
         </p>
@@ -48,22 +48,18 @@ Move characters from the output sequence to the input
         </p>
 <h6>
 <a name="boost_asio.reference.basic_streambuf.commit.h0"></a>
-          <span class="phrase"><a name="boost_asio.reference.basic_streambuf.commit.exceptions"></a></span><a class="link" href="commit.html#boost_asio.reference.basic_streambuf.commit.exceptions">Exceptions</a>
+          <span class="phrase"><a name="boost_asio.reference.basic_streambuf.commit.remarks"></a></span><a class="link" href="commit.html#boost_asio.reference.basic_streambuf.commit.remarks">Remarks</a>
         </h6>
-<div class="variablelist">
-<p class="title"><b></b></p>
-<dl class="variablelist">
-<dt><span class="term">std::length_error</span></dt>
-<dd><p>
-                If <code class="computeroutput"><span class="identifier">n</span></code> is greater than
-                the size of the output sequence.
-              </p></dd>
-</dl>
-</div>
+<p>
+          If <code class="computeroutput"><span class="identifier">n</span></code> is greater than the
+          size of the output sequence, the entire output sequence is moved to the
+          input sequence and no error is issued.
+        </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2013 Christopher M. Kohlhoff<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2015 Christopher M.
+      Kohlhoff<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

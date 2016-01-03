@@ -83,7 +83,7 @@ void do_test_gamma_2(const T& data, const char* type_name, const char* test_name
          BOOST_CHECK_CLOSE_EX(Real(data[i][1]), inv, precision, i);
       }
       else if(1 == Real(data[i][5]))
-         BOOST_CHECK_EQUAL(boost::math::gamma_p_inv(Real(data[i][0]), Real(data[i][5])), boost::math::tools::max_value<value_type>());
+         BOOST_CHECK_EQUAL(boost::math::gamma_p_inv(Real(data[i][0]), Real(data[i][5])), std::numeric_limits<value_type>::has_infinity ? std::numeric_limits<value_type>::infinity() : boost::math::tools::max_value<value_type>());
       else
       {
          // not enough bits in our input to get back to x, but we should be in
@@ -93,7 +93,7 @@ void do_test_gamma_2(const T& data, const char* type_name, const char* test_name
       }
 
       if(Real(data[i][3]) == 0)
-         BOOST_CHECK_EQUAL(boost::math::gamma_q_inv(Real(data[i][0]), Real(data[i][3])), boost::math::tools::max_value<value_type>());
+         BOOST_CHECK_EQUAL(boost::math::gamma_q_inv(Real(data[i][0]), Real(data[i][3])), std::numeric_limits<value_type>::has_infinity ? std::numeric_limits<value_type>::infinity() : boost::math::tools::max_value<value_type>());
       else if((1 - Real(data[i][3]) > 0.001) && (fabs(Real(data[i][3])) > 2 * boost::math::tools::min_value<value_type>()))
       {
          value_type inv = boost::math::gamma_q_inv(Real(data[i][0]), Real(data[i][3]));

@@ -58,7 +58,7 @@ struct tommath_int
    }
    tommath_int& operator = (tommath_int&& o)
    {
-      mp_exch(&m_data, &o.data());
+      mp_exch(&m_data, &o.m_data);
       return *this;
    }
 #endif
@@ -93,11 +93,10 @@ struct tommath_int
    }
    tommath_int& operator = (long long i)
    {
-      BOOST_MP_USING_ABS
       if(m_data.dp == 0)
          detail::check_tommath_result(mp_init(&m_data));
       bool neg = i < 0;
-      *this = static_cast<unsigned long long>(abs(i));
+      *this = boost::multiprecision::detail::unsigned_abs(i);
       if(neg)
          detail::check_tommath_result(mp_neg(&m_data, &m_data));
       return *this;
@@ -315,10 +314,10 @@ struct tommath_int
       {
          int pos = result[0] == '-' ? 1 : 0;
          const char* pp = base == 8 ? "0" : "0x";
-         result.insert(pos, pp);
+         result.insert(static_cast<std::string::size_type>(pos), pp);
       }
       if((f & std::ios_base::showpos) && (result[0] != '-'))
-         result.insert(0, 1, '+');
+         result.insert(static_cast<std::string::size_type>(0), 1, '+');
       return result;
    }
    ~tommath_int()

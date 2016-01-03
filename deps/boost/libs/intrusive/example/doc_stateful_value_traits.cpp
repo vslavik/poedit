@@ -36,11 +36,11 @@ struct stateful_value_traits
    {}
 
    ///Note: non static functions!
-   node_ptr to_node_ptr (value_type &value)
+   node_ptr to_node_ptr (value_type &value) const
       {  return this->nodes_ + (&value - this->ids_); }
    const_node_ptr to_node_ptr (const value_type &value) const
       {  return this->nodes_ + (&value - this->ids_); }
-   pointer to_value_ptr(node_ptr n)
+   pointer to_value_ptr(node_ptr n) const
       {  return this->ids_ + (n - this->nodes_); }
    const_pointer to_value_ptr(const_node_ptr n) const
       {  return this->ids_ + (n - this->nodes_); }

@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2000-2013 Vaclav Slavik
+ *  Copyright (C) 2000-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -49,5 +49,6 @@ extern bool ExecuteGettext(const wxString& cmdline);
 extern bool ExecuteGettextAndParseOutput(const wxString& cmdline,
                                          GettextErrors& errors);
 
+extern wxString QuoteCmdlineArg(const wxString& s);
 
 #endif // _GEXECUTE_H_

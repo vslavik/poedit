@@ -21,7 +21,7 @@
 #include <boost/fusion/container/generation/detail/preprocessed/deque_tie.hpp>
 #else
 #if defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "detail/preprocessed/deque_tie" FUSION_MAX_DEQUE_SIZE_STR".hpp")
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/deque_tie" FUSION_MAX_DEQUE_SIZE_STR ".hpp")
 #endif
 
 /*=============================================================================
@@ -80,24 +80,21 @@ namespace boost { namespace fusion
     namespace result_of
     {
         template <BOOST_PP_ENUM_PARAMS(N, typename T)>
-#if defined(BOOST_NO_PARTIAL_SPECIALIZATION_IMPLICIT_DEFAULT_ARGS)
         #define TEXT(z, n, text) , text
         struct deque_tie< BOOST_PP_ENUM_PARAMS(N, T) BOOST_PP_REPEAT_FROM_TO(BOOST_PP_DEC(N), FUSION_MAX_DEQUE_SIZE, TEXT, void_) >
         #undef TEXT
-#else
-        struct deque_tie<BOOST_PP_ENUM_PARAMS(N, T)>
-#endif
         {
             typedef deque<BOOST_PP_ENUM(N, BOOST_FUSION_REF, _)> type;
         };
     }
 
     template <BOOST_PP_ENUM_PARAMS(N, typename T)>
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
     inline deque<BOOST_PP_ENUM(N, BOOST_FUSION_REF, _)>
-    deque_tie(BOOST_PP_ENUM_BINARY_PARAMS(N, T, & _))
+    deque_tie(BOOST_PP_ENUM_BINARY_PARAMS(N, T, & arg))
     {
         return deque<BOOST_PP_ENUM(N, BOOST_FUSION_REF, _)>(
-            BOOST_PP_ENUM_PARAMS(N, _));
+            BOOST_PP_ENUM_PARAMS(N, arg));
     }
 
 #undef N

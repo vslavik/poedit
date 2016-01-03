@@ -7,6 +7,7 @@
 #if !defined(BOOST_FUSION_FIND_IF_FWD_HPP_INCLUDED)
 #define BOOST_FUSION_FIND_IF_FWD_HPP_INCLUDED
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/is_const.hpp>
 
@@ -20,7 +21,8 @@ namespace boost { namespace fusion
     }
 
     template <typename Pred, typename Sequence>
-    typename 
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+    inline typename
         lazy_disable_if<
             is_const<Sequence>
           , result_of::find_if<Sequence, Pred>
@@ -28,7 +30,8 @@ namespace boost { namespace fusion
     find_if(Sequence& seq);
 
     template <typename Pred, typename Sequence>
-    typename result_of::find_if<Sequence const, Pred>::type const
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+    inline typename result_of::find_if<Sequence const, Pred>::type const
     find_if(Sequence const& seq);
 }}
 

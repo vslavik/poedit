@@ -2129,12 +2129,20 @@ The rolling sum is the sum of the last /N/ samples.
 The rolling mean is the mean over the last /N/ samples. It is computed by dividing
 the rolling sum by the rolling count.
 
+Lazy or iterative calculation of the mean over the last /N/ samples. The lazy calculation is associated with the `tag::lazy_rolling_mean`
+feature, and the iterative calculation (which is the default) with the `tag::immediate_rolling_mean` feature. Both can be extracted
+using the `tag::rolling_mean()` extractor. For more implementation details, see
+[classref boost::accumulators::impl::lazy_rolling_mean_impl [^lazy_rolling_mean_impl]] and
+[classref boost::accumulators::impl::immediate_rolling_mean_impl [^immediate_rolling_mean_impl]]
+
 [variablelist
     [[Result Type] [``
                     numeric::functional::fdiv<_sample_type_, std::size_t>::result_type
                     ``]]
-    [[Depends On] [`rolling_sum` \n `rolling_count`]]
-    [[Variants] [['none]]]
+    [[Depends On] [`lazy_rolling_mean` depends on `rolling_sum` and `rolling_count` \n
+                   `immediate_rolling_mean` depends on `rolling_count`]]
+    [[Variants] [`lazy_rolling_mean` (a.k.a. `rolling_mean(lazy))` \n
+                 `immediate_rolling_mean` (a.k.a. `rolling_mean(immediate)`)]]	
     [[Initialization Parameters] [`tag::rolling_window::window_size`]]
     [[Accumulator Parameters] [['none]]]
     [[Extractor Parameters] [['none]]]
@@ -2166,9 +2174,114 @@ the rolling sum by the rolling count.
 
 [*See also]
 
-* [classref boost::accumulators::impl::rolling_mean_impl [^rolling_mean_impl]]
+* [classref boost::accumulators::impl::lazy_rolling_mean_impl [^lazy_rolling_mean_impl]]
+* [classref boost::accumulators::impl::immediate_rolling_mean_impl [^immediate_rolling_mean_impl]]
+* [link accumulators.user_s_guide.the_statistical_accumulators_library.rolling_count [^rolling_count]]
+* [link accumulators.user_s_guide.the_statistical_accumulators_library.rolling_sum [^rolling_sum]]
 
 [endsect]
+
+[section:rolling_moment rolling_moment]
+
+rolling_moment<M> calculates the /M/-th moment of the samples, which is defined as the sum of the /M/-th power of the samples over the count of samples, over the last /N/ samples. 
+
+[variablelist
+    [[Result Type] [``
+                    numeric::functional::fdiv<_sample_type_, std::size_t>::result_type
+                    ``]]
+    [[Depends On] [['none]]]					
+    [[Variants] [['none]]]
+    [[Initialization Parameters] [`tag::rolling_window::window_size`]]
+    [[Accumulator Parameters] [['none]]]
+    [[Extractor Parameters] [['none]]]
+    [[Accumulator Complexity] [O(1)]] 
+    [[Extractor Complexity] [O(1)]] 
+]
+
+[*Header]
+[def _ROLLING_MOMENT_HPP_ [headerref boost/accumulators/statistics/rolling_moment.hpp]]
+
+    #include <_ROLLING_MOMENT_HPP_>
+
+[*Example]
+
+    accumulator_set<int, stats<tag::rolling_moment<2> > > acc(tag::rolling_window::window_size = 3);
+    
+    acc(2);
+    acc(4);
+
+    BOOST_CHECK_CLOSE( rolling_moment<2>(acc), (4.0 + 16.0)/2, 1e-5 );
+
+    acc(5);
+    acc(6);
+
+    BOOST_CHECK_CLOSE( rolling_moment<2>(acc), (16.0 + 25.0 + 36.0)/3, 1e-5 );
+
+[*See also]
+
+* [classref boost::accumulators::impl::rolling_moment_impl [^rolling_moment_impl]]
+
+[endsect]
+
+[section:rolling_variance rolling_variance]
+
+Lazy or iterative calculation of the variance over the last /N/ samples. The lazy calculation is associated with the `tag::lazy_rolling_variance`
+feature, and the iterative calculation with the `tag::immediate_rolling_variance` feature. Both can be extracted using the `tag::rolling_variance()` extractor. 
+For more implementation details, see
+[classref boost::accumulators::impl::lazy_rolling_variance_impl [^lazy_rolling_variance_impl]] and
+[classref boost::accumulators::impl::immediate_rolling_variance_impl [^immediate_rolling_variance_impl]]
+
+[variablelist
+    [[Result Type] [``
+                    numeric::functional::fdiv<_sample_type_, std::size_t>::result_type
+                    ``]]
+    [[Depends On] [`lazy_rolling_variance` depends on `rolling_moment<2>`, `rolling_count` and `rolling_mean` \n
+                   `immediate_rolling_variance` depends on `rolling_count` and `immediate_rolling_mean`]]
+    [[Variants] [`lazy_rolling_variance` (a.k.a. `rolling_variance(lazy))` \n
+                 `immediate_rolling_variance` (a.k.a. `rolling_variance(immediate)`)]]
+    [[Initialization Parameters] [`tag::rolling_window::window_size`]]
+    [[Accumulator Parameters] [['none]]]
+    [[Extractor Parameters] [['none]]]
+    [[Accumulator Complexity] [O(1)]] 
+    [[Extractor Complexity] [O(1)]] 
+]
+
+[*Header]
+[def _ROLLING_VARIANCE_HPP_ [headerref boost/accumulators/statistics/rolling_variance.hpp]]
+
+    #include <_ROLLING_VARIANCE_HPP_>
+
+[*Example]
+
+    accumulator_set<double, stats<tag::rolling_variance> > acc(tag::rolling_window::window_size = 4);
+    
+    acc(1.2);
+
+    BOOST_CHECK_CLOSE( rolling_variance(acc), 0.0, 1e-10 ); // variance is not defined for a single sample
+	
+    acc(2.3);
+    acc(3.4);
+
+    BOOST_CHECK_CLOSE( rolling_variance(acc), 1.21, 1e-10 ); // variance over samples 1-3
+
+    acc(4.5);
+    acc(0.4);
+    acc(2.2);
+    acc(7.1);
+
+    BOOST_CHECK_CLOSE( rolling_variance(acc), 8.41666666666667, 1e-10 ); // variance over samples 4-7
+
+[*See also]
+
+* [classref boost::accumulators::impl::lazy_rolling_variance_impl [^lazy_rolling_variance_impl]]
+* [classref boost::accumulators::impl::immediate_rolling_variance_impl [^immediate_rolling_variance_impl]]
+* [link accumulators.user_s_guide.the_statistical_accumulators_library.rolling_count [^rolling_count]]
+* [link accumulators.user_s_guide.the_statistical_accumulators_library.rolling_mean [^rolling_mean]]
+* [link accumulators.user_s_guide.the_statistical_accumulators_library.immediate_rolling_mean [^immediate_rolling_mean]]
+* [link accumulators.user_s_guide.the_statistical_accumulators_library.rolling_moment [^rolling_moment]]
+
+[endsect]
+
 
 [section:skewness skewness]
 

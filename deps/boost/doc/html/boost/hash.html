@@ -7,7 +7,7 @@
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../hash/reference.html#header.boost.functional.hash_hpp" title="Header &lt;boost/functional/hash.hpp&gt;">
 <link rel="prev" href="../hash/reference.html" title="Reference">
-<link rel="next" href="hash_bool_idp21362872.html" title="Struct hash&lt;bool&gt;">
+<link rel="next" href="hash_bool_idp104297024.html" title="Struct hash&lt;bool&gt;">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../hash/reference.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../hash/reference.html#header.boost.functional.hash_hpp"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="hash_bool_idp21362872.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../hash/reference.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../hash/reference.html#header.boost.functional.hash_hpp"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="hash_bool_idp104297024.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.hash"></a><div class="titlepage"></div>
@@ -33,11 +33,11 @@
 
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="hash.html" title="Struct template hash">hash</a> <span class="special">:</span> <span class="keyword">public</span> std::unary_function&lt;T, std::size_t&gt; <span class="special">{</span>
-  <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <a class="link" href="hash.html#idp21065624-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <a class="link" href="hash.html#idp47373168-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp100584232"></a><h2>Description</h2>
-<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <a name="idp21065624-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> val<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<a name="idp205805792"></a><h2>Description</h2>
+<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <a name="idp47373168-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> val<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -49,7 +49,7 @@
 <td>
 <p>
             </p>
-<pre class="programlisting"><a class="link" href="../hash/reference.html#boost.hash_value_idp19018856">hash_value</a><span class="special">(</span><span class="identifier">val</span><span class="special">)</span></pre>
+<pre class="programlisting"><a class="link" href="../hash/reference.html#boost.hash_value_idp102674960">hash_value</a><span class="special">(</span><span class="identifier">val</span><span class="special">)</span></pre>
 <p>
           </p>
 </td>
@@ -58,7 +58,7 @@
 <td><p><span class="term">Notes:</span></p></td>
 <td>
 <p>
-              The call to <code class="computeroutput"><a class="link" href="../hash/reference.html#boost.hash_value_idp19018856">hash_value</a></code>
+              The call to <code class="computeroutput"><a class="link" href="../hash/reference.html#boost.hash_value_idp102674960">hash_value</a></code>
               is unqualified, so that custom overloads can be
               found via argument dependent lookup.
             </p>
@@ -71,13 +71,18 @@
               Forward declared in
               <code class="computeroutput">&lt;boost/functional/hash_fwd.hpp&gt;</code>
             </p>
+<p>
+              This hash function is not intended for general use, and isn't
+              guaranteed to be equal during separate runs of a program - so
+              please don't use it for any persistent storage or communication.
+            </p>
 </td>
 </tr>
 <tr>
 <td><p><span class="term">Throws:</span></p></td>
 <td><p>
             Only throws if
-            <code class="computeroutput"><a class="link" href="../hash/reference.html#boost.hash_value_idp19018856">hash_value</a>(T)</code> throws.
+            <code class="computeroutput"><a class="link" href="../hash/reference.html#boost.hash_value_idp102674960">hash_value</a>(T)</code> throws.
           </p></td>
 </tr>
 </tbody>
@@ -95,7 +100,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../hash/reference.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../hash/reference.html#header.boost.functional.hash_hpp"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="hash_bool_idp21362872.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../hash/reference.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../hash/reference.html#header.boost.functional.hash_hpp"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="hash_bool_idp104297024.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

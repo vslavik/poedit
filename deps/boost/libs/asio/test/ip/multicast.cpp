@@ -2,7 +2,7 @@
 // multicast.cpp
 // ~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -145,8 +145,22 @@ void test()
 #endif // defined(BOOST_ASIO_WINDOWS) && defined(UNDER_CE)
   BOOST_ASIO_CHECK(!have_v4 || !ec);
 
+#if (defined(__MACH__) && defined(__APPLE__)) \
+  || defined(__FreeBSD__) \
+  || defined(__NetBSD__) \
+  || defined(__OpenBSD__)
+  const ip::address multicast_address_v6 =
+    ip::address::from_string("ff02::1%lo0", ec);
+#else // (defined(__MACH__) && defined(__APPLE__))
+      //   || defined(__FreeBSD__)
+      //   || defined(__NetBSD__)
+      //   || defined(__OpenBSD__)
   const ip::address multicast_address_v6 =
     ip::address::from_string("ff01::1", ec);
+#endif // (defined(__MACH__) && defined(__APPLE__))
+       //   || defined(__FreeBSD__)
+       //   || defined(__NetBSD__)
+       //   || defined(__OpenBSD__)
   BOOST_ASIO_CHECK(!have_v6 || !ec);
 
   // join_group class.
@@ -155,30 +169,34 @@ void test()
   {
     ip::multicast::join_group join_group(multicast_address_v4);
     sock_v4.set_option(join_group, ec);
-    BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
+    BOOST_ASIO_CHECK_MESSAGE(!ec || ec == error::no_such_device,
+                       ec.value() << ", " << ec.message());
+
+    if (!ec)
+    {
+      // leave_group class.
+
+      ip::multicast::leave_group leave_group(multicast_address_v4);
+      sock_v4.set_option(leave_group, ec);
+      BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
+    }
   }
 
   if (have_v6)
   {
     ip::multicast::join_group join_group(multicast_address_v6);
     sock_v6.set_option(join_group, ec);
-    BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
-  }
+    BOOST_ASIO_CHECK_MESSAGE(!ec || ec == error::no_such_device,
+                       ec.value() << ", " << ec.message());
 
-  // leave_group class.
+    if (!ec)
+    {
+      // leave_group class.
 
-  if (have_v4)
-  {
-    ip::multicast::leave_group leave_group(multicast_address_v4);
-    sock_v4.set_option(leave_group, ec);
-    BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
-  }
-
-  if (have_v6)
-  {
-    ip::multicast::leave_group leave_group(multicast_address_v6);
-    sock_v6.set_option(leave_group, ec);
-    BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
+      ip::multicast::leave_group leave_group(multicast_address_v6);
+      sock_v6.set_option(leave_group, ec);
+      BOOST_ASIO_CHECK_MESSAGE(!ec, ec.value() << ", " << ec.message());
+    }
   }
 
   // outbound_interface class.

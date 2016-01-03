@@ -37,27 +37,45 @@ namespace ns
     {
     public:
     
-        point() : x(0), y(0) {}
-        point(int in_x, int in_y) : x(in_x), y(in_y) {}
+        point() : x(0), y(0), z(0) {}
+        point(int in_x, int in_y, int in_z) : x(in_x), y(in_y), z(in_z) {}
             
         int get_x() const { return x; }
         int get_y() const { return y; }
+        int get_z() const { return z; }
         void set_x(int x_) { x = x_; }
         void set_y(int y_) { y = y_; }
+        void set_z(int z_) { z = z_; }
         
     private:
         
         int x;
         int y;
+        int z;
     };
 }
+
+#if BOOST_PP_VARIADICS
 
 // this creates a fusion view: boost::fusion::adapted::point
 BOOST_FUSION_ADAPT_ADT_NAMED(
     ns::point, point,
-    (int, int, obj.obj.get_x(), obj.obj.set_x(val))
-    (int, int, obj.obj.get_y(), obj.obj.set_y(val))
+    (int, int, obj.get_x(), obj.set_x(val))
+    (int, int, obj.get_y(), obj.set_y(val))
+    (obj.get_z(), obj.set_z(val))
 )
+
+#else // BOOST_PP_VARIADICS
+
+// this creates a fusion view: boost::fusion::adapted::point
+BOOST_FUSION_ADAPT_ADT_NAMED(
+    ns::point, point,
+    (int, int, obj.get_x(), obj.set_x(val))
+    (int, int, obj.get_y(), obj.set_y(val))
+    (BOOST_FUSION_ADAPT_AUTO, BOOST_FUSION_ADAPT_AUTO, obj.get_z(), obj.set_z(val))
+)
+
+#endif // BOOST_PP_VARIADICS
 
 int
 main()
@@ -71,31 +89,33 @@ main()
 
     {
         BOOST_MPL_ASSERT((traits::is_view<adapted::point>));
-        ns::point basep(123, 456);
+        ns::point basep(123, 456, 789);
         adapted::point p(basep);
 
         std::cout << at_c<0>(p) << std::endl;
         std::cout << at_c<1>(p) << std::endl;
+        std::cout << at_c<2>(p) << std::endl;
         std::cout << p << std::endl;
-        BOOST_TEST(p == make_vector(123, 456));
+        BOOST_TEST(p == make_vector(123, 456, 789));
 
         at_c<0>(p) = 6;
         at_c<1>(p) = 9;
-        BOOST_TEST(p == make_vector(6, 9));
+        at_c<2>(p) = 12;
+        BOOST_TEST(p == make_vector(6, 9, 12));
 
-        BOOST_STATIC_ASSERT(boost::fusion::result_of::size<adapted::point>::value == 2);
+        BOOST_STATIC_ASSERT(boost::fusion::result_of::size<adapted::point>::value == 3);
         BOOST_STATIC_ASSERT(!boost::fusion::result_of::empty<adapted::point>::value);
 
         BOOST_TEST(front(p) == 6);
-        BOOST_TEST(back(p) == 9);
+        BOOST_TEST(back(p) == 12);
     }
 
     {
-        fusion::vector<int, float> v1(4, 2);
-        ns::point basep(5, 3);
+        fusion::vector<int, float, int> v1(4, 2, 2);
+        ns::point basep(5, 3, 3);
         adapted::point v2(basep);
 
-        fusion::vector<long, double> v3(5, 4);
+        fusion::vector<long, double, int> v3(5, 4, 4);
         BOOST_TEST(v1 < v2);
         BOOST_TEST(v1 <= v2);
         BOOST_TEST(v2 > v1);
@@ -108,19 +128,19 @@ main()
 
     {
         // conversion from ns::point to vector
-        ns::point basep(5, 3);
+        ns::point basep(5, 3, 3);
         adapted::point p(basep);
 
-        fusion::vector<int, long> v(p);
+        fusion::vector<int, long, int> v(p);
         v = p;
     }
 
     {
         // conversion from ns::point to list
-        ns::point basep(5, 3);
+        ns::point basep(5, 3, 3);
         adapted::point p(basep);
 
-        fusion::list<int, long> l(p);
+        fusion::list<int, long, float> l(p);
         l = p;
     }
 

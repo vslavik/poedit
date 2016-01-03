@@ -29,7 +29,7 @@
 <div class="toc"><dl class="toc"><dt><span class="section"><a href="boost__geometry__index__indexable.html#geometry.reference.spatial_indexes.observers.boost__geometry__index__indexable.operator___value_const___">operator()(Value
             const &amp;)</a></span></dt></dl></div>
 <p>
-            <a class="indexterm" name="idp62198040"></a><a class="indexterm" name="idp62198376"></a><a class="indexterm" name="idp62198712"></a><a class="indexterm" name="idp62199048"></a>
+            <a class="indexterm" name="idp129463424"></a><a class="indexterm" name="idp129464112"></a><a class="indexterm" name="idp129464800"></a><a class="indexterm" name="idp129465488"></a>
 The function object extracting Indexable from Value.
           </p>
 <h6>
@@ -37,9 +37,10 @@ The function object extracting Indexable from Value.
             <span class="phrase"><a name="geometry.reference.spatial_indexes.observers.boost__geometry__index__indexable.description"></a></span><a class="link" href="boost__geometry__index__indexable.html#geometry.reference.spatial_indexes.observers.boost__geometry__index__indexable.description">Description</a>
           </h6>
 <p>
-            It translates Value object to Indexable object. The default version handles
-            Values which are Indexables. This template is also specialized for std::pair&lt;Indexable,
-            T2&gt; and boost::tuple&lt;Indexable, ...&gt;.
+            It translates Value object to Indexable object. By default, it can handle
+            Values which are Indexables, std::pair&lt;Indexable, T2&gt;, boost::tuple&lt;Indexable,
+            ...&gt; and std::tuple&lt;Indexable, ...&gt; if STD tuples and variadic
+            templates are supported.
           </p>
 <h6>
 <a name="geometry.reference.spatial_indexes.observers.boost__geometry__index__indexable.h1"></a>
@@ -117,12 +118,13 @@ The function object extracting Indexable from Value.
 <tbody><tr>
 <td>
                     <p>
-                      <a name="structboost_1_1geometry_1_1index_1_1indexable_1a1b2b7a94fb62e59fd1f0587fa0aef5ef"></a><code class="computeroutput"><span class="identifier">result_type</span></code>
+                      <a name="structboost_1_1geometry_1_1index_1_1indexable_1af6f21324f6484330b9deb0ee0629f4b4"></a><code class="computeroutput"><span class="identifier">result_type</span></code>
                     </p>
                   </td>
 <td>
                     <p>
-                      The type of result returned by function object.
+                      The type of result returned by function object. It should be
+                      const Indexable reference.
                     </p>
                   </td>
 </tr></tbody>
@@ -179,12 +181,12 @@ The function object extracting Indexable from Value.
             const &amp;)</a>
 </h6></div></div></div>
 <p>
-              <a class="indexterm" name="idp62236312"></a>
+              <a class="indexterm" name="idp129535504"></a>
 Return indexable extracted from the value.
             </p>
 <h7><a name="geometry.reference.spatial_indexes.observers.boost__geometry__index__indexable.operator___value_const___.h0"></a>
               <span class="phrase"><a name="geometry.reference.spatial_indexes.observers.boost__geometry__index__indexable.operator___value_const___.synopsis"></a></span><a class="link" href="boost__geometry__index__indexable.html#geometry.reference.spatial_indexes.observers.boost__geometry__index__indexable.operator___value_const___.synopsis">Synopsis</a>
-            </h7><pre class="programlisting"><code class="literal"><a class="link" href="boost__geometry__index__indexable.html#structboost_1_1geometry_1_1index_1_1indexable_1a1b2b7a94fb62e59fd1f0587fa0aef5ef">result_type</a></code> <code class="computeroutput"><span class="keyword">operator</span><span class="special">()</span></code><code class="computeroutput"><span class="special">(</span></code><code class="computeroutput"><span class="identifier">Value</span> <span class="keyword">const</span> <span class="special">&amp;</span></code> <code class="computeroutput"><span class="identifier">v</span></code><code class="computeroutput"><span class="special">)</span></code>
+            </h7><pre class="programlisting"><code class="literal"><a class="link" href="boost__geometry__index__indexable.html#structboost_1_1geometry_1_1index_1_1indexable_1af6f21324f6484330b9deb0ee0629f4b4">result_type</a></code> <code class="computeroutput"><span class="keyword">operator</span><span class="special">()</span></code><code class="computeroutput"><span class="special">(</span></code><code class="computeroutput"><span class="identifier">Value</span> <span class="keyword">const</span> <span class="special">&amp;</span></code> <code class="computeroutput"><span class="identifier">v</span></code><code class="computeroutput"><span class="special">)</span></code>
 </pre>
 <h7><a name="geometry.reference.spatial_indexes.observers.boost__geometry__index__indexable.operator___value_const___.h1"></a>
               <span class="phrase"><a name="geometry.reference.spatial_indexes.observers.boost__geometry__index__indexable.operator___value_const___.modifier_s_"></a></span><a class="link" href="boost__geometry__index__indexable.html#geometry.reference.spatial_indexes.observers.boost__geometry__index__indexable.operator___value_const___.modifier_s_">Modifier(s)</a>
@@ -246,7 +248,8 @@ Return indexable extracted from the value.
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
+      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

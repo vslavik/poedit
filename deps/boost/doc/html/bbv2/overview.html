@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../bbv2.html" title="Chapter&#160;42.&#160;Boost.Build V2 User Manual">
+<link rel="up" href="../bbv2.html" title="Chapter&#160;43.&#160;Boost.Build User Manual">
 <link rel="prev" href="tutorial.html" title="Tutorial">
 <link rel="next" href="tasks.html" title="Common tasks">
 </head>
@@ -41,9 +41,9 @@
       help system must be used to obtain low-level documentation (see <a class="xref" href="overview.html#bbv2.reference.init.options.help"><code class="option">--help</code></a>).
     </p>
 <p>
-      Boost.Build actually consists of two parts - Boost.Jam, a build engine
+      Boost.Build has two parts&#8212;a build engine
       with its own interpreted language, and Boost.Build itself, implemented in
-      Boost.Jam's language. The chain of events when you type
+      that language. The chain of events when you type
       <span class="command"><strong>b2</strong></span> on the command line is as follows:
       </p>
 <div class="orderedlist"><ol class="orderedlist" type="1">
@@ -129,8 +129,8 @@ add_program ("a", "a.c")
       </p>
 <p>
         In order to support true multivariant builds, Boost.Build introduces the concept of a
-        <a class="indexterm" name="idp265661032"></a>
-        <a class="indexterm" name="idp265661704"></a>
+        <a class="indexterm" name="idp543817168"></a>
+        <a class="indexterm" name="idp543818528"></a>
         <em class="firstterm">metatarget</em>&#8212;an object that is created when the build description
         is parsed and can be called later with specific build properties to generate
         actual targets.
@@ -157,7 +157,7 @@ b2 toolset=gcc toolset=msvc
       </p>
 <p>
         Another key concept is
-        <a class="indexterm" name="idp265665256"></a>
+        <a class="indexterm" name="idp543824880"></a>
         <em class="firstterm">build property</em>. A build property is a variable
         that affects the build process. It can be specified on the command line, and is
         passed when calling a metatarget. While all build tools have a similar mechanism,
@@ -165,7 +165,7 @@ b2 toolset=gcc toolset=msvc
         and providing a large set of properties with portable semantics.
       </p>
 <p>
-        The final concept is <a class="indexterm" name="idp265666616"></a>
+        The final concept is <a class="indexterm" name="idp543827232"></a>
         <em class="firstterm">property propagation</em>. Boost.Build does not require that every
         metatarget is called with the same properties. Instead, the
         "top-level" metatargets are called with the properties specified on the command line.
@@ -190,7 +190,7 @@ b2 toolset=gcc toolset=msvc
 <p>
         <a class="link" href="../">Boost.Jam</a> has an interpreted, procedural
         language. On the lowest level, a <a class="link" href="../">Boost.Jam
-        </a> program consists of variables and <a class="indexterm" name="idp265672088"></a> <em class="firstterm">rules</em> (the Jam term for
+        </a> program consists of variables and <a class="indexterm" name="idp543836560"></a> <em class="firstterm">rules</em> (the Jam term for
         functions). They are grouped into modules&#8212;there is one global
         module and a number of named modules. Besides that, a <a class="link" href="../">Boost.Jam</a> program contains classes and class
         instances.
@@ -425,7 +425,7 @@ actions create-file-from-another
       are searched.
     </p>
 <div class="table">
-<a name="bbv2.reference.init.config"></a><p class="title"><b>Table&#160;42.1.&#160;Search paths for configuration files</b></p>
+<a name="bbv2.reference.init.config"></a><p class="title"><b>Table&#160;43.1.&#160;Search paths for configuration files</b></p>
 <div class="table-contents"><table class="table" summary="Search paths for configuration files">
 <colgroup>
 <col>
@@ -708,7 +708,7 @@ b2 toolset=gcc variant=debug optimization=space
               Useful for debugging custom generators.
               </p></dd>
 <dt><span class="term"><code class="option">-d0</code></span></dt>
-<dd><p>Supress all informational messages.</p></dd>
+<dd><p>Suppress all informational messages.</p></dd>
 <dt><span class="term"><code class="option">-d <em class="replaceable"><code>N</code></em></code></span></dt>
 <dd>
 <p>Enable cummulative debugging levels from 1 to n. Values are:
@@ -753,7 +753,7 @@ b2 toolset=gcc variant=debug optimization=space
         The complete list of features can be found in <a class="xref" href="reference.html#bbv2.overview.builtins.features" title="Builtin features">the section called &#8220;Builtin features&#8221;</a>.
         The most common features are summarized below.</p>
 <div class="table">
-<a name="idp265767896"></a><p class="title"><b>Table&#160;42.2.&#160;</b></p>
+<a name="idp544016128"></a><p class="title"><b>Table&#160;43.2.&#160;</b></p>
 <div class="table-contents"><table class="table">
 <colgroup>
 <col>
@@ -872,11 +872,11 @@ b2 include=static,shared
 <div class="titlepage"><div><div><h3 class="title">
 <a name="bbv2.overview.targets"></a>Declaring Targets</h3></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="overview.html#idp265792680">Name</a></span></dt>
-<dt><span class="section"><a href="overview.html#idp265802056">Sources</a></span></dt>
+<dt><span class="section"><a href="overview.html#idp544073296">Name</a></span></dt>
+<dt><span class="section"><a href="overview.html#idp544079024">Sources</a></span></dt>
 <dt><span class="section"><a href="overview.html#bbv2.overview.targets.requirements">Requirements</a></span></dt>
-<dt><span class="section"><a href="overview.html#idp265820856">Default Build</a></span></dt>
-<dt><span class="section"><a href="overview.html#idp265822520">Additional Information</a></span></dt>
+<dt><span class="section"><a href="overview.html#idp544115344">Default Build</a></span></dt>
+<dt><span class="section"><a href="overview.html#idp544118160">Additional Information</a></span></dt>
 </dl></div>
 <p><a name="bbv2.overview.targets.main"></a>
         A <em class="firstterm">Main target</em> is a user-defined named
@@ -885,9 +885,9 @@ b2 include=static,shared
         target rules described in <a class="xref" href="reference.html#bbv2.reference.rules" title="Builtin rules">the section called &#8220;Builtin rules&#8221;</a>.  The user can also declare
         custom main target rules as shown in <a class="xref" href="extender.html#bbv2.extending.rules" title="Main target rules">the section called &#8220;Main target rules&#8221;</a>.
       </p>
-<a class="indexterm" name="idp265789528"></a><p>Most main target rules in Boost.Build have the same common
+<a class="indexterm" name="idp544056624"></a><p>Most main target rules in Boost.Build have the same common
       signature:</p>
-<a class="indexterm" name="idp265790360"></a><a name="bbv2.main-target-rule-syntax"></a><pre class="programlisting">
+<a class="indexterm" name="idp544058272"></a><a name="bbv2.main-target-rule-syntax"></a><pre class="programlisting">
 rule <em class="replaceable"><code>rule-name</code></em> (
      main-target-name :
      sources + :
@@ -935,7 +935,7 @@ rule <em class="replaceable"><code>rule-name</code></em> (
       </p>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idp265792680"></a>Name</h4></div></div></div>
+<a name="idp544073296"></a>Name</h4></div></div></div>
 <p>The name of main target has two purposes. First, it's used to refer to this target from
         other targets and from command line. Second, it's used to compute the names of the generated files.
         Typically, filenames are obtained from main target name by appending system-dependent suffixes and
@@ -955,7 +955,7 @@ obj test.debug : test.cpp : &lt;variant&gt;debug ;
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idp265802056"></a>Sources</h4></div></div></div>
+<a name="idp544079024"></a>Sources</h4></div></div></div>
 <p>The list of sources specifies what should be processed to
         get the resulting targets. Most of the time, it's just a list of
         files. Sometimes, you'll want to automatically construct the
@@ -1002,7 +1002,7 @@ exe c : c.cpp /boost/program_options//program_options ;
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="bbv2.overview.targets.requirements"></a>Requirements</h4></div></div></div>
-<a class="indexterm" name="idp265808152"></a><p>Requirements are the properties that should always be present when
+<a class="indexterm" name="idp544090736"></a><p>Requirements are the properties that should always be present when
         building a target. Typically, they are includes and defines:
 </p>
 <pre class="programlisting">
@@ -1020,7 +1020,9 @@ obj main : main.cpp : &lt;optimization&gt;off ;
 </pre>
 <p>
         </p>
-<p><a name="bbv2.overview.targets.requirements.conditional"></a>Sometimes, particular relationships need to be maintained
+<p><a name="bbv2.overview.targets.requirements.conditional"></a>
+          <a class="indexterm" name="idp544095472"></a>
+          Sometimes, particular relationships need to be maintained
         among a target's build properties. This can be achieved with
         <em class="firstterm">conditional
         requirements</em>. For example, you might want to set
@@ -1030,7 +1032,7 @@ obj main : main.cpp : &lt;optimization&gt;off ;
 </p>
 <pre class="programlisting">
 lib network : network.cpp
-    : <span class="bold"><strong>&lt;link&gt;shared:&lt;define&gt;NEWORK_LIB_SHARED</strong></span>
+    : <span class="bold"><strong>&lt;link&gt;shared:&lt;define&gt;NETWORK_LIB_SHARED</strong></span>
      &lt;variant&gt;release:&lt;define&gt;EXTRA_FAST
     ;
 </pre>
@@ -1038,7 +1040,7 @@ lib network : network.cpp
 
         In the example above, whenever <code class="filename">network</code> is
         built with <code class="computeroutput">&lt;link&gt;shared</code>,
-        <code class="computeroutput">&lt;define&gt;NEWORK_LIB_SHARED</code> will be in its
+        <code class="computeroutput">&lt;define&gt;NETWORK_LIB_SHARED</code> will be in its
         properties, too.
         </p>
 <p>You can use several properties in the condition, for example:
@@ -1051,6 +1053,7 @@ lib network : network.cpp
 <p>
         </p>
 <p><a name="bbv2.overview.targets.requirements.indirect"></a>
+          <a class="indexterm" name="idp544104912"></a>
           A more powerful variant of conditional requirements
           is <em class="firstterm">indirect conditional requirements</em>.
           You can provide a rule that will be called with the current build properties and can compute additional properties
@@ -1107,7 +1110,7 @@ exe test3 : test3.cpp : -&lt;threading&gt;multi ;
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idp265820856"></a>Default Build</h4></div></div></div>
+<a name="idp544115344"></a>Default Build</h4></div></div></div>
 <p>The <code class="varname">default-build</code> parameter
         is a set of properties to be used if the build request does
         not otherwise specify a value for features in the set. For example:
@@ -1124,7 +1127,7 @@ exe hello : hello.cpp : : &lt;threading&gt;multi ;
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idp265822520"></a>Additional Information</h4></div></div></div>
+<a name="idp544118160"></a>Additional Information</h4></div></div></div>
 <p>
           The ways a target is built can be so different that
           describing them using conditional requirements would be
@@ -1217,7 +1220,7 @@ project tennis
 
         </p>
 <div class="table">
-<a name="idp265835496"></a><p class="title"><b>Table&#160;42.3.&#160;</b></p>
+<a name="idp544140592"></a><p class="title"><b>Table&#160;43.3.&#160;</b></p>
 <div class="table-contents"><table class="table" summary="">
 <colgroup>
 <col>
@@ -1318,8 +1321,8 @@ project tennis
 <a name="bbv2.overview.build_process"></a>The Build Process</h3></div></div></div>
 <div class="toc"><dl class="toc">
 <dt><span class="section"><a href="overview.html#bbv2.overview.build_request">Build Request</a></span></dt>
-<dt><span class="section"><a href="overview.html#idp265854488">Building a main target</a></span></dt>
-<dt><span class="section"><a href="overview.html#idp265861400">Building a Project</a></span></dt>
+<dt><span class="section"><a href="overview.html#idp544176512">Building a main target</a></span></dt>
+<dt><span class="section"><a href="overview.html#idp544188592">Building a Project</a></span></dt>
 </dl></div>
 <p>When you've described your targets, you want Boost.Build to run the
       right tools and create the needed targets.
@@ -1376,7 +1379,7 @@ b2 app1 lib1//lib1 gcc debug optimization=full
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idp265854488"></a>Building a main target</h4></div></div></div>
+<a name="idp544176512"></a>Building a main target</h4></div></div></div>
 <p>When you request, directly or indirectly, a build of a main target
         with specific requirements, the following steps are done. Some brief
         explanation is provided, and more details are given in <a class="xref" href="reference.html#bbv2.reference.buildprocess" title="Build process">the section called &#8220;Build process&#8221;</a>.
@@ -1436,7 +1439,7 @@ b2 app1 lib1//lib1 gcc debug optimization=full
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idp265861400"></a>Building a Project</h4></div></div></div>
+<a name="idp544188592"></a>Building a Project</h4></div></div></div>
 <p>Often, a user builds a complete project, not just one main
       target. In fact, invoking <span class="command"><strong>b2</strong></span> without
       arguments
@@ -1466,11 +1469,7 @@ explicit hello_test ;
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2009 Vladimir Prus<p>Distributed under the Boost Software License, Version 1.0.
-      (See accompanying file <code class="filename">LICENSE_1_0.txt</code> or copy at 
-      <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
-      </p>
-</div></td>
+<td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">

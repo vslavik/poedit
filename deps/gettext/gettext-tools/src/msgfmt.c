@@ -1,5 +1,6 @@
 /* Converts Uniforum style .po files to binary .mo files
-   Copyright (C) 1995-1998, 2000-2007, 2009-2010, 2012 Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2007, 2009-2010, 2012, 2015 Free
+   Software Foundation, Inc.
    Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, April 1995.
 
    This program is free software: you can redistribute it and/or modify
@@ -26,6 +27,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <assert.h>
 
 #include "closeout.h"
 #include "str-list.h"
@@ -45,6 +49,7 @@
 #include "write-resources.h"
 #include "write-tcl.h"
 #include "write-qt.h"
+#include "write-desktop.h"
 #include "propername.h"
 #include "message.h"
 #include "open-catalog.h"
@@ -52,8 +57,11 @@
 #include "read-po.h"
 #include "read-properties.h"
 #include "read-stringtable.h"
+#include "read-desktop.h"
 #include "po-charset.h"
 #include "msgl-check.h"
+#include "msgl-iconv.h"
+#include "concat-filename.h"
 #include "gettext.h"
 
 #define _(str) gettext (str)
@@ -76,6 +84,7 @@ static bool assume_java2;
 static const char *java_resource_name;
 static const char *java_locale_name;
 static const char *java_class_directory;
+static bool java_output_source;
 
 /* C# mode output file specification.  */
 static bool csharp_mode;
@@ -93,6 +102,14 @@ static const char *tcl_base_directory;
 
 /* Qt mode output file specification.  */
 static bool qt_mode;
+
+/* Desktop Entry mode output file specification.  */
+static bool desktop_mode;
+static const char *desktop_locale_name;
+static const char *desktop_template_name;
+static const char *desktop_base_directory;
+static hash_table desktop_keywords;
+static bool desktop_default_keywords = true;
 
 /* We may have more than one input file.  Domains with same names in
    different files have to merged.  So we need a list of tables for
@@ -157,21 +174,25 @@ static const struct option long_options[] =
   { "check-header", no_argument, NULL, CHAR_MAX + 4 },
   { "csharp", no_argument, NULL, CHAR_MAX + 10 },
   { "csharp-resources", no_argument, NULL, CHAR_MAX + 11 },
+  { "desktop", no_argument, NULL, CHAR_MAX + 15 },
   { "directory", required_argument, NULL, 'D' },
   { "endianness", required_argument, NULL, CHAR_MAX + 13 },
   { "help", no_argument, NULL, 'h' },
   { "java", no_argument, NULL, 'j' },
   { "java2", no_argument, NULL, CHAR_MAX + 5 },
+  { "keyword", required_argument, NULL, 'k' },
   { "locale", required_argument, NULL, 'l' },
   { "no-hash", no_argument, NULL, CHAR_MAX + 6 },
   { "output-file", required_argument, NULL, 'o' },
   { "properties-input", no_argument, NULL, 'P' },
   { "qt", no_argument, NULL, CHAR_MAX + 9 },
   { "resource", required_argument, NULL, 'r' },
+  { "source", no_argument, NULL, CHAR_MAX + 14 },
   { "statistics", no_argument, &do_statistics, 1 },
   { "strict", no_argument, NULL, 'S' },
   { "stringtable-input", no_argument, NULL, CHAR_MAX + 8 },
   { "tcl", no_argument, NULL, CHAR_MAX + 7 },
+  { "template", required_argument, NULL, CHAR_MAX + 16 },
   { "use-fuzzy", no_argument, NULL, 'f' },
   { "use-untranslated", no_argument, NULL, CHAR_MAX + 12 },
   { "verbose", no_argument, NULL, 'v' },
@@ -191,6 +212,11 @@ static struct msg_domain *new_domain (const char *name, const char *file_name);
 static bool is_nonobsolete (const message_ty *mp);
 static void read_catalog_file_msgfmt (char *filename,
                                       catalog_input_format_ty input_syntax);
+static string_list_ty *get_languages (const char *directory);
+static int msgfmt_desktop_bulk (const char *directory,
+                                const char *template_file_name,
+                                hash_table *keywords,
+                                const char *file_name);
 
 
 int
@@ -255,6 +281,7 @@ main (int argc, char *argv[])
         java_class_directory = optarg;
         csharp_base_directory = optarg;
         tcl_base_directory = optarg;
+        desktop_base_directory = optarg;
         break;
       case 'D':
         dir_list_append (optarg);
@@ -268,10 +295,25 @@ main (int argc, char *argv[])
       case 'j':
         java_mode = true;
         break;
+      case 'k':
+        if (optarg == NULL)
+          desktop_default_keywords = false;
+        else
+          {
+            if (desktop_keywords.table == NULL)
+              {
+                hash_init (&desktop_keywords, 100);
+                desktop_default_keywords = false;
+              }
+
+            desktop_add_keyword (&desktop_keywords, optarg, false);
+          }
+        break;
       case 'l':
         java_locale_name = optarg;
         csharp_locale_name = optarg;
         tcl_locale_name = optarg;
+        desktop_locale_name = optarg;
         break;
       case 'o':
         output_file_name = optarg;
@@ -353,6 +395,15 @@ main (int argc, char *argv[])
           byteswap = endianness ^ ENDIANNESS;
         }
         break;
+      case CHAR_MAX + 14: /* --source */
+        java_output_source = true;
+        break;
+      case CHAR_MAX + 15: /* --desktop */
+        desktop_mode = true;
+        break;
+      case CHAR_MAX + 16: /* --template=TEMPLATE */
+        desktop_template_name = optarg;
+        break;
       default:
         usage (EXIT_FAILURE);
         break;
@@ -378,9 +429,16 @@ There is NO WARRANTY, to the extent permitted by law.\n\
     usage (EXIT_SUCCESS);
 
   /* Test whether we have a .po file name as argument.  */
-  if (optind >= argc)
+  if (optind >= argc && !(desktop_mode && desktop_base_directory))
     {
       error (EXIT_SUCCESS, 0, _("no input file given"));
+      usage (EXIT_FAILURE);
+    }
+  if (optind < argc && desktop_mode && desktop_base_directory)
+    {
+      error (EXIT_SUCCESS, 0,
+             _("no input file should be given if %s and %s are specified"),
+             "--desktop", "-d");
       usage (EXIT_FAILURE);
     }
 
@@ -391,9 +449,11 @@ There is NO WARRANTY, to the extent permitted by law.\n\
       | (csharp_mode ? 2 : 0)
       | (csharp_resources_mode ? 4 : 0)
       | (tcl_mode ? 8 : 0)
-      | (qt_mode ? 16 : 0);
+      | (qt_mode ? 16 : 0)
+      | (desktop_mode ? 32 : 0);
     static const char *mode_options[] =
-      { "--java", "--csharp", "--csharp-resources", "--tcl", "--qt" };
+      { "--java", "--csharp", "--csharp-resources", "--tcl", "--qt",
+        "--desktop" };
     /* More than one bit set?  */
     if (modes & (modes - 1))
       {
@@ -471,6 +531,34 @@ There is NO WARRANTY, to the extent permitted by law.\n\
           usage (EXIT_FAILURE);
         }
     }
+  else if (desktop_mode)
+    {
+      if (desktop_template_name == NULL)
+        {
+          error (EXIT_SUCCESS, 0,
+                 _("%s requires a \"--template template\" specification"),
+                 "--desktop");
+          usage (EXIT_FAILURE);
+        }
+      if (output_file_name == NULL)
+        {
+          error (EXIT_SUCCESS, 0,
+                 _("%s requires a \"-o file\" specification"),
+                 "--desktop");
+          usage (EXIT_FAILURE);
+        }
+      if (desktop_base_directory != NULL && desktop_locale_name != NULL)
+        error (EXIT_FAILURE, 0,
+               _("%s and %s are mutually exclusive in %s"),
+               "-d", "-l", "--desktop");
+      if (desktop_base_directory == NULL && desktop_locale_name == NULL)
+        {
+          error (EXIT_SUCCESS, 0,
+                 _("%s requires a \"-l locale\" specification"),
+                 "--desktop");
+          usage (EXIT_FAILURE);
+        }
+    }
   else
     {
       if (java_resource_name != NULL)
@@ -491,6 +579,26 @@ There is NO WARRANTY, to the extent permitted by law.\n\
                  "-d", "--java", "--csharp", "--tcl");
           usage (EXIT_FAILURE);
         }
+    }
+
+  if (desktop_mode && desktop_default_keywords)
+    {
+      if (desktop_keywords.table == NULL)
+        hash_init (&desktop_keywords, 100);
+      desktop_add_default_keywords (&desktop_keywords);
+    }
+
+  /* Bulk processing mode for .desktop files.
+     Process all .po files in desktop_base_directory.  */
+  if (desktop_mode && desktop_base_directory)
+    {
+      exit_status = msgfmt_desktop_bulk (desktop_base_directory,
+                                         desktop_template_name,
+                                         &desktop_keywords,
+                                         output_file_name);
+      if (desktop_keywords.table != NULL)
+        hash_destroy (&desktop_keywords);
+      exit (exit_status);
     }
 
   /* The -o option determines the name of the domain and therefore
@@ -556,7 +664,8 @@ There is NO WARRANTY, to the extent permitted by law.\n\
         {
           if (msgdomain_write_java (domain->mlp, canon_encoding,
                                     java_resource_name, java_locale_name,
-                                    java_class_directory, assume_java2))
+                                    java_class_directory, assume_java2,
+                                    java_output_source))
             exit_status = EXIT_FAILURE;
         }
       else if (csharp_mode)
@@ -584,6 +693,18 @@ There is NO WARRANTY, to the extent permitted by law.\n\
           if (msgdomain_write_qt (domain->mlp, canon_encoding,
                                   domain->domain_name, domain->file_name))
             exit_status = EXIT_FAILURE;
+        }
+      else if (desktop_mode)
+        {
+          if (msgdomain_write_desktop (domain->mlp, canon_encoding,
+                                       desktop_locale_name,
+                                       desktop_template_name,
+                                       &desktop_keywords,
+                                       domain->file_name))
+            exit_status = EXIT_FAILURE;
+
+          if (desktop_keywords.table != NULL)
+            hash_destroy (&desktop_keywords);
         }
       else
         {
@@ -688,6 +809,8 @@ Operation mode:\n"));
       --tcl                   Tcl mode: generate a tcl/msgcat .msg file\n"));
       printf (_("\
       --qt                    Qt mode: generate a Qt .qm file\n"));
+      printf (_("\
+      --desktop               Desktop Entry mode: generate a .desktop file\n"));
       printf ("\n");
       printf (_("\
 Output file location:\n"));
@@ -704,6 +827,8 @@ Output file location in Java mode:\n"));
   -r, --resource=RESOURCE     resource name\n"));
       printf (_("\
   -l, --locale=LOCALE         locale name, either language or language_COUNTRY\n"));
+      printf (_("\
+      --source                produce a .java file, instead of a .class file\n"));
       printf (_("\
   -d DIRECTORY                base directory of classes directory hierarchy\n"));
       printf (_("\
@@ -733,6 +858,23 @@ Output file location in Tcl mode:\n"));
       printf (_("\
 The -l and -d options are mandatory.  The .msg file is written in the\n\
 specified directory.\n"));
+      printf ("\n");
+      printf (_("\
+Desktop Entry mode options:\n"));
+      printf (_("\
+  -l, --locale=LOCALE         locale name, either language or language_COUNTRY\n"));
+      printf (_("\
+  -o, --output-file=FILE      write output to specified file\n"));
+      printf (_("\
+  --template=TEMPLATE         a .desktop file used as a template\n"));
+      printf (_("\
+  -d DIRECTORY                base directory of .po files\n"));
+      printf (_("\
+  -kWORD, --keyword=WORD      look for WORD as an additional keyword\n\
+  -k, --keyword               do not to use default keywords\n"));
+      printf (_("\
+The -l, -o, and --template options are mandatory.  If -D is specified, input\n\
+files are read from the directory instead of the command line arguments.\n"));
       printf ("\n");
       printf (_("\
 Input file syntax:\n"));
@@ -846,8 +988,7 @@ is_nonobsolete (const message_ty *mp)
    default_catalog_reader_ty.  Its particularities are:
    - The header entry check is performed on-the-fly.
    - Comments are not stored, they are discarded right away.
-     (This is achieved by setting handle_comments = false and
-     handle_filepos_comments = false.)
+     (This is achieved by setting handle_comments = false.)
    - The multi-domain handling is adapted to our domain_list.
  */
 
@@ -923,7 +1064,7 @@ msgfmt_set_domain (default_catalog_reader_ty *this, char *name)
   /* If no output file was given, we change it with each 'domain'
      directive.  */
   if (!java_mode && !csharp_mode && !csharp_resources_mode && !tcl_mode
-      && !qt_mode && output_file_name == NULL)
+      && !qt_mode && !desktop_mode && output_file_name == NULL)
     {
       size_t correct;
 
@@ -1107,7 +1248,6 @@ read_catalog_file_msgfmt (char *filename, catalog_input_format_ty input_syntax)
 
   pop = default_catalog_reader_alloc (&msgfmt_methods);
   pop->handle_comments = false;
-  pop->handle_filepos_comments = false;
   pop->allow_domain_directives = true;
   pop->allow_duplicates = false;
   pop->allow_duplicates_if_same_msgstr = false;
@@ -1127,4 +1267,208 @@ read_catalog_file_msgfmt (char *filename, catalog_input_format_ty input_syntax)
 
   if (fp != stdin)
     fclose (fp);
+}
+
+static void
+add_languages (string_list_ty *languages, string_list_ty *desired_languages,
+               const char *line, size_t length)
+{
+  char *start;
+
+  /* Split the line by whitespace and build the languages list.  */
+  for (start = (char *) line; start - line < length; )
+    {
+      char *p;
+
+      /* Skip whitespace before the string.  */
+      while (*start == ' ' || *start == '\t')
+        start++;
+
+      p = start;
+      while (*p != '\0' && *p != ' ' && *p != '\t')
+        p++;
+
+      *p = '\0';
+      if (desired_languages == NULL
+          || string_list_member (desired_languages, start))
+        string_list_append_unique (languages, start);
+      start = p + 1;
+    }
+}
+
+/* Compute the languages list by reading the "LINGUAS" envvar or the
+   LINGUAS file under DIRECTORY.  */
+static string_list_ty *
+get_languages (const char *directory)
+{
+  char *envval;
+  string_list_ty *languages;
+  string_list_ty *desired_languages = NULL;
+  char *linguas_file_name;
+  struct stat statbuf;
+  FILE *fp;
+  size_t line_len = 0;
+  char *line_buf = NULL;
+
+  languages = string_list_alloc ();
+  envval = getenv ("LINGUAS");
+  if (envval)
+    {
+      desired_languages = string_list_alloc ();
+      add_languages (desired_languages, NULL, envval, strlen (envval));
+    }
+
+  linguas_file_name = xconcatenated_filename (directory, "LINGUAS", NULL);
+  if (stat (linguas_file_name, &statbuf) < 0)
+    {
+      error (EXIT_SUCCESS, 0, _("%s does not exist"), linguas_file_name);
+      string_list_free (languages);
+      if (desired_languages != NULL)
+        string_list_free (desired_languages);
+      free (linguas_file_name);
+      return NULL;
+    }
+
+  fp = fopen (linguas_file_name, "r");
+  if (fp == NULL)
+    {
+      error (EXIT_SUCCESS, 0, _("%s exists but cannot read"),
+             linguas_file_name);
+      string_list_free (languages);
+      if (desired_languages != NULL)
+        string_list_free (desired_languages);
+      free (linguas_file_name);
+      return NULL;
+    }
+
+  while (!feof (fp))
+    {
+      /* Read next line from file.  */
+      int len = getline (&line_buf, &line_len, fp);
+
+      /* In case of an error leave loop.  */
+      if (len < 0)
+        break;
+
+      /* Remove trailing '\n' and trailing whitespace.  */
+      if (len > 0 && line_buf[len - 1] == '\n')
+        line_buf[--len] = '\0';
+      while (len > 0
+             && (line_buf[len - 1] == ' '
+                 || line_buf[len - 1] == '\t'
+                 || line_buf[len - 1] == '\r'))
+        line_buf[--len] = '\0';
+
+      /* Test if we have to ignore the line.  */
+      if (*line_buf == '\0' || *line_buf == '#')
+        continue;
+
+      add_languages (languages, desired_languages, line_buf, len);
+    }
+
+  free (line_buf);
+  fclose (fp);
+  if (desired_languages != NULL)
+    string_list_free (desired_languages);
+  free (linguas_file_name);
+
+  return languages;
+}
+
+/* Helper function to support 'bulk' operation mode of --desktop.
+   This reads all .po files in DIRECTORY and merges them into a
+   .desktop file FILE_NAME.  Currently it does not support some
+   options available in 'iterative' mode, such as --statistics.  */
+static int
+msgfmt_desktop_bulk (const char *directory,
+                     const char *template_file_name,
+                     hash_table *keywords,
+                     const char *file_name)
+{
+  string_list_ty *languages = NULL;
+  message_list_ty **messages = NULL;
+  void *saved_dir_list;
+  int retval = 0;
+  size_t i;
+
+  languages = get_languages (directory);
+  if (!languages)
+    return EXIT_FAILURE;
+
+  /* Reset the directory search list so only .po files under DIRECTORY
+     will be read.  */
+  saved_dir_list = dir_list_save_reset ();
+  dir_list_append (directory);
+
+  /* Read all .po files.  */
+  messages = XNMALLOC (languages->nitems, message_list_ty *);
+  for (i = 0; i < languages->nitems; i++)
+    {
+      const char *language = languages->item[i];
+      char *input_file_name;
+      int nerrors;
+
+      current_domain = new_domain (file_name, file_name);
+
+      input_file_name = xconcatenated_filename ("", language, ".po");
+      read_catalog_file_msgfmt (input_file_name, &input_format_po);
+      free (input_file_name);
+
+      /* The domain directive is not supported by --desktop mode.
+         Thus, domain_list should always contain a single domain.  */
+      assert (current_domain == domain_list && domain_list->next == NULL);
+      messages[i] = current_domain->mlp;
+      free (current_domain);
+      current_domain = domain_list = NULL;
+
+      /* Remove obsolete messages.  They were only needed for duplicate
+         checking.  */
+      message_list_remove_if_not (messages[i], is_nonobsolete);
+
+      /* Perform all kinds of checks: plural expressions, format
+         strings, ...  */
+      nerrors =
+        check_message_list (messages[i],
+                            /* Untranslated and fuzzy messages have already
+                               been dealt with during parsing, see below in
+                               msgfmt_frob_new_message.  */
+                            0, 0,
+                            1, check_format_strings, check_header,
+                            check_compatibility,
+                            check_accelerators, accelerator_char);
+
+      /* Exit with status 1 on any error.  */
+      if (nerrors > 0)
+        {
+          error (0, 0,
+                 ngettext ("found %d fatal error", "found %d fatal errors",
+                           nerrors),
+                 nerrors);
+          retval = EXIT_FAILURE;
+          goto out;
+        }
+
+      /* Convert the messages to Unicode.  */
+      iconv_message_list (messages[i], NULL, po_charset_utf8, NULL);
+    }
+
+  /* Write the messages into .desktop file.  */
+  if (msgdomain_write_desktop_bulk (languages,
+                                    messages,
+                                    template_file_name,
+                                    keywords,
+                                    file_name))
+    {
+      retval = EXIT_FAILURE;
+      goto out;
+    }
+
+ out:
+  dir_list_restore (saved_dir_list);
+  for (i = 0; i < languages->nitems; i++)
+    message_list_free (messages[i], 0);
+  free (messages);
+  string_list_free (languages);
+
+  return retval;
 }

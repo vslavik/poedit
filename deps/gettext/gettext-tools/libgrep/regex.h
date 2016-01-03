@@ -1,6 +1,6 @@
 /* Definitions for data structures and routines for the regular
    expression library.
-   Copyright (C) 1985, 1989-1993, 1995-1998, 2000-2003, 2005-2013 Free Software
+   Copyright (C) 1985, 1989-1993, 1995-1998, 2000-2003, 2005-2015 Free Software
    Foundation, Inc.
    This file is part of the GNU C Library.
 
@@ -244,19 +244,16 @@ extern reg_syntax_t re_syntax_options;
    | RE_INVALID_INTERVAL_ORD)
 
 # define RE_SYNTAX_GREP							\
-  (RE_BK_PLUS_QM              | RE_CHAR_CLASSES				\
-   | RE_HAT_LISTS_NOT_NEWLINE | RE_INTERVALS				\
-   | RE_NEWLINE_ALT)
+  ((RE_SYNTAX_POSIX_BASIC | RE_NEWLINE_ALT)				\
+   & ~(RE_CONTEXT_INVALID_DUP | RE_DOT_NOT_NULL))
 
 # define RE_SYNTAX_EGREP						\
-  (RE_CHAR_CLASSES        | RE_CONTEXT_INDEP_ANCHORS			\
-   | RE_CONTEXT_INDEP_OPS | RE_HAT_LISTS_NOT_NEWLINE			\
-   | RE_NEWLINE_ALT       | RE_NO_BK_PARENS				\
-   | RE_NO_BK_VBAR)
+  ((RE_SYNTAX_POSIX_EXTENDED | RE_INVALID_INTERVAL_ORD | RE_NEWLINE_ALT) \
+   & ~(RE_CONTEXT_INVALID_OPS | RE_DOT_NOT_NULL))
 
+/* POSIX grep -E behavior is no longer incompatible with GNU.  */
 # define RE_SYNTAX_POSIX_EGREP						\
-  (RE_SYNTAX_EGREP | RE_INTERVALS | RE_NO_BK_BRACES			\
-   | RE_INVALID_INTERVAL_ORD)
+  RE_SYNTAX_EGREP
 
 /* P1003.2/D11.2, section 4.20.7.1, lines 5078ff.  */
 # define RE_SYNTAX_ED RE_SYNTAX_POSIX_BASIC
@@ -608,7 +605,7 @@ extern void re_set_registers (struct re_pattern_buffer *__buffer,
 			      regoff_t *__starts, regoff_t *__ends);
 #endif	/* Use GNU */
 
-#if defined _REGEX_RE_COMP || (defined _LIBC && defined __USE_BSD)
+#if defined _REGEX_RE_COMP || (defined _LIBC && defined __USE_MISC)
 # ifndef _CRAY
 /* 4.2 bsd compatibility.  */
 extern char *re_comp (const char *);

@@ -4,9 +4,9 @@
 <title>Preface</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Fusion 2.1">
-<link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Fusion 2.1">
-<link rel="prev" href="../index.html" title="Chapter&#160;1.&#160;Fusion 2.1">
+<link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
+<link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
+<link rel="prev" href="../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="next" href="introduction.html" title="Introduction">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -37,7 +37,7 @@
       <span class="phrase"><a name="fusion.preface.description"></a></span><a class="link" href="preface.html#fusion.preface.description">Description</a>
     </h4>
 <p>
-      Fusion is a library for working with heterogenous collections of data, commonly
+      Fusion is a library for working with heterogeneous collections of data, commonly
       referred to as tuples. A set of containers (vector, list, set and map) is provided,
       along with views that provide a transformed presentation of their underlying
       data. Collectively the containers and views are referred to as sequences, and
@@ -56,10 +56,10 @@
     </h4>
 <p>
       Tuples are powerful beasts. After having developed two significant projects
-      (<a href="http://spirit.sourceforge.net" target="_top">Spirit</a> and <a href="http://boost.org/libs/spirit/phoenix/index.html" target="_top">Phoenix</a>)
+      (<a href="http://spirit.sourceforge.net" target="_top">Spirit</a> and <a href="http://www.boost.org/libs/phoenix/index.html" target="_top">Phoenix</a>)
       that relied heavily metaprogramming, it became apparent that tuples are a powerful
       means to simplify otherwise tricky tasks; especially those that require a combination
-      of metaprogramming and manipulation of heterogenous data types with values.
+      of metaprogramming and manipulation of heterogeneous data types with values.
       While <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a> is
       an extremely powerful metaprogramming tool, <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>
       focuses on type manipulation only. Ultimately, you'll have to map these types
@@ -67,12 +67,12 @@
       action takes place.
     </p>
 <p>
-      As <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> and <a href="http://boost.org/libs/spirit/phoenix/index.html" target="_top">Phoenix</a>
+      As <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> and <a href="http://www.boost.org/libs/phoenix/index.html" target="_top">Phoenix</a>
       evolved, patterns and idioms related to tuple manipulation emerged. Soon, it
       became clear that those patterns and idioms were best assembled in a tuples
       algorithms library. <a href="http://www.boost.org/people/dave_abrahams.htm" target="_top">David
       Abrahams</a> outlined such a scheme in 2002. At that time, it just so happened
-      that <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> and <a href="http://boost.org/libs/spirit/phoenix/index.html" target="_top">Phoenix</a>
+      that <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> and <a href="http://www.boost.org/libs/phoenix/index.html" target="_top">Phoenix</a>
       had an adhoc collection of tuple manipulation and traversal routines. It was
       an instant <span class="emphasis"><em>AHA!</em></span> moment.
     </p>
@@ -85,105 +85,44 @@
       Some icons are used to mark certain topics indicative of their relevance. These
       icons precede some text to indicate:
     </p>
-<div class="table">
-<a name="fusion.preface.t0"></a><p class="title"><b>Table&#160;1.1.&#160;Icons</b></p>
-<div class="table-contents"><table class="table" summary="Icons">
-<colgroup>
-<col>
-<col>
-<col>
-</colgroup>
-<thead><tr>
-<th>
-              <p>
-                Icon
-              </p>
-            </th>
-<th>
-              <p>
-                Name
-              </p>
-            </th>
-<th>
-              <p>
-                Meaning
-              </p>
-            </th>
-</tr></thead>
-<tbody>
+<div class="note"><table border="0" summary="Note">
 <tr>
-<td>
-              <p>
-                <span class="inlinemediaobject"><img src="../images/note.png" alt="note"></span>
-              </p>
-            </td>
-<td>
-              <p>
-                Note
-              </p>
-            </td>
-<td>
-              <p>
-                Information provided is auxiliary but will give the reader a deeper
-                insight into a specific topic. May be skipped.
-              </p>
-            </td>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
 </tr>
-<tr>
-<td>
-              <p>
-                <span class="inlinemediaobject"><img src="../images/alert.png" alt="alert"></span>
-              </p>
-            </td>
-<td>
-              <p>
-                Alert
-              </p>
-            </td>
-<td>
-              <p>
-                Information provided is of utmost importance.
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                <span class="inlinemediaobject"><img src="../images/caution.png" alt="caution"></span>
-              </p>
-            </td>
-<td>
-              <p>
-                Caution
-              </p>
-            </td>
-<td>
-              <p>
-                A mild warning.
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                <span class="inlinemediaobject"><img src="../images/tip.png" alt="tip"></span>
-              </p>
-            </td>
-<td>
-              <p>
-                Tip
-              </p>
-            </td>
-<td>
-              <p>
-                A potentially useful and helpful piece of information.
-              </p>
-            </td>
-</tr>
-</tbody>
+<tr><td align="left" valign="top"><p>
+        Information provided is auxiliary but will give the reader a deeper insight
+        into a specific topic. May be skipped.
+      </p></td></tr>
 </table></div>
-</div>
-<br class="table-break"><p>
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../../doc/src/images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        Information provided is of utmost importance.
+      </p></td></tr>
+</table></div>
+<div class="caution"><table border="0" summary="Caution">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="../../../../../doc/src/images/caution.png"></td>
+<th align="left">Caution</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        A mild warning.
+      </p></td></tr>
+</table></div>
+<div class="tip"><table border="0" summary="Tip">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../../../doc/src/images/tip.png"></td>
+<th align="left">Tip</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        A potentially useful and helpful piece of information.
+      </p></td></tr>
+</table></div>
+<p>
       This documentation is automatically generated by Boost QuickBook documentation
       tool. QuickBook can be found in the <a href="http://www.boost.org/tools/index.html" target="_top">Boost
       Tools</a>.

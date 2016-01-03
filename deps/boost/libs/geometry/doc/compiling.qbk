@@ -35,21 +35,42 @@ __boost_geometry__ library has been successfully tested with the following
 compilers:
 
 * __msvc__ (including Express Editions)
+  * 14.0 (__msvc__ 14 CTP) [/reported by develop report on March, 2015]
+  * 12.0 (__msvc__ 2013) [/reported by develop report on March, 2015]
+  * 11.0 (__msvc__ 2012) [/reported by develop report on March, 2015]
   * 10.0 (__msvc__ 2010) [/reported by Trunk report May 8, 2011]
   *  9.0 (__msvc__ 2008) [/reported by Trunk report May 8, 2011]
   *  8.0 (__msvc__ 2005) [/reported by Trunk report May 8, 2011]
 * gcc
+  * gcc 5.0.0 [/reported by develop report on March, 2015]
+  * gcc 4.9.2 [/reported by develop report on March, 2015]
+  * gcc 4.9.0 [/reported by develop report on March, 2015]
+  * gcc 4.8.4 [/reported by develop report on March, 2015]
+  * gcc 4.8.1 [/reported by develop report on March, 2015]
+  * gcc 4.8.0 [/reported by develop report on March, 2015]
+  * gcc 4.7.3 [/reported by develop report on March, 2015]
+  * gcc 4.7.2 [/reported by develop report on March, 2015]
   * gcc 4.7.0 [/reported by Trunk report February 12, 2012]
+  * gcc 4.6.4 [/reported by develop report on March, 2015]
   * gcc 4.6.2 [/reported by Trunk report February 12, 2012]
   * gcc 4.6.1 [/reported by Trunk report May 8, 2011]
   * gcc 4.6.0 [/reported by Trunk report May 8, 2011]
+  * gcc 4.5.3 [/reported by develop report on March, 2015]
   * gcc 4.5.2 [/reported by Trunk report May 8, 2011]
+  * gcc 4.4.7 [/reported by develop report on March, 2015]
   * gcc 4.4.0 [/reported by Trunk report May 8, 2011]
   * gcc 4.3.4 [/reported by Trunk report March 26, 2011]
   * gcc 4.2.1 [/reported by Trunk report May 8, 2011]
   * gcc 3.4.6 [/reported by Trunk report March 26, 2011]
 * clang
-  * clang x.x [/reported by Trunk report March 26, 2011]
+  * clang 3.6 [/reported by develop report on March, 2015]
+  * clang 3.5 [/reported by develop report on March, 2015]
+  * clang 3.4 [/reported by develop report on March, 2015]
+  * clang 3.3 [/reported by mloskot on October, 2013]
+  * clang 3.2 [/reported by Trunk report March 26, 2011]
+  * clang 3.1 [/reported by develop report on March, 2015]
+  * clang 3.0 [/reported by develop report on March, 2015]
+  * clang 2.9 [/reported by develop report on March, 2015]
 * darwin
   * darwin 4.0.1 [/reported by Trunk report March 26, 2011]
   * darwin 4.4 [/reported by Trunk report March 26, 2011]
@@ -86,16 +107,23 @@ Another often used header is `geometries.hpp`:
 
     #include <boost/geometry/geometries/geometries.hpp>
 
-This includes definitions of all provided geometry types: point, 
-linestring, polygon, ring, box. The file `geometries.hpp` is not included in 
+This includes definitions of all provided geometry types:
+
+* point, 
+* linestring,
+* polygon,
+* ring,
+* multi_point,
+* multi_linestring,
+* multi_polygon,
+* box,
+* segment.
+
+The file `geometries.hpp` is not included in 
 the `geometry.hpp` headerfile because users should be given the liberty to use 
 their own geometries and not the provided ones. However, for the 
 __boost_geometry__ users who want to use the provided geometries it is useful 
 to include.
-
-For users using multi-geometries:
-
-    #include <boost/geometry/multi/geometries/multi_geometries.hpp>
 
 [heading Advanced Includes]
 

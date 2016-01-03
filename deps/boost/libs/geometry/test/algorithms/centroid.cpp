@@ -5,6 +5,11 @@
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
+// This file was modified by Oracle on 2014, 2015.
+// Modifications copyright (c) 2014-2015 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
 
@@ -24,7 +29,6 @@
 BOOST_GEOMETRY_REGISTER_C_ARRAY_CS(cs::cartesian)
 BOOST_GEOMETRY_REGISTER_BOOST_TUPLE_CS(cs::cartesian)
 
-
 template <typename Polygon>
 void test_polygon()
 {
@@ -37,10 +41,21 @@ void test_polygon()
     test_centroid<Polygon>(
         "POLYGON((2 1.3,2.4 1.7,2.8 1.8,3.4 1.2"
         ",3.7 1.6,3.4 2,4.1 3,5.3 2.6,5.4 1.2,4.9 0.8,2.9 0.7,2 1.3)"
-        ",(4 2,4.2 1.4,4.8 1.9,4.4 2.2,4 2))"
-        ,
+        ",(4 2,4.2 1.4,4.8 1.9,4.4 2.2,4 2))",
         4.0466264962959677, 1.6348996057331333);
 
+    test_centroid<Polygon>("POLYGON((0 0,0 10,10 10,10 0,0 0))", 5.0, 5.0);
+    test_centroid<Polygon>("POLYGON((-10 0,0 0,0 -10,-10 -10,-10 0))", -5.0, -5.0);
+
+    // invalid, self-intersecting polygon (area = 0)
+    test_centroid<Polygon>("POLYGON((1 1,4 -2,4 2,10 0,1 0,10 1,1 1))", 1.0, 1.0);
+    // invalid, degenerated
+    test_centroid<Polygon>("POLYGON((1 1,1 1,1 1,1 1))", 1.0, 1.0);
+    test_centroid<Polygon>("POLYGON((1 1))", 1.0, 1.0);
+
+    // should (1.5 1) be returned?
+    // if yes, then all other Polygons degenerated to Linestrings should be handled
+    test_centroid<Polygon>("POLYGON((1 1,2 1,1 1,1 1))", 1.0, 1.0);
 }
 
 
@@ -50,6 +65,13 @@ void test_2d()
     test_centroid<bg::model::linestring<P> >("LINESTRING(1 1, 2 2, 3 3)", 2.0, 2.0);
     test_centroid<bg::model::linestring<P> >("LINESTRING(0 0,0 4, 4 4)", 1.0, 3.0);
     test_centroid<bg::model::linestring<P> >("LINESTRING(0 0,3 3,0 6,3 9,0 12)", 1.5, 6.0);
+
+    test_centroid<bg::model::linestring<P> >("LINESTRING(1 1,10 1,1 0,10 0,4 -2,1 1)",
+                                             5.41385255923004, 0.13507358481085);
+
+    // degenerated linestring (length = 0)
+    test_centroid<bg::model::linestring<P> >("LINESTRING(1 1, 1 1)", 1.0, 1.0);
+    test_centroid<bg::model::linestring<P> >("LINESTRING(1 1)", 1.0, 1.0);
 
     test_centroid<bg::model::segment<P> >("LINESTRING(1 1, 3 3)", 2.0, 2.0);
 
@@ -129,6 +151,34 @@ void test_large_integers()
     BOOST_CHECK_EQUAL(bg::get<1>(int_centroid), bg::get<1>(double_centroid_as_int));
 }
 
+//#include <to_svg.hpp>
+
+void test_large_doubles()
+{
+    typedef bg::model::point<double, 2, bg::cs::cartesian> point;
+    point pt_far, pt_near;
+    bg::model::polygon<point> poly_far, poly_near;
+
+    // related to ticket #10643
+    bg::read_wkt("POLYGON((1074699.93 703064.65, 1074703.90 703064.58, 1074704.53 703061.40, 1074702.10 703054.62, 1074699.93 703064.65))", poly_far);
+    bg::read_wkt("POLYGON((699.93 64.65, 703.90 64.58, 704.53 61.40, 702.10 54.62, 699.93 64.65))", poly_near);
+
+    bg::centroid(poly_far, pt_far);
+    bg::centroid(poly_near, pt_near);
+
+    BOOST_CHECK(bg::within(pt_far, poly_far));
+    BOOST_CHECK(bg::within(pt_near, poly_near));
+
+    point pt_near_moved;
+    bg::set<0>(pt_near_moved, bg::get<0>(pt_near) + 1074000.0);
+    bg::set<1>(pt_near_moved, bg::get<1>(pt_near) + 703000.0);
+
+    //geom_to_svg(poly_far, pt_far, "far.svg");
+    //geom_to_svg(poly_near, pt_near, "near.svg");
+
+    double d = bg::distance(pt_far, pt_near_moved);
+    BOOST_CHECK(d < 0.1);
+}
 
 int test_main(int, char* [])
 {
@@ -145,7 +195,13 @@ int test_main(int, char* [])
     test_3d<boost::tuple<ttmath_big, ttmath_big, ttmath_big> >();
 #endif
 
+#ifndef NDEBUG
+    // The test currently fails in release mode. TODO: fix this
     test_large_integers();
+#endif
+
+    test_large_doubles();
+
     test_exceptions<bg::model::d2::point_xy<double> >();
 
     return 0;

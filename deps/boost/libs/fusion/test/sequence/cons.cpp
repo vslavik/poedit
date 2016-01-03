@@ -16,6 +16,7 @@
 #include <boost/lambda/lambda.hpp>
 #include <boost/fusion/algorithm/iteration/for_each.hpp>
 #include <boost/fusion/algorithm/transformation/filter_if.hpp>
+#include <boost/fusion/algorithm/transformation/push_front.hpp>
 #include <boost/fusion/sequence/io/out.hpp>
 
 #include <boost/type_traits/is_same.hpp>
@@ -81,6 +82,12 @@ main()
         int i = 3;
         cons<int&> tie(cons_tie(i));
         BOOST_TEST((*begin(tie) == 3));
+    }
+
+    {
+        // This used to trigger a hard compilation error:
+        cons<cons<int> > xs;
+        begin(push_front(xs, 3));
     }
 
     return boost::report_errors();

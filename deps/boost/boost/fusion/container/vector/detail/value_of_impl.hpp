@@ -7,6 +7,7 @@
 #if !defined(FUSION_VALUE_OF_IMPL_05052005_1128)
 #define FUSION_VALUE_OF_IMPL_05052005_1128
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/mpl/at.hpp>
 
 namespace boost { namespace fusion
@@ -22,7 +23,7 @@ namespace boost { namespace fusion
         struct value_of_impl<vector_iterator_tag>
         {
             template <typename Iterator>
-            struct apply 
+            struct apply
             {
                 typedef typename Iterator::vector vector;
                 typedef typename Iterator::index index;

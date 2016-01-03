@@ -74,6 +74,10 @@ If the `<boost/range/mfc.hpp>` is included before or after Boost.Range headers, 
 ]
 
 Other Boost.Range metafunctions are defined by the following. Let `Range` be any type listed above and `Ref` be the same as `range_reference<Range>::type`. `range_value<Range>::type` is the same as `remove_reference<remove_const<Ref>::type>::type`, `range_difference<Range>::type` is the same as `std::ptrdiff_t`, and `range_pointer<Range>::type` is the same as `add_pointer<remove_reference<Ref>::type>::type`. As for `const Range`, see below.
+
+Adam Walling has provided the header `<boost/range/mfc_map.hpp>` to add support
+for the map adaptor with MFC map types.
+
 [endsect]
 
 [section:atl_ranges ATL Ranges]

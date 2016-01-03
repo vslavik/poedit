@@ -1,756 +1,594 @@
-# Japanese message catalog for poedit
-# Copyright (C) 2003, 2008, 2012 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the poedit package.
-# Suzumizaki-Kimitaka <suzumizaki@free.japandesign.ne.jp>, 200?
-# Masapon <masapon@dream.com>, 2003.
-# Nobuhiro Iwamatsu <iwamatsu@nigauri.org>, 2008
-# Takeshi Hamasaki <hmatrjp@users.sourceforge.jp>, 2012.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: Poedit 1.6\n"
-"Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2013-11-27 11:14+0100\n"
-"PO-Revision-Date: 2012-10-30 11:09+0900\n"
-"Last-Translator: Takeshi Hamasaki <hmatrjp@users.sourceforge.jp>\n"
-"Language-Team: ja <hmatrjp@users.sourceforge.jp>\n"
-"Language: ja\n"
+"Project-Id-Version: poedit\n"
+"Report-Msgid-Bugs-To: help@poedit.net\n"
+"POT-Creation-Date: 2015-10-20 13:51+0200\n"
+"PO-Revision-Date: 2015-10-20 07:50-0400\n"
+"Last-Translator: vslavik <vaclav@slavik.io>\n"
+"Language-Team: Japanese\n"
+"Language: ja_JP\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=0;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: poedit\n"
+"X-Crowdin-Language: ja\n"
+"X-Crowdin-File: /locales/poedit.pot\n"
 
-#. TRANSLATORS: Quoted text with leading 4 spaces
-#: ../src/edframe.cpp:2884
+msgid "Hide this notification message"
+msgstr "この通知メッセージを表示しない"
+
+msgid "Don't Show Again"
+msgstr "今後表示しない"
+
+msgid "Don't show again"
+msgstr "今後表示しない"
+
 #, c-format
-msgid "    “%s”"
-msgstr ""
+msgid "%i line of file '%s' was not loaded correctly."
+msgid_plural "%i lines of file '%s' were not loaded correctly."
+msgstr[0] "ファイル ‘%2$s' の%1$i行目が正しく読み込めませんでした。"
 
-#: ../src/edframe.cpp:2524
 #, c-format
-msgid " (beta version expires %s)"
-msgstr ""
+msgid "Line %d of file '%s' is corrupted (not valid %s data)."
+msgstr "%d行目 (ファイル '%s') が破損しています。無効な%sデータです。"
 
-#: ../src/edframe.cpp:2513
-msgid " (modified)"
-msgstr " - 変更されました"
-
-#: ../src/edframe.cpp:2495
-msgid " (unsaved)"
-msgstr ""
-
-#. TRANSLATORS: This is version information in about dialog, it is followed
-#. by version number when used (wxWidgets 2.8)
-#: ../src/edapp.cpp:596
-msgid " Version "
-msgstr "バージョン"
-
-#: ../src/edframe.cpp:1679
 #, c-format
-msgid "%d issue with the translation found."
-msgid_plural "%d issues with the translation found."
-msgstr[0] "翻訳に %d 個の問題がみつかりました。"
-msgstr[1] "翻訳に %d 個の問題がみつかりました。"
+msgid "Malformed header: '%s'"
+msgstr "書式が不正なヘッダ: ‘%s’"
 
-#: ../src/edframe.cpp:2458
-#, c-format
-msgid "%i %% translated, %i string"
-msgid_plural "%i %% translated, %i strings"
-msgstr[0] "%i %% 翻訳されています、%i の文字列"
-msgstr[1] "%i %% 翻訳されています、%i の文字列"
-
-#: ../src/edframe.cpp:2463
-#, c-format
-msgid "%i %% translated, %i string (%s)"
-msgid_plural "%i %% translated, %i strings (%s)"
-msgstr[0] "%i %% 翻訳されています、%i の文字列 (%s)"
-msgstr[1] "%i %% 翻訳されています、%i の文字列 (%s)"
-
-#: ../src/export_html.cpp:141
-#, c-format
-msgid ""
-"%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr "%i %% 翻訳完了、%i 文字（未確定 %i、問題あり %i、未翻訳 %i )。"
-
-#: ../src/edframe.cpp:2448
-#, c-format
-msgid "%i bad token"
-msgid_plural "%i bad tokens"
-msgstr[0] "%i 個の不正なトークン"
-msgstr[1] "%i 個の不正なトークン"
-
-#: ../src/edframe.cpp:2442
-#, c-format
-msgid "%i fuzzy"
-msgid_plural "%i fuzzy"
-msgstr[0] "%i 個が未確定"
-msgstr[1] "%i 個が未確定"
-
-#: ../src/catalog.cpp:131
-#, c-format
-msgid "%i lines of file '%s' were not loaded correctly."
-msgstr "'%i' 行分はファイル %s から正しく読み出せませんでした。"
-
-#: ../src/edframe.cpp:2454
-#, c-format
-msgid "%i not translated"
-msgid_plural "%i not translated"
-msgstr[0] "%i 未翻訳"
-msgstr[1] "%i 未翻訳"
-
-#: ../src/resources/menus.xrc:265 ../src/resources/menus.xrc:266
-#: ../src/resources/menus.xrc:330 ../src/resources/menus.xrc:331
-msgid "&About"
-msgstr "このプログラムについて(&A)"
-
-#: ../src/resources/menus.xrc:264 ../src/resources/menus.xrc:329
-msgid "&About Poedit"
-msgstr "Poedit について(&A)..."
-
-#: ../src/edframe.cpp:3258
-msgid "&Bookmarks"
-msgstr "しおり(&B)"
-
-#: ../src/resources/manager.xrc:121 ../src/resources/menus.xrc:26
-msgid "&Close"
-msgstr "閉じる(&C)"
-
-#: ../src/resources/menus.xrc:215
-msgid "&Comment Window"
-msgstr "コメントウィンドウを表示する (&C)"
-
-#: ../src/resources/menus.xrc:214
-msgid "&Comment window"
-msgstr "コメントウィンドウを表示する (&C)"
-
-#: ../src/resources/menus.xrc:169
-msgid "&Done and Next"
-msgstr "翻訳済みとし、次へ(&D)"
-
-#: ../src/resources/menus.xrc:168
-msgid "&Done and next"
-msgstr "翻訳済みとし、次へ(&D)"
-
-#: ../src/resources/menus.xrc:64 ../src/resources/menus.xrc:303
-msgid "&Edit"
-msgstr "編集(&E)"
-
-#: ../src/edframe.cpp:522 ../src/resources/manager.xrc:114
-#: ../src/resources/menus.xrc:5 ../src/resources/menus.xrc:275
-msgid "&File"
-msgstr "ファイル(&F)"
-
-#: ../src/resources/menus.xrc:97 ../src/resources/menus.xrc:111
-msgid "&Find..."
-msgstr "検索(&F)..."
-
-#: ../src/resources/menus.xrc:252 ../src/resources/menus.xrc:320
-#, fuzzy
-msgid "&GNU gettext Manual"
-msgstr "GNU gettext ドキュメント"
-
-#: ../src/resources/menus.xrc:251 ../src/resources/menus.xrc:319
-#, fuzzy
-msgid "&GNU gettext manual"
-msgstr "GNU gettext ドキュメント"
-
-#: ../src/edframe.cpp:528 ../src/resources/menus.xrc:165
-msgid "&Go"
-msgstr "移動(&G)"
-
-#: ../src/edapp.cpp:194 ../src/resources/menus.xrc:268
-#: ../src/resources/menus.xrc:333
-msgid "&Help"
-msgstr "ヘルプ(&H)"
-
-#: ../src/resources/menus.xrc:261
-msgid "&License..."
-msgstr ""
-
-#: ../src/resources/menus.xrc:8 ../src/resources/menus.xrc:278
-#, fuzzy
-msgid "&New..."
-msgstr "新規カタログ(&N)..."
-
-#: ../src/resources/find.xrc:102
-#, fuzzy
-msgid "&Next >"
-msgstr "次へ >"
-
-#: ../src/resources/menus.xrc:181
-msgid "&Next Message"
-msgstr "次のメッセージ(&N)"
-
-#: ../src/resources/menus.xrc:180
-msgid "&Next message"
-msgstr "次のメッセージ(&N)"
-
-#: ../src/resources/menus.xrc:245 ../src/resources/menus.xrc:313
-msgid "&Online Help"
-msgstr "オンラインヘルプ(&O)"
-
-#: ../src/resources/menus.xrc:244 ../src/resources/menus.xrc:312
-msgid "&Online help"
-msgstr "オンラインヘルプ(&O)"
-
-#: ../src/resources/menus.xrc:21 ../src/resources/menus.xrc:291
-msgid "&Open..."
-msgstr "開く...(&O)"
-
-#: ../src/resources/menus.xrc:125
-msgid "&Preferences"
-msgstr "設定(&P)"
-
-#: ../src/resources/manager.xrc:117 ../src/resources/menus.xrc:47
-#: ../src/resources/menus.xrc:295
-msgid "&Preferences..."
-msgstr "設定(&P)..."
-
-#: ../src/resources/menus.xrc:176
-msgid "&Previous Message"
-msgstr "前のメッセージ(&P)"
-
-#: ../src/resources/menus.xrc:175
-msgid "&Previous message"
-msgstr "前のメッセージ(&P)"
-
-#: ../src/resources/menus.xrc:158
-msgid "&Properties..."
-msgstr "設定(&P)..."
-
-#: ../src/resources/menus.xrc:146
-msgid "&Purge Deleted Translations"
-msgstr "削除された翻訳を一掃する(&P)"
-
-#: ../src/resources/menus.xrc:145
-msgid "&Purge deleted translations"
-msgstr "削除された翻訳を一掃する(&P)"
-
-#: ../src/resources/menus.xrc:30
-msgid "&Save"
-msgstr "保存(&S)"
-
-#: ../src/resources/menus.xrc:94
-msgid "&Show References"
-msgstr "参照画面の表示 (&S)"
-
-#: ../src/resources/menus.xrc:93
-msgid "&Show references"
-msgstr "参照画面の表示 (&S)"
-
-#: ../src/resources/menus.xrc:154
-msgid "&Statistics"
-msgstr ""
-
-#: ../src/resources/menus.xrc:237
-msgid "&Untranslated Entries First"
-msgstr "未訳の項目を先頭に(&U)"
-
-#: ../src/resources/menus.xrc:236
-msgid "&Untranslated entries first"
-msgstr "未訳の項目を先頭に(&U)"
-
-#: ../src/resources/menus.xrc:134
-msgid "&Update from Sources"
-msgstr "ソースから更新 (&U)"
-
-#: ../src/resources/menus.xrc:133
-msgid "&Update from sources"
-msgstr "ソースから更新 (&U)"
-
-#: ../src/resources/menus.xrc:150
-msgid "&Validate Translations"
-msgstr "翻訳を検査(&V)"
-
-#: ../src/resources/menus.xrc:149
-msgid "&Validate translations"
-msgstr "翻訳を検査(&V)"
-
-#: ../src/resources/menus.xrc:196
-msgid "&View"
-msgstr "表示(&V)"
-
-#: ../src/catalog.cpp:1649
-#, c-format
-msgid "'%s' is not a valid POT file."
-msgstr "'%s' は有効な POT ファイルではありません。"
-
-#: ../src/summarydlg.cpp:56
-#, c-format
-msgid "(%i new, %i obsolete)"
-msgstr "(%i 新規, %i 使用しないように変更)"
-
-#: ../src/resources/summary.xrc:62
-msgid "(0 new, 0 obsolete)"
-msgstr "(0 新規, 0 使用しないように変更)"
-
-#: ../src/welcomescreen.cpp:227
-msgid "(Learn more about GNU gettext)"
-msgstr ""
-
-#: ../src/chooselang.cpp:62
-msgid "(Use default language)"
-msgstr "自動"
-
-#: ../src/resources/find.xrc:94
-#, fuzzy
-msgid "< &Previous"
-msgstr "< 前へ"
-
-#: ../src/manager.cpp:387
-msgid "<unnamed>"
-msgstr "<名称未設定>"
-
-#. TRANSLATORS: This is titlebar of about dialog, the string ends with space
-#. and is followed by application name when used ("Poedit",
-#. but don't add it to this translation yourself) (wxWidgets 2.8)
-#: ../src/edapp.cpp:600
-msgid "About "
-msgstr "このプログラムについて"
-
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#: ../src/aboutbox.cpp:77 ../src/edapp.cpp:590
-#, c-format
-msgid "About %s"
-msgstr "%s について"
-
-#: ../src/aboutbox.cpp:105 ../src/aboutbox.cpp:113
-msgid "Acknowledgements"
-msgstr ""
-
-#: ../src/resources/manager.xrc:80
-msgid "Add directory to the list"
-msgstr "ディレクトリをリストに追加"
-
-#: ../src/propertiesdlg.cpp:65
-#, fuzzy
-msgid "Additional keywords"
-msgstr "キーワード一覧の各項目:"
-
-#: ../src/resources/prefs.xrc:110
-msgid "Always change focus to text input field"
-msgstr "フォーカスは常にテキストフィールドに置く"
-
-#: ../src/resources/prefs.xrc:393
-msgid "An item in input files list:"
-msgstr "入力ファイル一覧の各項目:"
-
-#: ../src/resources/prefs.xrc:374
-msgid "An item in keywords list:"
-msgstr "キーワード一覧の各項目:"
-
-#: ../src/edframe.cpp:2863 ../src/edframe.cpp:2875
-msgid "Automatic Translations:"
-msgstr "自動翻訳:"
-
-#: ../src/export_html.cpp:191
-msgid "Automatic translation"
-msgstr "自動翻訳"
-
-#: ../src/edframe.cpp:2861 ../src/edframe.cpp:2873
-msgid "Automatic translations:"
-msgstr "自動翻訳:"
-
-#: ../src/resources/prefs.xrc:69
-msgid "Automatically check for new version of Poedit"
-msgstr "Poedt の最新版を自動的にチェックする"
-
-#: ../src/resources/prefs.xrc:94
-msgid "Automatically compile .mo file on save"
-msgstr "保存時に .mo ファイルを自動生成する"
-
-#: ../src/manager.cpp:253
-msgid "Bad Tokens"
-msgstr "不正な単語"
-
-#: ../src/resources/properties.xrc:156
-msgid "Base path:"
-msgstr "ベースのパス:"
-
-#: ../src/resources/prefs.xrc:90
-msgid "Behavior"
-msgstr "動作"
-
-#: ../src/edapp.cpp:201
-msgid "Beta expired"
-msgstr ""
-
-#: ../src/catalog.cpp:681
-msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr ""
-"カタログファイルが不正です： 複数形表記の msgstr が使われていますが "
-"msgid_plural の指定がありません。"
-
-#: ../src/catalog.cpp:636
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
-"カタログファイルが不正です： msgid_plural が指定されていますが msgstr は複数"
-"形表記ではありません。"
+"カタログファイルが破損しています。msgid_plural が指定されていますが msgstr は"
+"複数形表記ではありません。"
 
-#: ../src/resources/manager.xrc:79
-msgid "Browse"
-msgstr "参照"
-
-#: ../src/licensing.cpp:117
-msgid "Buy Online..."
+msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
+"カタログファイルが破損しています。複数形表記の msgstr が使われていますが "
+"msgid_plural の指定がありません。"
 
-#: ../src/licensing.cpp:115
-msgid "Buy online..."
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
 msgstr ""
+"カタログを読み出す際にエラーが発生しました。このため一部のデータが失われたり"
+"破損したりしている可能性があります。"
 
-#: ../src/resources/menus.xrc:130
-msgid "C&atalog"
-msgstr "カタログ(&A)"
-
-#: ../src/resources/comment.xrc:45
-msgid "C&lear"
-msgstr "クリア(&L)"
-
-#: ../src/resources/prefs.xrc:140
-msgid "CR/LF conversion"
-msgstr "CR/LF 変換"
-
-#: ../src/resources/comment.xrc:38 ../src/resources/manager.xrc:102
-#: ../src/resources/prefs.xrc:303 ../src/resources/prefs.xrc:445
-#: ../src/resources/progress.xrc:32 ../src/resources/properties.xrc:233
-msgid "Cancel"
-msgstr "キャンセル"
-
-#: ../src/utility.cpp:57 ../src/utility.cpp:67
-msgid "Cannot create temporary directory."
-msgstr "一時ディレクトリを作成できません！"
-
-#: ../src/gexecute.cpp:133
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "プログラムを実行できません: %s"
-
-#: ../src/edapp.cpp:837
-msgid "Capitalize"
-msgstr ""
-
-#: ../src/resources/find.xrc:36
-msgid "Case sensitive"
-msgstr "あいまい検索"
-
-#: ../src/manager.cpp:249
-msgid "Catalog"
-msgstr "カタログ"
-
-#: ../src/edframe.cpp:1129
-msgid "Catalog modified. Do you want to save changes?"
-msgstr "カタログの変更を保存しますか？"
-
-#: ../src/resources/properties.xrc:4
-msgid "Catalog properties"
-msgstr "カタログの設定"
-
-#: ../src/resources/menus.xrc:53
-msgid "Catalogs &Manager"
-msgstr "カタログマネージャ(&M)"
-
-#: ../src/resources/menus.xrc:52
-msgid "Catalogs &manager"
-msgstr "カタログマネージャ(&M)"
-
-#: ../src/edapp.cpp:769
-#, fuzzy
-msgid "Catalogs Manager"
-msgstr "カタログマネージャ(&M)"
-
-#: ../src/resources/prefs.xrc:62
-msgid "Change UI language"
-msgstr "Poedit の UI 言語を変更"
-
-#: ../src/export_html.cpp:126 ../src/resources/properties.xrc:115
-msgid "Charset:"
-msgstr "文字符号化法:"
-
-#: ../src/edapp.cpp:815
-msgid "Check Document Now"
-msgstr ""
-
-#: ../src/edapp.cpp:818
-msgid "Check Grammar With Spelling"
-msgstr ""
-
-#: ../src/edapp.cpp:817
-msgid "Check Spelling While Typing"
-msgstr ""
-
-#: ../src/edapp.cpp:774
-msgid "Check for Updates..."
-msgstr "更新を確認..."
-
-#: ../src/resources/toolbar.xrc:39
-msgid "Check for errors in the translation"
-msgstr "翻訳中の誤りを確認"
-
-#: ../src/resources/menus.xrc:44
-#, fuzzy
-msgid "Check for updates..."
-msgstr "更新を確認..."
-
-#: ../src/resources/prefs.xrc:127
-msgid "Check spelling"
-msgstr ""
-
-#: ../src/edframe.cpp:2836 ../src/resources/menus.xrc:70
-msgid "Clear Translation"
-msgstr "翻訳をクリア"
-
-#: ../src/resources/comment.xrc:46
-msgid "Clear the comment"
-msgstr "コメントのクリア"
-
-#: ../src/edframe.cpp:2834 ../src/resources/menus.xrc:69
-msgid "Clear translation"
-msgstr "翻訳をクリア"
-
-#: ../src/licensing.cpp:196 ../src/resources/find.xrc:87
-msgid "Close"
-msgstr "閉じる"
-
-#: ../src/resources/toolbar.xrc:57
-msgid "Comment"
-msgstr "コメント"
-
-#: ../src/resources/prefs.xrc:119
-msgid "Comment window is editable"
-msgstr "コメントウィンドウで編集できるようにする"
-
-#: ../src/edframe.cpp:707 ../src/export_html.cpp:213
-#: ../src/resources/comment.xrc:10
-msgid "Comment:"
-msgstr "コメント:"
-
-#: ../src/welcomescreen.cpp:250
-msgid "Configure source code extraction in Properties."
-msgstr ""
-
-#: ../src/manager.cpp:419 ../src/manager.cpp:439
-msgid "Confirmation"
-msgstr "確認"
-
-#: ../src/wordpress.cpp:115
-#, c-format
-msgid "Confused by ambiguous values of \"%s\" in %s."
-msgstr ""
-
-#: ../src/wordpress.cpp:210
-msgid "Confused: multiple main plugin files."
-msgstr ""
-
-#: ../src/prefsdlg.cpp:102
-msgid "Consult TM when updating from sources"
-msgstr ""
-
-#: ../src/edframe.cpp:2141
-msgid "Context:"
-msgstr "コンテキスト:"
-
-#: ../src/edframe.cpp:2829 ../src/resources/menus.xrc:77
-msgid "Copy from Source Text"
-msgstr "ソースからコピー"
-
-#: ../src/edframe.cpp:2827 ../src/resources/menus.xrc:76
-msgid "Copy from source text"
-msgstr "ソースからコピー"
-
-#: ../src/edapp.cpp:819
-msgid "Correct Spelling Automatically"
-msgstr ""
-
-#: ../src/wordpress.cpp:238
-#, c-format
-msgid "Couldn't detect translation domain of the \"%s\" plugin."
-msgstr ""
-
-#: ../src/catalog.cpp:1055
 #, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
-msgstr "ファイル %s を読み込めません。たぶんデータが破損しています。"
+msgstr "ファイル %s を読み込めません。おそらくデータが破損しています。"
 
-#: ../src/catalog.cpp:1344 ../src/catalog.cpp:1380
+#, c-format
+msgid ""
+"File '%s' is read-only and cannot be saved.\n"
+"Please save it under different name."
+msgstr ""
+"ファイル ‘%s’ は読み出し専用のため保存できません。\n"
+"別のファイル名で保存してください。"
+
 #, c-format
 msgid "Couldn't save file %s."
 msgstr "ファイル %s を保存できません。"
 
-#: ../src/welcomescreen.cpp:198
-msgid "Create a new translation. Poedit will set everything up automatically."
+msgid ""
+"There was a problem formatting the file nicely (but it was saved all right)."
+msgstr "ファイルを整形する際に問題が発生しましたが、保存は完了しています。"
+
+#, c-format
+msgid ""
+"The catalog couldn't be saved in '%s' charset as specified in catalog "
+"settings.\n"
+"\n"
+"It was saved in UTF-8 instead and the setting was modified accordingly."
+msgstr ""
+"カタログは設定の中で指定された ‘%s’ キャラクタセットで保存すること\n"
+"ができませんでした。\n"
+"代わりに UTF-8 で保存し、設定も変更されました。"
+
+msgid "Error saving catalog"
+msgstr "カタログ保存エラー"
+
+msgid "PO Translation Files"
+msgstr "PO 翻訳ファイル"
+
+msgid "POT Translation Templates"
+msgstr "POT 翻訳テンプレート"
+
+msgid "All Translation Files"
+msgstr "すべての翻訳ファイル"
+
+msgid "Merging differences..."
+msgstr "差分を統合しています…"
+
+#, c-format
+msgid "'%s' is not a valid POT file."
+msgstr "‘%s’ は有効な POT ファイルではありません。"
+
+msgid "(Use default language)"
+msgstr "(デフォルト言語を使用)"
+
+msgid "Select your preferred language"
+msgstr "お好みの言語を選択してください"
+
+msgid "Language selection"
+msgstr "言語選択"
+
+msgid "You must restart Poedit for this change to take effect."
+msgstr "変更を有効にするには Poedit を再起動してください。"
+
+msgid "Downloading translations is disabled in this project."
+msgstr "このプロジェクトでは、翻訳のダウンロードが無効になっています。"
+
+msgid "Not authorized, please sign in again."
+msgstr "未認証です。もう一度ログインしてください。"
+
+msgid ""
+"Crowdin is an online localization management platform and collaborative "
+"translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
+msgstr ""
+"Crowdin は、オンラインのローカリゼーション管理プラットフォームであり、共同翻"
+"訳ツールです。Poedit は Crowdin で管理されている PO ファイルをシームレスに同"
+"期することができます。"
+
+msgid "Sign In"
+msgstr "ログイン"
+
+msgid "Sign in"
+msgstr "ログイン"
+
+msgid "Sign Out"
+msgstr "ログアウト"
+
+msgid "Sign out"
+msgstr "ログアウト"
+
+msgid "Waiting for authentication…"
+msgstr "認証を待機中…"
+
+msgid "Updating user information…"
+msgstr "ユーザー情報を更新しています…"
+
+msgid "Signed in as:"
+msgstr "ログイン中:"
+
+msgid "Learn More About Crowdin"
+msgstr "Crowdin について"
+
+msgid "Learn more about Crowdin"
+msgstr "Crowdin について"
+
+msgid "Sign in to Crowdin"
+msgstr "Crowdin にログイン"
+
+msgid "Open Crowdin translation"
+msgstr "Crowdin 翻訳を開く"
+
+msgid "Project:"
+msgstr "プロジェクト:"
+
+msgid "Language:"
+msgstr "言語:"
+
+msgid "File:"
+msgstr "ファイル:"
+
+msgid "No translation projects listed in your Crowdin account."
+msgstr "あなたの Crowdin アカウントには翻訳プロジェクトが何もありません。"
+
+msgid "This project has no files that can be translated in Poedit."
+msgstr "このプロジェクトには Poedit で翻訳できるファイルがありません。"
+
+msgid "This file can only be edited in Crowdin’s web interface."
+msgstr "このファイルは Crowdin の Web インターフェイスでのみ編集できます。"
+
+msgid "Downloading latest translations…"
+msgstr "最新の翻訳をダウンロード中…"
+
+msgid "Syncing with Crowdin"
+msgstr "Crowdin と同期中"
+
+msgid "Syncing with Crowdin failed."
+msgstr "Crowdin との同期に失敗しました。"
+
+msgid "Crowdin error"
+msgstr "Crowdin エラー"
+
+msgid "Uploading translations…"
+msgstr "翻訳をアップロード中…"
+
+msgid "&Copy"
+msgstr "コピー (&C)"
+
+msgid "Learn more"
+msgstr "さらに詳しく"
+
+msgid "Learn More"
+msgstr "さらに詳しく"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "失敗したコマンド: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "gettext カタログの統合に失敗しました。"
+
+msgid "Scanning files..."
+msgstr "ファイルをスキャン中..."
+
+#. TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
+#, c-format
+msgid "Parsing %s files..."
+msgstr "%s ファイルを解析中…"
+
+msgid "Failed to load extracted catalog."
+msgstr "抽出したカタログの読み込みに失敗しました。"
+
+msgid "&Help"
+msgstr "ヘルプ (&H)"
+
+msgid "MO files can’t be directly edited in Poedit."
+msgstr "MO ファイルは Poedit で直接編集できません。"
+
+msgid "Error opening file"
+msgstr "ファイルを開く際にエラーが発生しました"
+
+msgid ""
+"Please open and edit the corresponding PO file instead. When you save it, "
+"the MO file will be updated as well."
+msgstr ""
+"代わりに、対応する PO ファイルを開いてください。そちらを保存する際に MO ファ"
+"イルも更新されます。"
+
+msgid "don't delete temporary files (for debugging)"
+msgstr "一時ファイルを削除しない (デバッグ向け)"
+
+msgid "handle a poedit:// URI"
+msgstr "poedit:// URI を処理"
+
+msgid "Failed to communicate with Poedit process."
 msgstr ""
 
-#: ../src/welcomescreen.cpp:191
-#, fuzzy
-msgid "Create new translation"
-msgstr "翻訳プロジェクトを作成する"
+#, c-format
+msgid "Unhandled exception occurred: %s"
+msgstr "未処理例外が発生しました: %s"
 
-#: ../src/resources/manager.xrc:33
-msgid "Create new translations project"
-msgstr "翻訳プロジェクトを作成する"
+msgid "Unhandled exception occurred."
+msgstr "未処理例外が発生しました。"
 
-#: ../src/prefsdlg.cpp:158
-msgid "Database size on disk:"
-msgstr ""
+msgid "Open catalog"
+msgstr "カタログを開く"
 
-#: ../src/resources/manager.xrc:42 ../src/resources/prefs.xrc:269
+#, c-format
+msgid "File '%s' doesn't exist."
+msgstr "ファイル ‘%s’ が見つかりません。"
+
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#, c-format
+msgid "About %s"
+msgstr "%s について"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "バージョン %s"
+
+msgid "Poedit is an easy to use translations editor."
+msgstr "Poeditは使いやすい翻訳エディタです。"
+
+msgid "Catalogs Manager"
+msgstr "カタログマネージャ"
+
+msgid "Check for Updates..."
+msgstr "更新を確認..."
+
+msgid "&Edit"
+msgstr "編集 (&E)"
+
+msgid "Undo"
+msgstr "元に戻す"
+
+msgid "Redo"
+msgstr "再実行"
+
+msgid "Paste and Match Style"
+msgstr "同じスタイルでペースト"
+
 msgid "Delete"
 msgstr "削除"
 
-#: ../src/resources/manager.xrc:43
-msgid "Delete the project"
-msgstr "翻訳プロジェクトを削除する"
+msgid "Spelling and Grammar"
+msgstr "綴りと文法"
 
-#: ../src/manager.cpp:305
-msgid "Directories:"
-msgstr "ディレクトリ:"
+msgid "Show Spelling and Grammar"
+msgstr "綴りと文法を表示"
 
-#: ../src/resources/menus.xrc:209
-msgid "Display &Notes for Translators"
-msgstr "翻訳の注を表示(&N)"
+msgid "Check Document Now"
+msgstr "ドキュメンテーションを今すぐ確認"
 
-#: ../src/resources/menus.xrc:199
-msgid "Display &Quotes"
-msgstr "引用符を表示(Q)"
+msgid "Check Spelling While Typing"
+msgstr "入力中にスペルチェック"
 
-#: ../src/resources/menus.xrc:208
-msgid "Display &notes for translators"
-msgstr "翻訳の両側に引用符を表示(&N)"
+msgid "Check Grammar With Spelling"
+msgstr "文法と綴りを確認"
 
-#: ../src/resources/menus.xrc:198
-msgid "Display &quotes"
-msgstr "引用符を表示(Q)"
+msgid "Correct Spelling Automatically"
+msgstr "綴りを自動修正"
 
-#: ../src/resources/menus.xrc:204
-#, fuzzy
-msgid "Display Entry &IDs"
-msgstr "引用符を表示(Q)"
+msgid "Substitutions"
+msgstr "代替案"
 
-#: ../src/resources/menus.xrc:203
-#, fuzzy
-msgid "Display entry &IDs"
-msgstr "行番号を表示(&L)"
+msgid "Show Substitutions"
+msgstr "代替案を表示"
 
-#: ../src/manager.cpp:438
+msgid "Smart Copy/Paste"
+msgstr "スマートコピー & ペースト"
+
+msgid "Smart Quotes"
+msgstr "スマート引用"
+
+msgid "Smart Dashes"
+msgstr "スマートダッシュ"
+
+msgid "Smart Links"
+msgstr "スマートリンク"
+
+msgid "Text Replacement"
+msgstr "テキスト置き換え"
+
+msgid "Transformations"
+msgstr "変換"
+
+msgid "Make Upper Case"
+msgstr "大文字に変換"
+
+msgid "Make Lower Case"
+msgstr "小文字に変換"
+
+msgid "Capitalize"
+msgstr "キャピタライズ"
+
+msgid "Speech"
+msgstr "スピーチ"
+
+msgid "Start Speaking"
+msgstr "読み上げを開始"
+
+msgid "Stop Speaking"
+msgstr "読み上げを停止"
+
+msgid "&View"
+msgstr "表示 (&V)"
+
+msgid "Enter Full Screen"
+msgstr "全画面表示"
+
+msgid "Window"
+msgstr "ウィンドウ"
+
+msgid "Minimize"
+msgstr "最小化"
+
+msgid "Zoom"
+msgstr "ズーム"
+
+msgid "Bring All to Front"
+msgstr "すべてを手前に移動"
+
+msgid "PO Translation"
+msgstr "PO 翻訳"
+
+msgid "The file cannot be opened."
+msgstr "ファイルを開けません。"
+
+msgid "Invalid file"
+msgstr "不正なファイル"
+
 msgid ""
-"Do you really want to do mass update of\n"
-"all catalogs in this project?"
-msgstr "このプロジェクトのすべてのカタログを更新してもよろしいですか？"
+"The file may be either corrupted or in a format not recognized by Poedit."
+msgstr "ファイルが破損しているか、Poedit が認識できない形式のようです。"
 
-#: ../src/manager.cpp:418
-msgid "Do you want to delete the project?"
-msgstr "プロジェクトを削除してよろしいですか？"
+msgid "&Undo"
+msgstr "取り消し (&U)"
 
-#: ../src/edframe.cpp:2726
-msgid "Do you want to remove all translations that are no longer used?"
-msgstr "もう使われていない翻訳をすべて削除しますか?"
+msgid "&Redo"
+msgstr "やり直し (&R)"
 
-#: ../src/edframe.cpp:1140
+msgid "Cu&t"
+msgstr "切り抜き (&t)"
+
+msgid "Cut"
+msgstr "切り抜き"
+
+msgid "Copy"
+msgstr "コピー"
+
+msgid "&Paste"
+msgstr "ペースト (&P)"
+
+msgid "Paste"
+msgstr "ペースト"
+
+msgid "&Delete"
+msgstr "削除 (&D)"
+
+msgid "Select &All"
+msgstr "すべてを選択 (&A)"
+
+msgid "Select All"
+msgstr "すべてを選択"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+msgid "Ctrl+"
+msgstr "Ctrl+"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+msgid "Alt+"
+msgstr "Alt+"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Shift+"
+msgstr "Shift+"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Enter"
+msgstr "Enter"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Up"
+msgstr "上へ"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Down"
+msgstr "下へ"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+msgid "ctrl"
+msgstr "ctrl"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+msgid "alt"
+msgstr "alt"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+msgid "shift"
+msgstr "shift"
+
+msgid "You can't drop more than one file on Poedit window."
+msgstr "Poedit へドロップできるのは1回につき1ファイルのみです。"
+
+#, c-format
+msgid "File '%s' is not a message catalog."
+msgstr "ファイル ‘%s’ はメッセージカタログではありません。"
+
+msgid "Poedit"
+msgstr "Poedit"
+
+msgid "&File"
+msgstr "ファイル (&F)"
+
+msgid "&Go"
+msgstr "移動 (&G)"
+
+msgid "Source text:"
+msgstr "ソーステキスト:"
+
+msgid "Singular:"
+msgstr "単数形:"
+
+msgid "Plural:"
+msgstr "複数形:"
+
+msgid "Translation:"
+msgstr "翻訳:"
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"POT ファイルはテンプレートのみで、それ自体に翻訳は含まれていません。 \n"
+"翻訳を行うには、このテンプレートをベースにして新しい PO ファイルを作成しま"
+"す。"
+
+msgid "Create New Translation"
+msgstr "新しい翻訳を作成"
+
+msgid "Create new translation"
+msgstr "翻訳プロジェクトを新規作成する"
+
+msgid "Upgrade to Windows 10 (for free) to enable spellchecking in Poedit."
+msgstr ""
+
+msgid ""
+"Poedit needs Windows 8 or newer for spellchecking, but you only have Windows "
+"7. Microsoft is offering free upgrades to Windows 10 until July 29, 2016."
+msgstr ""
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid ""
+"Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr ""
+"%sの辞書がインストールされていないためスペルチェックは無効化されています。"
+
+msgid "Install"
+msgstr "インストール"
+
+msgid "Catalog modified. Do you want to save changes?"
+msgstr "カタログの変更を保存しますか ?"
+
+msgid "Save changes"
+msgstr "変更を保存"
+
+msgid "Your changes will be lost if you don't save them."
+msgstr "保存しないと追加した変更は失われます。"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Don't save"
+msgstr "保存しない"
+
 msgid "Don't Save"
 msgstr "保存しない"
 
-#: ../src/resources/prefs.xrc:169
-msgid "Don't change format of existing catalogs"
-msgstr "既存のカタログのフォーマットは変更しない"
+msgid "Save as..."
+msgstr "名前を付けて保存..."
 
-#: ../src/edframe.cpp:1138
-msgid "Don't save"
-msgstr "Don't Save"
+msgid "Compile to..."
+msgstr "形式を指定してコンパイル…"
 
-#: ../src/attentionbar.cpp:240
-msgid "Don't show again"
-msgstr "もう表示しない"
+msgid "Compiled Translation Files"
+msgstr "翻訳ファイルをコンパイルしました"
 
-#: ../src/edapp.cpp:203
-msgid "Download"
-msgstr ""
+msgid "Export as..."
+msgstr "書式を指定してエクスポート…"
 
-#: ../src/resources/manager.xrc:125 ../src/resources/menus.xrc:59
-msgid "E&xit"
-msgstr "終了(&X)"
+msgid "HTML Files"
+msgstr "HTML ファイル"
 
-#: ../src/resources/menus.xrc:39
-#, fuzzy
-msgid "E&xport as HTML..."
-msgstr "書式と出力先を選択してください（通常の保存ではありません）"
+msgid "Open catalog template"
+msgstr "カタログの雛形を開く"
 
-#: ../src/edapp.cpp:777 ../src/resources/manager.xrc:37
-#: ../src/resources/prefs.xrc:262
-msgid "Edit"
-msgstr "編集"
+msgid "Updating catalog"
+msgstr "カタログを更新中"
 
-#: ../src/resources/menus.xrc:88
-msgid "Edit &Comment"
-msgstr "コメントの編集(&C)"
+msgid "Source code not available."
+msgstr "ソースコードが存在しません。"
 
-#: ../src/resources/menus.xrc:87
-msgid "Edit &comment"
-msgstr "コメントの編集(&C)"
+msgid "Updating failed"
+msgstr "更新に失敗しました"
 
-#: ../src/edframe.cpp:2843
-msgid "Edit Comment"
-msgstr "コメントの編集"
-
-#: ../src/welcomescreen.cpp:185
-#, fuzzy
-msgid "Edit a translation"
-msgstr "翻訳をクリア"
-
-#: ../src/edframe.cpp:2841 ../src/resources/comment.xrc:4
-#: ../src/resources/toolbar.xrc:58
-msgid "Edit comment"
-msgstr "コメントの編集"
-
-#: ../src/resources/manager.xrc:53
-msgid "Edit project"
-msgstr "プロジェクトの編集"
-
-#: ../src/resources/manager.xrc:38
-msgid "Edit the project"
-msgstr "翻訳プロジェクトを編集する"
-
-#: ../src/resources/prefs.xrc:84
-msgid "Editor"
-msgstr "編集"
-
-#: ../src/resources/menus.xrc:257 ../src/resources/menus.xrc:325
-#, fuzzy
-msgid "Email &Support..."
-msgstr "別書式で出力(&X)..."
-
-#: ../src/resources/menus.xrc:256 ../src/resources/menus.xrc:324
-#, fuzzy
-msgid "Email &support..."
-msgstr "別書式で出力(&X)..."
-
-#: ../src/wordpress.cpp:394
-msgid "Email Support"
-msgstr ""
-
-#: ../src/wordpress.cpp:391
-msgid "Email support"
-msgstr ""
-
-#: ../src/resources/prefs.xrc:128
-msgid "Enables on-the-fly spellchecking"
-msgstr "自動的に綴りを検査する"
-
-#: ../src/edframe.cpp:1611
-msgid "Entries in the catalog are probably incorrect."
-msgstr "カタログ中の項目に不正（未対応？）なものがあるようです。"
-
-#: ../src/edframe.cpp:2282
 msgid ""
-"Entries in this catalog have different plural forms count from what "
-"catalog's Plural-Forms header says"
+"Translations couldn’t be updated from the source code, because no code was "
+"found in the location specified in the catalog’s Properties."
 msgstr ""
-"カタログの中の項目がカタログの Plural-Forms ヘッダで示された数と異なる複数形"
-"を持っています"
+"カタログの属性で指定された位置にコードが見つからなかったため、翻訳をソース"
+"コードから更新できませんでした。"
 
-#: ../src/edframe.cpp:1687
+msgid "Entries in the catalog are probably incorrect."
+msgstr "カタログ中の項目が正しくない可能性があります。"
+
+msgid "Updating the catalog failed. Click on 'Details >>' for details."
+msgstr ""
+"カタログの更新に失敗しました。詳細を見るには ‘詳細 >>’ をクリックしてくださ"
+"い。"
+
+#, c-format
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] "翻訳に%d件の問題が見つかりました。"
+
+msgid "Validation results"
+msgstr "検査の結果"
+
 msgid ""
 "Entries with errors were marked in red in the list. Details of the error "
 "will be shown when you select such an entry."
@@ -758,388 +596,502 @@ msgstr ""
 "エラーがある項目はリスト中で赤くマークされています。エラーの詳細は、その項目"
 "を選択すると表示されます。"
 
-#: ../src/edframe.cpp:2389
+msgid "The file was saved safely."
+msgstr "ファイルを安全に保存しました。"
+
+msgid ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
+msgstr ""
+"ファイルを安全に保存し MO 形式にコンパイルしましたが、恐らく正常に動作しない"
+"でしょう。"
+
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr ""
+"ファイルは安全に保存されましたが MO 形式にコンパイルできなかったため使用でき"
+"ません。"
+
+msgid ""
+"The file was compiled into the MO format, but it will probably not work "
+"correctly."
+msgstr ""
+"ファイルを MO 形式にコンパイルしましたが、恐らく正常に動作しないでしょう。"
+
+msgid "The file cannot be compiled into the MO format and used."
+msgstr "ファイルを MO 形式にコンパイルして使用することができません。"
+
+msgid "No problems with the translation found."
+msgstr "翻訳に問題は見つかりませんでした。"
+
+#, c-format
+msgid "The translation is ready for use, but %d entry is not translated yet."
+msgid_plural ""
+"The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] "この翻訳を利用できますが、%d件の項目がまだ翻訳されていません。"
+
+msgid "The translation is ready for use."
+msgstr "この翻訳は使用できます。"
+
+msgid "Context:"
+msgstr "コンテキスト:"
+
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr "Poedit は、ファイル「%s」内の無効なコンテンツを自動的に修正しました。"
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as fuzzy and correct them if "
+"necessary."
+msgstr ""
+"ファイルに重複する項目が含まれています。重複項目は PO ファイルでは許可されて"
+"おらず、ファイルの利用を妨げます。Poedit はこの問題を修正しましたが、未確定と"
+"してマークされている項目を確認し必要に応じて修正する必要があります。"
+
+msgid "Language of the translation isn't set."
+msgstr "翻訳の言語が設定されていません。"
+
+msgid "Set Language"
+msgstr "言語を設定"
+
+msgid "Set language"
+msgstr "言語を設定"
+
+#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
+msgid ""
+"Suggestions are not available if the translation language is not set "
+"correctly. Other features, such as plural forms, may be affected as well."
+msgstr ""
+"翻訳言語が正しく設定されていない場合、提案は利用できません。また、複数形など"
+"の他の機能にも影響する可能性があります。"
+
+msgid "Language of the translation is the same as source language."
+msgstr "翻訳言語がソース言語と同一です。"
+
+msgid "Fix Language"
+msgstr "言語を修正"
+
+msgid "Fix language"
+msgstr "言語を修正"
+
+msgid ""
+"This catalog has entries with plural forms, but doesn't have Plural-Forms "
+"header configured."
+msgstr ""
+"このカタログには複数形を含む項目がありますが、Plural-Forms ヘッダが設定されて"
+"いません。"
+
+msgid ""
+"Entries in this catalog have different plural forms count from what "
+"catalog's Plural-Forms header says"
+msgstr ""
+"カタログの中の項目がカタログの Plural-Forms ヘッダで示された数と異なる複数形"
+"を持っています"
+
+msgid "Required header Plural-Forms is missing."
+msgstr "必要なヘッダ Plural-Forms がありません。"
+
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr "Plural-Forms ヘッダに文法エラーがあります (\"%s\") 。"
+
+msgid "Fix the Header"
+msgstr "ヘッダーを修正"
+
+msgid "Fix the header"
+msgstr "ヘッダーを修正"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid "Plural forms expression used by the catalog is unusual for %s."
+msgstr ""
+"このカタログで使われている複数形表現は、%sの一般的なものではありません。"
+
+#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
+msgid "Review"
+msgstr "レビュー"
+
 #, c-format
 msgid "Error loading message catalog file '%s'."
-msgstr "メッセージカタログ '%s' の読み込みエラーです。"
+msgstr "メッセージカタログ ‘%s’ の読み込みエラーです。"
 
-#: ../src/fileviewer.cpp:297
 #, c-format
-msgid "Error opening file %s!"
-msgstr "ファイル %s を開く途中でエラーが発生しました！"
+msgid "Translated: %d of %d (%d %%)"
+msgstr "翻訳済み: %d/%d件中 (%d %%)"
 
-#: ../src/catalog.cpp:1515
-msgid "Error saving catalog"
-msgstr "カタログ保存エラー"
-
-#: ../src/errorbar.cpp:68
-msgid "Error:"
-msgstr "エラー:"
-
-#: ../src/edframe.cpp:3176
-msgid "Everything"
-msgstr ""
-
-#: ../src/edframe.cpp:1276
-msgid "Export as..."
-msgstr "書式と出力先を選択してください（通常の保存ではありません）"
-
-#: ../src/welcomescreen.cpp:249
-#, fuzzy
-msgid "Extract from sources"
-msgstr "ソースから更新 (&U)"
-
-#: ../src/resources/properties.xrc:147
-msgid "Extract text from source files in the following directories:"
-msgstr "ソースファイルからテキストを抽出し、以下のディレクトリに格納:"
-
-#: ../src/digger.cpp:60
 #, c-format
-msgid "Failed command: %s"
-msgstr "パーサのコマンド: %s"
+msgid "Remaining: %d"
+msgstr "未翻訳: %d"
 
-#: ../src/wordpress.cpp:376
-#, fuzzy
-msgid "Failed to extract WordPress information."
-msgstr "抽出したカタログの読み込みに失敗しました。"
+#, c-format
+msgid "%d error"
+msgid_plural "%d errors"
+msgstr[0] "%d件のエラー"
 
-#: ../src/digger.cpp:114
-msgid "Failed to load extracted catalog."
-msgstr "抽出したカタログの読み込みに失敗しました。"
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "%d項目"
 
-#: ../src/digger.cpp:61
-msgid "Failed to merge gettext catalogs."
-msgstr "gettext カタログのマージに失敗しました。"
+msgid " (unsaved)"
+msgstr " (未保存)"
 
-#: ../src/wordpress.cpp:71
-#, fuzzy, c-format
-msgid "Failed to read file '%s'."
-msgstr "パーサのコマンド: %s"
+msgid " (modified)"
+msgstr " (変更済)"
 
-#: ../src/wordpress.cpp:135
-#, fuzzy, c-format
-msgid "Failed to read folder '%s'."
-msgstr "書式が不正確なヘッダがあります： '%s'"
+msgid "Go"
+msgstr "Go"
 
-#: ../src/edframe.cpp:2645
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to update translation memory: %s"
-msgstr "翻訳メモリを更新しています..."
+msgstr "翻訳メモリを更新できませんでした: %s"
 
-#: ../src/edapp.cpp:571 ../src/edframe.cpp:445 ../src/edframe.cpp:1198
-#, c-format
-msgid "File '%s' doesn't exist."
-msgstr "ファイル '%s' が見つかりません。"
+msgid "Purge deleted translations"
+msgstr "削除された翻訳を一掃する"
 
-#: ../src/edframe.cpp:438
-#, c-format
-msgid "File '%s' is not a message catalog."
-msgstr "ファイル '%s' はメッセージカタログではありません。"
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr "もう使われていない翻訳をすべて削除しますか ?"
 
-#: ../src/catalog.cpp:1326
-#, c-format
-msgid ""
-"File '%s' is read-only and cannot be saved.\n"
-"Please save it under different name."
-msgstr ""
-"ファイル %s は読み出し専用のため保存できません。\n"
-"異なるファイル名で保存してください。"
-
-#: ../src/prefsdlg.cpp:196 ../src/tm/tm_migrate.cpp:198
-msgid "Finalizing..."
-msgstr ""
-
-#: ../src/resources/menus.xrc:109
-#, fuzzy
-msgid "Find"
-msgstr "検索..."
-
-#: ../src/resources/menus.xrc:115
-#, fuzzy
-msgid "Find Next"
-msgstr "翻訳済みとし、次へ(&D)"
-
-#: ../src/resources/menus.xrc:119
-#, fuzzy
-msgid "Find Previous"
-msgstr "< 前へ"
-
-#: ../src/resources/find.xrc:78
-msgid "Find in automatic comments"
-msgstr "自動注釈の中を探す"
-
-#: ../src/resources/find.xrc:71
-msgid "Find in comments"
-msgstr "注釈の中を探す"
-
-#: ../src/resources/find.xrc:57
-msgid "Find in original strings"
-msgstr "原文を検索対象に含める"
-
-#: ../src/resources/find.xrc:64
-msgid "Find in translations"
-msgstr "翻訳された文字列を検索対象に含める"
-
-#: ../src/resources/menus.xrc:101
-#, fuzzy
-msgid "Find next"
-msgstr "注釈の中を探す"
-
-#: ../src/resources/menus.xrc:105
-#, fuzzy
-msgid "Find previous"
-msgstr "< 前へ"
-
-#: ../src/resources/find.xrc:4
-msgid "Find..."
-msgstr "検索..."
-
-#: ../src/edframe.cpp:2312
-msgid "Fix the header"
-msgstr "ヘッダを修正する"
-
-#: ../src/wordpress.cpp:294
-msgid "Folder looks like both a plugin and a theme."
-msgstr ""
-
-#: ../src/resources/prefs.xrc:180
-msgid "Fonts"
-msgstr "フォント"
-
-#: ../src/edframe.cpp:3178
-#, c-format
-msgid "Form %i"
-msgstr "形式 %i"
-
-#: ../src/wordpress.cpp:296
-msgid "Found neither WordPress theme nor plugin in the folder."
-msgstr ""
-
-#: ../src/aboutbox.cpp:165
-msgid "Free version (please upgrade!)"
-msgstr ""
-
-#: ../src/manager.cpp:252 ../src/resources/toolbar.xrc:51
-msgid "Fuzzy"
-msgstr "未確定"
-
-#: ../src/export_html.cpp:197
-msgid "Fuzzy translation"
-msgstr "未確定文字列"
-
-#: ../src/edapp.cpp:545 ../src/edframe.cpp:1179 ../src/edframe.cpp:1239
-#: ../src/prefsdlg.cpp:169
-msgid "GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
-msgstr "GNU gettext カタログ (*.po)|*.po|すべてのファイル (*.*)|*.*"
-
-#: ../src/edframe.cpp:1629
-msgid "GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
-msgstr "GNU gettext テンプレート (*.pot)|*.pot|すべてのファイル (*.*)|*.*"
-
-#: ../src/edframe.cpp:1327
-#, fuzzy
-msgid ""
-"GNU gettext templates (*.pot)|*.pot|GNU gettext catalogs (*.po)|*.po|All "
-"files (*.*)|*.*"
-msgstr "GNU gettext テンプレート (*.pot)|*.pot|すべてのファイル (*.*)|*.*"
-
-#: ../src/edframe.cpp:3270
-#, c-format
-msgid "Go to Bookmark %i\tCtrl+%i"
-msgstr "しおり %i へ移動します\tCtrl+%i"
-
-#: ../src/edframe.cpp:3264
-#, c-format
-msgid "Go to Bookmark %i\tCtrl+Alt+%i"
-msgstr "しおり %i へ移動します\tCtrl+Alt+%i"
-
-#: ../src/edframe.cpp:3267
-#, c-format
-msgid "Go to bookmark %i\tCtrl+%i"
-msgstr "しおり %i へ移動します\tCtrl+%i"
-
-#: ../src/edframe.cpp:1278
-msgid "HTML file (*.html)|*.html"
-msgstr "HTML ファイル (*.html)|*.html"
-
-#: ../src/attentionbar.cpp:79
-msgid "Hide this notification message"
-msgstr "この通知メッセージを表示しない"
-
-#: ../src/edlistctrl.cpp:333
-msgid "ID"
-msgstr ""
-
-#: ../src/resources/prefs.xrc:17
-msgid "Identity"
-msgstr "自分の署名"
-
-#: ../src/resources/prefs.xrc:120
-msgid "If checked, the comment window will be editable."
-msgstr "チェックしておくと、コメントウィンドウで編集ができます。"
-
-#: ../src/prefsdlg.cpp:104
-msgid "If enabled, Poedit will try to fill in missing translations."
-msgstr ""
-
-#: ../src/edframe.cpp:2728
 msgid ""
 "If you continue with purging, all translations marked as deleted will be "
 "permanently removed. You will have to translate them again if they are added "
 "back in the future."
 msgstr ""
-"一掃を完了すると、削除マークがついた翻訳はすべて削除されます。将来再び追加さ"
-"れたときには翻訳し直さなくてはなりません。"
+"一掃を実行すると、削除済みとしてマークされた翻訳はすべて完全に削除されます。"
+"将来再び追加された場合は翻訳し直す必要があります。"
 
-#: ../src/prefsdlg.cpp:180
-#, fuzzy
-msgid "Importing translations..."
-msgstr "自動翻訳:"
-
-#: ../src/tm/tm_migrate.cpp:141
-#, fuzzy, c-format
-msgid "Importing translations: %d"
-msgstr "自動翻訳:"
-
-#: ../src/resources/prefs.xrc:76
-msgid "Include beta versions"
-msgstr ""
-
-#: ../src/edframe.cpp:166 ../src/edframe.cpp:2186
-msgid "Invalid file"
-msgstr ""
-
-#: ../src/resources/prefs.xrc:351
-msgid "Invocation:"
-msgstr "実行オプション:"
-
-#: ../src/statistics.cpp:161
-msgid "Items"
-msgstr ""
-
-#: ../src/edframe.cpp:2732
 msgid "Keep"
 msgstr "保持する"
 
-#: ../src/languagectrl.cpp:42
-msgid "Language Code or Name (e.g. en_GB)"
+msgid "Purge"
+msgstr "翻訳の一掃"
+
+msgid "Fill missing translations from TM"
+msgstr "翻訳メモリを使って未翻訳項目を埋める"
+
+msgid "Only fill in exact matches"
+msgstr "完全な一致のみ採用する"
+
+msgid ""
+"By default, inaccurate results are filled in as well and marked as fuzzy. "
+"Check this option to only include accurate matches."
 msgstr ""
+"デフォルトでは正確ではない一致結果も使われ、未翻訳としてマークされます。正確"
+"な一致のみを含めたい場合、このオプションにチェックを入れてください。"
 
-#: ../src/edframe.cpp:2263
-#, fuzzy
-msgid "Language of the translation isn't set."
-msgstr "削除された翻訳を完全に消去"
+msgid "Don’t mark exact matches as fuzzy"
+msgstr "完全な一致を未確定としてマークしない"
 
-#: ../src/languagectrl.cpp:94
-#, fuzzy
+msgid ""
+"Only enable if you trust the quality of your TM. By default, all matches "
+"from the TM are marked as fuzzy and should be reviewed."
+msgstr ""
+"翻訳メモリの品質を信頼できる場合のみ有効化してください。デフォルトでは翻訳メ"
+"モリからの一致は未確定にマークされ、レビューが必要となります。"
+
+msgid "Fill"
+msgstr "埋める"
+
+#, c-format
+msgid "%d entry was filled from the translation memory."
+msgid_plural "%d entries were filled from the translation memory."
+msgstr[0] "翻訳メモリを使って%d件の項目を埋めました。"
+
+msgid ""
+"The translations were marked as fuzzy, because they may be inaccurate. You "
+"should review them for correctness."
+msgstr ""
+"翻訳は正確でない可能性があるため、未確定にマークされています。間違っていない"
+"かどうかレビューしてください。"
+
+msgid "No entries could be filled from the translation memory."
+msgstr "翻訳メモリを使って埋められる項目はありませんでした。"
+
+msgid ""
+"The TM doesn’t contain any strings similar to the content of this file. It "
+"is only effective for semi-automatic translations after Poedit learns enough "
+"from files that you translated manually."
+msgstr ""
+"このファイルに含まれるコンテンツに似た文字列が翻訳メモリには含まれていませ"
+"ん。"
+
+msgid "Translating"
+msgstr "翻訳中"
+
+msgid "Filling missing translations from TM..."
+msgstr "翻訳メモリを使って未翻訳項目を埋めています…"
+
+#, c-format
+msgid "Translated %u string"
+msgid_plural "Translated %u strings"
+msgstr[0] "%u件の文字列を翻訳済み"
+
+msgid "Copy from source text"
+msgstr "ソーステキストからコピー"
+
+msgid "Copy from Source Text"
+msgstr "ソーステキストからコピー"
+
+msgid "Clear translation"
+msgstr "翻訳をクリア"
+
+msgid "Clear Translation"
+msgstr "翻訳をクリア"
+
+msgid "Edit comment"
+msgstr "コメントを編集"
+
+msgid "Edit Comment"
+msgstr "コメントを編集"
+
+msgid "References:"
+msgstr "参照位置:"
+
+msgid "Everything"
+msgstr "すべて"
+
+#, c-format
+msgid "Form %i"
+msgstr "形式 %i"
+
+msgid "Singular"
+msgstr "単数形"
+
+msgid "Zero"
+msgstr "0"
+
+msgid "One"
+msgstr "1"
+
+msgid "Two"
+msgstr "2"
+
+msgid "Plural"
+msgstr "複数形"
+
+msgid "Other"
+msgstr "その他"
+
+msgid "&Bookmarks"
+msgstr "ブックマーク (&B)"
+
+#, c-format
+msgid "Set bookmark %i"
+msgstr "ブックマーク %i を設定"
+
+#, c-format
+msgid "Go to bookmark %i"
+msgstr "ブックマーク %i へ移動"
+
+#, c-format
+msgid "Set Bookmark %i"
+msgstr "ブックマーク %i を設定"
+
+#, c-format
+msgid "Go to Bookmark %i"
+msgstr "ブックマーク %i へ移動"
+
+msgid "Hide Sidebar"
+msgstr "サイドバーを隠す"
+
+msgid "Show Sidebar"
+msgstr "サイドバーを表示"
+
+msgid "Hide Status Bar"
+msgstr "ステータスバーを非表示"
+
+msgid "Show Status Bar"
+msgstr "ステータスバーを表示"
+
+msgid "Source text"
+msgstr "ソーステキスト"
+
+msgid "Translation"
+msgstr "対訳"
+
+msgid "ID"
+msgstr "ID"
+
+#, c-format
+msgid "Source text — %s"
+msgstr "ソース テキスト — %s"
+
+msgid "unknown language"
+msgstr "不明な言語"
+
+#, c-format
+msgid "Translation — %s"
+msgstr "翻訳 — %s"
+
+msgid "Error:"
+msgstr "エラー:"
+
+msgid "Source file"
+msgstr "ソースファイル"
+
+msgid "Source file occurrence:"
+msgstr "ソースファイルでの出現:"
+
+msgid "Open in Editor"
+msgstr "エディターで開く"
+
+msgid "Open in editor"
+msgstr "エディターで開く"
+
+msgid "No references for the selected item."
+msgstr "選択項目の参照情報はありません。"
+
+#, c-format
+msgid "Error opening file %s!"
+msgstr "ファイル %s を開く際にエラーが発生しました。"
+
+msgid "Find"
+msgstr "検索"
+
+msgid "Replace"
+msgstr "置き換え"
+
+#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+msgid "Options"
+msgstr "設定"
+
+msgid "Ignore case"
+msgstr "大文字小文字を無視"
+
+msgid "Wrap around"
+msgstr "回り込み"
+
+msgid "Whole words only"
+msgstr "空白等で区切られた単語だけを探す"
+
+msgid "Find in source texts"
+msgstr "ソース テキストを検索"
+
+msgid "Find in translations"
+msgstr "翻訳された文字列を検索対象に含める"
+
+msgid "Find in comments"
+msgstr "コメントを検索対象に含める"
+
+msgid "Close"
+msgstr "閉じる"
+
+msgid "Replace All"
+msgstr "すべて置換"
+
+msgid "Replace all"
+msgstr "すべて置換"
+
+msgid "< &Previous"
+msgstr "< 前へ (&P)"
+
+msgid "&Next >"
+msgstr "次へ > (&N)"
+
+msgid "String to find"
+msgstr "検索する文字列"
+
+msgid "Replacement string"
+msgstr "置換文字列"
+
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "プログラムを実行できません: %s"
+
+msgid "Language Code or Name (e.g. en_GB)"
+msgstr "言語コードまたは言語名 (例: en_GB)"
+
+msgid "Translation Language"
+msgstr "翻訳言語"
+
 msgid "Language of the translation:"
-msgstr "削除された翻訳を完全に消去"
+msgstr "翻訳の言語:"
 
-#: ../src/chooselang.cpp:68
-msgid "Language selection"
-msgstr "言語を選択："
+msgid "Poedit - Catalogs manager"
+msgstr "Poedit - カタログマネージャ"
 
-#: ../src/export_html.cpp:115 ../src/resources/prefs.xrc:319
-#: ../src/resources/prefs.xrc:323 ../src/resources/properties.xrc:33
-msgid "Language:"
-msgstr "言語:"
+msgid "Catalog"
+msgstr "カタログ"
 
-#: ../src/manager.cpp:254
+msgid "Total"
+msgstr "合計"
+
+msgid "Untrans"
+msgstr "未翻訳"
+
+msgid "Fuzzy"
+msgstr "未確定"
+
+msgid "Bad Tokens"
+msgstr "不正な単語"
+
 msgid "Last modified"
 msgstr "最終更新"
 
-#: ../src/prefsdlg.cpp:98
-#, fuzzy
-msgid "Learn From Files..."
-msgstr "%s ファイルを解析中..."
+msgid "Select directory"
+msgstr "ディレクトリの選択"
 
-#: ../src/resources/properties.xrc:202
-#, fuzzy
-msgid "Learn about gettext keywords"
-msgstr "Plural-Form(複数形) とは"
+msgid "Directories:"
+msgstr "ディレクトリ:"
 
-#: ../src/resources/properties.xrc:75
-msgid "Learn about plural forms"
-msgstr "Plural-Form(複数形) とは"
+msgid "<unnamed>"
+msgstr "<名称未設定>"
 
-#: ../src/edframe.cpp:1046 ../src/licensing.cpp:354
-msgid "Learn more"
-msgstr "更に詳しく"
+msgid "Do you want to delete the project?"
+msgstr "プロジェクトを削除してもよいですか ?"
 
-#: ../src/aboutbox.cpp:106 ../src/aboutbox.cpp:114
-msgid "License Agreement"
+msgid "Confirmation"
+msgstr "確認"
+
+msgid ""
+"Do you really want to do mass update of\n"
+"all catalogs in this project?"
 msgstr ""
+"このプロジェクトのすべてのカタログを\n"
+"更新してもよいですか ?"
 
-#: ../src/licensing.cpp:99
-msgid "License Key"
+msgid "Information about the translator"
+msgstr "翻訳者に関する情報"
+
+msgid "Name:"
+msgstr "名前:"
+
+msgid "Your Name"
+msgstr "あなたの名前:"
+
+msgid "Email:"
+msgstr "メール:"
+
+msgid "your_email@example.com"
+msgstr "your_email@example.com"
+
+msgid ""
+"Your name and email address are only used to set the Last-Translator header "
+"of GNU gettext files."
 msgstr ""
+"お名前とメールアドレスは GNU gettext ファイルの Last-Translator ヘッダーを設"
+"定するためにのみ使われます。"
 
-#: ../src/edapp.cpp:771
-msgid "License..."
-msgstr ""
+msgid "Editing"
+msgstr "編集中"
 
-#: ../src/aboutbox.cpp:163
-#, c-format
-msgid "Licensed to %s"
-msgstr ""
+msgid "Automatically compile MO file when saving"
+msgstr "保存する際に MO ファイルを自動コンパイル"
 
-#: ../src/licensing.cpp:229
-#, c-format
-msgid "Licensed to: %s"
-msgstr ""
+msgid "Show summary after catalog update"
+msgstr "カタログ更新後に要約を表示"
 
-#: ../src/catalog.cpp:144
-#, c-format
-msgid "Line %u of file '%s' is corrupted (not valid %s data)."
-msgstr "行番号 %u (ファイル %s ) が破損しています。不正な %s データです。"
+msgid "Check spelling"
+msgstr "スペルチェック"
 
-#: ../src/resources/prefs.xrc:148
-msgid "Line endings format:"
-msgstr "行末の形式:"
+msgid "Always change focus to text input field"
+msgstr "フォーカスは常にテキストフィールドに置く"
 
-#: ../src/resources/prefs.xrc:335
-msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
-msgstr "対象拡張子をセミコロンで区切って指定してください (例. *.cpp;*h):"
-
-#: ../src/edapp.cpp:836
-msgid "Make Lower Case"
-msgstr ""
-
-#: ../src/edapp.cpp:835
-msgid "Make Upper Case"
-msgstr ""
-
-#: ../src/catalog.cpp:219
-#, c-format
-msgid "Malformed header: '%s'"
-msgstr "書式が不正確なヘッダがあります： '%s'"
-
-#: ../src/catalog.cpp:1620
-msgid "Merging differences..."
-msgstr "差分と合成しています..."
-
-#: ../src/licensing.cpp:94
-msgid "Name"
-msgstr ""
-
-#: ../src/propertiesdlg.cpp:71
-#, fuzzy
-msgid "Name of the project the translation is for"
-msgstr "翻訳に問題は見つかりませんでした。"
-
-#: ../src/resources/menus.xrc:191
-msgid "Ne&xt Unfinished"
-msgstr "次の未訳または未確定(&X)"
-
-#: ../src/resources/menus.xrc:190
-msgid "Ne&xt unfinished"
-msgstr "次の未訳または未確定(&X)"
-
-#: ../src/statistics.cpp:172
-msgid "Needs review (fuzzy)"
-msgstr ""
-
-#: ../src/resources/prefs.xrc:112
 msgid ""
 "Never let the list of strings take focus. If enabled, you must use Ctrl-"
 "arrows for keyboard navigation but you can also type text immediately, "
@@ -1148,666 +1100,541 @@ msgstr ""
 "チェックすると一覧にフォーカスが移動しなくなります。キーボードによる項目の移"
 "動は Ctrl + 矢印キー のみとなります。"
 
-#: ../src/resources/manager.xrc:32 ../src/resources/prefs.xrc:257
+msgid "Appearance"
+msgstr "外観"
+
+msgid "Use custom list font:"
+msgstr "カスタムリストフォントを使う:"
+
+msgid "Use custom text fields font:"
+msgstr "カスタムテキストフィールドフォントを使う:"
+
+msgid "Change UI language"
+msgstr "Poedit の UI 言語を変更"
+
+#. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
+msgid "(requires Windows 8 or newer)"
+msgstr "(Window 8 以降が必要)"
+
+msgid "General"
+msgstr "一般"
+
+msgid "Use translation memory"
+msgstr "翻訳メモリを使う"
+
+msgid "Learn From Files..."
+msgstr "ファイルから学習…"
+
+msgid "Learn from files..."
+msgstr "ファイルから学習…"
+
+#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+msgid "Reset"
+msgstr "リセット"
+
+msgid "Consult TM when updating from sources"
+msgstr "ソースからの更新の際に翻訳メモリを調べる"
+
+msgid ""
+"If enabled, Poedit will try to fill in new entries using your previous\n"
+"translations stored in the translation memory. If the TM is\n"
+"near-empty, it will not be very effective. The more translations\n"
+"you edit and the larger the TM grows, the better it gets."
+msgstr ""
+"有効化すると、Poedit は翻訳メモリに保存されている以前の翻訳を使って\n"
+"新しい項目を埋めるよう試みます。もし翻訳メモリが空に近い場合、あまり\n"
+"効率的には動作しないでしょう。より多くの翻訳を編集すればするほど、\n"
+"翻訳メモリが大きくなり結果も改善されます。"
+
+msgid "Stored translations:"
+msgstr "保存された翻訳:"
+
+msgid "Database size on disk:"
+msgstr "ディスク上のデータベースサイズ:"
+
+msgid "Select translation files to import"
+msgstr "インポートする翻訳ファイルを選択"
+
+msgid "Translation Memory"
+msgstr "翻訳メモリ"
+
+msgid "Importing translations..."
+msgstr "翻訳をインポート中…"
+
+msgid "Finalizing..."
+msgstr "完了処理中…"
+
+msgid "Reset translation memory"
+msgstr "翻訳メモリをリセット"
+
+msgid "Are you sure you want to reset the translation memory?"
+msgstr "本当に翻訳メモリをリセットしてよいですか ?"
+
+msgid ""
+"Resetting the translation memory will irrevocably delete all stored "
+"translations from it. You can’t undo this operation."
+msgstr ""
+"翻訳メモリをリセットすると、保存された翻訳がすべて削除されます。元に戻すこと"
+"はできません。"
+
+msgid "Cancel"
+msgstr "キャンセル"
+
+#. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on OS X.
+#. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
+#. length there.
+msgid "TM"
+msgstr "翻訳メモリ"
+
+msgid ""
+"Source code extractors are used to find translatable strings in the source "
+"code files and extract them so that they can be translated."
+msgstr ""
+"ソースコード抽出ツールは、ソースコードファイル内にある翻訳可能な文字列を見つ"
+"けて抽出するために使われます。"
+
 msgid "New"
 msgstr "新規"
 
-#: ../src/resources/menus.xrc:13 ../src/resources/menus.xrc:283
-#, fuzzy
-msgid "New From &POT/PO File..."
-msgstr "&POT ファイルを元に更新します..."
-
-#: ../src/resources/menus.xrc:17 ../src/resources/menus.xrc:287
-#, fuzzy
-msgid "New WordPress Translation..."
-msgstr "翻訳をクリア"
-
-#: ../src/resources/menus.xrc:16 ../src/resources/menus.xrc:286
-#, fuzzy
-msgid "New WordPress translation..."
-msgstr "翻訳をクリア"
-
-#: ../src/resources/menus.xrc:12 ../src/resources/menus.xrc:282
-#, fuzzy
-msgid "New from &POT/PO file..."
-msgstr "&POT ファイルを元に更新します..."
-
-#: ../src/resources/summary.xrc:29
-msgid "New strings"
-msgstr "新規文字列"
-
-#: ../src/digger.cpp:186
-msgid "No files found in: "
-msgstr "ファイルが見つかりません:"
-
-#: ../src/edframe.cpp:1702
-msgid "No problems with the translation found."
-msgstr "翻訳に問題は見つかりませんでした。"
-
-#: ../src/edframe.cpp:1745
-msgid "No references to this string found."
-msgstr "この文字列への参照は見つかりませんでした。"
-
-#: ../src/licensing.cpp:353
-msgid "No, thanks"
-msgstr ""
-
-#: ../src/statistics.cpp:176
-#, fuzzy
-msgid "Not translated"
-msgstr "%i 未翻訳"
-
-#: ../src/export_html.cpp:158
-msgid "Notes"
-msgstr "注記"
-
-#: ../src/edframe.cpp:700 ../src/export_html.cpp:204
-msgid "Notes for translators:"
-msgstr "翻訳者への注記:"
-
-#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:94
-#: ../src/resources/prefs.xrc:295 ../src/resources/prefs.xrc:437
-#: ../src/resources/properties.xrc:225 ../src/resources/summary.xrc:70
-msgid "OK"
-msgstr "OK"
-
-#: ../src/resources/summary.xrc:50
-msgid "Obsolete strings"
-msgstr "もう使われていない文字列"
-
-#: ../src/edframe.cpp:3184
-msgid "One"
-msgstr ""
-
-#: ../src/resources/toolbar.xrc:15 ../src/resources/toolbar.xrc:20
-msgid "Open"
-msgstr "開く"
-
-#: ../src/fileviewer.cpp:73
-#, fuzzy
-msgid "Open In Editor"
+msgid "Edit"
 msgstr "編集"
 
-#: ../src/welcomescreen.cpp:186
-msgid "Open an existing PO file and edit the translation."
-msgstr ""
+msgid "Delete extractor"
+msgstr "抽出ツールを削除"
 
-#: ../src/edapp.cpp:542 ../src/edframe.cpp:1177
-#: ../src/resources/toolbar.xrc:16 ../src/resources/toolbar.xrc:21
-msgid "Open catalog"
-msgstr "カタログを開く"
-
-#: ../src/edframe.cpp:1325 ../src/edframe.cpp:1627
-msgid "Open catalog template"
-msgstr "カタログの雛形を開く"
-
-#: ../src/edframe.cpp:3191
-msgid "Other"
-msgstr ""
-
-#: ../src/resources/menus.xrc:186
-msgid "P&revious Unfinished"
-msgstr "前の未訳または未確定(&R)"
-
-#: ../src/resources/menus.xrc:185
-msgid "P&revious unfinished"
-msgstr "前の未訳または未確定(&R)"
-
-#: ../src/resources/prefs.xrc:355
-msgid "Parser command:"
-msgstr "パーサのコマンド:"
-
-#: ../src/resources/prefs.xrc:314
-msgid "Parser setup"
-msgstr "パーサ準備中"
-
-#: ../src/resources/prefs.xrc:232
-msgid "Parsers"
-msgstr "パーサ"
-
-#: ../src/digger.cpp:92
 #, c-format
-msgid "Parsing %s files..."
-msgstr "%s ファイルを解析中..."
+msgid "Are you sure you want to delete the “%s” extractor?"
+msgstr "本当に「%s」抽出ツールを削除してもよいですか ?"
 
-#: ../src/edapp.cpp:803
-msgid "Paste and Match Style"
+msgid "Extractors"
+msgstr "抽出ツール"
+
+msgid "Accounts"
+msgstr "アカウント"
+
+msgid "Automatically check for updates"
+msgstr "自動的に更新を確認"
+
+msgid "Include beta versions"
+msgstr "ベータ版を含める"
+
+msgid ""
+"Beta versions contain the latest new features and improvements, but may be a "
+"bit less stable."
 msgstr ""
+"ベータバージョンは最新の機能や改善を含みますが、安定性が低い可能性がありま"
+"す。"
 
-#: ../src/propertiesdlg.cpp:67
+msgid "Updates"
+msgstr "更新"
+
+msgid ""
+"These settings affect internal formatting of PO files. Adjust them if you "
+"have specific requirements e.g. because of version control."
+msgstr ""
+"これらの設定は PO ファイルの内部フォーマットに影響します。例えばバージョンコ"
+"ントロールのような特別な要件がある場合は調整してください。"
+
+msgid "Line endings:"
+msgstr "改行:"
+
+msgid "Unix (recommended)"
+msgstr "Unix (推奨)"
+
+msgid "Windows"
+msgstr "Windows"
+
+#. TRANSLATORS: Followed by text control for entering number; wraps text at given width
+msgid "Wrap at:"
+msgstr "折り返し:"
+
+msgid "Preserve formatting of existing files"
+msgstr "既存ファイルのフォーマットを保護する"
+
+msgid "Advanced"
+msgstr "上級者モード"
+
+msgid ""
+"<big>Drag and Drop Folders Here</big>\n"
+"\n"
+"or use the + button"
+msgstr ""
+"<big>フォルダーをここにドラッグアンドドロップ</big>\n"
+"\n"
+"または [+] ボタンを使ってください。"
+
+msgid ""
+"<big>Drag and drop folders here</big>\n"
+"\n"
+"or use the + button"
+msgstr ""
+"<big>フォルダーをここにドラッグアンドドロップ</big>\n"
+"\n"
+"または [+] ボタンを使ってください。"
+
+msgid "Add Folders..."
+msgstr "フォルダーを追加…"
+
+msgid "Add folders..."
+msgstr "フォルダーを追加…"
+
+msgid "Add Files..."
+msgstr "ファイルを追加…"
+
+msgid "Add files..."
+msgstr "ファイルを追加…"
+
+msgid "Add Wildcard..."
+msgstr "ワイルドカードを追加…"
+
+msgid "Add wildcard..."
+msgstr "ワイルドカードを追加…"
+
 msgid "Paths"
 msgstr "パス"
 
-#: ../src/resources/prefs.xrc:11
-msgid "Personalize"
-msgstr "個人情報"
+msgid "Excluded paths"
+msgstr "除外するパス"
 
-#: ../src/edframe.cpp:1753
-msgid "Please choose the reference you want to show:"
-msgstr "表示したい参照を選択してください:"
+msgid "Additional keywords"
+msgstr "追加キーワード"
 
-#: ../src/edapp.cpp:202
-msgid ""
-"Please download a newer version from the Poedit website at http://poedit.net/"
-"beta/"
-msgstr ""
+msgid "Name of the project the translation is for"
+msgstr "翻訳するプロジェクトの名称"
 
-#: ../src/wordpress.cpp:407
-msgid "Please email this log to help@poedit.net. Thank you!"
-msgstr ""
+msgid "e.g. nplurals=2; plural=(n > 1);"
+msgstr "例: nplurals=2; plural=(n > 1);"
 
-#: ../src/propertiesdlg.cpp:256
+msgid "UTF-8 (recommended)"
+msgstr "UTF-8 (推奨)"
+
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr ""
+"まずファイルを保存してください。保存するまでこのセクションは編集できません。"
 
-#: ../src/resources/properties.xrc:45
-msgid "Plural Forms:"
-msgstr "複数形："
+msgid "Comment:"
+msgstr "コメント:"
 
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:2350
-#, c-format
-msgid "Plural forms expression used by the catalog is unusual for %s."
-msgstr ""
+msgid "OK"
+msgstr "OK"
 
-#: ../src/edframe.cpp:679
-msgid "Plural:"
-msgstr "複数："
+msgid "C&lear"
+msgstr "クリア(&L)"
 
-#: ../src/edframe.cpp:462
-msgid "Poedit"
-msgstr "Poedit"
+msgid "Clear the comment"
+msgstr "コメントのクリア"
 
-#: ../src/manager.cpp:69
-msgid "Poedit - Catalogs manager"
-msgstr "Poedit - カタログマネージャ"
+msgid "Create new translations project"
+msgstr "翻訳プロジェクトを作成する"
 
-#: ../src/licensing.cpp:69
-msgid "Poedit Registration"
-msgstr ""
+msgid "Edit the project"
+msgstr "このプロジェクトを編集"
 
-#: ../src/tm/tm_migrate.cpp:157 ../src/tm/tm_migrate.cpp:233
-#: ../src/tm/tm_migrate.cpp:262
-#, fuzzy
-msgid "Poedit Update"
-msgstr "Poedit"
+msgid "Delete the project"
+msgstr "翻訳プロジェクトを削除する"
 
-#: ../src/wordpress.cpp:386
-#, c-format
-msgid ""
-"Poedit couldn’t understand the content of the folder you selected. This may "
-"be a problem with the plugin/theme or it may be Poedit being silly. The "
-"error is:\n"
-"\n"
-" • %s\n"
-"\n"
-"Please email help@poedit.net and we’ll sort it out."
-msgstr ""
+msgid "Update all"
+msgstr "全て更新する"
 
-#: ../src/digger.cpp:200
-msgid "Poedit did not find any files in scanned directories."
-msgstr ""
-"Poedit は検索対象ディレクトリにおいてファイルを見つけられませんでした。"
+msgid "Update all catalogs in the project"
+msgstr "プロジェクトのすべてのカタログを更新する"
 
-#: ../src/edapp.cpp:607
-msgid "Poedit is an easy to use translations editor."
-msgstr "Poeditは使いやすい翻訳エディタです。"
+msgid "Edit project"
+msgstr "プロジェクトを編集"
 
-#: ../src/tm/tm_migrate.cpp:232
-#, fuzzy
-msgid "Poedit needs to convert your translation memory to a new format."
-msgstr "Poedit の翻訳メモリにエラー"
-
-#: ../src/resources/prefs.xrc:4
-msgid "Preferences"
-msgstr "設定"
-
-#: ../src/tm/tm_migrate.cpp:157
-msgid "Preparing migration..."
-msgstr ""
-
-#: ../src/tm/tm_migrate.cpp:237
-msgid "Proceed"
-msgstr "続行"
-
-#: ../src/export_html.cpp:108
-msgid "Project info"
-msgstr "情報"
-
-#: ../src/export_html.cpp:112 ../src/resources/properties.xrc:18
-msgid "Project name and version:"
-msgstr "プロジェクトの名前とバージョン:"
-
-#: ../src/resources/manager.xrc:58
 msgid "Project name:"
 msgstr "プロジェクト名:"
 
-#: ../src/licensing.cpp:318
-msgid ""
-"Purchasing the full version will unlock more features\n"
-"in this and future versions of Poedit, including:\n"
-"\n"
-msgstr ""
+msgid "Browse"
+msgstr "参照"
 
-#: ../src/edframe.cpp:2732
-msgid "Purge"
-msgstr "使わない翻訳の整理"
+msgid "Add directory to the list"
+msgstr "ディレクトリをリストに追加"
 
-#: ../src/edframe.cpp:2724
-msgid "Purge deleted translations"
-msgstr "削除された翻訳を一掃する"
+msgid "&Preferences..."
+msgstr "設定… (&P)"
 
-#: ../src/edapp.cpp:203 ../src/tm/tm_migrate.cpp:237
-#: ../src/resources/manager.xrc:126 ../src/resources/menus.xrc:60
-#: ../src/resources/menus.xrc:299
+msgid "&Close"
+msgstr "閉じる (&C)"
+
+msgid "E&xit"
+msgstr "終了 (&X)"
+
 msgid "Quit"
 msgstr "終了"
 
-#: ../src/edapp.cpp:794
-msgid "Redo"
-msgstr ""
+msgid "&New..."
+msgstr "新規カタログ… (&N)"
 
-#: ../src/edframe.cpp:1753
-msgid "References"
-msgstr "参照"
+msgid "New from &POT/PO file..."
+msgstr "&POT ファイルを元に更新します…"
 
-#: ../src/edframe.cpp:2896 ../src/edframe.cpp:2900
-msgid "References:"
-msgstr "参照位置:"
+msgid "New From &POT/PO File..."
+msgstr "POT ファイルを元に更新… (&P)"
 
-#: ../src/licensing.cpp:124 ../src/licensing.cpp:128
-msgid "Register"
-msgstr ""
+msgid "&Open..."
+msgstr "開く… (&O)"
 
-#: ../src/edframe.cpp:2293
-msgid "Required header Plural-Forms is missing."
-msgstr "必要なヘッダ Plural-Forms がありません。"
+msgid "Open Recent"
+msgstr "最近のファイルを開く"
 
-#: ../src/edframe.cpp:2354
-msgid "Review"
-msgstr ""
+msgid "Open from Crowdin..."
+msgstr "Crowdin から開く…"
 
-#: ../src/edframe.cpp:1136 ../src/resources/toolbar.xrc:25
-#: ../src/resources/toolbar.xrc:30
-msgid "Save"
-msgstr "保存"
+msgid "Open From Crowdin..."
+msgstr "Crowdin から開く…"
 
-#: ../src/resources/menus.xrc:35
+msgid "&Save"
+msgstr "保存 (&S)"
+
+msgid "Save &as..."
+msgstr "名前を付けて保存 (&A)…"
+
 msgid "Save &As..."
 msgstr "名前を付けて保存 (&A)..."
 
-#: ../src/resources/menus.xrc:34
-msgid "Save &as..."
-msgstr "名前を付けて保存 (&A)..."
+msgid "Compile to MO..."
+msgstr "MO にコンパイル…"
 
-#: ../src/edframe.cpp:1238
-msgid "Save as..."
-msgstr "名前を付けて保存..."
+msgid "E&xport as HTML..."
+msgstr "HTML としてエクスポート… (&E)"
 
-#: ../src/resources/toolbar.xrc:26 ../src/resources/toolbar.xrc:31
-msgid "Save catalog"
-msgstr "カタログの保存"
+msgid "Check for updates..."
+msgstr "更新を確認…"
 
-#: ../src/edframe.cpp:1130
-msgid "Save changes"
-msgstr "変更を保存"
+msgid "Catalogs &manager"
+msgstr "カタログマネージャ (&M)"
 
-#: ../src/digger.cpp:77
-msgid "Scanning files..."
-msgstr "ファイルを検索中..."
+msgid "Catalogs &Manager"
+msgstr "カタログマネージャ (&M)"
 
-#: ../src/manager.cpp:285
-msgid "Select directory"
-msgstr "ディレクトリの選択"
+msgid "Translation is &fuzzy"
+msgstr "未確定翻訳 (&F)"
 
-#: ../src/edframe.cpp:1402
-msgid "Select the folder with the WordPress theme or plugin"
-msgstr ""
+msgid "Translation Is &Fuzzy"
+msgstr "未確定翻訳 (&F)"
 
-#: ../src/prefsdlg.cpp:166
-#, fuzzy
-msgid "Select translation files to import"
-msgstr "Poedit の翻訳メモリにエラー"
+msgid "Edit &comment"
+msgstr "コメントを編集 (&C)"
 
-#: ../src/chooselang.cpp:67
-msgid "Select your prefered language"
-msgstr "Poeditの操作に用いる言語を選んでください"
+msgid "Edit &Comment"
+msgstr "コメントを編集 (&C)"
 
-#: ../src/edframe.cpp:3269
-#, c-format
-msgid "Set Bookmark %i\tAlt+%i"
-msgstr "しおり %i を設定\tAlt+%i"
+msgid "Suggestions"
+msgstr "提案"
 
-#: ../src/edframe.cpp:3263
-#, c-format
-msgid "Set Bookmark %i\tCtrl+%i"
-msgstr "しおり %i を設定\tCtrl+%i"
+msgid "&Show references"
+msgstr "参照画面の表示 (&S)"
 
-#: ../src/edframe.cpp:3266
-#, c-format
-msgid "Set bookmark %i\tAlt+%i"
-msgstr "しおり %i を設定\tAlt+%i"
+msgid "&Show References"
+msgstr "参照画面の表示 (&S)"
 
-#: ../src/edframe.cpp:2235
-msgid "Set email"
-msgstr "E-mail アドレスを設定"
+msgid "&Find..."
+msgstr "検索… (&F)"
 
-#: ../src/edframe.cpp:2265
-#, fuzzy
-msgid "Set language"
-msgstr "言語の選択"
+msgid "Replace..."
+msgstr "置換…"
 
-#: ../src/edframe.cpp:2250
-#, fuzzy
-msgid "Set name"
-msgstr "言語の選択"
+msgid "Find next"
+msgstr "次を検索"
 
-#: ../src/edapp.cpp:814
-msgid "Show Spelling and Grammar"
-msgstr ""
+msgid "Find previous"
+msgstr "前を検索"
 
-#: ../src/edapp.cpp:824
-msgid "Show Substitutions"
-msgstr ""
+msgid "Find and Replace..."
+msgstr "検索・置換"
 
-#: ../src/resources/prefs.xrc:103
-msgid "Show summary after catalog update"
-msgstr "カタログ更新後に要約を表示"
+msgid "Find Next"
+msgstr "次を検索"
 
-#: ../src/edframe.cpp:672
-msgid "Singular:"
-msgstr "単数形："
+msgid "Find Previous"
+msgstr "前を検索"
 
-#: ../src/edapp.cpp:826
-msgid "Smart Copy/Paste"
-msgstr ""
+msgid "&Preferences"
+msgstr "設定 (&P)"
 
-#: ../src/edapp.cpp:828
-msgid "Smart Dashes"
-msgstr ""
+msgid "Display entry &IDs"
+msgstr "項目 ID を表示 (&I)"
 
-#: ../src/edapp.cpp:829
-msgid "Smart Links"
-msgstr ""
+msgid "Display Entry &IDs"
+msgstr "項目 ID を表示 (&I)"
 
-#: ../src/edapp.cpp:827
-msgid "Smart Quotes"
-msgstr ""
-
-#: ../src/tm/tm_migrate.cpp:265
-msgid ""
-"Something went wrong and your translation memory data couldn't be migrated. "
-"Please email help@poedit.net and we’ll get it fixed."
-msgstr ""
-
-#: ../src/resources/menus.xrc:221
-msgid "Sort by &File Order"
-msgstr "ソート ファイルに書かれている順(&F)"
-
-#: ../src/resources/menus.xrc:226
-msgid "Sort by &Source"
-msgstr "ソート ソースファイル順(&S)"
-
-#: ../src/resources/menus.xrc:231
-msgid "Sort by &Translation"
-msgstr "ソート 対訳順(&T)"
-
-#: ../src/resources/menus.xrc:220
 msgid "Sort by &file order"
-msgstr "ソート ファイルに書かれている順(&F)"
+msgstr "ファイル順でソート (&F)"
 
-#: ../src/resources/menus.xrc:225
+msgid "Sort by &File Order"
+msgstr "ファイル順でソート (&F)"
+
 msgid "Sort by &source"
-msgstr "ソート ソースファイル順(&S)"
+msgstr "ソース順でソート (&S)"
 
-#: ../src/resources/menus.xrc:230
+msgid "Sort by &Source"
+msgstr "ソース順でソート (&S)"
+
 msgid "Sort by &translation"
-msgstr "ソート 対訳順(&T)"
+msgstr "翻訳順でソート (&T)"
 
-#: ../src/export_html.cpp:152
-msgid "Source"
-msgstr "ソース"
+msgid "Sort by &Translation"
+msgstr "翻訳順でソート (&T)"
 
-#: ../src/statistics.cpp:188
-#, fuzzy
-msgid "Source Text"
-msgstr "ソーステキスト"
+msgid "&Group by context"
+msgstr "コンテクストでグループ化 (&G)"
 
-#: ../src/resources/prefs.xrc:412 ../src/resources/properties.xrc:127
-msgid "Source code charset:"
-msgstr "ソースコードの文字符号化法:"
+msgid "&Group By Context"
+msgstr "コンテクストでグループ化 (&G)"
 
-#: ../src/catalog.cpp:1603
-#, fuzzy, c-format
-msgid "Source code directory '%s' doesn't exist."
-msgstr "ファイル '%s' が見つかりません。"
+msgid "Entries with errors first"
+msgstr "エラーのある項目を先頭に表示"
 
-#: ../src/resources/prefs.xrc:238
-msgid "Source code parsers:"
-msgstr "ソースコードのパーサ:"
+msgid "Entries with Errors First"
+msgstr "エラーのある項目を先頭に表示"
 
-#: ../src/fileviewer.cpp:48
-msgid "Source file"
-msgstr "ソースファイル"
+msgid "&Untranslated entries first"
+msgstr "未訳の項目を先頭に (&U)"
 
-#: ../src/fileviewer.cpp:63
-msgid "Source file occurrence:"
-msgstr "ソースファイルでの出現"
+msgid "&Untranslated Entries First"
+msgstr "未訳の項目を先頭に (&U)"
 
-#: ../src/edlistctrl.cpp:330
-msgid "Source text"
-msgstr "ソーステキスト"
+msgid "Show sidebar"
+msgstr "サイドバーを表示"
 
-#: ../src/edframe.cpp:665
-msgid "Source text:"
-msgstr "ソーステキスト:"
+msgid "Show status bar"
+msgstr "ステータスバーを表示"
 
-#: ../src/resources/properties.xrc:214
-msgid "Sources keywords"
-msgstr "ソース中のキーワード"
+msgid "C&atalog"
+msgstr "カタログ(&A)"
 
-#: ../src/resources/properties.xrc:178
-msgid "Sources paths"
-msgstr "ソースの検索パス"
+msgid "&Update from sources"
+msgstr "ソースから更新 (&U)"
 
-#: ../src/edapp.cpp:840
-msgid "Speech"
-msgstr ""
+msgid "&Update from Sources"
+msgstr "ソースから更新 (&U)"
 
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:1042
-#, c-format
-msgid "Spellchecker dictionary for %s isn't available, you need to install it."
-msgstr "%s の綴り検査辞書がありません。インストールしてください。"
+msgid "Update from &POT file..."
+msgstr "POT ファイルから更新… (&P)"
 
-#: ../src/edapp.cpp:812
-msgid "Spelling and Grammar"
-msgstr ""
+msgid "Update from &POT File..."
+msgstr "POT ファイルから更新… (&P)"
 
-#: ../src/edapp.cpp:842
-msgid "Start Speaking"
-msgstr ""
+msgid "Sync with Crowdin"
+msgstr "Crowdin と同期"
 
-#: ../src/resources/find.xrc:43
-msgid "Start from the first item"
-msgstr "最初の項目から順に検索する"
+msgid "Fill missing translations from &TM..."
+msgstr "翻訳メモリを使って未翻訳項目を埋める… (&T)"
 
-#: ../src/statistics.cpp:145
-msgid "Statistics"
-msgstr ""
+msgid "Fill Missing Translations from &TM..."
+msgstr "翻訳メモリを使って未翻訳項目を埋める… (&T)"
 
-#: ../src/edapp.cpp:843
-msgid "Stop Speaking"
-msgstr ""
+msgid "&Purge deleted translations"
+msgstr "削除された翻訳を一掃する (&P)"
 
-#: ../src/prefsdlg.cpp:157
-#, fuzzy
-msgid "Stored translations:"
-msgstr "ソート 対訳順(&T)"
+msgid "&Purge Deleted Translations"
+msgstr "削除された翻訳を一掃する (&P)"
 
-#: ../src/resources/find.xrc:21
-msgid "String to find:"
-msgstr "検索する文字列:"
+msgid "&Validate translations"
+msgstr "翻訳を検査 (&V)"
 
-#: ../src/statistics.cpp:194
-msgid "Strings in source language"
-msgstr ""
+msgid "&Validate Translations"
+msgstr "翻訳を検査 (&V)"
 
-#: ../src/edapp.cpp:822
-msgid "Substitutions"
-msgstr ""
+msgid "&Properties..."
+msgstr "設定… (&P)"
 
-#: ../src/edframe.cpp:2298
-#, c-format
-msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "PluralForms ヘッダに文法エラーがあります。(\"%s\")"
+msgid "&Done and next"
+msgstr "翻訳済みとし、次へ (&D)"
 
-#: ../src/welcomescreen.cpp:192
+msgid "&Done and Next"
+msgstr "翻訳済みとし、次へ (&D)"
+
+msgid "&Previous translation"
+msgstr "前の翻訳 (&P)"
+
+msgid "&Previous Translation"
+msgstr "前の翻訳 (&P)"
+
+msgid "&Next translation"
+msgstr "次の翻訳 (&N)"
+
+msgid "&Next Translation"
+msgstr "次の翻訳 (&N)"
+
+msgid "P&revious unfinished"
+msgstr "前の未訳または未確定 (&R)"
+
+msgid "P&revious Unfinished"
+msgstr "前の未訳または未確定 (&R)"
+
+msgid "Ne&xt unfinished"
+msgstr "次の未訳または未確定 (&X)"
+
+msgid "Ne&xt Unfinished"
+msgstr "次の未訳または未確定 (&X)"
+
+msgid "&Online help"
+msgstr "オンラインヘルプ (&O)"
+
+msgid "&Online Help"
+msgstr "オンラインヘルプ (&O)"
+
+msgid "&GNU gettext manual"
+msgstr "GNU gettext ドキュメント (&G)"
+
+msgid "&GNU gettext Manual"
+msgstr "GNU gettext ドキュメント (&G)"
+
+msgid "&About Poedit"
+msgstr "Poedit について (&A)"
+
+msgid "&About"
+msgstr "このプログラムについて (&A)"
+
+msgid "Extractor setup"
+msgstr "抽出ツール設定"
+
+msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
+msgstr "セミコロン区切りの拡張子 (例. *.cpp;*h):"
+
+msgid "Invocation:"
+msgstr "呼び出し:"
+
+msgid "Command to extract translations:"
+msgstr "翻訳を抽出するコマンド:"
+
 msgid ""
-"Take an existing PO file or POT template and create a new translation from "
-"it."
-msgstr ""
-
-#: ../src/welcomescreen.cpp:239
-msgid "Take translatable strings from an existing POT template."
-msgstr ""
-
-#: ../src/export_html.cpp:122 ../src/resources/properties.xrc:101
-msgid "Team's email address:"
-msgstr "翻訳チームのメールアドレス:"
-
-#: ../src/export_html.cpp:118 ../src/resources/properties.xrc:87
-msgid "Team:"
-msgstr "翻訳チーム:"
-
-#: ../src/edapp.cpp:830
-msgid "Text Replacement"
-msgstr ""
-
-#: ../src/wordpress.cpp:233
-#, c-format
-msgid "The \"%s\" plugin isn't localization-ready."
-msgstr ""
-
-#: ../src/wordpress.cpp:177
-#, c-format
-msgid "The \"%s\" theme isn't localization-ready."
-msgstr ""
-
-#: ../src/catalog.cpp:1513
-#, fuzzy, c-format
-msgid ""
-"The catalog couldn't be saved in '%s' charset as specified in catalog "
-"settings.\n"
-"\n"
-"It was saved in UTF-8 instead and the setting was modified accordingly."
-msgstr ""
-"カタログは設定の中で指定された '%s' キャラクタセットで保存すること\n"
-"ができませんでした。\n"
-"代わりに UTF-8 で保存し、設定も変更されました。"
-
-#: ../src/edframe.cpp:165 ../src/edframe.cpp:2185
-msgid "The file cannot be opened."
-msgstr ""
-
-#: ../src/edframe.cpp:170 ../src/edframe.cpp:2190
-msgid ""
-"The file may be either corrupted or in a format not recognized by Poedit."
-msgstr ""
-
-#: ../src/edframe.cpp:1691
-msgid ""
-"The file was saved safely, but it cannot be compiled into the MO format and "
-"used."
-msgstr ""
-"ファイルは安全に保存されました、しかし MO 形式にコンパイルできなかったので使"
-"用できません。"
-
-#: ../src/licensing.cpp:104
-msgid ""
-"The registration key can be used on multiple computers you use personally or "
-"for multiple\n"
-"accounts on a single computer."
-msgstr ""
-
-#: ../src/welcomescreen.cpp:231
-msgid "The simplest way to fill this catalog is to update it from a POT:"
-msgstr ""
-
-#: ../src/edframe.cpp:1706
-msgid "The translation is ready for use."
-msgstr "翻訳は使用できます。"
-
-#: ../src/welcomescreen.cpp:217
-msgid "There are no translations. That’s unusual."
-msgstr ""
-
-#: ../src/catalog.cpp:1389
-msgid ""
-"There was a problem formatting the file nicely (but it was saved all right)."
-msgstr ""
-"ファイルを整形する際に問題が発生しました（しかし、保存はできています）。"
-
-#: ../src/catalog.cpp:1045
-msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
-"corrupted as the result."
-msgstr ""
-"カタログを読み出し中にエラーが発生しました。この結果、いくつかのデータが失わ"
-"れたり破壊されたりしているかもしれません"
-
-#: ../src/resources/summary.xrc:37
-msgid ""
-"These strings are no longer in the sources.\n"
-"Poedit will remove them from the catalog now."
-msgstr ""
-"これらの文字列はソースファイルから失われています。 \n"
-"Poedit はカタログから取り除きます。"
-
-#: ../src/resources/summary.xrc:16
-msgid ""
-"These strings were found in the sources but were not in the catalog.\n"
-"Poedit will add them to the catalog now."
-msgstr ""
-"これらの文字列はソースファイル中に存在しますが、カタログにありませんでし"
-"た。\n"
-"Poedit はカタログにそれらの文字列を加えます。"
-
-#: ../src/edapp.cpp:201
-msgid "This beta version of Poedit expired."
-msgstr ""
-
-#: ../src/edframe.cpp:2278
-msgid ""
-"This catalog has entries with plural forms, but doesn't have Plural-Forms "
-"header configured."
-msgstr ""
-"このカタログには複数形を含む項目がありますが、Plural-Forms ヘッダが設定されて"
-"いません。"
-
-#: ../src/resources/prefs.xrc:367
-msgid ""
-"This is the command used to launch the parser.\n"
+"This is the command used to launch the extractor.\n"
 "%o expands to the name of output file, %K to list\n"
 "of keywords, %F to list of input files,\n"
 "%C to charset flag (see below)."
 msgstr ""
-"これはパーサ起動時に使用されます。\n"
-"%o には出力ファイル名、 %K にはキーワードの一覧、\n"
-"%F には入力ファイルの一覧、%C には文字符号化法が\n"
-"展開されます。下を参照ください。"
+"これは抽出ツールを立ち上げるためのコマンドです。\n"
+"%o は出力ファイルの名前として展開され、%K は\n"
+"キーワードのリスト、%F は入力ファイルのリスト、\n"
+"%C は文字集合フラグ (以下を参照) です。"
 
-#: ../src/tm/tm_migrate.cpp:236
+msgid "An item in keywords list:"
+msgstr "キーワード一覧の各項目:"
+
 msgid ""
-"This must be done before Poedit can start. It may take a few minutes if you "
-"have lots of translations stored, but should normally be much faster."
+"This will be attached to the command line once\n"
+"for each keyword. %k expands to the keyword."
 msgstr ""
+"各キーワードごとに一回コマンドラインへ追加されます。\n"
+"%k にキーワード名が展開されます。"
 
-#: ../src/resources/prefs.xrc:424
+msgid "An item in input files list:"
+msgstr "入力ファイル一覧の各項目:"
+
+#, c-format
+msgid ""
+"This will be attached to the command line once\n"
+"for each input file. %f expands to the filename."
+msgstr ""
+"各入力ファイルごとに一回コマンドラインへ追加されます。\n"
+"%f にファイル名が展開されます。"
+
+msgid "Source code charset:"
+msgstr "ソースコードの文字符号化法:"
+
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
@@ -1816,37 +1643,220 @@ msgstr ""
 "ソースコードの文字符号化法が指定された場合のみ\n"
 "コマンドラインに追加されます。%c に符号化法の値が展開されます。"
 
-#: ../src/resources/prefs.xrc:405
+msgid "Catalog properties"
+msgstr "カタログの設定"
+
+msgid "Project name and version:"
+msgstr "プロジェクト名とバージョン:"
+
+msgid "Plural Forms:"
+msgstr "複数形:"
+
+msgid "Use default rules for this language"
+msgstr "この言語のデフォルトルールを使う"
+
+msgid "Use custom expression"
+msgstr "カスタム表現を使用"
+
+msgid "Learn about plural forms"
+msgstr "複数形とは"
+
+msgid "Charset:"
+msgstr "文字符号化法:"
+
+msgid "Team:"
+msgstr "翻訳チーム:"
+
+msgid "Team's email address:"
+msgstr "翻訳チームのメールアドレス:"
+
+msgid "Translation properties"
+msgstr "翻訳の設定"
+
+msgid "Sources paths"
+msgstr "ソースの検索パス"
+
+msgid "Extract text from source files in the following directories:"
+msgstr "以下のディレクトリのソースファイルからテキストを抽出:"
+
+msgid "Base path:"
+msgstr "ベースのパス:"
+
+msgid "Sources keywords"
+msgstr "ソース中のキーワード"
+
+msgid ""
+"Use these keywords (function names) to recognize translatable strings\n"
+"in source files:"
+msgstr ""
+"ソースファイル中でこれらのキーワード (または関数名) を\n"
+"翻訳対象文字列の認識に使います:"
+
+msgid "Learn about gettext keywords"
+msgstr "gettext キーワードとは"
+
+msgid "Update summary"
+msgstr "要約を更新"
+
+msgid ""
+"These strings were found in the sources but were not in the catalog.\n"
+"Poedit will add them to the catalog now."
+msgstr ""
+"これらの文字列がソースファイル中に存在しますが、カタログには含まれていません"
+"でした。\n"
+"Poedit はカタログにこの文字列を追加します。"
+
+msgid "New strings"
+msgstr "新規文字列"
+
+msgid ""
+"These strings are no longer in the sources.\n"
+"Poedit will remove them from the catalog now."
+msgstr ""
+"これらの文字列はソースファイルにはもう存在しません。 \n"
+"Poedit はカタログからこの文字列を取り除きます。"
+
+msgid "Obsolete strings"
+msgstr "もう使われていない文字列"
+
+msgid "(0 new, 0 obsolete)"
+msgstr "(新規 0、使用しないように変更 0)"
+
+msgid "Open"
+msgstr "開く"
+
+msgid "Save catalog"
+msgstr "カタログの保存"
+
+msgid "Validate"
+msgstr "検査"
+
+msgid "Check for errors in the translation"
+msgstr "翻訳中のエラーをチェック"
+
+msgid "Update"
+msgstr "更新する"
+
+msgid "Update catalog - synchronize it with sources"
+msgstr "カタログの更新 - ソースと同期させる"
+
+msgid "Toggled if selected string has fuzzy translation"
+msgstr "選択した文字列に未確定翻訳がある場合は切り替えられます"
+
+msgid "Show or hide the sidebar"
+msgstr "サイドバーを表示・非表示にする。"
+
+#. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
+msgid "Previous source text:"
+msgstr "以前のソーステキスト:"
+
+msgid ""
+"The old source text (before it changed during an update) that the fuzzy "
+"translation corresponds to."
+msgstr "未確定翻訳が対応する、更新で変更される前の旧ソーステキスト。"
+
+msgid "Notes for translators:"
+msgstr "翻訳者への注記:"
+
+msgid "Add comment"
+msgstr "コメントを追加"
+
+msgid "Add Comment"
+msgstr "コメントを追加"
+
+msgid "Translation suggestions:"
+msgstr "翻訳の提案:"
+
+#. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
+msgid "No matches found"
+msgstr "一致するものが見つかりませんでした"
+
+#. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (OS X, Linux).
+msgid "No Matches Found"
+msgstr "一致するものが見つかりませんでした"
+
+msgid "This string was found in Poedit’s translation memory."
+msgstr "Poedit の翻訳メモリにこの文字列が見つかりました。"
+
+#, c-format
+msgid "(New: %i, obsolete: %i)"
+msgstr "(新規 %i、使用しないように変更 %i)"
+
+#, c-format
+msgid "Importing translations: %d"
+msgstr "翻訳をインポート中: %d"
+
+msgid "Poedit Update"
+msgstr "Poedit の更新"
+
+msgid "Preparing migration..."
+msgstr "移行準備中…"
+
+#, c-format
+msgid "Migration exit status: %d"
+msgstr "移行終了ステータス: %d"
+
+msgid "Poedit needs to convert your translation memory to a new format."
+msgstr "Poedit は既存の翻訳メモリを新しい形式に変換する必要があります。"
+
+msgid ""
+"This must be done before Poedit can start. It may take a few minutes if you "
+"have lots of translations stored, but should normally be much faster."
+msgstr ""
+"これは Poedit をスタートする前に行う必要があります。たくさんの翻訳が保存され"
+"ている場合は数分かかる場合がありますが、通常はもっと早く完了するはずです。"
+
+msgid "Proceed"
+msgstr "続行"
+
+msgid "Translation memory migration failed."
+msgstr "翻訳メモリの移行に失敗しました。"
+
 #, c-format
 msgid ""
-"This will be attached to the command line once\n"
-"for each input file. %f expands to the filename."
+"Your translation memory data couldn't be migrated. The error was:\n"
+"\n"
+"%s\n"
+"Please email help@poedit.net and we’ll get it fixed."
 msgstr ""
-"入力ファイル毎に指定された文字列が展開され、全てをつなげて\n"
-"ファイル一覧とします。%f が各ファイル名に置きかわります。"
+"翻訳メモリのデータを移行できませんでした。エラーは以下のとおりです。\n"
+"\n"
+"%s\n"
+"help@poedit.net にメールしてください。お手伝いさせていただきます。"
 
-#: ../src/resources/prefs.xrc:386
+msgid "Cannot create temporary directory."
+msgstr "一時ディレクトリを作成できません。"
+
+msgid "Welcome to Poedit"
+msgstr "Poedit へようこそ"
+
+msgid "Edit a translation"
+msgstr "翻訳を編集"
+
+msgid "Open an existing PO file and edit the translation."
+msgstr "既存の PO ファイルを開いて翻訳を編集する。"
+
 msgid ""
-"This will be attached to the command line once\n"
-"for each keyword. %k expands to the keyword."
+"Take an existing PO file or POT template and create a new translation from "
+"it."
 msgstr ""
-"キーワード毎に指定された文字列が展開され、全てをつなげて\n"
-"キーワード一覧とします。%k が各キーワードに置きかわります。"
+"既存の PO または POT テンプレートから新しい翻訳プロジェクトを作成する。"
 
-#: ../src/resources/toolbar.xrc:52
-msgid "Toggled if selected string has fuzzy translation"
-msgstr "現在の項目を未確定翻訳に設定"
+msgid "Collaborate on a translation with Crowdin"
+msgstr "Crowdin で翻訳の共同作業をする"
 
-#: ../src/manager.cpp:250
-msgid "Total"
-msgstr "トータル"
+msgid ""
+"Download a file from Crowdin project, translate and sync your changes back."
+msgstr ""
+"Crowdin プロジェクトからファイルをダウンロードし、翻訳した後に変更内容を同期"
+"します。"
 
-#: ../src/edapp.cpp:833
-#, fuzzy
-msgid "Transformations"
-msgstr "対訳"
+msgid "What is Crowdin?"
+msgstr "Crowdin とは ?"
 
-#: ../src/welcomescreen.cpp:222
+msgid "There are no translations. That’s unusual."
+msgstr "翻訳が存在しません。何かがおかしいようです。"
+
 msgid ""
 "Translatable entries aren't added manually in the Gettext system, but are "
 "automatically extracted\n"
@@ -1854,629 +1864,36 @@ msgid ""
 "Translators typically use PO template files (POTs) prepared for them by the "
 "developer."
 msgstr ""
+"翻訳可能な項目は手動で Gettext システムに追加されるのではなく、ソースコードか"
+"ら自動的に抽出されます。\n"
+"これにより、項目を常に最新版で正確に保つことができます。\n"
+"翻訳者は通常、開発者が用意した PO テンプレートファイル (POT) を使用します。"
 
-#: ../src/resources/menus.xrc:142
-#, fuzzy
-msgid "Translate Using &TM"
-msgstr "翻訳メモリを利用して自動翻訳する(&A)"
+msgid "(Learn more about GNU gettext)"
+msgstr "(GNU gettext の詳細)"
 
-#: ../src/welcomescreen.cpp:197
-msgid "Translate WordPress theme or plugin"
+msgid "The simplest way to fill this catalog is to update it from a POT:"
 msgstr ""
+"このカタログを埋める一番簡単な方法は POT ファイルから更新することです。"
 
-#: ../src/resources/menus.xrc:141
-#, fuzzy
-msgid "Translate using &TM"
-msgstr "対訳"
-
-#: ../src/statistics.cpp:168
-#, fuzzy
-msgid "Translated"
-msgstr "対訳"
-
-#: ../src/edframe.cpp:2799
-#, fuzzy, c-format
-msgid "Translated %u strings"
-msgstr "%i %% 翻訳されています、%i の文字列"
-
-#: ../src/edframe.cpp:2781
-msgid "Translating using TM..."
-msgstr ""
-
-#: ../src/edlistctrl.cpp:331 ../src/export_html.cpp:155
-#: ../src/statistics.cpp:158
-msgid "Translation"
-msgstr "対訳"
-
-#: ../src/resources/menus.xrc:82
-msgid "Translation Is &Fuzzy"
-msgstr "未確定翻訳 (&F)"
-
-#: ../src/languagectrl.cpp:89
-#, fuzzy
-msgid "Translation Language"
-msgstr "対訳"
-
-#: ../src/prefsdlg.cpp:179 ../src/prefsdlg.cpp:220
-msgid "Translation Memory"
-msgstr "翻訳メモリ"
-
-#: ../src/resources/menus.xrc:81
-msgid "Translation is &fuzzy"
-msgstr "未確定翻訳 (&F)"
-
-#: ../src/tm/tm_migrate.cpp:261
-#, fuzzy
-msgid "Translation memory migration failed."
-msgstr "翻訳メモリデータベースにエラー: %s"
-
-#: ../src/resources/properties.xrc:139
-msgid "Translation properties"
-msgstr "翻訳の設定"
-
-#: ../src/edlistctrl.cpp:387
-#, fuzzy, c-format
-msgid "Translation — %s"
-msgstr "対訳"
-
-#: ../src/edframe.cpp:2248
-#, fuzzy
-msgid "Translation's project name isn't set."
-msgstr "ファイル '%s' が見つかりません。"
-
-#: ../src/edframe.cpp:687
-msgid "Translation:"
-msgstr "翻訳:"
-
-#: ../src/wordpress.cpp:312
-#, fuzzy, c-format
-msgid "Translations folder (%s) doesn't exist."
-msgstr "ファイル '%s' が見つかりません。"
-
-#: ../src/statistics.cpp:180
-#, fuzzy
-msgid "Translations with errors"
-msgstr "翻訳メモリ"
-
-#: ../src/edframe.cpp:3186
-msgid "Two"
-msgstr ""
-
-#: ../src/propertiesdlg.cpp:108
-msgid "UTF-8 (recommended)"
-msgstr "UTF-8 (推奨)"
-
-#: ../src/edapp.cpp:793 ../src/resources/summary.xrc:78
-msgid "Undo"
-msgstr "アンドゥ"
-
-#: ../src/resources/prefs.xrc:156
-msgid "Unix (recommended)"
-msgstr "Unix (推奨)"
-
-#: ../src/manager.cpp:251
-msgid "Untrans"
-msgstr "翻訳できない"
-
-#: ../src/resources/toolbar.xrc:44
-msgid "Update"
-msgstr "更新する"
-
-#: ../src/resources/manager.xrc:48
-msgid "Update all"
-msgstr "全て更新する"
-
-#: ../src/resources/manager.xrc:49
-msgid "Update all catalogs in the project"
-msgstr "プロジェクトのすべてのカタログを更新する"
-
-#: ../src/resources/toolbar.xrc:45
-msgid "Update catalog - synchronize it with sources"
-msgstr "カタログの更新 - ソースと同期させる"
-
-#: ../src/resources/menus.xrc:138
-msgid "Update from &POT File..."
-msgstr "&POT ファイルを元に更新します..."
-
-#: ../src/resources/menus.xrc:137
-msgid "Update from &POT file..."
-msgstr "&POT ファイルを元に更新します..."
-
-#: ../src/welcomescreen.cpp:238
-#, fuzzy
 msgid "Update from POT"
-msgstr "&POT ファイルを元に更新します..."
+msgstr "POT ファイルから更新"
 
-#: ../src/resources/summary.xrc:4
-msgid "Update summary"
-msgstr "要約を更新中..."
+msgid "Take translatable strings from an existing POT template."
+msgstr "既存の POT テンプレートから翻訳可能な文字列を使います。"
 
-#: ../src/edframe.cpp:1597 ../src/manager.cpp:447
-msgid "Updating catalog"
-msgstr "カタログを更新中"
-
-#: ../src/edframe.cpp:1613
-msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr ""
-"カタログの更新に失敗しました。詳細を見るには 'Details>>' をクリックしてくださ"
-"い。"
-
-#: ../src/welcomescreen.cpp:169
-msgid "Upgrade to the Pro version of Poedit with more features."
-msgstr ""
-
-#: ../src/licensing.cpp:352
-msgid "Upgrade..."
-msgstr ""
-
-#: ../src/resources/properties.xrc:61
-msgid "Use custom expression"
-msgstr ""
-
-#: ../src/resources/prefs.xrc:206
-msgid "Use custom font for text fields"
-msgstr "テキスト欄にカスタムフォントを使用する"
-
-#: ../src/resources/prefs.xrc:186
-msgid "Use custom font for translations list"
-msgstr "翻訳対象リストにカスタムフォントを使う"
-
-#: ../src/resources/properties.xrc:52
-#, fuzzy
-msgid "Use default rules for this language"
-msgstr "自動"
-
-#: ../src/resources/properties.xrc:186
-msgid ""
-"Use these keywords (function names) to recognize translatable strings\n"
-"in source files:"
-msgstr ""
-"ソースファイル中で これらのキーワード(または関数名)を\n"
-"翻訳対象文字列の認識に使います:"
-
-#: ../src/prefsdlg.cpp:89
-#, fuzzy
-msgid "Use translation memory"
-msgstr "翻訳メモリを更新しています..."
-
-#: ../src/resources/toolbar.xrc:38
-msgid "Validate"
-msgstr "検査"
-
-#: ../src/edframe.cpp:1684 ../src/edframe.cpp:1703
-msgid "Validation results"
-msgstr "検査の結果"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#: ../src/aboutbox.cpp:97 ../src/edapp.cpp:593 ../src/welcomescreen.cpp:156
-#, c-format
-msgid "Version %s"
-msgstr "バージョン %s"
-
-#: ../src/licensing.cpp:193
-msgid "View License Key"
-msgstr ""
-
-#: ../src/wordpress.cpp:395
-#, fuzzy
-msgid "View Log"
-msgstr "表示(&V)"
-
-#: ../src/licensing.cpp:191
-msgid "View license key"
-msgstr ""
-
-#: ../src/wordpress.cpp:392
-#, fuzzy
-msgid "View log"
-msgstr "表示(&V)"
-
-#: ../src/welcomescreen.cpp:151
-#, fuzzy
-msgid "Welcome to Poedit"
-msgstr "Poedit について(&A)..."
-
-#: ../src/resources/find.xrc:50
-msgid "Whole words only"
-msgstr "空白等で区切られた単語だけを探す"
-
-#: ../src/resources/prefs.xrc:157
-msgid "Windows"
-msgstr "Windows"
-
-#: ../src/wordpress.cpp:406
-msgid "WordPress Errors Log"
-msgstr ""
-
-#: ../src/wordpress.cpp:377
-msgid "WordPress error"
-msgstr ""
-
-#: ../src/statistics.cpp:162
-#, fuzzy
-msgid "Words"
-msgstr "キーワード"
-
-#: ../src/welcomescreen.cpp:242
 msgid ""
 "You can also extract translatable strings directly from the source code:"
-msgstr ""
+msgstr "翻訳可能な文字列をソースコードから直接抽出できます。"
 
-#: ../src/edframe.cpp:430
-msgid "You can't drop more than one file on Poedit window."
-msgstr "Poedit へドロップできるのは一回につきファイルひとつだけです。"
+msgid "Extract from sources"
+msgstr "ソースから抽出"
 
-#: ../src/chooselang.cpp:86
-msgid "You must restart Poedit for this change to take effect."
-msgstr "変更を有効にするには Poedit を再起動してください。"
+msgid "Configure source code extraction in Properties."
+msgstr "設定画面でソースコード抽出を設定できます。"
 
-#: ../src/edframe.cpp:2233
-msgid ""
-"You should set your email address in Preferences so that it can be used for "
-"Last-Translator header in GNU gettext files."
-msgstr ""
-"設定 でEメールアドレスを記入してください、GNU gettext ファイルの Last-"
-"Translator ヘッダで用いられます。"
+msgid "Sync"
+msgstr "同期"
 
-#: ../src/edframe.cpp:1133
-msgid "Your changes will be lost if you don't save them."
-msgstr "保存しないとあなたが行った変更は失われます。"
-
-#: ../src/licensing.cpp:166
-msgid "Your copy is upgraded to Poedit Pro."
-msgstr ""
-
-#: ../src/resources/prefs.xrc:43
-msgid "Your email address:"
-msgstr "あなたのメールアドレス:"
-
-#: ../src/resources/prefs.xrc:21
-msgid ""
-"Your name and email set below are only used\n"
-"to set the Last-Translator header of GNU gettext files."
-msgstr ""
-"以下でセットされる名前と電子メールは、GNU gettext ファイルの\n"
-"Last-Translator ヘッダをセットするためにのに用いられます。"
-
-#: ../src/resources/prefs.xrc:29
-msgid "Your name:"
-msgstr "名前:"
-
-#: ../src/licensing.cpp:180
-msgid ""
-"You’re awesome! Thank you so much\n"
-"for purchasing Poedit Pro."
-msgstr ""
-
-#: ../src/edframe.cpp:3182
-msgid "Zero"
-msgstr ""
-
-#: ../src/edapp.cpp:429
-msgid "don't delete temporary files (for debugging)"
-msgstr "一時ファイルを削除しない（デバッグ向け）"
-
-#: ../src/propertiesdlg.cpp:72
-msgid "e.g. nplurals=2; plural=(n > 1);"
-msgstr ""
-
-#: ../src/edlistctrl.cpp:384
-msgid "unknown language"
-msgstr ""
-
-#~ msgid "&Automatically translate using TM"
-#~ msgstr "翻訳メモリを利用して自動翻訳する(&A)"
-
-#~ msgid "&New catalog..."
-#~ msgstr "新規カタログ(&N)..."
-
-#~ msgid "(none of these)"
-#~ msgstr "(なし)"
-
-#~ msgid "Add"
-#~ msgstr "追加"
-
-#~ msgid "Add files"
-#~ msgstr "ファイルの追加"
-
-#~ msgid "Add path to the list of directories where catalogs lie."
-#~ msgstr "カタログが位置するパスをディレクトリのリストに追加します。"
-
-#~ msgid "Automatic spellchecking"
-#~ msgstr "自動綴り検査:"
-
-#~ msgid "Automatically translate when updating catalog"
-#~ msgstr "カタログ更新時に自動的に翻訳しなおす"
-
-#~ msgid "Automatically translated %u strings"
-#~ msgstr "文字列を自動翻訳 - %u"
-
-#~ msgid "Automatically translating..."
-#~ msgstr "自動翻訳中..."
-
-#~ msgid "Cannot create TM database directory!"
-#~ msgstr "翻訳メモリデータベースのディレクトリを作成できません！"
-
-#~ msgid "Cannot extract catalogs from RPM file."
-#~ msgstr "RPM ファイルからカタログを抽出できません。"
-
-#~ msgid "Choose"
-#~ msgstr "選択"
-
-#~ msgid "Configuration"
-#~ msgstr "自動翻訳の設定"
-
-#~ msgid "Database"
-#~ msgstr "データベース"
-
-#~ msgid "Delete item"
-#~ msgstr "項目を削除"
-
-#~ msgid "Display &Line Numbers"
-#~ msgstr "行番号を表示(&L)"
-
-#~ msgid "Edit item"
-#~ msgstr "項目を編集"
-
-#~ msgid "Files List"
-#~ msgstr "ファイル一覧"
-
-#~ msgid "Form %i (e.g. \"%u\")"
-#~ msgstr "形式 %i （例：  \"%u\"）"
-
-#~ msgid "Generate TM database"
-#~ msgstr "翻訳履歴データベースの作成"
-
-#~ msgid "Generate database"
-#~ msgstr "データベースの作成"
-
-#~ msgid "Line"
-#~ msgstr "行"
-
-#~ msgid "Max. # of missing words:"
-#~ msgstr "許容する欠落単語の最大数"
-
-# 意味がよくわからへん…
-#~ msgid "Max. difference in sentence length:"
-#~ msgstr "許容する原文の長さの差"
-
-#~ msgid "Move down"
-#~ msgstr "下へ"
-
-#~ msgid "Move up"
-#~ msgstr "上へ"
-
-#~ msgid "My Languages"
-#~ msgstr "利用できる言語"
-
-#~ msgid "New Catalog from POT File..."
-#~ msgstr "POT ファイルを元に新しいカタログを作成します..."
-
-#~ msgid "New catalog from POT file..."
-#~ msgstr "POT ファイルを元に新しいカタログを作成します..."
-
-#~ msgid "New item"
-#~ msgstr "新しい項目"
-
-#~ msgid "Open catalogs manager on Poedit startup"
-#~ msgstr "起動時にカタログマネージャを開く"
-
-#~ msgid "Pick language from the list of known languages"
-#~ msgstr "既知言語の一覧から選択します"
-
-#~ msgid "Please add directories where locale files are stored on your system:"
-#~ msgstr ""
-#~ "ロケールファイルを格納するディレクトリをシステム上に追加してください："
-
-#~ msgid "Please select language ISO code:"
-#~ msgstr "言語の ISO コードを選択してください:"
-
-#~ msgid "Please select language code:"
-#~ msgstr "言語のコードを選択してください:"
-
-#~ msgid ""
-#~ "Please verify that all files were moved to the new location or do it "
-#~ "manually if they weren't.\n"
-#~ "\n"
-#~ "Old location: %s\n"
-#~ "New location: %s"
-#~ msgstr ""
-#~ "すべてのファイルが新しい場所へ移動されたか確認してください。または、手動で"
-#~ "移動してください。\n"
-#~ "\n"
-#~ "古い場所: %s\n"
-#~ "新しい場所: %s"
-
-#~ msgid "Regenerate translation memory from catalogs in paths listed above."
-#~ msgstr "上記パス一覧にあるカタログ群から翻訳メモリを再生成します。"
-
-#~ msgid "Reset to defaults"
-#~ msgstr "初期値に戻す"
-
-#~ msgid "Scanning file: "
-#~ msgstr "ファイルの検索:"
-
-#~ msgid "Search Paths"
-#~ msgstr "検索パス"
-
-#~ msgid "Select catalog's language"
-#~ msgstr "カタログの言語を選択"
-
-#~ msgid "There was a problem moving your translation memory."
-#~ msgstr "あなたの翻訳メモリを移動する際に問題が発生しました。"
-
-#~ msgid "Translation files (*.po;*.mo)|*.po;*.mo"
-#~ msgstr "翻訳ファイル (*.po;*.mo)|*.po;*.mo"
-
-#~ msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
-#~ msgstr "翻訳ファイル (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
-
-#~ msgid ""
-#~ "Translation memory will be built from the files listed below.\n"
-#~ "You can add more files to the list now."
-#~ msgstr ""
-#~ "翻訳メモリは下にリストされたファイルから構築されます。より多くのファイルを"
-#~ "リストに追加することができます。"
-
-#~ msgid "Unknown locale code '%s' in registry."
-#~ msgstr "不明なロケールコード '%s' は登録されていません。"
-
-#~ msgid "Updating translation memory"
-#~ msgstr "翻訳メモリを更新しています"
-
-#~ msgid "What languages do you want to use the TM with?"
-#~ msgstr "翻訳メモリでどの言語を使用しますか?"
-
-#, fuzzy
-#~ msgid "Automatic C&omments Window"
-#~ msgstr "自動コメントウィンドウを表示する (&C)"
-
-#, fuzzy
-#~ msgid "Automatic c&omments window"
-#~ msgstr "自動コメントウィンドウを表示する (&C)"
-
-#, fuzzy
-#~ msgid "Automatic comments:"
-#~ msgstr "自動注釈の中を探す"
-
-#~ msgid "Cannot execute program: "
-#~ msgstr "プログラムを実行できません:"
-
-#~ msgid "Country:"
-#~ msgstr "国または地域:"
-
-#~ msgid "Gettext syntax error"
-#~ msgstr "Gettext の構文エラーです"
-
-#, fuzzy
-#~ msgid "[checking translations: %i left]"
-#~ msgid_plural "[checking translations: %i left]"
-#~ msgstr[0] "[翻訳を調べています： 残り %i 個]"
-#~ msgstr[1] "[翻訳を調べています： 残り %i 個]"
-
-#~ msgid "&Contents..."
-#~ msgstr "目次(&C)..."
-
-#~ msgid "&Fullscreen view"
-#~ msgstr "フルスクリーン表示(&F)"
-
-#~ msgid "&Settings..."
-#~ msgstr "設定(&S)..."
-
-#~ msgid "(%f will be substituted with filename, %l with line number)"
-#~ msgstr "(%f にはファイル名、 %l には行番号が展開されます)"
-
-#~ msgid "Edit the file in text editor"
-#~ msgstr "ファイルをテキストエディタで編集する"
-
-#~ msgid "Editor executable:"
-#~ msgstr "エディタの起動方法："
-
-#~ msgid "Error initializing spell checking: %s"
-#~ msgstr "綴り検査の初期化でエラーが発生しました： %s"
-
-#~ msgid "External editor"
-#~ msgstr "外部エディタ"
-
-#~ msgid "Fullscreen view"
-#~ msgstr "フルスクリーン表示"
-
-#~ msgid "Macintosh"
-#~ msgstr "Macintosh"
-
-#~ msgid "My Project"
-#~ msgstr "My Project"
-
-#~ msgid "No editor specified. Please set it in Preferences dialog."
-#~ msgstr "エディタは指定されていません。設定ダイアログで指定してください。"
-
-#~ msgid "Open source files in editor, not in file viewer"
-#~ msgstr "ソースファイルをエディタで開く"
-
-#~ msgid "Original string"
-#~ msgstr "原文"
-
-#~ msgid "Path to DB:"
-#~ msgstr "データベースへのパス:"
-
-#~ msgid "Settings"
-#~ msgstr "プロジェクトの設定"
-
-#~ msgid "Setup"
-#~ msgstr "セットアップ"
-
-#~ msgid ""
-#~ "This is first time you run Poedit.\n"
-#~ "Please fill in your name and email address.\n"
-#~ "(This information is used only in catalogs headers)"
-#~ msgstr ""
-#~ "Poedit が初めて実行されました。\n"
-#~ "名前とメールアドレスを設定してください。\n"
-#~ "(これらの情報はカタログファイルのヘッダとしてのみ利用されます)"
-
-#~ msgid "Unix"
-#~ msgstr "Unix"
-
-#~ msgid "current platform's default"
-#~ msgstr "現在のプラットフォームにおける初期値"
-
-#~ msgid "none"
-#~ msgstr "なし"
-
-#~ msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
-#~ msgstr "翻訳対象は %i 個です（未確定 %i、問題あり %i、未翻訳 %i )。"
-
-#~ msgid "'."
-#~ msgstr "'."
-
-#~ msgid " files..."
-#~ msgstr " 個のファイル..."
-
-#~ msgid "Error while loading file '%s': line %u is corrupted."
-#~ msgstr ""
-#~ "ファイル %s を読み出し中にエラーが発生しました： %u 行目が破損しています。"
-
-#~ msgid "Help"
-#~ msgstr "ヘルプ"
-
-#~ msgid "Parsing "
-#~ msgstr "パーシング中"
-
-#~ msgid ""
-#~ "Poedit installation is broken, cannot find application's home directory."
-#~ msgstr ""
-#~ "Poedit の設置に失敗しています。アプリケーションのホームディレクトリが見つ"
-#~ "かりません。"
-
-#, fuzzy
-#~ msgid "; charset="
-#~ msgstr "キャラクタセット:"
-
-#~ msgid ""
-#~ "Cannot find resources file '%s'!\n"
-#~ "Please reinstall Poedit."
-#~ msgstr ""
-#~ "リソースファイル '%s' が見つかりません！\n"
-#~ "Poedit を再インストールしてください。."
-
-#~ msgid ""
-#~ "Cannot find resources file '%s'!\n"
-#~ "Poedit was configured to be installed in '%s'.\n"
-#~ "You may try to set POEDIT_PREFIX environment variable to point\n"
-#~ "to the location where you installed Poedit."
-#~ msgstr ""
-#~ "リソースファイル '%s' が見つかりません！\n"
-#~ "Poedit はインストール時に '%s' を設定しました。\n"
-#~ "修正のためには環境変数 POEDIT_PREFIX が\n"
-#~ "Poedit のインスールパスを指定するように設定してください。"
-
-#~ msgid "Poedit Error"
-#~ msgstr "Poedit エラー"
-
-#, fuzzy
-#~ msgid "X-Poedit-Keywords"
-#~ msgstr "キーワード"
-
-#~ msgid "&Catalog"
-#~ msgstr "カタログ(&C)"
+msgid "Synchronize the translation with Crowdin"
+msgstr "Crowdin と翻訳を同期する"

@@ -91,7 +91,7 @@ namespace boost { namespace phoenix
         typedef
             typename proto::result_of::make_expr<
                 Tag
-              , proto::basic_default_domain
+              , phoenix_default_domain //proto::basic_default_domain
               , BOOST_PP_REPEAT(BOOST_PHOENIX_ITERATION, M0, _)
             >::type
             base_type;
@@ -103,12 +103,13 @@ namespace boost { namespace phoenix
             proto_grammar;
         
         static type make(BOOST_PP_REPEAT(BOOST_PHOENIX_ITERATION, M1, _))
-        {
-            actor<base_type> const e =
+      { //?? actor or Actor??
+        //Actor<base_type> const e =
+                actor<base_type> const e =
                 {
                     proto::make_expr<
                         Tag
-                      , proto::basic_default_domain
+                      , phoenix_default_domain // proto::basic_default_domain
                     >(BOOST_PHOENIX_a)
                 };
             return e;

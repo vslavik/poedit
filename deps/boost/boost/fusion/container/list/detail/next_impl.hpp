@@ -8,6 +8,7 @@
 #if !defined(FUSION_NEXT_IMPL_07172005_0836)
 #define FUSION_NEXT_IMPL_07172005_0836
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/iterator/next.hpp>
 #include <boost/fusion/iterator/equal_to.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -35,7 +36,7 @@ namespace boost { namespace fusion
             {
                 typedef typename Iterator::cons_type cons_type;
                 typedef typename cons_type::cdr_type cdr_type;
-    
+
                 typedef cons_iterator<
                     typename mpl::eval_if<
                         is_const<cons_type>
@@ -43,7 +44,8 @@ namespace boost { namespace fusion
                       , mpl::identity<cdr_type>
                     >::type>
                 type;
-    
+
+                BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
                 static type
                 call(Iterator const& i)
                 {

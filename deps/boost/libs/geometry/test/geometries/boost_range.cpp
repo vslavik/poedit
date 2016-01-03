@@ -25,6 +25,7 @@
 
 #include <sstream>
 
+#ifdef BOOST_GEOMETRY_TEST_QUARANTINED
 struct not_two
 {
     template <typename P>
@@ -42,6 +43,7 @@ struct sum_not_five
         return boost::geometry::get<0>(p1) + boost::geometry::get<0>(p2) != 5.0;
     }
 };
+#endif
 
 
 template <typename P>
@@ -74,6 +76,10 @@ void test_range_adaptor()
         BOOST_CHECK_EQUAL(out.str(), "LINESTRING(2 2,3 3)");
     }
 
+#ifdef BOOST_GEOMETRY_TEST_QUARANTINED
+// range filter adaptor does not support boost::size()
+// This makes it in practice not applicable, boost::geometry calls boost::size
+// in most if not all algorithms
     {
         std::ostringstream out;
         out << bg::wkt(ls | boost::adaptors::filtered(not_two()));
@@ -96,6 +102,7 @@ void test_range_adaptor()
         //out << bg::wkt(ls | boost::adaptors::uniqued);
         //BOOST_CHECK_EQUAL(out.str(), "LINESTRING(1 1,2 2,3 3,4 4)");
     }
+#endif
 }
 
 template <typename P>

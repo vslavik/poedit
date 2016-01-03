@@ -32,7 +32,7 @@ int main()
 {
     using namespace boost::assign;
     using boost::adaptors::uniqued;
-    
+
     boost::geometry::model::ring<xy> ring;
     ring += xy(0, 0);
     ring += xy(0, 1);
@@ -43,8 +43,8 @@ int main()
     ring += xy(2, 2);
     ring += xy(2, 0);
     ring += xy(0, 0);
-    
-    std::cout 
+
+    std::cout
         << "Normal: " << boost::geometry::dsv(ring) << std::endl
         << "Unique: " << boost::geometry::dsv(ring | uniqued) << std::endl;
 

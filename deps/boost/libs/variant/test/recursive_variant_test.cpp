@@ -48,10 +48,20 @@ int main( int argc, char* argv[] )
 #include <sstream>
 #include <vector>
 #include <map>
+#if !defined(BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES) && !defined(BOOST_NO_CXX11_HDR_TUPLE)
+#include <tuple>
+#endif // !defined(BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES) && !defined(BOOST_NO_CXX11_HDR_TUPLE)
 
-struct vector_printer
+struct printer
     : boost::static_visitor<std::string>
 {
+    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
+    std::string operator()(
+            const boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> &var) const
+    {
+        return boost::apply_visitor( printer(), var );
+    }
+
     template <typename T>
     std::string operator()(const std::vector<T>& vec) const
     {
@@ -61,12 +71,35 @@ struct vector_printer
 
         typename std::vector<T>::const_iterator it = vec.begin();
         for (; it != vec.end(); ++it)
-            ost << boost::apply_visitor( vector_printer(), *it );
+            ost << printer()( *it );
 
         ost << ") ";
 
         return ost.str();
     }
+
+#if !defined(BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES) && !defined(BOOST_NO_CXX11_HDR_TUPLE)
+    template <int...> struct indices {};
+    template <typename... Ts, int... Is>
+    std::string operator()(const std::tuple<Ts...>& tup, indices<Is...>)
+    {
+        std::ostringstream ost;
+        ost << "( ";
+        (void) (int []){0, (ost << printer()( std::get<Is>(tup) ), 0)... };
+        ost << ") ";
+        return ost.str();
+    }
+
+    template <int N, int... Is>
+        struct make_indices : make_indices<N-1, N-1, Is...> {};
+    template <int... Is>
+        struct make_indices<0, Is...> : indices<Is...> {};
+    template <typename... Ts>
+    std::string operator()(const std::tuple<Ts...>& tup) const
+    {
+        return printer()(tup, make_indices<sizeof...(Ts)>());
+    }
+#endif // !defined(BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES) && !defined(BOOST_NO_CXX11_HDR_TUPLE)
 
     template <typename T>
     std::string operator()(const T& operand) const
@@ -91,10 +124,47 @@ void test_recursive_variant()
     vec1.push_back(7);
 
     var1_t var1(vec1);
-    std::string result1( boost::apply_visitor( vector_printer(), var1 ) );
+    std::string result1( printer()(var1) );
 
     std::cout << "result1: " << result1 << '\n';
     BOOST_CHECK(result1 == "( 3 5 ( 3 5 ) 7 ) ");
+
+    std::vector<var1_t> vec1_copy = vec1;
+    vec1_copy.erase(vec1_copy.begin() + 2);
+    vec1_copy.insert(vec1_copy.begin() + 2, vec1_copy);
+    var1 = vec1_copy;
+    result1 = printer()(var1);
+    std::cout << "result1+: " << result1 << '\n';
+    BOOST_CHECK(result1 == "( 3 5 ( 3 5 7 ) 7 ) ");
+
+    // Uses move construction on compilers with rvalue references support
+    result1 = printer()(
+        var1_t(
+            std::vector<var1_t>(vec1_copy)
+        )
+    );
+    std::cout << "result1++: " << result1 << '\n';
+    BOOST_CHECK(result1 == "( 3 5 ( 3 5 7 ) 7 ) ");
+
+
+    var1_t vec1_another_copy(vec1_copy);
+    vec1_copy[2].swap(vec1_another_copy);
+    result1 = printer()(
+        var1_t(vec1_copy)
+    );
+    std::cout << "result1+++1: " << result1 << '\n';
+    BOOST_CHECK(result1 == "( 3 5 ( 3 5 ( 3 5 7 ) 7 ) 7 ) ");
+
+    result1 = printer()(vec1_another_copy);
+    std::cout << "result1++2: " << result1 << '\n';
+    BOOST_CHECK(result1 == "( 3 5 7 ) ");
+
+    vec1_copy[2].swap(vec1_copy[2]);
+    result1 = printer()(
+        var1_t(vec1_copy)
+    );
+    std::cout << "result1.2: " << result1 << '\n';
+    BOOST_CHECK(result1 == "( 3 5 ( 3 5 ( 3 5 7 ) 7 ) 7 ) ");
 
     typedef boost::make_recursive_variant<
           boost::variant<int, double>
@@ -108,7 +178,7 @@ void test_recursive_variant()
     vec2.push_back(boost::variant<int, double>(7));
 
     var2_t var2(vec2);
-    std::string result2( boost::apply_visitor( vector_printer(), var2 ) );
+    std::string result2( printer()(var2) );
 
     std::cout << "result2: " << result2 << '\n';
     BOOST_CHECK(result2 == "( 3 3.5 ( 3 3.5 ) 7 ) ");
@@ -135,7 +205,7 @@ void test_recursive_variant()
     vec3.push_back(7);
 
     var4_t var4(vec3);
-    std::string result3( boost::apply_visitor( vector_printer(), var4 ) );
+    std::string result3( printer()(var4) );
 
     std::cout << "result2: " << result3 << '\n';
     BOOST_CHECK(result3 == "( 3 5 ( 3.5 ( 3 5 ) ) 7 ) ");
@@ -150,7 +220,7 @@ void test_recursive_variant()
     vec5.push_back(vec1);
     vec5.push_back(17.25);
 
-    std::string result5( vector_printer()(vec5) );
+    std::string result5( printer()(vec5) );
 
     std::cout << "result5: " << result5 << '\n';
     BOOST_CHECK(result5 == "( 3.5 ( 3 5 ( 3 5 ) 7 ) 17.25 ) ");
@@ -160,6 +230,21 @@ void test_recursive_variant()
           std::map<int, boost::recursive_variant_>
         >::type var6_t;
     var6_t var6;
+
+#if !defined(BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES) && !defined(BOOST_NO_CXX11_HDR_TUPLE)
+    typedef boost::make_recursive_variant<
+          int,
+          std::tuple<int, boost::recursive_variant_>
+        >::type var7_t;
+    var7_t var7 = 0;
+    var7 = std::tuple<int, var7_t>(1, var7);
+    var7 = std::tuple<int, var7_t>(2, var7);
+
+    std::string result7( printer()(var7) );
+
+    std::cout << "result7: " << result7 << '\n';
+    BOOST_CHECK(result7 == "( 2 ( 1 0 ) ) ");
+#endif // !defined(BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES) && !defined(BOOST_NO_CXX11_HDR_TUPLE)
 }
 
 void test_recursive_variant_over()
@@ -178,10 +263,40 @@ void test_recursive_variant_over()
     vec1.push_back(7);
 
     var1_t var1(vec1);
-    std::string result1( boost::apply_visitor( vector_printer(), var1 ) );
+    std::string result1( printer()(var1) );
 
     std::cout << "result1: " << result1 << '\n';
     BOOST_CHECK(result1 == "( 3 5 ( 3 5 ) 7 ) ");
+
+    std::vector<var1_t> vec1_copy = vec1;
+    vec1_copy.erase(vec1_copy.begin() + 2);
+    vec1_copy.insert(vec1_copy.begin() + 2, vec1_copy);
+    var1 = vec1_copy;
+    result1 = printer()(var1);
+    std::cout << "result1+: " << result1 << '\n';
+    BOOST_CHECK(result1 == "( 3 5 ( 3 5 7 ) 7 ) ");
+
+    // Uses move construction on compilers with rvalue references support
+    result1 = printer()(
+        var1_t(
+            std::vector<var1_t>(vec1_copy)
+        )
+    );
+    std::cout << "result1++: " << result1 << '\n';
+    BOOST_CHECK(result1 == "( 3 5 ( 3 5 7 ) 7 ) ");
+
+
+    var1_t vec1_another_copy(vec1_copy);
+    vec1_copy[2].swap(vec1_another_copy);
+    result1 = printer()(
+        var1_t(vec1_copy)
+    );
+    std::cout << "result1+++1: " << result1 << '\n';
+    BOOST_CHECK(result1 == "( 3 5 ( 3 5 ( 3 5 7 ) 7 ) 7 ) ");
+
+    result1 = printer()(vec1_another_copy);
+    std::cout << "result1++2: " << result1 << '\n';
+    BOOST_CHECK(result1 == "( 3 5 7 ) ");
 
     typedef boost::make_recursive_variant_over<
           boost::mpl::vector<
@@ -197,7 +312,7 @@ void test_recursive_variant_over()
     vec2.push_back(boost::variant<int, double>(7));
 
     var2_t var2(vec2);
-    std::string result2( boost::apply_visitor( vector_printer(), var2 ) );
+    std::string result2( printer()(var2) );
 
     std::cout << "result2: " << result2 << '\n';
     BOOST_CHECK(result2 == "( 3 3.5 ( 3 3.5 ) 7 ) ");
@@ -235,7 +350,7 @@ void test_recursive_variant_over()
     vec3.push_back(7);
 
     var4_t var3(vec3);
-    std::string result3( boost::apply_visitor( vector_printer(), var3 ) );
+    std::string result3( printer()(var3) );
 
     std::cout << "result2: " << result3 << '\n';
     BOOST_CHECK(result3 == "( 3 5 ( 3.5 ( 3 5 ) ) 7 ) ");
@@ -252,7 +367,7 @@ void test_recursive_variant_over()
     vec5.push_back(vec1);
     vec5.push_back(17.25);
 
-    std::string result5( vector_printer()(vec5) );
+    std::string result5( printer()(vec5) );
 
     std::cout << "result5: " << result5 << '\n';
     BOOST_CHECK(result5 == "( 3.5 ( 3 5 ( 3 5 ) 7 ) 17.25 ) ");

@@ -2,7 +2,7 @@
 
 #line 1 "ostream.oo.c"
 /* Abstract output stream data type.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2015 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify

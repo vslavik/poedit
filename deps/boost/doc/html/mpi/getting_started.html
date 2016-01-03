@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../mpi.html" title="Chapter&#160;19.&#160;Boost.MPI">
-<link rel="prev" href="../mpi.html" title="Chapter&#160;19.&#160;Boost.MPI">
+<link rel="up" href="../mpi.html" title="Chapter&#160;20.&#160;Boost.MPI">
+<link rel="prev" href="../mpi.html" title="Chapter&#160;20.&#160;Boost.MPI">
 <link rel="next" href="tutorial.html" title="Tutorial">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -136,10 +136,9 @@ lamhalt
         For many users using <a href="http://www.lam-mpi.org/" target="_top">LAM/MPI</a>,
         <a href="http://www-unix.mcs.anl.gov/mpi/mpich/" target="_top">MPICH2</a>, or <a href="http://www.open-mpi.org" target="_top">OpenMPI</a>, configuration is almost automatic.
         If you don't already have a file <code class="computeroutput"><span class="identifier">user</span><span class="special">-</span><span class="identifier">config</span><span class="special">.</span><span class="identifier">jam</span></code> in
-        your home directory, copy <code class="computeroutput"><span class="identifier">tools</span><span class="special">/</span><span class="identifier">build</span><span class="special">/</span><span class="identifier">v2</span><span class="special">/</span><span class="identifier">user</span><span class="special">-</span><span class="identifier">config</span><span class="special">.</span><span class="identifier">jam</span></code> there.
-        For many users, MPI support can be enabled simply by adding the following
-        line to your user-config.jam file, which is used to configure Boost.Build
-        version 2.
+        your home directory, copy <code class="computeroutput"><span class="identifier">tools</span><span class="special">/</span><span class="identifier">build</span><span class="special">/</span><span class="identifier">user</span><span class="special">-</span><span class="identifier">config</span><span class="special">.</span><span class="identifier">jam</span></code> there. For many users, MPI support
+        can be enabled simply by adding the following line to your user-config.jam
+        file, which is used to configure Boost.Build version 2.
       </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">mpi</span> <span class="special">;</span>
 </pre>
@@ -174,7 +173,7 @@ lamhalt
         To see the results of MPI auto-detection, pass <code class="computeroutput"><span class="special">--</span><span class="identifier">debug</span><span class="special">-</span><span class="identifier">configuration</span></code> on the bjam command line.
       </p>
 <p>
-        The (optional) fourth argument configures Boost.MPI for running regression
+        The (optional) third argument configures Boost.MPI for running regression
         tests. These parameters specify the executable used to launch jobs (default:
         "mpirun") followed by any necessary arguments to this to run tests
         and tell the program to expect the number of processors to follow (default:

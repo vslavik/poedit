@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>String_Ref</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="string_ref.html" title="String_Ref">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -37,14 +37,14 @@
 </div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl>
+<dl class="toc">
 <dt><span class="section"><a href="string_ref.html#string_ref.overview">Overview</a></span></dt>
 <dt><span class="section"><a href="string_ref.html#string_ref.examples">Examples</a></span></dt>
 <dt><span class="section"><a href="string_ref.html#string_ref.reference">Reference </a></span></dt>
 <dt><span class="section"><a href="string_ref.html#string_ref.history">History</a></span></dt>
 </dl>
 </div>
-<div class="section string_ref_overview">
+<div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="string_ref.overview"></a><a class="link" href="string_ref.html#string_ref.overview" title="Overview">Overview</a>
 </h2></div></div></div>
@@ -115,7 +115,7 @@
       <code class="computeroutput"><span class="identifier">string_ref</span></code> does.
     </p>
 </div>
-<div class="section string_ref_examples">
+<div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="string_ref.examples"></a><a class="link" href="string_ref.html#string_ref.examples" title="Examples">Examples</a>
 </h2></div></div></div>
@@ -130,7 +130,7 @@
     <span class="keyword">return</span> <span class="identifier">bar</span><span class="special">.</span><span class="identifier">substr</span> <span class="special">(</span> <span class="number">2</span><span class="special">,</span> <span class="number">3</span> <span class="special">);</span>
     <span class="special">}</span>
 
-<span class="keyword">if</span> <span class="special">(</span> <span class="identifier">extract_part</span> <span class="special">(</span> <span class="string">"ABCDEFG"</span> <span class="special">).</span><span class="identifier">front</span><span class="special">()</span> <span class="special">==</span> <span class="string">"C"</span> <span class="special">)</span> <span class="special">{</span> <span class="comment">/* do something */</span> <span class="special">}</span>
+<span class="keyword">if</span> <span class="special">(</span> <span class="identifier">extract_part</span> <span class="special">(</span> <span class="string">"ABCDEFG"</span> <span class="special">).</span><span class="identifier">front</span><span class="special">()</span> <span class="special">==</span> <span class="char">'C'</span> <span class="special">)</span> <span class="special">{</span> <span class="comment">/* do something */</span> <span class="special">}</span>
 </pre>
 <p>
       Let's figure out what happens in this (contrived) example.
@@ -166,15 +166,15 @@
       copied, but those are cheap operations.
     </p>
 </div>
-<div class="section string_ref_reference">
+<div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="string_ref.reference"></a><a class="link" href="string_ref.html#string_ref.reference" title="Reference">Reference </a>
 </h2></div></div></div>
 <p>
       The header file "string_ref.hpp" defines a template <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">basic_string_ref</span></code>,
       and four specializations - for <code class="computeroutput"><span class="keyword">char</span></code>
-      / <code class="computeroutput"><span class="keyword">wchar_t</span></code> / <code class="computeroutput"><span class="identifier">char16_t</span></code>
-      / <code class="computeroutput"><span class="identifier">char32_t</span></code> .
+      / <code class="computeroutput"><span class="keyword">wchar_t</span></code> / <code class="computeroutput"><span class="keyword">char16_t</span></code>
+      / <code class="computeroutput"><span class="keyword">char32_t</span></code> .
     </p>
 <p>
       <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">utility</span><span class="special">/</span><span class="identifier">string_ref</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
@@ -256,22 +256,22 @@
 <span class="keyword">bool</span> <span class="identifier">ends_with</span><span class="special">(</span><span class="identifier">basic_string_ref</span> <span class="identifier">x</span><span class="special">)</span> <span class="keyword">const</span> <span class="special">;</span>
 </pre>
 </div>
-<div class="section string_ref_history">
+<div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="string_ref.history"></a><a class="link" href="string_ref.html#string_ref.history" title="History">History</a>
 </h2></div></div></div>
 <h4>
 <a name="string_ref.history.h0"></a>
-      <span><a name="string_ref.history.boost_1_53"></a></span><a class="link" href="string_ref.html#string_ref.history.boost_1_53">boost
+      <span class="phrase"><a name="string_ref.history.boost_1_53"></a></span><a class="link" href="string_ref.html#string_ref.history.boost_1_53">boost
       1.53</a>
     </h4>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
           Introduced
         </li></ul></div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: January 14, 2013 at 16:24:14 GMT</small></p></td>
+<td align="left"><p><small>Last revised: April 07, 2015 at 22:46:52 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

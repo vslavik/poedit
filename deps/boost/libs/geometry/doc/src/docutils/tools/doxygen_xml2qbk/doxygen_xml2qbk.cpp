@@ -80,22 +80,22 @@ int main(int argc, char** argv)
             description.add_options()
                 ("help", "Help message")
                 ("version", "Version description")
-                ("xml", po::value<std::string>(&filename), 
+                ("xml", po::value<std::string>(&filename),
                             "Name of XML file written by Doxygen")
-                ("start_include", po::value<std::string>(&config.start_include), 
+                ("start_include", po::value<std::string>(&config.start_include),
                             "Start include")
-                ("convenience_header_path", po::value<std::string>(&config.convenience_header_path), 
+                ("convenience_header_path", po::value<std::string>(&config.convenience_header_path),
                             "Convenience header path")
-                ("convenience_headers", po::value<std::string>(&convenience_headers), 
+                ("convenience_headers", po::value<std::string>(&convenience_headers),
                             "Convenience header(s) (comma-separated)")
-                ("skip_namespace", po::value<std::string>(&config.skip_namespace), 
+                ("skip_namespace", po::value<std::string>(&config.skip_namespace),
                             "Namespace to skip (e.g. boost::mylib::)")
-                ("copyright", po::value<std::string>(&copyright_filename), 
+                ("copyright", po::value<std::string>(&copyright_filename),
                             "Name of QBK file including (commented) copyright and license")
 
                 ("output_style", po::value<std::string>(&output_style),
                             "Docbook output style. Available values: 'alt'")
-                ("output_member_variables", po::value<bool>(&config.output_member_variables), 
+                ("output_member_variables", po::value<bool>(&config.output_member_variables),
                             "Output member variables inside the class")
             ;
 
@@ -121,16 +121,16 @@ int main(int argc, char** argv)
             }
             else if (varmap.count("help"))
             {
-                std::cout 
-                    << program_description(true) << std::endl 
+                std::cout
+                    << program_description(true) << std::endl
                     << "Available options:" << std::endl
                     << description << std::endl;
                 return 0;
             }
             else if (filename.empty())
             {
-                std::cout 
-                    << program_description(true) << std::endl 
+                std::cout
+                    << program_description(true) << std::endl
                     << "Allowed options:" << std::endl
                     << description << std::endl;
                 return 1;
@@ -144,13 +144,15 @@ int main(int argc, char** argv)
         }
 
         // Set output style
-        if ( "alt" == output_style )
+        if ("alt" == output_style)
+        {
             config.output_style = configuration::alt;
+        }
 
         // Read files into strings
         std::string xml_string = file_to_string(filename);
-        std::string license = copyright_filename.empty() 
-            ? "" 
+        std::string license = copyright_filename.empty()
+            ? ""
             : file_to_string(copyright_filename);
 
         // Parse the XML outputted by Doxygen
@@ -221,8 +223,10 @@ int main(int argc, char** argv)
                 quickbook_output_alt(doc.cos, config, std::cout);
             }
 
-            if ( !doc.group_id.empty() )
+            if (! doc.group_id.empty())
+            {
                 quickbook_output_alt(doc, config, std::cout);
+            }
         }
     }
     catch(std::exception const& e)
@@ -236,7 +240,7 @@ int main(int argc, char** argv)
     }
     catch(...)
     {
-        std::cerr << "Unknown exception in doxygen_xml2qbk" 
+        std::cerr << "Unknown exception in doxygen_xml2qbk"
             << std::endl;
         return 1;
     }

@@ -8,8 +8,8 @@
  *
  * Implementation of Hamilton operator via MTL library
  *
- * Copyright 2009-2012 Karsten Ahnert
- * Copyright 2009-2012 Mario Mulansky
+ * Copyright 2011-2013 Mario Mulansky
+ * Copyright 2011-2012 Karsten Ahnert
  *
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or
@@ -21,7 +21,7 @@
 #include <complex>
 
 #include <boost/numeric/odeint.hpp>
-#include <boost/numeric/odeint/external/mtl4/mtl4_resize.hpp>
+#include <boost/numeric/odeint/external/mtl4/mtl4.hpp>
 
 #include <boost/numeric/mtl/mtl.hpp>
 
@@ -113,7 +113,7 @@ int main( int argc , char** argv )
     }
     x /= mtl::two_norm( x );
 
-    typedef runge_kutta4< state_type , double , state_type , double , vector_space_algebra > stepper;
+    typedef runge_kutta4< state_type > stepper;
 
     // create potential barrier
     mtl::compressed2D< double > V( N , N );

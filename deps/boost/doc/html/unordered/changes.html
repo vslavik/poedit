@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../unordered.html" title="Chapter&#160;36.&#160;Boost.Unordered">
+<link rel="up" href="../unordered.html" title="Chapter&#160;37.&#160;Boost.Unordered">
 <link rel="prev" href="rationale.html" title="Implementation Rationale">
 <link rel="next" href="reference.html" title="Reference">
 </head>
@@ -114,7 +114,7 @@
     </h3>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-          Use <a href="../../../libs/utility/swap.html" target="_top"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">swap</span></code></a>.
+          Use <a href="../../../libs/core/swap.html" target="_top"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">swap</span></code></a>.
         </li>
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/2237" target="_top">Ticket 2237</a>:
@@ -471,6 +471,83 @@
 <li class="listitem">
           If the hash function and equality predicate are known to both have nothrow
           move assignment or construction then use them.
+        </li>
+</ul></div>
+<h3>
+<a name="unordered.changes.h18"></a>
+      <span class="phrase"><a name="unordered.changes.boost_1_55_0"></a></span><a class="link" href="changes.html#unordered.changes.boost_1_55_0">Boost
+      1.55.0</a>
+    </h3>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Avoid some warnings (<a href="https://svn.boost.org/trac/boost/ticket/8851" target="_top">#8851</a>, <a href="https://svn.boost.org/trac/boost/ticket/8874" target="_top">#8874</a>).
+        </li>
+<li class="listitem">
+          Avoid exposing some detail functions via. ADL on the iterators.
+        </li>
+<li class="listitem">
+          Follow the standard by only using the allocators' construct and destroy
+          methods to construct and destroy stored elements. Don't use them for internal
+          data like pointers.
+        </li>
+</ul></div>
+<h3>
+<a name="unordered.changes.h19"></a>
+      <span class="phrase"><a name="unordered.changes.boost_1_56_0"></a></span><a class="link" href="changes.html#unordered.changes.boost_1_56_0">Boost
+      1.56.0</a>
+    </h3>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Fix some shadowed variable warnings (<a href="https://svn.boost.org/trac/boost/ticket/9377" target="_top">#9377</a>).
+        </li>
+<li class="listitem">
+          Fix allocator use in documentation (<a href="https://svn.boost.org/trac/boost/ticket/9719" target="_top">#9719</a>).
+        </li>
+<li class="listitem">
+          Always use prime number of buckets for integers. Fixes performance regression
+          when inserting consecutive integers, although makes other uses slower (<a href="https://svn.boost.org/trac/boost/ticket/9282" target="_top">#9282</a>).
+        </li>
+<li class="listitem">
+          Only construct elements using allocators, as specified in C++11 standard.
+        </li>
+</ul></div>
+<h3>
+<a name="unordered.changes.h20"></a>
+      <span class="phrase"><a name="unordered.changes.boost_1_57_0"></a></span><a class="link" href="changes.html#unordered.changes.boost_1_57_0">Boost
+      1.57.0</a>
+    </h3>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Fix the <code class="computeroutput"><span class="identifier">pointer</span></code> typedef
+          in iterators (<a href="https://svn.boost.org/trac/boost/ticket/10672" target="_top">#10672</a>).
+        </li>
+<li class="listitem">
+          Fix Coverity warning (<a href="https://github.com/boostorg/unordered/pull/2" target="_top">GitHub
+          #2</a>).
+        </li>
+</ul></div>
+<h3>
+<a name="unordered.changes.h21"></a>
+      <span class="phrase"><a name="unordered.changes.boost_1_58_0"></a></span><a class="link" href="changes.html#unordered.changes.boost_1_58_0">Boost
+      1.58.0</a>
+    </h3>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Remove unnecessary template parameter from const iterators.
+        </li>
+<li class="listitem">
+          Rename private <code class="computeroutput"><span class="identifier">iterator</span></code>
+          typedef in some iterator classes, as it confuses some traits classes.
+        </li>
+<li class="listitem">
+          Fix move assignment with stateful, propagate_on_container_move_assign allocators
+          (<a href="https://svn.boost.org/trac/boost/ticket/10777" target="_top">#10777</a>).
+        </li>
+<li class="listitem">
+          Fix rare exception safety issue in move assignment.
+        </li>
+<li class="listitem">
+          Fix potential overflow when calculating number of buckets to allocate (<a href="https://github.com/boostorg/unordered/pull/4" target="_top">GitHub #4</a>).
         </li>
 </ul></div>
 </div>

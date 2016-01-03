@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2001-2013 Vaclav Slavik
+ *  Copyright (C) 2001-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -23,130 +23,258 @@
  *
  */
 
-#include <wx/xrc/xmlres.h>
 #include <wx/accel.h>
+#include <wx/choice.h>
+#include <wx/collpane.h>
 #include <wx/config.h>
 #include <wx/button.h>
+#include <wx/sizer.h>
+#include <wx/stattext.h>
 #include <wx/textctrl.h>
 #include <wx/checkbox.h>
+#include <wx/notebook.h>
+
+#ifdef __WXOSX__
+#include <AppKit/AppKit.h>
+#endif
+
+#ifdef __WXGTK__
+#include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
+#endif
 
 #include "catalog.h"
-#include "findframe.h"
+#include "text_control.h"
+#include "edframe.h"
 #include "edlistctrl.h"
+#include "findframe.h"
+#include "hidpi.h"
 #include "utility.h"
+
+namespace
+{
 
 // The word separators used when doing a "Whole words only" search
 // FIXME-ICU: use ICU to separate words
-static const wxString SEPARATORS = wxT(" \t\r\n\\/:;.,?!\"'_|-+=(){}[]<>&#@");
+const wxString SEPARATORS = wxT(" \t\r\n\\/:;.,?!\"'_|-+=(){}[]<>&#@");
+
+enum
+{
+    Mode_Find,
+    Mode_Replace
+};
+
+const int FRAME_STYLE = (wxDEFAULT_FRAME_STYLE | wxFRAME_TOOL_WINDOW | wxTAB_TRAVERSAL | wxFRAME_FLOAT_ON_PARENT)
+                        & ~(wxRESIZE_BORDER | wxMAXIMIZE_BOX);
+
+} // anonymous namespace
+
 
 wxString FindFrame::ms_text;
-FindFrame *FindFrame::ms_singleton = nullptr;
 
-BEGIN_EVENT_TABLE(FindFrame, wxDialog)
-   EVT_BUTTON(XRCID("find_next"), FindFrame::OnNext)
-   EVT_BUTTON(XRCID("find_prev"), FindFrame::OnPrev)
-   EVT_BUTTON(wxID_CLOSE, FindFrame::OnClose)
-   EVT_TEXT(XRCID("string_to_find"), FindFrame::OnTextChange)
-   EVT_CHECKBOX(-1, FindFrame::OnCheckbox)
-END_EVENT_TABLE()
-
-FindFrame::FindFrame(wxWindow *parent,
+FindFrame::FindFrame(PoeditFrame *owner,
                      PoeditListCtrl *list,
-                     Catalog *c,
-                     wxTextCtrl *textCtrlOrig,
-                     wxTextCtrl *textCtrlTrans,
-                     wxTextCtrl *textCtrlComments,
-                     wxTextCtrl *textCtrlAutoComments)
-        : m_listCtrl(list),
+                     const CatalogPtr& c,
+                     CustomizedTextCtrl *textCtrlOrig,
+                     CustomizedTextCtrl *textCtrlTrans,
+                     wxNotebook *pluralNotebook)
+        : wxFrame(owner, wxID_ANY, _("Find"), wxDefaultPosition, wxDefaultSize, FRAME_STYLE),
+          m_owner(owner),
+          m_listCtrl(list),
           m_catalog(c),
           m_position(-1),
           m_textCtrlOrig(textCtrlOrig),
           m_textCtrlTrans(textCtrlTrans),
-          m_textCtrlComments(textCtrlComments),
-          m_textCtrlAutoComments(textCtrlAutoComments)
+          m_pluralNotebook(pluralNotebook)
 {
-    wxXmlResource::Get()->LoadDialog(this, parent, "find_frame");
+    auto panel = new wxPanel(this, wxID_ANY);
+    wxBoxSizer *panelsizer = new wxBoxSizer(wxVERTICAL);
 
-    m_textField = XRCCTRL(*this, "string_to_find", wxTextCtrl);
+    wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+    panelsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
 
-    SetEscapeId(wxID_CLOSE);
+    auto entrySizer = new wxFlexGridSizer(2, wxSize(MSW_OR_OTHER(PX(5), PX(10)), PX(5)));
+    m_mode = new wxChoice(panel, wxID_ANY);
+#ifdef __WXOSX__
+    [(NSPopUpButton*)m_mode->GetHandle() setBordered:NO];
+#endif
+    m_mode->Append(_("Find"));
+    m_mode->Append(_("Replace"));
+    m_mode->SetSelection(Mode_Find);
+
+    m_searchField = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(PX(400), -1));
+    m_replaceField = new wxTextCtrl(panel, wxID_ANY);
+
+    entrySizer->Add(m_mode);
+    entrySizer->Add(m_searchField, wxSizerFlags(1).Expand());
+    entrySizer->AddSpacer(1);
+    entrySizer->Add(m_replaceField, wxSizerFlags(1).Expand());
+    sizer->Add(entrySizer, wxSizerFlags().Expand().PXBorderAll());
+
+#ifdef __WXMSW__
+    #define collPane panel
+#else
+    // TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+    auto coll = new wxCollapsiblePane(panel, wxID_ANY, _("Options"));
+    auto collPane = coll->GetPane();
+#endif
+
+    m_ignoreCase = new wxCheckBox(collPane, wxID_ANY, _("Ignore case"));
+    m_wrapAround = new wxCheckBox(collPane, wxID_ANY, _("Wrap around"));
+    m_wholeWords = new wxCheckBox(collPane, wxID_ANY, _("Whole words only"));
+    m_findInOrig = new wxCheckBox(collPane, wxID_ANY, _("Find in source texts"));
+    m_findInTrans = new wxCheckBox(collPane, wxID_ANY, _("Find in translations"));
+    m_findInComments = new wxCheckBox(collPane, wxID_ANY, _("Find in comments"));
+
+    wxBoxSizer *options = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer *optionsL = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer *optionsR = new wxBoxSizer(wxVERTICAL);
+    options->Add(optionsL, wxSizerFlags(1).Expand().PXBorder(wxRIGHT));
+    options->Add(optionsR, wxSizerFlags(1).Expand());
+    optionsL->Add(m_ignoreCase, wxSizerFlags().Expand());
+    optionsL->Add(m_wrapAround, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+    optionsL->Add(m_wholeWords, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+    optionsR->Add(m_findInOrig, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+    optionsR->Add(m_findInTrans, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+    optionsR->Add(m_findInComments, wxSizerFlags().Expand().Border(wxTOP, PX(2)));
+
+#ifdef __WXMSW__
+    sizer->Add(options, wxSizerFlags().Expand().PXBorderAll());
+#else
+    collPane->SetSizer(options);
+    sizer->Add(coll, wxSizerFlags().Expand().PXBorderAll());
+#endif
+
+    m_btnClose = new wxButton(panel, wxID_CLOSE, _("Close"));
+    m_btnReplaceAll = new wxButton(panel, wxID_ANY, MSW_OR_OTHER(_("Replace all"), _("Replace All")));
+    m_btnReplace = new wxButton(panel, wxID_ANY, _("Replace"));
+    m_btnPrev = new wxButton(panel, wxID_ANY, _("< &Previous"));
+    m_btnNext = new wxButton(panel, wxID_ANY, _("&Next >"));
+    m_btnNext->SetDefault();
+
+    wxBoxSizer *buttons = new wxBoxSizer(wxHORIZONTAL);
+    sizer->Add(buttons, wxSizerFlags().Expand().PXBorderAll());
+    buttons->Add(m_btnClose, wxSizerFlags().PXBorder(wxRIGHT));
+    buttons->AddStretchSpacer();
+    buttons->Add(m_btnReplaceAll, wxSizerFlags().PXBorder(wxRIGHT));
+    buttons->Add(m_btnReplace, wxSizerFlags().PXBorder(wxRIGHT));
+    buttons->Add(m_btnPrev, wxSizerFlags().PXBorder(wxRIGHT));
+    buttons->Add(m_btnNext, wxSizerFlags());
+
+    panel->SetSizer(panelsizer);
+    auto topsizer = new wxBoxSizer(wxHORIZONTAL);
+    topsizer->Add(panel, wxSizerFlags(1).Expand());
+    SetSizerAndFit(topsizer);
 
     RestoreWindowState(this, wxDefaultSize, WinState_Pos);
 
-    m_btnNext = XRCCTRL(*this, "find_next", wxButton);
-    m_btnPrev = XRCCTRL(*this, "find_prev", wxButton);
-
     if ( !ms_text.empty() )
     {
-        m_textField->SetValue(ms_text);
-        m_textField->SelectAll();
+        m_searchField->SetValue(ms_text);
+        m_searchField->SelectAll();
     }
 
     Reset(c);
 
-    XRCCTRL(*this, "in_orig", wxCheckBox)->SetValue(
-        wxConfig::Get()->ReadBool("find_in_orig", true));
-    XRCCTRL(*this, "in_trans", wxCheckBox)->SetValue(
-        wxConfig::Get()->ReadBool("find_in_trans", true));
-    XRCCTRL(*this, "in_comments", wxCheckBox)->SetValue(
-        wxConfig::Get()->ReadBool("find_in_comments", true));
-    XRCCTRL(*this, "in_auto_comments", wxCheckBox)->SetValue(
-        wxConfig::Get()->ReadBool("find_in_auto_comments", true));
-    XRCCTRL(*this, "case_sensitive", wxCheckBox)->SetValue(
-        wxConfig::Get()->ReadBool("find_case_sensitive", false));
-    XRCCTRL(*this, "from_first", wxCheckBox)->SetValue(
-        wxConfig::Get()->ReadBool("find_from_first", true));
-    XRCCTRL(*this, "whole_words", wxCheckBox)->SetValue(
-        wxConfig::Get()->ReadBool("whole_words", false));
+    m_findInOrig->SetValue(wxConfig::Get()->ReadBool("find_in_orig", true));
+    m_findInTrans->SetValue(wxConfig::Get()->ReadBool("find_in_trans", true));
+    m_findInComments->SetValue(wxConfig::Get()->ReadBool("find_in_comments", true));
+    m_ignoreCase->SetValue(!wxConfig::Get()->ReadBool("find_case_sensitive", false));
+    m_wrapAround->SetValue(wxConfig::Get()->ReadBool("find_wrap_around", true));
+    m_wholeWords->SetValue(wxConfig::Get()->ReadBool("whole_words", false));
 
-#ifdef __WXOSX__
     wxAcceleratorEntry entries[] = {
-        { wxACCEL_CMD,  'W', wxID_CLOSE }
+#ifndef __WXGTK__
+        { wxACCEL_SHIFT,  WXK_RETURN, m_btnPrev->GetId() },
+#endif
+#ifdef __WXOSX__
+        { wxACCEL_CMD,  'W', wxID_CLOSE },
+#endif
+        { wxACCEL_NORMAL,  WXK_ESCAPE, wxID_CLOSE }
     };
     wxAcceleratorTable accel(WXSIZEOF(entries), entries);
     SetAcceleratorTable(accel);
+
+    m_searchField->Bind(wxEVT_TEXT, &FindFrame::OnTextChange, this);
+    m_btnPrev->Bind(wxEVT_BUTTON, &FindFrame::OnPrev, this);
+    m_btnNext->Bind(wxEVT_BUTTON, &FindFrame::OnNext, this);
+    Bind(wxEVT_BUTTON, &FindFrame::OnClose, this, wxID_CLOSE);
+    Bind(wxEVT_MENU, &FindFrame::OnClose, this, wxID_CLOSE);
+    Bind(wxEVT_CHECKBOX, &FindFrame::OnCheckbox, this);
+
+    // Set Shift+Return accelerator natively so that the button is animated.
+    // (Can't be done on Windows where wxAcceleratorEntry above is used.)
+#if defined(__WXGTK__)
+    GtkAccelGroup *accelGroup = gtk_accel_group_new();
+    gtk_window_add_accel_group(GTK_WINDOW(GetHandle()), accelGroup);
+    gtk_widget_add_accelerator(m_btnPrev->GetHandle(), "activate", accelGroup, GDK_KEY_Return, GDK_SHIFT_MASK, GTK_ACCEL_VISIBLE);
+#elif defined(__WXOSX__)
+    // wx's code interferes with normal processing of Shift-Return and
+    // setKeyEquivalent: @"\r" with setKeyEquivalentModifierMask: NSShiftKeyMask
+    // wouldn't work. Emulate it in custom code instead, by handling the
+    // event originating from the button and from the accelerator table above
+    // differently. More than a bit of a hack, but it works.
+    NSButton *osxPrev = (NSButton*)m_btnPrev->GetHandle();
+    Bind(wxEVT_MENU, [=](wxCommandEvent&){ [osxPrev performClick:nil]; }, m_btnPrev->GetId());
 #endif
 
-    ms_singleton = this;
+    OnModeChanged();
+    m_mode->Bind(wxEVT_CHOICE, [=](wxCommandEvent&){ OnModeChanged(); });
+
+    m_btnReplace->Bind(wxEVT_BUTTON, &FindFrame::OnReplace, this);
+    m_btnReplaceAll->Bind(wxEVT_BUTTON, &FindFrame::OnReplaceAll, this);
+    m_btnReplace->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable((bool)m_lastItem); });
+    m_btnReplaceAll->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable(!ms_text.empty()); });
+
+    // SetHint() needs to be called *after* binding any event handlers, for
+    // compatibility with its generic implementation:
+    m_searchField->SetHint(_("String to find"));
+    m_replaceField->SetHint(_("Replacement string"));
+
+    // Create hidden, will be shown after setting it up
+    Show(false);
 }
 
 
 FindFrame::~FindFrame()
 {
-    ms_singleton = nullptr;
-
     SaveWindowState(this, WinState_Pos);
-
-    wxConfig::Get()->Write("find_in_orig",
-            XRCCTRL(*this, "in_orig", wxCheckBox)->GetValue());
-    wxConfig::Get()->Write("find_in_trans",
-                XRCCTRL(*this, "in_trans", wxCheckBox)->GetValue());
-    wxConfig::Get()->Write("find_in_comments",
-                XRCCTRL(*this, "in_comments", wxCheckBox)->GetValue());
-    wxConfig::Get()->Write("find_in_auto_comments",
-                XRCCTRL(*this, "in_auto_comments", wxCheckBox)->GetValue());
-    wxConfig::Get()->Write("find_case_sensitive",
-                XRCCTRL(*this, "case_sensitive", wxCheckBox)->GetValue());
-    wxConfig::Get()->Write("find_from_first",
-                XRCCTRL(*this, "from_first", wxCheckBox)->GetValue());
-    wxConfig::Get()->Write("whole_words",
-                XRCCTRL(*this, "whole_words", wxCheckBox)->GetValue());
 }
 
 
-void FindFrame::Reset(Catalog *c)
+void FindFrame::Reset(const CatalogPtr& c)
 {
-    bool fromFirst = XRCCTRL(*this, "from_first", wxCheckBox)->GetValue();
+    if (!m_listCtrl)
+        return;
 
     m_catalog = c;
     m_position = -1;
-    if (!fromFirst)
-        m_position = (int)m_listCtrl->GetNextItem(-1,
-                                                  wxLIST_NEXT_ALL,
-                                                  wxLIST_STATE_SELECTED);
 
     m_btnPrev->Enable(!ms_text.empty());
     m_btnNext->Enable(!ms_text.empty());
+}
+
+
+void FindFrame::ShowForFind()
+{
+    DoShowFor(Mode_Find);
+}
+
+void FindFrame::ShowForReplace()
+{
+    DoShowFor(Mode_Replace);
+}
+
+void FindFrame::DoShowFor(int mode)
+{
+    m_mode->SetSelection(mode);
+    OnModeChanged();
+
+    Show(true);
+    Raise();
+
+    m_searchField->SetFocus();
+    m_searchField->SelectAll();
 }
 
 
@@ -156,17 +284,45 @@ void FindFrame::OnClose(wxCommandEvent&)
 }
 
 
-void FindFrame::OnTextChange(wxCommandEvent&)
+void FindFrame::OnModeChanged()
 {
-    ms_text = m_textField->GetValue();
+    bool isReplace = m_mode->GetSelection() == Mode_Replace;
+
+    SetTitle(isReplace ? _("Replace") : _("Find"));
+
+    m_btnReplace->Show(isReplace);
+    m_btnReplaceAll->Show(isReplace);
+    m_replaceField->GetContainingSizer()->Show(m_replaceField, isReplace);
+
+    m_findInOrig->Enable(!isReplace);
+    m_findInTrans->Enable(!isReplace);
+    m_findInComments->Enable(!isReplace);
+    m_ignoreCase->Enable(!isReplace);
+
+    Layout();
+    GetSizer()->SetSizeHints(this);
+}
+
+
+void FindFrame::OnTextChange(wxCommandEvent& e)
+{
+    ms_text = m_searchField->GetValue();
+    m_lastItem.reset();
 
     Reset(m_catalog);
+
+    e.Skip();
 }
 
 
 void FindFrame::OnCheckbox(wxCommandEvent&)
 {
-    Reset(m_catalog);
+    wxConfig::Get()->Write("find_in_orig", m_findInOrig->GetValue());
+    wxConfig::Get()->Write("find_in_trans", m_findInTrans->GetValue());
+    wxConfig::Get()->Write("find_in_comments", m_findInComments->GetValue());
+    wxConfig::Get()->Write("find_case_sensitive", !m_ignoreCase->GetValue());
+    wxConfig::Get()->Write("find_wrap_around", m_wrapAround->GetValue());
+    wxConfig::Get()->Write("whole_words", m_wholeWords->GetValue());
 }
 
 
@@ -198,172 +354,255 @@ void FindFrame::FindNext()
 }
 
 
-enum FoundState
+namespace
 {
-    Found_Not = 0,
-    Found_InOrig,
-    Found_InTrans,
-    Found_InComments,
-    Found_InAutoComments
-};
 
-bool TextInString(const wxString& str, const wxString& text, bool wholeWords)
+template<typename S, typename F>
+bool FindTextInStringAndDo(S& str, const wxString& text, bool wholeWords, F&& handler)
 {
-    int index = str.Find(text);
-    if (index >= 0)
+    auto textLen = text.Length();
+
+    bool found = false;
+    size_t start = 0;
+    while (start != wxString::npos)
     {
+        auto index = str.find(text, start);
+        if (index == wxString::npos)
+            break;
+
         if (wholeWords)
         {
-            size_t textLen = text.Length();
-
             bool result = true;
             if (index >0)
                 result = result && SEPARATORS.Contains(str[index-1]);
             if (index+textLen < str.Length())
                 result = result && SEPARATORS.Contains(str[index+textLen]);
 
-            return result;
+            if (!result)
+            {
+                start = index + textLen;
+                continue;
+            }
         }
-        else
-        {
-            return true;
-        }
+
+        found = true;
+        start = handler(str, index, textLen);
     }
-    else
-    {
-        return false;
-    }
+
+    return found;
 }
+
+bool IsTextInString(wxString str, const wxString& text,
+                    bool ignoreCase, bool wholeWords, bool ignoreAmp, bool ignoreUnderscore)
+{
+    if (ignoreCase)
+        str.MakeLower();
+    if (ignoreAmp)
+        str.Replace("&", "");
+    if (ignoreUnderscore)
+        str.Replace("_", "");
+
+    return FindTextInStringAndDo(str, text, wholeWords,
+                                 [=](const wxString&,size_t,size_t){ return wxString::npos;/*just 1 hit*/ });
+}
+
+size_t IsTextInStrings(const wxArrayString& strs, const wxString& text,
+                     bool ignoreCase, bool wholeWords, bool ignoreAmp, bool ignoreUnderscore)
+{
+    // loop through all strings and search for the substring in them
+    for (size_t i = 0; i < strs.GetCount(); i++)
+    {
+        if (IsTextInString(strs[i], text, ignoreCase, wholeWords, ignoreAmp, ignoreUnderscore))
+            return i;
+    }
+
+    return -1;
+}
+
+bool ReplaceTextInString(wxString& str, const wxString& text, bool wholeWords, const wxString& replacement)
+{
+    return FindTextInStringAndDo(str, text, wholeWords,
+                                 [=](wxString& s, size_t pos, size_t len){
+                                     s.replace(pos, len, replacement);
+                                     return pos + replacement.length();
+                                 });
+}
+
+enum FoundState
+{
+    Found_Not = 0,
+    Found_InOrig,
+    Found_InTrans,
+    Found_InComments,
+    Found_InExtractedComments
+};
+
+} // anonymous space
 
 bool FindFrame::DoFind(int dir)
 {
+    wxASSERT( dir == +1 || dir == -1 );
+
+    if (!m_listCtrl)
+        return false;
+
+    int mode = m_mode->GetSelection();
     int cnt = m_listCtrl->GetItemCount();
-    bool inStr = XRCCTRL(*this, "in_orig", wxCheckBox)->GetValue();
-    bool inTrans = XRCCTRL(*this, "in_trans", wxCheckBox)->GetValue();
-    bool inComments = XRCCTRL(*this, "in_comments", wxCheckBox)->GetValue();
-    bool inAutoComments = XRCCTRL(*this, "in_auto_comments", wxCheckBox)->GetValue();
-    bool caseSens = XRCCTRL(*this, "case_sensitive", wxCheckBox)->GetValue();
-    bool wholeWords = XRCCTRL(*this, "whole_words", wxCheckBox)->GetValue();
+    bool inTrans = m_findInTrans->GetValue()  && (m_catalog->HasCapability(Catalog::Cap::Translations));
+    bool inSource = (mode == Mode_Find) && m_findInOrig->GetValue();
+    bool inComments = (mode == Mode_Find) && m_findInComments->GetValue();
+    bool ignoreCase = (mode == Mode_Find) && m_ignoreCase->GetValue();
+    bool wholeWords = m_wholeWords->GetValue();
+    bool wrapAround = m_wrapAround->GetValue();
     int posOrig = m_position;
+    size_t trans;
 
     FoundState found = Found_Not;
+    CatalogItemPtr lastItem;
+
     wxString textc;
     wxString text(ms_text);
 
-    if (!caseSens)
+    if (ignoreCase)
         text.MakeLower();
 
     // Only ignore mnemonics when searching if the text being searched for
     // doesn't contain them. That's a reasonable heuristics: most of the time,
     // ignoring them is the right thing to do and provides better results. But
     // sometimes, people want to search for them.
-    const bool ignoreMnemonicsAmp = (text.Find(_T('&')) == wxNOT_FOUND);
-    const bool ignoreMnemonicsUnderscore = (text.Find(_T('_')) == wxNOT_FOUND);
+    const bool ignoreAmp = (mode == Mode_Find) && (text.Find(_T('&')) == wxNOT_FOUND);
+    const bool ignoreUnderscore = (mode == Mode_Find) && (text.Find(_T('_')) == wxNOT_FOUND);
 
-    m_position += dir;
-    while (m_position >= 0 && m_position < cnt)
+    int oldPosition = m_position;
+    m_position = oldPosition + dir;
+    for (int tested = 0; tested < cnt; ++tested, m_position += dir)
     {
-        CatalogItem &dt = (*m_catalog)[m_listCtrl->ListIndexToCatalog(m_position)];
-
-        if (inStr)
+        if (m_position < 0)
         {
-            textc = dt.GetString();
-            if (!caseSens)
-                textc.MakeLower();
-            if (ignoreMnemonicsAmp)
-                textc.Replace("&", "");
-            if (ignoreMnemonicsUnderscore)
-                textc.Replace("_", "");
-            if (TextInString(textc, text, wholeWords))
+            if (wrapAround)
+                m_position += cnt;
+            else
+                break;
+        }
+        else if (m_position >= cnt)
+        {
+            if (wrapAround)
+                m_position -= cnt;
+            else
+                break;
+        }
+
+        auto dt = lastItem = (*m_catalog)[m_listCtrl->ListIndexToCatalog(m_position)];
+
+        if (inTrans)
+        {
+            trans = IsTextInStrings(dt->GetTranslations(), text, ignoreCase, wholeWords, ignoreAmp, ignoreUnderscore);
+            if (trans != (size_t)-1)
+            {
+                found = Found_InTrans;
+                break;
+            }
+        }
+        if (inSource)
+        {
+            if (IsTextInString(dt->GetString(), text, ignoreCase, wholeWords, ignoreAmp, ignoreUnderscore))
             {
                 found = Found_InOrig;
                 break;
             }
         }
-        if (inTrans)
-        {
-            // concatenate all translations:
-            unsigned cntTrans = dt.GetNumberOfTranslations();
-            textc = wxEmptyString;
-            for (unsigned i = 0; i < cntTrans; i++)
-            {
-                textc += dt.GetTranslation(i);
-            }
-            // and search for the substring in them:
-            if (!caseSens)
-                textc.MakeLower();
-            if (ignoreMnemonicsAmp)
-                textc.Replace("&", "");
-            if (ignoreMnemonicsUnderscore)
-                textc.Replace("_", "");
-
-            if (TextInString(textc, text, wholeWords)) { found = Found_InTrans; break; }
-        }
         if (inComments)
         {
-            textc = dt.GetComment();
-            if (!caseSens)
-                textc.MakeLower();
-
-            if (TextInString(textc, text, wholeWords)) { found = Found_InComments; break; }
+            if (IsTextInString(dt->GetComment(), text, ignoreCase, wholeWords, false, false))
+            {
+                found = Found_InComments;
+                break;
+            }
+            if (IsTextInStrings(dt->GetExtractedComments(), text, ignoreCase, wholeWords, false, false) != (size_t)-1)
+            {
+                found = Found_InExtractedComments;
+                break;
+            }
         }
-        if (inAutoComments)
-        {
-            wxArrayString autoComments = dt.GetAutoComments();
-            textc = wxEmptyString;
-            for (unsigned i = 0; i < autoComments.GetCount(); i++)
-                textc += autoComments[i];
-
-            if (!caseSens)
-                textc.MakeLower();
-
-            if (TextInString(textc, text, wholeWords)) { found = Found_InAutoComments; break; }
-        }
-
-        m_position += dir;
     }
 
     if (found != Found_Not)
     {
+        m_lastItem = lastItem;
+
         m_listCtrl->EnsureVisible(m_position);
-#ifdef __WXMAC__
-        m_listCtrl->Refresh();
-#endif
-        m_listCtrl->Select(m_position);
-        m_listCtrl->SetItemState(m_position,
-                    wxLIST_STATE_FOCUSED, wxLIST_STATE_FOCUSED);
+        m_listCtrl->SelectAndFocus(m_position);
 
         // find the text on the control and select it:
 
-        wxTextCtrl* txt = NULL;
+        CustomizedTextCtrl* txt = nullptr;
         switch (found)
         {
             case Found_InOrig:
               txt = m_textCtrlOrig;
               break;
             case Found_InTrans:
-              txt = m_textCtrlTrans;
+              if (lastItem->GetNumberOfTranslations() == 1)
+              {
+                  txt = m_textCtrlTrans;
+              }
+              else
+              {
+                  m_pluralNotebook->SetSelection(trans);
+                  txt = (CustomizedTextCtrl*)m_pluralNotebook->GetCurrentPage();
+              }
               break;
             case Found_InComments:
-              txt = m_textCtrlComments;
-              break;
-            case Found_InAutoComments:
-              txt = m_textCtrlAutoComments;
-              break;
-            case Found_Not: // silence compiler warning, can't get here
+            case Found_InExtractedComments:
+            case Found_Not:
               break;
         }
 
-        textc = txt->GetValue();
-        if (!caseSens)
-            textc.MakeLower();
-        int pos = textc.Find(text);
-        if (pos != wxNOT_FOUND)
-            txt->SetSelection(pos, pos + text.length());
+        if (txt)
+        {
+            textc = txt->GetValue();
+            if (ignoreCase)
+                textc.MakeLower();
+            int pos = textc.Find(text);
+            if (pos != wxNOT_FOUND)
+                txt->ShowFindIndicator(pos, (int)text.length());
+        }
 
         return true;
     }
 
     m_position = posOrig;
     return false;
+}
+
+bool FindFrame::DoReplaceInItem(CatalogItemPtr item)
+{
+    bool wholeWords = m_wholeWords->GetValue();
+    auto search = m_searchField->GetValue();
+    auto replace = m_replaceField->GetValue();
+
+    bool replaced = false;
+    for (auto& t: item->GetTranslations())
+    {
+        if (ReplaceTextInString(t, search, wholeWords, replace))
+            replaced = true;
+    }
+
+    if (replaced && item == m_owner->GetCurrentItem())
+        m_owner->UpdateToTextCtrl(PoeditFrame::UndoableEdit);
+
+    return replaced;
+}
+
+void FindFrame::OnReplace(wxCommandEvent&)
+{
+    DoReplaceInItem(m_lastItem);
+    m_listCtrl->Refresh();
+}
+
+void FindFrame::OnReplaceAll(wxCommandEvent&)
+{
+    for (auto& item: m_catalog->items())
+        DoReplaceInItem(item);
+    m_listCtrl->Refresh();
 }

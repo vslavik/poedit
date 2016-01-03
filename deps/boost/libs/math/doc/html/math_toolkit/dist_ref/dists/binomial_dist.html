@@ -2,9 +2,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Binomial Distribution</title>
-<link rel="stylesheet" href="../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../index.html" title="Math Toolkit">
+<link rel="stylesheet" href="../../../math.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="../../../index.html" title="Math Toolkit 2.2.0">
 <link rel="up" href="../dists.html" title="Distributions">
 <link rel="prev" href="beta_dist.html" title="Beta Distribution">
 <link rel="next" href="cauchy_dist.html" title="Cauchy-Lorentz Distribution">
@@ -31,12 +31,12 @@
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">math</span><span class="special">{</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span> <span class="special">=</span> <span class="keyword">double</span><span class="special">,</span>
-          <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;13.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>   <span class="special">=</span> <a class="link" href="../../pol_ref/pol_ref_ref.html" title="Policy Class Reference">policies::policy&lt;&gt;</a> <span class="special">&gt;</span>
+          <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>   <span class="special">=</span> <a class="link" href="../../pol_ref/pol_ref_ref.html" title="Policy Class Reference">policies::policy&lt;&gt;</a> <span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">binomial_distribution</span><span class="special">;</span>
 
 <span class="keyword">typedef</span> <span class="identifier">binomial_distribution</span><span class="special">&lt;&gt;</span> <span class="identifier">binomial</span><span class="special">;</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;13.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">binomial_distribution</span>
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
@@ -105,7 +105,7 @@
           The PDF for the binomial distribution is given by:
         </p>
 <p>
-          <span class="inlinemediaobject"><img src="../../../../equations/binomial_ref2.png"></span>
+          <span class="inlinemediaobject"><img src="../../../../equations/binomial_ref2.svg"></span>
         </p>
 <p>
           The following two graphs illustrate how the PDF changes depending upon
@@ -113,14 +113,14 @@
           fixed at 0.5, and vary the sample size:
         </p>
 <p>
-          <span class="inlinemediaobject"><img src="../../../../graphs/binomial_pdf_1.png" align="middle"></span>
+          <span class="inlinemediaobject"><img src="../../../../graphs/binomial_pdf_1.svg" align="middle"></span>
         </p>
 <p>
           Alternatively, we can keep the sample size fixed at N=20 and vary the success
           fraction <span class="emphasis"><em>p</em></span>:
         </p>
 <p>
-          <span class="inlinemediaobject"><img src="../../../../graphs/binomial_pdf_2.png" align="middle"></span>
+          <span class="inlinemediaobject"><img src="../../../../graphs/binomial_pdf_2.svg" align="middle"></span>
         </p>
 <div class="caution"><table border="0" summary="Caution">
 <tr>
@@ -492,7 +492,7 @@
           in the context of this distribution:
         </p>
 <div class="table">
-<a name="math_toolkit.dist_ref.dists.binomial_dist.meaning_of_the_non_member_access"></a><p class="title"><b>Table&#160;2.1.&#160;Meaning of the non-member accessors</b></p>
+<a name="math_toolkit.dist_ref.dists.binomial_dist.meaning_of_the_non_member_access"></a><p class="title"><b>Table&#160;5.1.&#160;Meaning of the non-member accessors</b></p>
 <div class="table-contents"><table class="table" summary="Meaning of the non-member accessors">
 <colgroup>
 <col>
@@ -673,7 +673,7 @@
                     if <sub>n</sub>C<sub>k </sub> is the binomial coefficient of a and b, then we have:
                   </p>
                   <p>
-                    <span class="inlinemediaobject"><img src="../../../../equations/binomial_ref1.png"></span>
+                    <span class="inlinemediaobject"><img src="../../../../equations/binomial_ref1.svg"></span>
                   </p>
                   <p>
                     Which can be evaluated as <code class="computeroutput"><span class="identifier">ibeta_derivative</span><span class="special">(</span><span class="identifier">k</span><span class="special">+</span><span class="number">1</span><span class="special">,</span> <span class="identifier">n</span><span class="special">-</span><span class="identifier">k</span><span class="special">+</span><span class="number">1</span><span class="special">,</span> <span class="identifier">p</span><span class="special">)</span> <span class="special">/</span>
@@ -891,9 +891,10 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012, 2013 Paul A. Bristow, Christopher Kormanyos,
-      Hubert Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin
-      Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
+      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
+      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
+      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

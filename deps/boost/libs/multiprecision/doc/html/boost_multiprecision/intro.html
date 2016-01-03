@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Introduction</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="prev" href="../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
@@ -171,7 +171,7 @@
       move aware and have overloads that look something like:
     </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">B</span><span class="special">&gt;</span>
-<span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">,</span> <span class="identifier">et_off</span><span class="special">&gt;</span> <span class="keyword">operator</span> <span class="special">+</span> <span class="special">(</span><span class="identifier">number</span><span class="special">&amp;&amp;</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">number</span><span class="special">&amp;</span> <span class="identifier">b</span><span class="special">)</span>
+<span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">,</span> <span class="identifier">et_off</span><span class="special">&gt;</span> <span class="keyword">operator</span> <span class="special">+</span> <span class="special">(</span><span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">,</span> <span class="identifier">et_off</span><span class="special">&gt;&amp;&amp;</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">,</span> <span class="identifier">et_off</span><span class="special">&gt;&amp;</span> <span class="identifier">b</span><span class="special">)</span>
 <span class="special">{</span>
     <span class="keyword">return</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">move</span><span class="special">(</span><span class="identifier">a</span> <span class="special">+=</span> <span class="identifier">b</span><span class="special">);</span>
 <span class="special">}</span>
@@ -257,7 +257,7 @@
       to pretty much zero). Note that if we compile with expression templates disabled
       and rvalue-reference support on, then actually still have no wasted memory
       allocations as even though temporaries are created, their contents are moved
-      rather than copied. <a href="#ftn.boost_multiprecision.intro.f0" class="footnote" name="boost_multiprecision.intro.f0"><sup class="footnote">[1]</sup></a>
+      rather than copied. <a href="#ftn.boost_multiprecision.intro.f0" class="footnote"><sup class="footnote"><a name="boost_multiprecision.intro.f0"></a>[1]</sup></a>
     </p>
 <div class="important"><table border="0" summary="Important">
 <tr>
@@ -372,7 +372,7 @@
       for polynomial execution:
     </p>
 <div class="table">
-<a name="boost_multiprecision.intro.evaluation_of_order_6_polynomial_"></a><p class="title"><b>Table&#160;1.1.&#160;Evaluation of Order 6 Polynomial.</b></p>
+<a name="boost_multiprecision.intro.evaluation_of_order_6_polynomial"></a><p class="title"><b>Table&#160;1.1.&#160;Evaluation of Order 6 Polynomial.</b></p>
 <div class="table-contents"><table class="table" summary="Evaluation of Order 6 Polynomial.">
 <colgroup>
 <col>
@@ -486,7 +486,7 @@
       (50 decimal digits):
     </p>
 <div class="table">
-<a name="boost_multiprecision.intro.evaluation_of_boost_math_s_bessel_function_test_data"></a><p class="title"><b>Table&#160;1.2.&#160;Evaluation of Boost.Math's Bessel function test data</b></p>
+<a name="boost_multiprecision.intro.evaluation_of_boost_math_s_besse"></a><p class="title"><b>Table&#160;1.2.&#160;Evaluation of Boost.Math's Bessel function test data</b></p>
 <div class="table-contents"><table class="table" summary="Evaluation of Boost.Math's Bessel function test data">
 <colgroup>
 <col>
@@ -584,7 +584,7 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="boost_multiprecision.intro.evaluation_of_boost_math_s_non_central_t_distribution_test_data"></a><p class="title"><b>Table&#160;1.3.&#160;Evaluation of Boost.Math's Non-Central T distribution test data</b></p>
+<a name="boost_multiprecision.intro.evaluation_of_boost_math_s_non_c"></a><p class="title"><b>Table&#160;1.3.&#160;Evaluation of Boost.Math's Non-Central T distribution test data</b></p>
 <div class="table-contents"><table class="table" summary="Evaluation of Boost.Math's Non-Central T distribution test data">
 <colgroup>
 <col>
@@ -686,7 +686,7 @@
       optimizations on (/Ox), with MPFR 3.0 and MPIR 2.3.0.
     </p>
 <div class="footnotes">
-<br><hr style="width:100; text-align:left;margin-left: 0">
+<br><hr style="width:100; align:left;">
 <div id="ftn.boost_multiprecision.intro.f0" class="footnote"><p><a href="#boost_multiprecision.intro.f0" class="para"><sup class="para">[1] </sup></a>
         The actual number generated will depend on the compiler, how well it optimises
         the code, and whether it supports rvalue references. The number of 11 temporaries
@@ -696,7 +696,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2012 John Maddock and Christopher Kormanyos<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2013 John Maddock and Christopher Kormanyos<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -28,7 +28,7 @@
 
 
 template <typename P, typename T>
-void test_with_point(std::string const& caseid,
+void test_with_point(std::string const& /*caseid*/,
                 T pi_x, T pi_y, T pj_x, T pj_y,
                 T ri_x, T ri_y, T rj_x, T rj_y,
                 T si_x, T si_y, T sj_x, T sj_y,

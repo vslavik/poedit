@@ -1,12 +1,9 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Tests for the general string extraction facilities of the Perl backend
 # (with option --extract-all).
                                                                                 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-pl-4.pl"
 cat <<\EOPERL > xg-pl-4.pl
 use strict;
 
@@ -57,15 +54,11 @@ print "\U\x70\LO\154\x{69}\x{004E}a \Q\lRu\LLeS\E\041\n";
 #      "\x{430}\x{447}\x{43a}\x{430}\n";
 EOPERL
 
-tmpfiles="$tmpfiles xg-pl-4.tmp.pot xg-pl-4.pot"
 : ${XGETTEXT=xgettext}
 LC_MESSAGES=C LC_ALL= \
-${XGETTEXT} -a --omit-header --no-location -o xg-pl-4.tmp.pot xg-pl-4.pl
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < xg-pl-4.tmp.pot > xg-pl-4.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -a --omit-header --no-location -o xg-pl-4.tmp.pot xg-pl-4.pl || exit 1
+LC_ALL=C tr -d '\r' < xg-pl-4.tmp.pot > xg-pl-4.pot || exit 1
 
-tmpfiles="$tmpfiles xg-pl-4.ok"
 cat <<\EOF > xg-pl-4.ok
 msgid "'Your command, please?', asked the waiter.\n"
 msgstr ""
@@ -114,7 +107,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-pl-4.ok xg-pl-4.pot
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

@@ -73,6 +73,21 @@ main()
         BOOST_TEST (os2.str() == std::string("(TUPU:HUPU:LUPU:4.5)") );
     }
 
+    {
+        useThisOStringStream os2;
+        // Set format (a:b:c) for os2;
+        os2 << tuple_open('(');
+        os2 << tuple_close(')');
+        os2 << tuple_delimiter(':');
+        // overwrite previous setting
+        os2 << tuple_open("< ");
+        os2 << tuple_close('>');
+        os2 << tuple_delimiter(", ");
+
+        os2 << make_vector("TUPU", "HUPU", "LUPU", 4.5);
+        BOOST_TEST (os2.str() == std::string("< TUPU, HUPU, LUPU, 4.5>") );
+    }
+
     // The format is still [a, b, c] for os1
     os1 << make_vector(1, 2, 3);
     BOOST_TEST (os1.str() == std::string("[1,2,3][1,2,3]") );
@@ -103,7 +118,7 @@ main()
     useThisIStringStream is("(100 200 300)");
 
     vector<int, int, int> ti;
-    BOOST_TEST(bool(is >> ti) != 0);
+    BOOST_TEST(!!(is >> ti));
     BOOST_TEST(ti == make_vector(100, 200, 300));
 
     // Note that strings are problematic:

@@ -126,7 +126,7 @@ to a [match_results] object, whose members are set as follows:
 
 [table
 [[Element][Value]]
-[[`(*it).size()`][`re.mark_count()`]]
+[[`(*it).size()`][`1 + re.mark_count()`]]
 [[`(*it).empty()`][`false`]]
 [[`(*it).prefix().first`][The end of the last match found, or the start 
    of the underlying sequence if this is the first match enumerated]]
@@ -203,7 +203,7 @@ memory allocation (if Boost.Regex is configured in non-recursive mode).
                         const basic_regex<charT, traits>& e, 
                         regex_constants::match_flag_type m = regex_constants::match_default);
 
-[*Effects]: returns an iterator that enumerates all occurences of expression /e/ 
+[*Effects]: returns an iterator that enumerates all occurrences of expression /e/ 
 in text /p/ using [match_flag_type] /m/.
 
 [h4 Examples]

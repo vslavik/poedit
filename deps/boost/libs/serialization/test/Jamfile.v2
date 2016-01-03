@@ -58,6 +58,8 @@ lib dll_polymorphic_derived2_lib
 test-suite "serialization" :
      [ test-bsl-run_files test_array : A ]
      [ test-bsl-run_files test_binary ]
+     [ test-bsl-run_files test_class_info_load ]
+     [ test-bsl-run_files test_class_info_save ]
      [ test-bsl-run_files test_bitset ]
      [ test-bsl-run_files test_complex ]
      [ test-bsl-run_files test_contained_class : A ]
@@ -70,10 +72,8 @@ test-suite "serialization" :
      [ test-bsl-run_files test_diamond ]
      [ test-bsl-run_files test_diamond_complex ]
      [ test-bsl-run_files test_exported : polymorphic_base ]
-     [ test-bsl-run_files test_class_info_load ]
-     [ test-bsl-run_files test_class_info_save ]
-     [ test-bsl-run_files test_object ]
-     [ test-bsl-run_files test_primitive ]
+     [ test-bsl-run_files test_helper_support ]
+     [ test-bsl-run_files test_interrupts ]
      [ test-bsl-run_files test_list : A ]
      [ test-bsl-run_files test_list_ptrs : A ]
      [ test-bsl-run_files test_map : A ]
@@ -86,14 +86,20 @@ test-suite "serialization" :
      [ test-bsl-run_files test_non_default_ctor2 ]
      [ test-bsl-run_files test_null_ptr ]
      [ test-bsl-run_files test_nvp : A ]
+     [ test-bsl-run_files test_object ]
+     [ test-bsl-run_files test_primitive ]
+     [ test-bsl-run_files test_priority_queue : A ]
+     [ test-bsl-run_files test_queue : A ]
      [ test-bsl-run_files test_recursion : A ]
      [ test-bsl-run_files test_registered ]
      [ test-bsl-run_files test_set : A ]
      [ test-bsl-run_files test_simple_class : A ]
      [ test-bsl-run_files test_simple_class_ptr : A ]
      [ test-bsl-run_files test_split ]
+     [ test-bsl-run_files test_stack : A ]
      [ test-bsl-run_files test_tracking ]
      [ test-bsl-run_files test_unregistered ]
+     [ test-bsl-run_files test_unique_ptr ]
      [ test-bsl-run_files test_valarray ]
      [ test-bsl-run_files test_variant : A ]
      [ test-bsl-run_files test_vector : A ]
@@ -121,7 +127,7 @@ if ! $(BOOST_ARCHIVE_LIST) {
         
         [ test-bsl-run-no-lib test_iterators ]
         [ test-bsl-run-no-lib test_iterators_base64 ]
-	    [ test-bsl-run-no-lib test_inclusion ]
+        [ test-bsl-run-no-lib test_inclusion ]
         [ test-bsl-run-no-lib test_smart_cast ]
         
         [ test-bsl-run-no-lib test_utf8_codecvt 
@@ -132,6 +138,8 @@ if ! $(BOOST_ARCHIVE_LIST) {
             : ../src/codecvt_null 
             : <dependency>../../config/test/all//BOOST_NO_STD_WSTREAMBUF
         ]
+
+	[ test-bsl-run-no-lib test_z ]
 
         # should fail compilation
         [ compile-fail test_not_serializable.cpp ]

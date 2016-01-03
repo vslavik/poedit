@@ -6,7 +6,7 @@
 # package by hand; see doc/relocatable-maint.texi (in Gnulib) for
 # details.
 #
-# Copyright (C) 2003-2013 Free Software Foundation, Inc.
+# Copyright (C) 2003-2015 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,37 +21,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
-# func_tmpdir
-# creates a temporary directory.
-# Sets variable
-# - tmp             pathname of freshly created temporary directory
-func_tmpdir ()
-{
-  # Use the environment variable TMPDIR, falling back to /tmp. This allows
-  # users to specify a different temporary directory, for example, if their
-  # /tmp is filled up or too small.
-  : ${TMPDIR=/tmp}
-  {
-    # Use the mktemp program if available. If not available, hide the error
-    # message.
-    tmp=`(umask 077 && mktemp -d "$TMPDIR/glXXXXXX") 2>/dev/null` &&
-    test -n "$tmp" && test -d "$tmp"
-  } ||
-  {
-    # Use a simple mkdir command. It is guaranteed to fail if the directory
-    # already exists.  $RANDOM is bash specific and expands to empty in shells
-    # other than bash, ksh and zsh.  Its use does not increase security;
-    # rather, it minimizes the probability of failure in a very cluttered /tmp
-    # directory.
-    tmp=$TMPDIR/gl$$-$RANDOM
-    (umask 077 && mkdir "$tmp")
-  } ||
-  {
-    echo "$0: cannot create a temporary directory in $TMPDIR" >&2
-    { (exit 1); exit 1; }
-  }
-}
 
 # Support for relocatability.
 func_find_curr_installdir ()

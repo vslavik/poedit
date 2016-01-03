@@ -4,13 +4,15 @@
 
 # Generates preprocessed files with wave.
 
+project : requirements <link>static <variant>release ;
+
 actions wave
 {
   $(>[2]) -o- -DBOOST_PROTO_MAX_ARITY=10 --config-file wave.cfg $(>[1])
 }
 
-W = ../../../tools/wave/build//wave ;
+W = /boost/libs/wave/tool//wave ;
 
 make preprocess_proto
-  : preprocess_proto.cpp $(W) : wave
+  : preprocess_proto.cpp $(W) : wave : <dependency>wave.cfg
   ;

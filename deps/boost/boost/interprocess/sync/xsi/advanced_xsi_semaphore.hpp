@@ -30,6 +30,14 @@
 #ifndef BOOST_INTERPROCESS_SYNC_XSI_ADVANCED_XSI_SEMAPHORE_HPP
 #define BOOST_INTERPROCESS_SYNC_XSI_ADVANCED_XSI_SEMAPHORE_HPP
 
+#ifndef BOOST_CONFIG_HPP
+#  include <boost/config.hpp>
+#endif
+#
+#if defined(BOOST_HAS_PRAGMA_ONCE)
+#  pragma once
+#endif
+
 #include <sys/ipc.h>
 #include <sys/sem.h>
 #include <errno.h>

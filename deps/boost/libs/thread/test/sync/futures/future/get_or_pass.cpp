@@ -11,12 +11,13 @@
 // R& future<R&>::get_or(R&);
 
 #define BOOST_THREAD_VERSION 4
-#define BOOST_THREAD_USES_LOG
+//#define BOOST_THREAD_USES_LOG
 #define BOOST_THREAD_USES_LOG_THREAD_ID
 #include <boost/thread/detail/log.hpp>
 
 #include <boost/thread/future.hpp>
 #include <boost/thread/thread.hpp>
+#include <boost/core/ref.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 #if defined BOOST_THREAD_USES_CHRONO
@@ -128,49 +129,49 @@ int main()
           BOOST_THREAD_LOG << BOOST_THREAD_END_LOG;
       }
   }
-//  BOOST_THREAD_LOG << BOOST_THREAD_END_LOG;
-//  {
-//      typedef int& T;
-//      {
-//          boost::promise<T> p;
-//          boost::future<T> f = p.get_future();
-//#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
-//          boost::thread(func3, boost::move(p)).detach();
-//#else
-//          int j=5;
-//          p.set_value(j);
-//#endif
-//          BOOST_TEST(f.valid());
-//          int k=4;
-//          BOOST_TEST(f.get_or(k) == 5);
-//#ifdef BOOST_THREAD_PROVIDES_FUTURE_INVALID_AFTER_GET
-//          BOOST_TEST(!f.valid());
-//#endif
-//      }
-//      BOOST_THREAD_LOG << BOOST_THREAD_END_LOG;
-//      {
-//          boost::promise<T> p;
-//          boost::future<T> f = p.get_future();
-//#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
-//          boost::thread(func4, boost::move(p)).detach();
-//#else
-//          p.set_exception(boost::make_exception_ptr(3.5));
-//#endif
-//          try
-//          {
-//              BOOST_TEST(f.valid());
-//              int j=4;
-//              BOOST_TEST(f.get_or(j) == 4);
-//          }
-//          catch (...)
-//          {
-//            BOOST_TEST(false);
-//          }
-//#ifdef BOOST_THREAD_PROVIDES_FUTURE_INVALID_AFTER_GET
-//          BOOST_TEST(!f.valid());
-//#endif
-//      }
-//  }
+  BOOST_THREAD_LOG << BOOST_THREAD_END_LOG;
+  {
+      typedef int& T;
+      {
+          boost::promise<T> p;
+          boost::future<T> f = p.get_future();
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+          boost::thread(func3, boost::move(p)).detach();
+#else
+          int j=5;
+          p.set_value(j);
+#endif
+          BOOST_TEST(f.valid());
+          int k=4;
+          BOOST_TEST(f.get_or(boost::ref(k)) == 5);
+#ifdef BOOST_THREAD_PROVIDES_FUTURE_INVALID_AFTER_GET
+          BOOST_TEST(!f.valid());
+#endif
+      }
+      BOOST_THREAD_LOG << BOOST_THREAD_END_LOG;
+      {
+          boost::promise<T> p;
+          boost::future<T> f = p.get_future();
+#if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK && defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
+          boost::thread(func4, boost::move(p)).detach();
+#else
+          p.set_exception(boost::make_exception_ptr(3.5));
+#endif
+          try
+          {
+              BOOST_TEST(f.valid());
+              int j=4;
+              BOOST_TEST(f.get_or(boost::ref(j)) == 4);
+          }
+          catch (...)
+          {
+            BOOST_TEST(false);
+          }
+#ifdef BOOST_THREAD_PROVIDES_FUTURE_INVALID_AFTER_GET
+          BOOST_TEST(!f.valid());
+#endif
+      }
+  }
   BOOST_THREAD_LOG << BOOST_THREAD_END_LOG;
 
 

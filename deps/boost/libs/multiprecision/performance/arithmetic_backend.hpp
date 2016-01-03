@@ -545,17 +545,54 @@ struct double_precision_type<arithmetic_backend<boost::int32_t> >
 }
 
 }} // namespaces
-
+#if !(defined(__SGI_STL_PORT) || defined(BOOST_NO_LIMITS_COMPILE_TIME_CONSTANTS))
+//
+// We shouldn't need these to get code to compile, however for the sake of
+// "level playing field" performance comparisons they avoid the very slow
+// lexical_cast's that would otherwise take place.  Definition has to be guarded
+// by the inverse of pp-logic in real_concept.hpp which defines these as a workaround
+// for STLPort plus some other old/broken standartd libraries.
+//
 namespace boost{ namespace math{ namespace tools{
 
-template <>
-inline double real_cast<double, concepts::real_concept>(concepts::real_concept r)
-{
-   return static_cast<double>(r.value());
-}
+   template <>
+   inline unsigned int real_cast<unsigned int, concepts::real_concept>(concepts::real_concept r)
+   {
+      return static_cast<unsigned int>(r.value());
+   }
+
+   template <>
+   inline int real_cast<int, concepts::real_concept>(concepts::real_concept r)
+   {
+      return static_cast<int>(r.value());
+   }
+
+   template <>
+   inline long real_cast<long, concepts::real_concept>(concepts::real_concept r)
+   {
+      return static_cast<long>(r.value());
+   }
+
+   // Converts from T to narrower floating-point types, float, double & long double.
+
+   template <>
+   inline float real_cast<float, concepts::real_concept>(concepts::real_concept r)
+   {
+      return static_cast<float>(r.value());
+   }
+   template <>
+   inline double real_cast<double, concepts::real_concept>(concepts::real_concept r)
+   {
+      return static_cast<double>(r.value());
+   }
+   template <>
+   inline long double real_cast<long double, concepts::real_concept>(concepts::real_concept r)
+   {
+      return r.value();
+   }
 
 }}}
-
+#endif
 
 namespace std{
 

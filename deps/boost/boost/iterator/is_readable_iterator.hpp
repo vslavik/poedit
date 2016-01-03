@@ -16,7 +16,9 @@
 #ifndef BOOST_NO_IS_CONVERTIBLE
 
 namespace boost {
- 
+
+namespace iterators {
+
 namespace detail
 {
   // Guts of is_readable_iterator.  Value is the iterator's value_type
@@ -26,12 +28,12 @@ namespace detail
   {
       static char tester(Value&, int);
       static char (& tester(any_conversion_eater, ...) )[2];
-    
+
       template <class It>
       struct rebind
       {
           static It& x;
-          
+
           BOOST_STATIC_CONSTANT(
               bool
             , value = (
@@ -44,7 +46,7 @@ namespace detail
   };
 
 #undef BOOST_READABLE_PRESERVER
-  
+
   //
   // void specializations to handle std input and output iterators
   //
@@ -97,8 +99,12 @@ namespace detail
 // Define the trait with full mpl lambda capability and various broken
 // compiler workarounds
 BOOST_TT_AUX_BOOL_TRAIT_DEF1(
-    is_readable_iterator,T,::boost::detail::is_readable_iterator_impl2<T>::value)
-    
+    is_readable_iterator,T,::boost::iterators::detail::is_readable_iterator_impl2<T>::value)
+
+} // namespace iterators
+
+using iterators::is_readable_iterator;
+
 } // namespace boost
 
 #endif

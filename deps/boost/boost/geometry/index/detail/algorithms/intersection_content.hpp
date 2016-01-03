@@ -2,7 +2,7 @@
 //
 // boxes union/intersection area/volume
 //
-// Copyright (c) 2011-2013 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2011-2014 Adam Wulkiewicz, Lodz, Poland.
 //
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -12,6 +12,7 @@
 #define BOOST_GEOMETRY_INDEX_DETAIL_ALGORITHMS_INTERSECTION_CONTENT_HPP
 
 #include <boost/geometry/algorithms/intersection.hpp>
+#include <boost/geometry/strategies/intersection.hpp>
 #include <boost/geometry/index/detail/algorithms/content.hpp>
 
 namespace boost { namespace geometry { namespace index { namespace detail {
@@ -25,8 +26,8 @@ inline typename default_content_result<Box>::type intersection_content(Box const
     if ( geometry::intersects(box1, box2) )
     {
         Box box_intersection;
-        geometry::intersection(box1, box2, box_intersection);
-        return detail::content(box_intersection);
+        if ( geometry::intersection(box1, box2, box_intersection) )
+            return detail::content(box_intersection);
     }
     return 0;
 }

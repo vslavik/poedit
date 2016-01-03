@@ -55,6 +55,21 @@ void test_state_saver(const char* str, const char* str2, D d, boost::chrono::dur
   BOOST_TEST(out.str() == str2);
 }
 
+template<typename D>
+void test_state_saver2(const char* str, const char* str2, D d, boost::chrono::duration_style style)
+{
+  std::ostringstream out;
+  {
+    boost::chrono::duration_style_io_saver ios(out, style);
+    out << d;
+    BOOST_TEST(out.good());
+    BOOST_TEST(out.str() == str);
+  }
+  out << " " <<  d;
+  BOOST_TEST(out.good());
+  BOOST_TEST(out.str() == str2);
+}
+
 #endif
 
 int main()
@@ -90,6 +105,7 @@ int main()
   test_good("5000 hours", hours(5000), duration_style::prefix);
   test_good("5000 h", hours(5000), duration_style::symbol);
   test_state_saver("5000 h", "5000 h 5000 hours", hours(5000), duration_style::symbol);
+  test_state_saver2("5000 h", "5000 h 5000 hours", hours(5000), duration_style::symbol);
 #endif
 
   return boost::report_errors();

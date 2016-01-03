@@ -7,7 +7,9 @@
 #if !defined(BOOST_FUSION_MAP_DETAIL_AT_IMPL_02042013_0821)
 #define BOOST_FUSION_MAP_DETAIL_AT_IMPL_02042013_0821
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/support/detail/access.hpp>
+#include <boost/utility/declval.hpp>
 
 namespace boost { namespace fusion
 {
@@ -26,9 +28,10 @@ namespace boost { namespace fusion
             {
                 typedef mpl::int_<N::value> index;
                 typedef
-                    decltype(std::declval<Sequence>().get(index()))
+                    decltype(boost::declval<Sequence>().get(index()))
                 type;
 
+                BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
                 static type
                 call(Sequence& m)
                 {
@@ -41,9 +44,10 @@ namespace boost { namespace fusion
             {
                 typedef mpl::int_<N::value> index;
                 typedef
-                    decltype(std::declval<Sequence const>().get(index()))
+                    decltype(boost::declval<Sequence const>().get(index()))
                 type;
 
+                BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
                 static type
                 call(Sequence const& m)
                 {

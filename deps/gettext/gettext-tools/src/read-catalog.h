@@ -1,5 +1,6 @@
 /* Reading PO files.
-   Copyright (C) 1995-1998, 2000-2003, 2005-2006, 2008-2009 Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2003, 2005-2006, 2008-2009, 2015 Free
+   Software Foundation, Inc.
    This file was written by Bruno Haible <haible@clisp.cons.org>.
 
    This program is free software: you can redistribute it and/or modify
@@ -77,10 +78,6 @@ struct default_catalog_reader_class_ty
   /* If true, pay attention to comments and filepos comments.  */       \
   bool handle_comments;                                                 \
                                                                         \
-  /* If true, remember comments for file name and line number for each  \
-     msgid, if present in the reference input.  */                      \
-  bool handle_filepos_comments;                                         \
-                                                                        \
   /* If false, domain directives lead to an error messsage.  */         \
   bool allow_domain_directives;                                         \
                                                                         \
@@ -117,6 +114,7 @@ struct default_catalog_reader_class_ty
   enum is_format is_format[NFORMATS];                                   \
   struct argument_range range;                                          \
   enum is_wrap do_wrap;                                                 \
+  enum is_syntax_check do_syntax_check[NSYNTAXCHECKS];                  \
 
 typedef struct default_catalog_reader_ty default_catalog_reader_ty;
 struct default_catalog_reader_ty
@@ -166,10 +164,6 @@ extern void default_add_message (default_catalog_reader_ty *this,
 extern default_catalog_reader_ty *
        default_catalog_reader_alloc (default_catalog_reader_class_ty *method_table);
 
-
-/* If nonzero, remember comments for file name and line number for each
-   msgid, if present in the reference input.  Defaults to true.  */
-extern DLL_VARIABLE int line_comment;
 
 /* If false, duplicate msgids in the same domain and file generate an error.
    If true, such msgids are allowed; the caller should treat them

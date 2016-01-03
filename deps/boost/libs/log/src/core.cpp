@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -252,10 +252,6 @@ public:
         m_default_sink(boost::make_shared< sinks::aux::default_sink >()),
         m_enabled(true)
     {
-        // Workaround for https://svn.boost.org/trac/boost/ticket/8642
-        // Initialize global locale in Boost.Filesystem early, so that it is still available while the logging core is destroyed.
-        // Note that this only helps in the simplest case, when the core is not kept alive by a shared_ptr saved by user.
-        filesystem::path::codecvt();
     }
 
     //! Invokes sink-specific filter and adds the sink to the record if the filter passes the log record
@@ -606,7 +602,7 @@ BOOST_LOG_API void core::push_record_move(record& rec)
         typedef std::vector< shared_ptr< sinks::sink > > accepting_sinks_t;
         accepting_sinks_t accepting_sinks(data->accepting_sink_count());
         shared_ptr< sinks::sink >* const begin = &*accepting_sinks.begin();
-        register shared_ptr< sinks::sink >* end = begin;
+        shared_ptr< sinks::sink >* end = begin;
 
         // Lock sinks that are willing to consume the record
         record_view::private_data::sink_list weak_sinks = data->get_accepting_sinks();
@@ -622,11 +618,11 @@ BOOST_LOG_API void core::push_record_move(record& rec)
         }
 
         bool shuffled = (end - begin) <= 1;
-        register shared_ptr< sinks::sink >* it = begin;
+        shared_ptr< sinks::sink >* it = begin;
         while (true) try
         {
             // First try to distribute load between different sinks
-            register bool all_locked = true;
+            bool all_locked = true;
             while (it != end)
             {
                 if (it->get()->try_consume(rec_view))

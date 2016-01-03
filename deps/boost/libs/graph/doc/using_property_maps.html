@@ -219,7 +219,7 @@ one could create exterior properties for a graph.
 
 <P>
 The first method uses the adaptor class
-<TT>random_access_iterator_property_map</TT>. This
+<TT>iterator_property_map</TT>. This
 class wraps a random access iterator, creating a property map out
 of it. The random access iterator must point to the beginning of a
 range of property values, and the length of the range must be the
@@ -229,7 +229,7 @@ with an ID property map, which will be used to map the vertex or
 edge descriptor to the offset of the property value (offset from the
 random access iterator). The ID property map will typically be an
 interior property map of the graph.  The following example shows
-how the <TT>random_access_iterator_property_map</TT>
+how the <TT>iterator_property_map</TT>
 can be used to create exterior property maps for the capacity and flow properties, which are stored in arrays. The arrays are
 indexed by edge ID. The edge ID is added to the graph using a property,
 and the values of the ID's are given when each edge is added to the
@@ -257,7 +257,7 @@ the flow and capacity values.
   typedef property_map&lt;Graph, edge_index_t&gt;::type EdgeID_Map;
   EdgeID_Map edge_id = get(edge_index, G);
 
-  random_access_iterator_property_map
+  iterator_property_map
     &lt;int*, int, int&amp;, EdgeID_Map&gt; 
       capacity(capacity_array, edge_id), 
       flow(flow_array, edge_id);
@@ -276,7 +276,7 @@ suitable as the key type for a pointer property map. When the
 <TT>VertexList</TT> is not <TT>vecS</TT>, then the vertex descriptor is
 not an integer, and cannot be used with a pointer property map.
 Instead the method described above of using a
-<TT>random_access_iterator_property_map</TT> with an ID
+<TT>iterator_property_map</TT> with an ID
 property must be used. The <TT>edge_list</TT> class may also use an
 integer type for the vertex descriptor, depending on how the adapted
 edge iterator is defined. The example in
@@ -388,10 +388,10 @@ your new property map type.
 
 <P>
 The implementation of the
-<TT>random_access_iterator_property_map</TT> class
+<TT>iterator_property_map</TT> class
 serves as a good example for how to build and exterior property
 map. Here we present a simplified implementation of the
-<TT>random_access_iterator_property_map</TT> class
+<TT>iterator_property_map</TT> class
 which we will name <TT>iterator_pa</TT>.
 
 <P>
@@ -462,7 +462,7 @@ to the random access iterator <TT>m_iter</TT>.
 <P>
 That is it. The <TT>iterator_map</TT> class is complete and could be
 used just like the
-<TT>random_access_iterator_property_map</TT> in the
+<TT>iterator_property_map</TT> in the
 previous section.
 
 <P>

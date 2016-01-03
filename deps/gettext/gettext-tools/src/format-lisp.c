@@ -1,5 +1,6 @@
 /* Lisp format strings.
-   Copyright (C) 2001-2004, 2006-2007, 2009 Free Software Foundation, Inc.
+   Copyright (C) 2001-2004, 2006-2007, 2009, 2015 Free Software
+   Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -1272,10 +1273,12 @@ make_intersected_list (struct format_arg_list *list1,
         /* Intersect the argument types.  */
         if (!make_intersected_element (re, e1, e2))
           {
+            bool re_is_required = re->presence == FCT_REQUIRED;
+
             append_repeated_to_initial (result);
 
             /* If re->presence == FCT_OPTIONAL, the result list ends here.  */
-            if (re->presence == FCT_REQUIRED)
+            if (re_is_required)
               /* Contradiction.  Backtrack.  */
               result = backtrack_in_initial (result);
 

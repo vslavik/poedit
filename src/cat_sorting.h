@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2010-2013 Vaclav Slavik
+ *  Copyright (C) 2010-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -41,7 +41,7 @@ struct SortOrder
         By_Translation
     };
 
-    SortOrder() : by(By_FileOrder), untransFirst(true) {}
+    SortOrder() : by(By_FileOrder), groupByContext(false), untransFirst(false), errorsFirst(true) {}
 
     /// Loads default sort order from config settings
     static SortOrder Default();
@@ -52,8 +52,14 @@ struct SortOrder
     /// What are we sorting by
     ByWhat by;
 
+    /// Group items by context?
+    bool groupByContext;
+
     /// Do untranslated entries go first?
     bool untransFirst;
+
+    /// Do entries with errors go first?
+    bool errorsFirst;
 };
 
 /**
@@ -73,7 +79,7 @@ public:
     bool operator()(int i, int j) const;
 
 protected:
-    const CatalogItem& Item(int i) const { return m_catalog[i]; }
+    const CatalogItem& Item(int i) const { return *m_catalog[i]; }
     int CompareStrings(wxString a, wxString b) const;
 
 private:

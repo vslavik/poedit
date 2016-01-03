@@ -2,9 +2,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Configuration Macros</title>
-<link rel="stylesheet" href="../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../index.html" title="Math Toolkit">
+<link rel="stylesheet" href="../math.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="../index.html" title="Math Toolkit 2.2.0">
 <link rel="up" href="../overview.html" title="Chapter&#160;1.&#160;Overview">
 <link rel="prev" href="compilers_overview.html" title="Compilers">
 <link rel="next" href="intro_pol_overview.html" title="Policies">
@@ -60,19 +60,6 @@
 <tr>
 <td>
               <p>
-                <code class="computeroutput"><span class="identifier">BOOST_MATH_NO_REAL_CONCEPT_TESTS</span></code>
-              </p>
-            </td>
-<td>
-              <p>
-                Do not try to use real concept tests (hardware or software does not
-                support real_concept type).
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
                 <code class="computeroutput"><span class="identifier">BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS</span></code>
               </p>
             </td>
@@ -81,6 +68,46 @@
                 Do not produce or use long double functions: this macro gets set
                 when the platform's long double or standard library long double support
                 is absent or buggy.
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">BOOST_MATH_USE_FLOAT128</span></code>
+              </p>
+            </td>
+<td>
+              <p>
+                When set the numeric constants support the <code class="computeroutput"><span class="identifier">__float128</span></code>
+                data type with constants having the <code class="computeroutput"><span class="identifier">Q</span></code>
+                suffix.
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">BOOST_MATH_DISABLE_FLOAT128</span></code>
+              </p>
+            </td>
+<td>
+              <p>
+                When set the numeric constants do not use the <code class="computeroutput"><span class="identifier">__float128</span></code>
+                data type even if the compiler appears to support it.
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">BOOST_MATH_NO_REAL_CONCEPT_TESTS</span></code>
+              </p>
+            </td>
+<td>
+              <p>
+                Do not try to use real concept tests (hardware or software does not
+                support real_concept type).
               </p>
             </td>
 </tr>
@@ -133,58 +160,6 @@
               <p>
                 define if no native (or buggy) <code class="computeroutput"><span class="identifier">fpclassify</span><span class="special">(</span><span class="keyword">long</span> <span class="keyword">double</span><span class="special">)</span></code>
                 even though the other C99 functions are present.
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                <code class="computeroutput"><span class="identifier">BOOST_MATH_EXPLICIT_TEMPLATE_TYPE</span></code>
-              </p>
-            </td>
-<td>
-              <p>
-                Workaround helper macro for broken compilers - composed from other
-                Boost.Config macros, do not edit.
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                <code class="computeroutput"><span class="identifier">BOOST_MATH_EXPLICIT_TEMPLATE_NON_TYPE</span></code>
-              </p>
-            </td>
-<td>
-              <p>
-                Workaround helper macro for broken compilers - composed from other
-                Boost.Config macros, do not edit.
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                <code class="computeroutput"><span class="identifier">BOOST_MATH_APPEND_EXPLICIT_TEMPLATE_TYPE_SPEC</span></code>
-              </p>
-            </td>
-<td>
-              <p>
-                Workaround helper macro for broken compilers - composed from other
-                Boost.Config macros, do not edit.
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                <code class="computeroutput"><span class="identifier">BOOST_MATH_APPEND_EXPLICIT_TEMPLATE_NON_TYPE_SPEC</span></code>
-              </p>
-            </td>
-<td>
-              <p>
-                Workaround helper macro for broken compilers - composed from other
-                Boost.Config macros, do not edit.
               </p>
             </td>
 </tr>
@@ -391,9 +366,10 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012, 2013 Paul A. Bristow, Christopher Kormanyos,
-      Hubert Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin
-      Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
+      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
+      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
+      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

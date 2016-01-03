@@ -7,7 +7,7 @@
 =============================================================================*/
 
 #include "dependency_tracker.hpp"
-#include "input_path.hpp"
+#include "native_text.hpp"
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/foreach.hpp>
@@ -100,10 +100,25 @@ namespace quickbook
         return generic;
     }
 
+    dependency_tracker::dependency_tracker() :
+        dependencies(), glob_dependencies(),
+        last_glob(glob_dependencies.end()) {}
+
     bool dependency_tracker::add_dependency(fs::path const& f) {
         bool found = fs::exists(fs::status(f));
         dependencies[normalize_path(f)] |= found;
         return found;
+    }
+
+    void dependency_tracker::add_glob(fs::path const& f) {
+        std::pair<glob_list::iterator, bool> r = glob_dependencies.insert(
+                std::make_pair(normalize_path(f), glob_list::mapped_type()));
+        last_glob = r.first;
+    }
+
+    void dependency_tracker::add_glob_match(fs::path const& f) {
+        assert(last_glob != glob_dependencies.end());
+        last_glob->second.insert(normalize_path(f));
     }
 
     void dependency_tracker::write_dependencies(fs::path const& file_out,
@@ -124,16 +139,45 @@ namespace quickbook
     void dependency_tracker::write_dependencies(std::ostream& out,
             flags f)
     {
-        BOOST_FOREACH(dependency_list::value_type const& d, dependencies)
-        {
-            if (f & checked) {
+        if (f & checked) {
+            BOOST_FOREACH(dependency_list::value_type const& d, dependencies)
+            {
                 out << (d.second ? "+ " : "- ")
                     << get_path(d.first, f) << std::endl;
             }
-            else {
-                if (d.second) {
-                    out << get_path(d.first, f) << std::endl;
+
+            BOOST_FOREACH(glob_list::value_type const& g, glob_dependencies)
+            {
+                out << "g "
+                    << get_path(g.first, f) << std::endl;
+
+                BOOST_FOREACH(fs::path const& p, g.second)
+                {
+                    out << "+ " << get_path(p, f) << std::endl;
                 }
+            }
+        }
+        else {
+            std::set<std::string> paths;
+
+            BOOST_FOREACH(dependency_list::value_type const& d, dependencies)
+            {
+                if (d.second) {
+                    paths.insert(get_path(d.first, f));
+                }
+            }
+
+            BOOST_FOREACH(glob_list::value_type const& g, glob_dependencies)
+            {
+                BOOST_FOREACH(fs::path const& p, g.second)
+                {
+                    paths.insert(get_path(p, f));
+                }
+            }
+
+            BOOST_FOREACH(std::string const& p, paths)
+            {
+                out << p << std::endl;
             }
         }
     }

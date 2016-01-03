@@ -1,6 +1,6 @@
 /* Boost.Flyweight example of a composite design.
  *
- * Copyright 2006-2010 Joaquin M Lopez Munoz.
+ * Copyright 2006-2014 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -47,12 +47,10 @@ typedef flyweight<list_impl> list;
 
 /* list_impl must be hashable to be used by flyweight: If a
  * node is a std::string, its hash resolves to that of the string;
- * if it is a vector of nodes, we compute the hash by combining
- * the *addresses* of the stored flyweights' associated values: this is
- * consistent because flyweight equality implies equality of reference.
- * Using this trick instead of hashing the node values themselves
- * allow us to do the computation without recursively descending down
- * through the entire data structure.
+ * if it is a vector of flyweight nodes, we combine their corresponding
+ * hash values. As hashing a flyweight does not involve actually hashing
+ * its pointed-to value, the resulting computation does not recursively
+ * descend down the entire data structure.
  */
 
 struct list_hasher:boost::static_visitor<std::size_t>
@@ -68,8 +66,7 @@ struct list_hasher:boost::static_visitor<std::size_t>
     std::size_t res=0;
     for(list_elems::const_iterator it=elms.begin(),it_end=elms.end();
         it!=it_end;++it){
-      const list_impl* p=&it->get();
-      boost::hash_combine(res,p);
+      boost::hash_combine(res,*it);
     }
     return res;
   }

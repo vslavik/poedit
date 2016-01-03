@@ -35,34 +35,34 @@
          <span class="keyword">typename</span> VariateTag<span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="weighted_covariance_impl.html" title="Struct template weighted_covariance_impl">weighted_covariance_impl</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">accumulator_base</span> <span class="special">{</span>
   <span class="comment">// <a class="link" href="weighted_covariance_impl.html#boost.accumulators.impl.weighted_covariance_implconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <a class="link" href="weighted_covariance_impl.html#idp33748408-bb"><span class="identifier">weighted_covariance_impl</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <a class="link" href="weighted_covariance_impl.html#idp59894032-bb"><span class="identifier">weighted_covariance_impl</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="weighted_covariance_impl.html#idp33746184-bb">public member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="weighted_covariance_impl.html#idp33746392-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">result_type</span> <a class="link" href="weighted_covariance_impl.html#idp33747608-bb"><span class="identifier">result</span></a><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="weighted_covariance_impl.html#idp59889120-bb">public member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="weighted_covariance_impl.html#idp59889680-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">result_type</span> <a class="link" href="weighted_covariance_impl.html#idp59892064-bb"><span class="identifier">result</span></a><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp58038984"></a><h2>Description</h2>
-<p>An iterative Monte Carlo estimator for the weighted covariance <span class="inlinemediaobject"><img src="../../../images/accumulators//form_0.png"></span>, where <span class="inlinemediaobject"><img src="../../../images/accumulators//form_1.png"></span> is a sample and <span class="inlinemediaobject"><img src="../../../images/accumulators//form_2.png"></span> a variate, is given by:</p>
+<a name="idp102467872"></a><h2>Description</h2>
+<p>An iterative Monte Carlo estimator for the weighted covariance <span class="inlinemediaobject"><img src="../../../images/accumulators//form_39.png"></span>, where <span class="inlinemediaobject"><img src="../../../images/accumulators//form_40.png"></span> is a sample and <span class="inlinemediaobject"><img src="../../../images/accumulators//form_41.png"></span> a variate, is given by:</p>
 <div class="equation">
-<a name="idp58043032"></a><p class="title"><b>Equation&#160;1.27.&#160;</b></p>
-<div class="equation-contents"><div class="mediaobject" align="center"><img src="../../../images/accumulators//form_81.png" align="middle"></div></div>
+<a name="idp102475872"></a><p class="title"><b>Equation&#160;1.40.&#160;</b></p>
+<div class="equation-contents"><div class="mediaobject" align="center"><img src="../../../images/accumulators//form_42.png" align="middle"></div></div>
 </div>
 <p><br class="equation-break"></p>
-<p><span class="inlinemediaobject"><img src="../../../images/accumulators//form_4.png"></span> and <span class="inlinemediaobject"><img src="../../../images/accumulators//form_5.png"></span> being the weighted means of the samples and variates and <span class="inlinemediaobject"><img src="../../../images/accumulators//form_82.png"></span> the sum of the <span class="inlinemediaobject"><img src="../../../images/accumulators//form_60.png"></span> first weights <span class="inlinemediaobject"><img src="../../../images/accumulators//form_83.png"></span>. </p>
+<p><span class="inlinemediaobject"><img src="../../../images/accumulators//form_7.png"></span> and <span class="inlinemediaobject"><img src="../../../images/accumulators//form_43.png"></span> being the weighted means of the samples and variates and <span class="inlinemediaobject"><img src="../../../images/accumulators//form_5.png"></span> the sum of the <span class="inlinemediaobject"><img src="../../../images/accumulators//form_3.png"></span> first weights <span class="inlinemediaobject"><img src="../../../images/accumulators//form_6.png"></span>. </p>
 <div class="refsect2">
-<a name="idp58050712"></a><h3>
+<a name="idp102490976"></a><h3>
 <a name="boost.accumulators.impl.weighted_covariance_implconstruct-copy-destruct"></a><code class="computeroutput">weighted_covariance_impl</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <a name="idp33748408-bb"></a><span class="identifier">weighted_covariance_impl</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <a name="idp59894032-bb"></a><span class="identifier">weighted_covariance_impl</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp58055992"></a><h3>
-<a name="idp33746184-bb"></a><code class="computeroutput">weighted_covariance_impl</code> public member functions</h3>
+<a name="idp102501680"></a><h3>
+<a name="idp59889120-bb"></a><code class="computeroutput">weighted_covariance_impl</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp33746392-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">result_type</span> <a name="idp33747608-bb"></a><span class="identifier">result</span><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp59889680-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">result_type</span> <a name="idp59892064-bb"></a><span class="identifier">result</span><span class="special">(</span><span class="identifier">dont_care</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>

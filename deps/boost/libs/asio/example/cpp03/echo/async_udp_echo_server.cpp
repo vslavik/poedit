@@ -2,7 +2,7 @@
 // async_udp_echo_server.cpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -19,8 +19,7 @@ class server
 {
 public:
   server(boost::asio::io_service& io_service, short port)
-    : io_service_(io_service),
-      socket_(io_service, udp::endpoint(udp::v4(), port))
+    : socket_(io_service, udp::endpoint(udp::v4(), port))
   {
     socket_.async_receive_from(
         boost::asio::buffer(data_, max_length), sender_endpoint_,
@@ -61,7 +60,6 @@ public:
   }
 
 private:
-  boost::asio::io_service& io_service_;
   udp::socket socket_;
   udp::endpoint sender_endpoint_;
   enum { max_length = 1024 };

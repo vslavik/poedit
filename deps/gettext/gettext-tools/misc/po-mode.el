@@ -1,6 +1,7 @@
 ;;; po-mode.el -- major mode for GNU gettext PO files
 
-;; Copyright (C) 1995-1999, 2000-2002, 2005-2008, 2010 Free Software Foundation, Inc.
+;; Copyright (C) 1995-2002, 2005-2008, 2010, 2015 Free Software
+;; Foundation, Inc.
 
 ;; Authors: François Pinard <pinard@iro.umontreal.ca>
 ;;          Greg McGary <gkm@magilla.cichlid.com>
@@ -62,7 +63,7 @@
 
 ;;; Code:
 
-(defconst po-mode-version-string "2.22" "\
+(defconst po-mode-version-string "2.23" "\
 Version number of this version of po-mode.el.")
 
 ;;; Emacs portability matters - part I.
@@ -127,6 +128,11 @@ Value is nil, t, or ask."
 
 (defcustom po-auto-select-on-unfuzzy nil
   "*Automatically select some new entry while making an entry not fuzzy."
+  :type 'boolean
+  :group 'po)
+
+(defcustom po-keep-mo-file nil
+  "*Set whether MO file should be kept or discarded after validation."
   :type 'boolean
   :group 'po)
 
@@ -1064,7 +1070,7 @@ Initialize or replace current translation with the original message"))])
     ;;  '("msgctxt " "msgid " "msgid_plural " "msgstr " "msgstr[0] " "msgstr[1] "))
     ("^\\(\\(msg\\(ctxt\\|id\\(_plural\\)?\\|str\\(\\[[0-9]\\]\\)?\\)\\) \\)?\"\\|\"$"
      . font-lock-keyword-face)
-    ("\\\\.\\|%[*$-.0-9ul]*[a-zA-Z]" . font-lock-variable-name-face)
+    ("\\\\.\\|%[*$-.0-9hjltuzL]*[a-zA-Z]" . font-lock-variable-name-face)
     ("^# .*\\|^#[:,]?" . font-lock-comment-face)
     ("^#:\\(.*\\)" 1 font-lock-reference-face)
     ;; The following line does not work, and I wonder why.
@@ -3345,20 +3351,25 @@ Leave point after marked string."
 (defun po-validate ()
   "Use 'msgfmt' for validating the current PO file contents."
   (interactive)
-  ; The 'compile' subsystem is autoloaded through a call to (compile ...).
-  ; We need to initialize it outside of any binding. Without this statement,
-  ; all defcustoms and defvars of compile.el would be undone when the let*
-  ; terminates.
+  ;; The 'compile' subsystem is autoloaded through a call to (compile ...).
+  ;; We need to initialize it outside of any binding. Without this statement,
+  ;; all defcustoms and defvars of compile.el would be undone when the let*
+  ;; terminates.
   (require 'compile)
   (let* ((dev-null
           (cond ((boundp 'null-device) null-device) ; since Emacs 20.3
                 ((memq system-type '(windows-nt windows-95)) "NUL")
                 (t "/dev/null")))
+         (output
+          (if po-keep-mo-file
+              (concat (file-name-sans-extension buffer-file-name) ".mo")
+            dev-null))
          (compilation-buffer-name-function
           (function (lambda (mode-name)
                       (concat "*" mode-name " validation*"))))
          (compile-command (concat po-msgfmt-program
-                                  " --statistics -c -v -o " dev-null " "
+                                  " --statistics -c -v -o "
+                                  (shell-quote-argument output) " "
                                   (shell-quote-argument buffer-file-name))))
     (po-msgfmt-version-check)
     (compile compile-command)))
@@ -3509,7 +3520,7 @@ Write to your team?  ('n' if writing to the Translation Project robot) ")))
               (insert-buffer-substring buffer)
               (shell-command-on-region
                (region-beginning) (region-end)
-               (concat po-gzip-uuencode-command " " name ".gz") t))))))
+               (concat po-gzip-uuencode-command " " name ".gz") t t))))))
   (message ""))
 
 (defun po-confirm-and-quit ()

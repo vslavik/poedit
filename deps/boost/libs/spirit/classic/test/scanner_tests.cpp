@@ -29,12 +29,12 @@ struct to_upper_iter_policy : public iteration_policy {
 
 inline bool test_isspace(char c)
 {
-    using namespace std; return isspace(c);
+    using namespace std; return isspace(c) != 0;
 }
 
 inline bool test_islower(char c)
 {
-    using namespace std; return islower(c);
+    using namespace std; return islower(c) != 0;
 }
 
 struct skip_white_iter_policy : public iteration_policy {

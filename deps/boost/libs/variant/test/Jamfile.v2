@@ -3,14 +3,9 @@
 #  Copyright (C) 2003, Eric Friedman, Itay Maman.
 #  Copyright (C) 2013, Antony Polukhin.
 #
-#  This material is provided "as is", with absolutely no warranty expressed
-#  or implied. Any use is at your own risk.
-#
-#  Permission to use or copy this software for any purpose is hereby granted
-#  without fee, provided the above notices are retained on all copies.
-#  Permission to modify the code and to distribute modified code is granted,
-#  provided the above notices are retained, and a notice that the code was
-#  modified is included with the above copyright notice.
+# Use, modification and distribution is subject to the Boost Software License,
+# Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
 #
 project
     : requirements
@@ -33,9 +28,12 @@ test-suite variant
     [ run variant_reference_test.cpp ]
     [ run variant_comparison_test.cpp ]
     [ run variant_visit_test.cpp ]
+    [ run variant_get_test.cpp ]
+    [ run variant_polymorphic_get_test.cpp ]
     [ run variant_multivisit_test.cpp ]
     [ run hash_variant_test.cpp ]
     [ run rvalue_test.cpp ]
+    [ run variant_nonempty_check.cpp ]
     [ run recursive_variant_test.cpp : : : <define>BOOST_NO_EXCEPTIONS
       <toolset>gcc-4.3:<cxxflags>-fno-exceptions
       <toolset>gcc-4.4:<cxxflags>-fno-exceptions
@@ -46,6 +44,9 @@ test-suite variant
       <toolset>clang:<cxxflags>-fno-exceptions
       : variant_noexcept_test
     ]
+    [ run recursive_variant_test.cpp : : : <rtti>off <define>BOOST_NO_RTTI <define>BOOST_NO_TYPEID : variant_no_rtti_test ]
+    [ run variant_swap_test.cpp ]
+    [ run auto_visitors.cpp ]
    ; 
 
 

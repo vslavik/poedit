@@ -18,10 +18,10 @@
 class B;
 
 class A {
-^    friend boost::serialization::access;
-^    B *pimpl;
-^    template<class Archive>
-^    void serialize(Archive & ar, const unsigned int file_version);
+    friend boost::serialization::access;
+    B *pimpl;
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int file_version);
 };
 
 int test_main( int argc, char* argv[] )

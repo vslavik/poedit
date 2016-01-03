@@ -447,7 +447,7 @@ The returned iterators are relative to `begin()` and `end()`.
 
 [*Requires]: The expression must have been compiled with the
 [syntax_option_type] save_subexpression_location set.  Argument
-/n/ must be in within the range `1 <= n < mark_count()`.
+/n/ must be in within the range `0 <= n < mark_count()`.
 
 [#boost_regex.basic_regex.begin]
 
@@ -487,7 +487,7 @@ otherwise false.
 
    size_type mark_count() const;
 
-[*Effects]: Returns the number of marked sub-expressions within the regular expresion.
+[*Effects]: Returns the number of marked sub-expressions within the regular expression.
 
 [#boost_regex.basic_regex.assign1]
 

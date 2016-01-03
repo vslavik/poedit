@@ -28,33 +28,46 @@
       arbitrary precision floating point types</a>
 </h3></div></div></div>
 <p>
-        Besides the classical floating point number like <code class="computeroutput"><span class="keyword">float</span></code>,
-        <code class="computeroutput"><span class="keyword">double</span></code>, <code class="computeroutput"><span class="identifier">complex</span><span class="special">&lt;</span> <span class="keyword">double</span> <span class="special">&gt;</span></code> you can also use arbitrary precision
-        types, like the types from <a href="http://gmplib.org/" target="_top">gmp</a> and
-        <a href="http://www.mpfr.org/" target="_top">mpfr</a>. But you have to be careful
-        about instantiating any numbers.
+        Sometimes one needs results with higher precision than provided by the standard
+        floating point types. As odeint allows to configure the fundamental numerical
+        type, it is well suited to be run with arbitrary precision types. Therefore,
+        one only needs a library that provides a type representing values with arbitrary
+        precision and the fundamental operations for those values. <a href="http://www.boost.org/doc/libs/release/libs/multiprecision/" target="_top">Boost.Multiprecision</a>
+        is a boost library that does exactly this. Making use of <a href="http://www.boost.org/doc/libs/release/libs/multiprecision/" target="_top">Boost.Multiprecision</a>
+        to solve odes with odeint is very simple, as the following example shows.
       </p>
 <p>
-        For gmp types you have to set the default precision before any number is
-        instantiated. This can be done by calling <code class="computeroutput"><span class="identifier">mpf_set_default_prec</span><span class="special">(</span> <span class="identifier">precision</span> <span class="special">)</span></code> as the first function in your main program.
-        Secondly, you can not use any global constant variables since they will not
-        be set with the default precision you have already set.
-      </p>
-<p>
-        Here is a simple example:
+        Here we use <code class="computeroutput"><span class="identifier">cpp_dec_float_50</span></code>
+        as the fundamental value type, which ensures exact computations up to 50
+        decimal digits.
       </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">mpf_class</span> <span class="identifier">value_type</span><span class="special">;</span>
-<span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">array</span><span class="special">&lt;</span> <span class="identifier">value_type</span> <span class="special">,</span> <span class="number">3</span> <span class="special">&gt;</span> <span class="identifier">state_type</span><span class="special">;</span>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">numeric</span><span class="special">/</span><span class="identifier">odeint</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">multiprecision</span><span class="special">/</span><span class="identifier">cpp_dec_float</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
-<span class="keyword">struct</span> <span class="identifier">lorenz</span>
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">std</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">numeric</span><span class="special">::</span><span class="identifier">odeint</span><span class="special">;</span>
+
+<span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">::</span><span class="identifier">cpp_dec_float_50</span> <span class="identifier">value_type</span><span class="special">;</span>
+
+<span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">array</span><span class="special">&lt;</span> <span class="identifier">value_type</span> <span class="special">,</span> <span class="number">3</span> <span class="special">&gt;</span> <span class="identifier">state_type</span><span class="special">;</span>
+</pre>
+<p>
+      </p>
+<p>
+        As exemplary ODE again the lorenz system is chosen, but here we have to make
+        sure all constants are initialized as high precision values.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">lorenz</span>
 <span class="special">{</span>
     <span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()(</span> <span class="keyword">const</span> <span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">x</span> <span class="special">,</span> <span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">dxdt</span> <span class="special">,</span> <span class="identifier">value_type</span> <span class="identifier">t</span> <span class="special">)</span> <span class="keyword">const</span>
     <span class="special">{</span>
-        <span class="keyword">const</span> <span class="identifier">value_type</span> <span class="identifier">sigma</span><span class="special">(</span> <span class="number">10.0</span> <span class="special">);</span>
-        <span class="keyword">const</span> <span class="identifier">value_type</span> <span class="identifier">R</span><span class="special">(</span> <span class="number">28.0</span> <span class="special">);</span>
-        <span class="keyword">const</span> <span class="identifier">value_type</span> <span class="identifier">b</span><span class="special">(</span> <span class="identifier">value_type</span><span class="special">(</span> <span class="number">8.0</span> <span class="special">)</span> <span class="special">/</span> <span class="identifier">value_type</span><span class="special">(</span> <span class="number">3.0</span> <span class="special">)</span> <span class="special">);</span>
+        <span class="keyword">const</span> <span class="identifier">value_type</span> <span class="identifier">sigma</span><span class="special">(</span> <span class="number">10</span> <span class="special">);</span>
+        <span class="keyword">const</span> <span class="identifier">value_type</span> <span class="identifier">R</span><span class="special">(</span> <span class="number">28</span> <span class="special">);</span>
+        <span class="keyword">const</span> <span class="identifier">value_type</span> <span class="identifier">b</span><span class="special">(</span> <span class="identifier">value_type</span><span class="special">(</span> <span class="number">8</span> <span class="special">)</span> <span class="special">/</span> <span class="identifier">value_type</span><span class="special">(</span> <span class="number">3</span> <span class="special">)</span> <span class="special">);</span>
 
         <span class="identifier">dxdt</span><span class="special">[</span><span class="number">0</span><span class="special">]</span> <span class="special">=</span> <span class="identifier">sigma</span> <span class="special">*</span> <span class="special">(</span> <span class="identifier">x</span><span class="special">[</span><span class="number">1</span><span class="special">]</span> <span class="special">-</span> <span class="identifier">x</span><span class="special">[</span><span class="number">0</span><span class="special">]</span> <span class="special">);</span>
         <span class="identifier">dxdt</span><span class="special">[</span><span class="number">1</span><span class="special">]</span> <span class="special">=</span> <span class="identifier">R</span> <span class="special">*</span> <span class="identifier">x</span><span class="special">[</span><span class="number">0</span><span class="special">]</span> <span class="special">-</span> <span class="identifier">x</span><span class="special">[</span><span class="number">1</span><span class="special">]</span> <span class="special">-</span> <span class="identifier">x</span><span class="special">[</span><span class="number">0</span><span class="special">]</span> <span class="special">*</span> <span class="identifier">x</span><span class="special">[</span><span class="number">2</span><span class="special">];</span>
@@ -65,43 +78,28 @@
 <p>
       </p>
 <p>
-        which can be integrated:
+        The actual integration then is straight forward:
       </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">const</span> <span class="keyword">int</span> <span class="identifier">precision</span> <span class="special">=</span> <span class="number">1024</span><span class="special">;</span>
-<span class="identifier">mpf_set_default_prec</span><span class="special">(</span> <span class="identifier">precision</span> <span class="special">);</span>
+<pre class="programlisting"><span class="identifier">state_type</span> <span class="identifier">x</span> <span class="special">=</span> <span class="special">{{</span> <span class="identifier">value_type</span><span class="special">(</span> <span class="number">10.0</span> <span class="special">)</span> <span class="special">,</span> <span class="identifier">value_type</span><span class="special">(</span> <span class="number">10.0</span> <span class="special">)</span> <span class="special">,</span> <span class="identifier">value_type</span><span class="special">(</span> <span class="number">10.0</span> <span class="special">)</span> <span class="special">}};</span>
 
-<span class="identifier">state_type</span> <span class="identifier">x</span> <span class="special">=</span> <span class="special">{{</span> <span class="identifier">value_type</span><span class="special">(</span> <span class="number">10.0</span> <span class="special">)</span> <span class="special">,</span> <span class="identifier">value_type</span><span class="special">(</span> <span class="number">10.0</span> <span class="special">)</span> <span class="special">,</span> <span class="identifier">value_type</span><span class="special">(</span> <span class="number">10.0</span> <span class="special">)</span> <span class="special">}};</span>
-
-<span class="identifier">cout</span><span class="special">.</span><span class="identifier">precision</span><span class="special">(</span> <span class="number">1000</span> <span class="special">);</span>
+<span class="identifier">cout</span><span class="special">.</span><span class="identifier">precision</span><span class="special">(</span> <span class="number">50</span> <span class="special">);</span>
 <span class="identifier">integrate_const</span><span class="special">(</span> <span class="identifier">runge_kutta4</span><span class="special">&lt;</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="identifier">value_type</span> <span class="special">&gt;()</span> <span class="special">,</span>
         <span class="identifier">lorenz</span><span class="special">()</span> <span class="special">,</span> <span class="identifier">x</span> <span class="special">,</span> <span class="identifier">value_type</span><span class="special">(</span> <span class="number">0.0</span> <span class="special">)</span> <span class="special">,</span> <span class="identifier">value_type</span><span class="special">(</span> <span class="number">10.0</span> <span class="special">)</span> <span class="special">,</span> <span class="identifier">value_type</span><span class="special">(</span> <span class="identifier">value_type</span><span class="special">(</span> <span class="number">1.0</span> <span class="special">)</span> <span class="special">/</span> <span class="identifier">value_type</span><span class="special">(</span> <span class="number">10.0</span> <span class="special">)</span> <span class="special">)</span> <span class="special">,</span>
         <span class="identifier">streaming_observer</span><span class="special">(</span> <span class="identifier">cout</span> <span class="special">)</span> <span class="special">);</span>
 </pre>
 <p>
       </p>
-<div class="caution"><table border="0" summary="Caution">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="../../../../../../../doc/src/images/caution.png"></td>
-<th align="left">Caution</th>
-</tr>
-<tr><td align="left" valign="top"><p>
-          The full support of arbitrary precision types depends on the functionality
-          they provide. For example, the types from gmp are lacking of functions
-          for calculating the power and arbitrary roots, hence they can not be used
-          with the controlled steppers. In detail, for full support the <code class="computeroutput"><span class="identifier">min</span><span class="special">(</span> <span class="identifier">x</span> <span class="special">,</span> <span class="identifier">y</span> <span class="special">)</span></code>,
-          <code class="computeroutput"><span class="identifier">max</span><span class="special">(</span>
-          <span class="identifier">x</span> <span class="special">,</span>
-          <span class="identifier">y</span> <span class="special">)</span></code>,
-          <code class="computeroutput"><span class="identifier">pow</span><span class="special">(</span>
-          <span class="identifier">x</span> <span class="special">,</span>
-          <span class="identifier">y</span> <span class="special">)</span></code>
-          must be callable.
-        </p></td></tr>
-</table></div>
 <p>
-        The full example can be found at <a href="../../../../../../../libs/numeric/odeint/examples/gmpxx/lorenz_gmpxx.cpp" target="_top">lorenz_gmpxx.cpp</a>.
+        The full example can be found at <a href="https://github.com/headmyshoulder/odeint-v2/blob/master/examples/multiprecision/lorenz_mp.cpp" target="_top">lorenz_mp.cpp</a>.
+        Another example that compares the accuracy of the high precision type with
+        standard double can be found at <a href="https://github.com/headmyshoulder/odeint-v2/blob/master/examples/multiprecision/cmp_precision.cpp" target="_top">cmp_precision.cpp</a>.
+      </p>
+<p>
+        Furthermore, odeint can also be run with other multiprecision libraries,
+        e.g. <a href="http://gmplib.org/" target="_top">gmp</a>. An example for this is
+        given in <a href="https://github.com/headmyshoulder/odeint-v2/blob/master/examples/gmpxx/lorenz_gmpxx.cpp" target="_top">lorenz_gmpxx.cpp</a>.
       </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

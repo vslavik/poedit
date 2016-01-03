@@ -20,6 +20,7 @@
 #include <boost/range/iterator_range.hpp>
 #include <boost/range/functions.hpp>
 #include <boost/range/as_literal.hpp>
+#include <boost/cstdint.hpp>
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test.hpp>
 #include <iostream>
@@ -213,7 +214,32 @@ namespace iterator_range_test_detail
         BOOST_CHECK_EQUAL_COLLECTIONS( rng.begin(), rng.end(),
                                        source, source + 6 );
     }
-    
+
+    void check_make_iterator_range_n()
+    {
+        using boost::uint32_t;
+
+        std::vector<uint32_t> input;
+        for (uint32_t i = 0; i < 10u; ++i)
+            input.push_back(i);
+
+        boost::iterator_range<std::vector<uint32_t>::iterator> rng =
+                boost::make_iterator_range_n(boost::begin(input), 8u);
+
+        BOOST_CHECK(rng.begin() == input.begin());
+        BOOST_CHECK(rng.end() == input.begin() + 8);
+        BOOST_CHECK_EQUAL(rng.size(), 8u);
+
+        const std::vector<uint32_t>& cinput = input;
+
+        boost::iterator_range<std::vector<uint32_t>::const_iterator> crng =
+                boost::make_iterator_range_n(boost::begin(cinput), 8u);
+
+        BOOST_CHECK(crng.begin() == cinput.begin());
+        BOOST_CHECK(crng.end() == cinput.begin() + 8);
+        BOOST_CHECK_EQUAL(crng.size(), 8u);
+    }
+
 } // namespace iterator_range_test_detail
 
 template<typename Pred>
@@ -223,19 +249,35 @@ inline void check_iterator_range_operator()
         Pred());
 }
 
-boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] )
+inline void test_advance()
 {
-    boost::unit_test::test_suite* test = BOOST_TEST_SUITE( "Range Test Suite" );
+    std::vector<int> l;
+    l.push_back(1);
+    l.push_back(2);
+    typedef boost::iterator_range<std::vector<int>::iterator> rng_t;
 
-    test->add(BOOST_TEST_CASE(&check_iterator_range));
-    test->add(BOOST_TEST_CASE(&check_iterator_range_operator<iterator_range_test_detail::less>));
-    test->add(BOOST_TEST_CASE(&check_iterator_range_operator<iterator_range_test_detail::less_or_equal>));
-    test->add(BOOST_TEST_CASE(&check_iterator_range_operator<iterator_range_test_detail::greater>));
-    test->add(BOOST_TEST_CASE(&check_iterator_range_operator<iterator_range_test_detail::greater_or_equal>));
-    test->add(BOOST_TEST_CASE(&check_iterator_range_operator<iterator_range_test_detail::equal_to>));
-    test->add(BOOST_TEST_CASE(&check_iterator_range_operator<iterator_range_test_detail::not_equal_to>));
+    rng_t r1(l.begin(), l.end());
+    BOOST_CHECK(r1.advance_begin(1).advance_end(-1).empty());
+    
+    rng_t r2(l.begin(), l.end());
+    BOOST_CHECK_EQUAL(r2.advance_begin(1).size(), 1u);
 
-    return test;
+    rng_t r3(l.begin(), l.end());
+    BOOST_CHECK_EQUAL(r3.advance_end(-1).size(), 1u);
+}
+
+struct ptr_iterator
+  : boost::iterator_adaptor<ptr_iterator, int *>
+{
+    ptr_iterator() {}
+    ptr_iterator(int *p) : boost::iterator_adaptor<ptr_iterator, int *>(p) {}
+private:
+    typedef void iterator; // To throw off the SFINAE mechanism in iterator_range
+};
+
+void test_sfinae()
+{
+    boost::iterator_range<ptr_iterator> r(ptr_iterator(0), ptr_iterator(0));
 }
 
 //
@@ -268,3 +310,21 @@ void check_reference_type()
     test_iter_range<veci_type>(a_vec);
     test_iter_range<veci_type const>(a_vec);
 }
+
+boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] )
+{
+    boost::unit_test::test_suite* test = BOOST_TEST_SUITE( "Range Test Suite" );
+    
+    test->add(BOOST_TEST_CASE(&check_iterator_range));
+    test->add(BOOST_TEST_CASE(&check_iterator_range_operator<iterator_range_test_detail::less>));
+    test->add(BOOST_TEST_CASE(&check_iterator_range_operator<iterator_range_test_detail::less_or_equal>));
+    test->add(BOOST_TEST_CASE(&check_iterator_range_operator<iterator_range_test_detail::greater>));
+    test->add(BOOST_TEST_CASE(&check_iterator_range_operator<iterator_range_test_detail::greater_or_equal>));
+    test->add(BOOST_TEST_CASE(&check_iterator_range_operator<iterator_range_test_detail::equal_to>));
+    test->add(BOOST_TEST_CASE(&check_iterator_range_operator<iterator_range_test_detail::not_equal_to>));
+    test->add(BOOST_TEST_CASE(&iterator_range_test_detail::check_make_iterator_range_n));
+    test->add(BOOST_TEST_CASE(&test_advance));
+    
+    return test;
+}
+

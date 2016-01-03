@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../heap.html" title="Chapter&#160;12.&#160;Boost.Heap">
+<link rel="up" href="../heap.html" title="Chapter&#160;13.&#160;Boost.Heap">
 <link rel="prev" href="data_structures.html" title="Data Structures">
 <link rel="next" href="../boost/heap/binomial_heap.html" title="Class template binomial_heap">
 </head>
@@ -68,9 +68,9 @@
 <a name="header.boost.heap.heap_concepts_hpp"></a>Header &lt;<a href="../../../boost/heap/heap_concepts.hpp" target="_top">boost/heap/heap_concepts.hpp</a>&gt;</h3></div></div></div>
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">heap</span> <span class="special">{</span>
-    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> C<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/heap/PriorityQueue.html" title="Struct template PriorityQueue">PriorityQueue</a><span class="special">;</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> C<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/heap/MergablePriorityQueue.html" title="Struct template MergablePriorityQueue">MergablePriorityQueue</a><span class="special">;</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> C<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/heap/MutablePriorityQueue.html" title="Struct template MutablePriorityQueue">MutablePriorityQueue</a><span class="special">;</span>
+    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> C<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/heap/PriorityQueue.html" title="Struct template PriorityQueue">PriorityQueue</a><span class="special">;</span>
   <span class="special">}</span>
 <span class="special">}</span></pre>
 </div>
@@ -97,14 +97,14 @@
 <a name="header.boost.heap.policies_hpp"></a>Header &lt;<a href="../../../boost/heap/policies.hpp" target="_top">boost/heap/policies.hpp</a>&gt;</h3></div></div></div>
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">heap</span> <span class="special">{</span>
-    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/heap/compare.html" title="Struct template compare">compare</a><span class="special">;</span>
-    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">bool</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/heap/mutable_.html" title="Struct template mutable_">mutable_</a><span class="special">;</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/heap/allocator.html" title="Struct template allocator">allocator</a><span class="special">;</span>
-    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">bool</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/heap/stable.html" title="Struct template stable">stable</a><span class="special">;</span>
-    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> IntType<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/heap/stability_counter_type.html" title="Struct template stability_counter_type">stability_counter_type</a><span class="special">;</span>
-    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">bool</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/heap/constant_time_size.html" title="Struct template constant_time_size">constant_time_size</a><span class="special">;</span>
-    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">bool</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/heap/store_parent_pointer.html" title="Struct template store_parent_pointer">store_parent_pointer</a><span class="special">;</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">unsigned</span> <span class="keyword">int</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/heap/arity.html" title="Struct template arity">arity</a><span class="special">;</span>
+    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/heap/compare.html" title="Struct template compare">compare</a><span class="special">;</span>
+    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">bool</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/heap/constant_time_size.html" title="Struct template constant_time_size">constant_time_size</a><span class="special">;</span>
+    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">bool</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/heap/mutable_.html" title="Struct template mutable_">mutable_</a><span class="special">;</span>
+    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> IntType<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/heap/stability_counter_type.html" title="Struct template stability_counter_type">stability_counter_type</a><span class="special">;</span>
+    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">bool</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/heap/stable.html" title="Struct template stable">stable</a><span class="special">;</span>
+    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">bool</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/heap/store_parent_pointer.html" title="Struct template store_parent_pointer">store_parent_pointer</a><span class="special">;</span>
   <span class="special">}</span>
 <span class="special">}</span></pre>
 </div>

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Support for Compiler Intrinsics</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="prev" href="user_defined.html" title="User Defined Specializations">
@@ -37,7 +37,10 @@
       The Following traits classes always need compiler support to do the right thing
       for all types (but all have safe fallback positions if this support is unavailable):
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          <a class="link" href="reference/is_final.html" title="is_final">is_final</a>
+        </li>
 <li class="listitem">
           <a class="link" href="reference/is_union.html" title="is_union">is_union</a>
         </li>
@@ -80,7 +83,7 @@
       although in practice, the implementations do in fact do the right thing on
       all the compilers we know about:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           <a class="link" href="reference/is_empty.html" title="is_empty">is_empty</a>
         </li>
@@ -91,7 +94,7 @@
 <p>
       The following traits classes are dependent on one or more of the above:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           <a class="link" href="reference/is_class.html" title="is_class">is_class</a>
         </li>
@@ -283,6 +286,30 @@
 <tr>
 <td>
               <p>
+                BOOST_IS_NOTHROW_MOVE_ASSIGN(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true T has a non-throwing move assign operator.
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                BOOST_IS_NOTHROW_MOVE_CONSTRUCT(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true T has a non-throwing move constructor.
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
                 BOOST_IS_ABSTRACT(T)
               </p>
             </td>
@@ -360,7 +387,20 @@
             </td>
 <td>
               <p>
-                Should evaluate to the alignment requirements of type T.
+                Should evaluate to the alignment requirements of type T
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                BOOST_IS_FINAL(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true if T is a class type declared with the final
+                specifier
               </p>
             </td>
 </tr>

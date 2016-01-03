@@ -6,7 +6,7 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-// $Id: concept_map.cpp 81428 2012-11-19 21:19:34Z steven_watanabe $
+// $Id$
 
 #include <boost/type_erasure/operators.hpp>
 #include <typeinfo>

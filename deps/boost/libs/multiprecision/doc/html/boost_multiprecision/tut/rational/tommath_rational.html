@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>tommath_rational</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../rational.html" title="Rational Number Types">
 <link rel="prev" href="gmp_rational.html" title="gmp_rational">
@@ -87,34 +87,36 @@
 </ul></div>
 <h6>
 <a name="boost_multiprecision.tut.rational.tommath_rational.h0"></a>
-          <span class="phrase"><a name="boost_multiprecision.tut.rational.tommath_rational.example_"></a></span><a class="link" href="tommath_rational.html#boost_multiprecision.tut.rational.tommath_rational.example_">Example:</a>
+          <span class="phrase"><a name="boost_multiprecision.tut.rational.tommath_rational.example"></a></span><a class="link" href="tommath_rational.html#boost_multiprecision.tut.rational.tommath_rational.example">Example:</a>
         </h6>
-<p>
-</p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">multiprecision</span><span class="special">/</span><span class="identifier">tommath</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 
-<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">;</span>
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+   <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">;</span>
 
-<span class="identifier">tom_rational</span> <span class="identifier">v</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span>
+   <span class="identifier">tom_rational</span> <span class="identifier">v</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span>
 
-<span class="comment">// Do some arithmetic:</span>
-<span class="keyword">for</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;=</span> <span class="number">1000</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
-   <span class="identifier">v</span> <span class="special">*=</span> <span class="identifier">i</span><span class="special">;</span>
-<span class="identifier">v</span> <span class="special">/=</span> <span class="number">10</span><span class="special">;</span>
+   <span class="comment">// Do some arithmetic:</span>
+   <span class="keyword">for</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;=</span> <span class="number">1000</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
+      <span class="identifier">v</span> <span class="special">*=</span> <span class="identifier">i</span><span class="special">;</span>
+   <span class="identifier">v</span> <span class="special">/=</span> <span class="number">10</span><span class="special">;</span>
 
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">v</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// prints 1000! / 10</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">numerator</span><span class="special">(</span><span class="identifier">v</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">denominator</span><span class="special">(</span><span class="identifier">v</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">v</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// prints 1000! / 10</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">numerator</span><span class="special">(</span><span class="identifier">v</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">denominator</span><span class="special">(</span><span class="identifier">v</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 
-<span class="identifier">tom_rational</span> <span class="identifier">w</span><span class="special">(</span><span class="number">2</span><span class="special">,</span> <span class="number">3</span><span class="special">);</span> <span class="comment">// Component wise constructor</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">w</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// prints 2/3</span>
+   <span class="identifier">tom_rational</span> <span class="identifier">w</span><span class="special">(</span><span class="number">2</span><span class="special">,</span> <span class="number">3</span><span class="special">);</span> <span class="comment">// Component wise constructor</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">w</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// prints 2/3</span>
+
+   <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
 </pre>
-<p>
-        </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2012 John Maddock and Christopher Kormanyos<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2013 John Maddock and Christopher Kormanyos<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

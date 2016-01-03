@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../move.html" title="Chapter&#160;18.&#160;Boost.Move">
-<link rel="prev" href="construct_forwarding.html" title="Constructor Forwarding">
+<link rel="up" href="../move.html" title="Chapter&#160;19.&#160;Boost.Move">
+<link rel="prev" href="move_return.html" title="Implicit Move when returning a local object">
 <link rel="next" href="move_inserters.html" title="Move inserters">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="construct_forwarding.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../move.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="move_inserters.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="move_return.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../move.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="move_inserters.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
@@ -36,7 +36,7 @@
       <code class="computeroutput"><a class="link" href="../boost/move_iterator.html" title="Class template move_iterator">move_iterator</a></code> is an iterator
       adaptor with the same behavior as the underlying iterator except that its dereference
       operator implicitly converts the value returned by the underlying iterator's
-      dereference operator to an rvalue reference: <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">move</span><span class="special">(*</span><span class="identifier">underlying_iterator</span><span class="special">)</span></code>
+      dereference operator to a rvalue reference: <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">move</span><span class="special">(*</span><span class="identifier">underlying_iterator</span><span class="special">)</span></code>
       It is a read-once iterator, but can have up to random access traversal characteristics.
     </p>
 <p>
@@ -67,7 +67,10 @@
    <span class="special">{</span>  <span class="identifier">value_</span> <span class="special">=</span> <span class="identifier">m</span><span class="special">.</span><span class="identifier">value_</span><span class="special">;</span>   <span class="identifier">m</span><span class="special">.</span><span class="identifier">value_</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>  <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;</span>  <span class="special">}</span>
 
    <span class="keyword">bool</span> <span class="identifier">moved</span><span class="special">()</span> <span class="keyword">const</span> <span class="comment">//Observer</span>
-   <span class="special">{</span>  <span class="keyword">return</span> <span class="identifier">value_</span> <span class="special">==</span> <span class="number">0</span><span class="special">;</span> <span class="special">}</span>
+   <span class="special">{</span>  <span class="keyword">return</span> <span class="special">!</span><span class="identifier">value_</span><span class="special">;</span> <span class="special">}</span>
+
+   <span class="keyword">int</span> <span class="identifier">value</span><span class="special">()</span> <span class="keyword">const</span> <span class="comment">//Observer</span>
+   <span class="special">{</span>  <span class="keyword">return</span> <span class="identifier">value_</span><span class="special">;</span> <span class="special">}</span>
 <span class="special">};</span>
 
 <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">{</span>
@@ -121,7 +124,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2008-2012 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2008-2014 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -129,7 +132,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="construct_forwarding.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../move.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="move_inserters.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="move_return.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../move.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="move_inserters.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

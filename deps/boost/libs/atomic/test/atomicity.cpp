@@ -24,14 +24,20 @@
 // operations truly behave atomic if this test program does not
 // report an error.
 
-#include <algorithm>
-
 #include <boost/atomic.hpp>
+
+#include <algorithm>
+#include <boost/ref.hpp>
 #include <boost/bind.hpp>
+#include <boost/function.hpp>
+#include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/date_time/posix_time/time_formatters.hpp>
-#include <boost/test/test_tools.hpp>
-#include <boost/test/included/test_exec_monitor.hpp>
-#include <boost/thread.hpp>
+#include <boost/thread/thread.hpp>
+#include <boost/thread/thread_time.hpp>
+#include <boost/thread/locks.hpp>
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/condition_variable.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 /* helper class to let two instances of a function race against each
 other, with configurable timeout and early abort on detection of error */
@@ -154,7 +160,7 @@ estimate_avg_race_time(void)
         );
 
         if (success) {
-            BOOST_FAIL("Failed to establish baseline time for reproducing race condition");
+            BOOST_ERROR("Failed to establish baseline time for reproducing race condition");
         }
 
         sum = sum + timeout.total_microseconds();
@@ -233,7 +239,7 @@ test_bitops(boost::atomic<value_type> & shared_value, size_t instance)
     return true;
 }
 
-int test_main(int, char *[])
+int main(int, char *[])
 {
     boost::posix_time::time_duration reciprocal_lambda;
 
@@ -254,7 +260,7 @@ int test_main(int, char *[])
             tmp
         );
 
-        BOOST_CHECK_MESSAGE(success, "concurrent arithmetic");
+        BOOST_TEST(success); // concurrent arithmetic error
     }
 
     {
@@ -269,7 +275,8 @@ int test_main(int, char *[])
             tmp
         );
 
-        BOOST_CHECK_MESSAGE(success, "concurrent bitops");
+        BOOST_TEST(success); // concurrent bit operations error
     }
-    return 0;
+
+    return boost::report_errors();
 }

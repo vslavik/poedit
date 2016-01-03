@@ -13,7 +13,7 @@
 #include <boost/preprocessor/repetition/repeat.hpp>
 
 #define BOOST_PHOENIX_ADAPT_FUNCTION_NULLARY(RESULT, NAME, FUNC)                \
-    namespace detail                                                            \
+    namespace detail0                                                            \
     {                                                                           \
         struct BOOST_PP_CAT(NAME, _impl_nullary)                                \
         {                                                                       \
@@ -27,19 +27,20 @@
         };                                                                      \
     }                                                                           \
                                                                                 \
+    inline                                                                      \
     boost::phoenix::detail::expression::function_eval<                          \
-        detail:: BOOST_PP_CAT(NAME, _impl_nullary)                              \
+        detail0:: BOOST_PP_CAT(NAME, _impl_nullary)                              \
     >::type const                                                               \
-    inline NAME()                                                               \
+    NAME()                                                                      \
     {                                                                           \
         return boost::phoenix::detail::expression::                             \
-                function_eval<detail:: BOOST_PP_CAT(NAME, _impl_nullary)>       \
-                    ::make(detail:: BOOST_PP_CAT(NAME, _impl_nullary)());       \
+                function_eval<detail0:: BOOST_PP_CAT(NAME, _impl_nullary)>       \
+                    ::make(detail0:: BOOST_PP_CAT(NAME, _impl_nullary)());       \
     }                                                                           \
 /**/
 
 #define BOOST_PHOENIX_ADAPT_FUNCTION(RESULT, NAME, FUNC, N)                     \
-    namespace detail                                                            \
+    namespace detail1                                                            \
     {                                                                           \
         struct BOOST_PP_CAT(BOOST_PP_CAT(NAME, _impl_), N)                      \
         {                                                                       \
@@ -48,7 +49,7 @@
                                                                                 \
             template <typename This, BOOST_PHOENIX_typename_A(N)>               \
             struct result<This(BOOST_PHOENIX_A(N))>                             \
-            {typedef RESULT type;};                                            \
+            {typedef RESULT type;};                                             \
                                                                                 \
             template <BOOST_PHOENIX_typename_A(N)>                              \
             RESULT                                                              \
@@ -60,18 +61,19 @@
     }                                                                           \
                                                                                 \
     template <BOOST_PHOENIX_typename_A(N)>                                      \
+    inline                                                                      \
     typename                                                                    \
         boost::phoenix::detail::expression::function_eval<                      \
-        detail:: BOOST_PP_CAT(BOOST_PP_CAT(NAME, _impl_), N)                    \
+        detail1:: BOOST_PP_CAT(BOOST_PP_CAT(NAME, _impl_), N)                    \
           , BOOST_PHOENIX_A(N)>::type const                                     \
-    inline NAME(BOOST_PHOENIX_A_const_ref_a(N))                                 \
+    NAME(BOOST_PHOENIX_A_const_ref_a(N))                                        \
     {                                                                           \
         return boost::phoenix::detail::expression::                             \
             function_eval<                                                      \
-                detail:: BOOST_PP_CAT(BOOST_PP_CAT(NAME, _impl_), N)            \
+                detail1:: BOOST_PP_CAT(BOOST_PP_CAT(NAME, _impl_), N)            \
               , BOOST_PHOENIX_A(N)                                              \
             >::make(                                                            \
-                detail:: BOOST_PP_CAT(BOOST_PP_CAT(NAME, _impl_), N)()          \
+                detail1:: BOOST_PP_CAT(BOOST_PP_CAT(NAME, _impl_), N)()          \
               , BOOST_PHOENIX_a(N)                                              \
             );                                                                  \
     }                                                                           \

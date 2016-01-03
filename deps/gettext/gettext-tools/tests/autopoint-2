@@ -1,0 +1,170 @@
+#! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
+
+# Test the autopoint program, without Automake.
+
+required_gettext_version=0.19.5
+
+: ${AUTOCONF=autoconf}
+${AUTOCONF} --version >/dev/null 2>/dev/null \
+  || { echo "Skipping test: autoconf not found"; exit 77; }
+
+cat <<\EOF >configure.ac
+AC_PREREQ([2.60])
+EOF
+
+${AUTOCONF} >/dev/null 2>/dev/null \
+  || { echo "Skipping test: autoconf version too old"; exit 77; }
+
+rm -f configure.ac
+
+gettext_datadir=$top_builddir/misc
+export gettext_datadir
+
+# Check for not copying libintl source.
+cat <<EOF >configure.ac
+AC_INIT
+AC_CONFIG_SRCDIR(hello.c)
+AC_CONFIG_AUX_DIR([build-aux])
+
+AC_PROG_CC
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([$required_gettext_version])
+
+AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([po/Makefile.in])
+AC_OUTPUT
+EOF
+
+$gettext_datadir/autopoint >/dev/null 2>autopoint.err
+test $? = 0 || { cat autopoint.err; exit 1; }
+
+test ! -d intl || exit 1
+test -d m4 || exit 1
+test -d po || exit 1
+test -d build-aux || exit 1
+
+test -f m4/po.m4 || exit 1
+test -f po/Makefile.in.in || exit 1
+test -f build-aux/config.rpath || exit 1
+
+rm -fr m4 po
+
+# Check for copying libintl source.
+cat <<EOF >configure.ac
+AC_INIT
+AC_CONFIG_SRCDIR(hello.c)
+
+AC_PROG_CC
+AM_GNU_GETTEXT
+AM_GNU_GETTEXT_VERSION([$required_gettext_version])
+
+AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([po/Makefile.in])
+AC_OUTPUT
+EOF
+
+$gettext_datadir/autopoint >/dev/null 2>autopoint.err
+test $? = 0 || { cat autopoint.err; exit 1; }
+
+test -d intl || exit 1
+test -d m4 || exit 1
+test -d po || exit 1
+
+test -f intl/VERSION || exit 1
+test -f m4/po.m4 || exit 1
+test -f po/Makefile.in.in || exit 1
+
+rm -fr intl m4 po
+
+# Check for custom macro directory.
+cat <<EOF >configure.ac
+AC_INIT
+AC_CONFIG_SRCDIR(hello.c)
+
+AC_PROG_CC
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([$required_gettext_version])
+
+# first macro directory, in which po.m4, etc. belong
+AC_CONFIG_MACRO_DIR([gettext-m4])
+
+# second macro directory
+AC_CONFIG_MACRO_DIR([m4])
+
+AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([po/Makefile.in])
+AC_OUTPUT
+EOF
+
+$gettext_datadir/autopoint >/dev/null 2>autopoint.err
+test $? = 0 || { cat autopoint.err; exit 1; }
+
+test ! -d intl || exit 1
+test ! -d m4 || exit 1
+test -d gettext-m4 || exit 1
+test -d po || exit 1
+
+test -f gettext-m4/po.m4 || exit 1
+test -f po/Makefile.in.in || exit 1
+
+rm -fr gettext-m4 po
+
+# Check for multiple arguments to AM_GNU_GETTEXT
+# <https://savannah.gnu.org/bugs/?40082>
+cat <<EOF >configure.ac
+AC_INIT
+AC_CONFIG_SRCDIR(hello.c)
+
+AC_PROG_CC
+AM_GNU_GETTEXT([external], [need-formatstring-macros])
+AM_GNU_GETTEXT_VERSION([$required_gettext_version])
+
+AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([po/Makefile.in])
+AC_OUTPUT
+EOF
+
+$gettext_datadir/autopoint >/dev/null 2>autopoint.err
+test $? = 0 || { cat autopoint.err; exit 1; }
+
+test ! -d intl || exit 1
+test -d m4 || exit 1
+test -d po || exit 1
+
+test -f m4/po.m4 || exit 1
+test -f po/Makefile.in.in || exit 1
+
+rm -fr m4 po
+
+# Check for certain built-in macros are not in effect when tracing:
+# <https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=764580>
+cat <<EOF >configure.ac
+AC_INIT
+AC_CONFIG_SRCDIR(hello.c)
+
+dnl m4_shiftn internally calls m4_assert, which is disabled by autopoint
+m4_define([_gt_recurse],
+[m4_ifblank([\$1], , [_gt_recurse(m4_shiftn(1, \$@))])])
+_gt_recurse([a], [b], , [c])
+
+AC_PROG_CC
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([$required_gettext_version])
+
+AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([po/Makefile.in])
+AC_OUTPUT
+EOF
+
+$gettext_datadir/autopoint >/dev/null 2>autopoint.err
+test $? = 0 || { cat autopoint.err; exit 1; }
+
+test ! -d intl || exit 1
+test -d m4 || exit 1
+test -d po || exit 1
+
+test -f m4/po.m4 || exit 1
+test -f po/Makefile.in.in || exit 1
+
+rm -fr m4 po

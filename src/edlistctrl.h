@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 1999-2013 Vaclav Slavik
+ *  Copyright (C) 1999-2015 Vaclav Slavik
  *  Copyright (C) 2005 Olivier Sannier
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
@@ -60,7 +60,7 @@ class PoeditListCtrl : public wxListView
 
         void SetDisplayLines(bool dl);
 
-        void CatalogChanged(Catalog* catalog);
+        void CatalogChanged(const CatalogPtr& catalog);
 
         virtual wxString OnGetItemText(long item, long column) const;
         virtual wxListItemAttr *OnGetItemAttr(long item) const;
@@ -71,49 +71,102 @@ class PoeditListCtrl : public wxListView
         int CatalogIndexToList(int index) const
         {
             if ( index < 0 || index >= (int)m_mapCatalogToList.size() )
-                return index;
+                return -1;
             else
                 return m_mapCatalogToList[index];
         }
 
         /// Returns item's index in the catalog
-        int ListIndexToCatalog(int index) const
+        int ListIndexToCatalog(long index) const
         {
             if ( index < 0 || index >= (int)m_mapListToCatalog.size() )
-                return index;
+                return -1;
             else
                 return m_mapListToCatalog[index];
         }
 
         /// Returns item from the catalog based on list index
-        const CatalogItem& ListIndexToCatalogItem(int index) const
+        CatalogItemPtr ListIndexToCatalogItem(long index) const
         {
-            return (*m_catalog)[ListIndexToCatalog(index)];
+            auto idx = ListIndexToCatalog(index);
+            return idx != -1 ? (*m_catalog)[idx] : nullptr;
         }
-
-
-        /// Returns current list selection (as list item index)
-        int GetSelection() const { return (int)GetFirstSelected(); }
+        CatalogItemPtr ListIndexToCatalogItem(long index)
+        {
+            auto idx = ListIndexToCatalog(index);
+            return idx != -1 ? (*m_catalog)[idx] : nullptr;
+        }
 
         /// Returns index of selected catalog item
-        int GetSelectedCatalogItem() const
+        int GetFirstSelectedCatalogItem() const
         {
-            return ListIndexToCatalog(GetSelection());
+            return ListIndexToCatalog(GetFirstSelected());
         }
 
-        /// Selects given catalog item
-        void SelectCatalogItem(int catalogIndex)
+        std::vector<int> GetSelectedCatalogItems() const
         {
-            Select(CatalogIndexToList(catalogIndex));
+            std::vector<int> s;
+            for (auto i = GetFirstSelected(); i != -1; i = GetNextSelected(i))
+                s.push_back(ListIndexToCatalog(i));
+            return s;
         }
 
-        void Select(long n, bool on = true)
+        void SetSelectedCatalogItems(const std::vector<int>& selection)
         {
-#ifdef __WXMAC__
-            SetItemState(GetSelection(), 0, wxLIST_STATE_SELECTED);
-#endif
-            wxListView::Select(n, on);
+            ClearSelection();
+            for (auto i: selection)
+            {
+                auto idx = CatalogIndexToList(i);
+                if (idx != -1)
+                    Select(idx);
+            }
+        }
+
+        // Perform given function for all selected items. The function takes
+        // reference to the item as its argument. Also refresh the items touched,
+        // on the assumption that the operation modifies them.
+        template<typename T>
+        void ForSelectedCatalogItemsDo(T func)
+        {
+            for (auto i = GetFirstSelected(); i != -1; i = GetNextSelected(i))
+            {
+                func(*ListIndexToCatalogItem(i));
+                RefreshItem(i);
+            }
+        }
+
+        void SelectOnly(long n)
+        {
+            ClearSelection();
+            wxListView::Select(n);
             EnsureVisible(n);
+        }
+
+        void SelectAndFocus(long n)
+        {
+            SelectOnly(n);
+            Focus(n);
+        }
+
+        void ClearSelection()
+        {
+            for (auto i = GetFirstSelected(); i != -1; i = GetNextSelected(i))
+                wxListView::Select(i, false);
+        }
+
+        /// Returns true if at least one item is selected.
+        bool HasSelection() const { return GetSelectedItemCount() >= 1; }
+
+        /// Returns true if exactly one item is selected.
+        bool HasSingleSelection() const { return GetSelectedItemCount() == 1; }
+
+        /// Returns true if more than one item are selected.
+        bool HasMultipleSelection() const { return GetSelectedItemCount() > 1; }
+
+        void RefreshSelectedItems()
+        {
+            for (auto i = GetFirstSelected(); i != -1; i = GetNextSelected(i))
+                RefreshItem(i);
         }
 
         void SetCustomFont(wxFont font);
@@ -130,13 +183,15 @@ class PoeditListCtrl : public wxListView
 
         void CreateSortMap();
         void CreateColumns();
-        void ReadCatalog();
+        void ReadCatalog(bool resetSizeAndSelection);
         void OnSize(wxSizeEvent& event);
 
         bool m_displayIDs;
+        int m_colSource, m_colTrans, m_colId;
         unsigned m_colWidth;
+        bool m_isRTL, m_appIsRTL;
 
-        Catalog* m_catalog;
+        CatalogPtr m_catalog;
 
         std::vector<int> m_mapListToCatalog;
         std::vector<int> m_mapCatalogToList;

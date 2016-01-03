@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2000-2013 Vaclav Slavik
+ *  Copyright (C) 2000-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -29,6 +29,8 @@
 #include <wx/dialog.h>
 #include <wx/notebook.h>
 
+#include <memory>
+
 #include "catalog.h"
 #include "languagectrl.h"
 
@@ -41,13 +43,13 @@ class WXDLLIMPEXP_FWD_CORE wxComboBox;
 class PropertiesDialog : public wxDialog
 {
     public:
-        PropertiesDialog(wxWindow *parent, bool fileExistsOnDisk, int initialPage = 0);
+        PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileExistsOnDisk, int initialPage = 0);
 
         /// Reads data from the catalog and fill dialog's controls.
-        void TransferTo(Catalog *cat);
+        void TransferTo(const CatalogPtr& cat);
 
         /// Saves data from the dialog to the catalog.
-        void TransferFrom(Catalog *cat);
+        void TransferFrom(const CatalogPtr& cat);
 
         virtual bool Validate();
             
@@ -59,15 +61,24 @@ class PropertiesDialog : public wxDialog
         void OnPluralFormsDefault(wxCommandEvent& event);
         void OnPluralFormsCustom(wxCommandEvent& event);
 
+        struct PathsData;
+        class BasePathCtrl;
+        class PathsList;
+        class SourcePathsList;
+        class ExcludedPathsList;
+
         wxTextCtrl *m_team, *m_teamEmail, *m_project;
         LanguageCtrl *m_language;
         wxComboBox *m_charset, *m_sourceCodeCharset;
         wxRadioButton *m_pluralFormsDefault, *m_pluralFormsCustom;
         wxTextCtrl *m_pluralFormsExpr;
-        wxTextCtrl *m_basePath;
-        wxEditableListBox *m_paths, *m_keywords;
+        BasePathCtrl *m_basePath;
+        std::shared_ptr<PathsData> m_pathsData;
+        PathsList *m_paths, *m_excludedPaths;
+        wxEditableListBox *m_keywords;
         wxString m_rememberedPluralForm;
 
+        bool m_hasLang;
         int m_validatedPlural, m_validatedLang;
 };
 

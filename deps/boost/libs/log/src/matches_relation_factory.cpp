@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -15,9 +15,29 @@
 
 #if !defined(BOOST_LOG_WITHOUT_SETTINGS_PARSERS) && !defined(BOOST_LOG_WITHOUT_DEFAULT_FACTORIES)
 
+#include <boost/log/detail/setup_config.hpp>
+
+#if defined(BOOST_LOG_USE_STD_REGEX) && defined(BOOST_NO_CXX11_HDR_REGEX)
+#error "Boost.Log: Cannot use std::regex because it is not supported by the standard library."
+#endif
+
+#if !defined(BOOST_LOG_USE_BOOST_REGEX) && !defined(BOOST_LOG_USE_STD_REGEX) && !defined(BOOST_LOG_USE_BOOST_XPRESSIVE)
+// Use Boost.Regex backend by default. It produces smaller executables and also has the best performance for small string matching.
+// Note: This default has to be in sync with Boost.Log Jamfile.v2.
+#define BOOST_LOG_USE_BOOST_REGEX
+#endif
+
 #include <string>
+#if defined(BOOST_LOG_USE_STD_REGEX)
+#include <regex>
+#include <boost/log/support/std_regex.hpp>
+#elif defined(BOOST_LOG_USE_BOOST_REGEX)
+#include <boost/regex.hpp>
+#include <boost/log/support/regex.hpp>
+#else
 #include <boost/xpressive/xpressive_dynamic.hpp>
 #include <boost/log/support/xpressive.hpp>
+#endif
 #include <boost/log/utility/string_literal.hpp>
 #include <boost/log/utility/functional/matches.hpp>
 #include <boost/log/utility/type_dispatch/standard_types.hpp>
@@ -37,6 +57,101 @@ BOOST_LOG_OPEN_NAMESPACE
 namespace aux {
 
 BOOST_LOG_ANONYMOUS_NAMESPACE {
+
+#if defined(BOOST_LOG_USE_STD_REGEX) || defined(BOOST_LOG_USE_BOOST_REGEX)
+
+#if defined(BOOST_LOG_USE_STD_REGEX)
+namespace regex_namespace = std;
+#else
+namespace regex_namespace = boost;
+#endif
+
+#if defined(BOOST_LOG_USE_CHAR) && defined(BOOST_LOG_USE_WCHAR_T)
+
+//! A special filtering predicate that adopts the string operand to the attribute value character type
+struct matches_predicate :
+    public matches_fun
+{
+    template< typename CharT >
+    struct initializer
+    {
+        typedef void result_type;
+        typedef CharT char_type;
+        typedef std::basic_string< char_type > string_type;
+
+        explicit initializer(string_type const& val) : m_initializer(val)
+        {
+        }
+
+        template< typename T >
+        result_type operator() (T& val) const
+        {
+            try
+            {
+                typedef typename T::value_type target_char_type;
+                std::basic_string< target_char_type > str;
+                log::aux::code_convert(m_initializer, str);
+                val.assign(str, T::ECMAScript | T::optimize);
+            }
+            catch (...)
+            {
+            }
+        }
+
+    private:
+        string_type const& m_initializer;
+    };
+
+    typedef matches_fun::result_type result_type;
+
+    template< typename CharT >
+    explicit matches_predicate(std::basic_string< CharT > const& operand)
+    {
+        fusion::for_each(m_operands, initializer< CharT >(operand));
+    }
+
+    template< typename T >
+    result_type operator() (T const& val) const
+    {
+        typedef typename T::value_type char_type;
+        typedef regex_namespace::basic_regex< char_type > regex_type;
+        return matches_fun::operator() (val, fusion::at_key< regex_type >(m_operands));
+    }
+
+private:
+    fusion::set< regex_namespace::regex, regex_namespace::wregex > m_operands;
+};
+
+#else
+
+//! A special filtering predicate that adopts the string operand to the attribute value character type
+template< typename CharT >
+struct matches_predicate :
+    public matches_fun
+{
+    typedef typename matches_fun::result_type result_type;
+    typedef CharT char_type;
+    typedef std::basic_string< char_type > string_type;
+    typedef regex_namespace::basic_regex< char_type > regex_type;
+
+    explicit matches_predicate(string_type const& operand) :
+        m_operand(operand, regex_type::ECMAScript | regex_type::optimize)
+    {
+    }
+
+    template< typename T >
+    result_type operator() (T const& val) const
+    {
+        return matches_fun::operator() (val, m_operand);
+    }
+
+private:
+    regex_type m_operand;
+};
+
+#endif
+
+#else // defined(BOOST_LOG_USE_STD_REGEX) || defined(BOOST_LOG_USE_BOOST_REGEX)
 
 #if defined(BOOST_LOG_USE_CHAR) && defined(BOOST_LOG_USE_WCHAR_T)
 
@@ -122,6 +237,8 @@ private:
 };
 
 #endif
+
+#endif // defined(BOOST_LOG_USE_STD_REGEX) || defined(BOOST_LOG_USE_BOOST_REGEX)
 
 } // namespace
 

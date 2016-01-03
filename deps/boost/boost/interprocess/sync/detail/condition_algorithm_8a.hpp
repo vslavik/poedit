@@ -11,6 +11,14 @@
 #ifndef BOOST_INTERPROCESS_DETAIL_CONDITION_ALGORITHM_8A_HPP
 #define BOOST_INTERPROCESS_DETAIL_CONDITION_ALGORITHM_8A_HPP
 
+#ifndef BOOST_CONFIG_HPP
+#  include <boost/config.hpp>
+#endif
+#
+#if defined(BOOST_HAS_PRAGMA_ONCE)
+#  pragma once
+#endif
+
 #include <boost/interprocess/detail/config_begin.hpp>
 #include <boost/interprocess/detail/workaround.hpp>
 #include <boost/interprocess/sync/scoped_lock.hpp>
@@ -324,7 +332,8 @@ class condition_8a_wrapper
 
    condition_8a_wrapper(){}
 
-   ~condition_8a_wrapper(){}
+   //Compiler-generated destructor is OK
+   //~condition_8a_wrapper(){}
 
    ConditionMembers & get_members()
    {  return m_data; }
@@ -359,10 +368,6 @@ class condition_8a_wrapper
    template <typename L>
    bool timed_wait(L& lock, const boost::posix_time::ptime &abs_time)
    {
-      if(abs_time == boost::posix_time::pos_infin){
-         this->wait(lock);
-         return true;
-      }
       if (!lock)
          throw lock_exception();
       return algo_type::wait(m_data, lock, true, abs_time);
@@ -371,10 +376,6 @@ class condition_8a_wrapper
    template <typename L, typename Pr>
    bool timed_wait(L& lock, const boost::posix_time::ptime &abs_time, Pr pred)
    {
-      if(abs_time == boost::posix_time::pos_infin){
-         this->wait(lock, pred);
-         return true;
-      }
       if (!lock)
             throw lock_exception();
       while (!pred()){

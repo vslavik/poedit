@@ -1,5 +1,5 @@
 [/
-          Copyright Oliver Kowalke 2009.
+          Copyright Oliver Kowalke 2014.
  Distributed under the Boost Software License, Version 1.0.
     (See accompanying file LICENSE_1_0.txt or copy at
           http://www.boost.org/LICENSE_1_0.txt
@@ -25,22 +25,8 @@ fcontext_t is the part to port to new platforms.
 
 [note Context switches do not preserve the signal mask on UNIX systems.]
 
-Because the assembler code uses the byte layout of __fcontext__ to access 
-its members __fcontext__ must be a POD. This requires that __fcontext__ has only a
-default constructor, no visibility keywords (e.g. private, public, protected), no
-virtual methods and all members and base classes are PODs too.
+__fcontext__ is an opaque pointer.
 
-
-[heading Protecting the stack]
-
-Because the stack's size is fixed -- there is no support for split stacks yet -- it
-is important to protect against exceeding the stack's bounds. Otherwise, in the
-best case, overrunning the stack's memory will result in a segmentation fault or
-access violation and, in the worst case, the application's memory will be
-overwritten. `stack_allocator` appends a guard page to the stack to help detect
-overruns. The guard page consumes no physical memory, but generates a
-segmentation fault or access violation on access to the virtual memory addresses
-within it.
 
 
 [section Other APIs ]

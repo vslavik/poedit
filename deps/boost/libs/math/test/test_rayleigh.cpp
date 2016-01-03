@@ -194,9 +194,11 @@ void test_spots(RealType T)
          tolerance * 100); // %
 
    BOOST_CHECK_CLOSE(
-      ::boost::math::kurtosis_excess(
-         rayleigh_distribution<RealType>(1.L)),
-         static_cast<RealType>(0.2450893006876380628486604106197544154170667057995L),
+     ::boost::math::kurtosis_excess(
+     rayleigh_distribution<RealType>(1.L)),
+     -static_cast<RealType>(6 * pi<RealType>() * pi<RealType>() - 24 * pi<RealType>() + 16) /
+        ((4 - pi<RealType>()) * (4 - pi<RealType>())),
+        // static_cast<RealType>(0.2450893006876380628486604106197544154170667057995L),
          tolerance * 1000); // %
 
    BOOST_CHECK_CLOSE(

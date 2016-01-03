@@ -7,6 +7,7 @@
 #if !defined(FUSION_LIST_TO_CONS_07172005_1041)
 #define FUSION_LIST_TO_CONS_07172005_1041
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/container/list/cons.hpp>
 #include <boost/fusion/container/list/limits.hpp>
 #include <boost/preprocessor/repetition/enum.hpp>

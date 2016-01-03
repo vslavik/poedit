@@ -1,5 +1,5 @@
 
-POEDIT_LINGUAS = af_ZA am ar ast be be@latin bg bn br bs ca ca@valencia ckb co cs da de el en_GB eo es es_PR et eu fa_IR fi fr fur ga gl he hi hr hu id is it ja ka kk ko ku ky lt lv mk mn mr ms nb ne nl nn pa pl pt pt_BR ro ru sk sl sq sr sv ta tg th tr tt ug uk ur uz vi wa zh_CN zh_TW
+POEDIT_LINGUAS = af am an ar ast az be be@latin bg bn br bs ca ca@valencia ckb co cs da de el en_GB eo es et eu fa fi fr fur fy_NL ga gl he hi hr hu hy id is it ja ka kab kk ko ky lt lv mk mn mr ms nb ne nl nn oc pa pl pt_BR pt_PT ro ru sk sl sq sr sv ta tg th tr tt ug uk ur uz vi wa zh_CN zh_TW
 
 localedir = $(datadir)/locale
 
@@ -11,7 +11,8 @@ install-poedit-catalogs:
 	    $(INSTALL_DATA) $(srcdir)/$$i.mo $(DESTDIR)$(localedir)/$$i/LC_MESSAGES/poedit.mo ; \
 	done
 
-
+uninstall-local:
+	rm -rf $(DESTDIR)$(localedir)/*/LC_MESSAGES/poedit.mo
 
 # ----------------------------------------------------------------------------
 # Logic for catalogs updating follows
@@ -26,11 +27,11 @@ XGETTEXT=xgettext
 XARGS=xargs
 
 # common xgettext args: C++ syntax, use the specified macro names as markers
-XGETTEXT_ARGS=-C -k_ -kwxGetTranslation -kwxTRANSLATE -kwxPLURAL:1,2 -s -j \
+XGETTEXT_ARGS=-C -k_ -kwxGetTranslation -kwxTRANSLATE -kwxPLURAL:1,2 -F -j \
               --add-comments=TRANSLATORS \
               --from-code=UTF-8 \
               --package-name=Poedit --package-version=$(PACKAGE_SHORT_VERSION) \
-              --msgid-bugs-address=poedit@googlegroups.com
+              --msgid-bugs-address=help@poedit.net
 
 # implicit rules
 %.mo: %.po
@@ -75,7 +76,5 @@ stats:
 
 dist-hook: allmo
 	cp -a $(srcdir)/*.pot $(srcdir)/*.po $(srcdir)/*.mo $(distdir)
-
-EXTRA_DIST = update-translation-lists.sh
 
 .PHONY: allpo allmo force-update stats FORCE

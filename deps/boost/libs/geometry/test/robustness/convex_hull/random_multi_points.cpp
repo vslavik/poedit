@@ -124,7 +124,7 @@ void test_random_multi_points(MultiPoint& result, int& index,
     }
     if (settings.wkt)
     {
-        std::cout 
+        std::cout
             << "input: " << bg::wkt(mp) << std::endl
             << "output: " << bg::wkt(hull) << std::endl
             << std::endl;

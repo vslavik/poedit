@@ -1,5 +1,5 @@
 [/
-              Copyright Andrey Semashev 2007 - 2013.
+              Copyright Andrey Semashev 2007 - 2015.
      Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
               http://www.boost.org/LICENSE_1_0.txt)
@@ -163,6 +163,35 @@ It should be fine to use logging during the application initialization (i.e. bef
 * Do not use named scopes in termination code.
 
 These rules don't guarantee that the library will work in termination context but they may help to avoid problems. The library will get improved to support this use case better.
+
+[endsect]
+
+[section:why_crash_on_term Why my application crashes on process termination when file sinks are used?]
+
+There are known problems with __boost_filesystem__ (for example, [ticket 8642] and [ticket 9219]), which affect Boost.Log file sink backends. When the file sink is destroyed, it attempts to perform a final log file rotation, which involves __boost_filesystem__ for moving files. This typically happens when Boost.Log core is deinitialized, at the global deinitialization stage, after leaving `main()`. The crux of the problem is that __boost_filesystem__ uses a global locale object internally to perform character code conversion for `path`s, and this locale may get destroyed before Boost.Log is deinitialized, which results in a crash.
+
+There is no way for Boost.Log to influence the order of global deinitialization, but the problem can be worked around on the user's side. One solution is to make sure the locale is initialized /before/ Boost.Log. This can be achieved by calling `boost::filesystem::path::codecvt()` or `boost::filesystem::path::imbue()` early during the application startup, before performing any calls to Boost.Log. For example:
+
+    int main(int argc, char* argv[])
+    {
+        boost::filesystem::path::imbue(std::locale("C"));
+        initialize_log();
+
+        // ...
+    }
+
+Note that in this case you can't use Boost.Log in global constructors or you have to make sure that `boost::filesystem::path::imbue()` is still called first.
+
+Another solution is to remove and destroy file sinks from the logging core before returning from `main()`. This way file rotation will happen before leaving `main()`, while the locale is still valid. The file sinks can be removed either individually or as a part of the `remove_all_sinks()` call:
+
+    int main(int argc, char* argv[])
+    {
+        // ...
+
+        logging::core::get()->remove_all_sinks();
+
+        return 0;
+    }
 
 [endsect]
 

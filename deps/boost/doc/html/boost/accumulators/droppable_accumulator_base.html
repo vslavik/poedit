@@ -6,8 +6,8 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../accumulators/reference.html#header.boost.accumulators.accumulators_fwd_hpp" title="Header &lt;boost/accumulators/accumulators_fwd.hpp&gt;">
-<link rel="prev" href="tag/droppable.html" title="Struct template droppable">
-<link rel="next" href="droppable_accumulator.html" title="Struct template droppable_accumulator">
+<link rel="prev" href="droppable_accumulator.html" title="Struct template droppable_accumulator">
+<link rel="next" href="extractor.html" title="Struct template extractor">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="tag/droppable.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../accumulators/reference.html#header.boost.accumulators.accumulators_fwd_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="droppable_accumulator.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="droppable_accumulator.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../accumulators/reference.html#header.boost.accumulators.accumulators_fwd_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="extractor.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.accumulators.droppable_accumulator_base"></a><div class="titlepage"></div>
@@ -34,35 +34,35 @@
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Accumulator<span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="droppable_accumulator_base.html" title="Struct template droppable_accumulator_base">droppable_accumulator_base</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">Accumulator</span> <span class="special">{</span>
   <span class="comment">// <a class="link" href="droppable_accumulator_base.html#boost.accumulators.droppable_accumulator_baseconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <a class="link" href="droppable_accumulator_base.html#idp32957992-bb"><span class="identifier">droppable_accumulator_base</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="droppable_accumulator_base.html#idp32958808-bb"><span class="identifier">droppable_accumulator_base</span></a><span class="special">(</span><a class="link" href="droppable_accumulator_base.html" title="Struct template droppable_accumulator_base">droppable_accumulator_base</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <a class="link" href="droppable_accumulator_base.html#idp57994624-bb"><span class="identifier">droppable_accumulator_base</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="droppable_accumulator_base.html#idp57996448-bb"><span class="identifier">droppable_accumulator_base</span></a><span class="special">(</span><a class="link" href="droppable_accumulator_base.html" title="Struct template droppable_accumulator_base">droppable_accumulator_base</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="droppable_accumulator_base.html#idp32953672-bb">public member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="droppable_accumulator_base.html#idp32953880-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="droppable_accumulator_base.html#idp32955096-bb"><span class="identifier">add_ref</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="droppable_accumulator_base.html#idp32956312-bb"><span class="identifier">drop</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="droppable_accumulator_base.html#idp32957528-bb"><span class="identifier">is_dropped</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="droppable_accumulator_base.html#idp57985632-bb">public member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="droppable_accumulator_base.html#idp57986192-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="droppable_accumulator_base.html#idp57988576-bb"><span class="identifier">add_ref</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="droppable_accumulator_base.html#idp57990960-bb"><span class="identifier">drop</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="droppable_accumulator_base.html#idp57993344-bb"><span class="identifier">is_dropped</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp52251752"></a><h2>Description</h2>
+<a name="idp90073424"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp52251960"></a><h3>
+<a name="idp90073840"></a><h3>
 <a name="boost.accumulators.droppable_accumulator_baseconstruct-copy-destruct"></a><code class="computeroutput">droppable_accumulator_base</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <a name="idp32957992-bb"></a><span class="identifier">droppable_accumulator_base</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a name="idp32958808-bb"></a><span class="identifier">droppable_accumulator_base</span><span class="special">(</span><a class="link" href="droppable_accumulator_base.html" title="Struct template droppable_accumulator_base">droppable_accumulator_base</a> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <a name="idp57994624-bb"></a><span class="identifier">droppable_accumulator_base</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp57996448-bb"></a><span class="identifier">droppable_accumulator_base</span><span class="special">(</span><a class="link" href="droppable_accumulator_base.html" title="Struct template droppable_accumulator_base">droppable_accumulator_base</a> <span class="keyword">const</span> <span class="special">&amp;</span> that<span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp52260120"></a><h3>
-<a name="idp32953672-bb"></a><code class="computeroutput">droppable_accumulator_base</code> public member functions</h3>
+<a name="idp90090416"></a><h3>
+<a name="idp57985632-bb"></a><code class="computeroutput">droppable_accumulator_base</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp32953880-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp32955096-bb"></a><span class="identifier">add_ref</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp32956312-bb"></a><span class="identifier">drop</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">bool</span> <a name="idp32957528-bb"></a><span class="identifier">is_dropped</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp57986192-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp57988576-bb"></a><span class="identifier">add_ref</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Args<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp57990960-bb"></a><span class="identifier">drop</span><span class="special">(</span><span class="identifier">Args</span> <span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">bool</span> <a name="idp57993344-bb"></a><span class="identifier">is_dropped</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>
@@ -77,7 +77,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="tag/droppable.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../accumulators/reference.html#header.boost.accumulators.accumulators_fwd_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="droppable_accumulator.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="droppable_accumulator.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../accumulators/reference.html#header.boost.accumulators.accumulators_fwd_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="extractor.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

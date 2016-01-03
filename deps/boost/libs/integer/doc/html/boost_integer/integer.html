@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Integer Type Selection</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="Boost.Integer">
 <link rel="up" href="../index.html" title="Boost.Integer">
 <link rel="prev" href="traits.html" title="Integer Traits">
@@ -24,13 +24,13 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="boost_integer.integer"></a><a class="link" href="integer.html" title="Integer Type Selection"> Integer Type Selection</a>
+<a name="boost_integer.integer"></a><a class="link" href="integer.html" title="Integer Type Selection">Integer Type Selection</a>
 </h2></div></div></div>
-<div class="toc"><dl>
-<dt><span class="section"><a href="integer.html#boost_integer.integer.synopsis"> Synopsis</a></span></dt>
-<dt><span class="section"><a href="integer.html#boost_integer.integer.easiest"> Easiest-to-Manipulate
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="integer.html#boost_integer.integer.synopsis">Synopsis</a></span></dt>
+<dt><span class="section"><a href="integer.html#boost_integer.integer.easiest">Easiest-to-Manipulate
       Types</a></span></dt>
-<dt><span class="section"><a href="integer.html#boost_integer.integer.sized"> Sized Types</a></span></dt>
+<dt><span class="section"><a href="integer.html#boost_integer.integer.sized">Sized Types</a></span></dt>
 <dt><span class="section"><a href="integer.html#boost_integer.integer.example">Example</a></span></dt>
 <dt><span class="section"><a href="integer.html#boost_integer.integer.demonstration_program">Demonstration
       Program</a></span></dt>
@@ -46,20 +46,20 @@
     </p>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="boost_integer.integer.synopsis"></a><a class="link" href="integer.html#boost_integer.integer.synopsis" title="Synopsis"> Synopsis</a>
+<a name="boost_integer.integer.synopsis"></a><a class="link" href="integer.html#boost_integer.integer.synopsis" title="Synopsis">Synopsis</a>
 </h3></div></div></div>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span>
 <span class="special">{</span>
-  <span class="comment">//  fast integers from least integers
-</span>  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">LeastInt</span><span class="special">&gt;</span>
+  <span class="comment">//  fast integers from least integers</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">LeastInt</span><span class="special">&gt;</span>
   <span class="keyword">struct</span> <span class="identifier">int_fast_t</span>
   <span class="special">{</span>
       <span class="keyword">typedef</span> <span class="emphasis"><em>implementation-defined-type</em></span>  <span class="identifier">type</span><span class="special">;</span>
   <span class="special">};</span>
 
-  <span class="comment">//  signed
-</span>  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">int</span> <span class="identifier">Bits</span><span class="special">&gt;</span>
-  <span class="keyword">struct</span> <span class="identifier">int_t</span> 
+  <span class="comment">//  signed</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">int</span> <span class="identifier">Bits</span><span class="special">&gt;</span>
+  <span class="keyword">struct</span> <span class="identifier">int_t</span>
   <span class="special">{</span>
       <span class="comment">/* Member exact may or may not be defined depending upon Bits */</span>
       <span class="keyword">typedef</span> <span class="emphasis"><em>implementation-defined-type</em></span>  <span class="identifier">exact</span><span class="special">;</span>
@@ -67,9 +67,9 @@
       <span class="keyword">typedef</span> <span class="identifier">int_fast_t</span><span class="special">&lt;</span><span class="identifier">least</span><span class="special">&gt;::</span><span class="identifier">fast</span>      <span class="identifier">fast</span><span class="special">;</span>
   <span class="special">};</span>
 
-  <span class="comment">//  unsigned
-</span>  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">int</span> <span class="identifier">Bits</span><span class="special">&gt;</span>
-  <span class="keyword">struct</span> <span class="identifier">uint_t</span> 
+  <span class="comment">//  unsigned</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">int</span> <span class="identifier">Bits</span><span class="special">&gt;</span>
+  <span class="keyword">struct</span> <span class="identifier">uint_t</span>
   <span class="special">{</span>
       <span class="comment">/* Member exact may or may not be defined depending upon Bits */</span>
       <span class="keyword">typedef</span> <span class="emphasis"><em>implementation-defined-type</em></span>  <span class="identifier">exact</span><span class="special">;</span>
@@ -77,34 +77,34 @@
       <span class="keyword">typedef</span> <span class="identifier">int_fast_t</span><span class="special">&lt;</span><span class="identifier">least</span><span class="special">&gt;::</span><span class="identifier">fast</span>      <span class="identifier">fast</span><span class="special">;</span>
   <span class="special">};</span>
 
-  <span class="comment">//  signed
-</span>  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">long</span> <span class="keyword">long</span> <span class="identifier">MaxValue</span><span class="special">&gt;</span>
-  <span class="keyword">struct</span> <span class="identifier">int_max_value_t</span> 
+  <span class="comment">//  signed</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">long</span> <span class="keyword">long</span> <span class="identifier">MaxValue</span><span class="special">&gt;</span>
+  <span class="keyword">struct</span> <span class="identifier">int_max_value_t</span>
   <span class="special">{</span>
       <span class="keyword">typedef</span> <span class="emphasis"><em>implementation-defined-type</em></span>  <span class="identifier">least</span><span class="special">;</span>
       <span class="keyword">typedef</span> <span class="identifier">int_fast_t</span><span class="special">&lt;</span><span class="identifier">least</span><span class="special">&gt;::</span><span class="identifier">fast</span>      <span class="identifier">fast</span><span class="special">;</span>
   <span class="special">};</span>
 
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">long</span> <span class="keyword">long</span> <span class="identifier">MinValue</span><span class="special">&gt;</span>
-  <span class="keyword">struct</span> <span class="identifier">int_min_value_t</span> 
+  <span class="keyword">struct</span> <span class="identifier">int_min_value_t</span>
   <span class="special">{</span>
       <span class="keyword">typedef</span> <span class="emphasis"><em>implementation-defined-type</em></span>  <span class="identifier">least</span><span class="special">;</span>
       <span class="keyword">typedef</span> <span class="identifier">int_fast_t</span><span class="special">&lt;</span><span class="identifier">least</span><span class="special">&gt;::</span><span class="identifier">fast</span>      <span class="identifier">fast</span><span class="special">;</span>
   <span class="special">};</span>
 
-  <span class="comment">//  unsigned
-</span>  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> <span class="identifier">Value</span><span class="special">&gt;</span>
-  <span class="keyword">struct</span> <span class="identifier">uint_value_t</span> 
+  <span class="comment">//  unsigned</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> <span class="identifier">Value</span><span class="special">&gt;</span>
+  <span class="keyword">struct</span> <span class="identifier">uint_value_t</span>
   <span class="special">{</span>
       <span class="keyword">typedef</span> <span class="emphasis"><em>implementation-defined-type</em></span>  <span class="identifier">least</span><span class="special">;</span>
       <span class="keyword">typedef</span> <span class="identifier">int_fast_t</span><span class="special">&lt;</span><span class="identifier">least</span><span class="special">&gt;::</span><span class="identifier">fast</span>      <span class="identifier">fast</span><span class="special">;</span>
   <span class="special">};</span>
-<span class="special">}</span> <span class="comment">// namespace boost
-</span></pre>
+<span class="special">}</span> <span class="comment">// namespace boost</span>
+</pre>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="boost_integer.integer.easiest"></a><a class="link" href="integer.html#boost_integer.integer.easiest" title="Easiest-to-Manipulate Types"> Easiest-to-Manipulate
+<a name="boost_integer.integer.easiest"></a><a class="link" href="integer.html#boost_integer.integer.easiest" title="Easiest-to-Manipulate Types">Easiest-to-Manipulate
       Types</a>
 </h3></div></div></div>
 <p>
@@ -128,7 +128,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="boost_integer.integer.sized"></a><a class="link" href="integer.html#boost_integer.integer.sized" title="Sized Types"> Sized Types</a>
+<a name="boost_integer.integer.sized"></a><a class="link" href="integer.html#boost_integer.integer.sized" title="Sized Types">Sized Types</a>
 </h3></div></div></div>
 <p>
         The <code class="literal">int_t</code>, <code class="literal">uint_t</code>, <code class="literal">int_max_value_t</code>,
@@ -347,19 +347,19 @@
 </h3></div></div></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">integer</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
-<span class="comment">//...
-</span>
+<span class="comment">//...</span>
+
 <span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">int_t</span><span class="special">&lt;</span><span class="number">24</span><span class="special">&gt;::</span><span class="identifier">least</span> <span class="identifier">my_var</span><span class="special">;</span>  <span class="comment">// my_var has at least 24-bits
-</span>    <span class="comment">//...
-</span>    <span class="comment">// This one is guarenteed not to be truncated:
-</span>    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">int_max_value_t</span><span class="special">&lt;</span><span class="number">1000</span><span class="special">&gt;::</span><span class="identifier">least</span> <span class="identifier">my1000</span> <span class="special">=</span> <span class="number">1000</span><span class="special">;</span>
-    <span class="comment">//...
-</span>    <span class="comment">// This one is guarenteed not to be truncated, and as fast
-</span>    <span class="comment">// to manipulate as possible, its size may be greater than
-</span>    <span class="comment">// that of my1000:
-</span>    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">int_max_value_t</span><span class="special">&lt;</span><span class="number">1000</span><span class="special">&gt;::</span><span class="identifier">fast</span> <span class="identifier">my_fast1000</span> <span class="special">=</span> <span class="number">1000</span><span class="special">;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">int_t</span><span class="special">&lt;</span><span class="number">24</span><span class="special">&gt;::</span><span class="identifier">least</span> <span class="identifier">my_var</span><span class="special">;</span>  <span class="comment">// my_var has at least 24-bits</span>
+    <span class="comment">//...</span>
+    <span class="comment">// This one is guarenteed not to be truncated:</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">int_max_value_t</span><span class="special">&lt;</span><span class="number">1000</span><span class="special">&gt;::</span><span class="identifier">least</span> <span class="identifier">my1000</span> <span class="special">=</span> <span class="number">1000</span><span class="special">;</span>
+    <span class="comment">//...</span>
+    <span class="comment">// This one is guarenteed not to be truncated, and as fast</span>
+    <span class="comment">// to manipulate as possible, its size may be greater than</span>
+    <span class="comment">// that of my1000:</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">int_max_value_t</span><span class="special">&lt;</span><span class="number">1000</span><span class="special">&gt;::</span><span class="identifier">fast</span> <span class="identifier">my_fast1000</span> <span class="special">=</span> <span class="number">1000</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
 </div>
@@ -381,7 +381,7 @@
 <p>
         The rationale for the design of the templates in this header includes:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             Avoid recursion because of concern about C++'s limited guaranteed recursion
             depth (17).
@@ -417,8 +417,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001 -2009 Beman Dawes, Daryle Walker, Gennaro Prota,
-      John Maddock<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2009 Beman
+      Dawes, Daryle Walker, Gennaro Prota, John Maddock<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -1,6 +1,10 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2013 Adam Wulkiewicz, Lodz, Poland.
+
+// This file was modified by Oracle on 2013, 2014.
+// Modifications copyright (c) 2013, 2014 Oracle and/or its affiliates.
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -9,9 +13,13 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 #ifndef BOOST_GEOMETRY_STRATEGY_AGNOSTIC_POINT_IN_POLY_WINDING_HPP
 #define BOOST_GEOMETRY_STRATEGY_AGNOSTIC_POINT_IN_POLY_WINDING_HPP
 
+
+#include <boost/core/ignore_unused.hpp>
 
 #include <boost/geometry/util/math.hpp>
 #include <boost/geometry/util/select_calculation_type.hpp>
@@ -26,6 +34,153 @@ namespace boost { namespace geometry
 
 namespace strategy { namespace within
 {
+
+
+// Fix for https://svn.boost.org/trac/boost/ticket/9628
+// For floating point coordinates, the <1> coordinate of a point is compared
+// with the segment's points using some EPS. If the coordinates are "equal"
+// the sides are calculated. Therefore we can treat a segment as a long areal
+// geometry having some width. There is a small ~triangular area somewhere
+// between the segment's effective area and a segment's line used in sides
+// calculation where the segment is on the one side of the line but on the
+// other side of a segment (due to the width).
+// For the s1 of a segment going NE the real side is RIGHT but the point may
+// be detected as LEFT, like this:
+//                     RIGHT
+//                 ___----->
+//                  ^      O Pt  __ __
+//                 EPS     __ __
+//                  v__ __ BUT DETECTED AS LEFT OF THIS LINE
+//             _____7
+//       _____/
+// _____/
+template <typename CSTag>
+struct winding_side_equal
+{
+    typedef typename strategy::side::services::default_strategy
+        <
+            CSTag
+        >::type strategy_side_type;
+
+    template <size_t D, typename Point, typename PointOfSegment>
+    static inline int apply(Point const& point,
+                            PointOfSegment const& se,
+                            int count)
+    {
+        // Create a vertical segment intersecting the original segment's endpoint
+        // equal to the point, with the derived direction (UP/DOWN).
+        // Set only the 2 first coordinates, the other ones are ignored
+        PointOfSegment ss1, ss2;
+        set<1-D>(ss1, get<1-D>(se));
+        set<1-D>(ss2, get<1-D>(se));
+        if (count > 0) // UP
+        {
+            set<D>(ss1, 0);
+            set<D>(ss2, 1);
+        }
+        else // DOWN
+        {
+            set<D>(ss1, 1);
+            set<D>(ss2, 0);
+        }
+        // Check the side using this vertical segment
+        return strategy_side_type::apply(ss1, ss2, point);
+    }
+};
+
+// The optimization for cartesian
+template <>
+struct winding_side_equal<cartesian_tag>
+{
+    template <size_t D, typename Point, typename PointOfSegment>
+    static inline int apply(Point const& point,
+                            PointOfSegment const& se,
+                            int count)
+    {
+        return math::equals(get<1-D>(point), get<1-D>(se)) ?
+                0 :
+                get<1-D>(point) < get<1-D>(se) ?
+                    // assuming count is equal to 1 or -1
+                    count : // ( count > 0 ? 1 : -1) :
+                    -count; // ( count > 0 ? -1 : 1) ;
+    }
+};
+
+
+template <typename CSTag>
+struct winding_side_between
+{
+    typedef typename strategy::side::services::default_strategy
+        <
+            CSTag
+        >::type strategy_side_type;
+
+    template <size_t D, typename Point, typename PointOfSegment>
+    static inline int apply(Point const& point,
+                            PointOfSegment const& s1, PointOfSegment const& s2,
+                            int count)
+    {
+        // Create a vertical segment intersecting the original segment's endpoint
+        // equal to the point, with the derived direction (UP/DOWN).
+        // Set only the 2 first coordinates, the other ones are ignored
+        PointOfSegment ss1, ss2;
+        set<1-D>(ss1, get<1-D>(s1));
+        set<1-D>(ss2, get<1-D>(s1));
+
+        if (count > 0) // UP
+        {
+            set<D>(ss1, 0);
+            set<D>(ss2, 1);
+        }
+        else // DOWN
+        {
+            set<D>(ss1, 1);
+            set<D>(ss2, 0);
+        }
+
+        int const seg_side = strategy_side_type::apply(ss1, ss2, s2);
+
+        if (seg_side != 0) // segment not vertical
+        {
+            if (strategy_side_type::apply(ss1, ss2, point) == -seg_side) // point on the opposite side than s2
+            {
+                return -seg_side;
+            }
+            else
+            {
+                set<1-D>(ss1, get<1-D>(s2));
+                set<1-D>(ss2, get<1-D>(s2));
+
+                if (strategy_side_type::apply(ss1, ss2, point) == seg_side) // point behind s2
+                {
+                    return seg_side;
+                }
+            }
+        }
+
+        // segment is vertical or point is between p1 and p2
+        return strategy_side_type::apply(s1, s2, point);
+    }
+};
+
+// The specialization for cartesian
+template <>
+struct winding_side_between<cartesian_tag>
+{
+    typedef strategy::side::services::default_strategy
+        <
+            cartesian_tag
+        >::type strategy_side_type;
+
+    template <size_t D, typename Point, typename PointOfSegment>
+    static inline int apply(Point const& point,
+                            PointOfSegment const& s1, PointOfSegment const& s2,
+                            int /*count*/)
+    {
+        return strategy_side_type::apply(s1, s2, point);
+    }
+};
+
 
 /*!
 \brief Within detection using winding rule
@@ -106,21 +261,21 @@ class winding
     template <size_t D>
     static inline int check_segment(Point const& point,
                 PointOfSegment const& seg1, PointOfSegment const& seg2,
-                counter& state)
+                counter& state, bool& eq1, bool& eq2)
     {
         calculation_type const p = get<D>(point);
         calculation_type const s1 = get<D>(seg1);
         calculation_type const s2 = get<D>(seg2);
 
         // Check if one of segment endpoints is at same level of point
-        bool eq1 = math::equals(s1, p);
-        bool eq2 = math::equals(s2, p);
+        eq1 = math::equals(s1, p);
+        eq2 = math::equals(s2, p);
 
         if (eq1 && eq2)
         {
             // Both equal p -> segment is horizontal (or vertical for D=0)
             // The only thing which has to be done is check if point is ON segment
-            return check_touch<1 - D>(point, seg1, seg2,state);
+            return check_touch<1 - D>(point, seg1, seg2, state);
         }
 
         return
@@ -130,8 +285,6 @@ class winding
             : s2 < p && s1 > p ? -2     // Point between s2 -> s1 --> DOWN
             : 0;
     }
-
-
 
 
 public :
@@ -145,10 +298,27 @@ public :
                 PointOfSegment const& s1, PointOfSegment const& s2,
                 counter& state)
     {
-        int count = check_segment<1>(point, s1, s2, state);
+        typedef typename cs_tag<Point>::type cs_t;
+
+        bool eq1 = false;
+        bool eq2 = false;
+        boost::ignore_unused(eq2);
+
+        int count = check_segment<1>(point, s1, s2, state, eq1, eq2);
         if (count != 0)
         {
-            int side = strategy_side_type::apply(s1, s2, point);
+            int side = 0;
+            if (count == 1 || count == -1)
+            {
+                side = winding_side_equal<cs_t>
+                            ::template apply<1>(point, eq1 ? s1 : s2, count);
+            }
+            else // count == 2 || count == -2
+            {
+                side = winding_side_between<cs_t>
+                            ::template apply<1>(point, s1, s2, count);
+            }
+            
             if (side == 0)
             {
                 // Point is lying on segment
@@ -194,6 +364,19 @@ struct default_strategy<point_tag, AnyTag, point_tag, areal_tag, spherical_tag, 
     typedef winding<Point, typename geometry::point_type<Geometry>::type> type;
 };
 
+// TODO: use linear_tag and pointlike_tag the same way how areal_tag is used
+
+template <typename Point, typename Geometry, typename AnyTag>
+struct default_strategy<point_tag, AnyTag, point_tag, AnyTag, cartesian_tag, cartesian_tag, Point, Geometry>
+{
+    typedef winding<Point, typename geometry::point_type<Geometry>::type> type;
+};
+
+template <typename Point, typename Geometry, typename AnyTag>
+struct default_strategy<point_tag, AnyTag, point_tag, AnyTag, spherical_tag, spherical_tag, Point, Geometry>
+{
+    typedef winding<Point, typename geometry::point_type<Geometry>::type> type;
+};
 
 } // namespace services
 
@@ -221,6 +404,19 @@ struct default_strategy<point_tag, AnyTag, point_tag, areal_tag, spherical_tag, 
     typedef strategy::within::winding<Point, typename geometry::point_type<Geometry>::type> type;
 };
 
+// TODO: use linear_tag and pointlike_tag the same way how areal_tag is used
+
+template <typename Point, typename Geometry, typename AnyTag>
+struct default_strategy<point_tag, AnyTag, point_tag, AnyTag, cartesian_tag, cartesian_tag, Point, Geometry>
+{
+    typedef strategy::within::winding<Point, typename geometry::point_type<Geometry>::type> type;
+};
+
+template <typename Point, typename Geometry, typename AnyTag>
+struct default_strategy<point_tag, AnyTag, point_tag, AnyTag, spherical_tag, spherical_tag, Point, Geometry>
+{
+    typedef strategy::within::winding<Point, typename geometry::point_type<Geometry>::type> type;
+};
 
 }}} // namespace strategy::covered_by::services
 #endif

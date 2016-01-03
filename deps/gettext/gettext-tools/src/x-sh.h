@@ -1,5 +1,5 @@
 /* xgettext sh backend.
-   Copyright (C) 2003, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2006, 2015 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@ extern "C" {
 
 #define SCANNERS_SH \
   { "Shell",            extract_sh,                                     \
-                        &flag_table_sh, &formatstring_sh, NULL },       \
+                        &flag_table_sh, &formatstring_sh, NULL, NULL },       \
 
 /* Scan a shell script file and add its translatable strings to mdlp.  */
 extern void extract_sh (FILE *fp, const char *real_filename,

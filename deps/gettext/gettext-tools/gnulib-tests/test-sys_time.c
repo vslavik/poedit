@@ -1,5 +1,5 @@
 /* Test of <sys/time.h> substitute.
-   Copyright (C) 2007, 2009-2013 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2009-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,8 +23,9 @@
 /* Check that the 'struct timeval' type is defined.  */
 struct timeval a;
 
-/* Check that &a.tv_sec is a 'time_t *', ignoring signedness issues.  */
-typedef int verify_tv_sec_type[sizeof (a.tv_sec) == sizeof (time_t) ? 1 : -1];
+/* Check that a.tv_sec is wide enough to hold a time_t, ignoring
+   signedness issues.  */
+typedef int verify_tv_sec_type[sizeof (time_t) <= sizeof (a.tv_sec) ? 1 : -1];
 
 int
 main (void)

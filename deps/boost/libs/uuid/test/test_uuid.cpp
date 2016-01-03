@@ -9,6 +9,7 @@
 
 //  libs/uuid/test/test_uuid.cpp  -------------------------------//
 
+#include <iostream>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/detail/lightweight_test.hpp>
@@ -156,6 +157,8 @@ int main(int, char*[])
         uuid u1 = {{0}};
         uuid u2 = {{1,0}};
         uuid u3 = {{255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255}};
+        uuid u4 = {{0,1,0}};
+        uuid u5 = {{0,255,0}};
 
         BOOST_TEST_EQ(u1, u1);
 
@@ -163,6 +166,11 @@ int main(int, char*[])
    
         BOOST_TEST(u1 < u2);
         BOOST_TEST(u2 < u3);
+        BOOST_TEST(u1 < u4);
+        BOOST_TEST(u1 < u5);
+        BOOST_TEST(u4 < u5);
+        BOOST_TEST(u4 < u2);
+        BOOST_TEST(u5 < u2);
 
         BOOST_TEST(u1 <= u1);
         BOOST_TEST(u1 <= u2);

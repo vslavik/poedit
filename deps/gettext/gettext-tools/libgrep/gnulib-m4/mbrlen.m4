@@ -1,5 +1,5 @@
-# mbrlen.m4 serial 8
-dnl Copyright (C) 2008, 2010-2013 Free Software Foundation, Inc.
+# mbrlen.m4 serial 9
+dnl Copyright (C) 2008, 2010-2015 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -224,6 +224,40 @@ int main ()
           [gl_cv_func_mbrlen_nul_retval=no],
           [])
       fi
+    ])
+])
+
+dnl Test whether mbrlen returns the correct value on empty input.
+
+AC_DEFUN([gl_MBRLEN_EMPTY_INPUT],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CACHE_CHECK([whether mbrlen works on empty input],
+    [gl_cv_func_mbrlen_empty_input],
+    [
+      dnl Initial guess, used when cross-compiling or when no suitable locale
+      dnl is present.
+changequote(,)dnl
+      case "$host_os" in
+                     # Guess no on AIX and glibc systems.
+        aix* | *-gnu*)
+                    gl_cv_func_mbrlen_empty_input="guessing no" ;;
+        *)          gl_cv_func_mbrlen_empty_input="guessing yes" ;;
+      esac
+changequote([,])dnl
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
+           #include <wchar.h>
+           static mbstate_t mbs;
+           int
+           main (void)
+           {
+             return mbrlen ("", 0, &mbs) == (size_t) -2;
+           }]])],
+        [gl_cv_func_mbrlen_empty_input=no],
+        [gl_cv_func_mbrlen_empty_input=yes],
+        [:])
     ])
 ])
 

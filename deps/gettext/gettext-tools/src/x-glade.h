@@ -1,5 +1,5 @@
 /* xgettext glade backend.
-   Copyright (C) 2002-2003, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2006, 2015 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2002.
 
    This program is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@ extern "C" {
   { "ui",        "glade"    },                                          \
 
 #define SCANNERS_GLADE \
-  { "glade",            extract_glade, NULL, NULL, NULL },              \
+  { "glade",            extract_glade, NULL, NULL, NULL, NULL },              \
 
 /* Scan a glade XML file and add its translatable strings to mdlp.  */
 extern void extract_glade (FILE *fp, const char *real_filename,

@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2007-2013
+// (C) Copyright Ion Gaztanaga 2007-2014
 //
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -18,14 +18,15 @@
 #define BOOST_INTRUSIVE_SGTREE_ALGORITHMS_HPP
 
 #include <boost/intrusive/detail/config_begin.hpp>
+#include <boost/intrusive/intrusive_fwd.hpp>
 
 #include <cstddef>
-#include <boost/intrusive/intrusive_fwd.hpp>
-#include <boost/intrusive/detail/assert.hpp>
-#include <boost/intrusive/detail/utilities.hpp>
+#include <boost/intrusive/detail/algo_type.hpp>
 #include <boost/intrusive/bstree_algorithms.hpp>
-#include <boost/intrusive/pointer_traits.hpp>
 
+#if defined(BOOST_HAS_PRAGMA_ONCE)
+#  pragma once
+#endif
 
 namespace boost {
 namespace intrusive {
@@ -187,6 +188,7 @@ class sgtree_algorithms
    //! @copydoc ::boost::intrusive::bstree_algorithms::count(const const_node_ptr&,const KeyType&,KeyNodePtrCompare)
    template<class KeyType, class KeyNodePtrCompare>
    static std::size_t count(const const_node_ptr & header, const KeyType &key, KeyNodePtrCompare comp);
+
    #endif   //#ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
 
    //! @copydoc ::boost::intrusive::bstree_algorithms::insert_equal_upper_bound(const node_ptr&,const node_ptr&,NodePtrCompare)
@@ -316,12 +318,12 @@ class sgtree_algorithms
       if(tree_size > max_tree_size)
          max_tree_size = tree_size;
 
-      if(tree_size > 2 && //Nothing to do with only the root 
+      if(tree_size > 2 && //Nothing to do with only the root
          //Check if the root node is unbalanced
          //Scapegoat paper depth counts root depth as zero and "depth" counts root as 1,
          //but since "depth" is the depth of the ancestor of x, i == depth
          depth > h_alpha(tree_size)){
-                                          
+
          //Find the first non height-balanced node
          //as described in the section 4.2 of the paper.
          //This method is the alternative method described
@@ -330,25 +332,21 @@ class sgtree_algorithms
          //than the weight balanced method.
          node_ptr s = x;
          std::size_t size = 1;
-         for(std::size_t ancestor = 1; true; ++ancestor){
-            if(ancestor == depth){ //Check if whole tree must be rebuilt
-               max_tree_size = tree_size;
-               bstree_algo::rebalance_subtree(NodeTraits::get_parent(s));
-               break;
-            }
-            else{ //Go to the next scapegoat candidate
-               const node_ptr s_parent = NodeTraits::get_parent(s);
-               const node_ptr s_parent_left = NodeTraits::get_left(s_parent);
-               //Obtain parent's size (previous size + parent + sibling tree)
-               const node_ptr s_sibling = s_parent_left == s ? NodeTraits::get_right(s_parent) : s_parent_left;
-               size += 1 + bstree_algo::subtree_size(s_sibling);
-               s = s_parent;
-               if(ancestor > h_alpha(size)){ //is 's' scapegoat?
-                  bstree_algo::rebalance_subtree(s);
-                  break;
-               }
+         for(std::size_t ancestor = 1; ancestor != depth; ++ancestor){
+            const node_ptr s_parent = NodeTraits::get_parent(s);
+            const node_ptr s_parent_left = NodeTraits::get_left(s_parent);
+            //Obtain parent's size (previous size + parent + sibling tree)
+            const node_ptr s_sibling = s_parent_left == s ? NodeTraits::get_right(s_parent) : s_parent_left;
+            size += 1 + bstree_algo::subtree_size(s_sibling);
+            s = s_parent;
+            if(ancestor > h_alpha(size)){ //is 's' scapegoat?
+               bstree_algo::rebalance_subtree(s);
+               return;
             }
          }
+         //The whole tree must be rebuilt
+         max_tree_size = tree_size;
+         bstree_algo::rebalance_subtree(NodeTraits::get_parent(s));
       }
    }
    /// @endcond
@@ -360,6 +358,12 @@ template<class NodeTraits>
 struct get_algo<SgTreeAlgorithms, NodeTraits>
 {
    typedef sgtree_algorithms<NodeTraits> type;
+};
+
+template <class ValueTraits, class NodePtrCompare, class ExtraChecker>
+struct get_node_checker<SgTreeAlgorithms, ValueTraits, NodePtrCompare, ExtraChecker>
+{
+   typedef detail::bstree_node_checker<ValueTraits, NodePtrCompare, ExtraChecker> type;
 };
 
 /// @endcond

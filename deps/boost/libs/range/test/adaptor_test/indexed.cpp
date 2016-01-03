@@ -1,6 +1,6 @@
 // Boost.Range library
 //
-//  Copyright Neil Groves 2009. Use, modification and
+//  Copyright Neil Groves 2014. Use, modification and
 //  distribution is subject to the Boost Software License, Version
 //  1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -14,6 +14,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <boost/assign.hpp>
+#include <boost/foreach.hpp>
 #include <boost/range/algorithm_ext.hpp>
 #include <boost/range/concepts.hpp>
 
@@ -23,83 +24,129 @@
 
 #include "../test_utils.hpp"
 
-namespace boost
+namespace boost_range_test
 {
     namespace
     {
-        template< class Container >
-        void indexed_test_impl( Container& c )
-        {
-            using namespace boost::adaptors;
 
-            typedef BOOST_DEDUCED_TYPENAME Container::value_type value_t;
+template<typename Container, typename AdaptedRange>
+void check_result(
+    const Container&    reference_range,
+    const AdaptedRange& adapted_range,
+    std::ptrdiff_t      start_index
+    )
+{
+    typedef typename boost::range_iterator<const Container>::type
+                reference_iterator;
 
-            // This is my preferred syntax using the | operator.
-            std::vector< value_t > test_result1;
-            boost::push_back(test_result1, c | indexed(0));
+    typedef typename boost::range_iterator<const AdaptedRange>::type
+                adapted_iterator;
 
-            // This is an alternative syntax preferred by some.
-            std::vector< value_t > test_result2;
-            boost::push_back(test_result2, adaptors::index(c, 0));
+    BOOST_REQUIRE_EQUAL(boost::size(reference_range),
+                        boost::size(adapted_range));
 
-            BOOST_CHECK_EQUAL_COLLECTIONS( c.begin(), c.end(),
-                                           test_result1.begin(), test_result1.end() );
-
-            BOOST_CHECK_EQUAL_COLLECTIONS( c.begin(), c.end(),
-                                           test_result2.begin(), test_result2.end() );
-
-            boost::indexed_range< Container > test_result3
-                = c | indexed(0);
-
-            typedef BOOST_DEDUCED_TYPENAME boost::range_const_iterator<
-                boost::indexed_range< Container > >::type iter_t;
-
-            iter_t it = test_result3.begin();
-            for (std::size_t i = 0, count = c.size(); i < count; ++i)
-            {
-                BOOST_CHECK_EQUAL( i, static_cast<std::size_t>(it.index()) );
-                ++it;
-            }
-
-        }
-
-        template< class Container >
-        void indexed_test_impl()
-        {
-            using namespace boost::assign;
-
-            Container c;
-
-            // test empty container
-            indexed_test_impl(c);
-
-            // test one element
-            c += 1;
-            indexed_test_impl(c);
-
-            // test many elements
-            c += 1,2,2,2,3,4,4,4,4,5,6,7,8,9,9;
-            indexed_test_impl(c);
-        }
-
-        void indexed_test()
-        {
-            indexed_test_impl< std::vector< int > >();
-            indexed_test_impl< std::list< int > >();
-            
-            check_random_access_range_concept(std::vector<int>() | boost::adaptors::indexed(0));
-            check_bidirectional_range_concept(std::list<int>() | boost::adaptors::indexed(0));
-        }
+    reference_iterator reference_it = boost::begin(reference_range);
+    adapted_iterator adapted_it = boost::begin(adapted_range);
+    for (std::ptrdiff_t i = start_index;
+            reference_it != boost::end(reference_range);
+            ++reference_it, ++adapted_it, ++i)
+    {
+        BOOST_CHECK_EQUAL(i, adapted_it->index());
+        BOOST_CHECK_EQUAL(*reference_it, adapted_it->value());
     }
 }
 
+template<typename Container>
+void indexed_test_impl(Container& c, std::ptrdiff_t start_index)
+{
+    // This is my preferred syntax using the | operator.
+    check_result(c, c | boost::adaptors::indexed(), 0);
+    check_result(c, c | boost::adaptors::indexed(start_index), start_index);
+
+    // This is the function syntax
+    check_result(c, boost::adaptors::index(c), 0);
+    check_result(c, boost::adaptors::index(c, start_index), start_index);
+}
+
+template<typename Container>
+void indexed_test_impl(Container& c)
+{
+    indexed_test_impl(c, 0);
+    indexed_test_impl(c, -1);
+    indexed_test_impl(c, 4);
+}
+
+template<typename Container>
+void indexed_test_impl()
+{
+    using namespace boost::assign;
+
+    Container c;
+
+    // test empty container
+    indexed_test_impl(c);
+
+    // test one element
+    c += 1;
+    indexed_test_impl(c);
+
+    // test many elements
+    c += 1,2,2,2,3,4,4,4,4,5,6,7,8,9,9;
+    indexed_test_impl(c);
+}
+
+template<typename Traversal, typename Range>
+void check_traversal(const Range& rng)
+{
+    BOOST_STATIC_ASSERT(
+        boost::is_convertible<
+            typename boost::range_traversal<const Range>::type,
+            Traversal
+        >::value);
+}
+
+template<typename Traversal, typename Range>
+void check_not_traversal(const Range& rng)
+{
+    BOOST_STATIC_ASSERT(
+        !boost::is_convertible<
+            typename boost::range_traversal<const Range>::type,
+            Traversal
+        >::value);
+}
+
+void indexed_test()
+{
+    indexed_test_impl< std::vector< int > >();
+    indexed_test_impl< std::list< int > >();
+
+    std::vector<int> vi;
+
+    check_traversal<boost::random_access_traversal_tag>(
+        vi | boost::adaptors::indexed());
+
+    std::list<int> li;
+
+    check_traversal<boost::forward_traversal_tag>(
+        li | boost::adaptors::indexed());
+
+    check_not_traversal<boost::bidirectional_traversal_tag>(
+        li | boost::adaptors::indexed());
+
+    check_not_traversal<boost::random_access_traversal_tag>(
+        li | boost::adaptors::indexed());
+}
+
+    } // anonymous namesapce
+} // namespace boost_range_test
+
 boost::unit_test::test_suite*
-init_unit_test_suite(int argc, char* argv[])
+init_unit_test_suite(int, char*[])
 {
     boost::unit_test::test_suite* test
-        = BOOST_TEST_SUITE( "RangeTestSuite.adaptor.indexed" );
+        = BOOST_TEST_SUITE( "Boost.Range indexed adaptor test suite" );
 
-    test->add( BOOST_TEST_CASE( &boost::indexed_test ) );
+    test->add(BOOST_TEST_CASE(&boost_range_test::indexed_test));
 
     return test;
 }

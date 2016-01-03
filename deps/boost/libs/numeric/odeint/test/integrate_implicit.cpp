@@ -6,8 +6,8 @@
  This file tests the integrate function and its variants with the implicit steppers.
  [end_description]
 
- Copyright 2009-2012 Karsten Ahnert
- Copyright 2009-2012 Mario Mulansky
+ Copyright 2011 Mario Mulansky
+ Copyright 2011-2013 Karsten Ahnert
 
  Distributed under the Boost Software License, Version 1.0.
  (See accompanying file LICENSE_1_0.txt or
@@ -32,10 +32,17 @@
 
 #include <boost/mpl/vector.hpp>
 
+#ifndef ODEINT_INTEGRATE_ITERATOR
 #include <boost/numeric/odeint/integrate/integrate_const.hpp>
 #include <boost/numeric/odeint/integrate/integrate_adaptive.hpp>
 #include <boost/numeric/odeint/integrate/integrate_times.hpp>
 #include <boost/numeric/odeint/integrate/integrate_n_steps.hpp>
+#else
+#include <boost/numeric/odeint/iterator/integrate/integrate_const.hpp>
+#include <boost/numeric/odeint/iterator/integrate/integrate_adaptive.hpp>
+#include <boost/numeric/odeint/iterator/integrate/integrate_times.hpp>
+#include <boost/numeric/odeint/iterator/integrate/integrate_n_steps.hpp>
+#endif
 #include <boost/numeric/odeint/stepper/rosenbrock4.hpp>
 #include <boost/numeric/odeint/stepper/rosenbrock4_controller.hpp>
 #include <boost/numeric/odeint/stepper/rosenbrock4_dense_output.hpp>
@@ -99,13 +106,13 @@ struct perform_integrate_const_test
         integrate_const( Stepper() , std::make_pair( sys() , jacobi() ) , x , 0.0 , t_end ,
                                         dt , push_back_time( times ) );
 
-        BOOST_CHECK_EQUAL( static_cast<int>(times.size()) , static_cast<int>(floor(t_end/dt))+1 );
+        BOOST_CHECK_EQUAL( static_cast<int>(times.size()) , static_cast<int>(std::floor(t_end/dt))+1 );
 
         for( size_t i=0 ; i<times.size() ; ++i )
         {
             //std::cout << i << std::endl;
             // check if observer was called at times 0,1,2,...
-            BOOST_CHECK_SMALL( times[i] - static_cast< value_type >(i)*dt , (i+1) * 2E-16 );
+            BOOST_CHECK_SMALL( times[i] - static_cast< value_type >(i)*dt , (i+1) * 2.0e-16 );
         }
     }
 };
@@ -126,8 +133,8 @@ struct perform_integrate_adaptive_test
 
         BOOST_CHECK_EQUAL( times.size() , steps+1 );
 
-        BOOST_CHECK_SMALL( times[0] - 0.0 , 2E-16 );
-        BOOST_CHECK_SMALL( times[times.size()-1] - t_end , times.size() * 2E-16 );
+        BOOST_CHECK_SMALL( times[0] - 0.0 , 2.0e-16 );
+        BOOST_CHECK_SMALL( times[times.size()-1] - t_end , times.size() * 3.0e-16 );
     }
 };
 
@@ -171,12 +178,12 @@ struct perform_integrate_n_steps_test
         // simple stepper
         value_type end_time = integrate_n_steps( Stepper() , std::make_pair( sys() , jacobi() ) , x , 0.0 , dt , n , push_back_time( times ) );
 
-        BOOST_CHECK_SMALL( end_time - n*dt , 2E-16 );
+        BOOST_CHECK_SMALL( end_time - n*dt , 3.0e-16 );
         BOOST_CHECK_EQUAL( static_cast<int>(times.size()) , n+1 );
 
         for( size_t i=0 ; i<times.size() ; ++i )
             // check if observer was called at times 0,1,2,...
-            BOOST_CHECK_SMALL( times[i] - static_cast< value_type >(i)*dt , (i+1) * 2E-16 );
+            BOOST_CHECK_SMALL( times[i] - static_cast< value_type >(i)*dt , (i+1) * 2.0e-16 );
     }
 };
 

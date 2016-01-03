@@ -1,5 +1,5 @@
 /* Test that gettext() does not crash by stack overflow when msgid is very long.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 #if HAVE_GETRLIMIT && HAVE_SETRLIMIT
 # include <sys/types.h>
@@ -39,6 +40,7 @@ main ()
 {
   size_t n;
   char *msg;
+  char *translated;
 
   n = 1000000;
 
@@ -73,7 +75,9 @@ main ()
   memset (msg, 'x', n);
   msg[n] = '\0';
 
-  msg = gettext (msg);
+  translated = gettext (msg);
+  free (msg);
+  assert (translated != NULL);
 
   return 0;
 }

@@ -6,7 +6,7 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-#include "id_manager_impl.hpp"
+#include "document_state_impl.hpp"
 #include "utils.hpp"
 #include <boost/range/algorithm.hpp>
 

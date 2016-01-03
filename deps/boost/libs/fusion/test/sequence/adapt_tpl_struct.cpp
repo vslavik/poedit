@@ -35,19 +35,40 @@ namespace ns
     {
         X x;
         Y y;
+        int z;
     };
 }
 
-BOOST_FUSION_ADAPT_TPL_STRUCT(
-    (X)(Y),
-    (ns::point)(X)(Y),
-    (X, x)
-    (Y, y)
-)
+#if BOOST_PP_VARIADICS
 
-template<typename M>
-struct s { M m; };
-BOOST_FUSION_ADAPT_TPL_STRUCT((M), (s)(M), (M, m))
+    BOOST_FUSION_ADAPT_TPL_STRUCT(
+        (X)(Y),
+        (ns::point)(X)(Y),
+        x,
+        (BOOST_FUSION_ADAPT_AUTO, y)
+        (int, z)
+    )
+
+    template<typename M>
+    struct s { M m; };
+    BOOST_FUSION_ADAPT_TPL_STRUCT((M), (s)(M), m)
+
+#else // BOOST_PP_VARIADICS
+
+    BOOST_FUSION_ADAPT_TPL_STRUCT(
+        (X)(Y),
+        (ns::point)(X)(Y),
+        (X, x)
+        (Y, y)
+        (BOOST_FUSION_ADAPT_AUTO, z)
+    )
+
+    template<typename M>
+    struct s { M m; };
+    BOOST_FUSION_ADAPT_TPL_STRUCT((M), (s)(M), (BOOST_FUSION_ADAPT_AUTO, m))
+
+#endif
+
 
 int
 main()
@@ -62,28 +83,30 @@ main()
 
     {
         BOOST_MPL_ASSERT_NOT((traits::is_view<point>));
-        point p = {123, 456};
+        point p = {123, 456, 789};
 
         std::cout << at_c<0>(p) << std::endl;
         std::cout << at_c<1>(p) << std::endl;
+        std::cout << at_c<2>(p) << std::endl;
         std::cout << p << std::endl;
-        BOOST_TEST(p == make_vector(123, 456));
+        BOOST_TEST(p == make_vector(123, 456, 789));
 
         at_c<0>(p) = 6;
         at_c<1>(p) = 9;
-        BOOST_TEST(p == make_vector(6, 9));
+        at_c<2>(p) = 12;
+        BOOST_TEST(p == make_vector(6, 9, 12));
 
-        BOOST_STATIC_ASSERT(boost::fusion::result_of::size<point>::value == 2);
+        BOOST_STATIC_ASSERT(boost::fusion::result_of::size<point>::value == 3);
         BOOST_STATIC_ASSERT(!boost::fusion::result_of::empty<point>::value);
 
         BOOST_TEST(front(p) == 6);
-        BOOST_TEST(back(p) == 9);
+        BOOST_TEST(back(p) == 12);
     }
 
     {
-        vector<int, float> v1(4, 2);
-        point v2 = {5, 3};
-        vector<long, double> v3(5, 4);
+        vector<int, float, int> v1(4, 2, 2);
+        point v2 = {5, 3, 3};
+        vector<long, double, int> v3(5, 4, 4);
         BOOST_TEST(v1 < v2);
         BOOST_TEST(v1 <= v2);
         BOOST_TEST(v2 > v1);
@@ -96,14 +119,14 @@ main()
 
     {
         // conversion from point to vector
-        point p = {5, 3};
-        vector<int, long> v(p);
+        point p = {5, 3, 3};
+        vector<int, long, int> v(p);
         v = p;
     }
 
     {
         // conversion from point to list
-        point p = {5, 3};
+        point p = {5, 3, 3};
         list<int, long> l(p);
         l = p;
     }

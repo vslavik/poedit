@@ -1,5 +1,5 @@
 /* Abstract sequential list data type.
-   Copyright (C) 2006-2013 Free Software Foundation, Inc.
+   Copyright (C) 2006-2015 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,9 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef GL_LIST_INLINE
 # define GL_LIST_INLINE _GL_INLINE

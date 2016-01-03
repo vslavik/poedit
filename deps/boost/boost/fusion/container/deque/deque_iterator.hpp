@@ -8,11 +8,17 @@
 #if !defined(BOOST_FUSION_DEQUE_ITERATOR_26112006_2154)
 #define BOOST_FUSION_DEQUE_ITERATOR_26112006_2154
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/iterator/iterator_facade.hpp>
 #include <boost/fusion/container/deque/detail/keyed_element.hpp>
+#include <boost/mpl/int.hpp>
 #include <boost/mpl/minus.hpp>
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/identity.hpp>
+#include <boost/mpl/if.hpp>
 #include <boost/type_traits/is_const.hpp>
+#include <boost/type_traits/add_const.hpp>
+#include <boost/type_traits/add_reference.hpp>
 
 namespace boost { namespace fusion {
 
@@ -25,6 +31,7 @@ namespace boost { namespace fusion {
         typedef Seq sequence;
         typedef mpl::int_<Pos> index;
 
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         deque_iterator(Seq& seq)
             : seq_(seq)
         {}
@@ -47,6 +54,7 @@ namespace boost { namespace fusion {
                 add_const<element_type>,
                 mpl::identity<element_type> >::type>::type type;
 
+            BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
             static type
             call(Iterator const& it)
             {
@@ -61,6 +69,7 @@ namespace boost { namespace fusion {
             typedef typename Iterator::sequence sequence;
             typedef deque_iterator<sequence, index::value + N::value> type;
 
+            BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
             static type
             call(Iterator const& i)
             {
@@ -87,6 +96,7 @@ namespace boost { namespace fusion {
                 >::type
             type;
 
+            BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
             static type
             call(I1 const&, I2 const&)
             {
@@ -107,5 +117,14 @@ namespace boost { namespace fusion {
     };
 
 }}
+
+#ifdef BOOST_FUSION_WORKAROUND_FOR_LWG_2408
+namespace std
+{
+    template <typename Seq, int Pos>
+    struct iterator_traits< ::boost::fusion::deque_iterator<Seq, Pos> >
+    { };
+}
+#endif
 
 #endif

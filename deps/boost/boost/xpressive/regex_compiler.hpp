@@ -11,7 +11,7 @@
 #define BOOST_XPRESSIVE_REGEX_COMPILER_HPP_EAN_10_04_2005
 
 // MS compatible compilers support #pragma once
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
+#if defined(_MSC_VER)
 # pragma once
 #endif
 
@@ -442,20 +442,20 @@ private:
         if(lookahead)
         {
             seq += detail::make_independent_end_xpression<BidiIter>(seq.pure());
-            detail::lookahead_matcher<xpr_type> lookahead(seq.xpr(), negative, seq.pure());
-            seq = detail::make_dynamic<BidiIter>(lookahead);
+            detail::lookahead_matcher<xpr_type> lam(seq.xpr(), negative, seq.pure());
+            seq = detail::make_dynamic<BidiIter>(lam);
         }
         else if(lookbehind)
         {
             seq += detail::make_independent_end_xpression<BidiIter>(seq.pure());
-            detail::lookbehind_matcher<xpr_type> lookbehind(seq.xpr(), seq.width().value(), negative, seq.pure());
-            seq = detail::make_dynamic<BidiIter>(lookbehind);
+            detail::lookbehind_matcher<xpr_type> lbm(seq.xpr(), seq.width().value(), negative, seq.pure());
+            seq = detail::make_dynamic<BidiIter>(lbm);
         }
         else if(keeper) // independent sub-expression
         {
             seq += detail::make_independent_end_xpression<BidiIter>(seq.pure());
-            detail::keeper_matcher<xpr_type> keeper(seq.xpr(), seq.pure());
-            seq = detail::make_dynamic<BidiIter>(keeper);
+            detail::keeper_matcher<xpr_type> km(seq.xpr(), seq.pure());
+            seq = detail::make_dynamic<BidiIter>(km);
         }
 
         // restore the modifiers

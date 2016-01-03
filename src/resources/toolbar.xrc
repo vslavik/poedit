@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resource xmlns="http://www.wxwidgets.org/wxxrc" version="2.5.3.0">
   <object class="wxToolBar" name="toolbar">
-    <bitmapsize platform="win">32,32</bitmapsize>
-    <bitmapsize platform="mac">32,32</bitmapsize>
-    <margins>4,4</margins> 
+    <margins>3,3d</margins>
     <style platform="mac">wxTB_TEXT|wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT</style>
     <style platform="win">wxTB_HORZ_TEXT|wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT|wxTB_NODIVIDER</style>
     <style platform="unix">wxTB_HORZ_TEXT|wxBORDER_NONE|wxTB_HORIZONTAL|wxTB_FLAT</style>
@@ -39,7 +37,7 @@
       <tooltip>Check for errors in the translation</tooltip>
     </object>
 
-    <object class="tool" name="menu_update">
+    <object class="tool" name="toolbar_update">
       <bitmap stock_id="poedit-update"/>
       <label>Update</label>
       <tooltip>Update catalog - synchronize it with sources</tooltip>
@@ -52,10 +50,13 @@
       <tooltip>Toggled if selected string has fuzzy translation</tooltip>
       <toggle>1</toggle>
     </object>
-    <object class="tool" name="menu_comment">
-      <bitmap stock_id="poedit-comment"/>
-      <label>Comment</label>
-      <tooltip>Edit comment</tooltip>
+
+    <object class="space"/>
+    <object class="tool" name="show_sidebar">
+      <bitmap stock_id="sidebar"/>
+      <label></label>
+      <tooltip>Show or hide the sidebar</tooltip>
     </object>
+
   </object>
 </resource>

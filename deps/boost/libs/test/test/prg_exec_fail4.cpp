@@ -7,7 +7,7 @@
 //
 //  File        : $RCSfile$
 //
-//  Version     : $Revision: 49313 $
+//  Version     : $Revision$
 //
 //  Description : test the Execution Monitor logic regards cpp_main return values
 // ***************************************************************************

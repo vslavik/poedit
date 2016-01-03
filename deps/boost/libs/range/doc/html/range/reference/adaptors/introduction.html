@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Introduction and motivation</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Range 2.0">
 <link rel="up" href="../adaptors.html" title="Range Adaptors">
 <link rel="prev" href="../adaptors.html" title="Range Adaptors">
@@ -22,7 +22,7 @@
 <div class="spirit-nav">
 <a accesskey="p" href="../adaptors.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../adaptors.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="general_requirements.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
-<div class="section range_reference_adaptors_introduction">
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="range.reference.adaptors.introduction"></a><a class="link" href="introduction.html" title="Introduction and motivation">Introduction
         and motivation</a>
@@ -118,7 +118,7 @@
         </p>
 <h6>
 <a name="range.reference.adaptors.introduction.h0"></a>
-          <span><a name="range.reference.adaptors.introduction.composition_of_adaptors"></a></span><a class="link" href="introduction.html#range.reference.adaptors.introduction.composition_of_adaptors">Composition
+          <span class="phrase"><a name="range.reference.adaptors.introduction.composition_of_adaptors"></a></span><a class="link" href="introduction.html#range.reference.adaptors.introduction.composition_of_adaptors">Composition
           of Adaptors</a>
         </h6>
 <p>
@@ -126,7 +126,7 @@
           is that adaptors are <span class="emphasis"><em><span class="bold"><strong>orthogonal</strong></span></em></span>
           to algorithms. For example, consider these Range algorithms:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">copy</span><span class="special">(</span> <span class="identifier">rng</span><span class="special">,</span> <span class="identifier">out</span> <span class="special">)</span></code>
             </li>
@@ -142,7 +142,7 @@
           And what if we only want to count the elements that satisfy the same predicate?
           The naive answer would be to use these algorithms:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">copy_if</span><span class="special">(</span>
               <span class="identifier">rng</span><span class="special">,</span>
@@ -161,11 +161,14 @@
           suffers a combinatorial explosion. Inevitably many algorithms are missing
           <code class="computeroutput"><span class="identifier">_if</span></code> variants and there
           is redundant development overhead for each new algorithm. The Adaptor Generator
-          is the design solution to this problem.
+          is the design solution to this problem. It is conceivable that some algorithms
+          are capable of optimization by tightly coupling the filter with the algorithm.
+          The adaptors provide a more general solution with superior separation of
+          orthogonal concerns.
         </p>
 <h6>
 <a name="range.reference.adaptors.introduction.h1"></a>
-          <span><a name="range.reference.adaptors.introduction.range_adaptor_alternative_to_copy_if_algorithm"></a></span><a class="link" href="introduction.html#range.reference.adaptors.introduction.range_adaptor_alternative_to_copy_if_algorithm">Range
+          <span class="phrase"><a name="range.reference.adaptors.introduction.range_adaptor_alternative_to_copy_if_algorithm"></a></span><a class="link" href="introduction.html#range.reference.adaptors.introduction.range_adaptor_alternative_to_copy_if_algorithm">Range
           Adaptor alternative to copy_if algorithm</a>
         </h6>
 <p>
@@ -181,7 +184,7 @@
         </p>
 <h6>
 <a name="range.reference.adaptors.introduction.h2"></a>
-          <span><a name="range.reference.adaptors.introduction.range_adaptor_alternative_to_count_if_algorithm"></a></span><a class="link" href="introduction.html#range.reference.adaptors.introduction.range_adaptor_alternative_to_count_if_algorithm">Range
+          <span class="phrase"><a name="range.reference.adaptors.introduction.range_adaptor_alternative_to_count_if_algorithm"></a></span><a class="link" href="introduction.html#range.reference.adaptors.introduction.range_adaptor_alternative_to_count_if_algorithm">Range
           Adaptor alternative to count_if algorithm</a>
         </h6>
 <p>
@@ -191,15 +194,15 @@
 <p>
           can be expressed as
 </p>
-<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">count</span><span class="special">(</span> <span class="identifier">rng</span> <span class="special">|</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">adaptors</span><span class="special">::</span><span class="identifier">filtered</span><span class="special">(</span><span class="identifier">pred</span><span class="special">),</span> <span class="identifier">out</span> <span class="special">);</span>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">size</span><span class="special">(</span> <span class="identifier">rng</span> <span class="special">|</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">adaptors</span><span class="special">::</span><span class="identifier">filtered</span><span class="special">(</span><span class="identifier">pred</span><span class="special">)</span> <span class="special">);</span>
 </pre>
 <p>
         </p>
 <p>
-          What this means is that <span class="emphasis"><em><span class="bold"><strong>no</strong></span></em></span>
-          algorithm with the <code class="computeroutput"><span class="identifier">_if</span></code>
-          suffix is needed. Furthermore, it turns out that algorithms with the <code class="computeroutput"><span class="identifier">_copy</span></code> suffix are not needed either. Consider
-          the somewhat misdesigned <code class="computeroutput"><span class="identifier">replace_copy_if</span><span class="special">()</span></code> which may be used as
+          What this means is that many algorithms no longer require nor benefit from
+          an optimized implementation with an <code class="computeroutput"><span class="identifier">_if</span></code>
+          suffix. Furthermore, it turns out that algorithms with the <code class="computeroutput"><span class="identifier">_copy</span></code> suffix are often not needed either.
+          Consider <code class="computeroutput"><span class="identifier">replace_copy_if</span><span class="special">()</span></code> which may be used as
         </p>
 <p>
 </p>
@@ -243,7 +246,7 @@
           of Range Adaptors has the following consequences:
         </p>
 <p>
-          1. we no longer need <code class="computeroutput"><span class="identifier">_if</span></code>,
+          1. we no longer need many of the <code class="computeroutput"><span class="identifier">_if</span></code>,
           <code class="computeroutput"><span class="identifier">_copy</span></code>, <code class="computeroutput"><span class="identifier">_copy_if</span></code>
           and <code class="computeroutput"><span class="identifier">_n</span></code> variants of algorithms.
         </p>

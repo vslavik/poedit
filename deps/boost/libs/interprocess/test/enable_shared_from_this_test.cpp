@@ -15,7 +15,7 @@
 #include <boost/interprocess/smart_ptr/enable_shared_from_this.hpp>
 #include <boost/interprocess/smart_ptr/shared_ptr.hpp>
 
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include <boost/interprocess/managed_shared_memory.hpp>
 #include "get_process_id_name.hpp"
 

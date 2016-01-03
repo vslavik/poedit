@@ -116,11 +116,11 @@ int main(int,char*[])
     Graph g(used_by, used_by + nedges, N);
 
     graph_traits&lt;Graph&gt;::vertex_iterator v, v_end;
-    for (tie(v,v_end) = vertices(g); v != v_end; ++v)
+    for (boost::tie(v,v_end) = vertices(g); v != v_end; ++v)
         put(vertex_color_t(), g, *v, name[*v]);
 
     graph_traits&lt;Graph&gt;::edge_iterator e, e_end;
-    for (tie(e,e_end) = edges(g); e != e_end; ++e)
+    for (boost::tie(e,e_end) = edges(g); e != e_end; ++e)
         put(edge_weight_t(), g, *e, 3);
 
     dynamic_properties dp;

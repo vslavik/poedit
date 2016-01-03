@@ -13,6 +13,8 @@
 #include <boost/math/special_functions/expm1.hpp>
 #include <boost/math/special_functions/powm1.hpp>
 #include <boost/math/special_functions/sqrt1pm1.hpp>
+#include <boost/math/special_functions/sin_pi.hpp>
+#include <boost/math/special_functions/cos_pi.hpp>
 #endif
 
 #ifndef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS

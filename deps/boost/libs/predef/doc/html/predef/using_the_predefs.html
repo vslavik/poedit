@@ -4,8 +4,8 @@
 <title>Using the predefs</title>
 <link rel="stylesheet" href="../boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../index.html" title="Predef 1.0">
-<link rel="up" href="../index.html" title="Predef 1.0">
+<link rel="home" href="../index.html" title="Predef 1.2">
+<link rel="up" href="../index.html" title="Predef 1.2">
 <link rel="prev" href="introduction.html" title="Introduction">
 <link rel="next" href="adding_new_predefs.html" title="Adding new predefs">
 </head>
@@ -50,6 +50,10 @@
 <li class="listitem">
           <code class="computeroutput"><span class="identifier">BOOST_OS_</span></code> for the operating
           system we are compiling to.
+        </li>
+<li class="listitem">
+          <code class="computeroutput"><span class="identifier">BOOST_PLAT_</span></code> for platforms
+          on top of operating system or compilers.
         </li>
 <li class="listitem">
           <code class="computeroutput"><span class="identifier">BOOST_ENDIAN_</span></code> for endianness
@@ -128,7 +132,7 @@
 <span class="special">}</span>
 </pre>
 <p>
-      In addition, for each version macro defined there is a <code class="computeroutput"><span class="special">*</span><span class="identifier">_AVAILABLE</span></code> macro defined only when the particular
+      In addition, for each version macro defined there is an <code class="computeroutput"><span class="special">*</span><span class="identifier">_AVAILABLE</span></code> macro defined only when the particular
       aspect is detected. I.e. a definition equivalent to:
     </p>
 <pre class="programlisting"><span class="preprocessor">#if</span> <span class="identifier">BOOST_PREDEF_ABC</span>
@@ -141,6 +145,24 @@
     </p>
 <h4>
 <a name="predef.using_the_predefs.h0"></a>
+      <span class="phrase"><a name="predef.using_the_predefs.the_emulated_macros"></a></span><a class="link" href="using_the_predefs.html#predef.using_the_predefs.the_emulated_macros">The
+      <code class="computeroutput"><span class="special">*</span><span class="identifier">_EMULATED</span></code>
+      macros</a>
+    </h4>
+<p>
+      Predef definitions are guaranteed to be uniquely detected within one category.
+      But there are contexts under which multiple underlying detections are possible.
+      The well known example of this is detection of GCC and MSVC compilers which
+      are commonly emulated by other compilers by defining the same base macros.
+      To account for this detection headers are allowed to define <code class="computeroutput"><span class="special">*</span><span class="identifier">_EMULATED</span></code> predefs when this situation is
+      detected. The emulated predefs will be set to the version number of the detection
+      instead of the regular predef macro for that detection. For example MSVC will
+      set <code class="computeroutput"><span class="identifier">BOOST_COMP_MSVC_EMULATED</span></code>
+      but not set <code class="computeroutput"><span class="identifier">BOOST_COM_MSVC</span></code>,
+      and it will also set <code class="computeroutput"><span class="identifier">BOOST_COMP_MSVC_AVAILABLE</span></code>.
+    </p>
+<h4>
+<a name="predef.using_the_predefs.h1"></a>
       <span class="phrase"><a name="predef.using_the_predefs.using_the_boost_version_number_m"></a></span><a class="link" href="using_the_predefs.html#predef.using_the_predefs.using_the_boost_version_number_m">Using the
       <code class="computeroutput"><span class="identifier">BOOST_VERSION_NUMBER</span></code> macro</a>
     </h4>
@@ -189,7 +211,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005 Rene Rivera<br>Copyright &#169; 2008-2013 Redshift Software Inc<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005, 2008-2014 Rene Rivera<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

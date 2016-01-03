@@ -44,9 +44,9 @@ project
         <toolset>clang:<cxxflags>-Wextra
         <toolset>clang:<cxxflags>-pedantic
         <toolset>clang:<cxxflags>-Wno-long-long
-        <toolset>gcc-mingw-4.5.0:<cxxflags>-Wno-missing-field-initializers
-        <toolset>gcc-mingw-4.5.0:<cxxflags>-fdiagnostics-show-option
-        <toolset>gcc-mingw-4.6.0:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.5.0:<cxxflags>-Wno-missing-field-initializers
+        #<toolset>gcc-mingw-4.5.0:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.6.0:<cxxflags>-fdiagnostics-show-option
         <toolset>msvc:<cxxflags>/wd4127
 # Note: Some of the remarks from the Intel compiler are disabled
 # remark #1418: external function definition with no prior declaration
@@ -54,7 +54,7 @@ project
         <toolset>intel:<cxxflags>-wd304,1418
     ;
 
-    test-suite "ratio.ratio"
+    test-suite "ratio_ratio"
         :
         [ compile typedefs_pass.cpp ]
         [ compile ratio_ratio/ratio_pass.cpp ]
@@ -70,7 +70,7 @@ project
         [ run ratio_io/ratio_io_pass.cpp ]
         ;
 
-    test-suite "ratio.arithmetic"
+    test-suite "ratio_arithmetic"
         :
         [ compile ratio_arithmetic/ratio_add_pass.cpp  ]
         [ compile ratio_arithmetic/ratio_subtract_pass.cpp  ]
@@ -82,9 +82,13 @@ project
         [ compile-fail ratio_arithmetic/ratio_subtract_fail.cpp  ]
         [ compile-fail ratio_arithmetic/ratio_multiply_fail.cpp  ]
         [ compile-fail ratio_arithmetic/ratio_divide_fail.cpp  ]
+        [ compile ratio_arithmetic/ratio_negate_pass.cpp  ]
+        [ compile ratio_arithmetic/ratio_sign_pass.cpp  ]
+        [ compile ratio_arithmetic/ratio_abs_pass.cpp  ]
+        [ compile ratio_arithmetic/ratio_power_pass.cpp  ]
         ;
 
-    test-suite "ratio.comparison"
+    test-suite "ratio_comparison"
         :
         [ compile ratio_comparison/ratio_equal_pass.cpp  ]
         [ compile ratio_comparison/ratio_not_equal_pass.cpp  ]
@@ -100,7 +104,7 @@ project
         [ run ../example/display_ex.cpp ]
         ;
 
-    test-suite "ratio.ext"
+    test-suite "ratio_ext"
         :
         [ run ratio_extensions/ratio_ext_pass.cpp  ]
         [ compile ratio_extensions/mpl_plus_pass.cpp  ]

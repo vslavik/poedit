@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../chrono.html" title="Chapter&#160;5.&#160;Boost.Chrono 2.0.2">
+<link rel="up" href="../chrono.html" title="Chapter&#160;6.&#160;Boost.Chrono 2.0.5">
 <link rel="prev" href="users_guide.html" title="User's Guide">
 <link rel="next" href="appendices.html" title="Appendices">
 </head>
@@ -113,7 +113,7 @@
           and Extensions</a>
 </h5></div></div></div>
 <p>
-            At present, tthere is no know limitation respect to the C++11 standard.
+            At present, there is no know limitation respect to the C++11 standard.
           </p>
 <p>
             The current implementation provides in addition:
@@ -150,11 +150,11 @@
                 </li>
 <li class="listitem">
                   <code class="computeroutput"><span class="identifier">BOOST_CHRONO_USES_MPL_ASSERT</span></code>:
-                  define it if you want to use Boost.MPL static asertions.
+                  define it if you want to use Boost.MPL static assertions.
                 </li>
 <li class="listitem">
                   <code class="computeroutput"><span class="identifier">BOOST_CHRONO_USES_ARRAY_ASSERT</span></code>:
-                  define it if you want to use internal static asertions.
+                  define it if you want to use internal static assertions.
                 </li>
 </ul></div>
 <p>
@@ -350,7 +350,7 @@
         <span class="keyword">const</span> <span class="identifier">duration</span><span class="special">&lt;</span><span class="identifier">Rep2</span><span class="special">,</span> <span class="identifier">Period2</span><span class="special">&gt;&amp;</span> <span class="identifier">rhs</span><span class="special">);</span>
 
     <span class="preprocessor">#ifdef</span> <span class="identifier">BOOST_CHRONO_EXTENSIONS</span>
-    <span class="comment">// Used to get frecuency of events</span>
+    <span class="comment">// Used to get frequency of events</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Rep1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Rep2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Period</span><span class="special">&gt;</span>
     <span class="keyword">constexpr</span>
     <span class="keyword">double</span> <a class="link" href="reference.html#chrono.reference.cpp0x.duration_hpp.arith.duration__op_div_1" title="Non-Member Function operator/(duration,Rep2)"><code class="computeroutput"><span class="keyword">operator</span><span class="special">/</span></code></a><span class="special">(</span>
@@ -1319,7 +1319,7 @@
           between t1 and t2.).
         </p>
 <div class="table">
-<a name="chrono.reference.cpp0x.clock.clock_requirements"></a><p class="title"><b>Table&#160;5.1.&#160;Clock Requirements</b></p>
+<a name="chrono.reference.cpp0x.clock.clock_requirements"></a><p class="title"><b>Table&#160;6.1.&#160;Clock Requirements</b></p>
 <div class="table-contents"><table class="table" summary="Clock Requirements">
 <colgroup>
 <col>
@@ -1591,7 +1591,7 @@
           a <code class="computeroutput"><span class="identifier">EcClock</span></code> type and <code class="computeroutput"><span class="identifier">ec</span></code> is an instance of a <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">system</span><span class="special">::</span><span class="identifier">error_code</span></code>.
         </p>
 <div class="table">
-<a name="chrono.reference.cpp0x.ecclock.clock_requirements"></a><p class="title"><b>Table&#160;5.2.&#160;Clock Requirements</b></p>
+<a name="chrono.reference.cpp0x.ecclock.clock_requirements"></a><p class="title"><b>Table&#160;6.2.&#160;Clock Requirements</b></p>
 <div class="table-contents"><table class="table" summary="Clock Requirements">
 <colgroup>
 <col>
@@ -2681,7 +2681,7 @@
     <span class="keyword">operator</span><span class="special">&lt;&lt;(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span><span class="special">&gt;&amp;</span> <span class="identifier">os</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">duration</span><span class="special">&lt;</span><span class="identifier">Rep</span><span class="special">,</span> <span class="identifier">Period</span><span class="special">&gt;&amp;</span> <span class="identifier">d</span><span class="special">);</span>
 </pre>
 <p>
-            <span class="bold"><strong>Effects:</strong></span> outputs the <a class="link" href="reference.html#chrono.reference.cpp0x.duration_hpp.duration" title="Class Template duration&lt;&gt;"><code class="computeroutput"><span class="identifier">duration</span></code></a> as an abrevieated or
+            <span class="bold"><strong>Effects:</strong></span> outputs the <a class="link" href="reference.html#chrono.reference.cpp0x.duration_hpp.duration" title="Class Template duration&lt;&gt;"><code class="computeroutput"><span class="identifier">duration</span></code></a> as an abbreviated or
             long text format depending on the state of the <a class="link" href="reference.html#chrono.reference.io_v1.chrono_io_hpp.duration_punct" title="Template Class duration_punct&lt;&gt;"><code class="computeroutput"><span class="identifier">duration_punct</span></code></a> facet.
           </p>
 <p>
@@ -2704,7 +2704,7 @@
            <span class="keyword">const</span> <span class="identifier">time_point</span><span class="special">&lt;</span><span class="identifier">Clock</span><span class="special">,</span> <span class="identifier">Duration</span><span class="special">&gt;&amp;</span> <span class="identifier">tp</span><span class="special">);</span>
 </pre>
 <p>
-            <span class="bold"><strong>Effects:</strong></span> outputs the <a class="link" href="reference.html#chrono.reference.cpp0x.time_point_hpp.time_point" title="Class template time_point&lt;&gt;"><code class="computeroutput"><span class="identifier">time_point</span></code></a> as an abrevieated
+            <span class="bold"><strong>Effects:</strong></span> outputs the <a class="link" href="reference.html#chrono.reference.cpp0x.time_point_hpp.time_point" title="Class template time_point&lt;&gt;"><code class="computeroutput"><span class="identifier">time_point</span></code></a> as an abbreviated
             or long text format depending on the state of the <a class="link" href="reference.html#chrono.reference.io_v1.chrono_io_hpp.duration_punct" title="Template Class duration_punct&lt;&gt;"><code class="computeroutput"><span class="identifier">duration_punct</span></code></a> facet.
           </p>
 <p>
@@ -2919,7 +2919,7 @@
             <span class="special">&amp;)</span></code></a>
 </h6></div></div></div>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CharT</span><span class="special">&gt;</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;</span> <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.sag.get_time_fmt" title="Non Member Function get_time_fmt(std::ios_base &amp;)"><code class="computeroutput"><span class="identifier">get_time_fmt</span></code></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span> <span class="identifier">ios</span><span class="special">);</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;</span> <span class="identifier">get_time_fmt</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span> <span class="identifier">ios</span><span class="special">);</span>
 </pre>
 <p>
               <span class="bold"><strong>Returns:</strong></span> The stream's time format
@@ -2932,13 +2932,499 @@
             Member Function <code class="computeroutput"><span class="identifier">set_time_fmt</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">&amp;,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;)</span></code></a>
 </h6></div></div></div>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CharT</span><span class="special">&gt;</span>
-<span class="keyword">void</span> <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.sag.set_time_fmt" title="Non Member Function set_time_fmt(std::ios_base&amp;, std::basic_string&lt;CharT&gt; const&amp;)"><code class="computeroutput"><span class="identifier">set_time_fmt</span></code></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">&amp;</span> <span class="identifier">ios</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">fmt</span><span class="special">);</span>
+<span class="keyword">void</span> <span class="identifier">set_time_fmt</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">&amp;</span> <span class="identifier">ios</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">fmt</span><span class="special">);</span>
 </pre>
 <p>
               <span class="bold"><strong>Effects:</strong></span> Set the stream's time format
               attribute associated to <code class="computeroutput"><span class="identifier">ios</span></code>
               with the <code class="computeroutput"><span class="identifier">fmt</span></code> parameter.
             </p>
+<p>
+              The format is composed of zero or more directives. Each directive is
+              composed of one of the following:
+            </p>
+<pre class="programlisting"><span class="special">*</span> <span class="identifier">one</span> <span class="keyword">or</span> <span class="identifier">more</span> <span class="identifier">white</span><span class="special">-</span><span class="identifier">space</span> <span class="identifier">characters</span> <span class="special">(</span><span class="identifier">as</span> <span class="identifier">specified</span> <span class="identifier">by</span> <span class="identifier">isspace</span><span class="special">());</span>
+<span class="special">*</span> <span class="identifier">an</span> <span class="identifier">ordinary</span> <span class="identifier">character</span> <span class="special">(</span><span class="identifier">neither</span> <span class="char">'%'</span> <span class="identifier">nor</span> <span class="identifier">a</span> <span class="identifier">white</span><span class="special">-</span><span class="identifier">space</span> <span class="identifier">character</span><span class="special">);</span>
+<span class="special">*</span> <span class="keyword">or</span> <span class="identifier">a</span> <span class="identifier">conversion</span> <span class="identifier">specification</span><span class="special">.</span>
+</pre>
+<p>
+              Each conversion specification is composed of a '%' character followed
+              by a conversion character which specifies the replacement required.
+              The application shall ensure that there is white-space or other non-alphanumeric
+              characters between any two conversion specifications. The following
+              conversion specifications are supported:
+            </p>
+<div class="table">
+<a name="chrono.reference.io.ios_state_hpp.sag.set_time_fmt.format_tags"></a><p class="title"><b>Table&#160;6.3.&#160;Format tags</b></p>
+<div class="table-contents"><table class="table" summary="Format tags">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                      <p>
+                        Format Specifier
+                      </p>
+                    </th>
+<th>
+                      <p>
+                        Description
+                      </p>
+                    </th>
+<th>
+                      <p>
+                        Example
+                      </p>
+                    </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%%</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        Replaced by <code class="computeroutput"><span class="special">%</span></code>.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">a</span>
+                        <span class="special">%</span><span class="identifier">A</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The day of the week, using the locale's weekday names; either
+                        the abbreviated or full name may be specified.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        "Monday".
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">b</span>
+                        <span class="special">%</span><span class="identifier">B</span>
+                        <span class="special">%</span><span class="identifier">h</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The month, using the locale's month names; either the abbreviated
+                        or full name may be specified.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        "February".
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">c</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        Not supported.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">d</span>
+                        <span class="special">%</span><span class="identifier">e</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The day of the month <code class="computeroutput"><span class="special">[</span><span class="number">01</span><span class="special">,</span><span class="number">31</span><span class="special">]</span></code>;
+                        leading zeros are permitted but not required..
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">D</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The date as <code class="computeroutput"><span class="special">%</span><span class="identifier">m</span><span class="special">/%</span><span class="identifier">d</span><span class="special">/%</span><span class="identifier">y</span></code>.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">F</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The date as <code class="computeroutput"><span class="special">%</span><span class="identifier">Y</span><span class="special">/%</span><span class="identifier">m</span><span class="special">/%</span><span class="identifier">d</span></code>.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">H</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The hour (24-hour clock) <code class="computeroutput"><span class="special">[</span><span class="number">00</span><span class="special">,</span><span class="number">23</span><span class="special">]</span></code>;
+                        leading zeros are permitted but not required.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">I</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The hour (12-hour clock) <code class="computeroutput"><span class="special">[</span><span class="number">01</span><span class="special">,</span><span class="number">12</span><span class="special">]</span></code>;
+                        leading zeros are permitted but not required.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">j</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The day number of the year <code class="computeroutput"><span class="special">[</span><span class="number">001</span><span class="special">,</span><span class="number">366</span><span class="special">]</span></code>;
+                        leading zeros are permitted but not required.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        "060" =&gt; Feb-29.
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">m</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The month number <code class="computeroutput"><span class="special">[</span><span class="number">01</span><span class="special">,</span><span class="number">12</span><span class="special">]</span></code>;
+                        leading zeros are permitted but not required..
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        "01" =&gt; January.
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">M</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The minute <code class="computeroutput"><span class="special">[</span><span class="number">00</span><span class="special">,</span><span class="number">59</span><span class="special">]</span></code>;
+                        leading zeros are permitted but not required.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">n</span>
+                        <span class="special">%</span><span class="identifier">t</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        Any white space..
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">p</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        Not supported.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">r</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        Not supported.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">R</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The time as <code class="computeroutput"><span class="special">%</span><span class="identifier">H</span><span class="special">:%</span><span class="identifier">M</span></code>.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">S</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The seconds <code class="computeroutput"><span class="special">[</span><span class="number">00</span><span class="special">,</span><span class="number">60</span><span class="special">]</span></code>;
+                        leading zeros are permitted but not required.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">T</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The time as <code class="computeroutput"><span class="special">%</span><span class="identifier">H</span><span class="special">:%</span><span class="identifier">M</span><span class="special">:%</span><span class="identifier">S</span></code>.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">U</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        Not supported.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">w</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The weekday as a decimal number <code class="computeroutput"><span class="special">[</span><span class="number">0</span><span class="special">,</span><span class="number">6</span><span class="special">]</span></code>,
+                        with 0 representing Sunday; leading zeros are permitted but
+                        not required..
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        "0" =&gt; Sunday.
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">W</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        Not supported.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">x</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The date, using the locale's date format..
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">X</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        Not supported.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">y</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        Not supported.
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        "2005".
+                      </p>
+                    </td>
+</tr>
+<tr>
+<td>
+                      <p>
+                        <code class="computeroutput"><span class="special">%</span><span class="identifier">Y</span></code>
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        The year, including the century (for example, 1988).
+                      </p>
+                    </td>
+<td>
+                      <p>
+                        .
+                      </p>
+                    </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break">
 </div>
 </div>
 <div class="section">
@@ -2959,7 +3445,7 @@
   <span class="keyword">typedef</span> <a class="link" href="reference.html#chrono.reference.io.duration_style_hpp.duration_style" title="Scoped enum duration_style"><code class="computeroutput"><span class="identifier">duration_style</span></code></a> <span class="identifier">aspect_type</span><span class="special">;</span> <span class="comment">// the aspect type is the __duration_style</span>
 
   <span class="keyword">explicit</span> <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.duration_style_io_saver.c1" title="Constructor duration_style_io_saver(state_type&amp;)"><code class="computeroutput"><span class="identifier">duration_style_io_saver</span></code></a><span class="special">(</span><span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">s</span><span class="special">);</span>
-  <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.duration_style_io_saver.c2" title="Constructor duration_style_io_saver(state_type, aspect_type)"><code class="computeroutput"><span class="identifier">duration_style_io_saver</span></code></a><span class="special">(</span><span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">s</span><span class="special">,</span> <span class="identifier">aspect_type</span> <span class="identifier">new_value</span><span class="special">);</span>
+  <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.duration_style_io_saver.c2" title="Constructor duration_style_io_saver(state_type&amp;, aspect_type)"><code class="computeroutput"><span class="identifier">duration_style_io_saver</span></code></a><span class="special">(</span><span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">s</span><span class="special">,</span> <span class="identifier">aspect_type</span> <span class="identifier">new_value</span><span class="special">);</span>
   <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.duration_style_io_saver.d" title="Destructor ~duration_style_io_saver()"><code class="computeroutput"><span class="special">~</span><span class="identifier">duration_style_io_saver</span></code></a><span class="special">();</span>
   <span class="keyword">void</span> <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.duration_style_io_saver.restore" title="Member Function restore()"><code class="computeroutput"><span class="identifier">restore</span></code></a><span class="special">();</span>
 <span class="special">};</span>
@@ -2974,8 +3460,8 @@
               <code class="computeroutput"><span class="identifier">duration_style_io_saver</span><span class="special">(</span><span class="identifier">state_type</span><span class="special">&amp;)</span></code></a>
 </h6></div></div></div>
 <p>
-                The first constructor takes a stream object and saves a reference
-                to the stream and the current value of a particular stream attribute.
+                This constructor takes a stream object and saves a reference to the
+                stream and the current value of a particular stream attribute.
               </p>
 <pre class="programlisting"><span class="keyword">explicit</span> <span class="identifier">duration_style_io_saver</span><span class="special">(</span><span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">s</span><span class="special">);</span>
 </pre>
@@ -2983,28 +3469,24 @@
                 <span class="bold"><strong>Effects:</strong></span> Constructs a <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.duration_style_io_saver" title="Template Class duration_style_io_saver"><code class="computeroutput"><span class="identifier">duration_style_io_saver</span></code></a>
                 by storing <code class="computeroutput"><span class="identifier">s</span></code>.
               </p>
-<p>
-                <span class="bold"><strong>Post Conditions:</strong></span> <code class="computeroutput"><span class="keyword">static_cast</span><span class="special">&lt;</span><span class="identifier">duration_style</span><span class="special">&gt;(*</span><span class="keyword">this</span><span class="special">)</span> <span class="special">==</span> <span class="identifier">f</span></code>.
-              </p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h6 class="title">
-<a name="chrono.reference.io.ios_state_hpp.ioss.duration_style_io_saver.c2"></a><a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.duration_style_io_saver.c2" title="Constructor duration_style_io_saver(state_type, aspect_type)">Constructor
-              <code class="computeroutput"><span class="identifier">duration_style_io_saver</span><span class="special">(</span><span class="identifier">state_type</span><span class="special">,</span> <span class="identifier">aspect_type</span><span class="special">)</span></code></a>
+<a name="chrono.reference.io.ios_state_hpp.ioss.duration_style_io_saver.c2"></a><a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.duration_style_io_saver.c2" title="Constructor duration_style_io_saver(state_type&amp;, aspect_type)">Constructor
+              <code class="computeroutput"><span class="identifier">duration_style_io_saver</span><span class="special">(</span><span class="identifier">state_type</span><span class="special">&amp;,</span> <span class="identifier">aspect_type</span><span class="special">)</span></code></a>
 </h6></div></div></div>
 <p>
-                The second constructor works like the first, and uses its second
-                argument to change the stream's attribute to the new aspect_type
-                value given.
+                This constructor works like the previous one, and in addition uses
+                its second argument to change the stream's attribute to the new
+                <code class="computeroutput"><span class="identifier">aspect_type</span></code> value
+                given.
               </p>
 <pre class="programlisting"><span class="keyword">explicit</span> <span class="identifier">duration_style_io_saver</span><span class="special">(</span><span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">s</span><span class="special">,</span> <span class="identifier">aspect_type</span> <span class="identifier">new_value</span><span class="special">);</span>
 </pre>
 <p>
                 <span class="bold"><strong>Effects:</strong></span> Constructs a <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.duration_style_io_saver" title="Template Class duration_style_io_saver"><code class="computeroutput"><span class="identifier">duration_style_io_saver</span></code></a>
-                by storing <code class="computeroutput"><span class="identifier">s</span></code>.
-              </p>
-<p>
-                <span class="bold"><strong>Post Conditions:</strong></span> <code class="computeroutput"><span class="keyword">static_cast</span><span class="special">&lt;</span><span class="identifier">duration_style</span><span class="special">&gt;(*</span><span class="keyword">this</span><span class="special">)</span> <span class="special">==</span> <span class="identifier">f</span></code>.
+                by storing <code class="computeroutput"><span class="identifier">s</span></code>. Sets
+                the <code class="computeroutput"><span class="identifier">state_type</span></code> <code class="computeroutput"><span class="identifier">aspect_type</span></code> with the value <code class="computeroutput"><span class="identifier">new_value</span></code>.
               </p>
 </div>
 <div class="section">
@@ -3051,7 +3533,7 @@
   <span class="keyword">typedef</span> <a class="link" href="reference.html#chrono.reference.io.timezone_hpp.timezone" title="Scoped enum timezone"><code class="computeroutput"><span class="identifier">timezone</span></code></a> <span class="identifier">aspect_type</span><span class="special">;</span>
 
   <span class="keyword">explicit</span> <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.timezone_io_saver.c1" title="Constructor timezone_io_saver(state_type&amp;)"><code class="computeroutput"><span class="identifier">timezone_io_saver</span></code></a><span class="special">(</span><span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">s</span><span class="special">);</span>
-  <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.timezone_io_saver.c2" title="Constructor timezone_io_saver(state_type, aspect_type)"><code class="computeroutput"><span class="identifier">timezone_io_saver</span></code></a><span class="special">(</span><span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">s</span><span class="special">,</span> <span class="identifier">aspect_type</span> <span class="identifier">new_value</span><span class="special">);</span>
+  <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.timezone_io_saver.c2" title="Constructor timezone_io_saver(state_type&amp;, aspect_type)"><code class="computeroutput"><span class="identifier">timezone_io_saver</span></code></a><span class="special">(</span><span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">s</span><span class="special">,</span> <span class="identifier">aspect_type</span> <span class="identifier">new_value</span><span class="special">);</span>
   <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.timezone_io_saver.d" title="Destructor ~timezone_io_saver()"><code class="computeroutput"><span class="special">~</span><span class="identifier">timezone_io_saver</span></code></a><span class="special">();</span>
   <span class="keyword">void</span> <span class="identifier">timezone_io_saver__restore</span><span class="special">();</span>
 <span class="special">};</span>
@@ -3070,8 +3552,8 @@
               <code class="computeroutput"><span class="identifier">timezone_io_saver</span><span class="special">(</span><span class="identifier">state_type</span><span class="special">&amp;)</span></code></a>
 </h6></div></div></div>
 <p>
-                The first constructor takes a stream object and saves a reference
-                to the stream and the current value of a particular stream attribute.
+                This constructor takes a stream object and saves a reference to the
+                stream and the current value of a particular stream attribute.
               </p>
 <pre class="programlisting"><span class="keyword">explicit</span> <span class="identifier">timezone_io_saver</span><span class="special">(</span><span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">s</span><span class="special">);</span>
 </pre>
@@ -3082,12 +3564,12 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h6 class="title">
-<a name="chrono.reference.io.ios_state_hpp.ioss.timezone_io_saver.c2"></a><a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.timezone_io_saver.c2" title="Constructor timezone_io_saver(state_type, aspect_type)">Constructor
-              <code class="computeroutput"><span class="identifier">timezone_io_saver</span><span class="special">(</span><span class="identifier">state_type</span><span class="special">,</span>
+<a name="chrono.reference.io.ios_state_hpp.ioss.timezone_io_saver.c2"></a><a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.timezone_io_saver.c2" title="Constructor timezone_io_saver(state_type&amp;, aspect_type)">Constructor
+              <code class="computeroutput"><span class="identifier">timezone_io_saver</span><span class="special">(</span><span class="identifier">state_type</span><span class="special">&amp;,</span>
               <span class="identifier">aspect_type</span><span class="special">)</span></code></a>
 </h6></div></div></div>
 <p>
-                The second constructor works like the first, and uses its second
+                This constructor works like the previous one, and uses its second
                 argument to change the stream's attribute to the new aspect_type
                 value given.
               </p>
@@ -3095,7 +3577,8 @@
 </pre>
 <p>
                 <span class="bold"><strong>Effects:</strong></span> Constructs a <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.timezone_io_saver" title="Template Class timezone_io_saver&lt;&gt;"><code class="computeroutput"><span class="identifier">timezone_io_saver</span></code></a> by storing
-                <code class="computeroutput"><span class="identifier">s</span></code>.
+                <code class="computeroutput"><span class="identifier">s</span></code>. Sets the <code class="computeroutput"><span class="identifier">state_type</span></code> <code class="computeroutput"><span class="identifier">aspect_type</span></code>
+                with the value <code class="computeroutput"><span class="identifier">new_value</span></code>.
               </p>
 </div>
 <div class="section">
@@ -3141,7 +3624,7 @@
   <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ios</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span><span class="special">&gt;</span> <span class="identifier">state_type</span><span class="special">;</span>
 
   <span class="keyword">explicit</span> <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.time_fmt_io_saver.c1" title="Constructor time_fmt_io_saver(state_type&amp;)"><code class="computeroutput"><span class="identifier">time_fmt_io_saver</span></code></a><span class="special">(</span><span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">s</span><span class="special">);</span>
-  <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.time_fmt_io_saver.c2" title="Constructor time_fmt_io_saver(state_type, aspect_type)"><code class="computeroutput"><span class="identifier">time_fmt_io_saver</span></code></a><span class="special">(</span><span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">s</span><span class="special">,</span> <span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">new_value</span><span class="special">);</span>
+  <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.time_fmt_io_saver.c2" title="Constructor time_fmt_io_saver(state_type&amp;, aspect_type)"><code class="computeroutput"><span class="identifier">time_fmt_io_saver</span></code></a><span class="special">(</span><span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">s</span><span class="special">,</span> <span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">new_value</span><span class="special">);</span>
   <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.time_fmt_io_saver.d" title="Destructor ~time_fmt_io_saver()"><code class="computeroutput"><span class="special">~</span><span class="identifier">time_fmt_io_saver</span></code></a><span class="special">();</span>
   <span class="keyword">void</span> <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.time_fmt_io_saver.restore" title="Member Function restore()"><code class="computeroutput"><span class="identifier">restore</span></code></a><span class="special">();</span>
 <span class="special">};</span>
@@ -3160,8 +3643,8 @@
               <code class="computeroutput"><span class="identifier">time_fmt_io_saver</span><span class="special">(</span><span class="identifier">state_type</span><span class="special">&amp;)</span></code></a>
 </h6></div></div></div>
 <p>
-                The first constructor takes a stream object and saves a reference
-                to the stream and the current value of a particular stream attribute.
+                This constructor takes a stream object and saves a reference to the
+                stream and the current value of a particular stream attribute.
               </p>
 <pre class="programlisting"><span class="keyword">explicit</span> <span class="identifier">time_fmt_io_saver</span><span class="special">(</span><span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">s</span><span class="special">);</span>
 </pre>
@@ -3172,12 +3655,12 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h6 class="title">
-<a name="chrono.reference.io.ios_state_hpp.ioss.time_fmt_io_saver.c2"></a><a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.time_fmt_io_saver.c2" title="Constructor time_fmt_io_saver(state_type, aspect_type)">Constructor
-              <code class="computeroutput"><span class="identifier">time_fmt_io_saver</span><span class="special">(</span><span class="identifier">state_type</span><span class="special">,</span>
+<a name="chrono.reference.io.ios_state_hpp.ioss.time_fmt_io_saver.c2"></a><a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.time_fmt_io_saver.c2" title="Constructor time_fmt_io_saver(state_type&amp;, aspect_type)">Constructor
+              <code class="computeroutput"><span class="identifier">time_fmt_io_saver</span><span class="special">(</span><span class="identifier">state_type</span><span class="special">&amp;,</span>
               <span class="identifier">aspect_type</span><span class="special">)</span></code></a>
 </h6></div></div></div>
 <p>
-                The second constructor works like the first, and uses its second
+                This constructor works like the previous one, and uses its second
                 argument to change the stream's attribute to the new aspect_type
                 value given.
               </p>
@@ -3185,7 +3668,8 @@
 </pre>
 <p>
                 <span class="bold"><strong>Effects:</strong></span> Constructs a <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.time_fmt_io_saver" title="Template Class time_fmt_io_saver&lt;&gt;"><code class="computeroutput"><span class="identifier">time_fmt_io_saver</span></code></a> by storing
-                <code class="computeroutput"><span class="identifier">s</span></code>.
+                <code class="computeroutput"><span class="identifier">s</span></code>. Sets the <code class="computeroutput"><span class="identifier">state_type</span></code> <code class="computeroutput"><span class="identifier">aspect_type</span></code>
+                with the value <code class="computeroutput"><span class="identifier">new_value</span></code>.
               </p>
 </div>
 <div class="section">
@@ -3724,7 +4208,7 @@
 <p>
               <span class="bold"><strong>Effects:</strong></span> Scan <code class="computeroutput"><span class="identifier">s</span></code>
               for the longest of all the plural forms associated with the duration
-              units. If sucessfull, sets the matched ratio in <code class="computeroutput"><span class="identifier">rt</span></code>.
+              units. If successful, sets the matched ratio in <code class="computeroutput"><span class="identifier">rt</span></code>.
               Otherwise evaluates <code class="computeroutput"><span class="identifier">err</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">failbit</span></code>.
             </p>
 <p>
@@ -3780,7 +4264,7 @@
 <p>
               <span class="bold"><strong>Effects:</strong></span> Scan <code class="computeroutput"><span class="identifier">s</span></code>
               for the longest of all the plural forms associated with the duration
-              units. If sucessfull, sets the matched ratio in <code class="computeroutput"><span class="identifier">rt</span></code>.
+              units. If successful, sets the matched ratio in <code class="computeroutput"><span class="identifier">rt</span></code>.
               Otherwise evaluates <code class="computeroutput"><span class="identifier">err</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">failbit</span></code>.
             </p>
 <p>
@@ -4361,7 +4845,7 @@
 <span class="keyword">class</span> <span class="identifier">duration_units_default</span><span class="special">:</span> <span class="keyword">public</span> <span class="identifier">duration_units</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;</span>
 <span class="special">{</span>
 <span class="keyword">protected</span><span class="special">:</span>
-  <span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">pfs_</span> <span class="special">=</span> <span class="number">2</span><span class="special">;</span> <span class="comment">// The defaul English facet has two plural forms.</span>
+  <span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">pfs_</span> <span class="special">=</span> <span class="number">2</span><span class="special">;</span> <span class="comment">// The default English facet has two plural forms.</span>
 
 <span class="keyword">public</span><span class="special">:</span>
   <span class="keyword">typedef</span> <span class="identifier">CharT</span> <span class="identifier">char_type</span><span class="special">;</span>
@@ -4916,7 +5400,7 @@
           Manipulators</a>
 </h5></div></div></div>
 <p>
-            There is a parameterized manimulator that takes the duration_style as
+            There is a parameterized manipulator that takes the duration_style as
             parameter. The symbol or name format can be easily chosen by streaming
             a <code class="computeroutput"><span class="identifier">symbol_format</span></code> or <code class="computeroutput"><span class="identifier">name_format</span></code> manipulators respectively.
           </p>
@@ -6037,7 +6521,7 @@
       <span class="keyword">typedef</span> <span class="identifier">timezone</span> <span class="identifier">aspect_type</span><span class="special">;</span>
 
       <span class="keyword">explicit</span> <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.timezone_io_saver.c1" title="Constructor timezone_io_saver(state_type&amp;)"><code class="computeroutput"><span class="identifier">timezone_io_saver</span></code></a><span class="special">(</span><span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">s</span><span class="special">);</span>
-      <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.timezone_io_saver.c2" title="Constructor timezone_io_saver(state_type, aspect_type)"><code class="computeroutput"><span class="identifier">timezone_io_saver</span></code></a><span class="special">(</span><span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">s</span><span class="special">,</span> <span class="identifier">aspect_type</span> <span class="identifier">new_value</span><span class="special">);</span>
+      <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.timezone_io_saver.c2" title="Constructor timezone_io_saver(state_type&amp;, aspect_type)"><code class="computeroutput"><span class="identifier">timezone_io_saver</span></code></a><span class="special">(</span><span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">s</span><span class="special">,</span> <span class="identifier">aspect_type</span> <span class="identifier">new_value</span><span class="special">);</span>
       <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.ioss.timezone_io_saver.d" title="Destructor ~timezone_io_saver()"><code class="computeroutput"><span class="special">~</span><span class="identifier">timezone_io_saver</span></code></a><span class="special">();</span>
       <span class="keyword">void</span> <span class="identifier">timezone_io_saver__restore</span><span class="special">();</span>
     <span class="special">};</span>
@@ -6166,7 +6650,7 @@
 <p>
                 Using the <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">time_put</span></code> facet stored in <code class="computeroutput"><span class="identifier">os</span></code>, this inserter writes characters
                 to the stream using the <code class="computeroutput"><span class="identifier">tm</span></code>
-                and the formating string stored in the <code class="computeroutput"><span class="identifier">time_punct</span></code>
+                and the formatting string stored in the <code class="computeroutput"><span class="identifier">time_punct</span></code>
                 facet, unless that facet was missing, or unless it provided an empty
                 string.
               </p>
@@ -6538,7 +7022,7 @@
           </p>
 <p>
             <a class="link" href="reference.html#chrono.reference.other_clocks.process_cpu_clocks_hpp.process_system_cpu_clock" title="Class process_system_cpu_clock"><code class="computeroutput"><span class="identifier">process_system_cpu_clock</span></code></a> class
-            provides access to the system CPU-time steady clockof the calling process.
+            provides access to the system CPU-time steady clock of the calling process.
             The process relative system current time can be obtained by calling
             <code class="computeroutput"><span class="identifier">process_system_cpu_clock</span><span class="special">::</span><span class="identifier">now</span><span class="special">()</span></code>.
           </p>
@@ -6645,7 +7129,7 @@
 </pre>
 <p>
             <span class="bold"><strong>Effects:</strong></span> Output each part separated
-            by ';' and sourrounded by '{', '}'.
+            by ';' and surrounded by '{', '}'.
           </p>
 <p>
             <span class="bold"><strong>Throws:</strong></span> None.

@@ -57,7 +57,7 @@ namespace boost { namespace phoenix
             : mpl::false_
         {};
     }
-
+  
     namespace detail
     {
         struct scope_is_nullary_actions
@@ -88,8 +88,8 @@ namespace boost { namespace phoenix
       : mpl::true_
     {};
 
-    template <typename Key>
-    struct custom_terminal<detail::local<Key> >
+  template <typename Key>
+  struct custom_terminal<detail::local<Key> >
     {
         template <typename Sig>
         struct result;
@@ -126,6 +126,9 @@ namespace boost { namespace phoenix
             static const int index_value = detail::get_index<typename env_type::map_type, detail::local<Key> >::value;
 
             typedef detail::eval_local<Key> eval_local;
+
+            // Detect if the return_type is for a value.
+            //typedef typename is_value<return_type>::type is_value_type;
 
             return eval_local::template get<return_type, index_value>(
                 phoenix::env(ctx));

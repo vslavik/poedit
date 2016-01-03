@@ -1,11 +1,30 @@
 [/ 
-  (C) Copyright Edward Diener 2011
+  (C) Copyright Edward Diener 2011,2013
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE_1_0.txt or copy at
   http://www.boost.org/LICENSE_1_0.txt).
 ]
 
 [section:tti_history History]
+
+[heading Post Boost 1.55 development]
+* Passing a valid non-class as the enclosing type of the query macro metafunctions
+  always returns false, rather than producing a compiler error.
+* Passing a valid non-class as the enclosing type of the BOOST_TTI_MEM_TYPE
+  macro metafunction always returns the marker type, rather than producing
+  a compiler error.
+
+[heading Boost 1.54]
+* TTI is in Boost and the macros have been simplified
+* Breaking changes
+  * The nullary type metafunctions are no longer part of the library.
+  * Single common macro metafuncions are now used for introspecting
+    member data, member functions, static member data, static member functions,
+    data, functions, types, and templates.
+  * Composite forms of macro metafunctions are now folded into the main macros.
+  * BOOST_TTI_HAS_TYPE metafunction takes an optional second template parameter
+    which may be an MPL lambda expression.
+  * The BOOST_TTI_MEMBER_TYPE metafunction takes an optional marker type.
 
 [heading Version 1.5]
 

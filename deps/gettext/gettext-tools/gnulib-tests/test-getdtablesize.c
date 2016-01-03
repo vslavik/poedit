@@ -1,5 +1,5 @@
 /* Test of getdtablesize() function.
-   Copyright (C) 2008-2013 Free Software Foundation, Inc.
+   Copyright (C) 2008-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ int
 main (int argc, char *argv[])
 {
   ASSERT (getdtablesize () >= 3);
+  ASSERT (dup2 (0, getdtablesize() - 1) == getdtablesize () - 1);
+  ASSERT (dup2 (0, getdtablesize()) == -1);
 
   return 0;
 }

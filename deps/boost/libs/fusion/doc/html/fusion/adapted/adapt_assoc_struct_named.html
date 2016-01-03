@@ -4,7 +4,7 @@
 <title>BOOST_FUSION_ADAPT_ASSOC_STRUCT_NAMED</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Fusion 2.1">
+<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../adapted.html" title="Adapted">
 <link rel="prev" href="adapt_assoc_tpl_struct.html" title="BOOST_FUSION_ADAPT_ASSOC_TPL_STRUCT">
 <link rel="next" href="adapt_adt.html" title="BOOST_FUSION_ADAPT_ADT">
@@ -43,8 +43,8 @@
       </h5>
 <pre class="programlisting"><span class="identifier">BOOST_FUSION_ADAPT_ASSOC_STRUCT_NAMED</span><span class="special">(</span>
     <span class="identifier">struct_name</span><span class="special">,</span> <span class="identifier">adapted_name</span><span class="special">,</span>
-    <span class="special">(</span><span class="identifier">member_type0</span><span class="special">,</span> <span class="identifier">member_name0</span><span class="special">,</span> <span class="identifier">key_type0</span><span class="special">)</span>
-    <span class="special">(</span><span class="identifier">member_type1</span><span class="special">,</span> <span class="identifier">member_name1</span><span class="special">,</span> <span class="identifier">key_type1</span><span class="special">)</span>
+    <span class="special">([</span><span class="identifier">member_type0</span><span class="special">,]</span> <span class="identifier">member_name0</span><span class="special">,</span> <span class="identifier">key_type0</span><span class="special">)</span>
+    <span class="special">([</span><span class="identifier">member_type1</span><span class="special">,]</span> <span class="identifier">member_name1</span><span class="special">,</span> <span class="identifier">key_type1</span><span class="special">)</span>
     <span class="special">...</span>
     <span class="special">)</span>
 
@@ -52,8 +52,8 @@
     <span class="identifier">struct_name</span><span class="special">,</span>
     <span class="special">(</span><span class="identifier">namespace0</span><span class="special">)(</span><span class="identifier">namespace1</span><span class="special">)...,</span>
     <span class="identifier">adapted_name</span><span class="special">,</span>
-    <span class="special">(</span><span class="identifier">member_type0</span><span class="special">,</span> <span class="identifier">member_name0</span><span class="special">,</span> <span class="identifier">key_type0</span><span class="special">)</span>
-    <span class="special">(</span><span class="identifier">member_type1</span><span class="special">,</span> <span class="identifier">member_name1</span><span class="special">,</span> <span class="identifier">key_type1</span><span class="special">)</span>
+    <span class="special">([</span><span class="identifier">member_type0</span><span class="special">,]</span> <span class="identifier">member_name0</span><span class="special">,</span> <span class="identifier">key_type0</span><span class="special">)</span>
+    <span class="special">([</span><span class="identifier">member_type1</span><span class="special">,]</span> <span class="identifier">member_name1</span><span class="special">,</span> <span class="identifier">key_type1</span><span class="special">)</span>
     <span class="special">...</span>
     <span class="special">)</span>
 </pre>
@@ -77,6 +77,10 @@
         the adapted view is placed in the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">adapted</span></code>.
         The sequence of <code class="computeroutput"><span class="special">(</span><span class="identifier">member_typeN</span><span class="special">,</span> <span class="identifier">member_nameN</span><span class="special">,</span> <span class="identifier">key_typeN</span><span class="special">)</span></code> triples declares the type, name and key
         type of each of the struct members that are part of the sequence.
+      </p>
+<p>
+        When member_typeN is omitted or set to BOOST_FUSION_ADAPT_AUTO, the type
+        is infered with Boost.TypeOf.
       </p>
 <p>
         The macros should be used at global scope, and <code class="computeroutput"><span class="identifier">struct_name</span></code>
@@ -112,8 +116,14 @@
 <span class="comment">// referring to demo::employee</span>
 <span class="identifier">BOOST_FUSION_ADAPT_ASSOC_STRUCT_NAMED</span><span class="special">(</span>
     <span class="identifier">demo</span><span class="special">::</span><span class="identifier">employee</span><span class="special">,</span> <span class="identifier">adapted_employee</span><span class="special">,</span>
-    <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="identifier">name</span><span class="special">,</span> <span class="identifier">keys</span><span class="special">::</span><span class="identifier">name</span><span class="special">)</span>
-    <span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="identifier">age</span><span class="special">,</span> <span class="identifier">keys</span><span class="special">::</span><span class="identifier">age</span><span class="special">))</span>
+    <span class="special">(</span><span class="identifier">name</span><span class="special">,</span> <span class="identifier">keys</span><span class="special">::</span><span class="identifier">name</span><span class="special">)</span>
+    <span class="special">(</span><span class="identifier">age</span><span class="special">,</span> <span class="identifier">keys</span><span class="special">::</span><span class="identifier">age</span><span class="special">))</span>
+
+<span class="comment">// Without BOOST_PP_VARIADICS support :</span>
+<span class="identifier">BOOST_FUSION_ADAPT_ASSOC_STRUCT_NAMED</span><span class="special">(</span>
+    <span class="identifier">demo</span><span class="special">::</span><span class="identifier">employee</span><span class="special">,</span> <span class="identifier">adapted_employee</span><span class="special">,</span>
+    <span class="special">(</span><span class="identifier">BOOST_FUSION_ADAPT_AUTO</span><span class="special">,</span> <span class="identifier">name</span><span class="special">,</span> <span class="identifier">keys</span><span class="special">::</span><span class="identifier">name</span><span class="special">)</span>
+    <span class="special">(</span><span class="identifier">BOOST_FUSION_ADAPT_AUTO</span><span class="special">,</span> <span class="identifier">age</span><span class="special">,</span> <span class="identifier">keys</span><span class="special">::</span><span class="identifier">age</span><span class="special">))</span>
 </pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

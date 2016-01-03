@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../interprocess.html" title="Chapter&#160;13.&#160;Boost.Interprocess">
+<link rel="up" href="../interprocess.html" title="Chapter&#160;14.&#160;Boost.Interprocess">
 <link rel="prev" href="architecture.html" title="Architecture and internals">
 <link rel="next" href="acknowledgements_notes.html" title="Acknowledgements, notes and links">
 </head>
@@ -158,11 +158,10 @@
 <li class="listitem">
             The <span class="bold"><strong>allocate()</strong></span> function must return
             0 if there is no more available memory. The memory returned by <span class="bold"><strong>my_algorithm</strong></span> must be aligned to the most restrictive
-            memory alignment of the system, for example, to the value returned by
-            <span class="bold"><strong>ipcdetail::alignment_of&lt;boost::detail::max_align&gt;::value</strong></span>.
-            This function should be executed with the synchronization capabilities
-            offered by <code class="computeroutput"><span class="keyword">typename</span> <span class="identifier">mutex_family</span><span class="special">::</span><span class="identifier">mutex_type</span></code>
-            interprocess_mutex. That means, that if we define <code class="computeroutput"><span class="keyword">typedef</span>
+            memory alignment of the system. This function should be executed with
+            the synchronization capabilities offered by <code class="computeroutput"><span class="keyword">typename</span>
+            <span class="identifier">mutex_family</span><span class="special">::</span><span class="identifier">mutex_type</span></code> interprocess_mutex. That
+            means, that if we define <code class="computeroutput"><span class="keyword">typedef</span>
             <span class="identifier">mutex_family</span> <span class="identifier">mutex_family</span><span class="special">;</span></code> then this function should offer the
             same synchronization as if it was surrounded by an interprocess_mutex
             lock/unlock. Normally, this is implemented using a member of type <code class="computeroutput"><span class="identifier">mutex_family</span><span class="special">::</span><span class="identifier">mutex_type</span></code>, but it could be done using
@@ -367,6 +366,8 @@
 </p>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">interprocess</span> <span class="special">{</span>
 
+<span class="preprocessor">#ifndef</span> <span class="identifier">BOOST_INTERPROCESS_DOXYGEN_INVOKED</span>
+
 <span class="comment">//!Helper class to define typedefs from IndexTraits</span>
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">MapConfig</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">flat_map_index_aux</span>
@@ -383,6 +384,8 @@
                     <span class="identifier">key_less</span><span class="special">,</span> <span class="identifier">allocator_type</span><span class="special">&gt;</span>      <span class="identifier">index_t</span><span class="special">;</span>
 <span class="special">};</span>
 
+<span class="preprocessor">#endif</span>   <span class="comment">//#ifndef BOOST_INTERPROCESS_DOXYGEN_INVOKED</span>
+
 <span class="comment">//!Index type based in flat_map. Just derives from flat_map and</span>
 <span class="comment">//!defines the interface needed by managed memory segments.</span>
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">MapConfig</span><span class="special">&gt;</span>
@@ -390,12 +393,12 @@
    <span class="comment">//Derive class from flat_map specialization</span>
    <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">flat_map_index_aux</span><span class="special">&lt;</span><span class="identifier">MapConfig</span><span class="special">&gt;::</span><span class="identifier">index_t</span>
 <span class="special">{</span>
-   <span class="comment">/// @cond</span>
+   <span class="preprocessor">#if</span> <span class="special">!</span><span class="identifier">defined</span><span class="special">(</span><span class="identifier">BOOST_INTERPROCESS_DOXYGEN_INVOKED</span><span class="special">)</span>
    <span class="keyword">typedef</span> <span class="identifier">flat_map_index_aux</span><span class="special">&lt;</span><span class="identifier">MapConfig</span><span class="special">&gt;</span>  <span class="identifier">index_aux</span><span class="special">;</span>
    <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">index_aux</span><span class="special">::</span><span class="identifier">index_t</span>    <span class="identifier">base_type</span><span class="special">;</span>
    <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">index_aux</span><span class="special">::</span>
       <span class="identifier">segment_manager_base</span>          <span class="identifier">segment_manager_base</span><span class="special">;</span>
-   <span class="comment">/// @endcond</span>
+   <span class="preprocessor">#endif</span>   <span class="comment">//#ifndef BOOST_INTERPROCESS_DOXYGEN_INVOKED</span>
 
    <span class="keyword">public</span><span class="special">:</span>
    <span class="comment">//!Constructor. Takes a pointer to the segment manager. Can throw</span>

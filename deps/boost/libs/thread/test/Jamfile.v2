@@ -34,6 +34,7 @@ project
         <toolset>gcc:<cxxflags>-Wno-variadic-macros
         #<toolset>gcc:<cxxflags>-Wunused-local-typedefs
         <toolset>gcc:<cxxflags>-Wunused-function
+        <toolset>gcc:<cxxflags>-Wno-unused-parameter
 
         <toolset>darwin:<cxxflags>-Wextra
         <toolset>darwin:<cxxflags>-pedantic
@@ -43,24 +44,27 @@ project
         <toolset>darwin:<cxxflags>-Wno-variadic-macros
         #<toolset>darwin:<cxxflags>-Wunused-local-typedefs
         <toolset>darwin:<cxxflags>-Wunused-function
+        <toolset>darwin:<cxxflags>-Wno-unused-parameter
 
         #<toolset>pathscale:<cxxflags>-Wextra
         <toolset>pathscale:<cxxflags>-Wno-long-long
         <toolset>pathscale:<cxxflags>-pedantic
 
+        <toolset>clang:<warnings>on
         <toolset>clang:<cxxflags>-Wextra
-        <toolset>clang:<cxxflags>-pedantic
+        #<toolset>clang:<cxxflags>-pedantic
         <toolset>clang:<cxxflags>-Wno-long-long
         #<toolset>clang:<cxxflags>-ansi
         #<toolset>clang:<cxxflags>-fpermissive # doesn't work
         <toolset>clang:<cxxflags>-Wunused-function
+        <toolset>clang:<cxxflags>-Wno-unused-parameter
 
-        <toolset>gcc-mingw-4.4.0:<cxxflags>-fdiagnostics-show-option
-        <toolset>gcc-mingw-4.5.0:<cxxflags>-fdiagnostics-show-option
-        <toolset>gcc-mingw-4.6.0:<cxxflags>-fdiagnostics-show-option
-        <toolset>gcc-mingw-4.6.3:<cxxflags>-fdiagnostics-show-option
-        <toolset>gcc-mingw-4.7.0:<cxxflags>-fdiagnostics-show-option
-        <toolset>gcc-mingw-4.8.0:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.4.0:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.5.0:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.6.0:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.6.3:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.7.0:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.8.0:<cxxflags>-fdiagnostics-show-option
 
         <toolset>darwin-4.6.2:<cxxflags>-ansi
         #<toolset>darwin-4.6.2:<cxxflags>-Wno-delete-non-virtual-dtor # doesn't work
@@ -95,13 +99,16 @@ project
         <toolset>intel:<cxxflags>-wd193,304,383,444
         <toolset>intel:<cxxflags>-wd593,981
         <toolset>intel:<cxxflags>-wd1418
-	<toolset>intel:<cxxflags>-wd2415
+        <toolset>intel:<cxxflags>-wd2415
 
-
+        <toolset>msvc:<cxxflags>/wd4100
+        <toolset>msvc:<cxxflags>/wd4512
+        <toolset>msvc:<cxxflags>/wd6246
     ;
 
 rule thread-run ( sources )
 {
+    sources = $(sources) winrt_init.cpp ;
     return
     [ run $(sources) ../build//boost_thread ]
     [ run $(sources) ../src/tss_null.cpp ../build//boost_thread/<link>static
@@ -112,9 +119,10 @@ rule thread-run ( sources )
 
 rule thread-test ( sources )
 {
+    sources = $(sources) winrt_init.cpp ;
     return
     [ run $(sources) ../build//boost_thread : : :
-      <library>/boost/test//boost_unit_test_framework/<link>static
+      <library>/boost/test//boost_unit_test_framework
     ]
     [ run $(sources) ../src/tss_null.cpp ../build//boost_thread/<link>static
         : : :
@@ -126,6 +134,7 @@ rule thread-test ( sources )
 
 rule thread-run2 ( sources : name )
 {
+    sources = $(sources) winrt_init.cpp ;
     return
     [ run $(sources) ../build//boost_thread : : :
       : $(name) ]
@@ -137,6 +146,7 @@ rule thread-run2 ( sources : name )
 
 rule thread-run2-noit ( sources : name )
 {
+    sources = $(sources) winrt_init.cpp ;
     return
     [ run $(sources) ../build//boost_thread : : :
       : $(name) ]
@@ -151,6 +161,7 @@ rule thread-run2-noit ( sources : name )
 
 rule thread-run2-noit-pthread ( sources : name )
 {
+    sources = $(sources) winrt_init.cpp ;
     return
     [ run $(sources) ../build//boost_thread : : : <threadapi>win32:<build>no
       : $(name) ]
@@ -165,6 +176,7 @@ rule thread-run2-noit-pthread ( sources : name )
 
 rule thread-run2-h ( sources : name )
 {
+    sources = $(sources) winrt_init.cpp ;
     return
     [ run $(sources) : : :
       <library>/boost/system//boost_system
@@ -177,6 +189,7 @@ rule thread-run2-h ( sources : name )
 
 rule thread-run-lib2 ( sources : name )
 {
+    sources = $(sources) winrt_init.cpp ;
     return
     [ run $(sources) ../src/tss_null.cpp ../build//boost_thread/<link>static
         : : :
@@ -209,6 +222,7 @@ rule thread-compile ( sources : reqs * : name )
           [ thread-test test_thread.cpp ]
           [ thread-test test_thread_id.cpp ]
           [ thread-test test_hardware_concurrency.cpp ]
+          [ thread-test test_physical_concurrency.cpp ]
           [ thread-test test_thread_move.cpp ]
           [ thread-test test_thread_return_local.cpp ]
           [ thread-test test_thread_move_return.cpp ]
@@ -278,6 +292,12 @@ rule thread-compile ( sources : reqs * : name )
           #[ thread-run test_7160.cpp ]
           [ thread-run test_7328.cpp ]
           [ thread-run test_7571.cpp ]
+          [ thread-run test_9319.cpp ]
+          #[ thread-run test_9711.cpp ] This is an invalid use of ::then deferred.
+          [ thread-run test_9856.cpp ]
+          [ thread-compile test_10963.cpp : : test_10963_c ]
+          [ thread-run test_10964.cpp ]
+          [ thread-test test_11053.cpp ]
     ;
 
 
@@ -320,6 +340,7 @@ rule thread-compile ( sources : reqs * : name )
     test-suite ts_async
     :
           [ thread-run2-noit ./sync/futures/async/async_pass.cpp : async__async_p ]
+          [ thread-run2-noit ./sync/futures/async/async_executor_pass.cpp : async__async_executor_p ]
     ;
 
     #explicit ts_promise ;
@@ -338,12 +359,19 @@ rule thread-compile ( sources : reqs * : name )
           [ thread-run2-noit ./sync/futures/promise/set_rvalue_pass.cpp : promise__set_rvalue_p ]
           [ thread-run2-noit ./sync/futures/promise/set_value_const_pass.cpp : promise__set_value_const_p ]
           [ thread-run2-noit ./sync/futures/promise/set_value_void_pass.cpp : promise__set_value_void_p ]
+          [ thread-run2-noit ./sync/futures/promise/emplace_pass.cpp : promise__emplace_p ]
           [ thread-run2-noit ./sync/futures/promise/use_allocator_pass.cpp : promise__use_allocator_p ]
           [ thread-run2-noit ./sync/futures/promise/set_exception_at_thread_exit_pass.cpp : promise__set_exception_at_thread_exit_p ]
           [ thread-run2-noit ./sync/futures/promise/set_lvalue_at_thread_exit_pass.cpp : promise__set_lvalue_at_thread_exit_p ]
           [ thread-run2-noit ./sync/futures/promise/set_rvalue_at_thread_exit_pass.cpp : promise__set_rvalue_at_thread_exit_p ]
           [ thread-run2-noit ./sync/futures/promise/set_value_at_thread_exit_const_pass.cpp : promise__set_value_at_thread_exit_const_p ]
           [ thread-run2-noit ./sync/futures/promise/set_value_at_thread_exit_void_pass.cpp : promise__set_value_at_thread_exit_void_p ]
+    ;
+
+    #explicit ts_make_ready_future ;
+    test-suite ts_make_ready_future
+    :
+          [ thread-run2-noit ./sync/futures/make_ready_future_pass.cpp : make_ready_future_p ]
     ;
 
     #explicit ts_future ;
@@ -362,6 +390,9 @@ rule thread-compile ( sources : reqs * : name )
           [ thread-run2-noit ./sync/futures/future/wait_for_pass.cpp : future__wait_for_p ]
           [ thread-run2-noit ./sync/futures/future/wait_until_pass.cpp : future__wait_until_p ]
           [ thread-run2-noit ./sync/futures/future/then_pass.cpp : future__then_p ]
+          [ thread-run2-noit ./sync/futures/future/then_executor_pass.cpp : future__then_executor_p ]
+          [ thread-run2-noit ./sync/futures/future/async_deferred_then_pass.cpp : future__async_def_then_p ]
+          [ thread-run2-noit ./sync/futures/future/then_deferred_pass.cpp : future__then_def_p ]
     ;
 
     #explicit ts_shared_future ;
@@ -378,6 +409,7 @@ rule thread-compile ( sources : reqs * : name )
           [ thread-run2-noit ./sync/futures/shared_future/wait_for_pass.cpp : shared_future__wait_for_p ]
           [ thread-run2-noit ./sync/futures/shared_future/wait_until_pass.cpp : shared_future__wait_until_p ]
           [ thread-run2-noit ./sync/futures/shared_future/then_pass.cpp : shared_future__then_p ]
+          [ thread-run2-noit ./sync/futures/shared_future/then_executor_pass.cpp : shared_future__then_executor_p ]
     ;
 
     #explicit ts_packaged_task ;
@@ -402,6 +434,24 @@ rule thread-compile ( sources : reqs * : name )
     ;
 
 
+    #explicit ts_when_all ;
+    test-suite ts_when_all
+    :
+          [ thread-run2-noit ./sync/futures/when_all/none_pass.cpp : when_all__none_p ]
+          [ thread-run2-noit ./sync/futures/when_all/one_pass.cpp : when_all__one_p ]
+          [ thread-run2-noit ./sync/futures/when_all/iterators_pass.cpp : when_all__iterators_p ]
+          [ thread-run2-noit ./sync/futures/when_all/variadic_pass.cpp : when_all__variadic_p ]
+    ;
+
+    #explicit ts_when_any ;
+    test-suite ts_when_any
+    :
+          [ thread-run2-noit ./sync/futures/when_any/none_pass.cpp : when_any__none_p ]
+          [ thread-run2-noit ./sync/futures/when_any/one_pass.cpp : when_any__one_p ]
+          [ thread-run2-noit ./sync/futures/when_any/iterators_pass.cpp : when_any__iterators_p ]
+          [ thread-run2-noit ./sync/futures/when_any/variadic_pass.cpp : when_any__variadic_p ]
+    ;
+
     #explicit ts_lock_guard ;
     test-suite ts_lock_guard
     :
@@ -425,10 +475,10 @@ rule thread-compile ( sources : reqs * : name )
           [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/duration_pass.cpp : unique_lock__cons__duration_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/move_assign_pass.cpp : unique_lock__cons__move_assign_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/move_ctor_pass.cpp : unique_lock__cons__move_ctor_p ]
-          [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/move_ctor_upgrade_lock_pass.cpp : unique_lock__cons__move_ctor_upgrade_lock_p ]
-          [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/move_ctor_upgrade_lock_try_pass.cpp : unique_lock__cons__move_ctor_upgrade_lock_try_p ]
-          [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/move_ctor_upgrade_lock_for_pass.cpp : unique_lock__cons__move_ctor_upgrade_lock_for_p ]
-          [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/move_ctor_upgrade_lock_until_pass.cpp : unique_lock__cons__move_ctor_upgrade_lock_until_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/move_ctor_upgrade_lock_pass.cpp : uq_lk_cons_mv_c_upg_lk_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/move_ctor_upgrade_lock_try_pass.cpp : uq_lk_cons_mv_c_upg_lk_t_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/move_ctor_upgrade_lock_for_pass.cpp : uq_lk_cons_mv_c_upg_lk_f_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/move_ctor_upgrade_lock_until_pass.cpp : uq_lk_cons_mv_c_upg_lk_u_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/mutex_pass.cpp : unique_lock__cons__mutex_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/time_point_pass.cpp : unique_lock__cons__time_point_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/try_to_lock_pass.cpp : unique_lock__cons__try_to_lock_p ]
@@ -472,8 +522,8 @@ rule thread-compile ( sources : reqs * : name )
           [ thread-run2-noit ./sync/mutual_exclusion/locks/shared_lock/cons/duration_pass.cpp : shared_lock__cons__duration_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/locks/shared_lock/cons/move_assign_pass.cpp : shared_lock__cons__move_assign_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/locks/shared_lock/cons/move_ctor_pass.cpp : shared_lock__cons__move_ctor_p ]
-          [ thread-run2-noit ./sync/mutual_exclusion/locks/shared_lock/cons/move_ctor_unique_lock_pass.cpp : shared_lock__cons__move_ctor_unique_lock_p ]
-          [ thread-run2-noit ./sync/mutual_exclusion/locks/shared_lock/cons/move_ctor_upgrade_lock_pass.cpp : shared_lock__cons__move_ctor_upgrade_lock_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/locks/shared_lock/cons/move_ctor_unique_lock_pass.cpp : sh_lock_cons_move_ctor_unq_lock_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/locks/shared_lock/cons/move_ctor_upgrade_lock_pass.cpp : sh_lock_cons_move_ctor_upg_lock_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/locks/shared_lock/cons/mutex_pass.cpp : shared_lock__cons__mutex_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/locks/shared_lock/cons/time_point_pass.cpp : shared_lock__cons__time_point_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/locks/shared_lock/cons/try_to_lock_pass.cpp : shared_lock__cons__try_to_lock_p ]
@@ -506,7 +556,7 @@ rule thread-compile ( sources : reqs * : name )
           [ thread-run2-noit ./sync/mutual_exclusion/locks/upgrade_lock/cons/duration_pass.cpp : upgrade_lock__cons__duration_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/locks/upgrade_lock/cons/move_assign_pass.cpp : upgrade_lock__cons__move_assign_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/locks/upgrade_lock/cons/move_ctor_pass.cpp : upgrade_lock__cons__move_ctor_p ]
-          [ thread-run2-noit ./sync/mutual_exclusion/locks/upgrade_lock/cons/move_ctor_unique_lock_pass.cpp : upgrade_lock__cons__move_ctor_unique_lock_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/locks/upgrade_lock/cons/move_ctor_unique_lock_pass.cpp : upg_lock_cons_mv_ctor_uq_lock_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/locks/upgrade_lock/cons/mutex_pass.cpp : upgrade_lock__cons__mutex_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/locks/upgrade_lock/cons/time_point_pass.cpp : upgrade_lock__cons__time_point_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/locks/upgrade_lock/cons/try_to_lock_pass.cpp : upgrade_lock__cons__try_to_lock_p ]
@@ -538,8 +588,8 @@ rule thread-compile ( sources : reqs * : name )
     #explicit ts_nested_strict_lock ;
     test-suite ts_nested_strict_lock
     :
-          [ thread-compile-fail ./sync/mutual_exclusion/locks/nested_strict_lock/copy_assign_fail.cpp : : nested_strict_lock__cons__copy_assign_f ]
-          [ thread-compile-fail ./sync/mutual_exclusion/locks/nested_strict_lock/copy_ctor_fail.cpp : : nested_strict_lock__cons__copy_ctor_f ]
+          [ thread-compile-fail ./sync/mutual_exclusion/locks/nested_strict_lock/copy_assign_fail.cpp : : nested_strict_lock_cons_copy_assign_f ]
+          [ thread-compile-fail ./sync/mutual_exclusion/locks/nested_strict_lock/copy_ctor_fail.cpp : : nested_strict_lock_cons_copy_ctor_f ]
           [ thread-run2-noit ./sync/mutual_exclusion/locks/nested_strict_lock/default_pass.cpp : nested_strict_lock__cons__default_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/locks/nested_strict_lock/owns_lock_pass.cpp : nested_strict_lock__owns_lock_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/locks/nested_strict_lock/types_pass.cpp : nested_strict_lock__types_p ]
@@ -585,10 +635,10 @@ rule thread-compile ( sources : reqs * : name )
           [ thread-compile-fail ./sync/mutual_exclusion/recursive_timed_mutex/copy_fail.cpp : : recursive_timed_mutex__copy_f ]
           [ thread-run2-noit ./sync/mutual_exclusion/recursive_timed_mutex/default_pass.cpp : recursive_timed_mutex__default_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/recursive_timed_mutex/lock_pass.cpp : recursive_timed_mutex__lock_p ]
-          [ thread-run2-noit-pthread ./sync/mutual_exclusion/recursive_timed_mutex/native_handle_pass.cpp : recursive_timed_mutex__native_handle_p ]
-          [ thread-run2-noit ./sync/mutual_exclusion/recursive_timed_mutex/try_lock_for_pass.cpp : recursive_timed_mutex__try_lock_for_p ]
+          [ thread-run2-noit-pthread ./sync/mutual_exclusion/recursive_timed_mutex/native_handle_pass.cpp : rec_timed_mutex_native_handle_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/recursive_timed_mutex/try_lock_for_pass.cpp : rec_timed_mutex_try_lock_for_p ]
           [ thread-run2-noit ./sync/mutual_exclusion/recursive_timed_mutex/try_lock_pass.cpp : recursive_timed_mutex__try_lock_p ]
-          [ thread-run2-noit ./sync/mutual_exclusion/recursive_timed_mutex/try_lock_until_pass.cpp : recursive_timed_mutex__try_lock_until_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/recursive_timed_mutex/try_lock_until_pass.cpp : rec_timed_mutex_try_lock_until_p ]
     ;
 
     #explicit ts_timed_mutex ;
@@ -636,10 +686,47 @@ rule thread-compile ( sources : reqs * : name )
           [ thread-run2-noit ./sync/mutual_exclusion/sync_queue/multi_thread_pass.cpp : sync_queue__multi_thread_p ]
     ;
 
+    test-suite ts_sync_deque
+    :
+          [ thread-run2-noit ./sync/mutual_exclusion/sync_deque/single_thread_pass.cpp : sync_deque__single_thread_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/sync_deque/multi_thread_pass.cpp : sync_deque__multi_thread_p ]
+    ;
+
     test-suite ts_sync_bounded_queue
     :
-          [ thread-run2-noit ./sync/mutual_exclusion/sync_bounded_queue/single_thread_pass.cpp : sync_bounded_queue__single_thread_p ]
-          [ thread-run2-noit ./sync/mutual_exclusion/sync_bounded_queue/multi_thread_pass.cpp : sync_bounded_queue__multi_thread_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/sync_bounded_queue/single_thread_pass.cpp : sync_bounded_q_single_thread_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/sync_bounded_queue/multi_thread_pass.cpp : sync_bounded_q_multi_thread_p ]
+    ;
+
+    test-suite ts_sync_pq
+    :
+          [ thread-run2-noit ./sync/mutual_exclusion/sync_pq/pq_single_thread_pass.cpp : sync_pq_single_thread_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/sync_pq/pq_multi_thread_pass.cpp : sync_pq_multi_thread_p ]
+    ;
+
+    test-suite ts_sync_tq
+    :
+          [ thread-run2-noit ./sync/mutual_exclusion/sync_pq/tq_single_thread_pass.cpp : sync_tq_single_thread_p ]
+          #[ thread-run2-noit ./sync/mutual_exclusion/sync_pq/tq_multi_thread_pass.cpp : sync_tq_multi_thread_p ]
+    ;
+
+    test-suite ts_scheduler
+    :
+          [ thread-run2-noit ./test_scheduled_tp.cpp : test_scheduled_tp_p ]
+          [ thread-run2-noit ./test_scheduling_adaptor.cpp : test_scheduling_adaptor_p ]
+          [ thread-run2-noit ./test_scheduler.cpp : test_scheduler_p ]
+    ;
+
+    test-suite ts_queue_views
+    :
+          [ thread-run2-noit ./sync/mutual_exclusion/queue_views/single_thread_pass.cpp : queue_views__single_thread_p ]
+          #[ thread-run2-noit ./sync/mutual_exclusion/queue_views/multi_thread_pass.cpp : queue_views__multi_thread_p ]
+    ;
+
+    test-suite ts_deque_views
+    :
+          [ thread-run2-noit ./sync/mutual_exclusion/deque_views/single_thread_pass.cpp : deque_views__single_thread_p ]
+          #[ thread-run2-noit ./sync/mutual_exclusion/deque_views/multi_thread_pass.cpp : deque_views__multi_thread_p ]
     ;
 
     #explicit ts_this_thread ;
@@ -714,21 +801,33 @@ rule thread-compile ( sources : reqs * : name )
           [ thread-run2-noit ../example/ba_externallly_locked.cpp : ex_ba_externallly_locked ]
           [ thread-run2 ../example/producer_consumer_bounded.cpp : ex_producer_consumer_bounded ]
           [ thread-run2 ../example/producer_consumer.cpp : ex_producer_consumer ]
+          [ thread-run2 ../example/producer_consumer2.cpp : ex_producer_consumer2 ]
           [ thread-run2 ../example/not_interleaved.cpp : ex_not_interleaved ]
           [ thread-run2 ../example/lambda_future.cpp : ex_lambda_future ]
-
+          [ thread-run2 ../example/not_interleaved2.cpp : ex_not_interleaved2 ]
+          [ thread-run2 ../example/thread_pool.cpp : ex_thread_pool ]
+          [ thread-run2 ../example/user_scheduler.cpp : ex_user_scheduler ]
+          [ thread-run2 ../example/executor.cpp : ex_executor ]
+          [ thread-run2 ../example/generic_executor_ref.cpp : ex_generic_executor_ref ]
+          [ thread-run2 ../example/serial_executor.cpp : ex_serial_executor ]
+          [ thread-run2 ../example/serial_executor_cont.cpp : ex_serial_executor_cont ]
+          [ thread-run2 ../example/future_when_all.cpp : ex_future_when_all ]
+          [ thread-run2 ../example/parallel_accumulate.cpp : ex_parallel_accumulate ]
+          [ thread-run2 ../example/parallel_quick_sort.cpp : ex_parallel_quick_sort ]
+          [ thread-run2 ../example/with_lock_guard.cpp : ex_with_lock_guard ]
+          [ thread-run2 ../example/fib_task_region.cpp : ex_fib_task_region ]
     ;
 
     #explicit ts_shared_upwards ;
     test-suite ts_shared_upwards
     :
-          [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/move_ctor_shared_lock_try_pass.cpp : unique_lock__cons__move_ctor_shared_lock_try_p ]
-          [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/move_ctor_shared_lock_for_pass.cpp : unique_lock__cons__move_ctor_shared_lock_for_p ]
-          [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/move_ctor_shared_lock_until_pass.cpp : unique_lock__cons__move_ctor_shared_lock_until_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/move_ctor_shared_lock_try_pass.cpp : uq_lock_cons_mv_ctor_sh_lock_try_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/move_ctor_shared_lock_for_pass.cpp : uq_lock_cons_mv_ctor_sh_lock_for_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/locks/unique_lock/cons/move_ctor_shared_lock_until_pass.cpp : uq_lock_cons_mv_ctor_sh_lock_until_p ]
 
-          [ thread-run2-noit ./sync/mutual_exclusion/locks/upgrade_lock/cons/move_ctor_shared_lock_try_pass.cpp : upgrade_lock__cons__move_ctor_shared_lock_try_p ]
-          [ thread-run2-noit ./sync/mutual_exclusion/locks/upgrade_lock/cons/move_ctor_shared_lock_for_pass.cpp : upgrade_lock__cons__move_ctor_shared_lock_for_p ]
-          [ thread-run2-noit ./sync/mutual_exclusion/locks/upgrade_lock/cons/move_ctor_shared_lock_until_pass.cpp : upgrade_lock__cons__move_ctor_shared_lock_until_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/locks/upgrade_lock/cons/move_ctor_shared_lock_try_pass.cpp : upg_lock_cons_move_ctor_sh_lock_try_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/locks/upgrade_lock/cons/move_ctor_shared_lock_for_pass.cpp : upg_lock_cons_move_ctor_sh_lock_for_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/locks/upgrade_lock/cons/move_ctor_shared_lock_until_pass.cpp : upg_lock_cons_move_ctor_sh_lock_untl_p ]
     ;
 
 
@@ -772,29 +871,87 @@ rule thread-compile ( sources : reqs * : name )
 
     ;
 
+
+    test-suite ts_with_lock_guard
+    :
+          [ thread-run2-noit ./sync/mutual_exclusion/with_lock_guard/with_lock_guard_simple.cpp : with_lock_guard_simple_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/with_lock_guard/with_lock_guard_bind.cpp : with_lock_guard_bind_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/with_lock_guard/with_lock_guard_move.cpp : with_lock_guard_move_p ]
+          [ thread-run2-noit ./sync/mutual_exclusion/with_lock_guard/with_lock_guard_lambda.cpp : with_lock_guard_lambda_p ]
+    ;
+
+    explicit ts_invoke ;
+    test-suite ts_invoke
+    :
+          [ thread-run2-noit ./functional/invoke/invoke_int_0_pass.cpp : invoke_int_0_p ]
+          [ thread-run2-noit ./functional/invoke/invoke_lvalue_pass.cpp : invoke_lvalue_p ]
+          [ thread-run2-noit ./functional/invoke/invoke_rvalue_pass.cpp : invoke_rvalue_p ]
+    ;
+
+    explicit ts_invoker ;
+    test-suite ts_invoker
+    :
+          [ thread-run2-noit ./functional/invoker/invoker_int_0_pass.cpp : invoker_int_0_p ]
+          [ thread-run2-noit ./functional/invoker/invoker_lvalue_pass.cpp : invoker_lvalue_p ]
+          [ thread-run2-noit ./functional/invoker/invoker_rvalue_pass.cpp : invoker_rvalue_p ]
+    ;
+
+
+
+    explicit ts_more ;
+    test-suite ts_more
+    :
+          [ thread-run test_7666.cpp ]
+          [ thread-run test_7720.cpp ]
+          [ thread-run test_7755.cpp ]
+          [ thread-run test_8455.cpp ]
+          [ thread-run test_8508.cpp ]
+          #[ thread-run test_8557.cpp ]
+          [ thread-run test_8586.cpp ]
+          [ thread-run test_8943.cpp ]
+          [ thread-run test_8960.cpp ]
+          [ thread-run test_9079_a.cpp ]
+          [ thread-run test_9079_b.cpp ]
+          [ thread-run test_9192.cpp ]
+          #[ thread-run test_9303.cpp ]
+          #[ thread-run test_9720.cpp ]
+          #[ thread-run test_10125.cpp ]
+          #[ thread-run test_10128.cpp ]
+          #[ thread-run test_10340.cpp ]
+    ;
+    
+    explicit ts_more_cpp11 ;
+    test-suite ts_more_cpp11
+    :
+          [ thread-run test_8596.cpp ]
+          [ thread-run test_8600.cpp ]
+    ;
+
+    explicit perf ;
+    test-suite perf
+    :
+          #[ thread-run ../example/perf_condition_variable.cpp ]
+          #[ thread-run ../example/perf_shared_mutex.cpp ]
+    ;
+
+
+    #explicit ts_exception_list ;
+    test-suite ts_exception_list
+    :
+          [ thread-run2-noit ./experimental/parallel/v1/exception_list_pass.cpp : exception_list_p ]
+    ;
+    
+    #explicit ts_task_region ;
+    test-suite ts_task_region
+    :
+          [ thread-run2-noit ./experimental/parallel/v2/task_region_pass.cpp : task_region_p ]
+    ;
+    
     explicit ts_ ;
     test-suite ts_
     :
-
-          #[ thread-run ../example/test_so.cpp ]
-          #[ thread-run ../example/test_so2.cpp ]
-
-          #[ compile virtual_noexcept.cpp ]
-          #[ thread-run test_7720.cpp ]
-          #[ thread-run test_7666.cpp ]
-          #[ thread-run test_7755.cpp ]
-          #[ thread-run ../example/perf_condition_variable.cpp ]
-          #[ thread-run ../example/perf_shared_mutex.cpp ]
-          #[ thread-run ../example/std_async_test.cpp ]
-          #[ thread-run test_8508.cpp ]
-          #[ thread-run test_8586.cpp ]
-          #[ thread-run test_8596.cpp ]
-          #[ thread-run test_8600.cpp ]
-          #[ thread-run test_8943.cpp ]
-          #[ thread-run test_8960.cpp ]
-          [ thread-run test_9079_a.cpp ]
-          [ thread-run test_9079_b.cpp ]
-
+          [ thread-run2 ../example/this_executor.cpp : ex_this_executor ]
+          [ thread-run2 ../example/default_executor.cpp : ex_default_executor ]
     ;
 
 }

@@ -61,8 +61,8 @@
 <p>
       </p>
 <p>
-        Now, we can use this in an <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>
-        using <code class="computeroutput"><a class="link" href="../boost/type_erasure/call_idp100909224.html" title="Function call">call</a></code> to
+        Now, we can use this in an <code class="computeroutput">any</code>
+        using <code class="computeroutput"><a class="link" href="../boost/type_erasure/call_idp304107712.html" title="Function call">call</a></code> to
         dispatch the operation.
       </p>
 <p>
@@ -76,16 +76,16 @@
 <p>
       </p>
 <p>
-        Our second task is to customize <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>
+        Our second task is to customize <code class="computeroutput">any</code>
         so that we can call <code class="computeroutput"><span class="identifier">c</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">10</span><span class="special">)</span></code>. We do
         this by specializing <code class="computeroutput"><a class="link" href="../boost/type_erasure/concept_interface.html" title="Struct template concept_interface">concept_interface</a></code>.
         The first argument is <code class="computeroutput"><span class="identifier">has_push_back</span></code>,
-        since we want to inject a member into every <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>
+        since we want to inject a member into every <code class="computeroutput">any</code>
         that uses the <code class="computeroutput"><span class="identifier">has_push_back</span></code>
         concept. The second argument, <code class="computeroutput"><span class="identifier">Base</span></code>,
         is used by the library to chain multiple uses of <code class="computeroutput"><a class="link" href="../boost/type_erasure/concept_interface.html" title="Struct template concept_interface">concept_interface</a></code>
         together. We have to inherit from it publicly. <code class="computeroutput"><span class="identifier">Base</span></code>
-        is also used to get access to the full <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>
+        is also used to get access to the full <code class="computeroutput">any</code>
         type. The third argument is the placeholder that represents this any. If
         someone used <code class="computeroutput"><span class="identifier">push_back</span><span class="special">&lt;</span><span class="identifier">_c</span><span class="special">,</span> <span class="identifier">_b</span><span class="special">&gt;</span></code>, we only want to insert a <code class="computeroutput"><span class="identifier">push_back</span></code> member in the container, not
         the value type. Thus, the third argument is the container placeholder.
@@ -136,7 +136,7 @@
       </p>
 <p>
         <code class="computeroutput"><a class="link" href="../boost/type_erasure/concept_interface.html" title="Struct template concept_interface">concept_interface</a></code>
-        allows us to inject arbitrary declarations into an <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>.
+        allows us to inject arbitrary declarations into an <code class="computeroutput">any</code>.
         This is very flexible, but there are some pitfalls to watch out for. Sometimes
         we want to use the same concept several times with different parameters.
         Specializing <code class="computeroutput"><a class="link" href="../boost/type_erasure/concept_interface.html" title="Struct template concept_interface">concept_interface</a></code>
@@ -327,20 +327,18 @@
         (For the source of the examples in this section see <a href="../../../libs/type_erasure/example/associated.cpp" target="_top">associated.cpp</a>)
       </p>
 <p>
-        Associated types are defined using the <code class="computeroutput"><a class="link" href="../boost/type_erasure/deduced.html" title="Struct template deduced">deduced</a></code>
+        Associated types such as <code class="computeroutput"><span class="keyword">typename</span>
+        <span class="identifier">T</span><span class="special">::</span><span class="identifier">value_type</span></code> or <code class="computeroutput"><span class="keyword">typename</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">iterator_traits</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">reference</span></code> are quite common in template
+        programming. Boost.TypeErasure handles them using the <code class="computeroutput"><a class="link" href="../boost/type_erasure/deduced.html" title="Struct template deduced">deduced</a></code>
         template. <code class="computeroutput"><a class="link" href="../boost/type_erasure/deduced.html" title="Struct template deduced">deduced</a></code>
-        is just like an ordinary placeholder, except that the type that it binds
-        to is determined by calling a metafunction and does not need to be specified
-        explicitly.
+        is just like an ordinary <code class="computeroutput"><a class="link" href="../boost/type_erasure/placeholder.html" title="Struct placeholder">placeholder</a></code>,
+        except that the type that it binds to is determined by calling a metafunction
+        and does not need to be specified explicitly.
       </p>
 <p>
-        For example, we can define a concept for holding any iterator, raw pointer,
-        or smart pointer as follows.
-      </p>
-<p>
-        Note the extra trickery to make sure that it is safe to instantiate pointee
-        with a placeholder, because argument dependant lookup can cause spurious
-        instantiations.
+        For example, we can define a concept for holding an iterator, raw pointer,
+        or smart pointer as follows. First, we define a metafunction called <code class="computeroutput"><span class="identifier">pointee</span></code> defining the associated type.
       </p>
 <p>
 </p>
@@ -352,8 +350,19 @@
         <span class="identifier">boost</span><span class="special">::</span><span class="identifier">pointee</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
     <span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">type</span><span class="special">;</span>
 <span class="special">};</span>
-
-<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span> <span class="special">=</span> <span class="identifier">_self</span><span class="special">&gt;</span>
+</pre>
+<p>
+      </p>
+<p>
+        Note that we can't just use <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">pointee</span></code>,
+        because this metafunction needs to be safe to instantiate with placeholders.
+        It doesn't matter what it returns as long as it doesn't give an error. (The
+        library never tries to instantiate it with a placeholder, but argument dependent
+        lookup can cause spurious instantiations.)
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span> <span class="special">=</span> <span class="identifier">_self</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">pointer</span> <span class="special">:</span>
     <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span>
         <span class="identifier">copy_constructible</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;,</span>
@@ -372,7 +381,7 @@
         <code class="computeroutput"><span class="identifier">pointer</span><span class="special">&lt;&gt;::</span><span class="identifier">element_type</span></code>. When we construct <code class="computeroutput"><span class="identifier">x</span></code>, with an <code class="computeroutput"><span class="keyword">int</span><span class="special">*</span></code>, <code class="computeroutput"><span class="identifier">pointer</span><span class="special">&lt;&gt;::</span><span class="identifier">element_type</span></code>
         is deduced as <code class="computeroutput"><span class="identifier">pointee</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">*&gt;::</span><span class="identifier">type</span></code> which is <code class="computeroutput"><span class="keyword">int</span></code>.
         Thus, dereferencing <code class="computeroutput"><span class="identifier">x</span></code> returns
-        an <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code> that contains
+        an <code class="computeroutput">any</code> that contains
         an <code class="computeroutput"><span class="keyword">int</span></code>.
       </p>
 <p>

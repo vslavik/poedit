@@ -50,7 +50,7 @@ Defined in the header file `boost/range/algorithm/partition.hpp`
 
 [heading Requirements]
 
-* `ForwardRange` is a model of the __forward_range__ Concept.
+* `ForwardRange` is a model of the __forward_range__ Concept. For C++ versions prior to C++11 the underlying std::partition requires Bidirectional Iterators, hence the requirement for older library versions is for a __bidirectional_range__.
 * `UnaryPredicate` is a model of the `PredicateConcept`.
 * `ForwardRange`'s value type is convertible to `UnaryPredicate`'s argument type.
 

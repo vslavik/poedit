@@ -29,7 +29,7 @@ namespace bg = boost::geometry;
 namespace bgi = boost::geometry::index;
 //]
 
-int main(void)
+int main()
 {
     //[rtree_quickstart_valuetype
     typedef bg::model::point<float, 2, bg::cs::cartesian> point;
@@ -47,7 +47,7 @@ int main(void)
     for ( unsigned i = 0 ; i < 10 ; ++i )
     {
         // create a box
-        box b(point(i, i), point(i + 0.5f, i + 0.5f));
+        box b(point(i + 0.0f, i + 0.0f), point(i + 0.5f, i + 0.5f));
         // insert new value
         rtree.insert(std::make_pair(b, i));
     }
@@ -65,6 +65,8 @@ int main(void)
     std::vector<value> result_n;
     rtree.query(bgi::nearest(point(0, 0), 5), std::back_inserter(result_n));
     //]
+
+    // note: in Boost.Geometry WKT representation of a box is polygon
 
     //[rtree_quickstart_output
     // display results

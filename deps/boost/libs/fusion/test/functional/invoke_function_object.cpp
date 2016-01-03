@@ -10,6 +10,10 @@
 #include <boost/fusion/functional/invocation/invoke_function_object.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+#include <functional>
+#endif
+
 #include <boost/type_traits/is_same.hpp>
 
 #include <memory>
@@ -25,6 +29,8 @@
 #include <boost/fusion/view/iterator_range.hpp>
 #include <boost/fusion/iterator/advance.hpp>
 #include <boost/fusion/algorithm/transformation/join.hpp>
+
+#include "../compile_time/sfinae_friendly.hpp"
 
 namespace mpl = boost::mpl;
 namespace fusion = boost::fusion;
@@ -75,7 +81,12 @@ struct fobj
 
     int operator()(int i, object &, object_nc &)       { return 10 + i; }
     int operator()(int i, object &, object_nc &) const { return 11 + i; }
+    int operator()(int i, object const &, object_nc &);
+    int operator()(int i, object const &, object_nc &) const;
 };
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_function_object<fobj, sfinae_friendly::v1>));
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_function_object<fobj, sfinae_friendly::v2>));
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_function_object<fobj, sfinae_friendly::v3>));
 
 struct nullary_fobj
 {
@@ -84,6 +95,9 @@ struct nullary_fobj
     int operator()()       { return 0; }
     int operator()() const { return 1; }
 };
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_function_object<nullary_fobj, sfinae_friendly::v1>));
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_function_object<nullary_fobj, sfinae_friendly::v2>));
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_function_object<nullary_fobj, sfinae_friendly::v3>));
 
 struct fobj_nc
       : boost::noncopyable
@@ -101,6 +115,10 @@ struct fobj_nc
     int operator()(int i)       { return 14 + i; }
     int operator()(int i) const { return 15 + i; }
 };
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_function_object<fobj_nc, sfinae_friendly::v0>));
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_function_object<fobj_nc, sfinae_friendly::v1>));
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_function_object<fobj_nc, sfinae_friendly::v2>));
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_function_object<fobj_nc, sfinae_friendly::v3>));
 
 struct nullary_fobj_nc
       : boost::noncopyable
@@ -110,6 +128,9 @@ struct nullary_fobj_nc
     int operator()()       { return 12; }
     int operator()() const { return 13; }
 };
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_function_object<nullary_fobj_nc, sfinae_friendly::v1>));
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_function_object<nullary_fobj_nc, sfinae_friendly::v2>));
+SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_function_object<nullary_fobj_nc, sfinae_friendly::v3>));
 
 
 typedef int         element1_type;
@@ -207,7 +228,17 @@ int main()
     vector0 v0;
     vector1 v1(element1);
     vector2 v2(element1, element2);
+
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+    // Note: C++11 will pickup the rvalue overload for the d argument
+    // since we do not have all permutations (expensive!) for all const&
+    // and && arguments. We either have all && or all const& arguments only.
+    // For that matter, use std::ref to disambiguate the call.
+
+    vector3 v3(element1, element2, std::ref(element3));
+#else
     vector3 v3(element1, element2, element3);
+#endif
 
     test_sequence(v0);
     test_sequence(v1);

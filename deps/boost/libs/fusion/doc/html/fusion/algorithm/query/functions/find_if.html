@@ -4,7 +4,7 @@
 <title>find_if</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.1">
+<link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../functions.html" title="Functions">
 <link rel="prev" href="find.html" title="find">
 <link rel="next" href="count.html" title="count">
@@ -26,15 +26,15 @@
 <div class="titlepage"><div><div><h5 class="title">
 <a name="fusion.algorithm.query.functions.find_if"></a><a class="link" href="find_if.html" title="find_if">find_if</a>
 </h5></div></div></div>
+<h6>
+<a name="fusion.algorithm.query.functions.find_if.h0"></a>
+            <span class="phrase"><a name="fusion.algorithm.query.functions.find_if.description"></a></span><a class="link" href="find_if.html#fusion.algorithm.query.functions.find_if.description">Description</a>
+          </h6>
 <p>
             Finds the first element within a sequence with a type for which a given
             <a href="http://www.boost.org/libs/mpl/doc/refmanual/lambda-expression.html" target="_top">MPL
             Lambda Expression</a> evaluates to <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>.
           </p>
-<h6>
-<a name="fusion.algorithm.query.functions.find_if.h0"></a>
-            <span class="phrase"><a name="fusion.algorithm.query.functions.find_if.description"></a></span><a class="link" href="find_if.html#fusion.algorithm.query.functions.find_if.description">Description</a>
-          </h6>
 <h6>
 <a name="fusion.algorithm.query.functions.find_if.h1"></a>
             <span class="phrase"><a name="fusion.algorithm.query.functions.find_if.synopsis"></a></span><a class="link" href="find_if.html#fusion.algorithm.query.functions.find_if.synopsis">Synopsis</a>
@@ -43,16 +43,16 @@
     <span class="keyword">typename</span> <span class="identifier">F</span><span class="special">,</span>
     <span class="keyword">typename</span> <span class="identifier">Sequence</span>
     <span class="special">&gt;</span>
-<span class="emphasis"><em>unspecified</em></span> <span class="identifier">find_if</span><span class="special">(</span><span class="identifier">Sequence</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">seq</span><span class="special">);</span>
+<span class="keyword">typename</span> <a class="link" href="../metafunctions/find_if.html" title="find_if"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">find_if</span></code></a><span class="special">&lt;</span><span class="identifier">Sequence</span> <span class="keyword">const</span><span class="special">,</span> <span class="identifier">F</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">find_if</span><span class="special">(</span><span class="identifier">Sequence</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">seq</span><span class="special">);</span>
 
 <span class="keyword">template</span><span class="special">&lt;</span>
     <span class="keyword">typename</span> <span class="identifier">F</span><span class="special">,</span>
     <span class="keyword">typename</span> <span class="identifier">Sequence</span>
     <span class="special">&gt;</span>
-<span class="emphasis"><em>unspecified</em></span> <span class="identifier">find_if</span><span class="special">(</span><span class="identifier">Sequence</span><span class="special">&amp;</span> <span class="identifier">seq</span><span class="special">);</span>
+<span class="keyword">typename</span> <a class="link" href="../metafunctions/find_if.html" title="find_if"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">find_if</span></code></a><span class="special">&lt;</span><span class="identifier">Sequence</span><span class="special">,</span> <span class="identifier">F</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">find_if</span><span class="special">(</span><span class="identifier">Sequence</span><span class="special">&amp;</span> <span class="identifier">seq</span><span class="special">);</span>
 </pre>
 <div class="table">
-<a name="fusion.algorithm.query.functions.find_if.t0"></a><p class="title"><b>Table&#160;1.54.&#160;Parameters</b></p>
+<a name="fusion.algorithm.query.functions.find_if.t0"></a><p class="title"><b>Table&#160;1.56.&#160;Parameters</b></p>
 <div class="table-contents"><table class="table" summary="Parameters">
 <colgroup>
 <col>
@@ -141,16 +141,15 @@
 <p>
             Linear. At most <code class="computeroutput"><a class="link" href="../../../sequence/intrinsic/metafunctions/size.html" title="size"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">size</span></code></a><span class="special">&lt;</span><span class="identifier">Sequence</span><span class="special">&gt;::</span><span class="identifier">value</span></code> comparisons.
           </p>
-<div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem">
-                include &lt;boost/fusion/algorithm/query/find_if.hpp&gt;
-              </li>
-<li class="listitem">
-                include &lt;boost/fusion/include/find_if.hpp&gt;
-              </li>
-</ol></div>
 <h6>
 <a name="fusion.algorithm.query.functions.find_if.h4"></a>
+            <span class="phrase"><a name="fusion.algorithm.query.functions.find_if.header"></a></span><a class="link" href="find_if.html#fusion.algorithm.query.functions.find_if.header">Header</a>
+          </h6>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">algorithm</span><span class="special">/</span><span class="identifier">query</span><span class="special">/</span><span class="identifier">find_if</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">find_if</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<h6>
+<a name="fusion.algorithm.query.functions.find_if.h5"></a>
             <span class="phrase"><a name="fusion.algorithm.query.functions.find_if.example"></a></span><a class="link" href="find_if.html#fusion.algorithm.query.functions.find_if.example">Example</a>
           </h6>
 <pre class="programlisting"><span class="keyword">const</span> <a class="link" href="../../../container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">vec</span><span class="special">(</span><span class="number">1.0</span><span class="special">,</span><span class="number">2</span><span class="special">);</span>

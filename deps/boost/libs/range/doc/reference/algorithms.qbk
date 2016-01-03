@@ -37,7 +37,9 @@ boost::copy(boost::unique(boost::sort(vec)),
             std::ostream_iterator<int>(std::cout));
 ``
 
-Algorithms like `boost::unique` usually return the same range: `[boost::begin(rng), found)`. However, this behaviour may be changed by supplying the algorithms with a template argument:
+Algorithms like `boost::unique` usually return the range: `[boost::begin(rng), found)`.
+However, this behaviour may be changed by supplying a `range_return_value`
+as a template parameter to the algorithm:
 
 [table
     [[Expression] [Return]]
@@ -61,7 +63,7 @@ std::vector<int> vec = ...;
 boost::erase(vec, boost::unique<boost::return_found_end>(boost::sort(vec)));
 ``
 
-Notice the use of `boost::return_found_end`. What if we wanted to erase all the duplicates except one of them? In old-fashined STL-programming we might write
+Notice the use of `boost::return_found_end`. What if we wanted to erase all the duplicates except one of them? In old-fashioned STL-programming we might write
 
 ``
 // assume 'vec' is already sorted

@@ -12,23 +12,23 @@
 #define BOOST_INTERPROCESS_TEST_VECTOR_TEST_HEADER
 
 #include <boost/interprocess/detail/config_begin.hpp>
-#include <algorithm>
-#include <memory>
-#include <vector>
-#include <iostream>
-#include <functional>
-#include <list>
 
 #include <boost/interprocess/exceptions.hpp>
-#include <boost/interprocess/detail/move.hpp>
+#include <boost/move/utility_core.hpp>
 #include <boost/interprocess/detail/mpl.hpp>
 #include "print_container.hpp"
 #include "check_equal_containers.hpp"
 #include "movable_int.hpp"
-#include <string>
-#include <vector>
+
 #include "get_process_id_name.hpp"
 #include "emplace_test.hpp"
+
+#include <vector>
+#include <list>
+#include <string>
+#include <iostream>
+#include <cstddef>
+
 
 namespace boost{
 namespace interprocess{

@@ -6,7 +6,7 @@
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/config for the most recent version.//
-//  Revision $Id: has_tr1_complex_trig_pass.cpp 47435 2008-07-15 10:41:52Z johnmaddock $
+//  Revision $Id$
 //
 
 

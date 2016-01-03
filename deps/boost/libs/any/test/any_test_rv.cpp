@@ -2,7 +2,7 @@
 //
 //  See http://www.boost.org for most recent version, including documentation.
 //
-//  Copyright Antony Polukhin, 2013.
+//  Copyright Antony Polukhin, 2013-2014.
 //
 //  Distributed under the Boost
 //  Software License, Version 1.0. (See accompanying file
@@ -13,7 +13,7 @@
 #include <utility>
 
 #include "boost/any.hpp"
-#include "../test.hpp"
+#include "test.hpp"
 #include <boost/move/move.hpp>
 
 #ifdef BOOST_NO_CXX11_RVALUE_REFERENCES
@@ -51,6 +51,7 @@ namespace any_tests // test suite
     void test_move_assignment_from_value();
     void test_copy_construction_from_value();
     void test_copy_assignment_from_value();
+    void test_construction_from_const_any_rv();
     void test_cast_to_rv();
     
 
@@ -65,6 +66,7 @@ namespace any_tests // test suite
         { "move assignment from value",           test_move_assignment_from_value  },
         { "copy construction from value",         test_copy_construction_from_value },
         { "copy assignment from value",           test_copy_assignment_from_value },
+        { "constructing from const any&&",        test_construction_from_const_any_rv },
         { "casting to rvalue reference",          test_cast_to_rv }
     };
 
@@ -273,6 +275,20 @@ namespace any_tests // test definitions
         check_equal(
             move_copy_conting_class::moves_count, 0u, 
             "checking move counts");
+    }
+
+    const any helper_method() {
+        return true;
+    }
+
+    const bool helper_method1() {
+        return true;
+    }
+
+    void test_construction_from_const_any_rv()
+    {
+        any values[] = {helper_method(), helper_method1() };
+        (void)values;
     }
 
     void test_cast_to_rv()

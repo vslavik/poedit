@@ -1,4 +1,5 @@
-# (C) Copyright 2010 : Karsten Ahnert, Mario Mulansky
+# Copyright 2012 Karsten Ahnert
+# Copyright 2012 Mario Mulansky
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
@@ -10,6 +11,9 @@ project
     : requirements
       <define>BOOST_ALL_NO_LIB=1
       <include>../../../..
+      <cxxflags>-std=c++11
+      <toolset>gcc:<cxxflags>-ffast-math
+      <toolset>intel:<cxxflags>"-fast -inline-forceinline"
     : default-build release
     ;
     
@@ -23,49 +27,6 @@ lib libmkl_intel_thread : : <name>mkl_intel_thread ;
 lib libiomp5 : : <name>iomp5 ;
 lib libpthread : : <name>pthread ;
 
-exe odeint_rk4_lorenz_array
-    : odeint_rk4_lorenz_array.cpp
+exe odeint_rk4_array
+    : odeint_rk4_array.cpp
     ;
-    
-exe odeint_rk4_lorenz_range
-    : odeint_rk4_lorenz_range.cpp
-    ;
-
-# exe odeint_rk4_lorenz_fusion
-#     : odeint_rk4_lorenz_fusion.cpp
-#     ;
-
-exe generic_odeint_rk4_lorenz 
-    : generic_odeint_rk4_lorenz.cpp
-    : <toolset>intel:<cxxflags>-inline-forceinline
-    ;
-
-exe nr_rk4_lorenz
-    : nr_rk4_lorenz.cpp
-    ;
-
-exe rt_generic_rk4_lorenz
-    : rt_generic_rk4_lorenz.cpp
-    ;
-    
-exe gsl_rk4_lorenz
-    : gsl_rk4_lorenz.cpp libgslcblas libgsl
-    ;
-    
-exe odeint_rk4_phase_lattice
-    : odeint_rk4_phase_lattice.cpp
-    ;
-    
-exe odeint_rk4_phase_lattice_mkl
-    : odeint_rk4_phase_lattice_mkl.cpp libpthread libiomp5 libmkl_core libmkl_intel_thread libmkl
-    ;
-    
-exe nr_rk4_phase_lattice
-    : nr_rk4_phase_lattice.cpp
-    ;
-
-exe rt_generic_rk4_phase_lattice
-    : rt_generic_rk4_phase_lattice.cpp
-    ;
-
-

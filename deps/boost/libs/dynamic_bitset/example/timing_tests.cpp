@@ -23,6 +23,10 @@
 //   table in detail/dynamic_bitset.hpp and report any interesting
 //   discovery on the list as well.
 
+//   You might also want to try both counting methods (by_bytes vs.
+//   by_blocks) to see if the one that is selected automatically is
+//   actually the fastest on your system.
+
 //
 //
 // -----------------------------------------------------------------------//
@@ -55,9 +59,9 @@ namespace {
     // see http://gcc.gnu.org/ml/gcc-bugs/1999-03n/msg00884.html
     //
     class boost_version {
-        const int m_major;
-        const int m_minor;
-        const int m_subminor;
+        int m_major;
+        int m_minor;
+        int m_subminor;
 
     public:
         boost_version(unsigned long v = BOOST_VERSION):
@@ -91,11 +95,11 @@ template <typename T>
 void timing_test(T* = 0) // dummy parameter to workaround VC6
 {
 
-    const unsigned long num = 100000;
+    const unsigned long num = 30 * 100000;
 
 
     // This variable is printed at the end of the test,
-    // to prevent the optimizer eliminating the call to
+    // to prevent the optimizer from removing the call to
     // count() in the loop below.
     typename boost::dynamic_bitset<T>::size_type dummy = 0;
 
@@ -123,7 +127,6 @@ void timing_test(T* = 0) // dummy parameter to workaround VC6
 
 int main()
 {
-
     prologue();
 
     timing_test<unsigned char>();

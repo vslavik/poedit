@@ -22,20 +22,6 @@ namespace boost {
 namespace archive {
 
 // explicitly instantiate for this type of stream
-template class detail::archive_serializer_map<naked_binary_iarchive>;
-template class basic_binary_iprimitive<
-    naked_binary_iarchive,
-    std::istream::char_type, 
-    std::istream::traits_type
->;
-template class basic_binary_iarchive<naked_binary_iarchive> ;
-template class binary_iarchive_impl<
-    naked_binary_iarchive, 
-    std::istream::char_type, 
-    std::istream::traits_type
->;
-
-// explicitly instantiate for this type of stream
 template class detail::archive_serializer_map<binary_iarchive>;
 template class basic_binary_iprimitive<
     binary_iarchive,

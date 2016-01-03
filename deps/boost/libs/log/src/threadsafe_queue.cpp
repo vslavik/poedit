@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -28,10 +28,10 @@
 #include <new>
 #include <boost/assert.hpp>
 #include <boost/throw_exception.hpp>
+#include <boost/align/aligned_alloc.hpp>
 #include <boost/type_traits/alignment_of.hpp>
 #include <boost/log/detail/spin_mutex.hpp>
 #include <boost/log/detail/locks.hpp>
-#include <boost/log/detail/malloc_aligned.hpp>
 #include <boost/log/detail/header.hpp>
 
 namespace boost {
@@ -137,7 +137,7 @@ BOOST_LOG_API threadsafe_queue_impl* threadsafe_queue_impl::create(node_base* fi
 
 BOOST_LOG_API void* threadsafe_queue_impl::operator new (std::size_t size)
 {
-    void* p = malloc_aligned(size, BOOST_LOG_CPU_CACHE_LINE_SIZE);
+    void* p = alignment::aligned_alloc(BOOST_LOG_CPU_CACHE_LINE_SIZE, size);
     if (!p)
         BOOST_THROW_EXCEPTION(std::bad_alloc());
     return p;
@@ -145,7 +145,7 @@ BOOST_LOG_API void* threadsafe_queue_impl::operator new (std::size_t size)
 
 BOOST_LOG_API void threadsafe_queue_impl::operator delete (void* p, std::size_t)
 {
-    free_aligned(p);
+    alignment::aligned_free(p);
 }
 
 } // namespace aux

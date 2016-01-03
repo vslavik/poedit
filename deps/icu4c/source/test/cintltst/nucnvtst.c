@@ -1,11 +1,11 @@
 /********************************************************************
  * COPYRIGHT:
- * Copyright (c) 1997-2012, International Business Machines Corporation and
+ * Copyright (c) 1997-2015, International Business Machines Corporation and
  * others. All Rights Reserved.
  ********************************************************************/
 /*******************************************************************************
 *
-* File CCONVTST.C
+* File nucnvtst.c
 *
 * Modification History:
 *        Name                     Description
@@ -25,8 +25,6 @@
 #include "unicode/utf16.h"
 #include "cmemory.h"
 #include "nucnvtst.h"
-
-#define LENGTHOF(array) (sizeof(array)/sizeof((array)[0]))
 
 static void TestNextUChar(UConverter* cnv, const char* source, const char* limit, const int32_t results[], const char* message);
 static void TestNextUCharError(UConverter* cnv, const char* source, const char* limit, UErrorCode expected, const char* message);
@@ -1830,7 +1828,7 @@ static void TestUTF7() {
     UErrorCode errorCode=U_ZERO_ERROR;
     UConverter *cnv=ucnv_open("UTF-7", &errorCode);
     if(U_FAILURE(errorCode)) {
-        log_err("Unable to open a UTF-7 converter: %s\n", u_errorName(errorCode)); /* sholdn't be a data err */
+        log_data_err("Unable to open a UTF-7 converter: %s\n", u_errorName(errorCode));
         return;
     }
     TestNextUChar(cnv, source, limit, results, "UTF-7");
@@ -1873,7 +1871,7 @@ static void TestIMAP() {
     UErrorCode errorCode=U_ZERO_ERROR;
     UConverter *cnv=ucnv_open("IMAP-mailbox-name", &errorCode);
     if(U_FAILURE(errorCode)) {
-        log_err("Unable to open a IMAP-mailbox-name converter: %s\n", u_errorName(errorCode)); /* sholdn't be a data err */
+        log_data_err("Unable to open a IMAP-mailbox-name converter: %s\n", u_errorName(errorCode));
         return;
     }
     TestNextUChar(cnv, source, limit, results, "IMAP-mailbox-name");
@@ -2006,7 +2004,7 @@ static void TestCESU8() {
     UErrorCode errorCode=U_ZERO_ERROR;
     UConverter *cnv=ucnv_open("CESU-8", &errorCode);
     if(U_FAILURE(errorCode)) {
-        log_err("Unable to open a CESU-8 converter: %s\n", u_errorName(errorCode));
+        log_data_err("Unable to open a CESU-8 converter: %s\n", u_errorName(errorCode));
         return;
     }
     TestNextUChar(cnv, source, limit, results, "CESU-8");
@@ -2226,7 +2224,7 @@ static void TestUTF32() {
     UErrorCode errorCode=U_ZERO_ERROR;
     UConverter *cnv=ucnv_open("UTF-32", &errorCode);
     if(U_FAILURE(errorCode)) {
-        log_err("Unable to open a UTF-32 converter: %s\n", u_errorName(errorCode));
+        log_data_err("Unable to open a UTF-32 converter: %s\n", u_errorName(errorCode));
         return;
     }
 
@@ -2302,7 +2300,7 @@ TestUTF32BE() {
     UErrorCode errorCode=U_ZERO_ERROR;
     UConverter *cnv=ucnv_open("UTF-32BE", &errorCode);
     if(U_FAILURE(errorCode)) {
-        log_err("Unable to open a UTF-32BE converter: %s\n", u_errorName(errorCode));
+        log_data_err("Unable to open a UTF-32BE converter: %s\n", u_errorName(errorCode));
         return;
     }
     TestNextUChar(cnv, source, limit, results, "UTF-32BE");
@@ -2373,7 +2371,7 @@ TestUTF32LE() {
     UErrorCode errorCode=U_ZERO_ERROR;
     UConverter *cnv=ucnv_open("UTF-32LE", &errorCode);
     if(U_FAILURE(errorCode)) {
-        log_err("Unable to open a UTF-32LE converter: %s\n", u_errorName(errorCode));
+        log_data_err("Unable to open a UTF-32LE converter: %s\n", u_errorName(errorCode));
         return;
     }
     TestNextUChar(cnv, source, limit, results, "UTF-32LE");
@@ -5397,6 +5395,12 @@ static void TestJitterbug981(){
     }
 
     rules = ucol_getRules(myCollator, &rules_length);
+    if(rules_length == 0) {
+        log_data_err("missing zh tailoring rule string\n");
+        ucol_close(myCollator);
+        ucnv_close(utf8cnv);
+        return;
+    }
     buff_size = rules_length * ucnv_getMaxCharSize(utf8cnv);
     buff = malloc(buff_size);
 
@@ -5533,7 +5537,7 @@ static void TestJB5275(){
     const UChar* exp = expected;
     ucnv_toUnicode(conv, &target, targetLimit, &source, sourceLimit, NULL, TRUE, &status);
     if(U_FAILURE(status)){
-        log_err("conversion failed: %s \n", u_errorName(status));
+        log_data_err("conversion failed: %s \n", u_errorName(status));
     }
     targetLimit = target;
     target = dest;
@@ -5569,7 +5573,7 @@ TestIsFixedWidth() {
             "UTF16"
     };
 
-    for (i = 0; i < LENGTHOF(fixedWidth); i++) {
+    for (i = 0; i < UPRV_LENGTHOF(fixedWidth); i++) {
         cnv = ucnv_open(fixedWidth[i], &status);
         if (cnv == NULL || U_FAILURE(status)) {
             log_data_err("Error open converter: %s - %s \n", fixedWidth[i], u_errorName(status));
@@ -5582,7 +5586,7 @@ TestIsFixedWidth() {
         ucnv_close(cnv);
     }
 
-    for (i = 0; i < LENGTHOF(notFixedWidth); i++) {
+    for (i = 0; i < UPRV_LENGTHOF(notFixedWidth); i++) {
         cnv = ucnv_open(notFixedWidth[i], &status);
         if (cnv == NULL || U_FAILURE(status)) {
             log_data_err("Error open converter: %s - %s \n", notFixedWidth[i], u_errorName(status));

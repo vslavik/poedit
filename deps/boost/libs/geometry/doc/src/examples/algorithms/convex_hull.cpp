@@ -30,7 +30,7 @@ int main()
 
     polygon hull;
     boost::geometry::convex_hull(poly, hull);
-        
+
     using boost::geometry::dsv;
     std::cout
         << "polygon: " << dsv(poly) << std::endl

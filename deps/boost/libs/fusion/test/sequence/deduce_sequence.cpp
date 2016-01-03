@@ -6,6 +6,7 @@
     http://www.boost.org/LICENSE_1_0.txt).
 ==============================================================================*/
 
+#include <boost/config.hpp>
 #include <boost/fusion/support/deduce_sequence.hpp>
 #include <boost/fusion/mpl.hpp>
 #include <boost/detail/lightweight_test.hpp>
@@ -13,6 +14,9 @@
 #include <boost/mpl/equal.hpp>
 
 #include <boost/ref.hpp>
+#ifndef BOOST_NO_CXX11_HDR_FUNCTIONAL
+#include <functional>
+#endif
 
 using boost::is_same;
 using boost::reference_wrapper;
@@ -65,6 +69,13 @@ int main()
     TEST_SAME_TYPE(deduce< reference_wrapper<int const> & >::type, int const &);
     TEST_SAME_TYPE(deduce< reference_wrapper<int> const & >::type, int &);
     TEST_SAME_TYPE(deduce< reference_wrapper<int const> const & >::type, int const &);
+
+#ifndef BOOST_NO_CXX11_HDR_FUNCTIONAL
+    TEST_SAME_TYPE(deduce< std::reference_wrapper<int> & >::type, int &);
+    TEST_SAME_TYPE(deduce< std::reference_wrapper<int const> & >::type, int const &);
+    TEST_SAME_TYPE(deduce< std::reference_wrapper<int> const & >::type, int &);
+    TEST_SAME_TYPE(deduce< std::reference_wrapper<int const> const & >::type, int const &);
+#endif
 
     TEST_SAME_TYPE(deduce< int(&)[2] >::type, int(&)[2]);
     TEST_SAME_TYPE(deduce< int const (&)[2] >::type, int const (&)[2]);

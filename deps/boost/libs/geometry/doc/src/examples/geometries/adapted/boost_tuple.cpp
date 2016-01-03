@@ -11,7 +11,7 @@
 /*`
 Shows how to use Boost.Tuple points in Boost.Geometry
 
-Working with Boost.Tuples in Boost.Geometry is straightforward and shown in 
+Working with Boost.Tuples in Boost.Geometry is straightforward and shown in
 various other examples as well.
 
 */
@@ -31,11 +31,11 @@ int main()
     poly.outer().push_back(boost::make_tuple(6.0, 4.0));
     poly.outer().push_back(boost::make_tuple(5.0, 1.0));
     poly.outer().push_back(boost::make_tuple(1.0, 2.0));
-    
+
     std::cout << "Area: " << boost::geometry::area(poly) << std::endl;
-    std::cout << "Contains (1.5, 2.5): " 
+    std::cout << "Contains (1.5, 2.5): "
         << std::boolalpha
-        << boost::geometry::within(boost::make_tuple(1.5, 2.5), poly) 
+        << boost::geometry::within(boost::make_tuple(1.5, 2.5), poly)
         << std::endl;
 
     return 0;

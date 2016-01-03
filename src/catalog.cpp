@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 1999-2013 Vaclav Slavik
+ *  Copyright (C) 1999-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -31,8 +31,9 @@
 #include <wx/datetime.h>
 #include <wx/config.h>
 #include <wx/textfile.h>
+#include <wx/stdpaths.h>
 #include <wx/strconv.h>
-#include <wx/msgdlg.h>
+#include <wx/memtext.h>
 #include <wx/filename.h>
 
 #include <set>
@@ -42,40 +43,34 @@
 #include "digger.h"
 #include "gexecute.h"
 #include "progressinfo.h"
-#include "summarydlg.h"
+#include "str_helpers.h"
 #include "utility.h"
 #include "version.h"
 #include "language.h"
 
+#ifdef __WXOSX__
+#import <Foundation/Foundation.h>
+#endif
+
+// TODO: split into different file
+#if wxUSE_GUI
+    #include <wx/msgdlg.h>
+    #include "summarydlg.h"
+#endif
 
 // ----------------------------------------------------------------------
 // Textfile processing utilities:
 // ----------------------------------------------------------------------
 
-
-// Read one line from file, remove all \r and \n characters, ignore empty lines
-static wxString ReadTextLine(wxTextFile* f)
+namespace
 {
-    wxString s;
-
-    while (s.empty())
-    {
-        if (f->Eof()) return wxEmptyString;
-
-        // read next line and strip insignificant whitespace from it:
-        s = f->GetNextLine().Strip(wxString::both);
-    }
-
-    return s;
-}
-
 
 // If input begins with pattern, fill output with end of input (without
 // pattern; strips trailing spaces) and return true.  Return false otherwise
 // and don't touch output. Is permissive about whitespace in the input:
 // a space (' ') in pattern will match any number of any whitespace characters
 // on that position in input.
-static bool ReadParam(const wxString& input, const wxString& pattern, wxString& output)
+bool ReadParam(const wxString& input, const wxString& pattern, wxString& output)
 {
     if (input.size() < pattern.size())
         return false;
@@ -128,8 +123,11 @@ bool VerifyFileCharset(const wxTextFile& f, const wxString& filename,
 
     if (f.GetLineCount() != f2.GetLineCount())
     {
-        wxLogError(_("%i lines of file '%s' were not loaded correctly."),
-                   (int)f2.GetLineCount() - (int)f.GetLineCount(),
+        int linesCount = (int)f2.GetLineCount() - (int)f.GetLineCount();
+        wxLogError(wxPLURAL("%i line of file '%s' was not loaded correctly.",
+                            "%i lines of file '%s' were not loaded correctly.",
+                            linesCount),
+                   linesCount,
                    filename.c_str());
         return false;
     }
@@ -141,8 +139,8 @@ bool VerifyFileCharset(const wxTextFile& f, const wxString& filename,
         if (f[i].empty() && !f2[i].empty()) // wxMBConv conversion failed
         {
             wxLogError(
-                _("Line %u of file '%s' is corrupted (not valid %s data)."),
-                i, filename.c_str(), charset.c_str());
+                _("Line %d of file '%s' is corrupted (not valid %s data)."),
+                int(i), filename.c_str(), charset.c_str());
             ok = false;
         }
     }
@@ -151,50 +149,53 @@ bool VerifyFileCharset(const wxTextFile& f, const wxString& filename,
 }
 
 
-// converts \n into newline character and \\ into \:
-static wxString UnescapeCEscapes(const wxString& str)
+wxTextFileType GetFileCRLFFormat(wxTextFile& po_file)
 {
-    wxString out;
-    size_t len = str.size();
-    size_t i;
+    wxLogNull null;
+    auto crlf = po_file.GuessType();
 
-    if ( len == 0 )
-        return str;
-
-    for (i = 0; i < len-1; i++)
-    {
-        if (str[i] == _T('\\'))
-        {
-            switch ((wxChar)str[i+1])
-            {
-                case _T('n'):
-                    out << _T('\n');
-                    i++;
-                    break;
-                case _T('\\'):
-                    out << _T('\\');
-                    i++;
-                    break;
-                case _T('"'):
-                    out << _T('"');
-                    i++;
-                    break;
-                default:
-                    out << _T('\\');
-            }
-        }
-        else
-        {
-            out << str[i];
-        }
-    }
-
-    // last character:
-    if (i < len)
-        out << str[i];
-
-    return out;
+    // Discard any unsupported setting. In particular, we ignore "Mac"
+    // line endings, because the ancient OS 9 systems aren't used anymore,
+    // OSX uses Unix ending *and* "Mac" endings break gettext tools. So if
+    // we encounter a catalog with "Mac" line endings, we silently convert
+    // it into Unix endings (i.e. the modern Mac).
+    if (crlf == wxTextFileType_Mac)
+        crlf = wxTextFileType_Unix;
+    if (crlf != wxTextFileType_Dos && crlf != wxTextFileType_Unix)
+        crlf = wxTextFileType_None;
+    return crlf;
 }
+
+wxTextFileType GetDesiredCRLFFormat(wxTextFileType existingCRLF)
+{
+    if (existingCRLF != wxTextFileType_None && wxConfigBase::Get()->ReadBool("keep_crlf", true))
+    {
+        return existingCRLF;
+    }
+    else
+    {
+        wxString format = wxConfigBase::Get()->Read("crlf_format", "unix");
+        if (format == "win")
+            return wxTextFileType_Dos;
+        else /* "unix" or obsolete settings */
+            return wxTextFileType_Unix;
+    }
+}
+
+// Fixup some common issues with filepaths in PO files, due to old Poedit versions,
+// user misunderstanding or Poedit bugs:
+wxString FixBrokenSearchPathValue(wxString p)
+{
+    if (p.empty())
+        return p;
+    // no DOS paths please:
+    p.Replace("\\", "/");
+    if (p.Last() == '/')
+        p.RemoveLast();
+    return p;
+}
+
+} // anonymous namespace
 
 
 // ----------------------------------------------------------------------
@@ -203,9 +204,7 @@ static wxString UnescapeCEscapes(const wxString& str)
 
 void Catalog::HeaderData::FromString(const wxString& str)
 {
-    wxString hdr(str);
-    hdr = UnescapeCEscapes(hdr);
-    wxStringTokenizer tkn(hdr, "\n");
+    wxStringTokenizer tkn(str, "\n");
     wxString ln;
 
     m_entries.clear();
@@ -238,13 +237,9 @@ wxString Catalog::HeaderData::ToString(const wxString& line_delim)
     UpdateDict();
 
     wxString hdr;
-    for (std::vector<Entry>::const_iterator i = m_entries.begin();
-         i != m_entries.end(); i++)
+    for (auto& e: m_entries)
     {
-        wxString v(i->Value);
-        v.Replace("\\", "\\\\");
-        v.Replace(_T("\""), _T("\\\""));
-        hdr << i->Key << ": " << v << "\\n" << line_delim;
+        hdr << EscapeCString(e.Key) << ": " << EscapeCString(e.Value) << "\\n" << line_delim;
     }
     return hdr;
 }
@@ -256,16 +251,30 @@ void Catalog::HeaderData::UpdateDict()
     SetHeader("PO-Revision-Date", RevisionDate);
 
     if (TranslatorEmail.empty())
-        SetHeader("Last-Translator", Translator);
+    {
+        if (!Translator.empty() || !HasHeader("Last-Translator"))
+            SetHeader("Last-Translator", Translator);
+        // else: don't modify the header, leave as-is
+    }
     else
-        SetHeader("Last-Translator",
-                  Translator + " <" + TranslatorEmail + ">");
+    {
+        if (Translator.empty())
+            SetHeader("Last-Translator", TranslatorEmail);
+        else
+            SetHeader("Last-Translator", Translator + " <" + TranslatorEmail + ">");
+    }
 
     if (TeamEmail.empty())
+    {
         SetHeader("Language-Team", Team);
+    }
     else
-        SetHeader("Language-Team",
-                  Team + " <" + TeamEmail + ">");
+    {
+        if (Team.empty())
+            SetHeader("Language-Team", TeamEmail);
+        else
+            SetHeader("Language-Team", Team + " <" + TeamEmail + ">");
+    }
 
     SetHeader("MIME-Version", "1.0");
     SetHeader("Content-Type", "text/plain; charset=" + Charset);
@@ -303,9 +312,9 @@ void Catalog::HeaderData::UpdateDict()
     SetHeaderNotEmpty("X-Poedit-Basepath", BasePath);
 
     i = 0;
-    wxString path;
     while (true)
     {
+        wxString path;
         path.Printf("X-Poedit-SearchPath-%i", i);
         if (!HasHeader(path))
             break;
@@ -313,10 +322,29 @@ void Catalog::HeaderData::UpdateDict()
         i++;
     }
 
-    for (i = 0; i < SearchPaths.GetCount(); i++)
+    i = 0;
+    while (true)
     {
+        wxString path;
+        path.Printf("X-Poedit-SearchPathExcluded-%i", i);
+        if (!HasHeader(path))
+            break;
+        DeleteHeader(path);
+        i++;
+    }
+
+    for (i = 0; i < SearchPaths.size(); i++)
+    {
+        wxString path;
         path.Printf("X-Poedit-SearchPath-%i", i);
         SetHeader(path, SearchPaths[i]);
+    }
+
+    for (i = 0; i < SearchPathsExcluded.size(); i++)
+    {
+        wxString path;
+        path.Printf("X-Poedit-SearchPathExcluded-%i", i);
+        SetHeader(path, SearchPathsExcluded[i]);
     }
 }
 
@@ -376,14 +404,14 @@ void Catalog::HeaderData::ParseDict()
     wxString languageCode = GetHeader("Language");
     if ( !languageCode.empty() )
     {
-        Lang = Language::TryParse(languageCode);
+        Lang = Language::TryParse(languageCode.ToStdWstring());
     }
     else
     {
         wxString X_Language = GetHeader("X-Poedit-Language");
         wxString X_Country = GetHeader("X-Poedit-Country");
         if ( !X_Language.empty() )
-            Lang = Language::FromLegacyNames(X_Language, X_Country);
+            Lang = Language::FromLegacyNames(X_Language.ToStdString(), X_Country.ToStdString());
     }
 
     DeleteHeader("X-Poedit-Language");
@@ -391,7 +419,7 @@ void Catalog::HeaderData::ParseDict()
 
     // Parse extended information:
     SourceCodeCharset = GetHeader("X-Poedit-SourceCharset");
-    BasePath = GetHeader("X-Poedit-Basepath");
+    BasePath = FixBrokenSearchPathValue(GetHeader("X-Poedit-Basepath"));
 
     Keywords.Clear();
     wxString kwlist = GetHeader("X-Poedit-KeywordsList");
@@ -438,15 +466,31 @@ void Catalog::HeaderData::ParseDict()
         }
     }
 
+    SearchPaths.clear();
     i = 0;
-    wxString path;
-    SearchPaths.Clear();
     while (true)
     {
+        wxString path;
         path.Printf("X-Poedit-SearchPath-%i", i);
         if (!HasHeader(path))
             break;
-        SearchPaths.Add(GetHeader(path));
+        wxString p = FixBrokenSearchPathValue(GetHeader(path));
+        if (!p.empty())
+            SearchPaths.push_back(p);
+        i++;
+    }
+
+    SearchPathsExcluded.clear();
+    i = 0;
+    while (true)
+    {
+        wxString path;
+        path.Printf("X-Poedit-SearchPathExcluded-%i", i);
+        if (!HasHeader(path))
+            break;
+        wxString p = FixBrokenSearchPathValue(GetHeader(path));
+        if (!p.empty())
+            SearchPathsExcluded.push_back(p);
         i++;
     }
 }
@@ -531,7 +575,7 @@ bool CatalogParser::Parse()
 
     wxString line, dummy;
     wxString mflags, mstr, msgid_plural, mcomment;
-    wxArrayString mrefs, mautocomments, mtranslations;
+    wxArrayString mrefs, mextractedcomments, mtranslations;
     wxArrayString msgid_old;
     bool has_plural = false;
     bool has_context = false;
@@ -539,28 +583,28 @@ bool CatalogParser::Parse()
     unsigned mlinenum = 0;
 
     line = m_textFile->GetFirstLine();
-    if (line.empty()) line = ReadTextLine(m_textFile);
+    if (line.empty()) line = ReadTextLine();
 
     while (!line.empty())
     {
-        // ignore empty special tags (except for automatic comments which we
+        // ignore empty special tags (except for extracted comments which we
         // DO want to preserve):
         while (line == "#," || line == "#:" || line == "#|")
-            line = ReadTextLine(m_textFile);
+            line = ReadTextLine();
 
         // flags:
         // Can't we have more than one flag, now only the last is kept ...
         if (ReadParam(line, "#, ", dummy))
         {
             mflags = "#, " + dummy;
-            line = ReadTextLine(m_textFile);
+            line = ReadTextLine();
         }
 
         // auto comments:
         if (ReadParam(line, "#. ", dummy) || ReadParam(line, "#.", dummy)) // second one to account for empty auto comments
         {
-            mautocomments.Add(dummy);
-            line = ReadTextLine(m_textFile);
+            mextractedcomments.Add(dummy);
+            line = ReadTextLine();
         }
 
         // references:
@@ -569,27 +613,30 @@ bool CatalogParser::Parse()
             // Just store the references unmodified, we don't modify this
             // data anywhere.
             mrefs.push_back(dummy);
-            line = ReadTextLine(m_textFile);
+            line = ReadTextLine();
         }
 
         // previous msgid value:
         else if (ReadParam(line, "#| ", dummy))
         {
             msgid_old.Add(dummy);
-            line = ReadTextLine(m_textFile);
+            line = ReadTextLine();
         }
 
         // msgctxt:
         else if (ReadParam(line, _T("msgctxt \""), dummy))
         {
             has_context = true;
-            msgctxt = dummy.RemoveLast();
-            while (!(line = ReadTextLine(m_textFile)).empty())
+            msgctxt = UnescapeCString(dummy.RemoveLast());
+            while (!(line = ReadTextLine()).empty())
             {
                 if (line[0u] == _T('\t'))
                     line.Remove(0, 1);
                 if (line[0u] == _T('"') && line.Last() == _T('"'))
-                    msgctxt += line.Mid(1, line.Length() - 2);
+                {
+                    msgctxt += UnescapeCString(line.Mid(1, line.Length() - 2));
+                    PossibleWrappedLine();
+                }
                 else
                     break;
             }
@@ -598,14 +645,17 @@ bool CatalogParser::Parse()
         // msgid:
         else if (ReadParam(line, _T("msgid \""), dummy))
         {
-            mstr = dummy.RemoveLast();
+            mstr = UnescapeCString(dummy.RemoveLast());
             mlinenum = unsigned(m_textFile->GetCurrentLine() + 1);
-            while (!(line = ReadTextLine(m_textFile)).empty())
+            while (!(line = ReadTextLine()).empty())
             {
                 if (line[0u] == _T('\t'))
                     line.Remove(0, 1);
                 if (line[0u] == _T('"') && line.Last() == _T('"'))
-                    mstr += line.Mid(1, line.Length() - 2);
+                {
+                    mstr += UnescapeCString(line.Mid(1, line.Length() - 2));
+                    PossibleWrappedLine();
+                }
                 else
                     break;
             }
@@ -614,15 +664,18 @@ bool CatalogParser::Parse()
         // msgid_plural:
         else if (ReadParam(line, _T("msgid_plural \""), dummy))
         {
-            msgid_plural = dummy.RemoveLast();
+            msgid_plural = UnescapeCString(dummy.RemoveLast());
             has_plural = true;
             mlinenum = unsigned(m_textFile->GetCurrentLine() + 1);
-            while (!(line = ReadTextLine(m_textFile)).empty())
+            while (!(line = ReadTextLine()).empty())
             {
                 if (line[0u] == _T('\t'))
                     line.Remove(0, 1);
                 if (line[0u] == _T('"') && line.Last() == _T('"'))
-                    msgid_plural += line.Mid(1, line.Length() - 2);
+                {
+                    msgid_plural += UnescapeCString(line.Mid(1, line.Length() - 2));
+                    PossibleWrappedLine();
+                }
                 else
                     break;
             }
@@ -637,20 +690,27 @@ bool CatalogParser::Parse()
                 return false;
             }
 
-            wxString str = dummy.RemoveLast();
-            while (!(line = ReadTextLine(m_textFile)).empty())
+            wxString str = UnescapeCString(dummy.RemoveLast());
+            while (!(line = ReadTextLine()).empty())
             {
                 if (line[0u] == _T('\t'))
                     line.Remove(0, 1);
                 if (line[0u] == _T('"') && line.Last() == _T('"'))
-                    str += line.Mid(1, line.Length() - 2);
+                {
+                    str += UnescapeCString(line.Mid(1, line.Length() - 2));
+                    PossibleWrappedLine();
+                }
                 else
                     break;
             }
             mtranslations.Add(str);
 
-            bool shouldIgnore = m_ignoreHeader && mstr.empty();
-            if ( !shouldIgnore )
+            bool shouldIgnore = m_ignoreHeader && (mstr.empty() && !has_context);
+            if ( shouldIgnore )
+            {
+                OnIgnoredEntry();
+            }
+            else
             {
                 if (!mstr.empty() && m_ignoreTranslations)
                     mtranslations.clear();
@@ -658,7 +718,7 @@ bool CatalogParser::Parse()
                 if (!OnEntry(mstr, wxEmptyString, false,
                              has_context, msgctxt,
                              mtranslations,
-                             mflags, mrefs, mcomment, mautocomments, msgid_old,
+                             mflags, mrefs, mcomment, mextractedcomments, msgid_old,
                              mlinenum))
                 {
                     return false;
@@ -668,7 +728,7 @@ bool CatalogParser::Parse()
             mcomment = mstr = msgid_plural = msgctxt = mflags = wxEmptyString;
             has_plural = has_context = false;
             mrefs.Clear();
-            mautocomments.Clear();
+            mextractedcomments.Clear();
             mtranslations.Clear();
             msgid_old.Clear();
         }
@@ -687,13 +747,16 @@ bool CatalogParser::Parse()
 
             while (ReadParam(line, label + _T(" \""), dummy))
             {
-                wxString str = dummy.RemoveLast();
+                wxString str = UnescapeCString(dummy.RemoveLast());
 
-                while (!(line=ReadTextLine(m_textFile)).empty())
+                while (!(line=ReadTextLine()).empty())
                 {
                     line.Trim(/*fromRight=*/false);
                     if (line[0u] == _T('"') && line.Last() == _T('"'))
-                        str += line.Mid(1, line.Length() - 2);
+                    {
+                        str += UnescapeCString(line.Mid(1, line.Length() - 2));
+                        PossibleWrappedLine();
+                    }
                     else
                     {
                         if (ReadParam(line, "msgstr[", dummy))
@@ -710,7 +773,7 @@ bool CatalogParser::Parse()
             if (!OnEntry(mstr, msgid_plural, true,
                          has_context, msgctxt,
                          mtranslations,
-                         mflags, mrefs, mcomment, mautocomments, msgid_old,
+                         mflags, mrefs, mcomment, mextractedcomments, msgid_old,
                          mlinenum))
             {
                 return false;
@@ -719,7 +782,7 @@ bool CatalogParser::Parse()
             mcomment = mstr = msgid_plural = msgctxt = mflags = wxEmptyString;
             has_plural = has_context = false;
             mrefs.Clear();
-            mautocomments.Clear();
+            mextractedcomments.Clear();
             mtranslations.Clear();
             msgid_old.Clear();
         }
@@ -730,7 +793,7 @@ bool CatalogParser::Parse()
             wxArrayString deletedLines;
             deletedLines.Add(line);
             mlinenum = unsigned(m_textFile->GetCurrentLine() + 1);
-            while (!(line = ReadTextLine(m_textFile)).empty())
+            while (!(line = ReadTextLine()).empty())
             {
                 // if line does not start with "#~" anymore, stop reading
                 if (!ReadParam(line, "#~", dummy))
@@ -743,7 +806,7 @@ bool CatalogParser::Parse()
                 deletedLines.Add(line);
             }
             if (!OnDeletedEntry(deletedLines,
-                                mflags, mrefs, mcomment, mautocomments, mlinenum))
+                                mflags, mrefs, mcomment, mextractedcomments, mlinenum))
             {
                 return false;
             }
@@ -751,7 +814,7 @@ bool CatalogParser::Parse()
             mcomment = mstr = msgid_plural = mflags = wxEmptyString;
             has_plural = false;
             mrefs.Clear();
-            mautocomments.Clear();
+            mextractedcomments.Clear();
             mtranslations.Clear();
             msgid_old.Clear();
         }
@@ -763,24 +826,81 @@ bool CatalogParser::Parse()
 
             while (!line.empty() &&
                     line[0u] == _T('#') &&
-                   (line.Length() < 2 || (line[1u] != _T(',') && line[1u] != _T(':') && line[1u] != _T('.') )))
+                   (line.Length() < 2 || (line[1u] != _T(',') && line[1u] != _T(':') && line[1u] != _T('.') && line[1u] != _T('~') )))
             {
                 mcomment << line << _T('\n');
                 readNewLine = true;
-                line = ReadTextLine(m_textFile);
+                line = ReadTextLine();
             }
 
             if (!readNewLine)
-                line = ReadTextLine(m_textFile);
+                line = ReadTextLine();
         }
 
         else
         {
-            line = ReadTextLine(m_textFile);
+            line = ReadTextLine();
         }
     }
 
     return true;
+}
+
+
+wxString CatalogParser::ReadTextLine()
+{
+    m_previousLineHardWrapped = m_lastLineHardWrapped;
+    m_lastLineHardWrapped = false;
+
+    wxString s;
+
+    while (s.empty())
+    {
+        if (m_textFile->Eof())
+            return wxEmptyString;
+
+        // read next line and strip insignificant whitespace from it:
+        auto ln = m_textFile->GetNextLine();
+
+        // gettext tools don't include (extracted) comments in wrapping, so they can't
+        // be reliably used to detect file's wrapping either; just skip them.
+        if (!ln.StartsWith(wxS("#. ")) && !ln.StartsWith(wxS("# ")))
+        {
+            if (ln.EndsWith(wxS("\\n\"")))
+            {
+                // Similarly, lines ending with \n are always wrapped, so skip that too.
+                m_lastLineHardWrapped = true;
+            }
+            else if (ln == "msgid \"\"" || ln == "msgstr \"\"")
+            {
+                // The header is always indented like this
+                m_lastLineHardWrapped = true;
+            }
+            else
+            {
+                // Watch out for lines with too long words that couldn't be wrapped.
+                // That "2" is to account for unwrappable comment lines: "#: somethinglong"
+                // See https://github.com/vslavik/poedit/issues/135
+                auto space = ln.find_last_of(' ');
+                if (space != wxString::npos && space > 2)
+                {
+                    m_detectedLineWidth = std::max(m_detectedLineWidth, (int)ln.size());
+                }
+            }
+        }
+
+        s = ln.Strip(wxString::both);
+    }
+
+    return s;
+}
+
+int CatalogParser::GetWrappingWidth() const
+{
+    if (!m_detectedWrappedLines)
+        return Catalog::NO_WRAPPING;
+
+    return m_detectedLineWidth;
 }
 
 
@@ -798,17 +918,17 @@ class CharsetInfoFinder : public CatalogParser
         virtual bool OnEntry(const wxString& msgid,
                              const wxString& /*msgid_plural*/,
                              bool /*has_plural*/,
-                             bool /*has_context*/,
+                             bool has_context,
                              const wxString& /*context*/,
                              const wxArrayString& mtranslations,
                              const wxString& /*flags*/,
                              const wxArrayString& /*references*/,
                              const wxString& /*comment*/,
-                             const wxArrayString& /*autocomments*/,
+                             const wxArrayString& /*extractedComments*/,
                              const wxArrayString& /*msgid_old*/,
                              unsigned /*lineNumber*/)
         {
-            if (msgid.empty())
+            if (msgid.empty() && !has_context)
             {
                 // gettext header:
                 Catalog::HeaderData hdr;
@@ -827,11 +947,22 @@ class CharsetInfoFinder : public CatalogParser
 class LoadParser : public CatalogParser
 {
     public:
-        LoadParser(Catalog *c, wxTextFile *f)
-              : CatalogParser(f), m_catalog(c), m_nextId(1) {}
+        LoadParser(Catalog& c, wxTextFile *f)
+              : CatalogParser(f),
+                FileIsValid(false),
+                m_catalog(c), m_nextId(1), m_seenHeaderAlready(false) {}
+
+        // true if the file is valid, i.e. has at least some data
+        bool FileIsValid;
+
+        Language GetMsgidLanguage()
+        {
+            auto utf8 = m_allMsgidText.utf8_str();
+            return Language::TryDetectFromText(utf8.data(), utf8.length(), Language::English());
+        }
 
     protected:
-        Catalog *m_catalog;
+        Catalog& m_catalog;
 
         virtual bool OnEntry(const wxString& msgid,
                              const wxString& msgid_plural,
@@ -842,7 +973,7 @@ class LoadParser : public CatalogParser
                              const wxString& flags,
                              const wxArrayString& references,
                              const wxString& comment,
-                             const wxArrayString& autocomments,
+                             const wxArrayString& extractedComments,
                              const wxArrayString& msgid_old,
                              unsigned lineNumber);
 
@@ -850,11 +981,17 @@ class LoadParser : public CatalogParser
                                     const wxString& flags,
                                     const wxArrayString& references,
                                     const wxString& comment,
-                                    const wxArrayString& autocomments,
+                                    const wxArrayString& extractedComments,
                                     unsigned lineNumber);
+
+        virtual void OnIgnoredEntry() { FileIsValid = true; }
 
     private:
         int m_nextId;
+        bool m_seenHeaderAlready;
+
+        // collected text of msgids, with newlines, for language detection
+        wxString m_allMsgidText;
 };
 
 
@@ -867,47 +1004,63 @@ bool LoadParser::OnEntry(const wxString& msgid,
                          const wxString& flags,
                          const wxArrayString& references,
                          const wxString& comment,
-                         const wxArrayString& autocomments,
+                         const wxArrayString& extractedComments,
                          const wxArrayString& msgid_old,
                          unsigned lineNumber)
 {
+    FileIsValid = true;
+
     static const wxString MSGCAT_CONFLICT_MARKER("#-#-#-#-#");
 
-    if (msgid.empty())
+    if (msgid.empty() && !has_context)
     {
-        // gettext header:
-        m_catalog->m_header.FromString(mtranslations[0]);
-        m_catalog->m_header.Comment = comment;
+        if (!m_seenHeaderAlready)
+        {
+            // gettext header:
+            m_catalog.m_header.FromString(mtranslations[0]);
+            m_catalog.m_header.Comment = comment;
+            m_seenHeaderAlready = true;
+        }
+        // else: ignore duplicate header in malformed files
     }
     else
     {
-        CatalogItem d;
-        d.SetId(m_nextId++);
+        CatalogItemPtr d = std::make_shared<CatalogItem>();
+        d->SetId(m_nextId++);
         if (!flags.empty())
-            d.SetFlags(flags);
-        d.SetString(msgid);
+            d->SetFlags(flags);
+        d->SetString(msgid);
         if (has_plural)
-            d.SetPluralString(msgid_plural);
+            d->SetPluralString(msgid_plural);
         if (has_context)
-            d.SetContext(context);
-        d.SetTranslations(mtranslations);
-        d.SetComment(comment);
-        d.SetLineNumber(lineNumber);
+            d->SetContext(context);
+        d->SetTranslations(mtranslations);
+        d->SetComment(comment);
+        d->SetLineNumber(lineNumber);
         for (size_t i = 0; i < references.GetCount(); i++)
-            d.AddReference(references[i]);
+            d->AddReference(references[i]);
 
-        for (auto i: autocomments)
+        for (auto i: extractedComments)
         {
-            // Sometimes, msgcat produces conflicts in automatic comments; see the gory details:
+            // Sometimes, msgcat produces conflicts in extracted comments; see the gory details:
             // https://groups.google.com/d/topic/poedit/j41KuvXtVUU/discussion
             // As a workaround, just filter them out.
             // FIXME: Fix this properly... but not using msgcat in the first place
             if (i.StartsWith(MSGCAT_CONFLICT_MARKER) && i.EndsWith(MSGCAT_CONFLICT_MARKER))
                 continue;
-            d.AddAutoComments(i);
+            d->AddExtractedComments(i);
         }
-        d.SetOldMsgid(msgid_old);
-        m_catalog->AddItem(d);
+        d->SetOldMsgid(msgid_old);
+        m_catalog.AddItem(d);
+
+        // collect text for language detection:
+        m_allMsgidText.append(msgid);
+        m_allMsgidText.append('\n');
+        if (!msgid_plural.empty())
+        {
+            m_allMsgidText.append(msgid_plural);
+            m_allMsgidText.append('\n');
+        }
     }
     return true;
 }
@@ -916,17 +1069,19 @@ bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
                                 const wxString& flags,
                                 const wxArrayString& /*references*/,
                                 const wxString& comment,
-                                const wxArrayString& autocomments,
+                                const wxArrayString& extractedComments,
                                 unsigned lineNumber)
 {
+    FileIsValid = true;
+
     CatalogDeletedData d;
     if (!flags.empty()) d.SetFlags(flags);
     d.SetDeletedLines(deletedLines);
     d.SetComment(comment);
     d.SetLineNumber(lineNumber);
-    for (size_t i = 0; i < autocomments.GetCount(); i++)
-      d.AddAutoComments(autocomments[i]);
-    m_catalog->AddDeletedItem(d);
+    for (size_t i = 0; i < extractedComments.GetCount(); i++)
+      d.AddExtractedComments(extractedComments[i]);
+    m_catalog.AddDeletedItem(d);
 
     return true;
 }
@@ -937,8 +1092,14 @@ bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
 // Catalog class
 // ----------------------------------------------------------------------
 
-Catalog::Catalog()
+Catalog::Catalog(Type type)
 {
+    m_sourceLanguage = Language::English();
+    m_fileType = type;
+
+    m_fileCRLF = wxTextFileType_None;
+    m_fileWrappingWidth = DEFAULT_WRAPPING;
+
     m_isOk = true;
     m_header.BasePath = wxEmptyString;
     for(int i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
@@ -947,6 +1108,16 @@ Catalog::Catalog()
     }
 }
 
+Catalog::Catalog(const wxString& po_file, int flags)
+{
+    m_sourceLanguage = Language::English();
+    m_fileType = Type::PO;
+
+    m_fileCRLF = wxTextFileType_None;
+    m_fileWrappingWidth = DEFAULT_WRAPPING;
+
+    m_isOk = Load(po_file, flags);
+}
 
 Catalog::~Catalog()
 {
@@ -954,32 +1125,35 @@ Catalog::~Catalog()
 }
 
 
-Catalog::Catalog(const wxString& po_file, int flags)
+bool Catalog::HasCapability(Catalog::Cap cap) const
 {
-    m_isOk = Load(po_file, flags);
+    switch (cap)
+    {
+        case Cap::Translations:
+        case Cap::LanguageSetting:
+        case Cap::UserComments:
+            return m_fileType == Type::PO;
+    }
+    return false; // silence VC++ warning
 }
 
 
-static wxString GetCurrentTimeRFC822()
+static inline wxString GetCurrentTimeString()
 {
-    wxDateTime timenow = wxDateTime::Now();
-    int offs = (int)wxDateTime::TimeZone(wxDateTime::Local).GetOffset();
-    wxString s;
-    s.Printf("%s%s%02i%02i",
-             timenow.Format("%Y-%m-%d %H:%M").c_str(),
-             (offs > 0) ? "+" : "-",
-             abs(offs) / 3600, (abs(offs) / 60) % 60);
-    return s;
+    return wxDateTime::Now().Format("%Y-%m-%d %H:%M%z");
 }
 
 void Catalog::CreateNewHeader()
 {
     HeaderData &dt = Header();
 
-    dt.CreationDate = GetCurrentTimeRFC822();
+    dt.CreationDate = GetCurrentTimeString();
     dt.RevisionDate = dt.CreationDate;
 
     dt.Lang = Language();
+    if (m_fileType == Type::POT)
+        dt.SetHeader("Plural-Forms", "nplurals=INTEGER; plural=EXPRESSION;"); // default invalid value
+
     dt.Project = wxEmptyString;
     dt.Team = wxEmptyString;
     dt.TeamEmail = wxEmptyString;
@@ -1003,10 +1177,13 @@ void Catalog::CreateNewHeader(const Catalog::HeaderData& pot_header)
 
     // clear the fields that are translation-specific:
     dt.Lang = Language();
-    //dt.Team.clear();
-    //dt.TeamEmail.clear();
+    if (dt.Team == "LANGUAGE")
+        dt.Team.clear();
+    if (dt.TeamEmail == "LL@li.org")
+        dt.TeamEmail.clear();
 
-    // translator should be pre-filled
+    // translator should be pre-filled & not the default "FULL NAME <EMAIL@ADDRESS>"
+    dt.DeleteHeader("Last-Translator");
     dt.Translator = wxConfig::Get()->Read("translator_name", wxEmptyString);
     dt.TranslatorEmail = wxConfig::Get()->Read("translator_email", wxEmptyString);
 
@@ -1022,6 +1199,13 @@ bool Catalog::Load(const wxString& po_file, int flags)
     m_isOk = false;
     m_fileName = po_file;
     m_header.BasePath = wxEmptyString;
+
+    wxString ext;
+    wxFileName::SplitPath(po_file, nullptr, nullptr, &ext);
+    if (ext.CmpNoCase("pot") == 0)
+        m_fileType = Type::POT;
+    else
+        m_fileType = Type::PO;
 
     /* Load the .po file: */
 
@@ -1045,7 +1229,7 @@ bool Catalog::Load(const wxString& po_file, int flags)
         wxLogError(_("There were errors when loading the catalog. Some data may be missing or corrupted as the result."));
     }
 
-    LoadParser parser(this, &f);
+    LoadParser parser(*this, &f);
     parser.IgnoreHeader(flags & CreationFlag_IgnoreHeader);
     parser.IgnoreTranslations(flags & CreationFlag_IgnoreTranslations);
     if (!parser.Parse())
@@ -1057,19 +1241,25 @@ bool Catalog::Load(const wxString& po_file, int flags)
         return false;
     }
 
+    m_sourceLanguage = parser.GetMsgidLanguage();
+
     // now that the catalog is loaded, update its items with the bookmarks
     for (unsigned i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
     {
         if (m_header.Bookmarks[i] != -1 &&
             m_header.Bookmarks[i] < (int)m_items.size())
         {
-            m_items[m_header.Bookmarks[i]].SetBookmark(
+            m_items[m_header.Bookmarks[i]]->SetBookmark(
                     static_cast<Bookmark>(i));
         }
     }
 
+    m_fileCRLF = GetFileCRLFFormat(f);
+    m_fileWrappingWidth = parser.GetWrappingWidth();
+    wxLogTrace("poedit", "detect line wrapping: %d", m_fileWrappingWidth);
+
     // If we didn't find any entries, the file must be invalid:
-    if (m_items.size() == 0)
+    if (!parser.FileIsValid)
         return false;
 
     m_isOk = true;
@@ -1087,6 +1277,13 @@ bool Catalog::Load(const wxString& po_file, int flags)
 
 void Catalog::FixupCommonIssues()
 {
+    if (m_header.Project == "PACKAGE VERSION")
+        m_header.Project.clear();
+
+    // All the following fixups are specific to POs and should *not* be done in POTs:
+    if (m_fileType == Type::POT)
+        return;
+
     if (!m_header.Lang.IsValid())
     {
         if (!m_fileName.empty())
@@ -1094,12 +1291,44 @@ void Catalog::FixupCommonIssues()
             m_header.Lang = Language::TryGuessFromFilename(m_fileName);
             wxLogTrace("poedit", "guessed language from filename '%s': %s", m_fileName, m_header.Lang.Code());
         }
+
+        if (!m_header.Lang.IsValid())
+        {
+            // If all else fails, try to detect the language from content
+            wxString allText;
+            for (auto& i: items())
+            {
+                for (auto& s: i->GetTranslations())
+                {
+                    if (s.empty())
+                        continue;
+                    allText.append(s);
+                    allText.append('\n');
+                }
+            }
+            if (!allText.empty())
+            {
+                auto utf8 = allText.utf8_str();
+                m_header.Lang = Language::TryDetectFromText(utf8.data(), utf8.length());
+            }
+        }
     }
 
     wxLogTrace("poedit", "catalog lang is '%s'", GetLanguage().Code());
 
-    if (m_header.Project == "PACKAGE VERSION")
-        m_header.Project = "";
+    if (m_header.GetHeader("Language-Team") == "LANGUAGE <LL@li.org>")
+    {
+        m_header.DeleteHeader("Language-Team");
+        m_header.Team.clear();
+        m_header.TeamEmail.clear();
+    }
+
+    if (m_header.GetHeader("Last-Translator") == "FULL NAME <EMAIL@ADDRESS>")
+    {
+        m_header.DeleteHeader("Last-Translator");
+        m_header.Translator.clear();
+        m_header.TranslatorEmail.clear();
+    }
 
     wxString pluralForms = m_header.GetHeader("Plural-Forms");
 
@@ -1128,7 +1357,7 @@ void Catalog::FixupCommonIssues()
     // TODO: mark catalog as modified if any changes were made
 }
 
-void Catalog::AddItem(const CatalogItem& data)
+void Catalog::AddItem(const CatalogItemPtr& data)
 {
     m_items.push_back(data);
 }
@@ -1148,16 +1377,15 @@ void Catalog::RemoveDeletedItems()
     m_deletedItems.clear();
 }
 
-CatalogItem *Catalog::FindItemByLine(int lineno)
+CatalogItemPtr Catalog::FindItemByLine(int lineno)
 {
-    CatalogItem *last = NULL;
+    CatalogItemPtr last;
 
-    for ( CatalogItemArray::iterator i = m_items.begin();
-          i != m_items.end(); ++i )
+    for (auto& i: m_items)
     {
         if ( i->GetLineNumber() > lineno )
             return last;
-        last = &(*i);
+        last = i;
     }
 
     return last;
@@ -1179,14 +1407,14 @@ int Catalog::SetBookmark(int id, Bookmark bookmark)
     int result = (bookmark==NO_BOOKMARK)?-1:m_header.Bookmarks[bookmark];
 
     // unset previous bookmarks, if any
-    Bookmark bk = m_items[id].GetBookmark();
+    Bookmark bk = m_items[id]->GetBookmark();
     if (bk != NO_BOOKMARK)
         m_header.Bookmarks[bk] = -1;
     if (result > -1)
-        m_items[result].SetBookmark(NO_BOOKMARK);
+        m_items[result]->SetBookmark(NO_BOOKMARK);
 
     // set new bookmark
-    m_items[id].SetBookmark(bookmark);
+    m_items[id]->SetBookmark(bookmark);
     if (bookmark != NO_BOOKMARK)
         m_header.Bookmarks[bookmark] = id;
 
@@ -1209,7 +1437,7 @@ inline bool CanEncodeStringToCharset(const wxString& s, wxMBConv& conv)
     return true;
 }
 
-bool CanEncodeToCharset(const wxTextFile& f, const wxString& charset)
+bool CanEncodeToCharset(const wxTextBuffer& f, const wxString& charset)
 {
     if (charset.Lower() == "utf-8" || charset.Lower() == "utf8")
         return true;
@@ -1227,100 +1455,58 @@ bool CanEncodeToCharset(const wxTextFile& f, const wxString& charset)
 }
 
 
-void GetCRLFBehaviour(wxTextFileType& type, bool& preserve)
-{
-    wxString format = wxConfigBase::Get()->Read("crlf_format", "unix");
-
-    if (format == "win") type = wxTextFileType_Dos;
-    else /* "unix" or obsolete settings */ type = wxTextFileType_Unix;
-
-    preserve = wxConfigBase::Get()->ReadBool("keep_crlf", true);
-}
-
-
-wxTextFileType GetDesiredCRLFFormat(const wxString& po_file)
-{
-    wxTextFileType crlfDefault, crlf;
-    bool crlfPreserve;
-    GetCRLFBehaviour(crlfDefault, crlfPreserve);
-
-    wxTextFile f;
-    if ( crlfPreserve && wxFileExists(po_file) &&
-         f.Open(po_file, wxConvISO8859_1) )
-    {
-        wxLogNull null;
-        crlf = f.GuessType();
-
-        // Discard any unsupported setting. In particular, we ignore "Mac"
-        // line endings, because the ancient OS 9 systems aren't used anymore,
-        // OSX uses Unix ending *and* "Mac" endings break gettext tools. So if
-        // we encounter a catalog with "Mac" line endings, we silently convert
-        // it into Unix endings (i.e. the modern Mac).
-        if (crlf == wxTextFileType_Mac)
-            crlf = wxTextFileType_Unix;
-        if (crlf != wxTextFileType_Dos && crlf != wxTextFileType_Unix)
-            crlf = crlfDefault;
-
-        f.Close();
-    }
-    else
-    {
-        crlf = crlfDefault;
-    }
-
-    return crlf;
-}
-
-
-void SaveMultiLines(wxTextFile &f, const wxString& text)
+void SaveMultiLines(wxTextBuffer &f, const wxString& text)
 {
     wxStringTokenizer tkn(text, _T('\n'));
     while (tkn.HasMoreTokens())
         f.AddLine(tkn.GetNextToken());
 }
 
-/** Adds \n characters as neccesary for good-looking output
+/** Adds \n characters as necessary for good-looking output
  */
 wxString FormatStringForFile(const wxString& text)
 {
     wxString s;
-    unsigned n_cnt = 0;
-    int len = (int)text.length();
+    s.reserve(text.length() + 16);
 
-    s.Alloc(len + 16);
-    // Scan the string up to len-2 because we don't want to account for the
-    // very last \n on the line:
-    //       "some\n string \n"
-    //                      ^
-    //                      |
-    //                      \--- = len-2
-    int i;
-    for (i = 0; i < len-2; i++)
+    wxStringTokenizer tkn(text, wxS('\n'), wxTOKEN_RET_EMPTY_ALL);
+    while (tkn.HasMoreTokens())
     {
-        if (text[i] == _T('\\') && text[i+1] == _T('n'))
-        {
-            n_cnt++;
-            s << _T("\\n\"\n\"");
-            i++;
-        }
-        else
-            s << text[i];
+        if (!s.empty())
+            s += wxS("\"\n\"");
+        auto piece = tkn.GetNextToken();
+        if (tkn.GetLastDelimiter())
+            piece += tkn.GetLastDelimiter();
+        s += EscapeCString(piece);
     }
-    // ...and add not yet processed characters to the string...
-    for (; i < len; i++)
-        s << text[i];
 
-    if (n_cnt >= 1)
-        return _T("\"\n\"") + s;
-    else
-        return s;
+    return s;
 }
 
 } // anonymous namespace
 
 
-bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors)
+#ifdef __WXOSX__
+
+@interface CompiledMOFilePresenter : NSObject<NSFilePresenter>
+@property (atomic, copy) NSURL *presentedItemURL;
+@property (atomic, copy) NSURL *primaryPresentedItemURL;
+@end
+
+@implementation CompiledMOFilePresenter
+- (NSOperationQueue *)presentedItemOperationQueue {
+     return [NSOperationQueue mainQueue];
+}
+@end
+
+#endif // __WXOSX__
+
+
+bool Catalog::Save(const wxString& po_file, bool save_mo,
+                   int& validation_errors, CompilationStatus& mo_compilation_status)
 {
+    mo_compilation_status = CompilationStatus::NotDone;
+
     if ( wxFileExists(po_file) && !wxFile::Access(po_file, wxFile::write) )
     {
         wxLogError(_("File '%s' is read-only and cannot be saved.\nPlease save it under different name."),
@@ -1328,18 +1514,15 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
         return false;
     }
 
-    // Update information about last modification time. But if the header
-    // was empty previously, the author apparently doesn't want this header
-    // set, so don't mess with it. See https://sourceforge.net/tracker/?func=detail&atid=389156&aid=1900298&group_id=27043
-    // for motivation:
-    if ( !m_header.RevisionDate.empty() )
-        m_header.RevisionDate = GetCurrentTimeRFC822();
+    TempOutputFileFor po_file_temp_obj(po_file);
+    const wxString po_file_temp = po_file_temp_obj.FileName();
 
-    const wxString po_file_temp = po_file + ".temp.po";
-    if ( wxFileExists(po_file_temp) )
-        wxRemoveFile(po_file_temp);
+    wxTextFileType outputCrlf = GetDesiredCRLFFormat(m_fileCRLF);
+    // Save into Unix line endings first and only if Windows is required,
+    // reformat the file later. This is because msgcat cannot handle DOS
+    // input particularly well.
 
-    if ( !DoSaveOnly(po_file_temp) )
+    if ( !DoSaveOnly(po_file_temp, wxTextFileType_Unix) )
     {
         wxLogError(_("Couldn't save file %s."), po_file.c_str());
         return false;
@@ -1353,20 +1536,55 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
 
     int msgcat_ok = false;
     {
+        int wrapping = DEFAULT_WRAPPING;
+        if (wxConfig::Get()->ReadBool("keep_crlf", true))
+            wrapping = m_fileWrappingWidth;
+
+        wxString wrappingFlag;
+        if (wrapping == DEFAULT_WRAPPING)
+        {
+            if (wxConfig::Get()->ReadBool("wrap_po_files", true))
+            {
+                wrapping = (int)wxConfig::Get()->ReadLong("wrap_po_files_width", 79);
+            }
+            else
+            {
+                wrapping = NO_WRAPPING;
+            }
+        }
+
+        if (wrapping == NO_WRAPPING)
+            wrappingFlag = " --no-wrap";
+        else if (wrapping != DEFAULT_WRAPPING)
+            wrappingFlag.Printf(" --width=%d", wrapping);
+
+        TempOutputFileFor po_file_temp2_obj(po_file_temp);
+        const wxString po_file_temp2 = po_file_temp2_obj.FileName();
+        auto msgcatCmd = wxString::Format("msgcat --force-po%s -o %s %s",
+                                          wrappingFlag,
+                                          QuoteCmdlineArg(po_file_temp2),
+                                          QuoteCmdlineArg(po_file_temp));
+        wxLogTrace("poedit", "formatting file with %s", msgcatCmd);
+
         // Ignore msgcat errors output (but not exit code), because it
         //   a) complains about things DoValidate() already complained above
         //   b) issues warnings about source-extraction things (e.g. using non-ASCII
         //      msgids) that, while correct, are not something a *translator* can
         //      do anything about.
         wxLogNull null;
-        msgcat_ok =
-              ExecuteGettext
-              (
-                  wxString::Format(_T("msgcat --force-po -o \"%s\" \"%s\""),
-                                   po_file.c_str(),
-                                   po_file_temp.c_str())
-              )
-              && wxFileExists(po_file);
+        msgcat_ok = ExecuteGettext(msgcatCmd) &&
+                    wxFileExists(po_file_temp2);
+
+        // msgcat always outputs Unix line endings, so we need to reformat the file
+        if (msgcat_ok && outputCrlf == wxTextFileType_Dos)
+        {
+            wxTextFile finalFile(po_file_temp2);
+            if (finalFile.Open())
+                finalFile.Write(outputCrlf);
+        }
+
+        if (!TempOutputFileFor::ReplaceFile(po_file_temp2, po_file))
+            msgcat_ok = false;
     }
 
     if ( msgcat_ok )
@@ -1375,7 +1593,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
     }
     else
     {
-        if ( !wxRenameFile(po_file_temp, po_file, /*overwrite=*/true) )
+        if ( !po_file_temp_obj.Commit() )
         {
             wxLogError(_("Couldn't save file %s."), po_file.c_str());
         }
@@ -1391,22 +1609,88 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
         }
     }
 
+    
     /* If the user wants it, compile .mo file right now: */
 
-    if (save_mo && wxConfig::Get()->Read("compile_mo", (long)true))
+    if (m_fileType == Type::PO && save_mo && wxConfig::Get()->Read("compile_mo", (long)true))
     {
-        const wxString mofile = po_file.BeforeLast(_T('.')) + ".mo";
-        if ( !ExecuteGettext
-              (
-                  wxString::Format(_T("msgfmt -o \"%s\" \"%s\""),
-                                   mofile.c_str(),
-                                   po_file.c_str())
-              ) )
+        const wxString mo_file = wxFileName::StripExtension(po_file) + ".mo";
+        TempOutputFileFor mo_file_temp_obj(mo_file);
+        const wxString mo_file_temp = mo_file_temp_obj.FileName();
+
         {
-            // Don't report errors, they were reported as part of validation
-            // step above.  Notice that we run msgfmt *without* the -c flag
-            // here to create the MO file in as many cases as possible, even if
-            // it has some errors.
+            // Ignore msgfmt errors output (but not exit code), because it
+            // complains about things DoValidate() already complained above.
+            wxLogNull null;
+
+            if ( ExecuteGettext
+                  (
+                      wxString::Format("msgfmt -o %s %s",
+                                       QuoteCmdlineArg(mo_file_temp),
+                                       QuoteCmdlineArg(CliSafeFileName(po_file)))
+                  ) )
+            {
+                mo_compilation_status = CompilationStatus::Success;
+            }
+            else
+            {
+                // Don't report errors, they were reported as part of validation
+                // step above.  Notice that we run msgfmt *without* the -c flag
+                // here to create the MO file in as many cases as possible, even if
+                // it has some errors.
+                //
+                // Still, msgfmt has the ugly habit of sometimes returning non-zero
+                // exit code, reporting "fatal errors" and *still* producing a usable
+                // .mo file. If this happens, don't pretend the file wasn't created.
+                if (wxFileName::FileExists(mo_file_temp))
+                    mo_compilation_status = CompilationStatus::Success;
+                else
+                    mo_compilation_status = CompilationStatus::Error;
+            }
+        }
+
+        // Move the MO from temporary location to the final one, if it was created
+        if (mo_compilation_status == CompilationStatus::Success)
+        {
+#ifdef __WXOSX__
+            NSURL *mofileUrl = [NSURL fileURLWithPath:str::to_NS(mo_file)];
+            NSURL *mofiletempUrl = [NSURL fileURLWithPath:str::to_NS(mo_file_temp)];
+            bool sandboxed = (getenv("APP_SANDBOX_CONTAINER_ID") != NULL);
+            CompiledMOFilePresenter *presenter = nil;
+            if (sandboxed)
+            {
+                presenter = [CompiledMOFilePresenter new];
+                presenter.presentedItemURL = mofileUrl;
+                presenter.primaryPresentedItemURL = [NSURL fileURLWithPath:str::to_NS(po_file)];
+                [NSFileCoordinator addFilePresenter:presenter];
+                [NSFileCoordinator filePresenters];
+            }
+            NSFileCoordinator *coo = [[NSFileCoordinator alloc] initWithFilePresenter:presenter];
+            [coo coordinateWritingItemAtURL:mofileUrl options:NSFileCoordinatorWritingForReplacing error:nil byAccessor:^(NSURL *newURL) {
+                NSURL *resultingUrl;
+                BOOL ok = [[NSFileManager defaultManager] replaceItemAtURL:newURL
+                                                             withItemAtURL:mofiletempUrl
+                                                            backupItemName:nil
+                                                                   options:0
+                                                          resultingItemURL:&resultingUrl
+                                                                     error:nil];
+                if (!ok)
+                {
+                    wxLogError(_("Couldn't save file %s."), mo_file.c_str());
+                    mo_compilation_status = CompilationStatus::Error;
+                }
+            }];
+            if (sandboxed)
+            {
+                [NSFileCoordinator removeFilePresenter:presenter];
+            }
+#else // !__WXOSX__
+            if ( !mo_file_temp_obj.Commit() )
+            {
+                wxLogError(_("Couldn't save file %s."), mo_file.c_str());
+                mo_compilation_status = CompilationStatus::Error;
+            }
+#endif // __WXOSX__/!__WXOSX__
         }
     }
 
@@ -1416,10 +1700,94 @@ bool Catalog::Save(const wxString& po_file, bool save_mo, int& validation_errors
 }
 
 
-bool Catalog::DoSaveOnly(const wxString& po_file)
+std::string Catalog::SaveToBuffer()
 {
-    wxTextFileType crlf = GetDesiredCRLFFormat(po_file);
+    class StringSerializer : public wxMemoryText
+    {
+    public:
+        bool OnWrite(wxTextFileType typeNew, const wxMBConv& conv) override
+        {
+            size_t cnt = GetLineCount();
+            for (size_t n = 0; n < cnt; n++)
+            {
+                auto ln = GetLine(n) +
+                          GetEOL(typeNew == wxTextFileType_None ? GetLineType(n) : typeNew);
+                auto buf = ln.mb_str(conv);
+                buffer.append(buf.data(), buf.length());
+            }
+            return true;
+        }
 
+        std::string buffer;
+    };
+
+    StringSerializer f;
+
+    if (!DoSaveOnly(f, wxTextFileType_Unix))
+        return std::string();
+    return f.buffer;
+}
+
+
+bool Catalog::CompileToMO(const wxString& mo_file,
+                          int& validation_errors,
+                          CompilationStatus& mo_compilation_status)
+{
+    mo_compilation_status = CompilationStatus::NotDone;
+
+    TempDirectory tmpdir;
+    if ( !tmpdir.IsOk() )
+        return false;
+    wxString po_file_temp = tmpdir.CreateFileName("output.po");
+
+    if ( !DoSaveOnly(po_file_temp, wxTextFileType_Unix) )
+    {
+        wxLogError(_("Couldn't save file %s."), po_file_temp.c_str());
+        return false;
+    }
+
+    validation_errors = DoValidate(po_file_temp);
+
+    TempOutputFileFor mo_file_temp_obj(mo_file);
+    const wxString mo_file_temp = mo_file_temp_obj.FileName();
+
+    {
+        // Ignore msgfmt errors output (but not exit code), because it
+        // complains about things DoValidate() already complained above.
+        wxLogNull null;
+        ExecuteGettext(wxString::Format("msgfmt -o %s %s",
+                                        QuoteCmdlineArg(mo_file_temp),
+                                        QuoteCmdlineArg(po_file_temp)));
+    }
+
+    // Don't check return code:
+    // msgfmt has the ugly habit of sometimes returning non-zero
+    // exit code, reporting "fatal errors" and *still* producing a usable
+    // .mo file. If this happens, don't pretend the file wasn't created.
+    if (!wxFileName::FileExists(mo_file_temp))
+    {
+        mo_compilation_status = CompilationStatus::Error;
+        return false;
+    }
+    else
+    {
+        mo_compilation_status = CompilationStatus::Success;
+    }
+
+    if ( !mo_file_temp_obj.Commit() )
+    {
+        wxLogError(_("Couldn't save file %s."), mo_file.c_str());
+        return false;
+    }
+
+    return true;
+}
+
+
+
+
+bool Catalog::DoSaveOnly(const wxString& po_file, wxTextFileType crlf)
+{
     wxTextFile f;
     if (!f.Create(po_file))
         return false;
@@ -1427,13 +1795,32 @@ bool Catalog::DoSaveOnly(const wxString& po_file)
     return DoSaveOnly(f, crlf);
 }
 
-bool Catalog::DoSaveOnly(wxTextFile& f, wxTextFileType crlf)
+bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
 {
     /* Save .po file: */
     if (!m_header.Charset || m_header.Charset == "CHARSET")
         m_header.Charset = "UTF-8";
 
+    // Update information about last modification time. But if the header
+    // was empty previously, the author apparently doesn't want this header
+    // set, so don't mess with it. See https://sourceforge.net/tracker/?func=detail&atid=389156&aid=1900298&group_id=27043
+    // for motivation:
+    auto currentTime = GetCurrentTimeString();
+    switch (m_fileType)
+    {
+        case Type::PO:
+            if ( !m_header.RevisionDate.empty() )
+                m_header.RevisionDate = currentTime;
+            break;
+        case Type::POT:
+            if ( m_fileType == Type::POT && !m_header.CreationDate.empty() )
+                m_header.CreationDate = currentTime;
+            break;
+    }
+
     SaveMultiLines(f, m_header.Comment);
+    if (m_fileType == Type::POT)
+        f.AddLine("#, fuzzy");
     f.AddLine(_T("msgid \"\""));
     f.AddLine(_T("msgstr \"\""));
     wxString pohdr = wxString(_T("\"")) + m_header.ToString(_T("\"\n\""));
@@ -1441,46 +1828,47 @@ bool Catalog::DoSaveOnly(wxTextFile& f, wxTextFileType crlf)
     SaveMultiLines(f, pohdr);
     f.AddLine(wxEmptyString);
 
-    for (unsigned itemIdx = 0; itemIdx < m_items.size(); itemIdx++)
+    auto pluralsCount = GetPluralFormsCount();
+
+    for (auto& data: m_items)
     {
-        CatalogItem& data = m_items[itemIdx];
-        data.SetLineNumber(int(f.GetLineCount()+1));
-        SaveMultiLines(f, data.GetComment());
-        for (unsigned i = 0; i < data.GetAutoComments().GetCount(); i++)
+        data->SetLineNumber(int(f.GetLineCount()+1));
+        SaveMultiLines(f, data->GetComment());
+        for (unsigned i = 0; i < data->GetExtractedComments().GetCount(); i++)
         {
-            if (data.GetAutoComments()[i].empty())
+            if (data->GetExtractedComments()[i].empty())
               f.AddLine("#.");
             else
-              f.AddLine("#. " + data.GetAutoComments()[i]);
+              f.AddLine("#. " + data->GetExtractedComments()[i]);
         }
-        for (unsigned i = 0; i < data.GetRawReferences().GetCount(); i++)
-            f.AddLine("#: " + data.GetRawReferences()[i]);
-        wxString dummy = data.GetFlags();
+        for (unsigned i = 0; i < data->GetRawReferences().GetCount(); i++)
+            f.AddLine("#: " + data->GetRawReferences()[i]);
+        wxString dummy = data->GetFlags();
         if (!dummy.empty())
             f.AddLine(dummy);
-        for (unsigned i = 0; i < data.GetOldMsgid().GetCount(); i++)
-            f.AddLine("#| " + data.GetOldMsgid()[i]);
-        if ( data.HasContext() )
+        for (unsigned i = 0; i < data->GetOldMsgid().GetCount(); i++)
+            f.AddLine("#| " + data->GetOldMsgid()[i]);
+        if ( data->HasContext() )
         {
-            SaveMultiLines(f, _T("msgctxt \"") + FormatStringForFile(data.GetContext()) + _T("\""));
+            SaveMultiLines(f, _T("msgctxt \"") + FormatStringForFile(data->GetContext()) + _T("\""));
         }
-        dummy = FormatStringForFile(data.GetString());
+        dummy = FormatStringForFile(data->GetString());
         SaveMultiLines(f, _T("msgid \"") + dummy + _T("\""));
-        if (data.HasPlural())
+        if (data->HasPlural())
         {
-            dummy = FormatStringForFile(data.GetPluralString());
+            dummy = FormatStringForFile(data->GetPluralString());
             SaveMultiLines(f, _T("msgid_plural \"") + dummy + _T("\""));
 
-            for (unsigned i = 0; i < data.GetNumberOfTranslations(); i++)
+            for (unsigned i = 0; i < pluralsCount; i++)
             {
-                dummy = FormatStringForFile(data.GetTranslation(i));
+                dummy = FormatStringForFile(data->GetTranslation(i));
                 wxString hdr = wxString::Format(_T("msgstr[%u] \""), i);
                 SaveMultiLines(f, hdr + dummy + _T("\""));
             }
         }
         else
         {
-            dummy = FormatStringForFile(data.GetTranslation());
+            dummy = FormatStringForFile(data->GetTranslation());
             SaveMultiLines(f, _T("msgstr \"") + dummy + _T("\""));
         }
         f.AddLine(wxEmptyString);
@@ -1495,8 +1883,8 @@ bool Catalog::DoSaveOnly(wxTextFile& f, wxTextFileType crlf)
         CatalogDeletedData& deletedItem = m_deletedItems[itemIdx];
         deletedItem.SetLineNumber(int(f.GetLineCount()+1));
         SaveMultiLines(f, deletedItem.GetComment());
-        for (unsigned i = 0; i < deletedItem.GetAutoComments().GetCount(); i++)
-            f.AddLine("#. " + deletedItem.GetAutoComments()[i]);
+        for (unsigned i = 0; i < deletedItem.GetExtractedComments().GetCount(); i++)
+            f.AddLine("#. " + deletedItem.GetExtractedComments()[i]);
         for (unsigned i = 0; i < deletedItem.GetRawReferences().GetCount(); i++)
             f.AddLine("#: " + deletedItem.GetRawReferences()[i]);
         wxString dummy = deletedItem.GetFlags();
@@ -1509,11 +1897,13 @@ bool Catalog::DoSaveOnly(wxTextFile& f, wxTextFileType crlf)
 
     if (!CanEncodeToCharset(f, m_header.Charset))
     {
+#if wxUSE_GUI
         wxString msg;
         msg.Printf(_("The catalog couldn't be saved in '%s' charset as specified in catalog settings.\n\nIt was saved in UTF-8 instead and the setting was modified accordingly."),
                    m_header.Charset.c_str());
         wxMessageBox(msg, _("Error saving catalog"),
                      wxOK | wxICON_EXCLAMATION);
+#endif
         m_header.Charset = "UTF-8";
 
         // Re-do the save again because we modified a header:
@@ -1526,6 +1916,99 @@ bool Catalog::DoSaveOnly(wxTextFile& f, wxTextFileType crlf)
 }
 
 
+bool Catalog::HasDuplicateItems() const
+{
+    typedef std::pair<wxString, wxString> MsgId;
+    std::set<MsgId> ids;
+    for (auto& item: m_items)
+    {
+        if (!ids.emplace(std::make_pair(item->GetContext(), item->GetString())).second)
+            return true;
+    }
+    return false;
+}
+
+bool Catalog::FixDuplicateItems()
+{
+    auto oldname = m_fileName;
+
+    TempDirectory tmpdir;
+    if ( !tmpdir.IsOk() )
+        return false;
+
+    wxString po_file_temp = tmpdir.CreateFileName("catalog.po");
+    wxString po_file_fixed = tmpdir.CreateFileName("fixed.po");
+
+    if ( !DoSaveOnly(po_file_temp, wxTextFileType_Unix) )
+    {
+        wxLogError(_("Couldn't save file %s."), po_file_temp.c_str());
+        return false;
+    }
+
+    ExecuteGettext(wxString::Format("msguniq -o %s %s",
+                                    QuoteCmdlineArg(po_file_fixed),
+                                    QuoteCmdlineArg(po_file_temp)));
+
+    if (!wxFileName::FileExists(po_file_fixed))
+        return false;
+
+    bool ok = Load(po_file_fixed);
+    m_fileName = oldname;
+    return ok;
+}
+
+
+namespace
+{
+
+wxString MaskForType(const char *extensions, const wxString& description, bool showExt = true)
+{
+    (void)showExt;
+#ifdef __WXMSW__
+    if (showExt)
+        return wxString::Format("%s (%s)|%s", description, extensions, extensions);
+    else
+#endif
+        return wxString::Format("%s|%s", description, extensions);
+}
+
+wxString MaskForType(Catalog::Type t)
+{
+    switch (t)
+    {
+        case Catalog::Type::PO:
+            return MaskForType("*.po", _("PO Translation Files"));
+        case Catalog::Type::POT:
+            return MaskForType("*.pot", _("POT Translation Templates"));
+    }
+    return ""; // silence stupid warning
+}
+
+} // anonymous namespace
+
+wxString Catalog::GetTypesFileMask(std::initializer_list<Type> types)
+{
+    if (types.size() == 0)
+        return "";
+    wxString out;
+    auto t = types.begin();
+    out += MaskForType(*t);
+    for (++t; t != types.end(); ++t)
+    {
+        out += "|";
+        out += MaskForType(*t);
+    }
+    return out;
+}
+
+wxString Catalog::GetAllTypesFileMask()
+{
+    return MaskForType("*.po;*.pot", _("All Translation Files"), /*showExt=*/false) +
+           "|" +
+           GetTypesFileMask({Type::PO, Type::POT});
+}
+
+
 int Catalog::Validate()
 {
     TempDirectory tmpdir;
@@ -1533,7 +2016,7 @@ int Catalog::Validate()
         return 0;
 
     wxString tmp_po = tmpdir.CreateFileName("validated.po");
-    if ( !DoSaveOnly(tmp_po) )
+    if ( !DoSaveOnly(tmp_po, wxTextFileType_Unix) )
         return 0;
 
     return DoValidate(tmp_po);
@@ -1544,12 +2027,11 @@ int Catalog::DoValidate(const wxString& po_file)
     GettextErrors err;
     ExecuteGettextAndParseOutput
     (
-        wxString::Format(_T("msgfmt -o /dev/null -c \"%s\""), po_file.c_str()),
+        wxString::Format("msgfmt -o /dev/null -c %s", QuoteCmdlineArg(CliSafeFileName(po_file))),
         err
     );
 
-    for ( CatalogItemArray::iterator i = m_items.begin();
-          i != m_items.end(); ++i )
+    for (auto& i: m_items)
     {
         i->SetValidity(CatalogItem::Val_Valid);
     }
@@ -1558,7 +2040,7 @@ int Catalog::DoValidate(const wxString& po_file)
     {
         if ( i->line != -1 )
         {
-            CatalogItem *item = FindItemByLine(i->line);
+            auto item = FindItemByLine(i->line);
             if ( item )
             {
                 item->SetValidity(CatalogItem::Val_Invalid);
@@ -1573,34 +2055,137 @@ int Catalog::DoValidate(const wxString& po_file)
     return (int)err.size();
 }
 
-
-bool Catalog::Update(ProgressInfo *progress, bool summary)
+void Catalog::SetFileName(const wxString& fn)
 {
-    if (!m_isOk) return false;
+    wxFileName f(fn);
+    f.Normalize();
+    m_fileName = f.GetFullPath();
+}
+
+
+namespace
+{
+
+enum class SourcesPath
+{
+    Base,
+    Root
+};
+
+wxString GetSourcesPath(const wxString& fileName, const Catalog::HeaderData& header, SourcesPath kind)
+{
+    if (fileName.empty())
+        return wxString();
+
+    if (header.BasePath.empty())
+        return wxString();
+
+    wxString basepath;
+    if (wxIsAbsolutePath(header.BasePath))
+    {
+        basepath = header.BasePath;
+    }
+    else
+    {
+        wxString path = wxPathOnly(fileName);
+        if (path.empty())
+            path = ".";
+        basepath = path + wxFILE_SEP_PATH + header.BasePath + wxFILE_SEP_PATH;
+    }
+
+    wxFileName root = wxFileName::DirName(basepath);
+    root.Normalize();
+
+    if (kind == SourcesPath::Root)
+    {
+        // Deal with misconfigured catalogs where the basepath isn't the root.
+        for (auto& p : header.SearchPaths)
+        {
+            wxString path = (p == ".") ? basepath : basepath + wxFILE_SEP_PATH + p;
+            root = CommonDirectory(root, MakeFileName(path));
+        }
+    }
+
+    return root.GetFullPath();
+}
+
+} // anonymous namespace
+
+wxString Catalog::GetSourcesBasePath() const
+{
+    return GetSourcesPath(m_fileName, m_header, SourcesPath::Base);
+}
+
+wxString Catalog::GetSourcesRootPath() const
+{
+    return GetSourcesPath(m_fileName, m_header, SourcesPath::Root);
+}
+
+bool Catalog::HasSourcesConfigured() const
+{
+    return !m_fileName.empty() &&
+           !m_header.BasePath.empty() &&
+           !m_header.SearchPaths.empty();
+}
+
+bool Catalog::HasSourcesAvailable() const
+{
+    if (!HasSourcesConfigured())
+        return false;
+
+    auto basepath = GetSourcesBasePath();
+    if (!wxFileName::DirExists(basepath))
+        return false;
+
+    for (auto& p: m_header.SearchPaths)
+    {
+        auto fullp = wxIsAbsolutePath(p) ? p : basepath + p;
+        if (!wxFileName::Exists(fullp))
+            return false;
+    }
+
+    auto wpfile = m_header.GetHeader("X-Poedit-WPHeader");
+    if (!wpfile.empty())
+    {
+        // The following tests in this function are heuristics, so don't run
+        // them in presence of X-Poedit-WPHeader and consider the existence
+        // of that file a confirmation of correct setup (even though strictly
+        // speaking only its absence proves anything).
+        return wxFileName::FileExists(basepath + wpfile);
+    }
+
+    if (m_header.SearchPaths.size() == 1)
+    {
+        // A single path doesn't give us much in terms of detection. About the
+        // only thing we can do is to check if it is is a well known directory
+        // that is unlikely to be the root.
+        auto root = GetSourcesRootPath();
+        if (root == wxGetUserHome() ||
+            root == wxStandardPaths::Get().GetDocumentsDir() ||
+            root.EndsWith(wxString(wxFILE_SEP_PATH) + "Desktop" + wxFILE_SEP_PATH))
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+#if wxUSE_GUI // TODO: better separation into another file
+bool Catalog::Update(ProgressInfo *progress, bool summary, UpdateResultReason& reason)
+{
+    reason = UpdateResultReason::Unspecified;
+
+    if (!m_isOk)
+        return false;
 
     wxString cwd = wxGetCwd();
-    if (m_fileName != wxEmptyString)
+    auto path = GetSourcesBasePath();
+    if (!path.empty())
     {
-        wxString path;
-
-        if (wxIsAbsolutePath(m_header.BasePath))
-        {
-            path = m_header.BasePath;
-        }
-        else
-        {
-            path = wxPathOnly(m_fileName);
-            if (path.empty())
-                path = ".";
-            path = path + "/" + m_header.BasePath;
-        }
-
-        if (!wxIsAbsolutePath(path))
-            path = cwd + "/" + path;
-
         if (!wxFileName::DirExists(path))
         {
-            wxLogError(_("Source code directory '%s' doesn't exist."), path.c_str());
+            reason = UpdateResultReason::NoSourcesFound;
             return false;
         }
 
@@ -1609,63 +2194,84 @@ bool Catalog::Update(ProgressInfo *progress, bool summary)
 
     SourceDigger dig(progress);
 
-    Catalog *newcat = dig.Dig(m_header.SearchPaths,
-                              m_header.Keywords,
-                              m_header.SourceCodeCharset);
+    auto newcat = dig.Dig(m_header.SearchPaths,
+                          m_header.SearchPathsExcluded,
+                          m_header.Keywords,
+                          m_header.SourceCodeCharset,
+                          reason);
 
-    if (newcat != NULL)
+    if (progress->Cancelled())
+        reason = UpdateResultReason::CancelledByUser;
+
+    if (newcat)
     {
         bool succ = false;
         if ( progress )
             progress->UpdateMessage(_("Merging differences..."));
 
-        if (!summary || ShowMergeSummary(newcat))
-            succ = Merge(newcat);
+        bool cancelledByUser = false;
+        if (!summary || ShowMergeSummary(newcat, &cancelledByUser))
+        {
+            switch (m_fileType)
+            {
+                case Type::PO:
+                    succ = Merge(newcat);
+                    break;
+                case Type::POT:
+                    m_items = newcat->m_items;
+                    succ = true;
+                    break;
+            }
+        }
         if (!succ)
         {
-            delete newcat;
-            newcat = NULL;
+            newcat.reset();
         }
+        if (cancelledByUser)
+            reason = UpdateResultReason::CancelledByUser;
     }
 
     wxSetWorkingDirectory(cwd);
 
-    if (newcat == NULL) return false;
-
-    delete newcat;
-    return true;
+    return newcat != nullptr;
 }
+#endif
 
-
-bool Catalog::UpdateFromPOT(const wxString& pot_file, bool summary,
+bool Catalog::UpdateFromPOT(const wxString& pot_file,
+                            bool summary,
+                            UpdateResultReason& reason,
                             bool replace_header)
 {
+    reason = UpdateResultReason::Unspecified;
     if (!m_isOk) return false;
 
-    Catalog newcat(pot_file, CreationFlag_IgnoreTranslations);
+    CatalogPtr newcat = std::make_shared<Catalog>(pot_file, CreationFlag_IgnoreTranslations);
 
-    if (!newcat.IsOk())
+    if (!newcat->IsOk())
     {
         wxLogError(_("'%s' is not a valid POT file."), pot_file.c_str());
         return false;
     }
 
-    if (!summary || ShowMergeSummary(&newcat))
+    bool cancelledByUser = false;
+    if (!summary || ShowMergeSummary(newcat, &cancelledByUser))
     {
-        if ( !Merge(&newcat) )
+        if ( !Merge(newcat) )
             return false;
         if ( replace_header )
-            CreateNewHeader(newcat.Header());
+            CreateNewHeader(newcat->Header());
         return true;
     }
     else
     {
+        if (cancelledByUser)
+            reason = UpdateResultReason::CancelledByUser;
         return false;
     }
 }
 
 
-bool Catalog::Merge(Catalog *refcat)
+bool Catalog::Merge(const CatalogPtr& refcat)
 {
     wxString oldname = m_fileName;
 
@@ -1677,15 +2283,24 @@ bool Catalog::Merge(Catalog *refcat)
     wxString tmp2 = tmpdir.CreateFileName("input.po");
     wxString tmp3 = tmpdir.CreateFileName("output.po");
 
-    refcat->DoSaveOnly(tmp1);
-    DoSaveOnly(tmp2);
+    refcat->DoSaveOnly(tmp1, wxTextFileType_Unix);
+    DoSaveOnly(tmp2, wxTextFileType_Unix);
+
+    wxString flags("-q --force-po");
+    if (wxConfig::Get()->ReadBool("use_tm_when_updating", false) == false)
+    {
+        flags += " --no-fuzzy-matching";
+    }
 
     bool succ = ExecuteGettext
                 (
                     wxString::Format
                     (
-                        _T("msgmerge -q --force-po -o \"%s\" \"%s\" \"%s\""),
-                        tmp3.c_str(), tmp2.c_str(), tmp1.c_str()
+                        "msgmerge %s -o %s %s %s",
+                        flags,
+                        QuoteCmdlineArg(tmp3),
+                        QuoteCmdlineArg(tmp2),
+                        QuoteCmdlineArg(tmp1)
                     )
                 );
 
@@ -1707,18 +2322,18 @@ bool Catalog::Merge(Catalog *refcat)
 }
 
 
-static inline wxString ItemMergeSummary(const CatalogItem& item)
+static inline wxString ItemMergeSummary(const CatalogItemPtr& item)
 {
-    wxString s = item.GetString();
-    if ( item.HasPlural() )
-        s += "|" + item.GetPluralString();
-    if ( item.HasContext() )
-        s += wxString::Format("%s [%s]", s.c_str(), item.GetContext().c_str());
+    wxString s = item->GetString();
+    if ( item->HasPlural() )
+        s += "|" + item->GetPluralString();
+    if ( item->HasContext() )
+        s += wxString::Format(" [%s]", item->GetContext());
 
     return s;
 }
 
-void Catalog::GetMergeSummary(Catalog *refcat,
+void Catalog::GetMergeSummary(const CatalogPtr& refcat,
                               wxArrayString& snew, wxArrayString& sobsolete)
 {
     wxASSERT( snew.empty() );
@@ -1726,36 +2341,47 @@ void Catalog::GetMergeSummary(Catalog *refcat,
 
     std::set<wxString> strsThis, strsRef;
 
-    for ( unsigned i = 0; i < GetCount(); i++ )
-        strsThis.insert(ItemMergeSummary((*this)[i]));
-    for ( unsigned i = 0; i < refcat->GetCount(); i++ )
-        strsRef.insert(ItemMergeSummary((*refcat)[i]));
+    for (auto& i: m_items)
+        strsThis.insert(ItemMergeSummary(i));
+    for (auto& i: refcat->m_items)
+        strsRef.insert(ItemMergeSummary(i));
 
-    for ( std::set<wxString>::const_iterator i = strsThis.begin(); i != strsThis.end(); ++i )
+    for (auto& i: strsThis)
     {
-        if (strsRef.find(*i) == strsRef.end())
-            sobsolete.Add(*i);
+        if (strsRef.find(i) == strsRef.end())
+            sobsolete.Add(i);
     }
 
-    for ( std::set<wxString>::const_iterator i = strsRef.begin(); i != strsRef.end(); ++i )
+    for (auto& i: strsRef)
     {
-        if (strsThis.find(*i) == strsThis.end())
-            snew.Add(*i);
+        if (strsThis.find(i) == strsThis.end())
+            snew.Add(i);
     }
 }
 
-bool Catalog::ShowMergeSummary(Catalog *refcat)
+bool Catalog::ShowMergeSummary(const CatalogPtr& refcat, bool *cancelledByUser)
 {
+#if wxUSE_GUI
+    if (cancelledByUser)
+        *cancelledByUser = false;
     if (wxConfig::Get()->ReadBool("show_summary", false))
     {
         wxArrayString snew, sobsolete;
         GetMergeSummary(refcat, snew, sobsolete);
         MergeSummaryDialog sdlg;
         sdlg.TransferTo(snew, sobsolete);
-        return (sdlg.ShowModal() == wxID_OK);
+        bool ok = (sdlg.ShowModal() == wxID_OK);
+        if (cancelledByUser)
+            *cancelledByUser = !ok;
+        return ok;
     }
     else
         return true;
+#else
+    (void)refcat;
+    (void)cancelledByUser;
+    return true;
+#endif
 }
 
 static unsigned GetCountFromPluralFormsHeader(const Catalog::HeaderData& header)
@@ -1769,21 +2395,24 @@ static unsigned GetCountFromPluralFormsHeader(const Catalog::HeaderData& header)
         form = form.BeforeFirst(_T(';'));
         if (form.BeforeFirst(_T('=')) == "nplurals")
         {
+            wxString vals = form.AfterFirst('=');
+            if (vals == "INTEGER") // POT default
+                return 2;
             long val;
-            if (form.AfterFirst(_T('=')).ToLong(&val))
+            if (vals.ToLong(&val))
                 return (unsigned)val;
         }
     }
 
-    return 0;
+    // fallback value for plural forms count should be 2, as in English:
+    return 2;
 }
 
 unsigned Catalog::GetPluralFormsCount() const
 {
     unsigned count = GetCountFromPluralFormsHeader(m_header);
 
-    for ( CatalogItemArray::const_iterator i = m_items.begin();
-          i != m_items.end(); ++i )
+    for (auto& i: m_items)
     {
         count = std::max(count, i->GetPluralFormsCount());
     }
@@ -1795,8 +2424,7 @@ bool Catalog::HasWrongPluralFormsCount() const
 {
     unsigned count = 0;
 
-    for ( CatalogItemArray::const_iterator i = m_items.begin();
-          i != m_items.end(); ++i )
+    for (auto& i: m_items)
     {
         count = std::max(count, i->GetPluralFormsCount());
     }
@@ -1814,16 +2442,19 @@ bool Catalog::HasWrongPluralFormsCount() const
 
 bool Catalog::HasPluralItems() const
 {
-    for ( CatalogItemArray::const_iterator i = m_items.begin();
-          i != m_items.end(); ++i )
+    for (auto& i: m_items)
     {
         if ( i->HasPlural() )
             return true;
     }
-
     return false;
 }
 
+void Catalog::SetLanguage(Language lang)
+{
+    m_header.Lang = lang;
+    m_header.SetHeaderNotEmpty("Plural-Forms", lang.DefaultPluralFormsExpr());
+}
 
 void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens,
                             int *untranslated, int *unfinished)
@@ -1834,27 +2465,29 @@ void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens,
     if (untranslated) *untranslated = 0;
     if (unfinished) *unfinished = 0;
 
-    int cnt = GetCount();
-    for (int i = 0; i < cnt; i++)
+    for (auto& i: m_items)
     {
         bool ok = true;
 
         if (all)
             (*all)++;
 
-        if ((*this)[i].IsFuzzy())
+        if (i->IsFuzzy())
         {
-            (*fuzzy)++;
+            if (fuzzy)
+                (*fuzzy)++;
             ok = false;
         }
-        if ((*this)[i].GetValidity() == CatalogItem::Val_Invalid)
+        if (i->GetValidity() == CatalogItem::Val_Invalid)
         {
-            (*badtokens)++;
+            if (badtokens)
+                (*badtokens)++;
             ok = false;
         }
-        if (!(*this)[i].IsTranslated())
+        if (!i->IsTranslated())
         {
-            (*untranslated)++;
+            if (untranslated)
+                (*untranslated)++;
             ok = false;
         }
 
@@ -1890,6 +2523,13 @@ wxString CatalogItem::GetFlags() const
         return "#" + f;
     else
         return wxEmptyString;
+}
+
+void CatalogItem::SetFuzzy(bool fuzzy)
+{
+    if (!fuzzy && m_isFuzzy)
+        m_oldMsgid.clear();
+    m_isFuzzy = fuzzy;
 }
 
 bool CatalogItem::IsInFormat(const wxString& format)
@@ -1946,6 +2586,47 @@ void CatalogItem::SetTranslations(const wxArrayString &t)
             m_isTranslated = false;
             break;
         }
+    }
+}
+
+void CatalogItem::SetTranslationFromSource()
+{
+    m_validity = Val_Unknown;
+    m_isFuzzy = false;
+    m_isAutomatic = false;
+    m_isTranslated = true;
+
+    auto iter = m_translations.begin();
+    if (*iter != m_string)
+    {
+        *iter = m_string;
+        m_isModified = true;
+    }
+
+    if (m_hasPlural)
+    {
+        ++iter;
+        for ( ; iter != m_translations.end(); ++iter )
+        {
+            if (*iter != m_plural)
+            {
+                *iter = m_plural;
+                m_isModified = true;
+            }
+        }
+    }
+}
+
+void CatalogItem::ClearTranslation()
+{
+    m_isFuzzy = false;
+    m_isAutomatic = false;
+    m_isTranslated = false;
+    for (auto& t: m_translations)
+    {
+        if (!t.empty())
+            m_isModified = true;
+        t.clear();
     }
 }
 

@@ -30,6 +30,30 @@
 # define BOOST_INTERLOCKED_COMPARE_EXCHANGE_POINTER InterlockedCompareExchangePointer
 # define BOOST_INTERLOCKED_EXCHANGE_POINTER InterlockedExchangePointer
 
+#elif defined( BOOST_USE_INTRIN_H )
+
+#include <intrin.h>
+
+# define BOOST_INTERLOCKED_INCREMENT _InterlockedIncrement
+# define BOOST_INTERLOCKED_DECREMENT _InterlockedDecrement
+# define BOOST_INTERLOCKED_COMPARE_EXCHANGE _InterlockedCompareExchange
+# define BOOST_INTERLOCKED_EXCHANGE _InterlockedExchange
+# define BOOST_INTERLOCKED_EXCHANGE_ADD _InterlockedExchangeAdd
+
+# if defined(_M_IA64) || defined(_M_AMD64) || defined(__x86_64__) || defined(__x86_64)
+
+#  define BOOST_INTERLOCKED_COMPARE_EXCHANGE_POINTER _InterlockedCompareExchangePointer
+#  define BOOST_INTERLOCKED_EXCHANGE_POINTER _InterlockedExchangePointer
+
+# else
+
+#  define BOOST_INTERLOCKED_COMPARE_EXCHANGE_POINTER(dest,exchange,compare) \
+    ((void*)BOOST_INTERLOCKED_COMPARE_EXCHANGE((long volatile*)(dest),(long)(exchange),(long)(compare)))
+#  define BOOST_INTERLOCKED_EXCHANGE_POINTER(dest,exchange) \
+    ((void*)BOOST_INTERLOCKED_EXCHANGE((long volatile*)(dest),(long)(exchange)))
+
+# endif
+
 #elif defined(_WIN32_WCE)
 
 #if _WIN32_WCE >= 0x600
@@ -70,41 +94,40 @@ extern "C" long __cdecl InterlockedExchangeAdd( long*, long );
 
 #elif defined( BOOST_MSVC ) || defined( BOOST_INTEL_WIN )
 
-#if defined( BOOST_MSVC ) && BOOST_MSVC >= 1500
+#if defined( BOOST_MSVC ) && BOOST_MSVC >= 1400
 
 #include <intrin.h>
 
-#elif defined( __CLRCALL_PURE_OR_CDECL )
-
-extern "C" long __CLRCALL_PURE_OR_CDECL _InterlockedIncrement( long volatile * );
-extern "C" long __CLRCALL_PURE_OR_CDECL _InterlockedDecrement( long volatile * );
-extern "C" long __CLRCALL_PURE_OR_CDECL _InterlockedCompareExchange( long volatile *, long, long );
-extern "C" long __CLRCALL_PURE_OR_CDECL _InterlockedExchange( long volatile *, long );
-extern "C" long __CLRCALL_PURE_OR_CDECL _InterlockedExchangeAdd( long volatile *, long );
-
 #else
 
-extern "C" long __cdecl _InterlockedIncrement( long volatile * );
-extern "C" long __cdecl _InterlockedDecrement( long volatile * );
-extern "C" long __cdecl _InterlockedCompareExchange( long volatile *, long, long );
-extern "C" long __cdecl _InterlockedExchange( long volatile *, long );
-extern "C" long __cdecl _InterlockedExchangeAdd( long volatile *, long );
+# if defined( __CLRCALL_PURE_OR_CDECL )
+#  define BOOST_INTERLOCKED_CLRCALL_PURE_OR_CDECL __CLRCALL_PURE_OR_CDECL
+# else
+#  define BOOST_INTERLOCKED_CLRCALL_PURE_OR_CDECL __cdecl
+# endif
+
+extern "C" long BOOST_INTERLOCKED_CLRCALL_PURE_OR_CDECL _InterlockedIncrement( long volatile * );
+extern "C" long BOOST_INTERLOCKED_CLRCALL_PURE_OR_CDECL _InterlockedDecrement( long volatile * );
+extern "C" long BOOST_INTERLOCKED_CLRCALL_PURE_OR_CDECL _InterlockedCompareExchange( long volatile *, long, long );
+extern "C" long BOOST_INTERLOCKED_CLRCALL_PURE_OR_CDECL _InterlockedExchange( long volatile *, long );
+extern "C" long BOOST_INTERLOCKED_CLRCALL_PURE_OR_CDECL _InterlockedExchangeAdd( long volatile *, long );
+
+# undef BOOST_INTERLOCKED_CLRCALL_PURE_OR_CDECL
+
+# if defined( BOOST_MSVC ) && BOOST_MSVC >= 1310
+#  pragma intrinsic( _InterlockedIncrement )
+#  pragma intrinsic( _InterlockedDecrement )
+#  pragma intrinsic( _InterlockedCompareExchange )
+#  pragma intrinsic( _InterlockedExchange )
+#  pragma intrinsic( _InterlockedExchangeAdd )
+# endif
 
 #endif
-
-# pragma intrinsic( _InterlockedIncrement )
-# pragma intrinsic( _InterlockedDecrement )
-# pragma intrinsic( _InterlockedCompareExchange )
-# pragma intrinsic( _InterlockedExchange )
-# pragma intrinsic( _InterlockedExchangeAdd )
 
 # if defined(_M_IA64) || defined(_M_AMD64)
 
 extern "C" void* __cdecl _InterlockedCompareExchangePointer( void* volatile *, void*, void* );
 extern "C" void* __cdecl _InterlockedExchangePointer( void* volatile *, void* );
-
-#  pragma intrinsic( _InterlockedCompareExchangePointer )
-#  pragma intrinsic( _InterlockedExchangePointer )
 
 #  define BOOST_INTERLOCKED_COMPARE_EXCHANGE_POINTER _InterlockedCompareExchangePointer
 #  define BOOST_INTERLOCKED_EXCHANGE_POINTER _InterlockedExchangePointer

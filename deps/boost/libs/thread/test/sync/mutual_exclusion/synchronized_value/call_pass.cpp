@@ -92,7 +92,7 @@ int main()
   {
       boost::synchronized_value<S> v;
       v(&nc);
-      //v(&c);
+      v(&c);
   }
   {
       const boost::synchronized_value<S> v;

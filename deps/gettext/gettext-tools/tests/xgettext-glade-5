@@ -1,25 +1,20 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of Glade 2 support for msgctxt.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-gl-5-empty.glade"
 cat <<EOF > xg-gl-5-empty.glade
 <?xml version="1.0"?>
 <GTK-Interface/>
 EOF
 
-tmpfiles="$tmpfiles xg-gl-5.pot"
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} -o xg-gl-5.pot xg-gl-5-empty.glade 2>/dev/null
 test $? = 0 || {
   echo "Skipping test: xgettext was built without Glade support"
-  rm -fr $tmpfiles; exit 77
+  exit 77
 }
 
-tmpfiles="$tmpfiles xg-gl-5.glade"
 cat <<EOF > xg-gl-5.glade
 <?xml version="1.0"?>
 <glade-interface>
@@ -58,15 +53,12 @@ cat <<EOF > xg-gl-5.glade
 </glade-interface>
 EOF
 
-tmpfiles="$tmpfiles xg-gl-5.tmp xg-gl-5.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o xg-gl-5.tmp xg-gl-5.glade
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o xg-gl-5.tmp xg-gl-5.glade || exit 1
 # Don't simplify this to "grep ... < xg-gl-5.tmp", otherwise OpenBSD 4.0 grep
 # only outputs "Binary file (standard input) matches".
 cat xg-gl-5.tmp | grep -v 'POT-Creation-Date' > xg-gl-5.pot
 
-tmpfiles="$tmpfiles xg-gl-5.ok"
 cat <<\EOF > xg-gl-5.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -101,10 +93,23 @@ ${DIFF} xg-gl-5.ok xg-gl-5.pot
 result=$?
 
 test $result = 0 || {
-  rm -fr $tmpfiles; exit $result
+  exit $result
 }
 
-tmpfiles="$tmpfiles xg-gl-5b.glade"
+# Check with --extract-all option
+rm xg-gl-5.tmp
+${XGETTEXT} -a -o xg-gl-5.tmp xg-gl-5.glade || exit 1
+# Don't simplify this to "grep ... < xg-gl-5.tmp", otherwise OpenBSD 4.0 grep
+# only outputs "Binary file (standard input) matches".
+cat xg-gl-5.tmp | grep -v 'POT-Creation-Date' > xg-gl-5.pot
+
+${DIFF} xg-gl-5.ok xg-gl-5.pot
+result=$?
+
+test $result = 0 || {
+  exit $result
+}
+
 cat <<EOF > xg-gl-5b.glade
 <?xml version="1.0"?>
 <glade-interface>
@@ -143,15 +148,12 @@ cat <<EOF > xg-gl-5b.glade
 </glade-interface>
 EOF
 
-tmpfiles="$tmpfiles xg-gl-5b.tmp xg-gl-5b.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o xg-gl-5b.tmp xg-gl-5b.glade 2>/dev/null
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o xg-gl-5b.tmp xg-gl-5b.glade 2>/dev/null || exit 1
 # Don't simplify this to "grep ... < xg-gl-5b.tmp", otherwise OpenBSD 4.0 grep
 # only outputs "Binary file (standard input) matches".
 cat xg-gl-5b.tmp | grep -v 'POT-Creation-Date' > xg-gl-5b.pot
 
-tmpfiles="$tmpfiles xg-gl-5b.ok"
 cat <<\EOF > xg-gl-5b.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -179,7 +181,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-gl-5b.ok xg-gl-5b.pot
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

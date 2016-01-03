@@ -1,5 +1,5 @@
 /* Writing Java ResourceBundles.
-   Copyright (C) 2001-2003 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2015 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -33,6 +33,7 @@ extern int
                              const char *resource_name,
                              const char *locale_name,
                              const char *directory,
-                             bool assume_java2);
+                             bool assume_java2,
+                             bool output_source);
 
 #endif /* _WRITE_JAVA_H */

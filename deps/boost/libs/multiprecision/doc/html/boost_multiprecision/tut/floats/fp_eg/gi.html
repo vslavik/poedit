@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Calculating an Integral</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../fp_eg.html" title="Examples">
 <link rel="prev" href="nd.html" title="Calculating a Derivative">
@@ -31,8 +31,6 @@
             Similar to the generic derivative example, we can calculate integrals
             in a similar manner:
           </p>
-<p>
-</p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">value_type</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">function_type</span><span class="special">&gt;</span>
 <span class="keyword">inline</span> <span class="identifier">value_type</span> <span class="identifier">integral</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">value_type</span> <span class="identifier">a</span><span class="special">,</span>
                            <span class="keyword">const</span> <span class="identifier">value_type</span> <span class="identifier">b</span><span class="special">,</span>
@@ -73,14 +71,10 @@
 <span class="special">}</span>
 </pre>
 <p>
-          </p>
-<p>
             The following sample program shows how the function can be called, we
             begin by defining a function object, which when integrated should yield
             the Bessel J function:
           </p>
-<p>
-</p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">value_type</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">cyl_bessel_j_integral_rep</span>
 <span class="special">{</span>
@@ -99,10 +93,6 @@
    <span class="keyword">const</span> <span class="identifier">value_type</span> <span class="identifier">x</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
-<p>
-          </p>
-<p>
-</p>
 <pre class="programlisting">   <span class="comment">/* The function can now be called as follows: */</span>
 <span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">char</span><span class="special">**)</span>
 <span class="special">{</span>
@@ -151,12 +141,10 @@
    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">cyl_bessel_j</span><span class="special">(</span><span class="number">2</span><span class="special">,</span> <span class="identifier">mp_type</span><span class="special">(</span><span class="number">123</span><span class="special">)</span> <span class="special">/</span> <span class="number">100</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
-<p>
-          </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2012 John Maddock and Christopher Kormanyos<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2013 John Maddock and Christopher Kormanyos<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

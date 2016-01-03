@@ -69,7 +69,7 @@ Note how we had to add some extra escapes to the expression: remember that
 the escape is seen once by the C++ compiler, before it gets to be seen by 
 the regular expression engine, consequently escapes in regular expressions 
 have to be doubled up when embedding them in C/C++ code. Also note that 
-all the examples assume that your compiler supports argument-dependent-lookup
+all the examples assume that your compiler supports argument-dependent 
 lookup, if yours doesn't (for example VC6), then you will have to add some 
 `boost::` prefixes to some of the function calls in the examples.
 
@@ -135,7 +135,7 @@ that we have already seen, the [match_results] class has a `format` member that
 takes the result of a match and a format string, and produces a new string 
 by merging the two.
 
-For iterating through all occurences of an expression within a text, 
+For iterating through all occurrences of an expression within a text, 
 there are two iterator types: [regex_iterator] will enumerate over the 
 [match_results] objects found, while [regex_token_iterator] will enumerate 
 a series of strings (similar to perl style split operations).

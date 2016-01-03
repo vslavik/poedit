@@ -1,12 +1,9 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test conversion from UTF-8 to BIG5.
 # Test that encoding names are case insensitive.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mco-test2.po"
 cat <<\EOF > mco-test2.po
 # Chinese translation for GNU gettext messages.
 #
@@ -21,12 +18,9 @@ msgid "exactly 2 input files required"
 msgstr "此功能需要恰好指定兩個輸入檔"
 EOF
 
-tmpfiles="$tmpfiles mco-test2.out"
 : ${MSGCONV=msgconv}
-${MSGCONV} -t Big5 -o mco-test2.out mco-test2.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGCONV} -t Big5 -o mco-test2.out mco-test2.po || exit 1
 
-tmpfiles="$tmpfiles mco-test2.ok"
 cat <<\EOF > mco-test2.ok
 # Chinese translation for GNU gettext messages.
 #
@@ -45,7 +39,5 @@ EOF
 # Redirect stdout, so as not to fill the user's screen with non-ASCII bytes.
 ${DIFF} mco-test2.ok mco-test2.out >/dev/null
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

@@ -43,32 +43,36 @@ namespace boost { namespace geometry
 \qbk{[include reference/views/box_view.qbk]}
 */
 template <typename Box, bool Clockwise = true>
-struct box_view 
+struct box_view
     : public detail::points_view
         <
-            typename geometry::point_type<Box>::type, 
+            typename geometry::point_type<Box>::type,
             5
         >
 {
     typedef typename geometry::point_type<Box>::type point_type;
-    
+
     /// Constructor accepting the box to adapt
     explicit box_view(Box const& box)
         : detail::points_view<point_type, 5>(copy_policy(box))
     {}
-    
-private :    
-    
+
+private :
+
     class copy_policy
     {
     public :
         inline copy_policy(Box const& box)
             : m_box(box)
         {}
-        
+
         inline void apply(point_type* points) const
         {
-            detail::assign_box_corners_oriented<!Clockwise>(m_box, points);
+            // assign_box_corners_oriented requires a range
+            // an alternative for this workaround would be to pass a range here,
+            // e.g. use boost::array in points_view instead of c-array
+            std::pair<point_type*, point_type*> rng = std::make_pair(points, points + 5);
+            detail::assign_box_corners_oriented<!Clockwise>(m_box, rng);
             points[4] = points[0];
         }
     private :

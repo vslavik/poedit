@@ -5,7 +5,7 @@
  * accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
  *
- * $Id: haertel.hpp 60755 2010-03-22 00:45:06Z steven_watanabe $
+ * $Id$
  *
  * Revision history
  */

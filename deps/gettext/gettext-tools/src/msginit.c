@@ -1,5 +1,5 @@
 /* Initializes a new PO file.
-   Copyright (C) 2001-2012 Free Software Foundation, Inc.
+   Copyright (C) 2001-2015 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -26,6 +26,7 @@
 #include <getopt.h>
 #include <limits.h>
 #include <locale.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -648,7 +649,7 @@ catalogname_for_locale (const char *locale)
     "pa_IN",    /* Punjabi      India */
     "pag_PH",   /* Pangasinan   Philippines */
     "pam_PH",   /* Pampanga     Philippines */
-    "pap_AN",   /* Papiamento   Netherlands Antilles */
+    "pap_AN",   /* Papiamento   Netherlands Antilles - this line can be removed in 2018 */
     "pbb_CO",   /* Páez                Colombia */
     "pl_PL",    /* Polish       Poland */
     "ps_AF",    /* Pashto       Afghanistan */
@@ -675,7 +676,6 @@ catalogname_for_locale (const char *locale)
     "so_SO",    /* Somali       Somalia */
     "sq_AL",    /* Albanian     Albania */
     "sr_RS",    /* Serbian      Serbia */
-    "sr_YU",    /* Serbian      Yugoslavia - this line can be removed in 2010 */
     "srr_SN",   /* Serer        Senegal */
     "suk_TZ",   /* Sukuma       Tanzania */
     "sus_GN",   /* Susu         Guinea */
@@ -1059,7 +1059,7 @@ get_user_pwd ()
   if (userpasswd != NULL)
     return userpasswd;
   if (errno != 0)
-    error (EXIT_FAILURE, errno, "getpwuid(\"%d\")", getuid ());
+    error (EXIT_FAILURE, errno, "getpwuid(%ju)", (uintmax_t) getuid ());
 #endif
 
   return NULL;
@@ -1332,6 +1332,8 @@ content_transfer_encoding ()
 static const char *
 plural_forms ()
 {
+  const char *gettextcldrdir;
+  char *prog = NULL;
   size_t i;
 
   /* Search for a formula depending on the catalogname.  */
@@ -1344,6 +1346,85 @@ plural_forms ()
     if (strcmp (plural_table[i].lang, language) == 0)
       return plural_table[i].value;
 
+  gettextcldrdir = getenv ("GETTEXTCLDRDIR");
+  if (gettextcldrdir != NULL && gettextcldrdir[0] != '\0')
+    {
+      const char *gettextlibdir;
+      char *dirs[3], *last_dir;
+      char *argv[4];
+      pid_t child;
+      int fd[1];
+      FILE *fp;
+      char *line;
+      size_t linesize;
+      size_t linelen;
+      int exitstatus;
+
+      gettextlibdir = getenv ("GETTEXTLIBDIR");
+      if (gettextlibdir == NULL || gettextlibdir[0] == '\0')
+        gettextlibdir = relocate (LIBDIR "/gettext");
+
+      prog = xconcatenated_filename (gettextlibdir, "cldr-plurals", NULL);
+
+      last_dir = xstrdup (gettextcldrdir);
+      dirs[0] = "common";
+      dirs[1] = "supplemental";
+      dirs[2] = "plurals.xml";
+      for (i = 0; i < SIZEOF (dirs); i++)
+        {
+          char *dir = xconcatenated_filename (last_dir, dirs[i], NULL);
+          free (last_dir);
+          last_dir = dir;
+        }
+
+      /* Call the cldr-plurals command.  */
+      argv[0] = "cldr-plurals";
+      argv[1] = (char *) language;
+      argv[2] = last_dir;
+      argv[3] = NULL;
+      child = create_pipe_in (prog, prog, argv, DEV_NULL,
+                              false, true, false,
+                              fd);
+      free (last_dir);
+      if (child == -1)
+        goto failed;
+
+      /* Retrieve its result.  */
+      fp = fdopen (fd[0], "r");
+      if (fp == NULL)
+        {
+          error (0, errno, _("fdopen() failed"));
+          goto failed;
+        }
+
+      line = NULL; linesize = 0;
+      linelen = getline (&line, &linesize, fp);
+      if (linelen == (size_t)(-1))
+        {
+          error (0, 0, _("%s subprocess I/O error"), prog);
+          fclose (fp);
+          goto failed;
+        }
+      if (linelen > 0 && line[linelen - 1] == '\n')
+        line[linelen - 1] = '\0';
+
+      fclose (fp);
+
+      /* Remove zombie process from process list, and retrieve exit status.  */
+      exitstatus = wait_subprocess (child, prog, false, false, true, false,
+                                    NULL);
+      if (exitstatus != 0)
+        {
+          error (0, 0, _("%s subprocess failed with exit code %d"),
+                 prog, exitstatus);
+          goto failed;
+        }
+
+      return line;
+    }
+
+ failed:
+  free (prog);
   return NULL;
 }
 

@@ -1,5 +1,6 @@
 /* open-po - search for .po file along search path list and open for reading
-   Copyright (C) 1995-1996, 2000-2003, 2005-2009 Free Software Foundation, Inc.
+   Copyright (C) 1995-1996, 2000-2003, 2005-2009, 2015 Free Software
+   Foundation, Inc.
    Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, April 1995.
 
    This program is free software: you can redistribute it and/or modify

@@ -1669,7 +1669,7 @@
 // wxWebKit is a wrapper for Apple's WebKit framework, use it if you want to
 // embed the Safari browser control
 // 0 by default because of Jaguar compatibility problems
-#define wxUSE_WEBKIT        1
+#define wxUSE_WEBKIT        0
 
 
 // Set to 0 for no libmspack

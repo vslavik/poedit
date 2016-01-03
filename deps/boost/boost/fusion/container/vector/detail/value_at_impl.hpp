@@ -7,6 +7,7 @@
 #if !defined(FUSION_VALUE_AT_IMPL_05052005_0232)
 #define FUSION_VALUE_AT_IMPL_05052005_0232
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/mpl/at.hpp>
 
 namespace boost { namespace fusion
@@ -22,7 +23,7 @@ namespace boost { namespace fusion
         struct value_at_impl<vector_tag>
         {
             template <typename Sequence, typename N>
-            struct apply 
+            struct apply
             {
                 typedef typename mpl::at<typename Sequence::types, N>::type type;
             };

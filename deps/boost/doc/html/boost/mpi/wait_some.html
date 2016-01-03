@@ -32,15 +32,15 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../mpi/reference.html#header.boost.mpi.nonblocking_hpp" title="Header &lt;boost/mpi/nonblocking.hpp&gt;">boost/mpi/nonblocking.hpp</a>&gt;
 
 </span>
-<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <a class="link" href="../../BidirectionalIterator.html" title="Concept BidirectionalIterator">BidirectionalIterator</a><span class="special">,</span> <span class="keyword">typename</span> <a class="link" href="../../OutputIterator.html" title="Concept OutputIterator">OutputIterator</a><span class="special">&gt;</span> 
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> BidirectionalIterator<span class="special">,</span> <span class="keyword">typename</span> OutputIterator<span class="special">&gt;</span> 
   <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">OutputIterator</span><span class="special">,</span> <span class="identifier">BidirectionalIterator</span> <span class="special">&gt;</span> 
   <span class="identifier">wait_some</span><span class="special">(</span><span class="identifier">BidirectionalIterator</span> first<span class="special">,</span> <span class="identifier">BidirectionalIterator</span> last<span class="special">,</span> 
             <span class="identifier">OutputIterator</span> out<span class="special">)</span><span class="special">;</span>
-<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <a class="link" href="../../BidirectionalIterator.html" title="Concept BidirectionalIterator">BidirectionalIterator</a><span class="special">&gt;</span> 
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> BidirectionalIterator<span class="special">&gt;</span> 
   <span class="identifier">BidirectionalIterator</span> 
   <span class="identifier">wait_some</span><span class="special">(</span><span class="identifier">BidirectionalIterator</span> first<span class="special">,</span> <span class="identifier">BidirectionalIterator</span> last<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp165748920"></a><h2>Description</h2>
+<a name="idp334751648"></a><h2>Description</h2>
 <p>This routine takes in a set of requests stored in the iterator range <code class="computeroutput"></code>[first,last) and waits until at least one of the requests has completed. It then completes all of the requests it can, partitioning the input sequence into pending requests followed by completed requests. If an output iterator is provided, <code class="computeroutput">status</code> objects will be emitted for each of the completed requests. This routine provides functionality equivalent to <code class="computeroutput">MPI_Waitsome</code>.</p>
 <p>
 

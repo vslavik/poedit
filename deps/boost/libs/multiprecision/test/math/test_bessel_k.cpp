@@ -54,6 +54,13 @@ void expected_results()
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
+      ".*cpp_bin_float.*",           // test type(s)
+      ".*",                          // test data group
+      ".*", 300, 150);               // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
+      ".*",                          // platform
       ".*",                          // test type(s)
       ".*",                          // test data group
       ".*", 50, 15);                 // test function

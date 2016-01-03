@@ -27,7 +27,7 @@
 <a name="geometry.reference.core.tag"></a><a class="link" href="tag.html" title="tag">tag</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp58957832"></a>
+          <a class="indexterm" name="idp122686880"></a>
 Metafunction defining <span class="bold"><strong>type</strong></span> as the tag
           of the specified geometry type.
         </p>
@@ -96,7 +96,7 @@ Metafunction defining <span class="bold"><strong>type</strong></span> as the tag
           Either
         </p>
 <p>
-          <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
+          <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
         </p>
 <p>
           Or
@@ -164,7 +164,7 @@ Metafunction defining <span class="bold"><strong>type</strong></span> as the tag
 
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometries</span><span class="special">/</span><span class="identifier">polygon</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">multi</span><span class="special">/</span><span class="identifier">geometries</span><span class="special">/</span><span class="identifier">multi_polygon</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometries</span><span class="special">/</span><span class="identifier">multi_polygon</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometries</span><span class="special">/</span><span class="identifier">adapted</span><span class="special">/</span><span class="identifier">boost_tuple</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
 <span class="identifier">BOOST_GEOMETRY_REGISTER_BOOST_TUPLE_CS</span><span class="special">(</span><span class="identifier">cs</span><span class="special">::</span><span class="identifier">cartesian</span><span class="special">)</span>
@@ -192,7 +192,7 @@ Metafunction defining <span class="bold"><strong>type</strong></span> as the tag
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Polygon</span><span class="special">&gt;</span>
     <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span> <span class="identifier">apply</span><span class="special">(</span><span class="identifier">Polygon</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">p</span><span class="special">)</span>
     <span class="special">{</span>
-        <span class="comment">// Use the Boost.Geometry manipulator "dsv" </span>
+        <span class="comment">// Use the Boost.Geometry manipulator "dsv"</span>
         <span class="comment">// working on all supported geometries</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Hello POLYGON, you look like: "</span>
             <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">geometry</span><span class="special">::</span><span class="identifier">dsv</span><span class="special">(</span><span class="identifier">p</span><span class="special">)</span>
@@ -256,7 +256,8 @@ Hello MULTIPOLYGON, you contain: 1 polygon(s)
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
+      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

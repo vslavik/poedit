@@ -6,14 +6,13 @@
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 
-#include <boost/math/bindings/rr.hpp>
-//#include <boost/math/tools/dual_precision.hpp>
 #include <boost/math/tools/test_data.hpp>
 #include <boost/test/included/prg_exec_monitor.hpp>
 #include <boost/math/special_functions/ellint_3.hpp>
 #include <fstream>
 #include <boost/math/tools/test_data.hpp>
-#include <boost/tr1/random.hpp>
+#include <boost/random.hpp>
+#include "mp_t.hpp"
 
 float extern_val;
 // confuse the compilers optimiser, and force a truncation to float precision:
@@ -23,13 +22,13 @@ float truncate_to_float(float const * pf)
    return *pf;
 }
 
-boost::math::tuple<boost::math::ntl::RR, boost::math::ntl::RR> generate_data(boost::math::ntl::RR n, boost::math::ntl::RR phi)
+boost::math::tuple<mp_t, mp_t> generate_data(mp_t n, mp_t phi)
 {
-   static std::tr1::mt19937 r;
-   std::tr1::uniform_real<float> ui(0, 1);
+   static boost::mt19937 r;
+   boost::uniform_real<float> ui(0, 1);
    float k = ui(r);
-   boost::math::ntl::RR kr(truncate_to_float(&k));
-   boost::math::ntl::RR result = boost::math::ellint_3(kr, n, phi);
+   mp_t kr(truncate_to_float(&k));
+   mp_t result = boost::math::ellint_3(kr, n, phi);
    return boost::math::make_tuple(kr, result);
 }
 
@@ -37,11 +36,8 @@ int cpp_main(int argc, char*argv [])
 {
    using namespace boost::math::tools;
 
-   boost::math::ntl::RR::SetOutputPrecision(50);
-   boost::math::ntl::RR::SetPrecision(1000);
-
-   parameter_info<boost::math::ntl::RR> arg1, arg2;
-   test_data<boost::math::ntl::RR> data;
+   parameter_info<mp_t> arg1, arg2;
+   test_data<mp_t> data;
 
    bool cont;
    std::string line;
@@ -70,7 +66,7 @@ int cpp_main(int argc, char*argv [])
       line = "ellint_pi3_data.ipp";
    std::ofstream ofs(line.c_str());
    line.erase(line.find('.'));
-   ofs << std::scientific;
+   ofs << std::scientific << std::setprecision(40);
    write_code(ofs, data, line.c_str());
 
    return 0;

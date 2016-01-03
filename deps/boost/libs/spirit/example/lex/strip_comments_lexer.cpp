@@ -112,9 +112,9 @@ struct strip_comments_tokens : lex::lexer<Lexer>
       : strip_comments_tokens::base_type(lex::match_flags::match_default)
     {
         // define tokens and associate them with the lexer
-        cppcomment = "\\/\\/[^\n]*";    // '//[^\n]*'
-        ccomment = "\\/\\*";            // '/*'
-        endcomment = "\\*\\/";          // '*/'
+        cppcomment = "\"//\"[^\n]*";    // '//[^\n]*'
+        ccomment = "\"/*\"";            // '/*'
+        endcomment = "\"*/\"";          // '*/'
         any = std::string(".");
         eol = "\n";
 

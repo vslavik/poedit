@@ -6,6 +6,7 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #define BOOST_THREAD_VERSION 2
+#define BOOST_TEST_MODULE Boost.Threads: xtime test suite
 
 #include <boost/thread/detail/config.hpp>
 
@@ -15,7 +16,7 @@
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition.hpp>
 
-void test_xtime_cmp()
+BOOST_AUTO_TEST_CASE(test_xtime_cmp)
 {
     boost::xtime xt1, xt2, cur;
     BOOST_CHECK_EQUAL(
@@ -39,7 +40,7 @@ void test_xtime_cmp()
     BOOST_CHECK(boost::xtime_cmp(cur, cur) == 0);
 }
 
-void test_xtime_get()
+BOOST_AUTO_TEST_CASE(test_xtime_get)
 {
     boost::xtime orig, cur, old;
     BOOST_CHECK_EQUAL(
@@ -58,7 +59,7 @@ void test_xtime_get()
     }
 }
 
-void test_xtime_mutex_backwards_compatibility()
+BOOST_AUTO_TEST_CASE(test_xtime_mutex_backwards_compatibility)
 {
     boost::timed_mutex m;
     BOOST_CHECK(m.timed_lock(boost::get_xtime(boost::get_system_time()+boost::posix_time::milliseconds(10))));
@@ -82,7 +83,7 @@ bool predicate()
 }
 
 
-void test_xtime_condvar_backwards_compatibility()
+BOOST_AUTO_TEST_CASE(test_xtime_condvar_backwards_compatibility)
 {
     boost::condition_variable cond;
     boost::condition_variable_any cond_any;
@@ -93,19 +94,4 @@ void test_xtime_condvar_backwards_compatibility()
     cond.timed_wait(lk,boost::get_xtime(boost::get_system_time()+boost::posix_time::milliseconds(10)),predicate);
     cond_any.timed_wait(lk,boost::get_xtime(boost::get_system_time()+boost::posix_time::milliseconds(10)));
     cond_any.timed_wait(lk,boost::get_xtime(boost::get_system_time()+boost::posix_time::milliseconds(10)),predicate);
-}
-
-
-
-boost::unit_test::test_suite* init_unit_test_suite(int, char*[])
-{
-    boost::unit_test::test_suite* test =
-        BOOST_TEST_SUITE("Boost.Threads: xtime test suite");
-
-    test->add(BOOST_TEST_CASE(&test_xtime_cmp));
-    test->add(BOOST_TEST_CASE(&test_xtime_get));
-    test->add(BOOST_TEST_CASE(&test_xtime_mutex_backwards_compatibility));
-    test->add(BOOST_TEST_CASE(&test_xtime_condvar_backwards_compatibility));
-
-    return test;
 }

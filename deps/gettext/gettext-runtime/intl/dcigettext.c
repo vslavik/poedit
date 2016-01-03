@@ -1,5 +1,5 @@
 /* Implementation of the internal dcigettext function.
-   Copyright (C) 1995-1999, 2000-2010, 2012 Free Software Foundation, Inc.
+   Copyright (C) 1995-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
@@ -157,7 +157,7 @@ static void *mempcpy (void *dest, const void *src, size_t n);
 
 /* Use a replacement if the system does not provide the `tsearch' function
    family.  */
-#if HAVE_TSEARCH || defined _LIBC
+#if defined HAVE_TSEARCH || defined _LIBC
 # include <search.h>
 #else
 # define tsearch libintl_tsearch
@@ -550,7 +550,7 @@ DCIGETTEXT (const char *domainname, const char *msgid1, const char *msgid2,
 #ifdef HAVE_PER_THREAD_LOCALE
 # ifndef IN_LIBGLOCALE
 #  ifdef _LIBC
-  localename = _strdupa (_current_locale_name (category));
+  localename = strdupa (__current_locale_name (category));
 #  else
   categoryname = category_to_name (category);
 #   define CATEGORYNAME_INITIALIZED
@@ -742,6 +742,11 @@ DCIGETTEXT (const char *domainname, const char *msgid1, const char *msgid2,
 		  retval = _nl_find_msg (domain->successor[cnt], binding,
 					 msgid1, 1, &retlen);
 #endif
+
+		  /* Resource problems are not fatal, instead we return no
+		     translation.  */
+		  if (__builtin_expect (retval == (char *) -1, 0))
+		    goto return_untranslated;
 
 		  if (retval != NULL)
 		    {
@@ -1103,6 +1108,11 @@ _nl_find_msg (struct loaded_l10nfile *domain_file,
 		_nl_find_msg (domain_file, domainbinding, "", 0, &nullentrylen);
 # endif
 
+	      /* Resource problems are fatal.  If we continue onwards we will
+	         only attempt to calloc a new conv_tab and fail later.  */
+	      if (__builtin_expect (nullentry == (char *) -1, 0))
+	        return (char *) -1;
+
 	      if (nullentry != NULL)
 		{
 		  const char *charsetstr;
@@ -1328,7 +1338,7 @@ _nl_find_msg (struct loaded_l10nfile *domain_file,
 							     freemem_size);
 # ifdef _LIBC
 		      if (newmem != NULL)
-			transmem_list = transmem_list->next;
+			transmem_list = newmem;
 		      else
 			{
 			  struct transmem_list *old = transmem_list;
@@ -1343,6 +1353,16 @@ _nl_find_msg (struct loaded_l10nfile *domain_file,
 		      malloc_count = 1;
 		      freemem_size = INITIAL_BLOCK_SIZE;
 		      newmem = (transmem_block_t *) malloc (freemem_size);
+# ifdef _LIBC
+		      if (newmem != NULL)
+			{
+			  /* Add the block to the list of blocks we have to free
+			     at some point.  */
+			  newmem->next = transmem_list;
+			  transmem_list = newmem;
+			}
+		      /* Fall through and return -1.  */
+# endif
 		    }
 		  if (__builtin_expect (newmem == NULL, 0))
 		    {
@@ -1353,11 +1373,6 @@ _nl_find_msg (struct loaded_l10nfile *domain_file,
 		    }
 
 # ifdef _LIBC
-		  /* Add the block to the list of blocks we have to free
-		     at some point.  */
-		  newmem->next = transmem_list;
-		  transmem_list = newmem;
-
 		  freemem = (unsigned char *) newmem->data;
 		  freemem_size -= offsetof (struct transmem_list, data);
 # else

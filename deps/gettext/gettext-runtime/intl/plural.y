@@ -1,6 +1,6 @@
 %{
 /* Expression parsing for plural form selection.
-   Copyright (C) 2000-2001, 2003, 2005-2006 Free Software Foundation, Inc.
+   Copyright (C) 2000-2015 Free Software Foundation, Inc.
    Written by Ulrich Drepper <drepper@cygnus.com>, 2000.
 
    This program is free software: you can redistribute it and/or modify
@@ -40,10 +40,10 @@
 # define __gettextparse PLURAL_PARSE
 #endif
 
-#define YYLEX_PARAM	&((struct parse_args *) arg)->cp
-#define YYPARSE_PARAM	arg
 %}
-%pure_parser
+%parse-param {struct parse_args *arg}
+%lex-param {struct parse_args *arg}
+%define api.pure full
 %expect 7
 
 %union {
@@ -54,8 +54,8 @@
 
 %{
 /* Prototypes for local functions.  */
-static int yylex (YYSTYPE *lval, const char **pexp);
-static void yyerror (const char *str);
+static int yylex (YYSTYPE *lval, struct parse_args *arg);
+static void yyerror (struct parse_args *arg, const char *str);
 
 /* Allocation of expressions.  */
 
@@ -153,7 +153,7 @@ start:	  exp
 	  {
 	    if ($1 == NULL)
 	      YYABORT;
-	    ((struct parse_args *) arg)->res = $1;
+	    arg->res = $1;
 	  }
 	;
 
@@ -234,16 +234,16 @@ FREE_EXPRESSION (struct expression *exp)
 
 
 static int
-yylex (YYSTYPE *lval, const char **pexp)
+yylex (YYSTYPE *lval, struct parse_args *arg)
 {
-  const char *exp = *pexp;
+  const char *exp = arg->cp;
   int result;
 
   while (1)
     {
       if (exp[0] == '\0')
 	{
-	  *pexp = exp;
+	  arg->cp = exp;
 	  return YYEOF;
 	}
 
@@ -370,14 +370,14 @@ yylex (YYSTYPE *lval, const char **pexp)
       break;
     }
 
-  *pexp = exp;
+  arg->cp = exp;
 
   return result;
 }
 
 
 static void
-yyerror (const char *str)
+yyerror (struct parse_args *arg, const char *str)
 {
   /* Do nothing.  We don't print error messages here.  */
 }

@@ -89,7 +89,7 @@ and functions of the library.
 Boost.MultiIndex safe mode is set by globally defining the macro
 <code>BOOST_MULTI_INDEX_ENABLE_SAFE_MODE</code>. Error conditions
 are checked via the macro <code>BOOST_MULTI_INDEX_SAFE_MODE_ASSERT</code>, which
-by default resolves to a call to <a href="../../../../libs/utility/assert.html">
+by default resolves to a call to <a href="../../../../libs/assert/assert.html">
 <code>BOOST_ASSERT</code></a>.
 </p>
 
@@ -213,7 +213,7 @@ internal invariants of the data structures managed are preserved.
 If an invariant test fails, Boost.MultiIndex will indicate the failure
 by means of the unary macro <code>BOOST_MULTI_INDEX_INVARIANT_ASSERT</code>.
 Unless the user provides a definition for this macro, it defaults to
-<a href="../../../../libs/utility/assert.html">
+<a href="../../../../libs/assert/assert.html">
 <code>BOOST_ASSERT</code></a>. Any assertion of this kind should
 be regarded in principle as a bug in the library. Please report such
 problems, along with as much contextual information as possible, to the
@@ -239,9 +239,9 @@ Techniques
 
 <br>
 
-<p>Revised February 6th 2006</p>
+<p>Revised July 16th 2014</p>
 
-<p>&copy; Copyright 2003-2006 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2003-2014 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

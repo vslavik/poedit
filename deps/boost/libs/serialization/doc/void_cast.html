@@ -29,7 +29,7 @@ http://www.boost.org/LICENSE_1_0.txt)
 C++ includes the operator <code style="white-space: normal">dynamic_cast&lt;T&gt;(U * u)</code>
 for casting a pointer at runtime between two related types. However, this can only be 
 used for polymorphic classes.  That is, it can only be used with related classes which have at least one virtual function.
-Limiting the serializaton of pointers to only such class would diminish the applicability
+Limiting the serializaton of pointers to only such classes would diminish the applicability
 of the library.
 
 <h3>Usage</h3>
@@ -46,7 +46,7 @@ const void_cast_detail::void_caster &
 void_cast_register(
     Derived const * derived = NULL, 
     Base * const base = NULL
-)
+);
 </code></pre></h4></dt>
 <dd>
 This function "registers" a pair of related types.  It stores the fact that

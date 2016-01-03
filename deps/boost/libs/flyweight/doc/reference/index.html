@@ -31,6 +31,7 @@ Index
 
 <ul>
   <li><a href="#headers">Header summary</a></li>
+  <li><a href="#dependencies">Dependencies</a></li>
   <li><a href="#flyweight_synopsis">Header
     <code>"boost/flyweight.hpp"</code> synopsis</a></li>
   <li><a href="flyweight.html">Class template <code>flyweight</code></a></li>
@@ -52,6 +53,7 @@ Boost.Flyweight comprises the following public headers:
     <ul>
       <li><a href="flyweight.html#flyweight_fwd_synopsis"><code>"boost/flyweight/flyweight_fwd.hpp"</code></a></li>
       <li><a href="flyweight.html#synopsis"><code>"boost/flyweight/flyweight.hpp"</code></a></li>
+      <li><a href="flyweight.html#serialize_synopsis"><code>"boost/flyweight/flyweight_serialize.hpp"</code></a></li>
     </ul>
   </li>
   <li>Key-value flyweights
@@ -106,9 +108,16 @@ Boost.Flyweight comprises the following public headers:
 </ul>
 </p>
 
+<h2><a name="dependencies">Dependencies</a></h2>
+
 <p>
-Boost.Flyweight is a header-only library, requiring no additional
-object modules.
+In order to use the serialization capabilities of Boost.Flyweight,
+the appropriate Boost.Serialization library module must be linked. Other
+than that, Boost.Flyweight is a header-only library, requiring no additional
+object modules. The default <a href="locking.html#simple_locking"><code>simple_locking</code></a>
+locking policy introduces a dependency on the Pthreads library on those POSIX-compliant
+environments where the <a href="../../../config/doc/html/index.html">Boost.Config</a> macro
+<code>BOOST_HAS_PTHREADS</code> is set.
 </p>
 
 <h2>
@@ -145,9 +154,9 @@ Index
 
 <br>
 
-<p>Revised January 27th 2009</p>
+<p>Revised September 1st 2014</p>
 
-<p>&copy; Copyright 2006-2009 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2006-2014 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

@@ -1,5 +1,6 @@
 /* xgettext librep backend.
-   Copyright (C) 2001-2003, 2005-2009 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2005-2009, 2015 Free Software Foundation,
+   Inc.
 
    This file was written by Bruno Haible <haible@clisp.cons.org>, 2001.
 

@@ -7,6 +7,7 @@
 #if !defined(FUSION_END_IMPL_05042005_1142)
 #define FUSION_END_IMPL_05042005_1142
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/container/vector/vector_iterator.hpp>
 
 namespace boost { namespace fusion
@@ -22,11 +23,12 @@ namespace boost { namespace fusion
         struct end_impl<vector_tag>
         {
             template <typename Sequence>
-            struct apply 
+            struct apply
             {
                 typedef typename Sequence::size size;
                 typedef vector_iterator<Sequence, size::value> type;
-    
+
+                BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
                 static type
                 call(Sequence& v)
                 {

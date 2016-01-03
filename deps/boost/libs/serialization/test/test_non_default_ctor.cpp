@@ -16,15 +16,14 @@
 #include <cstdio>  // remove()
 #include <fstream>
 #include <cstdlib> // for rand()
-#include <cmath> // for fabs()
 #include <boost/config.hpp>
 #include <boost/detail/workaround.hpp>
 #include <boost/limits.hpp>
+#include <boost/math/special_functions/next.hpp>
 
 #if defined(BOOST_NO_STDC_NAMESPACE)
 namespace std{
     using ::rand; 
-    using ::fabs; 
     using ::remove;
     #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) && !defined(UNDER_CE)
         using ::numeric_limits;
@@ -100,8 +99,8 @@ bool A::operator==(const A &rhs) const
         && t == rhs.t 
         && u == rhs.u 
         && v == rhs.v 
-        && std::fabs(w - rhs.w) <= std::numeric_limits<float>::round_error()
-        && std::fabs(x - rhs.x) <= std::numeric_limits<float>::round_error()
+        && std::abs( boost::math::float_distance(w, rhs.w)) < 2
+        && std::abs( boost::math::float_distance(x, rhs.x)) < 2
     ;
 }
 
@@ -115,10 +114,10 @@ bool A::operator<(const A &rhs) const
         return t < rhs.u; 
     if(! (v == rhs.v) )
         return t < rhs.v;
-    if(! (std::fabs(w - rhs.w) < std::numeric_limits<float>::round_error() ) )
-        return t < rhs.w; 
-    if(! (std::fabs(x - rhs.x) < std::numeric_limits<float>::round_error() ) )
-        return t < rhs.x;
+    if(std::abs( boost::math::float_distance(w, rhs.w)) > 1)
+        return false;
+    if(std::abs( boost::math::float_distance(x, rhs.x)) > 1)
+        return false;
     return false;
 }
 

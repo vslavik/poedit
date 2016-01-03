@@ -1,8 +1,8 @@
 // Boost.Geometry Index
 //
-// n-dimensional box's / point validity check
+// n-dimensional Indexable validity check
 //
-// Copyright (c) 2011-2013 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2011-2014 Adam Wulkiewicz, Lodz, Poland.
 //
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -11,18 +11,17 @@
 #ifndef BOOST_GEOMETRY_INDEX_DETAIL_ALGORITHMS_IS_VALID_HPP
 #define BOOST_GEOMETRY_INDEX_DETAIL_ALGORITHMS_IS_VALID_HPP
 
+#include <cstddef>
+#include <boost/geometry/core/access.hpp>
+
 namespace boost { namespace geometry { namespace index { namespace detail {
 
 namespace dispatch {
 
-template <typename Box, size_t Dimension>
+template <typename Box,
+          std::size_t Dimension = geometry::dimension<Box>::value>
 struct is_valid_box
 {
-    BOOST_MPL_ASSERT_MSG(
-        (0 < Dimension && Dimension <= dimension<Box>::value),
-        INVALID_DIMENSION_PARAMETER,
-        (is_valid_box));
-
     static inline bool apply(Box const& b)
     {
         return is_valid_box<Box, Dimension - 1>::apply(b) &&
@@ -39,7 +38,8 @@ struct is_valid_box<Box, 1>
     }
 };
 
-template <typename Indexable, typename Tag>
+template <typename Indexable,
+          typename Tag = typename geometry::tag<Indexable>::type>
 struct is_valid
 {
     BOOST_MPL_ASSERT_MSG(
@@ -62,7 +62,16 @@ struct is_valid<Indexable, box_tag>
 {
     static inline bool apply(Indexable const& b)
     {
-        return dispatch::is_valid_box<Indexable, dimension<Indexable>::value>::apply(b);
+        return dispatch::is_valid_box<Indexable>::apply(b);
+    }
+};
+
+template <typename Indexable>
+struct is_valid<Indexable, segment_tag>
+{
+    static inline bool apply(Indexable const&)
+    {
+        return true;
     }
 };
 
@@ -71,7 +80,10 @@ struct is_valid<Indexable, box_tag>
 template <typename Indexable>
 inline bool is_valid(Indexable const& b)
 {
-    return dispatch::is_valid<Indexable, typename tag<Indexable>::type>::apply(b);
+    // CONSIDER: detection of NaNs
+    // e.g. by comparison of b with copy of b
+
+    return dispatch::is_valid<Indexable>::apply(b);
 }
 
 }}}} // namespace boost::geometry::index::detail

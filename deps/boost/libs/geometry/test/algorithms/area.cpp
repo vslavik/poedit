@@ -23,7 +23,7 @@
 
 #include <test_geometries/all_custom_ring.hpp>
 #include <test_geometries/all_custom_polygon.hpp>
-//#define GEOMETRY_TEST_DEBUG
+//#define BOOST_GEOMETRY_TEST_DEBUG
 
 #include <boost/variant/variant.hpp>
 
@@ -96,14 +96,14 @@ void test_spherical(bool polar = false)
     // SQL Server gives: 4537.9654419375
     // PostGIS gives: 4537.9311668307
     // Note: those are Geographic, this test is Spherical
-    BOOST_CHECK_CLOSE(area, 4506.6389, 0.001); 
+    BOOST_CHECK_CLOSE(area, 4506.6389, 0.001);
 
     // Wrangel, more in detail
     bg::read_wkt("POLYGON((-178.568604 71.564148,-178.017548 71.449692,-177.833313 71.3461,-177.502838 71.277466 ,-177.439453 71.226929,-177.620026 71.116638,-177.9389 71.037491,-178.8186 70.979965,-179.274445 70.907761,-180 70.9972,179.678314 70.895538,179.272766 70.888596,178.791016 70.7964,178.617737 71.035538,178.872192 71.217484,179.530273 71.4383 ,-180 71.535843 ,-179.628601 71.577194,-179.305298 71.551361,-179.03421 71.597748,-178.568604 71.564148))", geometry);
     area = bg::area(geometry, spherical_earth);
     // SQL Server gives: 7669.10402181435
     // PostGIS gives: 7669.55565459832
-    BOOST_CHECK_CLOSE(area, 7616.523769, 0.001); 
+    BOOST_CHECK_CLOSE(area, 7616.523769, 0.001);
 
     // Check more at the equator
     /*
@@ -125,7 +125,7 @@ void test_spherical(bool polar = false)
 
     bg::read_wkt("POLYGON((-178.7858 20.7852, 177.4758 21.2333, 179.7436 21.5733, -178.7858 20.7852))", geometry);
     area = bg::area(geometry, spherical_earth);
-    BOOST_CHECK_CLOSE(area, 12987.8682, 0.001); // SQL Server gives: 12944.3970990317 -> -39m^2 
+    BOOST_CHECK_CLOSE(area, 12987.8682, 0.001); // SQL Server gives: 12944.3970990317 -> -39m^2
 
     bg::read_wkt("POLYGON((-178.7858 30.7852, 177.4758 31.2333, 179.7436 31.5733, -178.7858 30.7852))", geometry);
     area = bg::area(geometry, spherical_earth);

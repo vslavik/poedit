@@ -47,7 +47,7 @@ test_locale::test_locale(const char* c_name, boost::uint32_t lcid)
 #else
   s_c_locale = no_test;
 #endif
-#ifndef BOOST_NO_STD_LOCALE
+#if !defined(BOOST_NO_STD_LOCALE) && !defined(BOOST_NO_EXCEPTIONS)
    // back up the C++ locale and create the new one:
    m_old_cpp_locale = s_cpp_locale_inst;
    m_old_cpp_state = s_cpp_locale;
@@ -55,7 +55,8 @@ test_locale::test_locale(const char* c_name, boost::uint32_t lcid)
       s_cpp_locale_inst = std::locale(c_name);
       s_cpp_locale = test_with_locale;
       std::cout << "Testing the C++ locale: " << c_name << std::endl;
-   }catch(std::runtime_error const &)
+   }
+   catch(std::runtime_error const &)
    {
       s_cpp_locale = no_test;
       std::cout << "The C++ locale: " << c_name << " is not available and will not be tested." << std::endl;

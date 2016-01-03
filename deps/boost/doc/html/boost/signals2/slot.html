@@ -55,33 +55,33 @@
   <span class="special">}</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="slot.html#boost.signals2.slotconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Slot<span class="special">&gt;</span> <a class="link" href="slot.html#idp95983624-bb"><span class="identifier">slot</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Slot</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Slot<span class="special">&gt;</span> <a class="link" href="slot.html#idp85194480-bb"><span class="identifier">slot</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Slot</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> OtherSignature<span class="special">,</span> <span class="keyword">typename</span> OtherSlotFunction<span class="special">&gt;</span> 
-    <a class="link" href="slot.html#idp97244840-bb"><span class="identifier">slot</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">slot</span><span class="special">&lt;</span><span class="identifier">OtherSignature</span><span class="special">,</span> <span class="identifier">OtherSlotFunction</span><span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <a class="link" href="slot.html#idp146724176-bb"><span class="identifier">slot</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">slot</span><span class="special">&lt;</span><span class="identifier">OtherSignature</span><span class="special">,</span> <span class="identifier">OtherSlotFunction</span><span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Func<span class="special">,</span> <span class="keyword">typename</span> Arg1<span class="special">,</span> <span class="keyword">typename</span> Arg2<span class="special">,</span> <span class="special">...</span><span class="special">,</span> <span class="keyword">typename</span> ArgN<span class="special">&gt;</span> 
-    <a class="link" href="slot.html#idp96562824-bb"><span class="identifier">slot</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Func</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Arg1</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Arg2</span> <span class="special">&amp;</span><span class="special">,</span> <span class="special">...</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">ArgN</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <a class="link" href="slot.html#idp106968688-bb"><span class="identifier">slot</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Func</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Arg1</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Arg2</span> <span class="special">&amp;</span><span class="special">,</span> <span class="special">...</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">ArgN</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="slot.html#idp92544808-bb">invocation</a></span>
-  <span class="identifier">result_type</span> <a class="link" href="slot.html#idp92545288-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">arg</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">,</span> <span class="identifier">arg</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">_type</span><span class="special">,</span> <span class="special">...</span><span class="special">,</span> <span class="identifier">arg</span><span class="special">&lt;</span><span class="identifier">N</span><span class="special">-</span><span class="number">1</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">result_type</span> <a class="link" href="slot.html#idp96747800-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">arg</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">,</span> <span class="identifier">arg</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">_type</span><span class="special">,</span> <span class="special">...</span><span class="special">,</span> <span class="identifier">arg</span><span class="special">&lt;</span><span class="identifier">N</span><span class="special">-</span><span class="number">1</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="slot.html#idp91522672-bb">invocation</a></span>
+  <span class="identifier">result_type</span> <a class="link" href="slot.html#idp90307632-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">arg</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">,</span> <span class="identifier">arg</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">_type</span><span class="special">,</span> <span class="special">...</span><span class="special">,</span> <span class="identifier">arg</span><span class="special">&lt;</span><span class="identifier">N</span><span class="special">-</span><span class="number">1</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">result_type</span> <a class="link" href="slot.html#idp152895312-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">arg</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">,</span> <span class="identifier">arg</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">_type</span><span class="special">,</span> <span class="special">...</span><span class="special">,</span> <span class="identifier">arg</span><span class="special">&lt;</span><span class="identifier">N</span><span class="special">-</span><span class="number">1</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="slot.html#idp96752552-bb">tracking</a></span>
-  <span class="identifier">slot</span> <span class="special">&amp;</span> <a class="link" href="slot.html#idp97842408-bb"><span class="identifier">track</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">weak_ptr</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">slot</span> <span class="special">&amp;</span> <a class="link" href="slot.html#idp97843288-bb"><span class="identifier">track</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="signal_base.html" title="Class signal_base">signals2::signal_base</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">slot</span> <span class="special">&amp;</span> <a class="link" href="slot.html#idp97844360-bb"><span class="identifier">track</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="slot_base.html" title="Class slot_base">signals2::slot_base</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="slot.html#idp89491152-bb">tracking</a></span>
+  <span class="identifier">slot</span> <span class="special">&amp;</span> <a class="link" href="slot.html#idp89492048-bb"><span class="identifier">track</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">weak_ptr</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">slot</span> <span class="special">&amp;</span> <a class="link" href="slot.html#idp152695040-bb"><span class="identifier">track</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="signal_base.html" title="Class signal_base">signals2::signal_base</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">slot</span> <span class="special">&amp;</span> <a class="link" href="slot.html#idp150487248-bb"><span class="identifier">track</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="slot_base.html" title="Class slot_base">signals2::slot_base</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ForeignWeakPtr<span class="special">&gt;</span> 
-    <span class="identifier">slot</span> <span class="special">&amp;</span> <a class="link" href="slot.html#idp104586376-bb"><span class="identifier">track_foreign</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">ForeignWeakPtr</span> <span class="special">&amp;</span><span class="special">,</span> 
+    <span class="identifier">slot</span> <span class="special">&amp;</span> <a class="link" href="slot.html#idp108705632-bb"><span class="identifier">track_foreign</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">ForeignWeakPtr</span> <span class="special">&amp;</span><span class="special">,</span> 
                          <span class="keyword">typename</span> <span class="identifier">weak_ptr_traits</span><span class="special">&lt;</span><span class="identifier">ForeignWeakPtr</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">shared_type</span> <span class="special">*</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ForeignSharedPtr<span class="special">&gt;</span> 
-    <span class="identifier">slot</span> <span class="special">&amp;</span> <a class="link" href="slot.html#idp97046744-bb"><span class="identifier">track_foreign</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">ForeignSharedPtr</span> <span class="special">&amp;</span><span class="special">,</span> 
+    <span class="identifier">slot</span> <span class="special">&amp;</span> <a class="link" href="slot.html#idp223914032-bb"><span class="identifier">track_foreign</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">ForeignSharedPtr</span> <span class="special">&amp;</span><span class="special">,</span> 
                          <span class="keyword">typename</span> <span class="identifier">shared_ptr_traits</span><span class="special">&lt;</span><span class="identifier">ForeignSharedPtr</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">weak_type</span> <span class="special">*</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="slot.html#idp96309704-bb">slot function access</a></span>
-  <span class="identifier">slot_function_type</span> <span class="special">&amp;</span> <a class="link" href="slot.html#idp96310184-bb"><span class="identifier">slot_function</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">const</span> <span class="identifier">slot_function_type</span> <span class="special">&amp;</span> <a class="link" href="slot.html#idp96310568-bb"><span class="identifier">slot_function</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="slot.html#idp149100320-bb">slot function access</a></span>
+  <span class="identifier">slot_function_type</span> <span class="special">&amp;</span> <a class="link" href="slot.html#idp103405280-bb"><span class="identifier">slot_function</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">const</span> <span class="identifier">slot_function_type</span> <span class="special">&amp;</span> <a class="link" href="slot.html#idp103969712-bb"><span class="identifier">slot_function</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp209770312"></a><h2>Description</h2>
+<a name="idp423604832"></a><h2>Description</h2>
 <p>A slot consists of a polymorphic function wrapper (<a class="link" href="../function.html" title="Class template function">boost::function</a> by default)
             plus a container of <code class="computeroutput">weak_ptr</code>s which identify the slot's "tracked objects".  If any of the
             tracked objects expire, the slot will automatically disable itself.  That is, the slot's function
@@ -97,7 +97,7 @@
             to the incoming functors with <a class="link" href="../visit_each.html" title="Function template visit_each">boost::visit_each</a>.
           </p>
 <div class="refsect2">
-<a name="idp209774392"></a><h3>Template Parameters</h3>
+<a name="idp423611856"></a><h3>Template Parameters</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">typename</span> Signature</pre>
@@ -107,13 +107,13 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp209780616"></a><h3>
+<a name="idp423624608"></a><h3>
 <a name="boost.signals2.slotconstruct-copy-destruct"></a><code class="computeroutput">slot</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Slot<span class="special">&gt;</span> <a name="idp95983624-bb"></a><span class="identifier">slot</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Slot</span> <span class="special">&amp;</span> target<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Slot<span class="special">&gt;</span> <a name="idp85194480-bb"></a><span class="identifier">slot</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Slot</span> <span class="special">&amp;</span> target<span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -139,7 +139,7 @@
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> OtherSignature<span class="special">,</span> <span class="keyword">typename</span> OtherSlotFunction<span class="special">&gt;</span> 
-  <a name="idp97244840-bb"></a><span class="identifier">slot</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">slot</span><span class="special">&lt;</span><span class="identifier">OtherSignature</span><span class="special">,</span> <span class="identifier">OtherSlotFunction</span><span class="special">&gt;</span> <span class="special">&amp;</span> other_slot<span class="special">)</span><span class="special">;</span></pre>
+  <a name="idp146724176-bb"></a><span class="identifier">slot</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">slot</span><span class="special">&lt;</span><span class="identifier">OtherSignature</span><span class="special">,</span> <span class="identifier">OtherSlotFunction</span><span class="special">&gt;</span> <span class="special">&amp;</span> other_slot<span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -155,7 +155,7 @@
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Func<span class="special">,</span> <span class="keyword">typename</span> Arg1<span class="special">,</span> <span class="keyword">typename</span> Arg2<span class="special">,</span> <span class="special">...</span><span class="special">,</span> <span class="keyword">typename</span> ArgN<span class="special">&gt;</span> 
-  <a name="idp96562824-bb"></a><span class="identifier">slot</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Func</span> <span class="special">&amp;</span> f<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Arg1</span> <span class="special">&amp;</span> a1<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Arg2</span> <span class="special">&amp;</span> a2<span class="special">,</span> <span class="special">...</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">ArgN</span> <span class="special">&amp;</span> aN<span class="special">)</span><span class="special">;</span></pre>
+  <a name="idp106968688-bb"></a><span class="identifier">slot</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Func</span> <span class="special">&amp;</span> f<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Arg1</span> <span class="special">&amp;</span> a1<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Arg2</span> <span class="special">&amp;</span> a2<span class="special">,</span> <span class="special">...</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">ArgN</span> <span class="special">&amp;</span> aN<span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -173,12 +173,12 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp209809976"></a><h3>
-<a name="idp92544808-bb"></a><code class="computeroutput">slot</code> invocation</h3>
+<a name="idp423683440"></a><h3>
+<a name="idp91522672-bb"></a><code class="computeroutput">slot</code> invocation</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp92545048-bb"></a><span class="identifier">result_type</span> <a name="idp92545288-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">arg</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> a1<span class="special">,</span> <span class="identifier">arg</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">_type</span> a2<span class="special">,</span> <span class="special">...</span><span class="special">,</span> 
+<pre class="literallayout"><a name="idp91523232-bb"></a><span class="identifier">result_type</span> <a name="idp90307632-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">arg</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> a1<span class="special">,</span> <span class="identifier">arg</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">_type</span> a2<span class="special">,</span> <span class="special">...</span><span class="special">,</span> 
                        <span class="identifier">arg</span><span class="special">&lt;</span><span class="identifier">N</span><span class="special">-</span><span class="number">1</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> aN<span class="special">)</span><span class="special">;</span>
-<span class="identifier">result_type</span> <a name="idp96747800-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">arg</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> a1<span class="special">,</span> <span class="identifier">arg</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">_type</span> a2<span class="special">,</span> <span class="special">...</span><span class="special">,</span> 
+<span class="identifier">result_type</span> <a name="idp152895312-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">arg</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> a1<span class="special">,</span> <span class="identifier">arg</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">_type</span> a2<span class="special">,</span> <span class="special">...</span><span class="special">,</span> 
                        <span class="identifier">arg</span><span class="special">&lt;</span><span class="identifier">N</span><span class="special">-</span><span class="number">1</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> aN<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
@@ -203,9 +203,9 @@
 </tr>
 <tr>
 <td><p><span class="term">Notes:</span></p></td>
-<td><p>If you have already used <a class="link" href="slot_base.html#idp99679064-bb">lock</a> to insure the
+<td><p>If you have already used <a class="link" href="slot_base.html#idp213028752-bb">lock</a> to insure the
             tracked objects are valid, it is slightly more efficient to use the
-            <a class="link" href="slot.html#idp96309944-bb">slot_function</a>() method
+            <a class="link" href="slot.html#idp103404720-bb">slot_function</a>() method
             and call the slot's <code class="computeroutput">SlotFunction</code> directly.</p></td>
 </tr>
 </tbody>
@@ -213,13 +213,13 @@
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp209834936"></a><h3>
-<a name="idp96752552-bb"></a><code class="computeroutput">slot</code> tracking</h3>
+<a name="idp423734304"></a><h3>
+<a name="idp89491152-bb"></a><code class="computeroutput">slot</code> tracking</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp96752792-bb"></a><span class="identifier">slot</span> <span class="special">&amp;</span> <a name="idp97842408-bb"></a><span class="identifier">track</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">weak_ptr</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;</span> <span class="special">&amp;</span> tracked_object<span class="special">)</span><span class="special">;</span>
-<span class="identifier">slot</span> <span class="special">&amp;</span> <a name="idp97843288-bb"></a><span class="identifier">track</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="signal_base.html" title="Class signal_base">signals2::signal_base</a> <span class="special">&amp;</span> tracked_signal<span class="special">)</span><span class="special">;</span>
-<span class="identifier">slot</span> <span class="special">&amp;</span> <a name="idp97844360-bb"></a><span class="identifier">track</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="slot_base.html" title="Class slot_base">signals2::slot_base</a> <span class="special">&amp;</span> tracked_slot<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp89491600-bb"></a><span class="identifier">slot</span> <span class="special">&amp;</span> <a name="idp89492048-bb"></a><span class="identifier">track</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">weak_ptr</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">&gt;</span> <span class="special">&amp;</span> tracked_object<span class="special">)</span><span class="special">;</span>
+<span class="identifier">slot</span> <span class="special">&amp;</span> <a name="idp152695040-bb"></a><span class="identifier">track</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="signal_base.html" title="Class signal_base">signals2::signal_base</a> <span class="special">&amp;</span> tracked_signal<span class="special">)</span><span class="special">;</span>
+<span class="identifier">slot</span> <span class="special">&amp;</span> <a name="idp150487248-bb"></a><span class="identifier">track</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="slot_base.html" title="Class slot_base">signals2::slot_base</a> <span class="special">&amp;</span> tracked_slot<span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -254,11 +254,11 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp104586184-bb"></a><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ForeignWeakPtr<span class="special">&gt;</span> 
-  <span class="identifier">slot</span> <span class="special">&amp;</span> <a name="idp104586376-bb"></a><span class="identifier">track_foreign</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">ForeignWeakPtr</span> <span class="special">&amp;</span> tracked_object<span class="special">,</span> 
+<pre class="literallayout"><a name="idp150778480-bb"></a><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ForeignWeakPtr<span class="special">&gt;</span> 
+  <span class="identifier">slot</span> <span class="special">&amp;</span> <a name="idp108705632-bb"></a><span class="identifier">track_foreign</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">ForeignWeakPtr</span> <span class="special">&amp;</span> tracked_object<span class="special">,</span> 
                        <span class="keyword">typename</span> <span class="identifier">weak_ptr_traits</span><span class="special">&lt;</span><span class="identifier">ForeignWeakPtr</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">shared_type</span> <span class="special">*</span> SFINAE <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ForeignSharedPtr<span class="special">&gt;</span> 
-  <span class="identifier">slot</span> <span class="special">&amp;</span> <a name="idp97046744-bb"></a><span class="identifier">track_foreign</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">ForeignSharedPtr</span> <span class="special">&amp;</span> tracked_object<span class="special">,</span> 
+  <span class="identifier">slot</span> <span class="special">&amp;</span> <a name="idp223914032-bb"></a><span class="identifier">track_foreign</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">ForeignSharedPtr</span> <span class="special">&amp;</span> tracked_object<span class="special">,</span> 
                        <span class="keyword">typename</span> <span class="identifier">shared_ptr_traits</span><span class="special">&lt;</span><span class="identifier">ForeignSharedPtr</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">weak_type</span> <span class="special">*</span> SFINAE <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
@@ -270,7 +270,7 @@
 <td><p><span class="term">Effects:</span></p></td>
 <td>
 <p>
-                The <code class="computeroutput">track_foreign</code>() method behaves similarly to calling the <a class="link" href="slot.html#idp96752792-bb">track</a>() method
+                The <code class="computeroutput">track_foreign</code>() method behaves similarly to calling the <a class="link" href="slot.html#idp89491600-bb">track</a>() method
                 with a boost::shared_ptr or boost::weak_ptr argument.
                 However, <code class="computeroutput">track_foreign</code> is more flexible in that it will accept <code class="computeroutput">shared_ptr</code>
                 or <code class="computeroutput">weak_ptr</code> classes from outside of boost (most significantly <code class="computeroutput">std::shared_ptr</code>
@@ -305,11 +305,11 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp209877608"></a><h3>
-<a name="idp96309704-bb"></a><code class="computeroutput">slot</code> slot function access</h3>
+<a name="idp423819168"></a><h3>
+<a name="idp149100320-bb"></a><code class="computeroutput">slot</code> slot function access</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp96309944-bb"></a><span class="identifier">slot_function_type</span> <span class="special">&amp;</span> <a name="idp96310184-bb"></a><span class="identifier">slot_function</span><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-<span class="keyword">const</span> <span class="identifier">slot_function_type</span> <span class="special">&amp;</span> <a name="idp96310568-bb"></a><span class="identifier">slot_function</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp103404720-bb"></a><span class="identifier">slot_function_type</span> <span class="special">&amp;</span> <a name="idp103405280-bb"></a><span class="identifier">slot_function</span><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+<span class="keyword">const</span> <span class="identifier">slot_function_type</span> <span class="special">&amp;</span> <a name="idp103969712-bb"></a><span class="identifier">slot_function</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">

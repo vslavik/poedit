@@ -160,15 +160,17 @@ namespace boost
             MutableContainer2 cont2;
             const Container2& cref_cont2 = cont2;
 
-            typedef BOOST_DEDUCED_TYPENAME Container1::iterator iterator1_t;
-            typedef BOOST_DEDUCED_TYPENAME Container1::const_iterator const_iterator1_t;
-            typedef BOOST_DEDUCED_TYPENAME Container2::iterator iterator2_t;
-            typedef BOOST_DEDUCED_TYPENAME Container2::const_iterator const_iterator2_t;
+            typedef BOOST_DEDUCED_TYPENAME Container1::iterator
+                                        iterator1_t BOOST_RANGE_UNUSED;
 
-            typedef std::pair<iterator1_t,       iterator2_t>       pair_mmit_t;
-            typedef std::pair<const_iterator1_t, iterator2_t>       pair_cmit_t;
-            typedef std::pair<iterator1_t,       const_iterator2_t> pair_mcit_t;
-            typedef std::pair<const_iterator1_t, const_iterator2_t> pair_ccit_t;
+            typedef BOOST_DEDUCED_TYPENAME Container1::const_iterator
+                                        const_iterator1_t BOOST_RANGE_UNUSED;
+
+            typedef BOOST_DEDUCED_TYPENAME Container2::iterator
+                                        iterator2_t BOOST_RANGE_UNUSED;
+
+            typedef BOOST_DEDUCED_TYPENAME Container2::const_iterator
+                                        const_iterator2_t BOOST_RANGE_UNUSED;
 
             eval_mismatch(cont1, cont2, cont1.end(), cont2.end());
             eval_mismatch(cont1, cont2, std::equal_to<int>(), cont1.end(), cont2.end());

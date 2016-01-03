@@ -32,14 +32,14 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../../header/boost/numeric/odeint/stepper/euler_hpp.html" title="Header &lt;boost/numeric/odeint/stepper/euler.hpp&gt;">boost/numeric/odeint/stepper/euler.hpp</a>&gt;
 
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> State<span class="special">,</span> <span class="keyword">typename</span> Value <span class="special">=</span> <span class="keyword">double</span><span class="special">,</span> <span class="keyword">typename</span> Deriv <span class="special">=</span> <span class="identifier">State</span><span class="special">,</span> 
-         <span class="keyword">typename</span> Time <span class="special">=</span> <span class="identifier">Value</span><span class="special">,</span> <span class="keyword">typename</span> Algebra <span class="special">=</span> <span class="identifier">range_algebra</span><span class="special">,</span> 
-         <span class="keyword">typename</span> Operations <span class="special">=</span> <span class="identifier">default_operations</span><span class="special">,</span> 
+         <span class="keyword">typename</span> Time <span class="special">=</span> <span class="identifier">Value</span><span class="special">,</span> 
+         <span class="keyword">typename</span> Algebra <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">algebra_dispatcher</span><span class="special">&lt;</span> <span class="identifier">State</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">algebra_type</span><span class="special">,</span> 
+         <span class="keyword">typename</span> Operations <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">operations_dispatcher</span><span class="special">&lt;</span> <span class="identifier">State</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">operations_type</span><span class="special">,</span> 
          <span class="keyword">typename</span> Resizer <span class="special">=</span> <span class="identifier">initially_resizer</span><span class="special">&gt;</span> 
-<span class="keyword">class</span> <a class="link" href="euler.html" title="Class template euler">euler</a> <span class="special">:</span> <span class="keyword">public</span> boost::numeric::odeint::explicit_stepper_base&lt; Stepper, Order, State, Value, Deriv, Time, Algebra, Operations, Resizer &gt;
-<span class="special">{</span>
+<span class="keyword">class</span> <a class="link" href="euler.html" title="Class template euler">euler</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">explicit_stepper_base</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// types</span>
-  <span class="keyword">typedef</span> <a class="link" href="explicit_stepper_base.html" title="Class template explicit_stepper_base">explicit_stepper_base</a><span class="special">&lt;</span> <a class="link" href="euler.html" title="Class template euler">euler</a><span class="special">&lt;</span> <span class="special">...</span> <span class="special">&gt;</span><span class="special">,</span><span class="special">...</span> <span class="special">&gt;</span> <a name="boost.numeric.odeint.euler.stepper_base_type"></a><span class="identifier">stepper_base_type</span><span class="special">;</span>
+  <span class="keyword">typedef</span> <span class="identifier">explicit_stepper_base</span><span class="special">&lt;</span> <a class="link" href="euler.html" title="Class template euler">euler</a><span class="special">&lt;</span> <span class="special">...</span> <span class="special">&gt;</span><span class="special">,</span><span class="special">...</span> <span class="special">&gt;</span> <a name="boost.numeric.odeint.euler.stepper_base_type"></a><span class="identifier">stepper_base_type</span><span class="special">;</span>
   <span class="keyword">typedef</span> <span class="identifier">stepper_base_type</span><span class="special">::</span><span class="identifier">state_type</span>             <a name="boost.numeric.odeint.euler.state_type"></a><span class="identifier">state_type</span><span class="special">;</span>       
   <span class="keyword">typedef</span> <span class="identifier">stepper_base_type</span><span class="special">::</span><span class="identifier">value_type</span>             <a name="boost.numeric.odeint.euler.value_type"></a><span class="identifier">value_type</span><span class="special">;</span>       
   <span class="keyword">typedef</span> <span class="identifier">stepper_base_type</span><span class="special">::</span><span class="identifier">deriv_type</span>             <a name="boost.numeric.odeint.euler.deriv_type"></a><span class="identifier">deriv_type</span><span class="special">;</span>       
@@ -49,43 +49,26 @@
   <span class="keyword">typedef</span> <span class="identifier">stepper_base_type</span><span class="special">::</span><span class="identifier">resizer_type</span>           <a name="boost.numeric.odeint.euler.resizer_type"></a><span class="identifier">resizer_type</span><span class="special">;</span>     
 
   <span class="comment">// <a class="link" href="euler.html#boost.numeric.odeint.eulerconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="euler.html#idp27075640-bb"><span class="identifier">euler</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">algebra_type</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="identifier">algebra_type</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="euler.html#idp40737952-bb"><span class="identifier">euler</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">algebra_type</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="identifier">algebra_type</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="euler.html#idp27031848-bb">public member functions</a></span>
+  <span class="comment">// <a class="link" href="euler.html#idp40710512-bb">public member functions</a></span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> System<span class="special">,</span> <span class="keyword">typename</span> StateIn<span class="special">,</span> <span class="keyword">typename</span> DerivIn<span class="special">,</span> 
            <span class="keyword">typename</span> StateOut<span class="special">&gt;</span> 
-    <span class="keyword">void</span> <a class="link" href="euler.html#idp27032056-bb"><span class="identifier">do_step_impl</span></a><span class="special">(</span><span class="identifier">System</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">DerivIn</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">,</span> 
+    <span class="keyword">void</span> <a class="link" href="euler.html#idp40711072-bb"><span class="identifier">do_step_impl</span></a><span class="special">(</span><span class="identifier">System</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">DerivIn</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">,</span> 
                       <span class="identifier">StateOut</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StateOut<span class="special">,</span> <span class="keyword">typename</span> StateIn1<span class="special">,</span> <span class="keyword">typename</span> StateIn2<span class="special">&gt;</span> 
-    <span class="keyword">void</span> <a class="link" href="euler.html#idp27039576-bb"><span class="identifier">calc_state</span></a><span class="special">(</span><span class="identifier">StateOut</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateIn1</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">,</span> 
+    <span class="keyword">void</span> <a class="link" href="euler.html#idp40723920-bb"><span class="identifier">calc_state</span></a><span class="special">(</span><span class="identifier">StateOut</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateIn1</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">,</span> 
                     <span class="keyword">const</span> <span class="identifier">StateIn2</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StateType<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="euler.html#idp27044648-bb"><span class="identifier">adjust_size</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">StateType</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">order_type</span> <a class="link" href="euler.html#idp27046552-bb"><span class="identifier">order</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> System<span class="special">,</span> <span class="keyword">typename</span> StateInOut<span class="special">&gt;</span> 
-    <span class="keyword">void</span> <a class="link" href="euler.html#idp27047800-bb"><span class="identifier">do_step</span></a><span class="special">(</span><span class="identifier">System</span><span class="special">,</span> <span class="identifier">StateInOut</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> System<span class="special">,</span> <span class="keyword">typename</span> StateInOut<span class="special">&gt;</span> 
-    <span class="keyword">void</span> <a class="link" href="euler.html#idp27051800-bb"><span class="identifier">do_step</span></a><span class="special">(</span><span class="identifier">System</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateInOut</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> System<span class="special">,</span> <span class="keyword">typename</span> StateInOut<span class="special">,</span> <span class="keyword">typename</span> DerivIn<span class="special">&gt;</span> 
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">disable_if</span><span class="special">&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">is_same</span><span class="special">&lt;</span> <span class="identifier">DerivIn</span><span class="special">,</span> <span class="identifier">time_type</span> <span class="special">&gt;</span><span class="special">,</span> <span class="keyword">void</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> 
-    <a class="link" href="euler.html#idp27054536-bb"><span class="identifier">do_step</span></a><span class="special">(</span><span class="identifier">System</span><span class="special">,</span> <span class="identifier">StateInOut</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">DerivIn</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> System<span class="special">,</span> <span class="keyword">typename</span> StateIn<span class="special">,</span> <span class="keyword">typename</span> StateOut<span class="special">&gt;</span> 
-    <span class="keyword">void</span> <a class="link" href="euler.html#idp27060552-bb"><span class="identifier">do_step</span></a><span class="special">(</span><span class="identifier">System</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">,</span> <span class="identifier">StateOut</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> System<span class="special">,</span> <span class="keyword">typename</span> StateIn<span class="special">,</span> <span class="keyword">typename</span> DerivIn<span class="special">,</span> 
-           <span class="keyword">typename</span> StateOut<span class="special">&gt;</span> 
-    <span class="keyword">void</span> <a class="link" href="euler.html#idp27065608-bb"><span class="identifier">do_step</span></a><span class="special">(</span><span class="identifier">System</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">DerivIn</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">,</span> 
-                 <span class="identifier">StateOut</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StateIn<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="euler.html#idp27071880-bb"><span class="identifier">adjust_size</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">algebra_type</span> <span class="special">&amp;</span> <a class="link" href="euler.html#idp27073768-bb"><span class="identifier">algebra</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">const</span> <span class="identifier">algebra_type</span> <span class="special">&amp;</span> <a class="link" href="euler.html#idp27074696-bb"><span class="identifier">algebra</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StateType<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="euler.html#idp40734176-bb"><span class="identifier">adjust_size</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">StateType</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp57414920"></a><h2>Description</h2>
+<a name="idp113756528"></a><h2>Description</h2>
 <p>The Euler method is a very simply solver for ordinary differential equations. This method should not be used for real applications. It is only useful for demonstration purposes. Step size control is not provided but trivial continuous output is available.</p>
-<p>This class derives from <a class="link" href="explicit_stepper_base.html" title="Class template explicit_stepper_base">explicit_stepper_base</a> and inherits its interface via CRTP (current recurring template pattern), see <a class="link" href="explicit_stepper_base.html" title="Class template explicit_stepper_base">explicit_stepper_base</a></p>
+<p>This class derives from explicit_stepper_base and inherits its interface via CRTP (current recurring template pattern), see explicit_stepper_base</p>
 <p>
 </p>
 <div class="refsect2">
-<a name="idp57416824"></a><h3>Template Parameters</h3>
+<a name="idp113758144"></a><h3>Template Parameters</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">typename</span> State</pre>
@@ -104,11 +87,11 @@
 <p>The time representing the independent variable - the time. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">typename</span> Algebra <span class="special">=</span> <span class="identifier">range_algebra</span></pre>
+<pre class="literallayout"><span class="keyword">typename</span> Algebra <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">algebra_dispatcher</span><span class="special">&lt;</span> <span class="identifier">State</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">algebra_type</span></pre>
 <p>The algebra type. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">typename</span> Operations <span class="special">=</span> <span class="identifier">default_operations</span></pre>
+<pre class="literallayout"><span class="keyword">typename</span> Operations <span class="special">=</span> <span class="keyword">typename</span> <span class="identifier">operations_dispatcher</span><span class="special">&lt;</span> <span class="identifier">State</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">operations_type</span></pre>
 <p>The operations type. </p>
 </li>
 <li class="listitem">
@@ -118,12 +101,12 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp57428136"></a><h3>
+<a name="idp113788512"></a><h3>
 <a name="boost.numeric.odeint.eulerconstruct-copy-destruct"></a><code class="computeroutput">euler</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp27075640-bb"></a><span class="identifier">euler</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">algebra_type</span> <span class="special">&amp;</span> algebra <span class="special">=</span> <span class="identifier">algebra_type</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>Constructs the euler class. This constructor can be used as a default constructor of the algebra has a default constructor. <p>
+<pre class="literallayout"><a name="idp40737952-bb"></a><span class="identifier">euler</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">algebra_type</span> <span class="special">&amp;</span> algebra <span class="special">=</span> <span class="identifier">algebra_type</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>Constructs the euler class. This constructor can be used as a default constructor of the algebra has a default constructor. <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
@@ -139,7 +122,7 @@
 </colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">algebra</code></span></p></td>
-<td><p>A copy of algebra is made and stored inside <code class="computeroutput"><a class="link" href="explicit_stepper_base.html" title="Class template explicit_stepper_base">explicit_stepper_base</a></code>. </p></td>
+<td><p>A copy of algebra is made and stored inside explicit_stepper_base. </p></td>
 </tr></tbody>
 </table></div></td>
 </tr></tbody>
@@ -147,14 +130,14 @@
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp57435800"></a><h3>
-<a name="idp27031848-bb"></a><code class="computeroutput">euler</code> public member functions</h3>
+<a name="idp113802336"></a><h3>
+<a name="idp40710512-bb"></a><code class="computeroutput">euler</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> System<span class="special">,</span> <span class="keyword">typename</span> StateIn<span class="special">,</span> <span class="keyword">typename</span> DerivIn<span class="special">,</span> 
          <span class="keyword">typename</span> StateOut<span class="special">&gt;</span> 
-  <span class="keyword">void</span> <a name="idp27032056-bb"></a><span class="identifier">do_step_impl</span><span class="special">(</span><span class="identifier">System</span> system<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span> in<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">DerivIn</span> <span class="special">&amp;</span> dxdt<span class="special">,</span> 
-                    <span class="identifier">time_type</span> t<span class="special">,</span> <span class="identifier">StateOut</span> <span class="special">&amp;</span> out<span class="special">,</span> <span class="identifier">time_type</span> dt<span class="special">)</span><span class="special">;</span></pre>This method performs one step. The derivative <code class="computeroutput">dxdt</code> of <code class="computeroutput">in</code> at the time <code class="computeroutput">t</code> is passed to the method. The result is updated out of place, hence the input is in <code class="computeroutput">in</code> and the output in <code class="computeroutput">out</code>. Access to this step functionality is provided by <code class="computeroutput"><a class="link" href="explicit_stepper_base.html" title="Class template explicit_stepper_base">explicit_stepper_base</a></code> and <code class="computeroutput">do_step_impl</code> should not be called directly. <p>
+  <span class="keyword">void</span> <a name="idp40711072-bb"></a><span class="identifier">do_step_impl</span><span class="special">(</span><span class="identifier">System</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span> in<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">DerivIn</span> <span class="special">&amp;</span> dxdt<span class="special">,</span> 
+                    <span class="identifier">time_type</span><span class="special">,</span> <span class="identifier">StateOut</span> <span class="special">&amp;</span> out<span class="special">,</span> <span class="identifier">time_type</span> dt<span class="special">)</span><span class="special">;</span></pre>This method performs one step. The derivative <code class="computeroutput">dxdt</code> of <code class="computeroutput">in</code> at the time <code class="computeroutput">t</code> is passed to the method. The result is updated out of place, hence the input is in <code class="computeroutput">in</code> and the output in <code class="computeroutput">out</code>. Access to this step functionality is provided by explicit_stepper_base and <code class="computeroutput">do_step_impl</code> should not be called directly. <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
@@ -184,14 +167,6 @@
 <tr>
 <td><p><span class="term"><code class="computeroutput">out</code></span></p></td>
 <td><p>The result of the step is written in out. </p></td>
-</tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">system</code></span></p></td>
-<td><p>The system function to solve, hence the r.h.s. of the ODE. It must fulfill the Simple System concept. </p></td>
-</tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">t</code></span></p></td>
-<td><p>The value of the time, at which the step should be performed. </p></td>
 </tr>
 </tbody>
 </table></div></td>
@@ -200,11 +175,10 @@
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StateOut<span class="special">,</span> <span class="keyword">typename</span> StateIn1<span class="special">,</span> <span class="keyword">typename</span> StateIn2<span class="special">&gt;</span> 
-  <span class="keyword">void</span> <a name="idp27039576-bb"></a><span class="identifier">calc_state</span><span class="special">(</span><span class="identifier">StateOut</span> <span class="special">&amp;</span> x<span class="special">,</span> <span class="identifier">time_type</span> t<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateIn1</span> <span class="special">&amp;</span> old_state<span class="special">,</span> 
-                  <span class="identifier">time_type</span> t_old<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateIn2</span> <span class="special">&amp;</span> current_state<span class="special">,</span> 
-                  <span class="identifier">time_type</span> t_new<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>This method is used for continuous output and it calculates the state <code class="computeroutput">x</code> at a time <code class="computeroutput">t</code> from the knowledge of two states <code class="computeroutput">old_state</code> and <code class="computeroutput">current_state</code> at time points <code class="computeroutput">t_old</code> and <code class="computeroutput">t_new</code>. </li>
+  <span class="keyword">void</span> <a name="idp40723920-bb"></a><span class="identifier">calc_state</span><span class="special">(</span><span class="identifier">StateOut</span> <span class="special">&amp;</span> x<span class="special">,</span> <span class="identifier">time_type</span> t<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateIn1</span> <span class="special">&amp;</span> old_state<span class="special">,</span> 
+                  <span class="identifier">time_type</span> t_old<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateIn2</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>This method is used for continuous output and it calculates the state <code class="computeroutput">x</code> at a time <code class="computeroutput">t</code> from the knowledge of two states <code class="computeroutput">old_state</code> and <code class="computeroutput">current_state</code> at time points <code class="computeroutput">t_old</code> and <code class="computeroutput">t_new</code>. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StateType<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp27044648-bb"></a><span class="identifier">adjust_size</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">StateType</span> <span class="special">&amp;</span> x<span class="special">)</span><span class="special">;</span></pre>Adjust the size of all temporaries in the stepper manually. <p>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StateType<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp40734176-bb"></a><span class="identifier">adjust_size</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">StateType</span> <span class="special">&amp;</span> x<span class="special">)</span><span class="special">;</span></pre>Adjust the size of all temporaries in the stepper manually. <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
@@ -223,281 +197,6 @@
 <td><p>A state from which the size of the temporaries to be resized is deduced. </p></td>
 </tr></tbody>
 </table></div></td>
-</tr></tbody>
-</table></div>
-</li>
-<li class="listitem">
-<pre class="literallayout"><span class="identifier">order_type</span> <a name="idp27046552-bb"></a><span class="identifier">order</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
-<p>
-</p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody><tr>
-<td><p><span class="term">Returns:</span></p></td>
-<td><p>Returns the order of the stepper. </p></td>
-</tr></tbody>
-</table></div>
-</li>
-<li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> System<span class="special">,</span> <span class="keyword">typename</span> StateInOut<span class="special">&gt;</span> 
-  <span class="keyword">void</span> <a name="idp27047800-bb"></a><span class="identifier">do_step</span><span class="special">(</span><span class="identifier">System</span> system<span class="special">,</span> <span class="identifier">StateInOut</span> <span class="special">&amp;</span> x<span class="special">,</span> <span class="identifier">time_type</span> t<span class="special">,</span> <span class="identifier">time_type</span> dt<span class="special">)</span><span class="special">;</span></pre>This method performs one step. It transforms the result in-place. <p>
-</p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody><tr>
-<td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><code class="computeroutput">dt</code></span></p></td>
-<td><p>The step size. </p></td>
-</tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">system</code></span></p></td>
-<td><p>The system function to solve, hence the r.h.s. of the ordinary differential equation. It must fulfill the Simple System concept. </p></td>
-</tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">t</code></span></p></td>
-<td><p>The value of the time, at which the step should be performed. </p></td>
-</tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">x</code></span></p></td>
-<td><p>The state of the ODE which should be solved. After calling do_step the result is updated in x. </p></td>
-</tr>
-</tbody>
-</table></div></td>
-</tr></tbody>
-</table></div>
-</li>
-<li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> System<span class="special">,</span> <span class="keyword">typename</span> StateInOut<span class="special">&gt;</span> 
-  <span class="keyword">void</span> <a name="idp27051800-bb"></a><span class="identifier">do_step</span><span class="special">(</span><span class="identifier">System</span> system<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateInOut</span> <span class="special">&amp;</span> x<span class="special">,</span> <span class="identifier">time_type</span> t<span class="special">,</span> <span class="identifier">time_type</span> dt<span class="special">)</span><span class="special">;</span></pre>Second version to solve the forwarding problem, can be called with Boost.Range as StateInOut. </li>
-<li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> System<span class="special">,</span> <span class="keyword">typename</span> StateInOut<span class="special">,</span> <span class="keyword">typename</span> DerivIn<span class="special">&gt;</span> 
-  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">disable_if</span><span class="special">&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">is_same</span><span class="special">&lt;</span> <span class="identifier">DerivIn</span><span class="special">,</span> <span class="identifier">time_type</span> <span class="special">&gt;</span><span class="special">,</span> <span class="keyword">void</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> 
-  <a name="idp27054536-bb"></a><span class="identifier">do_step</span><span class="special">(</span><span class="identifier">System</span> system<span class="special">,</span> <span class="identifier">StateInOut</span> <span class="special">&amp;</span> x<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">DerivIn</span> <span class="special">&amp;</span> dxdt<span class="special">,</span> <span class="identifier">time_type</span> t<span class="special">,</span> 
-          <span class="identifier">time_type</span> dt<span class="special">)</span><span class="special">;</span></pre>The method performs one step. Additionally to the other method the derivative of x is also passed to this method. It is supposed to be used in the following way: <pre class="programlisting">sys( x , dxdt , t );
-stepper.do_step( sys , x , dxdt , t , dt );
-</pre>
-<p>The result is updated in place in x. This method is disabled if Time and Deriv are of the same type. In this case the method could not be distinguished from other <code class="computeroutput">do_step</code> versions.</p>
-<div class="note"><table border="0" summary="Note">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../../doc/src/images/note.png"></td>
-<th align="left">Note</th>
-</tr>
-<tr><td align="left" valign="top"><p>This method does not solve the forwarding problem.</p></td></tr>
-</table></div>
-<p>
-
-</p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody><tr>
-<td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><code class="computeroutput">dt</code></span></p></td>
-<td><p>The step size. </p></td>
-</tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">dxdt</code></span></p></td>
-<td><p>The derivative of x at t. </p></td>
-</tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">system</code></span></p></td>
-<td><p>The system function to solve, hence the r.h.s. of the ODE. It must fulfill the Simple System concept. </p></td>
-</tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">t</code></span></p></td>
-<td><p>The value of the time, at which the step should be performed. </p></td>
-</tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">x</code></span></p></td>
-<td><p>The state of the ODE which should be solved. After calling do_step the result is updated in x. </p></td>
-</tr>
-</tbody>
-</table></div></td>
-</tr></tbody>
-</table></div>
-</li>
-<li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> System<span class="special">,</span> <span class="keyword">typename</span> StateIn<span class="special">,</span> <span class="keyword">typename</span> StateOut<span class="special">&gt;</span> 
-  <span class="keyword">void</span> <a name="idp27060552-bb"></a><span class="identifier">do_step</span><span class="special">(</span><span class="identifier">System</span> system<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span> in<span class="special">,</span> <span class="identifier">time_type</span> t<span class="special">,</span> <span class="identifier">StateOut</span> <span class="special">&amp;</span> out<span class="special">,</span> 
-               <span class="identifier">time_type</span> dt<span class="special">)</span><span class="special">;</span></pre>The method performs one step. The state of the ODE is updated out-of-place. <div class="note"><table border="0" summary="Note">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../../doc/src/images/note.png"></td>
-<th align="left">Note</th>
-</tr>
-<tr><td align="left" valign="top"><p>This method does not solve the forwarding problem.</p></td></tr>
-</table></div>
-<p>
-
-</p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody><tr>
-<td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><code class="computeroutput">dt</code></span></p></td>
-<td><p>The step size. </p></td>
-</tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">in</code></span></p></td>
-<td><p>The state of the ODE which should be solved. in is not modified in this method </p></td>
-</tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">out</code></span></p></td>
-<td><p>The result of the step is written in out. </p></td>
-</tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">system</code></span></p></td>
-<td><p>The system function to solve, hence the r.h.s. of the ODE. It must fulfill the Simple System concept. </p></td>
-</tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">t</code></span></p></td>
-<td><p>The value of the time, at which the step should be performed. </p></td>
-</tr>
-</tbody>
-</table></div></td>
-</tr></tbody>
-</table></div>
-</li>
-<li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> System<span class="special">,</span> <span class="keyword">typename</span> StateIn<span class="special">,</span> <span class="keyword">typename</span> DerivIn<span class="special">,</span> 
-         <span class="keyword">typename</span> StateOut<span class="special">&gt;</span> 
-  <span class="keyword">void</span> <a name="idp27065608-bb"></a><span class="identifier">do_step</span><span class="special">(</span><span class="identifier">System</span> system<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span> in<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">DerivIn</span> <span class="special">&amp;</span> dxdt<span class="special">,</span> 
-               <span class="identifier">time_type</span> t<span class="special">,</span> <span class="identifier">StateOut</span> <span class="special">&amp;</span> out<span class="special">,</span> <span class="identifier">time_type</span> dt<span class="special">)</span><span class="special">;</span></pre>The method performs one step. The state of the ODE is updated out-of-place. Furthermore, the derivative of x at t is passed to the stepper. It is supposed to be used in the following way: <pre class="programlisting">sys( in , dxdt , t );
-stepper.do_step( sys , in , dxdt , t , out , dt );
-</pre>
-<div class="note"><table border="0" summary="Note">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../../doc/src/images/note.png"></td>
-<th align="left">Note</th>
-</tr>
-<tr><td align="left" valign="top"><p>This method does not solve the forwarding problem.</p></td></tr>
-</table></div>
-<p>
-
-</p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody><tr>
-<td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><code class="computeroutput">dt</code></span></p></td>
-<td><p>The step size. </p></td>
-</tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">dxdt</code></span></p></td>
-<td><p>The derivative of x at t. </p></td>
-</tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">in</code></span></p></td>
-<td><p>The state of the ODE which should be solved. in is not modified in this method </p></td>
-</tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">out</code></span></p></td>
-<td><p>The result of the step is written in out. </p></td>
-</tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">system</code></span></p></td>
-<td><p>The system function to solve, hence the r.h.s. of the ODE. It must fulfill the Simple System concept. </p></td>
-</tr>
-<tr>
-<td><p><span class="term"><code class="computeroutput">t</code></span></p></td>
-<td><p>The value of the time, at which the step should be performed. </p></td>
-</tr>
-</tbody>
-</table></div></td>
-</tr></tbody>
-</table></div>
-</li>
-<li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StateIn<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp27071880-bb"></a><span class="identifier">adjust_size</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span> x<span class="special">)</span><span class="special">;</span></pre>Adjust the size of all temporaries in the stepper manually. <p>
-</p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody><tr>
-<td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody><tr>
-<td><p><span class="term"><code class="computeroutput">x</code></span></p></td>
-<td><p>A state from which the size of the temporaries to be resized is deduced. </p></td>
-</tr></tbody>
-</table></div></td>
-</tr></tbody>
-</table></div>
-</li>
-<li class="listitem">
-<pre class="literallayout"><span class="identifier">algebra_type</span> <span class="special">&amp;</span> <a name="idp27073768-bb"></a><span class="identifier">algebra</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
-<p>
-</p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody><tr>
-<td><p><span class="term">Returns:</span></p></td>
-<td><p>A reference to the algebra which is held by this class. </p></td>
-</tr></tbody>
-</table></div>
-</li>
-<li class="listitem">
-<pre class="literallayout"><span class="keyword">const</span> <span class="identifier">algebra_type</span> <span class="special">&amp;</span> <a name="idp27074696-bb"></a><span class="identifier">algebra</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
-<p>
-</p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody><tr>
-<td><p><span class="term">Returns:</span></p></td>
-<td><p>A const reference to the algebra which is held by this class. </p></td>
 </tr></tbody>
 </table></div>
 </li>

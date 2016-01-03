@@ -7,8 +7,20 @@
 
 [section:attributes Attributes]
 
-Class `attributes` is used to transfers parameters required to setup a
-coroutines's context.
+Class `attributes` is used to specify parameters required to setup a
+coroutine's context.
+
+        enum flag_unwind_t
+        {
+            stack_unwind,
+            no_stack_unwind
+        };
+
+        enum flag_fpu_t
+        {
+            fpu_preserved,
+            fpu_not_preserved
+        };
 
         struct attributes
         {
@@ -16,31 +28,33 @@ coroutines's context.
             flag_unwind_t   do_unwind;
             flag_fpu_t      preserve_fpu;
 
-            attributes() BOOST_NOEXCEPT;
+            attributes() noexcept;
 
-            explicit attributes( std::size_t size_) BOOST_NOEXCEPT;
+            explicit attributes( std::size_t size_) noexcept;
 
-            explicit attributes( flag_unwind_t do_unwind_) BOOST_NOEXCEPT;
+            explicit attributes( flag_unwind_t do_unwind_) noexcept;
 
-            explicit attributes( flag_fpu_t preserve_fpu_) BOOST_NOEXCEPT;
+            explicit attributes( flag_fpu_t preserve_fpu_) noexcept;
 
-            explicit attributes( std::size_t size_, flag_unwind_t do_unwind_) BOOST_NOEXCEPT;
+            explicit attributes( std::size_t size_, flag_unwind_t do_unwind_) noexcept;
 
-            explicit attributes( std::size_t size_, flag_fpu_t preserve_fpu_) BOOST_NOEXCEPT;
+            explicit attributes( std::size_t size_, flag_fpu_t preserve_fpu_) noexcept;
 
-            explicit attributes( flag_unwind_t do_unwind_, flag_fpu_t preserve_fpu_) BOOST_NOEXCEPT;
+            explicit attributes( flag_unwind_t do_unwind_, flag_fpu_t preserve_fpu_) noexcept;
+
+            explicit attributes( std::size_t size_, flag_unwind_t do_unwind_, flag_fpu_t preserve_fpu_) noexcept;
         };
 
 [heading `attributes()`]
 [variablelist
-[[Effects:] [Default constructor using `ctx::default_stacksize()`, does unwind
+[[Effects:] [Default constructor using `boost::context::default_stacksize()`, does unwind
 the stack after coroutine/generator is complete and preserves FPU registers.]]
 [[Throws:] [Nothing.]]
 ]
 
 [heading `attributes( std::size_t size)`]
 [variablelist
-[[Effects:] [Argument `size` defines stack size of the inner `context`.
+[[Effects:] [Argument `size` defines stack size of the new coroutine.
 Stack unwinding after termination and preserving FPU registers is set by
 default.]]
 [[Throws:] [Nothing.]]
@@ -49,7 +63,7 @@ default.]]
 [heading `attributes( flag_unwind_t do_unwind)`]
 [variablelist
 [[Effects:] [Argument `do_unwind` determines if stack will be unwound after
-termination or not. The default stacksize is used for the inner `context`
+termination or not. The default stacksize is used for the new coroutine
 and FPU registers are preserved.]]
 [[Throws:] [Nothing.]]
 ]
@@ -57,15 +71,15 @@ and FPU registers are preserved.]]
 [heading `attributes( flag_fpu_t preserve_fpu)`]
 [variablelist
 [[Effects:] [Argument `preserve_fpu` determines if FPU register have to be
-preserved if a `context` switches. THe default stacksize is used for the
-inner `context` and the stack will be unwound after termination.]]
+preserved across context switches. The default stacksize is used for the
+new coroutine and its stack will be unwound after termination.]]
 [[Throws:] [Nothing.]]
 ]
 
 [heading `attributes( std::size_t size, flag_unwind_t do_unwind)`]
 [variablelist
 [[Effects:] [Arguments `size` and `do_unwind` are given by the user.
-FPU registers preserved during each `context` switch.]]
+FPU registers are preserved across each context switch.]]
 [[Throws:] [Nothing.]]
 ]
 
@@ -79,7 +93,14 @@ The stack is automatically unwound after coroutine/generator terminates.]]
 [heading `attributes( flag_unwind_t do_unwind, flag_fpu_t preserve_fpu)`]
 [variablelist
 [[Effects:] [Arguments `do_unwind` and `preserve_fpu` are given by the user.
-The stack gets a default value of `ctx::default_stacksize()`.]]
+The stack gets a default value of `boost::context::default_stacksize()`.]]
+[[Throws:] [Nothing.]]
+]
+
+[heading `attributes( std::size_t size, flag_unwind_t do_unwind, flag_fpu_t preserve_fpu)`]
+[variablelist
+[[Effects:] [Arguments `size`, `do_unwind` and `preserve_fpu` are given by the
+user.]]
 [[Throws:] [Nothing.]]
 ]
 

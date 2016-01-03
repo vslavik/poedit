@@ -1,6 +1,6 @@
 /********************************************************************
  * COPYRIGHT:
- * Copyright (c) 1999-2013, International Business Machines Corporation and
+ * Copyright (c) 1999-2015, International Business Machines Corporation and
  * others. All Rights Reserved.
  ********************************************************************/
 /************************************************************************
@@ -31,13 +31,14 @@
 #include "intltest.h"
 #include "rbbitst.h"
 #include <string.h>
+#include "charstr.h"
 #include "uvector.h"
 #include "uvectr32.h"
-#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "unicode/numfmt.h"
 #include "unicode/uscript.h"
+#include "cmemory.h"
 
 #define TEST_ASSERT(x) {if (!(x)) { \
     errln("Failure in file %s, line %d", __FILE__, __LINE__);}}
@@ -354,27 +355,19 @@ void RBBITest::TestStatusReturn() {
 }
 
 
-static void printStringBreaks(UnicodeString ustr, int expected[],
-                              int expectedcount)
-{
+static void printStringBreaks(UText *tstr, int expected[], int expectedCount) {
     UErrorCode status = U_ZERO_ERROR;
     char name[100];
     printf("code    alpha extend alphanum type word sent line name\n");
-    int j;
-    for (j = 0; j < ustr.length(); j ++) {
-        if (expectedcount > 0) {
-            int k;
-            for (k = 0; k < expectedcount; k ++) {
-                if (j == expected[k]) {
-                    printf("------------------------------------------------ %d\n",
-                           j);
-                }
-            }
+    int nextExpectedIndex = 0;
+    utext_setNativeIndex(tstr, 0);
+    for (int j = 0; j < utext_nativeLength(tstr); j=utext_getNativeIndex(tstr)) {
+        if (nextExpectedIndex < expectedCount && j >= expected[nextExpectedIndex] ) {
+            printf("------------------------------------------------ %d\n", j);
+            ++nextExpectedIndex;
         }
-        UChar32 c = ustr.char32At(j);
-        if (c > 0xffff) {
-            j ++;
-        }
+
+        UChar32 c = utext_next32(tstr);
         u_charName(c, U_UNICODE_CHAR_NAME, name, 100, &status);
         printf("%7x %5d %6d %8d %4s %4s %4s %4s %s\n", (int)c,
                            u_isUAlphabetic(c),
@@ -397,6 +390,19 @@ static void printStringBreaks(UnicodeString ustr, int expected[],
                                    U_SHORT_PROPERTY_NAME),
                            name);
     }
+}
+
+
+static void printStringBreaks(const UnicodeString &ustr, int expected[], int expectedCount) {
+   UErrorCode status = U_ZERO_ERROR;
+   UText *tstr = NULL;
+   tstr = utext_openConstUnicodeString(NULL, &ustr, &status);
+   if (U_FAILURE(status)) {
+       printf("printStringBreaks, utext_openConstUnicodeString() returns %s\n", u_errorName(status));
+       return;
+    }
+   printStringBreaks(tstr, expected, expectedCount);
+   utext_close(tstr);
 }
 
 
@@ -830,23 +836,173 @@ void RBBITest::TestBug5775() {
 //------------------------------------------------------------------------------
 
 struct TestParams {
-    BreakIterator   *bi;
-    UnicodeString    dataToBreak;
-    UVector32       *expectedBreaks;
-    UVector32       *srcLine;
+    BreakIterator   *bi;                   // Break iterator is set while parsing test source.
+                                           //   Changed out whenever test data changes break type.
+
+    UnicodeString    dataToBreak;          // Data that is built up while parsing the test.
+    UVector32       *expectedBreaks;       // Expected break positions, matches dataToBreak UnicodeString.
+    UVector32       *srcLine;              // Positions in source file, indexed same as dataToBreak.
     UVector32       *srcCol;
+
+    UText           *textToBreak;          // UText, could be UTF8 or UTF16.
+    UVector32       *textMap;              // Map from UTF-16 dataToBreak offsets to UText offsets.
+    CharString       utf8String;           // UTF-8 form of text to break.
+
+    TestParams(UErrorCode &status) : dataToBreak() {
+        bi               = NULL;
+        expectedBreaks   = new UVector32(status);
+        srcLine          = new UVector32(status);
+        srcCol           = new UVector32(status);
+        textToBreak      = NULL;
+        textMap          = new UVector32(status);
+    }
+
+    ~TestParams() {
+        delete bi;
+        delete expectedBreaks;
+        delete srcLine;
+        delete srcCol;
+        utext_close(textToBreak);
+        delete textMap;
+    }
+    
+    int32_t getSrcLine(int32_t bp);
+    int32_t getExpectedBreak(int32_t bp);
+    int32_t getSrcCol(int32_t bp);
+
+    void setUTF16(UErrorCode &status);
+    void setUTF8(UErrorCode &status);
 };
 
-void RBBITest::executeTest(TestParams *t) {
+// Append a UnicodeString to a CharString with UTF-8 encoding.
+// Substitute any invalid chars.
+//   Note: this is used with test data that includes a few unpaired surrogates in the UTF-16 that will be substituted.
+static void CharStringAppend(CharString &dest, const UnicodeString &src, UErrorCode &status) {
+    if (U_FAILURE(status)) {
+        return;
+    }
+    int32_t utf8Length;
+    u_strToUTF8WithSub(NULL, 0, &utf8Length,            // Output Buffer, NULL for preflight.
+                       src.getBuffer(), src.length(),   // UTF-16 data
+                       0xfffd, NULL,                    // Substitution char, number of subs.
+                       &status);
+    if (U_FAILURE(status) && status != U_BUFFER_OVERFLOW_ERROR) {
+        return;
+    }
+    status = U_ZERO_ERROR;
+    int32_t capacity;
+    char *buffer = dest.getAppendBuffer(utf8Length, utf8Length, capacity, status);
+    u_strToUTF8WithSub(buffer, utf8Length, NULL,
+                       src.getBuffer(), src.length(),
+                       0xfffd, NULL, &status);
+    dest.append(buffer, utf8Length, status);
+}
+  
+
+void TestParams::setUTF16(UErrorCode &status) {
+    textToBreak = utext_openUnicodeString(textToBreak, &dataToBreak, &status);
+    textMap->removeAllElements();
+    for (int32_t i=0; i<dataToBreak.length(); i++) {
+        if (i == dataToBreak.getChar32Start(i)) {
+            textMap->addElement(i, status);
+        } else {
+            textMap->addElement(-1, status);
+        }
+    }
+    textMap->addElement(dataToBreak.length(), status);
+    U_ASSERT(dataToBreak.length() + 1 == textMap->size());
+}
+
+
+void TestParams::setUTF8(UErrorCode &status) {
+    if (U_FAILURE(status)) {
+        return;
+    }
+    utf8String.clear();
+    CharStringAppend(utf8String, dataToBreak, status);
+    textToBreak = utext_openUTF8(textToBreak, utf8String.data(), utf8String.length(), &status);
+    if (U_FAILURE(status)) {
+        return;
+    }
+
+    textMap->removeAllElements();
+    int32_t utf16Index = 0;
+    for (;;) {
+        textMap->addElement(utf16Index, status);
+        UChar32 c32 = utext_current32(textToBreak);
+        if (c32 < 0) {
+            break;
+        }
+        utf16Index += U16_LENGTH(c32);
+        utext_next32(textToBreak);
+        while (textMap->size() < utext_getNativeIndex(textToBreak)) {
+            textMap->addElement(-1, status);
+        }
+    }
+    U_ASSERT(utext_nativeLength(textToBreak) + 1 == textMap->size());
+}
+
+
+int32_t TestParams::getSrcLine(int bp) {
+    if (bp >= textMap->size()) {
+        bp = textMap->size() - 1;
+    }
+    int32_t i = 0;
+    for(; bp >= 0 ; --bp) {
+        // Move to a character boundary if we are not on one already.
+        i = textMap->elementAti(bp);
+        if (i >= 0) {
+            break;
+        }
+    }
+    return srcLine->elementAti(i);
+}
+
+
+int32_t TestParams::getExpectedBreak(int bp) {
+    if (bp >= textMap->size()) {
+        return 0;
+    }
+    int32_t i = textMap->elementAti(bp);
+    int32_t retVal = 0;
+    if (i >= 0) {
+        retVal = expectedBreaks->elementAti(i);
+    }
+    return retVal;
+}
+
+
+int32_t TestParams::getSrcCol(int bp) {
+    if (bp >= textMap->size()) {
+        bp = textMap->size() - 1;
+    }
+    int32_t i = 0;
+    for(; bp >= 0; --bp) {
+        // Move bp to a character boundary if we are not on one already.
+        i = textMap->elementAti(bp);
+        if (i >= 0) {
+            break;
+        }
+    }
+    return srcCol->elementAti(i);
+}
+
+
+void RBBITest::executeTest(TestParams *t, UErrorCode &status) {
     int32_t    bp;
     int32_t    prevBP;
     int32_t    i;
+
+    TEST_ASSERT_SUCCESS(status);
+    if (U_FAILURE(status)) {
+        return;
+    }
 
     if (t->bi == NULL) {
         return;
     }
 
-    t->bi->setText(t->dataToBreak);
+    t->bi->setText(t->textToBreak, status);
     //
     //  Run the iterator forward
     //
@@ -855,93 +1011,92 @@ void RBBITest::executeTest(TestParams *t) {
         if (prevBP ==  bp) {
             // Fail for lack of forward progress.
             errln("Forward Iteration, no forward progress.  Break Pos=%4d  File line,col=%4d,%4d",
-                bp, t->srcLine->elementAti(bp), t->srcCol->elementAti(bp));
+                bp, t->getSrcLine(bp), t->getSrcCol(bp));
             break;
         }
 
-        // Check that there were we didn't miss an expected break between the last one
+        // Check that there we didn't miss an expected break between the last one
         //  and this one.
         for (i=prevBP+1; i<bp; i++) {
-            if (t->expectedBreaks->elementAti(i) != 0) {
+            if (t->getExpectedBreak(i) != 0) {
                 int expected[] = {0, i};
                 printStringBreaks(t->dataToBreak, expected, 2);
                 errln("Forward Iteration, break expected, but not found.  Pos=%4d  File line,col= %4d,%4d",
-                      i, t->srcLine->elementAti(i), t->srcCol->elementAti(i));
+                      i, t->getSrcLine(i), t->getSrcCol(i));
             }
         }
 
         // Check that the break we did find was expected
-        if (t->expectedBreaks->elementAti(bp) == 0) {
+        if (t->getExpectedBreak(bp) == 0) {
             int expected[] = {0, bp};
-            printStringBreaks(t->dataToBreak, expected, 2);
+            printStringBreaks(t->textToBreak, expected, 2);
             errln("Forward Iteration, break found, but not expected.  Pos=%4d  File line,col= %4d,%4d",
-                bp, t->srcLine->elementAti(bp), t->srcCol->elementAti(bp));
+                bp, t->getSrcLine(bp), t->getSrcCol(bp));
         } else {
             // The break was expected.
             //   Check that the {nnn} tag value is correct.
-            int32_t expectedTagVal = t->expectedBreaks->elementAti(bp);
+            int32_t expectedTagVal = t->getExpectedBreak(bp);
             if (expectedTagVal == -1) {
                 expectedTagVal = 0;
             }
-            int32_t line = t->srcLine->elementAti(bp);
+            int32_t line = t->getSrcLine(bp);
             int32_t rs = ((RuleBasedBreakIterator *)t->bi)->getRuleStatus();
             if (rs != expectedTagVal) {
                 errln("Incorrect status for forward break.  Pos=%4d  File line,col= %4d,%4d.\n"
                       "          Actual, Expected status = %4d, %4d",
-                    bp, line, t->srcCol->elementAti(bp), rs, expectedTagVal);
+                    bp, line, t->getSrcCol(bp), rs, expectedTagVal);
             }
         }
-
 
         prevBP = bp;
     }
 
     // Verify that there were no missed expected breaks after the last one found
-    for (i=prevBP+1; i<t->expectedBreaks->size(); i++) {
-        if (t->expectedBreaks->elementAti(i) != 0) {
+    for (i=prevBP+1; i<utext_nativeLength(t->textToBreak); i++) {
+        if (t->getExpectedBreak(i) != 0) {
             errln("Forward Iteration, break expected, but not found.  Pos=%4d  File line,col= %4d,%4d",
-                      i, t->srcLine->elementAti(i), t->srcCol->elementAti(i));
+                      i, t->getSrcLine(i), t->getSrcCol(i));
         }
     }
 
     //
     //  Run the iterator backwards, verify that the same breaks are found.
     //
-    prevBP = t->dataToBreak.length()+2;  // start with a phony value for the last break pos seen.
+    prevBP = utext_nativeLength(t->textToBreak)+2;  // start with a phony value for the last break pos seen.
     for (bp = t->bi->last(); bp != BreakIterator::DONE; bp = t->bi->previous()) {
         if (prevBP ==  bp) {
             // Fail for lack of progress.
             errln("Reverse Iteration, no progress.  Break Pos=%4d  File line,col=%4d,%4d",
-                bp, t->srcLine->elementAti(bp), t->srcCol->elementAti(bp));
+                bp, t->getSrcLine(bp), t->getSrcCol(bp));
             break;
         }
 
-        // Check that there were we didn't miss an expected break between the last one
+        // Check that we didn't miss an expected break between the last one
         //  and this one.  (UVector returns zeros for index out of bounds.)
         for (i=prevBP-1; i>bp; i--) {
-            if (t->expectedBreaks->elementAti(i) != 0) {
-                errln("Reverse Itertion, break expected, but not found.  Pos=%4d  File line,col= %4d,%4d",
-                      i, t->srcLine->elementAti(i), t->srcCol->elementAti(i));
+            if (t->getExpectedBreak(i) != 0) {
+                errln("Reverse Iteration, break expected, but not found.  Pos=%4d  File line,col= %4d,%4d",
+                      i, t->getSrcLine(i), t->getSrcCol(i));
             }
         }
 
         // Check that the break we did find was expected
-        if (t->expectedBreaks->elementAti(bp) == 0) {
+        if (t->getExpectedBreak(bp) == 0) {
             errln("Reverse Itertion, break found, but not expected.  Pos=%4d  File line,col= %4d,%4d",
-                   bp, t->srcLine->elementAti(bp), t->srcCol->elementAti(bp));
+                   bp, t->getSrcLine(bp), t->getSrcCol(bp));
         } else {
             // The break was expected.
             //   Check that the {nnn} tag value is correct.
-            int32_t expectedTagVal = t->expectedBreaks->elementAti(bp);
+            int32_t expectedTagVal = t->getExpectedBreak(bp);
             if (expectedTagVal == -1) {
                 expectedTagVal = 0;
             }
-            int line = t->srcLine->elementAti(bp);
-            int32_t rs = ((RuleBasedBreakIterator *)t->bi)->getRuleStatus();
+            int line = t->getSrcLine(bp);
+            int32_t rs = t->bi->getRuleStatus();
             if (rs != expectedTagVal) {
                 errln("Incorrect status for reverse break.  Pos=%4d  File line,col= %4d,%4d.\n"
                       "          Actual, Expected status = %4d, %4d",
-                    bp, line, t->srcCol->elementAti(bp), rs, expectedTagVal);
+                    bp, line, t->getSrcCol(bp), rs, expectedTagVal);
             }
         }
 
@@ -950,30 +1105,30 @@ void RBBITest::executeTest(TestParams *t) {
 
     // Verify that there were no missed breaks prior to the last one found
     for (i=prevBP-1; i>=0; i--) {
-        if (t->expectedBreaks->elementAti(i) != 0) {
+        if (t->getExpectedBreak(i) != 0) {
             errln("Forward Itertion, break expected, but not found.  Pos=%4d  File line,col= %4d,%4d",
-                      i, t->srcLine->elementAti(i), t->srcCol->elementAti(i));
+                      i, t->getSrcLine(i), t->getSrcCol(i));
         }
     }
 
     // Check isBoundary()
-    for (i=0; i<t->expectedBreaks->size(); i++) {
-        UBool boundaryExpected = (t->expectedBreaks->elementAti(i) != 0);
+    for (i=0; i < utext_nativeLength(t->textToBreak); i++) {
+        UBool boundaryExpected = (t->getExpectedBreak(i) != 0);
         UBool boundaryFound    = t->bi->isBoundary(i);
         if (boundaryExpected != boundaryFound) {
             errln("isBoundary(%d) incorrect. File line,col= %4d,%4d\n"
                   "        Expected, Actual= %s, %s",
-                  i, t->srcLine->elementAti(i), t->srcCol->elementAti(i),
+                  i, t->getSrcLine(i), t->getSrcCol(i),
                   boundaryExpected ? "true":"false", boundaryFound? "true" : "false");
         }
     }
 
     // Check following()
-    for (i=0; i<t->expectedBreaks->size(); i++) {
+    for (i=0; i < utext_nativeLength(t->textToBreak); i++) {
         int32_t actualBreak = t->bi->following(i);
         int32_t expectedBreak = BreakIterator::DONE;
-        for (int32_t j=i+1; j < t->expectedBreaks->size(); j++) {
-            if (t->expectedBreaks->elementAti(j) != 0) {
+        for (int32_t j=i+1; j <= utext_nativeLength(t->textToBreak); j++) {
+            if (t->getExpectedBreak(j) != 0) {
                 expectedBreak = j;
                 break;
             }
@@ -981,17 +1136,24 @@ void RBBITest::executeTest(TestParams *t) {
         if (expectedBreak != actualBreak) {
             errln("following(%d) incorrect. File line,col= %4d,%4d\n"
                   "        Expected, Actual= %d, %d",
-                  i, t->srcLine->elementAti(i), t->srcCol->elementAti(i), expectedBreak, actualBreak);
+                  i, t->getSrcLine(i), t->getSrcCol(i), expectedBreak, actualBreak);
         }
     }
 
     // Check preceding()
-    for (i=t->expectedBreaks->size(); i>=0; i--) {
+    for (i=utext_nativeLength(t->textToBreak); i>=0; i--) {
         int32_t actualBreak = t->bi->preceding(i);
         int32_t expectedBreak = BreakIterator::DONE;
 
-        for (int32_t j=i-1; j >= 0; j--) {
-            if (t->expectedBreaks->elementAti(j) != 0) {
+        // For UTF-8 & UTF-16 supplementals, all code units of a character are equivalent.
+        // preceding(trailing byte) will return the index of some preceding code point,
+        // not the lead byte of the current code point, even though that has a smaller index.
+        // Therefore, start looking at the expected break data not at i-1, but at
+        // the start of code point index - 1.
+        utext_setNativeIndex(t->textToBreak, i);
+        int32_t j = utext_getNativeIndex(t->textToBreak) - 1;
+        for (; j >= 0; j--) {
+            if (t->getExpectedBreak(j) != 0) {
                 expectedBreak = j;
                 break;
             }
@@ -999,7 +1161,7 @@ void RBBITest::executeTest(TestParams *t) {
         if (expectedBreak != actualBreak) {
             errln("preceding(%d) incorrect. File line,col= %4d,%4d\n"
                   "        Expected, Actual= %d, %d",
-                  i, t->srcLine->elementAti(i), t->srcCol->elementAti(i), expectedBreak, actualBreak);
+                  i, t->getSrcLine(i), t->getSrcCol(i), expectedBreak, actualBreak);
         }
     }
 }
@@ -1011,13 +1173,9 @@ void RBBITest::TestExtended() {
     Locale          locale("");
 
     UnicodeString       rules;
-    TestParams          tp;
-    tp.bi             = NULL;
-    tp.expectedBreaks = new UVector32(status);
-    tp.srcLine        = new UVector32(status);
-    tp.srcCol         = new UVector32(status);
+    TestParams          tp(status);
 
-    RegexMatcher      localeMatcher(UNICODE_STRING_SIMPLE("<locale *([\\p{L}\\p{Nd}_]*) *>"), 0, status);
+    RegexMatcher      localeMatcher(UNICODE_STRING_SIMPLE("<locale *([\\p{L}\\p{Nd}_@=-]*) *>"), 0, status);
     if (U_FAILURE(status)) {
         dataerrln("Failure in file %s, line %d, status = \"%s\"", __FILE__, __LINE__, u_errorName(status));
     }
@@ -1190,7 +1348,16 @@ void RBBITest::TestExtended() {
                 charIdx += 6;
 
                 // RUN THE TEST!
-                executeTest(&tp);
+                status = U_ZERO_ERROR;
+                tp.setUTF16(status);
+                executeTest(&tp, status);
+                TEST_ASSERT_SUCCESS(status);
+
+                // Run again, this time with UTF-8 text wrapped in a UText.
+                status = U_ZERO_ERROR;
+                tp.setUTF8(status);
+                TEST_ASSERT_SUCCESS(status);
+                executeTest(&tp, status);
                 break;
             }
 
@@ -1356,10 +1523,6 @@ void RBBITest::TestExtended() {
     }
 
 end_test:
-    delete tp.bi;
-    delete tp.expectedBreaks;
-    delete tp.srcLine;
-    delete tp.srcCol;
     delete [] testFile;
 #endif
 }
@@ -1562,6 +1725,32 @@ void RBBITest::TestUnicodeFiles() {
 }
 
 
+// Check for test cases from the Unicode test data files that are known to fail
+// and should be skipped because ICU is not yet able to fully implement the spec.
+// See ticket #7270.
+
+UBool RBBITest::testCaseIsKnownIssue(const UnicodeString &testCase, const char *fileName) {
+    static const UChar badTestCases[][4] = {                     // Line Numbers from Unicode 7.0.0 file.
+        {(UChar)0x200B, (UChar)0x0020, (UChar)0x007D, (UChar)0x0000},   // Line 5198
+        {(UChar)0x200B, (UChar)0x0020, (UChar)0x0029, (UChar)0x0000},   // Line 5202
+        {(UChar)0x200B, (UChar)0x0020, (UChar)0x0021, (UChar)0x0000},   // Line 5214
+        {(UChar)0x200B, (UChar)0x0020, (UChar)0x002c, (UChar)0x0000},   // Line 5246
+        {(UChar)0x200B, (UChar)0x0020, (UChar)0x002f, (UChar)0x0000},   // Line 5298
+        {(UChar)0x200B, (UChar)0x0020, (UChar)0x2060, (UChar)0x0000}    // Line 5302
+    };
+    if (strcmp(fileName, "LineBreakTest.txt") != 0) {
+        return FALSE;
+    }
+
+    for (int i=0; i<UPRV_LENGTHOF(badTestCases); i++) {
+        if (testCase == UnicodeString(badTestCases[i])) {
+            return logKnownIssue("7270");
+        }
+    }
+    return FALSE;
+}
+
+
 //--------------------------------------------------------------------------------------------
 //
 //   Run tests from one of the boundary test data files distributed by the Unicode Consortium
@@ -1569,9 +1758,6 @@ void RBBITest::TestUnicodeFiles() {
 //-------------------------------------------------------------------------------------------
 void RBBITest::runUnicodeTestData(const char *fileName, RuleBasedBreakIterator *bi) {
 #if !UCONFIG_NO_REGULAR_EXPRESSIONS
-    // TODO(andy): Match line break behavior to Unicode 6.0 and remove this time bomb. Ticket #7270
-    UBool isTicket7270Fixed = !logKnownIssue("7270");
-    UBool isLineBreak = 0 == strcmp(fileName, "LineBreakTest.txt");
     UErrorCode  status = U_ZERO_ERROR;
 
     //
@@ -1663,20 +1849,8 @@ void RBBITest::runUnicodeTestData(const char *fileName, RuleBasedBreakIterator *
         else if (tokenMatcher.start(4, status) >= 0) {
             // Scanned to end of a line, possibly skipping over a comment in the process.
             //   If the line from the file contained test data, run the test now.
-            //
-            if (testString.length() > 0) {
-// TODO(andy): Remove this time bomb code. Note: Failing line numbers may change when updating to new Unicode data.
-//             Rule 8 
-//                ZW SP* <break>
-//             is not yet implemented.
-if (!(isLineBreak && !isTicket7270Fixed && (5198 == lineNumber || 
-                                            5202 == lineNumber ||
-                                            5214 == lineNumber ||
-                                            5246 == lineNumber ||
-                                            5298 == lineNumber ||
-                                            5302 == lineNumber ))) {
+            if (testString.length() > 0 && !testCaseIsKnownIssue(testString, fileName)) {  
                 checkUnicodeTestCase(fileName, lineNumber, testString, &breakPositions, bi);
-}
             }
 
             // Clear out this test case.

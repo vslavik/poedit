@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
    }
 
    return 0;
-};
+}
 
 //]
 #include <boost/interprocess/detail/config_end.hpp>

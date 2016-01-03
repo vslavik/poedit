@@ -176,7 +176,7 @@ copy the resulting `bjam` executable some place convenient.
 
 For many users using _LAM_, _MPICH_, or _OpenMPI_, configuration is
 almost automatic. If you don't already have a file `user-config.jam`
-in your home directory, copy `tools/build/v2/user-config.jam`
+in your home directory, copy `tools/build/user-config.jam`
 there. For many users, MPI support can be enabled simply by adding the
 following line to your user-config.jam file, which is used to configure
 Boost.Build version 2. 
@@ -212,7 +212,7 @@ you can pass MPI-related options explicitly via the second parameter to the
 To see the results of MPI auto-detection, pass `--debug-configuration` on
 the bjam command line.
 
-The (optional) fourth argument configures Boost.MPI for running
+The (optional) third argument configures Boost.MPI for running
 regression tests. These parameters specify the executable used to
 launch jobs (default: "mpirun") followed by any necessary arguments
 to this to run tests and tell the program to expect the number of
@@ -482,6 +482,19 @@ until it has completed (see the [memberref
 boost::mpi::request::wait wait] method). Multiple requests
 can be completed at the same time with the [funcref
 boost::mpi::wait_all wait_all] operation. 
+
+Important note: The MPI standard requires users to keep the request
+handle for a non-blocking communication, and to call the "wait"
+operation (or successfully test for completion) to complete the send
+or receive. Unlike most C MPI implementations, which allow the user to
+discard the request for a non-blocking send, Boost.MPI requires the
+user to call "wait" or "test", since the request object might contain
+temporary buffers that have to be kept until the send is
+completed. Moreover, the MPI standard does not guarantee that the
+receive makes any progress before a call to "wait" or "test", although
+most implementations of the C MPI do allow receives to progress before
+the call to "wait" or "test". Boost.MPI, on the other hand, generally
+requires "test" or "wait" calls to make progress.
 
 If you run this program multiple times, you may see some strange
 results: namely, some runs will produce:

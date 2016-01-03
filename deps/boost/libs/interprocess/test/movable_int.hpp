@@ -13,7 +13,7 @@
 
 #include <boost/interprocess/detail/config_begin.hpp>
 #include <boost/interprocess/detail/workaround.hpp>
-#include <boost/interprocess/detail/move.hpp>
+#include <boost/move/utility_core.hpp>
 
 namespace boost {
 namespace interprocess {
@@ -115,7 +115,7 @@ class movable_and_copyable_int
    movable_and_copyable_int(const movable_and_copyable_int& mmi)
       :  m_int(mmi.m_int)
    {}
-  
+
    movable_and_copyable_int(BOOST_RV_REF(movable_and_copyable_int) mmi)
       :  m_int(mmi.m_int)
    {  mmi.m_int = 0; }
@@ -189,7 +189,7 @@ class copyable_int
    copyable_int(const copyable_int& mmi)
       :  m_int(mmi.m_int)
    {}
-  
+
    copyable_int & operator= (int i)
    {  this->m_int = i;  return *this;  }
 

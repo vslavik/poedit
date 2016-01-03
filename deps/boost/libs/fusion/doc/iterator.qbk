@@ -67,8 +67,7 @@ the following expressions are valid:
 ]
 
 [heading Expression Semantics]
-[
-table
+[table
     [[Expression]              [Semantics]]
     [[`__next__(i)`]               [An iterator to the element following `i`]]
     [[`i == j`]                [Iterator equality comparison]]
@@ -161,6 +160,7 @@ the following invariants always hold:
 * __std_pair__ iterator
 * __boost_array__ iterator
 * __vector__ iterator
+* __map__ iterator
 * __single_view__ iterator
 * __iterator_range__ (where adapted sequence is a __bidirectional_sequence__)
 * __transform_view__ (where adapted sequence is a __bidirectional_sequence__)
@@ -206,6 +206,7 @@ the following expressions must be valid:
 
 [heading Models]
 * __vector__ iterator
+* __map__ iterator
 * __std_pair__ iterator
 * __boost_array__ iterator
 * __single_view__ iterator
@@ -416,15 +417,15 @@ Moves an iterator by a specified distance.
 
 [heading Synopsis]
     template<
-        typename I,
-        typename M
+        typename M,
+        typename I
         >
     typename __result_of_advance__<I, M>::type advance(I const& i);
 
 [table Parameters
     [[Parameter]    [Requirement]   [Description]]
     [[`i`]          [Model of __forward_iterator__] [Iterator to move relative to]]
-    [[`N`]          [An __mpl_integral_constant__] [Number of positions to move]]
+    [[`M`]          [An __mpl_integral_constant__] [Number of positions to move]]
 ]
 
 [heading Expression Semantics]
@@ -453,8 +454,8 @@ Moves an iterator by a specified distance.
 
 [heading Synopsis]
     template<
-        typename I,
-        int N
+        int N,
+        typename I
         >
     typename __result_of_advance_c__<I, N>::type advance_c(I const& i);
 
@@ -511,7 +512,7 @@ Deferences the data property associated with the element referenced by an associ
     #include <boost/fusion/include/deref_data.hpp>
 
 [heading Example]
-    typedef __map__<__pair__<float,int&> > map;
+    typedef __map__<__pair__<float, int&> > map;
 
     int i(0);
     map m(1.0f,i);
@@ -535,7 +536,7 @@ Dereferences an iterator.
     template<
         typename I
         >
-    typename __result_of_deref__<I>::type operator*(__unspecified__<I> const& i);
+    typename __result_of_deref__<I>::type operator*(I const& i);
 
 [table Parameters
     [[Parameter]      [Requirement]    [Description]]
@@ -675,7 +676,7 @@ Returns the type stored at the position of an iterator.
 [heading Description]
 Returns the type that will be returned by dereferencing an iterator.
 
-[heading Synposis]
+[heading Synopsis]
     template<
         typename I
         >
@@ -719,7 +720,7 @@ Returns the type that will be returned by dereferencing an iterator.
 [heading Description]
 Returns the type of the next iterator in a sequence.
 
-[heading Synposis]
+[heading Synopsis]
     template<
         typename I
         >
@@ -993,9 +994,9 @@ Returns the key type associated with the element referenced by an associative it
 [heading Example]
     typedef __map__<__pair__<float,int> > vec;
     typedef __result_of_begin__<vec>::type first;
-	
+
     BOOST_MPL_ASSERT((boost::is_same<__result_of_key_of__<first>::type, float>));
-    
+
 [endsect]
 
 [section value_of_data]
@@ -1032,9 +1033,9 @@ Returns the type of the data property associated with the element referenced by 
 [heading Example]
     typedef __map__<__pair__<float,int> > vec;
     typedef __result_of_begin__<vec>::type first;
-	
+
     BOOST_MPL_ASSERT((boost::is_same<__result_of_value_of_data__<first>::type, int>));
-    
+
 [endsect]
 
 [section deref_data]
@@ -1042,7 +1043,7 @@ Returns the type of the data property associated with the element referenced by 
 [heading Description]
 Returns the type that will be returned by dereferencing the data property referenced by an associative iterator.
 
-[heading Synposis]
+[heading Synopsis]
     template<
         typename I
         >
@@ -1064,18 +1065,17 @@ Returns the type that will be returned by dereferencing the data property refere
 [*Semantics]: Returns the result of dereferencing the data property referenced by an associative iterator of type `I`.
 
 [heading Header]
-    #include <boosta/fusion/iterator/deref_data.hpp>
+    #include <boost/fusion/iterator/deref_data.hpp>
     #include <boost/fusion/include/deref_data.hpp>
 
 [heading Example]
-    typedef __map__<__pair__<float,int> > map;
-    typedef __result_of_begin__<vec>::type first;
-
-    BOOST_MPL_ASSERT((boost::is_same<__result_of_deref_data__<first>::type, int&>));
-
-[endsect]
+    typedef map<pair<float, int> > map_type;
+    typedef boost::fusion::result_of::begin<map_type>::type i_type;
+    typedef boost::fusion::result_of::deref_data<i_type>::type r_type;
+    BOOST_STATIC_ASSERT((boost::is_same<r_type, int&>::value));
 
 [endsect]
 
 [endsect]
 
+[endsect]

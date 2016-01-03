@@ -28,7 +28,7 @@
       boost::units</a>
 </h3></div></div></div>
 <p>
-        odeint also works well with <a href="http://www.boost.org/doc/libs/release/libs/units/index.html" target="_top">Boost.Units</a>
+        odeint also works well with <a href="http://www.boost.org/doc/libs/release/libs/units/" target="_top">Boost.Units</a>
         - a library for compile time unit and dimension analysis. It works by decoding
         unit information into the types of values. For a one-dimensional unit you
         can just use the Boost.Unit types as state type, deriv type and time type
@@ -50,11 +50,11 @@
         If you want to solve more-dimensional problems the individual entries typically
         have different units. That means that the <code class="computeroutput"><span class="identifier">state_type</span></code>
         is now possibly heterogeneous, meaning that every entry might have a different
-        type. To solve this problem, compile-time sequences from <a href="http://www.boost.org/doc/libs/release/libs/fusion/index.html" target="_top">Boost.Fusion</a>
+        type. To solve this problem, compile-time sequences from <a href="http://www.boost.org/doc/libs/release/libs/fusion/" target="_top">Boost.Fusion</a>
         can be used.
       </p>
 <p>
-        To illustrate how odeint works with <a href="http://www.boost.org/doc/libs/release/libs/units/index.html" target="_top">Boost.Units</a>
+        To illustrate how odeint works with <a href="http://www.boost.org/doc/libs/release/libs/units/" target="_top">Boost.Units</a>
         we use the harmonic oscillator as primary example. We start with defining
         all quantities
       </p>
@@ -62,6 +62,7 @@
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">numeric</span><span class="special">/</span><span class="identifier">odeint</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">numeric</span><span class="special">/</span><span class="identifier">odeint</span><span class="special">/</span><span class="identifier">algebra</span><span class="special">/</span><span class="identifier">fusion_algebra</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">numeric</span><span class="special">/</span><span class="identifier">odeint</span><span class="special">/</span><span class="identifier">algebra</span><span class="special">/</span><span class="identifier">fusion_algebra_dispatcher</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">units</span><span class="special">/</span><span class="identifier">systems</span><span class="special">/</span><span class="identifier">si</span><span class="special">/</span><span class="identifier">length</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">units</span><span class="special">/</span><span class="identifier">systems</span><span class="special">/</span><span class="identifier">si</span><span class="special">/</span><span class="identifier">time</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -117,22 +118,32 @@
 <p>
         Next, we instantiate an appropriate stepper. We must explicitly parametrize
         the stepper with the <code class="computeroutput"><span class="identifier">state_type</span></code>,
-        <code class="computeroutput"><span class="identifier">deriv_type</span></code>, <code class="computeroutput"><span class="identifier">time_type</span></code>. Furthermore, the iteration over
-        vector elements is now done by the <code class="computeroutput"><span class="identifier">fusion_algebra</span></code>
-        which must also be given. For more on the state types / algebras see chapter
-        <a class="link" href="../odeint_in_detail/state_types__algebras_and_operations.html" title="State types, algebras and operations">Adapt
-        your own state types</a>.
+        <code class="computeroutput"><span class="identifier">deriv_type</span></code>, <code class="computeroutput"><span class="identifier">time_type</span></code>.
       </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">runge_kutta_dopri5</span><span class="special">&lt;</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="keyword">double</span> <span class="special">,</span> <span class="identifier">deriv_type</span> <span class="special">,</span> <span class="identifier">time_type</span> <span class="special">,</span> <span class="identifier">fusion_algebra</span> <span class="special">&gt;</span> <span class="identifier">stepper_type</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">runge_kutta_dopri5</span><span class="special">&lt;</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="keyword">double</span> <span class="special">,</span> <span class="identifier">deriv_type</span> <span class="special">,</span> <span class="identifier">time_type</span> <span class="special">&gt;</span> <span class="identifier">stepper_type</span><span class="special">;</span>
 
 <span class="identifier">state_type</span> <span class="identifier">x</span><span class="special">(</span> <span class="number">1.0</span> <span class="special">*</span> <span class="identifier">si</span><span class="special">::</span><span class="identifier">meter</span> <span class="special">,</span> <span class="number">0.0</span> <span class="special">*</span> <span class="identifier">si</span><span class="special">::</span><span class="identifier">meter_per_second</span> <span class="special">);</span>
 
-<span class="identifier">integrate_const</span><span class="special">(</span> <span class="identifier">make_dense_output</span><span class="special">(</span> <span class="number">1.0e-6</span> <span class="special">,</span> <span class="number">1.0e-6</span> <span class="special">,</span> <span class="identifier">stepper_type</span><span class="special">()</span> <span class="special">)</span> <span class="special">,</span> <span class="identifier">oscillator</span><span class="special">(</span> <span class="number">2.0</span> <span class="special">*</span> <span class="identifier">si</span><span class="special">::</span><span class="identifier">hertz</span> <span class="special">)</span> <span class="special">,</span> <span class="identifier">x</span> <span class="special">,</span> <span class="number">0.0</span> <span class="special">*</span> <span class="identifier">si</span><span class="special">::</span><span class="identifier">second</span> <span class="special">,</span> <span class="number">100.0</span> <span class="special">*</span> <span class="identifier">si</span><span class="special">::</span><span class="identifier">second</span> <span class="special">,</span> <span class="number">0.1</span> <span class="special">*</span> <span class="identifier">si</span><span class="special">::</span><span class="identifier">second</span> <span class="special">,</span> <span class="identifier">streaming_observer</span><span class="special">(</span> <span class="identifier">cout</span> <span class="special">)</span> <span class="special">);</span>
+<span class="identifier">integrate_const</span><span class="special">(</span> <span class="identifier">make_dense_output</span><span class="special">(</span> <span class="number">1.0e-6</span> <span class="special">,</span> <span class="number">1.0e-6</span> <span class="special">,</span> <span class="identifier">stepper_type</span><span class="special">()</span> <span class="special">)</span> <span class="special">,</span> <span class="identifier">oscillator</span><span class="special">(</span> <span class="number">2.0</span> <span class="special">*</span> <span class="identifier">si</span><span class="special">::</span><span class="identifier">hertz</span> <span class="special">)</span> <span class="special">,</span>
+                 <span class="identifier">x</span> <span class="special">,</span> <span class="number">0.0</span> <span class="special">*</span> <span class="identifier">si</span><span class="special">::</span><span class="identifier">second</span> <span class="special">,</span> <span class="number">100.0</span> <span class="special">*</span> <span class="identifier">si</span><span class="special">::</span><span class="identifier">second</span> <span class="special">,</span> <span class="number">0.1</span> <span class="special">*</span> <span class="identifier">si</span><span class="special">::</span><span class="identifier">second</span> <span class="special">,</span> <span class="identifier">streaming_observer</span><span class="special">(</span> <span class="identifier">cout</span> <span class="special">)</span> <span class="special">);</span>
 </pre>
 <p>
       </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          When using compile-time sequences, the iteration over vector elements is
+          done by the <code class="computeroutput"><span class="identifier">fusion_algebra</span></code>,
+          which is automatically chosen by odeint. For more on the state types /
+          algebras see chapter <a class="link" href="../odeint_in_detail/state_types__algebras_and_operations.html" title="State types, algebras and operations">Adapt
+          your own state types</a>.
+        </p></td></tr>
+</table></div>
 <p>
         It is quite easy but the compilation time might take very long. Furthermore,
         the observer is defined a bit different
@@ -174,14 +185,14 @@
 <th align="left">Caution</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-          Using <a href="http://www.boost.org/doc/libs/release/libs/units/index.html" target="_top">Boost.Units</a>
+          Using <a href="http://www.boost.org/doc/libs/release/libs/units/" target="_top">Boost.Units</a>
           works nicely but compilation can be very time and memory consuming. For
-          example the unit test for the usage of <a href="http://www.boost.org/doc/libs/release/libs/units/index.html" target="_top">Boost.Units</a>
+          example the unit test for the usage of <a href="http://www.boost.org/doc/libs/release/libs/units/" target="_top">Boost.Units</a>
           in odeint take up to 4 GB of memory at compilation.
         </p></td></tr>
 </table></div>
 <p>
-        The full cpp file for this example can be found here <a href="../../../../../../../libs/numeric/odeint/examples/harmonic_oscillator_units.cpp" target="_top">harmonic_oscillator_units.cpp</a>.
+        The full cpp file for this example can be found here <a href="https://github.com/headmyshoulder/odeint-v2/blob/master/examples/harmonic_oscillator_units.cpp" target="_top">harmonic_oscillator_units.cpp</a>.
       </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

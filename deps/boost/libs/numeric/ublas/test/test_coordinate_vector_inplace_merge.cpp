@@ -13,21 +13,10 @@
 #include <boost/numeric/ublas/vector_sparse.hpp>
 #include <boost/numeric/ublas/vector_expression.hpp>
 #include <boost/numeric/ublas/io.hpp>
-
-#include "libs/numeric/ublas/test/utils.hpp"
+#include "common/testhelper.hpp"
+#include "utils.hpp"
 
 const double TOL = 1e-15;
-
-
-template <class AE>
-typename AE::value_type mean_square(const boost::numeric::ublas::vector_expression<AE> &me) {
-    typename AE::value_type s(0);
-    typename AE::size_type i;
-    for (i=0; i!= me().size(); i++) {
-      s += boost::numeric::ublas::scalar_traits<typename AE::value_type>::type_abs(me()(i));
-    }
-    return s/me().size();
-}
 
 template<typename T>
 bool check_sortedness(const boost::numeric::ublas::coordinate_vector<T>& vector) {
@@ -69,7 +58,7 @@ BOOST_UBLAS_TEST_DEF( test_coordinate_vector_inplace_merge_random )
       vector_coord.sort();
 
       std::vector<size_t> entries;
-      for (int entry = 0; entry < nr_entries; ++ entry) {
+      for (size_t entry = 0; entry < nr_entries; ++ entry) {
         int x = rand() % size_vec;
         entries.push_back(x);
         vector_coord.append_element(x, 1);
@@ -79,15 +68,15 @@ BOOST_UBLAS_TEST_DEF( test_coordinate_vector_inplace_merge_random )
 
       {
         bool sorted = check_sortedness(vector_coord);
-        bool identical = mean_square(vector_coord - vector_dense) < TOL;
+        bool identical = compare_to(vector_coord, vector_dense, TOL);
         if (!(sorted && identical)) {
           print_entries(size_vec, entries);
         }
         BOOST_UBLAS_TEST_CHECK( check_sortedness(vector_coord) );
-        BOOST_UBLAS_TEST_CHECK( mean_square(vector_coord - vector_dense) < TOL);
+        BOOST_UBLAS_TEST_CHECK( compare_to(vector_coord, vector_dense, TOL) );
       }
 
-      for (int entry = 0; entry < nr_entries; ++ entry) {
+      for (size_t entry = 0; entry < nr_entries; ++ entry) {
         int x = rand() % size_vec;
         entries.push_back(x);
         vector_coord(x) += 1;
@@ -97,7 +86,7 @@ BOOST_UBLAS_TEST_DEF( test_coordinate_vector_inplace_merge_random )
 
       {
         bool sorted = check_sortedness(vector_coord);
-        bool identical = mean_square(vector_coord - vector_dense) < TOL;
+        bool identical = compare_to(vector_coord, vector_dense, TOL);
         if (!(sorted && identical)) {
           print_entries(size_vec, entries);
         }

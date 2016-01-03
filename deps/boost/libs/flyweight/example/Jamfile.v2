@@ -1,6 +1,6 @@
 # Boost.Flyweight examples Jamfile
 #
-# Copyright 2006-2008 Joaquín M López Muñoz.
+# Copyright 2006-2014 Joaquín M López Muñoz.
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
@@ -46,4 +46,10 @@ exe perf
     : perf.cpp
     : <include>$(BOOST_ROOT)
     : release
+    ;
+
+exe serialization
+    : serialization.cpp
+      /boost/serialization//boost_serialization/<link>static
+    : <include>$(BOOST_ROOT)
     ;

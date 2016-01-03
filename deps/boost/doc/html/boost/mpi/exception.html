@@ -35,26 +35,26 @@
 <span class="keyword">class</span> <a class="link" href="exception.html" title="Class exception">exception</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">exception</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="exception.html#boost.mpi.exceptionconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="exception.html#idp98408744-bb"><span class="identifier">exception</span></a><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="exception.html#idp98410648-bb"><span class="special">~</span><span class="identifier">exception</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="exception.html#idp67703392-bb"><span class="identifier">exception</span></a><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="exception.html#idp151446560-bb"><span class="special">~</span><span class="identifier">exception</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="exception.html#idp98413368-bb">public member functions</a></span>
-  <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a class="link" href="exception.html#idp98413576-bb"><span class="identifier">what</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a class="link" href="exception.html#idp98414280-bb"><span class="identifier">routine</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">int</span> <a class="link" href="exception.html#idp98407368-bb"><span class="identifier">result_code</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">int</span> <a class="link" href="exception.html#idp98408056-bb"><span class="identifier">error_class</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="exception.html#idp67696592-bb">public member functions</a></span>
+  <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a class="link" href="exception.html#idp67697120-bb"><span class="identifier">what</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a class="link" href="exception.html#idp67698896-bb"><span class="identifier">routine</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">int</span> <a class="link" href="exception.html#idp67700480-bb"><span class="identifier">result_code</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">int</span> <a class="link" href="exception.html#idp67701856-bb"><span class="identifier">error_class</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp165080808"></a><h2>Description</h2>
+<a name="idp333476400"></a><h2>Description</h2>
 <p>Instances of this class will be thrown when an MPI error occurs. MPI failures that trigger these exceptions may or may not be recoverable, depending on the underlying MPI implementation. Consult the documentation for your MPI implementation to determine the effect of MPI errors. </p>
 <div class="refsect2">
-<a name="idp165081432"></a><h3>
+<a name="idp333477376"></a><h3>
 <a name="boost.mpi.exceptionconstruct-copy-destruct"></a><code class="computeroutput">exception</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp98408744-bb"></a><span class="identifier">exception</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> routine<span class="special">,</span> <span class="keyword">int</span> result_code<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp67703392-bb"></a><span class="identifier">exception</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> routine<span class="special">,</span> <span class="keyword">int</span> result_code<span class="special">)</span><span class="special">;</span></pre>
 <p>Build a new <code class="computeroutput">exception</code> exception.</p>
 <p>
 </p>
@@ -84,25 +84,25 @@
 </tr></tbody>
 </table></div>
 </li>
-<li class="listitem"><pre class="literallayout"><a name="idp98410648-bb"></a><span class="special">~</span><span class="identifier">exception</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp151446560-bb"></a><span class="special">~</span><span class="identifier">exception</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp165090872"></a><h3>
-<a name="idp98413368-bb"></a><code class="computeroutput">exception</code> public member functions</h3>
+<a name="idp333496416"></a><h3>
+<a name="idp67696592-bb"></a><code class="computeroutput">exception</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a name="idp98413576-bb"></a><span class="identifier">what</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a name="idp67697120-bb"></a><span class="identifier">what</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>A description of the error that occurred. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a name="idp98414280-bb"></a><span class="identifier">routine</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a name="idp67698896-bb"></a><span class="identifier">routine</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Retrieve the name of the MPI routine that reported the error. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">int</span> <a name="idp98407368-bb"></a><span class="identifier">result_code</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Retrieve the result code returned from the MPI routine that reported the error. </li>
+<pre class="literallayout"><span class="keyword">int</span> <a name="idp67700480-bb"></a><span class="identifier">result_code</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Retrieve the result code returned from the MPI routine that reported the error. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">int</span> <a name="idp98408056-bb"></a><span class="identifier">error_class</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns the MPI error class associated with the error that triggered this exception. </li>
+<pre class="literallayout"><span class="keyword">int</span> <a name="idp67701856-bb"></a><span class="identifier">error_class</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns the MPI error class associated with the error that triggered this exception. </li>
 </ol></div>
 </div>
 </div>

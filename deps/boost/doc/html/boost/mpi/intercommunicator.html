@@ -35,43 +35,41 @@
 <span class="keyword">class</span> <a class="link" href="intercommunicator.html" title="Class intercommunicator">intercommunicator</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpi</span><span class="special">::</span><span class="identifier">communicator</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="intercommunicator.html#boost.mpi.intercommunicatorconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="intercommunicator.html#idp98300680-bb"><span class="identifier">intercommunicator</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">MPI_Comm</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">comm_create_kind</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="intercommunicator.html#idp98295112-bb"><span class="identifier">intercommunicator</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="communicator.html" title="Class communicator">communicator</a> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="communicator.html" title="Class communicator">communicator</a> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="intercommunicator.html#idp220876080-bb"><span class="identifier">intercommunicator</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">MPI_Comm</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">comm_create_kind</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="intercommunicator.html#idp219234896-bb"><span class="identifier">intercommunicator</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="communicator.html" title="Class communicator">communicator</a> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="communicator.html" title="Class communicator">communicator</a> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="intercommunicator.html#idp98309176-bb">public member functions</a></span>
-  <span class="keyword">int</span> <a class="link" href="intercommunicator.html#idp98309384-bb"><span class="identifier">local_size</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <a class="link" href="group.html" title="Class group">boost::mpi::group</a> <a class="link" href="intercommunicator.html#idp98310152-bb"><span class="identifier">local_group</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">int</span> <a class="link" href="intercommunicator.html#idp98304520-bb"><span class="identifier">local_rank</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">int</span> <a class="link" href="intercommunicator.html#idp98305240-bb"><span class="identifier">remote_size</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <a class="link" href="group.html" title="Class group">boost::mpi::group</a> <a class="link" href="intercommunicator.html#idp98301832-bb"><span class="identifier">remote_group</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <a class="link" href="communicator.html" title="Class communicator">communicator</a> <a class="link" href="intercommunicator.html#idp98302616-bb"><span class="identifier">merge</span></a><span class="special">(</span><span class="keyword">bool</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="intercommunicator.html#idp222677072-bb">public member functions</a></span>
+  <span class="keyword">int</span> <a class="link" href="intercommunicator.html#idp222677632-bb"><span class="identifier">local_size</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <a class="link" href="group.html" title="Class group">boost::mpi::group</a> <a class="link" href="intercommunicator.html#idp222679248-bb"><span class="identifier">local_group</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">int</span> <a class="link" href="intercommunicator.html#idp222680992-bb"><span class="identifier">local_rank</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">int</span> <a class="link" href="intercommunicator.html#idp222682576-bb"><span class="identifier">remote_size</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <a class="link" href="group.html" title="Class group">boost::mpi::group</a> <a class="link" href="intercommunicator.html#idp222684192-bb"><span class="identifier">remote_group</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <a class="link" href="communicator.html" title="Class communicator">communicator</a> <a class="link" href="intercommunicator.html#idp220871696-bb"><span class="identifier">merge</span></a><span class="special">(</span><span class="keyword">bool</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp165559400"></a><h2>Description</h2>
+<a name="idp334392448"></a><h2>Description</h2>
 <p>The <code class="computeroutput">intercommunicator</code> class provides communication facilities among processes from different groups. An intercommunicator is always associated with two process groups: one "local" process group, containing the process that initiates an MPI operation (e.g., the sender in a <code class="computeroutput">send</code> operation), and one "remote" process group, containing the process that is the target of the MPI operation.</p>
 <p>While intercommunicators have essentially the same point-to-point operations as intracommunicators (the latter communicate only within a single process group), all communication with intercommunicators occurs between the processes in the local group and the processes in the remote group; communication within a group must use a different (intra-)communicator. </p>
 <div class="refsect2">
-<a name="idp165561304"></a><h3>
+<a name="idp334395568"></a><h3>
 <a name="boost.mpi.intercommunicatorconstruct-copy-destruct"></a><code class="computeroutput">intercommunicator</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp98300680-bb"></a><span class="identifier">intercommunicator</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">MPI_Comm</span> <span class="special">&amp;</span> comm<span class="special">,</span> <span class="identifier">comm_create_kind</span> kind<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp220876080-bb"></a><span class="identifier">intercommunicator</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">MPI_Comm</span> <span class="special">&amp;</span> comm<span class="special">,</span> <span class="identifier">comm_create_kind</span> kind<span class="special">)</span><span class="special">;</span></pre>
 <p>Build a new Boost.MPI intercommunicator based on the MPI intercommunicator <code class="computeroutput">comm</code>.</p>
 <p><code class="computeroutput">comm</code> may be any valid MPI intercommunicator. If <code class="computeroutput">comm</code> is MPI_COMM_NULL, an empty communicator (that cannot be used for communication) is created and the <code class="computeroutput">kind</code> parameter is ignored. Otherwise, the <code class="computeroutput">kind</code> parameter determines how the Boost.MPI communicator will be related to <code class="computeroutput">comm:</code> </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>If <code class="computeroutput">kind</code> is <code class="computeroutput">comm_duplicate</code>, duplicate <code class="computeroutput">comm</code> to create a new communicator. This new communicator will be freed when the Boost.MPI communicator (and all copies of it) is destroyed. This option is only permitted if the underlying MPI implementation supports MPI 2.0; duplication of intercommunicators is not available in MPI 1.x.</p></li></ul></div>
-<p>
-</p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>If <code class="computeroutput">kind</code> is <code class="computeroutput">comm_take_ownership</code>, take ownership of <code class="computeroutput">comm</code>. It will be freed automatically when all of the Boost.MPI communicators go out of scope.</p></li></ul></div>
-<p>
-</p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>If <code class="computeroutput">kind</code> is <code class="computeroutput">comm_attach</code>, this Boost.MPI communicator will reference the existing MPI communicator <code class="computeroutput">comm</code> but will not free <code class="computeroutput">comm</code> when the Boost.MPI communicator goes out of scope. This option should only be used when the communicator is managed by the user. </p></li></ul></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>If <code class="computeroutput">kind</code> is <code class="computeroutput">comm_duplicate</code>, duplicate <code class="computeroutput">comm</code> to create a new communicator. This new communicator will be freed when the Boost.MPI communicator (and all copies of it) is destroyed. This option is only permitted if the underlying MPI implementation supports MPI 2.0; duplication of intercommunicators is not available in MPI 1.x.</p></li>
+<li class="listitem"><p>If <code class="computeroutput">kind</code> is <code class="computeroutput">comm_take_ownership</code>, take ownership of <code class="computeroutput">comm</code>. It will be freed automatically when all of the Boost.MPI communicators go out of scope.</p></li>
+<li class="listitem"><p>If <code class="computeroutput">kind</code> is <code class="computeroutput">comm_attach</code>, this Boost.MPI communicator will reference the existing MPI communicator <code class="computeroutput">comm</code> but will not free <code class="computeroutput">comm</code> when the Boost.MPI communicator goes out of scope. This option should only be used when the communicator is managed by the user. </p></li>
+</ul></div>
 <p>
 </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp98295112-bb"></a><span class="identifier">intercommunicator</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="communicator.html" title="Class communicator">communicator</a> <span class="special">&amp;</span> local<span class="special">,</span> <span class="keyword">int</span> local_leader<span class="special">,</span> 
+<pre class="literallayout"><a name="idp219234896-bb"></a><span class="identifier">intercommunicator</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="communicator.html" title="Class communicator">communicator</a> <span class="special">&amp;</span> local<span class="special">,</span> <span class="keyword">int</span> local_leader<span class="special">,</span> 
                   <span class="keyword">const</span> <a class="link" href="communicator.html" title="Class communicator">communicator</a> <span class="special">&amp;</span> peer<span class="special">,</span> <span class="keyword">int</span> remote_leader<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructs a new intercommunicator whose local group is <code class="computeroutput">local</code> and whose remote group is <code class="computeroutput">peer</code>. The intercommunicator can then be used to communicate between processes in the two groups. This constructor is equivalent to a call to <code class="computeroutput">MPI_Intercomm_create</code>.</p>
 <p>
@@ -113,31 +111,31 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp165585608"></a><h3>
-<a name="idp98309176-bb"></a><code class="computeroutput">intercommunicator</code> public member functions</h3>
+<a name="idp334441712"></a><h3>
+<a name="idp222677072-bb"></a><code class="computeroutput">intercommunicator</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">int</span> <a name="idp98309384-bb"></a><span class="identifier">local_size</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">int</span> <a name="idp222677632-bb"></a><span class="identifier">local_size</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Returns the size of the local group, i.e., the number of local processes that are part of the group. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="group.html" title="Class group">boost::mpi::group</a> <a name="idp98310152-bb"></a><span class="identifier">local_group</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="group.html" title="Class group">boost::mpi::group</a> <a name="idp222679248-bb"></a><span class="identifier">local_group</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Returns the local group, containing all of the local processes in this intercommunicator. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">int</span> <a name="idp98304520-bb"></a><span class="identifier">local_rank</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">int</span> <a name="idp222680992-bb"></a><span class="identifier">local_rank</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Returns the rank of this process within the local group. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">int</span> <a name="idp98305240-bb"></a><span class="identifier">remote_size</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">int</span> <a name="idp222682576-bb"></a><span class="identifier">remote_size</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Returns the size of the remote group, i.e., the number of processes that are part of the remote group. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="group.html" title="Class group">boost::mpi::group</a> <a name="idp98301832-bb"></a><span class="identifier">remote_group</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="group.html" title="Class group">boost::mpi::group</a> <a name="idp222684192-bb"></a><span class="identifier">remote_group</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Returns the remote group, containing all of the remote processes in this intercommunicator. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="communicator.html" title="Class communicator">communicator</a> <a name="idp98302616-bb"></a><span class="identifier">merge</span><span class="special">(</span><span class="keyword">bool</span> high<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="communicator.html" title="Class communicator">communicator</a> <a name="idp220871696-bb"></a><span class="identifier">merge</span><span class="special">(</span><span class="keyword">bool</span> high<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Merge the local and remote groups in this intercommunicator into a new intracommunicator containing the union of the processes in both groups. This method is equivalent to <code class="computeroutput">MPI_Intercomm_merge</code>.</p>
 <p>
 

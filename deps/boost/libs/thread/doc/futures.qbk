@@ -93,7 +93,7 @@ the result is ready, it is returned from __unique_future_get__ by rvalue-referen
 appropriate for the type.
 
 On the other hand, many instances of __shared_future__ may reference the same result. Instances can be freely copied and assigned,
-and __shared_future_get__ returns a non `const` reference so that multiple calls to __shared_future_get__ are safe. You can move an
+and __shared_future_get__ returns a `const` reference so that multiple calls to __shared_future_get__ are safe. You can move an
 instance of __unique_future__ into an instance of __shared_future__, thus transferring ownership of the associated asynchronous
 result, but not vice-versa.
 
@@ -308,7 +308,7 @@ The second `get()` call in the following example is undefined.
       use3( ftr.get() ); // second use is undefined
   }
     
-Using a `shared_mutex` solves the issue
+Using a `shared_future` solves the issue
 
   void good_second_use( type arg ) {
       
@@ -341,7 +341,7 @@ Here `share()` could be used to simplify the code
       use3( ftr.get() ); // second use is defined
   }
  
-[heading Writting on get()]
+[heading Writing on get()]
 
 The user can either read or write the future avariable. 
 
@@ -412,7 +412,7 @@ or wasting threads on polling, greatly improving the responsiveness and scalabil
 With `.then()` the antecedent future is ready (has a value or exception stored in the shared state) before the continuation 
 starts as instructed by the lambda function.
 
-In the example below the `future<int>` `f2` is registered to be a continuation of `future<int>` `f1` using the `.then()` member 
+In the example below the `future<string>` `f2` is registered to be a continuation of `future<int>` `f1` using the `.then()` member 
 function. This operation takes a lambda function which describes how `f2` should proceed after `f1` is ready.
 
 

@@ -6,7 +6,7 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-// $Id: convert.cpp 79728 2012-07-24 22:07:53Z steven_watanabe $
+// $Id$
 
 #include <boost/type_erasure/any.hpp>
 #include <boost/type_erasure/builtin.hpp>

@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../any.html" title="Chapter&#160;2.&#160;Boost.Any">
-<link rel="prev" href="../any.html" title="Chapter&#160;2.&#160;Boost.Any">
+<link rel="up" href="../any.html" title="Chapter&#160;3.&#160;Boost.Any">
+<link rel="prev" href="../any.html" title="Chapter&#160;3.&#160;Boost.Any">
 <link rel="next" href="reference.html" title="Reference">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -24,14 +24,14 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="idp61787512"></a>Examples</h2></div></div></div>
+<a name="idp111619232"></a>Examples</h2></div></div></div>
 <p>The following code demonstrates the syntax for using
     implicit conversions to and copying of any objects:</p>
 <pre class="programlisting">
 #include &lt;list&gt;
 #include &lt;boost/any.hpp&gt;
 
-using <code class="computeroutput"><a class="link" href="../boost/any_cast_idp25102232.html" title="Function any_cast">boost::any_cast</a></code>;
+using <code class="computeroutput"><a class="link" href="../boost/any_cast_idp42424128.html" title="Function any_cast">boost::any_cast</a></code>;
 typedef std::list&lt;<code class="computeroutput"><a class="link" href="../boost/any.html" title="Class any">boost::any</a></code>&gt; many;
 
 void append_int(many &amp; values, int value)
@@ -66,19 +66,19 @@ void append_nothing(many &amp; values)
 <pre class="programlisting">
 bool is_empty(const <code class="computeroutput"><a class="link" href="../boost/any.html" title="Class any">boost::any</a></code> &amp; operand)
 {
-    return operand.<code class="computeroutput"><a class="link" href="../boost/any.html#idp25096024-bb">empty</a></code>();
+    return operand.<code class="computeroutput"><a class="link" href="../boost/any.html#idp30088016-bb">empty</a></code>();
 }
 
 bool is_int(const <code class="computeroutput"><a class="link" href="../boost/any.html" title="Class any">boost::any</a></code> &amp; operand)
 {
-    return operand.<code class="computeroutput"><a class="link" href="../boost/any.html#idp25097512-bb">type</a></code>() == typeid(int);
+    return operand.<code class="computeroutput"><a class="link" href="../boost/any.html#idp30091328-bb">type</a></code>() == typeid(int);
 }
 
 bool is_char_ptr(const <code class="computeroutput"><a class="link" href="../boost/any.html" title="Class any">boost::any</a></code> &amp; operand)
 {
     try
     {
-        <code class="computeroutput"><a class="link" href="../boost/any_cast_idp25102232.html" title="Function any_cast">any_cast</a></code>&lt;const char *&gt;(operand);
+        <code class="computeroutput"><a class="link" href="../boost/any_cast_idp42424128.html" title="Function any_cast">any_cast</a></code>&lt;const char *&gt;(operand);
         return true;
     }
     catch(const <code class="computeroutput"><a class="link" href="../boost/bad_any_cast.html" title="Class bad_any_cast">boost::bad_any_cast</a></code> &amp;)
@@ -89,7 +89,7 @@ bool is_char_ptr(const <code class="computeroutput"><a class="link" href="../boo
 
 bool is_string(const <code class="computeroutput"><a class="link" href="../boost/any.html" title="Class any">boost::any</a></code> &amp; operand)
 {
-    return <code class="computeroutput"><a class="link" href="../boost/any_cast_idp25102232.html" title="Function any_cast">any_cast</a></code>&lt;std::string&gt;(&amp;operand);
+    return <code class="computeroutput"><a class="link" href="../boost/any_cast_idp42424128.html" title="Function any_cast">any_cast</a></code>&lt;std::string&gt;(&amp;operand);
 }
 
 void count_all(many &amp; values, std::ostream &amp; out)

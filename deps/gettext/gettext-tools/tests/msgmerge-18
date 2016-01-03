@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test msgmerge and msgcmp on a PO file with contexts.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mm-test18.po"
 cat <<\EOF > mm-test18.po
 msgid ""
 msgstr ""
@@ -51,7 +48,6 @@ msgid "copier"
 msgstr "photocopieur"
 EOF
 
-tmpfiles="$tmpfiles mm-test18.pot"
 cat <<\EOF > mm-test18.pot
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -118,16 +114,12 @@ EOF
 
 : ${MSGCMP=msgcmp}
 ${MSGCMP} --use-fuzzy --use-untranslated mm-test18.po mm-test18.pot 2>/dev/null
-test $? = 1 || { rm -fr $tmpfiles; exit 1; }
+test $? = 1 || { exit 1; }
 
-tmpfiles="$tmpfiles mm-test18.tmp.po mm-test18.new.po"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o mm-test18.tmp.po mm-test18.po mm-test18.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mm-test18.tmp.po > mm-test18.new.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o mm-test18.tmp.po mm-test18.po mm-test18.pot || exit 1
+LC_ALL=C tr -d '\r' < mm-test18.tmp.po > mm-test18.new.po || exit 1
 
-tmpfiles="$tmpfiles mm-test18.ok"
 # Note that the fuzzy guess for "Open" in context "Door state" could be either
 # "Ouvrir" (from context "File|") or "Ouvert" (from context "Lock state").
 cat <<\EOF > mm-test18.ok
@@ -194,13 +186,9 @@ msgstr "photocopieur"
 EOF
 
 : ${DIFF=diff}
-${DIFF} mm-test18.ok mm-test18.new.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${DIFF} mm-test18.ok mm-test18.new.po || exit 1
 
 : ${MSGCMP=msgcmp}
-${MSGCMP} --use-fuzzy --use-untranslated mm-test18.new.po mm-test18.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-
-rm -fr $tmpfiles
+${MSGCMP} --use-fuzzy --use-untranslated mm-test18.new.po mm-test18.pot || exit 1
 
 exit 0

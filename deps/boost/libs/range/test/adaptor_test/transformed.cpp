@@ -14,6 +14,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <boost/assign.hpp>
+#include <boost/bind.hpp>
 #include <boost/range/algorithm_ext.hpp>
 
 #include <algorithm>
@@ -92,6 +93,29 @@ namespace boost
             transformed_test_impl< std::set< int > >();
             transformed_test_impl< std::multiset< int > >();
         }
+
+        struct foo_bind
+        {
+            int foo() const { return 7; }
+        };
+
+        void transformed_bind()
+        {
+            using namespace boost::adaptors;
+
+            std::vector<foo_bind> input(5);
+            std::vector<int> output;
+            boost::range::push_back(
+                    output,
+                    input | transformed(boost::bind(&foo_bind::foo, _1)));
+
+            BOOST_CHECK_EQUAL(output.size(), input.size());
+
+            std::vector<int> reference_output(5, 7);
+            BOOST_CHECK_EQUAL_COLLECTIONS(
+                        output.begin(), output.end(),
+                        reference_output.begin(), reference_output.end());
+        }
     }
 }
 
@@ -101,7 +125,8 @@ init_unit_test_suite(int argc, char* argv[])
     boost::unit_test::test_suite* test
         = BOOST_TEST_SUITE( "RangeTestSuite.adaptor.transformed" );
 
-    test->add( BOOST_TEST_CASE( &boost::transformed_test ) );
+    test->add(BOOST_TEST_CASE(&boost::transformed_test));
+    test->add(BOOST_TEST_CASE(&boost::transformed_bind));
 
     return test;
 }

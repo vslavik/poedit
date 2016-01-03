@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2001-2013 Vaclav Slavik
+ *  Copyright (C) 2001-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -43,7 +43,7 @@
     For the purposes of algorithm description, let's say that TM is a 
     database that stores original string-translation pairs (where both 
     original string and translation are strings consisting of words 
-    delimined by spaces and/or interpunction) and supports inexact 
+    delimited by spaces and/or interpunction) and supports inexact 
     retrieval with original string as primary key. Inexact retrieval means
     that TM will return non-empty response even though there's no record
     with given key. In such case, TM will return \e similar records, that is
@@ -108,7 +108,7 @@
     word separators, converting to lowercase and removing bad words that
     are too common, such as "a", "the" or "will"). Number of words is used
     as sentence length and the ID is added to (word,length) records in 
-    DbWords for all words in the sentence (adding new records as neccessary).
+    DbWords for all words in the sentence (adding new records as necessary).
     (IDs are added to the end of list; this ensures, together with ID=index
     property, that IDs in DbWords are always sorted.)
     
@@ -353,22 +353,33 @@ std::string escape(const std::string& data)
 
 void DumpLanguage(DbEnv *env, const char *envpath, const std::string& lang)
 {
-    printf("<language lang=\"%s\">\n", escape(lang).c_str());
+    try
+    {
+        std::string path(envpath);
+        path += "/" + lang + "/";
+        DbOrig orig(env, path);
+        DbTrans trans(env, path);
 
-    std::string path(envpath);
-    path += "/" + lang + "/";
-    DbOrig orig(env, path);
-    DbTrans trans(env, path);
+        printf("<language lang=\"%s\">\n", escape(lang).c_str());
 
-    orig.Enumerate([&trans](const std::string& str, DbKey key){
-        std::vector<std::string> tr(trans.Read(key));
-        for (auto t: tr)
-        {
-            printf("<i s=\"%s\"\n   t=\"%s\"/>\n", escape(str).c_str(), escape(t).c_str());
-        }
-    });
-
-    printf("</language>\n");
+        orig.Enumerate([&trans](const std::string& str, DbKey key){
+            std::vector<std::string> tr(trans.Read(key));
+            for (auto t: tr)
+            {
+                printf("<i s=\"%s\"\n   t=\"%s\"/>\n", escape(str).c_str(), escape(t).c_str());
+            }
+        });
+        
+        printf("</language>\n");
+    }
+    catch (DbException& e)
+    {
+        // per-language DB may be missing, this is OK
+        if (e.get_errno() == ENOENT)
+            return;
+        else
+            throw;
+    }
 }
 
 

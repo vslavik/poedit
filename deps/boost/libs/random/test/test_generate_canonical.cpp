@@ -5,7 +5,7 @@
  * accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
  *
- * $Id: test_generate_canonical.cpp 71018 2011-04-05 21:27:52Z steven_watanabe $
+ * $Id$
  *
  */
 
@@ -15,6 +15,7 @@
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/lagged_fibonacci.hpp>
 #include <boost/cstdint.hpp>
+#include <boost/mpl/vector.hpp>
 
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>

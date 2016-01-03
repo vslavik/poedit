@@ -113,8 +113,8 @@ namespace boost {
           }
           for(;iter != end; ++iter)
           {
-            lock_type lock(**iter);
             cache->tracked_ptrs.clear();
+            lock_type lock(**iter);
             (*iter)->nolock_grab_tracked_objects(std::back_inserter(cache->tracked_ptrs));
             if((*iter)->nolock_nograb_connected())
             {

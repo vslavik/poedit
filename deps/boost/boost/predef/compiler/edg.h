@@ -1,5 +1,5 @@
 /*
-Copyright Redshift Software, Inc. 2008-2013
+Copyright Rene Rivera 2008-2014
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE_1_0.txt or copy at
 http://www.boost.org/LICENSE_1_0.txt)
@@ -29,18 +29,29 @@ Version number available as major, minor, and patch.
 #define BOOST_COMP_EDG BOOST_VERSION_NUMBER_NOT_AVAILABLE
 
 #if defined(__EDG__)
-#   undef BOOST_COMP_EDG
-#   define BOOST_COMP_EDG BOOST_PREDEF_MAKE_10_VRR(__EDG_VERSION__)
+#   define BOOST_COMP_EDG_DETECTION BOOST_PREDEF_MAKE_10_VRR(__EDG_VERSION__)
 #endif
 
-#if BOOST_COMP_EDG
+#ifdef BOOST_COMP_EDG_DETECTION
+#   if defined(BOOST_PREDEF_DETAIL_COMP_DETECTED)
+#       define BOOST_COMP_EDG_EMULATED BOOST_COMP_EDG_DETECTION
+#   else
+#       undef BOOST_COMP_EDG
+#       define BOOST_COMP_EDG BOOST_COMP_EDG_DETECTION
+#   endif
 #   define BOOST_COMP_EDG_AVAILABLE
+#   include <boost/predef/detail/comp_detected.h>
 #endif
 
 #define BOOST_COMP_EDG_NAME "EDG C++ Frontend"
 
 #include <boost/predef/detail/test.h>
 BOOST_PREDEF_DECLARE_TEST(BOOST_COMP_EDG,BOOST_COMP_EDG_NAME)
+
+#ifdef BOOST_COMP_EDG_EMULATED
+#include <boost/predef/detail/test.h>
+BOOST_PREDEF_DECLARE_TEST(BOOST_COMP_EDG_EMULATED,BOOST_COMP_EDG_NAME)
+#endif
 
 
 #endif

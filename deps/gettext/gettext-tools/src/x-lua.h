@@ -1,5 +1,5 @@
 /* xgettext Lua backend.
-   Copyright (C) 2011 Free Software Foundation, Inc.
+   Copyright (C) 2011, 2015 Free Software Foundation, Inc.
    Written by Ľubomír Remák <lubomirrk@lubomirr.eu>, 2011
 
    This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ extern "C"
 
 #define SCANNERS_LUA \
   { "Lua",             extract_lua,                                     \
-                       &flag_table_lua, &formatstring_lua, NULL },      \
+                       &flag_table_lua, &formatstring_lua, NULL, NULL },      \
 
   /* Scan a Lua file and add its translatable strings to mdlp.  */
   extern void extract_lua (FILE * fp, const char *real_filename,

@@ -68,7 +68,7 @@
       </p>
 <p>
         Then, in order to register this type with the simple formatter factory, a
-        single call to <code class="computeroutput"><a class="link" href="../../boost/log/register_simpl_idp28382392.html" title="Function template register_simple_formatter_factory">register_simple_formatter_factory</a></code>
+        single call to <code class="computeroutput"><a class="link" href="../../boost/log/register_simpl_idp46707376.html" title="Function template register_simple_formatter_factory">register_simple_formatter_factory</a></code>
         will suffice:
       </p>
 <p>
@@ -125,8 +125,8 @@
 <p>
         The simple formatter factory ignores all additional parameters from the format
         string, so we have to implement our own factory instead. Custom factories
-        are registered with the <code class="computeroutput"><a class="link" href="../../boost/log/register_forma_idp28375816.html" title="Function template register_formatter_factory">register_formatter_factory</a></code>
-        function, which is similar to <code class="computeroutput"><a class="link" href="../../boost/log/register_simpl_idp28382392.html" title="Function template register_simple_formatter_factory">register_simple_formatter_factory</a></code>
+        are registered with the <code class="computeroutput"><a class="link" href="../../boost/log/register_forma_idp46694672.html" title="Function template register_formatter_factory">register_formatter_factory</a></code>
+        function, which is similar to <code class="computeroutput"><a class="link" href="../../boost/log/register_simpl_idp46707376.html" title="Function template register_simple_formatter_factory">register_simple_formatter_factory</a></code>
         but accepts a pointer to the factory instead of the explicit template parameters.
       </p>
 <p>
@@ -142,7 +142,7 @@
     <span class="special">{</span>
     <span class="special">}</span>
 
-    <span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()</span> <span class="special">(</span><span class="identifier">logging</span><span class="special">::</span><span class="identifier">formatting_ostream</span><span class="special">&amp;</span> <span class="identifier">strm</span><span class="special">,</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">value_ref</span><span class="special">&lt;</span> <span class="identifier">point</span> <span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">value</span><span class="special">)</span>
+    <span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()</span> <span class="special">(</span><span class="identifier">logging</span><span class="special">::</span><span class="identifier">formatting_ostream</span><span class="special">&amp;</span> <span class="identifier">strm</span><span class="special">,</span> <span class="identifier">logging</span><span class="special">::</span><span class="identifier">value_ref</span><span class="special">&lt;</span> <span class="identifier">point</span> <span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">value</span><span class="special">)</span> <span class="keyword">const</span>
     <span class="special">{</span>
         <span class="keyword">if</span> <span class="special">(</span><span class="identifier">value</span><span class="special">)</span>
         <span class="special">{</span>
@@ -154,7 +154,7 @@
     <span class="special">}</span>
 
 <span class="keyword">private</span><span class="special">:</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">format</span> <span class="identifier">m_format</span><span class="special">;</span>
+    <span class="keyword">mutable</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">format</span> <span class="identifier">m_format</span><span class="special">;</span>
 <span class="special">};</span>
 
 <span class="comment">// Custom point formatter factory</span>
@@ -210,7 +210,7 @@
         wrapper which can be empty if the value is not present.
       </p>
 <p>
-        Lastly, the call to <code class="computeroutput"><a class="link" href="../../boost/log/register_forma_idp28375816.html" title="Function template register_formatter_factory">register_formatter_factory</a></code>
+        Lastly, the call to <code class="computeroutput"><a class="link" href="../../boost/log/register_forma_idp46694672.html" title="Function template register_formatter_factory">register_formatter_factory</a></code>
         creates the factory and adds it to the library.
       </p>
 <p>
@@ -254,7 +254,7 @@
           </li>
 </ol></div>
 <p>
-        Naturally, all these operators must be visible from the point of the <code class="computeroutput"><a class="link" href="../../boost/log/register_simpl_idp28342696.html" title="Function template register_simple_filter_factory">register_simple_filter_factory</a></code>
+        Naturally, all these operators must be visible from the point of the <code class="computeroutput"><a class="link" href="../../boost/log/register_simpl_idp46625264.html" title="Function template register_simple_filter_factory">register_simple_filter_factory</a></code>
         call. Note that unlike the simple formatter factory, the filter factory requires
         the user's type to support reading from a stream. This is so because the
         filter factory would have to parse the argument of the filter relation from
@@ -328,7 +328,7 @@
 <p>
       </p>
 <p>
-        Having called the <code class="computeroutput"><a class="link" href="../../boost/log/register_filte_idp28336024.html" title="Function template register_filter_factory">register_filter_factory</a></code>
+        Having called the <code class="computeroutput"><a class="link" href="../../boost/log/register_filte_idp46612368.html" title="Function template register_filter_factory">register_filter_factory</a></code>
         function, whenever the <a class="link" href="../detailed/utilities.html#log.detailed.utilities.setup.filter_formatter" title="Filter and formatter parsers">filter
         parser</a> encounters the "Coordinates" attribute mentioned
         in the filter, it will use the <code class="computeroutput"><span class="identifier">point_filter_factory</span></code>
@@ -367,11 +367,11 @@
       </p>
 <p>
         The library allows not only adding support for new types, but also associating
-        new relations with them. For instance, we can create a new relation "is_in_rect"
+        new relations with them. For instance, we can create a new relation "is_in_rectangle"
         that will yield positive if the coordinates fit into a rectangle denoted
         with two points. The filter might look like this:
       </p>
-<pre class="programlisting">%Coordinates% is_in_rect "{(10, 10) - (20, 20)}"</pre>
+<pre class="programlisting">%Coordinates% is_in_rectangle "{(10, 10) - (20, 20)}"</pre>
 <p>
         First, let's define our rectangle class:
       </p>
@@ -398,7 +398,7 @@
 <p>
 </p>
 <pre class="programlisting"><span class="comment">// The function checks if the point is inside the rectangle</span>
-<span class="keyword">bool</span> <span class="identifier">is_in_rect</span><span class="special">(</span><span class="identifier">logging</span><span class="special">::</span><span class="identifier">value_ref</span><span class="special">&lt;</span> <span class="identifier">point</span> <span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">p</span><span class="special">,</span> <span class="identifier">rectangle</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">r</span><span class="special">)</span>
+<span class="keyword">bool</span> <span class="identifier">is_in_rectangle</span><span class="special">(</span><span class="identifier">logging</span><span class="special">::</span><span class="identifier">value_ref</span><span class="special">&lt;</span> <span class="identifier">point</span> <span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">p</span><span class="special">,</span> <span class="identifier">rectangle</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">r</span><span class="special">)</span>
 <span class="special">{</span>
     <span class="keyword">if</span> <span class="special">(</span><span class="identifier">p</span><span class="special">)</span>
     <span class="special">{</span>
@@ -430,9 +430,9 @@
 
     <span class="identifier">logging</span><span class="special">::</span><span class="identifier">filter</span> <span class="identifier">on_custom_relation</span><span class="special">(</span><span class="identifier">logging</span><span class="special">::</span><span class="identifier">attribute_name</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">name</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">rel</span><span class="special">,</span> <span class="identifier">string_type</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">arg</span><span class="special">)</span>
     <span class="special">{</span>
-        <span class="keyword">if</span> <span class="special">(</span><span class="identifier">rel</span> <span class="special">==</span> <span class="string">"is_in_rect"</span><span class="special">)</span>
+        <span class="keyword">if</span> <span class="special">(</span><span class="identifier">rel</span> <span class="special">==</span> <span class="string">"is_in_rectangle"</span><span class="special">)</span>
         <span class="special">{</span>
-            <span class="keyword">return</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">bind</span><span class="special">(&amp;</span><span class="identifier">is_in_rect</span><span class="special">,</span> <span class="identifier">expr</span><span class="special">::</span><span class="identifier">attr</span><span class="special">&lt;</span> <span class="identifier">point</span> <span class="special">&gt;(</span><span class="identifier">name</span><span class="special">),</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">lexical_cast</span><span class="special">&lt;</span> <span class="identifier">rectangle</span> <span class="special">&gt;(</span><span class="identifier">arg</span><span class="special">));</span>
+            <span class="keyword">return</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">bind</span><span class="special">(&amp;</span><span class="identifier">is_in_rectangle</span><span class="special">,</span> <span class="identifier">expr</span><span class="special">::</span><span class="identifier">attr</span><span class="special">&lt;</span> <span class="identifier">point</span> <span class="special">&gt;(</span><span class="identifier">name</span><span class="special">),</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">lexical_cast</span><span class="special">&lt;</span> <span class="identifier">rectangle</span> <span class="special">&gt;(</span><span class="identifier">arg</span><span class="special">));</span>
         <span class="special">}</span>
         <span class="keyword">throw</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">runtime_error</span><span class="special">(</span><span class="string">"Unsupported filter relation: "</span> <span class="special">+</span> <span class="identifier">rel</span><span class="special">);</span>
     <span class="special">}</span>
@@ -447,11 +447,11 @@
       </p>
 <p>
         The <code class="computeroutput"><span class="identifier">on_custom_relation</span></code> method
-        is called with the relation name (the "is_in_rect" string in our
-        case) and the right-hand argument for the relation (the rectangle description).
-        All we have to do is to construct the filter, which is implemented by our
-        <code class="computeroutput"><span class="identifier">is_in_rect</span></code> function. We use
-        <code class="computeroutput"><span class="identifier">bind</span></code> from <a href="http://www.boost.org/doc/libs/release/libs/phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
+        is called with the relation name (the "is_in_rectangle" string
+        in our case) and the right-hand argument for the relation (the rectangle
+        description). All we have to do is to construct the filter, which is implemented
+        by our <code class="computeroutput"><span class="identifier">is_in_rectangle</span></code> function.
+        We use <code class="computeroutput"><span class="identifier">bind</span></code> from <a href="http://www.boost.org/doc/libs/release/libs/phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
         to compose the filter from the function and the <a class="link" href="../detailed/expressions.html#log.detailed.expressions.attr" title="Generic attribute placeholder">attribute
         placeholder</a>. You can find the complete code of this example <a href="../../../../../../libs/log/example/doc/extension_filter_parser_custom_rel.cpp" target="_top">here</a>.
       </p>
@@ -589,7 +589,7 @@
         custom "StatCollector" sink.
       </p>
 <p>
-        After defining the factory we only have to register it with the <code class="computeroutput"><a class="link" href="../../boost/log/register_sink__idp28405624.html" title="Function template register_sink_factory">register_sink_factory</a></code>
+        After defining the factory we only have to register it with the <code class="computeroutput"><a class="link" href="../../boost/log/register_sink__idp46756832.html" title="Function template register_sink_factory">register_sink_factory</a></code>
         call. The first argument is the new value of the "Destination"
         parameter in the settings. Whenever the library finds sink description with
         destination "StatCollector", our factory will be invoked to create
@@ -625,7 +625,8 @@ WriteInterval=30
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2013 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2015 Andrey
+      Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

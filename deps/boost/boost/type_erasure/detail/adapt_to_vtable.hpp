@@ -6,13 +6,14 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-// $Id: adapt_to_vtable.hpp 83325 2013-03-05 22:24:25Z steven_watanabe $
+// $Id$
 
 #if !defined(BOOST_PP_IS_ITERATING)
 
 #ifndef BOOST_TYPE_ERASURE_DETAIL_ADAPT_TO_VTABLE_HPP_INCLUDED
 #define BOOST_TYPE_ERASURE_DETAIL_ADAPT_TO_VTABLE_HPP_INCLUDED
 
+#include <boost/detail/workaround.hpp>
 #include <boost/utility/addressof.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -174,7 +175,9 @@ struct maybe_adapt_to_vtable
     >::type type;
 };
 
-#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && \
+    !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && \
+    !BOOST_WORKAROUND(BOOST_MSVC, == 1800)
 
 template<class PrimitiveConcept, class Sig, class ConceptSig>
 struct vtable_adapter_impl;

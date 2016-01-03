@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -128,8 +128,8 @@ public:
 
     attribute_value get_value()
     {
-        register unsigned long next_counter = static_cast< unsigned long >(++m_Counter);
-        register value_type next = static_cast< value_type >(m_Initial + (next_counter * m_Step));
+        const unsigned long next_counter = static_cast< unsigned long >(++m_Counter);
+        value_type next = static_cast< value_type >(m_Initial + (next_counter * m_Step));
         return make_attribute_value(next);
     }
 };

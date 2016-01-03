@@ -5,7 +5,7 @@
  * accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
  *
- * $Id: test_lagged_fibonacci607.cpp 74867 2011-10-09 23:13:31Z steven_watanabe $
+ * $Id$
  *
  */
 

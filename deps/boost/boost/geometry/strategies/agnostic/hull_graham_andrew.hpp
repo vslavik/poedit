@@ -2,6 +2,11 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
+// This file was modified by Oracle on 2014.
+// Modifications copyright (c) 2014 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
 
@@ -230,7 +235,7 @@ public:
         // For the left boundary it is important that multiple points
         // are sorted from bottom to top. Therefore the less predicate
         // does not take the x-only template parameter (this fixes ticket #6019.
-        // For the right boundary it is not necessary (though also not harmful), 
+        // For the right boundary it is not necessary (though also not harmful),
         // because points are sorted from bottom to top in a later stage.
         // For symmetry and to get often more balanced lower/upper halves
         // we keep it.
@@ -282,17 +287,17 @@ public:
 
     template <typename OutputIterator>
     inline void result(partitions const& state,
-                    OutputIterator out, bool clockwise)  const
+                       OutputIterator out,
+                       bool clockwise,
+                       bool closed) const
     {
         if (clockwise)
         {
-            output_range<iterate_forward>(state.m_upper_hull, out, false);
-            output_range<iterate_reverse>(state.m_lower_hull, out, true);
+            output_ranges(state.m_upper_hull, state.m_lower_hull, out, closed);
         }
         else
         {
-            output_range<iterate_forward>(state.m_lower_hull, out, false);
-            output_range<iterate_reverse>(state.m_upper_hull, out, true);
+            output_ranges(state.m_lower_hull, state.m_upper_hull, out, closed);
         }
     }
 
@@ -319,11 +324,11 @@ private:
         typedef typename strategy::side::services::default_strategy<cs_tag>::type side;
 
         output.push_back(p);
-        register std::size_t output_size = output.size();
+        std::size_t output_size = output.size();
         while (output_size >= 3)
         {
             rev_iterator rit = output.rbegin();
-            point_type const& last = *rit++;
+            point_type const last = *rit++;
             point_type const& last2 = *rit++;
 
             if (Factor * side::apply(*rit, last, last2) <= 0)
@@ -343,28 +348,28 @@ private:
     }
 
 
-    template <iterate_direction Direction, typename OutputIterator>
-    static inline void output_range(container_type const& range,
-        OutputIterator out, bool skip_first)
+    template <typename OutputIterator>
+    static inline void output_ranges(container_type const& first, container_type const& second,
+                                     OutputIterator out, bool closed)
     {
-        typedef typename reversible_view<container_type const, Direction>::type view_type;
-        view_type view(range);
-        bool first = true;
-        for (typename boost::range_iterator<view_type const>::type it = boost::begin(view);
-            it != boost::end(view); ++it)
+        std::copy(boost::begin(first), boost::end(first), out);
+
+        BOOST_ASSERT(closed ? !boost::empty(second) : boost::size(second) > 1);
+        std::copy(++boost::rbegin(second), // skip the first Point
+                  closed ? boost::rend(second) : --boost::rend(second), // skip the last Point if open
+                  out);
+
+        typedef typename boost::range_size<container_type>::type size_type;
+        size_type const count = boost::size(first) + boost::size(second) - 1;
+        // count describes a closed case but comparison with min size of closed
+        // gives the result compatible also with open
+        // here core_detail::closure::minimum_ring_size<closed> could be used
+        if (count < 4)
         {
-            if (first && skip_first)
-            {
-                first = false;
-            }
-            else
-            {
-                *out = *it;
-                ++out;
-            }
+            // there should be only one missing
+            *out++ = *boost::begin(first);
         }
     }
-
 };
 
 }} // namespace strategy::convex_hull

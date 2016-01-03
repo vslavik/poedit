@@ -60,7 +60,9 @@ namespace
                        Integer count, const Value& value,
                        BinaryPredicate pred)
     {
-        typedef typename std::iterator_traits<ForwardIterator>::iterator_category cat_t;
+        typedef typename std::iterator_traits<
+            ForwardIterator
+        >::iterator_category cat_t BOOST_RANGE_UNUSED;
 
         if (count <= 0)
             return first;

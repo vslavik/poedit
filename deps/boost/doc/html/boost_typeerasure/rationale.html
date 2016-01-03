@@ -55,7 +55,7 @@
       non-member functions?</a>
 </h3></div></div></div>
 <p>
-        The members of <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>
+        The members of <code class="computeroutput">any</code>
         can be customized. By using free functions, we guarantee that we don't interfere
         with anything that a user might want.
       </p>
@@ -86,7 +86,7 @@
         store a reference to a function object. However, in the general case treating
         references and values in the same way causes inconsistent behavior that is
         difficult to reason about. If Boost.TypeErasure handled references like this,
-        then, when you copy an <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>,
+        then, when you copy an <code class="computeroutput">any</code>,
         you would have no idea whether the new object is a real copy or just a new
         reference to the same underlying object. Boost.Function can get away with
         it, because it doesn't expose any mutating operations on the stored function

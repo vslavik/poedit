@@ -35,6 +35,7 @@ Tests for output from various units, name, symbol and raw formats, and automatic
 
 #include <boost/regex.hpp>
 
+#include <iostream>
 #include <sstream>
 #include <boost/config.hpp>
 #include <limits>
@@ -132,6 +133,18 @@ typedef boost::units::make_scaled_unit<custom2, boost::units::scale<10, boost::u
     BOOST_CHECK(boost::regex_match(ss.str(), r));           \
 }
 
+#define BOOST_UNITS_TEST_OUTPUT_DISPLAY(v)                  \
+{                                                           \
+    std::ostringstream ss;                                  \
+    ss FORMATTERS << v;                                     \
+    std::cout << #v << ": " << ss.str() << std::endl;       \
+}                                                           \
+{                                                           \
+    std::wostringstream ss;                                 \
+    ss FORMATTERS << v;                                     \
+    std::wcout << #v << ": " << ss.str() << std::endl;      \
+}
+
 #else
 
 #define BOOST_UNITS_TEST_OUTPUT(v, expected)                \
@@ -148,6 +161,13 @@ typedef boost::units::make_scaled_unit<custom2, boost::units::scale<10, boost::u
     boost::regex r(expected);                               \
     BOOST_CHECK_MESSAGE(boost::regex_match(ss.str(), r),    \
         ss.str() + " does not match " + expected);          \
+}
+
+#define BOOST_UNITS_TEST_OUTPUT_DISPLAY(v)                  \
+{                                                           \
+    std::ostringstream ss;                                  \
+    ss FORMATTERS << v;                                     \
+    std::cout << #v << ": " << ss.str() << std::endl;       \
 }
 
 #endif
@@ -239,7 +259,7 @@ BOOST_AUTO_TEST_CASE(test_output_quantity_symbol)
     BOOST_UNITS_TEST_OUTPUT(1.5*scaled_custom1(), "1.5 kc1");
     BOOST_UNITS_TEST_OUTPUT(1.5*scaled_custom2(), "1.5 kc2");
     BOOST_UNITS_TEST_OUTPUT(1.5*boost::units::absolute<meter_base_unit::unit_type>(), "1.5 absolute m");
-    BOOST_UNITS_TEST_OUTPUT(pow(2., 10) * byte_base_unit::unit_type(), "1024 b");
+    BOOST_UNITS_TEST_OUTPUT(std::pow(2., 10) * byte_base_unit::unit_type(), "1024 b");
 
 #undef FORMATTERS
 }
@@ -316,7 +336,7 @@ BOOST_AUTO_TEST_CASE(test_output_autoprefixed_quantity_name)
     BOOST_UNITS_TEST_OUTPUT_REGEX(std::numeric_limits<float>::infinity()*meter_base_unit::unit_type(), "(1\\.#INF|inf|INF) meter");
     BOOST_UNITS_TEST_OUTPUT_REGEX(-std::numeric_limits<float>::infinity()*meter_base_unit::unit_type(), "-(1\\.#INF|inf|INF) meter");
     BOOST_UNITS_TEST_OUTPUT_REGEX(std::numeric_limits<double>::quiet_NaN()*meter_base_unit::unit_type(), "(1\\.#QNAN|nan|NaNQ) meter");
-    BOOST_UNITS_TEST_OUTPUT_REGEX(-std::numeric_limits<double>::quiet_NaN()*meter_base_unit::unit_type(), "-?(1\\.#IND|nan|NaNQ) meter");
+    BOOST_UNITS_TEST_OUTPUT_REGEX(-std::numeric_limits<double>::quiet_NaN()*meter_base_unit::unit_type(), "-?(1\\.#IND|nan|nan\\(ind\\)|NaNQ) meter");
 
     BOOST_UNITS_TEST_OUTPUT(1.5*velocity(), "1.5 meter second^-1");
     BOOST_UNITS_TEST_OUTPUT(1.5*scaled_length(), "1.5 kilometer");
@@ -333,7 +353,7 @@ BOOST_AUTO_TEST_CASE(test_output_autoprefixed_quantity_name)
     BOOST_UNITS_TEST_OUTPUT(1.5*scaled_custom1(), "1.5 kilocustom1");
     BOOST_UNITS_TEST_OUTPUT(1.5*scaled_custom2(), "1.5 kilocustom2");
     BOOST_UNITS_TEST_OUTPUT(1.5*boost::units::absolute<meter_base_unit::unit_type>(), "1.5 absolute meter");
-    BOOST_UNITS_TEST_OUTPUT(pow(2., 10) * byte_base_unit::unit_type(), "1.024 kilobyte");
+    BOOST_UNITS_TEST_OUTPUT(std::pow(2., 10) * byte_base_unit::unit_type(), "1.024 kilobyte");
 
     BOOST_UNITS_TEST_OUTPUT(1.5, "1.5"); // scalar.
     BOOST_UNITS_TEST_OUTPUT(1567., "1567"); // scalars are *not* autoprefixed.
@@ -381,7 +401,7 @@ BOOST_AUTO_TEST_CASE(test_output_autoprefixed_quantity_symbol)
     BOOST_UNITS_TEST_OUTPUT(1.5*scaled_custom1(), "1.5 kc1");
     BOOST_UNITS_TEST_OUTPUT(1.5*scaled_custom2(), "1.5 kc2");
     BOOST_UNITS_TEST_OUTPUT(1.5*boost::units::absolute<meter_base_unit::unit_type>(), "1.5 absolute m");
-    BOOST_UNITS_TEST_OUTPUT(pow(2., 10) * byte_base_unit::unit_type(), "1.024 kb");
+    BOOST_UNITS_TEST_OUTPUT(std::pow(2., 10) * byte_base_unit::unit_type(), "1.024 kb");
 
 #undef FORMATTERS
 }
@@ -390,11 +410,13 @@ BOOST_AUTO_TEST_CASE(test_output_auto_binary_prefixed_quantity_symbol)
 { // Binary prefix with symbol format.
 #define FORMATTERS << boost::units::symbol_format << boost::units::binary_prefix
     BOOST_UNITS_TEST_OUTPUT(1024 * byte_base_unit::unit_type(), "1 Kib");
-    BOOST_UNITS_TEST_OUTPUT(pow(2., 20) * byte_base_unit::unit_type(), "1 Mib");
-    BOOST_UNITS_TEST_OUTPUT(pow(2., 30) * byte_base_unit::unit_type(), "1 Gib");
-    BOOST_UNITS_TEST_OUTPUT(pow(2., 40) * byte_base_unit::unit_type(), "1 Tib");
-    BOOST_UNITS_TEST_OUTPUT(pow(2., 50) * byte_base_unit::unit_type(), "1 Pib");
-    BOOST_UNITS_TEST_OUTPUT(pow(2., 60) * byte_base_unit::unit_type(), "1 Eib");
+    BOOST_UNITS_TEST_OUTPUT(std::pow(2., 20) * byte_base_unit::unit_type(), "1 Mib");
+    BOOST_UNITS_TEST_OUTPUT(std::pow(2., 30) * byte_base_unit::unit_type(), "1 Gib");
+    BOOST_UNITS_TEST_OUTPUT(std::pow(2., 40) * byte_base_unit::unit_type(), "1 Tib");
+    BOOST_UNITS_TEST_OUTPUT(std::pow(2., 50) * byte_base_unit::unit_type(), "1 Pib");
+    BOOST_UNITS_TEST_OUTPUT(std::pow(2., 60) * byte_base_unit::unit_type(), "1 Eib");
+    BOOST_UNITS_TEST_OUTPUT(std::pow(2., 70) * byte_base_unit::unit_type(), "1 Zib");
+    BOOST_UNITS_TEST_OUTPUT(std::pow(2., 80) * byte_base_unit::unit_type(), "1 Yib");
     BOOST_UNITS_TEST_OUTPUT(42, "42"); // integer scalar.
     BOOST_UNITS_TEST_OUTPUT(-42, "-42"); // integer scalar.
     BOOST_UNITS_TEST_OUTPUT(1567, "1567"); // scalars are *not* autoprefixed.
@@ -408,12 +430,16 @@ BOOST_AUTO_TEST_CASE(test_output_auto_binary_prefixed_quantity_name)
   // 1998 the International Electrotechnical Commission (IEC) approved 
   // IEC 60027-2, Second edition, 2000-11, Letter symbols to be used in electrical technology
   // - Part 2: Telecommunications and electronics.
+  // IEC 80000-13:2008, Quantities and units
+  // – Part 13: Information science and technology
 #define FORMATTERS << boost::units::name_format << boost::units::binary_prefix
     BOOST_UNITS_TEST_OUTPUT(2048  * byte_base_unit::unit_type(), "2 kibibyte");
-    BOOST_UNITS_TEST_OUTPUT(pow(2., 32) *byte_base_unit::unit_type(), "4 gibibyte");
-    BOOST_UNITS_TEST_OUTPUT(pow(2., 41) *byte_base_unit::unit_type(), "2 tebibyte"); // http://en.wikipedia.org/wiki/Tebibyte
-    BOOST_UNITS_TEST_OUTPUT(pow(2., 50) *byte_base_unit::unit_type(), "1 pebibyte"); 
-    BOOST_UNITS_TEST_OUTPUT(pow(2., 60) *byte_base_unit::unit_type(), "1 exbibyte");
+    BOOST_UNITS_TEST_OUTPUT(std::pow(2., 32) *byte_base_unit::unit_type(), "4 gibibyte");
+    BOOST_UNITS_TEST_OUTPUT(std::pow(2., 41) *byte_base_unit::unit_type(), "2 tebibyte"); // http://en.wikipedia.org/wiki/Tebibyte
+    BOOST_UNITS_TEST_OUTPUT(std::pow(2., 50) *byte_base_unit::unit_type(), "1 pebibyte"); 
+    BOOST_UNITS_TEST_OUTPUT(std::pow(2., 60) *byte_base_unit::unit_type(), "1 exbibyte");
+    BOOST_UNITS_TEST_OUTPUT(std::pow(2., 70) *byte_base_unit::unit_type(), "1 zebibyte");
+    BOOST_UNITS_TEST_OUTPUT(std::pow(2., 80) *byte_base_unit::unit_type(), "1 yobibyte");
     BOOST_UNITS_TEST_OUTPUT(2048, "2048"); // scalars are *not* autoprefixed.
     BOOST_UNITS_TEST_OUTPUT(-4096, "-4096"); // scalars are *not* autoprefixed.
 #undef FORMATTERS
@@ -446,5 +472,28 @@ BOOST_AUTO_TEST_CASE(test_output_auto_binary_prefixed_quantity_symbol_duplicate)
 { // Ensure that if more than one auto prefix specified, only the last is used.
 #define FORMATTERS << boost::units::symbol_format << boost::units::engineering_prefix << boost::units::binary_prefix
     BOOST_UNITS_TEST_OUTPUT(2048 * byte_base_unit::unit_type(), "2 Kib");
+#undef FORMATTERS
+}
+
+BOOST_AUTO_TEST_CASE(test_output_typename_format)
+{  // Displays typename formatting result. The test doesn't check the formatting result
+   // and thus doesn't fail because the formatting result is platform-dependent.
+#define FORMATTERS << boost::units::typename_format
+    BOOST_UNITS_TEST_OUTPUT_DISPLAY(meter_base_unit::unit_type());
+    BOOST_UNITS_TEST_OUTPUT_DISPLAY(velocity());
+    BOOST_UNITS_TEST_OUTPUT_DISPLAY(scaled_length());
+    BOOST_UNITS_TEST_OUTPUT_DISPLAY(scaled_velocity1());
+    BOOST_UNITS_TEST_OUTPUT_DISPLAY(millisecond_base_unit::unit_type());
+    BOOST_UNITS_TEST_OUTPUT_DISPLAY(scaled_time());
+    BOOST_UNITS_TEST_OUTPUT_DISPLAY(scaled_velocity2());
+    BOOST_UNITS_TEST_OUTPUT_DISPLAY(area());
+    BOOST_UNITS_TEST_OUTPUT_DISPLAY(scaled_area());
+    BOOST_UNITS_TEST_OUTPUT_DISPLAY(double_scaled_length());
+    BOOST_UNITS_TEST_OUTPUT_DISPLAY(double_scaled_length2());
+    BOOST_UNITS_TEST_OUTPUT_DISPLAY(custom1());
+    BOOST_UNITS_TEST_OUTPUT_DISPLAY(custom2());
+    BOOST_UNITS_TEST_OUTPUT_DISPLAY(scaled_custom1());
+    BOOST_UNITS_TEST_OUTPUT_DISPLAY(scaled_custom2());
+    BOOST_UNITS_TEST_OUTPUT_DISPLAY(boost::units::absolute<meter_base_unit::unit_type>());
 #undef FORMATTERS
 }

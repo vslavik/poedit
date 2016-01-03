@@ -1,13 +1,13 @@
 #ifndef BOOST_SERIALIZATION_TEST_TOOLS_HPP
 #define BOOST_SERIALIZATION_TEST_TOOLS_HPP
 
-#define BOOST_FILESYSTEM_VERSION 3
-#include <boost/filesystem.hpp>
-
 // MS compatible compilers support #pragma once
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
+#if defined(_MSC_VER)
 # pragma once
 #endif
+
+#define BOOST_FILESYSTEM_VERSION 3
+#include <boost/filesystem/operations.hpp> // unique_path
 
 /////////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
 // test_tools.hpp
@@ -20,10 +20,10 @@
 //  See http://www.boost.org for updates, documentation, and revision history.
 
 #include <cstddef> // size_t
+#include <boost/config.hpp>
 #ifndef BOOST_NO_EXCEPTION_STD_NAMESPACE
     #include <exception>
 #endif
-#include <boost/config.hpp>
 #include <boost/detail/no_exceptions_support.hpp>
 
 #if defined(UNDER_CE)
@@ -63,9 +63,9 @@ namespace std{
 #include <direct.h>
 #include <boost/archive/tmpdir.hpp>
 
-#if defined(__COMO__)
+//#if defined(__COMO__)
     #define chdir _chdir
-#endif
+//#endif  // defined win32
 
 #if defined(NDEBUG) && defined(__BORLANDC__)
     #define STRCPY strcpy
@@ -196,11 +196,11 @@ int test_main(int argc, char * argv[]);
 
 int
 main(int argc, char * argv[]){
-    
     boost::serialization::singleton_module::lock();
 
+    int retval = 1;
     BOOST_TRY{
-        test_main(argc, argv);
+        retval = test_main(argc, argv);
     }
     #ifndef BOOST_NO_EXCEPTION_STD_NAMESPACE
         BOOST_CATCH(const std::exception & e){
@@ -214,7 +214,10 @@ main(int argc, char * argv[]){
 
     boost::serialization::singleton_module::unlock();
 
-    return boost::report_errors();
+    int error_count = boost::report_errors();
+    if(error_count > 0)
+        retval = error_count;
+    return retval;
 }
 
 // the following is to ensure that when one of the libraries changes

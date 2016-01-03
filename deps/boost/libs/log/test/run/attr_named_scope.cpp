@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -139,7 +139,6 @@ BOOST_AUTO_TEST_CASE(detaching_from_thread)
     typedef attrs::named_scope named_scope;
     typedef named_scope::sentry sentry;
     typedef attrs::named_scope_list scopes;
-    typedef attrs::named_scope_entry scope;
     typedef scope_test_data< char > scope_data;
 
     named_scope attr;
@@ -181,7 +180,6 @@ BOOST_AUTO_TEST_CASE(copying)
     typedef attrs::named_scope named_scope;
     typedef named_scope::sentry sentry;
     typedef attrs::named_scope_list scopes;
-    typedef attrs::named_scope_entry scope;
     typedef scope_test_data< char > scope_data;
 
     sentry scope1(scope_data::scope1(), scope_data::file(), __LINE__);

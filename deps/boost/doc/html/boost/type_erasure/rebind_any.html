@@ -37,8 +37,8 @@
   <span class="keyword">typedef</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a name="boost.type_erasure.rebind_any.type"></a><span class="identifier">type</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp233616376"></a><h2>Description</h2>
-<p>A metafunction that changes the <a class="link" href="placeholder.html" title="Struct placeholder">placeholder</a> of an <a class="link" href="any.html" title="Class template any">any</a>. If <code class="computeroutput">T</code> is not a placeholder, returns <code class="computeroutput">T</code> unchanged. This class is intended to be used in <a class="link" href="concept_interface.html" title="Struct template concept_interface">concept_interface</a> to deduce the argument types from the arguments of the concept.</p>
+<a name="idp475921536"></a><h2>Description</h2>
+<p>A metafunction that changes the <a class="link" href="placeholder.html" title="Struct placeholder">placeholder</a> of an any. If <code class="computeroutput">T</code> is not a placeholder, returns <code class="computeroutput">T</code> unchanged. This class is intended to be used in <a class="link" href="concept_interface.html" title="Struct template concept_interface">concept_interface</a> to deduce the argument types from the arguments of the concept.</p>
 <p>
 </p>
 <pre class="programlisting"><span class="identifier">rebind_any</span><span class="special">&lt;</span><span class="identifier">any</span><span class="special">&lt;</span><span class="identifier">Concept</span><span class="special">&gt;</span><span class="special">,</span> <span class="identifier">_a</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <span class="special">-&gt;</span> <span class="identifier">any</span><span class="special">&lt;</span><span class="identifier">Concept</span><span class="special">,</span> <span class="identifier">_a</span><span class="special">&gt;</span>

@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 //  Adaptation to Boost of the libcxx
 //  Copyright 2010 Vicente J. Botet Escriba
+//  Copyright (c) Microsoft Corporation 2014
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
 
@@ -145,6 +146,7 @@ int main()
     BOOST_CHRONO_STATIC_ASSERT(boost::chrono::process_real_cpu_clock::is_steady, NOTHING, ());
     check_clock_now<boost::chrono::process_real_cpu_clock>();
 
+#if ! BOOST_OS_WINDOWS || BOOST_PLAT_WINDOWS_DESKTOP
     check_clock_invariants<boost::chrono::process_user_cpu_clock>();
     BOOST_CHRONO_STATIC_ASSERT(boost::chrono::process_user_cpu_clock::is_steady, NOTHING, ());
     check_clock_now<boost::chrono::process_user_cpu_clock>();
@@ -156,6 +158,7 @@ int main()
     check_clock_invariants<boost::chrono::process_cpu_clock>();
     BOOST_CHRONO_STATIC_ASSERT(boost::chrono::process_cpu_clock::is_steady, NOTHING, ());
     check_clock_now<boost::chrono::process_cpu_clock>();
+#endif
 #endif
 
 
@@ -180,6 +183,7 @@ int main()
     check_clock_now_ec<boost::chrono::process_real_cpu_clock>();
     check_clock_now_throws<boost::chrono::process_real_cpu_clock>();
 
+#if ! BOOST_OS_WINDOWS || BOOST_PLAT_WINDOWS_DESKTOP
     check_clock_now_ec<boost::chrono::process_user_cpu_clock>();
     check_clock_now_throws<boost::chrono::process_user_cpu_clock>();
 
@@ -188,6 +192,7 @@ int main()
 
     check_clock_now_ec<boost::chrono::process_cpu_clock>();
     check_clock_now_throws<boost::chrono::process_cpu_clock>();
+#endif
 #endif
 
 #endif

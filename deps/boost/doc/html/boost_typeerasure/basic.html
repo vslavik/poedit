@@ -30,10 +30,10 @@
       (For the source of the examples in this section see <a href="../../../libs/type_erasure/example/basic.cpp" target="_top">basic.cpp</a>)
     </p>
 <p>
-      The main class in the library is <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>.
-      An <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code> can store objects
+      The main class in the library is <code class="computeroutput">any</code>.
+      An <code class="computeroutput">any</code> can store objects
       that meet whatever requirements we specify. These requirements are passed to
-      <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code> as an MPL sequence.
+      <code class="computeroutput">any</code> as an MPL sequence.
     </p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -55,12 +55,12 @@
 <p>
       <code class="computeroutput"><a class="link" href="../boost/type_erasure/copy_constructible.html" title="Struct template copy_constructible">copy_constructible</a></code>
       is a builtin concept that allows us to copy and destroy the object. <code class="computeroutput"><a class="link" href="../boost/type_erasure/typeid_.html" title="Struct template typeid_">typeid_</a></code> provides run-time type
-      information so that we can use <code class="computeroutput"><a class="link" href="../boost/type_erasure/any_cast_idp101098872.html" title="Function any_cast">any_cast</a></code>.
+      information so that we can use <code class="computeroutput"><a class="link" href="../boost/type_erasure/any_cast_idp303398944.html" title="Function any_cast">any_cast</a></code>.
       <code class="computeroutput"><a class="link" href="../boost/type_erasure/relaxed.html" title="Struct relaxed">relaxed</a></code> enables various
       useful defaults. Without <code class="computeroutput"><a class="link" href="../boost/type_erasure/relaxed.html" title="Struct relaxed">relaxed</a></code>,
-      <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code> supports <span class="emphasis"><em>exactly</em></span>
+      <code class="computeroutput">any</code> supports <span class="emphasis"><em>exactly</em></span>
       what you specify and nothing else. In particular, it allows default construction
-      and assignment of <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>.
+      and assignment of <code class="computeroutput">any</code>.
     </p>
 <p>
       Now, this example doesn't do very much. <code class="computeroutput"><span class="identifier">x</span></code>
@@ -127,10 +127,10 @@
       Also, note that <code class="computeroutput"><span class="identifier">append_many</span></code>
       has to operate directly on its argument. It cannot make a copy. To handle this
       we use <code class="computeroutput"><span class="identifier">_self</span><span class="special">&amp;</span></code>
-      as the second argument of <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>.
+      as the second argument of <code class="computeroutput">any</code>.
       <code class="computeroutput"><span class="identifier">_self</span></code> is a <code class="computeroutput"><a class="link" href="../boost/type_erasure/placeholder.html" title="Struct placeholder">placeholder</a></code>.
       By using <code class="computeroutput"><span class="identifier">_self</span><span class="special">&amp;</span></code>,
-      we indicate that the <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>
+      we indicate that the <code class="computeroutput">any</code>
       stores a reference to an external object instead of allocating its own object.
     </p>
 <p>

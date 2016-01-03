@@ -4,9 +4,11 @@
     <title>Update summary</title>
     <style>wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER</style>
     <object class="wxBoxSizer">
+      <minsize>300,200d</minsize>
       <orient>wxVERTICAL</orient>
       <object class="sizeritem">
         <object class="wxNotebook">
+          <variant platform="mac">small</variant>
           <object class="notebookpage">
             <object class="wxPanel">
               <object class="wxBoxSizer">
@@ -59,6 +61,7 @@
           <orient>wxHORIZONTAL</orient>
           <object class="sizeritem">
             <object class="wxStaticText" name="items_count">
+              <variant platform="mac">small</variant>
               <label>(0 new, 0 obsolete)</label>
             </object>
             <flag>wxALL</flag>

@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 1999-2013 Vaclav Slavik
+ *  Copyright (C) 1999-2015 Vaclav Slavik
  *  Copyright (C) 2005 Olivier Sannier
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
@@ -26,7 +26,8 @@
 
 #include "cat_sorting.h"
 
-#include "icuhelpers.h"
+#include <unicode/unistr.h>
+#include "str_helpers.h"
 
 #include <wx/config.h>
 #include <wx/log.h>
@@ -36,7 +37,9 @@
     SortOrder order;
 
     wxString by = wxConfig::Get()->Read("/sort_by", "file-order");
-    long untrans = wxConfig::Get()->Read("/sort_untrans_first", 1L);
+    long ctxt = wxConfig::Get()->Read("/sort_group_by_context", 0L);
+    long untrans = wxConfig::Get()->Read("/sort_untrans_first", 0L);
+    long errors = wxConfig::Get()->Read("/sort_errors_first", 1L);
 
     if ( by == "source" )
         order.by = By_Source;
@@ -45,7 +48,9 @@
     else
         order.by = By_FileOrder;
 
+    order.groupByContext = (ctxt != 0);
     order.untransFirst = (untrans != 0);
+    order.errorsFirst = (errors != 0);
 
     return order;
 }
@@ -68,7 +73,9 @@ void SortOrder::Save()
     }
 
     wxConfig::Get()->Write("/sort_by", bystr);
+    wxConfig::Get()->Write("/sort_group_by_context", groupByContext);
     wxConfig::Get()->Write("/sort_untrans_first", untransFirst);
+    wxConfig::Get()->Write("/sort_errors_first", errorsFirst);
 }
 
 
@@ -80,7 +87,7 @@ CatalogItemsComparator::CatalogItemsComparator(const Catalog& catalog, const Sor
     {
         case SortOrder::By_Source:
             // TODO: allow non-English source languages too
-            m_collator.reset(icu::Collator::createInstance(icu::Locale::getEnglish(), err));
+            m_collator.reset(icu::Collator::createInstance(catalog.GetSourceLanguage().ToIcu(), err));
             break;
 
         case SortOrder::By_Translation:
@@ -110,22 +117,39 @@ bool CatalogItemsComparator::operator()(int i, int j) const
     const CatalogItem& a = Item(i);
     const CatalogItem& b = Item(j);
 
-    if ( m_order.untransFirst )
+    if ( m_order.errorsFirst )
     {
         if ( a.GetValidity() == CatalogItem::Val_Invalid && b.GetValidity() != CatalogItem::Val_Invalid )
             return true;
-        if ( a.GetValidity() != CatalogItem::Val_Invalid && b.GetValidity() == CatalogItem::Val_Invalid )
+        else if ( a.GetValidity() != CatalogItem::Val_Invalid && b.GetValidity() == CatalogItem::Val_Invalid )
             return false;
+    }
 
+    if ( m_order.untransFirst )
+    {
         if ( !a.IsTranslated() && b.IsTranslated() )
             return true;
-        if ( a.IsTranslated() && !b.IsTranslated() )
+        else if ( a.IsTranslated() && !b.IsTranslated() )
             return false;
 
         if ( a.IsFuzzy() && !b.IsFuzzy() )
             return true;
-        if ( !a.IsFuzzy() && b.IsFuzzy() )
+        else if ( !a.IsFuzzy() && b.IsFuzzy() )
             return false;
+    }
+
+    if ( m_order.groupByContext )
+    {
+        if ( a.HasContext() && !b.HasContext() )
+            return true;
+        else if ( !a.HasContext() && b.HasContext() )
+            return false;
+        else if ( a.HasContext() && b.HasContext() )
+        {
+            int r = CompareStrings(a.GetContext(), b.GetContext());
+            if ( r != 0 )
+                return r < 0;
+        }
     }
 
     switch ( m_order.by )
@@ -167,12 +191,19 @@ int CatalogItemsComparator::CompareStrings(wxString a, wxString b) const
     b.Replace("&", "");
     b.Replace("_", "");
 
-    UErrorCode err = U_ZERO_ERROR;
+    if (m_collator)
+    {
+        UErrorCode err = U_ZERO_ERROR;
 #if wxUSE_UNICODE_UTF8
-    return m_collator->compareUTF8(a.wx_str(), b.wx_str(), err);
+        return m_collator->compareUTF8(a.wx_str(), b.wx_str(), err);
 #elif SIZEOF_WCHAR_T == 2
-    return m_collator->compare(a.wx_str(), a.length(), b.wx_str(), b.length(), err);
+        return m_collator->compare(a.wx_str(), a.length(), b.wx_str(), b.length(), err);
 #else
-    return m_collator->compare(ToIcuStr(a), ToIcuStr(b), err);
+        return m_collator->compare(str::to_icu(a), str::to_icu(b), err);
 #endif
+    }
+    else
+    {
+        return a.CmpNoCase(b);
+    }
 }

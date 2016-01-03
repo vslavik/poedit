@@ -265,17 +265,7 @@ namespace boost {
   {
     typename graph_traits<Graph>::adjacency_iterator vi, viend, found;
     boost::tie(vi, viend) = adjacent_vertices(a, g);
-#if defined(BOOST_MSVC) && BOOST_MSVC <= 1300 && defined(__SGI_STL_PORT)
-    // Getting internal compiler error with std::find()
-    found = viend;
-    for (; vi != viend; ++vi)
-      if (*vi == b) {
-        found = vi;
-        break;
-      }
-#else
     found = std::find(vi, viend, b);
-#endif
     if ( found == viend )
       return false;
 
@@ -283,17 +273,7 @@ namespace boost {
       out_found;
     boost::tie(oi, oiend) = out_edges(a, g);
 
-#if defined(BOOST_MSVC) && BOOST_MSVC <= 1300 && defined(__SGI_STL_PORT)
-    // Getting internal compiler error with std::find()
-    out_found = oiend;
-    for (; oi != oiend; ++oi)
-      if (target(*oi, g) == b) {
-        out_found = oi;
-        break;
-      }
-#else
     out_found = std::find_if(oi, oiend, incident_to(b, g));
-#endif
     if (out_found == oiend)
       return false;
     return true;

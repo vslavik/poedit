@@ -1,3 +1,18 @@
+msgid "warning: "
+msgstr ""
+
+#, c-format
+msgid "'%s' is not a valid encoding name.  Using ASCII as fallback.\n"
+msgstr ""
+
+#, c-format
+msgid "syntax check '%s' unknown"
+msgstr ""
+
+#, c-format
+msgid "sentence end type '%s' unknown"
+msgstr ""
+
 #, c-format, no-wrap
 msgid ""
 "Copyright (C) %s Free Software Foundation, Inc.\n"
@@ -38,6 +53,12 @@ msgstr ""
 #, c-format
 msgid "warning: file '%s' extension '%s' is unknown; will try C"
 msgstr ""
+
+#, c-format
+msgid "found %d fatal error"
+msgid_plural "found %d fatal errors"
+msgstr[0] ""
+msgstr[1] ""
 
 #, c-format
 msgid "Try '%s --help' for more information.\n"
@@ -114,7 +135,7 @@ msgid ""
 "                                JavaProperties, C#, awk, YCP, Tcl, Perl, "
 "PHP,\n"
 "                                GCC-source, NXStringTable, RST, Glade, Lua,\n"
-"                                JavaScript, Vala)\n"
+"                                JavaScript, Vala, Desktop)\n"
 msgstr ""
 
 #, c-format
@@ -163,6 +184,20 @@ msgid ""
 msgstr ""
 
 #, c-format
+msgid ""
+"      --check=NAME            perform syntax check on messages\n"
+"                                (ellipsis-unicode, space-ellipsis,\n"
+"                                 quote-unicode)\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"      --sentence-end=TYPE     type describing the end of sentence\n"
+"                                (single-space, which is the default, \n"
+"                                 or double-space)\n"
+msgstr ""
+
+#, c-format
 msgid "Language specific options:\n"
 msgstr ""
 
@@ -183,6 +218,15 @@ msgstr ""
 msgid ""
 "  -kWORD, --keyword=WORD      look for WORD as an additional keyword\n"
 "  -k, --keyword               do not to use default keywords\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"                                (only languages C, C++, ObjectiveC, Shell,\n"
+"                                Python, Lisp, EmacsLisp, librep, Scheme, "
+"Java,\n"
+"                                C#, awk, Tcl, Perl, PHP, GCC-source, Glade,\n"
+"                                Lua, JavaScript, Vala, Desktop)\n"
 msgstr ""
 
 #, c-format
@@ -437,9 +481,6 @@ msgstr ""
 msgid "context mismatch between singular and plural form"
 msgstr ""
 
-msgid "warning: "
-msgstr ""
-
 msgid ""
 "The option --msgid-bugs-address was not specified.\n"
 "If you are using a 'Makevars' file, please specify\n"
@@ -460,11 +501,27 @@ msgid "invalid endianness: %s"
 msgstr ""
 
 #, c-format
+msgid "no input file should be given if %s and %s are specified"
+msgstr ""
+
+#, c-format
 msgid "%s requires a \"-d directory\" specification"
 msgstr ""
 
 #, c-format
 msgid "%s requires a \"-l locale\" specification"
+msgstr ""
+
+#, c-format
+msgid "%s requires a \"--template template\" specification"
+msgstr ""
+
+#, c-format
+msgid "%s requires a \"-o file\" specification"
+msgstr ""
+
+#, c-format
+msgid "%s and %s are mutually exclusive in %s"
 msgstr ""
 
 #, c-format
@@ -474,12 +531,6 @@ msgstr ""
 #, c-format
 msgid "%s is only valid with %s, %s or %s"
 msgstr ""
-
-#, c-format
-msgid "found %d fatal error"
-msgid_plural "found %d fatal errors"
-msgstr[0] ""
-msgstr[1] ""
 
 #, c-format
 msgid "%s: "
@@ -547,6 +598,11 @@ msgid "      --qt                    Qt mode: generate a Qt .qm file\n"
 msgstr ""
 
 #, c-format
+msgid ""
+"      --desktop               Desktop Entry mode: generate a .desktop file\n"
+msgstr ""
+
+#, c-format
 msgid "  -o, --output-file=FILE      write output to specified file\n"
 msgstr ""
 
@@ -566,6 +622,12 @@ msgstr ""
 msgid ""
 "  -l, --locale=LOCALE         locale name, either language or "
 "language_COUNTRY\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"      --source                produce a .java file, instead of a .class "
+"file\n"
 msgstr ""
 
 #, c-format
@@ -609,6 +671,25 @@ msgstr ""
 msgid ""
 "The -l and -d options are mandatory.  The .msg file is written in the\n"
 "specified directory.\n"
+msgstr ""
+
+#, c-format
+msgid "Desktop Entry mode options:\n"
+msgstr ""
+
+#, c-format
+msgid "  --template=TEMPLATE         a .desktop file used as a template\n"
+msgstr ""
+
+#, c-format
+msgid "  -d DIRECTORY                base directory of .po files\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"The -l, -o, and --template options are mandatory.  If -D is specified, "
+"input\n"
+"files are read from the directory instead of the command line arguments.\n"
 msgstr ""
 
 #, c-format
@@ -724,4 +805,12 @@ msgstr ""
 
 #, c-format
 msgid "%s: warning: source file contains fuzzy translation"
+msgstr ""
+
+#, c-format
+msgid "%s does not exist"
+msgstr ""
+
+#, c-format
+msgid "%s exists but cannot read"
 msgstr ""

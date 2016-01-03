@@ -1,5 +1,6 @@
 /* Display hostname in various forms.
-   Copyright (C) 2001-2003, 2006-2007, 2012 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006-2007, 2012, 2015 Free Software
+   Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -46,7 +47,9 @@
 #endif
 
 /* Get MAXHOSTNAMELEN.  */
-#include <sys/param.h>
+#if HAVE_SYS_PARAM_H
+# include <sys/param.h>
+#endif
 #ifndef MAXHOSTNAMELEN
 # define MAXHOSTNAMELEN 64
 #endif

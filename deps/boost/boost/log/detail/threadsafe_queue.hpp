@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -246,7 +246,7 @@ public:
         threadsafe_queue_impl::node_base *dealloc, *destr;
         if (m_pImpl->try_pop(dealloc, destr))
         {
-            register node* p = static_cast< node* >(destr);
+            node* p = static_cast< node* >(destr);
             auto_deallocate guard(static_cast< base_type* >(this), static_cast< node* >(dealloc), p);
             value = boost::move(p->value());
             return true;

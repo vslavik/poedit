@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test ISO C 99 <inttypes.h> format string directives.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mf-12.po"
 cat <<\EOF > mf-12.po
 msgid ""
 msgstr "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -22,19 +19,13 @@ msgid "<PRIXFAST16> errors"
 msgstr "<PRIXFAST16> Fehler"
 EOF
 
-tmpfiles="$tmpfiles mf-12.mo"
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o mf-12.mo mf-12.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGFMT} -o mf-12.mo mf-12.po || exit 1
 
-tmpfiles="$tmpfiles mf-12.tmp mf-12.out"
 : ${MSGUNFMT=msgunfmt}
-${MSGUNFMT} -o mf-12.tmp mf-12.mo
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mf-12.tmp > mf-12.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGUNFMT} -o mf-12.tmp mf-12.mo || exit 1
+LC_ALL=C tr -d '\r' < mf-12.tmp > mf-12.out || exit 1
 
-tmpfiles="$tmpfiles mf-12.ok"
 cat <<\EOF > mf-12.ok
 msgid ""
 msgstr "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -54,7 +45,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mf-12.ok mf-12.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

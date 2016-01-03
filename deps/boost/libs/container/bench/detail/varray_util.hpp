@@ -17,28 +17,20 @@
 #include <memory>
 #include <limits>
 
-#include <boost/mpl/if.hpp>
-#include <boost/mpl/and.hpp>
-#include <boost/mpl/or.hpp>
-#include <boost/mpl/int.hpp>
-
-#include <boost/type_traits/is_same.hpp>
-#include <boost/type_traits/remove_const.hpp>
-#include <boost/type_traits/remove_reference.hpp>
-#include <boost/type_traits/has_trivial_assign.hpp>
-#include <boost/type_traits/has_trivial_copy.hpp>
-#include <boost/type_traits/has_trivial_constructor.hpp>
-#include <boost/type_traits/has_trivial_destructor.hpp>
-//#include <boost/type_traits/has_nothrow_constructor.hpp>
-//#include <boost/type_traits/has_nothrow_copy.hpp>
-//#include <boost/type_traits/has_nothrow_assign.hpp>
-//#include <boost/type_traits/has_nothrow_destructor.hpp>
-
-#include <boost/detail/no_exceptions_support.hpp>
 #include <boost/config.hpp>
-#include <boost/move/move.hpp>
-#include <boost/utility/addressof.hpp>
-#include <boost/iterator/iterator_traits.hpp>
+#include <boost/core/no_exceptions_support.hpp>
+
+#include <boost/container/detail/addressof.hpp>
+#if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+#include <boost/move/detail/fwd_macros.hpp>
+#endif
+#include <boost/container/detail/iterator.hpp>
+#include <boost/container/detail/mpl.hpp>
+#include <boost/container/detail/type_traits.hpp>
+
+#include <boost/move/algorithm.hpp>
+#include <boost/move/traits.hpp>
+#include <boost/move/utility_core.hpp>
 
 // TODO - move vectors iterators optimization to the other, optional file instead of checking defines?
 
@@ -49,44 +41,46 @@
 
 namespace boost { namespace container { namespace varray_detail {
 
+namespace bcd = ::boost::container::container_detail;
+
 template <typename I>
-struct are_elements_contiguous : boost::is_pointer<I>
+struct are_elements_contiguous : boost::container::container_detail::is_pointer<I>
 {};
-    
+
 #if defined(BOOST_CONTAINER_VARRAY_ENABLE_VECTORS_OPTIMIZATION) && !defined(BOOST_NO_EXCEPTIONS)
-    
+
 template <typename Pointer>
 struct are_elements_contiguous<
-    boost::container::container_detail::vector_const_iterator<Pointer>
-> : boost::true_type
+    bcd::vector_const_iterator<Pointer>
+> : bcd::true_type
 {};
 
 template <typename Pointer>
 struct are_elements_contiguous<
-    boost::container::container_detail::vector_iterator<Pointer>
-> : boost::true_type
+    bcd::vector_iterator<Pointer>
+> : bcd::true_type
 {};
 
 #if defined(BOOST_DINKUMWARE_STDLIB)
-    
+
 template <typename T>
 struct are_elements_contiguous<
     std::_Vector_const_iterator<T>
-> : boost::true_type
+> : bcd::true_type
 {};
 
 template <typename T>
 struct are_elements_contiguous<
     std::_Vector_iterator<T>
-> : boost::true_type
+> : bcd::true_type
 {};
 
 #elif defined(BOOST_GNU_STDLIB)
 
-template <typename P, typename T, typename A>
+template <typename P, typename T, typename Allocator>
 struct are_elements_contiguous<
-    __gnu_cxx::__normal_iterator<P, std::vector<T, A> >
-> : boost::true_type
+    __gnu_cxx::__normal_iterator<P, std::vector<T, Allocator> >
+> : bcd::true_type
 {};
 
 #elif defined(_LIBCPP_VERSION)
@@ -95,59 +89,53 @@ struct are_elements_contiguous<
 //template <typename P>
 //struct are_elements_contiguous<
 //    __wrap_iter<P>
-//> : boost::true_type
+//> : bcd::true_type
 //{};
 
 #else // OTHER_STDLIB
 
 // TODO - add other iterators implementations
-    
+
 #endif // STDLIB
 
 #endif // BOOST_CONTAINER_VARRAY_ENABLE_VECTORS_OPTIMIZATION && !BOOST_NO_EXCEPTIONS
 
-}}} // namespace boost::container::varray_detail
-
-namespace boost { namespace container { namespace varray_detail {
-
 template <typename I, typename O>
 struct are_corresponding :
-    ::boost::mpl::and_<
-        ::boost::is_same<
-            ::boost::remove_const<
-                typename ::boost::iterator_value<I>::type
+    bcd::bool_<
+        bcd::is_same<
+            bcd::remove_const<
+                typename ::boost::container::iterator_traits<I>::value_type
             >,
-            ::boost::remove_const<
-                typename ::boost::iterator_value<O>::type
+            bcd::remove_const<
+                typename ::boost::container::iterator_traits<O>::value_type
             >
-        >,
-        are_elements_contiguous<I>,
-        are_elements_contiguous<O>
+        >::value &&
+        are_elements_contiguous<I>::value &&
+        are_elements_contiguous<O>::value
     >
 {};
 
 template <typename I, typename V>
 struct is_corresponding_value :
-    ::boost::is_same<
-        ::boost::remove_const<
-            typename ::boost::iterator_value<I>::type
-        >,
-        ::boost::remove_const<V>
-    >
+   bcd::bool_<
+         bcd::is_same<
+            bcd::remove_const<typename ::boost::container::iterator_traits<I>::value_type>,
+            bcd::remove_const<V>
+         >::value
+      >
 {};
 
 // destroy(I, I)
 
 template <typename I>
-void destroy_dispatch(I /*first*/, I /*last*/,
-                      boost::true_type const& /*has_trivial_destructor*/)
+void destroy_dispatch(I /*first*/, I /*last*/, bcd::true_type const& /*is_trivially_destructible*/)
 {}
 
 template <typename I>
-void destroy_dispatch(I first, I last,
-                      boost::false_type const& /*has_trivial_destructor*/)
+void destroy_dispatch(I first, I last, bcd::false_type const& /*is_trivially_destructible*/)
 {
-    typedef typename boost::iterator_value<I>::type value_type;
+    typedef typename ::boost::container::iterator_traits<I>::value_type value_type;
     for ( ; first != last ; ++first )
         first->~value_type();
 }
@@ -155,48 +143,45 @@ void destroy_dispatch(I first, I last,
 template <typename I>
 void destroy(I first, I last)
 {
-    typedef typename boost::iterator_value<I>::type value_type;
-    destroy_dispatch(first, last, has_trivial_destructor<value_type>());
+    typedef typename ::boost::container::iterator_traits<I>::value_type value_type;
+    destroy_dispatch(first, last, bcd::bool_<bcd::is_trivially_destructible<value_type>::value>());
 }
 
 // destroy(I)
 
 template <typename I>
 void destroy_dispatch(I /*pos*/,
-                      boost::true_type const& /*has_trivial_destructor*/)
+                      bcd::true_type const& /*is_trivially_destructible*/)
 {}
 
 template <typename I>
 void destroy_dispatch(I pos,
-                      boost::false_type const& /*has_trivial_destructor*/)
+                      bcd::false_type const& /*is_trivially_destructible*/)
 {
-    typedef typename boost::iterator_value<I>::type value_type;
+    typedef typename ::boost::container::iterator_traits<I>::value_type value_type;
     pos->~value_type();
 }
 
 template <typename I>
 void destroy(I pos)
 {
-    typedef typename boost::iterator_value<I>::type value_type;
-    destroy_dispatch(pos, has_trivial_destructor<value_type>());
+    typedef typename ::boost::container::iterator_traits<I>::value_type value_type;
+    destroy_dispatch(pos, bcd::bool_<bcd::is_trivially_destructible<value_type>::value>());
 }
 
 // copy(I, I, O)
 
 template <typename I, typename O>
-inline O copy_dispatch(I first, I last, O dst,
-                       boost::mpl::bool_<true> const& /*use_memmove*/)
+inline O copy_dispatch(I first, I last, O dst, bcd::true_type const& /*use_memmove*/)
 {
-    typedef typename boost::iterator_value<I>::type value_type;
-    typename boost::iterator_difference<I>::type d = std::distance(first, last);
-
-    ::memmove(boost::addressof(*dst), boost::addressof(*first), sizeof(value_type) * d);
-    return dst + d;
+   typedef typename ::boost::container::iterator_traits<I>::value_type value_type;
+   const std::size_t d = boost::container::iterator_distance(first, last);
+   ::memmove(boost::container::container_detail::addressof(*dst), boost::container::container_detail::addressof(*first), sizeof(value_type) * d);
+   return dst + d;
 }
 
 template <typename I, typename O>
-inline O copy_dispatch(I first, I last, O dst,
-                       boost::mpl::bool_<false> const& /*use_memmove*/)
+inline O copy_dispatch(I first, I last, O dst, bcd::false_type const& /*use_memmove*/)
 {
     return std::copy(first, last, dst);                                         // may throw
 }
@@ -204,16 +189,12 @@ inline O copy_dispatch(I first, I last, O dst,
 template <typename I, typename O>
 inline O copy(I first, I last, O dst)
 {
-    typedef typename
-    ::boost::mpl::and_<
-        are_corresponding<I, O>,
-        ::boost::has_trivial_assign<
-            typename ::boost::iterator_value<O>::type
-        >
-    >::type
-    use_memmove;
-    
-    return copy_dispatch(first, last, dst, use_memmove());                       // may throw
+   typedef bcd::bool_
+   <  are_corresponding<I, O>::value &&
+      bcd::is_trivially_copy_assignable<typename ::boost::container::iterator_traits<O>::value_type>::value
+   > use_memmove;
+
+   return copy_dispatch(first, last, dst, use_memmove());                       // may throw
 }
 
 // uninitialized_copy(I, I, O)
@@ -221,19 +202,18 @@ inline O copy(I first, I last, O dst)
 template <typename I, typename O>
 inline
 O uninitialized_copy_dispatch(I first, I last, O dst,
-                              boost::mpl::bool_<true> const& /*use_memcpy*/)
+                              bcd::true_type const& /*use_memcpy*/)
 {
-    typedef typename boost::iterator_value<I>::type value_type;
-    typename boost::iterator_difference<I>::type d = std::distance(first, last);
-
-    ::memcpy(boost::addressof(*dst), boost::addressof(*first), sizeof(value_type) * d);
-    return dst + d;
+   typedef typename ::boost::container::iterator_traits<I>::value_type value_type;
+   const std::size_t d = boost::container::iterator_distance(first, last);
+   ::memcpy(boost::container::container_detail::addressof(*dst), boost::container::container_detail::addressof(*first), sizeof(value_type) * d);
+   return dst + d;
 }
 
 template <typename I, typename F>
 inline
 F uninitialized_copy_dispatch(I first, I last, F dst,
-                              boost::mpl::bool_<false> const& /*use_memcpy*/)
+                              bcd::false_type const& /*use_memcpy*/)
 {
     return std::uninitialized_copy(first, last, dst);                                       // may throw
 }
@@ -242,16 +222,11 @@ template <typename I, typename F>
 inline
 F uninitialized_copy(I first, I last, F dst)
 {
-    typedef typename
-    ::boost::mpl::and_<
-        are_corresponding<I, F>,
-        ::boost::has_trivial_copy<
-            typename ::boost::iterator_value<F>::type
-        >
-    >::type
-    use_memcpy;
-
-    return uninitialized_copy_dispatch(first, last, dst, use_memcpy());          // may throw
+   typedef bcd::bool_
+   <  are_corresponding<I, F>::value &&
+      bcd::is_trivially_copy_constructible<typename ::boost::container::iterator_traits<F>::value_type>::value
+   > use_memcpy;
+   return uninitialized_copy_dispatch(first, last, dst, use_memcpy());          // may throw
 }
 
 // uninitialized_move(I, I, O)
@@ -259,19 +234,18 @@ F uninitialized_copy(I first, I last, F dst)
 template <typename I, typename O>
 inline
 O uninitialized_move_dispatch(I first, I last, O dst,
-                              boost::mpl::bool_<true> const& /*use_memcpy*/)
+                              bcd::true_type const& /*use_memcpy*/)
 {
-    typedef typename boost::iterator_value<I>::type value_type;
-    typename boost::iterator_difference<I>::type d = std::distance(first, last);
-
-    ::memcpy(boost::addressof(*dst), boost::addressof(*first), sizeof(value_type) * d);
-    return dst + d;
+   typedef typename ::boost::container::iterator_traits<I>::value_type value_type;
+   const std::size_t d = boost::container::iterator_distance(first, last);
+   ::memcpy(boost::container::container_detail::addressof(*dst), boost::container::container_detail::addressof(*first), sizeof(value_type) * d);
+   return dst + d;
 }
 
 template <typename I, typename O>
 inline
 O uninitialized_move_dispatch(I first, I last, O dst,
-                              boost::mpl::bool_<false> const& /*use_memcpy*/)
+                              bcd::false_type const& /*use_memcpy*/)
 {
     //return boost::uninitialized_move(first, last, dst);                         // may throw
 
@@ -279,9 +253,9 @@ O uninitialized_move_dispatch(I first, I last, O dst,
 
     BOOST_TRY
     {
-        typedef typename std::iterator_traits<O>::value_type value_type;
+        typedef typename boost::container::iterator_traits<O>::value_type value_type;
         for (; first != last; ++first, ++o )
-            new (boost::addressof(*o)) value_type(boost::move(*first));
+            new (boost::container::container_detail::addressof(*o)) value_type(boost::move(*first));
     }
     BOOST_CATCH(...)
     {
@@ -297,16 +271,11 @@ template <typename I, typename O>
 inline
 O uninitialized_move(I first, I last, O dst)
 {
-    typedef typename
-    ::boost::mpl::and_<
-        are_corresponding<I, O>,
-        ::boost::has_trivial_copy<
-            typename ::boost::iterator_value<O>::type
-        >
-    >::type
-    use_memcpy;
-
-    return uninitialized_move_dispatch(first, last, dst, use_memcpy());         // may throw
+   typedef bcd::bool_
+   <  are_corresponding<I, O>::value &&
+      bcd::is_trivially_copy_constructible<typename ::boost::container::iterator_traits<O>::value_type>::value
+   > use_memcpy;
+   return uninitialized_move_dispatch(first, last, dst, use_memcpy());         // may throw
 }
 
 // TODO - move uses memmove - implement 2nd version using memcpy?
@@ -316,37 +285,31 @@ O uninitialized_move(I first, I last, O dst)
 template <typename I, typename O>
 inline
 O move_dispatch(I first, I last, O dst,
-                boost::mpl::bool_<true> const& /*use_memmove*/)
+                bcd::true_type const& /*use_memmove*/)
 {
-    typedef typename boost::iterator_value<I>::type value_type;
-    typename boost::iterator_difference<I>::type d = std::distance(first, last);
-
-    ::memmove(boost::addressof(*dst), boost::addressof(*first), sizeof(value_type) * d);
-    return dst + d;
+   typedef typename ::boost::container::iterator_traits<I>::value_type value_type;
+   const std::size_t d = boost::container::iterator_distance(first, last);
+   ::memmove(boost::container::container_detail::addressof(*dst), boost::container::container_detail::addressof(*first), sizeof(value_type)*d );
+   return dst + d;
 }
 
 template <typename I, typename O>
 inline
 O move_dispatch(I first, I last, O dst,
-                boost::mpl::bool_<false> const& /*use_memmove*/)
+                bcd::false_type const& /*use_memmove*/)
 {
-    return boost::move(first, last, dst);                                         // may throw
+   return boost::move(first, last, dst);                                         // may throw
 }
 
 template <typename I, typename O>
 inline
 O move(I first, I last, O dst)
 {
-    typedef typename
-    ::boost::mpl::and_<
-        are_corresponding<I, O>,
-        ::boost::has_trivial_assign<
-            typename ::boost::iterator_value<O>::type
-        >
-    >::type
-    use_memmove;
-
-    return move_dispatch(first, last, dst, use_memmove());                      // may throw
+   typedef bcd::bool_
+   <  are_corresponding<I, O>::value &&
+      bcd::is_trivially_copy_constructible<typename ::boost::container::iterator_traits<O>::value_type>::value
+   > use_memmove;
+   return move_dispatch(first, last, dst, use_memmove());                      // may throw
 }
 
 // move_backward(BDI, BDI, BDO)
@@ -354,20 +317,19 @@ O move(I first, I last, O dst)
 template <typename BDI, typename BDO>
 inline
 BDO move_backward_dispatch(BDI first, BDI last, BDO dst,
-                           boost::mpl::bool_<true> const& /*use_memmove*/)
+                           bcd::true_type const& /*use_memmove*/)
 {
-    typedef typename boost::iterator_value<BDI>::type value_type;
-    typename boost::iterator_difference<BDI>::type d = std::distance(first, last);
-
+    typedef typename ::boost::container::iterator_traits<BDI>::value_type value_type;
+    const std::size_t d = boost::container::iterator_distance(first, last);
     BDO foo(dst - d);
-    ::memmove(boost::addressof(*foo), boost::addressof(*first), sizeof(value_type) * d);
+    ::memmove(boost::container::container_detail::addressof(*foo), boost::container::container_detail::addressof(*first), sizeof(value_type) * d);
     return foo;
 }
 
 template <typename BDI, typename BDO>
 inline
 BDO move_backward_dispatch(BDI first, BDI last, BDO dst,
-                           boost::mpl::bool_<false> const& /*use_memmove*/)
+                           bcd::false_type const& /*use_memmove*/)
 {
     return boost::move_backward(first, last, dst);                                // may throw
 }
@@ -376,29 +338,21 @@ template <typename BDI, typename BDO>
 inline
 BDO move_backward(BDI first, BDI last, BDO dst)
 {
-    typedef typename
-    ::boost::mpl::and_<
-        are_corresponding<BDI, BDO>,
-        ::boost::has_trivial_assign<
-            typename ::boost::iterator_value<BDO>::type
-        >
-    >::type
-    use_memmove;
-
-    return move_backward_dispatch(first, last, dst, use_memmove());             // may throw
+   typedef bcd::bool_
+   <  are_corresponding<BDI, BDO>::value &&
+      bcd::is_trivially_copy_constructible<typename ::boost::container::iterator_traits<BDO>::value_type>::value
+   > use_memmove;
+   return move_backward_dispatch(first, last, dst, use_memmove());             // may throw
 }
 
 template <typename T>
 struct has_nothrow_move : public
-    ::boost::mpl::or_<
-        boost::mpl::bool_<
-            ::boost::has_nothrow_move<
-                typename ::boost::remove_const<T>::type
-            >::value
-        >,
-        boost::mpl::bool_<
-            ::boost::has_nothrow_move<T>::value
-        >
+    bcd::bool_<
+         ::boost::has_nothrow_move<
+               typename bcd::remove_const<T>::type
+         >::value
+        ||
+         ::boost::has_nothrow_move<T>::value
     >
 {};
 
@@ -406,21 +360,21 @@ struct has_nothrow_move : public
 
 template <typename I, typename O>
 inline
-O uninitialized_move_if_noexcept_dispatch(I first, I last, O dst, boost::mpl::bool_<true> const& /*use_move*/)
+O uninitialized_move_if_noexcept_dispatch(I first, I last, O dst, bcd::true_type const& /*use_move*/)
 { return uninitialized_move(first, last, dst); }
 
 template <typename I, typename O>
 inline
-O uninitialized_move_if_noexcept_dispatch(I first, I last, O dst, boost::mpl::bool_<false> const& /*use_move*/)
+O uninitialized_move_if_noexcept_dispatch(I first, I last, O dst, bcd::false_type const& /*use_move*/)
 { return uninitialized_copy(first, last, dst); }
 
 template <typename I, typename O>
 inline
 O uninitialized_move_if_noexcept(I first, I last, O dst)
 {
-    typedef typename has_nothrow_move<
-        typename ::boost::iterator_value<O>::type
-    >::type use_move;
+    typedef has_nothrow_move<
+        typename ::boost::container::iterator_traits<O>::value_type
+    > use_move;
 
     return uninitialized_move_if_noexcept_dispatch(first, last, dst, use_move());         // may throw
 }
@@ -429,21 +383,21 @@ O uninitialized_move_if_noexcept(I first, I last, O dst)
 
 template <typename I, typename O>
 inline
-O move_if_noexcept_dispatch(I first, I last, O dst, boost::mpl::bool_<true> const& /*use_move*/)
+O move_if_noexcept_dispatch(I first, I last, O dst, bcd::true_type const& /*use_move*/)
 { return move(first, last, dst); }
 
 template <typename I, typename O>
 inline
-O move_if_noexcept_dispatch(I first, I last, O dst, boost::mpl::bool_<false> const& /*use_move*/)
+O move_if_noexcept_dispatch(I first, I last, O dst, bcd::false_type const& /*use_move*/)
 { return copy(first, last, dst); }
 
 template <typename I, typename O>
 inline
 O move_if_noexcept(I first, I last, O dst)
 {
-    typedef typename has_nothrow_move<
-        typename ::boost::iterator_value<O>::type
-    >::type use_move;
+    typedef has_nothrow_move<
+        typename ::boost::container::iterator_traits<O>::value_type
+    > use_move;
 
     return move_if_noexcept_dispatch(first, last, dst, use_move());         // may throw
 }
@@ -453,34 +407,34 @@ O move_if_noexcept(I first, I last, O dst)
 template <typename I>
 inline
 void uninitialized_fill_dispatch(I first, I last,
-                                 boost::true_type const& /*has_trivial_constructor*/,
-                                 boost::true_type const& /*disable_trivial_init*/)
+                                 bcd::true_type const& /*is_trivially_default_constructible*/,
+                                 bcd::true_type const& /*disable_trivial_init*/)
 {}
 
 template <typename I>
 inline
 void uninitialized_fill_dispatch(I first, I last,
-                                 boost::true_type const& /*has_trivial_constructor*/,
-                                 boost::false_type const& /*disable_trivial_init*/)
+                                 bcd::true_type const& /*is_trivially_default_constructible*/,
+                                 bcd::false_type const& /*disable_trivial_init*/)
 {
-    typedef typename boost::iterator_value<I>::type value_type;
+    typedef typename ::boost::container::iterator_traits<I>::value_type value_type;
     for ( ; first != last ; ++first )
-        new (boost::addressof(*first)) value_type();
+        new (boost::container::container_detail::addressof(*first)) value_type();
 }
 
 template <typename I, typename DisableTrivialInit>
 inline
 void uninitialized_fill_dispatch(I first, I last,
-                                 boost::false_type const& /*has_trivial_constructor*/,
+                                 bcd::false_type const& /*is_trivially_default_constructible*/,
                                  DisableTrivialInit const& /*not_used*/)
 {
-    typedef typename boost::iterator_value<I>::type value_type;
+    typedef typename ::boost::container::iterator_traits<I>::value_type value_type;
     I it = first;
 
     BOOST_TRY
     {
         for ( ; it != last ; ++it )
-            new (boost::addressof(*it)) value_type();                           // may throw
+            new (boost::container::container_detail::addressof(*it)) value_type();                           // may throw
     }
     BOOST_CATCH(...)
     {
@@ -494,35 +448,36 @@ template <typename I, typename DisableTrivialInit>
 inline
 void uninitialized_fill(I first, I last, DisableTrivialInit const& disable_trivial_init)
 {
-    typedef typename boost::iterator_value<I>::type value_type;
-    uninitialized_fill_dispatch(first, last, boost::has_trivial_constructor<value_type>(), disable_trivial_init);     // may throw
+    typedef typename ::boost::container::iterator_traits<I>::value_type value_type;
+    uninitialized_fill_dispatch(first, last
+      , bcd::bool_<bcd::is_trivially_default_constructible<value_type>::value>()
+      , disable_trivial_init);     // may throw
 }
 
 // construct(I)
 
 template <typename I>
 inline
-void construct_dispatch(boost::mpl::bool_<true> const& /*dont_init*/, I pos)
+void construct_dispatch(bcd::true_type const& /*dont_init*/, I pos)
 {}
 
 template <typename I>
 inline
-void construct_dispatch(boost::mpl::bool_<false> const& /*dont_init*/, I pos)
+void construct_dispatch(bcd::false_type const& /*dont_init*/, I pos)
 {
-    typedef typename ::boost::iterator_value<I>::type value_type;
-    new (static_cast<void*>(::boost::addressof(*pos))) value_type();                      // may throw
+    typedef typename ::boost::container::iterator_traits<I>::value_type value_type;
+    new (static_cast<void*>(::boost::container::container_detail::addressof(*pos))) value_type();                      // may throw
 }
 
 template <typename DisableTrivialInit, typename I>
 inline
 void construct(DisableTrivialInit const&, I pos)
 {
-    typedef typename ::boost::iterator_value<I>::type value_type;
-    typedef typename ::boost::mpl::and_<
-        boost::has_trivial_constructor<value_type>,
-        DisableTrivialInit
-    >::type dont_init;
-
+    typedef typename ::boost::container::iterator_traits<I>::value_type value_type;
+    bcd::bool_<
+        bcd::is_trivially_default_constructible<value_type>::value &&
+        DisableTrivialInit::value
+    > dont_init;
     construct_dispatch(dont_init(), pos);                                                // may throw
 }
 
@@ -530,34 +485,29 @@ void construct(DisableTrivialInit const&, I pos)
 
 template <typename I, typename V>
 inline
-void construct_dispatch(I pos, V const& v,
-                        boost::mpl::bool_<true> const& /*use_memcpy*/)
+void construct_dispatch(I pos, V const& v, bcd::true_type const& /*use_memcpy*/)
 {
-    ::memcpy(boost::addressof(*pos), boost::addressof(v), sizeof(V));
+    ::memcpy(boost::container::container_detail::addressof(*pos), boost::container::container_detail::addressof(v), sizeof(V));
 }
 
 template <typename I, typename P>
 inline
 void construct_dispatch(I pos, P const& p,
-                        boost::mpl::bool_<false> const& /*use_memcpy*/)
+                        bcd::false_type const& /*use_memcpy*/)
 {
-    typedef typename boost::iterator_value<I>::type V;
-    new (static_cast<void*>(boost::addressof(*pos))) V(p);                      // may throw
+    typedef typename ::boost::container::iterator_traits<I>::value_type V;
+    new (static_cast<void*>(boost::container::container_detail::addressof(*pos))) V(p);                      // may throw
 }
 
 template <typename DisableTrivialInit, typename I, typename P>
 inline
-void construct(DisableTrivialInit const&,
-               I pos, P const& p)
+void construct(DisableTrivialInit const&, I pos, P const& p)
 {
-    typedef typename
-    ::boost::mpl::and_<
-        is_corresponding_value<I, P>,
-        ::boost::has_trivial_copy<P>
-    >::type
-    use_memcpy;
-
-    construct_dispatch(pos, p, use_memcpy());                                   // may throw
+   typedef bcd::bool_
+   <  is_corresponding_value<I, P>::value &&
+      bcd::is_trivially_copy_constructible<P>::value
+   > use_memcpy;
+   construct_dispatch(pos, p, use_memcpy());                                   // may throw
 }
 
 // Needed by push_back(V &&)
@@ -566,21 +516,14 @@ template <typename DisableTrivialInit, typename I, typename P>
 inline
 void construct(DisableTrivialInit const&, I pos, BOOST_RV_REF(P) p)
 {
-    typedef typename
-    ::boost::mpl::and_<
-        is_corresponding_value<I, P>,
-        ::boost::has_trivial_copy<P>
-    >::type
-    use_memcpy;
-
-    typedef typename boost::iterator_value<I>::type V;
-    new (static_cast<void*>(boost::addressof(*pos))) V(::boost::move(p));                      // may throw
+    typedef typename ::boost::container::iterator_traits<I>::value_type V;
+    new (static_cast<void*>(boost::container::container_detail::addressof(*pos))) V(::boost::move(p));                      // may throw
 }
 
 // Needed by emplace_back() and emplace()
 
 #if !defined(BOOST_CONTAINER_VARRAY_DISABLE_EMPLACE)
-#if !defined(BOOST_NO_VARIADIC_TEMPLATES)
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
 
 template <typename DisableTrivialInit, typename I, class ...Args>
 inline
@@ -588,34 +531,28 @@ void construct(DisableTrivialInit const&,
                I pos,
                BOOST_FWD_REF(Args) ...args)
 {
-    typedef typename boost::iterator_value<I>::type V;
-    new (static_cast<void*>(boost::addressof(*pos))) V(::boost::forward<Args>(args)...);    // may throw
+    typedef typename ::boost::container::iterator_traits<I>::value_type V;
+    new (static_cast<void*>(boost::container::container_detail::addressof(*pos))) V(::boost::forward<Args>(args)...);    // may throw
 }
 
-#else // !BOOST_NO_VARIADIC_TEMPLATES
+#else // !BOOST_NO_CXX11_VARIADIC_TEMPLATES
 
 // BOOST_NO_RVALUE_REFERENCES -> P0 const& p0
 // !BOOST_NO_RVALUE_REFERENCES -> P0 && p0
 // which means that version with one parameter may take V const& v
 
-#define BOOST_PP_LOCAL_MACRO(n)                                                                     \
-template <typename DisableTrivialInit, typename I, typename P BOOST_PP_ENUM_TRAILING_PARAMS(n, typename P) >  \
-inline                                                                                              \
-void construct(DisableTrivialInit const&,                                                           \
-               I pos,                                                                               \
-               BOOST_CONTAINER_PP_PARAM(P, p)                                                       \
-               BOOST_PP_ENUM_TRAILING(n, BOOST_CONTAINER_PP_PARAM_LIST, _))                         \
-{                                                                                                   \
-    typedef typename boost::iterator_value<I>::type V;                                              \
-    new                                                                                             \
-    (static_cast<void*>(boost::addressof(*pos)))                                                    \
-    V(p, BOOST_PP_ENUM(n, BOOST_CONTAINER_PP_PARAM_FORWARD, _));                   /*may throw*/    \
-}                                                                                                   \
-//
-#define BOOST_PP_LOCAL_LIMITS (1, BOOST_CONTAINER_MAX_CONSTRUCTOR_PARAMETERS)
-#include BOOST_PP_LOCAL_ITERATE()
+#define BOOST_CONTAINER_VARRAY_UTIL_CONSTRUCT_CODE(N) \
+template <typename DisableTrivialInit, typename I, typename P BOOST_MOVE_I##N BOOST_MOVE_CLASS##N >\
+inline void construct(DisableTrivialInit const&, I pos, BOOST_FWD_REF(P) p BOOST_MOVE_I##N BOOST_MOVE_UREF##N )\
+{\
+    typedef typename ::boost::container::iterator_traits<I>::value_type V;\
+    new (static_cast<void*>(boost::container::container_detail::addressof(*pos)))\
+    V(::boost::forward<P>(p) BOOST_MOVE_I##N BOOST_MOVE_FWD##N); /*may throw*/\
+}
+BOOST_MOVE_ITERATE_1TO9(BOOST_CONTAINER_VARRAY_UTIL_CONSTRUCT_CODE)
+#undef BOOST_CONTAINER_VARRAY_UTIL_CONSTRUCT_CODE
 
-#endif // !BOOST_NO_VARIADIC_TEMPLATES
+#endif // !BOOST_NO_CXX11_VARIADIC_TEMPLATES
 #endif // !BOOST_CONTAINER_VARRAY_DISABLE_EMPLACE
 
 // assign(I, V)
@@ -623,15 +560,15 @@ void construct(DisableTrivialInit const&,                                       
 template <typename I, typename V>
 inline
 void assign_dispatch(I pos, V const& v,
-                     boost::mpl::bool_<true> const& /*use_memcpy*/)
+                     bcd::true_type const& /*use_memcpy*/)
 {
-    ::memcpy(boost::addressof(*pos), boost::addressof(v), sizeof(V));
+    ::memcpy(boost::container::container_detail::addressof(*pos), boost::container::container_detail::addressof(v), sizeof(V));
 }
 
 template <typename I, typename V>
 inline
 void assign_dispatch(I pos, V const& v,
-                     boost::mpl::bool_<false> const& /*use_memcpy*/)
+                     bcd::false_type const& /*use_memcpy*/)
 {
     *pos = v;                                                                   // may throw
 }
@@ -640,14 +577,11 @@ template <typename I, typename V>
 inline
 void assign(I pos, V const& v)
 {
-    typedef typename
-    ::boost::mpl::and_<
-        is_corresponding_value<I, V>,
-        ::boost::has_trivial_assign<V>
-    >::type
-    use_memcpy;
-
-    assign_dispatch(pos, v, use_memcpy());                                        // may throw
+   typedef bcd::bool_
+   <  is_corresponding_value<I, V>::value &&
+      bcd::is_trivially_copy_assignable<V>::value
+   > use_memcpy;
+   assign_dispatch(pos, v, use_memcpy());                                        // may throw
 }
 
 template <typename I, typename V>

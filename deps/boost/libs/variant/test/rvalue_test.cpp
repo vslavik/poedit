@@ -3,7 +3,7 @@
 // See http://www.boost.org for updates, documentation, and revision history.
 //-----------------------------------------------------------------------------
 //
-// Copyright (c) 2012-2013 Antony Polukhin
+// Copyright (c) 2012-2014 Antony Polukhin
 //
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
@@ -14,9 +14,24 @@
 #include "boost/test/minimal.hpp"
 #include "boost/variant.hpp"
 #include "boost/type_traits/is_nothrow_move_assignable.hpp"
+#include "boost/mpl/bool.hpp"
+
+#include <boost/blank.hpp>
+#include <boost/swap.hpp>
+
+namespace swap_ambiguouty_test_ns {
+    struct A {};
+    struct B {};
+
+    void swap_ambiguouty_test() {
+        // If boost::blank is not used, then it compiles.
+        typedef boost::variant<boost::blank, A, B> Variant;
+        Variant v1, v2;
+        swap(v1, v2);
+    }
+} // namespace swap_ambiguouty_test_ns
 
 // Most part of tests from this file require rvalue references support
-
 
 class move_copy_conting_class {
 public:
@@ -189,6 +204,13 @@ private:
     move_only_structure& operator=(const move_only_structure&);
 };
 
+struct visitor_returning_move_only_type: boost::static_visitor<move_only_structure> {
+    template <class T>
+    move_only_structure operator()(const T&) const {
+        return move_only_structure();
+    }
+};
+
 void run_move_only()
 {
     move_only_structure mo;
@@ -204,6 +226,9 @@ void run_move_only()
     vi = static_cast<move_only_structure&&>(mo);
     vi2 = static_cast<move_only_structure&&>(mo);
     BOOST_CHECK(vi.which() == 1);
+
+    move_only_structure from_visitor = boost::apply_visitor(visitor_returning_move_only_type(), vi);
+    (void)from_visitor;
 }
 
 void run_moves_are_noexcept() {
@@ -256,13 +281,43 @@ void run_tricky_compilation_test()
     v = nothrow_copyable_throw_movable();
 }
 
+template <typename T>
+struct is_container : boost::mpl::false_ {};
+
+template <typename T>
+struct is_container<boost::variant<T> > : is_container<T> {};
+
+template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
+struct is_container<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
+  : boost::mpl::bool_<is_container<T0>::value
+     || is_container<boost::variant<BOOST_VARIANT_ENUM_SHIFTED_PARAMS(T)> >::value>
+{};
+
+void run_is_container_compilation_test()
+{
+    BOOST_CHECK((!is_container<boost::variant<double, int> >::value));
+    BOOST_CHECK((!is_container<boost::variant<double, int, char> >::value));
+    BOOST_CHECK((!is_container<boost::variant<double, int, char, float> >::value));
+}
+
 int test_main(int , char* [])
 {
+   swap_ambiguouty_test_ns::swap_ambiguouty_test();
    run();
    run1();
    run_move_only();
    run_moves_are_noexcept();
    run_tricky_compilation_test();
    run_const_rvalues();
+   run_is_container_compilation_test();
+
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && defined(__GNUC__) && (__GNUC__ == 4) && (__GNUC_MINOR__ > 6)
+#   ifdef BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES
+        BOOST_CHECK(false && 
+            "Something wrong with macro definitions. GCC-4.7+ is known to work with variadic templates"
+        );
+#   endif
+#endif
+
    return 0;
 }

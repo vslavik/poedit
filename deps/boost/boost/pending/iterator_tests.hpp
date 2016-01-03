@@ -25,28 +25,26 @@
 # include <boost/static_assert.hpp>
 # include <boost/concept_archetype.hpp> // for detail::dummy_constructor
 # include <boost/implicit_cast.hpp>
-# include <boost/type_traits/broken_compiler_spec.hpp>
 
 namespace boost {
 
   // use this for the value type
-struct dummyT { 
+struct dummyT {
   dummyT() { }
   dummyT(detail::dummy_constructor) { }
   dummyT(int x) : m_x(x) { }
-  int foo() const { return m_x; } 
+  int foo() const { return m_x; }
   bool operator==(const dummyT& d) const { return m_x == d.m_x; }
   int m_x;
 };
 
 }
 
-BOOST_TT_BROKEN_COMPILER_SPEC(boost::dummyT)
-    
 namespace boost {
+namespace iterators {
 
 // Tests whether type Iterator satisfies the requirements for a
-// TrivialIterator. 
+// TrivialIterator.
 // Preconditions: i != j, *i == val
 template <class Iterator, class T>
 void trivial_iterator_test(const Iterator i, const Iterator j, T val)
@@ -87,7 +85,7 @@ void mutable_trivial_iterator_test(const Iterator i, const Iterator j, T val)
 
 // Preconditions: *i == v1, *++i == v2
 template <class Iterator, class T>
-void input_iterator_test(Iterator i, T v1, T v2) 
+void input_iterator_test(Iterator i, T v1, T v2)
 {
   Iterator i1(i);
 
@@ -153,7 +151,7 @@ template <> struct lvalue_test<true> {
 #endif
 
 template <class Iterator, class T>
-void forward_iterator_test(Iterator i, T v1, T v2) 
+void forward_iterator_test(Iterator i, T v1, T v2)
 {
   input_iterator_test(i, v1, v2);
 
@@ -218,7 +216,7 @@ void random_access_iterator_test(Iterator i, int N, TrueVals vals)
   int c;
 
   typedef typename boost::detail::iterator_traits<Iterator>::value_type value_type;
-  
+
   for (c = 0; c < N-1; ++c) {
     assert(i == j + c);
     assert(*i == vals[c]);
@@ -237,7 +235,7 @@ void random_access_iterator_test(Iterator i, int N, TrueVals vals)
     assert(i == k - c);
     assert(*i == vals[N - 1 - c]);
     assert(*i == boost::implicit_cast<value_type>(j[N - 1 - c]));
-    Iterator q = k - c; 
+    Iterator q = k - c;
     assert(*i == *q);
     assert(i > j);
     assert(i >= j);
@@ -262,6 +260,18 @@ void const_nonconst_iterator_test(Iterator i, ConstIterator j)
   assert(k == i);
   assert(i == k);
 }
+
+} // namespace iterators
+
+using iterators::undefined;
+using iterators::trivial_iterator_test;
+using iterators::mutable_trivial_iterator_test;
+using iterators::input_iterator_test;
+using iterators::lvalue_test;
+using iterators::forward_iterator_test;
+using iterators::bidirectional_iterator_test;
+using iterators::random_access_iterator_test;
+using iterators::const_nonconst_iterator_test;
 
 } // namespace boost
 

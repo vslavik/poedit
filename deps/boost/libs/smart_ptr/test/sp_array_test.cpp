@@ -194,7 +194,7 @@ int main()
         BOOST_TEST( wp5.lock() == 0 );
     }
 
-#if !defined( BOOST_NO_CXX11_SMART_PTR )
+#if !defined( BOOST_NO_CXX11_SMART_PTR ) && !defined( BOOST_NO_CXX11_RVALUE_REFERENCES )
 
     {
         std::unique_ptr<X[]> px( new X[ 4 ] );

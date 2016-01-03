@@ -1,14 +1,16 @@
 /*=============================================================================
     Copyright (c) 2005-2007 Dan Marsden
     Copyright (c) 2005-2007 Joel de Guzman
+    Copyright (c) 2014      John Fletcher
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
 #include <boost/detail/lightweight_test.hpp>
+//#include <boost/move/unique_ptr.hpp>
 
 #include <memory>
 
@@ -79,15 +81,28 @@ int main()
     BOOST_TEST((arg1->*&Test::value)(cscptr) == 2);
     BOOST_TEST((arg1->*&Test::func)(9)(cscptr) == 9);
 
+#ifdef BOOST_NO_CXX11_SMART_PTR
     std::auto_ptr<Test> aptr(new Test(test));
+#else
+    std::unique_ptr<Test> aptr(new Test(test));
+#endif
 
     BOOST_TEST((arg1->*&Test::value)(aptr) == 2);
     BOOST_TEST((arg1->*&Test::func)(10)(aptr) == 10);
 
+#ifdef BOOST_NO_CXX11_SMART_PTR
     std::auto_ptr<const Test> captr(new Test(test));
+#else
+    std::unique_ptr<const Test> captr(new Test(test));
+#endif
 
     BOOST_TEST((arg1->*&Test::value)(captr) == 2);
     BOOST_TEST((arg1->*&Test::func)(11)(captr) == 11);
+
+    //boost::movelib::unique_ptr<Test> buptr(new Test(test));
+    //BOOST_TEST((arg1->*&Test::value)(buptr) == 2);
+    //BOOST_TEST((arg1->*&Test::func)(12)(buptr) == 12);
+
 
     return boost::report_errors();
 }

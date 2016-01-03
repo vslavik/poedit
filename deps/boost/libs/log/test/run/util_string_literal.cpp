@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -15,6 +15,7 @@
 #define BOOST_TEST_MODULE util_string_literal
 
 #include <cwchar>
+#include <cstring>
 #include <set>
 #include <memory>
 #include <string>
@@ -40,24 +41,24 @@ BOOST_AUTO_TEST_CASE(string_literal_ctors)
         logging::string_literal lit = "abcd";
         BOOST_CHECK(!lit.empty());
         BOOST_CHECK_EQUAL(lit.size(), 4UL);
-        BOOST_CHECK(strcmp(lit.c_str(), "abcd") == 0);
+        BOOST_CHECK(std::strcmp(lit.c_str(), "abcd") == 0);
     }
 
     // Copying
     {
         logging::wstring_literal lit1 = L"Hello";
         logging::wstring_literal lit2 = lit1;
-        BOOST_CHECK(wcscmp(lit2.c_str(), L"Hello") == 0);
-        BOOST_CHECK(wcscmp(lit1.c_str(), lit2.c_str()) == 0);
+        BOOST_CHECK(std::wcscmp(lit2.c_str(), L"Hello") == 0);
+        BOOST_CHECK(std::wcscmp(lit1.c_str(), lit2.c_str()) == 0);
     }
 
     // Generator functions
     {
         logging::string_literal lit1 = logging::str_literal("Wow!");
-        BOOST_CHECK(strcmp(lit1.c_str(), "Wow!") == 0);
+        BOOST_CHECK(std::strcmp(lit1.c_str(), "Wow!") == 0);
 
         logging::wstring_literal lit2 = logging::str_literal(L"Wow!");
-        BOOST_CHECK(wcscmp(lit2.c_str(), L"Wow!") == 0);
+        BOOST_CHECK(std::wcscmp(lit2.c_str(), L"Wow!") == 0);
     }
 }
 
@@ -70,7 +71,7 @@ BOOST_AUTO_TEST_CASE(string_literal_assignment)
         BOOST_CHECK(lit.empty());
 
         lit = "Hello";
-        BOOST_CHECK(strcmp(lit.c_str(), "Hello") == 0);
+        BOOST_CHECK(std::strcmp(lit.c_str(), "Hello") == 0);
 
         logging::string_literal empty_lit;
         lit = empty_lit;
@@ -78,7 +79,7 @@ BOOST_AUTO_TEST_CASE(string_literal_assignment)
 
         logging::string_literal filled_lit = "Some string";
         lit = filled_lit;
-        BOOST_CHECK(strcmp(lit.c_str(), filled_lit.c_str()) == 0);
+        BOOST_CHECK(std::strcmp(lit.c_str(), filled_lit.c_str()) == 0);
     }
 
     // assign
@@ -87,7 +88,7 @@ BOOST_AUTO_TEST_CASE(string_literal_assignment)
         BOOST_CHECK(lit.empty());
 
         lit.assign("Hello");
-        BOOST_CHECK(strcmp(lit.c_str(), "Hello") == 0);
+        BOOST_CHECK(std::strcmp(lit.c_str(), "Hello") == 0);
 
         logging::string_literal empty_lit;
         lit.assign(empty_lit);
@@ -95,7 +96,7 @@ BOOST_AUTO_TEST_CASE(string_literal_assignment)
 
         logging::string_literal filled_lit = "Some string";
         lit.assign(filled_lit);
-        BOOST_CHECK(strcmp(lit.c_str(), filled_lit.c_str()) == 0);
+        BOOST_CHECK(std::strcmp(lit.c_str(), filled_lit.c_str()) == 0);
     }
 }
 
@@ -208,11 +209,11 @@ BOOST_AUTO_TEST_CASE(string_literal_copy)
     char t[32] = { 0 };
 
     BOOST_CHECK_EQUAL(lit.copy(t, 2), 2UL);
-    BOOST_CHECK(strcmp(t, "yo") == 0);
+    BOOST_CHECK(std::strcmp(t, "yo") == 0);
 
     BOOST_CHECK_EQUAL(lit.copy(t, 4, 2), 4UL);
-    BOOST_CHECK(strcmp(t, "-ho-") == 0);
+    BOOST_CHECK(std::strcmp(t, "-ho-") == 0);
 
     BOOST_CHECK_EQUAL(lit.copy(t, 100), 8UL);
-    BOOST_CHECK(strcmp(t, "yo-ho-ho") == 0);
+    BOOST_CHECK(std::strcmp(t, "yo-ho-ho") == 0);
 }

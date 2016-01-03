@@ -483,8 +483,8 @@ defined in the implemented models.
 
 [heading Description]
 
-`nview` presents a view which iterates over a given __sequence__ in a specified order. 
-An `nview` is constructed from an arbitrary __sequence__ and a list of indicies specifying
+`nview` presents a view which iterates over a given __sequence__ in a specified order.
+An `nview` is constructed from an arbitrary __sequence__ and a list of indices specifying
 the elements to iterate over.
 
 [heading Header]
@@ -494,7 +494,7 @@ the elements to iterate over.
 
 [heading Synopsis]
 
-    template <typename Sequence, typename Indicies>
+    template <typename Sequence, typename Indices>
     struct nview;
 
     template <typename Sequence, int I1, int I2 = -1, ...>
@@ -507,15 +507,15 @@ the elements to iterate over.
     [[Parameter]            [Description]                   [Default]]
     [[`Sequence`]           [An arbitrary Fusion __forward_sequence__]
                                                             []]
-    [[`Indicies`]           [A `mpl::vector_c<int, ...>` holding the indicies defining 
+    [[`Indices`]           [A `mpl::vector_c<int, ...>` holding the indices defining
                              the required iteration order.] []]
-    [[`I1`, `I2`, `I3`...]  [A list of integers specifying the required 
+    [[`I1`, `I2`, `I3`...]  [A list of integers specifying the required
                              iteration order.]              [`INT_MAX` for `I2`, `I3`...]]
 ]
 
 [heading Model of]
 
-* __random_access_sequence__ (see __traversal_concept__) 
+* __random_access_sequence__ (see __traversal_concept__)
 
 [variablelist Notation
     [[`NV`]            [A `nview` type]]
@@ -530,7 +530,7 @@ defined in __random_access_sequence__.
 
 [table
     [[Expression]           [Semantics]]
-    [[`NV(s)`]              [Creates an `nview` given a sequence and a list of indicies.]]
+    [[`NV(s)`]              [Creates an `nview` given a sequence and a list of indices.]]
     [[`NV(nv1)`]            [Copy constructs an `nview` from another `nview`, `nv1`.]]
     [[`nv1 = nv2`]          [Assigns to an `nview`, `nv1`, from another `nview`, `nv2`.]]
 ]
@@ -540,15 +540,14 @@ of the original Fusion __sequence__
 
 [heading Example]
     typedef __vector__<int, char, double> vec;
-    typedef mpl::vector_c<int, 2, 1, 0, 2, 0> indicies;
+    typedef mpl::vector_c<int, 2, 1, 0, 2, 0> indices;
 
     vec v1(1, 'c', 2.0);
 
-    std::cout << nview<vec, indicies>(v1) << std::endl; // (2.0 c 1 2.0 1)
+    std::cout << nview<vec, indices>(v1) << std::endl; // (2.0 c 1 2.0 1)
     std::cout << as_nview<2, 1, 1, 0>(v1) << std::endl; // (2.0 c c 1)
 
 [endsect]
-
 
 [section repetitive_view]
 
@@ -593,7 +592,7 @@ printing a `repetitive_view` to `std::cout` is not.
     [[`RV(rv1)`]            []                     [Copy constructs an `repetitive_view` from another `repetitive_view`, `rv1`.]]
     [[`rv1 = rv2`]          []                     [Assigns to a `repetitive_view`, `rv1`, from another `repetitive_view`, `rv2`.]]
     [[`__begin__(rv)`]      [__forward_iterator__] []]
-    [[`__end__(rv)`]       [__forward_iterator__] [Creates an unreachable iterator (since the sequnce is infinite)]]
+    [[`__end__(rv)`]       [__forward_iterator__] [Creates an unreachable iterator (since the sequence is infinite)]]
 ]
 
 [heading Result Type Expressions]
@@ -612,6 +611,60 @@ printing a `repetitive_view` to `std::cout` is not.
     vec2 v2(repetitive_view<vec1>(v1));
 
     std::cout << v2 << std::endl; // 1, 'c', 2.0, 1, 'c'
+
+[endsect]
+
+[section flatten_view]
+
+[heading Description]
+
+`flatten_view` presents a view which iterates over its elements recursively in depth-first order.
+
+[heading Header]
+
+    #include <boost/fusion/view/flatten_view.hpp>
+    #include <boost/fusion/include/flatten_view.hpp>
+
+[heading Synopsis]
+
+    template <typename Sequence>
+    struct flatten_view;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]            [Description]                   [Default]]
+    [[`Sequence`]           [A __forward_sequence__]        []]
+]
+
+[heading Model of]
+
+* __forward_sequence__
+
+[variablelist Notation
+    [[`F`]             [A `flatten_view` type]]
+    [[`s`]             [An instance of `Sequence`]]
+    [[`f`, `f2`]       [Instances of `F`]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in __forward_sequence__.
+
+[table
+    [[Expression]           [Semantics]]
+    [[`F(s)`]              	[Creates a `flatten_view` given sequence, `s`.]]
+    [[`F(f)`]             	[Copy constructs a `flatten_view` from another `flatten_view`, `f`.]]
+    [[`f = f2`]           	[Assigns to a `flatten_view`, `f`, from another `flatten_view`, `f2`.]]
+]
+
+[heading Example]
+    typedef __vector__<int, int, __vector__<int, int>, int> sequence_type;
+    sequence_type seq;
+    __flatten_view__<sequence_type> flattened(seq);
+    __copy__(__make_vector__(1, 2, 3, 4, 5), flattened);
+    assert(seq == __make_vector__(1, 2, __make_vector__(3, 4), 5));
 
 [endsect]
 

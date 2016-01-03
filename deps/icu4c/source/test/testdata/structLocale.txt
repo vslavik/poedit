@@ -1,6 +1,6 @@
 // ***************************************************************************
 // *
-// * Copyright (C) 2004-2013 International Business Machines
+// * Copyright (C) 2004-2015 International Business Machines
 // * Corporation and others.  All Rights Reserved.
 // *
 // ***************************************************************************
@@ -301,7 +301,15 @@ structLocale:table(nofallback){
         ZW{""}
         ZZ{""}
     }
-    CountriesShort{
+    Countries%variant{
+        CD{""}
+        CG{""}
+        CI{""}
+        FK{""}
+        MK{""}
+        TL{""}
+    }
+    Countries%short{
         GB{""}
         HK{""}
         MO{""}
@@ -1506,6 +1514,109 @@ structLocale:table(nofallback){
             "",
             "",
         }
+    }
+    Currencies%variant{
+        AMD{""}
+        AZN{""}
+        RUB{""}
+        TRY{""}
+    }
+    Currencies%narrow{
+        AOA{""}
+        ARS{""}
+        AUD{""}
+        BAM{""}
+        BBD{""}
+        BDT{""}
+        BMD{""}
+        BND{""}
+        BOB{""}
+        BRL{""}
+        BSD{""}
+        BWP{""}
+        BYR{""}
+        BZD{""}
+        CAD{""}
+        CLP{""}
+        CNY{""}
+        COP{""}
+        CRC{""}
+        CUC{""}
+        CUP{""}
+        CZK{""}
+        DKK{""}
+        DOP{""}
+        EGP{""}
+        ESP{""}
+        EUR{""}
+        FJD{""}
+        FKP{""}
+        GBP{""}
+        GIP{""}
+        GNF{""}
+        GTQ{""}
+        GYD{""}
+        HKD{""}
+        HNL{""}
+        HRK{""}
+        HUF{""}
+        IDR{""}
+        ILS{""}
+        INR{""}
+        ISK{""}
+        JMD{""}
+        JPY{""}
+        KHR{""}
+        KMF{""}
+        KPW{""}
+        KRW{""}
+        KYD{""}
+        KZT{""}
+        LAK{""}
+        LBP{""}
+        LKR{""}
+        LRD{""}
+        LTL{""}
+        LVL{""}
+        MGA{""}
+        MMK{""}
+        MNT{""}
+        MUR{""}
+        MXN{""}
+        MYR{""}
+        NAD{""}
+        NGN{""}
+        NIO{""}
+        NOK{""}
+        NPR{""}
+        NZD{""}
+        PHP{""}
+        PKR{""}
+        PLN{""}
+        PYG{""}
+        RUR{""}
+        RWF{""}
+        SBD{""}
+        SEK{""}
+        SGD{""}
+        SHP{""}
+        SRD{""}
+        SSP{""}
+        STD{""}
+        SYP{""}
+        THB{""}
+        TOP{""}
+        TRY{""}
+        TTD{""}
+        TWD{""}
+        UAH{""}
+        USD{""}
+        UYU{""}
+        VEF{""}
+        VND{""}
+        XCD{""}
+        ZAR{""}
+        ZMW{""}
     }
     CurrencyPlurals{
         ADP{
@@ -3876,6 +3987,14 @@ structLocale:table(nofallback){
     }
     defaultNumberingSystem{""}
     contextTransforms{
+        calendar-field:intvector{
+            2,
+            2,
+        }
+        currencyName:intvector{  
+            2,
+            2,
+        }
         day-format-except-narrow:intvector{  
             2,
             2,
@@ -3884,15 +4003,15 @@ structLocale:table(nofallback){
             2,
             2,
         }
-        displayName:intvector{  
-            2,
-            2,
-        }
         era-abbr:intvector{  
             2,
             2,
         }
         era-name:intvector{  
+            2,
+            2,
+        }
+        keyValue:intvector{  
             2,
             2,
         }
@@ -3908,15 +4027,19 @@ structLocale:table(nofallback){
             2,
             2,
         }
+        number-spellout:intvector{  
+            2,
+            2,
+        }
+        relative:intvector{  
+            2,
+            2,
+        }
         script:intvector{  
             2,
             2,
         }
-        tense:intvector{  
-            2,
-            2,
-        }
-        type:intvector{  
+        unit-pattern:intvector{
             2,
             2,
         }
@@ -3971,8 +4094,69 @@ structLocale:table(nofallback){
                 }
             }
         }
+        day-narrow{
+            dn{"Day"}
+            relative{
+                "-3"{""}
+                "-2"{""}
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+                "2"{""}
+                "3"{""}
+            }
+            relativeTime{
+                future{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+                past{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+            }
+        }
+        day-short{
+            dn{"Day"}
+            relative{
+                "-3"{""}
+                "-2"{""}
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+                "2"{""}
+                "3"{""}
+            }
+            relativeTime{
+                future{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+                past{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+            }
+        }
         dayperiod{
             dn{"Dayperiod"}
+            dn%variant{""}
             relative{
                 "-1"{""}
                 "0"{""}
@@ -3994,7 +4178,73 @@ structLocale:table(nofallback){
                 "1"{""}
             }
         }
+        fri-narrow{
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+        }
+        fri-short{
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+        }
         hour{
+            dn{"Hour"}
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+            relativeTime{
+                future{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+                past{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+            }
+        }
+        hour-narrow{
+            dn{"Hour"}
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+            relativeTime{
+                future{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+                past{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+            }
+        }
+        hour-short{
             dn{"Hour"}
             relative{
                 "-1"{""}
@@ -4046,7 +4296,73 @@ structLocale:table(nofallback){
                 }
             }
         }
+        minute-narrow{
+            dn{"Minute"}
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+            relativeTime{
+                future{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+                past{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+            }
+        }
+        minute-short{
+            dn{"Minute"}
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+            relativeTime{
+                future{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+                past{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+            }
+        }
         mon{
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+        }
+        mon-narrow{
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+        }
+        mon-short{
             relative{
                 "-1"{""}
                 "0"{""}
@@ -4079,7 +4395,151 @@ structLocale:table(nofallback){
                 }
             }
         }
+        month-narrow{
+            dn{"Month"}
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+            relativeTime{
+                future{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+                past{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+            }
+        }
+        month-short{
+            dn{"Month"}
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+            relativeTime{
+                future{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+                past{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+            }
+        }
+        quarter{
+            dn{""}
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+            relativeTime{
+                future{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+                past{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+            }
+        }
+        quarter-narrow{
+            dn{""}
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+            relativeTime{
+                future{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+                past{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+            }
+        }
+        quarter-short{
+            dn{""}
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+            relativeTime{
+                future{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+                past{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+            }
+        }
         sat{
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+        }
+        sat-narrow{
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+        }
+        sat-short{
             relative{
                 "-1"{""}
                 "0"{""}
@@ -4112,7 +4572,73 @@ structLocale:table(nofallback){
                 }
             }
         }
+        second-narrow{
+            dn{"Second"}
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+            relativeTime{
+                future{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+                past{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+            }
+        }
+        second-short{
+            dn{"Second"}
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+            relativeTime{
+                future{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+                past{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+            }
+        }
         sun{
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+        }
+        sun-narrow{
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+        }
+        sun-short{
             relative{
                 "-1"{""}
                 "0"{""}
@@ -4126,7 +4652,35 @@ structLocale:table(nofallback){
                 "1"{""}
             }
         }
+        thu-narrow{
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+        }
+        thu-short{
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+        }
         tue{
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+        }
+        tue-narrow{
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+        }
+        tue-short{
             relative{
                 "-1"{""}
                 "0"{""}
@@ -4140,7 +4694,73 @@ structLocale:table(nofallback){
                 "1"{""}
             }
         }
+        wed-narrow{
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+        }
+        wed-short{
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+        }
         week{
+            dn{"Week"}                    
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+            relativeTime{
+                future{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+                past{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+            }
+        }
+        week-narrow{
+            dn{"Week"}                    
+            relative{
+                "-1"{""}
+                "0"{""}
+                "1"{""}
+            }
+            relativeTime{
+                future{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+                past{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+            }
+        }
+        week-short{
             dn{"Week"}                    
             relative{
                 "-1"{""}
@@ -4178,6 +4798,61 @@ structLocale:table(nofallback){
             dn{"Year"}                    
             relative{
                 "-1"{""}
+                "-2"{""}
+                "0"{""}
+                "1"{""}
+            }
+            relativeTime{
+                future{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+                past{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+            }
+        }
+        year-narrow{
+            dn{"Year"}                    
+            relative{
+                "-1"{""}
+                "-2"{""}
+                "0"{""}
+                "1"{""}
+            }
+            relativeTime{
+                future{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+                past{
+                    zero{""}
+                    one{""}
+                    two{""}
+                    few{""}
+                    many{""}
+                    other{""}
+                }
+            }
+        }
+        year-short{
+            dn{"Year"}                    
+            relative{
+                "-1"{""}
+                "-2"{""}
                 "0"{""}
                 "1"{""}
             }
@@ -4807,8 +5482,22 @@ structLocale:table(nofallback){
         zxx{""}
         zza{""}
     }
-    LanguagesShort{
+    Languages%secondary{
+        crh{""}
+        fa{""}
+        kl{""}
+        lad{""}
+        tr{""}
+    }
+    Languages%variant{
+        ky{""}
+        ps{""}
+        ug{""}
+    }
+    Languages%short{
         az{""}
+        en_GB{""}
+        en_US{""}
     }
     LocaleScript{
         "",
@@ -5042,6 +5731,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         arabext{
@@ -5270,6 +5960,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         bali{
@@ -5498,6 +6189,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         beng{
@@ -5726,6 +6418,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         cham{
@@ -5954,6 +6647,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         default{""}
@@ -6183,6 +6877,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         finance{""}
@@ -6408,6 +7103,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         gujr{
@@ -6636,6 +7332,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         guru{
@@ -6864,6 +7561,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         hanidec{
@@ -7092,6 +7790,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         java{
@@ -7320,6 +8019,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         kali{
@@ -7548,6 +8248,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         khmr{
@@ -7776,6 +8477,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         knda{
@@ -8004,6 +8706,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         lana{
@@ -8232,6 +8935,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         lanatham{
@@ -8456,6 +9160,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         laoo{
@@ -8684,6 +9389,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         latn{
@@ -8912,6 +9618,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         lepc{
@@ -9140,6 +9847,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         limb{
@@ -9368,6 +10076,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         mlym{
@@ -9596,6 +10305,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         mong{
@@ -9824,6 +10534,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         mtei{
@@ -10052,6 +10763,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         mymr{
@@ -10280,6 +10992,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         mymrshan{
@@ -10504,8 +11217,10 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
+        minimumGroupingDigits{""}
         native{""}
         nkoo{
             miscPatterns{
@@ -10733,6 +11448,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         olck{
@@ -10961,6 +11677,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         orya{
@@ -11189,6 +11906,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         saur{
@@ -11417,6 +12135,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         sund{
@@ -11645,6 +12364,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         talu{
@@ -11873,6 +12593,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         tamldec{
@@ -12101,6 +12822,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         telu{
@@ -12329,6 +13051,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         thai{
@@ -12557,6 +13280,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         tibt{
@@ -12785,6 +13509,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
         traditional{""}
@@ -13014,6 +13739,7 @@ structLocale:table(nofallback){
                 currencyDecimal{""}
                 currencyGroup{""}
                 superscriptingExponent{""}
+                timeSeparator{""}
             }
         }
     }
@@ -13153,9 +13879,23 @@ structLocale:table(nofallback){
         Zyyy{""}
         Zzzz{""}
     }
+    Scripts%secondary{
+        Ethi{""}
+        Geok{""}
+        Geor{""}
+        Mtei{""}
+        Visp{""}
+    }
+    Scripts%short{
+        Cans{""}
+        Xsux{""}
+    }
     Scripts%stand-alone{
         Hans{""}
         Hant{""}
+    }
+    Scripts%variant{
+        Arab{""}
     }
     Types{
         calendar{
@@ -13168,10 +13908,14 @@ structLocale:table(nofallback){
             gregorian{""}
             hebrew{""}
             indian{""}
-            persian{""}
             islamic{""}
             islamic-civil{""}
+            islamic-rgsa{""}
+            islamic-tbla{""}
+            islamic-umalqura{""}
+            iso8601{""}
             japanese{""}
+            persian{""}
             roc{""}
         }
         collation{
@@ -13180,8 +13924,81 @@ structLocale:table(nofallback){
             gb2312han{""}
             phonebook{""}
             pinyin{""}
+            search{""}
+            searchjl{""}
+            standard{""}
             stroke{""}
             traditional{""}
+            unihan{""}
+            zhuyin{""}
+        }
+        numbers{
+            arab{""}
+            armn{""}
+            armnlow{""}
+            bali{""}
+            beng{""}
+            brah{""}
+            cakm{""}
+            cham{""}
+            deva{""}
+            ethi{""}
+            finance{""}
+            fullwide{""}
+            geor{""}
+            grek{""}
+            greklow{""}
+            gujr{""}
+            guru{""}
+            hanidays{""}
+            hanidec{""}
+            hans{""}
+            hansfin{""}
+            hant{""}
+            hantfin{""}
+            hebr{""}
+            java{""}
+            jpan{""}
+            jpanfin{""}
+            kali{""}
+            khmr{""}
+            knda{""}
+            lana{""}
+            lanatham{""}
+            laoo{""}
+            latn{""}
+            lepc{""}
+            limb{""}
+            mlym{""}
+            mong{""}
+            mtei{""}
+            mymr{""}
+            mymrshan{""}
+            native{""}
+            nkoo{""}
+            olck{""}
+            orya{""}
+            osma{""}
+            roman{""}
+            romanlow{""}
+            saur{""}
+            shrd{""}
+            sora{""}
+            sund{""}
+            takr{""}
+            talu{""}
+            taml{""}
+            tamldec{""}
+            telu{""}
+            thai{""}
+            tibt{""}
+            traditional{""}
+            vaii{""}
+        }
+    }
+    Types%short{
+        numbers{
+            arabext{""}
         }
     }
     Variants{
@@ -13279,7 +14096,7 @@ structLocale:table(nofallback){
                     "",
                 }
             }
-             intervalFormats{
+            intervalFormats{
                 H{
                     H{""}
                 }
@@ -13314,6 +14131,14 @@ structLocale:table(nofallback){
                 }
                 MMMM{
                     M{""}
+                }
+                MMMMEd{
+                    M{""}
+                    d{""}
+                }
+                MMMMd{
+                    M{""}
+                    d{""}
                 }
                 MMMd{
                     M{""}
@@ -13375,6 +14200,21 @@ structLocale:table(nofallback){
                     M{""}
                     y{""}
                 }
+                yMMMMEEEEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
                 yMMMd{
                     M{""}
                     d{""}
@@ -13386,7 +14226,7 @@ structLocale:table(nofallback){
                     y{""}
                 }
             }
-       }
+        }
         chinese{
             AmPmMarkers{
                 "",
@@ -13430,6 +14270,36 @@ structLocale:table(nofallback){
                 dayParts{
                     format{
                         abbreviated{
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                        }
+                    }
+                }
+                solarTerms{
+                    format{
+                        abbreviated{
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
                             "",
                             "",
                             "",
@@ -13566,6 +14436,14 @@ structLocale:table(nofallback){
                 MMMM{
                     M{""}
                 }
+                MMMMEd{
+                    M{""}
+                    d{""}
+                }
+                MMMMd{
+                    M{""}
+                    d{""}
+                }
                 MMMd{
                     M{""}
                     d{""}
@@ -13624,6 +14502,21 @@ structLocale:table(nofallback){
                 }
                 yMMMM{
                     M{""}
+                    y{""}
+                }
+                yMMMMEEEEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMd{
+                    M{""}
+                    d{""}
                     y{""}
                 }
                 yMMMd{
@@ -13834,6 +14727,14 @@ structLocale:table(nofallback){
                 MMMM{
                     M{""}
                 }
+                MMMMEd{
+                    M{""}
+                    d{""}
+                }
+                MMMMd{
+                    M{""}
+                    d{""}
+                }
                 MMMd{
                     M{""}
                     d{""}
@@ -13892,6 +14793,21 @@ structLocale:table(nofallback){
                 }
                 yMMMM{
                     M{""}
+                    y{""}
+                }
+                yMMMMEEEEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMd{
+                    M{""}
+                    d{""}
                     y{""}
                 }
                 yMMMd{
@@ -14062,6 +14978,36 @@ structLocale:table(nofallback){
                         }
                     }
                 }
+                solarTerms{
+                    format{
+                        abbreviated{
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                        }
+                    }
+                }
                 years{
                     format{
                         abbreviated{
@@ -14183,6 +15129,14 @@ structLocale:table(nofallback){
                 MMMM{
                     M{""}
                 }
+                MMMMEd{
+                    M{""}
+                    d{""}
+                }
+                MMMMd{
+                    M{""}
+                    d{""}
+                }
                 MMMd{
                     M{""}
                     d{""}
@@ -14241,6 +15195,21 @@ structLocale:table(nofallback){
                 }
                 yMMMM{
                     M{""}
+                    y{""}
+                }
+                yMMMMEEEEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMd{
+                    M{""}
+                    d{""}
                     y{""}
                 }
                 yMMMd{
@@ -14383,9 +15352,28 @@ structLocale:table(nofallback){
                 "",
                 "",
             }
+            AmPmMarkersAbbr{
+                "",
+                "",
+            }
             AmPmMarkersNarrow{
                 "",
                 "",
+            }
+            DateTimePatterns{
+                "",
+                "",
+                "",
+                "",
+                "A2",
+                "A2",
+                "A2",
+                "A2",
+                "",
+                "A4",
+                "A4",
+                "A4",
+                "A4",
             }
             availableFormats{
                 HHmm{""}
@@ -14452,6 +15440,14 @@ structLocale:table(nofallback){
                 MMMM{
                     M{""}
                 }
+                MMMMEd{
+                    M{""}
+                    d{""}
+                }
+                MMMMd{
+                    M{""}
+                    d{""}
+                }
                 MMMd{
                     M{""}
                     d{""}
@@ -14510,6 +15506,289 @@ structLocale:table(nofallback){
                 }
                 yMMMM{
                     M{""}
+                    y{""}
+                }
+                yMMMMEEEEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+            }
+            monthNames{
+                format{
+                    abbreviated{
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                    }
+                    default{""}
+                    narrow{
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                    }
+                    wide{
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                    }
+                }
+                stand-alone{
+                    abbreviated{
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                    }
+                    default{""}
+                    narrow{
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                    }
+                    wide{
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                    }
+                }
+            }
+        }
+        ethiopic-amete-alem{
+            AmPmMarkers{
+                "",
+                "",
+            }
+            AmPmMarkersAbbr{
+                "",
+                "",
+            }
+            AmPmMarkersNarrow{
+                "",
+                "",
+            }
+            availableFormats{
+                HHmm{""}
+                HHmmss{""}
+                KKmm{"KK:mm a"}
+                KKmmss{"KK:mm:ss a"}
+                MMMM{""}
+                MMMdd{""}
+                mmssSS{""}
+                ww{""}
+                yyMM{""}
+                yyMMMEEEd{""}
+                yyMMMd{""}
+                yyMd{""}
+                yyQQQQ{""}
+            }
+            eras{
+                abbreviated{
+                    "",
+                }
+                wide{
+                    "",
+                }
+                narrow{
+                    ""
+                }
+            }
+            intervalFormats{
+                H{
+                    H{""}
+                }
+                Hm{
+                    H{""}
+                    m{""}
+                }
+                Hmv{
+                    H{""}
+                    m{""}
+                }
+                Hv{
+                    H{""}
+                }
+                M{
+                    M{""}
+                }
+                MEd{
+                    M{""}
+                    d{""}
+                }
+                MMM{
+                    M{""}
+                }
+                MMMEd{
+                    M{""}
+                    d{""}
+                }
+                MMMEEEEd{
+                    M{""}
+                    d{""}
+                }
+                MMMM{
+                    M{""}
+                }
+                MMMMEd{
+                    M{""}
+                    d{""}
+                }
+                MMMMd{
+                    M{""}
+                    d{""}
+                }
+                MMMd{
+                    M{""}
+                    d{""}
+                }
+                Md{
+                    M{""}
+                    d{""}
+                }
+                d{
+                    d{""}
+                }
+                fallback{""}
+                h{
+                    a{""}
+                    h{""}
+                }
+                hm{
+                    a{""}
+                    h{""}
+                    m{""}
+                }
+                hmv{
+                    a{""}
+                    h{""}
+                    m{""}
+                }
+                hv{
+                    a{""}
+                    h{""}
+                }
+                y{
+                    y{""}
+                }
+                yM{
+                    M{""}
+                    y{""}
+                }
+                yMEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMM{
+                    M{""}
+                    y{""}
+                }
+                yMMMEEEEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMM{
+                    M{""}
+                    y{""}
+                }
+                yMMMMEEEEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMd{
+                    M{""}
+                    d{""}
                     y{""}
                 }
                 yMMMd{
@@ -14636,10 +15915,10 @@ structLocale:table(nofallback){
                 "",
                 "",
                 "",
-                "",
-                "",
-                "",
-                "",
+                "A2",
+                "A2",
+                "A2",
+                "A2",
                 "",
                 "A4",
                 "A4",
@@ -14791,6 +16070,14 @@ structLocale:table(nofallback){
                 MMMM{
                     M{""}
                 }
+                MMMMEd{
+                    M{""}
+                    d{""}
+                }
+                MMMMd{
+                    M{""}
+                    d{""}
+                }
                 MMMd{
                     M{""}
                     d{""}
@@ -14849,6 +16136,21 @@ structLocale:table(nofallback){
                 }
                 yMMMM{
                     M{""}
+                    y{""}
+                }
+                yMMMMEEEEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMd{
+                    M{""}
+                    d{""}
                     y{""}
                 }
                 yMMMd{
@@ -14910,6 +16212,14 @@ structLocale:table(nofallback){
                 "",
                 "",
             }
+            AmPmMarkers%variant{
+                "",
+                "",
+            }
+            AmPmMarkersAbbr{
+                "",
+                "",
+            }
             AmPmMarkersNarrow{
                 "",
                 "",
@@ -14923,16 +16233,19 @@ structLocale:table(nofallback){
                 "",
                 "",
                 "",
-                "",
-                "",
-                "",
-                "",
+                "A2",
+                "A2",
+                "A2",
+                "A2",
                 "",
                 "A4",
                 "A4",
                 "A4",
                 "A4",
             }
+            NoonMarker{""}
+            NoonMarkerAbbr{""}
+            NoonMarkerNarrow{""}
             appendItems{
                 Day{"{0} ({2}: {1})"}
                 Day-Of-Week{"{0} {1}"}
@@ -15047,13 +16360,25 @@ structLocale:table(nofallback){
                     "",
                     "",
                 }
-                wide{
+                abbreviated%variant{
                     "",
-                    ""
+                    "",
                 }
                 narrow{
                     "",
                     ""
+                }
+                narrow%variant{
+                    "",
+                    ""
+                }
+                wide{
+                    "",
+                    ""
+                }
+                wide%variant{
+                    "",
+                    "",
                 }
             }
             intervalFormats{
@@ -15091,6 +16416,14 @@ structLocale:table(nofallback){
                 }
                 MMMM{
                     M{""}
+                }
+                MMMMEd{
+                    M{""}
+                    d{""}
+                }
+                MMMMd{
+                    M{""}
+                    d{""}
                 }
                 MMMd{
                     M{""}
@@ -15150,6 +16483,21 @@ structLocale:table(nofallback){
                 }
                 yMMMM{
                     M{""}
+                    y{""}
+                }
+                yMMMMEEEEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMd{
+                    M{""}
+                    d{""}
                     y{""}
                 }
                 yMMMd{
@@ -15391,6 +16739,14 @@ structLocale:table(nofallback){
                 MMMM{
                     M{""}
                 }
+                MMMMEd{
+                    M{""}
+                    d{""}
+                }
+                MMMMd{
+                    M{""}
+                    d{""}
+                }
                 MMMd{
                     M{""}
                     d{""}
@@ -15449,6 +16805,21 @@ structLocale:table(nofallback){
                 }
                 yMMMM{
                     M{""}
+                    y{""}
+                }
+                yMMMMEEEEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMd{
+                    M{""}
+                    d{""}
                     y{""}
                 }
                 yMMMd{
@@ -15654,6 +17025,14 @@ structLocale:table(nofallback){
                 MMMM{
                     M{""}
                 }
+                MMMMEd{
+                    M{""}
+                    d{""}
+                }
+                MMMMd{
+                    M{""}
+                    d{""}
+                }
                 MMMd{
                     M{""}
                     d{""}
@@ -15712,6 +17091,21 @@ structLocale:table(nofallback){
                 }
                 yMMMM{
                     M{""}
+                    y{""}
+                }
+                yMMMMEEEEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMd{
+                    M{""}
+                    d{""}
                     y{""}
                 }
                 yMMMd{
@@ -15909,6 +17303,14 @@ structLocale:table(nofallback){
                 MMMM{
                     M{""}
                 }
+                MMMMEd{
+                    M{""}
+                    d{""}
+                }
+                MMMMd{
+                    M{""}
+                    d{""}
+                }
                 MMMd{
                     M{""}
                     d{""}
@@ -15967,6 +17369,21 @@ structLocale:table(nofallback){
                 }
                 yMMMM{
                     M{""}
+                    y{""}
+                }
+                yMMMMEEEEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMd{
+                    M{""}
+                    d{""}
                     y{""}
                 }
                 yMMMd{
@@ -16164,6 +17581,14 @@ structLocale:table(nofallback){
                 MMMM{
                     M{""}
                 }
+                MMMMEd{
+                    M{""}
+                    d{""}
+                }
+                MMMMd{
+                    M{""}
+                    d{""}
+                }
                 MMMd{
                     M{""}
                     d{""}
@@ -16222,6 +17647,21 @@ structLocale:table(nofallback){
                 }
                 yMMMM{
                     M{""}
+                    y{""}
+                }
+                yMMMMEEEEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMd{
+                    M{""}
+                    d{""}
                     y{""}
                 }
                 yMMMd{
@@ -17175,6 +18615,14 @@ structLocale:table(nofallback){
                 MMMM{
                     M{""}
                 }
+                MMMMEd{
+                    M{""}
+                    d{""}
+                }
+                MMMMd{
+                    M{""}
+                    d{""}
+                }
                 MMMd{
                     M{""}
                     d{""}
@@ -17233,6 +18681,21 @@ structLocale:table(nofallback){
                 }
                 yMMMM{
                     M{""}
+                    y{""}
+                }
+                yMMMMEEEEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMEd{
+                    M{""}
+                    d{""}
+                    y{""}
+                }
+                yMMMMd{
+                    M{""}
+                    d{""}
                     y{""}
                 }
                 yMMMd{
@@ -17310,6 +18773,16 @@ structLocale:table(nofallback){
     units{
         acceleration{
             g-force{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            meter-per-second-squared{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17320,6 +18793,7 @@ structLocale:table(nofallback){
         }
         angle{
             degree{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17328,6 +18802,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             arc-minute{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17336,6 +18811,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             arc-second{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            radian{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17346,6 +18831,7 @@ structLocale:table(nofallback){
         }
         area{
             acre{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17354,6 +18840,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             hectare{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17362,6 +18849,25 @@ structLocale:table(nofallback){
                 other{""}
             }
             square-foot{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            square-centimeter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            square-inch{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17370,6 +18876,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             square-kilometer{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17378,6 +18885,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             square-meter{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17386,6 +18894,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             square-mile{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            square-yard{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17397,8 +18915,121 @@ structLocale:table(nofallback){
         compound{
             per{""}
         }
+        consumption{
+            liter-per-kilometer{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            mile-per-gallon{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
+        digital{
+            bit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            byte{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            gigabit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            gigabyte{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kilobit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kilobyte{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            megabit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            megabyte{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            terabit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            terabyte{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
         duration{
             day{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17407,6 +19038,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             day-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17415,6 +19047,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             day-past{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17423,14 +19056,17 @@ structLocale:table(nofallback){
                 other{""}
             }
             hour{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
                 few{""}
                 many{""}
                 other{""}
+                per{""}
             }
             hour-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17439,6 +19075,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             hour-past{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            microsecond{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17447,6 +19093,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             millisecond{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17455,6 +19102,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             minute{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17463,6 +19111,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             minute-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17471,6 +19120,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             minute-past{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17479,6 +19129,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             month{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17487,6 +19138,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             month-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17495,6 +19147,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             month-past{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            nanosecond{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17503,14 +19165,17 @@ structLocale:table(nofallback){
                 other{""}
             }
             second{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
                 few{""}
                 many{""}
                 other{""}
+                per{""}
             }
             second-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17519,6 +19184,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             second-past{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17527,6 +19193,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             week{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17535,6 +19202,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             week-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17543,6 +19211,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             week-past{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17551,6 +19220,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             year{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17559,6 +19229,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             year-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17567,6 +19238,139 @@ structLocale:table(nofallback){
                 other{""}
             }
             year-past{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
+        electric{
+            ampere{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            milliampere{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            ohm{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            volt{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
+        energy{
+            calorie{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            foodcalorie{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            joule{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kilocalorie{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kilojoule{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kilowatt-hour{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
+        frequency{
+            gigahertz{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            hertz{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kilohertz{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            megahertz{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17576,7 +19380,35 @@ structLocale:table(nofallback){
             }
         }
         length{
+            astronomical-unit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
             centimeter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            decimeter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            fathom{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17585,6 +19417,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             foot{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            furlong{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17593,6 +19435,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             inch{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17601,6 +19444,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             kilometer{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17609,6 +19453,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             light-year{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17617,6 +19462,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             meter{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17625,6 +19471,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             mile{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            micrometer{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17633,6 +19489,34 @@ structLocale:table(nofallback){
                 other{""}
             }
             millimeter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            nanometer{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            nautical-mile{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            parsec{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17641,6 +19525,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             picometer{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17649,6 +19534,18 @@ structLocale:table(nofallback){
                 other{""}
             }
             yard{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
+        light{
+            lux{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17658,7 +19555,17 @@ structLocale:table(nofallback){
             }
         }
         mass{
+            carat{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
             gram{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17667,6 +19574,34 @@ structLocale:table(nofallback){
                 other{""}
             }
             kilogram{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            metric-ton{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            microgram{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            milligram{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17675,6 +19610,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             ounce{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            ounce-troy{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17683,6 +19628,25 @@ structLocale:table(nofallback){
                 other{""}
             }
             pound{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            stone{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            ton{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17693,6 +19657,16 @@ structLocale:table(nofallback){
         }
         power{
             horsepower{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            gigawatt{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17701,6 +19675,25 @@ structLocale:table(nofallback){
                 other{""}
             }
             kilowatt{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            megawatt{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            milliwatt{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17709,6 +19702,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             watt{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17719,6 +19713,7 @@ structLocale:table(nofallback){
         }
         pressure{
             hectopascal{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17727,6 +19722,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             inch-hg{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17735,6 +19731,36 @@ structLocale:table(nofallback){
                 other{""}
             }
             millibar{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            millimeter-of-mercury{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            pound-per-square-inch{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
+        proportion{
+            karat{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17745,6 +19771,7 @@ structLocale:table(nofallback){
         }
         speed{
             kilometer-per-hour{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17753,6 +19780,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             meter-per-second{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17761,6 +19789,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             mile-per-hour{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17771,6 +19800,7 @@ structLocale:table(nofallback){
         }
         temperature{
             celsius{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17779,6 +19809,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             fahrenheit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kelvin{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17788,7 +19828,71 @@ structLocale:table(nofallback){
             }
         }
         volume{
+            acre-foot{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            bushel{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            centiliter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            cubic-centimeter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            cubic-foot{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            cubic-inch{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
             cubic-kilometer{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            cubic-meter{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17797,6 +19901,61 @@ structLocale:table(nofallback){
                 other{""}
             }
             cubic-mile{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            cubic-yard{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            cup{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            deciliter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            fluid-ounce{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            gallon{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            hectoliter{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17805,6 +19964,61 @@ structLocale:table(nofallback){
                 other{""}
             }
             liter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            megaliter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            milliliter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            pint{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            quart{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            teaspoon{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            tablespoon{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17817,6 +20031,16 @@ structLocale:table(nofallback){
     unitsNarrow{
         acceleration{
             g-force{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            meter-per-second-squared{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17827,6 +20051,7 @@ structLocale:table(nofallback){
         }
         angle{
             degree{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17835,6 +20060,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             arc-minute{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17843,6 +20069,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             arc-second{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            radian{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17853,6 +20089,7 @@ structLocale:table(nofallback){
         }
         area{
             acre{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17861,6 +20098,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             hectare{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17869,6 +20107,25 @@ structLocale:table(nofallback){
                 other{""}
             }
             square-foot{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            square-centimeter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            square-inch{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17877,6 +20134,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             square-kilometer{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17885,6 +20143,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             square-meter{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17893,6 +20152,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             square-mile{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            square-yard{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17904,8 +20173,121 @@ structLocale:table(nofallback){
         compound{
             per{""}
         }
+        consumption{
+            liter-per-kilometer{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            mile-per-gallon{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
+        digital{
+            bit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            byte{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            gigabit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            gigabyte{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kilobit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kilobyte{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            megabit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            megabyte{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            terabit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            terabyte{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
         duration{
             day{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17914,6 +20296,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             day-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17922,6 +20305,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             day-past{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17930,14 +20314,17 @@ structLocale:table(nofallback){
                 other{""}
             }
             hour{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
                 few{""}
                 many{""}
                 other{""}
+                per{""}
             }
             hour-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17946,6 +20333,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             hour-past{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            microsecond{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17954,6 +20351,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             millisecond{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17962,6 +20360,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             minute{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17970,6 +20369,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             minute-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17978,6 +20378,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             minute-past{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17986,6 +20387,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             month{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -17994,6 +20396,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             month-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18002,6 +20405,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             month-past{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            nanosecond{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18010,14 +20423,17 @@ structLocale:table(nofallback){
                 other{""}
             }
             second{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
                 few{""}
                 many{""}
                 other{""}
+                per{""}
             }
             second-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18026,6 +20442,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             second-past{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18034,6 +20451,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             week{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18042,6 +20460,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             week-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18050,6 +20469,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             week-past{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18058,6 +20478,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             year{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18066,6 +20487,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             year-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18074,6 +20496,139 @@ structLocale:table(nofallback){
                 other{""}
             }
             year-past{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
+        electric{
+            ampere{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            milliampere{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            ohm{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            volt{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
+        energy{
+            calorie{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            foodcalorie{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            joule{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kilocalorie{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kilojoule{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kilowatt-hour{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
+        frequency{
+            gigahertz{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            hertz{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kilohertz{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            megahertz{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18083,7 +20638,35 @@ structLocale:table(nofallback){
             }
         }
         length{
+            astronomical-unit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
             centimeter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            decimeter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            fathom{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18092,6 +20675,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             foot{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            furlong{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18100,6 +20693,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             inch{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18108,6 +20702,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             kilometer{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18116,6 +20711,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             light-year{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18124,6 +20720,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             meter{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18132,6 +20729,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             mile{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            micrometer{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18140,6 +20747,34 @@ structLocale:table(nofallback){
                 other{""}
             }
             millimeter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            nanometer{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            nautical-mile{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            parsec{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18148,6 +20783,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             picometer{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18156,6 +20792,18 @@ structLocale:table(nofallback){
                 other{""}
             }
             yard{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
+        light{
+            lux{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18165,7 +20813,17 @@ structLocale:table(nofallback){
             }
         }
         mass{
+            carat{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
             gram{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18174,6 +20832,34 @@ structLocale:table(nofallback){
                 other{""}
             }
             kilogram{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            metric-ton{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            microgram{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            milligram{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18182,6 +20868,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             ounce{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            ounce-troy{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18190,6 +20886,25 @@ structLocale:table(nofallback){
                 other{""}
             }
             pound{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            stone{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            ton{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18200,6 +20915,16 @@ structLocale:table(nofallback){
         }
         power{
             horsepower{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            gigawatt{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18208,6 +20933,25 @@ structLocale:table(nofallback){
                 other{""}
             }
             kilowatt{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            megawatt{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            milliwatt{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18216,6 +20960,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             watt{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18226,6 +20971,7 @@ structLocale:table(nofallback){
         }
         pressure{
             hectopascal{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18234,6 +20980,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             inch-hg{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18242,6 +20989,36 @@ structLocale:table(nofallback){
                 other{""}
             }
             millibar{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            millimeter-of-mercury{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            pound-per-square-inch{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
+        proportion{
+            karat{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18252,6 +21029,7 @@ structLocale:table(nofallback){
         }
         speed{
             kilometer-per-hour{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18260,6 +21038,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             meter-per-second{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18268,6 +21047,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             mile-per-hour{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18278,6 +21058,7 @@ structLocale:table(nofallback){
         }
         temperature{
             celsius{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18286,6 +21067,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             fahrenheit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kelvin{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18295,7 +21086,71 @@ structLocale:table(nofallback){
             }
         }
         volume{
+            acre-foot{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            bushel{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            centiliter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            cubic-centimeter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            cubic-foot{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            cubic-inch{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
             cubic-kilometer{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            cubic-meter{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18304,6 +21159,61 @@ structLocale:table(nofallback){
                 other{""}
             }
             cubic-mile{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            cubic-yard{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            cup{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            deciliter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            fluid-ounce{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            gallon{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            hectoliter{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18312,6 +21222,61 @@ structLocale:table(nofallback){
                 other{""}
             }
             liter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            megaliter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            milliliter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            pint{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            quart{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            teaspoon{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            tablespoon{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18324,6 +21289,16 @@ structLocale:table(nofallback){
     unitsShort{
         acceleration{
             g-force{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            meter-per-second-squared{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18334,6 +21309,7 @@ structLocale:table(nofallback){
         }
         angle{
             degree{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18342,6 +21318,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             arc-minute{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18350,6 +21327,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             arc-second{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            radian{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18360,6 +21347,7 @@ structLocale:table(nofallback){
         }
         area{
             acre{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18368,6 +21356,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             hectare{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18376,6 +21365,25 @@ structLocale:table(nofallback){
                 other{""}
             }
             square-foot{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            square-centimeter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            square-inch{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18384,6 +21392,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             square-kilometer{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18392,6 +21401,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             square-meter{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18400,6 +21410,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             square-mile{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            square-yard{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18411,8 +21431,121 @@ structLocale:table(nofallback){
         compound{
             per{""}
         }
+        consumption{
+            liter-per-kilometer{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            mile-per-gallon{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
+        digital{
+            bit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            byte{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            gigabit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            gigabyte{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kilobit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kilobyte{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            megabit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            megabyte{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            terabit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            terabyte{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
         duration{
             day{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18421,6 +21554,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             day-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18429,6 +21563,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             day-past{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18437,14 +21572,17 @@ structLocale:table(nofallback){
                 other{""}
             }
             hour{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
                 few{""}
                 many{""}
                 other{""}
+                per{""}
             }
             hour-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18453,6 +21591,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             hour-past{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            microsecond{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18461,6 +21609,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             millisecond{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18469,6 +21618,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             minute{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18477,6 +21627,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             minute-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18485,6 +21636,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             minute-past{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18493,6 +21645,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             month{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18501,6 +21654,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             month-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18509,6 +21663,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             month-past{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            nanosecond{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18517,14 +21681,17 @@ structLocale:table(nofallback){
                 other{""}
             }
             second{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
                 few{""}
                 many{""}
                 other{""}
+                per{""}
             }
             second-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18533,6 +21700,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             second-past{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18541,6 +21709,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             week{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18549,6 +21718,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             week-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18557,6 +21727,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             week-past{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18565,6 +21736,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             year{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18573,6 +21745,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             year-future{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18581,6 +21754,139 @@ structLocale:table(nofallback){
                 other{""}
             }
             year-past{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
+        electric{
+            ampere{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            milliampere{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            ohm{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            volt{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
+        energy{
+            calorie{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            foodcalorie{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            joule{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kilocalorie{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kilojoule{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kilowatt-hour{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
+        frequency{
+            gigahertz{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            hertz{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kilohertz{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            megahertz{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18590,7 +21896,35 @@ structLocale:table(nofallback){
             }
         }
         length{
+            astronomical-unit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
             centimeter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            decimeter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            fathom{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18599,6 +21933,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             foot{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            furlong{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18607,6 +21951,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             inch{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18615,6 +21960,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             kilometer{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18623,6 +21969,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             light-year{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18631,6 +21978,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             meter{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18639,6 +21987,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             mile{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            micrometer{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18647,6 +22005,34 @@ structLocale:table(nofallback){
                 other{""}
             }
             millimeter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            nanometer{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            nautical-mile{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            parsec{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18655,6 +22041,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             picometer{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18663,6 +22050,18 @@ structLocale:table(nofallback){
                 other{""}
             }
             yard{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
+        light{
+            lux{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18672,7 +22071,17 @@ structLocale:table(nofallback){
             }
         }
         mass{
+            carat{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
             gram{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18681,6 +22090,34 @@ structLocale:table(nofallback){
                 other{""}
             }
             kilogram{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            metric-ton{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            microgram{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            milligram{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18689,6 +22126,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             ounce{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            ounce-troy{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18697,6 +22144,25 @@ structLocale:table(nofallback){
                 other{""}
             }
             pound{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            stone{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            ton{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18707,6 +22173,16 @@ structLocale:table(nofallback){
         }
         power{
             horsepower{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            gigawatt{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18715,6 +22191,25 @@ structLocale:table(nofallback){
                 other{""}
             }
             kilowatt{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            megawatt{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            milliwatt{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18723,6 +22218,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             watt{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18733,6 +22229,7 @@ structLocale:table(nofallback){
         }
         pressure{
             hectopascal{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18741,6 +22238,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             inch-hg{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18749,6 +22247,36 @@ structLocale:table(nofallback){
                 other{""}
             }
             millibar{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            millimeter-of-mercury{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            pound-per-square-inch{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+        }
+        proportion{
+            karat{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18759,6 +22287,7 @@ structLocale:table(nofallback){
         }
         speed{
             kilometer-per-hour{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18767,6 +22296,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             meter-per-second{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18775,6 +22305,7 @@ structLocale:table(nofallback){
                 other{""}
             }
             mile-per-hour{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18785,6 +22316,7 @@ structLocale:table(nofallback){
         }
         temperature{
             celsius{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18793,6 +22325,16 @@ structLocale:table(nofallback){
                 other{""}
             }
             fahrenheit{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            kelvin{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18802,7 +22344,71 @@ structLocale:table(nofallback){
             }
         }
         volume{
+            acre-foot{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            bushel{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            centiliter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            cubic-centimeter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            cubic-foot{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            cubic-inch{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
             cubic-kilometer{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            cubic-meter{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18811,6 +22417,61 @@ structLocale:table(nofallback){
                 other{""}
             }
             cubic-mile{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            cubic-yard{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            cup{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            deciliter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            fluid-ounce{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            gallon{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            hectoliter{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}
@@ -18819,6 +22480,61 @@ structLocale:table(nofallback){
                 other{""}
             }
             liter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            megaliter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            milliliter{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            pint{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            quart{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            teaspoon{
+                dnam{""}
+                zero{""}
+                one{""}
+                two{""}
+                few{""}
+                many{""}
+                other{""}
+            }
+            tablespoon{
+                dnam{""}
                 zero{""}
                 one{""}
                 two{""}

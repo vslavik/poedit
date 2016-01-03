@@ -4,7 +4,7 @@
 <title>let</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
+<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.2.0">
 <link rel="up" href="../scope.html" title="Scope">
 <link rel="prev" href="local_variables.html" title="Local Variables">
 <link rel="next" href="lambda.html" title="lambda">
@@ -124,16 +124,24 @@
           <code class="computeroutput"><span class="identifier">let</span></code> blocks can be nested.
           A local variable may hide an outer local variable. For example:
         </p>
-<pre class="programlisting"><span class="identifier">let</span><span class="special">(</span><span class="identifier">_x</span> <span class="special">=</span> <span class="number">1</span><span class="special">,</span> <span class="identifier">_y</span> <span class="special">=</span> <span class="string">", World"</span><span class="special">)</span>
+<pre class="programlisting"><span class="identifier">let</span><span class="special">(</span><span class="identifier">_x</span> <span class="special">=</span> <span class="identifier">_1</span><span class="special">,</span> <span class="identifier">_y</span> <span class="special">=</span> <span class="identifier">_2</span><span class="special">)</span>
 <span class="special">[</span>
     <span class="comment">// _x here is an int: 1</span>
 
-    <span class="identifier">let</span><span class="special">(</span><span class="identifier">_x</span> <span class="special">=</span> <span class="string">"Hello"</span><span class="special">)</span> <span class="comment">// hides the outer _x</span>
-    <span class="special">[</span>
-        <span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">_x</span> <span class="special">&lt;&lt;</span> <span class="identifier">_y</span> <span class="comment">// prints "Hello, World"</span>
-    <span class="special">]</span>
-<span class="special">]</span>
+   <span class="identifier">let</span><span class="special">(</span><span class="identifier">_x</span> <span class="special">=</span> <span class="identifier">_3</span><span class="special">)</span> <span class="comment">// hides the outer _x</span>
+   <span class="special">[</span>
+       <span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">_x</span> <span class="special">&lt;&lt;</span> <span class="identifier">_y</span> <span class="comment">// prints "Hello, World"</span>
+   <span class="special">]</span>
+<span class="special">](</span><span class="number">1</span><span class="special">,</span><span class="string">" World"</span><span class="special">,</span><span class="string">"Hello,"</span><span class="special">);</span>
 </pre>
+<p>
+          The actual values of the parameters _1, _2 and _3 are supplied from the
+          bracketed list at the end of the <code class="computeroutput"><span class="identifier">let</span></code>.
+        </p>
+<p>
+          There is currently a limitation that the inner <code class="computeroutput"><span class="identifier">let</span></code>
+          cannot be supplied with a constant e.g. <code class="computeroutput"><span class="identifier">let</span><span class="special">(</span><span class="identifier">_x</span> <span class="special">=</span> <span class="number">1</span><span class="special">)</span></code>.
+        </p>
 <p>
           The RHS (right hand side lambda-expression) of each local-declaration cannot
           refer to any LHS local-id. At this point, the local-ids are not in scope
@@ -157,18 +165,19 @@
 <pre class="programlisting"><span class="identifier">let</span><span class="special">(</span><span class="identifier">_a</span> <span class="special">=</span> <span class="number">1</span><span class="special">)</span>
 <span class="special">[</span>
     <span class="identifier">let</span><span class="special">(</span>
-        <span class="identifier">_a</span> <span class="special">=</span> <span class="number">1</span>
+        <span class="identifier">_a</span> <span class="special">=</span> <span class="identifier">_1</span>
       <span class="special">,</span> <span class="identifier">_b</span> <span class="special">=</span> <span class="identifier">_a</span> <span class="comment">// Ok. _a refers to the outer _a</span>
     <span class="special">)</span>
     <span class="special">[</span>
         <span class="comment">/*. body .*/</span>
     <span class="special">]</span>
-<span class="special">]</span>
+<span class="special">](</span><span class="number">1</span><span class="special">)</span>
 </pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2005, 2010 Joel de Guzman, Dan Marsden, Thomas Heller<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2005, 2010, 2014, 2015 Joel de Guzman, Dan Marsden, Thomas
+      Heller, John Fletcher<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

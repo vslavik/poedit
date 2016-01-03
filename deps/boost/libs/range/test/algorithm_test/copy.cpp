@@ -43,7 +43,7 @@ namespace boost
                 source.begin(), source.end()
                 );
 
-            it == boost::copy(boost::make_iterator_range(source), target.begin());
+            it = boost::copy(boost::make_iterator_range(source), target.begin());
             
             BOOST_CHECK( it == target.end() );
 

@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2001-2013 Vaclav Slavik
+ *  Copyright (C) 2001-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -29,6 +29,7 @@
 #include <wx/listctrl.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/settings.h>
+#include <wx/stdpaths.h>
 #include <wx/intl.h>
 #include <wx/frame.h>
 #include <wx/listbox.h>
@@ -48,6 +49,7 @@
 #include "catalog.h"
 #include "edapp.h"
 #include "edframe.h"
+#include "hidpi.h"
 #include "manager.h"
 #include "progressinfo.h"
 #include "utility.h"
@@ -78,7 +80,7 @@ ManagerFrame::ManagerFrame() :
     appicons.AddIcon(wxArtProvider::GetIcon("poedit", wxART_FRAME_ICON, wxSize(48,48)));
     SetIcons(appicons);
 #elif defined(__WXMSW__)
-    SetIcon(wxICON(appicon));
+    SetIcons(wxIconBundle(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\Poedit.ico"));
 #endif
 
     ms_instance = this;
@@ -92,7 +94,7 @@ ManagerFrame::ManagerFrame() :
     m_listCat = XRCCTRL(*panel, "prj_files", wxListCtrl);
     m_splitter = XRCCTRL(*panel, "manager_splitter", wxSplitterWindow);
 
-    wxImageList *list = new wxImageList(16, 16);
+    wxImageList *list = new wxImageList(PX(16), PX(16));
     list->Add(wxArtProvider::GetBitmap("poedit-status-cat-no"));
     list->Add(wxArtProvider::GetBitmap("poedit-status-cat-mid"));
     list->Add(wxArtProvider::GetBitmap("poedit-status-cat-ok"));
@@ -107,9 +109,9 @@ ManagerFrame::ManagerFrame() :
     if (m_listPrj->GetCount() > 0)
         UpdateListCat(last);
 
-    RestoreWindowState(this, wxSize(400, 300));
+    RestoreWindowState(this, wxSize(PX(400), PX(300)));
 
-    m_splitter->SetSashPosition(wxConfig::Get()->Read("manager_splitter", 200));
+    m_splitter->SetSashPosition((int)wxConfig::Get()->Read("manager_splitter", PX(200)));
 }
 
 
@@ -186,7 +188,7 @@ static void AddCatalogToList(wxListCtrl *list, int i, int id, const wxString& fi
     }
     else
     {
-        // supress error messages, we don't mind if the catalog is corrupted
+        // suppress error messages, we don't mind if the catalog is corrupted
         // FIXME: *do* indicate error somehow
         wxLogNull nullLog;
 
@@ -456,9 +458,11 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
             else
             {
                 Catalog cat(f);
-                cat.Update(&pinfo);
+                UpdateResultReason reason;
+                cat.Update(&pinfo, /*summary=*/false, reason);
                 int validation_errors = 0;
-                cat.Save(f, false, validation_errors);
+                Catalog::CompilationStatus mo_status;
+                cat.Save(f, false, validation_errors, mo_status);
             }
          }
 

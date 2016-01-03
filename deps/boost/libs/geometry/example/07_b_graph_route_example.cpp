@@ -34,8 +34,6 @@
 // For output:
 #include <boost/geometry/io/svg/svg_mapper.hpp>
 
-// Yes, this example currently uses an extension:
-
 // For distance-calculations over the Earth:
 //#include <boost/geometry/extensions/gis/geographic/strategies/andoyer.hpp>
 
@@ -82,7 +80,8 @@ void read_wkt(std::string const& filename, std::vector<Tuple>& tuples, Box& box)
     }
 }
 
-
+// To calculate distance, declare and construct a strategy with average earth radius
+boost::geometry::strategy::distance::haversine<double> const haversine(6372795.0);
 
 // Define properties for vertex
 template <typename Point>
@@ -93,8 +92,8 @@ struct bg_vertex_property
         boost::geometry::assign_zero(location);
     }
     bg_vertex_property(Point const& loc)
+        : location(loc)
     {
-        location = loc;
     }
 
     Point location;
@@ -105,9 +104,9 @@ template <typename Linestring>
 struct bg_edge_property
 {
     bg_edge_property(Linestring const& line)
-        : m_line(line)
+        : length(boost::geometry::length(line, haversine))
+        , m_line(line)
     {
-        length = boost::geometry::length(line);
     }
 
     inline Linestring const& line() const
@@ -292,9 +291,6 @@ int main()
     std::cout << "distances, all in KM" << std::endl
         << std::fixed << std::setprecision(0);
 
-    // To calculate distance, declare and construct a strategy with average earth radius
-    boost::geometry::strategy::distance::haversine<double> haversine(6372795.0);
-        
     // Main functionality: calculate shortest routes from/to all cities
 
     // For the first one, the complete route is stored as a linestring
@@ -371,7 +367,7 @@ int main()
         mapper.text(city.get<0>(), city.get<1>(),
                 "fill:rgb(0,0,0);font-family:Arial;font-size:10px", 5, 5);
     }
-#endif    
+#endif
 
     return 0;
 }

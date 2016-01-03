@@ -12,7 +12,9 @@
 #include <boost/msm/back/state_machine.hpp>
 #include <boost/msm/front/euml/euml.hpp>
 
+#ifndef BOOST_MSM_NONSTANDALONE_TEST
 #define BOOST_TEST_MODULE MyTest
+#endif
 #include <boost/test/unit_test.hpp>
 
 using namespace std;
@@ -104,7 +106,7 @@ namespace
     BOOST_MSM_EUML_ACTION(internal_guard)
     {
         template <class FSM,class EVT,class SourceState,class TargetState>
-        bool operator()(EVT const& evt,FSM& fsm,SourceState& ,TargetState& )
+        bool operator()(EVT const&,FSM& fsm,SourceState& ,TargetState& )
         {
             ++fsm.get_attribute(internal_guard_counter);
             return false;
@@ -113,7 +115,7 @@ namespace
     BOOST_MSM_EUML_ACTION(internal_guard2)
     {
         template <class FSM,class EVT,class SourceState,class TargetState>
-        bool operator()(EVT const& evt,FSM& fsm,SourceState& ,TargetState& )
+        bool operator()(EVT const&,FSM& fsm,SourceState& ,TargetState& )
         {
             ++fsm.get_attribute(internal_guard_counter);
             return true;

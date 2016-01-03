@@ -29,7 +29,7 @@
 <div class="toc"><dl class="toc"><dt><span class="section"><a href="boost__geometry__index__equal_to.html#geometry.reference.spatial_indexes.observers.boost__geometry__index__equal_to.operator___value_const____value_const___">operator()(Value
             const &amp;, Value const &amp;)</a></span></dt></dl></div>
 <p>
-            <a class="indexterm" name="idp62257544"></a><a class="indexterm" name="idp62257880"></a><a class="indexterm" name="idp62258216"></a><a class="indexterm" name="idp62258552"></a>
+            <a class="indexterm" name="idp129574800"></a><a class="indexterm" name="idp129575488"></a><a class="indexterm" name="idp129576176"></a><a class="indexterm" name="idp129576864"></a>
 The function object comparing Values.
           </p>
 <h6>
@@ -37,10 +37,11 @@ The function object comparing Values.
             <span class="phrase"><a name="geometry.reference.spatial_indexes.observers.boost__geometry__index__equal_to.description"></a></span><a class="link" href="boost__geometry__index__equal_to.html#geometry.reference.spatial_indexes.observers.boost__geometry__index__equal_to.description">Description</a>
           </h6>
 <p>
-            It compares Geometries using geometry::equals() function. Other types
-            are compared using operator==. The default version handles Values which
-            are Indexables. This template is also specialized for std::pair&lt;T1,
-            T2&gt; and boost::tuple&lt;...&gt;.
+            The default version handles Values which are Indexables, std::pair&lt;T1,
+            T2&gt;, boost::tuple&lt;...&gt; and std::tuple&lt;...&gt; if STD tuples
+            and variadic templates are supported. All members are compared from left
+            to right, Geometries using boost::geometry::equals() function, other
+            types using operator==.
           </p>
 <h6>
 <a name="geometry.reference.spatial_indexes.observers.boost__geometry__index__equal_to.h1"></a>
@@ -118,7 +119,7 @@ The function object comparing Values.
 <tbody><tr>
 <td>
                     <p>
-                      <a name="structboost_1_1geometry_1_1index_1_1equal__to_1a96a4ec5188f34ad90ea154308a93ebae"></a><code class="computeroutput"><span class="identifier">result_type</span></code>
+                      <a name="structboost_1_1geometry_1_1index_1_1equal__to_1ae6a986988e380c2ba4afa646294cfd93"></a><code class="computeroutput"><span class="identifier">result_type</span></code>
                     </p>
                   </td>
 <td>
@@ -170,8 +171,7 @@ The function object comparing Values.
                   </td>
 <td>
                     <p>
-                      Compare values. If Value is a Geometry geometry::equals() function
-                      is used.
+                      Compare Values.
                     </p>
                   </td>
 </tr></tbody>
@@ -182,9 +182,8 @@ The function object comparing Values.
             const &amp;, Value const &amp;)</a>
 </h6></div></div></div>
 <p>
-              <a class="indexterm" name="idp62297000"></a>
-Compare values. If Value is a Geometry geometry::equals() function
-              is used.
+              <a class="indexterm" name="idp129648624"></a>
+Compare Values.
             </p>
 <h7><a name="geometry.reference.spatial_indexes.observers.boost__geometry__index__equal_to.operator___value_const____value_const___.h0"></a>
               <span class="phrase"><a name="geometry.reference.spatial_indexes.observers.boost__geometry__index__equal_to.operator___value_const____value_const___.synopsis"></a></span><a class="link" href="boost__geometry__index__equal_to.html#geometry.reference.spatial_indexes.observers.boost__geometry__index__equal_to.operator___value_const____value_const___.synopsis">Synopsis</a>
@@ -264,13 +263,14 @@ Compare values. If Value is a Geometry geometry::equals() function
 <h7><a name="geometry.reference.spatial_indexes.observers.boost__geometry__index__equal_to.operator___value_const____value_const___.h3"></a>
               <span class="phrase"><a name="geometry.reference.spatial_indexes.observers.boost__geometry__index__equal_to.operator___value_const____value_const___.returns"></a></span><a class="link" href="boost__geometry__index__equal_to.html#geometry.reference.spatial_indexes.observers.boost__geometry__index__equal_to.operator___value_const____value_const___.returns">Returns</a>
             </h7><p>
-              true if values are equal.
+              true if Values are equal.
             </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
+      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

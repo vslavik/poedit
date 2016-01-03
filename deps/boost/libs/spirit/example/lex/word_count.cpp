@@ -84,7 +84,7 @@ struct word_count_tokens : lex::lexer<Lexer>
         this->self.add
             (word)          // no token id is needed here
             ('\n')          // characters are usable as tokens as well
-            (".", IDANY)    // string literals will not be esacped by the library
+            (".", IDANY)    // string literals will not be escaped by the library
         ;
     }
 
@@ -146,10 +146,10 @@ int main(int argc, char* argv[])
     char const* first = str.c_str();
     char const* last = &first[str.size()];
 
-/*<  Parsing is done based on the the token stream, not the character 
+/*<  Parsing is done based on the token stream, not the character 
      stream read from the input. The function `tokenize_and_parse()` wraps
      the passed iterator range `[first, last)` by the lexical analyzer and 
-     uses its exposed iterators to parse the toke stream.
+     uses its exposed iterators to parse the token stream.
 >*/  bool r = lex::tokenize_and_parse(first, last, word_count, g);
 
     if (r) {

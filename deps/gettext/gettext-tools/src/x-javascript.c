@@ -1,5 +1,6 @@
 /* xgettext JavaScript backend.
-   Copyright (C) 2002-2003, 2005-2009, 2013 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2005-2009, 2013, 2015 Free Software
+   Foundation, Inc.
 
    This file was written by Andreas Stricker <andy@knitter.ch>, 2010
    It's based on x-python from Bruno Haible.
@@ -43,7 +44,6 @@
 #include "c-strstr.h"
 #include "c-ctype.h"
 #include "po-charset.h"
-#include "uniname.h"
 #include "unistr.h"
 #include "gettext.h"
 
@@ -205,7 +205,8 @@ phase1_ungetc (int c)
 
 static lexical_context_ty lexical_context;
 
-static int phase2_pushback[max (9, UNINAME_MAX + 3)];
+/* Maximum used, length of "<![CDATA[" tag minus one.  */
+static int phase2_pushback[8];
 static int phase2_pushback_length;
 
 /* Read the next Unicode UCS-4 character from the input file.  */
@@ -545,10 +546,10 @@ comment_add (int c)
 }
 
 static inline const char *
-comment_line_end ()
+comment_line_end (size_t chars_to_remove)
 {
   char *buffer = unicode_string_buffer_result (&comment_buffer);
-  size_t buflen = strlen (buffer);
+  size_t buflen = strlen (buffer) - chars_to_remove;
 
   while (buflen >= 1
          && (buffer[buflen - 1] == ' ' || buffer[buflen - 1] == '\t'))
@@ -619,7 +620,10 @@ phase3_getc ()
                 {
                   c = phase2_getc ();
                   if (c == UEOF || c == '\n')
-                    break;
+                    {
+                      comment_line_end (0);
+                      break;
+                    }
                   /* We skip all leading white space, but not EOLs.  */
                   if (!(comment_at_start () && (c == ' ' || c == '\t')))
                     comment_add (c);
@@ -711,203 +715,6 @@ phase3_ungetc (int c)
    IS_UNICODE.  */
 #define UNICODE_VALUE(p7_result) ((p7_result) - 0x100)
 
-/* A string buffer type that allows appending bytes (in the
-   xgettext_current_source_encoding) or Unicode characters.
-   Returns the entire string in UTF-8 encoding.  */
-
-struct mixed_string_buffer
-{
-  /* The part of the string that has already been converted to UTF-8.  */
-  char *utf8_buffer;
-  size_t utf8_buflen;
-  size_t utf8_allocated;
-  /* The first half of an UTF-16 surrogate character.  */
-  unsigned short utf16_surr;
-  /* The part of the string that is still in the source encoding.  */
-  char *curr_buffer;
-  size_t curr_buflen;
-  size_t curr_allocated;
-  /* The lexical context.  Used only for error message purposes.  */
-  lexical_context_ty lcontext;
-};
-
-/* Initialize a 'struct mixed_string_buffer' to empty.  */
-static inline void
-init_mixed_string_buffer (struct mixed_string_buffer *bp, lexical_context_ty lcontext)
-{
-  bp->utf8_buffer = NULL;
-  bp->utf8_buflen = 0;
-  bp->utf8_allocated = 0;
-  bp->utf16_surr = 0;
-  bp->curr_buffer = NULL;
-  bp->curr_buflen = 0;
-  bp->curr_allocated = 0;
-  bp->lcontext = lcontext;
-}
-
-/* Auxiliary function: Append a byte to bp->curr.  */
-static inline void
-mixed_string_buffer_append_byte (struct mixed_string_buffer *bp, unsigned char c)
-{
-  if (bp->curr_buflen == bp->curr_allocated)
-    {
-      bp->curr_allocated = 2 * bp->curr_allocated + 10;
-      bp->curr_buffer = xrealloc (bp->curr_buffer, bp->curr_allocated);
-    }
-  bp->curr_buffer[bp->curr_buflen++] = c;
-}
-
-/* Auxiliary function: Ensure count more bytes are available in bp->utf8.  */
-static inline void
-mixed_string_buffer_append_unicode_grow (struct mixed_string_buffer *bp, size_t count)
-{
-  if (bp->utf8_buflen + count > bp->utf8_allocated)
-    {
-      size_t new_allocated = 2 * bp->utf8_allocated + 10;
-      if (new_allocated < bp->utf8_buflen + count)
-        new_allocated = bp->utf8_buflen + count;
-      bp->utf8_allocated = new_allocated;
-      bp->utf8_buffer = xrealloc (bp->utf8_buffer, new_allocated);
-    }
-}
-
-/* Auxiliary function: Append a Unicode character to bp->utf8.
-   uc must be < 0x110000.  */
-static inline void
-mixed_string_buffer_append_unicode (struct mixed_string_buffer *bp, ucs4_t uc)
-{
-  unsigned char utf8buf[6];
-  int count = u8_uctomb (utf8buf, uc, 6);
-
-  if (count < 0)
-    /* The caller should have ensured that uc is not out-of-range.  */
-    abort ();
-
-  mixed_string_buffer_append_unicode_grow (bp, count);
-  memcpy (bp->utf8_buffer + bp->utf8_buflen, utf8buf, count);
-  bp->utf8_buflen += count;
-}
-
-/* Auxiliary function: Flush bp->utf16_surr into bp->utf8_buffer.  */
-static inline void
-mixed_string_buffer_flush_utf16_surr (struct mixed_string_buffer *bp)
-{
-  if (bp->utf16_surr != 0)
-    {
-      /* A half surrogate is invalid, therefore use U+FFFD instead.  */
-      mixed_string_buffer_append_unicode (bp, 0xfffd);
-      bp->utf16_surr = 0;
-    }
-}
-
-/* Auxiliary function: Flush bp->curr_buffer into bp->utf8_buffer.  */
-static inline void
-mixed_string_buffer_flush_curr_buffer (struct mixed_string_buffer *bp, int lineno)
-{
-  if (bp->curr_buflen > 0)
-    {
-      char *curr;
-      size_t count;
-
-      mixed_string_buffer_append_byte (bp, '\0');
-
-      /* Convert from the source encoding to UTF-8.  */
-      curr = from_current_source_encoding (bp->curr_buffer, bp->lcontext,
-                                           logical_file_name, lineno);
-
-      /* Append it to bp->utf8_buffer.  */
-      count = strlen (curr);
-      mixed_string_buffer_append_unicode_grow (bp, count);
-      memcpy (bp->utf8_buffer + bp->utf8_buflen, curr, count);
-      bp->utf8_buflen += count;
-
-      if (curr != bp->curr_buffer)
-        free (curr);
-      bp->curr_buflen = 0;
-    }
-}
-
-/* Append a character or Unicode character to a 'struct mixed_string_buffer'.  */
-static void
-mixed_string_buffer_append (struct mixed_string_buffer *bp, int c)
-{
-  if (IS_UNICODE (c))
-    {
-      /* Append a Unicode character.  */
-
-      /* Switch from multibyte character mode to Unicode character mode.  */
-      mixed_string_buffer_flush_curr_buffer (bp, line_number);
-
-      /* Test whether this character and the previous one form a Unicode
-         surrogate character pair.  */
-      if (bp->utf16_surr != 0
-          && (c >= UNICODE (0xdc00) && c < UNICODE (0xe000)))
-        {
-          unsigned short utf16buf[2];
-          ucs4_t uc;
-
-          utf16buf[0] = bp->utf16_surr;
-          utf16buf[1] = UNICODE_VALUE (c);
-          if (u16_mbtouc (&uc, utf16buf, 2) != 2)
-            abort ();
-
-          mixed_string_buffer_append_unicode (bp, uc);
-          bp->utf16_surr = 0;
-        }
-      else
-        {
-          mixed_string_buffer_flush_utf16_surr (bp);
-
-          if (c >= UNICODE (0xd800) && c < UNICODE (0xdc00))
-            bp->utf16_surr = UNICODE_VALUE (c);
-          else if (c >= UNICODE (0xdc00) && c < UNICODE (0xe000))
-            {
-              /* A half surrogate is invalid, therefore use U+FFFD instead.  */
-              mixed_string_buffer_append_unicode (bp, 0xfffd);
-            }
-          else
-            mixed_string_buffer_append_unicode (bp, UNICODE_VALUE (c));
-        }
-    }
-  else
-    {
-      /* Append a single byte.  */
-
-      /* Switch from Unicode character mode to multibyte character mode.  */
-      mixed_string_buffer_flush_utf16_surr (bp);
-
-      /* When a newline is seen, convert the accumulated multibyte sequence.
-         This ensures a correct line number in the error message in case of
-         a conversion error.  The "- 1" is to account for the newline.  */
-      if (c == '\n')
-        mixed_string_buffer_flush_curr_buffer (bp, line_number - 1);
-
-      mixed_string_buffer_append_byte (bp, (unsigned char) c);
-    }
-}
-
-/* Return the string buffer's contents.  */
-static char *
-mixed_string_buffer_result (struct mixed_string_buffer *bp)
-{
-  /* Flush all into bp->utf8_buffer.  */
-  mixed_string_buffer_flush_utf16_surr (bp);
-  mixed_string_buffer_flush_curr_buffer (bp, line_number);
-  /* NUL-terminate it.  */
-  mixed_string_buffer_append_unicode_grow (bp, 1);
-  bp->utf8_buffer[bp->utf8_buflen] = '\0';
-  /* Return it.  */
-  return bp->utf8_buffer;
-}
-
-/* Free the memory pointed to by a 'struct mixed_string_buffer'.  */
-static inline void
-free_mixed_string_buffer (struct mixed_string_buffer *bp)
-{
-  free (bp->utf8_buffer);
-  free (bp->curr_buffer);
-}
-
 
 /* ========================== Reading of tokens.  ========================== */
 
@@ -923,6 +730,7 @@ enum token_type_ty
   token_type_plus,              /* + */
   token_type_regexp,            /* /.../ */
   token_type_operator,          /* - * / % . < > = ~ ! | & ? : ^ */
+  token_type_equal,             /* = */
   token_type_string,            /* "abc", 'abc' */
   token_type_keyword,           /* return, else */
   token_type_symbol,            /* symbol, number */
@@ -1157,6 +965,114 @@ phase5_scan_regexp ()
       phase2_ungetc (c);
 }
 
+static int xml_element_depth = 0;
+static bool inside_embedded_js_in_xml = false;
+
+static bool
+phase5_scan_xml_markup (token_ty *tp)
+{
+  struct
+  {
+    const char *start;
+    const char *end;
+  } markers[] =
+      {
+        { "!--", "--" },
+        { "![CDATA[", "]]" },
+        { "?", "?" }
+      };
+  int i;
+
+  for (i = 0; i < SIZEOF (markers); i++)
+    {
+      const char *start = markers[i].start;
+      const char *end = markers[i].end;
+      int j;
+
+      /* Look for a start marker.  */
+      for (j = 0; start[j] != '\0'; j++)
+        {
+          int c;
+
+          assert (phase2_pushback_length + j < SIZEOF (phase2_pushback));
+          c = phase2_getc ();
+          if (c == UEOF)
+            goto eof;
+          if (c != start[j])
+            {
+              int k = j;
+
+              phase2_ungetc (c);
+              k--;
+
+              for (; k >= 0; k--)
+                phase2_ungetc (start[k]);
+              break;
+            }
+        }
+
+      if (start[j] != '\0')
+        continue;
+
+      /* Skip until the end marker.  */
+      for (;;)
+        {
+          int c;
+
+          for (j = 0; end[j] != '\0'; j++)
+            {
+              assert (phase2_pushback_length + 1 < SIZEOF (phase2_pushback));
+              c = phase2_getc ();
+              if (c == UEOF)
+                goto eof;
+              if (c != end[j])
+                {
+                  /* Don't push the first character back so the next
+                     iteration start from the second character.  */
+                  if (j > 0)
+                    {
+                      int k = j;
+
+                      phase2_ungetc (c);
+                      k--;
+
+                      for (; k > 0; k--)
+                        phase2_ungetc (end[k]);
+                    }
+                  break;
+                }
+            }
+
+          if (end[j] != '\0')
+            continue;
+
+          c = phase2_getc ();
+          if (c == UEOF)
+            goto eof;
+          if (c != '>')
+            {
+              error_with_progname = false;
+              error (0, 0,
+                     _("%s:%d: warning: %s is not allowed"),
+                     logical_file_name, line_number,
+                     end);
+              error_with_progname = true;
+              return false;
+            }
+          return true;
+        }
+    }
+  return false;
+
+ eof:
+  error_with_progname = false;
+  error (0, 0,
+         _("%s:%d: warning: unterminated XML markup"),
+         logical_file_name, line_number);
+  error_with_progname = true;
+  return false;
+}
+
 static void
 phase5_get (token_ty *tp)
 {
@@ -1275,29 +1191,37 @@ phase5_get (token_ty *tp)
 
         /* Strings.  */
           {
-            struct mixed_string_buffer literal;
+            struct mixed_string_buffer *bp;
             int quote_char;
 
             case '"': case '\'':
               quote_char = c;
               lexical_context = lc_string;
               /* Start accumulating the string.  */
-              init_mixed_string_buffer (&literal, lc_string);
+              bp = mixed_string_buffer_alloc (lexical_context,
+                                              logical_file_name,
+                                              line_number);
               for (;;)
                 {
                   int uc = phase7_getuc (quote_char);
+
+                  /* Keep line_number in sync.  */
+                  bp->line_number = line_number;
 
                   if (uc == P7_EOF || uc == P7_STRING_END)
                     break;
 
                   if (IS_UNICODE (uc))
-                    assert (UNICODE_VALUE (uc) >= 0
-                            && UNICODE_VALUE (uc) < 0x110000);
-
-                  mixed_string_buffer_append (&literal, uc);
+                    {
+                      assert (UNICODE_VALUE (uc) >= 0
+                              && UNICODE_VALUE (uc) < 0x110000);
+                      mixed_string_buffer_append_unicode (bp,
+                                                          UNICODE_VALUE (uc));
+                    }
+                  else
+                    mixed_string_buffer_append_char (bp, uc);
                 }
-              tp->string = xstrdup (mixed_string_buffer_result (&literal));
-              free_mixed_string_buffer (&literal);
+              tp->string = mixed_string_buffer_done (bp);
               tp->comment = add_reference (savable_comment);
               lexical_context = lc_outside;
               tp->type = last_token_type = token_type_string;
@@ -1311,13 +1235,93 @@ phase5_get (token_ty *tp)
         /* Identify operators. The multiple character ones are simply ignored
          * as they are recognized here and are otherwise not relevant. */
         case '-': case '*': /* '+' and '/' are not listed here! */
-        case '%': case '<': case '>': case '=':
+        case '%':
         case '~': case '!': case '|': case '&': case '^':
         case '?': case ':':
           tp->type = last_token_type = token_type_operator;
           return;
 
+        case '=':
+          tp->type = last_token_type = token_type_equal;
+          return;
+
+        case '<':
+          {
+            /* We assume:
+               - XMLMarkup and XMLElement are only allowed after '=' or '('
+               - embedded JavaScript expressions in XML do not recurse
+             */
+            if (xml_element_depth > 0
+                || (!inside_embedded_js_in_xml
+                    && (last_token_type == token_type_equal
+                        || last_token_type == token_type_lparen)))
+              {
+                /* Comments, PI, or CDATA.  */
+                if (phase5_scan_xml_markup (tp))
+                  return;
+                c = phase2_getc ();
+
+                /* Closing tag.  */
+                if (c == '/')
+                  lexical_context = lc_xml_close_tag;
+
+                /* Opening element.  */
+                else
+                  {
+                    phase2_ungetc (c);
+                    lexical_context = lc_xml_open_tag;
+                    xml_element_depth++;
+                  }
+
+                tp->type = last_token_type = token_type_other;
+              }
+            else
+              tp->type = last_token_type = token_type_operator;
+          }
+          return;
+
+        case '>':
+          if (xml_element_depth > 0 && !inside_embedded_js_in_xml)
+            {
+              switch (lexical_context)
+                {
+                case lc_xml_open_tag:
+                  lexical_context = lc_xml_content;
+                  break;
+
+                case lc_xml_close_tag:
+                  if (xml_element_depth-- > 0)
+                    lexical_context = lc_xml_content;
+                  else
+                    lexical_context = lc_outside;
+                  break;
+
+                default:
+                  break;
+                }
+              tp->type = last_token_type = token_type_other;
+            }
+          else
+            tp->type = last_token_type = token_type_operator;
+          return;
+
         case '/':
+          if (xml_element_depth > 0 && !inside_embedded_js_in_xml)
+            {
+              /* If it appears in an opening tag of an XML element, it's
+                 part of '/>'.  */
+              if (lexical_context == lc_xml_open_tag)
+                {
+                  c = phase2_getc ();
+                  if (c == '>')
+                    lexical_context = lc_outside;
+                  else
+                    phase2_ungetc (c);
+                }
+              tp->type = last_token_type = token_type_other;
+              return;
+            }
+
           /* Either a division operator or the start of a regular
              expression literal.  If the '/' token is spotted after a
              symbol it's a division, otherwise it's a regular
@@ -1331,6 +1335,18 @@ phase5_get (token_ty *tp)
               phase5_scan_regexp (tp);
               tp->type = last_token_type = token_type_regexp;
             }
+          return;
+
+        case '{':
+          if (xml_element_depth > 0 && !inside_embedded_js_in_xml)
+            inside_embedded_js_in_xml = true;
+          tp->type = last_token_type = token_type_other;
+          return;
+
+        case '}':
+          if (xml_element_depth > 0 && inside_embedded_js_in_xml)
+            inside_embedded_js_in_xml = false;
+          tp->type = last_token_type = token_type_other;
           return;
 
         case '(':
@@ -1595,6 +1611,7 @@ extract_balanced (message_list_ty *mlp,
         case token_type_plus:
         case token_type_regexp:
         case token_type_operator:
+        case token_type_equal:
         case token_type_other:
           next_context_iter = null_context_list_iterator;
           state = 0;
@@ -1624,6 +1641,8 @@ extract_javascript (FILE *f,
 
   last_comment_line = -1;
   last_non_comment_line = -1;
+
+  xml_element_depth = 0;
 
   xgettext_current_file_source_encoding = xgettext_global_source_encoding;
 #if HAVE_ICONV

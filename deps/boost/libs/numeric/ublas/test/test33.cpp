@@ -13,7 +13,7 @@
 #include "test3.hpp"
 
 // Test matrix expression templates
-template<class M, int N>
+template<class M, std::size_t N>
 struct test_my_matrix {
     typedef typename M::value_type value_type;
 

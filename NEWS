@@ -1,4 +1,231 @@
 
+Version 1.8.6
+-------------
+
+- Fix properties window on OS X 10.9 and older.
+- Fix visual flicker when quickly scrolling through a file with arrow keys.
+- [OS X] Fix rare exception when pasting text.
+- Fix file width autodetection when long comments were present.
+- Disable Find next/prev menu items properly.
+
+
+Version 1.8.5
+-------------
+
+- Improved setting and handling of source paths.
+- Implement gzip support in Crowdin API client.
+- Assorted fixes.
+
+
+Version 1.8.4
+-------------
+
+- Fixed bug in handling POTs with plural forms introduced in 1.8.3.
+
+
+Version 1.8.3
+-------------
+
+- Fixed Last-Translator error when creating a new translation from existing POT.
+- Fixed bogus "Sources not available" error for single files setups.
+- Fixed TM error reporting to prevent rendering the entire UI mostly unusable.
+
+
+Version 1.8.2
+-------------
+
+- text editor now ensures that trailing newlines are present only if they also
+  exist in the source text
+- fix HTML export error on Windows
+- automatically fix some bad paths settings in PO files
+- improved source language detection
+- fix incorrect timezone of PO-Revision-Date in some cases
+- use the user's default browser for Crowdin authentication on all platforms
+  (wxWebView no longer required as a dependency when building on Linux)
+
+
+Version 1.8.1
+-------------
+
+- fix TM-related crash under heavy concurrency
+- [OS X] fix crash when a concurrent task throws
+
+
+Version 1.8
+-----------
+
+- integration with the Crowdin localization management platform
+- search & replace
+- support for directly handling POT files
+- improved interface for configuring source code paths
+- Poedit now automatically fixes certain broken files produced by certain
+  broken tools (e.g. WPML)
+- modernized HTML export
+- [OS X] Quick  Look preview
+- support for non-English source languages (auto-detected)
+- [Windows] opening multiple Poedit windows now works correctly
+
+
+Version 1.7.7
+-------------
+
+- strip whitespace in extractor definitions resulting from copy & paste
+
+
+Version 1.7.6
+-------------
+
+- fix handling of multiple displays
+- [Windows] fix "file couldn't be formatted nicely" problems with files in
+  directories with (some) Unicode names
+
+
+Version 1.7.5
+-------------
+
+- fix scrolling to the top when saving a file; focus should be preserved now
+- fix disabling of extractors in preferences (oops)
+- [Windows, OS X] improve resilience of the TM to power loss
+
+
+Version 1.7.4
+-------------
+
+- size of the bottom editing part is now remembered correctly again
+- [GTK+] fix broken Edit->Copy/Cut/Paste
+- [OS X] fix stray BOM marks appearing on suggestions in some cases
+- [OS X] fix Brazilian Portuguese localization not being used
+- [OS X] fix sandbox permission window with unusual source paths setting
+- [Windows] HiDPI support
+
+
+Version 1.7.3
+-------------
+
+- it is now possible to disable unwanted extractors in preferences
+- source paths in catalog properties can now include individual files
+- exclusion paths in catalog properties can now use wildcards
+  (e.g. *.js, now default for WordPress)
+- "Consult TM when updating from sources" now includes only "good" matches
+  (with at least 75% score)
+- fix losing of the editing position when saving a file
+- fix Preferences layout in Japanese and Chinese translations
+- Windows: fix custom font setting after using a suggestion or copying from
+  source text
+
+(there was no version 1.7.2)
+
+
+Version 1.7.1
+-------------
+
+- fix menu shortcuts problem in Polish localization
+
+
+Version 1.7
+-----------
+
+- reworked preferences
+- support for extraction from JavaScript (and more) sources
+- suggestions and other relevant information (comments etc.) are now much
+  easier to access in a unified sidebar
+- syntax highlighting of special characters in translations
+- added Group by Context sorting option
+- implemented multiple selection
+- formatting of PO files can now be customized
+- added support for msgmerge --no-fuzzy-matching
+
+
+Version 1.6.10
+--------------
+
+- multiple fixes to parsing of the Language header
+- fix handling of broken POTs with duplicate headers
+- improved robustness of the Lucene TM database
+- misc small fixes
+- translations updates and fixes
+
+
+Version 1.6.9
+-------------
+
+- fixes to handling of RTL translations
+- fix editing-related crashes under wxGTK
+- translations updates
+
+
+Version 1.6.8
+-------------
+
+- fix parsing of obsolete entries in PO files
+- improved spellchecker handling on OS X and Windows
+- misc fixes
+- translations updates
+
+
+Version 1.6.7
+-------------
+
+- better handle "fatal" (but not really) msgfmt errors
+- OS X: fix OS X 10.7 compatibility
+- OS X/Win: update bundled Gettext to 0.19.2
+- translations updates
+
+
+Version 1.6.6
+-------------
+
+- added exclusion paths support to updating from sources
+- spellchecking is now supported on Windows 8+
+- STL version of wxWidgets is no longer required to build on Unix
+- update Windows and OS X builds to GNU gettext 0.19
+- misc fixes
+- translations updates
+
+
+Version 1.6.5
+-------------
+
+- assorted small bugfixes
+
+
+Version 1.6.4
+-------------
+
+- translation memory tuning
+- Unix: restore compatibility with GTK+ 2
+- misc fixes
+- minor UI improvements (better wording etc.)
+- OS X: misc fixes for Mavericks compatibility
+- OS X/Win: update bundled Gettext to 0.18.3.2
+- translations updates
+
+
+Version 1.6.3
+-------------
+
+- fix invocation of external parser tools that need PATH
+- Unix: use XDG_CONFIG_HOME for dotfile location
+- OS X: fix conflict with Smart Quotes on Mavericks
+- translations updates
+
+
+Version 1.6.2
+-------------
+
+- fix TM failures with non-ASCII paths on Windows
+- add support for Zend Framework's .phtml
+- and support for WordPress' translators: comments
+- translations updates
+
+
+Version 1.6.1
+-------------
+
+- fixes to TM migration code
+- OS X: fixes for Retina displays
+
+
 Version 1.6
 -----------
 
@@ -466,7 +693,7 @@ Version 1.2.0
   were unified into single RPM (mdk menu support was _not_ lost by this)
 - fixed data loss when updating catalog with invalid entries
 - Windows: fixed toolbars look on Windows XP
-- Windows: the installer no longer requires Administrator priviledges
+- Windows: the installer no longer requires Administrator privileges
 
 
 Version 1.1.10
@@ -514,7 +741,7 @@ Version 1.1.7
 - minor UI tweaks
 - added Chinese (zh_TW) translation (Ying-Chieh Liao)
 - several fixes related to handling of directory names with spaces
-- fixed lauching Poedit with filename as the argument
+- fixed launching Poedit with filename as the argument
 
 
 Version 1.1.6
@@ -527,7 +754,7 @@ Version 1.1.6
   (so far only Czech translation is available, translators welcome!)
 - added an option to display .po file line numbers for catalog entries
 - fixed crash when browsing certain source files
-- added ability to open refered source files directly in the editor of
+- added ability to open referred source files directly in the editor of
   choice instead of in built-in files viewer
 - Windows: fixed wrong placement of progress indicator in the status bar
 - Unix: man page is now installed
@@ -545,7 +772,7 @@ Version 1.1.5
 - visually improved listbox
 - Win32 binary package is now cross-compiled with Mingw32
 - fixed Unix makefile to not attempt to install KDE and/or GNOME entries
-  if you doesn't have neccessary write permissions
+  if you doesn't have necessary write permissions
 
 
 Version 1.1.4

@@ -2,7 +2,7 @@
 //
 // R-tree R*-tree insert algorithm implementation
 //
-// Copyright (c) 2011-2013 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2011-2014 Adam Wulkiewicz, Lodz, Poland.
 //
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -45,7 +45,9 @@ public:
         typedef typename elements_type::value_type element_type;
         typedef typename geometry::point_type<Box>::type point_type;
         // TODO: awulkiew - change second point_type to the point type of the Indexable?
-        typedef typename geometry::default_distance_result<point_type>::type distance_type;
+        typedef typename
+            geometry::default_comparable_distance_result<point_type>::type
+                comparable_distance_type;
 
         elements_type & elements = rtree::elements(n);
 
@@ -63,8 +65,9 @@ public:
         // fill the container of centers' distances of children from current node's center
         typedef typename index::detail::rtree::container_from_elements_type<
             elements_type,
-            std::pair<distance_type, element_type>
+            std::pair<comparable_distance_type, element_type>
         >::type sorted_elements_type;
+
         sorted_elements_type sorted_elements;
         // If constructor is used instead of resize() MS implementation leaks here
         sorted_elements.reserve(elements_count);                                                         // MAY THROW, STRONG (V, E: alloc, copy)
@@ -84,7 +87,7 @@ public:
             sorted_elements.begin(),
             sorted_elements.begin() + reinserted_elements_count,
             sorted_elements.end(),
-            distances_dsc<distance_type, element_type>);                                                // MAY THROW, BASIC (V, E: copy)
+            distances_dsc<comparable_distance_type, element_type>);                                                // MAY THROW, BASIC (V, E: copy)
 
         // copy elements which will be reinserted
         result_elements.clear();
@@ -175,14 +178,15 @@ struct level_insert_base
     typedef typename Options::parameters_type parameters_type;
 
     typedef typename Allocators::node_pointer node_pointer;
+    typedef typename Allocators::size_type size_type;
 
     inline level_insert_base(node_pointer & root,
-                             size_t & leafs_level,
+                             size_type & leafs_level,
                              Element const& element,
                              parameters_type const& parameters,
                              Translator const& translator,
                              Allocators & allocators,
-                             size_t relative_level)
+                             size_type relative_level)
         : base(root, leafs_level, element, parameters, translator, allocators, relative_level)
         , result_relative_level(0)
     {}
@@ -237,7 +241,7 @@ struct level_insert_base
         }
     }
 
-    size_t result_relative_level;
+    size_type result_relative_level;
     result_elements_type result_elements;
 };
 
@@ -253,14 +257,15 @@ struct level_insert
     typedef typename Options::parameters_type parameters_type;
 
     typedef typename Allocators::node_pointer node_pointer;
+    typedef typename Allocators::size_type size_type;
 
     inline level_insert(node_pointer & root,
-                        size_t & leafs_level,
+                        size_type & leafs_level,
                         Element const& element,
                         parameters_type const& parameters,
                         Translator const& translator,
                         Allocators & allocators,
-                        size_t relative_level)
+                        size_type relative_level)
         : base(root, leafs_level, element, parameters, translator, allocators, relative_level)
     {}
 
@@ -338,14 +343,15 @@ struct level_insert<InsertIndex, Value, Value, Options, Translator, Box, Allocat
     typedef typename Options::parameters_type parameters_type;
 
     typedef typename Allocators::node_pointer node_pointer;
+    typedef typename Allocators::size_type size_type;
 
     inline level_insert(node_pointer & root,
-                        size_t & leafs_level,
+                        size_type & leafs_level,
                         Value const& v,
                         parameters_type const& parameters,
                         Translator const& translator,
                         Allocators & allocators,
-                        size_t relative_level)
+                        size_type relative_level)
         : base(root, leafs_level, v, parameters, translator, allocators, relative_level)
     {}
 
@@ -393,14 +399,15 @@ struct level_insert<0, Value, Value, Options, Translator, Box, Allocators>
     typedef typename Options::parameters_type parameters_type;
 
     typedef typename Allocators::node_pointer node_pointer;
+    typedef typename Allocators::size_type size_type;
 
     inline level_insert(node_pointer & root,
-                        size_t & leafs_level,
+                        size_type & leafs_level,
                         Value const& v,
                         parameters_type const& parameters,
                         Translator const& translator,
                         Allocators & allocators,
-                        size_t relative_level)
+                        size_type relative_level)
         : base(root, leafs_level, v, parameters, translator, allocators, relative_level)
     {}
 
@@ -450,22 +457,24 @@ class insert<Element, Value, Options, Translator, Box, Allocators, insert_reinse
     typedef typename rtree::leaf<Value, parameters_type, Box, Allocators, typename Options::node_tag>::type leaf;
 
     typedef typename Allocators::node_pointer node_pointer;
+    typedef typename Allocators::size_type size_type;
 
 public:
     inline insert(node_pointer & root,
-                  size_t & leafs_level,
+                  size_type & leafs_level,
                   Element const& element,
                   parameters_type const& parameters,
                   Translator const& translator,
                   Allocators & allocators,
-                  size_t relative_level = 0)
+                  size_type relative_level = 0)
         : m_root(root), m_leafs_level(leafs_level), m_element(element)
         , m_parameters(parameters), m_translator(translator)
         , m_relative_level(relative_level), m_allocators(allocators)
     {}
 
-    inline void operator()(internal_node & BOOST_GEOMETRY_INDEX_ASSERT_UNUSED_PARAM(n))
+    inline void operator()(internal_node & n)
     {
+        boost::ignore_unused(n);
         BOOST_GEOMETRY_INDEX_ASSERT(&n == &rtree::get<internal_node>(*m_root), "current node should be the root");
 
         // Distinguish between situation when reinserts are required and use adequate visitor, otherwise use default one
@@ -490,8 +499,9 @@ public:
         }
     }
 
-    inline void operator()(leaf & BOOST_GEOMETRY_INDEX_ASSERT_UNUSED_PARAM(n))
+    inline void operator()(leaf & n)
     {
+        boost::ignore_unused(n);
         BOOST_GEOMETRY_INDEX_ASSERT(&n == &rtree::get<leaf>(*m_root), "current node should be the root");
 
         // Distinguish between situation when reinserts are required and use adequate visitor, otherwise use default one
@@ -551,13 +561,13 @@ private:
     }
 
     node_pointer & m_root;
-    size_t & m_leafs_level;
+    size_type & m_leafs_level;
     Element const& m_element;
 
     parameters_type const& m_parameters;
     Translator const& m_translator;
 
-    size_t m_relative_level;
+    size_type m_relative_level;
 
     Allocators & m_allocators;
 };

@@ -7,9 +7,9 @@
 //
 // See http://www.boost.org/libs/mpl for documentation.
 
-// $Id: quote.cpp 49268 2008-10-11 06:26:17Z agurtovoy $
-// $Date: 2008-10-10 23:26:17 -0700 (Fri, 10 Oct 2008) $
-// $Revision: 49268 $
+// $Id$
+// $Date$
+// $Revision$
 
 #include <boost/mpl/quote.hpp>
 #include <boost/type_traits/is_same.hpp>

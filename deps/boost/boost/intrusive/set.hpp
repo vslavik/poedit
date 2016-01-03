@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 //
 // (C) Copyright Olaf Krzikalla 2004-2006.
-// (C) Copyright Ion Gaztanaga  2006-2013
+// (C) Copyright Ion Gaztanaga  2006-2014
 //
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -15,10 +15,15 @@
 
 #include <boost/intrusive/detail/config_begin.hpp>
 #include <boost/intrusive/intrusive_fwd.hpp>
+
 #include <boost/intrusive/detail/mpl.hpp>
 #include <boost/intrusive/rbtree.hpp>
-#include <iterator>
-#include <boost/move/move.hpp>
+#include <boost/move/utility_core.hpp>
+#include <boost/static_assert.hpp>
+
+#if defined(BOOST_HAS_PRAGMA_ONCE)
+#  pragma once
+#endif
 
 namespace boost {
 namespace intrusive {
@@ -37,15 +42,15 @@ namespace intrusive {
 #if defined(BOOST_INTRUSIVE_DOXYGEN_INVOKED)
 template<class T, class ...Options>
 #else
-template<class ValueTraits, class Compare, class SizeType, bool ConstantTimeSize>
+template<class ValueTraits, class Compare, class SizeType, bool ConstantTimeSize, typename HeaderHolder>
 #endif
 class set_impl
 #ifndef BOOST_INTRUSIVE_DOXYGEN_INVOKED
-   : public bstree_impl<ValueTraits, Compare, SizeType, ConstantTimeSize, RbTreeAlgorithms>
+   : public bstree_impl<ValueTraits, Compare, SizeType, ConstantTimeSize, RbTreeAlgorithms, HeaderHolder>
 #endif
 {
    /// @cond
-   typedef bstree_impl<ValueTraits, Compare, SizeType, ConstantTimeSize, RbTreeAlgorithms> tree_type;
+   typedef bstree_impl<ValueTraits, Compare, SizeType, ConstantTimeSize, RbTreeAlgorithms, HeaderHolder> tree_type;
    BOOST_MOVABLE_BUT_NOT_COPYABLE(set_impl)
 
    typedef tree_type implementation_defined;
@@ -92,12 +97,12 @@ class set_impl
 
    //! @copydoc ::boost::intrusive::rbtree::rbtree(rbtree &&)
    set_impl(BOOST_RV_REF(set_impl) x)
-      :  tree_type(::boost::move(static_cast<tree_type&>(x)))
+      :  tree_type(BOOST_MOVE_BASE(tree_type, x))
    {}
 
    //! @copydoc ::boost::intrusive::rbtree::operator=(rbtree &&)
    set_impl& operator=(BOOST_RV_REF(set_impl) x)
-   {  return static_cast<set_impl&>(tree_type::operator=(::boost::move(static_cast<tree_type&>(x)))); }
+   {  return static_cast<set_impl&>(tree_type::operator=(BOOST_MOVE_BASE(tree_type, x))); }
 
    #ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
    //! @copydoc ::boost::intrusive::rbtree::~rbtree()
@@ -169,7 +174,7 @@ class set_impl
    //! @copydoc ::boost::intrusive::rbtree::clone_from
    template <class Cloner, class Disposer>
    void clone_from(const set_impl &src, Cloner cloner, Disposer disposer);
-   
+
    #endif   //#ifdef BOOST_iNTRUSIVE_DOXYGEN_INVOKED
 
    //! @copydoc ::boost::intrusive::rbtree::insert_unique(reference)
@@ -248,16 +253,22 @@ class set_impl
    template<class Disposer>
    void clear_and_dispose(Disposer disposer);
 
+   #endif   //   #ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
+
    //! @copydoc ::boost::intrusive::rbtree::count(const_reference)const
-   size_type count(const_reference value) const;
+   size_type count(const_reference value) const
+   {  return static_cast<size_type>(this->tree_type::find(value) != this->tree_type::cend()); }
 
    //! @copydoc ::boost::intrusive::rbtree::count(const KeyType&,KeyValueCompare)const
    template<class KeyType, class KeyValueCompare>
-   size_type count(const KeyType& key, KeyValueCompare comp) const;
-   
+   size_type count(const KeyType& key, KeyValueCompare comp) const
+   {  return static_cast<size_type>(this->tree_type::find(key, comp) != this->tree_type::cend()); }
+
+   #ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
+
    //! @copydoc ::boost::intrusive::rbtree::lower_bound(const_reference)
    iterator lower_bound(const_reference value);
-   
+
    //! @copydoc ::boost::intrusive::rbtree::lower_bound(const KeyType&,KeyValueCompare)
    template<class KeyType, class KeyValueCompare>
    iterator lower_bound(const KeyType& key, KeyValueCompare comp);
@@ -297,21 +308,29 @@ class set_impl
    template<class KeyType, class KeyValueCompare>
    const_iterator find(const KeyType& key, KeyValueCompare comp) const;
 
+   #endif   //   #ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
+
    //! @copydoc ::boost::intrusive::rbtree::equal_range(const_reference)
-   std::pair<iterator,iterator> equal_range(const_reference value);
+   std::pair<iterator,iterator> equal_range(const_reference value)
+   {  return this->tree_type::lower_bound_range(value); }
 
    //! @copydoc ::boost::intrusive::rbtree::equal_range(const KeyType&,KeyValueCompare)
    template<class KeyType, class KeyValueCompare>
-   std::pair<iterator,iterator> equal_range(const KeyType& key, KeyValueCompare comp);
+   std::pair<iterator,iterator> equal_range(const KeyType& key, KeyValueCompare comp)
+   {  return this->tree_type::lower_bound_range(key, comp); }
 
    //! @copydoc ::boost::intrusive::rbtree::equal_range(const_reference)const
    std::pair<const_iterator, const_iterator>
-      equal_range(const_reference value) const;
+      equal_range(const_reference value) const
+   {  return this->tree_type::lower_bound_range(value); }
 
    //! @copydoc ::boost::intrusive::rbtree::equal_range(const KeyType&,KeyValueCompare)const
    template<class KeyType, class KeyValueCompare>
    std::pair<const_iterator, const_iterator>
-      equal_range(const KeyType& key, KeyValueCompare comp) const;
+      equal_range(const KeyType& key, KeyValueCompare comp) const
+   {  return this->tree_type::lower_bound_range(key, comp); }
+
+   #ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
 
    //! @copydoc ::boost::intrusive::rbtree::bounded_range(const_reference,const_reference,bool,bool)
    std::pair<iterator,iterator> bounded_range
@@ -382,7 +401,8 @@ void swap(set_impl<T, Options...> &x, set_impl<T, Options...> &y);
 template<class T, class ...Options>
 #else
 template<class T, class O1 = void, class O2 = void
-                , class O3 = void, class O4 = void>
+                , class O3 = void, class O4 = void
+                , class O5 = void>
 #endif
 struct make_set
 {
@@ -390,7 +410,7 @@ struct make_set
    typedef typename pack_options
       < rbtree_defaults,
       #if !defined(BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-      O1, O2, O3, O4
+      O1, O2, O3, O4, O5
       #else
       Options...
       #endif
@@ -404,6 +424,7 @@ struct make_set
          , typename packed_options::compare
          , typename packed_options::size_type
          , packed_options::constant_time_size
+         , typename packed_options::header_holder_type
          > implementation_defined;
    /// @endcond
    typedef implementation_defined type;
@@ -411,14 +432,14 @@ struct make_set
 
 #ifndef BOOST_INTRUSIVE_DOXYGEN_INVOKED
 #if !defined(BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-template<class T, class O1, class O2, class O3, class O4>
+template<class T, class O1, class O2, class O3, class O4, class O5>
 #else
 template<class T, class ...Options>
 #endif
 class set
    :  public make_set<T,
    #if !defined(BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-   O1, O2, O3, O4
+   O1, O2, O3, O4, O5
    #else
    Options...
    #endif
@@ -427,7 +448,7 @@ class set
    typedef typename make_set
       <T,
       #if !defined(BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-      O1, O2, O3, O4
+      O1, O2, O3, O4, O5
       #else
       Options...
       #endif
@@ -456,11 +477,11 @@ class set
    {}
 
    set(BOOST_RV_REF(set) x)
-      :  Base(::boost::move(static_cast<Base&>(x)))
+      :  Base(BOOST_MOVE_BASE(Base, x))
    {}
 
    set& operator=(BOOST_RV_REF(set) x)
-   {  return static_cast<set &>(this->Base::operator=(::boost::move(static_cast<Base&>(x))));  }
+   {  return static_cast<set &>(this->Base::operator=(BOOST_MOVE_BASE(Base, x)));  }
 
    static set &container_from_end_iterator(iterator end_iterator)
    {  return static_cast<set &>(Base::container_from_end_iterator(end_iterator));   }
@@ -491,15 +512,15 @@ class set
 #if defined(BOOST_INTRUSIVE_DOXYGEN_INVOKED)
 template<class T, class ...Options>
 #else
-template<class ValueTraits, class Compare, class SizeType, bool ConstantTimeSize>
+template<class ValueTraits, class Compare, class SizeType, bool ConstantTimeSize, typename HeaderHolder>
 #endif
 class multiset_impl
 #ifndef BOOST_INTRUSIVE_DOXYGEN_INVOKED
-   : public bstree_impl<ValueTraits, Compare, SizeType, ConstantTimeSize, RbTreeAlgorithms>
+   : public bstree_impl<ValueTraits, Compare, SizeType, ConstantTimeSize, RbTreeAlgorithms, HeaderHolder>
 #endif
 {
    /// @cond
-   typedef bstree_impl<ValueTraits, Compare, SizeType, ConstantTimeSize, RbTreeAlgorithms> tree_type;
+   typedef bstree_impl<ValueTraits, Compare, SizeType, ConstantTimeSize, RbTreeAlgorithms, HeaderHolder> tree_type;
 
    BOOST_MOVABLE_BUT_NOT_COPYABLE(multiset_impl)
    typedef tree_type implementation_defined;
@@ -546,12 +567,12 @@ class multiset_impl
 
    //! @copydoc ::boost::intrusive::rbtree::rbtree(rbtree &&)
    multiset_impl(BOOST_RV_REF(multiset_impl) x)
-      :  tree_type(::boost::move(static_cast<tree_type&>(x)))
+      :  tree_type(BOOST_MOVE_BASE(tree_type, x))
    {}
 
    //! @copydoc ::boost::intrusive::rbtree::operator=(rbtree &&)
    multiset_impl& operator=(BOOST_RV_REF(multiset_impl) x)
-   {  return static_cast<multiset_impl&>(tree_type::operator=(::boost::move(static_cast<tree_type&>(x)))); }
+   {  return static_cast<multiset_impl&>(tree_type::operator=(BOOST_MOVE_BASE(tree_type, x))); }
 
    #ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
    //! @copydoc ::boost::intrusive::rbtree::~rbtree()
@@ -691,10 +712,10 @@ class multiset_impl
    //! @copydoc ::boost::intrusive::rbtree::count(const KeyType&,KeyValueCompare)const
    template<class KeyType, class KeyValueCompare>
    size_type count(const KeyType& key, KeyValueCompare comp) const;
-   
+
    //! @copydoc ::boost::intrusive::rbtree::lower_bound(const_reference)
    iterator lower_bound(const_reference value);
-   
+
    //! @copydoc ::boost::intrusive::rbtree::lower_bound(const KeyType&,KeyValueCompare)
    template<class KeyType, class KeyValueCompare>
    iterator lower_bound(const KeyType& key, KeyValueCompare comp);
@@ -819,7 +840,8 @@ void swap(multiset_impl<T, Options...> &x, multiset_impl<T, Options...> &y);
 template<class T, class ...Options>
 #else
 template<class T, class O1 = void, class O2 = void
-                , class O3 = void, class O4 = void>
+                , class O3 = void, class O4 = void
+                , class O5 = void>
 #endif
 struct make_multiset
 {
@@ -827,7 +849,7 @@ struct make_multiset
    typedef typename pack_options
       < rbtree_defaults,
       #if !defined(BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-      O1, O2, O3, O4
+      O1, O2, O3, O4, O5
       #else
       Options...
       #endif
@@ -841,6 +863,7 @@ struct make_multiset
          , typename packed_options::compare
          , typename packed_options::size_type
          , packed_options::constant_time_size
+         , typename packed_options::header_holder_type
          > implementation_defined;
    /// @endcond
    typedef implementation_defined type;
@@ -849,14 +872,14 @@ struct make_multiset
 #ifndef BOOST_INTRUSIVE_DOXYGEN_INVOKED
 
 #if !defined(BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-template<class T, class O1, class O2, class O3, class O4>
+template<class T, class O1, class O2, class O3, class O4, class O5>
 #else
 template<class T, class ...Options>
 #endif
 class multiset
    :  public make_multiset<T,
       #if !defined(BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-      O1, O2, O3, O4
+      O1, O2, O3, O4, O5
       #else
       Options...
       #endif
@@ -864,7 +887,7 @@ class multiset
 {
    typedef typename make_multiset<T,
       #if !defined(BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-      O1, O2, O3, O4
+      O1, O2, O3, O4, O5
       #else
       Options...
       #endif
@@ -894,11 +917,11 @@ class multiset
    {}
 
    multiset(BOOST_RV_REF(multiset) x)
-      :  Base(::boost::move(static_cast<Base&>(x)))
+      :  Base(BOOST_MOVE_BASE(Base, x))
    {}
 
    multiset& operator=(BOOST_RV_REF(multiset) x)
-   {  return static_cast<multiset &>(this->Base::operator=(::boost::move(static_cast<Base&>(x))));  }
+   {  return static_cast<multiset &>(this->Base::operator=(BOOST_MOVE_BASE(Base, x)));  }
 
    static multiset &container_from_end_iterator(iterator end_iterator)
    {  return static_cast<multiset &>(Base::container_from_end_iterator(end_iterator));   }

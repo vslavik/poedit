@@ -12,7 +12,7 @@
 //[doc_set_code
 #include <boost/intrusive/set.hpp>
 #include <vector>
-#include <algorithm>
+#include <functional>
 #include <cassert>
 
 using namespace boost::intrusive;

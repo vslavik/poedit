@@ -24,19 +24,19 @@ int main()
 
     typedef boost::geometry::ring_type<polygon>::type ring_type;
     typedef boost::geometry::interior_type<polygon>::type int_type;
-    
+
     std::cout << typeid(ring_type).name() << std::endl;
     std::cout << typeid(int_type).name() << std::endl;
-    
-    // So int_type defines a collection of rings, 
+
+    // So int_type defines a collection of rings,
     // which is a Boost.Range compatible range
     // The type of an element of the collection is the very same ring type again.
     // We show that.
     typedef boost::range_value<int_type>::type int_ring_type;
-    
-    std::cout 
+
+    std::cout
         << std::boolalpha
-        << boost::is_same<ring_type, int_ring_type>::value 
+        << boost::is_same<ring_type, int_ring_type>::value
         << std::endl;
 
     return 0;

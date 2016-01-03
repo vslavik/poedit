@@ -1,25 +1,20 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of Glade support.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-gl-1-empty.glade"
 cat <<EOF > xg-gl-1-empty.glade
 <?xml version="1.0"?>
 <GTK-Interface/>
 EOF
 
-tmpfiles="$tmpfiles xg-gl-1.pot"
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} -o xg-gl-1.pot xg-gl-1-empty.glade 2>/dev/null
 test $? = 0 || {
   echo "Skipping test: xgettext was built without Glade support"
-  rm -fr $tmpfiles; exit 77
+  exit 77
 }
 
-tmpfiles="$tmpfiles xg-gl-1-widgets.glade"
 cat <<EOF > xg-gl-1-widgets.glade
 <?xml version="1.0"?>
 <GTK-Interface>
@@ -1334,12 +1329,9 @@ for said code in libglade.</text>
 </GTK-Interface>
 EOF
 
-tmpfiles="$tmpfiles xg-gl-1.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --add-comments -o - xg-gl-1-widgets.glade | grep -v 'POT-Creation-Date' > xg-gl-1.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} --add-comments -o - xg-gl-1-widgets.glade | grep -v 'POT-Creation-Date' > xg-gl-1.pot || exit 1
 
-tmpfiles="$tmpfiles xg-gl-1.ok"
 cat <<EOF > xg-gl-1.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -1568,7 +1560,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-gl-1.ok xg-gl-1.pot
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

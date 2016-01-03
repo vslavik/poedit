@@ -2,9 +2,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Calling User Defined Error Handlers</title>
-<link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Math Toolkit">
+<link rel="stylesheet" href="../../math.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
 <link rel="up" href="../pol_tutorial.html" title="Policy Tutorial">
 <link rel="prev" href="namespace_policies.html" title="Setting Policies at Namespace or Translation Unit Scope">
 <link rel="next" href="understand_dis_quant.html" title="Understanding Quantiles of Discrete Distributions">
@@ -88,7 +88,7 @@
         Now we'll need to define a suitable policy that will call these handlers,
         and define some forwarding functions that make use of the policy:
       </p>
-<pre class="programlisting"><span class="keyword">namespace</span><span class="special">{</span>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">mymath</span><span class="special">{</span>
 
 <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">;</span>
 
@@ -102,8 +102,8 @@
 <span class="special">}</span> <span class="comment">// close unnamed namespace</span>
 </pre>
 <p>
-        We now have a set of forwarding functions defined in an unnamed namespace
-        that all look something like this:
+        We now have a set of forwarding functions defined in namespace mymath that
+        all look something like this:
       </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span><span class="special">&gt;</span>
 <span class="keyword">inline</span> <span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">tools</span><span class="special">::</span><span class="identifier">promote_args</span><span class="special">&lt;</span><span class="identifier">RT</span><span class="special">&gt;::</span><span class="identifier">type</span>
@@ -113,7 +113,7 @@
 <span class="special">}</span>
 </pre>
 <p>
-        So that when we call <code class="computeroutput"><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">z</span><span class="special">)</span></code>
+        So that when we call <code class="computeroutput"><span class="identifier">mymath</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">z</span><span class="special">)</span></code>
         we really end up calling <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">z</span><span class="special">,</span>
         <span class="identifier">user_error_policy</span><span class="special">())</span></code>,
         and any errors will get directed to our own error handlers.
@@ -121,9 +121,9 @@
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
    <span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Result of erf_inv(-10) is: "</span>
-      <span class="special">&lt;&lt;</span> <span class="identifier">erf_inv</span><span class="special">(-</span><span class="number">10</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
+      <span class="special">&lt;&lt;</span> <span class="identifier">mymath</span><span class="special">::</span><span class="identifier">erf_inv</span><span class="special">(-</span><span class="number">10</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
    <span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Result of tgamma(-10) is: "</span>
-      <span class="special">&lt;&lt;</span> <span class="identifier">tgamma</span><span class="special">(-</span><span class="number">10</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
+      <span class="special">&lt;&lt;</span> <span class="identifier">mymath</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(-</span><span class="number">10</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
 <p>
@@ -348,7 +348,7 @@
         Now we'll need to define a suitable policy that will call these handlers,
         and define some forwarding functions that make use of the policy:
       </p>
-<pre class="programlisting"><span class="keyword">namespace</span>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">mymath</span>
 <span class="special">{</span> <span class="comment">// unnamed.</span>
 
 <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">;</span>
@@ -367,8 +367,8 @@
 <span class="special">}</span> <span class="comment">// unnamed namespace</span>
 </pre>
 <p>
-        We now have a set of forwarding functions, defined in an unnamed namespace,
-        that all look something like this:
+        We now have a set of forwarding functions, defined in namespace mymath, that
+        all look something like this:
       </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span><span class="special">&gt;</span>
 <span class="keyword">inline</span> <span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">tools</span><span class="special">::</span><span class="identifier">promote_args</span><span class="special">&lt;</span><span class="identifier">RT</span><span class="special">&gt;::</span><span class="identifier">type</span>
@@ -378,7 +378,7 @@
 <span class="special">}</span>
 </pre>
 <p>
-        So that when we call <code class="computeroutput"><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">z</span><span class="special">)</span></code>
+        So that when we call <code class="computeroutput"><span class="identifier">mymath</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">z</span><span class="special">)</span></code>
         we really end up calling <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">z</span><span class="special">,</span>
         <span class="identifier">user_error_policy</span><span class="special">())</span></code>,
         and any errors will get directed to our own error handlers:
@@ -387,16 +387,16 @@
 <span class="special">{</span>
    <span class="comment">// Raise a domain error:</span>
    <span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Result of erf_inv(-10) is: "</span>
-      <span class="special">&lt;&lt;</span> <span class="identifier">erf_inv</span><span class="special">(-</span><span class="number">10</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
+      <span class="special">&lt;&lt;</span> <span class="identifier">mymath</span><span class="special">::</span><span class="identifier">erf_inv</span><span class="special">(-</span><span class="number">10</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
    <span class="comment">// Raise a pole error:</span>
    <span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Result of tgamma(-10) is: "</span>
-      <span class="special">&lt;&lt;</span> <span class="identifier">tgamma</span><span class="special">(-</span><span class="number">10</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
+      <span class="special">&lt;&lt;</span> <span class="identifier">mymath</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(-</span><span class="number">10</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
    <span class="comment">// Raise an overflow error:</span>
    <span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Result of tgamma(3000) is: "</span>
-      <span class="special">&lt;&lt;</span> <span class="identifier">tgamma</span><span class="special">(</span><span class="number">3000</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
+      <span class="special">&lt;&lt;</span> <span class="identifier">mymath</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(</span><span class="number">3000</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
    <span class="comment">// Raise an underflow error:</span>
    <span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Result of tgamma(-190.5) is: "</span>
-      <span class="special">&lt;&lt;</span> <span class="identifier">tgamma</span><span class="special">(-</span><span class="number">190.5</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
+      <span class="special">&lt;&lt;</span> <span class="identifier">mymath</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(-</span><span class="number">190.5</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
    <span class="comment">// Unfortunately we can't predicably raise a denormalised</span>
    <span class="comment">// result, nor can we raise an evaluation error in this example</span>
    <span class="comment">// since these should never really occur!</span>
@@ -437,9 +437,10 @@ Result of tgamma(-190.5) is: 0
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012, 2013 Paul A. Bristow, Christopher Kormanyos,
-      Hubert Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin
-      Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
+      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
+      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
+      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

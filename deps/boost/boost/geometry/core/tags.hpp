@@ -4,6 +4,11 @@
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
+// This file was modified by Oracle on 2014.
+// Modifications copyright (c) 2014 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
 
@@ -37,6 +42,14 @@ struct spherical_equatorial_tag : spherical_tag {};
 struct geographic_tag : spherical_tag {};
 
 
+// Tags defining coordinate systems reference models
+
+/// For reference spheroid defining parameters of geographical coordinate system
+struct srs_spheroid_tag {};
+
+/// For reference sphere defining parameters of spherical coordinate system
+struct srs_sphere_tag : srs_spheroid_tag {};
+
 
 // Tags defining tag hierarchy
 
@@ -57,7 +70,7 @@ struct linear_tag {};
 struct areal_tag {};
 
 // Subset of areal types (polygon, multi_polygon, ring)
-struct polygonal_tag : areal_tag {}; 
+struct polygonal_tag : areal_tag {};
 
 /// For volume types (also box (?), polyhedron)
 struct volumetric_tag {};
@@ -87,6 +100,49 @@ struct box_tag : single_tag, areal_tag {};
 /// Convenience segment (2-points) identifying tag
 struct segment_tag : single_tag, linear_tag {};
 
+
+/// OGC Multi point identifying tag
+struct multi_point_tag : multi_tag, pointlike_tag  {};
+
+/// OGC Multi linestring identifying tag
+struct multi_linestring_tag : multi_tag, linear_tag {};
+
+/// OGC Multi polygon identifying tag
+struct multi_polygon_tag : multi_tag, polygonal_tag {};
+
+/// OGC Geometry Collection identifying tag
+struct geometry_collection_tag : multi_tag {};
+
+
+/*!
+\brief Meta-function to get for a tag of a multi-geometry
+    the tag of the corresponding single-geometry
+*/
+template <typename Tag>
+struct single_tag_of
+{};
+
+#ifndef DOXYGEN_NO_DETAIL
+
+template <>
+struct single_tag_of<multi_point_tag>
+{
+    typedef point_tag type;
+};
+
+template <>
+struct single_tag_of<multi_linestring_tag>
+{
+    typedef linestring_tag type;
+};
+
+template <>
+struct single_tag_of<multi_polygon_tag>
+{
+    typedef polygon_tag type;
+};
+
+#endif
 
 
 }} // namespace boost::geometry

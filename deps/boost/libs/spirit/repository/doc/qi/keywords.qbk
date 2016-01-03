@@ -11,9 +11,9 @@
 
 [heading Description]
 
-The keyword list operator, `kwd("k1")[a] / kwd("k2")[b]`,  works tightly with the kwd, ikwd directives
-to effeciently match keyword lists. As long as one of the keywords specified through the kwd or ikwd directive 
-matches, the keyword will be immediatly followed by the the keyword's associated subject parser. 
+The keyword list operator, `kwd("k1")[a] / kwd("k2")[b]`,  works tightly with the kwd, ikwd, dkwd and idkwd directives
+to effeciently match keyword lists. As long as one of the keywords specified through the kwd, ikwd, dkwd or idkwd directive 
+matches, the keyword will be immediatly followed by the keyword's associated subject parser. 
 The parser will continue parsing input as long as the one of the keywords and it's associated parser succeed.
 Writing :
 (kwd("k1")[a] / kwd("k2")[b] / ... ) 
@@ -47,31 +47,27 @@ a: Unused, b: Unused --> (kwd(k1)[a] / kwd(k2)[b]): Unused
 a: A, b: A -->(kwd(k1)[a] / kwd(k2)[b]): tuple<A, A>``]]
 ]
 
-[note The keyword list parser works tightly with the kwd and ikwd directives
+[note The keyword list parser works tightly with the kwd, ikwd, dkwd and idkwd directives
       and can't be used without it. A compile time error will warn you
       of any mistakes. This parser collects all the kwd directives and 
-      extracts the keyword literals from the directives to internaly
-      build a Ternary Search Tree (TST) to effectively parse the keywords.
-      Because you we can't mix character types inside a TST you must take
-      care not to mix wide strings with normal strings in the keyword you supply
+      extracts the keyword literals or parsers from the directives to internaly
+      build a Ternary Search Tree (TST) and permutation loop (for complex parsers) 
+      to effectively parse the keywords.
+      Because you can't mix character types inside a TST you must take
+      care not to mix wide strings with normal strings in the keywords you supply
       to a keyword list. Should it happen the compiler will trap the mistake for you.]
 
 [note The kwd directive also works a bit like the repeat directive 
       and can be used to formulate additional contraints on the number of
-      times a keyword can occur while parsing a keyword list.]
+      times a keyword can or must occur while parsing a keyword list.]
       
-[note The kwd and ikwd directives can be mixed inside a keyword list. This has
+[note The kwd, dkwd and ikwd, idkwd directives can be mixed inside a keyword list. This has
       however a small overhead and should be avoided when possible.]
 
 [heading Complexity]
 
 [:The overall complexity of the keyword list parser is defined by the
-sum of the complexities of its elements. The complexity of the
-keyword list itself is determined by the complexity of the internal TST contents :
-
-O(log n+k)
-
-Where k is the length of the string to be searched in a TST with n strings.]
+sum of the complexities of its elements.]
 
 [heading Example]
 

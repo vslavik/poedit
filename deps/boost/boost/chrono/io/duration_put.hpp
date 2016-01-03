@@ -13,6 +13,7 @@
 
 #include <boost/chrono/config.hpp>
 #include <boost/chrono/io/duration_units.hpp>
+#include <boost/chrono/process_cpu_clocks.hpp>
 #include <boost/assert.hpp>
 #include <locale>
 
@@ -21,6 +22,17 @@ namespace boost
   namespace chrono
   {
 
+    namespace detail
+    {
+      template <class T>
+      struct propagate {
+        typedef T type;
+      };
+      template <>
+      struct propagate<boost::int_least32_t> {
+        typedef boost::int_least64_t type;
+      };
+    }
     /**
      * @tparam ChatT a character type
      * @tparam OutputIterator a model of @c OutputIterator
@@ -90,24 +102,24 @@ namespace boost
        */
       template <typename Rep, typename Period>
       iter_type put(iter_type s, std::ios_base& ios, char_type fill, duration<Rep, Period> const& d, const CharT* pattern,
-          const CharT* pat_end) const
+          const CharT* pat_end, const char_type* val = 0) const
       {
         if (std::has_facet<duration_units<CharT> >(ios.getloc()))
         {
           duration_units<CharT> const&facet = std::use_facet<duration_units<CharT> >(
               ios.getloc());
-          return put(facet, s, ios, fill, d, pattern, pat_end);
+          return put(facet, s, ios, fill, d, pattern, pat_end, val);
         }
         else
         {
           duration_units_default<CharT> facet;
-          return put(facet, s, ios, fill, d, pattern, pat_end);
+          return put(facet, s, ios, fill, d, pattern, pat_end, val);
         }
       }
 
       template <typename Rep, typename Period>
       iter_type put(duration_units<CharT> const& units_facet, iter_type s, std::ios_base& ios, char_type fill,
-          duration<Rep, Period> const& d, const CharT* pattern, const CharT* pat_end) const
+          duration<Rep, Period> const& d, const CharT* pattern, const CharT* pat_end, const char_type* val = 0) const
       {
 
         const std::ctype<char_type>& ct = std::use_facet<std::ctype<char_type> >(ios.getloc());
@@ -125,7 +137,7 @@ namespace boost
             {
             case 'v':
             {
-              s = put_value(s, ios, fill, d);
+              s = put_value(s, ios, fill, d, val);
               break;
             }
             case 'u':
@@ -158,20 +170,21 @@ namespace boost
        * @Returns An iterator pointing immediately after the last character produced.
        */
       template <typename Rep, typename Period>
-      iter_type put(iter_type s, std::ios_base& ios, char_type fill, duration<Rep, Period> const& d) const
+      iter_type put(iter_type s, std::ios_base& ios, char_type fill, duration<Rep, Period> const& d, const char_type* val = 0) const
       {
         if (std::has_facet<duration_units<CharT> >(ios.getloc()))
         {
           duration_units<CharT> const&facet = std::use_facet<duration_units<CharT> >(
               ios.getloc());
           std::basic_string<CharT> str = facet.get_pattern();
-          return put(facet, s, ios, fill, d, str.data(), str.data() + str.size());
+          return put(facet, s, ios, fill, d, str.data(), str.data() + str.size(), val);
         }
         else
         {
           duration_units_default<CharT> facet;
           std::basic_string<CharT> str = facet.get_pattern();
-          return put(facet, s, ios, fill, d, str.data(), str.data() + str.size());
+
+          return put(facet, s, ios, fill, d, str.data(), str.data() + str.size(), val);
         }
       }
 
@@ -185,10 +198,31 @@ namespace boost
        * @Returns s, iterator pointing immediately after the last character produced.
        */
       template <typename Rep, typename Period>
-      iter_type put_value(iter_type s, std::ios_base& ios, char_type fill, duration<Rep, Period> const& d) const
+      iter_type put_value(iter_type s, std::ios_base& ios, char_type fill, duration<Rep, Period> const& d, const char_type* val = 0) const
       {
+        if (val)
+        {
+          while (*val) {
+            *s = *val;
+            s++; val++;
+          }
+          return s;
+        }
         return std::use_facet<std::num_put<CharT, iter_type> >(ios.getloc()).put(s, ios, fill,
-            static_cast<long int> (d.count()));
+            static_cast<typename detail::propagate<Rep>::type> (d.count()));
+      }
+
+      template <typename Rep, typename Period>
+      iter_type put_value(iter_type s, std::ios_base& ios, char_type fill, duration<process_times<Rep>, Period> const& d, const char_type* = 0) const
+      {
+        *s++ = CharT('{');
+        s = put_value(s, ios, fill, process_real_cpu_clock::duration(d.count().real));
+        *s++ = CharT(';');
+        s = put_value(s, ios, fill, process_user_cpu_clock::duration(d.count().user));
+        *s++ = CharT(';');
+        s = put_value(s, ios, fill, process_system_cpu_clock::duration(d.count().system));
+        *s++ = CharT('}');
+        return s;
       }
 
       /**
@@ -236,6 +270,25 @@ namespace boost
           std::use_facet<std::num_put<CharT, iter_type> >(ios.getloc()).put(s, ios, fill, Period::den);
           *s++ = CharT(']');
           string_type str = facet.get_n_d_unit(get_duration_style(ios), d);
+          s=std::copy(str.begin(), str.end(), s);
+        }
+        return s;
+      }
+      template <typename Rep, typename Period>
+      iter_type put_unit(duration_units<CharT> const& facet, iter_type s, std::ios_base& ios, char_type fill,
+          duration<process_times<Rep>, Period> const& d) const
+      {
+        duration<Rep,Period> real(d.count().real);
+        if (facet.template is_named_unit<Period>()) {
+          string_type str = facet.get_unit(get_duration_style(ios), real);
+          s=std::copy(str.begin(), str.end(), s);
+        } else {
+          *s++ = CharT('[');
+          std::use_facet<std::num_put<CharT, iter_type> >(ios.getloc()).put(s, ios, fill, Period::num);
+          *s++ = CharT('/');
+          std::use_facet<std::num_put<CharT, iter_type> >(ios.getloc()).put(s, ios, fill, Period::den);
+          *s++ = CharT(']');
+          string_type str = facet.get_n_d_unit(get_duration_style(ios), real);
           s=std::copy(str.begin(), str.end(), s);
         }
         return s;

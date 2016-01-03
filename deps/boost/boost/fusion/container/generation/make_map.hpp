@@ -7,6 +7,7 @@
 #if !defined(FUSION_MAKE_MAP_07222005_1247)
 #define FUSION_MAKE_MAP_07222005_1247
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/container/map/map.hpp>
 
 #if !defined(BOOST_FUSION_HAS_VARIADIC_MAP)
@@ -35,11 +36,12 @@ namespace boost { namespace fusion
                       , typename detail::as_fusion_element<T>::type
                     >...>
                 type;
-        };
+            };
         };
     }
 
     template <typename ...Key, typename ...T>
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
     inline map<
         fusion::pair<
             Key
@@ -56,7 +58,7 @@ namespace boost { namespace fusion
 
         return result_type(arg...);
     }
-}}
+ }}
 
 #endif
 #endif

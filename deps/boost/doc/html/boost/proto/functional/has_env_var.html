@@ -43,16 +43,16 @@
     <span class="keyword">typedef</span> <em class="replaceable"><code><span class="identifier">see</span><span class="special">-</span><span class="identifier">below</span></code></em> <a class="link" href="has_env_var/result.html#boost.proto.functional.has_env_var.result.type"><span class="identifier">type</span></a><span class="special">;</span>
   <span class="special">}</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="has_env_var.html#idp68895720-bb">public member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Env<span class="special">&gt;</span> <em class="replaceable"><code><span class="identifier">see</span><span class="special">-</span><span class="identifier">below</span></code></em> <a class="link" href="has_env_var.html#idp68896008-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Env</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="has_env_var.html#idp202581696-bb">public member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Env<span class="special">&gt;</span> <em class="replaceable"><code><span class="identifier">see</span><span class="special">-</span><span class="identifier">below</span></code></em> <a class="link" href="has_env_var.html#idp202582256-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Env</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp189698120"></a><h2>Description</h2>
+<a name="idp381732400"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp189698328"></a><h3>
-<a name="idp68895720-bb"></a><code class="computeroutput">has_env_var</code> public member functions</h3>
+<a name="idp381732816"></a><h3>
+<a name="idp202581696-bb"></a><code class="computeroutput">has_env_var</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Env<span class="special">&gt;</span> <em class="replaceable"><code><span class="identifier">see</span><span class="special">-</span><span class="identifier">below</span></code></em> <a name="idp68896008-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Env</span> <span class="keyword">const</span> <span class="special">&amp;</span> e<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Env<span class="special">&gt;</span> <em class="replaceable"><code><span class="identifier">see</span><span class="special">-</span><span class="identifier">below</span></code></em> <a name="idp202582256-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Env</span> <span class="keyword">const</span> <span class="special">&amp;</span> e<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>
                   This function behaves as follows:
                   </p>
@@ -63,7 +63,7 @@
 <li class="listitem">
                           If <code class="computeroutput">e[Key()]</code> returns an instance of
                           <code class="computeroutput"><a class="link" href="../key_not_found.html" title="Struct key_not_found">proto::key_not_found</a></code>, return
-                          <code class="computeroutput">mpl::false_</code>. See <code class="computeroutput"><a class="link" href="../env.html#idp68797544-bb">proto::env::operator[]</a></code>
+                          <code class="computeroutput">mpl::false_</code>. See <code class="computeroutput"><a class="link" href="../env.html#idp202505184-bb">proto::env::operator[]</a></code>
                           for more information.
                         </li>
 <li class="listitem">

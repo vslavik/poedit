@@ -30,13 +30,20 @@ __rtree__ has 5 parameters but only 2 are required:
 
 __rtree__ may store `__value__`s of any type as long as passed function objects know how to interpret those `__value__`s, that is
 extract an `__indexable__` that the __rtree__ can handle and compare `__value__`s.
+The `__indexable__` is a type adapted to Point, Box or Segment concept.
+The examples of rtrees storing `__value__`s translatable to various `__indexable__`s are presented below.
+
+[table
+[[rtree<Point, ...>] [rtree<Box, ...>] [rtree<Segment, ...>]]
+[[[$img/index/rtree/rtree_pt.png]] [[$img/index/rtree/rstar.png]] [[$img/index/rtree/rtree_seg.png]]]
+]
 
 By default function objects `index::indexable<Value>` and `index::equal_to<Value>` are defined for some typically used `__value__`
 types which may be stored without defining any additional classes. By default the rtree may store pure `__indexable__`s, pairs
 and tuples. In the case of those two collection types, the `__indexable__` must be the first stored type.
 
-* `__indexable__ = __point__ | __box__`
-* `__value__ = Indexable | std::pair<__indexable__, T> | tuple<__indexable__, ...>`
+* `__indexable__ = __point__ | __box__ | Segment`
+* `__value__ = Indexable | std::pair<__indexable__, T> | boost::tuple<__indexable__, ...> [ | std::tuple<__indexable__, ...> ]`
 
 By default `boost::tuple<...>` is supported on all compilers. If the compiler supports C++11 tuples and variadic templates
 then `std::tuple<...>` may be used "out of the box" as well.
@@ -46,6 +53,7 @@ Examples of default `__value__` types:
  geometry::model::point<...>
  geometry::model::point_xy<...>
  geometry::model::box<...>
+ geometry::model::segment<...>
  std::pair<geometry::model::box<...>, unsigned>
  boost::tuple<geometry::model::point<...>, int, float>
 
@@ -55,7 +63,7 @@ The predefined `index::indexable<Value>` returns const reference to the `__index
 
 The predefined `index::equal_to<Value>`:
 
-* for `__point__` and `__box__` - compares `__value__`s with geometry::equals().
+* for `__point__`, `__box__` and `Segment` - compares `__value__`s with geometry::equals().
 * for `std::pair<...>` - compares both components of the `__value__`. The first value stored in the pair is compared before the second one.
   If the value stored in the pair is a Geometry, `geometry::equals()` is used. For other types it uses `operator==()`.
 * for `tuple<...>` - compares all components of the `__value__`. If the component is a `Geometry`, `geometry::equals()`
@@ -156,7 +164,7 @@ stored in another container.
 [h4 Additional interface]
 
 The __rtree__ allows creation, inserting and removing of Values from a range. The range may be passed as
-[first, last) Iterators pair or as a Range.
+`[first, last)` Iterators pair or as a Range adapted to one of the Boost.Range Concepts.
 
  namespace bgi = boost::geometry::index;
  typedef std::pair<Box, int> __value__;
@@ -176,13 +184,13 @@ The __rtree__ allows creation, inserting and removing of Values from a range. Th
 
  // create R-tree with default constructor and insert values with insert(Range)
  RTree rt3;
- rt3.insert(values);
+ rt3.insert(values_range);
 
  // create R-tree with constructor taking Iterators
  RTree rt4(values.begin(), values.end());
 
  // create R-tree with constructor taking Range
- RTree rt5(values);
+ RTree rt5(values_range);
 
  // remove values with remove(Value const&)
  BOOST_FOREACH(__value__ const& v, values)
@@ -192,7 +200,13 @@ The __rtree__ allows creation, inserting and removing of Values from a range. Th
  rt2.remove(values.begin(), values.end());
 
  // remove values with remove(Range)
- rt3.remove(values);
+ rt3.remove(values_range);
+
+Furthermore, it's possible to pass a Range adapted by one of the Boost.Range adaptors into the rtree (more complete example can be found in the *Examples* section).
+
+ // create Rtree containing `std::pair<Box, int>` from a container of Boxes on the fly.
+ RTree rt6(boxes | boost::adaptors::indexed()
+                 | boost::adaptors::transformed(pair_maker()));
 
 [h4 Insert iterator]
 

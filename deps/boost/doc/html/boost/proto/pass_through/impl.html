@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../pass_through.html#idp191270584" title="Description">
+<link rel="up" href="../pass_through.html#idp384841088" title="Description">
 <link rel="prev" href="../pass_through.html" title="Struct template pass_through">
 <link rel="next" href="../transforms_type.html" title="Struct transforms_type">
 </head>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../pass_through.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../pass_through.html#idp191270584"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../transforms_type.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../pass_through.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../pass_through.html#idp384841088"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../transforms_type.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.proto.pass_through.impl"></a><div class="titlepage"></div>
@@ -49,18 +49,18 @@
   <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">if_</span><span class="special">&lt;</span><a class="link" href="../wants_basic_expr.html" title="Struct template wants_basic_expr">proto::wants_basic_expr</a><span class="special">&lt;</span><span class="identifier">G</span><span class="special">&gt;</span><span class="special">,</span> <span class="identifier">BE</span><span class="special">,</span> <span class="identifier">E</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <a name="boost.proto.pass_through.impl.expr_type"></a><span class="identifier">expr_type</span><span class="special">;</span>    <span class="comment">// For exposition only</span>
   <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">&lt;</span><span class="identifier">D</span><span class="special">(</span><span class="identifier">expr_type</span><span class="special">)</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span>              <a name="boost.proto.pass_through.impl.result_type"></a><span class="identifier">result_type</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="impl.html#idp69273256-bb">public member functions</a></span>
-  <span class="identifier">result_type</span> <a class="link" href="impl.html#idp69273544-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">impl</span><span class="special">::</span><span class="identifier">expr_param</span><span class="special">,</span> 
+  <span class="comment">// <a class="link" href="impl.html#idp203257552-bb">public member functions</a></span>
+  <span class="identifier">result_type</span> <a class="link" href="impl.html#idp203258112-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">impl</span><span class="special">::</span><span class="identifier">expr_param</span><span class="special">,</span> 
                          <span class="keyword">typename</span> <span class="identifier">impl</span><span class="special">::</span><span class="identifier">state_param</span><span class="special">,</span> 
                          <span class="keyword">typename</span> <span class="identifier">impl</span><span class="special">::</span><span class="identifier">data_param</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp191380904"></a><h2>Description</h2>
+<a name="idp385061312"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp191381112"></a><h3>
-<a name="idp69273256-bb"></a><code class="computeroutput">impl</code> public member functions</h3>
+<a name="idp385061728"></a><h3>
+<a name="idp203257552-bb"></a><code class="computeroutput">impl</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="identifier">result_type</span> <a name="idp69273544-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">impl</span><span class="special">::</span><span class="identifier">expr_param</span> expr<span class="special">,</span> 
+<pre class="literallayout"><span class="identifier">result_type</span> <a name="idp203258112-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">impl</span><span class="special">::</span><span class="identifier">expr_param</span> expr<span class="special">,</span> 
                        <span class="keyword">typename</span> <span class="identifier">impl</span><span class="special">::</span><span class="identifier">state_param</span> state<span class="special">,</span> 
                        <span class="keyword">typename</span> <span class="identifier">impl</span><span class="special">::</span><span class="identifier">data_param</span> data<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
@@ -83,9 +83,9 @@
 <p>
                   </p>
 <pre class="programlisting"><span class="identifier">D</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">expr_type</span><span class="special">::</span><span class="identifier">make</span><span class="special">(</span>
-  <span class="identifier">G0</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><a class="link" href="../child_c_idp68619976.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">state</span><span class="special">,</span> <span class="identifier">data</span><span class="special">)</span><span class="special">,</span>
+  <span class="identifier">G0</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><a class="link" href="../child_c_idp194879248.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">state</span><span class="special">,</span> <span class="identifier">data</span><span class="special">)</span><span class="special">,</span>
   <span class="special">...</span>
-  <span class="identifier">GN</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><a class="link" href="../child_c_idp68619976.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">state</span><span class="special">,</span> <span class="identifier">data</span><span class="special">)</span>
+  <span class="identifier">GN</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><a class="link" href="../child_c_idp194879248.html" title="Function child_c">proto::child_c</a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">expr</span><span class="special">)</span><span class="special">,</span> <span class="identifier">state</span><span class="special">,</span> <span class="identifier">data</span><span class="special">)</span>
 <span class="special">)</span><span class="special">)</span></pre>
 <p>
                 </p>
@@ -107,7 +107,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../pass_through.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../pass_through.html#idp191270584"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../transforms_type.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../pass_through.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../pass_through.html#idp384841088"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../transforms_type.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

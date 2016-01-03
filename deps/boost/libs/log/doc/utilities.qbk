@@ -1,5 +1,5 @@
 [/
-              Copyright Andrey Semashev 2007 - 2013.
+              Copyright Andrey Semashev 2007 - 2015.
      Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
               http://www.boost.org/LICENSE_1_0.txt)
@@ -427,13 +427,27 @@ Below are some examples of filters:
 [[`%Tag% contains "net" or %Tag% contains "io" and not %StatFlow%`] [The filter returns `true` if an attribute value with name "Tag" is found and contains words "net" or "io" and if an attribute value "StatFlow" is not found. The "Tag" attribute value must be of one of the [link log.detailed.utilities.predef_types string types], the "StatFlow" attribute value type is not considered.]]
 ]
 
-The formatter string syntax is even simpler and pretty much resembles __boost_format__ format string syntax. The string must contain attribute names enclosed in percent signs ("%"), the corresponding attribute value will replace these placeholders. The placeholder "%Message%" will be replaced with the log record text. For instance, `[%TimeStamp%] *%Severity%* %Message%` formatter string will make log records look like this: `[2008-07-05 13:44:23] *0* Hello world`.
+The formatter string syntax is even simpler and pretty much resembles __boost_format__ format string syntax. The string is interpreted as a template which can contain attribute names enclosed with percent signs ("%"). The corresponding attribute values will replace these placeholders when the formatter is applied. The placeholder "%Message%" will be replaced with the log record text. For instance, the following formatter string:
+
+[teletype]
+
+    [%TimeStamp%] *%Severity%* %Message%
+
+[c++]
+
+will make log records look like this:
+
+[teletype]
+
+    [2008-07-05 13:44:23] *0* Hello world
+
+[c++]
 
 [note Previous releases of the library also supported the "%\_%" placeholder for the message text. This placeholder is deprecated now, although it still works for backward compatibility. Its support will be removed in future releases.]
 
-It must be noted, though, that by default the library only supports those attribute value types [link log.detailed.utilities.predef_types which are known] at the library build time. User-defined types will not work properly in parsed filters and formatters until registered in the library. More on this is available in the [link log.extension.settings Extending the library] section.
+It must be noted that by default the library only supports those attribute value types [link log.detailed.utilities.predef_types which are known] at the library build time. User-defined types will not work properly in parsed filters and formatters until registered in the library. It is also possible to override formatting rules of the known types, including support for additional formatting parameters in the string template. More on this is available in the [link log.extension.settings Extending the library] section.
 
-[note The parsed formatters and filters are generally less optimal than the equivalent ones written in code. This is because of two reasons: (\*) the programmer usually knows more about types of the attribute values that may be involved in formatting or filtering and (\*) the compiler has a better chance to optimize the formatter or filter if it is known in compile time. Therefore, if the performance matters, it is advised to avoid parsed filters and formatters.]
+[note The parsed formatters and filters are generally less optimal than the equivalent ones written in code with [link log.detailed.expressions template expressions]. This is because of two reasons: (\*) the programmer usually knows more about types of the attribute values that may be involved in formatting or filtering and (\*) the compiler has a better chance to optimize the formatter or filter if it is known in compile time. Therefore, when performance matters, it is advised to avoid parsed filters and formatters.]
 
 [endsect]
 
@@ -463,7 +477,7 @@ So basically, settings container is a layered associative container, with string
 ]
 ]
 
-Sink settings are divided into separate subsections within the common top-level section "Sinks" - one subsection for each sink. The subsection names should denote a user-defined sink name. For example, "MyFile".
+Sink settings are divided into separate subsections within the common top-level section "Sinks" - one subsection for each sink. The subsection names denote a user-defined sink name. For example, "MyFile".
 
 [note Previous versions of the library also supported top-level sections starting with the "Sink:" prefix to describe sink parameters. This syntax is deprecated now, although it still works when parsing a settings file for backward compatibility. The parser will automatically put these sections under the "Sinks" top-level section in the resulting settings container. Support for this syntax will be removed in future releases.]
 
@@ -525,6 +539,8 @@ Besides the common settings that all sinks support, some sink backends also acce
     [Mode of scanning for old files in the target directory, see [enumref boost::log::sinks::file::scan_method `scan_method`]. If not specified, no scanning will be performed.]
 ]
 ]
+
+[warning The text file sink uses __boost_filesystem__ internally, which may cause problems on process termination. See [link log.rationale.why_crash_on_term here] for more details.]
 
 The time-based rotation can be set up with one of the two parameters: RotationInterval or RotationTimePoint. Not more than one of these parameters should be specified for a given sink. If none is specified, no time-based rotation will be performed.
 

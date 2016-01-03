@@ -11,11 +11,15 @@
 #ifndef BOOST_INTERPROCESS_CONDITION_HPP
 #define BOOST_INTERPROCESS_CONDITION_HPP
 
-#if (defined _MSC_VER) && (_MSC_VER >= 1200)
+#ifndef BOOST_CONFIG_HPP
+#  include <boost/config.hpp>
+#endif
+#
+#if defined(BOOST_HAS_PRAGMA_ONCE)
 #  pragma once
 #endif
 
-/// @cond
+#if !defined(BOOST_INTERPROCESS_DOXYGEN_INVOKED)
 
 #include <boost/interprocess/detail/config_begin.hpp>
 #include <boost/interprocess/detail/workaround.hpp>
@@ -39,15 +43,19 @@
    #define BOOST_INTERPROCESS_USE_GENERIC_EMULATION
 #endif
 
-/// @endcond
+#endif   //#ifndef BOOST_INTERPROCESS_DOXYGEN_INVOKED
 
 //!\file
 //!Describes process-shared variables interprocess_condition class
 
 namespace boost {
 
+#if !defined(BOOST_INTERPROCESS_DOXYGEN_INVOKED)
+
 namespace posix_time
 {  class ptime;   }
+
+#endif   //#if !defined(BOOST_INTERPROCESS_DOXYGEN_INVOKED)
 
 namespace interprocess {
 
@@ -59,15 +67,15 @@ class named_condition;
 //!
 //!Unlike std::condition_variable in C++11, it is NOT safe to invoke the destructor if all
 //!threads have been only notified. It is required that they have exited their respective wait
-//!functions. 
+//!functions.
 class interprocess_condition
 {
-   /// @cond
+   #if !defined(BOOST_INTERPROCESS_DOXYGEN_INVOKED)
    //Non-copyable
    interprocess_condition(const interprocess_condition &);
    interprocess_condition &operator=(const interprocess_condition &);
    friend class named_condition;
-   /// @endcond
+   #endif   //#ifndef BOOST_INTERPROCESS_DOXYGEN_INVOKED
 
    public:
    //!Constructs a interprocess_condition. On error throws interprocess_exception.
@@ -94,7 +102,7 @@ class interprocess_condition
    //!this->notify_one() or this->notify_all(), and then reacquires the lock.
    template <typename L>
    void wait(L& lock)
-   {  
+   {
       ipcdetail::internal_mutex_lock<L> internal_lock(lock);
       m_condition.wait(internal_lock);
    }
@@ -130,7 +138,7 @@ class interprocess_condition
       return m_condition.timed_wait(internal_lock, abs_time, pred);
    }
 
-   /// @cond
+   #if !defined(BOOST_INTERPROCESS_DOXYGEN_INVOKED)
 
    private:
    #if defined (BOOST_INTERPROCESS_USE_GENERIC_EMULATION)
@@ -145,7 +153,7 @@ class interprocess_condition
    #else
       #error "Unknown platform for interprocess_mutex"
    #endif
-   /// @endcond
+   #endif   //#ifndef BOOST_INTERPROCESS_DOXYGEN_INVOKED
 };
 
 }  //namespace interprocess

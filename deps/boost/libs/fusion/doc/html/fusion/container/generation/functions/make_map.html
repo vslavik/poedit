@@ -4,7 +4,7 @@
 <title>make_map</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.1">
+<link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../functions.html" title="Functions">
 <link rel="prev" href="make_set.html" title="make_set">
 <link rel="next" href="tiers.html" title="Tiers">
@@ -45,7 +45,10 @@
 <span class="identifier">make_map</span><span class="special">(</span><span class="identifier">T0</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">x0</span><span class="special">,</span> <span class="identifier">T1</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">x1</span><span class="special">...</span> <span class="identifier">TN</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">xN</span><span class="special">);</span>
 </pre>
 <p>
-            The variadic function accepts <code class="computeroutput"><span class="number">0</span></code>
+            For C++11 compilers, the variadic function interface has no upper bound.
+          </p>
+<p>
+            For C++03 compilers, the variadic function accepts <code class="computeroutput"><span class="number">0</span></code>
             to <code class="computeroutput"><span class="identifier">FUSION_MAX_MAP_SIZE</span></code>
             elements, where <code class="computeroutput"><span class="identifier">FUSION_MAX_MAP_SIZE</span></code>
             is a user definable predefined maximum that defaults to <code class="computeroutput"><span class="number">10</span></code>. You may define the preprocessor constant
@@ -161,8 +164,8 @@
             also</a>
           </h6>
 <p>
-            <a class="link" href="../../../notes.html#fusion.notes.boost__ref"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">ref</span></code></a>,
-            <a class="link" href="../../../support/pair.html" title="pair"><code class="computeroutput"><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">pair</span></code></a>
+            <a class="link" href="../../../notes.html#fusion.notes.reference_wrappers"><code class="computeroutput"><span class="identifier">Reference</span>
+            <span class="identifier">Wrappers</span></code></a>, <a class="link" href="../../../support/pair.html" title="pair"><code class="computeroutput"><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">pair</span></code></a>
           </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

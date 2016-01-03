@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -34,8 +34,6 @@
 #endif
 #if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
 #include <boost/utility/enable_if.hpp>
-#include <boost/type_traits/is_same.hpp>
-#include <boost/mpl/or.hpp>
 #else
 #include <boost/type_traits/remove_reference.hpp>
 #endif
@@ -58,6 +56,28 @@ BOOST_LOG_OPEN_NAMESPACE
 
 namespace aux {
 
+#if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+
+template< typename T, typename ThisT >
+struct is_cv_same { enum _ { value = false }; };
+template< typename T >
+struct is_cv_same< T, T > { enum _ { value = true }; };
+template< typename T >
+struct is_cv_same< T, const T > { enum _ { value = true }; };
+template< typename T >
+struct is_cv_same< T, volatile T > { enum _ { value = true }; };
+template< typename T >
+struct is_cv_same< T, const volatile T > { enum _ { value = true }; };
+
+template< typename T, typename ThisT >
+struct is_rv_or_same { enum _ { value = false }; };
+template< typename T >
+struct is_rv_or_same< T, T > { enum _ { value = true }; };
+template< typename T, typename ThisT >
+struct is_rv_or_same< boost::rv< T >, ThisT > { enum _ { value = true }; };
+
+#endif
+
 template< typename SignatureT >
 class light_function;
 
@@ -75,18 +95,21 @@ public:
 private:
     struct impl_base
     {
-        typedef result_type (*invoke_type)(impl_base*, ArgsT...);
+        typedef result_type (*invoke_type)(void*, ArgsT...);
         const invoke_type invoke;
 
-        typedef impl_base* (*clone_type)(const impl_base*);
+        typedef impl_base* (*clone_type)(const void*);
         const clone_type clone;
 
-        typedef void (*destroy_type)(impl_base*);
+        typedef void (*destroy_type)(void*);
         const destroy_type destroy;
 
         impl_base(invoke_type inv, clone_type cl, destroy_type dstr) : invoke(inv), clone(cl), destroy(dstr)
         {
         }
+
+        BOOST_DELETED_FUNCTION(impl_base(impl_base const&))
+        BOOST_DELETED_FUNCTION(impl_base& operator= (impl_base const&))
     };
 
 #if !defined(BOOST_LOG_NO_MEMBER_TEMPLATE_FRIENDS)
@@ -114,23 +137,26 @@ private:
 #if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         explicit impl(FunT&& fun) :
             impl_base(&this_type::invoke_impl, &this_type::clone_impl, &this_type::destroy_impl),
-            m_Function(fun)
+            m_Function(boost::move(fun))
         {
         }
 #endif // !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
 
-        static void destroy_impl(impl_base* self)
+        static void destroy_impl(void* self)
         {
-            delete static_cast< impl* >(self);
+            delete static_cast< impl* >(static_cast< impl_base* >(self));
         }
-        static impl_base* clone_impl(const impl_base* self)
+        static impl_base* clone_impl(const void* self)
         {
-            return new impl(static_cast< const impl* >(self)->m_Function);
+            return new impl(static_cast< const impl* >(static_cast< const impl_base* >(self))->m_Function);
         }
-        static result_type invoke_impl(impl_base* self, ArgsT... args)
+        static result_type invoke_impl(void* self, ArgsT... args)
         {
-            return static_cast< impl* >(self)->m_Function(args...);
+            return static_cast< impl* >(static_cast< impl_base* >(self))->m_Function(args...);
         }
+
+        BOOST_DELETED_FUNCTION(impl(impl const&))
+        BOOST_DELETED_FUNCTION(impl& operator= (impl const&))
     };
 
 private:
@@ -168,12 +194,12 @@ public:
     }
 #else
     template< typename FunT >
-    light_function(FunT const& fun, typename disable_if< mpl::or_< move_detail::is_rv< FunT >, is_same< FunT, this_type > >, int >::type = 0) :
+    light_function(FunT const& fun, typename disable_if_c< is_rv_or_same< FunT, this_type >::value, int >::type = 0) :
         m_pImpl(new impl< FunT >(fun))
     {
     }
     template< typename FunT >
-    light_function(rv< FunT > const& fun, typename disable_if< is_same< typename remove_cv< FunT >::type, this_type >, int >::type = 0) :
+    light_function(BOOST_RV_REF(FunT) fun, typename disable_if_c< is_cv_same< FunT, this_type >::value, int >::type = 0) :
         m_pImpl(new impl< typename remove_cv< FunT >::type >(fun))
     {
     }
@@ -203,7 +229,7 @@ public:
     }
     light_function& operator= (BOOST_COPY_ASSIGN_REF(this_type) that)
     {
-        light_function tmp(that);
+        light_function tmp = static_cast< this_type const& >(that);
         this->swap(tmp);
         return *this;
     }
@@ -230,7 +256,7 @@ public:
     }
 #else
     template< typename FunT >
-    typename disable_if< mpl::or_< move_detail::is_rv< FunT >, is_same< FunT, this_type > >, this_type& >::type
+    typename disable_if_c< is_rv_or_same< FunT, this_type >::value, this_type& >::type
     operator= (FunT const& fun)
     {
         light_function tmp(fun);
@@ -244,7 +270,7 @@ public:
         return m_pImpl->invoke(m_pImpl, args...);
     }
 
-    BOOST_EXPLICIT_OPERATOR_BOOL()
+    BOOST_EXPLICIT_OPERATOR_BOOL_NOEXCEPT()
     bool operator! () const BOOST_NOEXCEPT { return (m_pImpl == NULL); }
     bool empty() const BOOST_NOEXCEPT { return (m_pImpl == NULL); }
     void clear() BOOST_NOEXCEPT
@@ -258,7 +284,7 @@ public:
 
     void swap(this_type& that) BOOST_NOEXCEPT
     {
-        register impl_base* p = m_pImpl;
+        impl_base* p = m_pImpl;
         m_pImpl = that.m_pImpl;
         that.m_pImpl = p;
     }
@@ -276,18 +302,21 @@ public:
 private:
     struct impl_base
     {
-        typedef void (*invoke_type)(impl_base*, ArgsT...);
+        typedef void (*invoke_type)(void*, ArgsT...);
         const invoke_type invoke;
 
-        typedef impl_base* (*clone_type)(const impl_base*);
+        typedef impl_base* (*clone_type)(const void*);
         const clone_type clone;
 
-        typedef void (*destroy_type)(impl_base*);
+        typedef void (*destroy_type)(void*);
         const destroy_type destroy;
 
         impl_base(invoke_type inv, clone_type cl, destroy_type dstr) : invoke(inv), clone(cl), destroy(dstr)
         {
         }
+
+        BOOST_DELETED_FUNCTION(impl_base(impl_base const&))
+        BOOST_DELETED_FUNCTION(impl_base& operator= (impl_base const&))
     };
 
 #if !defined(BOOST_LOG_NO_MEMBER_TEMPLATE_FRIENDS)
@@ -315,23 +344,26 @@ private:
 #if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         explicit impl(FunT&& fun) :
             impl_base(&this_type::invoke_impl, &this_type::clone_impl, &this_type::destroy_impl),
-            m_Function(fun)
+            m_Function(boost::move(fun))
         {
         }
 #endif // !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
 
-        static void destroy_impl(impl_base* self)
+        static void destroy_impl(void* self)
         {
-            delete static_cast< impl* >(self);
+            delete static_cast< impl* >(static_cast< impl_base* >(self));
         }
-        static impl_base* clone_impl(const impl_base* self)
+        static impl_base* clone_impl(const void* self)
         {
-            return new impl(static_cast< const impl* >(self)->m_Function);
+            return new impl(static_cast< const impl* >(static_cast< const impl_base* >(self))->m_Function);
         }
-        static result_type invoke_impl(impl_base* self, ArgsT... args)
+        static result_type invoke_impl(void* self, ArgsT... args)
         {
-            static_cast< impl* >(self)->m_Function(args...);
+            static_cast< impl* >(static_cast< impl_base* >(self))->m_Function(args...);
         }
+
+        BOOST_DELETED_FUNCTION(impl(impl const&))
+        BOOST_DELETED_FUNCTION(impl& operator= (impl const&))
     };
 
 private:
@@ -368,12 +400,12 @@ public:
     }
 #else
     template< typename FunT >
-    light_function(FunT const& fun, typename disable_if< mpl::or_< move_detail::is_rv< FunT >, is_same< FunT, this_type > >, int >::type = 0) :
+    light_function(FunT const& fun, typename disable_if_c< is_rv_or_same< FunT, this_type >::value, int >::type = 0) :
         m_pImpl(new impl< FunT >(fun))
     {
     }
     template< typename FunT >
-    light_function(rv< FunT > const& fun, typename disable_if< is_same< typename remove_cv< FunT >::type, this_type >, int >::type = 0) :
+    light_function(BOOST_RV_REF(FunT) fun, typename disable_if_c< is_cv_same< FunT, this_type >::value, int >::type = 0) :
         m_pImpl(new impl< typename remove_cv< FunT >::type >(fun))
     {
     }
@@ -403,7 +435,7 @@ public:
     }
     light_function& operator= (BOOST_COPY_ASSIGN_REF(this_type) that)
     {
-        light_function tmp = that;
+        light_function tmp = static_cast< this_type const& >(that);
         this->swap(tmp);
         return *this;
     }
@@ -430,7 +462,7 @@ public:
     }
 #else
     template< typename FunT >
-    typename disable_if< mpl::or_< move_detail::is_rv< FunT >, is_same< FunT, this_type > >, this_type& >::type
+    typename disable_if_c< is_rv_or_same< FunT, this_type >::value, this_type& >::type
     operator= (FunT const& fun)
     {
         light_function tmp(fun);
@@ -444,7 +476,7 @@ public:
         m_pImpl->invoke(m_pImpl, args...);
     }
 
-    BOOST_EXPLICIT_OPERATOR_BOOL()
+    BOOST_EXPLICIT_OPERATOR_BOOL_NOEXCEPT()
     bool operator! () const BOOST_NOEXCEPT { return (m_pImpl == NULL); }
     bool empty() const BOOST_NOEXCEPT { return (m_pImpl == NULL); }
     void clear() BOOST_NOEXCEPT
@@ -458,7 +490,7 @@ public:
 
     void swap(this_type& that) BOOST_NOEXCEPT
     {
-        register impl_base* p = m_pImpl;
+        impl_base* p = m_pImpl;
         m_pImpl = that.m_pImpl;
         that.m_pImpl = p;
     }

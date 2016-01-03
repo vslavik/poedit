@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -16,7 +16,7 @@
 #ifndef BOOST_LOG_UTILITY_EMPTY_DELETER_HPP_INCLUDED_
 #define BOOST_LOG_UTILITY_EMPTY_DELETER_HPP_INCLUDED_
 
-#include <boost/utility/empty_deleter.hpp>
+#include <boost/core/null_deleter.hpp>
 #include <boost/log/detail/config.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
@@ -24,16 +24,16 @@
 #endif
 
 #if defined(__GNUC__)
-#pragma message "Boost.Log: This header is deprecated, use boost/utility/empty_deleter.hpp instead."
+#pragma message "Boost.Log: This header is deprecated, use boost/core/null_deleter.hpp instead."
 #elif defined(_MSC_VER)
-#pragma message("Boost.Log: This header is deprecated, use boost/utility/empty_deleter.hpp instead.")
+#pragma message("Boost.Log: This header is deprecated, use boost/core/null_deleter.hpp instead.")
 #endif
 
 namespace boost {
 
 BOOST_LOG_OPEN_NAMESPACE
 
-using boost::empty_deleter;
+typedef boost::null_deleter empty_deleter;
 
 BOOST_LOG_CLOSE_NAMESPACE // namespace log
 

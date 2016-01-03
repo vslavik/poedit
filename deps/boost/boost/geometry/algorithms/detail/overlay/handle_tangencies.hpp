@@ -14,8 +14,23 @@
 #include <boost/geometry/algorithms/detail/ring_identifier.hpp>
 #include <boost/geometry/algorithms/detail/overlay/copy_segment_point.hpp>
 #include <boost/geometry/algorithms/detail/overlay/turn_info.hpp>
+#include <boost/geometry/algorithms/detail/recalculate.hpp>
 
+#include <boost/geometry/policies/robustness/robust_point_type.hpp>
+#include <boost/geometry/policies/robustness/segment_ratio_type.hpp>
+#include <boost/geometry/policies/robustness/robust_type.hpp>
+
+#if defined(BOOST_GEOMETRY_DEBUG_HANDLE_TANGENCIES)
+#include <boost/geometry/algorithms/detail/overlay/debug_turn_info.hpp>
+#endif
+
+#include <boost/geometry/geometries/point.hpp>
 #include <boost/geometry/geometries/segment.hpp>
+
+
+// TODO: the approach below should be completely replaced by the new
+// get_left_turns, to keep the outgoing vector which has open space one of its
+// sides.
 
 
 namespace boost { namespace geometry
@@ -31,6 +46,7 @@ template
     typename TurnPoints,
     typename Indexed,
     typename Geometry1, typename Geometry2,
+    typename RobustPolicy,
     bool Reverse1, bool Reverse2,
     typename Strategy
 >
@@ -39,10 +55,12 @@ struct sort_in_cluster
     inline sort_in_cluster(TurnPoints const& turn_points
             , Geometry1 const& geometry1
             , Geometry2 const& geometry2
+            , RobustPolicy const& robust_policy
             , Strategy const& strategy)
         : m_turn_points(turn_points)
         , m_geometry1(geometry1)
         , m_geometry2(geometry2)
+        , m_rescale_policy(robust_policy)
         , m_strategy(strategy)
     {}
 
@@ -51,49 +69,106 @@ private :
     TurnPoints const& m_turn_points;
     Geometry1 const& m_geometry1;
     Geometry2 const& m_geometry2;
+    RobustPolicy const& m_rescale_policy;
     Strategy const& m_strategy;
 
     typedef typename Indexed::type turn_operation_type;
     typedef typename geometry::point_type<Geometry1>::type point_type;
-    typedef model::referring_segment<point_type const> segment_type;
+
+    typedef typename geometry::robust_point_type
+    <
+        point_type,
+        RobustPolicy
+    >::type robust_point_type;
+
+    inline bool default_order(Indexed const& left, Indexed const& right) const
+    {
+        // We've nothing to sort on. Take the indexes
+        return left.turn_index < right.turn_index;
+    }
+
+    // Still necessary in some situations,
+    // for example #case_102_multi, #case_107_multi, #case_recursive_boxes_3
+    inline void get_situation_map(Indexed const& left, Indexed const& right,
+                              robust_point_type& pi_rob, robust_point_type& pj_rob,
+                              robust_point_type& ri_rob, robust_point_type& rj_rob,
+                              robust_point_type& si_rob, robust_point_type& sj_rob) const
+    {
+        point_type pi, pj, ri, rj, si, sj;
+
+        geometry::copy_segment_points<Reverse1, Reverse2>(m_geometry1, m_geometry2,
+            left.subject->seg_id,
+            pi, pj);
+        geometry::copy_segment_points<Reverse1, Reverse2>(m_geometry1, m_geometry2,
+            *left.other_seg_id,
+            ri, rj);
+        geometry::copy_segment_points<Reverse1, Reverse2>(m_geometry1, m_geometry2,
+            *right.other_seg_id,
+            si, sj);
+
+        geometry::recalculate(pi_rob, pi, m_rescale_policy);
+        geometry::recalculate(pj_rob, pj, m_rescale_policy);
+        geometry::recalculate(ri_rob, ri, m_rescale_policy);
+        geometry::recalculate(rj_rob, rj, m_rescale_policy);
+        geometry::recalculate(si_rob, si, m_rescale_policy);
+        geometry::recalculate(sj_rob, sj, m_rescale_policy);
+    }
+
+#if BOOST_GEOMETRY_HANDLE_TANGENCIES_WITH_OVERLAP_INFO
+    // This method was still called but did no effect whatsoever on the results,
+    // with or without robustness-rescaling.
+    // Probable cause: we rescale in this file ourselves, ignoring passed policy
+    // TODO: check this more.
+    // Besides this, it currently does not compile for yet unknown reasons
+    // (does not find specialization for segment_ratio_type)
+    // It is currently only called from the Unit Test "multi_intersection.cpp"
 
     // Determine how p/r and p/s are located.
-    template <typename P>
-    static inline void overlap_info(P const& pi, P const& pj,
-        P const& ri, P const& rj,
-        P const& si, P const& sj,
-        bool& pr_overlap, bool& ps_overlap, bool& rs_overlap)
+    inline void overlap_info(
+        robust_point_type const& pi, robust_point_type const& pj,
+        robust_point_type const& ri, robust_point_type const& rj,
+        robust_point_type const& si, robust_point_type const& sj,
+        bool& pr_overlap, bool& ps_overlap, bool& rs_overlap) const
     {
         // Determine how p/r and p/s are located.
         // One of them is coming from opposite direction.
+
+        typedef segment_intersection_points
+                <
+                    point_type,
+                    typename segment_ratio_type
+                    <
+                        point_type, RobustPolicy
+                    >::type
+                > intersection_return_type;
 
         typedef strategy::intersection::relate_cartesian_segments
             <
                 policies::relate::segments_intersection_points
                     <
-                        segment_type,
-                        segment_type,
-                        segment_intersection_points<point_type>
+                        intersection_return_type
                     >
             > policy;
 
+        typedef model::referring_segment<robust_point_type const> segment_type;
         segment_type p(pi, pj);
         segment_type r(ri, rj);
         segment_type s(si, sj);
 
         // Get the intersection point (or two points)
-        segment_intersection_points<point_type> pr = policy::apply(p, r);
-        segment_intersection_points<point_type> ps = policy::apply(p, s);
-        segment_intersection_points<point_type> rs = policy::apply(r, s);
+        intersection_return_type pr = policy::apply(p, r, m_rescale_policy, pi, pj, ri, rj);
+        intersection_return_type ps = policy::apply(p, s, m_rescale_policy, pi, pj, si, sj);
+        intersection_return_type rs = policy::apply(r, s, m_rescale_policy, ri, rj, si, sj);
 
         // Check on overlap
         pr_overlap = pr.count == 2;
         ps_overlap = ps.count == 2;
         rs_overlap = rs.count == 2;
     }
+#endif
 
 
-#ifdef BOOST_GEOMETRY_DEBUG_ENRICH
+#ifdef BOOST_GEOMETRY_DEBUG_HANDLE_TANGENCIES
     inline void debug_consider(int order, Indexed const& left,
             Indexed const& right, std::string const& header,
             bool skip = true,
@@ -102,19 +177,15 @@ private :
     {
         if (skip) return;
 
-        point_type pi, pj, ri, rj, si, sj;
-        geometry::copy_segment_points<Reverse1, Reverse2>(m_geometry1, m_geometry2,
-            left.subject.seg_id,
-            pi, pj);
-        geometry::copy_segment_points<Reverse1, Reverse2>(m_geometry1, m_geometry2,
-            left.subject.other_id,
-            ri, rj);
-        geometry::copy_segment_points<Reverse1, Reverse2>(m_geometry1, m_geometry2,
-            right.subject.other_id,
-            si, sj);
+        std::cout << "Case: " << header << " for " << left.turn_index << " / " << right.turn_index << std::endl;
 
+        robust_point_type pi, pj, ri, rj, si, sj;
+        get_situation_map(left, right, pi, pj, ri, rj, si, sj);
+
+#if BOOST_GEOMETRY_HANDLE_TANGENCIES_WITH_OVERLAP_INFO
         bool prc = false, psc = false, rsc = false;
         overlap_info(pi, pj, ri, rj, si, sj, prc, psc, rsc);
+#endif
 
         int const side_ri_p = m_strategy.apply(pi, pj, ri);
         int const side_rj_p = m_strategy.apply(pi, pj, rj);
@@ -123,8 +194,7 @@ private :
         int const side_si_r = m_strategy.apply(ri, rj, si);
         int const side_sj_r = m_strategy.apply(ri, rj, sj);
 
-        std::cout << "Case: " << header << " for " << left.index << " / " << right.index << std::endl;
-#ifdef BOOST_GEOMETRY_DEBUG_ENRICH_MORE
+#ifdef BOOST_GEOMETRY_DEBUG_HANDLE_TANGENCIES_MORE
         std::cout << " Segment p:" << geometry::wkt(pi) << " .. " << geometry::wkt(pj) << std::endl;
         std::cout << " Segment r:" << geometry::wkt(ri) << " .. " << geometry::wkt(rj) << std::endl;
         std::cout << " Segment s:" << geometry::wkt(si) << " .. " << geometry::wkt(sj) << std::endl;
@@ -136,13 +206,15 @@ private :
 
         std::cout << header
                 //<< " order: " << order
-                << " ops: " << operation_char(left.subject.operation)
-                    << "/" << operation_char(right.subject.operation)
+                << " ops: " << operation_char(left.subject->operation)
+                    << "/" << operation_char(right.subject->operation)
                 << " ri//p: " << side_ri_p
                 << " si//p: " << side_si_p
                 << " si//r: " << side_si_r
+#if BOOST_GEOMETRY_HANDLE_TANGENCIES_WITH_OVERLAP_INFO
                 << " cnts: " << int(prc) << ","  << int(psc) << "," << int(rsc)
-                //<< " idx: " << left.index << "/" << right.index
+#endif
+                //<< " idx: " << left.turn_index << "/" << right.turn_index
                 ;
 
         if (! extra.empty())
@@ -167,23 +239,23 @@ private :
             , std::string const& // header
         ) const
     {
-        bool ret = left.index < right.index;
+        bool ret = left.turn_index < right.turn_index;
 
         // In combination of u/x, x/u: take first union, then blocked.
         // Solves #88, #61, #56, #80
-        if (left.subject.operation == operation_union
-            && right.subject.operation == operation_blocked)
+        if (left.subject->operation == operation_union
+            && right.subject->operation == operation_blocked)
         {
             ret = true;
         }
-        else if (left.subject.operation == operation_blocked
-            && right.subject.operation == operation_union)
+        else if (left.subject->operation == operation_blocked
+            && right.subject->operation == operation_union)
         {
             ret = false;
         }
         else
         {
-#ifdef BOOST_GEOMETRY_DEBUG_ENRICH
+#if defined(BOOST_GEOMETRY_DEBUG_HANDLE_TANGENCIES)
             std::cout << "ux/ux unhandled" << std::endl;
 #endif
         }
@@ -201,32 +273,32 @@ private :
     {
         bool ret = false;
 
-        if (left.subject.operation == operation_union
-            && right.subject.operation == operation_union)
+        if (left.subject->operation == operation_union
+            && right.subject->operation == operation_union)
         {
             ret = order == 1;
         }
-        else if (left.subject.operation == operation_union
-            && right.subject.operation == operation_blocked)
+        else if (left.subject->operation == operation_union
+            && right.subject->operation == operation_blocked)
         {
             ret = true;
         }
-        else if (right.subject.operation == operation_union
-            && left.subject.operation == operation_blocked)
+        else if (right.subject->operation == operation_union
+            && left.subject->operation == operation_blocked)
         {
             ret = false;
         }
-        else if (left.subject.operation == operation_union)
+        else if (left.subject->operation == operation_union)
         {
             ret = true;
         }
-        else if (right.subject.operation == operation_union)
+        else if (right.subject->operation == operation_union)
         {
             ret = false;
         }
         else
         {
-#ifdef BOOST_GEOMETRY_DEBUG_ENRICH
+#if defined(BOOST_GEOMETRY_DEBUG_HANDLE_TANGENCIES)
             // this still happens in the traverse.cpp test
             std::cout << " iu/ux unhandled" << std::endl;
 #endif
@@ -245,10 +317,10 @@ private :
     {
         //debug_consider(order, left, right, header, false, "iu/ix");
 
-        return left.subject.operation == operation_intersection
-                && right.subject.operation == operation_intersection ? order == 1
-            : left.subject.operation == operation_intersection ? false
-            : right.subject.operation == operation_intersection ? true
+        return left.subject->operation == operation_intersection
+                && right.subject->operation == operation_intersection ? order == 1
+            : left.subject->operation == operation_intersection ? false
+            : right.subject->operation == operation_intersection ? true
             : order == 1;
     }
 
@@ -257,57 +329,49 @@ private :
             ) const
     {
         // Take first intersection, then blocked.
-        if (left.subject.operation == operation_intersection
-            && right.subject.operation == operation_blocked)
+        if (left.subject->operation == operation_intersection
+            && right.subject->operation == operation_blocked)
         {
             return true;
         }
-        else if (left.subject.operation == operation_blocked
-            && right.subject.operation == operation_intersection)
+        else if (left.subject->operation == operation_blocked
+            && right.subject->operation == operation_intersection)
         {
             return false;
         }
 
         // Default case, should not occur
 
-#ifdef BOOST_GEOMETRY_DEBUG_ENRICH
+#if defined(BOOST_GEOMETRY_DEBUG_HANDLE_TANGENCIES)
         std::cout << "ix/ix unhandled" << std::endl;
 #endif
         //debug_consider(0, left, right, header, false, "-> return", ret);
 
-        return left.index < right.index;
+        return default_order(left, right);
     }
 
 
     inline bool consider_iu_iu(Indexed const& left, Indexed const& right,
-                    std::string const& header) const
+                    std::string const& header, bool redo = false) const
     {
         //debug_consider(0, left, right, header);
 
         // In general, order it like "union, intersection".
-        if (left.subject.operation == operation_intersection
-            && right.subject.operation == operation_union)
+        if (left.subject->operation == operation_intersection
+            && right.subject->operation == operation_union)
         {
             //debug_consider(0, left, right, header, false, "i,u", false);
             return false;
         }
-        else if (left.subject.operation == operation_union
-            && right.subject.operation == operation_intersection)
+        else if (left.subject->operation == operation_union
+            && right.subject->operation == operation_intersection)
         {
             //debug_consider(0, left, right, header, false, "u,i", true);
             return true;
         }
 
-        point_type pi, pj, ri, rj, si, sj;
-        geometry::copy_segment_points<Reverse1, Reverse2>(m_geometry1, m_geometry2,
-            left.subject.seg_id,
-            pi, pj);
-        geometry::copy_segment_points<Reverse1, Reverse2>(m_geometry1, m_geometry2,
-            left.subject.other_id,
-            ri, rj);
-        geometry::copy_segment_points<Reverse1, Reverse2>(m_geometry1, m_geometry2,
-            right.subject.other_id,
-            si, sj);
+        robust_point_type pi, pj, ri, rj, si, sj;
+        get_situation_map(left, right, pi, pj, ri, rj, si, sj);
 
         int const side_ri_p = m_strategy.apply(pi, pj, ri);
         int const side_si_p = m_strategy.apply(pi, pj, si);
@@ -316,11 +380,17 @@ private :
         // Both located at same side (#58, pie_21_7_21_0_3)
         if (side_ri_p * side_si_p == 1 && side_si_r != 0)
         {
-            // Take the most left one
-            if (left.subject.operation == operation_union
-                && right.subject.operation == operation_union)
+            if (left.subject->operation == operation_union
+                && right.subject->operation == operation_union)
             {
-                bool ret = side_si_r == 1;
+                int const side_ri_s = m_strategy.apply(si, sj, ri);
+                if (side_si_r == side_ri_s)
+                {
+                    return default_order(left, right);
+                }
+
+                // Take the most left one
+                bool const ret = side_si_r == 1;
                 //debug_consider(0, left, right, header, false, "same side", ret);
                 return ret;
             }
@@ -337,27 +407,39 @@ private :
                 debug_consider(0, left, right, header, false, "opp.", ret);
                 return ret;
             }
-#ifdef BOOST_GEOMETRY_DEBUG_ENRICH
+#if defined(BOOST_GEOMETRY_DEBUG_HANDLE_TANGENCIES)
             std::cout << " iu/iu coming from opposite unhandled" << std::endl;
 #endif
         }
 
+#if BOOST_GEOMETRY_HANDLE_TANGENCIES_WITH_OVERLAP_INFO
         // We need EXTRA information here: are p/r/s overlapping?
         bool pr_ov = false, ps_ov = false, rs_ov = false;
         overlap_info(pi, pj, ri, rj, si, sj, pr_ov, ps_ov, rs_ov);
+#else
+        // std::cout << "Boost.Geometry: skipping overlap_info" << std::endl;
+#endif
 
         // One coming from right (#83,#90)
         // One coming from left (#90, #94, #95)
         if (side_si_r != 0 && (side_ri_p != 0 || side_si_p != 0))
         {
+            int const side_ri_s = m_strategy.apply(si, sj, ri);
+            if (side_si_r == side_ri_s)
+            {
+                return default_order(left, right);
+            }
+
             bool ret = false;
 
+#if BOOST_GEOMETRY_HANDLE_TANGENCIES_WITH_OVERLAP_INFO
             if (pr_ov || ps_ov)
             {
                 int r = side_ri_p != 0 ? side_ri_p : side_si_p;
                 ret = r * side_si_r == 1;
             }
             else
+#endif
             {
                 ret = side_si_r == 1;
             }
@@ -374,6 +456,7 @@ private :
             // Take the one NOT overlapping
             bool ret = false;
             bool found = false;
+#if BOOST_GEOMETRY_HANDLE_TANGENCIES_WITH_OVERLAP_INFO
             if (pr_ov && ! ps_ov)
             {
                 ret = true;
@@ -384,6 +467,7 @@ private :
                 ret = false;
                 found = true;
             }
+#endif
 
             debug_consider(0, left, right, header, false, "aligned", ret);
             if (found)
@@ -392,11 +476,18 @@ private :
             }
         }
 
-#ifdef BOOST_GEOMETRY_DEBUG_ENRICH
+#if defined(BOOST_GEOMETRY_DEBUG_HANDLE_TANGENCIES)
         std::cout << " iu/iu unhandled" << std::endl;
-        debug_consider(0, left, right, header, false, "unhandled", left.index < right.index);
+        debug_consider(0, left, right, header, false, "unhandled", left.turn_index < right.turn_index);
 #endif
-        return left.index < right.index;
+        if (! redo)
+        {
+            // In some cases behaviour is not symmetrical. TODO: fix this properly
+            //   OR: alternatively we might consider calling all these functions one-way anyway
+            return ! consider_iu_iu(right, left, header, true);
+        }
+
+        return default_order(left, right);
     }
 
     inline bool consider_ii(Indexed const& left, Indexed const& right,
@@ -404,16 +495,8 @@ private :
     {
         debug_consider(0, left, right, header);
 
-        point_type pi, pj, ri, rj, si, sj;
-        geometry::copy_segment_points<Reverse1, Reverse2>(m_geometry1, m_geometry2,
-            left.subject.seg_id,
-            pi, pj);
-        geometry::copy_segment_points<Reverse1, Reverse2>(m_geometry1, m_geometry2,
-            left.subject.other_id,
-            ri, rj);
-        geometry::copy_segment_points<Reverse1, Reverse2>(m_geometry1, m_geometry2,
-            right.subject.other_id,
-            si, sj);
+        robust_point_type pi, pj, ri, rj, si, sj;
+        get_situation_map(left, right, pi, pj, ri, rj, si, sj);
 
         int const side_ri_p = m_strategy.apply(pi, pj, ri);
         int const side_si_p = m_strategy.apply(pi, pj, si);
@@ -428,89 +511,87 @@ private :
             bool const ret = side_si_r != 1;
             return ret;
         }
-        return left.index < right.index;
+        return default_order(left, right);
     }
 
 
 public :
     inline bool operator()(Indexed const& left, Indexed const& right) const
     {
-        bool const default_order = left.index < right.index;
-
-        if ((m_turn_points[left.index].discarded || left.discarded)
-            && (m_turn_points[right.index].discarded || right.discarded))
+        if ((m_turn_points[left.turn_index].discarded || left.discarded)
+            && (m_turn_points[right.turn_index].discarded || right.discarded))
         {
-            return default_order;
+            return default_order(left, right);
         }
-        else if (m_turn_points[left.index].discarded || left.discarded)
+        else if (m_turn_points[left.turn_index].discarded || left.discarded)
         {
             // Be careful to sort discarded first, then all others
             return true;
         }
-        else if (m_turn_points[right.index].discarded || right.discarded)
+        else if (m_turn_points[right.turn_index].discarded || right.discarded)
         {
             // See above so return false here such that right (discarded)
             // is sorted before left (not discarded)
             return false;
         }
-        else if (m_turn_points[left.index].combination(operation_blocked, operation_union)
-                && m_turn_points[right.index].combination(operation_blocked, operation_union))
+        else if (m_turn_points[left.turn_index].combination(operation_blocked, operation_union)
+                && m_turn_points[right.turn_index].combination(operation_blocked, operation_union))
         {
             // ux/ux
             return consider_ux_ux(left, right, "ux/ux");
         }
-        else if (m_turn_points[left.index].both(operation_union)
-            && m_turn_points[right.index].both(operation_union))
+        else if (m_turn_points[left.turn_index].both(operation_union)
+            && m_turn_points[right.turn_index].both(operation_union))
         {
             // uu/uu, Order is arbitrary
             // Note: uu/uu is discarded now before so this point will
             //       not be reached.
-            return default_order;
+            return default_order(left, right);
         }
-        else if (m_turn_points[left.index].combination(operation_intersection, operation_union)
-                && m_turn_points[right.index].combination(operation_intersection, operation_union))
+        else if (m_turn_points[left.turn_index].combination(operation_intersection, operation_union)
+                && m_turn_points[right.turn_index].combination(operation_intersection, operation_union))
         {
             return consider_iu_iu(left, right, "iu/iu");
         }
-        else if (m_turn_points[left.index].combination(operation_intersection, operation_blocked)
-                && m_turn_points[right.index].combination(operation_intersection, operation_blocked))
+        else if (m_turn_points[left.turn_index].combination(operation_intersection, operation_blocked)
+                && m_turn_points[right.turn_index].combination(operation_intersection, operation_blocked))
         {
             return consider_ix_ix(left, right, "ix/ix");
         }
-        else if (m_turn_points[left.index].both(operation_intersection)
-                && m_turn_points[right.index].both(operation_intersection))
+        else if (m_turn_points[left.turn_index].both(operation_intersection)
+                && m_turn_points[right.turn_index].both(operation_intersection))
         {
             return consider_ii(left, right, "ii/ii");
         }
-        else  if (m_turn_points[left.index].combination(operation_union, operation_blocked)
-                && m_turn_points[right.index].combination(operation_intersection, operation_union))
+        else  if (m_turn_points[left.turn_index].combination(operation_union, operation_blocked)
+                && m_turn_points[right.turn_index].combination(operation_intersection, operation_union))
         {
             return consider_iu_ux(left, right, -1, "ux/iu");
         }
-        else if (m_turn_points[left.index].combination(operation_intersection, operation_union)
-                && m_turn_points[right.index].combination(operation_union, operation_blocked))
+        else if (m_turn_points[left.turn_index].combination(operation_intersection, operation_union)
+                && m_turn_points[right.turn_index].combination(operation_union, operation_blocked))
         {
             return consider_iu_ux(left, right, 1, "iu/ux");
         }
-        else  if (m_turn_points[left.index].combination(operation_intersection, operation_blocked)
-                && m_turn_points[right.index].combination(operation_intersection, operation_union))
+        else  if (m_turn_points[left.turn_index].combination(operation_intersection, operation_blocked)
+                && m_turn_points[right.turn_index].combination(operation_intersection, operation_union))
         {
             return consider_iu_ix(left, right, 1, "ix/iu");
         }
-        else if (m_turn_points[left.index].combination(operation_intersection, operation_union)
-                && m_turn_points[right.index].combination(operation_intersection, operation_blocked))
+        else if (m_turn_points[left.turn_index].combination(operation_intersection, operation_union)
+                && m_turn_points[right.turn_index].combination(operation_intersection, operation_blocked))
         {
             return consider_iu_ix(left, right, -1, "iu/ix");
         }
-        else if (m_turn_points[left.index].method != method_equal
-            && m_turn_points[right.index].method == method_equal
+        else if (m_turn_points[left.turn_index].method != method_equal
+            && m_turn_points[right.turn_index].method == method_equal
             )
         {
             // If one of them was EQUAL or CONTINUES, it should always come first
             return false;
         }
-        else if (m_turn_points[left.index].method == method_equal
-            && m_turn_points[right.index].method != method_equal
+        else if (m_turn_points[left.turn_index].method == method_equal
+            && m_turn_points[right.turn_index].method != method_equal
             )
         {
             return true;
@@ -518,16 +599,16 @@ public :
 
         // Now we have no clue how to sort.
 
-#ifdef BOOST_GEOMETRY_DEBUG_ENRICH
-        std::cout << " Consider: " << operation_char(m_turn_points[left.index].operations[0].operation)
-                << operation_char(m_turn_points[left.index].operations[1].operation)
-                << "/" << operation_char(m_turn_points[right.index].operations[0].operation)
-                << operation_char(m_turn_points[right.index].operations[1].operation)
-                << " " << " Take " << left.index << " < " << right.index
+#if defined(BOOST_GEOMETRY_DEBUG_HANDLE_TANGENCIES)
+        std::cout << " Consider: " << operation_char(m_turn_points[left.turn_index].operations[0].operation)
+                << operation_char(m_turn_points[left.turn_index].operations[1].operation)
+                << "/" << operation_char(m_turn_points[right.turn_index].operations[0].operation)
+                << operation_char(m_turn_points[right.turn_index].operations[1].operation)
+                << " " << " Take " << left.turn_index << " < " << right.turn_index
                 << std::endl;
 #endif
 
-        return default_order;
+        return default_order(left, right);
     }
 };
 
@@ -554,8 +635,8 @@ inline void inspect_cluster(Iterator begin_cluster, Iterator end_cluster,
     std::map<std::pair<operation_type, operation_type>, int> inspection;
     for (Iterator it = begin_cluster; it != end_cluster; ++it)
     {
-        operation_type first = turn_points[it->index].operations[0].operation;
-        operation_type second = turn_points[it->index].operations[1].operation;
+        operation_type first = turn_points[it->turn_index].operations[0].operation;
+        operation_type second = turn_points[it->turn_index].operations[1].operation;
         if (first > second)
         {
             std::swap(first, second);
@@ -584,7 +665,7 @@ inline void inspect_cluster(Iterator begin_cluster, Iterator end_cluster,
         // Because (in case of not discarding iu) correctly ordering of ii/iu appears impossible
         for (Iterator it = begin_cluster; it != end_cluster; ++it)
         {
-            if (turn_points[it->index].combination(operation_intersection, operation_union))
+            if (turn_points[it->turn_index].combination(operation_intersection, operation_union))
             {
                 it->discarded = true;
             }
@@ -600,7 +681,7 @@ inline void inspect_cluster(Iterator begin_cluster, Iterator end_cluster,
         if (! it->discarded)
         {
             nd_count++;
-            if (turn_points[it->index].both(operation_continue))
+            if (turn_points[it->turn_index].both(operation_continue))
             {
                 cc_count++;
             }
@@ -616,7 +697,7 @@ inline void inspect_cluster(Iterator begin_cluster, Iterator end_cluster,
     {
         for (Iterator it = begin_cluster; it != end_cluster; ++it)
         {
-            if (turn_points[it->index].both(operation_continue))
+            if (turn_points[it->turn_index].both(operation_continue))
             {
                 it->discarded = true;
             }
@@ -633,12 +714,14 @@ template
     typename TurnPoints,
     typename Geometry1,
     typename Geometry2,
+    typename RobustPolicy,
     typename Strategy
 >
 inline void handle_cluster(Iterator begin_cluster, Iterator end_cluster,
             TurnPoints& turn_points,
             operation_type for_operation,
             Geometry1 const& geometry1, Geometry2 const& geometry2,
+            RobustPolicy& robust_policy,
             Strategy const& strategy)
 {
     // First inspect and (possibly) discard rows
@@ -646,38 +729,38 @@ inline void handle_cluster(Iterator begin_cluster, Iterator end_cluster,
             for_operation, geometry1, geometry2, strategy);
 
 
-    // Then sort this range (discard rows will be ordered first and will be removed in enrich_assign)
+    // Then sort this range (discarded rows will be ordered first and will be removed in enrich_assign)
     std::sort(begin_cluster, end_cluster,
                 sort_in_cluster
                     <
                         TurnPoints,
                         IndexType,
                         Geometry1, Geometry2,
+                        RobustPolicy,
                         Reverse1, Reverse2,
                         Strategy
-                    >(turn_points, geometry1, geometry2, strategy));
+                    >(turn_points, geometry1, geometry2, robust_policy, strategy));
 
-
-#ifdef BOOST_GEOMETRY_DEBUG_ENRICH
+#if defined(BOOST_GEOMETRY_DEBUG_HANDLE_TANGENCIES)
     typedef typename IndexType::type operations_type;
-    operations_type const& op = turn_points[begin_cluster->index].operations[begin_cluster->operation_index];
-    std::cout << "Clustered points on equal distance " << op.enriched.distance << std::endl;
-    std::cout << "->Indexes ";
+    operations_type const& op = turn_points[begin_cluster->turn_index].operations[begin_cluster->operation_index];
+    std::cout << std::endl << "Clustered points on equal distance " << op.fraction << std::endl;
 
+    std::cout << "->Indexes ";
     for (Iterator it = begin_cluster; it != end_cluster; ++it)
     {
-        std::cout << " " << it->index;
+        std::cout << " " << it->turn_index;
     }
     std::cout << std::endl << "->Methods: ";
     for (Iterator it = begin_cluster; it != end_cluster; ++it)
     {
-        std::cout << " " << method_char(turn_points[it->index].method);
+        std::cout << " " << method_char(turn_points[it->turn_index].method);
     }
     std::cout << std::endl << "->Operations: ";
     for (Iterator it = begin_cluster; it != end_cluster; ++it)
     {
-        std::cout << " " << operation_char(turn_points[it->index].operations[0].operation)
-            << operation_char(turn_points[it->index].operations[1].operation);
+        std::cout << " " << operation_char(turn_points[it->turn_index].operations[0].operation)
+            << operation_char(turn_points[it->turn_index].operations[1].operation);
     }
     std::cout << std::endl << "->Discarded: ";
     for (Iterator it = begin_cluster; it != end_cluster; ++it)
@@ -687,7 +770,7 @@ inline void handle_cluster(Iterator begin_cluster, Iterator end_cluster,
     std::cout << std::endl;
         //<< "\tOn segments: "    << prev_op.seg_id  << " / "  << prev_op.other_id
         //<< " and "  << op.seg_id << " / " << op.other_id
-        //<< geometry::distance(turn_points[prev->index].point, turn_points[it->index].point)
+        //<< geometry::distance(turn_points[prev->turn_index].point, turn_points[it->turn_index].point)
 #endif
 
 }

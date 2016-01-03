@@ -39,128 +39,128 @@ struct X
     // 0
 
     int mf0_1() { return 0; }
-    int mf0_2() { return 0; }
+    int mf0_2() { return 1; }
 
     int cmf0_1() const { return 0; }
-    int cmf0_2() const { return 0; }
+    int cmf0_2() const { return 1; }
 
     void mf0v_1() {}
-    void mf0v_2() {}
+    void mf0v_2() { static int x; ++x; }
 
     void cmf0v_1() const {}
-    void cmf0v_2() const {}
+    void cmf0v_2() const { static int x; ++x; }
 
     // 1
 
     int mf1_1(int) { return 0; }
-    int mf1_2(int) { return 0; }
+    int mf1_2(int) { return 1; }
 
     int cmf1_1(int) const { return 0; }
-    int cmf1_2(int) const { return 0; }
+    int cmf1_2(int) const { return 1; }
 
     void mf1v_1(int) {}
-    void mf1v_2(int) {}
+    void mf1v_2(int) { static int x; ++x; }
 
     void cmf1v_1(int) const {}
-    void cmf1v_2(int) const {}
+    void cmf1v_2(int) const { static int x; ++x; }
 
     // 2
 
     int mf2_1(int, int) { return 0; }
-    int mf2_2(int, int) { return 0; }
+    int mf2_2(int, int) { return 1; }
 
     int cmf2_1(int, int) const { return 0; }
-    int cmf2_2(int, int) const { return 0; }
+    int cmf2_2(int, int) const { return 1; }
 
     void mf2v_1(int, int) {}
-    void mf2v_2(int, int) {}
+    void mf2v_2(int, int) { static int x; ++x; }
 
     void cmf2v_1(int, int) const {}
-    void cmf2v_2(int, int) const {}
+    void cmf2v_2(int, int) const { static int x; ++x; }
 
     // 3
 
     int mf3_1(int, int, int) { return 0; }
-    int mf3_2(int, int, int) { return 0; }
+    int mf3_2(int, int, int) { return 1; }
 
     int cmf3_1(int, int, int) const { return 0; }
-    int cmf3_2(int, int, int) const { return 0; }
+    int cmf3_2(int, int, int) const { return 1; }
 
     void mf3v_1(int, int, int) {}
-    void mf3v_2(int, int, int) {}
+    void mf3v_2(int, int, int) { static int x; ++x; }
 
     void cmf3v_1(int, int, int) const {}
-    void cmf3v_2(int, int, int) const {}
+    void cmf3v_2(int, int, int) const { static int x; ++x; }
 
     // 4
 
     int mf4_1(int, int, int, int) { return 0; }
-    int mf4_2(int, int, int, int) { return 0; }
+    int mf4_2(int, int, int, int) { return 1; }
 
     int cmf4_1(int, int, int, int) const { return 0; }
-    int cmf4_2(int, int, int, int) const { return 0; }
+    int cmf4_2(int, int, int, int) const { return 1; }
 
     void mf4v_1(int, int, int, int) {}
-    void mf4v_2(int, int, int, int) {}
+    void mf4v_2(int, int, int, int) { static int x; ++x; }
 
     void cmf4v_1(int, int, int, int) const {}
-    void cmf4v_2(int, int, int, int) const {}
+    void cmf4v_2(int, int, int, int) const { static int x; ++x; }
 
     // 5
 
     int mf5_1(int, int, int, int, int) { return 0; }
-    int mf5_2(int, int, int, int, int) { return 0; }
+    int mf5_2(int, int, int, int, int) { return 1; }
 
     int cmf5_1(int, int, int, int, int) const { return 0; }
-    int cmf5_2(int, int, int, int, int) const { return 0; }
+    int cmf5_2(int, int, int, int, int) const { return 1; }
 
     void mf5v_1(int, int, int, int, int) {}
-    void mf5v_2(int, int, int, int, int) {}
+    void mf5v_2(int, int, int, int, int) { static int x; ++x; }
 
     void cmf5v_1(int, int, int, int, int) const {}
-    void cmf5v_2(int, int, int, int, int) const {}
+    void cmf5v_2(int, int, int, int, int) const { static int x; ++x; }
 
     // 6
 
     int mf6_1(int, int, int, int, int, int) { return 0; }
-    int mf6_2(int, int, int, int, int, int) { return 0; }
+    int mf6_2(int, int, int, int, int, int) { return 1; }
 
     int cmf6_1(int, int, int, int, int, int) const { return 0; }
-    int cmf6_2(int, int, int, int, int, int) const { return 0; }
+    int cmf6_2(int, int, int, int, int, int) const { return 1; }
 
     void mf6v_1(int, int, int, int, int, int) {}
-    void mf6v_2(int, int, int, int, int, int) {}
+    void mf6v_2(int, int, int, int, int, int) { static int x; ++x; }
 
     void cmf6v_1(int, int, int, int, int, int) const {}
-    void cmf6v_2(int, int, int, int, int, int) const {}
+    void cmf6v_2(int, int, int, int, int, int) const { static int x; ++x; }
 
     // 7
 
     int mf7_1(int, int, int, int, int, int, int) { return 0; }
-    int mf7_2(int, int, int, int, int, int, int) { return 0; }
+    int mf7_2(int, int, int, int, int, int, int) { return 1; }
 
     int cmf7_1(int, int, int, int, int, int, int) const { return 0; }
-    int cmf7_2(int, int, int, int, int, int, int) const { return 0; }
+    int cmf7_2(int, int, int, int, int, int, int) const { return 1; }
 
     void mf7v_1(int, int, int, int, int, int, int) {}
-    void mf7v_2(int, int, int, int, int, int, int) {}
+    void mf7v_2(int, int, int, int, int, int, int) { static int x; ++x; }
 
     void cmf7v_1(int, int, int, int, int, int, int) const {}
-    void cmf7v_2(int, int, int, int, int, int, int) const {}
+    void cmf7v_2(int, int, int, int, int, int, int) const { static int x; ++x; }
 
     // 8
 
     int mf8_1(int, int, int, int, int, int, int, int) { return 0; }
-    int mf8_2(int, int, int, int, int, int, int, int) { return 0; }
+    int mf8_2(int, int, int, int, int, int, int, int) { return 1; }
 
     int cmf8_1(int, int, int, int, int, int, int, int) const { return 0; }
-    int cmf8_2(int, int, int, int, int, int, int, int) const { return 0; }
+    int cmf8_2(int, int, int, int, int, int, int, int) const { return 1; }
 
     void mf8v_1(int, int, int, int, int, int, int, int) {}
-    void mf8v_2(int, int, int, int, int, int, int, int) {}
+    void mf8v_2(int, int, int, int, int, int, int, int) { static int x; ++x; }
 
     void cmf8v_1(int, int, int, int, int, int, int, int) const {}
-    void cmf8v_2(int, int, int, int, int, int, int, int) const {}
+    void cmf8v_2(int, int, int, int, int, int, int, int) const { static int x; ++x; }
 
 };
 

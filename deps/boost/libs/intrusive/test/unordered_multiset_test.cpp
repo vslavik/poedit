@@ -10,16 +10,17 @@
 // See http://www.boost.org/libs/intrusive for documentation.
 //
 /////////////////////////////////////////////////////////////////////////////
-#include <boost/intrusive/detail/config_begin.hpp>
 #include <boost/intrusive/unordered_set.hpp>
 #include <boost/intrusive/pointer_traits.hpp>
+#include <boost/intrusive/detail/iterator.hpp>
 #include "itestvalue.hpp"
 #include "smart_ptr.hpp"
 #include "common_functors.hpp"
 #include <vector>
-#include <algorithm> //std::sort std::find
+#include <algorithm> //std::sort
 #include <set>
 #include <boost/detail/lightweight_test.hpp>
+
 #include "test_macros.hpp"
 #include "test_container.hpp"
 
@@ -67,6 +68,9 @@ struct hooks
       , store_hash<true>
       , optimize_multikey<true>
       >                                                           auto_member_hook_type;
+   typedef nonhook_node_member< unordered_node_traits< VoidPointer, true, true >,
+                                unordered_algorithms
+                              > nonhook_node_member_type;
 };
 
 static const std::size_t BucketSize = 8;
@@ -365,7 +369,7 @@ void test_unordered_multiset<ValueTraits, CacheBegin, CompareHash, Incremental>
             }
 
             //Erase the same values in both the intrusive and original vector
-            std::size_t erased_cnt = std::distance(it_beg_pos, it_end_pos);
+            std::size_t erased_cnt = boost::intrusive::iterator_distance(it_beg_pos, it_end_pos);
 
             //Erase values from the intrusive container
             testset.erase(it_beg_pos, it_end_pos);
@@ -499,24 +503,6 @@ void test_unordered_multiset<ValueTraits, CacheBegin, CompareHash, Incremental>
    BOOST_TEST(testset1.incremental_rehash(bucket_traits(
       pointer_traits<typename unordered_multiset_type::bucket_ptr>::
                               pointer_to(buckets1[0]), BucketSize)) == false);
-   BOOST_TEST(testset1.split_count() == BucketSize);
-   {  int init_values [] = { 1, 2, 2, 3, 4, 5 };
-   TEST_INTRUSIVE_SEQUENCE( init_values, testset1.begin() );  }
-
-   //This incremental rehash should success because the new size is twice the original
-   //and split_count is the same as the old bucket count
-   BOOST_TEST(testset1.incremental_rehash(bucket_traits(
-      pointer_traits<typename unordered_multiset_type::bucket_ptr>::
-         pointer_to(buckets1[0]), BucketSize*2)) == true);
-   BOOST_TEST(testset1.split_count() == BucketSize);
-   {  int init_values [] = { 1, 2, 2, 3, 4, 5 };
-   TEST_INTRUSIVE_SEQUENCE( init_values, testset1.begin() );  }
-
-   //This incremental rehash should also success because the new size is half the original
-   //and split_count is the same as the new bucket count
-   BOOST_TEST(testset1.incremental_rehash(bucket_traits(
-      pointer_traits<typename unordered_multiset_type::bucket_ptr>::
-         pointer_to(buckets1[0]), BucketSize)) == true);
    BOOST_TEST(testset1.split_count() == BucketSize);
    {  int init_values [] = { 1, 2, 2, 3, 4, 5 };
    TEST_INTRUSIVE_SEQUENCE( init_values, testset1.begin() );  }
@@ -687,7 +673,7 @@ void test_unordered_multiset<ValueTraits, CacheBegin, CompareHash, Incremental>:
 
    BOOST_TEST (range.first->value_ == 2);
    BOOST_TEST (range.second->value_ == 3);
-   BOOST_TEST (std::distance (range.first, range.second) == 2);
+   BOOST_TEST (boost::intrusive::iterator_distance (range.first, range.second) == 2);
 
    cmp_val.value_ = 7;
    BOOST_TEST (testset.find (cmp_val) == testset.end());
@@ -795,8 +781,7 @@ class test_main_template
                 >::test_all(data);
 
       test_unordered_multiset < typename detail::get_member_value_traits
-                  < value_type
-                  , member_hook< value_type
+                  < member_hook< value_type
                                , typename hooks<VoidPointer>::member_hook_type
                                , &value_type::node_
                                >
@@ -805,6 +790,15 @@ class test_main_template
                 , false
                 , Incremental
                 >::test_all(data);
+      test_unordered_multiset < nonhook_node_member_value_traits< value_type,
+                                                                  typename hooks<VoidPointer>::nonhook_node_member_type,
+                                                                  &value_type::nhn_member_,
+                                                                  safe_link
+                                                                >,
+                                false,
+                                false,
+                                Incremental
+                              >::test_all(data);
       return 0;
    }
 };
@@ -831,8 +825,7 @@ class test_main_template<VoidPointer, false, Incremental>
                 >::test_all(data);
 
       test_unordered_multiset < typename detail::get_member_value_traits
-                  < value_type
-                  , member_hook< value_type
+                  < member_hook< value_type
                                , typename hooks<VoidPointer>::member_hook_type
                                , &value_type::node_
                                >
@@ -852,8 +845,7 @@ class test_main_template<VoidPointer, false, Incremental>
                 >::test_all(data);
 
       test_unordered_multiset < typename detail::get_member_value_traits
-                  < value_type
-                  , member_hook< value_type
+                  < member_hook< value_type
                                , typename hooks<VoidPointer>::auto_member_hook_type
                                , &value_type::auto_node_
                                >
@@ -866,7 +858,7 @@ class test_main_template<VoidPointer, false, Incremental>
    }
 };
 
-int main( int, char* [] )
+int main()
 {
    test_main_template<void*, false, true>()();
    test_main_template<smart_ptr<void>, false, true>()();
@@ -878,5 +870,3 @@ int main( int, char* [] )
    test_main_template<smart_ptr<void>, true, false>()();
    return boost::report_errors();
 }
-
-#include <boost/intrusive/detail/config_end.hpp>

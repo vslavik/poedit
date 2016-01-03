@@ -1,7 +1,7 @@
 /* Boost numeric test of the runge kutta steppers test file
 
- Copyright 2012 Karsten Ahnert
  Copyright 2012 Mario Mulansky
+ Copyright 2012 Karsten Ahnert
 
  Distributed under the Boost Software License, Version 1.0.
  (See accompanying file LICENSE_1_0.txt or
@@ -26,6 +26,7 @@
 #include <boost/mpl/vector.hpp>
 
 #include <boost/numeric/odeint.hpp>
+#include <boost/numeric/odeint/stepper/extrapolation_stepper.hpp>
 
 using namespace boost::unit_test;
 using namespace boost::numeric::odeint;
@@ -142,7 +143,11 @@ typedef mpl::vector<
     runge_kutta_cash_karp54_classic< state_type > ,
     runge_kutta_cash_karp54< state_type > ,
     runge_kutta_dopri5< state_type > ,
-    runge_kutta_fehlberg78< state_type >
+    runge_kutta_fehlberg78< state_type > ,
+    extrapolation_stepper< 4, state_type > ,
+    extrapolation_stepper< 6, state_type > ,
+    extrapolation_stepper< 8, state_type > ,
+    extrapolation_stepper< 10, state_type >
     > runge_kutta_steppers;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE( runge_kutta_test , Stepper, runge_kutta_steppers )
@@ -156,7 +161,11 @@ typedef mpl::vector<
     runge_kutta_cash_karp54_classic< state_type > ,
     runge_kutta_cash_karp54< state_type > ,
     runge_kutta_dopri5< state_type > ,
-    runge_kutta_fehlberg78< state_type >
+    runge_kutta_fehlberg78< state_type > ,
+    extrapolation_stepper< 4, state_type > ,
+    extrapolation_stepper< 6, state_type > ,
+    extrapolation_stepper< 8, state_type > ,
+    extrapolation_stepper< 10, state_type >
     > runge_kutta_error_steppers;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE( runge_kutta_error_test , Stepper, runge_kutta_error_steppers )

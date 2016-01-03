@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../move.html" title="Chapter&#160;18.&#160;Boost.Move">
+<link rel="up" href="../move.html" title="Chapter&#160;19.&#160;Boost.Move">
 <link rel="prev" href="implementing_movable_classes.html" title="Implementing copyable and movable classes">
 <link rel="next" href="movable_only_classes.html" title="Movable but Non-Copyable Types">
 </head>
@@ -40,15 +40,15 @@
    <span class="keyword">public</span><span class="special">:</span>
    <span class="identifier">Base</span><span class="special">(){}</span>
 
-   <span class="identifier">Base</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Base</span> <span class="special">&amp;</span><span class="identifier">x</span><span class="special">)</span> <span class="special">{/**/}</span>             <span class="comment">// Copy ctor</span>
+   <span class="identifier">Base</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Base</span> <span class="special">&amp;/*</span><span class="identifier">x</span><span class="special">*/)</span> <span class="special">{/**/}</span>            <span class="comment">// Copy ctor</span>
 
-   <span class="identifier">Base</span><span class="special">(</span><span class="identifier">BOOST_RV_REF</span><span class="special">(</span><span class="identifier">Base</span><span class="special">)</span> <span class="identifier">x</span><span class="special">)</span> <span class="special">{/**/}</span>      <span class="comment">// Move ctor</span>
+   <span class="identifier">Base</span><span class="special">(</span><span class="identifier">BOOST_RV_REF</span><span class="special">(</span><span class="identifier">Base</span><span class="special">)</span> <span class="comment">/*x*/</span><span class="special">)</span> <span class="special">{/**/}</span>     <span class="comment">// Move ctor</span>
 
-   <span class="identifier">Base</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">BOOST_RV_REF</span><span class="special">(</span><span class="identifier">Base</span><span class="special">)</span> <span class="identifier">x</span><span class="special">)</span>
-   <span class="special">{/**/</span> <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;}</span>                   <span class="comment">// Move assign</span>
+   <span class="identifier">Base</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">BOOST_RV_REF</span><span class="special">(</span><span class="identifier">Base</span><span class="special">)</span> <span class="comment">/*x*/</span><span class="special">)</span>
+   <span class="special">{/**/</span> <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;}</span>                      <span class="comment">// Move assign</span>
 
-   <span class="identifier">Base</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">BOOST_COPY_ASSIGN_REF</span><span class="special">(</span><span class="identifier">Base</span><span class="special">)</span> <span class="identifier">x</span><span class="special">)</span>
-   <span class="special">{/**/</span> <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;}</span>                   <span class="comment">// Copy assign</span>
+   <span class="identifier">Base</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">BOOST_COPY_ASSIGN_REF</span><span class="special">(</span><span class="identifier">Base</span><span class="special">)</span> <span class="comment">/*x*/</span><span class="special">)</span>
+   <span class="special">{/**/</span> <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;}</span>                      <span class="comment">// Copy assign</span>
 
    <span class="keyword">virtual</span> <span class="identifier">Base</span> <span class="special">*</span><span class="identifier">clone</span><span class="special">()</span> <span class="keyword">const</span>
    <span class="special">{</span>  <span class="keyword">return</span> <span class="keyword">new</span> <span class="identifier">Base</span><span class="special">(*</span><span class="keyword">this</span><span class="special">);</span>  <span class="special">}</span>
@@ -85,19 +85,19 @@
    <span class="comment">// Compiler-generated copy constructor...</span>
 
    <span class="identifier">Derived</span><span class="special">(</span><span class="identifier">BOOST_RV_REF</span><span class="special">(</span><span class="identifier">Derived</span><span class="special">)</span> <span class="identifier">x</span><span class="special">)</span>             <span class="comment">// Move ctor</span>
-      <span class="special">:</span> <span class="identifier">Base</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">move</span><span class="special">(</span><span class="keyword">static_cast</span><span class="special">&lt;</span><span class="identifier">Base</span><span class="special">&amp;&gt;(</span><span class="identifier">x</span><span class="special">))),</span>
+      <span class="special">:</span> <span class="identifier">Base</span><span class="special">(</span><span class="identifier">BOOST_MOVE_BASE</span><span class="special">(</span><span class="identifier">Base</span><span class="special">,</span> <span class="identifier">x</span><span class="special">)),</span>
         <span class="identifier">mem_</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">move</span><span class="special">(</span><span class="identifier">x</span><span class="special">.</span><span class="identifier">mem_</span><span class="special">))</span> <span class="special">{</span> <span class="special">}</span>
 
    <span class="identifier">Derived</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">BOOST_RV_REF</span><span class="special">(</span><span class="identifier">Derived</span><span class="special">)</span> <span class="identifier">x</span><span class="special">)</span>  <span class="comment">// Move assign</span>
    <span class="special">{</span>
-      <span class="identifier">Base</span><span class="special">::</span><span class="keyword">operator</span><span class="special">=(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">move</span><span class="special">(</span><span class="keyword">static_cast</span><span class="special">&lt;</span><span class="identifier">Base</span><span class="special">&amp;&gt;(</span><span class="identifier">x</span><span class="special">)));</span>
-      <span class="identifier">mem_</span>  <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">move</span><span class="special">(</span><span class="identifier">x</span><span class="special">.</span><span class="identifier">mem_</span><span class="special">);</span>
+      <span class="identifier">Base</span><span class="special">::</span><span class="keyword">operator</span><span class="special">=(</span><span class="identifier">BOOST_MOVE_BASE</span><span class="special">(</span><span class="identifier">Base</span><span class="special">,</span> <span class="identifier">x</span><span class="special">));</span>
+      <span class="identifier">mem_</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">move</span><span class="special">(</span><span class="identifier">x</span><span class="special">.</span><span class="identifier">mem_</span><span class="special">);</span>
       <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;</span>
    <span class="special">}</span>
 
    <span class="identifier">Derived</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">BOOST_COPY_ASSIGN_REF</span><span class="special">(</span><span class="identifier">Derived</span><span class="special">)</span> <span class="identifier">x</span><span class="special">)</span>  <span class="comment">// Copy assign</span>
    <span class="special">{</span>
-      <span class="identifier">Base</span><span class="special">::</span><span class="keyword">operator</span><span class="special">=(</span><span class="keyword">static_cast</span><span class="special">&lt;</span><span class="keyword">const</span> <span class="identifier">Base</span><span class="special">&amp;&gt;(</span><span class="identifier">x</span><span class="special">));</span>
+      <span class="identifier">Base</span><span class="special">::</span><span class="keyword">operator</span><span class="special">=(</span><span class="identifier">x</span><span class="special">);</span>
       <span class="identifier">mem_</span>  <span class="special">=</span> <span class="identifier">x</span><span class="special">.</span><span class="identifier">mem_</span><span class="special">;</span>
       <span class="keyword">return</span> <span class="special">*</span><span class="keyword">this</span><span class="special">;</span>
    <span class="special">}</span>
@@ -142,7 +142,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2008-2012 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2008-2014 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

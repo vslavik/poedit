@@ -20,6 +20,11 @@ int main()
   BOOST_TEST(HaveAnotherMT<AType>::value);
   BOOST_TEST(ATemplateWithParms<AnotherType>::value);
   
+  // Passing non-class enclosing type will return false
+  
+  BOOST_TEST(!BOOST_TTI_HAS_TEMPLATE_GEN(AMemberTemplate)<unsigned char>::value);
+  BOOST_TEST(!HaveAnotherMT<AType *>::value);
+  
   return boost::report_errors();
 
   }

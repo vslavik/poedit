@@ -27,10 +27,6 @@ derivative of the gamma function:
 
 [optional_policy]
 
-There is no fully generic version of this function:  all the implementations
-are tuned to specific accuracy levels, the most precise of which delivers
-34-digits of precision.
-
 The return type of this function is computed using the __arg_pomotion_rules:
 the result is of type `double` when T is an integer type, and type T otherwise.
 
@@ -96,6 +92,14 @@ that is too small to have any effect on the result when evaluated at /BIG/.
 Choosing BIG=10 for up to 80-bit reals, and BIG=20 for 128-bit reals allows
 the series to truncated after a suitably small number of terms and evaluated
 as a polynomial in `1/(x*x)`.
+
+The arbitrary precision version of this function uses recurrence relations until
+x > BIG, and then evaluation via the asymptotic expansion above.  As special cases
+integer and half integer arguments are handled via:
+
+[equation digamma4]
+
+[equation digamma5]
 
 The rational approximation [jm_rationals] in the range [1,2] is derived as follows.
 

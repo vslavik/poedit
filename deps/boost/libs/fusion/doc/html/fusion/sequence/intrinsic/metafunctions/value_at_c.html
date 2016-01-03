@@ -4,7 +4,7 @@
 <title>value_at_c</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.1">
+<link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../metafunctions.html" title="Metafunctions">
 <link rel="prev" href="value_at.html" title="value_at">
 <link rel="next" href="has_key.html" title="has_key">
@@ -39,14 +39,14 @@
           </h6>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
     <span class="keyword">typename</span> <span class="identifier">Seq</span><span class="special">,</span>
-    <span class="keyword">int</span> <span class="identifier">M</span><span class="special">&gt;</span>
+    <span class="keyword">int</span> <span class="identifier">N</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">value_at_c</span>
 <span class="special">{</span>
     <span class="keyword">typedef</span> <span class="emphasis"><em>unspecified</em></span> <span class="identifier">type</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
 <div class="table">
-<a name="fusion.sequence.intrinsic.metafunctions.value_at_c.t0"></a><p class="title"><b>Table&#160;1.32.&#160;Parameters</b></p>
+<a name="fusion.sequence.intrinsic.metafunctions.value_at_c.t0"></a><p class="title"><b>Table&#160;1.31.&#160;Parameters</b></p>
 <div class="table-contents"><table class="table" summary="Parameters">
 <colgroup>
 <col>
@@ -92,7 +92,7 @@
 <tr>
 <td>
                     <p>
-                      <code class="computeroutput"><span class="identifier">M</span></code>
+                      <code class="computeroutput"><span class="identifier">N</span></code>
                     </p>
                   </td>
 <td>
@@ -114,14 +114,14 @@
             <span class="phrase"><a name="fusion.sequence.intrinsic.metafunctions.value_at_c.expression_semantics"></a></span><a class="link" href="value_at_c.html#fusion.sequence.intrinsic.metafunctions.value_at_c.expression_semantics">Expression
             Semantics</a>
           </h6>
-<pre class="programlisting"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">value_at_c</span><span class="special">&lt;</span><span class="identifier">Seq</span><span class="special">,</span> <span class="identifier">M</span><span class="special">&gt;::</span><span class="identifier">type</span>
+<pre class="programlisting"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">value_at_c</span><span class="special">&lt;</span><span class="identifier">Seq</span><span class="special">,</span> <span class="identifier">N</span><span class="special">&gt;::</span><span class="identifier">type</span>
 </pre>
 <p>
             <span class="bold"><strong>Return type</strong></span>: Any type
           </p>
 <p>
             <span class="bold"><strong>Semantics</strong></span>: Returns the actual type at
-            the <code class="computeroutput"><span class="identifier">M</span></code>th element of <code class="computeroutput"><span class="identifier">Seq</span></code>.
+            the <code class="computeroutput"><span class="identifier">N</span></code>th element of <code class="computeroutput"><span class="identifier">Seq</span></code>.
           </p>
 <h6>
 <a name="fusion.sequence.intrinsic.metafunctions.value_at_c.h3"></a>

@@ -1,19 +1,13 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test output in Qt .qm format.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mf-qt-1.qm"
 : ${MSGFMT=msgfmt}
-${MSGFMT} --qt -o mf-qt-1.qm ${top_srcdir}/tests/qttest_pl.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGFMT} --qt -o mf-qt-1.qm "$abs_srcdir"/qttest_pl.po || exit 1
 
 : ${CMP=cmp}
-${CMP} ${top_srcdir}/tests/qttest_pl.qm mf-qt-1.qm >/dev/null 2>/dev/null
+${CMP} "$abs_srcdir"/qttest_pl.qm mf-qt-1.qm >/dev/null 2>/dev/null
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

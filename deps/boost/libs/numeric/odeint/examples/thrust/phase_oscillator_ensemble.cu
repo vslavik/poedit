@@ -1,12 +1,13 @@
 /*
- * phase_oscillator_ensemble.cu
- *
- * The example how the phase_oscillator ensemble can be implemented using CUDA and thrust
- *
- *  Created on: July 15, 2011
- *      Author: karsten
- */
+ The example how the phase_oscillator ensemble can be implemented using CUDA and thrust
 
+ Copyright 2011-2013 Mario Mulansky
+ Copyright 2011 Karsten Ahnert
+
+ Distributed under the Boost Software License, Version 1.0.
+ (See accompanying file LICENSE_1_0.txt or
+ copy at http://www.boost.org/LICENSE_1_0.txt)
+ */
 
 #include <iostream>
 #include <fstream>
@@ -18,9 +19,7 @@
 #include <thrust/functional.h>
 
 #include <boost/numeric/odeint.hpp>
-#include <boost/numeric/odeint/external/thrust/thrust_algebra.hpp>
-#include <boost/numeric/odeint/external/thrust/thrust_operations.hpp>
-#include <boost/numeric/odeint/external/thrust/thrust_resize.hpp>
+#include <boost/numeric/odeint/external/thrust/thrust.hpp>
 
 #include <boost/timer.hpp>
 #include <boost/random/cauchy_distribution.hpp>
@@ -219,7 +218,7 @@ int main( int arc , char* argv[] )
     double dopri5_time = 0.0 , rk4_time = 0.0;
     {
         //[thrust_phase_ensemble_define_dopri5
-        typedef runge_kutta_dopri5< state_type , value_type , state_type , value_type , thrust_algebra , thrust_operations > stepper_type;
+        typedef runge_kutta_dopri5< state_type , value_type , state_type , value_type > stepper_type;
         //]
 
         ofstream fout( "phase_ensemble_dopri5.dat" );
@@ -250,7 +249,7 @@ int main( int arc , char* argv[] )
 
     {
         //[ thrust_phase_ensemble_define_rk4
-        typedef runge_kutta4< state_type , value_type , state_type , value_type , thrust_algebra , thrust_operations > stepper_type;
+        typedef runge_kutta4< state_type , value_type , state_type , value_type > stepper_type;
         //]
 
         ofstream fout( "phase_ensemble_rk4.dat" );

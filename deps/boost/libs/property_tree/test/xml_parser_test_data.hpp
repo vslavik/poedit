@@ -743,13 +743,9 @@ const char *ok_data_4 =
     "</rss>\n";
 
 // Correct, with UTF-8 data
-const char ok_data_5[] = {
-  '<', '?', 'x', 'm', 'l', ' ', 'v', 'e', 'r', 's', 'i', 'o', 'n', '=', '"',
-  '1', '.', '0', '"', ' ', 'e', 'n', 'c', 'o', 'd', 'i', 'n', 'g', '=', '"',
-  'u', 't', 'f', '-', '8', '"', '?', '>', '\n', /*39 chars*/
-  '<', 'd', 'o', 'c', '>', -61, -92, '<', '/', 'd', 'o', 'c', '>',
-  0
-};
+const char ok_data_5[] =
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" /*39 chars*/
+    "<doc>\xC3\xA4</doc>";
 
 // Erroneous
 const char *error_data_1 = 

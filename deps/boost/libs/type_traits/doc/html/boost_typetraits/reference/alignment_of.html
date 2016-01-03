@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>alignment_of</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="up" href="../reference.html" title="Alphabetical Reference">
 <link rel="prev" href="aligned_storage.html" title="aligned_storage">
@@ -62,6 +62,38 @@
 <div class="blockquote"><blockquote class="blockquote"><p>
           <code class="computeroutput"><span class="identifier">alignment_of</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value_type</span></code> is the type <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span></code>.
         </p></blockquote></div>
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../../../doc/src/images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+          Visual C++ users should note that MSVC has varying definitions of "alignment".
+          For example consider the following code:
+        </p>
+<p>
+</p>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> <span class="identifier">align_t</span><span class="special">;</span>
+<span class="identifier">assert</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment_of</span><span class="special">&lt;</span><span class="identifier">align_t</span><span class="special">&gt;::</span><span class="identifier">value</span> <span class="special">%</span> <span class="number">8</span> <span class="special">==</span> <span class="number">0</span><span class="special">);</span>
+<span class="identifier">align_t</span> <span class="identifier">a</span><span class="special">;</span>
+<span class="identifier">assert</span><span class="special">(((</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">uintptr_t</span><span class="special">)&amp;</span><span class="identifier">a</span> <span class="special">%</span> <span class="number">8</span><span class="special">)</span> <span class="special">==</span> <span class="number">0</span><span class="special">);</span>
+<span class="keyword">char</span> <span class="identifier">c</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
+<span class="identifier">align_t</span> <span class="identifier">a1</span><span class="special">;</span>
+<span class="identifier">assert</span><span class="special">(((</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">uintptr_t</span><span class="special">)&amp;</span><span class="identifier">a1</span> <span class="special">%</span> <span class="number">8</span><span class="special">)</span> <span class="special">==</span> <span class="number">0</span><span class="special">);</span>
+</pre>
+<p>
+        </p>
+<p>
+          In this code, even though <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment_of</span><span class="special">&lt;</span><span class="identifier">align_t</span><span class="special">&gt;</span></code> reports that <code class="computeroutput"><span class="identifier">align_t</span></code>
+          has 8-byte alignment, the final assert will fail for a 32-bit build because
+          <code class="computeroutput"><span class="identifier">a1</span></code> is not aligned on an
+          8 byte boundary. Note that had we used the MSVC intrinsic <code class="computeroutput"><span class="identifier">__alignof</span></code> in place of <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment_of</span></code>
+          we would still get the same result. In fact for MSVC alignment requirements
+          (and promises) only really apply to dynamic storage, and not the stack.
+        </p>
+</td></tr>
+</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

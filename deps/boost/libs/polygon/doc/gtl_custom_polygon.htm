@@ -78,6 +78,8 @@ namespace boost { namespace polygon {<br>
 <br>
 &nbsp; template &lt;&gt;<br>
 &nbsp; struct point_mutable_traits&lt;CPoint&gt; {<br>
+&nbsp;&nbsp;&nbsp; typedef int coordinate_type;<br>
+<br>
 &nbsp;&nbsp;&nbsp; static inline void set(CPoint&amp; point, orientation_2d orient, 
 int value) {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(orient == HORIZONTAL)<br>

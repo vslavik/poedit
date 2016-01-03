@@ -1,15 +1,11 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test basic functionality, duplicate detection, multiple domains.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mf-1"
 test -d mf-1 || mkdir mf-1
 test -d mf-1/LC_MESSAGES || mkdir mf-1/LC_MESSAGES
 
-tmpfiles="$tmpfiles mf-1-module1.po mf-1-module2.po"
 cat <<EOF > mf-1-module1.po
 #default domain "messages.mo"
 msgid	"SYS_(C)\n"
@@ -48,25 +44,19 @@ EOF
 # Without use of msgcat, expect a "duplicate message definition" error.
 : ${MSGFMT=msgfmt}
 if ${MSGFMT} -o mf-1/LC_MESSAGES/gen.mo mf-1-module1.po mf-1-module2.po 2> /dev/null; then
-  rm -fr $tmpfiles
   exit 1
 fi
 
 # With msgcat, it should work.
-tmpfiles="$tmpfiles mf-1-modules.po"
 : ${MSGCAT=msgcat} ${MSGFMT=msgfmt}
-${MSGCAT} --use-first -o mf-1-modules.po mf-1-module1.po mf-1-module2.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-${MSGFMT} -o mf-1/LC_MESSAGES/gen.mo mf-1-modules.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGCAT} --use-first -o mf-1-modules.po mf-1-module1.po mf-1-module2.po || exit 1
+${MSGFMT} -o mf-1/LC_MESSAGES/gen.mo mf-1-modules.po || exit 1
 
-tmpfiles="$tmpfiles mf-test1.out"
 : ${GETTEXT=gettext}
 TEXTDOMAINDIR=. LANGUAGE=mf-1 \
 ${GETTEXT} --env LC_ALL=en gen 'SYS_(C)
 ' | LC_ALL=C tr -d '\r' > mf-test1.out
 
-tmpfiles="$tmpfiles gtmf-test1.ok"
 cat <<EOF > gtmf-test1.ok
 MSGFMT(3) portable message object file compiler
 Copyright (C) 1995 Free Software Foundation
@@ -76,7 +66,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} gtmf-test1.ok mf-test1.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

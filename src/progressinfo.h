@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2000-2013 Vaclav Slavik
+ *  Copyright (C) 2000-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -46,7 +46,7 @@ class ProgressInfo
                 \param increment the delta
                 \return false if user cancelled operation, true otherwise
              */
-            void UpdateGauge(int increment = +1);
+            bool UpdateGauge(int increment = +1);
 
             /// Resets the gauge to given \a value.
             void ResetGauge(int value = 0);

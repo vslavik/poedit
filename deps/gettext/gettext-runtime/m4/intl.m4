@@ -1,5 +1,5 @@
-# intl.m4 serial 24 (gettext-0.18.3)
-dnl Copyright (C) 1995-2013 Free Software Foundation, Inc.
+# intl.m4 serial 29 (gettext-0.19)
+dnl Copyright (C) 1995-2014 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -42,6 +42,8 @@ AC_DEFUN([AM_INTL_SUBDIR],
   AC_REQUIRE([gl_XSIZE])dnl
   AC_REQUIRE([gl_FCNTL_O_FLAGS])dnl
   AC_REQUIRE([gt_INTL_MACOSX])dnl
+  AC_REQUIRE([gl_EXTERN_INLINE])dnl
+  AC_REQUIRE([gt_GL_ATTRIBUTE])dnl
 
   dnl Support for automake's --enable-silent-rules.
   case "$enable_silent_rules" in
@@ -230,6 +232,12 @@ AC_DEFUN([gt_INTL_SUBDIR_CORE],
     stpcpy strcasecmp strdup strtoul tsearch uselocale argz_count \
     argz_stringify argz_next __fsetlocking])
 
+  dnl Solaris 12 provides getlocalename_l, while Illumos doesn't have
+  dnl it nor the equivalent.
+  if test $ac_cv_func_uselocale = yes; then
+    AC_CHECK_FUNCS([getlocalename_l])
+  fi
+
   dnl Use the *_unlocked functions only if they are declared.
   dnl (because some of them were defined without being declared in Solaris
   dnl 2.5.1 but were removed in Solaris 2.6, whereas we want binaries built
@@ -240,8 +248,7 @@ AC_DEFUN([gt_INTL_SUBDIR_CORE],
 
   dnl intl/plural.c is generated from intl/plural.y. It requires bison,
   dnl because plural.y uses bison specific features. It requires at least
-  dnl bison-1.26 because earlier versions generate a plural.c that doesn't
-  dnl compile.
+  dnl bison-2.7 for %define api.pure.
   dnl bison is only needed for the maintainer (who touches plural.y). But in
   dnl order to avoid separate Makefiles or --enable-maintainer-mode, we put
   dnl the rule in general Makefile. Now, some people carelessly touch the
@@ -258,7 +265,7 @@ changequote(<<,>>)dnl
     ac_prog_version=`$INTLBISON --version 2>&1 | sed -n 's/^.*GNU Bison.* \([0-9]*\.[0-9.]*\).*$/\1/p'`
     case $ac_prog_version in
       '') ac_prog_version="v. ?.??, bad"; ac_verc_fail=yes;;
-      1.2[6-9]* | 1.[3-9][0-9]* | [2-9].*)
+      2.[7-9]* | [3-9].*)
 changequote([,])dnl
          ac_prog_version="$ac_prog_version, ok"; ac_verc_fail=no;;
       *) ac_prog_version="$ac_prog_version, bad"; ac_verc_fail=yes;;
@@ -269,3 +276,29 @@ changequote([,])dnl
     INTLBISON=:
   fi
 ])
+
+dnl Copies _GL_UNUSED and _GL_ATTRIBUTE_PURE definitions from
+dnl gnulib-common.m4 as a fallback, if the project isn't using Gnulib.
+AC_DEFUN([gt_GL_ATTRIBUTE], [
+  m4_ifndef([gl_[]COMMON],
+    AH_VERBATIM([gt_gl_attribute],
+[/* Define as a marker that can be attached to declarations that might not
+    be used.  This helps to reduce warnings, such as from
+    GCC -Wunused-parameter.  */
+#ifndef _GL_UNUSED
+# if __GNUC__ >= 3 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)
+#  define _GL_UNUSED __attribute__ ((__unused__))
+# else
+#  define _GL_UNUSED
+# endif
+#endif
+
+/* The __pure__ attribute was added in gcc 2.96.  */
+#ifndef _GL_ATTRIBUTE_PURE
+# if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
+#  define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
+# else
+#  define _GL_ATTRIBUTE_PURE /* empty */
+# endif
+#endif
+]))])

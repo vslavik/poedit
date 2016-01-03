@@ -6,7 +6,7 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="libraries.html" title="Part&#160;I.&#160;The Boost C++ Libraries (BoostBook Subset)">
-<link rel="prev" href="ref/ack.html" title="Acknowledgements">
+<link rel="prev" href="ratio/appendices.html" title="Appendices">
 <link rel="next" href="signals/tutorial.html" title="Tutorial">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="ref/ack.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="libraries.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="signals/tutorial.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="ratio/appendices.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="libraries.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="signals/tutorial.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="chapter">
 <div class="titlepage"><div>
@@ -31,7 +31,7 @@
 </h3></div></div>
 <div><p class="copyright">Copyright &#169; 2001-2004 Douglas Gregor</p></div>
 <div><div class="legalnotice">
-<a name="idp207475672"></a><p>Use, modification and distribution is subject to the Boost
+<a name="idp419035376"></a><p>Use, modification and distribution is subject to the Boost
     Software License, Version 1.0. (See accompanying file
     <code class="filename">LICENSE_1_0.txt</code> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)</p>
 </div></div>
@@ -39,17 +39,17 @@
 <div class="toc">
 <p><b>Table of Contents</b></p>
 <dl class="toc">
-<dt><span class="section"><a href="signals.html#idp207477144">Introduction</a></span></dt>
+<dt><span class="section"><a href="signals.html#idp419038144">Introduction</a></span></dt>
 <dt><span class="section"><a href="signals/tutorial.html">Tutorial</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="signals/tutorial.html#idp207482184">How to Read this Tutorial</a></span></dt>
-<dt><span class="section"><a href="signals/tutorial.html#idp207485960">Compatibility Note</a></span></dt>
-<dt><span class="section"><a href="signals/tutorial.html#idp207492712">Hello, World! (Beginner)</a></span></dt>
-<dt><span class="section"><a href="signals/tutorial.html#idp207502024">Calling multiple slots</a></span></dt>
-<dt><span class="section"><a href="signals/tutorial.html#idp207526824">Passing values to and from slots</a></span></dt>
-<dt><span class="section"><a href="signals/tutorial.html#idp207581720">Connection Management</a></span></dt>
-<dt><span class="section"><a href="signals/tutorial.html#idp207628136">Example: Document-View</a></span></dt>
-<dt><span class="section"><a href="signals/tutorial.html#idp207635784">Linking against the Signals library</a></span></dt>
+<dt><span class="section"><a href="signals/tutorial.html#idp419046320">How to Read this Tutorial</a></span></dt>
+<dt><span class="section"><a href="signals/tutorial.html#idp419053104">Compatibility Note</a></span></dt>
+<dt><span class="section"><a href="signals/tutorial.html#idp419066784">Hello, World! (Beginner)</a></span></dt>
+<dt><span class="section"><a href="signals/tutorial.html#idp419083952">Calling multiple slots</a></span></dt>
+<dt><span class="section"><a href="signals/tutorial.html#idp419130768">Passing values to and from slots</a></span></dt>
+<dt><span class="section"><a href="signals/tutorial.html#idp419237648">Connection Management</a></span></dt>
+<dt><span class="section"><a href="signals/tutorial.html#idp419324768">Example: Document-View</a></span></dt>
+<dt><span class="section"><a href="signals/tutorial.html#idp419339952">Linking against the Signals library</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="signals/reference.html">Reference</a></span></dt>
 <dd><dl>
@@ -63,27 +63,27 @@
 <dt><span class="section"><a href="signals/s04.html">Frequently Asked Questions</a></span></dt>
 <dt><span class="section"><a href="signals/s05.html">Design Overview</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="signals/s05.html#idp208193528">Type Erasure</a></span></dt>
-<dt><span class="section"><a href="signals/s05.html#idp208197720"><code class="computeroutput">connection</code> class</a></span></dt>
-<dt><span class="section"><a href="signals/s05.html#idp208204776">Slot Call Iterator</a></span></dt>
-<dt><span class="section"><a href="signals/s05.html#idp208216712"><code class="computeroutput">visit_each</code> function template</a></span></dt>
+<dt><span class="section"><a href="signals/s05.html#idp420448768">Type Erasure</a></span></dt>
+<dt><span class="section"><a href="signals/s05.html#idp420456032"><code class="computeroutput">connection</code> class</a></span></dt>
+<dt><span class="section"><a href="signals/s05.html#idp420469296">Slot Call Iterator</a></span></dt>
+<dt><span class="section"><a href="signals/s05.html#idp420491584"><code class="computeroutput">visit_each</code> function template</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="signals/s06.html">Design Rationale</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="signals/s06.html#idp208226072">Choice of Slot Definitions</a></span></dt>
-<dt><span class="section"><a href="signals/s06.html#idp208247400">User-level Connection Management</a></span></dt>
-<dt><span class="section"><a href="signals/s06.html#idp208257304">Combiner Interface</a></span></dt>
-<dt><span class="section"><a href="signals/s06.html#idp208262120">Connection Interfaces: +=  operator</a></span></dt>
-<dt><span class="section"><a href="signals/s06.html#idp208272392"><code class="computeroutput">trackable</code> rationale</a></span></dt>
-<dt><span class="section"><a href="signals/s06.html#idp208283368">Comparison with other Signal/Slot implementations</a></span></dt>
+<dt><span class="section"><a href="signals/s06.html#idp420508656">Choice of Slot Definitions</a></span></dt>
+<dt><span class="section"><a href="signals/s06.html#idp420518896">User-level Connection Management</a></span></dt>
+<dt><span class="section"><a href="signals/s06.html#idp420537152">Combiner Interface</a></span></dt>
+<dt><span class="section"><a href="signals/s06.html#idp420552240">Connection Interfaces: +=  operator</a></span></dt>
+<dt><span class="section"><a href="signals/s06.html#idp420571616"><code class="computeroutput">trackable</code> rationale</a></span></dt>
+<dt><span class="section"><a href="signals/s06.html#idp420591728">Comparison with other Signal/Slot implementations</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="signals/tests.html">Testsuite</a></span></dt>
-<dd><dl><dt><span class="section"><a href="signals/tests.html#idp208290744">Acceptance tests</a></span></dt></dl></dd>
+<dd><dl><dt><span class="section"><a href="signals/tests.html#idp420607088">Acceptance tests</a></span></dt></dl></dd>
 </dl>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="idp207477144"></a>Introduction</h2></div></div></div>
+<a name="idp419038144"></a>Introduction</h2></div></div></div>
 <div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../doc/src/images/note.png"></td>
@@ -118,12 +118,12 @@ combined.</p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: May 04, 2004 at 19:17:23 +0100</small></p></td>
+<td align="left"></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="ref/ack.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="libraries.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="signals/tutorial.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="ratio/appendices.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="libraries.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="signals/tutorial.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

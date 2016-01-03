@@ -35,7 +35,6 @@ struct X {
     template <class T> operator T&() const;
 };
 
-BOOST_TT_BROKEN_COMPILER_SPEC(X)
     
 int main()
 {

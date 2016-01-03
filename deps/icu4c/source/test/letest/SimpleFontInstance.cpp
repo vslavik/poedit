@@ -1,7 +1,7 @@
 /*
  *******************************************************************************
  *
- *   Copyright (C) 1999-2013, International Business Machines
+ *   Copyright (C) 1999-2015, International Business Machines
  *   Corporation and others.  All Rights Reserved.
  *
  *******************************************************************************
@@ -17,7 +17,10 @@
 #include "layout/LETypes.h"
 #include "layout/LEFontInstance.h"
 
+#ifndef USING_ICULEHB
 #include "CanonShaping.h"
+#endif
+
 #include "SimpleFontInstance.h"
 
 SimpleFontInstance::SimpleFontInstance(float pointSize, LEErrorCode &status)
@@ -38,8 +41,10 @@ SimpleFontInstance::~SimpleFontInstance()
     // nothing to do...
 }
 
-const void *SimpleFontInstance::getFontTable(LETag tableTag) const
+const void *SimpleFontInstance::getFontTable(LETag tableTag, size_t &length) const
 {
+  length = -1; // unknown for this test.
+#ifndef USING_ICULEHB
     if (tableTag == LE_GSUB_TABLE_TAG) {
         return CanonShaping::glyphSubstitutionTable;
     }
@@ -47,7 +52,7 @@ const void *SimpleFontInstance::getFontTable(LETag tableTag) const
     if (tableTag == LE_GDEF_TABLE_TAG) {
         return CanonShaping::glyphDefinitionTable;
     }
-
+#endif
     return NULL;
 }
 
@@ -60,6 +65,7 @@ void SimpleFontInstance::getGlyphAdvance(LEGlyphID glyph, LEPoint &advance) cons
         advance.fX = 0;
     }
 #else
+    (void)glyph;  // Suppress unused parameter compiler warning.
     advance.fX = xUnitsToPoints(2048);
 #endif
 

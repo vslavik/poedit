@@ -147,7 +147,7 @@ boman_et_al_graph_coloring
   typedef typename process_group_type::communication_category
     communication_category;
   static const bool asynchronous = 
-    is_convertible<communication_category, immediate_process_group_tag>::value;
+    is_convertible<communication_category, boost::parallel::immediate_process_group_tag>::value;
   process_group_type pg = process_group(g);
 
   // U_i <- V_i

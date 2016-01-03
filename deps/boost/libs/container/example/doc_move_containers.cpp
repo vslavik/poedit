@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2009-2012. Distributed under the Boost
+// (C) Copyright Ion Gaztanaga 2009-2013. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying file
 // LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
@@ -11,7 +11,7 @@
 #include <boost/container/detail/workaround.hpp>
 //[doc_move_containers
 #include <boost/container/vector.hpp>
-#include <boost/move/utility.hpp>
+#include <boost/move/utility_core.hpp>
 #include <cassert>
 
 //Non-copyable class

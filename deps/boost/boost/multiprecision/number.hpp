@@ -41,7 +41,7 @@ class number
 public:
    typedef Backend backend_type;
    BOOST_MP_FORCEINLINE BOOST_CONSTEXPR number() BOOST_NOEXCEPT_IF(noexcept(Backend())) {}
-   BOOST_MP_FORCEINLINE BOOST_CONSTEXPR number(const number& e) BOOST_NOEXCEPT_IF(noexcept(Backend(static_cast<const Backend&>(std::declval<Backend>())))) : m_backend(e.m_backend){}
+   BOOST_MP_FORCEINLINE BOOST_CONSTEXPR number(const number& e) BOOST_NOEXCEPT_IF(noexcept(Backend(std::declval<Backend const&>()))) : m_backend(e.m_backend){}
    template <class V>
    BOOST_MP_FORCEINLINE number(const V& v, typename boost::enable_if_c<
             (boost::is_arithmetic<V>::value || is_same<std::string, V>::value || is_convertible<V, const char*>::value)
@@ -55,16 +55,21 @@ public:
    BOOST_MP_FORCEINLINE BOOST_CONSTEXPR number(const V& v, typename boost::enable_if_c<
             is_convertible<typename detail::canonical<V, Backend>::type, Backend>::value
             && !detail::is_restricted_conversion<typename detail::canonical<V, Backend>::type, Backend>::value
-         >::type* = 0)
+   >::type* = 0) 
+#ifndef BOOST_INTEL
+          BOOST_NOEXCEPT_IF(noexcept(Backend(std::declval<typename detail::canonical<V, Backend>::type const&>())))
+#endif
       : m_backend(canonical_value(v)) {}
-   BOOST_MP_FORCEINLINE BOOST_CONSTEXPR number(const number& e, unsigned digits10)
+   BOOST_MP_FORCEINLINE BOOST_CONSTEXPR number(const number& e, unsigned digits10) 
+      BOOST_NOEXCEPT_IF(noexcept(Backend(std::declval<Backend const&>(), std::declval<unsigned>())))
       : m_backend(e.m_backend, digits10){}
    template <class V>
    explicit BOOST_MP_FORCEINLINE number(const V& v, typename boost::enable_if_c<
             (boost::is_arithmetic<V>::value || is_same<std::string, V>::value || is_convertible<V, const char*>::value)
             && !detail::is_explicitly_convertible<typename detail::canonical<V, Backend>::type, Backend>::value
             && detail::is_restricted_conversion<typename detail::canonical<V, Backend>::type, Backend>::value
-         >::type* = 0)
+         >::type* = 0) 
+         BOOST_NOEXCEPT_IF(noexcept(std::declval<Backend&>() = std::declval<typename detail::canonical<V, Backend>::type const&>()))
    {
       m_backend = canonical_value(v);
    }
@@ -74,6 +79,7 @@ public:
             && (detail::is_restricted_conversion<typename detail::canonical<V, Backend>::type, Backend>::value
                 || !is_convertible<typename detail::canonical<V, Backend>::type, Backend>::value)
          >::type* = 0)
+         BOOST_NOEXCEPT_IF(noexcept(Backend(std::declval<typename detail::canonical<V, Backend>::type const&>())))
       : m_backend(canonical_value(v)) {}
    /*
    //
@@ -89,12 +95,12 @@ public:
    */
    template<expression_template_option ET>
    BOOST_MP_FORCEINLINE BOOST_CONSTEXPR number(const number<Backend, ET>& val)
-      BOOST_NOEXCEPT_IF(noexcept(Backend(static_cast<const Backend&>(std::declval<Backend>())))) : m_backend(val.backend()) {}
+      BOOST_NOEXCEPT_IF(noexcept(Backend(std::declval<Backend const&>()))) : m_backend(val.backend()) {}
 
    template <class Other, expression_template_option ET>
    BOOST_MP_FORCEINLINE number(const number<Other, ET>& val,
          typename boost::enable_if_c<(boost::is_convertible<Other, Backend>::value && !detail::is_restricted_conversion<Other, Backend>::value)>::type* = 0)
-      BOOST_NOEXCEPT_IF(noexcept(Backend(static_cast<const Other&>(std::declval<Other>()))))
+      BOOST_NOEXCEPT_IF(noexcept(Backend(std::declval<Other const&>())))
       : m_backend(val.backend()) {}
 
    template <class Other, expression_template_option ET>
@@ -111,7 +117,7 @@ public:
    explicit BOOST_MP_FORCEINLINE number(const number<Other, ET>& val, typename boost::enable_if_c<
          (detail::is_explicitly_convertible<Other, Backend>::value
             && (detail::is_restricted_conversion<Other, Backend>::value || !boost::is_convertible<Other, Backend>::value))
-         >::type* = 0) BOOST_NOEXCEPT_IF(noexcept(Backend(static_cast<const Other&>(std::declval<Other>()))))
+         >::type* = 0) BOOST_NOEXCEPT_IF(noexcept(Backend(std::declval<Other const&>())))
       : m_backend(val.backend()) {}
 
    template <class V>
@@ -143,7 +149,7 @@ public:
    }
 
    BOOST_MP_FORCEINLINE number& operator=(const number& e)
-      BOOST_NOEXCEPT_IF(noexcept(std::declval<Backend>() = static_cast<const Backend&>(std::declval<Backend>())))
+      BOOST_NOEXCEPT_IF(noexcept(std::declval<Backend&>() = std::declval<Backend const&>()))
    {
       m_backend = e.m_backend;
       return *this;
@@ -152,14 +158,14 @@ public:
    template <class V>
    BOOST_MP_FORCEINLINE typename boost::enable_if<is_convertible<V, self_type>, number<Backend, ExpressionTemplates>& >::type
       operator=(const V& v)
-      BOOST_NOEXCEPT_IF(noexcept(std::declval<Backend>() = static_cast<typename boost::multiprecision::detail::canonical<V, Backend>::type const&>(std::declval<typename boost::multiprecision::detail::canonical<V, Backend>::type>())))
+      BOOST_NOEXCEPT_IF(noexcept(std::declval<Backend&>() = std::declval<const typename detail::canonical<V, Backend>::type&>()))
    {
       m_backend = canonical_value(v);
       return *this;
    }
    template <class V>
    BOOST_MP_FORCEINLINE number<Backend, ExpressionTemplates>& assign(const V& v)
-      BOOST_NOEXCEPT_IF(noexcept(std::declval<Backend>() = static_cast<typename boost::multiprecision::detail::canonical<V, Backend>::type const&>(std::declval<typename boost::multiprecision::detail::canonical<V, Backend>::type>())))
+      BOOST_NOEXCEPT_IF(noexcept(std::declval<Backend&>() = std::declval<const typename detail::canonical<V, Backend>::type&>()))
    {
       m_backend = canonical_value(v);
       return *this;
@@ -192,7 +198,7 @@ public:
    BOOST_MP_FORCEINLINE BOOST_CONSTEXPR number(number&& r)
       BOOST_NOEXCEPT_IF(noexcept(Backend(std::declval<Backend>())))
       : m_backend(static_cast<Backend&&>(r.m_backend)){}
-   BOOST_MP_FORCEINLINE number& operator=(number&& r) BOOST_NOEXCEPT
+   BOOST_MP_FORCEINLINE number& operator=(number&& r) BOOST_NOEXCEPT_IF(noexcept(std::declval<Backend&>() = std::declval<Backend>()))
    {
       m_backend = static_cast<Backend&&>(r.m_backend);
       return *this;
@@ -541,7 +547,7 @@ public:
    //
    // swap:
    //
-   BOOST_MP_FORCEINLINE void swap(self_type& other) BOOST_NOEXCEPT
+   BOOST_MP_FORCEINLINE void swap(self_type& other) BOOST_NOEXCEPT_IF(noexcept(std::declval<Backend>().swap(std::declval<Backend&>())))
    {
       m_backend.swap(other.backend());
    }
@@ -578,7 +584,7 @@ private:
       eval_convert_to(result, m_backend);
    }
    template <class B2, expression_template_option ET>
-   void convert_to_imp(number<B2, ET>* result)const
+   typename enable_if_c<detail::is_explicitly_convertible<Backend, B2>::value>::type convert_to_imp(number<B2, ET>* result)const
    {
       result->assign(*this);
    }
@@ -598,7 +604,7 @@ public:
    // Use in boolean context, and explicit conversion operators:
    //
 #ifndef BOOST_NO_CXX11_EXPLICIT_CONVERSION_OPERATORS
-#  if defined(__GNUC__) && (__GNUC__ == 4) && (__GNUC_MINOR__ < 7)
+#  if (defined(__GNUC__) && (__GNUC__ == 4) && (__GNUC_MINOR__ < 7)) || (defined(BOOST_INTEL) && (BOOST_INTEL <= 1500))
    //
    // Horrible workaround for gcc-4.6.x which always prefers the template
    // operator bool() rather than the non-template operator when converting to
@@ -1382,9 +1388,13 @@ private:
       do_multiplies(e.left(), typename left_type::tag_type());
       do_multiplies(e.right(), typename right_type::tag_type());
    }
-
+   //
+   // This rearrangement is disabled for integer types, the test on sizeof(Exp) is simply to make
+   // the disable_if dependent on the template argument (the size of 1 can never occur in practice).
+   //
    template <class Exp>
-   void do_multiplies(const Exp& e, const detail::divides&)
+   typename boost::disable_if_c<boost::multiprecision::number_category<self_type>::value == boost::multiprecision::number_kind_integer || sizeof(Exp) == 1>::type 
+      do_multiplies(const Exp& e, const detail::divides&)
    {
       typedef typename Exp::left_type left_type;
       typedef typename Exp::right_type right_type;
@@ -1399,8 +1409,13 @@ private:
       eval_multiply(m_backend, canonical_value(e.left().value()));
       eval_multiply(m_backend, canonical_value(e.right().value()));
    }
+   //
+   // This rearrangement is disabled for integer types, the test on sizeof(Exp) is simply to make
+   // the disable_if dependent on the template argument (the size of 1 can never occur in practice).
+   //
    template <class Exp>
-   void do_multiplies(const Exp& e, const detail::divide_immediates&)
+   typename boost::disable_if_c<boost::multiprecision::number_category<self_type>::value == boost::multiprecision::number_kind_integer || sizeof(Exp) == 1>::type
+      do_multiplies(const Exp& e, const detail::divide_immediates&)
    {
       using default_ops::eval_multiply;
       using default_ops::eval_divide;
@@ -1429,34 +1444,51 @@ private:
       do_divide(e.left(), typename left_type::tag_type());
       m_backend.negate();
    }
-
+   //
+   // This rearrangement is disabled for integer types, the test on sizeof(Exp) is simply to make
+   // the disable_if dependent on the template argument (the size of 1 can never occur in practice).
+   //
    template <class Exp>
-   void do_divide(const Exp& e, const detail::multiplies&)
+   typename boost::disable_if_c<boost::multiprecision::number_category<self_type>::value == boost::multiprecision::number_kind_integer || sizeof(Exp) == 1>::type
+      do_divide(const Exp& e, const detail::multiplies&)
    {
       typedef typename Exp::left_type left_type;
       typedef typename Exp::right_type right_type;
       do_divide(e.left(), typename left_type::tag_type());
       do_divide(e.right(), typename right_type::tag_type());
    }
-
+   //
+   // This rearrangement is disabled for integer types, the test on sizeof(Exp) is simply to make
+   // the disable_if dependent on the template argument (the size of 1 can never occur in practice).
+   //
    template <class Exp>
-   void do_divide(const Exp& e, const detail::divides&)
+   typename boost::disable_if_c<boost::multiprecision::number_category<self_type>::value == boost::multiprecision::number_kind_integer || sizeof(Exp) == 1>::type
+      do_divide(const Exp& e, const detail::divides&)
    {
       typedef typename Exp::left_type left_type;
       typedef typename Exp::right_type right_type;
       do_divide(e.left(), typename left_type::tag_type());
       do_multiplies(e.right(), typename right_type::tag_type());
    }
-
+   //
+   // This rearrangement is disabled for integer types, the test on sizeof(Exp) is simply to make
+   // the disable_if dependent on the template argument (the size of 1 can never occur in practice).
+   //
    template <class Exp>
-   void do_divides(const Exp& e, const detail::multiply_immediates&)
+   typename boost::disable_if_c<boost::multiprecision::number_category<self_type>::value == boost::multiprecision::number_kind_integer || sizeof(Exp) == 1>::type
+      do_divides(const Exp& e, const detail::multiply_immediates&)
    {
       using default_ops::eval_divide;
       eval_divide(m_backend, canonical_value(e.left().value()));
       eval_divide(m_backend, canonical_value(e.right().value()));
    }
+   //
+   // This rearrangement is disabled for integer types, the test on sizeof(Exp) is simply to make
+   // the disable_if dependent on the template argument (the size of 1 can never occur in practice).
+   //
    template <class Exp>
-   void do_divides(const Exp& e, const detail::divide_immediates&)
+   typename boost::disable_if_c<boost::multiprecision::number_category<self_type>::value == boost::multiprecision::number_kind_integer || sizeof(Exp) == 1>::type
+      do_divides(const Exp& e, const detail::divide_immediates&)
    {
       using default_ops::eval_multiply;
       using default_ops::eval_divide;
@@ -1660,7 +1692,7 @@ inline std::ostream& operator << (std::ostream& os, const number<Backend, Expres
       if((os.flags() & std::ios_base::left) == std::ios_base::left)
          s.append(static_cast<std::string::size_type>(ss - s.size()), fill);
       else
-         s.insert(0, static_cast<std::string::size_type>(ss - s.size()), fill);
+         s.insert(static_cast<std::string::size_type>(0), static_cast<std::string::size_type>(ss - s.size()), fill);
    }
    return os << s;
 }
@@ -1693,7 +1725,8 @@ inline std::istream& operator >> (std::istream& is, number<Backend, ExpressionTe
 }
 
 template <class Backend, expression_template_option ExpressionTemplates>
-BOOST_MP_FORCEINLINE void swap(number<Backend, ExpressionTemplates>& a, number<Backend, ExpressionTemplates>& b)
+BOOST_MP_FORCEINLINE void swap(number<Backend, ExpressionTemplates>& a, number<Backend, ExpressionTemplates>& b) 
+   BOOST_NOEXCEPT_IF(noexcept(std::declval<number<Backend, ExpressionTemplates>&>() = std::declval<number<Backend, ExpressionTemplates>&>()))
 {
    a.swap(b);
 }
@@ -1721,9 +1754,9 @@ inline std::istream& operator >> (std::istream& is, rational<multiprecision::num
       is.get();
    }
    if(hex_format && ((s1[0] != '0') || (s1[1] != 'x')))
-      s1.insert(0, "0x");
+      s1.insert(static_cast<std::string::size_type>(0), "0x");
    if(oct_format && (s1[0] != '0'))
-      s1.insert(0, "0");
+      s1.insert(static_cast<std::string::size_type>(0), "0");
    v1.assign(s1);
    s1.erase();
    if(c == '/')
@@ -1737,9 +1770,9 @@ inline std::istream& operator >> (std::istream& is, rational<multiprecision::num
          is.get();
       }
       if(hex_format && ((s1[0] != '0') || (s1[1] != 'x')))
-         s1.insert(0, "0x");
+         s1.insert(static_cast<std::string::size_type>(0), "0x");
       if(oct_format && (s1[0] != '0'))
-         s1.insert(0, "0");
+         s1.insert(static_cast<std::string::size_type>(0), "0");
       v2.assign(s1);
    }
    else
@@ -1782,6 +1815,17 @@ template <class T, multiprecision::expression_template_option ExpressionTemplate
 inline multiprecision::number<T, ExpressionTemplates> denominator(const rational<multiprecision::number<T, ExpressionTemplates> >& a)
 {
    return a.denominator();
+}
+
+namespace multiprecision
+{
+
+template <class I>
+struct component_type<boost::rational<I> >
+{
+   typedef I type;
+};
+
 }
 
 #ifdef BOOST_MSVC

@@ -7,8 +7,13 @@
     http://www.boost.org/LICENSE_1_0.txt).
 ==============================================================================*/
 
+#include <boost/config.hpp>
 #include <boost/fusion/functional/invocation/invoke_procedure.hpp>
 #include <boost/detail/lightweight_test.hpp>
+
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+#include <functional>
+#endif
 
 #include <memory>
 #include <boost/noncopyable.hpp>
@@ -23,6 +28,8 @@
 #include <boost/fusion/view/iterator_range.hpp>
 #include <boost/fusion/iterator/advance.hpp>
 #include <boost/fusion/algorithm/transformation/join.hpp>
+
+#include "../compile_time/sfinae_friendly.hpp"
 
 namespace mpl = boost::mpl;
 namespace fusion = boost::fusion;
@@ -61,18 +68,72 @@ class members
     int binary_c(int & i, object) const { return i = data + 6; }
 };
 
-members that;
-std::auto_ptr<members> spt_that(new members);
-std::auto_ptr<members const> spt_that_c(new members);
+#ifdef BOOST_NO_CXX11_SMART_PTR
+typedef std::auto_ptr<members      >       members_ptr;
+typedef std::auto_ptr<members const> const_members_ptr;
+#else
+typedef std::unique_ptr<members      >       members_ptr;
+typedef std::unique_ptr<members const> const_members_ptr;
+#endif
 
-fusion::single_view<members  > sv_obj_ctx(  that);
-fusion::single_view<members &> sv_ref_ctx(  that);
-fusion::single_view<members *> sv_ptr_ctx(& that);
-fusion::single_view<members const  > sv_obj_c_ctx(  that);
-fusion::single_view<members const &> sv_ref_c_ctx(  that);
-fusion::single_view<members const *> sv_ptr_c_ctx(& that);
-fusion::single_view<std::auto_ptr<members> const &> sv_spt_ctx(spt_that);
-fusion::single_view< std::auto_ptr<members const> const &> sv_spt_c_ctx(spt_that_c);
+members that;
+members_ptr spt_that(new members);
+const_members_ptr spt_that_c(new members);
+
+typedef fusion::single_view<members  > sv_obj;
+typedef fusion::single_view<members &> sv_ref;
+typedef fusion::single_view<members *> sv_ptr;
+typedef fusion::single_view<members const  > sv_obj_c;
+typedef fusion::single_view<members const &> sv_ref_c;
+typedef fusion::single_view<members const *> sv_ptr_c;
+typedef fusion::single_view<members_ptr const &> sv_spt;
+typedef fusion::single_view<const_members_ptr const &> sv_spt_c;
+
+sv_obj sv_obj_ctx(  that);
+sv_ref sv_ref_ctx(  that);
+sv_ptr sv_ptr_ctx(& that);
+sv_obj_c sv_obj_c_ctx(  that);
+sv_ref_c sv_ref_c_ctx(  that);
+sv_ptr_c sv_ptr_c_ctx(& that);
+sv_spt sv_spt_ctx(spt_that);
+sv_spt_c sv_spt_c_ctx(spt_that_c);
+template <typename F, typename S>
+struct sv_helper
+{
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<F, typename fusion::result_of::join<sv_obj  , S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<F, typename fusion::result_of::join<sv_ref  , S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<F, typename fusion::result_of::join<sv_ptr  , S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<F, typename fusion::result_of::join<sv_obj_c, S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<F, typename fusion::result_of::join<sv_ref_c, S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<F, typename fusion::result_of::join<sv_ptr_c, S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<F, typename fusion::result_of::join<sv_spt  , S>::type>));
+    SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<F, typename fusion::result_of::join<sv_spt_c, S>::type>));
+};
+// FIXME:
+//template struct sv_helper<int (members::*)()      , sfinae_friendly::v1>;
+//template struct sv_helper<int (members::*)()      , sfinae_friendly::v2>;
+//template struct sv_helper<int (members::*)()      , sfinae_friendly::v3>;
+//template struct sv_helper<int (members::*)() const, sfinae_friendly::v1>;
+//template struct sv_helper<int (members::*)() const, sfinae_friendly::v2>;
+//template struct sv_helper<int (members::*)() const, sfinae_friendly::v3>;
+
+//template struct sv_helper<int (members::*)(int)      , sfinae_friendly::v0>;
+//template struct sv_helper<int (members::*)(int)      , sfinae_friendly::v1>;
+//template struct sv_helper<int (members::*)(int)      , sfinae_friendly::v2>;
+//template struct sv_helper<int (members::*)(int)      , sfinae_friendly::v3>;
+//template struct sv_helper<int (members::*)(int) const, sfinae_friendly::v0>;
+//template struct sv_helper<int (members::*)(int) const, sfinae_friendly::v1>;
+//template struct sv_helper<int (members::*)(int) const, sfinae_friendly::v2>;
+//template struct sv_helper<int (members::*)(int) const, sfinae_friendly::v3>;
+
+//template struct sv_helper<int (members::*)(int, object)      , sfinae_friendly::v0>;
+//template struct sv_helper<int (members::*)(int, object)      , sfinae_friendly::v1>;
+//template struct sv_helper<int (members::*)(int, object)      , sfinae_friendly::v2>;
+//template struct sv_helper<int (members::*)(int, object)      , sfinae_friendly::v3>;
+//template struct sv_helper<int (members::*)(int, object) const, sfinae_friendly::v0>;
+//template struct sv_helper<int (members::*)(int, object) const, sfinae_friendly::v1>;
+//template struct sv_helper<int (members::*)(int, object) const, sfinae_friendly::v2>;
+//template struct sv_helper<int (members::*)(int, object) const, sfinae_friendly::v3>;
 
 struct fobj
 {
@@ -90,6 +151,11 @@ struct fobj
     int operator()(int & i, object &, object_nc &)       { return i = 10; }
     int operator()(int & i, object &, object_nc &) const { return i = 11; }
 };
+// FIXME:
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<fobj, sfinae_friendly::v0>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<fobj, sfinae_friendly::v1>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<fobj, sfinae_friendly::v2>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<fobj, sfinae_friendly::v3>));
 
 struct fobj_nc
       : boost::noncopyable
@@ -100,11 +166,35 @@ struct fobj_nc
     int operator()(int & i)       { return i = 14; }
     int operator()(int & i) const { return i = 15; }
 };
+// FIXME:
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<fobj_nc, sfinae_friendly::v0>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<fobj_nc, sfinae_friendly::v1>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<fobj_nc, sfinae_friendly::v2>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<fobj_nc, sfinae_friendly::v3>));
 
 int nullary() { return element1 = 16; }
 int unary(int & i) { return  i = 17; }
 int binary1(int & i, object &) { return i = 18; }
 int binary2(int & i, object const &) { return i = 19; }
+//FIXME
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<int(*)(), sfinae_friendly::v1>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<int(*)(), sfinae_friendly::v2>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<int(*)(), sfinae_friendly::v3>));
+//
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<int(*)(int), sfinae_friendly::v0>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<int(*)(int), sfinae_friendly::v1>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<int(*)(int), sfinae_friendly::v2>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<int(*)(int), sfinae_friendly::v3>));
+//
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<int(*)(int, object &), sfinae_friendly::v0>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<int(*)(int, object &), sfinae_friendly::v1>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<int(*)(int, object &), sfinae_friendly::v2>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<int(*)(int, object &), sfinae_friendly::v3>));
+//
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<int(*)(int, object const &), sfinae_friendly::v0>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<int(*)(int, object const &), sfinae_friendly::v1>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<int(*)(int, object const &), sfinae_friendly::v2>));
+//SFINAE_FRIENDLY_ASSERT((fusion::result_of::invoke_procedure<int(*)(int, object const &), sfinae_friendly::v3>));
 
 typedef int (*                   func_ptr)(int &);
 typedef int (* const           c_func_ptr)(int &);
@@ -256,8 +346,19 @@ int main()
 
     vector0 v0;
     vector1 v1(element1);
+
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+    // Note: C++11 will pickup the rvalue overload for the d argument
+    // since we do not have all permutations (expensive!) for all const&
+    // and && arguments. We either have all && or all const& arguments only.
+    // For that matter, use std::ref to disambiguate the call.
+
+    vector2 v2(std::ref(element1), element2);
+    vector3 v3(std::ref(element1), element2, std::ref(element3));
+#else
     vector2 v2(element1, element2);
     vector3 v3(element1, element2, element3);
+#endif
 
     test_sequence(v0);
     test_sequence(v1);

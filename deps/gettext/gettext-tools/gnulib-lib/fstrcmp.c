@@ -1,5 +1,5 @@
 /* Functions to make fuzzy comparisons between strings
-   Copyright (C) 1988-1989, 1992-1993, 1995, 2001-2003, 2006, 2008-2013 Free
+   Copyright (C) 1988-1989, 1992-1993, 1995, 2001-2003, 2006, 2008-2015 Free
    Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -13,32 +13,8 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-
-   Derived from GNU diff 2.7, analyze.c et al.
-
-   The basic idea is to consider two vectors as similar if, when
-   transforming the first vector into the second vector through a
-   sequence of edits (inserts and deletes of one element each),
-   this sequence is short - or equivalently, if the ordered list
-   of elements that are untouched by these edits is long.  For a
-   good introduction to the subject, read about the "Levenshtein
-   distance" in Wikipedia.
-
-   The basic algorithm is described in:
-   "An O(ND) Difference Algorithm and its Variations", Eugene Myers,
-   Algorithmica Vol. 1 No. 2, 1986, pp. 251-266;
-   see especially section 4.2, which describes the variation used below.
-
-   The basic algorithm was independently discovered as described in:
-   "Algorithms for Approximate String Matching", E. Ukkonen,
-   Information and Control Vol. 64, 1985, pp. 100-118.
-
-   Unless the 'find_minimal' flag is set, this code uses the TOO_EXPENSIVE
-   heuristic, by Paul Eggert, to limit the cost to O(N**1.5 log N)
-   at the price of producing suboptimal output for large inputs with
-   many differences.  */
 
 #include <config.h>
 
@@ -47,7 +23,9 @@
 
 #include <string.h>
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <limits.h>
 
@@ -56,20 +34,16 @@
 #include "minmax.h"
 #include "xalloc.h"
 
-#ifndef uintptr_t
-# define uintptr_t unsigned long
-#endif
-
 
 #define ELEMENT char
 #define EQUAL(x,y) ((x) == (y))
-#define OFFSET int
+#define OFFSET ptrdiff_t
 #define EXTRA_CONTEXT_FIELDS \
   /* The number of edits beyond which the computation can be aborted. */ \
-  int edit_count_limit; \
+  ptrdiff_t edit_count_limit; \
   /* The number of edits (= number of elements inserted, plus the number of \
      elements deleted), temporarily minus edit_count_limit. */ \
-  int edit_count;
+  ptrdiff_t edit_count;
 #define NOTE_DELETE(ctxt, xoff) ctxt->edit_count++
 #define NOTE_INSERT(ctxt, yoff) ctxt->edit_count++
 #define EARLY_ABORT(ctxt) ctxt->edit_count > 0
@@ -85,8 +59,8 @@
    already allocated memory, store the allocated memory per thread.  Free
    it only when the thread exits.  */
 
-static gl_tls_key_t buffer_key; /* TLS key for a 'int *' */
-static gl_tls_key_t bufmax_key; /* TLS key for a 'size_t' */
+static gl_tls_key_t buffer_key; /* TLS key for a 'ptrdiff_t *' */
+static gl_tls_key_t bufmax_key; /* TLS key for a 'uintptr_t' */
 
 static void
 keys_init (void)
@@ -111,17 +85,22 @@ double
 fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
 {
   struct context ctxt;
-  int xvec_length = strlen (string1);
-  int yvec_length = strlen (string2);
-  int i;
+  size_t xvec_length = strlen (string1);
+  size_t yvec_length = strlen (string2);
+  size_t length_sum = xvec_length + yvec_length;
+  ptrdiff_t i;
 
-  size_t fdiag_len;
-  int *buffer;
-  size_t bufmax;
+  ptrdiff_t fdiag_len;
+  ptrdiff_t *buffer;
+  uintptr_t bufmax;
 
   /* short-circuit obvious comparisons */
   if (xvec_length == 0 || yvec_length == 0) /* Prob: 1% */
-    return (xvec_length == 0 && yvec_length == 0 ? 1.0 : 0.0);
+    return length_sum == 0;
+
+  if (! (xvec_length <= length_sum
+         && length_sum <= MIN (UINTPTR_MAX, PTRDIFF_MAX) - 3))
+    xalloc_die ();
 
   if (lower_bound > 0)
     {
@@ -141,9 +120,8 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
                 / (xvec_length + yvec_length)
              = 2 * min (xvec_length, yvec_length) / (xvec_length + yvec_length).
        */
-      volatile double upper_bound =
-        (double) (2 * MIN (xvec_length, yvec_length))
-        / (xvec_length + yvec_length);
+      ptrdiff_t length_min = MIN (xvec_length, yvec_length);
+      volatile double upper_bound = 2.0 * length_min / length_sum;
 
       if (upper_bound < lower_bound) /* Prob: 74% */
         /* Return an arbitrary value < LOWER_BOUND.  */
@@ -152,7 +130,7 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
 #if CHAR_BIT <= 8
       /* When X and Y are both small, avoid the overhead of setting up an
          array of size 256.  */
-      if (xvec_length + yvec_length >= 20) /* Prob: 99% */
+      if (length_sum >= 20) /* Prob: 99% */
         {
           /* Compute a less quick upper bound.
              Each edit is an insertion or deletion of a character, hence
@@ -172,8 +150,9 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
                  <= (xvec_length + yvec_length - sum_C | OCC(X,C) - OCC(Y,C) |)
                     / (xvec_length + yvec_length).
            */
-          int occ_diff[UCHAR_MAX + 1]; /* array C -> OCC(X,C) - OCC(Y,C) */
-          int sum;
+          ptrdiff_t occ_diff[UCHAR_MAX + 1]; /* array C -> OCC(X,C) - OCC(Y,C) */
+          ptrdiff_t sum;
+          double dsum;
 
           /* Determine the occurrence counts in X.  */
           memset (occ_diff, 0, sizeof (occ_diff));
@@ -186,11 +165,12 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
           sum = 0;
           for (i = 0; i <= UCHAR_MAX; i++)
             {
-              int d = occ_diff[i];
+              ptrdiff_t d = occ_diff[i];
               sum += (d >= 0 ? d : -d);
             }
 
-          upper_bound = 1.0 - (double) sum / (xvec_length + yvec_length);
+          dsum = sum;
+          upper_bound = 1.0 - dsum / length_sum;
 
           if (upper_bound < lower_bound) /* Prob: 66% */
             /* Return an arbitrary value < LOWER_BOUND.  */
@@ -203,21 +183,11 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
   ctxt.xvec = string1;
   ctxt.yvec = string2;
 
-  /* Set TOO_EXPENSIVE to be approximate square root of input size,
-     bounded below by 256.  */
-  ctxt.too_expensive = 1;
-  for (i = xvec_length + yvec_length;
-       i != 0;
-       i >>= 2)
-    ctxt.too_expensive <<= 1;
-  if (ctxt.too_expensive < 256)
-    ctxt.too_expensive = 256;
-
   /* Allocate memory for fdiag and bdiag from a thread-local pool.  */
-  fdiag_len = xvec_length + yvec_length + 3;
+  fdiag_len = length_sum + 3;
   gl_once (keys_init_once, keys_init);
-  buffer = (int *) gl_tls_get (buffer_key);
-  bufmax = (size_t) (uintptr_t) gl_tls_get (bufmax_key);
+  buffer = gl_tls_get (buffer_key);
+  bufmax = (uintptr_t) gl_tls_get (bufmax_key);
   if (fdiag_len > bufmax)
     {
       /* Need more memory.  */
@@ -226,9 +196,8 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
         bufmax = fdiag_len;
       /* Calling xrealloc would be a waste: buffer's contents does not need
          to be preserved.  */
-      if (buffer != NULL)
-        free (buffer);
-      buffer = (int *) xnmalloc (bufmax, 2 * sizeof (int));
+      free (buffer);
+      buffer = xnmalloc (bufmax, 2 * sizeof *buffer);
       gl_tls_set (buffer_key, buffer);
       gl_tls_set (bufmax_key, (void *) (uintptr_t) bufmax);
     }
@@ -247,12 +216,12 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
      rounding errors.  */
   ctxt.edit_count_limit =
     (lower_bound < 1.0
-     ? (int) ((xvec_length + yvec_length) * (1.0 - lower_bound + 0.000001))
+     ? (ptrdiff_t) (length_sum * (1.0 - lower_bound + 0.000001))
      : 0);
 
   /* Now do the main comparison algorithm */
   ctxt.edit_count = - ctxt.edit_count_limit;
-  if (compareseq (0, xvec_length, 0, yvec_length, 0, &ctxt)) /* Prob: 98% */
+  if (compareseq (0, xvec_length, 0, yvec_length, &ctxt)) /* Prob: 98% */
     /* The edit_count passed the limit.  Hence the result would be
        < lower_bound.  We can return any value < lower_bound instead.  */
     return 0.0;

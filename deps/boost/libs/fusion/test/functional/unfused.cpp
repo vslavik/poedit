@@ -10,8 +10,8 @@
 #include <boost/detail/lightweight_test.hpp>
 
 #include <boost/noncopyable.hpp>
-#include <boost/blank.hpp>
 
+#include <boost/mpl/empty_base.hpp>
 #include <boost/mpl/identity.hpp>
 
 #include <boost/utility/result_of.hpp>
@@ -24,7 +24,7 @@ namespace mpl = boost::mpl;
 
 using boost::noncopyable;
 
-template <class Base = boost::blank>
+template <class Base = boost::mpl::empty_base>
 struct test_func
     : Base
 {
@@ -71,7 +71,7 @@ void result_type_tests()
 
     typedef fusion::unfused< test_func<> > t;
     BOOST_TEST(( is_same< boost::result_of< t () >::type, long >::value ));
-    BOOST_TEST(( is_same< boost::result_of< t (int) >::type, long >::value ));
+    BOOST_TEST(( is_same< boost::result_of< t (int &) >::type, long >::value ));
 }
 
 int main()

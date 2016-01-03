@@ -1,4 +1,4 @@
-# $Id: Jamfile.v2 85666 2013-09-14 14:22:45Z viboes $
+# $Id$
 # Copyright 2006-2007 Roland Schwarz.
 # Copyright 2007 Anthony Williams
 # Copyright 2011-2012 Vicente J.Botet Escriba.
@@ -63,6 +63,7 @@ project boost/thread
         <toolset>gcc:<cxxflags>-Wno-variadic-macros
         #<toolset>gcc:<cxxflags>-Wunused-local-typedefs
         <toolset>gcc:<cxxflags>-Wunused-function
+        <toolset>gcc:<cxxflags>-Wno-unused-parameter
 
         <toolset>darwin:<cxxflags>-Wextra
         <toolset>darwin:<cxxflags>-pedantic
@@ -72,25 +73,27 @@ project boost/thread
         <toolset>darwin:<cxxflags>-Wno-variadic-macros
         #<toolset>darwin:<cxxflags>-Wunused-local-typedefs
         <toolset>darwin:<cxxflags>-Wunused-function
+        <toolset>darwin:<cxxflags>-Wno-unused-parameter
 
         #<toolset>pathscale:<cxxflags>-Wextra
         <toolset>pathscale:<cxxflags>-Wno-long-long
         <toolset>pathscale:<cxxflags>-pedantic
 
+        <toolset>clang:<warnings>on
         <toolset>clang:<cxxflags>-Wextra
-        <toolset>clang:<cxxflags>-pedantic
         #<toolset>clang:<cxxflags>-ansi
         #<toolset>clang:<cxxflags>-fpermissive
         <toolset>clang:<cxxflags>-Wno-long-long
         <toolset>clang:<cxxflags>-Wunused-function
         <toolset>clang:<cxxflags>-Wno-variadic-macros
+        <toolset>clang:<cxxflags>-Wno-unused-parameter
 
-        <toolset>gcc-mingw-4.4.0:<cxxflags>-fdiagnostics-show-option
-        <toolset>gcc-mingw-4.5.0:<cxxflags>-fdiagnostics-show-option
-        <toolset>gcc-mingw-4.6.0:<cxxflags>-fdiagnostics-show-option
-        <toolset>gcc-mingw-4.6.3:<cxxflags>-fdiagnostics-show-option
-        <toolset>gcc-mingw-4.7.0:<cxxflags>-fdiagnostics-show-option
-        <toolset>gcc-mingw-4.8.0:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.4.0:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.5.0:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.6.0:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.6.3:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.7.0:<cxxflags>-fdiagnostics-show-option
+        #<toolset>gcc-mingw-4.8.0:<cxxflags>-fdiagnostics-show-option
         #<toolset>gcc:<cxxflags>-Wno-missing-field-initializers
 
         <toolset>darwin-4.6.2:<cxxflags>-Wno-delete-non-virtual-dtor
@@ -116,7 +119,9 @@ project boost/thread
         <toolset>intel:<cxxflags>-wd1418
         <toolset>intel:<cxxflags>-wd2415
 
+        <toolset>msvc:<cxxflags>/wd4100
         <toolset>msvc:<cxxflags>/wd4512
+        <toolset>msvc:<cxxflags>/wd6246
 
 
     # : default-build <threading>multi

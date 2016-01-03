@@ -5,7 +5,7 @@
  * accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
  *
- * $Id: test_uniform_real_distribution.cpp 71018 2011-04-05 21:27:52Z steven_watanabe $
+ * $Id$
  *
  */
 
@@ -36,3 +36,13 @@
 #define BOOST_RANDOM_TEST2_MAX 1.0
 
 #include "test_distribution.ipp"
+
+BOOST_AUTO_TEST_CASE(test_dbl_min_max) {
+    boost::random::minstd_rand rng;
+    double min = -(std::numeric_limits<double>::max)();
+    double max = (std::numeric_limits<double>::max)();
+    boost::random::uniform_real_distribution<double> dist(min, max);
+    double val = dist(rng);
+    BOOST_CHECK_GE(val, min);
+    BOOST_CHECK_LE(val, max);
+}

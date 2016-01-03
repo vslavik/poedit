@@ -35,7 +35,10 @@ class movable
    {  value_ = m.value_;   m.value_ = 0;  return *this;  }
 
    bool moved() const //Observer
-   {  return value_ == 0; }
+   {  return !value_; }
+
+   int value() const //Observer
+   {  return value_; }
 };
 
 namespace boost{

@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../move.html" title="Chapter&#160;18.&#160;Boost.Move">
+<link rel="up" href="../move.html" title="Chapter&#160;19.&#160;Boost.Move">
 <link rel="prev" href="composition_inheritance.html" title="Composition or inheritance">
 <link rel="next" href="move_and_containers.html" title="Containers and move semantics">
 </head>
@@ -56,7 +56,7 @@
 <p>
       In the above example, the underlying file handle is passed from object to object,
       as long as the source <code class="computeroutput"><span class="identifier">file_descriptor</span></code>
-      is an rvalue. At all times, there is still only one underlying file handle,
+      is a rvalue. At all times, there is still only one underlying file handle,
       and only one <code class="computeroutput"><span class="identifier">file_descriptor</span></code>
       owns it at a time.
     </p>
@@ -79,7 +79,7 @@
     </p>
 <p>
 </p>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">move</span><span class="special">/</span><span class="identifier">utility</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">move</span><span class="special">/</span><span class="identifier">utility_core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">stdexcept</span><span class="special">&gt;</span>
 
 <span class="keyword">class</span> <span class="identifier">file_descriptor</span>
@@ -117,7 +117,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2008-2012 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2008-2014 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

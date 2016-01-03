@@ -4,6 +4,11 @@
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
+// This file was modified by Oracle on 2014.
+// Modifications copyright (c) 2014 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
 
@@ -14,10 +19,9 @@
 #ifndef BOOST_GEOMETRY_CORE_CLOSURE_HPP
 #define BOOST_GEOMETRY_CORE_CLOSURE_HPP
 
-
 #include <boost/mpl/assert.hpp>
-#include <boost/mpl/int.hpp>
-#include <boost/range.hpp>
+#include <boost/mpl/size_t.hpp>
+#include <boost/range/value_type.hpp>
 #include <boost/type_traits/remove_const.hpp>
 
 #include <boost/geometry/core/ring_type.hpp>
@@ -32,10 +36,10 @@ namespace boost { namespace geometry
 \brief Enumerates options for defining if polygons are open or closed
 \ingroup enum
 \details The enumeration closure_selector describes options for if a polygon is
-    open or closed. In a closed polygon the very first point (per ring) should 
+    open or closed. In a closed polygon the very first point (per ring) should
     be equal to the very last point.
-    The specific closing property of a polygon type is defined by the closure 
-    metafunction. The closure metafunction defines a value, which is one of the 
+    The specific closing property of a polygon type is defined by the closure
+    metafunction. The closure metafunction defines a value, which is one of the
     values enumerated in the closure_selector
 
 \qbk{
@@ -45,12 +49,12 @@ namespace boost { namespace geometry
 */
 enum closure_selector
 {
-    /// Rings are open: first point and last point are different, algorithms 
+    /// Rings are open: first point and last point are different, algorithms
     /// close them explicitly on the fly
     open = 0,
     /// Rings are closed: first point and last point must be the same
     closed = 1,
-    /// (Not yet implemented): algorithms first figure out if ring must be 
+    /// (Not yet implemented): algorithms first figure out if ring must be
     /// closed on the fly
     closure_undertermined = -1
 };
@@ -93,10 +97,10 @@ template <closure_selector Closure>
 struct minimum_ring_size {};
 
 template <>
-struct minimum_ring_size<geometry::closed> : boost::mpl::int_<4> {};
+struct minimum_ring_size<geometry::closed> : boost::mpl::size_t<4> {};
 
 template <>
-struct minimum_ring_size<geometry::open> : boost::mpl::int_<3> {};
+struct minimum_ring_size<geometry::open> : boost::mpl::size_t<3> {};
 
 
 }} // namespace detail::point_order
@@ -128,18 +132,18 @@ template <typename Box>
 struct closure<segment_tag, Box> : public core_detail::closure::closed {};
 
 template <typename LineString>
-struct closure<linestring_tag, LineString> 
+struct closure<linestring_tag, LineString>
     : public core_detail::closure::closed {};
 
 
 template <typename Ring>
 struct closure<ring_tag, Ring>
 {
-    static const closure_selector value 
+    static const closure_selector value
         = geometry::traits::closure<Ring>::value;
 };
 
-// Specialization for polygon: the closure is the closure of its rings
+// Specialization for Polygon: the closure is the closure of its rings
 template <typename Polygon>
 struct closure<polygon_tag, Polygon>
 {
@@ -150,13 +154,31 @@ struct closure<polygon_tag, Polygon>
         >::value ;
 };
 
+template <typename MultiPoint>
+struct closure<multi_point_tag, MultiPoint>
+    : public core_detail::closure::closed {};
+
+template <typename MultiLinestring>
+struct closure<multi_linestring_tag, MultiLinestring>
+    : public core_detail::closure::closed {};
+
+// Specialization for MultiPolygon: the closure is the closure of Polygon's rings
+template <typename MultiPolygon>
+struct closure<multi_polygon_tag, MultiPolygon>
+{
+    static const closure_selector value = core_dispatch::closure
+        <
+            polygon_tag,
+            typename boost::range_value<MultiPolygon>::type
+        >::value ;
+};
 
 } // namespace core_dispatch
 #endif // DOXYGEN_NO_DISPATCH
 
 
 /*!
-\brief \brief_meta{value, closure (clockwise\, counterclockwise), 
+\brief \brief_meta{value, closure (clockwise\, counterclockwise),
     \meta_geometry_type}
 \tparam Geometry \tparam_geometry
 \ingroup core
@@ -169,7 +191,7 @@ struct closure
     static const closure_selector value = core_dispatch::closure
         <
             typename tag<Geometry>::type,
-            typename boost::remove_const<Geometry>::type
+            typename util::bare_type<Geometry>::type
         >::value;
 };
 

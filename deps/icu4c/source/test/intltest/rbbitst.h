@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright (c) 1999-2013, International Business Machines
+ * Copyright (c) 1999-2014, International Business Machines
  * Corporation and others. All Rights Reserved.
  *************************************************************************
  *   Date        Name        Description
@@ -57,7 +57,7 @@ public:
 
     void TestExtended();
     UChar *ReadAndConvertFile(const char *fileName, int &ulen, const char *encoding, UErrorCode &status);
-    void executeTest(TestParams *);
+    void executeTest(TestParams *, UErrorCode &status);
 
     void TestWordBreaks();
     void TestWordBoundary();
@@ -131,6 +131,15 @@ private:
     // Run the actual tests for TestTailoredBreaks()
     void TBTest(BreakIterator* brkitr, int type, const char *locale, const char* escapedText,
                 const int32_t *expectOffsets, int32_t expectOffsetsCount);
+
+    /** Filter for test cases from the Unicode test data files.
+     *  Some need to be skipped because ICU is unable to fully implement the
+     *  Unicode boundary specifications.
+     *  @param testCase the test data string.
+     *  @param fileName the Unicode test data file name.
+     *  @return FALSE if the test case should be run, TRUE if it should be skipped.
+     */
+    UBool testCaseIsKnownIssue(const UnicodeString &testCase, const char *fileName);
 };
 
 #endif /* #if !UCONFIG_NO_BREAK_ITERATION */

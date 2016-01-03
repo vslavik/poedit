@@ -18,7 +18,7 @@ documentation is unlikely to be further updated.
 The class RegEx provides a high level simplified interface to the regular 
 expression library, this class only handles narrow character strings, and 
 regular expressions always follow the "normal" syntax - that is the 
-same as the perl / ECMAScript synatx.
+same as the perl / ECMAScript syntax.
 
    typedef bool (*GrepCallback)(const RegEx& expression);
    typedef bool (*GrepFileCallback)(const char* file, const RegEx& expression);
@@ -109,7 +109,7 @@ Member functions for class RegEx are defined as follows:
          `SetExpression(p, false)`. Throws [bad_expression] on failure. 	 ]]
 [[`RegEx& operator=(const std::string& s);`][Assignment operator, equivalent to 
          calling `SetExpression(s, false)`. Throws [bad_expression] on failure. 	 ]]
-[[`unsigned int SetExpression(constchar* p, bool icase = false);`][Sets the 
+[[`unsigned int SetExpression(const char* p, bool icase = false);`][Sets the 
          current expression to /p/, if /icase/ is true then matching is 
          insensitive to case, otherwise it is sensitive to case. 
          Throws [bad_expression] on failure. 	 ]]
@@ -165,7 +165,7 @@ Member functions for class RegEx are defined as follows:
          [match_flag_type] /flags/. For each match pushes the starting index of what 
          matched onto /v/. Returns the number of matches found. 	 ]]
 [[`unsigned int GrepFiles(GrepFileCallback cb, const char* files, bool recurse = false, boost::match_flag_type flags = match_default);`]
-         [Finds all matches of the current expression in the files files using 
+         [Finds all matches of the current expression in the files /files/ using 
          the [match_flag_type] /flags/. For each match calls the call-back function cb. 
          If the call-back returns false then the algorithm returns without 
          considering further matches in the current file, or any further files. 
@@ -178,7 +178,7 @@ Member functions for class RegEx are defined as follows:
 
          May throw an exception derived from `std::runtime_error` if file io fails.]]
 [[`unsigned int GrepFiles(GrepFileCallback cb, const std::string& files, bool recurse = false, boost::match_flag_type flags = match_default);`]
-         [Finds all matches of the current expression in the files files using the 
+         [Finds all matches of the current expression in the files /files/ using the 
          [match_flag_type] /flags/. For each match calls the call-back function cb. 
 
          If the call-back returns false then the algorithm returns without 
@@ -229,7 +229,7 @@ Member functions for class RegEx are defined as follows:
          to determine what gets matched, and how the format string should be 
          treated. If /copy/ is true then all unmatched sections of input are 
          copied unchanged to output, if the flag /format_first_only/ is set then 
-         only the first occurance of the pattern found is replaced. 
+         only the first occurrence of the pattern found is replaced. 
          Returns the new string. See also 
          [link boost_regex.format format string syntax], and [match_flag_type].]]
 [[`std::string Merge(const char* in, const char* fmt, bool copy = true, boost::match_flag_type flags = match_default);`]
@@ -239,7 +239,7 @@ Member functions for class RegEx are defined as follows:
          what gets matched, and how the format string should be treated. 
          If /copy/ is true then all unmatched sections of input are copied 
          unchanged to output, if the flag /format_first_only/ is set then only 
-         the first occurance of the pattern found is replaced. Returns 
+         the first occurrence of the pattern found is replaced. Returns 
          the new string. See also [link boost_regex.format format string syntax], and [match_flag_type].]]
 [[`unsigned Split(std::vector<std::string>& v, std::string& s, boost::match_flag_type flags = match_default, unsigned max_count = ~0);`]
          [Splits the input string and pushes each one onto the vector. 

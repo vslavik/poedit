@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -23,9 +23,9 @@
 
 #include <new>
 #include <boost/assert.hpp>
+#include <boost/align/aligned_alloc.hpp>
 #include <boost/thread/shared_mutex.hpp>
 #include <boost/log/utility/once_block.hpp>
-#include <boost/log/detail/malloc_aligned.hpp>
 
 #include "windows_version.hpp"
 #include <windows.h>
@@ -68,7 +68,7 @@ void __stdcall InitializeSharedMutex(mutex_impl* mtx)
             )
             * BOOST_LOG_CPU_CACHE_LINE_SIZE
     };
-    mtx->p = malloc_aligned(size, BOOST_LOG_CPU_CACHE_LINE_SIZE);
+    mtx->p = alignment::aligned_alloc(BOOST_LOG_CPU_CACHE_LINE_SIZE, size);
     BOOST_ASSERT(mtx->p != NULL);
     new (mtx->p) shared_mutex();
 }
@@ -76,7 +76,7 @@ void __stdcall InitializeSharedMutex(mutex_impl* mtx)
 void __stdcall DeinitializeSharedMutex(mutex_impl* mtx)
 {
     static_cast< shared_mutex* >(mtx->p)->~shared_mutex();
-    free_aligned(mtx->p);
+    alignment::aligned_free(mtx->p);
     mtx->p = NULL;
 }
 

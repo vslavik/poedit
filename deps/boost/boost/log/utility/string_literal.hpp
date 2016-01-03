@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -18,6 +18,7 @@
 #include <cstddef>
 #include <stdexcept>
 #include <iosfwd>
+#include <ios> // std::streamsize
 #include <string>
 #include <iterator>
 #include <boost/operators.hpp>
@@ -332,11 +333,11 @@ public:
      */
     void swap(this_type& that) BOOST_NOEXCEPT
     {
-        register const_pointer p = m_pStart;
+        const_pointer p = m_pStart;
         m_pStart = that.m_pStart;
         that.m_pStart = p;
 
-        register size_type l = m_Len;
+        size_type l = m_Len;
         m_Len = that.m_Len;
         that.m_Len = l;
     }
@@ -392,7 +393,7 @@ public:
         if (pos > m_Len)
             BOOST_THROW_EXCEPTION(std::out_of_range("basic_string_literal::copy: the position is out of range"));
 
-        register size_type len = m_Len - pos;
+        size_type len = m_Len - pos;
         if (len > n)
             len = n;
         traits_type::copy(str, m_pStart + pos, len);
@@ -417,7 +418,7 @@ public:
         if (pos > m_Len)
             BOOST_THROW_EXCEPTION(std::out_of_range("basic_string_literal::compare: the position is out of range"));
 
-        register size_type compare_size = m_Len - pos;
+        size_type compare_size = m_Len - pos;
         if (compare_size > len)
             compare_size = len;
         if (compare_size > n)
@@ -498,8 +499,7 @@ private:
     {
         if (pLeft != pRight)
         {
-            register const int result = traits_type::compare(
-                pLeft, pRight, (LeftLen < RightLen ? LeftLen : RightLen));
+            const int result = traits_type::compare(pLeft, pRight, (LeftLen < RightLen ? LeftLen : RightLen));
             if (result != 0)
                 return result;
         }

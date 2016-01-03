@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -95,10 +95,63 @@ private:
     }
 };
 
+//! A base class for a dispatcher that supports a sequence of types
+class type_sequence_dispatcher_base :
+    public type_dispatcher
+{
+private:
+    //! Dispatching map element type
+    typedef std::pair< type_info_wrapper, void* > dispatching_map_element_type;
+
+private:
+    //! Dispatching map
+    const dispatching_map_element_type* m_dispatching_map_begin;
+    //! Dispatching map size
+    std::size_t m_dispatching_map_size;
+    //! Pointer to the receiver function
+    void* m_visitor;
+
+protected:
+    //! Initializing constructor
+    type_sequence_dispatcher_base(const dispatching_map_element_type* disp_map, std::size_t disp_map_size, void* visitor) BOOST_NOEXCEPT :
+        type_dispatcher(&type_sequence_dispatcher_base::get_callback),
+        m_dispatching_map_begin(disp_map),
+        m_dispatching_map_size(disp_map_size),
+        m_visitor(visitor)
+    {
+    }
+
+private:
+    //! The get_callback method implementation
+    static callback_base get_callback(type_dispatcher* p, std::type_info const& type)
+    {
+        type_sequence_dispatcher_base* const self = static_cast< type_sequence_dispatcher_base* >(p);
+        type_info_wrapper wrapper(type);
+        const dispatching_map_element_type* begin = self->m_dispatching_map_begin;
+        const dispatching_map_element_type* end = begin + self->m_dispatching_map_size;
+        const dispatching_map_element_type* it = std::lower_bound
+        (
+            begin,
+            end,
+            dispatching_map_element_type(wrapper, (void*)0),
+            dispatching_map_order()
+        );
+
+        if (it != end && it->first == wrapper)
+            return callback_base(self->m_visitor, it->second);
+        else
+            return callback_base();
+    }
+
+    //  Copying and assignment closed
+    BOOST_DELETED_FUNCTION(type_sequence_dispatcher_base(type_sequence_dispatcher_base const&))
+    BOOST_DELETED_FUNCTION(type_sequence_dispatcher_base& operator= (type_sequence_dispatcher_base const&))
+};
+
 //! A dispatcher that supports a sequence of types
 template< typename TypeSequenceT >
 class type_sequence_dispatcher :
-    public type_dispatcher
+    public type_sequence_dispatcher_base
 {
 public:
     //! Type sequence of the supported types
@@ -111,46 +164,17 @@ private:
         mpl::size< supported_types >::value
     > dispatching_map;
 
-private:
-    //! Pointer to the receiver function
-    void* m_pVisitor;
-    //! Pointer to the dispatching map
-    dispatching_map const& m_DispatchingMap;
-
 public:
     /*!
      * Constructor. Initializes the dispatcher internals.
      */
     template< typename VisitorT >
     explicit type_sequence_dispatcher(VisitorT& visitor) :
-        type_dispatcher(&type_sequence_dispatcher< supported_types >::get_callback),
-        m_pVisitor((void*)boost::addressof(visitor)),
-        m_DispatchingMap(get_dispatching_map< VisitorT >())
+        type_sequence_dispatcher_base(get_dispatching_map< VisitorT >().data(), dispatching_map::static_size, (void*)boost::addressof(visitor))
     {
     }
 
 private:
-    //! The get_callback method implementation
-    static callback_base get_callback(type_dispatcher* p, std::type_info const& type)
-    {
-        type_sequence_dispatcher* const self = static_cast< type_sequence_dispatcher* >(p);
-        type_info_wrapper wrapper(type);
-        typename dispatching_map::value_type const* begin = &*self->m_DispatchingMap.begin();
-        typename dispatching_map::value_type const* end = begin + dispatching_map::static_size;
-        typename dispatching_map::value_type const* it =
-            std::lower_bound(
-                begin,
-                end,
-                std::make_pair(wrapper, (void*)0),
-                dispatching_map_order()
-            );
-
-        if (it != end && it->first == wrapper)
-            return callback_base(self->m_pVisitor, it->second);
-        else
-            return callback_base();
-    }
-
     //! The method returns the dispatching map instance
     template< typename VisitorT >
     static dispatching_map const& get_dispatching_map()
@@ -180,36 +204,52 @@ private:
     BOOST_DELETED_FUNCTION(type_sequence_dispatcher& operator= (type_sequence_dispatcher const&))
 };
 
-//! A simple dispatcher that only supports one type
-template< typename T >
-class single_type_dispatcher :
+//! A base class for a single-type dispatcher
+class single_type_dispatcher_base :
     public type_dispatcher
 {
 private:
+    //! The type to match against
+    std::type_info const& m_type;
     //! A callback for the supported type
-    callback_base m_Callback;
+    callback_base m_callback;
 
-public:
-    //! Constructor
-    template< typename VisitorT >
-    explicit single_type_dispatcher(VisitorT& visitor) :
-        type_dispatcher(&single_type_dispatcher< T >::get_callback),
-        m_Callback(
-            (void*)boost::addressof(visitor),
-            &callback_base::trampoline< VisitorT, T >
-        )
+protected:
+    //! Initializing constructor
+    single_type_dispatcher_base(std::type_info const& type, callback_base const& callback) BOOST_NOEXCEPT :
+        type_dispatcher(&single_type_dispatcher_base::get_callback),
+        m_type(type),
+        m_callback(callback)
     {
     }
+
+private:
     //! The get_callback method implementation
     static callback_base get_callback(type_dispatcher* p, std::type_info const& type)
     {
-        if (type == typeid(visible_type< T >))
-        {
-            single_type_dispatcher* const self = static_cast< single_type_dispatcher* >(p);
-            return self->m_Callback;
-        }
+        single_type_dispatcher_base* const self = static_cast< single_type_dispatcher_base* >(p);
+        if (type == self->m_type)
+            return self->m_callback;
         else
             return callback_base();
+    }
+
+    //  Copying and assignment closed
+    BOOST_DELETED_FUNCTION(single_type_dispatcher_base(single_type_dispatcher_base const&))
+    BOOST_DELETED_FUNCTION(single_type_dispatcher_base& operator= (single_type_dispatcher_base const&))
+};
+
+//! A simple dispatcher that only supports one type
+template< typename T >
+class single_type_dispatcher :
+    public single_type_dispatcher_base
+{
+public:
+    //! Constructor
+    template< typename VisitorT >
+    explicit single_type_dispatcher(VisitorT& visitor) BOOST_NOEXCEPT :
+        single_type_dispatcher_base(typeid(visible_type< T >), callback_base((void*)boost::addressof(visitor), &callback_base::trampoline< VisitorT, T >))
+    {
     }
 
     //  Copying and assignment closed
@@ -251,6 +291,13 @@ private:
 public:
     /*!
      * Constructor. Initializes the dispatcher internals.
+     *
+     * The \a receiver object is not copied inside the dispatcher, but references to
+     * it may be kept by the dispatcher after construction. The receiver object must remain
+     * valid until the dispatcher is destroyed.
+     *
+     * \param receiver Unary function object that will be called on a dispatched value. The receiver
+     *                 must be callable with an argument of any of the supported types of the dispatcher.
      */
     template< typename ReceiverT >
     explicit static_type_dispatcher(ReceiverT& receiver) :

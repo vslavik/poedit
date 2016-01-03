@@ -2,6 +2,7 @@
 //
 // Copyright (c) 2012-2013 Adam Wulkiewicz, Lodz, Poland.
 // Copyright (c) 2011-2013 Andrew Hundt.
+// Copyright (c) 2014-2014 Ion Gaztanaga
 //
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -10,13 +11,18 @@
 #ifndef BOOST_CONTAINER_VARRAY_HPP
 #define BOOST_CONTAINER_VARRAY_HPP
 
-#if (defined _MSC_VER)
+#ifndef BOOST_CONFIG_HPP
+#  include <boost/config.hpp>
+#endif
+
+#if defined(BOOST_HAS_PRAGMA_ONCE)
 #  pragma once
 #endif
 
 #include <boost/container/detail/config_begin.hpp>
 
 #include "detail/varray.hpp"
+#include <boost/move/utility_core.hpp>
 
 namespace boost { namespace container {
 
@@ -31,12 +37,12 @@ namespace boost { namespace container {
  * change in size, along with the static allocation, low overhead, and fixed capacity of boost::array.
  *
  * A varray is a sequence that supports random access to elements, constant time insertion and
- * removal of elements at the end, and linear time insertion and removal of elements at the beginning or 
+ * removal of elements at the end, and linear time insertion and removal of elements at the beginning or
  * in the middle. The number of elements in a varray may vary dynamically up to a fixed capacity
- * because elements are stored within the object itself similarly to an array. However, objects are 
+ * because elements are stored within the object itself similarly to an array. However, objects are
  * initialized as they are inserted into varray unlike C arrays or std::array which must construct
  * all elements on instantiation. The behavior of varray enables the use of statically allocated
- * elements in cases with complex object lifetime requirements that would otherwise not be trivially 
+ * elements in cases with complex object lifetime requirements that would otherwise not be trivially
  * possible.
  *
  * @par Error Handling
@@ -96,7 +102,7 @@ public:
     //! @param count    The number of values which will be contained in the container.
     //!
     //! @par Throws
-    //!   If Value's default constructor throws.
+    //!   If Value's value initialization throws.
     //!
     //! @par Complexity
     //!   Linear O(N).
@@ -316,7 +322,7 @@ public:
     //! @param count    The number of elements which will be stored in the container.
     //!
     //! @par Throws
-    //!   If Value's default constructor throws.
+    //!   If Value's value initialization throws.
     //!
     //! @par Complexity
     //!   Linear O(N).

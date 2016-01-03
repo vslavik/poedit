@@ -27,7 +27,7 @@
 <a name="geometry.reference.algorithms.length.length_1"></a><a class="link" href="length_1.html" title="length">length</a>
 </h5></div></div></div>
 <p>
-            <a class="indexterm" name="idp55609560"></a>
+            <a class="indexterm" name="idp115625936"></a>
 Calculates the length of a geometry.
           </p>
 <h6>
@@ -46,7 +46,7 @@ Calculates the length of a geometry.
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Geometry</span><span class="special">&gt;</span>
-<span class="identifier">dispatch</span><span class="special">::</span><span class="identifier">devarianted_length</span><span class="special">&lt;</span><span class="identifier">Geometry</span><span class="special">&gt;::</span><span class="identifier">result_type</span> <span class="identifier">length</span><span class="special">(</span><span class="identifier">Geometry</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">geometry</span><span class="special">)</span></pre>
+<span class="identifier">default_length_result</span><span class="special">&lt;</span><span class="identifier">Geometry</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">length</span><span class="special">(</span><span class="identifier">Geometry</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">geometry</span><span class="special">)</span></pre>
 <p>
           </p>
 <h6>
@@ -120,7 +120,7 @@ Calculates the length of a geometry.
             Either
           </p>
 <p>
-            <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
+            <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
           </p>
 <p>
             Or
@@ -217,7 +217,6 @@ Calculates the length of a geometry.
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometries</span><span class="special">/</span><span class="identifier">linestring</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometries</span><span class="special">/</span><span class="identifier">point_xy</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">wkt</span><span class="special">/</span><span class="identifier">wkt</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
 
 <span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
@@ -242,7 +241,8 @@ Calculates the length of a geometry.
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
+      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

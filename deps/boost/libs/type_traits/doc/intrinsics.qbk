@@ -17,6 +17,7 @@ The Following traits classes always need compiler support to do the right thing
 for all types 
 (but all have safe fallback positions if this support is unavailable):
 
+* __is_final
 * __is_union
 * __is_pod
 * __has_trivial_constructor
@@ -60,6 +61,8 @@ a matter of defining one of more of the following macros:
    [[BOOST_HAS_NOTHROW_COPY(T)][Should evaluate to true if `T(t)` can not throw]]
    [[BOOST_HAS_NOTHROW_ASSIGN(T)][Should evaluate to true if `T t, u; t = u` can not throw]]
    [[BOOST_HAS_VIRTUAL_DESTRUCTOR(T)][Should evaluate to true T has a virtual destructor]]
+   [[BOOST_IS_NOTHROW_MOVE_ASSIGN(T)][Should evaluate to true T has a non-throwing move assign operator.]]
+   [[BOOST_IS_NOTHROW_MOVE_CONSTRUCT(T)][Should evaluate to true T has a non-throwing move constructor.]]
 
    [[BOOST_IS_ABSTRACT(T)][Should evaluate to true if T is an abstract type]]
    [[BOOST_IS_BASE_OF(T,U)][Should evaluate to true if T is a base class of U]]
@@ -67,7 +70,8 @@ a matter of defining one of more of the following macros:
    [[BOOST_IS_CONVERTIBLE(T,U)][Should evaluate to true if T is convertible to U]]
    [[BOOST_IS_ENUM(T)][Should evaluate to true is T is an enum]]
    [[BOOST_IS_POLYMORPHIC(T)][Should evaluate to true if T is a polymorphic type]]
-   [[BOOST_ALIGNMENT_OF(T)][Should evaluate to the alignment requirements of type T.]]
+   [[BOOST_ALIGNMENT_OF(T)][Should evaluate to the alignment requirements of type T]]
+   [[BOOST_IS_FINAL(T)][Should evaluate to true if T is a class type declared with the final specifier]]
    
 ]
 

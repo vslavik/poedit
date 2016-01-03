@@ -1,7 +1,7 @@
 /* Boost mtl4_resize.cpp test file
 
- Copyright 2009 Karsten Ahnert
- Copyright 2009 Mario Mulansky
+ Copyright 2012 Karsten Ahnert
+ Copyright 2012 Mario Mulansky
 
  This file tests the odeint library with the mtl4 routines.
 

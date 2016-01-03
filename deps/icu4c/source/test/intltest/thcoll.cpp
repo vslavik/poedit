@@ -1,6 +1,6 @@
 /*
 **********************************************************************
-*   Copyright (C) 1999-2012, International Business Machines
+*   Copyright (C) 1999-2014, International Business Machines
 *   Corporation and others.  All Rights Reserved.
 **********************************************************************
 *   Date        Name        Description
@@ -17,6 +17,7 @@
 #include "unicode/coll.h"
 #include "unicode/localpointer.h"
 #include "unicode/sortkey.h"
+#include "unicode/tblcoll.h"
 #include "unicode/ustring.h"
 #include "cstring.h"
 #include "filestrm.h"
@@ -458,7 +459,7 @@ void CollationThaiTest::TestReordering(void) {
   const char *testcontraction[] = { "\\u0E41ab", ">", "\\u0E41c"}; // After UCA 4.1 Thai are normal so won't break a contraction
   UnicodeString rules;
   parseChars(rules, rule);
-  LocalPointer<RuleBasedCollator> rcoll(new RuleBasedCollator(rules, status));
+  LocalPointer<RuleBasedCollator> rcoll(new RuleBasedCollator(rules, status), status);
   if(U_SUCCESS(status)) {
     compareArray(*rcoll, testcontraction, 3);
   } else {

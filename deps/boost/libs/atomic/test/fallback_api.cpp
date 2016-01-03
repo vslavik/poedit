@@ -9,11 +9,11 @@
 
 #include <boost/atomic.hpp>
 #include <boost/cstdint.hpp>
-#include <boost/test/minimal.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 #include "api_test_helpers.hpp"
 
-int test_main(int, char *[])
+int main(int, char *[])
 {
     test_flag_api();
 
@@ -46,7 +46,14 @@ int test_main(int, char *[])
     test_struct_api<test_struct<boost::uint32_t> >();
     test_struct_api<test_struct<boost::uint64_t> >();
 
+    // https://svn.boost.org/trac/boost/ticket/9985
+    test_struct_api<test_struct<double> >();
+
     test_large_struct_api();
 
-    return 0;
+    // Test that boost::atomic<T> only requires T to be trivially copyable.
+    // Other non-trivial constructors are allowed.
+    test_struct_with_ctor_api();
+
+    return boost::report_errors();
 }

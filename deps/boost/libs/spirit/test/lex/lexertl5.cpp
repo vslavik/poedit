@@ -39,7 +39,7 @@ int main()
         lex.self.add_pattern
             ("CCOMMENT", "\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/")
             ("CPPCOMMENT", "\\/\\/[^\\n\\r]*(\\n|\\r|\\r\\n)")
-            ("WS", "[\\v\\f\\n\\r]*")
+            ("WS", "[\\v\\f\\n\\r]+")
         ;
 
         token_def c_comment ("{CCOMMENT}", CCOMMENT);
@@ -71,7 +71,7 @@ int main()
         lex.self.add_pattern
             ("CCOMMENT", "\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/")
             ("CPPCOMMENT", "\\/\\/[^\\n\\r]*(\\n|\\r|\\r\\n)")
-            ("WS", "[\\v\\f\\n\\r]*")
+            ("WS", "[\\v\\f\\n\\r]+")
         ;
 
         token_def c_comment ("{CCOMMENT}", CCOMMENT);

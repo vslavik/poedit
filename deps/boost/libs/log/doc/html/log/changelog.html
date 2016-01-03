@@ -21,6 +21,162 @@
 </h2></div></div></div>
 <h4>
 <a name="log.changelog.h0"></a>
+      <span class="phrase"><a name="log.changelog.2_5__boost_1_58"></a></span><a class="link" href="changelog.html#log.changelog.2_5__boost_1_58">2.5,
+      Boost 1.58</a>
+    </h4>
+<p>
+      <span class="bold"><strong>Bug fixes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Fixed thread id formatting. The thread identifiers could be presented as
+          zeros on big-endian platforms. Also the lower 4 bits of the ids were lost
+          in the output.
+        </li>
+<li class="listitem">
+          Fixed process id formatting. Process ids could have misplaced filler zeros.
+          ( <a href="https://svn.boost.org/trac/boost/ticket/10926" target="_top">#10926</a>)
+        </li>
+<li class="listitem">
+          Fixed build failure on GNU Hurd.
+        </li>
+<li class="listitem">
+          Fixed incorrect behavior of <a class="link" href="detailed/sink_backends.html#log.detailed.sink_backends.text_file" title="Text file backend">text
+          file sink backend</a> in case if free space on the file system gets
+          exhausted. The sink will no longer create lots of empty files in attempt
+          to recover. ( <a href="https://svn.boost.org/trac/boost/ticket/11016" target="_top">#11016</a>)
+        </li>
+<li class="listitem">
+          Fixed incorrect behavior of <code class="computeroutput"><span class="identifier">attribute_set</span><span class="special">::</span><span class="identifier">insert</span><span class="special">()</span></code> in some cases. The inserted elements
+          could have made some previously inserted elements not findable. ( <a href="https://svn.boost.org/trac/boost/ticket/11106" target="_top">#11106</a>)
+        </li>
+<li class="listitem">
+          Fixed incorrect behavior of <code class="computeroutput"><span class="identifier">attribute_value_set</span><span class="special">::</span><span class="identifier">size</span><span class="special">()</span></code> if a large number of attribute values
+          are inserted into the set. ( <a href="https://svn.boost.org/trac/boost/ticket/11148" target="_top">#11148</a>)
+        </li>
+</ul></div>
+<h4>
+<a name="log.changelog.h1"></a>
+      <span class="phrase"><a name="log.changelog.2_4__boost_1_57"></a></span><a class="link" href="changelog.html#log.changelog.2_4__boost_1_57">2.4,
+      Boost 1.57</a>
+    </h4>
+<p>
+      <span class="bold"><strong>Bug fixes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          <a class="link" href="detailed/expressions.html#log.detailed.expressions.formatters.decorators" title="Character decorators">XML character
+          decorator</a> now escapes quote (") characters.
+        </li>
+<li class="listitem">
+          The exceptions thrown by asynchronous sinks created as a result of <a class="link" href="detailed/utilities.html#log.detailed.utilities.setup.settings" title="Library initialization from a settings container">initialization from settings</a>
+          are now silently suppressed instead of terminating the application. If
+          special error handling is needed, it is recommended to <a class="link" href="extension/settings.html#log.extension.settings.adding_support_for_user_defined_sinks">register
+          a user-defined sink factory</a>. ( <a href="https://svn.boost.org/trac/boost/ticket/10638" target="_top">#10638</a>)
+        </li>
+<li class="listitem">
+          Corrected syslog message composition on MSVC, if message length exceeds
+          1025 bytes. ( <a href="https://svn.boost.org/trac/boost/ticket/10700" target="_top">#10700</a>)
+        </li>
+</ul></div>
+<h4>
+<a name="log.changelog.h2"></a>
+      <span class="phrase"><a name="log.changelog.2_3__boost_1_56"></a></span><a class="link" href="changelog.html#log.changelog.2_3__boost_1_56">2.3,
+      Boost 1.56</a>
+    </h4>
+<p>
+      <span class="bold"><strong>General changes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          For Windows targets, the library now compiles for Windows XP by default.
+        </li>
+<li class="listitem">
+          Added indexing operators with <code class="computeroutput"><a class="link" href="../boost/log/attribute_name.html" title="Class attribute_name">attribute_name</a></code>
+          arguments to <code class="computeroutput"><a class="link" href="../boost/log/record.html" title="Class record">record</a></code> and
+          <code class="computeroutput"><a class="link" href="../boost/log/record_view.html" title="Class record_view">record_view</a></code>. The operators
+          behave the same way as the similar operators of <code class="computeroutput"><a class="link" href="../boost/log/attribute_value_set.html" title="Class attribute_value_set">attribute_value_set</a></code>
+          (i.e. return an <code class="computeroutput"><a class="link" href="../boost/log/attribute_value.html" title="Class attribute_value">attribute_value</a></code>
+          identified by the name).
+        </li>
+<li class="listitem">
+          Added operators for non-const object output to <code class="computeroutput"><a class="link" href="../boost/log/basic_formatting_ostream.html" title="Class template basic_formatting_ostream">basic_formatting_ostream</a></code>.
+          ( <a href="https://svn.boost.org/trac/boost/ticket/9389" target="_top">#9389</a>)
+        </li>
+<li class="listitem">
+          Added new format flags "%c", "%C" and "%F"
+          to the <a class="link" href="detailed/expressions.html#log.detailed.expressions.formatters.named_scope" title="Named scope formatter">named
+          scope formatter</a>. The new flags allow putting function names and
+          source file names of named scopes into the formatted strings. ( <a href="https://svn.boost.org/trac/boost/ticket/9263" target="_top">#9263</a>)
+        </li>
+<li class="listitem">
+          Added support for incomplete and empty markers to the <a class="link" href="detailed/expressions.html#log.detailed.expressions.formatters.named_scope" title="Named scope formatter">named
+          scope formatter</a>. The markers can be used to customize the scope
+          list presentation when the list is empty or limited by the <code class="computeroutput"><span class="identifier">depth</span></code> named parameter. ( <a href="https://svn.boost.org/trac/boost/ticket/9123" target="_top">#9123</a>)
+        </li>
+<li class="listitem">
+          The default presentation for incomplete named scope lists has changed.
+          In previous releases the incomplete marker included a trailing delimiter,
+          for example "scope1&lt;-scope2&lt;-...". From this release the
+          trailing delimiter is omitted, so in the same case the formatting result
+          would be: "scope1&lt;-scope2..." (note the missing trailing "&lt;-").
+        </li>
+<li class="listitem">
+          Added a support header for <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">regex</span></code>.
+          If <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">log</span><span class="special">/</span><span class="identifier">support</span><span class="special">/</span><span class="identifier">std_regex</span><span class="special">.</span><span class="identifier">hpp</span></code> is included, one can use <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">regex</span></code> expressions with <a class="link" href="detailed/expressions.html#log.detailed.expressions.predicates.advanced_string_matching" title="Advanced string matching filter">string
+          matching filters</a>.
+        </li>
+<li class="listitem">
+          By default Boost.Log uses <a href="http://www.boost.org/doc/libs/release/libs/regex/index.html" target="_top">Boost.Regex</a>
+          internally as the regular expressions backend. <a href="http://www.boost.org/doc/libs/release/doc/html/xpressive.html" target="_top">Boost.Xpressive</a>
+          was used in previous releases. This backend is used to implement string
+          matching filters parsed from strings or settings. Using <a href="http://www.boost.org/doc/libs/release/libs/regex/index.html" target="_top">Boost.Regex</a>
+          by default results in smaller executables and also better runtime performance.
+        </li>
+<li class="listitem">
+          Added build configuration macros for regex backend selection. By defining
+          <code class="computeroutput"><span class="identifier">BOOST_LOG_USE_STD_REGEX</span></code>,
+          <code class="computeroutput"><span class="identifier">BOOST_LOG_USE_BOOST_REGEX</span></code>
+          or <code class="computeroutput"><span class="identifier">BOOST_LOG_USE_BOOST_XPRESSIVE</span></code>
+          at Boost.Log build time the user can select which regex implementation
+          will be used by the library internally for the string matching filters
+          parsed from strings and settings. Note that this selection does not affect
+          <a class="link" href="detailed/expressions.html#log.detailed.expressions.predicates.advanced_string_matching" title="Advanced string matching filter">string
+          matching filters in expressions</a>.
+        </li>
+</ul></div>
+<p>
+      <span class="bold"><strong>Bug fixes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Fixed <a class="link" href="detailed/utilities.html#log.detailed.utilities.manipulators.dump" title="Binary dump manipulator"><code class="computeroutput"><span class="identifier">dump</span></code></a> manipulator output on AVX2-enabled
+          CPUs (e.g. Intel Haswell).
+        </li>
+<li class="listitem">
+          Fixed compilation of <code class="computeroutput"><span class="identifier">get_attribute</span></code>
+          method of loggers.
+        </li>
+<li class="listitem">
+          Fixed a possible race in <code class="computeroutput"><span class="identifier">locked_backend</span><span class="special">()</span></code> function implementation of synchronous
+          and asynchronous sink frontends.
+        </li>
+<li class="listitem">
+          Fixed a possible infinite block of the logging threads in the asynchronous
+          sink enqueue methods when <code class="computeroutput"><a class="link" href="../boost/log/sinks/block_on_overflow.html" title="Class block_on_overflow">block_on_overflow</a></code>
+          strategy was used.
+        </li>
+<li class="listitem">
+          Added a workaround for ticket <a href="https://svn.boost.org/trac/boost/ticket/9363" target="_top">#9363</a>.
+        </li>
+<li class="listitem">
+          Added a workaround for MSVC bug that caused the <a class="link" href="detailed/utilities.html#log.detailed.utilities.manipulators.add_value" title="Attribute value attaching manipulator"><code class="computeroutput"><span class="identifier">add_value</span></code></a> manipulator produce
+          garbage attribute values when using with immediate integer constants. (
+          <a href="https://svn.boost.org/trac/boost/ticket/9320" target="_top">#9320</a>)
+        </li>
+</ul></div>
+<h4>
+<a name="log.changelog.h3"></a>
       <span class="phrase"><a name="log.changelog.2_2__boost_1_55"></a></span><a class="link" href="changelog.html#log.changelog.2_2__boost_1_55">2.2,
       Boost 1.55</a>
     </h4>
@@ -74,12 +230,16 @@
           Fixed thread id formatting discrepancies between the default sink and formatters.
         </li>
 <li class="listitem">
+          Fixed parsing RotationTimePoint parameter values from settings, when the
+          time point only included time of day (i.e. daily rotation).
+        </li>
+<li class="listitem">
           Closed tickets: <a href="https://svn.boost.org/trac/boost/ticket/8815" target="_top">#8815</a>, <a href="https://svn.boost.org/trac/boost/ticket/8819" target="_top">#8819</a>, <a href="https://svn.boost.org/trac/boost/ticket/8915" target="_top">#8915</a>, <a href="https://svn.boost.org/trac/boost/ticket/8917" target="_top">#8917</a>, <a href="https://svn.boost.org/trac/boost/ticket/9139" target="_top">#9139</a>, <a href="https://svn.boost.org/trac/boost/ticket/9140" target="_top">#9140</a>,
           <a href="https://svn.boost.org/trac/boost/ticket/9153" target="_top">#9153</a>, <a href="https://svn.boost.org/trac/boost/ticket/9155" target="_top">#9155</a>.
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h1"></a>
+<a name="log.changelog.h4"></a>
       <span class="phrase"><a name="log.changelog.2_1__boost_1_54"></a></span><a class="link" href="changelog.html#log.changelog.2_1__boost_1_54">2.1,
       Boost 1.54</a>
     </h4>
@@ -126,7 +286,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h2"></a>
+<a name="log.changelog.h5"></a>
       <span class="phrase"><a name="log.changelog.2_0__13_april_2013"></a></span><a class="link" href="changelog.html#log.changelog.2_0__13_april_2013">2.0,
       13 April 2013</a>
     </h4>
@@ -501,7 +661,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h3"></a>
+<a name="log.changelog.h6"></a>
       <span class="phrase"><a name="log.changelog.1_1__02_december_2011"></a></span><a class="link" href="changelog.html#log.changelog.1_1__02_december_2011">1.1,
       02 December 2011</a>
     </h4>
@@ -521,7 +681,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h4"></a>
+<a name="log.changelog.h7"></a>
       <span class="phrase"><a name="log.changelog.1_0__09_may_2010"></a></span><a class="link" href="changelog.html#log.changelog.1_0__09_may_2010">1.0,
       09 May 2010</a>
     </h4>
@@ -561,7 +721,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h5"></a>
+<a name="log.changelog.h8"></a>
       <span class="phrase"><a name="log.changelog.release_candidate_4__08_jan_2010"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_4__08_jan_2010">Release
       Candidate 4, 08 Jan 2010</a>
     </h4>
@@ -656,7 +816,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h6"></a>
+<a name="log.changelog.h9"></a>
       <span class="phrase"><a name="log.changelog.release_candidate_3__08_feb_2009"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_3__08_feb_2009">Release
       Candidate 3, 08 Feb 2009</a>
     </h4>
@@ -690,7 +850,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h7"></a>
+<a name="log.changelog.h10"></a>
       <span class="phrase"><a name="log.changelog.release_candidate_2"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_2">Release
       Candidate 2</a>
     </h4>
@@ -700,7 +860,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2013 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2015 Andrey
+      Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

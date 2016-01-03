@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005, 2007, 2009-2013 Free Software Foundation, Inc.
+ * Copyright (C) 2005, 2007, 2009-2015 Free Software Foundation, Inc.
  * Written by Jim Meyering.
  *
  * This program is free software: you can redistribute it and/or modify

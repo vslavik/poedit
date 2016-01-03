@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test msgcat on a PO file with previous msgids.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mcat-test15.in"
 cat <<\EOF > mcat-test15.in
 msgid ""
 msgstr ""
@@ -44,27 +41,20 @@ msgstr "Argumente fehlen."
 #~ msgstr "%s: ungültige Option -- %c\n"
 EOF
 
-tmpfiles="$tmpfiles mcat-test15.tmp1 mcat-test15.out1"
 rm -f mcat-test15.tmp1
 : ${MSGCAT=msgcat}
-${MSGCAT} -o mcat-test15.tmp1 mcat-test15.in
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcat-test15.tmp1 > mcat-test15.out1
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGCAT} -o mcat-test15.tmp1 mcat-test15.in || exit 1
+LC_ALL=C tr -d '\r' < mcat-test15.tmp1 > mcat-test15.out1 || exit 1
 
 : ${DIFF=diff}
 ${DIFF} mcat-test15.in mcat-test15.out1
 result=$?
 
-tmpfiles="$tmpfiles mcat-test15.tmp2 mcat-test15.out2"
 rm -f mcat-test15.tmp2
 : ${MSGCAT=msgcat}
-${MSGCAT} --indent -o mcat-test15.tmp2 mcat-test15.in
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcat-test15.tmp2 > mcat-test15.out2
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGCAT} --indent -o mcat-test15.tmp2 mcat-test15.in || exit 1
+LC_ALL=C tr -d '\r' < mcat-test15.tmp2 > mcat-test15.out2 || exit 1
 
-tmpfiles="$tmpfiles mcat-test15.ok"
 cat <<\EOF > mcat-test15.ok
 msgid   ""
 msgstr  "Report-Msgid-Bugs-To: \n"
@@ -105,7 +95,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcat-test15.ok mcat-test15.out2
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

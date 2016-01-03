@@ -4,7 +4,7 @@
 <title>as_map</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.1">
+<link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../functions.html" title="Functions">
 <link rel="prev" href="as_set.html" title="as_set">
 <link rel="next" href="../metafunctions.html" title="Metafunctions">
@@ -105,8 +105,10 @@
             <code class="computeroutput"><span class="identifier">seq</span></code>, to a <a class="link" href="../../map.html" title="map"><code class="computeroutput"><span class="identifier">map</span></code></a>.
           </p>
 <p>
-            <span class="bold"><strong>Precondition</strong></span>: The elements of the sequence
-            are assumed to be __fusion_pair__s. There may be no duplicate <a class="link" href="../../../support/pair.html" title="pair"><code class="computeroutput"><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">pair</span></code></a> key types.
+            <span class="bold"><strong>Precondition</strong></span>: For non-associative sequence,
+            the elements are assumed to be __fusion_pair__s. There may be no duplicate
+            <a class="link" href="../../../support/pair.html" title="pair"><code class="computeroutput"><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">pair</span></code></a>
+            key types.
           </p>
 <h6>
 <a name="fusion.container.conversion.functions.as_map.h4"></a>
@@ -119,9 +121,25 @@
 <a name="fusion.container.conversion.functions.as_map.h5"></a>
             <span class="phrase"><a name="fusion.container.conversion.functions.as_map.example"></a></span><a class="link" href="as_map.html#fusion.container.conversion.functions.as_map.example">Example</a>
           </h6>
-<pre class="programlisting"><span class="identifier">as_map</span><span class="special">(</span><a class="link" href="../../generation/functions/make_vector.html" title="make_vector"><code class="computeroutput"><span class="identifier">make_vector</span></code></a><span class="special">(</span>
+<pre class="programlisting"><span class="comment">// from sequence of __fusion_pair__</span>
+<span class="identifier">as_map</span><span class="special">(</span><a class="link" href="../../generation/functions/make_vector.html" title="make_vector"><code class="computeroutput"><span class="identifier">make_vector</span></code></a><span class="special">(</span>
     <a class="link" href="../../../support/pair.html" title="pair"><code class="computeroutput"><span class="identifier">make_pair</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;(</span><span class="char">'X'</span><span class="special">)</span>
   <span class="special">,</span> <a class="link" href="../../../support/pair.html" title="pair"><code class="computeroutput"><span class="identifier">make_pair</span></code></a><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;(</span><span class="string">"Men"</span><span class="special">)))</span>
+
+<span class="comment">// from associative sequence</span>
+<span class="keyword">namespace</span> <span class="identifier">ns</span>
+<span class="special">{</span>
+    <span class="keyword">struct</span> <span class="identifier">x_member</span><span class="special">;</span>
+    <span class="keyword">struct</span> <span class="identifier">y_member</span><span class="special">;</span>
+<span class="special">}</span>
+<span class="identifier">BOOST_FUSION_DEFINE_ASSOC_STRUCT</span><span class="special">(</span>
+    <span class="special">(</span><span class="identifier">ns</span><span class="special">),</span>
+    <span class="identifier">point</span><span class="special">,</span>
+    <span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="identifier">x</span><span class="special">,</span> <span class="identifier">ns</span><span class="special">::</span><span class="identifier">x_member</span><span class="special">)</span>
+    <span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="identifier">y</span><span class="special">,</span> <span class="identifier">ns</span><span class="special">::</span><span class="identifier">y_member</span><span class="special">)</span>
+<span class="special">)</span>
+<span class="special">...</span>
+<span class="identifier">as_map</span><span class="special">(</span><span class="identifier">ns</span><span class="special">::</span><span class="identifier">point</span><span class="special">(</span><span class="number">123</span><span class="special">,</span> <span class="number">456</span><span class="special">))</span>
 </pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

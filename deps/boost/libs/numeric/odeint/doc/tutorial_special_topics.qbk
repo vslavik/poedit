@@ -1,8 +1,9 @@
 [/============================================================================
   Boost.odeint
 
-  Copyright (c) 2009-2012 Karsten Ahnert
-  Copyright (c) 2009-2012 Mario Mulansky
+  Copyright 2011-2012 Karsten Ahnert
+  Copyright 2011-2013 Mario Mulansky
+  Copyright 2012 Sylwester Arabas
 
   Use, modification and distribution is subject to the Boost Software License,
   Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -36,19 +37,16 @@ We strongly recommend to use the first ansatz. In this case you have explicit co
 When choosing the stepper type one has to account for the "unusual" state type:
 it is a single `complex<double>` opposed to the vector types used in the
 previous examples. This means that no iterations over vector elements have to
-be performed inside the stepper algorithm. You can enforce this by supplying
-additional template arguments to the stepper including the
-`vector_space_algebra`. Details on the usage of algebras can be found in the
-section __adapt_state_types.
+be performed inside the stepper algorithm. Odeint already detects that and
+automatically uses the `vector_space_algebra` for computation.
+You can enforce this by supplying additional template arguments to the stepper
+including the `vector_space_algebra`. Details on the usage of algebras can be
+found in the section __adapt_state_types.
 
 [stuart_landau_integration]
 
 The full cpp file for the Stuart-Landau example can be found here [github_link
-libs/numeric/odeint/examples/stuart_landau.cpp stuart_landau.cpp]
-
-[note The fact that we have to configure a different algebra is solely due to
-the fact that we use a non-vector state type and not to the usage of complex
-values. So for, e.g. `vector< complex<double> >`, this would not be required.] 
+examples/stuart_landau.cpp stuart_landau.cpp]
 
 [endsect]
 
@@ -77,7 +75,7 @@ The observer uses a reference to the system object to calculate the local energi
 
 [fpu_observer]
 
-The full cpp file for this FPU example can be found here [github_link libs/numeric/odeint/examples/fpu.cpp fpu.cpp]
+The full cpp file for this FPU example can be found here [github_link examples/fpu.cpp fpu.cpp]
 
 [endsect]
 
@@ -105,7 +103,7 @@ Now, we do several integrations for different values of ['__epsilon] and record 
 
 [phase_oscillator_ensemble_integration]
 
-The full cpp file for this example can be found here [github_link libs/numeric/odeint/examples/phase_oscillator_ensemble.cpp phase_oscillator_ensemble.cpp]
+The full cpp file for this example can be found here [github_link examples/phase_oscillator_ensemble.cpp phase_oscillator_ensemble.cpp]
 
 [endsect]
 
@@ -145,11 +143,13 @@ differential equation which is completely equivalent to the example in __tut_har
 [units_define_ode]
 
 Next, we instantiate an appropriate stepper. We must explicitly parametrize
-the stepper with the `state_type`, `deriv_type`, `time_type`. Furthermore, the
-iteration over vector elements is now done by the `fusion_algebra` which must
-also be given. For more on the state types / algebras see chapter __adapt_state_types.
+the stepper with the `state_type`, `deriv_type`, `time_type`. 
 
 [units_define_stepper]
+
+[note When using compile-time sequences, the iteration over vector elements is
+done by the `fusion_algebra`, which is automatically chosen by odeint. For
+more on the state types / algebras see chapter __adapt_state_types.]
 
 It is quite easy but the compilation time might take very long. Furthermore, the observer is defined a bit different
 
@@ -159,7 +159,7 @@ It is quite easy but the compilation time might take very long. Furthermore, the
 memory consuming. For example the unit test for the usage of __boost_units in odeint take up to 4 GB
 of memory at compilation.]
 
-The full cpp file for this example can be found here [github_link libs/numeric/odeint/examples/harmonic_oscillator_units.cpp harmonic_oscillator_units.cpp].
+The full cpp file for this example can be found here [github_link examples/harmonic_oscillator_units.cpp harmonic_oscillator_units.cpp].
 
 [endsect] 
 
@@ -179,7 +179,7 @@ In principle this is all. Please note, that the above code is far from being opt
 
 [$phase_lattice_2d_0000.jpg] [$phase_lattice_2d_0100.jpg] [$phase_lattice_2d_1000.jpg]
 
-The full cpp for this example can be found here [github_link libs/numeric/odeint/examples/two_dimensional_phase_lattice.cpp two_dimensional_phase_lattice.cpp].
+The full cpp for this example can be found here [github_link examples/two_dimensional_phase_lattice.cpp two_dimensional_phase_lattice.cpp].
 
 [endsect]
 
@@ -197,24 +197,40 @@ to be continued
 
 [section Using arbitrary precision floating point types]
 
-[import ../examples/gmpxx/lorenz_gmpxx.cpp]
+[import ../examples/multiprecision/lorenz_mp.cpp]
 
-Besides the classical floating point number like `float`, `double`, `complex< double >` you can also use arbitrary precision types, like the types from [@http://gmplib.org/ gmp] and [@http://www.mpfr.org/ mpfr]. But you have to be careful about instantiating any numbers.
+Sometimes one needs results with higher precision than provided by the
+standard floating point types.
+As odeint allows to configure the fundamental numerical type, it is well
+suited to be run with arbitrary precision types.
+Therefore, one only needs a library that provides a type representing values
+with arbitrary precision and the fundamental operations for those values.
+__boost_multiprecision is a boost library that does exactly this.
+Making use of __boost_multiprecision to solve odes with odeint is very simple,
+as the following example shows.
 
-For gmp types you have to set the default precision before any number is instantiated. This can be done by calling `mpf_set_default_prec( precision )` as the first function in your main program. Secondly, you can not use any global constant variables since they will not be set with the default precision you have already set.
+Here we use `cpp_dec_float_50` as the fundamental value type, which ensures
+exact computations up to 50 decimal digits.
 
-Here is a simple example:
 
-[gmpxx_lorenz]
+[mp_lorenz_defs]
 
-which can be integrated:
+As exemplary ODE again the lorenz system is chosen, but here we have to make
+sure all constants are initialized as high precision values.
 
-[gmpxx_integration]
+[mp_lorenz_rhs]
 
-[caution The full support of arbitrary precision types depends on the functionality they provide. For example, the types from gmp are lacking of functions for calculating the power and arbitrary roots, hence they can not be used with the controlled steppers. In detail, for full support the `min( x , y )`, `max( x , y )`, `pow( x , y )` must be callable.]
+The actual integration then is straight forward:
 
-The full example can be found at [github_link libs/numeric/odeint/examples/gmpxx/lorenz_gmpxx.cpp lorenz_gmpxx.cpp].
+[mp_lorenz_int]
 
+The full example can be found at [github_link examples/multiprecision/lorenz_mp.cpp lorenz_mp.cpp].
+Another example that compares the accuracy of the high precision type with
+standard double can be found at [github_link examples/multiprecision/cmp_precision.cpp cmp_precision.cpp].
+
+Furthermore, odeint can also be run with other multiprecision libraries,
+e.g. [@http://gmplib.org/ gmp].
+An example for this is given in [github_link examples/gmpxx/lorenz_gmpxx.cpp lorenz_gmpxx.cpp].
 
 [endsect]
 
@@ -251,7 +267,7 @@ The `do_resize` function simply calls `vector.resize` of `q` , `p` and `distr`.
 
 [resizing_lattice_resize_function]
 
-The full example can be found in [github_link libs/numeric/odeint/examples/resizing_lattice.cpp resizing_lattice.cpp]
+The full example can be found in [github_link examples/resizing_lattice.cpp resizing_lattice.cpp]
 
 [endsect]
 

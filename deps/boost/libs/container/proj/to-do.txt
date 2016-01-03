@@ -1,10 +1,7 @@
 ->Change "insert" and "push_back"/"push_front" to catch non-const rvalues
 ->Add an example with stateful allocators
 ->Add test to check convertible types in push_back/insert
-->Add SCARY iterators.
 ->Align with C++11 [multi]map::insert(P &&p) overload.
-->Unify all allocator version traits in one class (starting from stable_vector_detail::allocator_version_wrapper)
-   maybe in allocator_traits?
 ->Fix code marked with "//to-do: if possible, an efficient way to deallocate allocated blocks"
 ->Add BOOST_CONTAINER_TRY, etc. macros to allow disabling exceptions only in this library (just like Boost.Intrusive)
 ->Add macro to change the default allocator std::allocator to another one
@@ -61,3 +58,5 @@ Add hash for containers
 Add std:: hashing support
 
 Fix trivial destructor after move and other optimizing traits
+
+Implement n3586, "Splicing Maps and Sets" (http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3586.pdf)

@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2008-2013 Vaclav Slavik
+ *  Copyright (C) 2008-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -32,9 +32,11 @@
 #include <map>
 #include <functional>
 
+class WXDLLIMPEXP_FWD_CORE wxCheckBox;
 class WXDLLIMPEXP_FWD_CORE wxStaticText;
 class WXDLLIMPEXP_FWD_CORE wxStaticBitmap;
 class WXDLLIMPEXP_FWD_CORE wxSizer;
+class AutoWrappingText;
 
 /// Message to be displayed in AttentionBar
 class AttentionMessage
@@ -45,7 +47,15 @@ public:
     {
         Info,
         Warning,
+        Question,
         Error
+    };
+
+    /// Information passed to the action callback
+    struct ActionInfo
+    {
+        /// State of the (optional) checkbox
+        bool checkbox;
     };
 
     /**
@@ -61,9 +71,10 @@ public:
         @see AddToBlacklist
      */
     AttentionMessage(const wxString& id, Kind kind, const wxString& text)
-        : m_id(id), m_kind(kind), m_text(text) {}
+        : m_id(id), m_kind(kind), m_text(text), m_explanation("") {}
 
-    typedef std::function<void()> Callback;
+    typedef std::function<void(ActionInfo info)> Callback;
+    typedef std::function<void()> CallbackNoArgs;
 
     /**
         Adds an action button to the bar. By default, a close button is shown,
@@ -72,15 +83,27 @@ public:
         @param label    Short label for the action.
         @param callback Function to call when the button is clicked.
      */
-    void AddAction(const wxString& label, Callback callback)
+    void AddAction(const wxString& label, CallbackNoArgs callback)
+        { AddActionWithInfo(label, [=](ActionInfo){ callback(); }); }
+
+    /// Similarly to AddAction(), but uses callback that is passed ActionInfo
+    void AddActionWithInfo(const wxString& label, Callback callback)
         { m_actions.push_back(std::make_pair(label, callback)); }
 
     /// Adds "Don't show again" action.
     void AddDontShowAgain();
 
+    /// Set additional explanatory text
+    void SetExplanation(const wxString& txt) { m_explanation = txt; }
+
+    /// Add checkbox to the message
+    void AddCheckbox(const wxString& label) { m_checkbox = label; }
+
     wxString m_id;
     Kind m_kind;
     wxString m_text;
+    wxString m_explanation;
+    wxString m_checkbox;
 
     typedef std::pair<wxString, Callback> Action;
     typedef std::vector<Action> Actions;
@@ -121,13 +144,15 @@ public:
 private:
     void OnClose(wxCommandEvent& event);
     void OnAction(wxCommandEvent& event);
-#if defined(__WXMAC__) || defined(__WXMSW__)
     void OnPaint(wxPaintEvent& event);
-#endif
 
 private:
+#ifndef __WXGTK__
     wxStaticBitmap *m_icon;
-    wxStaticText *m_label;
+#endif
+    AutoWrappingText *m_label;
+    AutoWrappingText *m_explanation;
+    wxCheckBox *m_checkbox;
     wxSizer *m_buttons;
     typedef std::map<wxObject*, AttentionMessage::Callback> ActionsMap;
     ActionsMap m_actions;

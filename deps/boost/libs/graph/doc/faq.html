@@ -115,7 +115,7 @@ library. OO was hip in the 80s and 90s, but its time we moved beyond!
   // initialize the vertex_index property values
   graph_traits&lt;graph_t&gt;::vertex_iterator vi, vend;
   graph_traits&lt;graph_t&gt;::vertices_size_type cnt = 0;
-  for(tie(vi,vend) = vertices(G); vi != vend; ++vi)
+  for(boost::tie(vi,vend) = vertices(G); vi != vend; ++vi)
     put(index, *vi, cnt++);
 </pre>
 </li>

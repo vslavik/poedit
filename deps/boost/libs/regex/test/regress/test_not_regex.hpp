@@ -62,7 +62,9 @@ void test(boost::basic_regex<charT, traits>& r, const test_invalid_regex_tag&)
    //
    // try it with exceptions disabled first:
    //
+#ifndef BOOST_NO_EXCEPTIONS
    try
+#endif
    {
       if(0 == r.assign(expression, syntax_options | boost::regex_constants::no_except).status())
       {
@@ -70,21 +72,27 @@ void test(boost::basic_regex<charT, traits>& r, const test_invalid_regex_tag&)
       }
       test_empty(r);
    }
+#ifndef BOOST_NO_EXCEPTIONS
    catch(...)
    {
       BOOST_REGEX_TEST_ERROR("Unexpected exception thrown.", charT);
    }
+#endif
    //
    // now try again with exceptions:
    //
    bool have_catch = false;
-   try{
+#ifndef BOOST_NO_EXCEPTIONS
+   try
+#endif
+   {
       r.assign(expression, syntax_options);
 #ifdef BOOST_NO_EXCEPTIONS
       if(r.status())
          have_catch = true;
 #endif
    }
+#ifndef BOOST_NO_EXCEPTIONS
    catch(const boost::bad_expression&)
    {
       have_catch = true;
@@ -105,6 +113,7 @@ void test(boost::basic_regex<charT, traits>& r, const test_invalid_regex_tag&)
       have_catch = true;
       BOOST_REGEX_TEST_ERROR("Expected a bad_expression exception, but got an exception of unknown type instead", charT);
    }
+#endif
    if(!have_catch)
    {
       // oops expected exception was not thrown:

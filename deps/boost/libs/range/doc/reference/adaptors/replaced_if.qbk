@@ -15,8 +15,8 @@
     * The range `value_type` is convertible to the argument type of `pred`.
     * `new_value` is convertible to the `value_type` of the range.
 * [*Postconditions:] For all elements `x` in the returned range, the value `x` is equal to the value of `pred(y) ? new_value : y` where `y` is the corresponding element in the original range.
-* [*Range Category:] __forward_range__
-* [*Range Return Type:] `boost::replaced_if_range<typeof(rng)>`
+* [*Range Category:] __single_pass_range__
+* [*Range Return Type:] `boost::replaced_if_range<decltype(rng)>`
 * [*Returned Range Category:] The range category of `rng`.
 
 [section:replaced_if_example replaced_if example]

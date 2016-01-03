@@ -1,8 +1,9 @@
 [/============================================================================
   Boost.odeint
 
-  Copyright (c) 2009-2012 Karsten Ahnert
-  Copyright (c) 2009-2012 Mario Mulansky
+  Copyright 2011 Mario Mulansky
+  Copyright 2012 Karsten Ahnert
+  Copyright 2013 Pascal Germroth
 
   Use, modification and distribution is subject to the Boost Software License,
   Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -106,6 +107,8 @@ In the following we list the existing `Algebra`/`Operations` configurations that
   [[`boost::array` based on a `value_type` that supports operators +,*] [`array_algebra`] [`default_operations`] [Special implementation for boost::array with better performance than `range_algebra`]]
   [[Anything that defines operators + within itself and * with scalar (Mathematically spoken, anything that is a vector space).] [`vector_space_algebra`] [`default_operations`] [For the use of __controlled_stepper, the template `vector_space_reduce` has to be instantiated.]]
   [[`thrust::device_vector`, `thrust::host_vector`] [`thrust_algebra`] [`thrust_operations`] [For running odeint on CUDA devices by using __thrust]]
+  [[Any RandomAccessRange] [`openmp_range_algebra`] [`default_operations`] [OpenMP-parallelised range algebra]]
+  [[`openmp_state`] [`openmp_algebra`] [`default_operations`] [OpenMP-parallelised algebra for split data]]
   [[`boost::array` or anything which allocates the elements in a C-like manner] [`vector_space_algebra`] [`mkl_operations`] [Using the __intel_mkl in odeint for maximum performance. Currently, only the RK4 stepper is supported.]]
 ]
 

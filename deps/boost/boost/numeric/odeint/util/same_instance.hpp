@@ -6,8 +6,8 @@
  Basic check if two variables are the same instance
  [end_description]
 
- Copyright 2009-2012 Karsten Ahnert
- Copyright 2009-2012 Mario Mulansky
+ Copyright 2012 Karsten Ahnert
+ Copyright 2012 Mario Mulansky
 
  Distributed under the Boost Software License, Version 1.0.
  (See accompanying file LICENSE_1_0.txt or
@@ -25,7 +25,7 @@ namespace odeint {
 template< class T1 , class T2 , class Enabler=void >
 struct same_instance_impl
 { 
-    static bool same_instance( const T1 &x1 , const T2 &x2 )
+    static bool same_instance( const T1& /* x1 */ , const T2& /* x2 */ )
     {
         return false;
     }

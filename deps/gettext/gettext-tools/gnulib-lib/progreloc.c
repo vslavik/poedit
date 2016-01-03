@@ -1,5 +1,5 @@
 /* Provide relocatable programs.
-   Copyright (C) 2003-2013 Free Software Foundation, Inc.
+   Copyright (C) 2003-2015 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -42,6 +42,11 @@
 #ifdef WINDOWS_NATIVE
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
+#endif
+
+#ifdef __EMX__
+# define INCL_DOS
+# include <os2.h>
 #endif
 
 #include "relocatable.h"
@@ -88,11 +93,6 @@ extern char * canonicalize_file_name (const char *name);
 # define IS_PATH_WITH_DIR(P) (strchr (P, '/') != NULL)
 # define FILE_SYSTEM_PREFIX_LEN(P) 0
 #endif
-
-/* The results of open() in this file are not used with fchdir,
-   therefore save some unnecessary work in fchdir.c.  */
-#undef open
-#undef close
 
 /* Use the system functions, not the gnulib overrides in this file.  */
 #undef sprintf
@@ -161,6 +161,23 @@ find_executable (const char *argv0)
   if (!IS_PATH_WITH_DIR (location))
     /* Shouldn't happen.  */
     return NULL;
+  return xstrdup (location);
+#elif defined __EMX__
+  PPIB ppib;
+  char location[CCHMAXPATH];
+
+  /* See http://cyberkinetica.homeunix.net/os2tk45/cp1/619_L2H_DosGetInfoBlocksSynt.html
+     for specification of DosGetInfoBlocks().  */
+  if (DosGetInfoBlocks (NULL, &ppib))
+    return NULL;
+
+  /* See http://cyberkinetica.homeunix.net/os2tk45/cp1/1247_L2H_DosQueryModuleNameSy.html
+     for specification of DosQueryModuleName().  */
+  if (DosQueryModuleName (ppib->pib_hmte, sizeof (location), location))
+    return NULL;
+
+  _fnslashify (location);
+
   return xstrdup (location);
 #else /* Unix */
 # ifdef __linux__

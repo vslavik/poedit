@@ -24,6 +24,7 @@
 \defgroup core core: meta-functions for geometry types
 \defgroup correct correct: correct geometries
 \defgroup covered_by covered_by: detect if a geometry is inside or on the border of another geometry, a.o. point-in-polygon (border included)
+\defgroup crosses crosses: detect if two geometries crosses each other
 \defgroup cs coordinate systems
 \defgroup difference difference: difference of two geometries
 \defgroup disjoint disjoint: detect if geometries are not spatially related
@@ -39,12 +40,15 @@
 \defgroup interior_rings interior_rings: interior_rings
 \defgroup intersection intersection: calculate new geometry
 \defgroup intersects intersects: detect if a geometry self-intersects or if two geometries intersect
+\defgroup is_simple is_simple: detect if a geometry is simple
+\defgroup is_valid is_valid: detect if a geometry is valid
 \defgroup iterators iterators: iterators
 \defgroup length length: calculate length of a linear geometry
 \defgroup make make: construct geometries
 \defgroup num_geometries number of geometries: calculate the number of geometries in a multi-geometry
 \defgroup num_interior_rings number of interior rings: calculate the number of interior rings
 \defgroup num_points number of points: calculate number of points of a geometry
+\defgroup num_segments number of segments: calculate number of segments of a geometry
 \defgroup overlaps overlaps: detect overlap between two geometries
 \defgroup perimeter perimeter: calculate perimeter of a geometry
 \defgroup projection projection: Projection struct's, classes

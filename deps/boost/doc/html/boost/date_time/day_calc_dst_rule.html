@@ -6,8 +6,8 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../date_time/doxy.html#header.boost.date_time.dst_transition_generators_hpp" title="Header &lt;boost/date_time/dst_transition_generators.hpp&gt;">
-<link rel="prev" href="dst_day_calc_rule.html" title="Class template dst_day_calc_rule">
-<link rel="next" href="winapi/FILETIME.html" title="Struct FILETIME">
+<link rel="prev" href="us_dst_rules.html" title="Class template us_dst_rules">
+<link rel="next" href="dst_day_calc_rule.html" title="Class template dst_day_calc_rule">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="dst_day_calc_rule.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../date_time/doxy.html#header.boost.date_time.dst_transition_generators_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="winapi/FILETIME.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="us_dst_rules.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../date_time/doxy.html#header.boost.date_time.dst_transition_generators_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="dst_day_calc_rule.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.date_time.day_calc_dst_rule"></a><div class="titlepage"></div>
@@ -43,34 +43,34 @@
   <span class="keyword">typedef</span> <span class="identifier">spec</span><span class="special">::</span><span class="identifier">end_rule</span>       <a name="boost.date_time.day_calc_dst_rule.end_rule"></a><span class="identifier">end_rule</span><span class="special">;</span>  
 
   <span class="comment">// <a class="link" href="day_calc_dst_rule.html#boost.date_time.day_calc_dst_ruleconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="day_calc_dst_rule.html#idp25527992-bb"><span class="identifier">day_calc_dst_rule</span></a><span class="special">(</span><span class="identifier">start_rule</span><span class="special">,</span> <span class="identifier">end_rule</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="day_calc_dst_rule.html#idp107771520-bb"><span class="identifier">day_calc_dst_rule</span></a><span class="special">(</span><span class="identifier">start_rule</span><span class="special">,</span> <span class="identifier">end_rule</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="day_calc_dst_rule.html#idp25474808-bb">public member functions</a></span>
-  <span class="identifier">date_type</span> <a class="link" href="day_calc_dst_rule.html#idp25475016-bb"><span class="identifier">start_day</span></a><span class="special">(</span><span class="identifier">year_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="day_calc_dst_rule.html#idp19572184-bb"><span class="identifier">start_rule_as_string</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">date_type</span> <a class="link" href="day_calc_dst_rule.html#idp19572664-bb"><span class="identifier">end_day</span></a><span class="special">(</span><span class="identifier">year_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="day_calc_dst_rule.html#idp19573464-bb"><span class="identifier">end_rule_as_string</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="day_calc_dst_rule.html#idp67818880-bb">public member functions</a></span>
+  <span class="keyword">virtual</span> <span class="identifier">date_type</span> <a class="link" href="day_calc_dst_rule.html#idp67819440-bb"><span class="identifier">start_day</span></a><span class="special">(</span><span class="identifier">year_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="day_calc_dst_rule.html#idp105268272-bb"><span class="identifier">start_rule_as_string</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">virtual</span> <span class="identifier">date_type</span> <a class="link" href="day_calc_dst_rule.html#idp32205808-bb"><span class="identifier">end_day</span></a><span class="special">(</span><span class="identifier">year_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="day_calc_dst_rule.html#idp67343696-bb"><span class="identifier">end_rule_as_string</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp89314424"></a><h2>Description</h2>
+<a name="idp183469872"></a><h2>Description</h2>
 <p>This class is used to generate specific sets of dst rules</p>
 <p>
 </p>
 <div class="refsect2">
-<a name="idp89314952"></a><h3>
+<a name="idp183470800"></a><h3>
 <a name="boost.date_time.day_calc_dst_ruleconstruct-copy-destruct"></a><code class="computeroutput">day_calc_dst_rule</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp25527992-bb"></a><span class="identifier">day_calc_dst_rule</span><span class="special">(</span><span class="identifier">start_rule</span> dst_start<span class="special">,</span> <span class="identifier">end_rule</span> dst_end<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp107771520-bb"></a><span class="identifier">day_calc_dst_rule</span><span class="special">(</span><span class="identifier">start_rule</span> dst_start<span class="special">,</span> <span class="identifier">end_rule</span> dst_end<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp89318968"></a><h3>
-<a name="idp25474808-bb"></a><code class="computeroutput">day_calc_dst_rule</code> public member functions</h3>
+<a name="idp183478944"></a><h3>
+<a name="idp67818880-bb"></a><code class="computeroutput">day_calc_dst_rule</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="identifier">date_type</span> <a name="idp25475016-bb"></a><span class="identifier">start_day</span><span class="special">(</span><span class="identifier">year_type</span> y<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="idp19572184-bb"></a><span class="identifier">start_rule_as_string</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">date_type</span> <a name="idp19572664-bb"></a><span class="identifier">end_day</span><span class="special">(</span><span class="identifier">year_type</span> y<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="idp19573464-bb"></a><span class="identifier">end_rule_as_string</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">date_type</span> <a name="idp67819440-bb"></a><span class="identifier">start_day</span><span class="special">(</span><span class="identifier">year_type</span> y<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="idp105268272-bb"></a><span class="identifier">start_rule_as_string</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">date_type</span> <a name="idp32205808-bb"></a><span class="identifier">end_day</span><span class="special">(</span><span class="identifier">year_type</span> y<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">virtual</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="idp67343696-bb"></a><span class="identifier">end_rule_as_string</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>
@@ -83,7 +83,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="dst_day_calc_rule.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../date_time/doxy.html#header.boost.date_time.dst_transition_generators_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="winapi/FILETIME.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="us_dst_rules.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../date_time/doxy.html#header.boost.date_time.dst_transition_generators_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="dst_day_calc_rule.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

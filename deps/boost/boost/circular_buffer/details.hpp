@@ -1,6 +1,7 @@
 // Helper classes and functions for the circular buffer.
 
 // Copyright (c) 2003-2008 Jan Gaspar
+// Copyright (c) 2014 Glen Fernandes   // C++11 allocator model support.
 
 // Use, modification, and distribution is subject to the Boost Software
 // License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -9,14 +10,16 @@
 #if !defined(BOOST_CIRCULAR_BUFFER_DETAILS_HPP)
 #define BOOST_CIRCULAR_BUFFER_DETAILS_HPP
 
-#if defined(_MSC_VER) && _MSC_VER >= 1200
+#if defined(_MSC_VER)
     #pragma once
 #endif
 
 #include <boost/iterator.hpp>
 #include <boost/throw_exception.hpp>
+#include <boost/container/allocator_traits.hpp>
 #include <boost/move/move.hpp>
 #include <boost/type_traits/is_nothrow_move_constructible.hpp>
+#include <boost/utility/addressof.hpp>
 #include <boost/detail/no_exceptions_support.hpp>
 #include <iterator>
 
@@ -38,11 +41,11 @@ template<class ForwardIterator, class Diff, class T, class Alloc>
 void uninitialized_fill_n_with_alloc(
     ForwardIterator first, Diff n, const T& item, Alloc& alloc);
 
-template<class ValueType, class InputIterator, class ForwardIterator>
-ForwardIterator uninitialized_copy(InputIterator first, InputIterator last, ForwardIterator dest);
+template<class InputIterator, class ForwardIterator, class Alloc>
+ForwardIterator uninitialized_copy(InputIterator first, InputIterator last, ForwardIterator dest, Alloc& a);
 
-template<class ValueType, class InputIterator, class ForwardIterator>
-ForwardIterator uninitialized_move_if_noexcept(InputIterator first, InputIterator last, ForwardIterator dest);
+template<class InputIterator, class ForwardIterator, class Alloc>
+ForwardIterator uninitialized_move_if_noexcept(InputIterator first, InputIterator last, ForwardIterator dest, Alloc& a);
 
 /*!
     \struct const_traits
@@ -110,7 +113,7 @@ private:
 */
 template <class Value, class Alloc>
 struct assign_n {
-    typedef typename Alloc::size_type size_type;
+    typedef typename boost::container::allocator_traits<Alloc>::size_type size_type;
     size_type m_n;
     Value m_item;
     Alloc& m_alloc;
@@ -127,23 +130,24 @@ private:
     \struct assign_range
     \brief Helper functor for assigning range of items.
 */
-template <class ValueType, class Iterator>
+template <class Iterator, class Alloc>
 struct assign_range {
     Iterator m_first;
     Iterator m_last;
+    Alloc&   m_alloc;
 
-    assign_range(const Iterator& first, const Iterator& last) BOOST_NOEXCEPT
-    : m_first(first), m_last(last) {}
+    assign_range(const Iterator& first, const Iterator& last, Alloc& alloc)
+        : m_first(first), m_last(last), m_alloc(alloc) {}
 
     template <class Pointer>
     void operator () (Pointer p) const {
-        boost::cb_details::uninitialized_copy<ValueType>(m_first, m_last, p);
+        boost::cb_details::uninitialized_copy(m_first, m_last, p, m_alloc);
     }
 };
 
-template <class ValueType, class Iterator>
-inline assign_range<ValueType, Iterator> make_assign_range(const Iterator& first, const Iterator& last) {
-    return assign_range<ValueType, Iterator>(first, last);
+template <class Iterator, class Alloc>
+inline assign_range<Iterator, Alloc> make_assign_range(const Iterator& first, const Iterator& last, Alloc& a) {
+    return assign_range<Iterator, Alloc>(first, last, a);
 }
 
 /*!
@@ -423,70 +427,47 @@ operator + (typename Traits::difference_type n, const iterator<Buff, Traits>& it
     return it + n;
 }
 
-#if defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION) && !defined(BOOST_MSVC_STD_ITERATOR)
-
-//! Iterator category.
-template <class Buff, class Traits>
-inline std::random_access_iterator_tag iterator_category(const iterator<Buff, Traits>&) {
-    return std::random_access_iterator_tag();
-}
-
-//! The type of the elements stored in the circular buffer.
-template <class Buff, class Traits>
-inline typename Traits::value_type* value_type(const iterator<Buff, Traits>&) { return 0; }
-
-//! Distance type.
-template <class Buff, class Traits>
-inline typename Traits::difference_type* distance_type(const iterator<Buff, Traits>&) { return 0; }
-
-#endif // #if defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION) && !defined(BOOST_MSVC_STD_ITERATOR)
-
 /*!
     \fn ForwardIterator uninitialized_copy(InputIterator first, InputIterator last, ForwardIterator dest)
     \brief Equivalent of <code>std::uninitialized_copy</code> but with explicit specification of value type.
 */
-template<class ValueType, class InputIterator, class ForwardIterator>
-inline ForwardIterator uninitialized_copy(InputIterator first, InputIterator last, ForwardIterator dest) {
-    typedef ValueType value_type;
-
-    // We do not use allocator.construct and allocator.destroy
-    // because C++03 requires to take parameter by const reference but
-    // Boost.move requires nonconst reference
+template<class InputIterator, class ForwardIterator, class Alloc>
+inline ForwardIterator uninitialized_copy(InputIterator first, InputIterator last, ForwardIterator dest, Alloc& a) {
     ForwardIterator next = dest;
     BOOST_TRY {
         for (; first != last; ++first, ++dest)
-            ::new (dest) value_type(*first);
+            boost::container::allocator_traits<Alloc>::construct(a, boost::addressof(*dest), *first);
     } BOOST_CATCH(...) {
         for (; next != dest; ++next)
-            next->~value_type();
+            boost::container::allocator_traits<Alloc>::destroy(a, boost::addressof(*next));
         BOOST_RETHROW
     }
     BOOST_CATCH_END
     return dest;
 }
 
-template<class ValueType, class InputIterator, class ForwardIterator>
-ForwardIterator uninitialized_move_if_noexcept_impl(InputIterator first, InputIterator last, ForwardIterator dest,
+template<class InputIterator, class ForwardIterator, class Alloc>
+ForwardIterator uninitialized_move_if_noexcept_impl(InputIterator first, InputIterator last, ForwardIterator dest, Alloc& a,
     true_type) {
     for (; first != last; ++first, ++dest)
-        ::new (dest) ValueType(boost::move(*first));
+        boost::container::allocator_traits<Alloc>::construct(a, boost::addressof(*dest), boost::move(*first));
     return dest;
 }
 
-template<class ValueType, class InputIterator, class ForwardIterator>
-ForwardIterator uninitialized_move_if_noexcept_impl(InputIterator first, InputIterator last, ForwardIterator dest,
+template<class InputIterator, class ForwardIterator, class Alloc>
+ForwardIterator uninitialized_move_if_noexcept_impl(InputIterator first, InputIterator last, ForwardIterator dest, Alloc& a,
     false_type) {
-    return uninitialized_copy<ValueType>(first, last, dest);
+    return uninitialized_copy(first, last, dest, a);
 }
 
 /*!
     \fn ForwardIterator uninitialized_move_if_noexcept(InputIterator first, InputIterator last, ForwardIterator dest)
     \brief Equivalent of <code>std::uninitialized_copy</code> but with explicit specification of value type and moves elements if they have noexcept move constructors.
 */
-template<class ValueType, class InputIterator, class ForwardIterator>
-ForwardIterator uninitialized_move_if_noexcept(InputIterator first, InputIterator last, ForwardIterator dest) {
-    typedef typename boost::is_nothrow_move_constructible<ValueType>::type tag_t;
-    return uninitialized_move_if_noexcept_impl<ValueType>(first, last, dest, tag_t());
+template<class InputIterator, class ForwardIterator, class Alloc>
+ForwardIterator uninitialized_move_if_noexcept(InputIterator first, InputIterator last, ForwardIterator dest, Alloc& a) {
+    typedef typename boost::is_nothrow_move_constructible<typename boost::container::allocator_traits<Alloc>::value_type>::type tag_t;
+    return uninitialized_move_if_noexcept_impl(first, last, dest, a, tag_t());
 }
 
 /*!
@@ -498,10 +479,10 @@ inline void uninitialized_fill_n_with_alloc(ForwardIterator first, Diff n, const
     ForwardIterator next = first;
     BOOST_TRY {
         for (; n > 0; ++first, --n)
-            alloc.construct(first, item);
+            boost::container::allocator_traits<Alloc>::construct(alloc, boost::addressof(*first), item);
     } BOOST_CATCH(...) {
         for (; next != first; ++next)
-            alloc.destroy(next);
+            boost::container::allocator_traits<Alloc>::destroy(alloc, boost::addressof(*next));
         BOOST_RETHROW
     }
     BOOST_CATCH_END

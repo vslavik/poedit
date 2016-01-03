@@ -14,7 +14,7 @@
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/adapted/c_array.hpp>
 
-BOOST_GEOMETRY_REGISTER_C_ARRAY_CS(cs::cartesian) 
+BOOST_GEOMETRY_REGISTER_C_ARRAY_CS(cs::cartesian)
 
 int main()
 {
@@ -22,7 +22,7 @@ int main()
     int b[3] = {2, 3, 4};
 
     std::cout << boost::geometry::distance(a, b) << std::endl;
-    
+
     return 0;
 }
 

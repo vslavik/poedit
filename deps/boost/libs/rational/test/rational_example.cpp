@@ -5,6 +5,10 @@
 //  appears in all copies. This software is provided "as is" without express or
 //  implied warranty, and with no claim as to its suitability for any purpose.
 
+// boostinspect:nolicense (don't complain about the lack of a Boost license)
+// (Paul Moore hasn't been in contact for years, so there's no way to change the
+// license.)
+
 //  Revision History
 //  14 Dec 99  Initial version
 

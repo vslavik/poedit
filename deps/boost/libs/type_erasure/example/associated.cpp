@@ -6,7 +6,7 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-// $Id: associated.cpp 79777 2012-07-28 03:43:26Z steven_watanabe $
+// $Id$
 
 #include <boost/type_erasure/any.hpp>
 #include <boost/type_erasure/any_cast.hpp>
@@ -23,19 +23,20 @@ using namespace boost::type_erasure;
 
 //[associated1
 /*`
-    Associated types are defined using the __deduced
+    Associated types such as `typename T::value_type` or
+    `typename std::iterator_traits<T>::reference` are
+    quite common in template programming.
+    Boost.TypeErasure handles them using the __deduced
     template.  __deduced is just like an ordinary
-    placeholder, except that the type that it binds
+    __placeholder, except that the type that it binds
     to is determined by calling a metafunction and
     does not need to be specified explicitly.
 
     For example, we can define a concept for
-    holding any iterator, raw pointer, or
+    holding an iterator, raw pointer, or
     smart pointer as follows.
-
-    Note the extra trickery to make sure that it is safe
-    to instantiate pointee with a placeholder, because
-    argument dependant lookup can cause spurious instantiations.
+    First, we define a metafunction called `pointee`
+    defining the associated type.
 */
 
 template<class T>
@@ -46,6 +47,15 @@ struct pointee
         boost::pointee<T>
     >::type type;
 };
+
+/*`
+    Note that we can't just use `boost::pointee`, because
+    this metafunction needs to be safe to instantiate
+    with placeholders.  It doesn't matter what it returns
+    as long as it doesn't give an error.  (The library
+    never tries to instantiate it with a placeholder, but
+    argument dependent lookup can cause spurious instantiations.)
+*/
 
 template<class T = _self>
 struct pointer :

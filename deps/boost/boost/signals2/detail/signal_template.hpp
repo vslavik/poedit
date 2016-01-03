@@ -40,10 +40,10 @@ namespace boost
           BOOST_SIGNALS2_ARGS_TEMPLATE_DECL(BOOST_SIGNALS2_NUM_ARGS)>
           result_type operator()(ExtendedSlotFunction &func, const connection &conn
             BOOST_SIGNALS2_PP_COMMA_IF(BOOST_SIGNALS2_NUM_ARGS)
-            BOOST_SIGNALS2_FULL_REF_ARGS(BOOST_SIGNALS2_NUM_ARGS)) const
+            BOOST_SIGNALS2_FULL_FORWARD_ARGS(BOOST_SIGNALS2_NUM_ARGS)) const
         {
           return func(conn BOOST_SIGNALS2_PP_COMMA_IF(BOOST_SIGNALS2_NUM_ARGS)
-            BOOST_SIGNALS2_SIGNATURE_ARG_NAMES(BOOST_SIGNALS2_NUM_ARGS));
+            BOOST_SIGNALS2_FORWARDED_ARGS(BOOST_SIGNALS2_NUM_ARGS));
         }
       };
 #ifdef BOOST_NO_VOID_RETURNS
@@ -56,10 +56,10 @@ namespace boost
           BOOST_SIGNALS2_ARGS_TEMPLATE_DECL(BOOST_SIGNALS2_NUM_ARGS)>
           result_type operator()(ExtendedSlotFunction &func, const connection &conn
             BOOST_SIGNALS2_PP_COMMA_IF(BOOST_SIGNALS2_NUM_ARGS)
-            BOOST_SIGNALS2_FULL_REF_ARGS(BOOST_SIGNALS2_NUM_ARGS)) const
+            BOOST_SIGNALS2_FULL_FORWARD_ARGS(BOOST_SIGNALS2_NUM_ARGS)) const
         {
           func(conn BOOST_SIGNALS2_PP_COMMA_IF(BOOST_SIGNALS2_NUM_ARGS)
-            BOOST_SIGNALS2_SIGNATURE_ARG_NAMES(BOOST_SIGNALS2_NUM_ARGS));
+            BOOST_SIGNALS2_FORWARDED_ARGS(BOOST_SIGNALS2_NUM_ARGS));
           return result_type();
         }
       };
@@ -84,23 +84,23 @@ namespace boost
 #if BOOST_SIGNALS2_NUM_ARGS > 0
         template<BOOST_SIGNALS2_ARGS_TEMPLATE_DECL(BOOST_SIGNALS2_NUM_ARGS)>
 #endif // BOOST_SIGNALS2_NUM_ARGS > 0
-          result_type operator()(BOOST_SIGNALS2_FULL_REF_ARGS(BOOST_SIGNALS2_NUM_ARGS))
+          result_type operator()(BOOST_SIGNALS2_FULL_FORWARD_ARGS(BOOST_SIGNALS2_NUM_ARGS))
         {
           return BOOST_SIGNALS2_BOUND_EXTENDED_SLOT_FUNCTION_INVOKER_N(BOOST_SIGNALS2_NUM_ARGS)
             <typename ExtendedSlotFunction::result_type>()
             (_fun, *_connection BOOST_SIGNALS2_PP_COMMA_IF(BOOST_SIGNALS2_NUM_ARGS)
-              BOOST_SIGNALS2_SIGNATURE_ARG_NAMES(BOOST_SIGNALS2_NUM_ARGS));
+              BOOST_SIGNALS2_FORWARDED_ARGS(BOOST_SIGNALS2_NUM_ARGS));
         }
         // const overload
 #if BOOST_SIGNALS2_NUM_ARGS > 0
         template<BOOST_SIGNALS2_ARGS_TEMPLATE_DECL(BOOST_SIGNALS2_NUM_ARGS)>
 #endif // BOOST_SIGNALS2_NUM_ARGS > 0
-          result_type operator()(BOOST_SIGNALS2_FULL_REF_ARGS(BOOST_SIGNALS2_NUM_ARGS)) const
+          result_type operator()(BOOST_SIGNALS2_FULL_FORWARD_ARGS(BOOST_SIGNALS2_NUM_ARGS)) const
         {
           return BOOST_SIGNALS2_BOUND_EXTENDED_SLOT_FUNCTION_INVOKER_N(BOOST_SIGNALS2_NUM_ARGS)
             <typename ExtendedSlotFunction::result_type>()
             (_fun, *_connection BOOST_SIGNALS2_PP_COMMA_IF(BOOST_SIGNALS2_NUM_ARGS)
-              BOOST_SIGNALS2_SIGNATURE_ARG_NAMES(BOOST_SIGNALS2_NUM_ARGS));
+              BOOST_SIGNALS2_FORWARDED_ARGS(BOOST_SIGNALS2_NUM_ARGS));
         }
         template<typename T>
           bool operator==(const T &other) const
@@ -401,7 +401,7 @@ namespace boost
         };
         // Destructor of invocation_janitor does some cleanup when a signal invocation completes.
         // Code can't be put directly in signal's operator() due to complications from void return types.
-        class invocation_janitor
+        class invocation_janitor: noncopyable
         {
         public:
           typedef BOOST_SIGNALS2_SIGNAL_IMPL_CLASS_NAME(BOOST_SIGNALS2_NUM_ARGS) signal_type;
@@ -657,8 +657,31 @@ namespace boost
       {};
       virtual ~BOOST_SIGNALS2_SIGNAL_CLASS_NAME(BOOST_SIGNALS2_NUM_ARGS)()
       {
-        disconnect_all_slots();
       }
+      
+      //move support
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+      BOOST_SIGNALS2_SIGNAL_CLASS_NAME(BOOST_SIGNALS2_NUM_ARGS)(
+        BOOST_SIGNALS2_SIGNAL_CLASS_NAME(BOOST_SIGNALS2_NUM_ARGS) && other)
+      {
+        using std::swap;
+        swap(_pimpl, other._pimpl);
+      };
+      
+      BOOST_SIGNALS2_SIGNAL_CLASS_NAME(BOOST_SIGNALS2_NUM_ARGS) & 
+        operator=(BOOST_SIGNALS2_SIGNAL_CLASS_NAME(BOOST_SIGNALS2_NUM_ARGS) && rhs)
+      {
+        if(this == &rhs)
+        {
+          return *this;
+        }
+        _pimpl.reset();
+        using std::swap;
+        swap(_pimpl, rhs._pimpl);
+        return *this;
+      }
+#endif // !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+      
       connection connect(const slot_type &slot, connect_position position = at_back)
       {
         return (*_pimpl).connect(slot, position);

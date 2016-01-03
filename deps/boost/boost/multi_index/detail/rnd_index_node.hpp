@@ -1,4 +1,4 @@
-/* Copyright 2003-2008 Joaquin M Lopez Munoz.
+/* Copyright 2003-2015 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -9,15 +9,14 @@
 #ifndef BOOST_MULTI_INDEX_DETAIL_RND_INDEX_NODE_HPP
 #define BOOST_MULTI_INDEX_DETAIL_RND_INDEX_NODE_HPP
 
-#if defined(_MSC_VER)&&(_MSC_VER>=1200)
+#if defined(_MSC_VER)
 #pragma once
 #endif
 
 #include <boost/config.hpp> /* keep it first to prevent nasty warns in MSVC */
 #include <algorithm>
 #include <boost/detail/allocator_utilities.hpp>
-#include <boost/math/common_factor_rt.hpp>
-#include <boost/multi_index/detail/prevent_eti.hpp>
+#include <boost/integer/common_factor_rt.hpp>
 #include <cstddef>
 #include <functional>
 
@@ -30,24 +29,18 @@ namespace detail{
 template<typename Allocator>
 struct random_access_index_node_impl
 {
-  typedef typename prevent_eti<
-    Allocator,
-    typename boost::detail::allocator::rebind_to<
-      Allocator,random_access_index_node_impl
-    >::type
-  >::type::pointer                                pointer;
-  typedef typename prevent_eti<
-    Allocator,
-    typename boost::detail::allocator::rebind_to<
-      Allocator,random_access_index_node_impl
-    >::type
-  >::type::const_pointer                          const_pointer;
-  typedef typename prevent_eti<
-    Allocator,
-    typename boost::detail::allocator::rebind_to<
-      Allocator,pointer
-    >::type
-  >::type::pointer                                ptr_pointer;
+  typedef typename
+  boost::detail::allocator::rebind_to<
+    Allocator,random_access_index_node_impl
+  >::type::pointer                          pointer;
+  typedef typename
+  boost::detail::allocator::rebind_to<
+    Allocator,random_access_index_node_impl
+  >::type::const_pointer                    const_pointer;
+  typedef typename
+  boost::detail::allocator::rebind_to<
+    Allocator,pointer
+  >::type::pointer                          ptr_pointer;
 
   ptr_pointer& up(){return up_;}
   ptr_pointer  up()const{return up_;}
@@ -112,7 +105,7 @@ struct random_access_index_node_impl
     std::ptrdiff_t n=end-begin;
     std::ptrdiff_t m=middle-begin;
     std::ptrdiff_t n_m=n-m;
-    std::ptrdiff_t p=math::gcd(n,m);
+    std::ptrdiff_t p=integer::gcd(n,m);
 
     for(std::ptrdiff_t i=0;i<p;++i){
       pointer tmp=begin[i];
@@ -181,25 +174,19 @@ private:
 
 template<typename Super>
 struct random_access_index_node_trampoline:
-  prevent_eti<
-    Super,
-    random_access_index_node_impl<
-      typename boost::detail::allocator::rebind_to<
-        typename Super::allocator_type,
-        char
-      >::type
-    >
-  >::type
+  random_access_index_node_impl<
+    typename boost::detail::allocator::rebind_to<
+      typename Super::allocator_type,
+      char
+    >::type
+  >
 {
-  typedef typename prevent_eti<
-    Super,
-    random_access_index_node_impl<
-      typename boost::detail::allocator::rebind_to<
-        typename Super::allocator_type,
-        char
-      >::type
-    >
-  >::type impl_type;
+  typedef random_access_index_node_impl<
+    typename boost::detail::allocator::rebind_to<
+      typename Super::allocator_type,
+      char
+    >::type
+  > impl_type;
 };
 
 template<typename Super>

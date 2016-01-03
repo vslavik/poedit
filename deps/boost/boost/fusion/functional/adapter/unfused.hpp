@@ -47,6 +47,7 @@ namespace boost { namespace fusion
 
         using unfused<Function,false>::operator();
 
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         inline explicit unfused(func_const_fwd_t f = function())
             : unfused<Function,false>(f)
         { }
@@ -54,6 +55,7 @@ namespace boost { namespace fusion
         typedef typename boost::result_of<
             function_c(fusion::vector0<> &) >::type call_const_0_result;
 
+        BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         inline call_const_0_result operator()() const
         {
             fusion::vector0<> arg;
@@ -63,7 +65,8 @@ namespace boost { namespace fusion
         typedef typename boost::result_of< 
             function(fusion::vector0<> &) >::type call_0_result;
 
-        inline call_0_result operator()() 
+        BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+        inline call_0_result operator()()
         {
             fusion::vector0<> arg;
             return this->fnc_transformed(arg);
@@ -79,6 +82,7 @@ namespace boost { namespace fusion
         typedef typename detail::call_param<Function>::type func_const_fwd_t;
       public:
 
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         inline explicit unfused(func_const_fwd_t f = function())
             : fnc_transformed(f)
         { }
@@ -148,6 +152,7 @@ namespace boost
         { };
 
         template <BOOST_PP_ENUM_PARAMS(N,typename T)>
+        BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         inline typename boost::result_of<function_c(BOOST_PP_CAT(fusion::vector,N)
             <BOOST_PP_ENUM_BINARY_PARAMS(N,T,& BOOST_PP_INTERCEPT)> & )>::type
         operator()(BOOST_PP_ENUM_BINARY_PARAMS(N,T,& a)) const
@@ -159,6 +164,7 @@ namespace boost
         }
 
         template <BOOST_PP_ENUM_PARAMS(N,typename T)>
+        BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         inline typename boost::result_of<function(BOOST_PP_CAT(fusion::vector,N)
             <BOOST_PP_ENUM_BINARY_PARAMS(N,T,& BOOST_PP_INTERCEPT)> & )>::type
         operator()(BOOST_PP_ENUM_BINARY_PARAMS(N,T,& a)) 

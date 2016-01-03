@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2007-2013 Vaclav Slavik
+ *  Copyright (C) 2007-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -52,8 +52,8 @@ void Sparkle_Initialize(bool checkForBeta)
 
         /* TODO: Use feedParametersForUpdater delegate method and append ?beta=1 instead.
                  This code puts SUFeedURL into user defaults! */
-        NSString *url = checkForBeta ? @"http://releases.poedit.net/appcast-osx/beta"
-                                     : @"http://releases.poedit.net/appcast-osx";
+        NSString *url = checkForBeta ? @"https://poedit.net/updates/osx/appcast/beta"
+                                     : @"https://poedit.net/updates/osx/appcast";
         [updater setFeedURL:[NSURL URLWithString:url]];
     }
 }
@@ -82,18 +82,6 @@ void Sparkle_Cleanup()
     }
 }
 #endif // USE_SPARKLE
-
-// --------------------------------------------------------------------------------
-// Spell checking
-// --------------------------------------------------------------------------------
-
-int SpellChecker_SetLang(const char *lang)
-{
-    @autoreleasepool {
-        NSString *nslang = [NSString stringWithUTF8String: lang];
-        return [[NSSpellChecker sharedSpellChecker] setLanguage: nslang];
-    }
-}
 
 
 // --------------------------------------------------------------------------------

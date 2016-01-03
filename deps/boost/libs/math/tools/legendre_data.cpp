@@ -3,14 +3,12 @@
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/math/bindings/rr.hpp>
-#include <boost/math/tools/test_data.hpp>
-#include <boost/test/included/prg_exec_monitor.hpp>
 #include <boost/math/special_functions/legendre.hpp>
 #include <boost/math/special_functions/gamma.hpp>
 #include <fstream>
 #include <boost/math/tools/test_data.hpp>
-#include <boost/tr1/random.hpp>
+#include <boost/random.hpp>
+#include "mp_t.hpp"
 
 using namespace boost::math::tools;
 using namespace boost::math;
@@ -29,23 +27,20 @@ boost::math::tuple<T, T, T, T> legendre_p_data(T n, T x)
 template<class T>
 boost::math::tuple<T, T, T, T> assoc_legendre_p_data(T n, T x)
 {
-   static tr1::mt19937 r;
+   static boost::mt19937 r;
    int l = real_cast<int>(floor(n));
-   tr1::uniform_int<> ui((std::max)(-l, -40), (std::min)(l, 40));
+   boost::uniform_int<> ui((std::max)(-l, -40), (std::min)(l, 40));
    int m = ui(r);
    T r1 = legendre_p(l, m, x);
    return boost::math::make_tuple(n, m, x, r1);
 }
 
-int cpp_main(int argc, char*argv [])
+int main(int argc, char*argv [])
 {
    using namespace boost::math::tools;
 
-   boost::math::ntl::RR::SetOutputPrecision(50);
-   boost::math::ntl::RR::SetPrecision(1000);
-
-   parameter_info<boost::math::ntl::RR> arg1, arg2;
-   test_data<boost::math::ntl::RR> data;
+   parameter_info<mp_t> arg1, arg2;
+   test_data<mp_t> data;
 
    bool cont;
    std::string line;
@@ -63,7 +58,7 @@ int cpp_main(int argc, char*argv [])
          arg1.type |= dummy_param;
          arg2.type |= dummy_param;
 
-         data.insert(&legendre_p_data<boost::math::ntl::RR>, arg1, arg2);
+         data.insert(&legendre_p_data<mp_t>, arg1, arg2);
 
          std::cout << "Any more data [y/n]?";
          std::getline(std::cin, line);
@@ -81,7 +76,7 @@ int cpp_main(int argc, char*argv [])
          arg1.type |= dummy_param;
          arg2.type |= dummy_param;
 
-         data.insert(&assoc_legendre_p_data<boost::math::ntl::RR>, arg1, arg2);
+         data.insert(&assoc_legendre_p_data<mp_t>, arg1, arg2);
 
          std::cout << "Any more data [y/n]?";
          std::getline(std::cin, line);
@@ -97,6 +92,7 @@ int cpp_main(int argc, char*argv [])
    if(line == "")
       line = "legendre_p.ipp";
    std::ofstream ofs(line.c_str());
+   ofs << std::scientific << std::setprecision(40);
    line.erase(line.find('.'));
    write_code(ofs, data, line.c_str());
 

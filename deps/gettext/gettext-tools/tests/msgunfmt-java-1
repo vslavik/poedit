@@ -1,12 +1,10 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of --java option.
 
 # Note: This test fails when using gcj from GCC 3.1 and GCC 3.2, due to a bug
 # (libgcj/6576). It is fixed in GCC 3.3.
-
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
 
 # Test whether we can compile and execute Java programs.
 test "${JAVA_CHOICE}" != no || {
@@ -22,7 +20,6 @@ test "${TESTJAVA}" = yes || {
   exit 77
 }
 
-tmpfiles="$tmpfiles mu-java-1"
 test -d mu-java-1 || mkdir mu-java-1
 
 cat <<\EOF > mu-java-1/fr.po
@@ -61,7 +58,7 @@ ${MSGFMT} -j -d mu-java-1 -r prog -l fr mu-java-1/fr.po || exit 1
 
 : ${MSGUNFMT=msgunfmt}
 CLASSPATH=mu-java-1${CLASSPATH:+:$CLASSPATH} \
-GETTEXTJEXEDIR=../src GETTEXTJAR=../src/gettext.jar \
+GETTEXTJEXEDIR=../../src GETTEXTJAR=../../src/gettext.jar \
 ${MSGUNFMT} --java -d mu-java-1 -r prog -l fr -o mu-java-1/prog.out || exit 1
 
 : ${MSGCAT=msgcat}
@@ -93,7 +90,5 @@ msgstr "{1} remplace {0}."
 EOF
 : ${DIFF=diff}
 ${DIFF} mu-java-1/prog.ok mu-java-1/prog.sort || exit 1
-
-rm -fr $tmpfiles
 
 exit 0

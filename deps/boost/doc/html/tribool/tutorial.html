@@ -26,13 +26,13 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="tribool.tutorial"></a>Tutorial</h2></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="tutorial.html#idp228856168">Basic usage</a></span></dt>
-<dt><span class="section"><a href="tutorial.html#idp228884584">Renaming the indeterminate state</a></span></dt>
-<dt><span class="section"><a href="tutorial.html#idp228889752"><code class="computeroutput">tribool</code> input/output</a></span></dt>
+<dt><span class="section"><a href="tutorial.html#idp467271728">Basic usage</a></span></dt>
+<dt><span class="section"><a href="tutorial.html#idp467334560">Renaming the indeterminate state</a></span></dt>
+<dt><span class="section"><a href="tutorial.html#idp467344416"><code class="computeroutput">tribool</code> input/output</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp228856168"></a>Basic usage</h3></div></div></div>
+<a name="idp467271728"></a>Basic usage</h3></div></div></div>
 <p> The <code class="computeroutput"><a class="link" href="../boost/logic/tribool.html" title="Class tribool">tribool</a></code> class acts
     like the built-in <code class="computeroutput">bool</code> type, but for 3-state boolean
     logic. The three states are <code class="computeroutput">true</code>, <code class="computeroutput">false</code>,
@@ -115,10 +115,23 @@ if (<code class="computeroutput"><a class="link" href="../boost/logic/indetermin
 else {
   // report success or failure of x
 }</pre>
+<p> All the logical operators and methods of <code class="computeroutput"><a class="link" href="../boost/logic/tribool.html" title="Class tribool">tribool</a></code> are marked
+  as <code class="computeroutput">constexpr</code> in C++11. It means that <code class="computeroutput"><a class="link" href="../boost/logic/tribool.html" title="Class tribool">tribool</a></code> can
+  be used in compile time expressions:</p>
+<pre class="programlisting">constexpr <code class="computeroutput"><a class="link" href="../boost/logic/tribool.html" title="Class tribool">tribool</a></code> x = (tribool(true) || tribool(indeterminate));
+<code class="computeroutput">static_assert</code>(x, "Must be true!");
+</pre>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top">Some compilers may have troubles with evaluating <code class="computeroutput">tribool::operator safe_bool()</code> at compile time.</td></tr>
+</table></div>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp228884584"></a>Renaming the indeterminate state</h3></div></div></div>
+<a name="idp467334560"></a>Renaming the indeterminate state</h3></div></div></div>
 <p> Users may introduce additional keywords for the indeterminate
   value in addition to the implementation-supplied
   <code class="computeroutput"><a class="link" href="../boost/logic/indeterminate.html" title="Function indeterminate">indeterminate</a></code> using the
@@ -133,7 +146,7 @@ if (maybe(x)) { /* ... */ }</pre>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp228889752"></a><code class="computeroutput">tribool</code> input/output</h3></div></div></div>
+<a name="idp467344416"></a><code class="computeroutput">tribool</code> input/output</h3></div></div></div>
 <p><code class="computeroutput"><a class="link" href="../boost/logic/tribool.html" title="Class tribool">tribool</a></code> objects may be
   read from and written to streams by including the
   <code class="computeroutput"><a class="link" href="reference.html#header.boost.logic.tribool_io_hpp" title="Header &lt;boost/logic/tribool_io.hpp&gt;">boost/logic/tribool_io.hpp</a></code> header in a

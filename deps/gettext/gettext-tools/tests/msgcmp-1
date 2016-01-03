@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test a succeeding comparison.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mc-test1.in1 mc-test1.in2"
 cat <<EOF > mc-test1.in1
 msgid "one" msgstr "first"
 msgid "two" msgstr "second"
@@ -21,7 +18,5 @@ EOF
 : ${MSGCMP=msgcmp}
 ${MSGCMP} mc-test1.in1 mc-test1.in2 > /dev/null 2>&1
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -19,9 +19,11 @@
 
 #include <new>
 #include <iostream>
-#include <boost/integer.hpp>
 #include <boost/throw_exception.hpp>
-#include <boost/io/ios_state.hpp>
+#if !defined(BOOST_WINDOWS)
+#include <cstring>
+#include <boost/predef/other/endian.h>
+#endif
 #include <boost/log/detail/thread_id.hpp>
 #if defined(BOOST_LOG_USE_COMPILER_TLS)
 #include <boost/aligned_storage.hpp>
@@ -37,6 +39,7 @@
 #if !defined(BOOST_LOG_USE_COMPILER_TLS)
 #include <boost/log/detail/singleton.hpp>
 #endif
+#include "id_formatting.hpp"
 #include <boost/log/detail/header.hpp>
 
 #if defined(BOOST_WINDOWS)
@@ -80,6 +83,12 @@ BOOST_LOG_OPEN_NAMESPACE
 
 namespace aux {
 
+enum
+{
+    headroom_size = sizeof(pthread_t) > sizeof(uintmax_t) ? 0u : (sizeof(uintmax_t) - sizeof(pthread_t)),
+    tid_size = sizeof(uintmax_t) - headroom_size
+};
+
 BOOST_LOG_ANONYMOUS_NAMESPACE {
 
     //! The function returns current thread identifier
@@ -88,19 +97,17 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
         // According to POSIX, pthread_t may not be an integer type:
         // http://pubs.opengroup.org/onlinepubs/009695399/basedefs/sys/types.h.html
         // For now we use the hackish cast to get some opaque number that hopefully correlates with system thread identification.
-        union
-        {
-            thread::id::native_type as_uint;
-            pthread_t as_pthread;
-        }
-        caster = {};
-        caster.as_pthread = pthread_self();
-        return thread::id(caster.as_uint);
+        thread::id::native_type int_id = 0;
+        pthread_t pthread_id = pthread_self();
+#if BOOST_ENDIAN_BIG_BYTE || BOOST_ENDIAN_BIG_WORD
+        std::memcpy(reinterpret_cast< unsigned char* >(&int_id) + headroom_size, &pthread_id, tid_size);
+#else
+        std::memcpy(&int_id, &pthread_id, tid_size);
+#endif
+        return thread::id(int_id);
     }
 
 } // namespace
-
-enum { tid_size = sizeof(pthread_t) > sizeof(uintmax_t) ? sizeof(uintmax_t) : sizeof(pthread_t) };
 
 } // namespace aux
 
@@ -229,34 +236,18 @@ BOOST_LOG_API thread::id const& get_id()
 // Used in default_sink.cpp
 void format_thread_id(char* buf, std::size_t size, thread::id tid)
 {
-    static const char char_table[] = "0123456789abcdef";
-
-    // Input buffer is assumed to be always larger than 2 chars
-    *buf++ = '0';
-    *buf++ = 'x';
-
-    size -= 3; // reserve space for the terminating 0
-    thread::id::native_type id = tid.native_id();
-    unsigned int i = 0;
-    const unsigned int n = (size > (tid_size * 2u)) ? static_cast< unsigned int >(tid_size * 2u) : static_cast< unsigned int >(size);
-    for (unsigned int shift = n * 4u; i < n; ++i, shift -= 4u)
-    {
-        buf[i] = char_table[(id >> shift) & 15u];
-    }
-
-    buf[i] = '\0';
+    format_id< tid_size >(buf, size, tid.native_id(), false);
 }
 
 template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >&
-operator<< (std::basic_ostream< CharT, TraitsT >& strm, thread::id const& tid)
+std::basic_ostream< CharT, TraitsT >& operator<< (std::basic_ostream< CharT, TraitsT >& strm, thread::id const& tid)
 {
     if (strm.good())
     {
-        io::ios_flags_saver flags_saver(strm, (strm.flags() & std::ios_base::uppercase) | std::ios_base::hex | std::ios_base::internal | std::ios_base::showbase);
-        io::basic_ios_fill_saver< CharT, TraitsT > fill_saver(strm, static_cast< CharT >('0'));
-        strm.width(static_cast< std::streamsize >(tid_size * 2 + 2)); // 2 chars per byte + 2 chars for the leading 0x
-        strm << static_cast< uint_t< tid_size * 8 >::least >(tid.native_id());
+        CharT buf[tid_size * 2 + 3]; // 2 chars per byte + 3 chars for the leading 0x and terminating zero
+        format_id< tid_size >(buf, sizeof(buf) / sizeof(*buf), tid.native_id(), (strm.flags() & std::ios_base::uppercase) != 0);
+
+        strm << buf;
     }
 
     return strm;

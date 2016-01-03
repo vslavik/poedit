@@ -48,8 +48,8 @@ The program is run in the directory to be scanned for errors. Sub-directories ar
 If the first program argument is -help, a usage message is displayed, showing all available program options:
 
 [pre
-Usage: inspect \[-cvs\] \[-text\] \[-brief\] \[options...\]
-
+Usage: inspect \[search-root\] \[-cvs\] \[-text\] \[-brief\] \[options...\]
+ search-root default is the current directory
  Options:
   -license
   -copyright
@@ -61,6 +61,7 @@ Usage: inspect \[-cvs\] \[-text\] \[-brief\] \[options...\]
   -ascii
   -apple_macro
   -assert_macro
+  -deprecated_macro
   -minmax
   -unnamed
  default is all checks on; otherwise options specify desired checks

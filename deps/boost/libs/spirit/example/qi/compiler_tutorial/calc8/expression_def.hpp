@@ -39,6 +39,11 @@ namespace client { namespace parser
 
         ///////////////////////////////////////////////////////////////////////
         // Tokens
+        logical_op.add
+            ("&&", ast::op_and)
+            ("||", ast::op_or)
+            ;
+
         equality_op.add
             ("==", ast::op_equal)
             ("!=", ast::op_not_equal)
@@ -49,11 +54,6 @@ namespace client { namespace parser
             ("<=", ast::op_less_equal)
             (">", ast::op_greater)
             (">=", ast::op_greater_equal)
-            ;
-
-        logical_op.add
-            ("&&", ast::op_and)
-            ("||", ast::op_or)
             ;
 
         additive_op.add
@@ -84,7 +84,12 @@ namespace client { namespace parser
         ///////////////////////////////////////////////////////////////////////
         // Main expression grammar
         expr =
-            equality_expr.alias()
+            logical_expr.alias()
+            ;
+        
+        logical_expr =
+                equality_expr
+            >> *(logical_op > equality_expr)
             ;
 
         equality_expr =
@@ -93,13 +98,8 @@ namespace client { namespace parser
             ;
 
         relational_expr =
-                logical_expr
-            >> *(relational_op > logical_expr)
-            ;
-
-        logical_expr =
                 additive_expr
-            >> *(logical_op > additive_expr)
+            >> *(relational_op > additive_expr)
             ;
 
         additive_expr =

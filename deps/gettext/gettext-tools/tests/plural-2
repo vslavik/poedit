@@ -1,15 +1,11 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles plural-2-dir plural-2-ll.po dataout"
 : ${MSGFMT=msgfmt}
 test -d plural-2-dir || mkdir plural-2-dir
 test -d plural-2-dir/ll || mkdir plural-2-dir/ll
 test -d plural-2-dir/ll/LC_MESSAGES || mkdir plural-2-dir/ll/LC_MESSAGES
 
-tmpfiles="$tmpfiles plural-2.data"
 cat <<EOF > plural-2.data
 ja
 0
@@ -79,11 +75,8 @@ EOF
     echo "plural=${formula}" 1>&2
     echo "Expected: $dataok" 1>&2
     echo "Got:      "`cat dataout` 1>&2
-    rm -fr $tmpfiles
     exit 1
   }
 done < plural-2.data
-
-rm -fr $tmpfiles
 
 exit 0

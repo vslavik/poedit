@@ -1,13 +1,10 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test --update with --sort-output: POT-Creation-Date changed. This change
 # must not be reflected in the resulting PO file; this is needed for projects
 # which don't put the .pot file under CVS.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mm-u-4.po"
 cat <<\EOF > mm-u-4.po
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -33,7 +30,6 @@ msgstr "weiß"
 #~ msgstr "grün"
 EOF
 
-tmpfiles="$tmpfiles mm-u-4.pot"
 cat <<EOF > mm-u-4.pot
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -55,12 +51,9 @@ msgid "white"
 msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mm-u-4.po~"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q --update --sort-output mm-u-4.po mm-u-4.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q --update --sort-output mm-u-4.po mm-u-4.pot || exit 1
 
-tmpfiles="$tmpfiles mm-u-4.ok"
 cat <<\EOF > mm-u-4.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -89,7 +82,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mm-u-4.ok mm-u-4.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

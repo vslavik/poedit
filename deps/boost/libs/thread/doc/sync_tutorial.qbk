@@ -20,24 +20,44 @@ In addition to the C++11 standard locks, Boost.Thread provides other locks and s
 
 [section:with Executing Around a Function]
 
-In particular, the library provides some lock factories.
+In particular, the library provides a way to lock around the execution of a function.
 
-  template <class Lockable, class Function>
-  auto with_lock_guard(Lockable& m, Function f) -> decltype(f())
-  {
-    auto&& _ = boost::make_lock_guard(m);
-    f();
+  template <class Lockable, class Function, class... Args>
+  auto with_lock_guard(
+      Lockable& m,
+      Function&& func,
+      Args&&... args
+  ) -> decltype(func(boost::forward<Args>(args)...)) {
+    boost::lock_guard<Lockable> lock(m);
+    return func(boost::forward<Args>(args)...);
   }
 
+that can be used with regular functions:
 
-that can be used as
+  int func(int, int&);
+  //...
+  boost::mutex m;
+  int a;
+  int result = boost::with_lock_guard(m, func, 1, boost::ref(a));
 
-  int i = with_lock_guard(mtx, []() 
-  { 
-    // access the protected state 
-    return true;
-  });
+with boost::bind:
 
+  int result = boost::with_lock_guard(
+      m, boost::bind(func, 2, boost::ref(a))
+  );
+
+or with lambda expression:
+
+  int a;
+  int result = boost::with_lock_guard(
+      m,
+      [&a](int x) {
+        // this scope is protected by mutex m
+        a = 3;
+        return x + 4;
+      },
+      5
+  );
 
 [endsect] [/ With]
 

@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test whether the right number of arguments are extracted.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-pl-6.pl"
 cat <<\EOPERL > xg-pl-6.pl
 use strict;
 
@@ -66,15 +63,11 @@ print dgettext foo (17), "extracted15";
 print dgettext foo 17, "extracted16";
 EOPERL
 
-tmpfiles="$tmpfiles xg-pl-6.tmp xg-pl-6.pot"
 : ${XGETTEXT=xgettext}
 LC_MESSAGES=C LC_ALL= \
-${XGETTEXT} --omit-header --no-location -o xg-pl-6.tmp xg-pl-6.pl
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < xg-pl-6.tmp > xg-pl-6.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} --omit-header --no-location -o xg-pl-6.tmp xg-pl-6.pl || exit 1
+LC_ALL=C tr -d '\r' < xg-pl-6.tmp > xg-pl-6.pot || exit 1
 
-tmpfiles="$tmpfiles xg-pl-6.ok"
 cat <<\EOF > xg-pl-6.ok
 msgid "extracted1"
 msgstr ""
@@ -128,7 +121,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-pl-6.ok xg-pl-6.pot
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

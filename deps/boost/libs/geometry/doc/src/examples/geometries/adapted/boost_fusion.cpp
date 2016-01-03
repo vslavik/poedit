@@ -29,20 +29,20 @@ BOOST_GEOMETRY_REGISTER_BOOST_FUSION_CS(cs::cartesian)
 int main()
 {
     sample_point a, b, c;
-    
+
     // Set coordinates the Boost.Geometry way (one of the ways)
     boost::geometry::assign_values(a, 3, 2, 1);
-    
+
     // Set coordinates the Boost.Fusion way
     boost::fusion::at_c<0>(b) = 6;
     boost::fusion::at_c<1>(b) = 5;
     boost::fusion::at_c<2>(b) = 4;
-    
+
     // Set coordinates the native way
     c.x = 9;
     c.y = 8;
     c.z = 7;
-    
+
     std::cout << "Distance a-b: " << boost::geometry::distance(a, b) << std::endl;
     std::cout << "Distance a-c: " << boost::geometry::distance(a, c) << std::endl;
 

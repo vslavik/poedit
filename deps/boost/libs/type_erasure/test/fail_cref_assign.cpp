@@ -6,7 +6,7 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-// $Id: fail_cref_assign.cpp 78465 2012-05-14 03:44:19Z steven_watanabe $
+// $Id$
 
 #include <boost/type_erasure/any.hpp>
 #include <boost/type_erasure/builtin.hpp>

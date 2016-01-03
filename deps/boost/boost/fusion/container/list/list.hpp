@@ -7,8 +7,11 @@
 #if !defined(FUSION_LIST_07172005_1153)
 #define FUSION_LIST_07172005_1153
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/container/list/list_fwd.hpp>
 #include <boost/fusion/container/list/detail/list_to_cons.hpp>
+#include <boost/fusion/support/is_sequence.hpp>
+#include <boost/core/enable_if.hpp>
 
 #if !defined(BOOST_FUSION_DONT_USE_PREPROCESSED_FILES)
 #include <boost/fusion/container/list/detail/preprocessed/list.hpp>
@@ -47,27 +50,32 @@ namespace boost { namespace fusion
     public:
         typedef typename list_to_cons::type inherited_type;
 
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         list()
             : inherited_type() {}
 
         template <BOOST_PP_ENUM_PARAMS(FUSION_MAX_LIST_SIZE, typename U)>
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         list(list<BOOST_PP_ENUM_PARAMS(FUSION_MAX_LIST_SIZE, U)> const& rhs)
             : inherited_type(rhs) {}
 
         template <typename Sequence>
-        list(Sequence const& rhs)
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+        list(Sequence const& rhs
+            , typename boost::enable_if<traits::is_sequence<Sequence> >::type* = 0)
             : inherited_type(rhs) {}
 
         //  Expand a couple of forwarding constructors for arguments
         //  of type (T0), (T0, T1), (T0, T1, T2) etc. Exanple:
         //
         //  list(
-        //      typename detail::call_param<T0>::type _0
-        //    , typename detail::call_param<T1>::type _1)
-        //    : inherited_type(list_to_cons::call(_0, _1)) {}
+        //      typename detail::call_param<T0>::type arg0
+        //    , typename detail::call_param<T1>::type arg1)
+        //    : inherited_type(list_to_cons::call(arg0, arg1)) {}
         #include <boost/fusion/container/list/detail/list_forward_ctor.hpp>
 
         template <BOOST_PP_ENUM_PARAMS(FUSION_MAX_LIST_SIZE, typename U)>
+        BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         list&
         operator=(list<BOOST_PP_ENUM_PARAMS(FUSION_MAX_LIST_SIZE, U)> const& rhs)
         {
@@ -75,9 +83,10 @@ namespace boost { namespace fusion
             return *this;
         }
 
-        template <typename T>
-        list&
-        operator=(T const& rhs)
+        template <typename Sequence>
+        BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+        typename boost::enable_if<traits::is_sequence<Sequence>, list&>::type
+        operator=(Sequence const& rhs)
         {
             inherited_type::operator=(rhs);
             return *this;

@@ -1,3 +1,102 @@
+2015-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	gnulib-local: Fix Java compilation on mingw
+	* lib/clean-temp.c.diff: New file, from m4.
+	Suggested by Eric Blake in:
+	<https://lists.gnu.org/archive/html/bug-gnulib/2013-09/msg00044.html>.
+
+2015-07-10  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.5 released.
+
+2014-12-24  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.4 released.
+
+2014-12-24  Daiki Ueno  <ueno@gnu.org>
+
+	gnulib-local: Suppress compiler warning with -Wunused
+	* lib/diffseq.h.diff: New file.
+
+2014-12-16  Daiki Ueno  <ueno@gnu.org>
+
+	Backport iOS check from Gnulib
+	* lib/unistd.in.h.diff: Update.
+
+2014-12-15  Daiki Ueno  <ueno@gnu.org>
+
+	Work around interoperability with preinstalled libunistring
+	* modules/unilbrk/base.diff: New file; bump minimum version of
+	unilbrk.h.
+
+2014-10-15  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.3 released.
+
+2014-10-15  Daiki Ueno  <ueno@gnu.org>
+
+	* tests/test-term-ostream-xterm-basic-italic.out: New file.
+	* tests/test-term-ostream-xterm: Use it as possible test result.
+	* modules/term-ostream-tests (Files): Add new file.
+	* Makefile.am (EXTRA_DIST): Add new file.
+	Needed for ncurses >= 5.9-20140906 that defines sitm/ritm in the
+	xterm-basic terminfo definition.
+
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.2 released.
+
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	Update after gnulib changed.
+	* lib/execute.c.diff: Update.
+	* lib/spawn-pipe.c.diff: Update.
+
+2014-06-10  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.1 released.
+
+2014-06-03  Daiki Ueno  <ueno@gnu.org>
+
+	build: Handle 'environ' global variable differently on cygwin x86_64
+	Amendment to commit c97dafde.
+	* tests/test-environ.c.diff: New file.
+	* Makefile.am (EXTRA_DIST): Add new patch.
+
+2014-06-02  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19 released.
+
+2014-06-02  Daiki Ueno  <ueno@gnu.org>
+
+	build: Handle 'environ' global variable differently on cygwin x86_64
+	Problem reported by Vasyl Khalak in:
+	<https://cygwin.com/ml/cygwin/2013-06/msg00228.html>.
+	* lib/execute.c.diff: New file.
+	* lib/spawn-pipe.c.diff: Likewise.
+	* Makefile.am (EXTRA_DIST): Add new patches.
+
+2014-05-14  Daiki Ueno  <ueno@gnu.org>
+
+	Update after gnulib changed.
+	* modules/regex.diff: Remove.  modules/regex no longer depends on
+	malloc-gnu thus this patch is not needed anymore.
+
+2014-04-07  Daiki Ueno  <ueno@gnu.org>
+
+	Update after gnulib changed.
+	* lib/obstack.h.diff: Update.
+
+2013-08-07  Daiki Ueno  <ueno@gnu.org>
+
+	Update after gnulib changed.
+	* modules/regex.diff: Update.
+
+2013-07-21  Daiki Ueno  <ueno@gnu.org>
+
+	Update after gnulib changed.
+	* lib/localcharset.c.diff: Remove file.
+
 2013-06-25  Daiki Ueno  <ueno@gnu.org>
 
 	Work around localcharset issue under OS X multi-threaded scenario.

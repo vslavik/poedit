@@ -1,5 +1,5 @@
 /* Header describing internals of libintl library.
-   Copyright (C) 1995-1999, 2000-2007, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 1995-2015 Free Software Foundation, Inc.
    Written by Ulrich Drepper <drepper@cygnus.com>, 1995.
 
    This program is free software: you can redistribute it and/or modify
@@ -37,6 +37,7 @@
 #endif
 
 #ifdef _LIBC
+struct loaded_domain;
 extern char *__gettext (const char *__msgid);
 extern char *__dgettext (const char *__domainname, const char *__msgid);
 extern char *__dcgettext (const char *__domainname, const char *__msgid,

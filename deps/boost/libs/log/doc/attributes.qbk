@@ -1,5 +1,5 @@
 [/
-              Copyright Andrey Semashev 2007 - 2013.
+              Copyright Andrey Semashev 2007 - 2015.
      Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
               http://www.boost.org/LICENSE_1_0.txt)
@@ -263,6 +263,8 @@ Now we can mark execution scopes with the macros `BOOST_LOG_FUNCTION` and `BOOST
     }
 
 After executing `foo` we will be able to see in the log that the `bar` function was called from `foo` and, more precisely, from the case statement that corresponds to the value of `n`. This may be very useful when tracking down subtle bugs that show up only when `bar` is called from a specific location (e.g. if `bar` is being passed invalid arguments in that particular location).
+
+[note The `BOOST_LOG_FUNCTION` macro uses compiler-specific extensions to generate the scope name from the enclosing function. C++11 defines a standard macro `__func__` for this purpose, but it is not universally supported. Additionally, format of the string is not standardized and may vary from one compiler to another. For this reason it is generally advised to use `BOOST_LOG_NAMED_SCOPE` instead of `BOOST_LOG_FUNCTION` to ensure consistent and portable behavior.]
 
 Another good use case is attaching the scope stack information to an exception. With the help of __boost_exception__, this is possible:
 

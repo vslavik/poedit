@@ -26,8 +26,6 @@
 #include <boost/interprocess/detail/os_thread_functions.hpp>
 
 #include <boost/date_time/posix_time/posix_time_types.hpp>
-#include <algorithm>
-#include <iostream>
 #include <boost/version.hpp>
 
 namespace boost {
@@ -76,7 +74,7 @@ class thread_adapter
 template <typename P>
 struct data
 {
-   data(int id, int secs=0)
+   explicit data(int id, int secs=0)
       : m_id(id), m_value(-1), m_secs(secs), m_error(no_error)
    {}
    int            m_id;

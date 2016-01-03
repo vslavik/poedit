@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../interprocess.html" title="Chapter&#160;13.&#160;Boost.Interprocess">
+<link rel="up" href="../interprocess.html" title="Chapter&#160;14.&#160;Boost.Interprocess">
 <link rel="prev" href="customizing_interprocess.html" title="Customizing Boost.Interprocess">
 <link rel="next" href="indexes_reference.html" title="Indexes and Reference">
 </head>
@@ -28,7 +28,10 @@
     notes and links</a>
 </h2></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes">Notes</a></span></dt>
+<dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes_windows">Notes
+      for Windows users</a></span></dt>
+<dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes_linux">Notes
+      for Linux users</a></span></dt>
 <dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.thanks_to">Thanks
       to...</a></span></dt>
 <dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.release_notes">Release
@@ -40,119 +43,156 @@
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="interprocess.acknowledgements_notes.notes"></a><a class="link" href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes" title="Notes">Notes</a>
+<a name="interprocess.acknowledgements_notes.notes_windows"></a><a class="link" href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes_windows" title="Notes for Windows users">Notes
+      for Windows users</a>
 </h3></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes.notes_windows">Notes
-        for Windows users</a></span></dt>
-<dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes.notes_linux">Notes
-        for Linux users</a></span></dt>
+<dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes_windows.notes_windows_com_init">COM
+        Initialization</a></span></dt>
+<dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes_windows.notes_windows_shm_folder">Shared
+        memory emulation folder</a></span></dt>
+<dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes_windows.boost_use_windows_h">BOOST_USE_WINDOWS_H
+        support</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="interprocess.acknowledgements_notes.notes.notes_windows"></a><a class="link" href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes.notes_windows" title="Notes for Windows users">Notes
-        for Windows users</a>
+<a name="interprocess.acknowledgements_notes.notes_windows.notes_windows_com_init"></a><a class="link" href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes_windows.notes_windows_com_init" title="COM Initialization">COM
+        Initialization</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes.notes_windows.notes_windows_com_init">COM
-          Initialization</a></span></dt>
-<dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes.notes_windows.notes_windows_shm_folder">Shared
-          memory emulation folder</a></span></dt>
-</dl></div>
-<div class="section">
-<div class="titlepage"><div><div><h5 class="title">
-<a name="interprocess.acknowledgements_notes.notes.notes_windows.notes_windows_com_init"></a><a class="link" href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes.notes_windows.notes_windows_com_init" title="COM Initialization">COM
-          Initialization</a>
-</h5></div></div></div>
 <p>
-            <span class="bold"><strong>Boost.Interprocess</strong></span> uses the Windows
-            COM library to implement some features and initializes it with concurrency
-            model <code class="computeroutput"><span class="identifier">COINIT_APARTMENTTHREADED</span></code>.
-            If the COM library was already initialized by the calling thread for
-            another concurrency model, <span class="bold"><strong>Boost.Interprocess</strong></span>
-            handles this gracefully and uses COM calls for the already initialized
-            model. If for some reason, you want <span class="bold"><strong>Boost.Interprocess</strong></span>
-            to initialize the COM library with another model, define the macro <code class="computeroutput"><span class="identifier">BOOST_INTERPROCESS_WINDOWS_COINIT_MODEL</span></code>
-            before including <span class="bold"><strong>Boost.Interprocess</strong></span>
-            to one of these values:
-          </p>
+          <span class="bold"><strong>Boost.Interprocess</strong></span> uses the Windows COM
+          library to implement some features and initializes it with concurrency
+          model <code class="computeroutput"><span class="identifier">COINIT_APARTMENTTHREADED</span></code>.
+          If the COM library was already initialized by the calling thread for another
+          concurrency model, <span class="bold"><strong>Boost.Interprocess</strong></span>
+          handles this gracefully and uses COM calls for the already initialized
+          model. If for some reason, you want <span class="bold"><strong>Boost.Interprocess</strong></span>
+          to initialize the COM library with another model, define the macro <code class="computeroutput"><span class="identifier">BOOST_INTERPROCESS_WINDOWS_COINIT_MODEL</span></code>
+          before including <span class="bold"><strong>Boost.Interprocess</strong></span> to
+          one of these values:
+        </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-                <code class="computeroutput"><span class="identifier">COINIT_APARTMENTTHREADED_BIPC</span></code>
-              </li>
+              <code class="computeroutput"><span class="identifier">COINIT_APARTMENTTHREADED_BIPC</span></code>
+            </li>
 <li class="listitem">
-                <code class="computeroutput"><span class="identifier">COINIT_MULTITHREADED_BIPC</span></code>
-              </li>
+              <code class="computeroutput"><span class="identifier">COINIT_MULTITHREADED_BIPC</span></code>
+            </li>
 <li class="listitem">
-                <code class="computeroutput"><span class="identifier">COINIT_DISABLE_OLE1DDE_BIPC</span></code>
-              </li>
+              <code class="computeroutput"><span class="identifier">COINIT_DISABLE_OLE1DDE_BIPC</span></code>
+            </li>
 <li class="listitem">
-                <code class="computeroutput"><span class="identifier">COINIT_SPEED_OVER_MEMORY_BIPC</span></code>
-              </li>
+              <code class="computeroutput"><span class="identifier">COINIT_SPEED_OVER_MEMORY_BIPC</span></code>
+            </li>
 </ul></div>
 </div>
 <div class="section">
-<div class="titlepage"><div><div><h5 class="title">
-<a name="interprocess.acknowledgements_notes.notes.notes_windows.notes_windows_shm_folder"></a><a class="link" href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes.notes_windows.notes_windows_shm_folder" title="Shared memory emulation folder">Shared
-          memory emulation folder</a>
-</h5></div></div></div>
+<div class="titlepage"><div><div><h4 class="title">
+<a name="interprocess.acknowledgements_notes.notes_windows.notes_windows_shm_folder"></a><a class="link" href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes_windows.notes_windows_shm_folder" title="Shared memory emulation folder">Shared
+        memory emulation folder</a>
+</h4></div></div></div>
 <p>
-            Shared memory (<code class="computeroutput"><span class="identifier">shared_memory_object</span></code>)
-            is implemented in windows using memory mapped files, placed in a directory
-            in the shared documents folder (<code class="computeroutput"><span class="identifier">SOFTWARE</span><span class="special">\</span><span class="identifier">Microsoft</span><span class="special">\</span><span class="identifier">Windows</span><span class="special">\</span><span class="identifier">CurrentVersion</span><span class="special">\</span><span class="identifier">Explorer</span><span class="special">\</span><span class="identifier">Shell</span> <span class="identifier">Folders</span><span class="special">\</span><span class="identifier">Common</span> <span class="identifier">AppData</span></code>).
-            This directory name is the last bootup time (obtained via COM calls),
-            so that each bootup shared memory is created in a new folder obtaining
-            kernel persistence shared memory.
-          </p>
+          Shared memory (<code class="computeroutput"><span class="identifier">shared_memory_object</span></code>)
+          is implemented in windows using memory mapped files, placed in a shared
+          directory in the shared documents folder (<code class="computeroutput"><span class="identifier">SOFTWARE</span><span class="special">\</span><span class="identifier">Microsoft</span><span class="special">\</span><span class="identifier">Windows</span><span class="special">\</span><span class="identifier">CurrentVersion</span><span class="special">\</span><span class="identifier">Explorer</span><span class="special">\</span><span class="identifier">Shell</span> <span class="identifier">Folders</span><span class="special">\</span><span class="identifier">Common</span> <span class="identifier">AppData</span></code>).
+          This directory name is the last bootup time obtained via COM calls (if
+          <code class="computeroutput"><span class="identifier">BOOST_INTERPROCESS_BOOTSTAMP_IS_LASTBOOTUPTIME</span></code>)
+          defined or searching the system log for a startup event (the default implementation),
+          so that each bootup shared memory is created in a new folder obtaining
+          kernel persistence shared memory.
+        </p>
 <p>
-            Unfortunately, due to COM implementation related errors, in Boost 1.48
-            &amp; Boost 1.49 the bootup-time folder was dumped and files were directly
-            created in shared documents folder, reverting to filesystem persistence
-            shared memory. Boost 1.50 fixed those issues and recovered bootup time
-            directory and kernel persistence. If you need to reproduce Boost 1.48
-            &amp; Boost 1.49 behaviour to communicate with applications compiled
-            with that version, comment <code class="computeroutput"><span class="preprocessor">#define</span>
-            <span class="identifier">BOOST_INTERPROCESS_HAS_KERNEL_BOOTTIME</span></code>
-            directive in the Windows configuration part of <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">detail</span><span class="special">/</span><span class="identifier">workaround</span><span class="special">.</span><span class="identifier">hpp</span></code>.
-          </p>
-</div>
+          If using <code class="computeroutput"><span class="identifier">BOOST_INTERPROCESS_BOOTSTAMP_IS_LASTBOOTUPTIME</span></code>,
+          due to COM implementation related errors, in Boost 1.48 &amp; Boost 1.49
+          the bootup-time folder was dumped and files were directly created in shared
+          documents folder, reverting to filesystem persistence shared memory. Boost
+          1.50 fixed those issues and recovered bootup time directory and kernel
+          persistence. If you need to reproduce Boost 1.48 &amp; Boost 1.49 behaviour
+          to communicate with applications compiled with that version, comment <code class="computeroutput"><span class="preprocessor">#define</span> <span class="identifier">BOOST_INTERPROCESS_HAS_KERNEL_BOOTTIME</span></code>
+          directive in the Windows configuration part of <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">detail</span><span class="special">/</span><span class="identifier">workaround</span><span class="special">.</span><span class="identifier">hpp</span></code>.
+        </p>
+<p>
+          If using the default implementation, (<code class="computeroutput"><span class="identifier">BOOST_INTERPROCESS_BOOTSTAMP_IS_LASTBOOTUPTIME</span></code>
+          undefined) and the Startup Event is not found, this might be due to some
+          buggy software that floods or erases the event log.
+        </p>
+<p>
+          In any error case (shared documents folder is not defined or bootup time
+          could not be obtained, the library throws an error. You still can use
+          <span class="bold"><strong>Boost.Interprocess</strong></span> definining your own
+          directory as the shared directory. Just define <code class="computeroutput"><span class="identifier">BOOST_INTERPROCESS_SHARED_DIR_PATH</span></code>
+          when using the library and that path will be used to place shared memory
+          files.
+        </p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="interprocess.acknowledgements_notes.notes.notes_linux"></a><a class="link" href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes.notes_linux" title="Notes for Linux users">Notes
-        for Linux users</a>
+<a name="interprocess.acknowledgements_notes.notes_windows.boost_use_windows_h"></a><a class="link" href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes_windows.boost_use_windows_h" title="BOOST_USE_WINDOWS_H support">BOOST_USE_WINDOWS_H
+        support</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes.notes_linux.notes_linux_overcommit">Overcommit</a></span></dt></dl></div>
-<div class="section">
-<div class="titlepage"><div><div><h5 class="title">
-<a name="interprocess.acknowledgements_notes.notes.notes_linux.notes_linux_overcommit"></a><a class="link" href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes.notes_linux.notes_linux_overcommit" title="Overcommit">Overcommit</a>
-</h5></div></div></div>
 <p>
-            The committed address space is the total amount of virtual memory (swap
-            or physical memory/RAM) that the kernel might have to supply if all applications
-            decide to access all of the memory they've requested from the kernel.
-            By default, Linux allows processes to commit more virtual memory than
-            available in the system. If that memory is not accessed, no physical
-            memory + swap is actually used.
-          </p>
-<p>
-            The reason for this behaviour is that Linux tries to optimize memory
-            usage on forked processes; fork() creates a full copy of the process
-            space, but with overcommitted memory, in this new forked instance only
-            pages which have been written to actually need to be allocated by the
-            kernel. If applications access more memory than available, then the kernel
-            must free memory in the hard way: the OOM (Out Of Memory)-killer picks
-            some processes to kill in order to recover memory.
-          </p>
-<p>
-            <span class="bold"><strong>Boost.Interprocess</strong></span> has no way to change
-            this behaviour and users might suffer the OOM-killer when accessing shared
-            memory. According to the <a href="http://www.kernel.org/doc/Documentation/vm/overcommit-accounting" target="_top">Kernel
-            documentation</a>, the Linux kernel supports several overcommit modes.
-            If you need non-kill guarantees in your application, you should change
-            this overcommit behaviour.
-          </p>
+          If <code class="computeroutput"><span class="identifier">BOOST_USE_WINDOWS_H</span></code>
+          is defined, &lt;windows.h&gt; and other windows SDK files are included,
+          otherwise the library declares needed functions and structures to reduce
+          the impact of including those heavy headers.
+        </p>
 </div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="interprocess.acknowledgements_notes.notes_linux"></a><a class="link" href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes_linux" title="Notes for Linux users">Notes
+      for Linux users</a>
+</h3></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes_linux.notes_linux_shm_folder">Shared
+        memory emulation folder</a></span></dt>
+<dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes_linux.notes_linux_overcommit">Overcommit</a></span></dt>
+</dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="interprocess.acknowledgements_notes.notes_linux.notes_linux_shm_folder"></a><a class="link" href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes_linux.notes_linux_shm_folder" title="Shared memory emulation folder">Shared
+        memory emulation folder</a>
+</h4></div></div></div>
+<p>
+          On systems without POSIX shared memory support shared memory objects are
+          implemented as memory mapped files, using a directory placed in "/tmp"
+          that can include (if <code class="computeroutput"><span class="identifier">BOOST_INTERPROCESS_HAS_KERNEL_BOOTTIME</span></code>
+          is defined) the last bootup time (if the Os supports it). As in Windows,
+          in any error case obtaining this directory the library throws an error
+          . You still can use <span class="bold"><strong>Boost.Interprocess</strong></span>
+          definining your own directory as the shared directory. Just define <code class="computeroutput"><span class="identifier">BOOST_INTERPROCESS_SHARED_DIR_PATH</span></code> when
+          using the library and that path will be used to place shared memory files.
+        </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="interprocess.acknowledgements_notes.notes_linux.notes_linux_overcommit"></a><a class="link" href="acknowledgements_notes.html#interprocess.acknowledgements_notes.notes_linux.notes_linux_overcommit" title="Overcommit">Overcommit</a>
+</h4></div></div></div>
+<p>
+          The committed address space is the total amount of virtual memory (swap
+          or physical memory/RAM) that the kernel might have to supply if all applications
+          decide to access all of the memory they've requested from the kernel. By
+          default, Linux allows processes to commit more virtual memory than available
+          in the system. If that memory is not accessed, no physical memory + swap
+          is actually used.
+        </p>
+<p>
+          The reason for this behaviour is that Linux tries to optimize memory usage
+          on forked processes; fork() creates a full copy of the process space, but
+          with overcommitted memory, in this new forked instance only pages which
+          have been written to actually need to be allocated by the kernel. If applications
+          access more memory than available, then the kernel must free memory in
+          the hard way: the OOM (Out Of Memory)-killer picks some processes to kill
+          in order to recover memory.
+        </p>
+<p>
+          <span class="bold"><strong>Boost.Interprocess</strong></span> has no way to change
+          this behaviour and users might suffer the OOM-killer when accessing shared
+          memory. According to the <a href="http://www.kernel.org/doc/Documentation/vm/overcommit-accounting" target="_top">Kernel
+          documentation</a>, the Linux kernel supports several overcommit modes.
+          If you need non-kill guarantees in your application, you should change
+          this overcommit behaviour.
+        </p>
 </div>
 </div>
 <div class="section">
@@ -160,71 +200,66 @@
 <a name="interprocess.acknowledgements_notes.thanks_to"></a><a class="link" href="acknowledgements_notes.html#interprocess.acknowledgements_notes.thanks_to" title="Thanks to...">Thanks
       to...</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.thanks_to.thanks_to_people">People</a></span></dt></dl></div>
-<div class="section">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="interprocess.acknowledgements_notes.thanks_to.thanks_to_people"></a><a class="link" href="acknowledgements_notes.html#interprocess.acknowledgements_notes.thanks_to.thanks_to_people" title="People">People</a>
-</h4></div></div></div>
 <p>
-          Many people have contributed with ideas and revisions, so this is the place
-          to thank them:
-        </p>
+        Many people have contributed with ideas and revisions, so this is the place
+        to thank them:
+      </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-              Thanks to all people who have shown interest in the library and have
-              downloaded and tested the snapshots.
-            </li>
+            Thanks to all people who have shown interest in the library and have
+            downloaded and tested the snapshots.
+          </li>
 <li class="listitem">
-              Thanks to <span class="bold"><strong>Francis Andre</strong></span> and <span class="bold"><strong>Anders Hybertz</strong></span> for their ideas and suggestions.
-              Many of them are not implemented yet but I hope to include them when
-              library gets some stability.
-            </li>
+            Thanks to <span class="bold"><strong>Francis Andre</strong></span> and <span class="bold"><strong>Anders Hybertz</strong></span> for their ideas and suggestions.
+            Many of them are not implemented yet but I hope to include them when
+            library gets some stability.
+          </li>
 <li class="listitem">
-              Thanks to <span class="bold"><strong>Matt Doyle</strong></span>, <span class="bold"><strong>Steve
-              LoBasso</strong></span>, <span class="bold"><strong>Glenn Schrader</strong></span>,
-              <span class="bold"><strong>Hiang Swee Chiang</strong></span>, <span class="bold"><strong>Phil
-              Endecott</strong></span>, <span class="bold"><strong>Rene Rivera</strong></span>,
-              <span class="bold"><strong>Harold Pirtle</strong></span>, <span class="bold"><strong>Paul
-              Ryan</strong></span>, <span class="bold"><strong>Shumin Wu</strong></span>, <span class="bold"><strong>Michal Wozniak</strong></span>, <span class="bold"><strong>Peter
-              Johnson</strong></span>, <span class="bold"><strong>Alex Ott</strong></span>, <span class="bold"><strong>Shane Guillory</strong></span>, <span class="bold"><strong>Steven
-              Wooding</strong></span> and <span class="bold"><strong>Kim Barrett</strong></span>
-              for their bug fixes and library testing.
-            </li>
+            Thanks to <span class="bold"><strong>Matt Doyle</strong></span>, <span class="bold"><strong>Steve
+            LoBasso</strong></span>, <span class="bold"><strong>Glenn Schrader</strong></span>,
+            <span class="bold"><strong>Hiang Swee Chiang</strong></span>, <span class="bold"><strong>Phil
+            Endecott</strong></span>, <span class="bold"><strong>Rene Rivera</strong></span>, <span class="bold"><strong>Harold Pirtle</strong></span>, <span class="bold"><strong>Paul Ryan</strong></span>,
+            <span class="bold"><strong>Shumin Wu</strong></span>, <span class="bold"><strong>Michal
+            Wozniak</strong></span>, <span class="bold"><strong>Peter Johnson</strong></span>,
+            <span class="bold"><strong>Alex Ott</strong></span>, <span class="bold"><strong>Shane
+            Guillory</strong></span>, <span class="bold"><strong>Steven Wooding</strong></span>
+            and <span class="bold"><strong>Kim Barrett</strong></span> for their bug fixes
+            and library testing.
+          </li>
 <li class="listitem">
-              Thanks to <span class="bold"><strong>Martin Adrian</strong></span> who suggested
-              the use of Interprocess framework for user defined buffers.
-            </li>
+            Thanks to <span class="bold"><strong>Martin Adrian</strong></span> who suggested
+            the use of Interprocess framework for user defined buffers.
+          </li>
 <li class="listitem">
-              Thanks to <span class="bold"><strong>Synge Todo</strong></span> for his boostbook-doxygen
-              patch to improve Interprocess documentation.
-            </li>
+            Thanks to <span class="bold"><strong>Synge Todo</strong></span> for his boostbook-doxygen
+            patch to improve Interprocess documentation.
+          </li>
 <li class="listitem">
-              Thanks to <span class="bold"><strong>Olaf Krzikalla</strong></span> for his Intrusive
-              library. I have taken some ideas to improve red black tree implementation
-              from his library.
-            </li>
+            Thanks to <span class="bold"><strong>Olaf Krzikalla</strong></span> for his Intrusive
+            library. I have taken some ideas to improve red black tree implementation
+            from his library.
+          </li>
 <li class="listitem">
-              Thanks to <span class="bold"><strong>Daniel James</strong></span> for his unordered_map/set
-              family and his help with allocators. His great unordered implementation
-              has been a reference to design exception safe containers.
-            </li>
+            Thanks to <span class="bold"><strong>Daniel James</strong></span> for his unordered_map/set
+            family and his help with allocators. His great unordered implementation
+            has been a reference to design exception safe containers.
+          </li>
 <li class="listitem">
-              Thanks to <span class="bold"><strong>Howard Hinnant</strong></span> for his amazing
-              help, specially explaining allocator swapping, move semantics and for
-              developing upgradable mutex and lock transfer features.
-            </li>
+            Thanks to <span class="bold"><strong>Howard Hinnant</strong></span> for his amazing
+            help, specially explaining allocator swapping, move semantics and for
+            developing upgradable mutex and lock transfer features.
+          </li>
 <li class="listitem">
-              Thanks to <span class="bold"><strong>Pavel Vozenilek</strong></span> for his
-              continuous review process, suggestions, code and help. He is the major
-              supporter of Interprocess library. The library has grown with his many
-              and great advices.
-            </li>
+            Thanks to <span class="bold"><strong>Pavel Vozenilek</strong></span> for his continuous
+            review process, suggestions, code and help. He is the major supporter
+            of Interprocess library. The library has grown with his many and great
+            advices.
+          </li>
 <li class="listitem">
-              And finally, thank you to all Boosters. <span class="bold"><strong>Long
-              live to C++!</strong></span>
-            </li>
+            And finally, thank you to all Boosters. <span class="bold"><strong>Long live
+            to C++!</strong></span>
+          </li>
 </ul></div>
-</div>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -232,6 +267,12 @@
       Notes</a>
 </h3></div></div></div>
 <div class="toc"><dl class="toc">
+<dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.release_notes.release_notes_boost_1_58_00">Boost
+        1.58 Release</a></span></dt>
+<dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.release_notes.release_notes_boost_1_57_00">Boost
+        1.57 Release</a></span></dt>
+<dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.release_notes.release_notes_boost_1_56_00">Boost
+        1.56 Release</a></span></dt>
 <dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.release_notes.release_notes_boost_1_55_00">Boost
         1.55 Release</a></span></dt>
 <dt><span class="section"><a href="acknowledgements_notes.html#interprocess.acknowledgements_notes.release_notes.release_notes_boost_1_54_00">Boost
@@ -269,17 +310,207 @@
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
+<a name="interprocess.acknowledgements_notes.release_notes.release_notes_boost_1_58_00"></a><a class="link" href="acknowledgements_notes.html#interprocess.acknowledgements_notes.release_notes.release_notes_boost_1_58_00" title="Boost 1.58 Release">Boost
+        1.58 Release</a>
+</h4></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+              Reduced some compile-time dependencies. Updated to Boost.Container
+              changes.
+            </li>
+<li class="listitem">
+              Fixed bugs:
+              <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
+                    <a href="https://github.com/boostorg/interprocess/pull/13" target="_top">GitHub
+                    Pull #13 (<span class="emphasis"><em>"haiku: we don't have XSI shared memory,
+                    so don't try to use it"</em></span>)</a>.
+                  </li></ul></div>
+            </li>
+</ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="interprocess.acknowledgements_notes.release_notes.release_notes_boost_1_57_00"></a><a class="link" href="acknowledgements_notes.html#interprocess.acknowledgements_notes.release_notes.release_notes_boost_1_57_00" title="Boost 1.57 Release">Boost
+        1.57 Release</a>
+</h4></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+              Removed <code class="computeroutput"><span class="identifier">unique_ptr</span></code>,
+              now forwards boost::interprocess::unique_ptr to the general purpose
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">movelib</span><span class="special">::</span><span class="identifier">unique_ptr</span></code> class from <span class="bold"><strong>Boost.Move</strong></span>.
+              This implementation is closer to the standard <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">unique_ptr</span></code>
+              implementation and it's better maintained.
+            </li>
+<li class="listitem">
+              Fixed bugs:
+              <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                    <a href="https://svn.boost.org/trac/boost/ticket/10262" target="_top">Trac
+                    #10262 (<span class="emphasis"><em>"AIX 6.1 bug with variable definition
+                    hz"</em></span>)</a>.
+                  </li>
+<li class="listitem">
+                    <a href="https://svn.boost.org/trac/boost/ticket/10229" target="_top">Trac
+                    #10229 (<span class="emphasis"><em>"Compiling errors in interprocess\detail\os_file_functions.hpp"</em></span>)</a>.
+                  </li>
+<li class="listitem">
+                    <a href="https://svn.boost.org/trac/boost/ticket/10506" target="_top">Trac
+                    #10506 (<span class="emphasis"><em>"Infinite loop in create_or_open_file"</em></span>)</a>.
+                  </li>
+<li class="listitem">
+                    <a href="https://github.com/boostorg/interprocess/pull/11" target="_top">GitHub
+                    Pull #11 (<span class="emphasis"><em>"Compile fix for BOOST_USE_WINDOWS_H"</em></span>)</a>.
+                  </li>
+</ul></div>
+            </li>
+<li class="listitem">
+              Reorganized Doxygen marks to obtain a better header reference.
+            </li>
+</ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="interprocess.acknowledgements_notes.release_notes.release_notes_boost_1_56_00"></a><a class="link" href="acknowledgements_notes.html#interprocess.acknowledgements_notes.release_notes.release_notes_boost_1_56_00" title="Boost 1.56 Release">Boost
+        1.56 Release</a>
+</h4></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+              Fixed bugs:
+              <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                    <a href="https://svn.boost.org/trac/boost/ticket/9221" target="_top">Trac
+                    #9221 (<span class="emphasis"><em>"message_queue deadlock on linux"</em></span>)</a>.
+                  </li>
+<li class="listitem">
+                    <a href="https://svn.boost.org/trac/boost/ticket/9226" target="_top">Trac
+                    #9226 (<span class="emphasis"><em>"On some computers, Common Appdata is empty
+                    in registry, so boost interprocess cannot work"</em></span>)</a>.
+                  </li>
+<li class="listitem">
+                    <a href="https://svn.boost.org/trac/boost/ticket/9262" target="_top">Trac
+                    #9262 (<span class="emphasis"><em>"windows_intermodule_singleton breaks when
+                    calling a Debug dll from a Release executable"</em></span>)</a>.
+                  </li>
+<li class="listitem">
+                    <a href="https://svn.boost.org/trac/boost/ticket/9284" target="_top">Trac
+                    #9284 (<span class="emphasis"><em>"WaitForSingleObject(mutex) must handle
+                    WAIT_ABANDONED"</em></span>)</a>.
+                  </li>
+<li class="listitem">
+                    <a href="https://svn.boost.org/trac/boost/ticket/9285" target="_top">Trac
+                    #9285 (<span class="emphasis"><em>"CreateMutex returns NULL if fails"</em></span>)</a>.
+                  </li>
+<li class="listitem">
+                    <a href="https://svn.boost.org/trac/boost/ticket/9288" target="_top">Trac
+                    #9288 (<span class="emphasis"><em>"timed_wait does not check if it has expired"</em></span>)</a>.
+                  </li>
+<li class="listitem">
+                    <a href="https://svn.boost.org/trac/boost/ticket/9408" target="_top">Trac
+                    #9408 (<span class="emphasis"><em>"Android does not support XSI_SHARED_MEMORY_OBJECTS"</em></span></a>).
+                  </li>
+<li class="listitem">
+                    <a href="https://svn.boost.org/trac/boost/ticket/9729" target="_top">Trac
+                    #9729 (<span class="emphasis"><em>"crash on managed_external_buffer object
+                    construction"</em></span></a>).
+                  </li>
+<li class="listitem">
+                    <a href="https://svn.boost.org/trac/boost/ticket/9767" target="_top">Trac
+                    #9767 (<span class="emphasis"><em>"bootstamp generation causes error in case
+                    of corrupt Windows Event Log"</em></span>)</a>.
+                  </li>
+<li class="listitem">
+                    <a href="https://svn.boost.org/trac/boost/ticket/9835" target="_top">Trac
+                    #9835 (<span class="emphasis"><em>"Boost Interprocess fails to compile with
+                    Android NDK GCC 4.8, -Werror=unused-variable"</em></span>)</a>.
+                  </li>
+<li class="listitem">
+                    <a href="https://svn.boost.org/trac/boost/ticket/9911" target="_top">Trac
+                    #9911 (<span class="emphasis"><em>"get_tmp_base_dir(...) failure"</em></span>)</a>.
+                  </li>
+<li class="listitem">
+                    <a href="https://svn.boost.org/trac/boost/ticket/9946" target="_top">Trac
+                    #9946 (<span class="emphasis"><em>"ret_ptr uninitialized in init_atomic_func,
+                    fini_atomic_func"</em></span>)</a>.
+                  </li>
+<li class="listitem">
+                    <a href="https://svn.boost.org/trac/boost/ticket/10011" target="_top">Trac
+                    #10011 (<span class="emphasis"><em>"segment_manager::find( unique_instance_t*
+                    ) fails to compile"</em></span>)</a>.
+                  </li>
+<li class="listitem">
+                    <a href="https://svn.boost.org/trac/boost/ticket/10021" target="_top">Trac
+                    #10021 (<span class="emphasis"><em>"Interprocess and BOOST_USE_WINDOWS_H"</em></span>)</a>.
+                  </li>
+<li class="listitem">
+                    <a href="https://svn.boost.org/trac/boost/ticket/10230" target="_top">Trac
+                    #10230 (<span class="emphasis"><em>"No Sleep in interprocess::winapi"</em></span>)</a>.
+                  </li>
+<li class="listitem">
+                    <a href="https://github.com/boostorg/interprocess/pull/2" target="_top">GitHub
+                    Pull #2</a> (<span class="emphasis"><em>"Provide support for the Cray
+                    C++ compiler. The Cray compiler defines __GNUC__"</em></span>]).
+                  </li>
+<li class="listitem">
+                    <a href="https://github.com/boostorg/interprocess/pull/3" target="_top">GitHub
+                    Pull #3</a> (<span class="emphasis"><em>"Fix/mingw interprocess_exception
+                    throw in file_wrapper::priv_open_or_create"</em></span>]).
+                  </li>
+</ul></div>
+            </li>
+<li class="listitem">
+              <span class="bold"><strong>ABI breaking</strong></span>: <a href="https://svn.boost.org/trac/boost/ticket/9221" target="_top">#9221</a>
+              showed that <code class="computeroutput"><span class="identifier">BOOST_INTERPROCESS_MSG_QUEUE_CIRCULAR_INDEX</span></code>
+              option of message queue, was completely broken so an ABI break was
+              necessary to have a working implementation.
+            </li>
+<li class="listitem">
+              Simplified, refactored and unified (timed_)lock code based on try_lock().
+              There were several bugs when handling timeout expirations.
+            </li>
+<li class="listitem">
+              Changed the implementation of condition variables' destructors to allow
+              POSIX semantics (the condition variable can be destroyed after all
+              waiting threads have been woken up)..
+            </li>
+<li class="listitem">
+              Added <code class="computeroutput"><span class="identifier">BOOST_INTERPROCESS_SHARED_DIR_PATH</span></code>
+              option to define the shared directory used to place shared memory objects
+              when implemented as memory mapped files.
+            </li>
+<li class="listitem">
+              Added support for <code class="computeroutput"><span class="identifier">BOOST_USE_WINDOWS_H</span></code>.
+              When this macro is defined Interprocess does not declare used Windows
+              API function and types, includes all needed windows SDK headers and
+              uses types and functions declared by the Windows SDK.
+            </li>
+<li class="listitem">
+              Added <code class="computeroutput"><span class="identifier">get_size</span></code> to
+              <code class="computeroutput">::boost:interprocess:windows_shared_memory</code>.
+            </li>
+</ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
 <a name="interprocess.acknowledgements_notes.release_notes.release_notes_boost_1_55_00"></a><a class="link" href="acknowledgements_notes.html#interprocess.acknowledgements_notes.release_notes.release_notes_boost_1_55_00" title="Boost 1.55 Release">Boost
         1.55 Release</a>
 </h4></div></div></div>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
-              Fixed bugs <a href="https://svn.boost.org/trac/boost/ticket/7156" target="_top">#7156</a>,
-              <a href="https://svn.boost.org/trac/boost/ticket/7164" target="_top">#7164</a>,
-              <a href="https://svn.boost.org/trac/boost/ticket/8277" target="_top">#8277</a>,
-              <a href="https://svn.boost.org/trac/boost/ticket/8976" target="_top">#8976</a>,
-              <a href="https://svn.boost.org/trac/boost/ticket/9065" target="_top">#9065</a>,
-              <a href="https://svn.boost.org/trac/boost/ticket/9073" target="_top">#9073</a>,
-              <a href="https://svn.boost.org/trac/boost/ticket/8277" target="_top">#9908</a>.
+              Fixed bugs <a href="https://svn.boost.org/trac/boost/ticket/7156" target="_top">#7156</a>
+              (<span class="emphasis"><em>"interprocess buffer streams leak memory on construction"</em></span>]).
+              <a href="https://svn.boost.org/trac/boost/ticket/7164" target="_top">#7164</a>
+              (<span class="emphasis"><em>"Two potential bugs with b::int::vector of b::i::weak_ptr"</em></span>]).
+              <a href="https://svn.boost.org/trac/boost/ticket/7860" target="_top">#7860</a>
+              (<span class="emphasis"><em>"smart_ptr's yield_k and spinlock utilities can improve
+              spinlock-based sychronization primitives"</em></span>]). <a href="https://svn.boost.org/trac/boost/ticket/8277" target="_top">#8277</a> (<span class="emphasis"><em>"docs
+              for named_mutex erroneously refer to interprocess_mutex"</em></span>]).
+              <a href="https://svn.boost.org/trac/boost/ticket/8976" target="_top">#8976</a>
+              (<span class="emphasis"><em>"shared_ptr fails to compile if used with a scoped_allocator"</em></span>]).
+              <a href="https://svn.boost.org/trac/boost/ticket/9008" target="_top">#9008</a>
+              (<span class="emphasis"><em>"conditions variables fast enough only when opening
+              a multiprocess browser"</em></span>]). <a href="https://svn.boost.org/trac/boost/ticket/9065" target="_top">#9065</a>
+              (<span class="emphasis"><em>"atomic_cas32 inline assembly wrong on ppc32"</em></span>]).
+              <a href="https://svn.boost.org/trac/boost/ticket/9073" target="_top">#9073</a>
+              (<span class="emphasis"><em>"Conflict names 'realloc'"</em></span>]).
             </li></ul></div>
 </div>
 <div class="section">
@@ -733,9 +964,9 @@
 <li class="listitem">
               Added auxiliary utilities to ease the definition and construction of
               <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_ptr.html" title="Class template shared_ptr">shared_ptr</a></code>,
-              <code class="computeroutput"><a class="link" href="../boost/interprocess/weak_ptr.html" title="Class template weak_ptr">weak_ptr</a></code>
-              and <code class="computeroutput"><a class="link" href="../boost/interprocess/unique_ptr.html" title="Class template unique_ptr">unique_ptr</a></code>.
-              Added explanations and examples of these smart pointers in the documentation.
+              <code class="computeroutput">weak_ptr</code>
+              and <code class="computeroutput"><span class="identifier">unique_ptr</span></code>. Added
+              explanations and examples of these smart pointers in the documentation.
             </li>
 <li class="listitem">
               Optimized vector:

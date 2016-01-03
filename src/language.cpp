@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2013 Vaclav Slavik
+ *  Copyright (C) 2013-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -25,18 +25,30 @@
 
 #include "language.h"
 
-#include "icuhelpers.h"
-
 #include <cctype>
 #include <algorithm>
 #include <unordered_map>
 #include <mutex>
 #include <memory>
 
+#include <unicode/uvernum.h>
 #include <unicode/locid.h>
 #include <unicode/coll.h>
+#include <unicode/utypes.h>
 
 #include <wx/filename.h>
+
+#include "str_helpers.h"
+
+#ifdef HAVE_CLD2
+    #ifdef HAVE_CLD2_PUBLIC_COMPACT_LANG_DET_H
+        #include <cld2/public/compact_lang_det.h>
+        #include <cld2/public/encodings.h>
+    #else
+        #include "public/compact_lang_det.h"
+        #include "public/encodings.h"
+    #endif
+#endif
 
 // GCC's libstdc++ didn't have functional std::regex implementation until 4.9
 #if (defined(__GNUC__) && !defined(__clang__) && !wxCHECK_GCC_VERSION(4,9))
@@ -54,10 +66,10 @@ namespace
 
 // see http://www.gnu.org/software/gettext/manual/html_node/Header-Entry.html
 // for description of permitted formats
-const wregex RE_LANG_CODE(L"([a-z]){2,3}(_[A-Z]{2})?(@[a-z]+)?");
+const wregex RE_LANG_CODE(L"([a-z]){2,3}(_([A-Z]{2}|[0-9]{3}))?(@[a-z]+)?");
 
 // a more permissive variant of the same that TryNormalize() would fix
-const wregex RE_LANG_CODE_PERMISSIVE(L"([a-zA-Z]){2,3}([_-][a-zA-Z]{2})?(@[a-zA-Z]+)?");
+const wregex RE_LANG_CODE_PERMISSIVE(L"([a-zA-Z]){2,3}([_-]([a-zA-Z]{2}|[0-9]{3}))?(@[a-zA-Z]+)?");
 
 // try some normalizations: s/-/_/, case adjustments
 void TryNormalize(std::wstring& s)
@@ -132,39 +144,70 @@ const DisplayNamesData& GetDisplayNamesData()
         names.reserve(count);
         for (int i = 0; i < count; i++, loc++)
         {
+            auto language = loc->getLanguage();
+            auto script = loc->getScript();
+            auto country = loc->getCountry();
+            auto variant = loc->getVariant();
+
             // TODO: for now, ignore variants here and in FormatForRoundtrip(),
             //       because translating them between gettext and ICU is nontrivial
-            auto variant = loc->getVariant();
             if (variant != nullptr && *variant != '\0')
                 continue;
 
             icu::UnicodeString s;
             loc->getDisplayName(s);
-
             names.push_back(s);
 
+            if (strcmp(language, "zh") == 0 && *country == '\0')
+            {
+                if (strcmp(script, "Hans") == 0)
+                    country = "CN";
+                else if (strcmp(script, "Hant") == 0)
+                    country = "TW";
+            }
+
+            std::string code(language);
+            if (*country != '\0')
+            {
+                code += '_';
+                code += country;
+            }
+            if (*script != '\0')
+            {
+                if (strcmp(script, "Latn") == 0)
+                    code += "@latin";
+            }
+            
             s.foldCase();
-            data.names[StdFromIcuStr(s)] = loc->getName();
+            data.names[str::to_wstring(s)] = code;
 
             loc->getDisplayName(locEng, s);
             s.foldCase();
-            data.namesEng[StdFromIcuStr(s)] = loc->getName();
+            data.namesEng[str::to_wstring(s)] = code;
         }
 
         // sort the names alphabetically for data.sortedNames:
         UErrorCode err = U_ZERO_ERROR;
         std::unique_ptr<icu::Collator> coll(icu::Collator::createInstance(err));
-        coll->setStrength(icu::Collator::SECONDARY); // case insensitive
+        if (coll)
+        {
+            coll->setStrength(icu::Collator::SECONDARY); // case insensitive
 
-        std::sort(names.begin(), names.end(),
-                  [&coll](const icu::UnicodeString& a, const icu::UnicodeString& b){
-                      UErrorCode e = U_ZERO_ERROR;
-                      return coll->compare(a, b, e) == UCOL_LESS;
-        });
+            std::sort(names.begin(), names.end(),
+                      [&coll](const icu::UnicodeString& a, const icu::UnicodeString& b){
+                          UErrorCode e = U_ZERO_ERROR;
+                          return coll->compare(a, b, e) == UCOL_LESS;
+                      });
+        }
+        else
+        {
+            std::sort(names.begin(), names.end());
+        }
+
         // convert into std::wstring
         data.sortedNames.reserve(names.size());
         for (auto s: names)
-            data.sortedNames.push_back(StdFromIcuStr(s));
+            data.sortedNames.push_back(str::to_wstring(s));
     });
 
     return data;
@@ -206,6 +249,16 @@ std::string Language::Variant() const
         return m_code.substr(0, pos);
 }
 
+std::string Language::RFC3066() const
+{
+    auto c = Country();
+    auto l = Lang();
+    if (c.empty())
+        return l;
+    else
+        return l + "-" + c;
+}
+
 
 Language Language::TryParse(const std::wstring& s)
 {
@@ -223,9 +276,9 @@ Language Language::TryParse(const std::wstring& s)
 
     // If not, perhaps it's a human-readable name (perhaps coming from the language control)?
     auto names = GetDisplayNamesData();
-    icu::UnicodeString s_icu = ToIcuStr(s);
+    icu::UnicodeString s_icu = str::to_icu(s);
     s_icu.foldCase();
-    std::wstring folded = StdFromIcuStr(s_icu);
+    std::wstring folded = str::to_wstring(s_icu);
     auto i = names.names.find(folded);
     if (i != names.names.end())
         return Language(i->second);
@@ -306,12 +359,31 @@ std::string Language::DefaultPluralFormsExpr() const
 }
 
 
+bool Language::IsRTL() const
+{
+    if (!IsValid())
+        return false; // fallback
+
+#if U_ICU_VERSION_MAJOR_NUM >= 51
+    auto locale = IcuLocaleName();
+
+    UErrorCode err = U_ZERO_ERROR;
+    UScriptCode codes[10]= {USCRIPT_INVALID_CODE};
+    if (uscript_getCode(locale.c_str(), codes, 10, &err) == 0 || err != U_ZERO_ERROR)
+        return false; // fallback
+    return uscript_isRightToLeft(codes[0]);
+#else
+    return false;
+#endif
+}
+
+
 icu::Locale Language::ToIcu() const
 {
-    if (IsValid())
-        return icu::Locale(LangAndCountry().c_str());
-    else
+    if (!IsValid())
         return icu::Locale::getEnglish();
+
+    return icu::Locale(IcuLocaleName().c_str());
 }
 
 
@@ -319,7 +391,14 @@ wxString Language::DisplayName() const
 {
     icu::UnicodeString s;
     ToIcu().getDisplayName(s);
-    return FromIcuStr(s);
+    return str::to_wx(s);
+}
+
+wxString Language::LanguageDisplayName() const
+{
+    icu::UnicodeString s;
+    ToIcu().getDisplayLanguage(s);
+    return str::to_wx(s);
 }
 
 wxString Language::DisplayNameInItself() const
@@ -327,7 +406,7 @@ wxString Language::DisplayNameInItself() const
     auto loc = ToIcu();
     icu::UnicodeString s;
     loc.getDisplayName(loc, s);
-    return FromIcuStr(s);
+    return str::to_wx(s);
 }
 
 wxString Language::FormatForRoundtrip() const
@@ -341,7 +420,7 @@ wxString Language::FormatForRoundtrip() const
     // (e.g. "Chinese (China)" aren't in the list of known locale names
     // (here because zh-Trans is preferred to zh_CN). So make sure it can
     // be parsed back first.
-    if (TryParse(disp).IsValid())
+    if (TryParse(disp.ToStdWstring()).IsValid())
         return disp;
     else
         return m_code;
@@ -363,19 +442,19 @@ Language Language::TryGuessFromFilename(const wxString& filename)
     //  - entire name
     //  - suffix (foo.cs_CZ.po, wordpressTheme-cs_CZ.po)
     //  - directory name (cs_CZ, cs.lproj, cs/LC_MESSAGES)
-    wxString name = fn.GetName();
+    std::wstring name = fn.GetName().ToStdWstring();
     Language lang = Language::TryParseWithValidation(name);
             if (lang.IsValid())
                 return lang;
 
-    size_t pos = name.find_first_of(".-_");
+    size_t pos = name.find_first_of(L".-_");
     while (pos != wxString::npos)
     {
         auto part = name.substr(pos+1);
         lang = Language::TryParseWithValidation(part);
         if (lang.IsValid())
             return lang;
-         pos = name.find_first_of(".-_",  pos+1);
+         pos = name.find_first_of(L".-_",  pos+1);
     }
 
     auto dirs = fn.GetDirs();
@@ -389,10 +468,63 @@ Language Language::TryGuessFromFilename(const wxString& filename)
         }
         wxString rest;
         if (d->EndsWith(".lproj", &rest))
-            return Language::TryParseWithValidation(rest);
+            return Language::TryParseWithValidation(rest.ToStdWstring());
         else
-            return Language::TryParseWithValidation(*d);
+            return Language::TryParseWithValidation(d->ToStdWstring());
     }
 
     return Language(); // failed to match
+}
+
+
+Language Language::TryDetectFromText(const char *buffer, size_t len, Language probableLanguage)
+{
+#ifdef HAVE_CLD2
+    using namespace CLD2;
+
+    CLDHints hints = {NULL, NULL, UNKNOWN_ENCODING, UNKNOWN_LANGUAGE};
+    if (probableLanguage.IsValid())
+    {
+        if (probableLanguage.Lang() == "en")
+            hints.language_hint = ENGLISH;
+        else
+            hints.language_hint = GetLanguageFromName(probableLanguage.RFC3066().c_str());
+    }
+
+    // three best guesses; we don't care, but they must be passed in
+    CLD2::Language language3[3];
+    int percent3[3];
+    double normalized_score3[3];
+    // more result info:
+    int text_bytes;
+    bool is_reliable;
+
+    auto lang = CLD2::ExtDetectLanguageSummary(
+                        buffer, (int)len,
+                        /*is_plain_text=*/true, // any embedded HTML markup should be insignificant
+                        &hints,
+                        /*flags=*/0,
+                        language3, percent3, normalized_score3,
+                        /*resultchunkvector=*/nullptr,
+                        &text_bytes,
+                        &is_reliable);
+
+    if (lang == UNKNOWN_LANGUAGE || !is_reliable)
+        return Language();
+
+    // CLD2 penalizes English in bilingual content in some cases as "boilerplate"
+    // because it is tailored for the web. So e.g. 66% English, 33% Italian is
+    // tagged as Italian.
+    //
+    // Poedit's bias is the opposite: English is almost always the correct answer
+    // for PO source language. Fix this up manually.
+    if (lang != language3[0] && language3[0] == CLD2::ENGLISH && language3[1] == lang)
+        lang = language3[0];
+
+    return Language::TryParse(LanguageCode(lang));
+#else
+    (void)buffer;
+    (void)len;
+    return probableLanguage;
+#endif
 }

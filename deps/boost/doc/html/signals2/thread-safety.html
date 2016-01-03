@@ -26,13 +26,13 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="signals2.thread-safety"></a>Thread-Safety</h2></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="thread-safety.html#idp209977016">Introduction</a></span></dt>
-<dt><span class="section"><a href="thread-safety.html#idp209980408">Signals and combiners</a></span></dt>
-<dt><span class="section"><a href="thread-safety.html#idp209990552">Connections and other classes</a></span></dt>
+<dt><span class="section"><a href="thread-safety.html#idp424016480">Introduction</a></span></dt>
+<dt><span class="section"><a href="thread-safety.html#idp424022576">Signals and combiners</a></span></dt>
+<dt><span class="section"><a href="thread-safety.html#idp424044752">Connections and other classes</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp209977016"></a>Introduction</h3></div></div></div>
+<a name="idp424016480"></a>Introduction</h3></div></div></div>
 <p>
       The primary motivation for Boost.Signals2 is to provide a version of
       the original Boost.Signals library which can be used safely in a
@@ -49,7 +49,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp209980408"></a>Signals and combiners</h3></div></div></div>
+<a name="idp424022576"></a>Signals and combiners</h3></div></div></div>
 <p>
       Each signal object default-constructs a <code class="computeroutput">Mutex</code> object to protect
       its internal state.  Furthermore, a <code class="computeroutput">Mutex</code> is created
@@ -61,7 +61,7 @@
       signal's methods are called.  The mutex is usually held until the
       method completes, however there is one major exception to this rule.  When
       a signal is invoked by calling
-      <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#idp105296136-bb">signal::operator()</a></code>,
+      <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#idp90456528-bb">signal::operator()</a></code>,
       the invocation first acquires a lock on the signal's mutex.  Then
       it obtains a handle to the signal's slot list and combiner.  Next
       it releases the signal's mutex, before invoking the combiner to
@@ -108,7 +108,7 @@
       Note that since we unlock the connection's mutex before executing
       its associated slot, it is possible a slot will still be executing
       after it has been disconnected by a
-      <code class="computeroutput"><a class="link" href="../boost/signals2/connection.html#idp19390344-bb">connection::disconnect</a>()</code>, if
+      <code class="computeroutput"><a class="link" href="../boost/signals2/connection.html#idp154688224-bb">connection::disconnect</a>()</code>, if
       the disconnect was called concurrently with signal invocation.
     </p>
 <p>
@@ -125,7 +125,7 @@
       Future signal invocations will receive a handle to the newly created deep
       copy of the slot list, and the old slot list will be destroyed once it
       is no longer in use.  Similarly, if you change a signal's combiner with
-      <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#idp100936136-bb">signal::set_combiner</a></code>
+      <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#idp142899536-bb">signal::set_combiner</a></code>
       while a signal invocation is running concurrently, the concurrent
       signal invocation will continue to use the old combiner undisturbed,
       while future signal invocations will receive a handle to the new combiner.
@@ -163,7 +163,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp209990552"></a>Connections and other classes</h3></div></div></div>
+<a name="idp424044752"></a>Connections and other classes</h3></div></div></div>
 <p>
       The methods of the <code class="computeroutput"><a class="link" href="../boost/signals2/connection.html" title="Class connection">signals2::connection</a></code> class are thread-safe,
       with the exception of assignment and swap.  This is achived via locking the mutex

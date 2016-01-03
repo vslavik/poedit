@@ -81,7 +81,7 @@ static void init_library_scanner(const fs::path& p, bool cvs_mode, const std::st
                "\\("
                   "[^\\(\\);{}]*"          // argument list
                "\\)"
-               "\\s*"
+               "\\s*(?:BOOST[_A-Z]+\\s*)?"
                "\\{"                       // start of definition
             "|"
                "(\\<\\w+\\>)"              // Maybe class name
@@ -93,7 +93,7 @@ static void init_library_scanner(const fs::path& p, bool cvs_mode, const std::st
                "\\("
                   "[^\\(\\);{}]*"          // argument list
                "\\)"
-               "\\s*"
+               "\\s*(?:BOOST[_A-Z]+\\s*)?"
                "\\{"                       // start of definition
             ")"                            // end branch reset
             );
@@ -135,7 +135,7 @@ static void init_library_scanner(const fs::path& p, bool cvs_mode, const std::st
          "\\<(?!return)\\w+\\>[^:;{}#=<>!~%.\\w]*(";
          // List of function names goes here...
       const char* e3 = 
-         ")\\s*\\([^;()]*\\)\\s*;)";
+         ")\\s*\\([^;()]*\\)\\s*(?:BOOST[_A-Z]+\\s*)?;)";
 
       std::string class_name_list;
       std::set<std::string>::const_iterator i = class_names[libname].begin(), j = class_names[libname].end();

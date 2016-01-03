@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class iterator_range</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Range 2.0">
 <link rel="up" href="../utilities.html" title="Utilities">
 <link rel="prev" href="../utilities.html" title="Utilities">
@@ -22,7 +22,7 @@
 <div class="spirit-nav">
 <a accesskey="p" href="../utilities.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../utilities.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="sub_range.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
-<div class="section range_reference_utilities_iterator_range">
+<div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="range.reference.utilities.iterator_range"></a><a class="link" href="iterator_range.html" title="Class iterator_range">Class <code class="computeroutput"><span class="identifier">iterator_range</span></code></a>
 </h4></div></div></div>
@@ -49,8 +49,17 @@
         </p>
 <h5>
 <a name="range.reference.utilities.iterator_range.h0"></a>
-          <span><a name="range.reference.utilities.iterator_range.synopsis"></a></span><a class="link" href="iterator_range.html#range.reference.utilities.iterator_range.synopsis">Synopsis</a>
+          <span class="phrase"><a name="range.reference.utilities.iterator_range.synopsis"></a></span><a class="link" href="iterator_range.html#range.reference.utilities.iterator_range.synopsis">Synopsis</a>
         </h5>
+<p>
+          The core functionality is in the header file <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">range</span><span class="special">/</span><span class="identifier">iterator_range_core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
+          this includes all of the functionality except the <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">hash_value</span></code>
+          and <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">iostream</span></code> support.
+        </p>
+<p>
+          The <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">iostream</span></code> support is in the header <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">range</span><span class="special">/</span><span class="identifier">iterator_core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code> while the <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">hash_value</span></code>
+          support is in <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">range</span><span class="special">/</span><span class="identifier">iterator_range_hash</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
+        </p>
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span>
@@ -87,11 +96,18 @@
         <span class="keyword">operator</span>    <span class="identifier">unspecified_bool_type</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
         <span class="keyword">bool</span>        <span class="identifier">equal</span><span class="special">(</span> <span class="keyword">const</span> <span class="identifier">iterator_range</span><span class="special">&amp;</span> <span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
         <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">front</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
-        <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">back</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+        <span class="keyword">void</span>        <span class="identifier">drop_front</span><span class="special">();</span>
+        <span class="keyword">void</span>        <span class="identifier">drop_front</span><span class="special">(</span><span class="identifier">difference_type</span> <span class="identifier">n</span><span class="special">);</span>
+        <span class="keyword">bool</span>      <span class="identifier">empty</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+
         <span class="identifier">iterator_range</span><span class="special">&amp;</span> <span class="identifier">advance_begin</span><span class="special">(</span><span class="identifier">difference_type</span> <span class="identifier">n</span><span class="special">);</span>
         <span class="identifier">iterator_range</span><span class="special">&amp;</span> <span class="identifier">advance_end</span><span class="special">(</span><span class="identifier">difference_type</span> <span class="identifier">n</span><span class="special">);</span>
-        <span class="keyword">bool</span>      <span class="identifier">empty</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
-        <span class="comment">// for Random Access Range only:</span>
+
+        <span class="comment">// for Bidirectional:</span>
+        <span class="identifier">value_type</span><span class="special">&amp;</span> <span class="identifier">back</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+        <span class="keyword">void</span> <span class="identifier">drop_back</span><span class="special">();</span>
+        <span class="keyword">void</span> <span class="identifier">drop_back</span><span class="special">(</span><span class="identifier">difference_type</span> <span class="identifier">n</span><span class="special">);</span>
+        <span class="comment">// for Random Access only:</span>
         <span class="identifier">reference</span> <span class="keyword">operator</span><span class="special">[](</span> <span class="identifier">difference_type</span> <span class="identifier">at</span> <span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
         <span class="identifier">value_type</span> <span class="keyword">operator</span><span class="special">()(</span> <span class="identifier">difference_type</span> <span class="identifier">at</span> <span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
         <span class="identifier">size_type</span> <span class="identifier">size</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
@@ -146,6 +162,12 @@
     <span class="identifier">make_iterator_range</span><span class="special">(</span> <span class="identifier">ForwardTraversalIterator</span> <span class="identifier">Begin</span><span class="special">,</span>
                          <span class="identifier">ForwardTraversalIterator</span> <span class="identifier">End</span> <span class="special">);</span>
 
+    <span class="comment">// Make an iterator_range [first, boost::next(first, n) )</span>
+    <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">class</span> <span class="identifier">ForwardTraversalIterator</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Integer</span> <span class="special">&gt;</span>
+    <span class="identifier">iterator_range</span><span class="special">&lt;</span> <span class="identifier">ForwardTraversalIterator</span> <span class="special">&gt;</span>
+    <span class="identifier">make_iterator_range_n</span><span class="special">(</span> <span class="identifier">ForwardTraversalIterator</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">Integer</span> <span class="identifier">n</span> <span class="special">);</span>
+
+
     <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">class</span> <span class="identifier">ForwardRange</span> <span class="special">&gt;</span>
     <span class="identifier">iterator_range</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">range_iterator</span><span class="special">&lt;</span><span class="identifier">ForwardRange</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="special">&gt;</span>
     <span class="identifier">make_iterator_range</span><span class="special">(</span> <span class="identifier">ForwardRange</span><span class="special">&amp;</span> <span class="identifier">r</span> <span class="special">);</span>
@@ -188,7 +210,7 @@
         </p>
 <h5>
 <a name="range.reference.utilities.iterator_range.h1"></a>
-          <span><a name="range.reference.utilities.iterator_range.details_member_functions"></a></span><a class="link" href="iterator_range.html#range.reference.utilities.iterator_range.details_member_functions">Details
+          <span class="phrase"><a name="range.reference.utilities.iterator_range.details_member_functions"></a></span><a class="link" href="iterator_range.html#range.reference.utilities.iterator_range.details_member_functions">Details
           member functions</a>
         </h5>
 <p>
@@ -207,7 +229,7 @@
           </p></blockquote></div>
 <h5>
 <a name="range.reference.utilities.iterator_range.h2"></a>
-          <span><a name="range.reference.utilities.iterator_range.details_functions"></a></span><a class="link" href="iterator_range.html#range.reference.utilities.iterator_range.details_functions">Details
+          <span class="phrase"><a name="range.reference.utilities.iterator_range.details_functions"></a></span><a class="link" href="iterator_range.html#range.reference.utilities.iterator_range.details_functions">Details
           functions</a>
         </h5>
 <p>

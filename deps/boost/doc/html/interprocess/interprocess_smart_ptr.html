@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../interprocess.html" title="Chapter&#160;13.&#160;Boost.Interprocess">
+<link rel="up" href="../interprocess.html" title="Chapter&#160;14.&#160;Boost.Interprocess">
 <link rel="prev" href="streams.html" title="Direct iostream formatting: vectorstream and bufferstream">
 <link rel="next" href="architecture.html" title="Architecture and internals">
 </head>
@@ -441,7 +441,7 @@
 <p>
         To simplify this usage, <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_ptr.html" title="Class template shared_ptr">boost::interprocess::shared_ptr</a></code>
         header offers a shared pointer definition helper class (<code class="computeroutput"><a class="link" href="../boost/interprocess/managed_shared_ptr.html" title="Struct template managed_shared_ptr">managed_shared_ptr</a></code>)
-        and a function (<code class="computeroutput"><a class="link" href="../boost/interprocess/make_managed_s_idp28088232.html" title="Function template make_managed_shared_ptr">make_managed_shared_ptr</a></code>)
+        and a function (<code class="computeroutput"><a class="link" href="../boost/interprocess/make_managed_s_idp56247856.html" title="Function template make_managed_shared_ptr">make_managed_shared_ptr</a></code>)
         to easily construct a shared pointer from a type allocated in a managed segment
         with an allocator that will allocate the reference count also in the managed
         segment and a deleter that will erase the object from the segment.
@@ -463,14 +463,14 @@
 </pre>
 <p>
         <span class="bold"><strong>Boost.Interprocess</strong></span> also offers a weak pointer
-        named <code class="computeroutput"><a class="link" href="../boost/interprocess/weak_ptr.html" title="Class template weak_ptr">weak_ptr</a></code>
+        named <code class="computeroutput">weak_ptr</code>
         (with its corresponding <code class="computeroutput"><a class="link" href="../boost/interprocess/managed_weak_ptr.html" title="Struct template managed_weak_ptr">managed_weak_ptr</a></code>
         and <code class="computeroutput"><a class="link" href="../boost/interprocess/make_managed_weak_ptr.html" title="Function template make_managed_weak_ptr">make_managed_weak_ptr</a></code>
         utilities) to implement non-owning observers of an object owned by <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_ptr.html" title="Class template shared_ptr">shared_ptr</a></code>.
       </p>
 <p>
         Now let's see a detailed example of the use of <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_ptr.html" title="Class template shared_ptr">shared_ptr</a></code>:
-        and <code class="computeroutput"><a class="link" href="../boost/interprocess/weak_ptr.html" title="Class template weak_ptr">weak_ptr</a></code>
+        and <code class="computeroutput">weak_ptr</code>
       </p>
 <p>
 </p>
@@ -543,7 +543,6 @@
       <span class="identifier">assert</span><span class="special">(</span><span class="identifier">owner1</span><span class="special">-&gt;</span><span class="identifier">shared_ptr_</span><span class="special">.</span><span class="identifier">use_count</span><span class="special">()</span> <span class="special">==</span> <span class="number">2</span><span class="special">);</span>
       <span class="identifier">assert</span><span class="special">(</span><span class="identifier">owner2</span><span class="special">-&gt;</span><span class="identifier">shared_ptr_</span><span class="special">.</span><span class="identifier">use_count</span><span class="special">()</span> <span class="special">==</span> <span class="number">2</span><span class="special">);</span>
       <span class="identifier">assert</span><span class="special">(</span><span class="identifier">owner1</span><span class="special">-&gt;</span><span class="identifier">shared_ptr_</span><span class="special">.</span><span class="identifier">get</span><span class="special">()</span> <span class="special">==</span> <span class="identifier">owner2</span><span class="special">-&gt;</span><span class="identifier">shared_ptr_</span><span class="special">.</span><span class="identifier">get</span><span class="special">());</span>
-
       <span class="comment">//The mapped file is unmapped here. Objects have been flushed to disk</span>
    <span class="special">}</span>
    <span class="special">{</span>
@@ -591,7 +590,7 @@
 <p>
       </p>
 <p>
-        In general, using <span class="bold"><strong>Boost.Interprocess</strong></span>' <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_ptr.html" title="Class template shared_ptr">shared_ptr</a></code> and <code class="computeroutput"><a class="link" href="../boost/interprocess/weak_ptr.html" title="Class template weak_ptr">weak_ptr</a></code> is very similar
+        In general, using <span class="bold"><strong>Boost.Interprocess</strong></span>' <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_ptr.html" title="Class template shared_ptr">shared_ptr</a></code> and <code class="computeroutput">weak_ptr</code> is very similar
         to their counterparts <a href="http://www.boost.org/libs/smart_ptr/shared_ptr.htm" target="_top">boost::shared_ptr</a>
         and <a href="http://www.boost.org/libs/smart_ptr/weak_ptr.htm" target="_top">boost::weak_ptr</a>,
         but they need more template parameters and more run-time parameters in their
@@ -605,9 +604,9 @@
       </p>
 <p>
         If a programmer just uses <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_ptr.html" title="Class template shared_ptr">shared_ptr</a></code>
-        to be able to insert objects dynamically constructed in the managed segment
-        in a container, but does not need to share the ownership of that object with
-        other objects <code class="computeroutput"><a class="link" href="../boost/interprocess/unique_ptr.html" title="Class template unique_ptr">unique_ptr</a></code>
+        to be able to insert dynamically constructed objects into a container constructed
+        in the managed segment, but he does not need to share the ownership of that
+        object with other objects <code class="computeroutput"><a class="link" href="../boost/interprocess/managed_unique_ptr.html" title="Struct template managed_unique_ptr">managed_unique_ptr</a></code>
         is a much faster and easier to use alternative.
       </p>
 </div>
@@ -619,52 +618,54 @@
 <p>
         Unique ownership smart pointers are really useful to free programmers from
         manual resource liberation of non-shared objects. <span class="bold"><strong>Boost.Interprocess</strong></span>'
-        <code class="computeroutput"><a class="link" href="../boost/interprocess/unique_ptr.html" title="Class template unique_ptr">unique_ptr</a></code> is
-        much like <code class="computeroutput"><a class="link" href="../boost/interprocess/scoped_ptr.html" title="Class template scoped_ptr">scoped_ptr</a></code>
-        but it's <span class="bold"><strong>moveable</strong></span> and can be easily inserted
-        in <span class="bold"><strong>Boost.Interprocess</strong></span> containers. Here is
-        the declaration of the unique pointer class:
+        <code class="computeroutput"><span class="identifier">unique_ptr</span></code> is much like
+        <code class="computeroutput"><a class="link" href="../boost/interprocess/scoped_ptr.html" title="Class template scoped_ptr">scoped_ptr</a></code> but
+        it's <span class="bold"><strong>moveable</strong></span> and can be easily inserted
+        in <span class="bold"><strong>Boost.Interprocess</strong></span> containers. Interprocess
+        had its own <code class="computeroutput"><span class="identifier">unique_ptr</span></code> implementation
+        but from Boost 1.57, <span class="bold"><strong>Boost.Interprocess</strong></span>
+        uses the improved and generic <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unique_ptr</span></code>
+        implementation. Here is the declaration of the unique pointer class:
       </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">D</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">unique_ptr</span><span class="special">;</span>
 </pre>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-            T is the type of the object pointed by <code class="computeroutput"><a class="link" href="../boost/interprocess/unique_ptr.html" title="Class template unique_ptr">unique_ptr</a></code>.
+            T is the type of the object pointed by <code class="computeroutput"><span class="identifier">unique_ptr</span></code>.
           </li>
 <li class="listitem">
             D is the deleter that will erase the object type of the object pointed
-            by <code class="computeroutput"><a class="link" href="../boost/interprocess/unique_ptr.html" title="Class template unique_ptr">unique_ptr</a></code>
-            when the unique pointer is destroyed (and if still owns ownership of
-            the object). If the deleter defines an internal <code class="computeroutput"><span class="identifier">pointer</span></code>
-            typedef, <code class="computeroutput"><a class="link" href="../boost/interprocess/unique_ptr.html" title="Class template unique_ptr">unique_ptr</a></code>
-            will use an internal pointer of the same type. So if <code class="computeroutput"><span class="identifier">D</span><span class="special">::</span><span class="identifier">pointer</span></code>
+            by the unique_ptr when the unique pointer is destroyed (and if still
+            has the ownership of the object). If the deleter defines an internal
+            <code class="computeroutput"><span class="identifier">pointer</span></code> typedef, <code class="computeroutput"><span class="identifier">unique_ptr</span></code>] will use an internal pointer
+            of the same type. So if <code class="computeroutput"><span class="identifier">D</span><span class="special">::</span><span class="identifier">pointer</span></code>
             is <code class="computeroutput"><span class="identifier">offset_ptr</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>
             the unique pointer will store a relative pointer instead of a raw one.
-            This allows placing <code class="computeroutput"><a class="link" href="../boost/interprocess/unique_ptr.html" title="Class template unique_ptr">unique_ptr</a></code>
+            This allows placing <code class="computeroutput"><span class="identifier">unique_ptr</span></code>
             in shared memory and memory-mapped files.
           </li>
 </ul></div>
 <p>
-        <code class="computeroutput"><a class="link" href="../boost/interprocess/unique_ptr.html" title="Class template unique_ptr">unique_ptr</a></code> can
-        release the ownership of the stored pointer so it's useful also to be used
-        as a rollback function. One of the main properties of the class is that
-        <span class="bold"><strong>is not copyable, but only moveable</strong></span>. When
-        a unique pointer is moved to another one, the ownership of the pointer is
-        transferred from the source unique pointer to the target unique pointer.
-        If the target unique pointer owned an object, that object is first deleted
-        before taking ownership of the new object.
+        <code class="computeroutput"><span class="identifier">unique_ptr</span></code> can release the
+        ownership of the stored pointer so it's useful also to be used as a rollback
+        function. One of the main properties of the class is that <span class="bold"><strong>is
+        not copyable, but only moveable</strong></span>. When a unique pointer is moved
+        to another one, the ownership of the pointer is transferred from the source
+        unique pointer to the target unique pointer. If the target unique pointer
+        owned an object, that object is first deleted before taking ownership of
+        the new object.
       </p>
 <p>
-        <code class="computeroutput"><a class="link" href="../boost/interprocess/unique_ptr.html" title="Class template unique_ptr">unique_ptr</a></code> also
-        offers auxiliary types to easily define and construct unique pointers that
-        can be placed in managed segments and will correctly delete the owned object
-        from the segment: <code class="computeroutput"><a class="link" href="../boost/interprocess/managed_unique_ptr.html" title="Struct template managed_unique_ptr">managed_unique_ptr</a></code>
+        <span class="bold"><strong>Boost.Interprocess</strong></span> also offers auxiliary
+        types to easily define and construct unique pointers that can be placed in
+        managed segments and will correctly delete owned object from the segment:
+        <code class="computeroutput"><a class="link" href="../boost/interprocess/managed_unique_ptr.html" title="Struct template managed_unique_ptr">managed_unique_ptr</a></code>
         and <code class="computeroutput"><a class="link" href="../boost/interprocess/make_managed_unique_ptr.html" title="Function template make_managed_unique_ptr">make_managed_unique_ptr</a></code>
         utilities.
       </p>
 <p>
-        Here we see an example of the use <code class="computeroutput"><a class="link" href="../boost/interprocess/unique_ptr.html" title="Class template unique_ptr">unique_ptr</a></code>
+        Here we see an example of the use <code class="computeroutput"><span class="identifier">unique_ptr</span></code>
         including creating containers of such objects:
       </p>
 <p>

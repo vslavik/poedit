@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2004-2012. Distributed under the Boost
+// (C) Copyright Ion Gaztanaga 2004-2013. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying file
 // LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
@@ -9,19 +9,21 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #include <boost/container/detail/config_begin.hpp>
-#include <algorithm>
 #include <memory>
 #include <deque>
 #include <iostream>
-#include <functional>
 #include <list>
 
 #include <boost/container/deque.hpp>
+#include <boost/container/allocator.hpp>
+#include <boost/container/node_allocator.hpp>
+#include <boost/container/adaptive_pool.hpp>
+
 #include "print_container.hpp"
 #include "check_equal_containers.hpp"
 #include "dummy_test_allocator.hpp"
 #include "movable_int.hpp"
-#include <boost/move/utility.hpp>
+#include <boost/move/utility_core.hpp>
 #include <boost/move/iterator.hpp>
 #include <boost/container/detail/mpl.hpp>
 #include <boost/container/detail/type_traits.hpp>
@@ -29,7 +31,8 @@
 #include "emplace_test.hpp"
 #include "propagate_allocator_test.hpp"
 #include "vector_test.hpp"
-#include <boost/detail/no_exceptions_support.hpp>
+#include "default_init_test.hpp"
+#include <boost/core/no_exceptions_support.hpp>
 
 using namespace boost::container;
 
@@ -49,62 +52,74 @@ template class boost::container::deque
  < test::movable_and_copyable_int
  , std::allocator<test::movable_and_copyable_int> >;
 
+template class boost::container::deque
+   < test::movable_and_copyable_int
+   , allocator<test::movable_and_copyable_int> >;
+
+template class boost::container::deque
+   < test::movable_and_copyable_int
+   , adaptive_pool<test::movable_and_copyable_int> >;
+
+template class boost::container::deque
+   < test::movable_and_copyable_int
+   , node_allocator<test::movable_and_copyable_int> >;
+
 }}
 
 //Function to check if both sets are equal
 template<class V1, class V2>
-bool deque_copyable_only(V1 *, V2 *, container_detail::false_type)
+bool deque_copyable_only(V1 &, V2 &, container_detail::false_type)
 {
    return true;
 }
 
 //Function to check if both sets are equal
 template<class V1, class V2>
-bool deque_copyable_only(V1 *cntdeque, V2 *stddeque, container_detail::true_type)
+bool deque_copyable_only(V1 &cntdeque, V2 &stddeque, container_detail::true_type)
 {
    typedef typename V1::value_type IntType;
-   std::size_t size = cntdeque->size();
-   stddeque->insert(stddeque->end(), 50, 1);
-   cntdeque->insert(cntdeque->end(), 50, IntType(1));
+   std::size_t size = cntdeque.size();
+   stddeque.insert(stddeque.end(), 50, 1);
+   cntdeque.insert(cntdeque.end(), 50, IntType(1));
    if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
    {
       IntType move_me(1);
-      stddeque->insert(stddeque->begin()+size/2, 50, 1);
-      cntdeque->insert(cntdeque->begin()+size/2, 50, boost::move(move_me));
+      stddeque.insert(stddeque.begin()+size/2, 50, 1);
+      cntdeque.insert(cntdeque.begin()+size/2, 50, boost::move(move_me));
       if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
    }
    {
       IntType move_me(2);
-      cntdeque->assign(cntdeque->size()/2, boost::move(move_me));
-      stddeque->assign(stddeque->size()/2, 2);
+      cntdeque.assign(cntdeque.size()/2, boost::move(move_me));
+      stddeque.assign(stddeque.size()/2, 2);
       if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
    }
    {
       IntType move_me(1);
-      stddeque->clear();
-      cntdeque->clear();
-      stddeque->insert(stddeque->begin(), 50, 1);
-      cntdeque->insert(cntdeque->begin(), 50, boost::move(move_me));
+      stddeque.clear();
+      cntdeque.clear();
+      stddeque.insert(stddeque.begin(), 50, 1);
+      cntdeque.insert(cntdeque.begin(), 50, boost::move(move_me));
       if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
-      stddeque->insert(stddeque->begin()+20, 50, 1);
-      cntdeque->insert(cntdeque->begin()+20, 50, boost::move(move_me));
+      stddeque.insert(stddeque.begin()+20, 50, 1);
+      cntdeque.insert(cntdeque.begin()+20, 50, boost::move(move_me));
       if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
-      stddeque->insert(stddeque->begin()+20, 20, 1);
-      cntdeque->insert(cntdeque->begin()+20, 20, boost::move(move_me));
+      stddeque.insert(stddeque.begin()+20, 20, 1);
+      cntdeque.insert(cntdeque.begin()+20, 20, boost::move(move_me));
       if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
    }
    {
       IntType move_me(1);
-      stddeque->clear();
-      cntdeque->clear();
-      stddeque->insert(stddeque->end(), 50, 1);
-      cntdeque->insert(cntdeque->end(), 50, boost::move(move_me));
+      stddeque.clear();
+      cntdeque.clear();
+      stddeque.insert(stddeque.end(), 50, 1);
+      cntdeque.insert(cntdeque.end(), 50, boost::move(move_me));
       if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
-      stddeque->insert(stddeque->end()-20, 50, 1);
-      cntdeque->insert(cntdeque->end()-20, 50, boost::move(move_me));
+      stddeque.insert(stddeque.end()-20, 50, 1);
+      cntdeque.insert(cntdeque.end()-20, 50, boost::move(move_me));
       if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
-      stddeque->insert(stddeque->end()-20, 20, 1);
-      cntdeque->insert(cntdeque->end()-20, 20, boost::move(move_me));
+      stddeque.insert(stddeque.end()-20, 20, 1);
+      cntdeque.insert(cntdeque.end()-20, 20, boost::move(move_me));
       if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
    }
 
@@ -121,6 +136,10 @@ public:
 
    int id_;
    deque<recursive_deque> deque_;
+   deque<recursive_deque>::iterator it_;
+   deque<recursive_deque>::const_iterator cit_;
+   deque<recursive_deque>::reverse_iterator rit_;
+   deque<recursive_deque>::const_reverse_iterator crit_;
 };
 
 template<class IntType>
@@ -144,36 +163,35 @@ bool do_test()
    typedef deque<IntType>  MyCntDeque;
    typedef std::deque<int> MyStdDeque;
    const int max = 100;
-   BOOST_TRY{
-      //Shared memory allocator must be always be initialized
-      //since it has no default constructor
-      MyCntDeque *cntdeque = new MyCntDeque;
-      MyStdDeque *stddeque = new MyStdDeque;
-      //Compare several shared memory deque operations with std::deque
+   {
+      ::boost::movelib::unique_ptr<MyCntDeque> const pcntdeque = ::boost::movelib::make_unique<MyCntDeque>();
+      ::boost::movelib::unique_ptr<MyStdDeque> const pstddeque = ::boost::movelib::make_unique<MyStdDeque>();
+      MyCntDeque &cntdeque = *pcntdeque;
+      MyStdDeque &stddeque = *pstddeque;
       for(int i = 0; i < max*100; ++i){
          IntType move_me(i);
-         cntdeque->insert(cntdeque->end(), boost::move(move_me));
-         stddeque->insert(stddeque->end(), i);
+         cntdeque.insert(cntdeque.end(), boost::move(move_me));
+         stddeque.insert(stddeque.end(), i);
       }
       if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
 
-      cntdeque->clear();
-      stddeque->clear();
+      cntdeque.clear();
+      stddeque.clear();
 
       for(int i = 0; i < max*100; ++i){
          IntType move_me(i);
-         cntdeque->push_back(boost::move(move_me));
-         stddeque->push_back(i);
+         cntdeque.push_back(boost::move(move_me));
+         stddeque.push_back(i);
       }
       if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
 
-      cntdeque->clear();
-      stddeque->clear();
+      cntdeque.clear();
+      stddeque.clear();
 
       for(int i = 0; i < max*100; ++i){
          IntType move_me(i);
-         cntdeque->push_front(boost::move(move_me));
-         stddeque->push_front(i);
+         cntdeque.push_front(boost::move(move_me));
+         stddeque.push_front(i);
       }
       if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
 
@@ -181,12 +199,12 @@ bool do_test()
       typename MyCntDeque::const_iterator cit = it;
       (void)cit;
 
-      cntdeque->erase(cntdeque->begin()++);
-      stddeque->erase(stddeque->begin()++);
+      cntdeque.erase(cntdeque.begin()++);
+      stddeque.erase(stddeque.begin()++);
       if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
 
-      cntdeque->erase(cntdeque->begin());
-      stddeque->erase(stddeque->begin());
+      cntdeque.erase(cntdeque.begin());
+      stddeque.erase(stddeque.begin());
       if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
 
       {
@@ -201,10 +219,10 @@ bool do_test()
             aux_vect2[i] = -1;
          }
 
-         cntdeque->insert(cntdeque->end()
+         cntdeque.insert(cntdeque.end()
                            ,boost::make_move_iterator(&aux_vect[0])
                            ,boost::make_move_iterator(aux_vect + 50));
-         stddeque->insert(stddeque->end(), aux_vect2, aux_vect2 + 50);
+         stddeque.insert(stddeque.end(), aux_vect2, aux_vect2 + 50);
          if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
 
          for(int i = 0; i < 50; ++i){
@@ -215,15 +233,15 @@ bool do_test()
             aux_vect2[i] = i;
          }
 
-         cntdeque->insert(cntdeque->begin()+cntdeque->size()
+         cntdeque.insert(cntdeque.begin()+cntdeque.size()
                            ,boost::make_move_iterator(&aux_vect[0])
                            ,boost::make_move_iterator(aux_vect + 50));
-         stddeque->insert(stddeque->begin()+stddeque->size(), aux_vect2, aux_vect2 + 50);
+         stddeque.insert(stddeque.begin()+stddeque.size(), aux_vect2, aux_vect2 + 50);
          if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
 
-         for(int i = 0, j = static_cast<int>(cntdeque->size()); i < j; ++i){
-            cntdeque->erase(cntdeque->begin());
-            stddeque->erase(stddeque->begin());
+         for(int i = 0, j = static_cast<int>(cntdeque.size()); i < j; ++i){
+            cntdeque.erase(cntdeque.begin());
+            stddeque.erase(stddeque.begin());
          }
          if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
       }
@@ -237,10 +255,10 @@ bool do_test()
          for(int i = 0; i < 50; ++i){
             aux_vect2[i] = -1;
          }
-         cntdeque->insert(cntdeque->begin()
+         cntdeque.insert(cntdeque.begin()
                            ,boost::make_move_iterator(&aux_vect[0])
                            ,boost::make_move_iterator(aux_vect + 50));
-         stddeque->insert(stddeque->begin(), aux_vect2, aux_vect2 + 50);
+         stddeque.insert(stddeque.begin(), aux_vect2, aux_vect2 + 50);
          if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
       }
 
@@ -249,52 +267,89 @@ bool do_test()
          return false;
       }
 
-      cntdeque->erase(cntdeque->begin());
-      stddeque->erase(stddeque->begin());
+      cntdeque.erase(cntdeque.begin());
+      stddeque.erase(stddeque.begin());
 
       if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
 
       for(int i = 0; i < max; ++i){
          IntType move_me(i);
-         cntdeque->insert(cntdeque->begin(), boost::move(move_me));
-         stddeque->insert(stddeque->begin(), i);
+         cntdeque.insert(cntdeque.begin(), boost::move(move_me));
+         stddeque.insert(stddeque.begin(), i);
       }
       if(!test::CheckEqualContainers(cntdeque, stddeque)) return false;
 
       //Test insertion from list
       {
          std::list<int> l(50, int(1));
-         cntdeque->insert(cntdeque->begin(), l.begin(), l.end());
-         stddeque->insert(stddeque->begin(), l.begin(), l.end());
+         cntdeque.insert(cntdeque.begin(), l.begin(), l.end());
+         stddeque.insert(stddeque.begin(), l.begin(), l.end());
          if(!test::CheckEqualContainers(cntdeque, stddeque)) return 1;
-         cntdeque->assign(l.begin(), l.end());
-         stddeque->assign(l.begin(), l.end());
+         cntdeque.assign(l.begin(), l.end());
+         stddeque.assign(l.begin(), l.end());
          if(!test::CheckEqualContainers(cntdeque, stddeque)) return 1;
       }
 
-      cntdeque->resize(100);
-      stddeque->resize(100);
-      if(!test::CheckEqualContainers(cntdeque, stddeque)) return 1;        
+      cntdeque.resize(100);
+      stddeque.resize(100);
+      if(!test::CheckEqualContainers(cntdeque, stddeque)) return 1;
 
-      cntdeque->resize(200);
-      stddeque->resize(200);
-      if(!test::CheckEqualContainers(cntdeque, stddeque)) return 1;        
+      cntdeque.resize(200);
+      stddeque.resize(200);
+      if(!test::CheckEqualContainers(cntdeque, stddeque)) return 1;
+   }
 
-      delete cntdeque;
-      delete stddeque;
-   }
-   BOOST_CATCH(std::exception &ex){
-      #ifndef BOOST_NO_EXCEPTIONS
-      std::cout << ex.what() << std::endl;
-      #endif
-      return false;
-   }
-   BOOST_CATCH_END
-  
    std::cout << std::endl << "Test OK!" << std::endl;
    return true;
 }
 
+template<class VoidAllocator>
+struct GetAllocatorCont
+{
+   template<class ValueType>
+   struct apply
+   {
+      typedef deque< ValueType
+                    , typename allocator_traits<VoidAllocator>
+                        ::template portable_rebind_alloc<ValueType>::type
+                    > type;
+   };
+};
+
+template<class VoidAllocator>
+int test_cont_variants()
+{
+   typedef typename GetAllocatorCont<VoidAllocator>::template apply<int>::type MyCont;
+   typedef typename GetAllocatorCont<VoidAllocator>::template apply<test::movable_int>::type MyMoveCont;
+   typedef typename GetAllocatorCont<VoidAllocator>::template apply<test::movable_and_copyable_int>::type MyCopyMoveCont;
+   typedef typename GetAllocatorCont<VoidAllocator>::template apply<test::copyable_int>::type MyCopyCont;
+
+   if(test::vector_test<MyCont>())
+      return 1;
+   if(test::vector_test<MyMoveCont>())
+      return 1;
+   if(test::vector_test<MyCopyMoveCont>())
+      return 1;
+   if(test::vector_test<MyCopyCont>())
+      return 1;
+   return 0;
+}
+
+struct boost_container_deque;
+
+namespace boost { namespace container {   namespace test {
+
+template<>
+struct alloc_propagate_base<boost_container_deque>
+{
+   template <class T, class Allocator>
+   struct apply
+   {
+      typedef boost::container::deque<T, Allocator> type;
+   };
+};
+
+}}}   //namespace boost::container::test
 
 int main ()
 {
@@ -319,33 +374,59 @@ int main ()
       d.resize(1);
    }
 
-   {
-      typedef deque<int> MyDeque;
-      typedef deque<test::movable_int> MyMoveDeque;
-      typedef deque<test::movable_and_copyable_int> MyCopyMoveDeque;
-      typedef deque<test::copyable_int> MyCopyDeque;
-      if(test::vector_test<MyDeque>())
-         return 1;
-      if(test::vector_test<MyMoveDeque>())
-         return 1;
-      if(test::vector_test<MyCopyMoveDeque>())
-         return 1;
-      if(test::vector_test<MyCopyDeque>())
-         return 1;
-      if(!test::default_init_test< deque<int, test::default_init_allocator<int> > >()){
-         std::cerr << "Default init test failed" << std::endl;
-         return 1;
-      }
+   ////////////////////////////////////
+   //    Allocator implementations
+   ////////////////////////////////////
+   //       std:allocator
+   if(test_cont_variants< std::allocator<void> >()){
+      std::cerr << "test_cont_variants< std::allocator<void> > failed" << std::endl;
+      return 1;
+   }
+   //       boost::container::allocator
+   if(test_cont_variants< allocator<void> >()){
+      std::cerr << "test_cont_variants< allocator<void> > failed" << std::endl;
+      return 1;
+   }
+   //       boost::container::node_allocator
+   if(test_cont_variants< node_allocator<void> >()){
+      std::cerr << "test_cont_variants< node_allocator<void> > failed" << std::endl;
+      return 1;
+   }
+   //       boost::container::adaptive_pool
+   if(test_cont_variants< adaptive_pool<void> >()){
+      std::cerr << "test_cont_variants< adaptive_pool<void> > failed" << std::endl;
+      return 1;
+   }
+   ////////////////////////////////////
+   //    Default init test
+   ////////////////////////////////////
+   if(!test::default_init_test< deque<int, test::default_init_allocator<int> > >()){
+      std::cerr << "Default init test failed" << std::endl;
+      return 1;
    }
 
+   ////////////////////////////////////
+   //    Emplace testing
+   ////////////////////////////////////
    const test::EmplaceOptions Options = (test::EmplaceOptions)(test::EMPLACE_BACK | test::EMPLACE_FRONT | test::EMPLACE_BEFORE);
 
    if(!boost::container::test::test_emplace
       < deque<test::EmplaceInt>, Options>())
       return 1;
-
-   if(!boost::container::test::test_propagate_allocator<deque>())
+   ////////////////////////////////////
+   //    Allocator propagation testing
+   ////////////////////////////////////
+   if(!boost::container::test::test_propagate_allocator<boost_container_deque>())
       return 1;
+
+   ////////////////////////////////////
+   //    Initializer lists testing
+   ////////////////////////////////////
+   if(!boost::container::test::test_vector_methods_with_initializer_list_as_argument_for
+      < boost::container::deque<int> >()) {
+      return 1;
+   }
+   return 0;
 
    return 0;
 }

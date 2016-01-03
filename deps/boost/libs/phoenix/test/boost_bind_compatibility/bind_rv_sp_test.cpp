@@ -2,6 +2,7 @@
     Copyright (c) 2006 Peter Dimov
     Copyright (c) 2005-2010 Joel de Guzman
     Copyright (c) 2010 Thomas Heller
+    Copyright (c) 2015 John Fletcher
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,7 +18,7 @@
 #endif
 
 #include <boost/phoenix/core.hpp>
-#include <boost/phoenix/bind/bind_member_function.hpp>
+#include <boost/phoenix/bind.hpp>
 
 #if defined(BOOST_MSVC) && (BOOST_MSVC < 1300)
 #pragma warning(push, 3)
@@ -60,7 +61,15 @@ int main()
 
     Y y;
 
+    // MSVC 10,9 and 8 all give a COMDAT error with the full test.
+    // This also fails:
+    //boost::shared_ptr<X> xp = bind( &Y::f, &y )();
+#if defined(BOOST_MSVC) && (BOOST_MSVC < 1700)
+    boost::shared_ptr<X> xp = y.f();
+    BOOST_TEST( bind( &X::f, xp)()  == 42 );
+#else
     BOOST_TEST( bind( &X::f, bind( &Y::f, &y ) )() == 42 );
+#endif
 
     return boost::report_errors();
 }

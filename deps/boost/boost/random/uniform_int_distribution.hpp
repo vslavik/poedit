@@ -8,7 +8,7 @@
  *
  * See http://www.boost.org for most recent version including documentation.
  *
- * $Id: uniform_int_distribution.hpp 71018 2011-04-05 21:27:52Z steven_watanabe $
+ * $Id$
  *
  * Revision history
  *  2001-04-08  added min<max assertion (N. Becker)
@@ -30,6 +30,7 @@
 #include <boost/random/detail/signed_unsigned_tools.hpp>
 #include <boost/type_traits/make_unsigned.hpp>
 #include <boost/type_traits/is_integral.hpp>
+#include <boost/mpl/bool.hpp>
 
 namespace boost {
 namespace random {

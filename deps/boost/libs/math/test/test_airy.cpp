@@ -12,6 +12,8 @@
 #include <boost/math/special_functions/math_fwd.hpp>
 #include <boost/math/concepts/real_concept.hpp>
 #include <boost/array.hpp>
+#include <iostream>
+#include <iomanip>
 
 #ifdef _MSC_VER
 #  pragma warning(disable : 4756 4127) // overflow in constant arithmetic

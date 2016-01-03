@@ -27,7 +27,7 @@
 <a name="geometry.reference.strategies.strategy_transform_map_transformer"></a><a class="link" href="strategy_transform_map_transformer.html" title="strategy::transform::map_transformer">strategy::transform::map_transformer</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp63549928"></a><a class="indexterm" name="idp63550264"></a><a class="indexterm" name="idp63550600"></a>
+          <a class="indexterm" name="idp133588240"></a><a class="indexterm" name="idp133588928"></a><a class="indexterm" name="idp133589616"></a>
 Transformation strategy to map from one to another Cartesian coordinate
           system.
         </p>
@@ -37,7 +37,8 @@ Transformation strategy to map from one to another Cartesian coordinate
         </h6>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CalculationType</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Dimension1</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Dimension2</span><span class="special">,</span> <span class="keyword">bool</span> <span class="identifier">Mirror</span><span class="special">,</span> <span class="keyword">bool</span> <span class="identifier">SameScale</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CalculationType</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Dimension1</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Dimension2</span><span class="special">,</span> <span class="keyword">bool</span> <span class="identifier">Mirror</span><span class="special">,</span>
+         <span class="keyword">bool</span> <span class="identifier">SameScale</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">strategy</span><span class="special">::</span><span class="identifier">transform</span><span class="special">::</span><span class="identifier">map_transformer</span>
       <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">strategy</span><span class="special">::</span><span class="identifier">transform</span><span class="special">::</span><span class="identifier">ublas_transformer</span><span class="special">&lt;</span> <span class="identifier">CalculationType</span><span class="special">,</span> <span class="identifier">Dimension1</span><span class="special">,</span> <span class="identifier">Dimension2</span> <span class="special">&gt;</span>
 <span class="special">{</span>
@@ -198,7 +199,8 @@ Transformation strategy to map from one to another Cartesian coordinate
                   <p>
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">W</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">D</span><span class="special">&gt;</span>
-<span class="identifier">map_transformer</span><span class="special">(</span><span class="identifier">W</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">wx1</span><span class="special">,</span> <span class="identifier">W</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">wy1</span><span class="special">,</span> <span class="identifier">W</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">wx2</span><span class="special">,</span> <span class="identifier">W</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">wy2</span><span class="special">,</span> <span class="identifier">D</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">width</span><span class="special">,</span> <span class="identifier">D</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">height</span><span class="special">)</span></pre>
+<span class="identifier">map_transformer</span><span class="special">(</span><span class="identifier">W</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">wx1</span><span class="special">,</span> <span class="identifier">W</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">wy1</span><span class="special">,</span> <span class="identifier">W</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">wx2</span><span class="special">,</span>
+                 <span class="identifier">W</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">wy2</span><span class="special">,</span> <span class="identifier">D</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">width</span><span class="special">,</span> <span class="identifier">D</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">height</span><span class="special">)</span></pre>
 <p>
                   </p>
                 </td>
@@ -237,7 +239,8 @@ Transformation strategy to map from one to another Cartesian coordinate
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
+      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

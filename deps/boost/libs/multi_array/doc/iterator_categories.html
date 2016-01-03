@@ -50,7 +50,7 @@ iterator categories.
     <td><tt>*i</tt> is convertible to <tt>T</tt></td></tr>
   <tr>
     <td>Forward Iterator</td>
-    <td><tt>*i</tt> is <tt>T&amp;</tt> (or <tt>const T&amp;</tt> once <a href="http://anubis.dkuug.dk/JTC1/SC22/WG21/docs/lwg-active.html#200">issue 
+    <td><tt>*i</tt> is <tt>T&amp;</tt> (or <tt>const T&amp;</tt> once <a href="http://www.open-std.org/JTC1/SC22/WG21/docs/lwg-active.html#200">issue 
       200</a> is resolved)</td></tr>
   <tr>
     <td>Random Access Iterator</td>
@@ -61,7 +61,7 @@ iterator categories.
 <p>Because of the mixing of iterator traversal and dereference return type, many 
 useful iterators can not be appropriately categorized. For example, 
 <tt>vector&lt;bool&gt;::iterator</tt> is almost a random access iterator, but 
-the return type is not <tt>bool&amp;</tt> (see <a href="http://anubis.dkuug.dk/JTC1/SC22/WG21/docs/lwg-active.html#96">issue 
+the return type is not <tt>bool&amp;</tt> (see <a href="http://www.open-std.org/JTC1/SC22/WG21/docs/lwg-active.html#96">issue 
 96</a> and Herb Sutter's paper J16/99-0008 = WG21 N1185). Therefore, the 
 iterators only meet the requirements of input iterator and output iterator. This 
 is so nonintuitive that at least one implementation erroneously assigns 
@@ -74,7 +74,7 @@ integers when incremented and dereferenced (see <a href="http://www.boost.org/li
 There are two ways to implement this iterator, 1) make the <tt>reference</tt> 
 type be a true reference (a reference to an integer data member of the counting 
 iterator) or 2) make the <tt>reference</tt> type be the same as the 
-<tt>value_type</tt>. Option 1) runs into the problems discussed in <a href="http://anubis.dkuug.dk/JTC1/SC22/WG21/docs/lwg-active.html#198">Issue 
+<tt>value_type</tt>. Option 1) runs into the problems discussed in <a href="http://www.open-std.org/JTC1/SC22/WG21/docs/lwg-active.html#198">Issue 
 198</a>, the reference will not be valid after the iterator is destroyed. Option 
 2) is therefore a better choice, but then we have a counting iterator that 
 cannot be a random access iterator. 

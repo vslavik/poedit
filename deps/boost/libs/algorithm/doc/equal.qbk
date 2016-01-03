@@ -22,7 +22,7 @@ Consider the two sequences:
 	
 	std::equal ( seq1.begin (), seq1.end (), seq2.begin ()); // true
 	std::equal ( seq2.begin (), seq2.end (), seq1.begin ()); // Undefined behavior
-	std::equal ( seq1.begin (), seq1.end (), seq1.begin (), seq2.end ()); // false
+	std::equal ( seq1.begin (), seq1.end (), seq2.begin (), seq2.end ()); // false
 ```
 
 You can argue that `true` is the correct answer in the first case, even though the sequences are not the same. The first N entries in `seq2` are the same as the entries in `seq1` - but that's not all that's in `seq2`. But in the second case, the algorithm will read past the end of `seq1`, resulting in undefined behavior (large earthquake, incorrect results, pregnant cat, etc).

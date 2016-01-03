@@ -16,6 +16,8 @@
 
 #include <geometry_test_common.hpp>
 
+#include <boost/core/ignore_unused.hpp>
+
 #include <boost/geometry/geometries/concepts/segment_concept.hpp>
 
 #include <boost/geometry/geometries/point.hpp>
@@ -52,17 +54,18 @@ void test_all()
 
     typedef typename bg::coordinate_type<S>::type T;
     typedef typename bg::point_type<S>::type SP;
-
+    boost::ignore_unused<T, SP>();
 
     //std::cout << sizeof(typename coordinate_type<S>::type) << std::endl;
 
-    typedef bg::model::referring_segment<P const> CS;
-    //BOOST_CONCEPT_ASSERT( (concept::ConstSegment<CS>) );
+    typedef bg::model::referring_segment<P const> refseg_t;
+    //BOOST_CONCEPT_ASSERT( (concept::ConstSegment<refseg_t>) );
 
-    CS cs(p1, p2);
+    refseg_t seg(p1, p2);
 
-    typedef typename bg::coordinate_type<CS>::type CT;
-    typedef typename bg::point_type<CS>::type CSP;
+    typedef typename bg::coordinate_type<refseg_t>::type CT;
+    typedef typename bg::point_type<refseg_t>::type CSP;
+    boost::ignore_unused<CT, CSP>();
 }
 
 

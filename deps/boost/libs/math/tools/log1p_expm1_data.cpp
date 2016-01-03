@@ -3,19 +3,18 @@
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/math/bindings/rr.hpp>
 #include <fstream>
-
 #include <boost/math/tools/test_data.hpp>
 #include <boost/math/special_functions/log1p.hpp>
 #include <boost/math/special_functions/expm1.hpp>
+#include "mp_t.hpp"
 
 using namespace boost::math::tools;
 using namespace std;
 
 struct data_generator
 {
-   boost::math::tuple<boost::math::ntl::RR, boost::math::ntl::RR> operator()(boost::math::ntl::RR z)
+   boost::math::tuple<mp_t, mp_t> operator()(mp_t z)
    {
       return boost::math::make_tuple(boost::math::log1p(z), boost::math::expm1(z));
    }
@@ -23,11 +22,8 @@ struct data_generator
 
 int main(int argc, char* argv[])
 {
-   boost::math::ntl::RR::SetPrecision(1000);
-   boost::math::ntl::RR::SetOutputPrecision(40);
-
-   parameter_info<boost::math::ntl::RR> arg1;
-   test_data<boost::math::ntl::RR> data;
+   parameter_info<mp_t> arg1;
+   test_data<mp_t> data;
 
    std::cout << "Welcome.\n"
       "This program will generate spot tests for the log1p and expm1 functions:\n\n";
@@ -52,7 +48,7 @@ int main(int argc, char* argv[])
    if(line == "")
       line = "log1p_expm1_data.ipp";
    std::ofstream ofs(line.c_str());
-   ofs << std::scientific;
+   ofs << std::scientific << std::setprecision(40);
    write_code(ofs, data, "log1p_expm1_data");
    
    return 0;

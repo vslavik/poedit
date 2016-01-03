@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2000-2013 Vaclav Slavik
+ *  Copyright (C) 2000-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -25,27 +25,422 @@
 
 #include <wx/sizer.h>
 #include <wx/statline.h>
+#include <wx/bmpbuttn.h>
 #include <wx/combobox.h>
+#include <wx/filedlg.h>
+#include <wx/dirdlg.h>
+#include <wx/dnd.h>
 #include <wx/radiobut.h>
 #include <wx/textctrl.h>
+#include <wx/textdlg.h>
 #include <wx/editlbox.h>
 #include <wx/xrc/xmlres.h>
-#include <wx/intl.h>
 #include <wx/config.h>
-#include <wx/tokenzr.h>
+#include <wx/intl.h>
+#include <wx/listbox.h>
+#include <wx/sizer.h>
 #include <wx/stattext.h>
+#include <wx/menu.h>
 #include <wx/notebook.h>
 
+#include <wx/nativewin.h>
+#if !wxCHECK_VERSION(3,1,0)
+  #include "wx_backports/nativewin.h"
+#endif
+
+
+#include <algorithm>
+#include <functional>
 #include <memory>
 
 #include "propertiesdlg.h"
+#include "hidpi.h"
 #include "language.h"
+#include "str_helpers.h"
 #include "pluralforms/pl_evaluate.h"
+#include "utility.h"
+
+namespace
+{
+
+inline wxString NormalizedPath(const wxString& fn, wxPathFormat format)
+{
+    auto f = MakeFileName(fn);
+    f.Normalize();
+    return f.GetFullPath(format);
+}
+
+inline wxString RelativePath(const wxString& fn, const wxString& to, wxPathFormat format)
+{
+    if (fn == to || fn + wxFILE_SEP_PATH == to)
+        return ".";
+    auto f = MakeFileName(fn);
+    f.MakeRelativeTo(to);
+    return f.GetFullPath(format);
+}
+
+inline wxString RelativePathForPO(const wxString& fn, const wxString& to)
+{
+    auto rel = RelativePath(fn, to, wxPATH_UNIX);
+    if (rel.Last() == '/')
+        rel.RemoveLast();
+    return rel;
+}
 
 
-PropertiesDialog::PropertiesDialog(wxWindow *parent, bool fileExistsOnDisk, int initialPage)
+} // anonymous namespace
+
+struct PropertiesDialog::PathsData
+{
+    PathsData() : Changed(false) {}
+
+    std::function<void()> RefreshView;
+
+    // Did the data change in any way?
+    bool Changed;
+
+    // all paths here are absolute, normalized paths
+
+    // directory where the PO(T) file is
+    wxString filedir;
+
+    // catalog settings
+    wxString basepath;
+    wxArrayString paths;
+    wxArrayString excluded;
+
+    void GetFromCatalog(CatalogPtr cat)
+    {
+        Changed = false;
+        auto& hdr = cat->Header();
+        filedir = wxFileName(cat->GetFileName()).GetPathWithSep();
+        basepath = cat->GetSourcesBasePath();
+        if (basepath.empty())
+            basepath = filedir;
+        paths.clear();
+        excluded.clear();
+        for (auto& p: hdr.SearchPaths)
+        {
+            if (p.empty())
+                continue;
+            paths.push_back(NormalizedPath(basepath + p, wxPATH_NATIVE));
+        }
+        for (auto& p: hdr.SearchPathsExcluded)
+        {
+            if (p.empty())
+                continue;
+            if (wxIsWild(p))
+                excluded.push_back(p);
+            else
+                excluded.push_back(NormalizedPath(basepath + p, wxPATH_NATIVE));
+        }
+    }
+
+    void SetToCatalog(CatalogPtr cat) const
+    {
+        auto& hdr = cat->Header();
+        hdr.BasePath = RelativePathForPO(basepath, filedir);
+        hdr.SearchPaths.clear();
+        hdr.SearchPathsExcluded.clear();
+        for (auto& p: paths)
+        {
+            auto rel = RelativePathForPO(p, basepath);
+            hdr.SearchPaths.push_back(rel);
+        }
+        for (auto& p: excluded)
+        {
+            if (wxIsWild(p))
+            {
+                hdr.SearchPathsExcluded.push_back(p);
+            }
+            else
+            {
+                auto rel = RelativePathForPO(p, basepath);
+                hdr.SearchPathsExcluded.push_back(rel);
+            }
+        }
+    }
+
+    void UpdateBasePath()
+    {
+        if (!paths.empty())
+            basepath = CommonDirectory(paths).GetFullPath();
+        else
+            basepath = filedir;
+    }
+};
+
+
+#ifdef __WXOSX__
+
+@interface BasePathCtrlController : NSObject
+@end
+
+@implementation BasePathCtrlController
+- (void)pathClicked:(NSPathControl*)sender
+{
+    NSPathComponentCell *cell = [[sender cell] clickedPathComponentCell];
+    if (cell)
+        [[NSWorkspace sharedWorkspace] openURL:[cell URL]];
+}
+@end
+
+
+class PropertiesDialog::BasePathCtrl : public wxNativeWindow
+{
+public:
+    BasePathCtrl(wxWindow *parent) : wxNativeWindow()
+    {
+        m_path = [NSPathControl new];
+        m_ctrl = [BasePathCtrlController new];
+        Create(parent, wxID_ANY, m_path);
+        SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+        // Do native configuration *after* Create() to undo some of what it did:
+        if ([m_path respondsToSelector:@selector(setEditable:)])
+            [m_path setEditable:NO];
+        [m_path setTarget:m_ctrl];
+        [m_path setAction:@selector(pathClicked:)];
+        [m_path setDoubleAction:@selector(pathClicked:)];
+    }
+
+    void SetPath(const wxString& path)
+    {
+        m_path.URL = [[NSURL alloc] initFileURLWithPath:str::to_NS(path)];
+    }
+
+private:
+    NSPathControl *m_path;
+    BasePathCtrlController *m_ctrl;
+};
+
+#else // Win/GTK+
+
+class PropertiesDialog::BasePathCtrl : public wxStaticText
+{
+public:
+    BasePathCtrl(wxWindow *parent) : wxStaticText(parent, wxID_ANY, "", wxDefaultPosition, wxDefaultSize,
+                                                  wxST_ELLIPSIZE_MIDDLE | wxST_NO_AUTORESIZE)
+    {
+    #ifdef __WXMSW__
+        SetBackgroundColour(*wxWHITE);
+        SetForegroundColour(wxColour("#58595C"));
+    #endif
+    }
+
+    void SetPath(const wxString& path)
+    {
+        SetLabel(path);
+    }
+};
+
+#endif
+
+class PropertiesDialog::PathsList : public wxPanel
+{
+public:
+    PathsList(wxWindow *parent, const wxString& label, std::shared_ptr<PathsData> data)
+        : wxPanel(parent, wxID_ANY),
+          m_data(data)
+    {
+#if defined(__WXOSX__)
+        SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+        // FIXME: gross hack to make inside-notebook color to match
+        SetBackgroundColour(parent->GetBackgroundColour().ChangeLightness(93));
+#elif defined(__WXMSW__)
+        SetBackgroundColour(*wxWHITE);
+#endif
+
+        auto sizer = new wxBoxSizer(wxVERTICAL);
+        SetSizer(sizer);
+
+        auto lbl = new wxStaticText(this, wxID_ANY, label);
+        sizer->Add(lbl, wxSizerFlags().Expand());
+        m_list = new wxListBox(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, nullptr, wxLB_EXTENDED);
+        sizer->Add(m_list, wxSizerFlags(1).Expand());
+
+#if defined(__WXOSX__)
+        auto add = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("NSAddTemplate"), wxDefaultPosition, wxSize(18, 18), wxBORDER_SUNKEN);
+        auto remove = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("NSRemoveTemplate"), wxDefaultPosition, wxSize(18,18), wxBORDER_SUNKEN);
+#elif defined(__WXMSW__)
+        auto add = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("list-add"), wxDefaultPosition, wxSize(19,19));
+        auto remove = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("list-remove"), wxDefaultPosition, wxSize(19,19));
+#elif defined(__WXGTK__)
+        auto add = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("list-add"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+        auto remove = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("list-remove"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+#endif
+        auto buttonSizer = new wxBoxSizer(wxHORIZONTAL);
+        buttonSizer->Add(add);
+        buttonSizer->Add(remove);
+        sizer->Add(buttonSizer);
+
+        SetDropTarget(new DropTarget(this));
+
+        add->Bind(wxEVT_BUTTON, &PathsList::OnAddMenu, this);
+        remove->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){
+            wxArrayInt dummy;
+            e.Enable(m_list->GetSelections(dummy) > 0);
+        });
+        remove->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){
+            wxArrayInt s;
+            m_list->GetSelections(s);
+            Remove(s);
+        });
+
+#if 0
+        // TODO: Add background overlay with instructions:
+        _("<big>Drag and Drop Folders Here</big>\n\nor use the + button")
+        _("<big>Drag and drop folders here</big>\n\nor use the + button")
+#endif
+    }
+
+    void UpdateFromData()
+    {
+        m_list->Clear();
+        for (auto& p: Array())
+        {
+            if (wxIsWild(p))
+                m_list->Append(p);
+            else
+                m_list->Append(RelativePath(p, m_data->basepath, wxPATH_NATIVE));
+        }
+    }
+
+    void Add(const wxArrayString& files)
+    {
+        auto& a = Array();
+        for (auto& f: files)
+        {
+            if (wxIsWild(f))
+                a.push_back(f);
+            else
+                a.push_back(NormalizedPath(f, wxPATH_NATIVE));
+        }
+        m_data->Changed = true;
+        m_data->UpdateBasePath();
+        m_data->RefreshView();
+    }
+
+    void Add(const wxString& f)
+    {
+        Add(wxArrayString(1, &f));
+    }
+
+    void Remove(wxArrayInt selection)
+    {
+        auto& a = Array();
+        std::sort(selection.begin(), selection.end());
+        for (auto i = selection.rbegin(); i != selection.rend(); ++i)
+            a.RemoveAt(*i);
+        m_data->Changed = true;
+        m_data->UpdateBasePath();
+        m_data->RefreshView();
+    }
+
+protected:
+    virtual wxArrayString& Array() = 0;
+    virtual bool AllowWildcards() const = 0;
+
+    class DropTarget : public wxFileDropTarget
+    {
+    public:
+        DropTarget(PathsList *parent) : m_parent(parent) {}
+
+        bool OnDropFiles(wxCoord, wxCoord, const wxArrayString& files) override
+        {
+            m_parent->Add(files);
+            return true;
+        }
+
+        wxDragResult OnDragOver(wxCoord, wxCoord, wxDragResult) override { return wxDragCopy; }
+
+        PathsList *m_parent;
+    };
+
+    void OnAddMenu(wxCommandEvent& e)
+    {
+        static const auto idFolder = wxNewId();
+        static const auto idFile = wxNewId();
+        static const auto idWild = wxNewId();
+
+        wxMenu *menu = new wxMenu();
+        menu->Append(idFolder, MSW_OR_OTHER(_("Add folders..."), _("Add Folders...")));
+        menu->Append(idFile, MSW_OR_OTHER(_("Add files..."), _("Add Files...")));
+        if (AllowWildcards())
+            menu->Append(idWild, MSW_OR_OTHER(_("Add wildcard..."), _("Add Wildcard...")));
+
+        menu->Bind(wxEVT_MENU, [=](wxCommandEvent&){
+            wxDirDialog dlg(this,
+                            OSX_OR_OTHER("", _("Select directory")),
+                            m_data->basepath,
+                            wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
+            if (dlg.ShowModal() == wxID_OK)
+                Add(dlg.GetPath());
+        },
+        idFolder);
+
+        menu->Bind(wxEVT_MENU, [=](wxCommandEvent&){
+            wxFileDialog dlg(this,
+                             "",
+                             m_data->basepath,
+                             "",
+                             wxFileSelectorDefaultWildcardStr,
+                             wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE);
+            if (dlg.ShowModal() != wxID_OK)
+                return;
+            wxArrayString files;
+            dlg.GetPaths(files);
+            Add(files);
+        },
+        idFile);
+
+        menu->Bind(wxEVT_MENU, [=](wxCommandEvent&){
+            wxTextEntryDialog dlg(this, "", "");
+            if (dlg.ShowModal() != wxID_OK)
+                return;
+            Add(dlg.GetValue());
+        },
+        idWild);
+
+        auto win = dynamic_cast<wxButton*>(e.GetEventObject());
+#ifdef __WXOSX__
+        win->PopupMenu(menu, 9, 29);
+#else
+        win->PopupMenu(menu, 0, win->GetSize().y);
+#endif
+    }
+
+    std::shared_ptr<PathsData> m_data;
+    wxListBox *m_list;
+};
+
+class PropertiesDialog::SourcePathsList : public PropertiesDialog::PathsList
+{
+public:
+    SourcePathsList(wxWindow *parent, std::shared_ptr<PathsData> data)
+        : PathsList(parent, _("Paths"), data) {}
+
+protected:
+    wxArrayString& Array() override { return m_data->paths; }
+    bool AllowWildcards() const override { return false; }
+};
+
+class PropertiesDialog::ExcludedPathsList : public PropertiesDialog::PathsList
+{
+public:
+    ExcludedPathsList(wxWindow *parent, std::shared_ptr<PathsData> data)
+        : PathsList(parent, _("Excluded paths"), data) {}
+
+protected:
+    wxArrayString& Array() override { return m_data->excluded; }
+    bool AllowWildcards() const override { return true; }
+};
+
+
+PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileExistsOnDisk, int initialPage)
     : m_validatedPlural(-1), m_validatedLang(-1)
 {
+    m_hasLang = cat->HasCapability(Catalog::Cap::LanguageSetting);
+
     wxXmlResource::Get()->LoadDialog(this, parent, "properties");
 
     m_team = XRCCTRL(*this, "team_name", wxTextCtrl);
@@ -53,28 +448,70 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, bool fileExistsOnDisk, int 
     m_project = XRCCTRL(*this, "prj_name", wxTextCtrl);
     m_language = XRCCTRL(*this, "language", LanguageCtrl);
     m_charset = XRCCTRL(*this, "charset", wxComboBox);
-    m_basePath = XRCCTRL(*this, "basepath", wxTextCtrl);
     m_sourceCodeCharset = XRCCTRL(*this, "source_code_charset", wxComboBox);
 
     m_pluralFormsDefault = XRCCTRL(*this, "plural_forms_default", wxRadioButton);
     m_pluralFormsCustom = XRCCTRL(*this, "plural_forms_custom", wxRadioButton);
     m_pluralFormsExpr = XRCCTRL(*this, "plural_forms_expr", wxTextCtrl);
+#if defined(__WXMSW__) && !wxCHECK_VERSION(3,1,0)
+    m_pluralFormsExpr->SetFont(m_pluralFormsExpr->GetFont().Smaller());
+#else
     m_pluralFormsExpr->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+
+    if (!m_hasLang)
+    {
+        for (auto w: { (wxWindow*)m_language,
+                       (wxWindow*)m_pluralFormsDefault,
+                       (wxWindow*)m_pluralFormsCustom,
+                       (wxWindow*)m_pluralFormsExpr,
+                       XRCCTRL(*this, "language_label", wxWindow),
+                       XRCCTRL(*this, "plural_forms_label", wxWindow),
+                       XRCCTRL(*this, "plural_forms_help", wxWindow) })
+        {
+            w->GetContainingSizer()->Hide(w);
+        }
+    }
 
     // my custom controls:
-    m_keywords = new wxEditableListBox(this, -1, _("Additional keywords"));
+    auto page_paths = XRCCTRL(*this, "page_paths", wxWindow);
+    auto page_keywords = XRCCTRL(*this, "page_keywords", wxWindow);
+
+    m_keywords = new wxEditableListBox(page_keywords, -1, _("Additional keywords"));
+
+    m_pathsData.reset(new PathsData);
+    m_basePath = new BasePathCtrl(page_paths);
+    m_paths = new SourcePathsList(page_paths, m_pathsData);
+    m_excludedPaths = new ExcludedPathsList(page_paths, m_pathsData);
+    m_pathsData->RefreshView = [=]{
+        m_basePath->SetPath(m_pathsData->basepath);
+        m_paths->UpdateFromData();
+        m_excludedPaths->UpdateFromData();
+    };
+
+    m_paths->SetMinSize(wxSize(PX(450), PX(90)));
+    m_excludedPaths->SetMinSize(wxSize(-1, PX(90)));
+
+#ifdef __WXOSX__
+    for (auto c: m_keywords->GetChildren())
+    {
+        c->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+        for (auto c2: c->GetChildren())
+            c2->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+    }
+#endif // __WXOSX__
+
+    wxXmlResource::Get()->AttachUnknownControl("basepath", m_basePath);
     wxXmlResource::Get()->AttachUnknownControl("keywords", m_keywords);
-    m_paths = new wxEditableListBox(this, -1, _("Paths"));
     wxXmlResource::Get()->AttachUnknownControl("paths", m_paths);
+    wxXmlResource::Get()->AttachUnknownControl("excluded_paths", m_excludedPaths);
 
     // Controls setup:
     m_project->SetHint(_("Name of the project the translation is for"));
     m_pluralFormsExpr->SetHint(_("e.g. nplurals=2; plural=(n > 1);"));
 
-#if defined(__WXMSW__) || defined(__WXMAC__)
-    // FIXME
-    SetSize(GetSize().x+1,GetSize().y+1);
-#endif
+    Layout();
+    GetSizer()->SetSizeHints(this);
 
     if (!fileExistsOnDisk)
         DisableSourcesControls();
@@ -98,6 +535,11 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, bool fileExistsOnDisk, int 
         wxID_OK);
     CallAfter([=]{
         m_project->SetFocus();
+    });
+
+    auto openBasepath = XRCCTRL(*this, "open_basepath", wxBitmapButton);
+    openBasepath->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){
+        wxLaunchDefaultApplication(m_pathsData->basepath);
     });
 }
 
@@ -158,10 +600,27 @@ wxString GetCharsetFromCombobox(wxComboBox *ctrl)
     return c;
 }
 
+void GetKeywordsFromControl(wxEditableListBox *box, wxArrayString& output)
+{
+    wxArrayString arr;
+    box->GetStrings(arr);
+
+    output.clear();
+    for (auto x: arr)
+    {
+        if (x.empty())
+            continue;
+        wxString rest;
+        if (x.EndsWith(" ()", &rest) || x.EndsWith("()", &rest))
+            x = rest;
+        output.push_back(x);
+    }
+}
+
 } // anonymous namespace
 
 
-void PropertiesDialog::TransferTo(Catalog *cat)
+void PropertiesDialog::TransferTo(const CatalogPtr& cat)
 {
     SetCharsetToCombobox(m_charset, cat->Header().Charset);
     SetCharsetToCombobox(m_sourceCodeCharset, cat->Header().SourceCodeCharset);
@@ -170,29 +629,33 @@ void PropertiesDialog::TransferTo(Catalog *cat)
     SET_VAL(Team, team);
     SET_VAL(TeamEmail, teamEmail);
     SET_VAL(Project, project);
-    SET_VAL(BasePath, basePath);
     #undef SET_VAL
 
-    m_language->SetLang(cat->Header().Lang);
-    OnLanguageValueChanged(m_language->GetValue());
+    if (m_hasLang)
+    {
+        m_language->SetLang(cat->Header().Lang);
+        OnLanguageValueChanged(m_language->GetValue());
 
-    wxString pf_def = cat->Header().Lang.DefaultPluralFormsExpr();
-    wxString pf_cat = cat->Header().GetHeader("Plural-Forms");
-    if (pf_cat == "nplurals=INTEGER; plural=EXPRESSION;")
-        pf_cat = pf_def;
+        wxString pf_def = cat->Header().Lang.DefaultPluralFormsExpr();
+        wxString pf_cat = cat->Header().GetHeader("Plural-Forms");
+        if (pf_cat == "nplurals=INTEGER; plural=EXPRESSION;")
+            pf_cat = pf_def;
 
-    m_pluralFormsExpr->SetValue(pf_cat);
-    if (!pf_cat.empty() && pf_cat == pf_def)
-        m_pluralFormsDefault->SetValue(true);
-    else
-        m_pluralFormsCustom->SetValue(true);
+        m_pluralFormsExpr->SetValue(pf_cat);
+        if (!pf_cat.empty() && pf_cat == pf_def)
+            m_pluralFormsDefault->SetValue(true);
+        else
+            m_pluralFormsCustom->SetValue(true);
+    }
 
-    m_paths->SetStrings(cat->Header().SearchPaths);
     m_keywords->SetStrings(cat->Header().Keywords);
+
+    m_pathsData->GetFromCatalog(cat);
+    m_pathsData->RefreshView();
 }
 
 
-void PropertiesDialog::TransferFrom(Catalog *cat)
+void PropertiesDialog::TransferFrom(const CatalogPtr& cat)
 {
     cat->Header().Charset = GetCharsetFromCombobox(m_charset);
     cat->Header().SourceCodeCharset = GetCharsetFromCombobox(m_sourceCodeCharset);
@@ -201,56 +664,45 @@ void PropertiesDialog::TransferFrom(Catalog *cat)
     GET_VAL(Team, team);
     GET_VAL(TeamEmail, teamEmail);
     GET_VAL(Project, project);
-    GET_VAL(BasePath, basePath);
     #undef GET_VAL
 
-    Language lang = m_language->GetLang();
-    if (lang.IsValid())
-        cat->Header().Lang = lang;
-
-    wxString dummy;
-    wxArrayString arr;
-
-    cat->Header().SearchPaths.Clear();
-    cat->Header().Keywords.Clear();
-
-    m_paths->GetStrings(arr);
-    for (size_t i = 0; i < arr.GetCount(); i++)
+    if (m_hasLang)
     {
-        dummy = arr[i];
-        if (dummy[dummy.Length() - 1] == _T('/') || 
-                dummy[dummy.Length() - 1] == _T('\\')) 
-            dummy.RemoveLast();
-        cat->Header().SearchPaths.Add(dummy);
-    }
-    if (arr.GetCount() > 0 && cat->Header().BasePath.empty()) 
-        cat->Header().BasePath = ".";
+        Language lang = m_language->GetLang();
+        if (lang.IsValid())
+            cat->Header().Lang = lang;
 
-    m_keywords->GetStrings(arr);
-    cat->Header().Keywords = arr;
+        wxString pluralForms;
+        if (m_pluralFormsDefault->GetValue() && cat->Header().Lang.IsValid())
+        {
+            pluralForms = cat->Header().Lang.DefaultPluralFormsExpr();
+        }
 
-    wxString pluralForms;
-    if (m_pluralFormsDefault->GetValue() && cat->Header().Lang.IsValid())
-    {
-        pluralForms = cat->Header().Lang.DefaultPluralFormsExpr();
+        if (pluralForms.empty())
+        {
+            pluralForms = m_pluralFormsExpr->GetValue().Strip(wxString::both);
+            if ( !pluralForms.empty() && !pluralForms.EndsWith(";") )
+                pluralForms += ";";
+        }
+        cat->Header().SetHeaderNotEmpty("Plural-Forms", pluralForms);
     }
 
-    if (pluralForms.empty())
-    {
-        pluralForms = m_pluralFormsExpr->GetValue().Strip(wxString::both);
-        if ( !pluralForms.empty() && !pluralForms.EndsWith(";") )
-            pluralForms += ";";
-    }
-    cat->Header().SetHeaderNotEmpty("Plural-Forms", pluralForms);
+    GetKeywordsFromControl(m_keywords, cat->Header().Keywords);
+
+    if (m_pathsData->Changed)
+        m_pathsData->SetToCatalog(cat);
 }
 
 
 void PropertiesDialog::DisableSourcesControls()
 {
     m_basePath->Disable();
-    m_paths->Disable();
-    for (auto c: m_paths->GetChildren())
-        c->Disable();
+    for (auto p: {m_paths, m_excludedPaths})
+    {
+        p->Disable();
+        for (auto c: p->GetChildren())
+            c->Disable();
+    }
 
     auto label = XRCCTRL(*this, "sources_path_label", wxStaticText);
     label->SetLabel(_("Please save the file first. This section cannot be edited until then."));
@@ -267,7 +719,7 @@ void PropertiesDialog::OnLanguageChanged(wxCommandEvent& event)
 
 void PropertiesDialog::OnLanguageValueChanged(const wxString& langstr)
 {
-    Language lang = Language::TryParse(langstr);
+    Language lang = Language::TryParse(langstr.ToStdWstring());
     wxString pluralForm = lang.DefaultPluralFormsExpr();
     if (pluralForm.empty())
     {
@@ -311,6 +763,9 @@ void PropertiesDialog::OnPluralFormsCustom(wxCommandEvent& event)
 
 bool PropertiesDialog::Validate()
 {
+    if (!m_hasLang)
+        return true;
+
     if (m_validatedPlural == -1)
     {
         m_validatedPlural = 1;
@@ -332,6 +787,5 @@ bool PropertiesDialog::Validate()
     }
 
     return m_validatedLang == 1 &&
-           m_validatedPlural == 1 &&
-           !m_project->GetValue().empty();
+           m_validatedPlural == 1;
 }

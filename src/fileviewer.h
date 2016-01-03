@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 1999-2013 Vaclav Slavik
+ *  Copyright (C) 1999-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -26,11 +26,15 @@
 #ifndef _FILEVIEWER_H_
 #define _FILEVIEWER_H_
 
+#include "catalog.h"
+
 #include <wx/frame.h>
 
-class WXDLLIMPEXP_FWD_CORE wxListCtrl;
-class WXDLLIMPEXP_FWD_CORE wxStyledTextCtrl;
+class WXDLLIMPEXP_FWD_CORE wxButton;
+class WXDLLIMPEXP_FWD_CORE wxChoice;
+class WXDLLIMPEXP_FWD_CORE wxStaticText;
 class WXDLLIMPEXP_FWD_CORE wxFileName;
+class WXDLLIMPEXP_FWD_STC wxStyledTextCtrl;
 
 
 /** This class implements frame that shows part of file
@@ -38,38 +42,38 @@ class WXDLLIMPEXP_FWD_CORE wxFileName;
  */
 class FileViewer : public wxFrame
 {
-public:
-    /** Ctor. 
-        \param basePath   base directory that all entries in 
-                          \i references are relative to
-        \param references array of strings in format \i filename:linenum
-                          that lists all occurences of given string
-        \param openAt     number of the \i references entry to show
-                          by default
-     */
-    FileViewer(wxWindow *parent, const wxString& basePath,
-               const wxArrayString& references, int openAt);
+protected:
+    FileViewer(wxWindow *parent);
     ~FileViewer();
 
-    /// Shows given reference, i.e. loads the file
-    void ShowReference(const wxString& ref);
+public:
+    static FileViewer *GetAndActivate();
+    static FileViewer *GetIfExists() { return ms_instance; }
 
-    bool FileOk() { return !m_current.empty(); }
+    /// Shows given reference, i.e. loads the file
+    void ShowReferences(CatalogPtr catalog, CatalogItemPtr item, int defaultReference = 0);
 
 private:
     void SetupTextCtrl();
     int GetLexer(const wxString& extension);
     wxFileName GetFilename(wxString ref) const;
 
+    void SelectReference(const wxString& ref);
+    void ShowError(const wxString& msg);
+
 private:
     wxString m_basePath;
     wxArrayString m_references;
-    wxString m_current;
 
+    wxChoice *m_file;
+    wxButton *m_openInEditor;
     wxStyledTextCtrl *m_text;
+    wxStaticText *m_error;
 
     void OnChoice(wxCommandEvent &event);
     void OnEditFile(wxCommandEvent &event);
+
+    static FileViewer *ms_instance;
 };
 
 #endif // _FILEVIEWER_H_

@@ -1,5 +1,5 @@
 /* Test of <fcntl.h> substitute.
-   Copyright (C) 2007, 2009-2013 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2009-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -111,7 +111,7 @@ main (void)
 #if O_RSYNC && O_RSYNC != O_DSYNC
     case O_RSYNC:
 #endif
-#if O_SYNC && O_SYNC != O_RSYNC
+#if O_SYNC && O_SYNC != O_DSYNC && O_SYNC != O_RSYNC
     case O_SYNC:
 #endif
 #if O_TTY_INIT

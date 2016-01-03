@@ -590,6 +590,8 @@ void process_node(boost::tiny_xml::element_ptr node, node_id* prev, title_info* 
                         preferred_term = true;
                      }
                      parent = parent->parent.lock();
+                     if(!parent)
+                        break;
                   }
                }
                catch(const std::exception&){}

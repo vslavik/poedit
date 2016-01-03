@@ -302,13 +302,13 @@ int main()
 #include <cstddef>
 
 template<class InIt,
-	class Ty> inline
-	Ty accumulate2(InIt First, InIt Last, Ty Val)
-	{	// return sum of Val and all in [First, Last)
-	for (; First != Last; ++First) //First = First + 1)
-		Val = Val + *First;
-	return (Val);
-	}
+   class Ty> inline
+   Ty accumulate2(InIt First, InIt Last, Ty Val)
+   {   // return sum of Val and all in [First, Last)
+   for (; First != Last; ++First) //First = First + 1)
+      Val = Val + *First;
+   return (Val);
+   }
 
 template <typename Vector>
 void time_test(const Vector& vec, std::size_t iterations, const char* label) {
@@ -328,10 +328,10 @@ int main()
    using namespace boost::interprocess;
    typedef allocator<double, managed_shared_memory::segment_manager> alloc_t;
 
-   std::size_t n = 0x1 << 26; 
+   std::size_t n = 0x1 << 26;
    std::size_t file_size = n * sizeof(double) + 1000000;
 
-   {  
+   {
       shared_memory_object::remove("MyMappedFile");
       managed_shared_memory segment(open_or_create, "MyMappedFile", file_size);
       shared_memory_object::remove("MyMappedFile");

@@ -2,7 +2,7 @@
 // timer.cpp
 // ~~~~~~~~~
 //
-// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -18,7 +18,7 @@ void print(const boost::system::error_code& /*e*/,
 {
   if (*count < 5)
   {
-    std::cout << *count << "\n";
+    std::cout << *count << std::endl;
     ++(*count);
 
     t->expires_at(t->expires_at() + boost::posix_time::seconds(1));
@@ -38,7 +38,7 @@ int main()
 
   io.run();
 
-  std::cout << "Final count is " << count << "\n";
+  std::cout << "Final count is " << count << std::endl;
 
   return 0;
 }

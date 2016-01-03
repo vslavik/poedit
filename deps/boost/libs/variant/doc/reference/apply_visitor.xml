@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE header PUBLIC "-//Boost//DTD BoostBook XML V1.0//EN"
   "http://www.boost.org/tools/boostbook/dtd/boostbook.dtd">
+<!--
+    Copyright 2003, Eric Friedman, Itay Maman.
+    Copyright 2013-2014 Antony Polukhin.
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+-->
 <header name="boost/variant/apply_visitor.hpp">
   <namespace name="boost">
     <class name="apply_visitor_delayed_t">
@@ -14,6 +21,9 @@
         <simpara>See the &quot;visitor-only&quot; form of
           <code><functionname>apply_visitor</functionname></code> for a simple
           way to create <code>apply_visitor_delayed_t</code> objects.</simpara>
+        <simpara>See <code><classname>apply_visitor_delayed_cpp14_t</classname></code>
+            which is used on C++14 compatible compilers when <code>Visitor</code> has no
+            <code>result_type</code> typedef.</simpara>
       </description>
 
       <template>
@@ -37,6 +47,18 @@
 
       <method-group name="function object interface">
         <overloaded-method name="operator()">
+          <signature>
+            <template>
+              <template-type-parameter name="... Variant"/>
+            </template>
+
+            <type>result_type</type>
+            <parameter name="operand">
+              <paramtype>Variant&amp;...</paramtype>
+            </parameter>
+          </signature>
+
+
           <signature>
             <template>
               <template-type-parameter name="Variant"/>
@@ -69,10 +91,69 @@
             <code><functionname>apply_visitor</functionname></code> on the
             stored visitor using the given operands.</simpara>
           </description>
+          <notes>Version with variadic templates is used by default if
+          <macroname>BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES</macroname> is not defined.</notes>
         </overloaded-method>
       </method-group>
     </class>
-  
+
+    <class name="apply_visitor_delayed_cpp14_t">
+      <purpose>Adapts a visitor for use as a function object.</purpose>
+      <description>
+        <simpara>Adapts the function given at construction for use as a
+          function object. This is useful, for example, when one needs to
+          operate on each element of a sequence of variant objects using a
+          standard library algorithm such as
+          <code>std::for_each</code>.</simpara>
+        <simpara>See the &quot;visitor-only&quot; form of
+          <code><functionname>apply_visitor</functionname></code> for a simple
+          way to create <code>apply_visitor_delayed_t</code> objects.</simpara>
+        <simpara>See <code><classname>apply_visitor_delayed_t</classname></code>
+            which is used when <code>Visitor</code> has <code>result_type</code>
+            typedef.</simpara>
+        <simpara>Available only if macro
+          <macroname>BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES</macroname> is not defined and
+          compiler supports <code>decltype(auto)</code> and <code>decltype(some-expression)</code>.</simpara>
+      </description>
+
+      <template>
+        <template-type-parameter name="Visitor"/>
+      </template>
+
+      <constructor specifiers="explicit">
+        <parameter name="visitor">
+          <paramtype>Visitor &amp;</paramtype>
+        </parameter>
+
+        <effects>
+          <simpara>Constructs the function object with the given
+            visitor.</simpara>
+        </effects>
+      </constructor>
+
+      <method-group name="function object interface">
+        <overloaded-method name="operator()">
+          <signature>
+            <template>
+              <template-type-parameter name="... Variant"/>
+            </template>
+
+            <type>decltype(auto)</type>
+            <parameter name="operand">
+              <paramtype>Variant&amp;...</paramtype>
+            </parameter>
+          </signature>
+
+          <purpose>Function call operator.</purpose>
+          <description>
+            <simpara>Invokes
+            <code><functionname>apply_visitor</functionname></code> on the
+            stored visitor using the given operands.</simpara>
+          </description>
+        </overloaded-method>
+      </method-group>
+    </class>
+
     <overloaded-function name="apply_visitor">
       <signature>
         <template>
@@ -89,7 +170,7 @@
           <paramtype>Variant &amp;</paramtype>
         </parameter>
       </signature>
-      
+
       <signature>
         <template>
           <template-type-parameter name="Visitor"/>
@@ -113,7 +194,7 @@
           <template-type-parameter name="Variant2"/>
         </template>
 
-        <type>typename BinaryVisitor::result_type</type>
+        <type>typename BinaryVisitor::result_type OR decltype(auto)</type>
 
         <parameter name="visitor">
           <paramtype>BinaryVisitor &amp;</paramtype>
@@ -133,7 +214,7 @@
           <template-type-parameter name="Variant2"/>
         </template>
 
-        <type>typename BinaryVisitor::result_type</type>
+        <type>typename BinaryVisitor::result_type OR decltype(auto)</type>
 
         <parameter name="visitor">
           <paramtype>const BinaryVisitor &amp;</paramtype>
@@ -154,7 +235,7 @@
           <template-type-parameter name="Variant3"/>
         </template>
 
-        <type>typename MultiVisitor::result_type</type>
+        <type>typename MultiVisitor::result_type OR decltype(auto)</type>
 
         <parameter name="visitor">
           <paramtype>MultiVisitor &amp;</paramtype>
@@ -181,7 +262,7 @@
           <template-type-parameter name="Variant3"/>
         </template>
 
-        <type>typename MultiVisitor::result_type</type>
+        <type>typename MultiVisitor::result_type OR decltype(auto)</type>
 
         <parameter name="visitor">
           <paramtype>const MultiVisitor &amp;</paramtype>
@@ -212,6 +293,19 @@
         </parameter>
       </signature>
 
+
+      <signature>
+        <template>
+          <template-type-parameter name="Visitor"/>
+        </template>
+
+        <type><classname>apply_visitor_delayed_cpp14_t</classname>&lt;Visitor&gt;</type>
+
+        <parameter name="visitor">
+          <paramtype>Visitor &amp;</paramtype>
+        </parameter>
+      </signature>
+
       <purpose>
         <simpara>Allows compile-time checked type-safe application of the
         given visitor to the content of the given variant, ensuring that all
@@ -236,13 +330,17 @@
             <listitem>Overloads accepting three or more operands invoke the
               function call operator of the given visitor on the content of
               the given <code><classname>variant</classname></code>
-              operands. Maximum amount of parameters controlled by 
+              operands. Maximum amount of parameters controlled by
               <code><emphasis role="bold"><macroname>BOOST_VARAINT_MAX_MULTIVIZITOR_PARAMS</macroname></emphasis></code>
-              macro. Those functions are actually defined in <xref linkend="header.boost.variant.multivisitors_hpp"/>.</listitem>
+              macro. Those functions are actually defined in a header <code>boost/variant/multivisitors.hpp</code>
+              (See <xref linkend="header.boost.variant.multivisitors_hpp"/>). That header must be manually included
+              if multi visitors are meant for use.</listitem>
 
-            <listitem>The overload accepting only a visitor returns a
-              <classname alt="boost::apply_visitor_delayed_t">generic function object</classname>
-              that accepts either one or two arguments and invokes
+            <listitem>The overloads accepting only a visitor return a
+              <classname alt="boost::apply_visitor_delayed_t">C++03 compatible generic function object</classname>
+              or
+                <classname alt="boost::apply_visitor_delayed_cpp14_t">C++14 compatible generic function object</classname>
+              that accepts either one, two or arbitrary count of arguments and invoke
               <code><functionname>apply_visitor</functionname></code> using
               these arguments and <code>visitor</code>, thus behaving as
               specified above. (This behavior is particularly useful, for

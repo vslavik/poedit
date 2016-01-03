@@ -43,6 +43,12 @@ int check_f(const A& a)
 
 int test()
 {
+#if defined( BOOST_NO_EXCEPTIONS )
+   {
+      B b;
+      return check_f(b);
+   }
+#else
    try{
       B b;
       return check_f(b);
@@ -51,6 +57,7 @@ int test()
    {
       return 1;
    }
+#endif
 }
 
 }

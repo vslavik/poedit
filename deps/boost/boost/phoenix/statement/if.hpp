@@ -8,7 +8,7 @@
 #ifndef BOOST_PHOENIX_STATEMENT_IF_HPP
 #define BOOST_PHOENIX_STATEMENT_IF_HPP
 
-#include <boost/config.hpp>
+#include <boost/phoenix/config.hpp>
 #include <boost/phoenix/core/limits.hpp>
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/call.hpp>
@@ -93,9 +93,9 @@ namespace boost { namespace phoenix
     template<typename Cond, typename Then>
     struct else_gen
     {
-        else_gen(Cond const & cond, Then const & then)
-            : cond(cond)
-            , then(then) {}
+        else_gen(Cond const & cond_, Then const & then_)
+            : cond(cond_)
+            , then(then_) {}
 
         template<typename Else>
         typename expression::if_else_statement<Cond, Then, Else>::type const
@@ -135,8 +135,8 @@ namespace boost { namespace phoenix
     template<typename Cond>
     struct if_gen
     {
-        if_gen(Cond const & cond)
-            : cond(cond) {}
+        if_gen(Cond const & cond_)
+            : cond(cond_) {}
 
         template<typename Then>
         typename expression::if_<Cond, Then>::type const

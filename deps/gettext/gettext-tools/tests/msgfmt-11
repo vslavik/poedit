@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test handling of invalid multibyte sequences.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mf-11.po"
 cat <<\EOF > mf-11.po
 msgid ""
 msgstr ""
@@ -22,7 +19,6 @@ msgid "_Enable keyboard accessibility"
 msgstr "_Ув╕мкнути спец╕альн╕ можливост╕ клав╕атури"
 EOF
 
-tmpfiles="$tmpfiles mf-11.mo core *.core"
 : ${MSGFMT=msgfmt}
 ${MSGFMT} --check -o mf-11.mo mf-11.po 2>/dev/null
 # Exit code must be 1.
@@ -30,7 +26,5 @@ ${MSGFMT} --check -o mf-11.mo mf-11.po 2>/dev/null
 # If it produced a core dump, it would be 134 (= 128 + SIGABRT).
 test $? = 1
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

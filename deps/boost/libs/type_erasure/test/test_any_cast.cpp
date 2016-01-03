@@ -6,7 +6,7 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-// $Id: test_any_cast.cpp 78429 2012-05-12 02:37:24Z steven_watanabe $
+// $Id$
 
 #include <boost/type_erasure/any.hpp>
 #include <boost/type_erasure/tuple.hpp>

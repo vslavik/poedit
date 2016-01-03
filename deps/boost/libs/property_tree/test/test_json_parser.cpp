@@ -252,6 +252,16 @@ const char *error_data_4 =
 const char *bug_data_pr4387 =
     "[1, 2, 3]"; // Root array
 
+const char *bug_data_pr7180_1 =
+    "{\n"
+    "    \"a\": [\n"
+    "        \"1\",\n"
+    "        \"2\"\n"
+    "    ]\n"
+    "}\n";
+const char *bug_data_pr7180_2 =
+    "{\"a\":[\"1\",\"2\"]}\n";
+
 struct ReadFunc
 {
     template<class Ptree>
@@ -259,15 +269,34 @@ struct ReadFunc
     {
         boost::property_tree::read_json(filename, pt);
     }
+    template <class Ptree>
+    void operator()(
+        std::basic_istream<typename Ptree::key_type::value_type>& is,
+        Ptree& pt) const
+    {
+        boost::property_tree::read_json(is, pt);
+    }
 };
 
 struct WriteFunc
 {
+    WriteFunc(bool pretty = false) : pretty(pretty) {}
+
     template<class Ptree>
     void operator()(const std::string &filename, const Ptree &pt) const
     {
-        boost::property_tree::write_json(filename, pt);
+        boost::property_tree::write_json(filename, pt, std::locale(), pretty);
     }
+
+    template<class Ptree>
+    void operator()(
+        std::basic_ostream<typename Ptree::key_type::value_type>& os,
+        Ptree& pt) const
+    {
+        boost::property_tree::write_json(os, pt, pretty);
+    }
+
+    bool pretty;
 };
 
 template<class Ptree>
@@ -278,106 +307,134 @@ void test_json_parser()
 
     generic_parser_test_ok<Ptree, ReadFunc, WriteFunc>
     (
-        ReadFunc(), WriteFunc(), ok_data_1, NULL, 
+        ReadFunc(), WriteFunc(false), ok_data_1, NULL,
         "testok1.json", NULL, "testok1out.json", 1, 0, 0
     );
     
     generic_parser_test_ok<Ptree, ReadFunc, WriteFunc>
     (
-        ReadFunc(), WriteFunc(), ok_data_2, NULL, 
+        ReadFunc(), WriteFunc(false), ok_data_2, NULL, 
         "testok2.json", NULL, "testok2out.json", 18, 50, 74
     );
 
     generic_parser_test_ok<Ptree, ReadFunc, WriteFunc>
     (
-        ReadFunc(), WriteFunc(), ok_data_3, NULL, 
+        ReadFunc(), WriteFunc(false), ok_data_3, NULL, 
         "testok3.json", NULL, "testok3out.json", 3, 1, 2
     );
 
     generic_parser_test_ok<Ptree, ReadFunc, WriteFunc>
     (
-        ReadFunc(), WriteFunc(), ok_data_4, NULL, 
+        ReadFunc(), WriteFunc(false), ok_data_4, NULL, 
         "testok4.json", NULL, "testok4out.json", 11, 10, 4
     );
 
     generic_parser_test_ok<Ptree, ReadFunc, WriteFunc>
     (
-        ReadFunc(), WriteFunc(), ok_data_5, NULL, 
+        ReadFunc(), WriteFunc(false), ok_data_5, NULL, 
         "testok5.json", NULL, "testok5out.json", 1, 0, 0
     );
 
     generic_parser_test_ok<Ptree, ReadFunc, WriteFunc>
     (
-        ReadFunc(), WriteFunc(), ok_data_6, NULL, 
+        ReadFunc(), WriteFunc(false), ok_data_6, NULL, 
         "testok6.json", NULL, "testok6out.json", 56, 265, 111
     );
 
     generic_parser_test_ok<Ptree, ReadFunc, WriteFunc>
     (
-        ReadFunc(), WriteFunc(), ok_data_7, NULL, 
+        ReadFunc(), WriteFunc(false), ok_data_7, NULL, 
         "testok7.json", NULL, "testok7out.json", 87, 1046, 1216
     );
 
     generic_parser_test_ok<Ptree, ReadFunc, WriteFunc>
     (
-        ReadFunc(), WriteFunc(), ok_data_8, NULL, 
+        ReadFunc(), WriteFunc(false), ok_data_8, NULL, 
         "testok8.json", NULL, "testok8out.json", 23, 149, 125
     );
 
     generic_parser_test_ok<Ptree, ReadFunc, WriteFunc>
     (
-        ReadFunc(), WriteFunc(), ok_data_9, NULL, 
+        ReadFunc(), WriteFunc(false), ok_data_9, NULL, 
         "testok9.json", NULL, "testok9out.json", 15, 54, 60
     );
 
     generic_parser_test_ok<Ptree, ReadFunc, WriteFunc>
     (
-        ReadFunc(), WriteFunc(), ok_data_10, NULL, 
+        ReadFunc(), WriteFunc(false), ok_data_10, NULL, 
         "testok10.json", NULL, "testok10out.json", 17, 162, 85
     );
 
     generic_parser_test_ok<Ptree, ReadFunc, WriteFunc>
     (
-        ReadFunc(), WriteFunc(), ok_data_11, NULL, 
+        ReadFunc(), WriteFunc(false), ok_data_11, NULL, 
         "testok11.json", NULL, "testok11out.json", 17, 120, 91
     );
 
     generic_parser_test_ok<Ptree, ReadFunc, WriteFunc>
     (
-        ReadFunc(), WriteFunc(), ok_data_12, NULL, 
+        ReadFunc(), WriteFunc(false), ok_data_12, NULL, 
         "testok12.json", NULL, "testok12out.json", 2, 12, 17
     );
 
     generic_parser_test_error<ptree, ReadFunc, WriteFunc, json_parser_error>
     (
-        ReadFunc(), WriteFunc(), error_data_1, NULL,
+        ReadFunc(), WriteFunc(false), error_data_1, NULL,
         "testerr1.json", NULL, "testerr1out.json", 1
     );
 
     generic_parser_test_error<ptree, ReadFunc, WriteFunc, json_parser_error>
     (
-        ReadFunc(), WriteFunc(), error_data_2, NULL,
+        ReadFunc(), WriteFunc(false), error_data_2, NULL,
         "testerr2.json", NULL, "testerr2out.json", 3
     );
 
     generic_parser_test_error<ptree, ReadFunc, WriteFunc, json_parser_error>
     (
-        ReadFunc(), WriteFunc(), error_data_3, NULL,
+        ReadFunc(), WriteFunc(false), error_data_3, NULL,
         "testerr3.json", NULL, "testerr3out.json", 4
     );
 
     generic_parser_test_error<ptree, ReadFunc, WriteFunc, json_parser_error>
     (
-        ReadFunc(), WriteFunc(), error_data_4, NULL,
+        ReadFunc(), WriteFunc(false), error_data_4, NULL,
         "testerr4.json", NULL, "testerr4out.json", 3
     );
 
     generic_parser_test_ok<Ptree, ReadFunc, WriteFunc>
     (
-        ReadFunc(), WriteFunc(), bug_data_pr4387, NULL, 
+        ReadFunc(), WriteFunc(false), bug_data_pr4387, NULL,
         "testpr4387.json", NULL, "testpr4387out.json", 4, 3, 0
     );
 
+    check_exact_roundtrip<Ptree>(ReadFunc(), WriteFunc(true),
+                                 bug_data_pr7180_1);
+    check_exact_roundtrip<Ptree>(ReadFunc(), WriteFunc(false),
+                                 bug_data_pr7180_2);
+
+}
+
+void test_escaping_utf8()
+{
+    // This is cyrillic text encoded as UTF-8
+    std::string str = "\xD0\x9C\xD0\xB0\xD0\xBC\xD0\xB0 "
+      "\xD0\xBC\xD1\x8B\xD0\xBB\xD0\xB0 \xD1\x80\xD0\xB0\xD0\xBC\xD1\x83";
+    // Should NOT escape UTF-8
+    BOOST_CHECK(boost::property_tree::json_parser::create_escapes(str) == str);
+}
+
+void test_escaping_wide()
+{
+    // Should NOT escape characters within ASCII range.
+    std::wstring str1 = L"I am wstring with ASCII";
+    BOOST_CHECK(boost::property_tree::json_parser::create_escapes(str1) == str1);
+    // Should escape characters outside ASCII range - this is NOT utf-8
+    // This is cyrillic text
+    std::wstring str2 = L"\u041C\u0430\u043C\u0430 "
+        L"\u043C\u044B\u043B\u0430 \u0440\u0430\u043C\u0443";
+    BOOST_CHECK(boost::property_tree::json_parser::create_escapes(str2) ==
+        L"\\u041C\\u0430\\u043C\\u0430 "
+        L"\\u043C\\u044B\\u043B\\u0430 \\u0440\\u0430\\u043C\\u0443");
 }
 
 int test_main(int argc, char *argv[])
@@ -385,9 +442,11 @@ int test_main(int argc, char *argv[])
     using namespace boost::property_tree;
     test_json_parser<ptree>();
     test_json_parser<iptree>();
+    test_escaping_utf8();
 #ifndef BOOST_NO_CWCHAR
     test_json_parser<wptree>();
     test_json_parser<wiptree>();
+    test_escaping_wide();
 #endif
     return 0;
 }

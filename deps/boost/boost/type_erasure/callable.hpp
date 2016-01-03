@@ -6,13 +6,14 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-// $Id: callable.hpp 83248 2013-03-02 18:15:06Z steven_watanabe $
+// $Id$
 
 #if !defined(BOOST_PP_IS_ITERATING)
 
 #ifndef BOOST_TYPE_ERASURE_CALLABLE_HPP_INCLUDED
 #define BOOST_TYPE_ERASURE_CALLABLE_HPP_INCLUDED
 
+#include <boost/detail/workaround.hpp>
 #include <boost/utility/declval.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/push_back.hpp>
@@ -67,7 +68,9 @@ struct callable
     static R apply(F& f, T... arg);
 };
 
-#elif !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+#elif !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && \
+    !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && \
+    !BOOST_WORKAROUND(BOOST_MSVC, == 1800)
 
 template<class R, class... T, class F>
 struct callable<R(T...), F>

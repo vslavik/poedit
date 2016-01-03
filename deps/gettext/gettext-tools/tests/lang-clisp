@@ -1,16 +1,13 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of gettext facilities in the CLISP language.
 # Assumes an fr_FR locale is installed.
 # Assumes the following packages are installed: clisp.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles prog.lisp"
 cat <<\EOF > prog.lisp
 (setf (textdomain) "prog")
-(setf (textdomaindir "prog") "./l-clisp/")
+(setf (textdomaindir "prog") "./")
 
 (setq n (parse-integer (first *args*)))
 
@@ -21,15 +18,11 @@ cat <<\EOF > prog.lisp
 (format t "~A~%" (format nil (gettext "~A is replaced by ~A.") "FF" "EUR"))
 EOF
 
-tmpfiles="$tmpfiles l-clisp-prog.tmp l-clisp-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-clisp-prog.tmp --omit-header --no-location prog.lisp
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-clisp-prog.tmp > l-clisp-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o prog.tmp --omit-header --no-location prog.lisp || exit 1
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-clisp-prog.ok"
-cat <<EOF > l-clisp-prog.ok
+cat <<EOF > prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
 
@@ -45,10 +38,9 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} l-clisp-prog.ok l-clisp-prog.pot || exit 1
+${DIFF} prog.ok prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-clisp-fr.po"
-cat <<\EOF > l-clisp-fr.po
+cat <<\EOF > fr.po
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -70,46 +62,41 @@ msgid "~A is replaced by ~A."
 msgstr "~1@*~A remplace ~0@*~A."
 EOF
 
-tmpfiles="$tmpfiles l-clisp-fr.po.tmp l-clisp-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-clisp-fr.po.tmp l-clisp-fr.po l-clisp-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-clisp-fr.po.tmp > l-clisp-fr.po.new
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
 
 : ${DIFF=diff}
-${DIFF} l-clisp-fr.po l-clisp-fr.po.new || exit 1
+${DIFF} fr.po fr.po.new || exit 1
 
-tmpfiles="$tmpfiles l-clisp"
-test -d l-clisp || mkdir l-clisp
-test -d l-clisp/fr || mkdir l-clisp/fr
-test -d l-clisp/fr/LC_MESSAGES || mkdir l-clisp/fr/LC_MESSAGES
+test -d fr || mkdir fr
+test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o l-clisp/fr/LC_MESSAGES/prog.mo l-clisp-fr.po
+${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
 
 # Test for presence of clisp version 2.28 or newer with gettext support.
 # Use clisp for the comparison of the version numbers; neither 'expr' nor 'bc'
 # can deal with floating-point numbers.
 (clisp --version) >/dev/null 2>/dev/null \
-  || { echo "Skipping test: clisp not found"; rm -fr $tmpfiles; exit 77; }
+  || { echo "Skipping test: clisp not found"; exit 77; }
 version=`clisp --version | sed -n -e 1p | sed -e 's/^[^0-9]*//'`
 case $version in
   19* | 20*) # older than 2.25
-    echo "Skipping test: clisp version too old"; rm -fr $tmpfiles; exit 77;;
+    echo "Skipping test: clisp version too old"; exit 77;;
 esac
 version=`echo $version | sed -e 's/^\([0-9]*\.[0-9]*\).*/\1/'`
 clisp -norc -x "(sys::exit #+GETTEXT (not (>= $version 2.28)) #-GETTEXT t)" \
       >/dev/null \
   || { echo "Skipping test: clisp was built without gettext support"
-       rm -fr $tmpfiles; exit 77
+       exit 77
      }
 
 # Test which of the fr_FR locales are installed.
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  LC_ALL=$LOCALE_FR ./testlocale
+  LC_ALL=$LOCALE_FR ../testlocale
   case $? in
     0) ;;
     77) LOCALE_FR=none;;
@@ -117,7 +104,7 @@ if test $LOCALE_FR != none; then
   esac
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  LC_ALL=$LOCALE_FR_UTF8 ./testlocale
+  LC_ALL=$LOCALE_FR_UTF8 ../testlocale
   case $? in
     0) ;;
     77) LOCALE_FR_UTF8=none;;
@@ -130,17 +117,16 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  rm -fr $tmpfiles; exit 77
+  exit 77
 fi
 
-tmpfiles="$tmpfiles l-clisp-prog.ok l-clisp-prog.oku l-clisp-prog.out"
 : ${DIFF=diff}
-cat <<\EOF > l-clisp-prog.ok
+cat <<\EOF > prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
 2 morceaux de gateau
 EUR remplace FF.
 EOF
-cat <<\EOF > l-clisp-prog.oku
+cat <<\EOF > prog.oku
 Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
 2 morceaux de gateau
 EUR remplace FF.
@@ -149,16 +135,16 @@ EOF
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
-  CLISP_LANGUAGE= LANGUAGE= LC_ALL=$LOCALE_FR clisp prog.lisp 2 > l-clisp-prog.tmp || exit 1
-  LC_ALL=C tr -d '\r' < l-clisp-prog.tmp > l-clisp-prog.out || exit 1
-  ${DIFF} l-clisp-prog.ok l-clisp-prog.out || exit 1
+  prepare_locale_ fr $LOCALE_FR
+  CLISP_LANGUAGE= LANGUAGE= LC_ALL=$LOCALE_FR clisp prog.lisp 2 > prog.tmp || exit 1
+  LC_ALL=C tr -d '\r' < prog.tmp > prog.out || exit 1
+  ${DIFF} prog.ok prog.out || exit 1
 fi
 if test $LOCALE_FR_UTF8 != none; then
-  CLISP_LANGUAGE= LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 clisp prog.lisp 2 > l-clisp-prog.tmp || exit 1
-  LC_ALL=C tr -d '\r' < l-clisp-prog.tmp > l-clisp-prog.out || exit 1
-  ${DIFF} l-clisp-prog.oku l-clisp-prog.out || exit 1
+  prepare_locale_ fr $LOCALE_FR_UTF8
+  CLISP_LANGUAGE= LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 clisp prog.lisp 2 > prog.tmp || exit 1
+  LC_ALL=C tr -d '\r' < prog.tmp > prog.out || exit 1
+  ${DIFF} prog.oku prog.out || exit 1
 fi
-
-rm -fr $tmpfiles
 
 exit 0

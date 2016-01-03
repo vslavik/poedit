@@ -9,7 +9,6 @@
 // See http://www.boost.org/libs/intrusive for documentation.
 //
 /////////////////////////////////////////////////////////////////////////////
-#include <boost/intrusive/detail/config_begin.hpp>
 //[doc_recursive_member
 #include <boost/intrusive/list.hpp>
 #include <boost/intrusive/parent_from_member.hpp>
@@ -82,5 +81,3 @@ int main()
    return 0;
 }
 //]
-
-#include <boost/intrusive/detail/config_end.hpp>

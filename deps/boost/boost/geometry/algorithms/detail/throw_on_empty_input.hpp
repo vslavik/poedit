@@ -16,13 +16,17 @@
 
 // BSG 2012-02-06: we use this currently only for distance.
 // For other scalar results area,length,perimeter it is commented on purpose.
-// Reason is that for distance there is no other choice. distance of two 
+// Reason is that for distance there is no other choice. distance of two
 // empty geometries (or one empty) should NOT return any value.
 // But for area it is no problem to be 0.
 // Suppose: area(intersection(a,b)). We (probably) don't want a throw there...
 
 // So decided that at least for Boost 1.49 this is commented for
 // scalar results, except distance.
+
+#if defined(BOOST_GEOMETRY_EMPTY_INPUT_NO_THROW)
+#include <boost/core/ignore_unused.hpp>
+#endif
 
 namespace boost { namespace geometry
 {
@@ -39,6 +43,8 @@ inline void throw_on_empty_input(Geometry const& geometry)
     {
         throw empty_input_exception();
     }
+#else
+    boost::ignore_unused(geometry);
 #endif
 }
 

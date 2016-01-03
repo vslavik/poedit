@@ -2,10 +2,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Known Issues, and TODO List</title>
-<link rel="stylesheet" href="../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../index.html" title="Math Toolkit">
-<link rel="up" href="../status.html" title="Chapter&#160;16.&#160;Library Status">
+<link rel="stylesheet" href="../math.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="../index.html" title="Math Toolkit 2.2.0">
+<link rel="up" href="../status.html" title="Chapter&#160;17.&#160;Library Status">
 <link rel="prev" href="history2.html" title="History and What's New">
 <link rel="next" href="credits.html" title="Credits and Acknowledgements">
 </head>
@@ -97,13 +97,6 @@
     </h5>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-          Carlson's algorithms are essentially unchanged from Xiaogang Zhang's Google
-          Summer of Code student project, and are based on Carlson's original papers.
-          However, Carlson has revised his algorithms since then (refer to the references
-          in the elliptic integral docs for a list), to improve performance and accuracy,
-          we may be able to take advantage of these improvements too (Low Priority).
-        </li>
-<li class="listitem">
           [para Carlson's algorithms (mainly R<sub>J</sub>) are somewhat prone to internal overflow/underflow
           when the arguments are very large or small. The homogeneity relations:]
           [para R<sub>F</sub>(ka, kb, kc) = k<sup>-1/2</sup> R<sub>F</sub>(a, b, c)] [para and] [para R<sub>J</sub>(ka, kb, kc,
@@ -111,30 +104,13 @@
           provided the problem domains can be accurately identified. (Medium Priority).]
         </li>
 <li class="listitem">
-          Carlson's R<sub>C</sub> can be reduced to elementary funtions (asin and log), would
-          it be more efficient evaluated this way, rather than by Carlson's algorithms?
-          (Low Priority).
-        </li>
-<li class="listitem">
-          Should we add an implementation of Carlson's R<sub>G</sub>? It's not required for
-          the Legendre form integrals, but some people may find it useful (Low Priority).
-        </li>
-<li class="listitem">
-          There are a several other integrals: D(&#966;, k), Z(&#946;, k), &#923;<sub>0</sub>(&#946;, k) and Bulirsch's
-          <span class="emphasis"><em>el</em></span> functions that could be implemented using Carlson's
-          integrals (Low Priority).
+          There are a several other integrals: Bulirsch's <span class="emphasis"><em>el</em></span>
+          functions that could be implemented using Carlson's integrals (Low Priority).
         </li>
 <li class="listitem">
           The integrals K(k) and E(k) could be implemented using rational approximations
           (both for efficiency and accuracy), assuming we can find them. (Medium
           Priority).
-        </li>
-<li class="listitem">
-          There is a sub-domain of <a class="link" href="ellint/ellint_3.html" title="Elliptic Integrals of the Third Kind - Legendre Form">ellint_3</a>
-          that is unimplemented (see the docs for details), currently it's not clear
-          how to solve this issue, or if it's ever likely to be an real problem in
-          practice - especially as most other implementations don't support this
-          domain either (Medium Priority).
         </li>
 </ul></div>
 <h5>
@@ -176,6 +152,9 @@
       <span class="phrase"><a name="math_toolkit.issues.feature_requests"></a></span><a class="link" href="issues.html#math_toolkit.issues.feature_requests">Feature
       Requests</a>
     </h5>
+<p>
+      We have a request for the Lambert W function, see <a href="https://svn.boost.org/trac/boost/ticket/11027" target="_top">#11027</a>.
+    </p>
 <p>
       The following table lists distributions that are found in other packages but
       which are not yet present here, the more frequently the distribution is found,
@@ -1238,9 +1217,10 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012, 2013 Paul A. Bristow, Christopher Kormanyos,
-      Hubert Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin
-      Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
+      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
+      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
+      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

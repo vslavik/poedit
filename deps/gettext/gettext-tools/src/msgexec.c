@@ -1,5 +1,5 @@
 /* Pass translations to a subprocess.
-   Copyright (C) 2001-2012 Free Software Foundation, Inc.
+   Copyright (C) 2001-2015 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -71,6 +71,8 @@ static const char *sub_path;
 static char **sub_argv;
 static int sub_argc;
 
+static bool newline;
+
 /* Maximum exit code encountered.  */
 static int exitcode;
 
@@ -80,6 +82,7 @@ static const struct option long_options[] =
   { "directory", required_argument, NULL, 'D' },
   { "help", no_argument, NULL, 'h' },
   { "input", required_argument, NULL, 'i' },
+  { "newline", no_argument, NULL, CHAR_MAX + 2 },
   { "properties-input", no_argument, NULL, 'P' },
   { "stringtable-input", no_argument, NULL, CHAR_MAX + 1 },
   { "version", no_argument, NULL, 'V' },
@@ -165,6 +168,10 @@ main (int argc, char **argv)
 
       case CHAR_MAX + 1: /* --stringtable-input */
         input_syntax = &input_format_stringtable;
+        break;
+
+      case CHAR_MAX + 2: /* --newline */
+        newline = true;
         break;
 
       default:
@@ -274,6 +281,11 @@ null byte.  The output of \"msgexec 0\" is suitable as input for \"xargs -0\".\n
 "));
       printf ("\n");
       printf (_("\
+Command input:\n"));
+      printf (_("\
+  --newline                   add newline at the end of input\n"));
+      printf ("\n");
+      printf (_("\
 Mandatory arguments to long options are mandatory for short options too.\n"));
       printf ("\n");
       printf (_("\
@@ -352,10 +364,11 @@ process_string (const message_ty *mp, const char *str, size_t len)
       int fd[1];
       void (*orig_sigpipe_handler)(int);
       int exitstatus;
+      char *newstr;
 
       /* Set environment variables for the subprocess.
          Note: These environment variables, especially MSGEXEC_MSGCTXT and
-         MSGEXEC_MSGCTXT, may contain non-ASCII characters.  The subprocess
+         MSGEXEC_MSGID, may contain non-ASCII characters.  The subprocess
          may not interpret these values correctly if the locale encoding is
          different from the PO file's encoding.  We want about this situation,
          above.
@@ -370,10 +383,26 @@ process_string (const message_ty *mp, const char *str, size_t len)
       else
         unsetenv ("MSGEXEC_MSGCTXT");
       xsetenv ("MSGEXEC_MSGID", mp->msgid, 1);
+      if (mp->msgid_plural != NULL)
+        xsetenv ("MSGEXEC_MSGID_PLURAL", mp->msgid_plural, 1);
+      else
+        unsetenv ("MSGEXEC_MSGID_PLURAL");
       location = xasprintf ("%s:%ld", mp->pos.file_name,
                             (long) mp->pos.line_number);
       xsetenv ("MSGEXEC_LOCATION", location, 1);
       free (location);
+      if (mp->prev_msgctxt != NULL)
+        xsetenv ("MSGEXEC_PREV_MSGCTXT", mp->prev_msgctxt, 1);
+      else
+        unsetenv ("MSGEXEC_PREV_MSGCTXT");
+      if (mp->prev_msgid != NULL)
+        xsetenv ("MSGEXEC_PREV_MSGID", mp->prev_msgid, 1);
+      else
+        unsetenv ("MSGEXEC_PREV_MSGID");
+      if (mp->prev_msgid_plural != NULL)
+        xsetenv ("MSGEXEC_PREV_MSGID_PLURAL", mp->prev_msgid_plural, 1);
+      else
+        unsetenv ("MSGEXEC_PREV_MSGID_PLURAL");
 
       /* Open a pipe to a subprocess.  */
       child = create_pipe_out (sub_name, sub_path, sub_argv, NULL, false, true,
@@ -383,10 +412,22 @@ process_string (const message_ty *mp, const char *str, size_t len)
          successfully without having read all of the input that we feed it.  */
       orig_sigpipe_handler = signal (SIGPIPE, SIG_IGN);
 
-      if (full_write (fd[0], str, len) < len)
+      if (newline)
+        {
+          newstr = XNMALLOC (len + 1, char);
+          memcpy (newstr, str, len);
+          newstr[len++] = '\n';
+        }
+      else
+        newstr = (char *) str;
+
+      if (full_write (fd[0], newstr, len) < len)
         if (errno != EPIPE)
           error (EXIT_FAILURE, errno,
                  _("write to %s subprocess failed"), sub_name);
+
+      if (newstr != str)
+        free (newstr);
 
       close (fd[0]);
 
@@ -409,12 +450,22 @@ process_message (const message_ty *mp)
   const char *msgstr = mp->msgstr;
   size_t msgstr_len = mp->msgstr_len;
   const char *p;
+  size_t k;
 
   /* Process each NUL delimited substring separately.  */
-  for (p = msgstr; p < msgstr + msgstr_len; )
+  for (p = msgstr, k = 0; p < msgstr + msgstr_len; k++)
     {
       size_t length = strlen (p);
 
+      if (mp->msgid_plural != NULL)
+        {
+          char *plural_form_string = xasprintf ("%zu", k);
+
+          xsetenv ("MSGEXEC_PLURAL_FORM", plural_form_string, 1);
+          free (plural_form_string);
+        }
+      else
+        unsetenv ("MSGEXEC_PLURAL_FORM");
       process_string (mp, p, length);
 
       p += length + 1;

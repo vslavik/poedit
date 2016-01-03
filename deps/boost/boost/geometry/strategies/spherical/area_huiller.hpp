@@ -128,7 +128,8 @@ public :
 
             // E: spherical excess, using l'Huiller's formula
             // [tg(e / 4)]2   =   tg[s / 2]  tg[(s-a) / 2]  tg[(s-b) / 2]  tg[(s-c) / 2]
-            calculation_type E = four * atan(sqrt(geometry::math::abs(tan(s / two)
+            calculation_type E = four
+                * atan(geometry::math::sqrt(geometry::math::abs(tan(s / two)
                     * tan((s - a) / two)
                     * tan((s - b) / two)
                     * tan((s - c) / two))));

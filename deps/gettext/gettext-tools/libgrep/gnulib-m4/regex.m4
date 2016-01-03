@@ -1,6 +1,6 @@
-# serial 64
+# serial 65
 
-# Copyright (C) 1996-2001, 2003-2013 Free Software Foundation, Inc.
+# Copyright (C) 1996-2001, 2003-2015 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -28,6 +28,7 @@ AC_DEFUN([gl_REGEX],
     # If cross compiling, assume the test would fail and use the included
     # regex.c.
     AC_CHECK_DECLS_ONCE([alarm])
+    AC_CHECK_HEADERS_ONCE([malloc.h])
     AC_CACHE_CHECK([for working re_compile_pattern],
                    [gl_cv_func_re_compile_pattern_working],
       [AC_RUN_IFELSE(
@@ -37,9 +38,19 @@ AC_DEFUN([gl_REGEX],
             #include <locale.h>
             #include <limits.h>
             #include <string.h>
-            #if HAVE_DECL_ALARM
-            # include <unistd.h>
+
+            #if defined M_CHECK_ACTION || HAVE_DECL_ALARM
             # include <signal.h>
+            # include <unistd.h>
+            #endif
+
+            #if HAVE_MALLOC_H
+            # include <malloc.h>
+            #endif
+
+            #ifdef M_CHECK_ACTION
+            /* Exit with distinguishable exit code.  */
+            static void sigabrt_no_core (int sig) { raise (SIGTERM); }
             #endif
           ]],
           [[int result = 0;
@@ -49,11 +60,18 @@ AC_DEFUN([gl_REGEX],
             const char *s;
             struct re_registers regs;
 
+            /* Some builds of glibc go into an infinite loop on this
+               test.  Use alarm to force death, and mallopt to avoid
+               malloc recursion in diagnosing the corrupted heap. */
 #if HAVE_DECL_ALARM
-            /* Some builds of glibc go into an infinite loop on this test.  */
             signal (SIGALRM, SIG_DFL);
             alarm (2);
 #endif
+#ifdef M_CHECK_ACTION
+            signal (SIGABRT, sigabrt_no_core);
+            mallopt (M_CHECK_ACTION, 2);
+#endif
+
             if (setlocale (LC_ALL, "en_US.UTF-8"))
               {
                 {
@@ -266,7 +284,8 @@ AC_DEFUN([gl_PREREQ_REGEX],
   AC_REQUIRE([AC_C_RESTRICT])
   AC_REQUIRE([AC_TYPE_MBSTATE_T])
   AC_REQUIRE([gl_EEMALLOC])
+  AC_REQUIRE([gl_GLIBC21])
   AC_CHECK_HEADERS([libintl.h])
-  AC_CHECK_FUNCS_ONCE([isblank iswctype wcscoll])
+  AC_CHECK_FUNCS_ONCE([isblank iswctype])
   AC_CHECK_DECLS([isblank], [], [], [[#include <ctype.h>]])
 ])

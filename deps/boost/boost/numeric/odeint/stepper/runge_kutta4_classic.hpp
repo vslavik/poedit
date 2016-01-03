@@ -6,8 +6,9 @@
  Implementation for the classical Runge Kutta stepper.
  [end_description]
 
- Copyright 2009-2011 Karsten Ahnert
- Copyright 2009-2011 Mario Mulansky
+ Copyright 2010-2013 Karsten Ahnert
+ Copyright 2010-2013 Mario Mulansky
+ Copyright 2012 Christoph Koke
 
  Distributed under the Boost Software License, Version 1.0.
  (See accompanying file LICENSE_1_0.txt or
@@ -23,6 +24,8 @@
 #include <boost/numeric/odeint/stepper/base/explicit_stepper_base.hpp>
 #include <boost/numeric/odeint/algebra/range_algebra.hpp>
 #include <boost/numeric/odeint/algebra/default_operations.hpp>
+#include <boost/numeric/odeint/algebra/algebra_dispatcher.hpp>
+#include <boost/numeric/odeint/algebra/operations_dispatcher.hpp>
 
 #include <boost/numeric/odeint/util/state_wrapper.hpp>
 #include <boost/numeric/odeint/util/is_resizeable.hpp>
@@ -37,8 +40,8 @@ class State ,
 class Value = double ,
 class Deriv = State ,
 class Time = Value ,
-class Algebra = range_algebra ,
-class Operations = default_operations ,
+class Algebra = typename algebra_dispatcher< State >::algebra_type ,
+class Operations = typename operations_dispatcher< State >::operations_type ,
 class Resizer = initially_resizer
 >
 #ifndef DOXYGEN_SKIP
@@ -118,11 +121,20 @@ public :
 
         // dt * m_dxh = k4
         sys( m_x_tmp.m_v , m_dxh.m_v , t + dt );
+
         //x += dt/6 * ( m_dxdt + m_dxt + val2*m_dxm )
         time_type dt6 = dt / static_cast< value_type >( 6 );
         time_type dt3 = dt / static_cast< value_type >( 3 );
         stepper_base_type::m_algebra.for_each6( out , in , dxdt , m_dxt.m_v , m_dxm.m_v , m_dxh.m_v ,
-                typename operations_type::template scale_sum5< value_type , time_type , time_type , time_type , time_type >( 1.0 , dt6 , dt3 , dt3 , dt6 ) );
+                                             typename operations_type::template scale_sum5< value_type , time_type , time_type , time_type , time_type >( 1.0 , dt6 , dt3 , dt3 , dt6 ) );
+        
+        // x += dt/6 * m_dxdt + dt/3 * m_dxt )
+        // stepper_base_type::m_algebra.for_each4( out , in , dxdt , m_dxt.m_v , 
+        //                                         typename operations_type::template scale_sum3< value_type , time_type , time_type >( 1.0 , dt6 , dt3 ) ); 
+        // // x += dt/3 * m_dxm + dt/6 * m_dxh )
+        // stepper_base_type::m_algebra.for_each4( out , out , m_dxm.m_v , m_dxh.m_v , 
+        //                                         typename operations_type::template scale_sum3< value_type , time_type , time_type >( 1.0 , dt3 , dt6 ) ); 
+
     }
 
     template< class StateType >

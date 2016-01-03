@@ -43,13 +43,12 @@ Currently there is a portable binary archive in the examples directory.
 It is not regularly submitted to the exhaustive boost testing regimen
 but it is tested occasionally and has been used in production code.
 <p>
-Its missing the following:
+It's missing the following:
 <ul>
   <li>Addition of portable floating point types.  This is not trivial.  In addition to
   handling floating point types of varying sizes, It requires
   handling invalid floating point numbers (NaNs) in a portable manner.
-  <li>Some way to test archive portability within the Boost testing regimen.
-  <li>Integration into the Boost testing similar to the other archive classes.
+  <li>Integration into the Boost testing regimen similar to the other archive classes.
 </ul>
 
 <h2><a name="performancetesting"></a>Performance Testing and Profiling</h2>
@@ -67,13 +66,13 @@ which shows the results of each test and links to the actual
 profile.
 <p>
 The first thing I did was include some of the serialization library tests.
-It became immediatly apparent that these tests were totally unsuitable
+It became immediately apparent that these tests were totally unsuitable
 for performance testing and that new tests needed to be written for this 
 purpose.  These tests would highlight the location of any performance
 bottlenecks in the serialization library.  Whenever I've subjected my
-code in the past to this type of analysis, I've always been suprised
+code in the past to this type of analysis, I've always been surprised
 to find bottlenecks in totally unanticipated places and fixing those
-has always lead to large improvements in performance.  I expect that
+has always led to large improvements in performance.  I expect that
 this project would have a huge impact on the utility of the serialization
 library.
 
@@ -81,10 +80,10 @@ library.
 
 It has been suggested that a useful feature of the library would be
 the ability to create "older versions" of archives.  Currently,
-the library permits one make programs that are guarenteed
+the library permits one to make programs that are guaranteed
 the ability to load archives with classes of a previous version. 
-But there is not way to save classes in accordance with a
-previous version.  At first I dismissed this a a huge project
+But there is no way to save classes in accordance with a
+previous version.  At first I dismissed this as a huge project
 with small demand.  A cursory examination of the code revealed
 that this would not be very difficult.  It would require some
 small changes in code and some additional tests.  Also it
@@ -101,7 +100,7 @@ to use the library without it.  The example used for testing is an
 <code style="white-space: normal">extended_typeinfo</code> 
 implemenation which presumes that all classes names have been exported. 
 So, to make this library compatible for platforms without RTTI, 
-a set of tests, examples and new manual section would have to be created
+a set of tests, examples and new manual section would have to be created.
 
 <hr>
 <p>Revised 1 November, 2008 

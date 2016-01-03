@@ -17,6 +17,7 @@
 
 #include <boost/concept/requires.hpp>
 #include <boost/concept_check.hpp>
+#include <boost/core/ignore_unused.hpp>
 
 #include <boost/geometry/algorithms/assign.hpp>
 #include <boost/geometry/strategies/spherical/distance_haversine.hpp>
@@ -90,7 +91,12 @@ void test_services()
     {
 
         // Compile-check if there is a strategy for this type
-        typedef typename services::default_strategy<bg::point_tag, P1, P2>::type haversine_strategy_type;
+        typedef typename services::default_strategy
+            <
+                bg::point_tag, bg::point_tag, P1, P2
+            >::type haversine_strategy_type;
+
+        boost::ignore_unused<haversine_strategy_type>();
     }
 
     P1 p1;
@@ -252,8 +258,8 @@ int test_main(int, char* [])
         <
             bg::model::point<double, 2, bg::cs::spherical_equatorial<bg::degree> >,
             bg::model::point<double, 2, bg::cs::spherical_equatorial<bg::degree> >,
-            double, 
-            geographic_policy 
+            double,
+            geographic_policy
         >();
 
     return 0;

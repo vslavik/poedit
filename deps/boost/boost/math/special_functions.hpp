@@ -1,4 +1,4 @@
-//  Copyright John Maddock 2006, 2007, 2012.
+//  Copyright John Maddock 2006, 2007, 2012, 2014.
 //  Copyright Paul A. Bristow 2006, 2007, 2012
 
 //  Use, modification and distribution are subject to the
@@ -16,7 +16,9 @@
 #include <boost/math/special_functions/acosh.hpp>
 #include <boost/math/special_functions/asinh.hpp>
 #include <boost/math/special_functions/atanh.hpp>
+#include <boost/math/special_functions/bernoulli.hpp>
 #include <boost/math/special_functions/bessel.hpp>
+#include <boost/math/special_functions/bessel_prime.hpp>
 #include <boost/math/special_functions/beta.hpp>
 #include <boost/math/special_functions/binomial.hpp>
 #include <boost/math/special_functions/cbrt.hpp>
@@ -25,10 +27,14 @@
 #include <boost/math/special_functions/ellint_1.hpp>
 #include <boost/math/special_functions/ellint_2.hpp>
 #include <boost/math/special_functions/ellint_3.hpp>
+#include <boost/math/special_functions/ellint_d.hpp>
+#include <boost/math/special_functions/jacobi_zeta.hpp>
+#include <boost/math/special_functions/heuman_lambda.hpp>
 #include <boost/math/special_functions/ellint_rc.hpp>
 #include <boost/math/special_functions/ellint_rd.hpp>
 #include <boost/math/special_functions/ellint_rf.hpp>
 #include <boost/math/special_functions/ellint_rj.hpp>
+#include <boost/math/special_functions/ellint_rg.hpp>
 #include <boost/math/special_functions/erf.hpp>
 #include <boost/math/special_functions/expint.hpp>
 #include <boost/math/special_functions/expm1.hpp>
@@ -45,6 +51,7 @@
 #include <boost/math/special_functions/math_fwd.hpp>
 #include <boost/math/special_functions/next.hpp>
 #include <boost/math/special_functions/owens_t.hpp>
+#include <boost/math/special_functions/polygamma.hpp>
 #include <boost/math/special_functions/powm1.hpp>
 #include <boost/math/special_functions/sign.hpp>
 #include <boost/math/special_functions/sin_pi.hpp>

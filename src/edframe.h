@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 1999-2013 Vaclav Slavik
+ *  Copyright (C) 1999-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -26,10 +26,7 @@
 #ifndef _EDFRAME_H_
 #define _EDFRAME_H_
 
-#if defined(__WXMSW__)
-  #define CAN_MODIFY_DEFAULT_FONT
-#endif
-
+#include <memory>
 #include <set>
 
 #include <wx/frame.h>
@@ -38,6 +35,7 @@
 #include <wx/windowptr.h>
 
 class WXDLLIMPEXP_FWD_CORE wxSplitterWindow;
+class WXDLLIMPEXP_FWD_CORE wxSplitterEvent;
 class WXDLLIMPEXP_FWD_CORE wxTextCtrl;
 class WXDLLIMPEXP_FWD_CORE wxGauge;
 class WXDLLIMPEXP_FWD_CORE wxNotebook;
@@ -47,17 +45,19 @@ class WXDLLIMPEXP_FWD_CORE wxStaticText;
 #include "gexecute.h"
 #include "edlistctrl.h"
 #include "edapp.h"
-#include "tm/transmem.h"
 
 class ListHandler;
 class TextctrlHandler;
 class TransTextctrlHandler;
+class SourceTextCtrl;
+class TranslationTextCtrl;
 
 class PoeditFrame;
 class AttentionBar;
 class ErrorBar;
-
-WX_DECLARE_LIST(PoeditFrame, PoeditFramesList);
+class FindFrame;
+class MainToolbar;
+class Sidebar;
 
 /** This class provides main editing frame. It handles user's input
     and provides frontend to catalog editing engine. Nothing fancy.
@@ -95,26 +95,37 @@ class PoeditFrame : public wxFrame
 
         /// Returns active PoeditFrame, if it is unused (i.e. not showing
         /// content, not having catalog loaded); NULL otherwise.
-        static PoeditFrame *UnusedActiveWindow();
+        static PoeditFrame *UnusedActiveWindow() { return UnusedWindow(true); }
+        /// Ditto, but not required to be active
+        static PoeditFrame *UnusedWindow(bool active);
+
+        /// Returns true if at least one one window has unsaved changes
+        static bool AnyWindowIsModified();
+
+        /// Returns true if any windows (with documents) are open
+        static bool HasAnyWindow() { return !ms_instances.empty(); }
 
         ~PoeditFrame();
 
         /// Reads catalog, refreshes controls, takes ownership of catalog.
         void ReadCatalog(const wxString& catalog);
         /// Reads catalog, refreshes controls, takes ownership of catalog.
-        void ReadCatalog(Catalog *cat);
+        void ReadCatalog(const CatalogPtr& cat);
         /// Writes catalog.
         void WriteCatalog(const wxString& catalog);
 
         template<typename TFunctor>
         void WriteCatalog(const wxString& catalog, TFunctor completionHandler);
 
+        void FixDuplicatesIfPresent();
+        void WarnAboutLanguageIssues();
+
         /// Did the user modify the catalog?
         bool IsModified() const { return m_modified; }
         /** Updates catalog and sets m_modified flag. Updates from POT
             if \a pot_file is not empty and from sources otherwise.
          */
-        void UpdateCatalog(const wxString& pot_file = wxEmptyString);
+        bool UpdateCatalog(const wxString& pot_file = wxEmptyString);
 
 
         virtual void DoGiveHelp(const wxString& text, bool show);
@@ -124,6 +135,24 @@ class PoeditFrame : public wxFrame
 
         void EditCatalogProperties();
         void EditCatalogPropertiesAndUpdateFromSources();
+
+        /// Returns currently selected (edited) item
+        CatalogItemPtr GetCurrentItem() const;
+
+        /// Flags for UpdateToTextCtrl()
+        enum UpdateToTextCtrlFlags
+        {
+            /// Change to textctrl should be undoable by the user
+            UndoableEdit = 0x01,
+            /// Change is due to item change, discard undo buffer
+            ItemChanged = 0x02
+        };
+
+        /// Puts text from catalog & listctrl to textctrls.
+        void UpdateToTextCtrl(int flags);
+
+        /// Puts text from textctrls to catalog & listctrl.
+        void UpdateFromTextCtrl();
 
     private:
         /** Ctor.
@@ -138,6 +167,7 @@ class PoeditFrame : public wxFrame
             Invalid, // no content whatsoever
             Welcome,
             PO,
+            POT,
             Empty_PO
         };
         Content m_contentType;
@@ -148,21 +178,26 @@ class PoeditFrame : public wxFrame
         /// Ensures creation of specified content view, destroying the
         /// current content if necessary
         void EnsureContentView(Content type);
-        wxWindow* CreateContentViewPO();
+        void EnsureAppropriateContentView();
+        wxWindow* CreateContentViewPO(Content type);
+        void CreateContentViewEditControls(wxWindow *p, wxBoxSizer *panelSizer);
+        void CreateContentViewTemplateControls(wxWindow *p, wxBoxSizer *panelSizer);
         wxWindow* CreateContentViewWelcome();
         wxWindow* CreateContentViewEmptyPO();
         void DestroyContentView();
 
+        typedef std::set<PoeditFrame*> PoeditFramesList;
         static PoeditFramesList ms_instances;
 
     private:
         /// Refreshes controls.
-        void RefreshControls();
+        enum { Refresh_NoCatalogChanged = 1 };
+        void RefreshControls(int flags = 0);
+        void NotifyCatalogChanged(const CatalogPtr& cat);
+
         /// Sets controls custom fonts.
         void SetCustomFonts();
         void SetAccelerators();
-
-        CatalogItem *GetCurrentItem() const;
 
         // if there's modified catalog, ask user to save it; return true
         // if it's save to discard m_catalog and load new data
@@ -174,11 +209,6 @@ class PoeditFrame : public wxFrame
         // implements opening of files, without asking user
         void DoOpenFile(const wxString& filename);
 
-        /// Puts text from textctrls to catalog & listctrl.
-        void UpdateFromTextCtrl();
-        /// Puts text from catalog & listctrl to textctrls.
-        void UpdateToTextCtrl();
-
         /// Updates statistics in statusbar.
         void UpdateStatusBar();
         /// Updates frame title.
@@ -186,8 +216,8 @@ class PoeditFrame : public wxFrame
         /// Updates menu -- disables and enables items.
         void UpdateMenu();
 
-        /// Updates the editable nature of the comment window
-        void UpdateCommentWindowEditable();
+        // Called when catalog's language possibly changed
+        void UpdateTextLanguage();
 
         /// Returns popup menu for given catalog entry.
         wxMenu *GetPopupMenu(int item);
@@ -196,7 +226,8 @@ class PoeditFrame : public wxFrame
         void InitSpellchecker();
 
         // navigation to another item in the list
-        typedef bool (*NavigatePredicate)(const CatalogItem& item);
+        typedef bool (*NavigatePredicate)(const CatalogItemPtr& item);
+        long NavigateGetNextItem(const long start, int step, NavigatePredicate predicate, bool wrap, CatalogItemPtr *out_item);
         void Navigate(int step, NavigatePredicate predicate, bool wrap);
         void OnDoneAndNext(wxCommandEvent&);
         void OnPrev(wxCommandEvent&);
@@ -211,46 +242,89 @@ public: // for PoeditApp
         void OnNew(wxCommandEvent& event);
         void NewFromScratch();
         void NewFromPOT();
+        void NewFromPOT(const wxString& pot_file, Language language = Language());
 
         void OnOpen(wxCommandEvent& event);
+        void OnOpenFromCrowdin(wxCommandEvent& event);
+#ifndef __WXOSX__
         void OnOpenHist(wxCommandEvent& event);
-private:
         void OnCloseCmd(wxCommandEvent& event);
+#endif
+private:
         void OnSave(wxCommandEvent& event);
         void OnSaveAs(wxCommandEvent& event);
-        wxString GetSaveAsFilename(Catalog *cat, const wxString& current);
+        template<typename F>
+        void GetSaveAsFilenameThenDo(const CatalogPtr& cat, F then);
         void DoSaveAs(const wxString& filename);
         void OnProperties(wxCommandEvent& event);
-        void OnUpdate(wxCommandEvent& event);
+
+        void OnUpdateFromSources(wxCommandEvent& event);
+        void OnUpdateFromSourcesUpdate(wxUpdateUIEvent& event);
+        void OnUpdateFromPOT(wxCommandEvent& event);
+        void OnUpdateFromPOTUpdate(wxUpdateUIEvent& event);
+        void OnUpdateFromCrowdin(wxCommandEvent& event);
+        void OnUpdateFromCrowdinUpdate(wxUpdateUIEvent& event);
+        void OnUpdateSmart(wxCommandEvent& event);
+        void OnUpdateSmartUpdate(wxUpdateUIEvent& event);
+
         void OnValidate(wxCommandEvent& event);
         void OnListSel(wxListEvent& event);
         void OnListRightClick(wxMouseEvent& event);
         void OnListFocus(wxFocusEvent& event);
+        void OnSplitterSashMoving(wxSplitterEvent& event);
+        void OnSidebarSplitterSashMoving(wxSplitterEvent& event);
         void OnCloseWindow(wxCloseEvent& event);
         void OnReference(wxCommandEvent& event);
         void OnReferencesMenu(wxCommandEvent& event);
+        void OnReferencesMenuUpdate(wxUpdateUIEvent& event);
         void ShowReference(int num);
         void OnRightClick(wxCommandEvent& event);
         void OnFuzzyFlag(wxCommandEvent& event);
-        void OnQuotesFlag(wxCommandEvent& event);
         void OnIDsFlag(wxCommandEvent& event);
-        void OnCommentWinFlag(wxCommandEvent& event);
-        void OnAutoCommentsWinFlag(wxCommandEvent& event);
         void OnCopyFromSource(wxCommandEvent& event);
         void OnClearTranslation(wxCommandEvent& event);
         void OnFind(wxCommandEvent& event);
+        void OnFindAndReplace(wxCommandEvent& event);
         void OnFindNext(wxCommandEvent& event);
         void OnFindPrev(wxCommandEvent& event);
+        void OnUpdateFind(wxUpdateUIEvent& event);
         void OnEditComment(wxCommandEvent& event);
-        void OnCommentWindowText(wxCommandEvent& event);
         void OnSortByFileOrder(wxCommandEvent&);
         void OnSortBySource(wxCommandEvent&);
         void OnSortByTranslation(wxCommandEvent&);
+        void OnSortGroupByContext(wxCommandEvent&);
         void OnSortUntranslatedFirst(wxCommandEvent&);
+        void OnSortErrorsFirst(wxCommandEvent&);
 
-        void OnAutoTranslate(wxCommandEvent& event);
+        void OnShowHideSidebar(wxCommandEvent& event);
+        void OnUpdateShowHideSidebar(wxUpdateUIEvent& event);
+        void OnShowHideStatusbar(wxCommandEvent& event);
+        void OnUpdateShowHideStatusbar(wxUpdateUIEvent& event);
+
+        void OnSelectionUpdate(wxUpdateUIEvent& event);
+        void OnSelectionUpdateEditable(wxUpdateUIEvent& event);
+        void OnSingleSelectionUpdate(wxUpdateUIEvent& event);
+        void OnHasCatalogUpdate(wxUpdateUIEvent& event);
+        void OnIsEditableUpdate(wxUpdateUIEvent& event);
+        void OnEditCommentUpdate(wxUpdateUIEvent& event);
+
+#if defined(__WXMSW__) || defined(__WXGTK__)
+        void OnTextEditingCommand(wxCommandEvent& event);
+        void OnTextEditingCommandUpdate(wxUpdateUIEvent& event);
+#endif
+
+        void OnSuggestion(wxCommandEvent& event);
         void OnAutoTranslateAll(wxCommandEvent& event);
-        bool AutoTranslateCatalog();
+
+        enum AutoTranslateFlags
+        {
+            AutoTranslate_OnlyExact       = 0x01,
+            AutoTranslate_ExactNotFuzzy   = 0x02,
+            AutoTranslate_OnlyGoodQuality = 0x04
+        };
+        bool AutoTranslateCatalog(int *matchesCount, int flags);
+        template<typename T>
+        bool AutoTranslateCatalog(int *matchesCount, const T& range, int flags);
 
         void OnPurgeDeleted(wxCommandEvent& event);
 
@@ -259,63 +333,66 @@ private:
 
         void AddBookmarksMenu(wxMenu *menu);
 
+        void OnCompileMO(wxCommandEvent& event);
         void OnExport(wxCommandEvent& event);
         bool ExportCatalog(const wxString& filename);
 
-        void OnIdle(wxIdleEvent& event);
         void OnSize(wxSizeEvent& event);
-
-        // updates the status of both comment windows: Automatic and Translator's
-        void UpdateDisplayCommentWin();
 
         void ShowPluralFormUI(bool show = true);
 
         void RecreatePluralTextCtrls();
 
-        void RefreshSelectedItem();
-
         template<typename TFunctor>
-        void ReportValidationErrors(int errors, bool from_save, TFunctor completionHandler);
+        void ReportValidationErrors(int errors, Catalog::CompilationStatus mo_compilation_status,
+                                    bool from_save, bool other_file_saved,
+                                    TFunctor completionHandler);
 
+#ifndef __WXOSX__
         wxFileHistory& FileHistory() { return wxGetApp().FileHistory(); }
+#endif
         void NoteAsRecentFile();
+
+        void OnNewTranslationEntered(const CatalogItemPtr& item);
 
         DECLARE_EVENT_TABLE()
 
     private:
-        std::set<int> m_itemsRefreshQueue;
+        CatalogPtr m_catalog;
 
-        bool m_commentWindowEditable;
-        Catalog *m_catalog;
-        wxString m_fileName;
+        wxString GetFileName() const
+            { return m_catalog ? m_catalog->GetFileName() : wxString(); }
         bool m_fileExistsOnDisk;
 
-        TranslationMemory::Results m_autoTranslations;
+        std::unique_ptr<MainToolbar> m_toolbar;
 
-        wxPanel *m_bottomLeftPanel;
-        wxPanel *m_bottomRightPanel;
-        wxSplitterWindow *m_splitter, *m_bottomSplitter;
+        CatalogItemPtr m_pendingHumanEditedItem;
+
+        wxPanel *m_bottomPanel;
+        wxSplitterWindow *m_splitter;
+        wxSplitterWindow *m_sidebarSplitter;
         PoeditListCtrl *m_list;
-        wxStaticText *m_labelComment, *m_labelAutoComments;
         wxStaticText *m_labelContext;
         ErrorBar *m_errorBar;
-        wxTextCtrl *m_textOrig, *m_textOrigPlural, *m_textTrans, *m_textComment, *m_textAutoComments;
-        std::vector<wxTextCtrl*> m_textTransPlural;
-        wxTextCtrl *m_textTransSingularForm;
+        SourceTextCtrl *m_textOrig, *m_textOrigPlural;
+        TranslationTextCtrl *m_textTrans;
+        std::vector<TranslationTextCtrl*> m_textTransPlural;
+        TranslationTextCtrl *m_textTransSingularForm;
         wxNotebook *m_pluralNotebook;
         wxStaticText *m_labelSingular, *m_labelPlural;
+#ifndef __WXOSX__
         wxMenu *m_menuForHistory;
+#endif
 
         wxFont m_normalGuiFont, m_boldGuiFont;
 
         AttentionBar *m_attentionBar;
+        Sidebar *m_sidebar;
+        wxWeakRef<FindFrame> m_findWindow;
 
         bool m_modified;
         bool m_hasObsoleteItems;
-        bool m_displayQuotes;
         bool m_displayIDs;
-        bool m_displayCommentWin;
-        bool m_displayAutoCommentsWin;
         bool m_dontAutoclearFuzzyStatus;
         bool m_setSashPositionsWhenMaximized;
 

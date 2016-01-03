@@ -3,7 +3,7 @@
  * Boost Software License, Version 1.0. (See accompanying
  * file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt)
  * Author: Jeff Garland, Bart Garst
- * $Date: 2012-09-30 16:25:22 -0700 (Sun, 30 Sep 2012) $
+ * $Date$
  */
 
 #include "boost/date_time/gregorian/gregorian.hpp"
@@ -212,6 +212,11 @@ int main(){
     ss.str("%2005");
     ss >> y;
     check_equal("Multiple literal '%'s in year format", y, greg_year(2005));
+
+    f->year_format("%Y%");
+    ss.str("2005%");
+    ss >> y;
+    check_equal("Trailing'%'s in year format", y, greg_year(2005));
   }
 
   // All days, month, weekday, day, and year formats have been tested

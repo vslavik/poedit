@@ -1,5 +1,6 @@
 /* Extract some translations of a translation catalog.
-   Copyright (C) 2001-2007, 2009-2010, 2012 Free Software Foundation, Inc.
+   Copyright (C) 2001-2007, 2009-2010, 2012, 2015 Free Software
+   Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -91,7 +92,7 @@ static struct grep_task grep_task[5];
 /* Long options.  */
 static const struct option long_options[] =
 {
-  { "add-location", no_argument, &line_comment, 1 },
+  { "add-location", optional_argument, NULL, 'n' },
   { "color", optional_argument, NULL, CHAR_MAX + 9 },
   { "comment", no_argument, NULL, 'C' },
   { "directory", required_argument, NULL, 'D' },
@@ -111,7 +112,7 @@ static const struct option long_options[] =
   { "msgid", no_argument, NULL, 'K' },
   { "msgstr", no_argument, NULL, 'T' },
   { "no-escape", no_argument, NULL, CHAR_MAX + 3 },
-  { "no-location", no_argument, &line_comment, 0 },
+  { "no-location", no_argument, NULL, CHAR_MAX + 11 },
   { "no-wrap", no_argument, NULL, CHAR_MAX + 6 },
   { "output-file", required_argument, NULL, 'o' },
   { "properties-input", no_argument, NULL, 'P' },
@@ -196,7 +197,7 @@ main (int argc, char **argv)
       gt->case_insensitive = false;
     }
 
-  while ((opt = getopt_long (argc, argv, "CD:e:Ef:FhiJKM:N:o:pPTvVw:X",
+  while ((opt = getopt_long (argc, argv, "CD:e:Ef:FhiJKM:n:N:o:pPTvVw:X",
                              long_options, NULL))
          != EOF)
     switch (opt)
@@ -310,6 +311,11 @@ error while reading \"%s\""), optarg);
         string_list_append (domain_names, optarg);
         break;
 
+      case 'n':
+        if (handle_filepos_comment_option (optarg))
+          usage (EXIT_FAILURE);
+        break;
+
       case 'N':
         string_list_append (location_files, optarg);
         break;
@@ -397,6 +403,10 @@ error while reading \"%s\""), optarg);
         handle_style_option (optarg);
         break;
 
+      case CHAR_MAX + 11: /* --no-location */
+        message_print_style_filepos (filepos_comment_none);
+        break;
+
       default:
         usage (EXIT_FAILURE);
         break;
@@ -433,10 +443,6 @@ There is NO WARRANTY, to the extent permitted by law.\n\
     }
 
   /* Verify selected options.  */
-  if (!line_comment && sort_by_filepos)
-    error (EXIT_FAILURE, 0, _("%s and %s are mutually exclusive"),
-           "--no-location", "--sort-by-file");
-
   if (sort_by_msgid && sort_by_filepos)
     error (EXIT_FAILURE, 0, _("%s and %s are mutually exclusive"),
            "--sort-output", "--sort-by-file");
@@ -603,7 +609,7 @@ Output details:\n"));
       printf (_("\
       --no-location           suppress '#: filename:line' lines\n"));
       printf (_("\
-      --add-location          preserve '#: filename:line' lines (default)\n"));
+  -n, --add-location          preserve '#: filename:line' lines (default)\n"));
       printf (_("\
       --strict                strict Uniforum output style\n"));
       printf (_("\

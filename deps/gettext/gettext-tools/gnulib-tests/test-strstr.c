@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004, 2007-2013 Free Software Foundation, Inc.
+ * Copyright (C) 2004, 2007-2015 Free Software Foundation, Inc.
  * Written by Bruno Haible and Eric Blake
  *
  * This program is free software: you can redistribute it and/or modify
@@ -272,6 +272,7 @@ main (int argc, char *argv[])
         ASSERT (p);
         ASSERT (p - haystack == i);
       }
+    free (haystack);
   }
 
   return 0;

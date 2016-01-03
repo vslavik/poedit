@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2009-2012. Distributed under the Boost
+// (C) Copyright Ion Gaztanaga 2009-2013. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying file
 // LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
@@ -35,7 +35,7 @@ int main ()
    l.emplace(l.begin(), 0);
    assert(l.size() == 1);
 
-   //A new element will be built calling the default constructor
+   //A new element will be value initialized
    l.emplace(l.begin());
    assert(l.size() == 2);
    return 0;

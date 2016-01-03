@@ -23,6 +23,11 @@ int main()
   BOOST_TEST((SomethingElse<AnotherType,boost::is_same<AType::AnIntType,_> >::value));
   BOOST_TEST((!BOOST_TTI_HAS_TYPE_GEN(NoOtherType)<AnotherType,boost::is_same<double,_> >::value));
   
+  // Passing non-class enclosing type will return false
+  
+  BOOST_TEST((!BOOST_TTI_HAS_TYPE_GEN(AnIntTypeReference)<AType **,boost::is_same<int &,_> >::value));
+  BOOST_TEST((!SomethingElse<float,boost::is_same<AType::AnIntType,_> >::value));
+  
   return boost::report_errors();
 
   }

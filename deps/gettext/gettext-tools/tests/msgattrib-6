@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test --only-obsolete option.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles ma-test6.po"
 cat <<\EOF > ma-test6.po
 # HEADER.
 #
@@ -56,14 +53,10 @@ msgstr ""
 #~ msgstr "das einen verheirateten Mann liebt"
 EOF
 
-tmpfiles="$tmpfiles ma-test6.tmp ma-test6.out"
 : ${MSGATTRIB=msgattrib}
-${MSGATTRIB} --only-obsolete -o ma-test6.tmp ma-test6.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < ma-test6.tmp > ma-test6.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGATTRIB} --only-obsolete -o ma-test6.tmp ma-test6.po || exit 1
+LC_ALL=C tr -d '\r' < ma-test6.tmp > ma-test6.out || exit 1
 
-tmpfiles="$tmpfiles ma-test6.ok"
 cat <<\EOF > ma-test6.ok
 # HEADER.
 #
@@ -91,7 +84,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} ma-test6.ok ma-test6.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

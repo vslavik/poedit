@@ -37,6 +37,7 @@
 #include "test_out_of_range.hpp"
 
 #include <iostream>
+#include <iomanip>
 using std::cout;
 using std::endl;
 #include <limits>
@@ -226,6 +227,9 @@ void test_spot(
      RealType Q,     // Complement of CDF
      RealType tol)   // Test tolerance
 {
+   // An extra fudge factor for real_concept which has a less accurate tgamma:
+   RealType tolerance_tgamma_extra = std::numeric_limits<RealType>::is_specialized ? 1 : 5;
+
    boost::math::non_central_t_distribution<RealType> dist(df, ncp);
    BOOST_CHECK_CLOSE(
       cdf(dist, t), P, tol);
@@ -235,11 +239,11 @@ void test_spot(
       BOOST_CHECK_CLOSE(
          variance(dist), naive_variance(df, ncp), tol);
       BOOST_CHECK_CLOSE(
-         skewness(dist), naive_skewness(df, ncp), tol * 10);
+         skewness(dist), naive_skewness(df, ncp), tol * 10 * tolerance_tgamma_extra);
       BOOST_CHECK_CLOSE(
-         kurtosis_excess(dist), naive_kurtosis_excess(df, ncp), tol * 50);
+         kurtosis_excess(dist), naive_kurtosis_excess(df, ncp), tol * 50 * tolerance_tgamma_extra);
       BOOST_CHECK_CLOSE(
-         kurtosis(dist), 3 + naive_kurtosis_excess(df, ncp), tol * 50);
+         kurtosis(dist), 3 + naive_kurtosis_excess(df, ncp), tol * 50 * tolerance_tgamma_extra);
    }
    catch(const std::domain_error&)
    {
@@ -359,6 +363,16 @@ void test_spots(RealType)
       static_cast<RealType>(40),   // T
       static_cast<RealType>(0.179292265426085),       // Probability of result (CDF), P
       static_cast<RealType>(1-0.179292265426085),           // Q = 1 - P
+      tolerance);
+
+   // From https://svn.boost.org/trac/boost/ticket/10480.
+   // Test value from Mathematica N[CDF[NoncentralStudentTDistribution[2, 4], 5], 35]:
+   test_spot(
+      static_cast<RealType>(2),   // degrees of freedom
+      static_cast<RealType>(4),   // non centrality
+      static_cast<RealType>(5),   // T
+      static_cast<RealType>(0.53202069866995310466912357978934321L),       // Probability of result (CDF), P
+      static_cast<RealType>(1 - 0.53202069866995310466912357978934321L),           // Q = 1 - P
       tolerance);
 
    /* This test fails
@@ -824,9 +838,12 @@ BOOST_AUTO_TEST_CASE( test_main )
   
 #ifdef TEST_FLOAT
    test_accuracy(0.0F, "float"); // Test float.
+   test_big_df(0.F); // float
 #endif
 #ifdef TEST_DOUBLE
    test_accuracy(0.0, "double"); // Test double.
+   test_big_df(0.); // double
+   test_ignore_policy(0.0);
 #endif
 #ifndef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
 #ifdef TEST_LDOUBLE
@@ -839,9 +856,6 @@ BOOST_AUTO_TEST_CASE( test_main )
 #endif
 #endif
   /* */
-   test_ignore_policy(0.0);
-   test_big_df(0.F); // float
-   test_big_df(0.); // double
 
    
 } // BOOST_AUTO_TEST_CASE( test_main )

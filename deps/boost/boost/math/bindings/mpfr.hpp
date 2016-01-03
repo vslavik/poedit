@@ -36,6 +36,7 @@
 #include <boost/math/special_functions/math_fwd.hpp>
 #include <boost/math/bindings/detail/big_digamma.hpp>
 #include <boost/math/bindings/detail/big_lanczos.hpp>
+#include <boost/math/tools/big_constant.hpp>
 
 inline mpfr_class fabs(const mpfr_class& v)
 {
@@ -180,7 +181,14 @@ inline long long lltrunc(__gmp_expr<T,U> const& x, const Policy& pol)
    return lltrunc(static_cast<mpfr_class>(x), pol);
 }
 
-namespace boost{ namespace math{
+namespace boost{ 
+
+#ifdef BOOST_MATH_USE_FLOAT128
+   template<> struct is_convertible<BOOST_MATH_FLOAT128_TYPE, mpfr_class> : public boost::integral_constant<bool, false>{};
+#endif
+   template<> struct is_convertible<long long, mpfr_class> : public boost::integral_constant<bool, false>{};
+
+namespace math{
 
 #if defined(__GNUC__) && (__GNUC__ < 4)
    using ::iround;

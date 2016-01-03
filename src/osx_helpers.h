@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2007-2013 Vaclav Slavik
+ *  Copyright (C) 2007-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -39,9 +39,6 @@ void Sparkle_Initialize(bool checkForBeta);
 void Sparkle_AddMenuItem(NSMenu *appmenu, const char *title);
 void Sparkle_Cleanup();
 #endif // USE_SPARKLE
-
-// Spell checking
-int SpellChecker_SetLang(const char *lang);
 
 // Native preferences
 void UserDefaults_SetBoolValue(const char *key, int value);

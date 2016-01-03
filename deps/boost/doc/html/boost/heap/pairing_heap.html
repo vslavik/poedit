@@ -7,7 +7,7 @@
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../heap/reference.html#header.boost.heap.pairing_heap_hpp" title="Header &lt;boost/heap/pairing_heap.hpp&gt;">
 <link rel="prev" href="heap_merge.html" title="Function template heap_merge">
-<link rel="next" href="compare.html" title="Struct template compare">
+<link rel="next" href="allocator.html" title="Struct template allocator">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="heap_merge.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../heap/reference.html#header.boost.heap.pairing_heap_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="compare.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="heap_merge.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../heap/reference.html#header.boost.heap.pairing_heap_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="allocator.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.heap.pairing_heap"></a><div class="titlepage"></div>
@@ -50,46 +50,46 @@
   <span class="keyword">typedef</span> <span class="identifier">implementation_defined</span><span class="special">::</span><span class="identifier">handle_type</span>      <a name="boost.heap.pairing_heap.handle_type"></a><span class="identifier">handle_type</span><span class="special">;</span>     
 
   <span class="comment">// <a class="link" href="pairing_heap.html#boost.heap.pairing_heapconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">explicit</span> <a class="link" href="pairing_heap.html#idp48018936-bb"><span class="identifier">pairing_heap</span></a><span class="special">(</span><span class="identifier">value_compare</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="identifier">value_compare</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="pairing_heap.html#idp48020504-bb"><span class="identifier">pairing_heap</span></a><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="pairing_heap.html#idp25751384-bb"><span class="identifier">pairing_heap</span></a><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  pairing_heap&amp; <a class="link" href="pairing_heap.html#idp26045688-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  pairing_heap&amp; <a class="link" href="pairing_heap.html#idp46632696-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="pairing_heap.html#idp46825224-bb"><span class="special">~</span><span class="identifier">pairing_heap</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="pairing_heap.html#idp100728272-bb"><span class="identifier">pairing_heap</span></a><span class="special">(</span><span class="identifier">value_compare</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="identifier">value_compare</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="pairing_heap.html#idp100731648-bb"><span class="identifier">pairing_heap</span></a><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="pairing_heap.html#idp100734704-bb"><span class="identifier">pairing_heap</span></a><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;</span> <a class="link" href="pairing_heap.html#idp100738624-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;</span> <a class="link" href="pairing_heap.html#idp67308688-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="pairing_heap.html#idp67312368-bb"><span class="special">~</span><span class="identifier">pairing_heap</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="pairing_heap.html#idp18969752-bb">public member functions</a></span>
-  <span class="keyword">bool</span> <a class="link" href="pairing_heap.html#idp18969960-bb"><span class="identifier">empty</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">size_type</span> <a class="link" href="pairing_heap.html#idp18971704-bb"><span class="identifier">size</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">size_type</span> <a class="link" href="pairing_heap.html#idp18973528-bb"><span class="identifier">max_size</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp18975288-bb"><span class="identifier">clear</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">allocator_type</span> <a class="link" href="pairing_heap.html#idp18922696-bb"><span class="identifier">get_allocator</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp18924408-bb"><span class="identifier">swap</span></a><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">const_reference</span> <a class="link" href="pairing_heap.html#idp19624760-bb"><span class="identifier">top</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">handle_type</span> <a class="link" href="pairing_heap.html#idp46638936-bb"><span class="identifier">push</span></a><span class="special">(</span><span class="identifier">value_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span><span class="special">...</span> Args<span class="special">&gt;</span> <span class="identifier">handle_type</span> <a class="link" href="pairing_heap.html#idp19173128-bb"><span class="identifier">emplace</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="special">&amp;&amp;</span><span class="special">...</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp27368760-bb"><span class="identifier">pop</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp46030120-bb"><span class="identifier">update</span></a><span class="special">(</span><span class="identifier">handle_type</span><span class="special">,</span> <span class="identifier">const_reference</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp47722056-bb"><span class="identifier">update</span></a><span class="special">(</span><span class="identifier">handle_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp47724552-bb"><span class="identifier">increase</span></a><span class="special">(</span><span class="identifier">handle_type</span><span class="special">,</span> <span class="identifier">const_reference</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp23285080-bb"><span class="identifier">increase</span></a><span class="special">(</span><span class="identifier">handle_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp27665992-bb"><span class="identifier">decrease</span></a><span class="special">(</span><span class="identifier">handle_type</span><span class="special">,</span> <span class="identifier">const_reference</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp48314072-bb"><span class="identifier">decrease</span></a><span class="special">(</span><span class="identifier">handle_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp23369416-bb"><span class="identifier">erase</span></a><span class="special">(</span><span class="identifier">handle_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">iterator</span> <a class="link" href="pairing_heap.html#idp23502488-bb"><span class="identifier">begin</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">iterator</span> <a class="link" href="pairing_heap.html#idp23504232-bb"><span class="identifier">end</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">ordered_iterator</span> <a class="link" href="pairing_heap.html#idp27217656-bb"><span class="identifier">ordered_begin</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">ordered_iterator</span> <a class="link" href="pairing_heap.html#idp48219112-bb"><span class="identifier">ordered_end</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp28198824-bb"><span class="identifier">merge</span></a><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">value_compare</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a class="link" href="pairing_heap.html#idp23519224-bb"><span class="identifier">value_comp</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a class="link" href="pairing_heap.html#idp23072168-bb"><span class="keyword">operator</span><span class="special">&lt;</span></a><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a class="link" href="pairing_heap.html#idp25378008-bb"><span class="keyword">operator</span><span class="special">&gt;</span></a><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a class="link" href="pairing_heap.html#idp26090360-bb"><span class="keyword">operator</span><span class="special">&gt;=</span></a><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a class="link" href="pairing_heap.html#idp25304728-bb"><span class="keyword">operator</span><span class="special">&lt;=</span></a><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a class="link" href="pairing_heap.html#idp20228920-bb"><span class="keyword">operator</span><span class="special">==</span></a><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a class="link" href="pairing_heap.html#idp23668728-bb"><span class="keyword">operator</span><span class="special">!=</span></a><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="pairing_heap.html#idp34043088-bb">public member functions</a></span>
+  <span class="keyword">bool</span> <a class="link" href="pairing_heap.html#idp34043648-bb"><span class="identifier">empty</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">size_type</span> <a class="link" href="pairing_heap.html#idp34047248-bb"><span class="identifier">size</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">size_type</span> <a class="link" href="pairing_heap.html#idp34050816-bb"><span class="identifier">max_size</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp34054416-bb"><span class="identifier">clear</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">allocator_type</span> <a class="link" href="pairing_heap.html#idp34377376-bb"><span class="identifier">get_allocator</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp34381008-bb"><span class="identifier">swap</span></a><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">const_reference</span> <a class="link" href="pairing_heap.html#idp34384672-bb"><span class="identifier">top</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">handle_type</span> <a class="link" href="pairing_heap.html#idp34388272-bb"><span class="identifier">push</span></a><span class="special">(</span><span class="identifier">value_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span><span class="special">...</span> Args<span class="special">&gt;</span> <span class="identifier">handle_type</span> <a class="link" href="pairing_heap.html#idp34391616-bb"><span class="identifier">emplace</span></a><span class="special">(</span><span class="identifier">Args</span> <span class="special">&amp;&amp;</span><span class="special">...</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp34396224-bb"><span class="identifier">pop</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp34399568-bb"><span class="identifier">update</span></a><span class="special">(</span><span class="identifier">handle_type</span><span class="special">,</span> <span class="identifier">const_reference</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp34404560-bb"><span class="identifier">update</span></a><span class="special">(</span><span class="identifier">handle_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp105660736-bb"><span class="identifier">increase</span></a><span class="special">(</span><span class="identifier">handle_type</span><span class="special">,</span> <span class="identifier">const_reference</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp105666544-bb"><span class="identifier">increase</span></a><span class="special">(</span><span class="identifier">handle_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp105671280-bb"><span class="identifier">decrease</span></a><span class="special">(</span><span class="identifier">handle_type</span><span class="special">,</span> <span class="identifier">const_reference</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp105677088-bb"><span class="identifier">decrease</span></a><span class="special">(</span><span class="identifier">handle_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp105681872-bb"><span class="identifier">erase</span></a><span class="special">(</span><span class="identifier">handle_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">iterator</span> <a class="link" href="pairing_heap.html#idp105686448-bb"><span class="identifier">begin</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">iterator</span> <a class="link" href="pairing_heap.html#idp90501424-bb"><span class="identifier">end</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">ordered_iterator</span> <a class="link" href="pairing_heap.html#idp90505024-bb"><span class="identifier">ordered_begin</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">ordered_iterator</span> <a class="link" href="pairing_heap.html#idp90508592-bb"><span class="identifier">ordered_end</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="pairing_heap.html#idp90512160-bb"><span class="identifier">merge</span></a><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">value_compare</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a class="link" href="pairing_heap.html#idp90515840-bb"><span class="identifier">value_comp</span></a><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a class="link" href="pairing_heap.html#idp90518592-bb"><span class="keyword">operator</span><span class="special">&lt;</span></a><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a class="link" href="pairing_heap.html#idp90523504-bb"><span class="keyword">operator</span><span class="special">&gt;</span></a><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a class="link" href="pairing_heap.html#idp90528416-bb"><span class="keyword">operator</span><span class="special">&gt;=</span></a><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a class="link" href="pairing_heap.html#idp100713056-bb"><span class="keyword">operator</span><span class="special">&lt;=</span></a><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a class="link" href="pairing_heap.html#idp100717968-bb"><span class="keyword">operator</span><span class="special">==</span></a><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a class="link" href="pairing_heap.html#idp100723040-bb"><span class="keyword">operator</span><span class="special">!=</span></a><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="pairing_heap.html#idp45891928-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">handle_type</span> <a class="link" href="pairing_heap.html#idp45892136-bb"><span class="identifier">s_handle_from_iterator</span></a><span class="special">(</span><span class="identifier">iterator</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="pairing_heap.html#idp67313344-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">handle_type</span> <a class="link" href="pairing_heap.html#idp67313904-bb"><span class="identifier">s_handle_from_iterator</span></a><span class="special">(</span><span class="identifier">iterator</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
   <span class="comment">// public data members</span>
   <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">bool</span> <span class="identifier">constant_time_size</span><span class="special">;</span>
@@ -99,7 +99,7 @@
   <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">bool</span> <span class="identifier">has_reserve</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp102739144"></a><h2>Description</h2>
+<a name="idp209939072"></a><h2>Description</h2>
 <p>Pairing heaps are self-adjusting binary heaps. Although design and implementation are rather simple, the complexity analysis is yet unsolved. For details, consult:</p>
 <p>Pettie, Seth (2005), "Towards a final analysis of pairing heaps", Proc. 46th Annual IEEE Symposium on Foundations of Computer Science, pp. 174-183</p>
 <p>The template parameter T is the type to be managed by the container. The user can specify additional options and if no options are provided default options are used.</p>
@@ -114,7 +114,7 @@
 <p>
 </p>
 <div class="refsect2">
-<a name="idp102745144"></a><h3>
+<a name="idp209949152"></a><h3>
 <a name="boost.heap.pairing_heaptypes"></a><code class="computeroutput">pairing_heap</code> 
         public
        types</h3>
@@ -125,196 +125,196 @@
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp102748952"></a><h3>
+<a name="idp209955840"></a><h3>
 <a name="boost.heap.pairing_heapconstruct-copy-destruct"></a><code class="computeroutput">pairing_heap</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp48018936-bb"></a><span class="identifier">pairing_heap</span><span class="special">(</span><span class="identifier">value_compare</span> <span class="keyword">const</span> <span class="special">&amp;</span> cmp <span class="special">=</span> <span class="identifier">value_compare</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp100728272-bb"></a><span class="identifier">pairing_heap</span><span class="special">(</span><span class="identifier">value_compare</span> <span class="keyword">const</span> <span class="special">&amp;</span> cmp <span class="special">=</span> <span class="identifier">value_compare</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> constructs an empty priority queue.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> Constant. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp48020504-bb"></a><span class="identifier">pairing_heap</span><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="keyword">const</span> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp100731648-bb"></a><span class="identifier">pairing_heap</span><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="keyword">const</span> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> copy-constructs priority queue from rhs.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> Linear. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp25751384-bb"></a><span class="identifier">pairing_heap</span><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp100734704-bb"></a><span class="identifier">pairing_heap</span><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> C++11-style move constructor.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> Constant.</p>
 <p><span class="bold"><strong>Note:</strong></span> Only available, if BOOST_NO_CXX11_RVALUE_REFERENCES is not defined </p>
 </li>
 <li class="listitem">
-<pre class="literallayout">pairing_heap&amp; <a name="idp26045688-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;</span> <a name="idp100738624-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> C++11-style move assignment.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> Constant.</p>
 <p><span class="bold"><strong>Note:</strong></span> Only available, if BOOST_NO_CXX11_RVALUE_REFERENCES is not defined </p>
 </li>
 <li class="listitem">
-<pre class="literallayout">pairing_heap&amp; <a name="idp46632696-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="keyword">const</span> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;</span> <a name="idp67308688-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="keyword">const</span> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Assigns priority queue from rhs.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> Linear. </p>
 </li>
-<li class="listitem"><pre class="literallayout"><a name="idp46825224-bb"></a><span class="special">~</span><span class="identifier">pairing_heap</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp67312368-bb"></a><span class="special">~</span><span class="identifier">pairing_heap</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp102773432"></a><h3>
-<a name="idp18969752-bb"></a><code class="computeroutput">pairing_heap</code> public member functions</h3>
+<a name="idp210001504"></a><h3>
+<a name="idp34043088-bb"></a><code class="computeroutput">pairing_heap</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp18969960-bb"></a><span class="identifier">empty</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp34043648-bb"></a><span class="identifier">empty</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Returns true, if the priority queue contains no elements.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> Constant. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">size_type</span> <a name="idp18971704-bb"></a><span class="identifier">size</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">size_type</span> <a name="idp34047248-bb"></a><span class="identifier">size</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Returns the number of elements contained in the priority queue.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> Constant, if configured with constant_time_size&lt;true&gt;, otherwise linear. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">size_type</span> <a name="idp18973528-bb"></a><span class="identifier">max_size</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">size_type</span> <a name="idp34050816-bb"></a><span class="identifier">max_size</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Returns the maximum number of elements the priority queue can contain.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> Constant. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp18975288-bb"></a><span class="identifier">clear</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp34054416-bb"></a><span class="identifier">clear</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Removes all elements from the priority queue.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> Linear. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">allocator_type</span> <a name="idp18922696-bb"></a><span class="identifier">get_allocator</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">allocator_type</span> <a name="idp34377376-bb"></a><span class="identifier">get_allocator</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Returns allocator.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> Constant. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp18924408-bb"></a><span class="identifier">swap</span><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp34381008-bb"></a><span class="identifier">swap</span><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Swaps two priority queues.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> Constant. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">const_reference</span> <a name="idp19624760-bb"></a><span class="identifier">top</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">const_reference</span> <a name="idp34384672-bb"></a><span class="identifier">top</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Returns a const_reference to the maximum element.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> Constant. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">handle_type</span> <a name="idp46638936-bb"></a><span class="identifier">push</span><span class="special">(</span><span class="identifier">value_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> v<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">handle_type</span> <a name="idp34388272-bb"></a><span class="identifier">push</span><span class="special">(</span><span class="identifier">value_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> v<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Adds a new element to the priority queue. Returns handle to element</p>
 <p><span class="bold"><strong>Complexity:</strong></span> 2**2*log(log(N)) (amortized). </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span><span class="special">...</span> Args<span class="special">&gt;</span> <span class="identifier">handle_type</span> <a name="idp19173128-bb"></a><span class="identifier">emplace</span><span class="special">(</span><span class="identifier">Args</span> <span class="special">&amp;&amp;</span><span class="special">...</span> args<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span><span class="special">...</span> Args<span class="special">&gt;</span> <span class="identifier">handle_type</span> <a name="idp34391616-bb"></a><span class="identifier">emplace</span><span class="special">(</span><span class="identifier">Args</span> <span class="special">&amp;&amp;</span><span class="special">...</span> args<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Adds a new element to the priority queue. The element is directly constructed in-place. Returns handle to element.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> 2**2*log(log(N)) (amortized). </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp27368760-bb"></a><span class="identifier">pop</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp34396224-bb"></a><span class="identifier">pop</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Removes the top element from the priority queue.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> Logarithmic (amortized). </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp46030120-bb"></a><span class="identifier">update</span><span class="special">(</span><span class="identifier">handle_type</span> handle<span class="special">,</span> <span class="identifier">const_reference</span> v<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp34399568-bb"></a><span class="identifier">update</span><span class="special">(</span><span class="identifier">handle_type</span> handle<span class="special">,</span> <span class="identifier">const_reference</span> v<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Assigns <code class="computeroutput">v</code> to the element handled by <code class="computeroutput">handle</code> &amp; updates the priority queue.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> 2**2*log(log(N)) (amortized). </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp47722056-bb"></a><span class="identifier">update</span><span class="special">(</span><span class="identifier">handle_type</span> handle<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp34404560-bb"></a><span class="identifier">update</span><span class="special">(</span><span class="identifier">handle_type</span> handle<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Updates the heap after the element handled by <code class="computeroutput">handle</code> has been changed.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> 2**2*log(log(N)) (amortized).</p>
 <p><span class="bold"><strong>Note:</strong></span> If this is not called, after a handle has been updated, the behavior of the data structure is undefined! </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp47724552-bb"></a><span class="identifier">increase</span><span class="special">(</span><span class="identifier">handle_type</span> handle<span class="special">,</span> <span class="identifier">const_reference</span> v<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp105660736-bb"></a><span class="identifier">increase</span><span class="special">(</span><span class="identifier">handle_type</span> handle<span class="special">,</span> <span class="identifier">const_reference</span> v<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Assigns <code class="computeroutput">v</code> to the element handled by <code class="computeroutput">handle</code> &amp; updates the priority queue.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> 2**2*log(log(N)) (amortized).</p>
 <p><span class="bold"><strong>Note:</strong></span> The new value is expected to be greater than the current one </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp23285080-bb"></a><span class="identifier">increase</span><span class="special">(</span><span class="identifier">handle_type</span> handle<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp105666544-bb"></a><span class="identifier">increase</span><span class="special">(</span><span class="identifier">handle_type</span> handle<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Updates the heap after the element handled by <code class="computeroutput">handle</code> has been changed.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> 2**2*log(log(N)) (amortized).</p>
 <p><span class="bold"><strong>Note:</strong></span> If this is not called, after a handle has been updated, the behavior of the data structure is undefined! </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp27665992-bb"></a><span class="identifier">decrease</span><span class="special">(</span><span class="identifier">handle_type</span> handle<span class="special">,</span> <span class="identifier">const_reference</span> v<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp105671280-bb"></a><span class="identifier">decrease</span><span class="special">(</span><span class="identifier">handle_type</span> handle<span class="special">,</span> <span class="identifier">const_reference</span> v<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Assigns <code class="computeroutput">v</code> to the element handled by <code class="computeroutput">handle</code> &amp; updates the priority queue.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> 2**2*log(log(N)) (amortized).</p>
 <p><span class="bold"><strong>Note:</strong></span> The new value is expected to be less than the current one </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp48314072-bb"></a><span class="identifier">decrease</span><span class="special">(</span><span class="identifier">handle_type</span> handle<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp105677088-bb"></a><span class="identifier">decrease</span><span class="special">(</span><span class="identifier">handle_type</span> handle<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Updates the heap after the element handled by <code class="computeroutput">handle</code> has been changed.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> 2**2*log(log(N)) (amortized).</p>
 <p><span class="bold"><strong>Note:</strong></span> The new value is expected to be less than the current one. If this is not called, after a handle has been updated, the behavior of the data structure is undefined! </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp23369416-bb"></a><span class="identifier">erase</span><span class="special">(</span><span class="identifier">handle_type</span> handle<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp105681872-bb"></a><span class="identifier">erase</span><span class="special">(</span><span class="identifier">handle_type</span> handle<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Removes the element handled by <code class="computeroutput">handle</code> from the <code class="computeroutput"><a class="link" href="priority_queue.html" title="Class template priority_queue">priority_queue</a></code>.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> 2**2*log(log(N)) (amortized). </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">iterator</span> <a name="idp23502488-bb"></a><span class="identifier">begin</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">iterator</span> <a name="idp105686448-bb"></a><span class="identifier">begin</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Returns an iterator to the first element contained in the priority queue.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> Constant. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">iterator</span> <a name="idp23504232-bb"></a><span class="identifier">end</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">iterator</span> <a name="idp90501424-bb"></a><span class="identifier">end</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Returns an iterator to the end of the priority queue.</p>
 <p><span class="bold"><strong>Complexity:</strong></span> Constant. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">ordered_iterator</span> <a name="idp27217656-bb"></a><span class="identifier">ordered_begin</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">ordered_iterator</span> <a name="idp90505024-bb"></a><span class="identifier">ordered_begin</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Returns an ordered iterator to the first element contained in the priority queue.</p>
 <p><span class="bold"><strong>Note:</strong></span> Ordered iterators traverse the priority queue in heap order. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">ordered_iterator</span> <a name="idp48219112-bb"></a><span class="identifier">ordered_end</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">ordered_iterator</span> <a name="idp90508592-bb"></a><span class="identifier">ordered_end</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Returns an ordered iterator to the first element contained in the priority queue.</p>
 <p><span class="bold"><strong>Note:</strong></span> Ordered iterators traverse the priority queue in heap order. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp28198824-bb"></a><span class="identifier">merge</span><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp90512160-bb"></a><span class="identifier">merge</span><span class="special">(</span><a class="link" href="pairing_heap.html" title="Class template pairing_heap">pairing_heap</a> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effects:</strong></span> Merge all elements from rhs into this</p>
 <p><span class="bold"><strong>Complexity:</strong></span> 2**2*log(log(N)) (amortized). </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">value_compare</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a name="idp23519224-bb"></a><span class="identifier">value_comp</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">value_compare</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a name="idp90515840-bb"></a><span class="identifier">value_comp</span><span class="special">(</span><span class="keyword">void</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Effect:</strong></span> Returns the value_compare object used by the priority queue </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="idp23072168-bb"></a><span class="keyword">operator</span><span class="special">&lt;</span><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span> rhs<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="idp90518592-bb"></a><span class="keyword">operator</span><span class="special">&lt;</span><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span> rhs<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Returns:</strong></span> Element-wise comparison of heap data structures</p>
 <p><span class="bold"><strong>Requirement:</strong></span> the <code class="computeroutput">value_compare</code> object of both heaps must match. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="idp25378008-bb"></a><span class="keyword">operator</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span> rhs<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="idp90523504-bb"></a><span class="keyword">operator</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span> rhs<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Returns:</strong></span> Element-wise comparison of heap data structures</p>
 <p><span class="bold"><strong>Requirement:</strong></span> the <code class="computeroutput">value_compare</code> object of both heaps must match. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="idp26090360-bb"></a><span class="keyword">operator</span><span class="special">&gt;=</span><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span> rhs<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="idp90528416-bb"></a><span class="keyword">operator</span><span class="special">&gt;=</span><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span> rhs<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Returns:</strong></span> Element-wise comparison of heap data structures</p>
 <p><span class="bold"><strong>Requirement:</strong></span> the <code class="computeroutput">value_compare</code> object of both heaps must match. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="idp25304728-bb"></a><span class="keyword">operator</span><span class="special">&lt;=</span><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span> rhs<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="idp100713056-bb"></a><span class="keyword">operator</span><span class="special">&lt;=</span><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span> rhs<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p><span class="bold"><strong>Returns:</strong></span> Element-wise comparison of heap data structures</p>
 <p><span class="bold"><strong>Requirement:</strong></span> the <code class="computeroutput">value_compare</code> object of both heaps must match. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="idp20228920-bb"></a><span class="keyword">operator</span><span class="special">==</span><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span> rhs<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Equivalent comparison <span class="bold"><strong>Returns:</strong></span> True, if both heap data structures are equivalent. <p><span class="bold"><strong>Requirement:</strong></span> the <code class="computeroutput">value_compare</code> object of both heaps must match. </p>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="idp100717968-bb"></a><span class="keyword">operator</span><span class="special">==</span><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span> rhs<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Equivalent comparison <span class="bold"><strong>Returns:</strong></span> True, if both heap data structures are equivalent. <p><span class="bold"><strong>Requirement:</strong></span> the <code class="computeroutput">value_compare</code> object of both heaps must match. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="idp23668728-bb"></a><span class="keyword">operator</span><span class="special">!=</span><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span> rhs<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Equivalent comparison <span class="bold"><strong>Returns:</strong></span> True, if both heap data structures are not equivalent. <p><span class="bold"><strong>Requirement:</strong></span> the <code class="computeroutput">value_compare</code> object of both heaps must match. </p>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> HeapType<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="idp100723040-bb"></a><span class="keyword">operator</span><span class="special">!=</span><span class="special">(</span><span class="identifier">HeapType</span> <span class="keyword">const</span> <span class="special">&amp;</span> rhs<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Equivalent comparison <span class="bold"><strong>Returns:</strong></span> True, if both heap data structures are not equivalent. <p><span class="bold"><strong>Requirement:</strong></span> the <code class="computeroutput">value_compare</code> object of both heaps must match. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp102903752"></a><h3>
-<a name="idp45891928-bb"></a><code class="computeroutput">pairing_heap</code> public static functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">handle_type</span> <a name="idp45892136-bb"></a><span class="identifier">s_handle_from_iterator</span><span class="special">(</span><span class="identifier">iterator</span> <span class="keyword">const</span> <span class="special">&amp;</span> it<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp210236112"></a><h3>
+<a name="idp67313344-bb"></a><code class="computeroutput">pairing_heap</code> public static functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">handle_type</span> <a name="idp67313904-bb"></a><span class="identifier">s_handle_from_iterator</span><span class="special">(</span><span class="identifier">iterator</span> <span class="keyword">const</span> <span class="special">&amp;</span> it<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>
@@ -328,7 +328,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="heap_merge.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../heap/reference.html#header.boost.heap.pairing_heap_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="compare.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="heap_merge.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../heap/reference.html#header.boost.heap.pairing_heap_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="allocator.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

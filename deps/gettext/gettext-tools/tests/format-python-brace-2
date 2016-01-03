@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test checking of Python brace format strings.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles f-pyb-2.data"
 cat <<\EOF > f-pyb-2.data
 # Valid: same named arguments
 msgid  "abc{date}{time}"
@@ -28,6 +25,9 @@ msgstr "{baz} {bar} {foo} {bar}"
 # Valid: single reuse of same argument
 msgid  "{baz} {bar} {foo} {bar}"
 msgstr "{foo} {bar} {baz}"
+# Valid: "{{" is an escape of "{"
+msgid  "abc{{{x1}{x2}"
+msgstr "{x2}abc{x1}"
 EOF
 
 : ${MSGFMT=msgfmt}
@@ -36,7 +36,6 @@ while read comment; do
   read msgid_line
   read msgstr_line
   n=`expr $n + 1`
-  tmpfiles="$tmpfiles f-pyb-2-$n.po f-pyb-2-$n.mo"
   cat <<EOF > f-pyb-2-$n.po
 #, python-brace-format
 ${msgid_line}
@@ -64,7 +63,5 @@ EOF
   fi
   rm -f f-pyb-2-$n.po f-pyb-2-$n.mo
 done < f-pyb-2.data
-
-rm -fr $tmpfiles
 
 exit 0

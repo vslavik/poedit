@@ -30,7 +30,11 @@ Key-value flyweights
 <h2>Contents</h2>
 
 <ul>
-  <li><a href="#intro">Introduction</a></li>
+  <li><a href="#intro">Introduction</a>
+    <ul>
+      <li><a href="#serialization">Serialization</a></li>
+    </ul>
+  </li>
   <li><a href="#requirements">Flyweight requirements</a></li>
 </ul>
 
@@ -172,6 +176,45 @@ The <a href="../examples.html">examples section</a> explores
 some common usage scenarios of Boost.Flyweight.
 </p>
 
+<h4><a name="serialization">Serialization</a></h4>
+
+<p>
+<code>flyweight&lt;T&gt;</code> can be serialized by means of the
+<a href="../../../serialization/index.html">Boost Serialization Library</a>
+as long as the underlying <code>T</code> is serializable. Both regular and
+XML archives are supported. In order to
+use Boost.Flyweight serialization capabilities, the specific
+header <a href="../reference/flyweight.html#serialize_synopsis"><code>"boost/flyweight/serialize.hpp"</code></a>
+must be included.
+</p>
+
+<blockquote><pre><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">flyweight</span><span class="special">/</span><span class="identifier">serialize</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Archive</span><span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">serialize</span><span class="special">(</span><span class="identifier">Archive</span><span class="special">&amp;</span> <span class="identifier">ar</span><span class="special">,</span><span class="identifier">user_entry</span><span class="special">&amp;</span> <span class="identifier">user</span><span class="special">,</span><span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">int</span><span class="special">)</span>
+<span class="special">{</span>
+  <span class="identifier">ar</span><span class="special">&amp;</span><span class="identifier">user</span><span class="special">.</span><span class="identifier">first_name</span><span class="special">;</span>
+  <span class="identifier">ar</span><span class="special">&amp;</span><span class="identifier">user</span><span class="special">.</span><span class="identifier">last_name</span><span class="special">;</span>
+  <span class="identifier">ar</span><span class="special">&amp;</span><span class="identifier">user</span><span class="special">.</span><span class="identifier">age</span><span class="special">;</span>
+  <span class="special">...</span>
+<span class="special">}</span>
+</pre></blockquote>
+   
+<p>
+Much as using Boost.Flyweight reduces memory consumption due to the internal
+sharing of duplicate values, serializing <code>flyweight</code>s can also
+result in smaller archive files, as a common value is only stored
+once and their associated <code>flyweight</code>s get saved as references to it.
+This policy is observed even if <code>flyweight</code> underlying type is
+not <a href="../../../serialization/doc/traits.html#tracking">tracked</a>
+by Boost.Serialization.
+</p>
+
+<p>
+See <a href="../examples.html#example6">example 6</a> at the examples section
+for an illustration of use of Boost.Flyweight serialization capabilities.
+</p>
+
 <h3><a name="requirements">Flyweight requirements</a></h3>
 
 <p>
@@ -214,9 +257,9 @@ Key-value flyweights
 
 <br>
 
-<p>Revised December 2nd 2008</p>
+<p>Revised September 1st 2014</p>
 
-<p>&copy; Copyright 2006-2008 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2006-2014 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

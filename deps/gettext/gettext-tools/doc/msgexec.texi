@@ -17,15 +17,35 @@ A special builtin command called @samp{0} outputs the translation, followed
 by a null byte.  The output of @samp{msgexec 0} is suitable as input for
 @samp{xargs -0}.
 
+@table @samp
+@item --newline
+@opindex --newline@r{, @code{msgfilter} option}
+Add newline at the end of each input line.
+
+@end table
+
 @vindex MSGEXEC_MSGCTXT@r{, environment variable}
 @vindex MSGEXEC_MSGID@r{, environment variable}
+@vindex MSGEXEC_MSGID_PLURAL@r{, environment variable}
 @vindex MSGEXEC_LOCATION@r{, environment variable}
+@vindex MSGEXEC_PLURAL_FORM@r{, environment variable}
+@vindex MSGEXEC_PREV_MSGCTXT@r{, environment variable}
+@vindex MSGEXEC_PREV_MSGID@r{, environment variable}
+@vindex MSGEXEC_PREV_MSGID_PLURAL@r{, environment variable}
 During each @var{command} invocation, the environment variable
 @code{MSGEXEC_MSGID} is bound to the message's msgid, and the environment
 variable @code{MSGEXEC_LOCATION} is bound to the location in the PO file
 of the message.  If the message has a context, the environment variable
 @code{MSGEXEC_MSGCTXT} is bound to the message's msgctxt, otherwise it is
-unbound.
+unbound.  If the message has a plural form, environment variable
+@code{MSGEXEC_MSGID_PLURAL} is bound to the message's msgid_plural and
+@code{MSGEXEC_PLURAL_FORM} is bound to the order number of the plural
+actually processed (starting with 0), otherwise both are unbound.
+If the message has a previous msgid (added by @code{msgmerge}),
+environment variable @code{MSGEXEC_PREV_MSGCTXT} is bound to the
+message's previous msgctxt, @code{MSGEXEC_PREV_MSGID} is bound to
+the previous msgid, and @code{MSGEXEC_PREV_MSGID_PLURAL} is bound to
+the previous msgid_plural.
 
 @cindex catalog encoding and @code{msgexec} output
 Note: It is your responsibility to ensure that the @var{command} can cope

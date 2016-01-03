@@ -21,7 +21,7 @@
 #include <boost/interprocess/containers/vector.hpp>
 #include <boost/interprocess/smart_ptr/deleter.hpp>
 #include <boost/interprocess/smart_ptr/scoped_ptr.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 #include <string>
 #include "get_process_id_name.hpp"
 

@@ -9,12 +9,6 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #include <boost/interprocess/detail/config_begin.hpp>
-#include <algorithm>
-#include <memory>
-#include <vector>
-#include <iostream>
-#include <functional>
-
 #include <boost/interprocess/managed_shared_memory.hpp>
 #include <boost/interprocess/containers/stable_vector.hpp>
 #include <boost/interprocess/allocators/allocator.hpp>

@@ -1,3 +1,9 @@
+//  Copyright (c) 2011 David Bellot
+//
+//  Distributed under the Boost Software License, Version 1.0. (See
+//  accompanying file LICENSE_1_0.txt or copy at
+//  http://www.boost.org/LICENSE_1_0.txt)
+
 #ifndef BOOST_UBLAS_NO_ELEMENT_PROXIES
 # define BOOST_UBLAS_NO_ELEMENT_PROXIES
 #endif
@@ -5,7 +11,7 @@
 #include<boost/numeric/ublas/matrix_sparse.hpp>
 #include<boost/numeric/ublas/io.hpp>
 
-#include "libs/numeric/ublas/test/utils.hpp"
+#include "utils.hpp"
 
 using std::cout;
 using std::endl;

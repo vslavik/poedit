@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE library PUBLIC "-//Boost//DTD BoostBook XML V1.0//EN"
   "http://www.boost.org/tools/boostbook/dtd/boostbook.dtd">
+<!--
+    Copyright 2003, Eric Friedman, Itay Maman.
+    Copyright 2013-2014, Antony Polukhin.
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+-->
 <section id="variant.tutorial.advanced">
   <title>Advanced Topics</title>
 
@@ -390,19 +397,20 @@ struct if_visitor: public <classname>boost::static_visitor</classname>&lt;arithm
     arguments by means of <code>apply_visitor</code>:
 
 <programlisting>
-bool_like_t v0(1), v1(true), v2(1.0);
+bool_like_t v0(true), v1(1), v2(2.0);
 
 assert(
     <functionname>boost::apply_visitor</functionname>(if_visitor(), v0, v1, v2)
     ==
-    arithmetics_t(true)
+    arithmetics_t(1)
 );
 </programlisting>
   </para>
 
   <para>Finally, we must note that multi visitation does not support 
     &quot;delayed&quot; form of
-    <code><functionname>apply_visitor</functionname></code>.
+    <code><functionname>apply_visitor</functionname> if
+    <macroname>BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES</macroname> is defined</code>.
   </para>
 
 </section>

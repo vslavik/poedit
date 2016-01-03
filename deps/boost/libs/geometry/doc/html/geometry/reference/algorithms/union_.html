@@ -27,7 +27,7 @@
 <a name="geometry.reference.algorithms.union_"></a><a class="link" href="union_.html" title="union_">union_</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp57039464"></a>
+          <a class="indexterm" name="idp118852224"></a>
 Combines two geometries which each other.
         </p>
 <h6>
@@ -159,7 +159,7 @@ Combines two geometries which each other.
           Either
         </p>
 <p>
-          <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
+          <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
         </p>
 <p>
           Or
@@ -206,7 +206,32 @@ Combines two geometries which each other.
                   </p>
                 </th>
 </tr></thead>
-<tbody><tr>
+<tbody>
+<tr>
+<td>
+                  <p>
+                    GeometryOut is a Point
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Calculates union linestrings of input (multi)points
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    GeometryOut is a Linestring
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Calculates union linestrings of input (multi)linestrings
+                  </p>
+                </td>
+</tr>
+<tr>
 <td>
                   <p>
                     GeometryOut is a Polygon
@@ -217,7 +242,8 @@ Combines two geometries which each other.
                     Calculates union polygons of input (multi)polygons and/or boxes
                   </p>
                 </td>
-</tr></tbody>
+</tr>
+</tbody>
 </table></div>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -245,7 +271,6 @@ Combines two geometries which each other.
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometries</span><span class="special">/</span><span class="identifier">point_xy</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometries</span><span class="special">/</span><span class="identifier">polygon</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">wkt</span><span class="special">/</span><span class="identifier">wkt</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">foreach</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
@@ -308,7 +333,8 @@ Combines two geometries which each other.
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
+      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

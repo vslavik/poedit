@@ -28,7 +28,9 @@ namespace boost
         void test(Container1& cont1, Container2& cont2)
         {
             typedef BOOST_DEDUCED_TYPENAME Container1::value_type value_t;
-            typedef BOOST_DEDUCED_TYPENAME std::vector<value_t>::iterator iterator_t;
+
+            typedef BOOST_DEDUCED_TYPENAME std::vector<value_t>::iterator
+                                                iterator_t BOOST_RANGE_UNUSED;
 
             std::vector<value_t> reference_target(cont1.begin(), cont1.end());
             reference_target.insert(reference_target.end(),
@@ -74,7 +76,8 @@ namespace boost
         void test_pred(Container1 cont1, Container2 cont2, BinaryPredicate pred)
         {
             typedef BOOST_DEDUCED_TYPENAME Container1::value_type value_t;
-            typedef BOOST_DEDUCED_TYPENAME std::vector<value_t>::iterator iterator_t;
+            typedef BOOST_DEDUCED_TYPENAME std::vector<value_t>::iterator
+                                                iterator_t BOOST_RANGE_UNUSED;
 
             sort_container(cont1, pred);
             sort_container(cont2, pred);

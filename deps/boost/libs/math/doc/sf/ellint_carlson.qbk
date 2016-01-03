@@ -69,6 +69,21 @@ LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
   }} // namespaces
 
+``
+  #include <boost/math/special_functions/ellint_rg.hpp>
+``
+
+  namespace boost { namespace math {
+
+  template <class T1, class T2, class T3>
+  ``__sf_result`` ellint_rg(T1 x, T2 y, T3 z)
+
+  template <class T1, class T2, class T3, class ``__Policy``>
+  ``__sf_result`` ellint_rg(T1 x, T2 y, T3 z, const ``__Policy``&)
+
+  }} // namespaces
+
+
 
 [heading Description]
 
@@ -154,6 +169,20 @@ using the relation:
 
 [equation ellint18]
 
+  template <class T1, class T2, class T3>
+  ``__sf_result`` ellint_rg(T1 x, T2 y, T3 z)
+  
+  template <class T1, class T2, class T3, class ``__Policy``>
+  ``__sf_result`` ellint_rg(T1 x, T2 y, T3 z, const ``__Policy``&)
+  
+Returns Carlson's elliptic integral R[sub G]:
+
+[equation ellint27]
+
+Requires that x and y are non-negative, otherwise returns the result of __domain_error.
+
+[optional_policy]
+
 [heading Testing]
 
 There are two sets of tests.
@@ -199,7 +228,7 @@ closer and closer. When they are nearly equal, the special case equation
 
 is used. More specifically, ['[R F]] is evaluated from a Taylor series
 expansion to the fifth order. The calculations of the other three integrals
-are analogous.
+are analogous, except for R[sub C] which can be computed from elementary functions.
 
 For ['p < 0] in ['R[sub J](x, y, z, p)] and ['y < 0] in ['R[sub C](x, y)],
 the integrals are singular and their

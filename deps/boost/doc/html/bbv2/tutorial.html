@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../bbv2.html" title="Chapter&#160;42.&#160;Boost.Build V2 User Manual">
-<link rel="prev" href="installation.html" title="Installation">
+<link rel="up" href="../bbv2.html" title="Chapter&#160;43.&#160;Boost.Build User Manual">
+<link rel="prev" href="../bbv2.html" title="Chapter&#160;43.&#160;Boost.Build User Manual">
 <link rel="next" href="overview.html" title="Overview">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="installation.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../bbv2.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="overview.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../bbv2.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../bbv2.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="overview.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
@@ -35,8 +35,8 @@
 <dt><span class="section"><a href="tutorial.html#bbv2.tutorial.prebuilt">Prebuilt targets</a></span></dt>
 </dl></div>
 <p>
-    This section will guide you though the most basic features of Boost.Build
-    V2. We will start with the &#8220;Hello, world&#8221; example, learn how
+    This section will guide you though the most basic features of Boost.Build.
+    We will start with the &#8220;Hello, world&#8221; example, learn how
     to use libraries, and finish with testing and installing features.
   </p>
 <div class="section">
@@ -203,7 +203,7 @@ exe hello
         requirements, the target requirements usually override (or, in the case
         of &#8220;free&#8221;&#8221; features like
         <code class="varname">&lt;include&gt;</code>,
-        <a href="#ftn.idp265548968" class="footnote" name="idp265548968"><sup class="footnote">[13]</sup></a>
+        <a href="#ftn.idp543609808" class="footnote" name="idp543609808"><sup class="footnote">[13]</sup></a>
         augments) the build request.
       </p>
 <div class="tip"><table border="0" summary="Tip">
@@ -315,7 +315,7 @@ top/
 
       in its requirements, then all of its subprojects will have it
       in their requirements, too.  Of course, any project can add
-      include paths to those specified by its parents. <a href="#ftn.idp265564776" class="footnote" name="idp265564776"><sup class="footnote">[14]</sup></a>
+      include paths to those specified by its parents. <a href="#ftn.idp543638016" class="footnote" name="idp543638016"><sup class="footnote">[14]</sup></a>
     More details can be found in
       <a class="xref" href="overview.html#bbv2.overview.projects" title="Projects">the section called &#8220;Projects&#8221;</a>.
     </p>
@@ -600,13 +600,13 @@ exe app <span class="special">:</span> app.cpp core <span class="special">;</spa
       </p>
 <pre class="programlisting">
 lib network <span class="special">:</span> network.cpp
-    <span class="special">:</span> <span class="bold"><strong>&lt;link&gt;shared:&lt;define&gt;NEWORK_LIB_SHARED</strong></span>
+    <span class="special">:</span> <span class="bold"><strong>&lt;link&gt;shared:&lt;define&gt;NETWORK_LIB_SHARED</strong></span>
      &lt;variant&gt;release:&lt;define&gt;EXTRA_FAST
     <span class="special">;</span></pre>
 <p>
 
       In the example above, whenever <code class="filename">network</code> is built with
-      <code class="computeroutput">&lt;link&gt;shared</code>, <code class="computeroutput">&lt;define&gt;NEWORK_LIB_SHARED
+      <code class="computeroutput">&lt;link&gt;shared</code>, <code class="computeroutput">&lt;define&gt;NETWORK_LIB_SHARED
       </code> will be in its properties, too. Also, whenever its release variant
       is built, <code class="computeroutput">&lt;define&gt;EXTRA_FAST</code> will appear in its
       properties.
@@ -712,10 +712,10 @@ lib pythonlib <span class="special">:</span> <span class="special">:</span> &lt;
 </div>
 <div class="footnotes">
 <br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.idp265548968" class="footnote"><p><a href="#idp265548968" class="para"><sup class="para">[13] </sup></a>
+<div id="ftn.idp543609808" class="footnote"><p><a href="#idp543609808" class="para"><sup class="para">[13] </sup></a>
              See <a class="xref" href="reference.html#bbv2.reference.features.attributes" title="Feature Attributes">the section called &#8220;Feature Attributes&#8221;</a>
           </p></div>
-<div id="ftn.idp265564776" class="footnote"><p><a href="#idp265564776" class="para"><sup class="para">[14] </sup></a>Many
+<div id="ftn.idp543638016" class="footnote"><p><a href="#idp543638016" class="para"><sup class="para">[14] </sup></a>Many
       features will be overridden,
       rather than added-to, in subprojects.  See <a class="xref" href="reference.html#bbv2.reference.features.attributes" title="Feature Attributes">the section called &#8220;Feature Attributes&#8221;</a> for more
       information</p></div>
@@ -723,15 +723,11 @@ lib pythonlib <span class="special">:</span> <span class="special">:</span> &lt;
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2009 Vladimir Prus<p>Distributed under the Boost Software License, Version 1.0.
-      (See accompanying file <code class="filename">LICENSE_1_0.txt</code> or copy at 
-      <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
-      </p>
-</div></td>
+<td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="installation.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../bbv2.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="overview.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../bbv2.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../bbv2.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="overview.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

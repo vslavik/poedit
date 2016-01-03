@@ -18,27 +18,29 @@ replace_ver()
 
 VER_FULL=$1
 VER_SHORT="`echo $VER_FULL | sed -e 's/\(pre\|beta\|rc\)[0-9]//g'`"
-VER_WIN="`echo $VER_SHORT | tr '.' ','`,0"
+VER_WIN="`echo $VER_SHORT | tr '.' ','`"
+if [ `echo $VER_WIN | awk 'BEGIN{FS=","} {print NF}'` = 2 ] ; then
+    VER_WIN="$VER_WIN,0"
+fi
 
 replace_ver win32/poedit.iss \
             '\(#define VERSION_FULL *"\).*\("\)' "\1$VER_FULL\2"
 replace_ver win32/poedit.iss \
             '\(#define VERSION *"\).*\("\)' "\1$VER_SHORT\2"
+replace_ver win32/distrib.proj \
+            '\(<PoeditVersion>\).*\(</PoeditVersion>\)' "\1$VER_SHORT\2"
 replace_ver configure.ac \
             '\(AC_INIT(\[poedit\], \[\)[^]]*\(\],.*\)' "\1$VER_FULL\2"
 replace_ver configure.ac \
             '\(PACKAGE_SHORT_VERSION=\).*' "\1$VER_SHORT"
-replace_ver make-distrib.sh \
-            '\(VERSION=\).*' "\1$VER_FULL"
+replace_ver scripts/refresh-pot.sh \
+            '\(PACKAGE_SHORT_VERSION=\).*' "\1$VER_SHORT"
 replace_ver src/version.h \
             '\(POEDIT_VERSION.*"\).*\("\)' "\1$VER_FULL\2"
 replace_ver src/version.h \
             '\(POEDIT_VERSION_WIN *\).*' "\1$VER_WIN"
+replace_ver .travis.yml \
+            '\(file: poedit-\).*\(.tar.gz\)' "\1$VER_FULL\2"
 replace_ver Poedit.xcodeproj/project.pbxproj \
             '\(POEDIT_VERSION = \).*\(;\)' "\1$VER_FULL\2"
 touch macosx/Poedit-Info.plist
-
-for i in locales/*.po locales/*.pot ; do
-    replace_ver $i \
-                '\(Project-Id-Version:\)[^\\]*' "\1 Poedit $VER_SHORT"
-done

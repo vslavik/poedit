@@ -1,6 +1,6 @@
 /* Boost.Flyweight example of flyweight-based formatted text processing.
  *
- * Copyright 2006-2008 Joaquin M Lopez Munoz.
+ * Copyright 2006-2014 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -26,33 +26,6 @@ namespace std{using ::exit;using ::tolower;}
 
 using namespace boost::flyweights;
 
-/* See the portability section of Boost.Hash at
- *   http://boost.org/doc/html/hash/portability.html
- * for an explanation of the ADL-related workarounds.
- */
-
-namespace boost{
-#if !defined(BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP)
-namespace flyweights{
-#endif
-
-/* We hash the various flyweight types used in the program hashing
- * a *pointer* to their contents: this is consistent as equality of
- * flyweights implies equality of references.
- */
-
-template<typename T>
-std::size_t hash_value(const flyweight<T>& x)
-{
-  boost::hash<const T*> h;
-  return h(&x.get());
-}
-
-#if !defined(BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP)
-} /* namespace flyweights */
-#endif
-} /* namespace boost */
-
 /* An HTML tag consists of a name and optional properties of the form
  * name1=value1 ... namen=valuen. We do not need to parse the properties
  * for the purposes of the program, hence they are all stored in
@@ -69,6 +42,11 @@ bool operator==(const html_tag_data& x,const html_tag_data& y)
 {
   return x.name==y.name&&x.properties==y.properties;
 }
+
+/* See the portability section of Boost.Hash at
+ *   http://boost.org/doc/html/hash/portability.html
+ * for an explanation of the ADL-related workarounds.
+ */
 
 #if defined(BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP)
 namespace boost{

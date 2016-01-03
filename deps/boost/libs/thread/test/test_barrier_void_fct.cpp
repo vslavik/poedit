@@ -24,7 +24,7 @@ void void_fct() {
 }
 
 const int N_THREADS=3;
-boost::barrier gen_barrier(N_THREADS, void_fct);
+boost::barrier gen_barrier(N_THREADS, &void_fct);
 
 void barrier_thread()
 {
@@ -49,9 +49,10 @@ void test_barrier()
     }
     catch(...)
     {
+        BOOST_TEST(false);
         g.interrupt_all();
         g.join_all();
-        throw;
+        //throw;
     }
 
     BOOST_TEST(global_parameter==5);

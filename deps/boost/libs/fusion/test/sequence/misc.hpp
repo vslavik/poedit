@@ -13,6 +13,7 @@
 #include <boost/mpl/equal.hpp>
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/integral_c.hpp>
+#include <boost/mpl/is_sequence.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <string>
 
@@ -95,6 +96,7 @@ struct test_intrinsics2
 {
     typedef boost::fusion::FUSION_SEQUENCE<> seq0;
 
+#if !defined(BOOST_FUSION_SEQUENCE_CONVERSION_IS_NOT_SEQUENCE__TYPE_PRESERVING)
 #if !defined(FUSION_FORWARD_ONLY) // list has no back/prev
 
     typedef boost::fusion::FUSION_SEQUENCE<int> target1;
@@ -114,6 +116,8 @@ struct test_intrinsics2
     typedef boost::fusion::FUSION_SEQUENCE<double, int> target4;
     typedef boost::mpl::push_front<seq3, double>::type seq4;
     BOOST_STATIC_ASSERT((boost::mpl::equal<seq4, target4>::value));
+
+#endif
 };
 
 void
@@ -170,6 +174,17 @@ test()
         BOOST_STATIC_ASSERT(traits::is_sequence<t3>::value);
         BOOST_STATIC_ASSERT(!traits::is_sequence<int>::value);
         BOOST_STATIC_ASSERT(!traits::is_sequence<char>::value);
+    }
+
+    {   // testing mpl::is_sequence
+
+        typedef FUSION_SEQUENCE<int, float, double> t1;
+        typedef FUSION_SEQUENCE<> t2;
+        typedef FUSION_SEQUENCE<char> t3;
+
+        BOOST_STATIC_ASSERT(boost::mpl::is_sequence<t1>::value);
+        BOOST_STATIC_ASSERT(boost::mpl::is_sequence<t2>::value);
+        BOOST_STATIC_ASSERT(boost::mpl::is_sequence<t3>::value);
     }
 
     {   // testing mpl compatibility

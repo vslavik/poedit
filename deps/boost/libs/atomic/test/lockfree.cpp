@@ -9,11 +9,11 @@
 //  Also, if any operation is lock-free, then the platform
 //  implementation must provide overridden fence implementations.
 
-#include <iostream>
-
-#include <boost/config.hpp>
 #include <boost/atomic.hpp>
-#include <boost/test/minimal.hpp>
+
+#include <iostream>
+#include <boost/config.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 static const char * lock_free_level[] = {
     "never",
@@ -25,15 +25,15 @@ template<typename T>
 void
 verify_lock_free(const char * type_name, int lock_free_macro_val, int lock_free_expect)
 {
-    BOOST_CHECK(lock_free_macro_val >= 0 && lock_free_macro_val <= 2);
-    BOOST_CHECK(lock_free_macro_val == lock_free_expect);
+    BOOST_TEST(lock_free_macro_val >= 0 && lock_free_macro_val <= 2);
+    BOOST_TEST(lock_free_macro_val == lock_free_expect);
 
     boost::atomic<T> value;
 
     if (lock_free_macro_val == 0)
-        BOOST_CHECK(!value.is_lock_free());
+        BOOST_TEST(!value.is_lock_free());
     if (lock_free_macro_val == 2)
-        BOOST_CHECK(value.is_lock_free());
+        BOOST_TEST(value.is_lock_free());
 
     std::cout << "atomic<" << type_name << "> is " << lock_free_level[lock_free_macro_val] << " lock free\n";
 }
@@ -44,7 +44,7 @@ verify_lock_free(const char * type_name, int lock_free_macro_val, int lock_free_
 #define EXPECT_SHORT_LOCK_FREE 2
 #define EXPECT_INT_LOCK_FREE 2
 #define EXPECT_LONG_LOCK_FREE 2
-#if defined(BOOST_ATOMIC_X86_HAS_CMPXCHG8B)
+#if defined(BOOST_ATOMIC_DETAIL_X86_HAS_CMPXCHG8B)
 #define EXPECT_LLONG_LOCK_FREE 2
 #else
 #define EXPECT_LLONG_LOCK_FREE 0
@@ -60,7 +60,7 @@ verify_lock_free(const char * type_name, int lock_free_macro_val, int lock_free_
 #define EXPECT_INT_LOCK_FREE 2
 #define EXPECT_LONG_LOCK_FREE 2
 #define EXPECT_LLONG_LOCK_FREE 2
-#if defined(BOOST_ATOMIC_X86_HAS_CMPXCHG16B) && defined(BOOST_HAS_INT128)
+#if defined(BOOST_ATOMIC_DETAIL_X86_HAS_CMPXCHG16B) && (defined(BOOST_HAS_INT128) || !defined(BOOST_NO_ALIGNMENT))
 #define EXPECT_INT128_LOCK_FREE 2
 #else
 #define EXPECT_INT128_LOCK_FREE 0
@@ -100,15 +100,26 @@ verify_lock_free(const char * type_name, int lock_free_macro_val, int lock_free_
 #define EXPECT_POINTER_LOCK_FREE 2
 #define EXPECT_BOOL_LOCK_FREE 2
 
-#elif defined(__GNUC__) && (defined(__ARM_ARCH_6__)  || defined(__ARM_ARCH_6J__) \
-                         || defined(__ARM_ARCH_6Z__) || defined(__ARM_ARCH_6ZK__) \
-                         || defined(__ARM_ARCH_6K__) || defined(__ARM_ARCH_7A__))
+#elif defined(__GNUC__) &&\
+    (\
+        defined(__ARM_ARCH_6__)  || defined(__ARM_ARCH_6J__) ||\
+        defined(__ARM_ARCH_6K__) || defined(__ARM_ARCH_6Z__) ||\
+        defined(__ARM_ARCH_6ZK__) ||\
+        defined(__ARM_ARCH_7__) || defined(__ARM_ARCH_7A__) ||\
+        defined(__ARM_ARCH_7R__) || defined(__ARM_ARCH_7M__) ||\
+        defined(__ARM_ARCH_7EM__) || defined(__ARM_ARCH_7S__)\
+    )
 
 #define EXPECT_CHAR_LOCK_FREE 2
 #define EXPECT_SHORT_LOCK_FREE 2
 #define EXPECT_INT_LOCK_FREE 2
 #define EXPECT_LONG_LOCK_FREE 2
+#if !(defined(__ARM_ARCH_6__) || defined(__ARM_ARCH_6J__) || defined(__ARM_ARCH_6Z__)\
+    || ((defined(__ARM_ARCH_6K__) || defined(__ARM_ARCH_6ZK__)) && defined(__thumb__)) || defined(__ARM_ARCH_7M__))
+#define EXPECT_LLONG_LOCK_FREE 2
+#else
 #define EXPECT_LLONG_LOCK_FREE 0
+#endif
 #define EXPECT_INT128_LOCK_FREE 0
 #define EXPECT_POINTER_LOCK_FREE 2
 #define EXPECT_BOOL_LOCK_FREE 2
@@ -141,24 +152,13 @@ verify_lock_free(const char * type_name, int lock_free_macro_val, int lock_free_
 #define EXPECT_SHORT_LOCK_FREE 2
 #define EXPECT_INT_LOCK_FREE 2
 #define EXPECT_LONG_LOCK_FREE 2
-#if defined(_WIN64) || defined(BOOST_ATOMIC_X86_HAS_CMPXCHG8B) || defined(_M_AMD64) || defined(_M_IA64)
+#if defined(_WIN64) || defined(BOOST_ATOMIC_DETAIL_X86_HAS_CMPXCHG8B) || defined(_M_AMD64) || defined(_M_IA64) || (_MSC_VER >= 1700 && defined(_M_ARM))
 #define EXPECT_LLONG_LOCK_FREE 2
 #else
 #define EXPECT_LLONG_LOCK_FREE 0
 #endif
 #define EXPECT_INT128_LOCK_FREE 0
 #define EXPECT_POINTER_LOCK_FREE 2
-#define EXPECT_BOOL_LOCK_FREE 2
-
-#elif 0 && defined(__GNUC__)
-
-#define EXPECT_CHAR_LOCK_FREE 2
-#define EXPECT_SHORT_LOCK_FREE 2
-#define EXPECT_INT_LOCK_FREE 2
-#define EXPECT_LONG_LOCK_FREE (sizeof(long) <= 4 ? 2 : 0)
-#define EXPECT_LLONG_LOCK_FREE (sizeof(long long) <= 4 ? 2 : 0)
-#define EXPECT_INT128_LOCK_FREE 0
-#define EXPECT_POINTER_LOCK_FREE (sizeof(void *) <= 4 ? 2 : 0)
 #define EXPECT_BOOL_LOCK_FREE 2
 
 #else
@@ -174,7 +174,7 @@ verify_lock_free(const char * type_name, int lock_free_macro_val, int lock_free_
 
 #endif
 
-int test_main(int, char *[])
+int main(int, char *[])
 {
     verify_lock_free<char>("char", BOOST_ATOMIC_CHAR_LOCK_FREE, EXPECT_CHAR_LOCK_FREE);
     verify_lock_free<short>("short", BOOST_ATOMIC_SHORT_LOCK_FREE, EXPECT_SHORT_LOCK_FREE);
@@ -197,7 +197,7 @@ int test_main(int, char *[])
         BOOST_ATOMIC_LLONG_LOCK_FREE > 0 ||
         BOOST_ATOMIC_BOOL_LOCK_FREE > 0;
 
-    BOOST_CHECK(!any_lock_free || BOOST_ATOMIC_THREAD_FENCE > 0);
+    BOOST_TEST(!any_lock_free || BOOST_ATOMIC_THREAD_FENCE > 0);
 
-    return 0;
+    return boost::report_errors();
 }

@@ -27,7 +27,7 @@ int main()
                     boost::tuple<float, float, float>
                 >
         >::value;
-    
+
     std::cout << "dimensions: " << dim << std::endl;
 
     return 0;

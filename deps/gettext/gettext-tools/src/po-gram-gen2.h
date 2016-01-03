@@ -1,19 +1,19 @@
-/* A Bison parser, made by GNU Bison 2.6.4.  */
+/* A Bison parser, made by GNU Bison 3.0.2.  */
 
 /* Bison interface for Yacc-like parsers in C
-   
-      Copyright (C) 1984, 1989-1990, 2000-2012 Free Software Foundation, Inc.
-   
+
+   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
-   
+
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-   
+
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
@@ -26,13 +26,13 @@
    special exception, which will cause the skeleton and the resulting
    Bison output files to be licensed under the GNU General Public
    License without this special exception.
-   
+
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
 #ifndef YY_YY_PO_GRAM_GEN_H_INCLUDED
 # define YY_YY_PO_GRAM_GEN_H_INCLUDED
-/* Enabling traces.  */
+/* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
 #endif
@@ -40,27 +40,26 @@
 extern DLL_VARIABLE int po_gram_debug;
 #endif
 
-/* Tokens.  */
+/* Token type.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
-   /* Put the tokens into the symbol table, so that GDB and other debuggers
-      know about them.  */
-   enum po_gram_tokentype {
-     COMMENT = 258,
-     DOMAIN = 259,
-     JUNK = 260,
-     PREV_MSGCTXT = 261,
-     PREV_MSGID = 262,
-     PREV_MSGID_PLURAL = 263,
-     PREV_STRING = 264,
-     MSGCTXT = 265,
-     MSGID = 266,
-     MSGID_PLURAL = 267,
-     MSGSTR = 268,
-     NAME = 269,
-     NUMBER = 270,
-     STRING = 271
-   };
+  enum po_gram_tokentype
+  {
+    COMMENT = 258,
+    DOMAIN = 259,
+    JUNK = 260,
+    PREV_MSGCTXT = 261,
+    PREV_MSGID = 262,
+    PREV_MSGID_PLURAL = 263,
+    PREV_STRING = 264,
+    MSGCTXT = 265,
+    MSGID = 266,
+    MSGID_PLURAL = 267,
+    MSGSTR = 268,
+    NAME = 269,
+    NUMBER = 270,
+    STRING = 271
+  };
 #endif
 /* Tokens.  */
 #define COMMENT 258
@@ -78,13 +77,12 @@ extern DLL_VARIABLE int po_gram_debug;
 #define NUMBER 270
 #define STRING 271
 
-
-
+/* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE
+typedef union YYSTYPE YYSTYPE;
+union YYSTYPE
 {
-/* Line 2077 of yacc.c  */
-#line 143 "po-gram-gen.y"
+#line 144 "po-gram-gen.y" /* yacc.c:1909  */
 
   struct { char *string; lex_pos_ty pos; bool obsolete; } string;
   struct { string_list_ty stringlist; lex_pos_ty pos; bool obsolete; } stringlist;
@@ -94,29 +92,15 @@ typedef union YYSTYPE
   struct { char *prev_ctxt; char *prev_id; char *prev_id_plural; char *ctxt; lex_pos_ty pos; bool obsolete; } message_intro;
   struct { struct msgstr_def rhs; lex_pos_ty pos; bool obsolete; } rhs;
 
-
-/* Line 2077 of yacc.c  */
-#line 100 "po-gram-gen.h"
-} YYSTYPE;
+#line 96 "po-gram-gen.h" /* yacc.c:1909  */
+};
 # define YYSTYPE_IS_TRIVIAL 1
-# define po_gram_stype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 #endif
 
+
 extern DLL_VARIABLE YYSTYPE po_gram_lval;
 
-#ifdef YYPARSE_PARAM
-#if defined __STDC__ || defined __cplusplus
-int po_gram_parse (void *YYPARSE_PARAM);
-#else
-int po_gram_parse ();
-#endif
-#else /* ! YYPARSE_PARAM */
-#if defined __STDC__ || defined __cplusplus
 int po_gram_parse (void);
-#else
-int po_gram_parse ();
-#endif
-#endif /* ! YYPARSE_PARAM */
 
 #endif /* !YY_YY_PO_GRAM_GEN_H_INCLUDED  */

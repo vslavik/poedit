@@ -10,7 +10,7 @@
 :Contact: dave@boost-consulting.com, jsiek@osl.iu.edu, witt@styleadvisor.com
 :organization: `Boost Consulting`_, Indiana University `Open Systems
                Lab`_, `Zephyr Associates, Inc.`_
-:date: $Date: 2006-09-11 15:27:29 -0700 (Mon, 11 Sep 2006) $
+:date: $Date$
 
 :Number: This is a revised version of N1530_\ =03-0113, which was
          accepted for Technical Report 1 by the C++ standard
@@ -19,7 +19,7 @@
 .. Version 1.9 of this ReStructuredText document corresponds to
    n1530_, the paper accepted by the LWG.
 
-.. _n1530: http://anubis.dkuug.dk/jtc1/sc22/wg21/docs/papers/2003/n1530.html
+.. _n1530: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2003/n1530.html
 
 :copyright: Copyright David Abrahams, Jeremy Siek, and Thomas Witt 2003. 
 
@@ -140,7 +140,7 @@ as proposed in n1550_, since user-defined and especially adapted
 iterators suffer from the well known categorization problems that are
 inherent to the current iterator categories.
 
-.. _n1550: http://anubis.dkuug.dk/JTC1/SC22/WG21/docs/papers/2003/n1550.html
+.. _n1550: http://www.open-std.org/JTC1/SC22/WG21/docs/papers/2003/n1550.htm
 
 This proposal does not strictly depend on proposal n1550_, as there
 is a direct mapping between new and old categories. This proposal
@@ -169,8 +169,8 @@ reverse iterator types. The proposed new reverse_iterator template
 fixes the issues raised in 280. It provides the desired
 interoperability without introducing unwanted overloads.
 
-.. _179: http://anubis.dkuug.dk/jtc1/sc22/wg21/docs/lwg-defects.html#179
-.. _280: http://anubis.dkuug.dk/jtc1/sc22/wg21/docs/lwg-active.html#280
+.. _179: http://www.open-std.org/jtc1/sc22/wg21/docs/lwg-defects.html#179
+.. _280: http://www.open-std.org/jtc1/sc22/wg21/docs/lwg-active.html#280
 
 
 Iterator Facade

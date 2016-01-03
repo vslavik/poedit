@@ -6,14 +6,14 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../../../sinks.html#header.boost.log.sinks.event_log_backend_hpp" title="Header &lt;boost/log/sinks/event_log_backend.hpp&gt;">
-<link rel="prev" href="basic_simple_e_idp27192104.html" title="Class template basic_simple_event_log_backend">
-<link rel="next" href="event_log/make_event_id.html" title="Function make_event_id">
+<link rel="prev" href="event_log/direct_event_type_mapping.html" title="Class template direct_event_type_mapping">
+<link rel="next" href="basic_simple_e_idp44466032.html" title="Class template basic_simple_event_log_backend">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td></tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="basic_simple_e_idp27192104.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../sinks.html#header.boost.log.sinks.event_log_backend_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="event_log/make_event_id.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="event_log/direct_event_type_mapping.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../sinks.html#header.boost.log.sinks.event_log_backend_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="basic_simple_e_idp44466032.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.log.sinks.basic_event_log_backend"></a><div class="titlepage"></div>
@@ -39,51 +39,51 @@
 
   <span class="comment">// <a class="link" href="basic_event_log_backend.html#boost.log.sinks.basic_event_log_backendconstruct-copy-destruct">construct/copy/destruct</a></span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-    <span class="keyword">explicit</span> <a class="link" href="basic_event_log_backend.html#idp27220984-bb"><span class="identifier">basic_event_log_backend</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="basic_event_log_backend.html#idp27222344-bb"><span class="identifier">basic_event_log_backend</span></a><span class="special">(</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <span class="keyword">explicit</span> <a class="link" href="basic_event_log_backend.html#idp44445504-bb"><span class="identifier">basic_event_log_backend</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="basic_event_log_backend.html#idp44448192-bb"><span class="identifier">basic_event_log_backend</span></a><span class="special">(</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> 
-    <span class="keyword">explicit</span> <a class="link" href="basic_event_log_backend.html#idp27223288-bb"><span class="identifier">basic_event_log_backend</span></a><span class="special">(</span><span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="basic_event_log_backend.html#idp27228808-bb"><span class="special">~</span><span class="identifier">basic_event_log_backend</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+    <span class="keyword">explicit</span> <a class="link" href="basic_event_log_backend.html#idp44450032-bb"><span class="identifier">basic_event_log_backend</span></a><span class="special">(</span><span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="basic_event_log_backend.html#idp44460512-bb"><span class="special">~</span><span class="identifier">basic_event_log_backend</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="basic_event_log_backend.html#idp27215880-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="basic_event_log_backend.html#idp27216088-bb"><span class="identifier">consume</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="basic_event_log_backend.html#idp27217512-bb"><span class="identifier">set_event_type_mapper</span></a><span class="special">(</span><span class="identifier">event_type_mapper_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="basic_event_log_backend.html#idp27218648-bb"><span class="identifier">set_event_category_mapper</span></a><span class="special">(</span><span class="identifier">event_category_mapper_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="basic_event_log_backend.html#idp27219784-bb"><span class="identifier">set_event_composer</span></a><span class="special">(</span><span class="identifier">event_composer_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="basic_event_log_backend.html#idp44435856-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="basic_event_log_backend.html#idp44436416-bb"><span class="identifier">consume</span></a><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="basic_event_log_backend.html#idp44439104-bb"><span class="identifier">set_event_type_mapper</span></a><span class="special">(</span><span class="identifier">event_type_mapper_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="basic_event_log_backend.html#idp44441152-bb"><span class="identifier">set_event_category_mapper</span></a><span class="special">(</span><span class="identifier">event_category_mapper_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="basic_event_log_backend.html#idp44443216-bb"><span class="identifier">set_event_composer</span></a><span class="special">(</span><span class="identifier">event_composer_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="basic_event_log_backend.html#idp27229176-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">string_type</span> <a class="link" href="basic_event_log_backend.html#idp27229384-bb"><span class="identifier">get_default_log_name</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="identifier">string_type</span> <a class="link" href="basic_event_log_backend.html#idp27230312-bb"><span class="identifier">get_default_source_name</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="basic_event_log_backend.html#idp44461312-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">string_type</span> <a class="link" href="basic_event_log_backend.html#idp44461872-bb"><span class="identifier">get_default_log_name</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="identifier">string_type</span> <a class="link" href="basic_event_log_backend.html#idp44463840-bb"><span class="identifier">get_default_source_name</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp65181528"></a><h2>Description</h2>
-<p>The sink uses Windows NT 5 (Windows 2000) and later event log API to emit events to an event log. The sink acts as an event source. Unlike <code class="computeroutput"><a class="link" href="basic_simple_e_idp27192104.html" title="Class template basic_simple_event_log_backend">basic_simple_event_log_backend</a></code>, this sink backend allows users to specify the custom event message file and supports mapping attribute values onto several insertion strings. Although it requires considerably more scaffolding than the simple backend, this allows to support localizable event descriptions.</p>
+<a name="idp124803520"></a><h2>Description</h2>
+<p>The sink uses Windows NT 5 (Windows 2000) and later event log API to emit events to an event log. The sink acts as an event source. Unlike <code class="computeroutput"><a class="link" href="basic_simple_e_idp44466032.html" title="Class template basic_simple_event_log_backend">basic_simple_event_log_backend</a></code>, this sink backend allows users to specify the custom event message file and supports mapping attribute values onto several insertion strings. Although it requires considerably more scaffolding than the simple backend, this allows to support localizable event descriptions.</p>
 <p>Besides the file name of the module with event resources, the backend provides the following customizations: </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
-<li class="listitem"><p>Remote server UNC address, log name and source name. These parameters have similar meaning to <code class="computeroutput"><a class="link" href="basic_simple_e_idp27192104.html" title="Class template basic_simple_event_log_backend">basic_simple_event_log_backend</a></code>. </p></li>
+<li class="listitem"><p>Remote server UNC address, log name and source name. These parameters have similar meaning to <code class="computeroutput"><a class="link" href="basic_simple_e_idp44466032.html" title="Class template basic_simple_event_log_backend">basic_simple_event_log_backend</a></code>. </p></li>
 <li class="listitem"><p>Event type and category mappings. These are function object that allow to map attribute values to the according event parameters. One can use mappings in the <code class="computeroutput">event_log</code> namespace. </p></li>
 <li class="listitem"><p>Event composer. This function object extracts event identifier and formats string insertions, that will be used by the API to compose the final event message text. </p></li>
 </ul></div>
 <p>
 </p>
 <div class="refsect2">
-<a name="idp65185624"></a><h3>
+<a name="idp124810752"></a><h3>
 <a name="boost.log.sinks.basic_event_log_backendconstruct-copy-destruct"></a><code class="computeroutput">basic_event_log_backend</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-  <span class="keyword">explicit</span> <a name="idp27220984-bb"></a><span class="identifier">basic_event_log_backend</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> message_file_name<span class="special">)</span><span class="special">;</span></pre>
+  <span class="keyword">explicit</span> <a name="idp44445504-bb"></a><span class="identifier">basic_event_log_backend</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> message_file_name<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor. Registers event source with name based on the application executable file name in the Application log. If such a registration is already present, it is not overridden. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp27222344-bb"></a><span class="identifier">basic_event_log_backend</span><span class="special">(</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="keyword">const</span> <span class="special">&amp;</span> message_file_name<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp44448192-bb"></a><span class="identifier">basic_event_log_backend</span><span class="special">(</span><span class="identifier">filesystem</span><span class="special">::</span><span class="identifier">path</span> <span class="keyword">const</span> <span class="special">&amp;</span> message_file_name<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor. Registers event source with name based on the application executable file name in the Application log. If such a registration is already present, it is not overridden. </p>
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span><span class="special">...</span> ArgsT<span class="special">&gt;</span> 
-  <span class="keyword">explicit</span> <a name="idp27223288-bb"></a><span class="identifier">basic_event_log_backend</span><span class="special">(</span><span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre>
+  <span class="keyword">explicit</span> <a name="idp44450032-bb"></a><span class="identifier">basic_event_log_backend</span><span class="special">(</span><span class="identifier">ArgsT</span><span class="special">...</span><span class="keyword">const</span> <span class="special">&amp;</span> args<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor. Registers event log source with the specified parameters. The following named parameters are supported:</p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem"><p><code class="computeroutput">message_file</code> - Specifies the file name that contains resources that describe events and categories. </p></li>
@@ -116,17 +116,17 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp27228808-bb"></a><span class="special">~</span><span class="identifier">basic_event_log_backend</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp44460512-bb"></a><span class="special">~</span><span class="identifier">basic_event_log_backend</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Destructor. Unregisters event source. The log source description is not removed from the Windows registry. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp65210728"></a><h3>
-<a name="idp27215880-bb"></a><code class="computeroutput">basic_event_log_backend</code> public member functions</h3>
+<a name="idp124860416"></a><h3>
+<a name="idp44435856-bb"></a><code class="computeroutput">basic_event_log_backend</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp27216088-bb"></a><span class="identifier">consume</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp44436416-bb"></a><span class="identifier">consume</span><span class="special">(</span><span class="identifier">record_view</span> <span class="keyword">const</span> <span class="special">&amp;</span> rec<span class="special">)</span><span class="special">;</span></pre>
 <p>The method creates an event in the event log</p>
 <p>
 </p>
@@ -151,25 +151,25 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp27217512-bb"></a><span class="identifier">set_event_type_mapper</span><span class="special">(</span><span class="identifier">event_type_mapper_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> mapper<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp44439104-bb"></a><span class="identifier">set_event_type_mapper</span><span class="special">(</span><span class="identifier">event_type_mapper_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> mapper<span class="special">)</span><span class="special">;</span></pre>
 <p>The method installs the function object that maps application severity levels to WinAPI event types </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp27218648-bb"></a><span class="identifier">set_event_category_mapper</span><span class="special">(</span><span class="identifier">event_category_mapper_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> mapper<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp44441152-bb"></a><span class="identifier">set_event_category_mapper</span><span class="special">(</span><span class="identifier">event_category_mapper_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> mapper<span class="special">)</span><span class="special">;</span></pre>
 <p>The method installs the function object that extracts event category from attribute values </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp27219784-bb"></a><span class="identifier">set_event_composer</span><span class="special">(</span><span class="identifier">event_composer_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> composer<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp44443216-bb"></a><span class="identifier">set_event_composer</span><span class="special">(</span><span class="identifier">event_composer_type</span> <span class="keyword">const</span> <span class="special">&amp;</span> composer<span class="special">)</span><span class="special">;</span></pre>
 <p>The method installs the function object that extracts event identifier from the attributes and creates insertion strings that will replace placeholders in the event message. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp65226936"></a><h3>
-<a name="idp27229176-bb"></a><code class="computeroutput">basic_event_log_backend</code> public static functions</h3>
+<a name="idp124892816"></a><h3>
+<a name="idp44461312-bb"></a><code class="computeroutput">basic_event_log_backend</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">string_type</span> <a name="idp27229384-bb"></a><span class="identifier">get_default_log_name</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">string_type</span> <a name="idp44461872-bb"></a><span class="identifier">get_default_log_name</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
@@ -184,7 +184,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">string_type</span> <a name="idp27230312-bb"></a><span class="identifier">get_default_source_name</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">string_type</span> <a name="idp44463840-bb"></a><span class="identifier">get_default_source_name</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
@@ -204,7 +204,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2013 Andrey Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2015 Andrey
+      Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>
@@ -212,7 +213,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="basic_simple_e_idp27192104.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../sinks.html#header.boost.log.sinks.event_log_backend_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="event_log/make_event_id.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="event_log/direct_event_type_mapping.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../sinks.html#header.boost.log.sinks.event_log_backend_hpp"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="basic_simple_e_idp44466032.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

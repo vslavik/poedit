@@ -15,7 +15,7 @@ struct common_settings
     bool wkt;
     bool also_difference;
     double tolerance;
-    
+
     int field_size;
     bool triangular;
 

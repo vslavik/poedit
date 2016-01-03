@@ -7,8 +7,8 @@
  be used for demonstration purposes.
  [end_description]
 
- Copyright 2009-2011 Karsten Ahnert
- Copyright 2009-2011 Mario Mulansky
+ Copyright 2010-2013 Karsten Ahnert
+ Copyright 2010-2013 Mario Mulansky
 
  Distributed under the Boost Software License, Version 1.0.
  (See accompanying file LICENSE_1_0.txt or
@@ -24,6 +24,8 @@
 #include <boost/numeric/odeint/util/resizer.hpp>
 #include <boost/numeric/odeint/algebra/range_algebra.hpp>
 #include <boost/numeric/odeint/algebra/default_operations.hpp>
+#include <boost/numeric/odeint/algebra/algebra_dispatcher.hpp>
+#include <boost/numeric/odeint/algebra/operations_dispatcher.hpp>
 
 namespace boost {
 namespace numeric {
@@ -35,8 +37,8 @@ class State ,
 class Value = double ,
 class Deriv = State ,
 class Time = Value ,
-class Algebra = range_algebra ,
-class Operations = default_operations ,
+class Algebra = typename algebra_dispatcher< State >::algebra_type ,
+class Operations = typename operations_dispatcher< State >::operations_type ,
 class Resizer = initially_resizer
 >
 #ifndef DOXYGEN_SKIP
@@ -74,7 +76,7 @@ public :
     { }
 
     template< class System , class StateIn , class DerivIn , class StateOut >
-    void do_step_impl( System system , const StateIn &in , const DerivIn &dxdt , time_type t , StateOut &out , time_type dt )
+    void do_step_impl( System /* system */ , const StateIn &in , const DerivIn &dxdt , time_type /* t */ , StateOut &out , time_type dt )
     {
         stepper_base_type::m_algebra.for_each3( out , in , dxdt ,
                 typename operations_type::template scale_sum2< value_type , time_type >( 1.0 , dt ) );
@@ -82,7 +84,7 @@ public :
     }
 
     template< class StateOut , class StateIn1 , class StateIn2 >
-    void calc_state( StateOut &x , time_type t ,  const StateIn1 &old_state , time_type t_old , const StateIn2 &current_state , time_type t_new ) const
+    void calc_state( StateOut &x , time_type t ,  const StateIn1 &old_state , time_type t_old , const StateIn2 & /*current_state*/ , time_type /* t_new */ ) const
     {
         const time_type delta = t - t_old;
         stepper_base_type::m_algebra.for_each3( x , old_state , stepper_base_type::m_dxdt.m_v ,

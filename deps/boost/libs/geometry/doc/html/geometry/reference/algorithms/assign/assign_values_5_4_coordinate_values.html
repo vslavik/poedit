@@ -28,7 +28,7 @@
           (4 coordinate values)</a>
 </h5></div></div></div>
 <p>
-            <a class="indexterm" name="idp52453640"></a>
+            <a class="indexterm" name="idp107154912"></a>
 Assign four values to a geometry (usually a box or segment)
           </p>
 <h6>
@@ -38,7 +38,8 @@ Assign four values to a geometry (usually a box or segment)
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Geometry</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Type</span><span class="special">&gt;</span>
-<span class="keyword">void</span> <span class="identifier">assign_values</span><span class="special">(</span><span class="identifier">Geometry</span> <span class="special">&amp;</span> <span class="identifier">geometry</span><span class="special">,</span> <span class="identifier">Type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">c1</span><span class="special">,</span> <span class="identifier">Type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">c2</span><span class="special">,</span> <span class="identifier">Type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">c3</span><span class="special">,</span> <span class="identifier">Type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">c4</span><span class="special">)</span></pre>
+<span class="keyword">void</span> <span class="identifier">assign_values</span><span class="special">(</span><span class="identifier">Geometry</span> <span class="special">&amp;</span> <span class="identifier">geometry</span><span class="special">,</span> <span class="identifier">Type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">c1</span><span class="special">,</span> <span class="identifier">Type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">c2</span><span class="special">,</span>
+                   <span class="identifier">Type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">c3</span><span class="special">,</span> <span class="identifier">Type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">c4</span><span class="special">)</span></pre>
 <p>
           </p>
 <h6>
@@ -192,12 +193,22 @@ Assign four values to a geometry (usually a box or segment)
             <span class="phrase"><a name="geometry.reference.algorithms.assign.assign_values_5_4_coordinate_values.header"></a></span><a class="link" href="assign_values_5_4_coordinate_values.html#geometry.reference.algorithms.assign.assign_values_5_4_coordinate_values.header">Header</a>
           </h6>
 <p>
-            <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">algorithms</span><span class="special">/</span><span class="identifier">detail</span><span class="special">/</span><span class="identifier">assign_values</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
+            Either
+          </p>
+<p>
+            <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
+          </p>
+<p>
+            Or
+          </p>
+<p>
+            <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">algorithms</span><span class="special">/</span><span class="identifier">assign</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
           </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
+      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

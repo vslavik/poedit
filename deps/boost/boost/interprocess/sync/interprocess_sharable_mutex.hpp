@@ -15,7 +15,11 @@
 #ifndef BOOST_INTERPROCESS_SHARABLE_MUTEX_HPP
 #define BOOST_INTERPROCESS_SHARABLE_MUTEX_HPP
 
-#if (defined _MSC_VER) && (_MSC_VER >= 1200)
+#ifndef BOOST_CONFIG_HPP
+#  include <boost/config.hpp>
+#endif
+#
+#if defined(BOOST_HAS_PRAGMA_ONCE)
 #  pragma once
 #endif
 
@@ -109,7 +113,7 @@ class interprocess_sharable_mutex
    //!Throws: An exception derived from interprocess_exception on error.
    void unlock_sharable();
 
-   /// @cond
+   #if !defined(BOOST_INTERPROCESS_DOXYGEN_INVOKED)
    private:
    typedef scoped_lock<interprocess_mutex> scoped_lock_t;
 
@@ -155,10 +159,10 @@ class interprocess_sharable_mutex
          = ~(unsigned(1) << (sizeof(unsigned)*CHAR_BIT-1));
    };
    typedef base_constants_t<0> constants;
-   /// @endcond
+   #endif   //#ifndef BOOST_INTERPROCESS_DOXYGEN_INVOKED
 };
 
-/// @cond
+#if !defined(BOOST_INTERPROCESS_DOXYGEN_INVOKED)
 
 template <int Dummy>
 const unsigned interprocess_sharable_mutex::base_constants_t<Dummy>::max_readers;
@@ -213,16 +217,14 @@ inline bool interprocess_sharable_mutex::try_lock()
 inline bool interprocess_sharable_mutex::timed_lock
    (const boost::posix_time::ptime &abs_time)
 {
-   if(abs_time == boost::posix_time::pos_infin){
-      this->lock();
-      return true;
-   }
    scoped_lock_t lck(m_mut, abs_time);
    if(!lck.owns())   return false;
 
    //The exclusive lock must block in the first gate
    //if an exclusive lock has been acquired
    while (this->m_ctrl.exclusive_in){
+      //Mutexes and condvars handle just fine infinite abs_times
+      //so avoid checking it here
       if(!this->m_first_gate.timed_wait(lck, abs_time)){
          if(this->m_ctrl.exclusive_in){
             return false;
@@ -239,6 +241,8 @@ inline bool interprocess_sharable_mutex::timed_lock
 
    //Now wait until all readers are gone
    while (this->m_ctrl.num_shared){
+      //Mutexes and condvars handle just fine infinite abs_times
+      //so avoid checking it here
       if(!this->m_second_gate.timed_wait(lck, abs_time)){
          if(this->m_ctrl.num_shared){
             return false;
@@ -296,10 +300,6 @@ inline bool interprocess_sharable_mutex::try_lock_sharable()
 inline bool interprocess_sharable_mutex::timed_lock_sharable
    (const boost::posix_time::ptime &abs_time)
 {
-   if(abs_time == boost::posix_time::pos_infin){
-      this->lock_sharable();
-      return true;
-   }
    scoped_lock_t lck(m_mut, abs_time);
    if(!lck.owns())   return false;
 
@@ -308,6 +308,8 @@ inline bool interprocess_sharable_mutex::timed_lock_sharable
    //or there are too many sharable locks
    while (this->m_ctrl.exclusive_in
          || this->m_ctrl.num_shared == constants::max_readers){
+      //Mutexes and condvars handle just fine infinite abs_times
+      //so avoid checking it here
       if(!this->m_first_gate.timed_wait(lck, abs_time)){
          if(this->m_ctrl.exclusive_in
                || this->m_ctrl.num_shared == constants::max_readers){
@@ -337,7 +339,7 @@ inline void interprocess_sharable_mutex::unlock_sharable()
    }
 }
 
-/// @endcond
+#endif   //#ifndef BOOST_INTERPROCESS_DOXYGEN_INVOKED
 
 }  //namespace interprocess {
 }  //namespace boost {

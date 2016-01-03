@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 1999-2013 Vaclav Slavik
+ *  Copyright (C) 1999-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -32,7 +32,10 @@
 #include <wx/intl.h>
 #include <wx/docview.h>
 
+#include "prefsdlg.h"
+
 class WXDLLIMPEXP_FWD_BASE wxConfigBase;
+class WXDLLIMPEXP_FWD_BASE wxSingleInstanceChecker;
 class WXDLLIMPEXP_FWD_CORE wxMenuBar;
 
 
@@ -40,14 +43,20 @@ class WXDLLIMPEXP_FWD_CORE wxMenuBar;
 class PoeditApp : public wxApp
 {
     public:
-        /** wxWin initalization hook. Shows PoeditFrame and initializes
+        PoeditApp();
+        ~PoeditApp();
+
+        /** wxWin initialization hook. Shows PoeditFrame and initializes
             configuration entries to default values if they were missing.
          */
         virtual bool OnInit();
         virtual int OnExit();
 
+        virtual wxLayoutDirection GetLayoutDirection() const;
+
         /// Returns Poedit version string.
         wxString GetAppVersion() const;
+        wxString GetAppBuildNumber() const;
         bool IsBetaVersion() const;
         bool CheckForBetaUpdates() const;
 
@@ -56,11 +65,14 @@ class PoeditApp : public wxApp
         // opens empty frame or catalogs manager
         void OpenNewFile();
 
+#ifndef __WXOSX__
         wxFileHistory& FileHistory() { return m_history; }
+#endif
 
-#ifdef __WXMAC__
+#ifdef __WXOSX__
         virtual void MacOpenFiles(const wxArrayString& names) { OpenFiles(names); }
         virtual void MacNewFile() { OpenNewFile(); }
+        virtual void MacOpenURL(const wxString &url) { HandleCustomURI(url); }
 #endif
 
         void EditPreferences();
@@ -74,6 +86,11 @@ class PoeditApp : public wxApp
         // Make OSX-specific modifications to the menus, e.g. adding items into
         // the apple menu etc. Call on every newly created menubar
         void TweakOSXMenuBar(wxMenuBar *bar);
+        void CreateFakeOpenRecentMenu();
+        void InstallOpenRecentMenu(wxMenuBar *bar);
+        void OnIdleInstallOpenRecentMenu(wxIdleEvent& event);
+        virtual void OSXOnWillFinishLaunching();
+        void OnCloseWindowCommand(wxCommandEvent& event);
 #endif
 
     protected:
@@ -82,31 +99,56 @@ class PoeditApp : public wxApp
             upgrade to new version.)
          */
         void SetDefaultCfg(wxConfigBase *cfg);
-        void SetDefaultParsers(wxConfigBase *cfg);
+        void SetDefaultExtractors(wxConfigBase *cfg);
         
         void OnInitCmdLine(wxCmdLineParser& parser);
         bool OnCmdLineParsed(wxCmdLineParser& parser);
         
     private:
+        void HandleCustomURI(const wxString& uri);
+
         void SetupLanguage();
 
         // App-global menu commands:
         void OnNew(wxCommandEvent& event);
         void OnOpen(wxCommandEvent& event);
+        void OnOpenFromCrowdin(wxCommandEvent& event);
+#ifndef __WXOSX__
         void OnOpenHist(wxCommandEvent& event);
+#endif
         void OnAbout(wxCommandEvent& event);
         void OnManager(wxCommandEvent& event);
         void OnQuit(wxCommandEvent& event);
         void OnPreferences(wxCommandEvent& event);
         void OnHelp(wxCommandEvent& event);
         void OnGettextManual(wxCommandEvent& event);
+
 #ifdef __WXMSW__
+        void AssociateFileTypeIfNeeded();
         void OnWinsparkleCheck(wxCommandEvent& event);
+        static int WinSparkle_CanShutdown();
+        static void WinSparkle_Shutdown();
 #endif
 
         DECLARE_EVENT_TABLE()
 
+#ifdef __WXOSX__
+        class RecentMenuData;
+        std::unique_ptr<RecentMenuData> m_recentMenuData;
+#else
         wxFileHistory m_history;
+#endif
+
+        std::unique_ptr<PoeditPreferencesEditor> m_preferences;
+
+        std::unique_ptr<wxLocale> m_locale;
+
+#ifndef __WXOSX__
+        class RemoteServer;
+        class RemoteClient;
+        std::unique_ptr<RemoteServer> m_remoteServer;
+        std::unique_ptr<wxSingleInstanceChecker> m_instanceChecker;
+#endif
 };
 
 DECLARE_APP(PoeditApp);

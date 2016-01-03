@@ -4,7 +4,7 @@
 <title>cons</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Fusion 2.1">
+<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../container.html" title="Container">
 <link rel="prev" href="vector.html" title="vector">
 <link rel="next" href="list.html" title="list">
@@ -281,19 +281,22 @@
 </tr>
 </tbody>
 </table></div>
-<div class="sidebar">
-<div class="titlepage"></div>
-<p>
-        <span class="inlinemediaobject"><img src="../../images/note.png" alt="note"></span> <code class="computeroutput"><a class="link" href="../sequence/intrinsic/functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;(</span><span class="identifier">l</span><span class="special">)</span></code> is provided
-        for convenience and compatibility with the original <a href="http://www.boost.org/libs/tuple/doc/tuple_users_guide.html" target="_top">Boost.Tuple</a>
-        library, despite <code class="computeroutput"><span class="identifier">cons</span></code> being
-        a <a class="link" href="../sequence/concepts/forward_sequence.html" title="Forward Sequence">Forward Sequence</a>
-        only (<code class="computeroutput"><span class="identifier">at</span></code> is supposed to be
-        a <a class="link" href="../sequence/concepts/random_access_sequence.html" title="Random Access Sequence">Random
-        Access Sequence</a> requirement). The runtime complexity of <a class="link" href="../sequence/intrinsic/functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a> is constant (see <a class="link" href="../notes.html#fusion.notes.recursive_inlined_functions">Recursive
-        Inlined Functions</a>).
-      </p>
-</div>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          <code class="computeroutput"><a class="link" href="../sequence/intrinsic/functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;(</span><span class="identifier">l</span><span class="special">)</span></code> is
+          provided for convenience and compatibility with the original <a href="http://www.boost.org/libs/tuple/doc/tuple_users_guide.html" target="_top">Boost.Tuple</a>
+          library, despite <code class="computeroutput"><span class="identifier">cons</span></code> being
+          a <a class="link" href="../sequence/concepts/forward_sequence.html" title="Forward Sequence">Forward Sequence</a>
+          only (<code class="computeroutput"><span class="identifier">at</span></code> is supposed to
+          be a <a class="link" href="../sequence/concepts/random_access_sequence.html" title="Random Access Sequence">Random
+          Access Sequence</a> requirement). The runtime complexity of <a class="link" href="../sequence/intrinsic/functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a> is constant (see <a class="link" href="../notes.html#fusion.notes.recursive_inlined_functions">Recursive
+          Inlined Functions</a>).
+        </p></td></tr>
+</table></div>
 <h5>
 <a name="fusion.container.cons.h6"></a>
         <span class="phrase"><a name="fusion.container.cons.example"></a></span><a class="link" href="cons.html#fusion.container.cons.example">Example</a>

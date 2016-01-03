@@ -32,7 +32,6 @@ template <typename Container>
 inline std::string coordinates(Container const& points)
 {
     std::ostringstream out;
-    typedef typename boost::range_value<Container>::type point_type;
     for (typename boost::range_const_iterator<Container>::type it = boost::begin(points);
         it != boost::end(points);
         ++it)
@@ -132,8 +131,6 @@ void test_2d_compare()
 template <typename P>
 void test_2d_sort()
 {
-    typedef typename bg::coordinate_type<P>::type ct;
-
     std::vector<P> v;
     v.push_back(bg::make<P>(3, 1));
     v.push_back(bg::make<P>(2, 3));

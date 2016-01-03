@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_lexical_cast.html" title="Chapter&#160;16.&#160;Boost.Lexical_Cast 1.0">
-<link rel="prev" href="../boost_lexical_cast.html" title="Chapter&#160;16.&#160;Boost.Lexical_Cast 1.0">
+<link rel="up" href="../boost_lexical_cast.html" title="Chapter&#160;17.&#160;Boost.Lexical_Cast 1.0">
+<link rel="prev" href="../boost_lexical_cast.html" title="Chapter&#160;17.&#160;Boost.Lexical_Cast 1.0">
 <link rel="next" href="synopsis.html" title="Synopsis">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -113,7 +113,7 @@
 <span class="special">{</span>
     <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">array</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">,</span> <span class="number">50</span><span class="special">&gt;</span> <span class="identifier">buf_t</span><span class="special">;</span> <span class="comment">// You can use std::array if your compiler supports it</span>
     <span class="identifier">buf_t</span> <span class="identifier">buffer</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">lexical_cast</span><span class="special">&lt;</span><span class="identifier">buf_t</span><span class="special">&gt;(</span><span class="identifier">number</span><span class="special">);</span> <span class="comment">// No dynamic memory allocation</span>
-    <span class="identifier">fputs</span><span class="special">(</span><span class="identifier">buffer</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">file</span><span class="special">);</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">fputs</span><span class="special">(</span><span class="identifier">buffer</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">file</span><span class="special">);</span>
 <span class="special">}</span>
 </pre>
 <p>
@@ -257,7 +257,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2000-2005 Kevlin Henney<br>Copyright &#169; 2006-2010 Alexander Nasonov<br>Copyright &#169; 2011-2013 Antony Polukhin<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2000-2005 Kevlin Henney<br>Copyright &#169; 2006-2010 Alexander Nasonov<br>Copyright &#169; 2011-2014 Antony
+      Polukhin<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

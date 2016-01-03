@@ -1,7 +1,7 @@
 /* Boost numeric test of the symplectic steppers test file
 
- Copyright 2012 Karsten Ahnert
  Copyright 2012 Mario Mulansky
+ Copyright 2012 Karsten Ahnert
 
  Distributed under the Boost Software License, Version 1.0.
  (See accompanying file LICENSE_1_0.txt or

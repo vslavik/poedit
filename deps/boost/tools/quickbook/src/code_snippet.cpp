@@ -18,7 +18,7 @@
 #include "state.hpp"
 #include "values.hpp"
 #include "files.hpp"
-#include "input_path.hpp"
+#include "native_text.hpp"
 
 namespace quickbook
 {

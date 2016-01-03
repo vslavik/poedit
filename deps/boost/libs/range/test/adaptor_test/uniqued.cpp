@@ -9,6 +9,10 @@
 // For more information, see http://www.boost.org/libs/range/
 //
 #include <boost/range/adaptor/uniqued.hpp>
+#include <boost/range/adaptor/transformed.hpp>
+#include <boost/range/algorithm/unique_copy.hpp>
+#include <boost/range/algorithm_ext/push_back.hpp>
+#include <boost/algorithm/string/predicate.hpp>
 
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test.hpp>
@@ -74,8 +78,81 @@ namespace boost
             uniqued_test_impl< std::set< int > >();
             uniqued_test_impl< std::multiset< int > >();
         }
+
+class istring
+{
+public:
+    istring()
+        : m_value("")
+    {
     }
+
+    explicit istring(const char* value)
+        : m_value(value)
+    {
+    }
+
+    bool operator==(istring r) const
+    {
+        return boost::iequals(m_value, r.m_value);
+    }
+
+    bool operator!=(istring r) const
+    {
+        return !operator==(r);
+    }
+
+    inline friend std::ostream& operator<<(std::ostream& out, istring o)
+    {
+        return out << o.m_value;
+    }
+
+    const char* get() const { return m_value; }
+
+private:
+    const char* m_value;
+};
+
+struct istring_to_string
+{
+    typedef std::string result_type;
+
+    std::string operator()(istring s) const
+    {
+        return s.get();
+    }
+};
+
+// This is based on a test-case provided by Eric Neibler.
+void uniqued_return_first()
+{
+    using namespace boost::adaptors;
+
+    std::vector<istring> strs;
+    strs.push_back(istring("hello"));
+    strs.push_back(istring("hElLo"));
+    strs.push_back(istring("HELLO"));
+    strs.push_back(istring("ZZZZ"));
+
+    std::vector<istring> output1;
+
+    boost::unique_copy(strs, std::back_inserter(output1));
+
+    std::vector<istring> output2;
+    boost::push_back(output2, strs | uniqued);
+
+    std::vector<std::string> test1;
+    boost::push_back(test1, output1 | transformed(istring_to_string()));
+
+    std::vector<std::string> test2;
+    boost::push_back(test2, output2 | transformed(istring_to_string()));
+
+    BOOST_CHECK_EQUAL_COLLECTIONS(test1.begin(), test1.end(),
+                                  test2.begin(), test2.end());
 }
+
+    } // anonymous namespace
+} // namespace boost
 
 boost::unit_test::test_suite*
 init_unit_test_suite(int argc, char* argv[])
@@ -84,6 +161,8 @@ init_unit_test_suite(int argc, char* argv[])
         = BOOST_TEST_SUITE( "RangeTestSuite.adaptor.uniqued" );
 
     test->add( BOOST_TEST_CASE( &boost::uniqued_test ) );
+
+    test->add(BOOST_TEST_CASE(&boost::uniqued_return_first));
 
     return test;
 }

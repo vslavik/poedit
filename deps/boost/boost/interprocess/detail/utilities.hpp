@@ -14,7 +14,11 @@
 #ifndef BOOST_INTERPROCESS_DETAIL_UTILITIES_HPP
 #define BOOST_INTERPROCESS_DETAIL_UTILITIES_HPP
 
-#if (defined _MSC_VER) && (_MSC_VER >= 1200)
+#ifndef BOOST_CONFIG_HPP
+#  include <boost/config.hpp>
+#endif
+#
+#if defined(BOOST_HAS_PRAGMA_ONCE)
 #  pragma once
 #endif
 
@@ -22,18 +26,13 @@
 #include <boost/interprocess/detail/workaround.hpp>
 
 #include <boost/interprocess/interprocess_fwd.hpp>
-#include <boost/move/move.hpp>
-#include <boost/type_traits/has_trivial_destructor.hpp>
+#include <boost/move/utility_core.hpp>
 #include <boost/interprocess/detail/min_max.hpp>
 #include <boost/interprocess/detail/type_traits.hpp>
-#include <boost/interprocess/detail/transform_iterator.hpp>
 #include <boost/interprocess/detail/mpl.hpp>
-#include <boost/interprocess/containers/version_type.hpp>
 #include <boost/intrusive/pointer_traits.hpp>
-#include <boost/move/move.hpp>
+#include <boost/move/utility_core.hpp>
 #include <boost/static_assert.hpp>
-#include <utility>
-#include <algorithm>
 #include <climits>
 
 namespace boost {
@@ -48,14 +47,6 @@ template <class Pointer>
 inline typename boost::intrusive::pointer_traits<Pointer>::element_type*
 to_raw_pointer(const Pointer &p)
 {  return boost::interprocess::ipcdetail::to_raw_pointer(p.operator->());  }
-
-//!To avoid ADL problems with swap
-template <class T>
-inline void do_swap(T& x, T& y)
-{
-   using std::swap;
-   swap(x, y);
-}
 
 //Rounds "orig_size" by excess to round_to bytes
 template<class SizeType>
@@ -148,9 +139,9 @@ template<class SizeType>
 inline bool multiplication_overflows(SizeType a, SizeType b)
 {
    const SizeType sqrt_size_max = sqrt_size_type_max<SizeType>::value;
-   return   //Fast runtime check 
+   return   //Fast runtime check
          (  (a | b) > sqrt_size_max &&
-            //Slow division check 
+            //Slow division check
             b && a > SizeType(-1)/b
          );
 }
@@ -168,6 +159,8 @@ template<class RawPointer>
 class pointer_size_t_caster
 {
    public:
+   BOOST_STATIC_ASSERT(sizeof(std::size_t) == sizeof(void*));
+
    explicit pointer_size_t_caster(std::size_t sz)
       : m_ptr(reinterpret_cast<RawPointer>(sz))
    {}

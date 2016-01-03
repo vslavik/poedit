@@ -11,6 +11,8 @@
 #include <fstream>
 
 #define BOOST_GEOMETRY_INDEX_DETAIL_EXPERIMENTAL
+
+#include <boost/geometry.hpp>
 #include <boost/geometry/index/rtree.hpp>
 #include <boost/geometry/index/detail/rtree/utilities/statistics.hpp>
 

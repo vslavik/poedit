@@ -2,9 +2,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Beta</title>
-<link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Math Toolkit">
+<link rel="stylesheet" href="../../math.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
 <link rel="up" href="../sf_beta.html" title="Beta Functions">
 <link rel="prev" href="../sf_beta.html" title="Beta Functions">
 <link rel="next" href="ibeta_function.html" title="Incomplete Beta Functions">
@@ -37,8 +37,8 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">beta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;13.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">beta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;13.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">beta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="special">}}</span> <span class="comment">// namespaces</span>
 </pre>
@@ -50,15 +50,15 @@
         The beta function is defined by:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/beta1.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/beta1.svg"></span>
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../graphs/beta.png" align="middle"></span>
+        <span class="inlinemediaobject"><img src="../../../graphs/beta.svg" align="middle"></span>
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;13.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;13.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <p>
@@ -89,7 +89,7 @@
         zero error</a>.
       </p>
 <div class="table">
-<a name="math_toolkit.sf_beta.beta_function.peak_errors_in_the_beta_function"></a><p class="title"><b>Table&#160;3.7.&#160;Peak Errors In the Beta Function</b></p>
+<a name="math_toolkit.sf_beta.beta_function.peak_errors_in_the_beta_function"></a><p class="title"><b>Table&#160;6.7.&#160;Peak Errors In the Beta Function</b></p>
 <div class="table-contents"><table class="table" summary="Peak Errors In the Beta Function">
 <colgroup>
 <col>
@@ -256,7 +256,7 @@
         approximation</a>, then we can combine the power terms:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/beta2.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/beta2.svg"></span>
       </p>
 <p>
         which is almost the ideal solution, however almost all of the error occurs
@@ -266,7 +266,7 @@
         which immediately cuts the maximum error in half:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/beta3.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/beta3.svg"></span>
       </p>
 <p>
         This may not be the final solution, but it is very competitive compared to
@@ -280,7 +280,7 @@
         fraction parts are collected together into:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/beta8.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/beta8.svg"></span>
       </p>
 <p>
         where la, lb and lc are the integration limits used for a, b, and a+b.
@@ -293,10 +293,10 @@
         we can use the recurrence relations:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/beta4.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/beta4.svg"></span>
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/beta5.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/beta5.svg"></span>
       </p>
 <p>
         to move to a more favorable region where they are both greater than 1.
@@ -305,14 +305,15 @@
         In addition:
       </p>
 <p>
-        <span class="inlinemediaobject"><img src="../../../equations/beta7.png"></span>
+        <span class="inlinemediaobject"><img src="../../../equations/beta7.svg"></span>
       </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012, 2013 Paul A. Bristow, Christopher Kormanyos,
-      Hubert Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin
-      Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
+      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
+      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
+      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

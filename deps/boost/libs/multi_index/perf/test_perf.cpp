@@ -1,6 +1,6 @@
 /* Boost.MultiIndex performance test.
  *
- * Copyright 2003-2008 Joaquin M Lopez Munoz.
+ * Copyright 2003-2013 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -339,10 +339,7 @@ private:
  */
 
 template <typename IndexedTest,typename ManualTest>
-void run_tests(
-  const char* title
-  BOOST_APPEND_EXPLICIT_TEMPLATE_TYPE(IndexedTest)
-  BOOST_APPEND_EXPLICIT_TEMPLATE_TYPE(ManualTest))
+void run_tests(const char* title)
 {
   cout<<fixed<<setprecision(2);
   cout<<title<<endl;
@@ -374,10 +371,7 @@ void run_tests(
  */
 
 template <typename IndexedType,typename ManualType>
-void compare_structures(
-  const char* title
-  BOOST_APPEND_EXPLICIT_TEMPLATE_TYPE(IndexedType)
-  BOOST_APPEND_EXPLICIT_TEMPLATE_TYPE(ManualType))
+void compare_structures(const char* title)
 {
   run_tests<
     mono_container<IndexedType>,
@@ -386,11 +380,7 @@ void compare_structures(
 }
 
 template <typename IndexedType,typename ManualType1,typename ManualType2>
-void compare_structures2(
-  const char* title
-  BOOST_APPEND_EXPLICIT_TEMPLATE_TYPE(IndexedType)
-  BOOST_APPEND_EXPLICIT_TEMPLATE_TYPE(ManualType1)
-  BOOST_APPEND_EXPLICIT_TEMPLATE_TYPE(ManualType2))
+void compare_structures2(const char* title)
 {
   run_tests<
     mono_container<IndexedType>,
@@ -402,12 +392,7 @@ template <
   typename IndexedType,
   typename ManualType1,typename ManualType2,typename ManualType3
 >
-void compare_structures3(
-  const char* title
-  BOOST_APPEND_EXPLICIT_TEMPLATE_TYPE(IndexedType)
-  BOOST_APPEND_EXPLICIT_TEMPLATE_TYPE(ManualType1)
-  BOOST_APPEND_EXPLICIT_TEMPLATE_TYPE(ManualType2)
-  BOOST_APPEND_EXPLICIT_TEMPLATE_TYPE(ManualType3))
+void compare_structures3(const char* title)
 {
   run_tests<
     mono_container<IndexedType>,
@@ -417,12 +402,14 @@ void compare_structures3(
 
 int main()
 {
+  /* some stdlibs provide the discussed but finally rejected std::identity */
+  using boost::multi_index::identity; 
+
   {
     /* 1 ordered index */
 
     typedef multi_index_container<int> indexed_t;
     typedef set<int>                   manual_t;
-    indexed_t dummy; /* MSVC++ 6.0 chokes if indexed_t is not instantiated */ 
 
     compare_structures<indexed_t,manual_t>(
       "1 ordered index");
@@ -437,7 +424,6 @@ int main()
       >
     >                                  indexed_t;
     typedef list_wrapper<list<int> >   manual_t;
-    indexed_t dummy; /* MSVC++ 6.0 chokes if indexed_t is not instantiated */ 
 
     compare_structures<indexed_t,manual_t>(
       "1 sequenced index");
@@ -460,7 +446,6 @@ int main()
         manual_t1::key_compare
       >
     >                                  manual_t2;
-    indexed_t dummy; /* MSVC++ 6.0 chokes if indexed_t is not instantiated */ 
 
     compare_structures2<indexed_t,manual_t1,manual_t2>(
       "2 ordered indices");
@@ -485,7 +470,6 @@ int main()
         std::less<int>
       >
     >                                  manual_t2;
-    indexed_t dummy; /* MSVC++ 6.0 chokes if indexed_t is not instantiated */ 
 
     compare_structures2<indexed_t,manual_t1,manual_t2>(
       "1 ordered index + 1 sequenced index");
@@ -518,7 +502,6 @@ int main()
         manual_t2::key_compare
       >
     >                                  manual_t3;
-    indexed_t dummy; /* MSVC++ 6.0 chokes if indexed_t is not instantiated */ 
 
     compare_structures3<indexed_t,manual_t1,manual_t2,manual_t3>(
       "3 ordered indices");
@@ -553,7 +536,6 @@ int main()
         manual_t2::key_compare
       >
     >                                  manual_t3;
-    indexed_t dummy; /* MSVC++ 6.0 chokes if indexed_t is not instantiated */ 
 
     compare_structures3<indexed_t,manual_t1,manual_t2,manual_t3>(
       "2 ordered indices + 1 sequenced index");

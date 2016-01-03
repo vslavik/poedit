@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2013 Free Software Foundation, Inc.
+# Copyright (C) 2002-2015 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -39,6 +39,7 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([gl_PROG_AR_RANLIB])
   AC_REQUIRE([AM_PROG_CC_C_O])
+  # Code from module absolute-header:
   # Code from module alloca-opt:
   # Code from module allocator:
   # Code from module ansi-c++-opt:
@@ -65,6 +66,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module getopt-posix:
   # Code from module gettext-h:
   # Code from module gettext-runtime-misc:
+  # Code from module gettimeofday:
   # Code from module gperf:
   # Code from module havelib:
   # Code from module iconv:
@@ -76,6 +78,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module iswblank:
   # Code from module java:
   # Code from module javacomp-script:
+  # Code from module langinfo:
   # Code from module largefile:
   AC_REQUIRE([AC_SYS_LARGEFILE])
   # Code from module localcharset:
@@ -129,6 +132,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module strnlen1:
   # Code from module strtoul:
   # Code from module sys_stat:
+  # Code from module sys_time:
   # Code from module sys_types:
   # Code from module threadlib:
   gl_THREADLIB_EARLY
@@ -220,6 +224,12 @@ AC_DEFUN([gl_INIT],
   AC_SUBST([GNULIB_GL_UNISTD_H_GETOPT])
   AC_SUBST([LIBINTL])
   AC_SUBST([LTLIBINTL])
+  gl_FUNC_GETTIMEOFDAY
+  if test $HAVE_GETTIMEOFDAY = 0 || test $REPLACE_GETTIMEOFDAY = 1; then
+    AC_LIBOBJ([gettimeofday])
+    gl_PREREQ_GETTIMEOFDAY
+  fi
+  gl_SYS_TIME_MODULE_INDICATOR([gettimeofday])
   AM_ICONV
   m4_ifdef([gl_ICONV_MODULE_INDICATOR],
     [gl_ICONV_MODULE_INDICATOR([iconv])])
@@ -245,6 +255,7 @@ AC_DEFUN([gl_INIT],
   gt_JAVA_CHOICE
   # You need to invoke gt_JAVACOMP yourself, possibly with arguments.
   AC_CONFIG_FILES([javacomp.sh:../build-aux/javacomp.sh.in])
+  gl_LANGINFO_H
   AC_REQUIRE([gl_LARGEFILE])
   gl_LOCALCHARSET
   LOCALCHARSET_TESTS_ENVIRONMENT="CHARSETALIASDIR=\"\$(abs_top_builddir)/$gl_source_base\""
@@ -393,19 +404,21 @@ AC_DEFUN([gl_INIT],
   fi
   gl_HEADER_SYS_STAT_H
   AC_PROG_MKDIR_P
+  gl_HEADER_SYS_TIME_H
+  AC_PROG_MKDIR_P
   gl_SYS_TYPES_H
   AC_PROG_MKDIR_P
   gl_THREADLIB
   gl_HEADER_TIME_H
   gl_UNISTD_H
-  gl_LIBUNISTRING_LIBHEADER([0.9.2], [unistr.h])
+  gl_LIBUNISTRING_LIBHEADER([0.9.4], [unistr.h])
   gl_MODULE_INDICATOR([unistr/u8-mbtoucr])
   gl_LIBUNISTRING_MODULE([0.9], [unistr/u8-mbtoucr])
   gl_MODULE_INDICATOR([unistr/u8-uctomb])
   gl_LIBUNISTRING_MODULE([0.9], [unistr/u8-uctomb])
-  gl_LIBUNISTRING_LIBHEADER([0.9], [unitypes.h])
-  gl_LIBUNISTRING_LIBHEADER([0.9], [uniwidth.h])
-  gl_LIBUNISTRING_MODULE([0.9.4], [uniwidth/width])
+  gl_LIBUNISTRING_LIBHEADER([0.9.4], [unitypes.h])
+  gl_LIBUNISTRING_LIBHEADER([0.9.4], [uniwidth.h])
+  gl_LIBUNISTRING_MODULE([0.9.6], [uniwidth/width])
   gl_FUNC_GLIBC_UNLOCKED_IO
   gl_WCHAR_H
   gl_WCTYPE_H
@@ -596,6 +609,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/getopt1.c
   lib/getopt_int.h
   lib/gettext.h
+  lib/gettimeofday.c
   lib/glthread/lock.c
   lib/glthread/lock.h
   lib/glthread/threadlib.c
@@ -610,6 +624,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/iconv_open.c
   lib/intprops.h
   lib/iswblank.c
+  lib/langinfo.in.h
   lib/localcharset.c
   lib/localcharset.h
   lib/locale.in.h
@@ -674,6 +689,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/strtol.c
   lib/strtoul.c
   lib/sys_stat.in.h
+  lib/sys_time.in.h
   lib/sys_types.in.h
   lib/time.in.h
   lib/trim.c
@@ -702,6 +718,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/xstriconv.c
   lib/xstriconv.h
   m4/00gnulib.m4
+  m4/absolute-header.m4
   m4/alloca.m4
   m4/ansi-c++.m4
   m4/asm-underscore.m4
@@ -720,6 +737,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/extern-inline.m4
   m4/fcntl-o.m4
   m4/getopt.m4
+  m4/gettimeofday.m4
   m4/glibc21.m4
   m4/gnulib-common.m4
   m4/iconv.m4
@@ -731,6 +749,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/iswblank.m4
   m4/java.m4
   m4/javacomp.m4
+  m4/langinfo_h.m4
   m4/largefile.m4
   m4/lcmessage.m4
   m4/lib-ld.m4
@@ -784,6 +803,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/strtoul.m4
   m4/sys_socket_h.m4
   m4/sys_stat_h.m4
+  m4/sys_time_h.m4
   m4/sys_types_h.m4
   m4/threadlib.m4
   m4/time_h.m4

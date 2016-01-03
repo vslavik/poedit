@@ -4,7 +4,7 @@
 <title>nview</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Fusion 2.1">
+<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../view.html" title="View">
 <link rel="prev" href="reverse_view.html" title="reverse_view">
 <link rel="next" href="repetitive_view.html" title="repetitive_view">
@@ -35,7 +35,7 @@
         iterates over a given <a class="link" href="../sequence.html" title="Sequence">Sequence</a> in
         a specified order. An <code class="computeroutput"><span class="identifier">nview</span></code>
         is constructed from an arbitrary <a class="link" href="../sequence.html" title="Sequence">Sequence</a>
-        and a list of indicies specifying the elements to iterate over.
+        and a list of indices specifying the elements to iterate over.
       </p>
 <h5>
 <a name="fusion.view.nview.h1"></a>
@@ -48,7 +48,7 @@
 <a name="fusion.view.nview.h2"></a>
         <span class="phrase"><a name="fusion.view.nview.synopsis"></a></span><a class="link" href="nview.html#fusion.view.nview.synopsis">Synopsis</a>
       </h5>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Sequence</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Indicies</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Sequence</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Indices</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">nview</span><span class="special">;</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Sequence</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">I1</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">I2</span> <span class="special">=</span> <span class="special">-</span><span class="number">1</span><span class="special">,</span> <span class="special">...&gt;</span>
@@ -102,12 +102,12 @@
 <tr>
 <td>
                 <p>
-                  <code class="computeroutput"><span class="identifier">Indicies</span></code>
+                  <code class="computeroutput"><span class="identifier">Indices</span></code>
                 </p>
               </td>
 <td>
                 <p>
-                  A <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">vector_c</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="special">...&gt;</span></code> holding the indicies defining
+                  A <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">vector_c</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="special">...&gt;</span></code> holding the indices defining
                   the required iteration order.
                 </p>
               </td>
@@ -197,7 +197,7 @@
 <td>
                 <p>
                   Creates an <code class="computeroutput"><span class="identifier">nview</span></code>
-                  given a sequence and a list of indicies.
+                  given a sequence and a list of indices.
                 </p>
               </td>
 </tr>
@@ -242,11 +242,11 @@
         <span class="phrase"><a name="fusion.view.nview.example"></a></span><a class="link" href="nview.html#fusion.view.nview.example">Example</a>
       </h5>
 <pre class="programlisting"><span class="keyword">typedef</span> <a class="link" href="../container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">char</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">vec</span><span class="special">;</span>
-<span class="keyword">typedef</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">vector_c</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="number">1</span><span class="special">,</span> <span class="number">0</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="number">0</span><span class="special">&gt;</span> <span class="identifier">indicies</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">vector_c</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="number">1</span><span class="special">,</span> <span class="number">0</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="number">0</span><span class="special">&gt;</span> <span class="identifier">indices</span><span class="special">;</span>
 
 <span class="identifier">vec</span> <span class="identifier">v1</span><span class="special">(</span><span class="number">1</span><span class="special">,</span> <span class="char">'c'</span><span class="special">,</span> <span class="number">2.0</span><span class="special">);</span>
 
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">nview</span><span class="special">&lt;</span><span class="identifier">vec</span><span class="special">,</span> <span class="identifier">indicies</span><span class="special">&gt;(</span><span class="identifier">v1</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// (2.0 c 1 2.0 1)</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">nview</span><span class="special">&lt;</span><span class="identifier">vec</span><span class="special">,</span> <span class="identifier">indices</span><span class="special">&gt;(</span><span class="identifier">v1</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// (2.0 c 1 2.0 1)</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">as_nview</span><span class="special">&lt;</span><span class="number">2</span><span class="special">,</span> <span class="number">1</span><span class="special">,</span> <span class="number">1</span><span class="special">,</span> <span class="number">0</span><span class="special">&gt;(</span><span class="identifier">v1</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// (2.0 c c 1)</span>
 </pre>
 </div>

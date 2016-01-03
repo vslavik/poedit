@@ -16,7 +16,7 @@
 
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/polygon.hpp>
-#include <boost/geometry/multi/geometries/multi_polygon.hpp>
+#include <boost/geometry/geometries/multi_polygon.hpp>
 #include <boost/geometry/geometries/adapted/boost_tuple.hpp>
 
 BOOST_GEOMETRY_REGISTER_BOOST_TUPLE_CS(cs::cartesian)
@@ -31,9 +31,9 @@ template <> struct dispatch<boost::geometry::point_tag>
     {
         // Use the Boost.Geometry free function "get"
         // working on all supported point types
-        std::cout << "Hello POINT, you are located at: " 
-            << boost::geometry::get<0>(p) << ", " 
-            << boost::geometry::get<1>(p) 
+        std::cout << "Hello POINT, you are located at: "
+            << boost::geometry::get<0>(p) << ", "
+            << boost::geometry::get<1>(p)
             << std::endl;
     }
 };
@@ -44,10 +44,10 @@ template <> struct dispatch<boost::geometry::polygon_tag>
     template <typename Polygon>
     static inline void apply(Polygon const& p)
     {
-        // Use the Boost.Geometry manipulator "dsv" 
+        // Use the Boost.Geometry manipulator "dsv"
         // working on all supported geometries
-        std::cout << "Hello POLYGON, you look like: " 
-            << boost::geometry::dsv(p) 
+        std::cout << "Hello POLYGON, you look like: "
+            << boost::geometry::dsv(p)
             << std::endl;
     }
 };
@@ -60,7 +60,7 @@ template <> struct dispatch<boost::geometry::multi_polygon_tag>
     {
         // Use the Boost.Range free function "size" because all
         // multigeometries comply to Boost.Range
-        std::cout << "Hello MULTIPOLYGON, you contain: " 
+        std::cout << "Hello MULTIPOLYGON, you contain: "
             << boost::size(m) << " polygon(s)"
             << std::endl;
     }
@@ -84,7 +84,7 @@ int main()
     // Declare and fill a polygon and a multipolygon
     polygon_type poly;
     boost::geometry::exterior_ring(poly) = boost::assign::tuple_list_of(0, 0)(0, 10)(10, 5)(0, 0);
-        
+
     boost::geometry::model::multi_polygon<polygon_type> multi;
     multi.push_back(poly);
 

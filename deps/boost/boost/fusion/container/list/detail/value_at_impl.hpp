@@ -7,6 +7,7 @@
 #if !defined(FUSION_VALUE_AT_IMPL_07172005_0952)
 #define FUSION_VALUE_AT_IMPL_07172005_0952
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/support/detail/access.hpp>
 #include <boost/type_traits/is_const.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -25,9 +26,9 @@ namespace boost { namespace fusion
         struct value_at_impl<cons_tag>
         {
             template <typename Sequence, typename N>
-            struct apply 
+            struct apply
             {
-                typedef typename 
+                typedef typename
                     mpl::eval_if<
                         mpl::bool_<N::value == 0>
                       , mpl::identity<typename Sequence::car_type>

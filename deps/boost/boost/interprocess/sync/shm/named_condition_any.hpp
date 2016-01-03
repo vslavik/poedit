@@ -11,7 +11,11 @@
 #ifndef BOOST_INTERPROCESS_SHM_NAMED_CONDITION_ANY_HPP
 #define BOOST_INTERPROCESS_SHM_NAMED_CONDITION_ANY_HPP
 
-#if (defined _MSC_VER) && (_MSC_VER >= 1200)
+#ifndef BOOST_CONFIG_HPP
+#  include <boost/config.hpp>
+#endif
+#
+#if defined(BOOST_HAS_PRAGMA_ONCE)
 #  pragma once
 #endif
 
@@ -39,21 +43,21 @@ namespace boost {
 namespace interprocess {
 namespace ipcdetail {
 
-/// @cond
+#if !defined(BOOST_INTERPROCESS_DOXYGEN_INVOKED)
 class interprocess_tester;
-/// @endcond
+#endif   //#ifndef BOOST_INTERPROCESS_DOXYGEN_INVOKED
 
 //! A global condition variable that can be created by name.
 //! This condition variable is designed to work with named_mutex and
 //! can't be placed in shared memory or memory mapped files.
 class shm_named_condition_any
 {
-   /// @cond
+   #if !defined(BOOST_INTERPROCESS_DOXYGEN_INVOKED)
    //Non-copyable
    shm_named_condition_any();
    shm_named_condition_any(const shm_named_condition_any &);
    shm_named_condition_any &operator=(const shm_named_condition_any &);
-   /// @endcond
+   #endif   //#ifndef BOOST_INTERPROCESS_DOXYGEN_INVOKED
    public:
    //!Creates a global condition with a name.
    //!If the condition can't be created throws interprocess_exception
@@ -149,7 +153,7 @@ class shm_named_condition_any
    static bool remove(const char *name)
    {  return shared_memory_object::remove(name); }
 
-   /// @cond
+   #if !defined(BOOST_INTERPROCESS_DOXYGEN_INVOKED)
    private:
 
    class internal_condition_members
@@ -157,7 +161,7 @@ class shm_named_condition_any
       public:
       typedef interprocess_mutex       mutex_type;
       typedef interprocess_condition   condvar_type;
-  
+
       condvar_type&  get_condvar() {  return m_cond;  }
       mutex_type&    get_mutex()   {  return m_mtx; }
 
@@ -179,7 +183,7 @@ class shm_named_condition_any
 
    template <class T, class Arg> friend class boost::interprocess::ipcdetail::named_creation_functor;
    typedef boost::interprocess::ipcdetail::named_creation_functor<internal_condition> construct_func_t;
-   /// @endcond
+   #endif   //#ifndef BOOST_INTERPROCESS_DOXYGEN_INVOKED
 };
 
 }  //namespace ipcdetail

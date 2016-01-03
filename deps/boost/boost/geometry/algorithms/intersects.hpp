@@ -1,8 +1,13 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
-// Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
-// Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
+// Copyright (c) 2007-2014 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2008-2014 Bruno Lalande, Paris, France.
+// Copyright (c) 2009-2014 Mateusz Loskot, London, UK.
+
+// This file was modified by Oracle on 2013-2014.
+// Modifications copyright (c) 2013-2014, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -20,6 +25,9 @@
 #include <boost/geometry/geometries/concepts/check.hpp>
 #include <boost/geometry/algorithms/detail/overlay/self_turn_points.hpp>
 #include <boost/geometry/algorithms/disjoint.hpp>
+
+#include <boost/geometry/policies/robustness/no_rescale_policy.hpp>
+#include <boost/geometry/policies/robustness/segment_ratio_type.hpp>
 
 
 namespace boost { namespace geometry
@@ -43,37 +51,29 @@ inline bool intersects(Geometry const& geometry)
 {
     concept::check<Geometry const>();
 
+    typedef typename geometry::point_type<Geometry>::type point_type;
+    typedef detail::no_rescale_policy rescale_policy_type;
 
     typedef detail::overlay::turn_info
         <
-            typename geometry::point_type<Geometry>::type
+            point_type,
+            typename segment_ratio_type<point_type, rescale_policy_type>::type
         > turn_info;
-    std::deque<turn_info> turns;
 
-    typedef typename strategy_intersection
-        <
-            typename cs_tag<Geometry>::type,
-            Geometry,
-            Geometry,
-            typename geometry::point_type<Geometry>::type
-        >::segment_intersection_strategy_type segment_intersection_strategy_type;
+    std::deque<turn_info> turns;
 
     typedef detail::overlay::get_turn_info
         <
-            typename point_type<Geometry>::type,
-            typename point_type<Geometry>::type,
-            turn_info,
             detail::overlay::assign_null_policy
-        > TurnPolicy;
+        > turn_policy;
+
+    rescale_policy_type robust_policy;
 
     detail::disjoint::disjoint_interrupt_policy policy;
     detail::self_get_turn_points::get_turns
-            <
-                Geometry,
-                std::deque<turn_info>,
-                TurnPolicy,
-                detail::disjoint::disjoint_interrupt_policy
-            >::apply(geometry, turns, policy);
+        <
+            turn_policy
+        >::apply(geometry, robust_policy, turns, policy);
     return policy.has_intersections;
 }
 

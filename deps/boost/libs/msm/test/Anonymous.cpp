@@ -14,7 +14,9 @@
 //front-end
 #include <boost/msm/front/state_machine_def.hpp>
 
+#ifndef BOOST_MSM_NONSTANDALONE_TEST
 #define BOOST_TEST_MODULE MyTest
+#endif
 #include <boost/test/unit_test.hpp>
 
 namespace msm = boost::msm;
@@ -89,12 +91,12 @@ namespace
         void State2ToState3(none const&)       { ++state2_to_state3_counter; }
         void State3ToState4(none const&)       { ++state3_to_state4_counter; }
         // guard conditions
-        bool always_true(none const& evt)
+        bool always_true(none const& )
         {
             ++always_true_counter;
             return true;
         }
-        bool always_false(none const& evt)
+        bool always_false(none const& )
         {
             ++always_false_counter;
             return false;

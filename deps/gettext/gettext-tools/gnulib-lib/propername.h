@@ -1,5 +1,5 @@
 /* Localization of proper names.
-   Copyright (C) 2006, 2008-2013 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2008-2015 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -26,12 +26,12 @@
    have in common?
 
    A non-ASCII name. This causes trouble in the --version output. The simple
-   "solution", unfortunately mutilates the name.
+   "solution" unfortunately mutilates the name.
 
-     $ du --version| grep Granlund
+     $ du --version | grep Granlund
      Écrit par Torbjorn Granlund, David MacKenzie, Paul Eggert et Jim Meyering.
 
-     $ ptx --version| grep Pinard
+     $ ptx --version | grep Pinard
      Écrit par F. Pinard.
 
    What is desirable, is to print the full name if the output character set
@@ -51,11 +51,11 @@
    output will look like this:
       <translated name> (<original name in English>)
 
-   To use the 'propername' module is done in three simple steps:
+   To use the 'propername' module requires three simple steps:
 
      1) Add it to the list of gnulib modules to import,
 
-     2) Change the arguments of version_etc, from
+     2) Change the arguments of version_etc(),
 
           from "Paul Eggert"
           to   proper_name ("Paul Eggert")

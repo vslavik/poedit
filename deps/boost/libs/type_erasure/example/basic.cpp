@@ -6,7 +6,7 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-// $Id: basic.cpp 83373 2013-03-09 19:15:15Z steven_watanabe $
+// $Id$
 
 #include <boost/type_erasure/any.hpp>
 #include <boost/type_erasure/any_cast.hpp>

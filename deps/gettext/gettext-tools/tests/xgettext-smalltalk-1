@@ -1,11 +1,8 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test Smalltalk support: --add-comments option.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-st-1.st"
 cat <<EOF > xg-st-1.st
 "This comment will not be extracted."
 Transcript showCr: (NLS ? 'help').
@@ -19,15 +16,11 @@ Transcript showCr: (NLS ? 'Hey Jude').
 Transcript showCr: (NLS ? 'The Fabulous Four').
 EOF
 
-tmpfiles="$tmpfiles xg-st-1.tmp.po xg-st-1.po"
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --omit-header --no-location --add-comments=TRANSLATORS: \
-  -d xg-st-1.tmp xg-st-1.st
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < xg-st-1.tmp.po > xg-st-1.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+  -d xg-st-1.tmp xg-st-1.st || exit 1
+LC_ALL=C tr -d '\r' < xg-st-1.tmp.po > xg-st-1.po || exit 1
 
-tmpfiles="$tmpfiles xg-st-1.ok"
 cat <<EOF > xg-st-1.ok
 msgid "help"
 msgstr ""
@@ -49,7 +42,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-st-1.ok xg-st-1.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

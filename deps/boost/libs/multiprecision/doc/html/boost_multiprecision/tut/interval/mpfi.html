@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>mpfi_float</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../interval.html" title="Interval Number Types">
 <link rel="prev" href="../interval.html" title="Interval Number Types">
@@ -158,8 +158,8 @@
         </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">unsigned</span> <span class="identifier">Digits10</span><span class="special">,</span> <span class="identifier">expression_template_option</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;</span>
 <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;</span> <span class="identifier">intersect</span><span class="special">(</span>
-	<span class="keyword">const</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span> <span class="identifier">a</span><span class="special">,</span>
-	<span class="keyword">const</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span>  <span class="identifier">b</span><span class="special">);</span>
+  <span class="keyword">const</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span> <span class="identifier">a</span><span class="special">,</span>
+  <span class="keyword">const</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span>  <span class="identifier">b</span><span class="special">);</span>
 </pre>
 <p>
           Returns the interval which is the intersection of the <span class="emphasis"><em>a</em></span>
@@ -168,8 +168,8 @@
         </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">unsigned</span> <span class="identifier">Digits10</span><span class="special">,</span> <span class="identifier">expression_template_option</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;</span>
 <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;</span> <span class="identifier">hull</span><span class="special">(</span>
-	<span class="keyword">const</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span> <span class="identifier">a</span><span class="special">,</span>
-	<span class="keyword">const</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span>  <span class="identifier">b</span><span class="special">);</span>
+  <span class="keyword">const</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span> <span class="identifier">a</span><span class="special">,</span>
+  <span class="keyword">const</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfi_float_backend</span><span class="special">&lt;</span><span class="identifier">Digits10</span><span class="special">&gt;,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span>  <span class="identifier">b</span><span class="special">);</span>
 </pre>
 <p>
           Returns the interval which is the union of <span class="emphasis"><em>a</em></span> and
@@ -231,46 +231,48 @@
         </p>
 <h6>
 <a name="boost_multiprecision.tut.interval.mpfi.h0"></a>
-          <span class="phrase"><a name="boost_multiprecision.tut.interval.mpfi.__ulink_url__http___perso_ens_lyon_fr_nathalie_revol_software_html__mpfi__ulink__example_"></a></span><a class="link" href="mpfi.html#boost_multiprecision.tut.interval.mpfi.__ulink_url__http___perso_ens_lyon_fr_nathalie_revol_software_html__mpfi__ulink__example_">
-          MPFI
+          <span class="phrase"><a name="boost_multiprecision.tut.interval.mpfi.mpfi_example"></a></span><a class="link" href="mpfi.html#boost_multiprecision.tut.interval.mpfi.mpfi_example"> MPFI
           example:</a>
         </h6>
-<p>
-</p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">multiprecision</span><span class="special">/</span><span class="identifier">mpfi</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">special_functions</span><span class="special">/</span><span class="identifier">gamma</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 
-<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">;</span>
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+   <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">;</span>
 
-<span class="comment">// Operations at variable precision and no numeric_limits support:</span>
-<span class="identifier">mpfi_float</span> <span class="identifier">a</span> <span class="special">=</span> <span class="number">2</span><span class="special">;</span>
-<span class="identifier">mpfi_float</span><span class="special">::</span><span class="identifier">default_precision</span><span class="special">(</span><span class="number">1000</span><span class="special">);</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">mpfi_float</span><span class="special">::</span><span class="identifier">default_precision</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">sqrt</span><span class="special">(</span><span class="identifier">a</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// print root-2</span>
+   <span class="comment">// Operations at variable precision and no numeric_limits support:</span>
+   <span class="identifier">mpfi_float</span> <span class="identifier">a</span> <span class="special">=</span> <span class="number">2</span><span class="special">;</span>
+   <span class="identifier">mpfi_float</span><span class="special">::</span><span class="identifier">default_precision</span><span class="special">(</span><span class="number">1000</span><span class="special">);</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">mpfi_float</span><span class="special">::</span><span class="identifier">default_precision</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">sqrt</span><span class="special">(</span><span class="identifier">a</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// print root-2</span>
 
-<span class="comment">// Operations at fixed precision and full numeric_limits support:</span>
-<span class="identifier">mpfi_float_100</span> <span class="identifier">b</span> <span class="special">=</span> <span class="number">2</span><span class="special">;</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">mpfi_float_100</span><span class="special">&gt;::</span><span class="identifier">digits</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-<span class="comment">// We can use any C++ std lib function:</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">log</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// print log(2)</span>
+   <span class="comment">// Operations at fixed precision and full numeric_limits support:</span>
+   <span class="identifier">mpfi_float_100</span> <span class="identifier">b</span> <span class="special">=</span> <span class="number">2</span><span class="special">;</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">mpfi_float_100</span><span class="special">&gt;::</span><span class="identifier">digits</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+   <span class="comment">// We can use any C++ std lib function:</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">log</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// print log(2)</span>
 
-<span class="comment">// Access the underlying data:</span>
-<span class="identifier">mpfi_t</span> <span class="identifier">r</span><span class="special">;</span>
-<span class="identifier">mpfi_init</span><span class="special">(</span><span class="identifier">r</span><span class="special">);</span>
-<span class="identifier">mpfi_set</span><span class="special">(</span><span class="identifier">r</span><span class="special">,</span> <span class="identifier">b</span><span class="special">.</span><span class="identifier">backend</span><span class="special">().</span><span class="identifier">data</span><span class="special">());</span>
+   <span class="comment">// Access the underlying data:</span>
+   <span class="identifier">mpfi_t</span> <span class="identifier">r</span><span class="special">;</span>
+   <span class="identifier">mpfi_init</span><span class="special">(</span><span class="identifier">r</span><span class="special">);</span>
+   <span class="identifier">mpfi_set</span><span class="special">(</span><span class="identifier">r</span><span class="special">,</span> <span class="identifier">b</span><span class="special">.</span><span class="identifier">backend</span><span class="special">().</span><span class="identifier">data</span><span class="special">());</span>
 
-<span class="comment">// Construct some explicit intervals and perform set operations:</span>
-<span class="identifier">mpfi_float_50</span> <span class="identifier">i1</span><span class="special">(</span><span class="number">1</span><span class="special">,</span> <span class="number">2</span><span class="special">),</span> <span class="identifier">i2</span><span class="special">(</span><span class="number">1.5</span><span class="special">,</span> <span class="number">2.5</span><span class="special">);</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">intersect</span><span class="special">(</span><span class="identifier">i1</span><span class="special">,</span> <span class="identifier">i2</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">hull</span><span class="special">(</span><span class="identifier">i1</span><span class="special">,</span> <span class="identifier">i2</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">overlap</span><span class="special">(</span><span class="identifier">i1</span><span class="special">,</span> <span class="identifier">i2</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">subset</span><span class="special">(</span><span class="identifier">i1</span><span class="special">,</span> <span class="identifier">i2</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+   <span class="comment">// Construct some explicit intervals and perform set operations:</span>
+   <span class="identifier">mpfi_float_50</span> <span class="identifier">i1</span><span class="special">(</span><span class="number">1</span><span class="special">,</span> <span class="number">2</span><span class="special">),</span> <span class="identifier">i2</span><span class="special">(</span><span class="number">1.5</span><span class="special">,</span> <span class="number">2.5</span><span class="special">);</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">intersect</span><span class="special">(</span><span class="identifier">i1</span><span class="special">,</span> <span class="identifier">i2</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">hull</span><span class="special">(</span><span class="identifier">i1</span><span class="special">,</span> <span class="identifier">i2</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">overlap</span><span class="special">(</span><span class="identifier">i1</span><span class="special">,</span> <span class="identifier">i2</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">subset</span><span class="special">(</span><span class="identifier">i1</span><span class="special">,</span> <span class="identifier">i2</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+   <span class="identifier">mpfi_clear</span><span class="special">(</span><span class="identifier">r</span><span class="special">);</span>
+   <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
 </pre>
-<p>
-        </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2012 John Maddock and Christopher Kormanyos<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2013 John Maddock and Christopher Kormanyos<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

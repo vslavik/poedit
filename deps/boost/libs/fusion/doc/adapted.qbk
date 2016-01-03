@@ -89,6 +89,35 @@ __std_pair_doc__, __tr1_tuple_pair__
 
 [endsect]
 
+[section std::tuple]
+
+This module provides adapters for `std::tuple`. Including the module header
+makes `std::tuple` a fully conforming __random_access_sequence__.
+
+[important To be fully conforming, compiler should support C++11 Variadic Templates.]
+
+[heading Header]
+
+    #include <boost/fusion/adapted/std_tuple.hpp>
+    #include <boost/fusion/include/std_tuple.hpp>
+
+[heading Model of]
+
+* __random_access_sequence__
+
+[heading Example]
+
+    std::tuple<int, std::string, float> p(123, "Hola!!!", 456.f);
+    std::cout << __at_c__<0>(p) << std::endl;
+    std::cout << __at_c__<1>(p) << std::endl;
+    std::cout << p << std::endl;
+
+[heading See also]
+
+__std_tuple_doc__
+
+[endsect]
+
 [section mpl sequence]
 
 This module provides adapters for __mpl__ sequences. Including the module
@@ -168,8 +197,8 @@ header makes `boost::tuple` a fully conforming __forward_sequence__.
 [heading Example]
 
     boost::tuple<int,std::string> example_tuple(101, "hello");
-    std::cout << *boost::fusion::begin(example_tuple) << '\n';
-    std::cout << *boost::fusion::next(boost::fusion::begin(example_tuple)) << '\n';
+    std::cout << *__begin__(example_tuple) << '\n';
+    std::cout << *__next__(__begin__(example_tuple)) << '\n';
 
 [heading See also]
 
@@ -187,8 +216,18 @@ __random_access_sequence__.
 [heading Synopsis]
     BOOST_FUSION_ADAPT_STRUCT(
         struct_name,
+        member_name0,
+        member_name1,
+        member_name2,
+        ...
+        )
+
+    // Without BOOST_PP_VARIADICS support :
+    BOOST_FUSION_ADAPT_STRUCT(
+        struct_name,
         (member_type0, member_name0)
         (member_type1, member_name1)
+        (BOOST_FUSION_ADAPT_AUTO, member_name2)
         ...
         )
 
@@ -196,9 +235,13 @@ __random_access_sequence__.
 
 The above macro generates the necessary code to adapt `struct_name`
 as a model of __random_access_sequence__.
-The sequence of `(member_typeN, member_nameN)`
-pairs declares the type and names of each of the struct members that are
-part of the sequence.
+
+The sequence of `member_nameN,` arguments or  `(member_typeN, member_nameN)` 
+pairs declares the type and names of each of the struct members that are part of
+the sequence. 
+
+When member_typeN is omitted or set to BOOST_FUSION_ADAPT_AUTO, the type is
+infered with Boost.TypeOf.
 
 The macro should be used at global scope, and `struct_name` should be the fully
 namespace qualified name of the struct to be adapted.
@@ -208,7 +251,7 @@ namespace qualified name of the struct to be adapted.
     #include <boost/fusion/adapted/struct/adapt_struct.hpp>
     #include <boost/fusion/include/adapt_struct.hpp>
 
-[heading Example]
+[heading Example: BOOST_FUSION_ADAPT_STRUCT ]
     namespace demo
     {
         struct employee
@@ -221,8 +264,15 @@ namespace qualified name of the struct to be adapted.
     // demo::employee is now a Fusion sequence
     BOOST_FUSION_ADAPT_STRUCT(
         demo::employee,
-        (std::string, name)
-        (int, age))
+        name,
+        age)
+
+    // Without BOOST_PP_VARIADICS support :
+    BOOST_FUSION_ADAPT_STRUCT(
+        demo::employee,
+        (BOOST_FUSION_ADAPT_AUTO, name)
+        (BOOST_FUSION_ADAPT_AUTO, age)
+    )
 
 [endsect]
 
@@ -237,14 +287,24 @@ __random_access_sequence__.
     BOOST_FUSION_ADAPT_TPL_STRUCT(
         (template_param0)(template_param1)...,
         (struct_name) (specialization_param0)(specialization_param1)...,
+        member_name0,
+        member_name1
+        ...
+        )
+
+    // Without BOOST_PP_VARIADICS support :
+    BOOST_FUSION_ADAPT_TPL_STRUCT(
+        (template_param0)(template_param1)...,
+        (struct_name) (specialization_param0)(specialization_param1)...,
         (member_type0, member_name0)
         (member_type1, member_name1)
+        (BOOST_FUSION_ADAPT_AUTO, member_name2),
         ...
         )
 
 [heading Semantics]
 
-The above macro generates the necessary code to adapt `struct_name` or an 
+The above macro generates the necessary code to adapt `struct_name` or an
 arbitrary specialization of `struct_name` as a model of
 __random_access_sequence__.
 The sequence `(template_param0)(template_param1)...` declares the names of
@@ -252,9 +312,12 @@ the template type parameters used.
 The sequence `(specialization_param0)(specialization_param1)...`
 declares the template parameters of the actual specialization of `struct_name`
 that is adapted as a fusion sequence.
-The sequence of `(member_typeN, member_nameN)`
-pairs declares the type and names of each of the struct members that are
-part of the sequence.
+The sequence of `member_nameN,` arguments or  `(member_typeN, member_nameN)` 
+pairs declares the type and names of each of the struct members that are part of
+the sequence. 
+
+When member_typeN is omitted or set to BOOST_FUSION_ADAPT_AUTO, the type is
+infered with Boost.TypeOf.
 
 The macro should be used at global scope, and `struct_name` should be the fully
 namespace qualified name of the struct to be adapted.
@@ -272,6 +335,7 @@ namespace qualified name of the struct to be adapted.
         {
             Name name;
             Age age;
+            int employment_timestamp;
         };
     }
 
@@ -280,23 +344,53 @@ namespace qualified name of the struct to be adapted.
         (Name)(Age),
         (demo::employee) (Name)(Age),
         (Name, name)
-        (Age, age))
+        (Age, age)
+        (BOOST_FUSION_ADAPT_AUTO, employment_timestamp))
+
+    // Or by infering type completely
+    BOOST_FUSION_ADAPT_TPL_STRUCT(
+        (Name)(Age),
+        (demo::employee) (Name)(Age),
+        name,
+        age,
+        employment_timestamp) 
 
 [endsect]
 
 [section:adapt_struct_named BOOST_FUSION_ADAPT_STRUCT_NAMED]
 
 [heading Description]
-BOOST_FUSION_ADAPT_STRUCT_NAMED and BOOST_FUSION_ADAPT_STRUCT_NAMED_NS are 
-macros that can be used to generate all the necessary boilerplate to make an 
-arbitrary struct a model of __random_access_sequence__. The given struct is 
+BOOST_FUSION_ADAPT_STRUCT_NAMED and BOOST_FUSION_ADAPT_STRUCT_NAMED_NS are
+macros that can be used to generate all the necessary boilerplate to make an
+arbitrary struct a model of __random_access_sequence__. The given struct is
 adapted using the given name.
 
 [heading Synopsis]
     BOOST_FUSION_ADAPT_STRUCT_NAMED(
         struct_name, adapted_name,
+        member_name0,
+        member_name1,
+        member_name2,
+        ...
+        )
+
+    BOOST_FUSION_ADAPT_STRUCT_NAMED_NS(
+        struct_name,
+        (namespace0)(namespace1)...,
+        adapted_name,
+        member_name0,
+        member_name1,
+        member_name2,
+        ...
+        )
+
+    // Without BOOST_PP_VARIADICS support :
+
+    BOOST_FUSION_ADAPT_STRUCT_NAMED(
+        struct_name, adapted_name,
         (member_type0, member_name0)
         (member_type1, member_name1)
+        (BOOST_FUSION_ADAPT_AUTO, member_name2),
         ...
         )
 
@@ -306,13 +400,16 @@ adapted using the given name.
         adapted_name,
         (member_type0, member_name0)
         (member_type1, member_name1)
+        (BOOST_FUSION_ADAPT_AUTO, member_name2),
         ...
         )
+
+
 
 [heading Semantics]
 
 The above macros generate the necessary code to adapt `struct_name`
-as a model of __random_access_sequence__ while using `adapted_name` as the 
+as a model of __random_access_sequence__ while using `adapted_name` as the
 name of the adapted struct.
 The sequence `(namespace0)(namespace1)...` declares the namespace
 for `adapted_name`. It yields to a fully qualified name for `adapted_name` of
@@ -321,9 +418,12 @@ If an empty namespace sequence is given (that is a macro that expands to
 nothing), the adapted view is placed in the global namespace.
 If no namespace sequence is given (i.e. `BOOST_FUSION_ADAPT_STRUCT_NAMED`), the
 adapted view is placed in the namespace `boost::fusion::adapted`.
-The sequence of `(member_typeN, member_nameN)`
-pairs declares the type and names of each of the struct members that are
-part of the sequence.
+The sequence of `member_nameN,` arguments or  `(member_typeN, member_nameN)` 
+pairs declares the type and names of each of the struct members that are part of
+the sequence. 
+
+When member_typeN is omitted or set to BOOST_FUSION_ADAPT_AUTO, the type is
+infered with Boost.TypeOf.
 
 The macros should be used at global scope, and `struct_name` should be the fully
 namespace qualified name of the struct to be converted.
@@ -347,8 +447,14 @@ namespace qualified name of the struct to be converted.
     // referring to demo::employee
     BOOST_FUSION_ADAPT_STRUCT_NAMED(
         demo::employee, adapted_employee,
-        (std::string, name)
-        (int, age))
+        name,
+        age)
+
+    // Without BOOST_PP_VARIADICS support :
+    BOOST_FUSION_ADAPT_STRUCT_NAMED(
+        demo::employee, adapted_employee,
+        (BOOST_FUSION_ADAPT_AUTO, name),
+        (BOOST_FUSION_ADAPT_AUTO, age))
 
 [endsect]
 
@@ -362,8 +468,8 @@ __random_access_sequence__ and __associative_sequence__.
 [heading Synopsis]
     BOOST_FUSION_ADAPT_ASSOC_STRUCT(
         struct_name,
-        (member_type0, member_name0, key_type0)
-        (member_type1, member_name1, key_type1)
+        ([member_type0,] member_name0, key_type0)
+        ([member_type1,] member_name1, key_type1)
         ...
         )
 
@@ -371,9 +477,12 @@ __random_access_sequence__ and __associative_sequence__.
 
 The above macro generates the necessary code to adapt `struct_name`
 as a model of __random_access_sequence__ and __associative_sequence__.
-The sequence of `(member_typeN, member_nameN, key_typeN)`
-triples declares the type, name and key type of each of the struct members
+The sequence of `([member_typeN,] member_nameN, key_typeN)` tuples 
+declares the type, name and key type of each of the struct members 
 that are part of the sequence.
+
+When member_typeN is omitted or set to BOOST_FUSION_ADAPT_AUTO, the type is
+infered with Boost.TypeOf.
 
 The macro should be used at global scope, and `struct_name` should be the fully
 namespace qualified name of the struct to be adapted.
@@ -404,8 +513,14 @@ namespace qualified name of the struct to be adapted.
     // keys keys::name and keys::age present.
     BOOST_FUSION_ADAPT_ASSOC_STRUCT(
         demo::employee,
-        (std::string, name, keys::name)
-        (int, age, keys::age))
+        (name, keys::name)
+        (age, keys::age))
+
+    // Without BOOST_PP_VARIADICS support :
+    BOOST_FUSION_ADAPT_ASSOC_STRUCT(
+        demo::employee,
+        (BOOST_FUSION_ADAPT_AUTO, name, keys::name),
+        (BOOST_FUSION_ADAPT_AUTO, age, keys::name))
 
 [endsect]
 
@@ -420,14 +535,14 @@ __random_access_sequence__ and __associative_sequence__.
     BOOST_FUSION_ADAPT_ASSOC_TPL_STRUCT(
         (template_param0)(template_param1)...,
         (struct_name) (specialization_param0)(specialization_param1)...,
-        (member_type0, member_name0, key_type0)
-        (member_type1, member_name1, key_type1)
+        ([member_type0,] member_name0, key_type0)
+        ([member_type1,] member_name1, key_type1)
         ...
         )
 
 [heading Semantics]
 
-The above macro generates the necessary code to adapt `struct_name` or an 
+The above macro generates the necessary code to adapt `struct_name` or an
 arbitrary specialization of `struct_name` as a model of
 __random_access_sequence__ and __associative_sequence__.
 The sequence `(template_param0)(template_param1)...` declares the names of
@@ -435,9 +550,12 @@ the template type parameters used.
 The sequence `(specialization_param0)(specialization_param1)...`
 declares the template parameters of the actual specialization of `struct_name`
 that is adapted as a fusion sequence.
-The sequence of `(member_typeN, member_nameN, key_typeN)`
-triples declares the type, name and key type of each of the struct members
+The sequence of `([member_typeN,] member_nameN, key_typeN)`
+tuples declares the type, name and key type of each of the struct members
 that are part of the sequence.
+
+When member_typeN is omitted or set to BOOST_FUSION_ADAPT_AUTO, the type is
+infered with Boost.TypeOf.
 
 The macro should be used at global scope, and `struct_name` should be the fully
 namespace qualified name of the struct to be adapted.
@@ -463,10 +581,17 @@ namespace qualified name of the struct to be adapted.
         struct name;
         struct age;
     }
-    
+
     // Any instantiated demo::employee is now a Fusion sequence.
     // It is also an associative sequence with
     // keys keys::name and keys::age present.
+    BOOST_FUSION_ADAPT_ASSOC_TPL_STRUCT(
+        (Name)(Age),
+        (demo::employee) (Name)(Age),
+        (name, keys::name)
+        (age, keys::age))
+
+    // Without BOOST_PP_VARIADICS support :
     BOOST_FUSION_ADAPT_ASSOC_TPL_STRUCT(
         (Name)(Age),
         (demo::employee) (Name)(Age),
@@ -478,16 +603,16 @@ namespace qualified name of the struct to be adapted.
 [section:adapt_assoc_struct_named BOOST_FUSION_ADAPT_ASSOC_STRUCT_NAMED]
 
 [heading Description]
-BOOST_FUSION_ADAPT_ASSOC_STRUCT_NAMED and BOOST_FUSION_ADAPT_ASSOC_STRUCT_NAMED_NS are 
-macros that can be used to generate all the necessary boilerplate to make an 
+BOOST_FUSION_ADAPT_ASSOC_STRUCT_NAMED and BOOST_FUSION_ADAPT_ASSOC_STRUCT_NAMED_NS are
+macros that can be used to generate all the necessary boilerplate to make an
 arbitrary struct a model of __random_access_sequence__ and
 __associative_sequence__. The given struct is adapted using the given name.
 
 [heading Synopsis]
     BOOST_FUSION_ADAPT_ASSOC_STRUCT_NAMED(
         struct_name, adapted_name,
-        (member_type0, member_name0, key_type0)
-        (member_type1, member_name1, key_type1)
+        ([member_type0,] member_name0, key_type0)
+        ([member_type1,] member_name1, key_type1)
         ...
         )
 
@@ -495,8 +620,8 @@ __associative_sequence__. The given struct is adapted using the given name.
         struct_name,
         (namespace0)(namespace1)...,
         adapted_name,
-        (member_type0, member_name0, key_type0)
-        (member_type1, member_name1, key_type1)
+        ([member_type0,] member_name0, key_type0)
+        ([member_type1,] member_name1, key_type1)
         ...
         )
 
@@ -515,6 +640,9 @@ adapted view is placed in the namespace `boost::fusion::adapted`.
 The sequence of `(member_typeN, member_nameN, key_typeN)`
 triples declares the type, name and key type of each of the struct members
 that are part of the sequence.
+
+When member_typeN is omitted or set to BOOST_FUSION_ADAPT_AUTO, the type is
+infered with Boost.TypeOf.
 
 The macros should be used at global scope, and `struct_name` should be the fully
 namespace qualified name of the struct to be converted.
@@ -539,13 +667,19 @@ namespace qualified name of the struct to be converted.
         struct name;
         struct age;
     }
-    
+
     // boost::fusion::adapted::adapted_employee is now a Fusion sequence
     // referring to demo::employee
     BOOST_FUSION_ADAPT_ASSOC_STRUCT_NAMED(
         demo::employee, adapted_employee,
-        (std::string, name, keys::name)
-        (int, age, keys::age))
+        (name, keys::name)
+        (age, keys::age))
+
+    // Without BOOST_PP_VARIADICS support :
+    BOOST_FUSION_ADAPT_ASSOC_STRUCT_NAMED(
+        demo::employee, adapted_employee,
+        (BOOST_FUSION_ADAPT_AUTO, name, keys::name)
+        (BOOST_FUSION_ADAPT_AUTO, age, keys::age))
 
 [endsect]
 
@@ -559,17 +693,17 @@ __random_access_sequence__.
 
     BOOST_FUSION_ADAPT_ADT(
         type_name,
-        (attribute_type0, attribute_const_type0, get_expr0, set_expr0)
-        (attribute_type1, attribute_const_type1, get_expr1, set_expr1)
+        ([attribute_type0, attribute_const_type0,] get_expr0, set_expr0)
+        ([attribute_type1, attribute_const_type1,] get_expr1, set_expr1)
         ...
         )
 
 [heading Expression Semantics]
 
 The above macro generates the necessary code to adapt `type_name`
-as a model of __random_access_sequence__. 
+as a model of __random_access_sequence__.
 The sequence of
-[^(attribute_type['N], attribute_const_type['N], get_expr['N], set_expr['N])]
+[^([attribute_type['N], attribute_const_type['N],] get_expr['N], set_expr['N])]
 quadruples declares the types, const types, get-expressions and set-expressions
 of the elements that are part of the adapted fusion sequence.
 [^get_expr['N]] is the expression that is invoked to get the ['N]th element
@@ -577,7 +711,9 @@ of an instance of `type_name`. This expression may access a variable named
 `obj` of type `type_name&` or `type_name const&` which represents the underlying
 instance of `type_name`.
 [^attribute_type['N]] and [^attribute_const_type['N]] may specify the types
-that [^get_expr['N]] denotes to.
+that [^get_expr['N]] denotes to, when omitted the type is deduced from
+[get_expr['N]] return type via BOOST_TYPEOF. On compiler missing support for 
+variadic macros BOOST_FUSION_ADAPT_AUTO can be used to avoid repeating the type.
 [^set_expr['N]] is the expression that is invoked to set the ['N]th element
 of an instance of `type_name`. This expression may access variables named
 `obj` of type `type_name&`, which represent the corresponding instance of
@@ -600,7 +736,7 @@ namespace qualified name of the class type to be adapted.
 
     #include <boost/fusion/adapted/adt/adapt_adt.hpp>
     #include <boost/fusion/include/adapt_adt.hpp>
-    
+
 [heading Example]
     namespace demo
     {
@@ -609,41 +745,41 @@ namespace qualified name of the class type to be adapted.
         private:
             std::string name;
             int age;
-                
+
         public:
             void set_name(std::string const& n)
             {
                 name=n;
             }
-                
+
             void set_age(int a)
             {
                 age=a;
             }
-                
+
             std::string const& get_name()const
             {
                 return name;
             }
-                
+
             int get_age()const
             {
                 return age;
             }
         };
     }
-    
+
     BOOST_FUSION_ADAPT_ADT(
         demo::employee,
-        (std::string const&, std::string const&, obj.get_name(), obj.set_name(val))
-        (int, int, obj.get_age(), obj.set_age(val)))
-    
+        (obj.get_name(), obj.set_name(val))
+        (obj.get_age(), obj.set_age(val)))
+
     demo::employee e;
     front(e)="Edward Norton";
     back(e)=41;
     //Prints 'Edward Norton is 41 years old'
     std::cout << e.get_name() << " is " << e.get_age() << " years old" << std::endl;
-    
+
 [heading See also]
 
 __adt_attribute_proxy__
@@ -661,8 +797,8 @@ __random_access_sequence__.
     BOOST_FUSION_ADAPT_TPL_ADT(
         (template_param0)(template_param1)...,
         (type_name) (specialization_param0)(specialization_param1)...,
-        (attribute_type0, attribute_const_type0, get_expr0, set_expr0)
-        (attribute_type1, attribute_const_type1, get_expr1, set_expr1)
+        ([attribute_type0, attribute_const_type0,] get_expr0, set_expr0)
+        ([attribute_type1, attribute_const_type1,] get_expr1, set_expr1)
         ...
         )
 
@@ -670,7 +806,7 @@ __random_access_sequence__.
 
 The above macro generates the necessary code to adapt `type_name`
 or an arbitrary specialization of `type_name`
-as a model of __random_access_sequence__. 
+as a model of __random_access_sequence__.
 The sequence `(template_param0)(template_param1)...` declares the names of
 the template type parameters used.
 The sequence `(specialization_param0)(specialization_param1)...`
@@ -685,7 +821,9 @@ of an instance of `type_name`. This expression may access a variable named
 `obj` of type `type_name&` or `type_name const&` which represents the underlying
 instance of `type_name`.
 [^attribute_type['N]] and [^attribute_const_type['N]] may specify the types
-that [^get_expr['N]] denotes to.
+that [^get_expr['N]] denotes to, when omitted the type is deduced from
+[get_expr['N]] return type via BOOST_TYPEOF. On compiler missing support for 
+variadic macros BOOST_FUSION_ADAPT_AUTO can be used to avoid repeating the type.
 [^set_expr['N]] is the expression that is invoked to set the ['N]th element
 of an instance of `type_name`. This expression may access variables named
 `obj` of type `type_name&`, which represent the corresponding instance of
@@ -708,40 +846,40 @@ namespace qualified name of the template class type to be adapted.
 
     #include <boost/fusion/adapted/adt/adapt_adt.hpp>
     #include <boost/fusion/include/adapt_adt.hpp>
-    
+
 [heading Example]
     namespace demo
-    { 
+    {
 		template<typename Name, typename Age>
         struct employee
         {
         private:
             Name name;
             Age age;
-                
+
         public:
             void set_name(Name const& n)
             {
                 name=n;
             }
-                
+
             void set_age(Age const& a)
             {
                 age=a;
             }
-                
+
             Name const& get_name()const
             {
                 return name;
             }
-                
+
             Age const& get_age()const
             {
                 return age;
             }
         };
     }
-    
+
     BOOST_FUSION_ADAPT_TPL_ADT(
         (Name)(Age),
         (demo::employee) (Name)(Age),
@@ -753,7 +891,7 @@ namespace qualified name of the template class type to be adapted.
     boost::fusion::back(e)=41;
     //Prints 'Edward Norton is 41 years old'
     std::cout << e.get_name() << " is " << e.get_age() << " years old" << std::endl;
-    
+
 [heading See also]
 
 __adt_attribute_proxy__
@@ -770,15 +908,15 @@ __random_access_sequence__  and __associative_sequence__.
 
     BOOST_FUSION_ADAPT_ASSOC_ADT(
         type_name,
-        (attribute_type0, attribute_const_type0, get_expr0, set_expr0, key_type0)
-        (attribute_type1, attribute_const_type1, get_expr1, set_expr1, key_type1)
+        ([attribute_type0, attribute_const_type0,] get_expr0, set_expr0, key_type0)
+        ([attribute_type1, attribute_const_type1,] get_expr1, set_expr1, key_type1)
         ...
         )
 
 [heading Expression Semantics]
 
 The above macro generates the necessary code to adapt `type_name`
-as a model of __random_access_sequence__ and __associative_sequence__. 
+as a model of __random_access_sequence__ and __associative_sequence__.
 The sequence of
 [^(attribute_type['N], attribute_const_type['N], get_expr['N], set_expr['N], key_type['N])]
 5-tuples declares the types, const types, get-expressions, set-expressions and key types
@@ -788,7 +926,9 @@ of an instance of `type_name`. This expression may access a variable named
 `obj` of type `type_name&` or `type_name const&` which represents the underlying
 instance of `type_name`.
 [^attribute_type['N]] and [^attribute_const_type['N]] may specify the types
-that [^get_expr['N]] denotes to.
+that [^get_expr['N]] denotes to, when omitted the type is deduced from
+[get_expr['N]] return type via BOOST_TYPEOF. On compiler missing support for 
+variadic macros BOOST_FUSION_ADAPT_AUTO can be used to avoid repeating the type.
 [^set_expr['N]] is the expression that is invoked to set the ['N]th element
 of an instance of `type_name`. This expression may access variables named
 `obj` of type `type_name&`, which represent the corresponding instance of
@@ -800,7 +940,7 @@ The actual return type of fusion's intrinsic sequence access (meta-)functions
 when in invoked with (an instance of) `type_name` is a proxy type.
 This type is implicitly convertible to the attribute type via [^get_expr['N]] and
 forwards assignment to the underlying element via [^set_expr['N]].
-The value type (that is the type returned by __result_of_value_of__, __result_of_value_of_data__, 
+The value type (that is the type returned by __result_of_value_of__, __result_of_value_of_data__,
 __result_of_value_at__, __result_of_value_at_c__ and __result_of_value_at_key__) of the ['N]th element
 is [^attribute_type['N]] with const-qualifier and reference removed.
 
@@ -811,7 +951,7 @@ namespace qualified name of the class type to be adapted.
 
     #include <boost/fusion/adapted/adt/adapt_assoc_adt.hpp>
     #include <boost/fusion/include/adapt_assoc_adt.hpp>
-    
+
 [heading Example]
     namespace demo
     {
@@ -820,47 +960,47 @@ namespace qualified name of the class type to be adapted.
         private:
             std::string name;
             int age;
-                
+
         public:
             void set_name(std::string const& n)
             {
                 name=n;
             }
-                
+
             void set_age(int a)
             {
                 age=a;
             }
-                
+
             std::string const& get_name()const
             {
                 return name;
             }
-                
+
             int get_age()const
             {
                 return age;
             }
         };
     }
-    
+
     namespace keys
     {
         struct name;
         struct age;
     }
-    
+
     BOOST_FUSION_ADAPT_ASSOC_ADT(
         demo::employee,
-        (std::string const&, std::string const&, obj.get_name(), obj.set_name(val), keys::name)
-        (int, int, obj.get_age(), obj.set_age(val), keys::age))
-    
+        (obj.get_name(), obj.set_name(val), keys::name)
+        (obj.get_age(), obj.set_age(val), keys::age))
+
     demo::employee e;
     at_key<keys::name>(e)="Edward Norton";
     at_key<keys::age>(e)=41;
     //Prints 'Edward Norton is 41 years old'
     std::cout << e.get_name() << " is " << e.get_age() << " years old" << std::endl;
-    
+
 [heading See also]
 
 __adt_attribute_proxy__
@@ -878,8 +1018,8 @@ __random_access_sequence__  and __associative_sequence__.
     BOOST_FUSION_ADAPT_ASSOC_TPL_ADT(
         (template_param0)(template_param1)...,
         (type_name) (specialization_param0)(specialization_param1)...,
-        (attribute_type0, attribute_const_type0, get_expr0, set_expr0, key_type0)
-        (attribute_type1, attribute_const_type1, get_expr1, set_expr1, key_type1)
+        ([attribute_type0, attribute_const_type0,] get_expr0, set_expr0, key_type0)
+        ([attribute_type1, attribute_const_type1,] get_expr1, set_expr1, key_type1)
         ...
         )
 
@@ -887,14 +1027,14 @@ __random_access_sequence__  and __associative_sequence__.
 
 The above macro generates the necessary code to adapt `type_name`
 or an arbitrary specialization of `type_name`
-as a model of __random_access_sequence__ and __associative_sequence__. 
+as a model of __random_access_sequence__ and __associative_sequence__.
 The sequence `(template_param0)(template_param1)...` declares the names of
 the template type parameters used.
 The sequence `(specialization_param0)(specialization_param1)...`
 declares the template parameters of the actual specialization of `type_name`
 that is adapted as a fusion sequence.
 The sequence of
-[^(attribute_type['N], attribute_const_type['N], get_expr['N], set_expr['N], key_type['N])]
+[^([attribute_type['N], attribute_const_type['N],] get_expr['N], set_expr['N], key_type['N])]
 5-tuples declares the types, const types, get-expressions, set-expressions and key types
 of the elements that are part of the adapted fusion sequence.
 [^get_expr['N]] is the expression that is invoked to get the ['N]th element
@@ -902,7 +1042,9 @@ of an instance of `type_name`. This expression may access a variable named
 `obj` of type `type_name&` or `type_name const&` which represents the underlying
 instance of `type_name`.
 [^attribute_type['N]] and [^attribute_const_type['N]] may specify the types
-that [^get_expr['N]] denotes to.
+that [^get_expr['N]] denotes to, when omitted the type is deduced from
+[get_expr['N]] return type via BOOST_TYPEOF. On compiler missing support for 
+variadic macros BOOST_FUSION_ADAPT_AUTO can be used to avoid repeating the type.
 [^set_expr['N]] is the expression that is invoked to set the ['N]th element
 of an instance of `type_name`. This expression may access variables named
 `obj` of type `type_name&`, which represent the corresponding instance of
@@ -914,7 +1056,7 @@ The actual return type of fusion's intrinsic sequence access (meta-)functions
 when in invoked with (an instance of) `type_name` is a proxy type.
 This type is implicitly convertible to the attribute type via [^get_expr['N]] and
 forwards assignment to the underlying element via [^set_expr['N]].
-The value type (that is the type returned by __result_of_value_of__, __result_of_value_of_data__, 
+The value type (that is the type returned by __result_of_value_of__, __result_of_value_of_data__,
 __result_of_value_at__, __result_of_value_at_c__ and __result_of_value_at_key__) of the ['N]th element
 is [^attribute_type['N]] with const-qualifier and reference removed.
 
@@ -925,7 +1067,7 @@ namespace qualified name of the template class type to be adapted.
 
     #include <boost/fusion/adapted/adt/adapt_assoc_adt.hpp>
     #include <boost/fusion/include/adapt_assoc_adt.hpp>
-    
+
 [heading Example]
     namespace demo
     {
@@ -935,48 +1077,48 @@ namespace qualified name of the template class type to be adapted.
         private:
             Name name;
             Age age;
-                
+
         public:
             void set_name(Name const& n)
             {
                 name=n;
             }
-                
+
             void set_age(Age const& a)
             {
                 age=a;
             }
-                
+
             Name const& get_name()const
             {
                 return name;
             }
-                
+
             Age const& get_age()const
             {
                 return age;
             }
         };
     }
-    
+
     namespace keys
     {
         struct name;
         struct age;
     }
-    
+
     BOOST_FUSION_ADAPT_ASSOC_TPL_ADT(
         (Name)(Age),
         (demo::employee) (Name)(Age),
         (Name const&, Name const&, obj.get_name(), obj.set_name(val), keys::name)
         (Age const&, Age const&, obj.get_age(), obj.set_age(val), keys::age))
-    
+
     demo::employee<std::string, int> e;
     at_key<keys::name>(e)="Edward Norton";
     at_key<keys::age>(e)=41;
     //Prints 'Edward Norton is 41 years old'
     std::cout << e.get_name() << " is " << e.get_age() << " years old" << std::endl;
-    
+
 [heading See also]
 
 __adt_attribute_proxy__
@@ -1028,14 +1170,14 @@ defined in __random_access_sequence__.
     [[`struct_name(e0, e1,... en)`]   [Creates an instance of `struct_name` with elements `e0`...`en`.]]
     [[`struct_name(fs)`]              [Copy constructs an instance of `struct_name` from a __forward_sequence__ `fs`.]]
     [[`str = fs`]                     [Assigns from a __forward_sequence__ `fs`.]]
-    [[`str.member_nameN`]             [Access of struct member `member_nameN`]] 
+    [[`str.member_nameN`]             [Access of struct member `member_nameN`]]
 ]
 
 [heading Header]
 
     #include <boost/fusion/adapted/struct/define_struct.hpp>
     #include <boost/fusion/include/define_struct.hpp>
-    
+
 [heading Example]
 
     // demo::employee is a Fusion sequence
@@ -1097,14 +1239,14 @@ defined in __random_access_sequence__.
     [[`Str(e0, e1,... en)`]           [Creates an instance of `Str` with elements `e0`...`en`.]]
     [[`Str(fs)`]                      [Copy constructs an instance of `Str` from a __forward_sequence__ `fs`.]]
     [[`str = fs`]                     [Assigns from a __forward_sequence__ `fs`.]]
-    [[`str.member_nameN`]             [Access of struct member `member_nameN`]] 
+    [[`str.member_nameN`]             [Access of struct member `member_nameN`]]
 ]
 
 [heading Header]
 
     #include <boost/fusion/adapted/struct/define_struct.hpp>
     #include <boost/fusion/include/define_struct.hpp>
-    
+
 [heading Example]
 
     // Any instantiated demo::employee is a Fusion sequence
@@ -1256,14 +1398,14 @@ defined in __random_access_sequence__ and __associative_sequence__.
     [[`struct_name(e0, e1,... en)`]   [Creates an instance of `struct_name` with elements `e0`...`en`.]]
     [[`struct_name(fs)`]              [Copy constructs an instance of `struct_name` from a __forward_sequence__ `fs`.]]
     [[`str = fs`]                     [Assigns from a __forward_sequence__ `fs`.]]
-    [[`str.member_nameN`]             [Access of struct member `member_nameN`]] 
+    [[`str.member_nameN`]             [Access of struct member `member_nameN`]]
 ]
 
 [heading Header]
 
     #include <boost/fusion/adapted/struct/define_assoc_struct.hpp>
     #include <boost/fusion/include/define_assoc_struct.hpp>
-    
+
 [heading Example]
 
     namespace keys
@@ -1271,7 +1413,7 @@ defined in __random_access_sequence__ and __associative_sequence__.
         struct name;
         struct age;
     }
-    
+
     // demo::employee is a Fusion sequence
     BOOST_FUSION_DEFINE_ASSOC_STRUCT(
         (demo), employee,
@@ -1332,14 +1474,14 @@ defined in __random_access_sequence__ and __associative_sequence__.
     [[`Str(e0, e1,... en)`]           [Creates an instance of `Str` with elements `e0`...`en`.]]
     [[`Str(fs)`]                      [Copy constructs an instance of `Str` from a __forward_sequence__ `fs`.]]
     [[`str = fs`]                     [Assigns from a __forward_sequence__ `fs`.]]
-    [[`str.member_nameN`]             [Access of struct member `member_nameN`]] 
+    [[`str.member_nameN`]             [Access of struct member `member_nameN`]]
 ]
 
 [heading Header]
 
     #include <boost/fusion/adapted/struct/define_assoc_struct.hpp>
     #include <boost/fusion/include/define_assoc_struct.hpp>
-    
+
 [heading Example]
 
     namespace keys
@@ -1347,7 +1489,7 @@ defined in __random_access_sequence__ and __associative_sequence__.
         struct name;
         struct age;
     }
-    
+
     // Any instantiated demo::employee is a Fusion sequence
     BOOST_FUSION_DEFINE_ASSOC_TPL_STRUCT(
         (Name)(Age), (demo), employee,

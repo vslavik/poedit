@@ -1,14 +1,11 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test --force-po option.
-
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
 
 # no unique msg in input files.
 # without --force-po don't create any PO file; cf. msgcomm-15
 
-tmpfiles="$tmpfiles mcomm-test14.in1 mcomm-test14.in2 mcomm-test14.in3"
 cat <<EOF > mcomm-test14.in1
 msgid ""
 msgstr ""
@@ -61,18 +58,14 @@ msgid "1"
 msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mcomm-test14.tmp mcomm-test14.out"
 : ${MSGCOMM=msgcomm}
 
 # --unique is shorthand for --less-than=2; do we've to test both
 # switches?  Are 'for' loops allowed? -ke-
 ${MSGCOMM} --less-than=2 --no-location --force-po -o mcomm-test14.tmp \
-    mcomm-test14.in1 mcomm-test14.in2 mcomm-test14.in3
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcomm-test14.tmp > mcomm-test14.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+    mcomm-test14.in1 mcomm-test14.in2 mcomm-test14.in3 || exit 1
+LC_ALL=C tr -d '\r' < mcomm-test14.tmp > mcomm-test14.out || exit 1
 
-tmpfiles="$tmpfiles mcomm-test14.ok"
 cat << EOF > mcomm-test14.ok
 msgid ""
 msgstr ""
@@ -89,7 +82,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcomm-test14.ok mcomm-test14.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

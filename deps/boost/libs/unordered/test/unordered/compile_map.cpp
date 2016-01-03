@@ -202,6 +202,7 @@ UNORDERED_AUTO_TEST(test2)
     unordered_unique_test(map, map_value);
     unordered_map_test(map, assignable, assignable);
     unordered_copyable_test(map, assignable, map_value, hash, equal_to);
+    unordered_map_member_test(map, map_value);
 
     boost::unordered_map<
         test::minimal::assignable,
@@ -226,6 +227,7 @@ UNORDERED_AUTO_TEST(test2)
     unordered_equivalent_test(multimap, map_value);
     unordered_map_test(multimap, assignable, assignable);
     unordered_copyable_test(multimap, assignable, map_value, hash, equal_to);
+    unordered_map_member_test(multimap, map_value);
 }
 
 RUN_TESTS()

@@ -64,6 +64,8 @@
 #include <limits>
 #include <stdexcept>
 
+#define BOOST_UBLAS_NOT_USED(x) (void)(x)
+
 namespace boost { namespace numeric { namespace ublas { namespace test { namespace detail { namespace /*<unnamed>*/ {
 
   using ::std::abs;
@@ -119,8 +121,8 @@ template <typename T1, typename T2, typename T3>
 BOOST_UBLAS_INLINE
 bool rel_close_to(T1 x, T2 y, T3 tol)
 {
-	typedef typename promote_traits<typename promote_traits<T1,T2>::promote_type,
-									T3>::promote_type real_type;
+    //typedef typename promote_traits<typename promote_traits<T1,T2>::promote_type,
+    //								T3>::promote_type real_type;
 
     if ((boost::math::isnan)(x) || (boost::math::isnan)(y))
     {
@@ -212,15 +214,17 @@ bool rel_close_to(::std::complex<T1> const& x, ::std::complex<T2> const& y, T3 t
 								/* [/BOOST_UBLAS_TEST_DO] */
 
 
-/// Define the end of a test suite.
+/// Define the end of a test suite and return non-zero value if any test failed.
 #define BOOST_UBLAS_TEST_END() 	/* [BOOST_UBLAS_TEST_END] */ \
 								if (test_fails__ > 0) \
 								{ \
 									::std::cerr << "Number of failed tests: " << test_fails__ << ::std::endl; \
+									return 1; \
 								} \
 								else \
 								{ \
 									::std::cerr << "No failed test" << ::std::endl; \
+									return 0; \
 								} \
 								} /* End of test suite */ \
 								/* [/BOOST_UBLAS_TEST_END] */

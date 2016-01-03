@@ -21,7 +21,7 @@
 
 //#define BOOST_THREAD_VERSION 3
 #define BOOST_THREAD_VERSION 4
-#define BOOST_THREAD_USES_LOG
+//#define BOOST_THREAD_USES_LOG
 #define BOOST_THREAD_USES_LOG_THREAD_ID
 #include <boost/thread/detail/log.hpp>
 
@@ -39,7 +39,7 @@ namespace boost
   template <typename OStream>
   OStream& operator<<(OStream& os , boost::future_status st )
   {
-    os << int(st) << " ";
+    os << underlying_cast<int>(st) << " ";
     return os;
   }
   template <typename T>

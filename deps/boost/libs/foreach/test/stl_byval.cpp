@@ -49,6 +49,7 @@ std::list<int> const &my_const_list = my_list;
 int test_main( int, char*[] )
 {
     boost::mpl::false_ *p = BOOST_FOREACH_IS_LIGHTWEIGHT_PROXY(my_list);
+    (void)p;
 
     // non-const containers by value
     BOOST_CHECK(sequence_equal_byval_n(my_list, "\1\2\3\4\5"));

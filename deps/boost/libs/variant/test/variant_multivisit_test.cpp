@@ -3,37 +3,46 @@
 // See http://www.boost.org for updates, documentation, and revision history.
 //-----------------------------------------------------------------------------
 //
-// Copyright (c) 2013
-// Antony Polukhin
+// Copyright (c) 2013-2015 Antony Polukhin
 //
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include "boost/config.hpp"
+#include "boost/noncopyable.hpp"
 #define BOOST_VARAINT_MAX_MULTIVIZITOR_PARAMS 5
 #include "boost/variant/multivisitors.hpp"
+#include "boost/variant.hpp"
 
 #include "boost/test/minimal.hpp"
+
+struct my_noncopyable : boost::noncopyable {
+    my_noncopyable(){}
+    ~my_noncopyable(){}
+};
+
+typedef boost::variant<my_noncopyable, int>         variant_noncopy_t;
+
 
 typedef boost::variant<char, unsigned char, signed char, unsigned short, int, unsigned int>         variant6_t;
 
 struct test_visitor: boost::static_visitor<> {
     // operators that shall not be called
     template <class  T1, class  T2, class  T3>
-    void operator()(T1, T2, T3) const 
+    void operator()(T1&, T2&, T3&) const 
     {
         BOOST_CHECK(false);
     }
 
     template <class  T1, class  T2, class  T3, class  T4>
-    void operator()(T1, T2, T3, T4) const 
+    void operator()(T1&, T2&, T3&, T4&) const 
     {
         BOOST_CHECK(false);
     }
 
     template <class  T1, class  T2, class  T3, class  T4, class  T5>
-    void operator()(T1, T2, T3, T4, T5) const 
+    void operator()(T1&, T2&, T3&, T4&, T5&) const 
     {
         BOOST_CHECK(false);
     }
@@ -61,6 +70,21 @@ struct test_visitor: boost::static_visitor<> {
         BOOST_CHECK(v2 == 2);
         BOOST_CHECK(v3 == 3);
         BOOST_CHECK(v4 == 4);
+    }
+
+
+    // Noncopyables
+    void operator()(my_noncopyable&, my_noncopyable&, my_noncopyable&) const {
+        BOOST_CHECK(true);
+    }
+    void operator()(my_noncopyable&, my_noncopyable&, my_noncopyable&, my_noncopyable&) const {
+        BOOST_CHECK(true);
+    }
+    void operator()(my_noncopyable&, my_noncopyable&, my_noncopyable&, my_noncopyable&, my_noncopyable&) const {
+        BOOST_CHECK(true);
+    }
+    void operator()(my_noncopyable&, my_noncopyable&, my_noncopyable&, my_noncopyable&, my_noncopyable&, my_noncopyable&) const {
+        BOOST_CHECK(true);
     }
 };
 
@@ -112,13 +136,24 @@ int test_main(int , char* [])
         arithmetics_t(true)
     );
 
-    /* Delayed multi visitation is not implemented
+#if !defined(BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES)
     if_visitor if_vis;
     BOOST_CHECK(
         boost::apply_visitor(if_vis)(v0, v1, v2)
         ==
         arithmetics_t(true)
     );
-    */
+#endif
+
+
+    variant_noncopy_t vnonc[6];
+    boost::apply_visitor(v, vnonc[0], vnonc[1], vnonc[2]);
+    boost::apply_visitor(test_visitor(), vnonc[0], vnonc[1], vnonc[2], vnonc[3]);
+
+#ifdef BOOST_VARIANT_MULTIVISITORS_TEST_VERY_EXTREME
+    boost::apply_visitor(v, vnonc[0], vnonc[1], vnonc[2], vnonc[3], vnonc[4]);
+    boost::apply_visitor(test_visitor(), vnonc[0], vnonc[1], vnonc[2], vnonc[3], vnonc[4], vnonc[5]);
+#endif
+
     return boost::exit_success;
 }

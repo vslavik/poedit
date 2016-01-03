@@ -1,8 +1,8 @@
 [article Predef
     [quickbook 1.7]
-    [version 1.0]
+    [version 1.2]
     [authors [Rivera, Rene]]
-    [copyright 2005 Rene Rivera, 2008-2013 Redshift Software Inc]
+    [copyright 2005, 2008-2014 Rene Rivera]
     [purpose Identification and specification of predefined macros.]
     [license
         Distributed under the Boost Software License, Version 1.0.
@@ -141,6 +141,7 @@ macros of a particular prefix:
 * `BOOST_LIB_C_` and `BOOST_LIB_STD_` for the C and C++ standard library
   in use.
 * `BOOST_OS_` for the operating system we are compiling to.
+* `BOOST_PLAT_` for platforms on top of operating system or compilers.
 * `BOOST_ENDIAN_` for endianness of the os and architecture combination.
 
 [note The detected definitions are for the configuration one is targeting
@@ -209,7 +210,7 @@ from the preprocessor:
   }
 ``
 
-In addition, for each version macro defined there is a
+In addition, for each version macro defined there is an
 `*_AVAILABLE` macro defined only when the particular aspect is
 detected. I.e. a definition equivalent to:
 
@@ -221,6 +222,17 @@ detected. I.e. a definition equivalent to:
 
 Also for each aspect there is a macro defined with a descriptive
 name of what the detection is.
+
+[heading The `*_EMULATED` macros]
+
+Predef definitions are guaranteed to be uniquely detected within one category.
+But there are contexts under which multiple underlying detections are possible.
+The well known example of this is detection of GCC and MSVC compilers which are
+commonly emulated by other compilers by defining the same base macros. To
+account for this detection headers are allowed to define `*_EMULATED` predefs
+when this situation is detected. The emulated predefs will be set to the
+version number of the detection instead of the regular predef macro for that
+detection. For example MSVC will set `BOOST_COMP_MSVC_EMULATED` but not set `BOOST_COM_MSVC`, and it will also set `BOOST_COMP_MSVC_AVAILABLE`.
 
 [heading Using the `BOOST_VERSION_NUMBER` macro]
 
@@ -275,15 +287,21 @@ the same structure and requirements.
 All predefs need to follow a set of requirements:
 
 * The headers must use the Boost Software License.
-* The predef must, by default, be defined as `BOOST_VERSION_NUMBER(0,0,0)`.
+* The predef must, by default, be defined as `BOOST_VERSION_NUMBER_NOT_AVAILABLE`.
 * The predef must be redefined to a non-zero value once detected.
-* The predef must, by default, be defined to `BOOST_VERSION_NUMBER(0,0,1)`
+* The predef must, by default, be defined to `BOOST_VERSION_NUMBER_AVAILABLE`
   when the predef is detected.
 * If possible, the predef will be defined as the version number detected.
-* The predef must define `*_AVAILABLE` macros.
+* The predef must define `*_AVAILABLE` macros as needed.
 * The predef must define a symbolic constant string name macro.
 * The predef must declare itself, after being defined, for the testing
   system.
+* The predef must guarantee that it is the only one defined as detected
+  per category.
+* But a predef can define `*_EMULATED` macros to indicate that it was
+  previously detected by another header and is being "emulated" by the
+  system. Note that the `*_AVAILABLE` macros must still be defined in this
+  situation.
 
 And there are some extra guidelines that predef headers should follow:
 
@@ -314,6 +332,13 @@ http://www.boost.org/LICENSE_1_0.txt)
 #define BOOST_PREDEF_category_tag_H
 ``
 
+If the detection depends on the detection of another predef you should
+include those headers here.
+
+``
+#include <boost/predef/CATEGORY_TAG/DEPENDENCY.h>
+``
+
 Depending on how you are defining the predef you will at minimum have
 to include the `version_number.h` header. But you might also want to
 include the `make.h` header for the version number decomposing utility
@@ -339,7 +364,7 @@ for the macro. In particular this works for the popular Eclipse IDE:
 Documentation about what is detected.
 */
 
-#define BOOST_category_tag BOOST_VERSION_NUMBER(0,0,0)
+#define BOOST_category_tag BOOST_VERSION_NUMBER_NOT_AVAILABLE
 ``
 
 Next is the detection and definition of the particular predef. The
@@ -348,7 +373,7 @@ place further version detection inside this. The first action inside
 the overall check is to "`#undef BOOST_category_tag`" which undefines
 the zero-value default. The rest is up to the you how to do the checks
 for defining the version. But at minimum it must
-"`#define BOOST_category_tag BOOST_VERSION_NUMBER(0,0,1)`" as the fallback
+"`#define BOOST_category_tag BOOST_VERSION_NUMBER_AVAILABLE`" as the fallback
 to minimally indicate that the predef was detected:
 
 ``
@@ -357,19 +382,22 @@ to minimally indicate that the predef was detected:
 #   if (condition_b)
 #        define BOOST_category_tag BOOST_VERSION_NUMBER(major,minor,patch)
 #    else
-#        define BOOST_category_tag BOOST_VERSION_NUMBER(0,0,1)
+#        define BOOST_category_tag BOOST_VERSION_NUMBER_AVAILABLE
 #    endif
 #endif
 ``
 
-We also need to provide the `*_AVAILABLE` versions of the predef. And
-for convenience we also want to provide a `*_NAME` macro:
+We also need to provide the `*_AVAILABLE` versions of the predef.
 
 ``
 #if BOOST_category_tag
 #   define BOOST_category_tag_AVAILABLE
 #endif
+``
 
+And for convenience we also want to provide a `*_NAME` macro:
+
+``
 #define BOOST_catagory_tag_NAME "Name"
 ``
 
@@ -390,6 +418,78 @@ And, of course, we last need to close out the include guard:
 #endif
 ``
 
+[heading Adding exclusive predefs]
+
+For headers of predefs that need to be mutually exclusive in the detection
+we need to add checks and definitions to detect when the predef is
+detected by multiple headers.
+
+Internally compiler, operating system, and platforms define
+`BOOST_PREDEF_DETAIL_COMP_DETECTED`, `BOOST_PREDEF_DEFAIL_OS_DETECTED`, and
+`BOOST_PREDEF_DETAIL_PLAT_DETECTED` respectively when the predef is first
+detected. This is used to guard against multiple definition of the detection
+in later included headers. In those cases the detection would instead be
+written as:
+
+``
+#if !BOOST_PREDEF_DETAIL_category_DETECTED && (condition_a)
+#   undef BOOST_category_tag
+#   if (condition_b)
+#        define BOOST_category_tag BOOST_VERSION_NUMBER(major,minor,patch)
+#    else
+#        define BOOST_category_tag BOOST_VERSION_NUMBER(0,0,1)
+#    endif
+#endif
+``
+
+And we also include a header that defines the `*_DETECTED` macro when we have
+the detection:
+
+``
+#if BOOST_category_tag
+#   define BOOST_category_tag_AVAILABLE
+#   include <boost/predef/detail/CATEGORY_detected.h>
+#endif
+``
+
+Everything else about the header is the same as the basic detection header.
+
+[heading Adding an exclusive but emulated predef]
+
+Because compilers are frequently emulated by other compilers we both want
+to have exclusive detection of the compiler and also provide information
+that we detected the emulation of the compiler. To accomplish this we define
+a local `*_DETECTION` macro for the compiler detection. And conditionally
+define either the base compiler predef `BOOST_COMP_compiler` or the alternate
+`BOOST_COMP_compiler_EMULATED` predef.
+
+The initial detection would look like:
+
+``
+#if (condition_a)
+#   if (condition_b)
+#        define BOOST_COMP_tag_DETECTION BOOST_VERSION_NUMBER(major,minor,patch)
+#    else
+#        define BOOST_COMP_tag_DETECTION BOOST_VERSION_NUMBER_AVAILABLE
+#    endif
+#endif
+``
+
+And then we can conditionally define the base or emulated predefs:
+
+``
+#ifdef BOOST_COMP_tag_DETECTION
+#   if defined(BOOST_PREDEF_DETAIL_COMP_DETECTED)
+#       define BOOST_COMP_tag_EMULATED BOOST_COMP_tag_DETECTION
+#   else
+#       undef BOOST_COMP_tag
+#       define BOOST_COMP_tag BOOST_COMP_tag_DETECTION
+#   endif
+#   define BOOST_category_tag_AVAILABLE
+#   include <boost/predef/detail/comp_detected.h>
+#endif
+``
+
 [heading Using utility pattern macros]
 
 By including:
@@ -398,9 +498,9 @@ By including:
 #include <boost/predef/make.h>
 ``
 
-One will get a set of utlity macros to decompose common version
+One will get a set of utility macros to decompose common version
 macros as defined by compilers. For example the EDG compiler
-uses a simple 3-digit version macro (M,N,P). It can be decomesed
+uses a simple 3-digit version macro (M,N,P). It can be decomposed
 and defined as:
 
 ``
@@ -443,6 +543,10 @@ and "Y", "M", "D" for dates.
 [include ../include/boost/predef/os/bsd/*.h]
 [endsect]
 
+[section `BOOST_PLAT` platform macros]
+[include ../include/boost/predef/platform/*.h]
+[endsect]
+
 [section Other macros]
 [include ../include/boost/predef/other/*.h]
 [endsect]
@@ -454,10 +558,140 @@ and "Y", "M", "D" for dates.
 
 [endsect]
 
+[section Check Utilities]
+
+The `predef_check` utility provides a facility for building a
+program that will check a given set of expressions against
+the definitions it detected when it was built.
+
+[heading [^predef_check] programs]
+
+Even though there is only one `predef_check` program, there
+are variations for each of the languages that are detected
+by Predef to match the convention for sources files. For all
+of them one invokes with a list of expression arguments. The
+expressions are evaluated within the context of the particular
+[^predef_check] program and if they all are true zero (0) is returned.
+Otherwise the index of the first false expression is returned.
+
+The expression syntax is simple:
+
+[teletype]
+``
+predef-definition [ relational-operator version-value ]
+``
+[c++]
+
+[~predef-definition] can be any of the Predef definitions. For
+example `BOOST_COMP_GCC`.
+
+[~relational-operator] can be any of: [^>], [^<], [^>=], [^<=],
+[^==] and [^!=].
+
+[~version-number] can be a full or partial version triplet value.
+If it's a partial version triple it is completed with zeros. That
+is [^x.y] is equivalent to [^x.y.0] and [^x] is equivalent to
+[^x.0.0].
+
+The [~relations-operator] and [~version-number] can be ommited. In
+which case it is equivalent to:
+
+[teletype]
+``
+predef-definition > 0.0.0
+``
+[c++]
+
+[heading Using with Boost.Build]
+
+You can use the [^predef_check] programs directly from Boost Build
+to configure target requirements. This is useful for controlling
+what gets built as part of your project based on the detailed
+version information available in Predef. The basic use is simple:
+
+[teletype]
+``
+import path-to-predef-src/check/predef
+    : check require
+    : predef-check predef-require ;
+
+exe my_windows_program : windows_source.cpp
+    : [ predef-require "BOOST_OS_WINDOWS" ] ;
+``
+[c++]
+
+That simple use case will skip building the [^my_windows_program]
+unless one is building for Windows. Like the direct [^predef_check]
+you can pass mutiple expressions using relational comparisons.
+For example:
+
+[teletype]
+``
+import path-to-predef-src/check/predef
+    : check require
+    : predef-check predef-require ;
+
+lib my_special_lib : source.cpp
+    : [ predef-require "BOOST_OS_WINDOWS != 0" "BOOST_OS_VMS != 0"] ;
+``
+[c++]
+
+And in that case the [^my_special_lib] is built only when the OS is
+not Windows or VMS. The [^requires] rule is a special case of the
+[^check] rule. And is defined in terms of it:
+
+[teletype]
+``
+rule require ( expressions + : language ? )
+{
+    return [ check $(expressions) : $(language) : : <build>no ] ;
+}
+``
+[c++]
+
+You can use the [^check] rule for more control and to implement
+something other than control of what gets built. The definition
+for the [^check] rule is:
+
+[teletype]
+``
+rule check ( expressions + : language ? : true-properties * : false-properties * )
+``
+[c++]
+
+When invoked as a reuirement of a Boost Build target this rule
+will add the [^true-properties] to the target if all the [^expressions]
+evaluate to true. Otherwise the [^false-properties] get added as
+requirements. For example you could use it to enable or disable
+features in your programs:
+
+[teletype]
+``
+import path-to-predef-src/check/predef
+    : check require
+    : predef-check predef-require ;
+
+exe my_special_exe : source.cpp
+    : [ predef-check "BOOST_OS_WINDOWS == 0"
+        : <define>ENABLE_WMF=0
+        : <define>ENABLE_WMF=1 ] ;
+``
+[c++]
+
+For both [^check] and [^require] the [^language] argument controls
+which variant of the [^predef_check] program is used to check the
+expressions. It defaults to "c++", but can be any of: "c", "cpp",
+"objc", and "objcpp".
+
+[endsect]
+
+[include history.qbk]
+[include todo.qbk]
+
 [section Acknoledgements]
 
 The comprehensiveness of this library would not be
-possible without the existance of the indispensible
+possible without the existence of the indispensable
 resource that is the
 [@http://sourceforge.net/p/predef/ Pre-defined C/C++ Compiler Macros]
 Project. It was, and continues to be, the primary source

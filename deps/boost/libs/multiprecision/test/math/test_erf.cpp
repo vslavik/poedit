@@ -43,6 +43,13 @@ void expected_results()
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
+      ".*cpp_bin_float.*",           // test type(s)
+      "Erf Function:.*",             // test data group
+      "boost::math::erfc?", 3000, 1000); // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
+      ".*",                          // platform
       ".*",                          // test type(s)
       "Erf Function:.*",             // test data group
       "boost::math::erfc?", 300, 200); // test function

@@ -1,5 +1,6 @@
 /* Python brace format strings.
-   Copyright (C) 2004, 2006-2007, 2013 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2006-2007, 2013, 2015 Free Software Foundation,
+   Inc.
    Written by Daiki Ueno <ueno@gnu.org>, 2013.
 
    This program is free software: you can redistribute it and/or modify
@@ -24,6 +25,7 @@
 #include <string.h>
 
 #include "format.h"
+#include "c-ctype.h"
 #include "xalloc.h"
 #include "xvasprintf.h"
 #include "format-invalid.h"
@@ -38,11 +40,11 @@
      - an identifier [_A-Za-z][_0-9A-Za-z]*|[0-9]+,
      - an optional getattr ('.') or getitem ('['..']') operator with
        an identifier as argument,
-     - an optional width specifier starting with ':', with a
+     - an optional format specifier starting with ':', with a
        (unnested) format string as argument,
      - a closing brace '}'.
    Brace characters '{' and '}' can be escaped by doubles '{{' and '}}'.
- */
+*/
 
 struct named_arg
 {
@@ -186,20 +188,79 @@ parse_directive (struct spec *spec,
           return false;
         }
 
-      format++;
-      if (!parse_upto (spec, &format, false, '}', translated, fdi,
-                       invalid_reason))
-        {
-          /* FDI and INVALID_REASON will be set by a recursive call of
-             parse_directive.  */
-          return false;
-        }
+      /* Format specifiers.  Although a format specifier can be any
+         string in theory, we can only recognize two types of format
+         specifiers below, because otherwise we would need to evaluate
+         Python expressions by ourselves:
 
-      if (*format == '\0')
+           - A nested format directive expanding to the whole string
+           - The Standard Format Specifiers, as described in PEP3101,
+             not including a nested format directive  */
+      format++;
+      if (*format == '{')
         {
-          *invalid_reason = INVALID_UNTERMINATED_DIRECTIVE ();
-          FDI_SET (format, FMTDIR_ERROR);
-          return false;
+          /* Nested format directive.  */
+          if (!parse_directive (spec, &format, false, translated, fdi,
+                                invalid_reason))
+            {
+              /* FDI and INVALID_REASON will be set by a recursive call of
+                 parse_directive.  */
+              return false;
+            }
+
+          if (*format != '}')
+            {
+              *invalid_reason = INVALID_UNTERMINATED_DIRECTIVE ();
+              FDI_SET (format, FMTDIR_ERROR);
+              return false;
+            }
+        }
+      else
+        {
+          /* Standard format specifiers is in the form:
+             [[fill]align][sign][#][0][minimumwidth][.precision][type]  */
+
+          /* Look ahead two characters to skip [[fill]align].  */
+          int c1, c2;
+
+          c1 = format[0];
+          c2 = format[1];
+
+          if (c2 == '<' || c2 == '>' || c2 == '=' || c2 == '^')
+            format += 2;
+          else if (c1 == '<' || c1 == '>' || c1 == '=' || c1 == '^')
+            format++;
+          if (*format == '+' || *format == '-' || *format == ' ')
+            format++;
+          if (*format == '#')
+            format++;
+          if (*format == '0')
+            format++;
+          while (c_isdigit (*format))
+            format++;
+          if (*format == '.')
+            {
+              format++;
+              while (c_isdigit (*format))
+                format++;
+            }
+          switch (*format)
+            {
+            case 'b': case 'c': case 'd': case 'o': case 'x': case 'X':
+            case 'n':
+            case 'e': case 'E': case 'f': case 'F': case 'g': case 'G':
+            case '%':
+              format++;
+              break;
+            default:
+              break;
+            }
+          if (*format != '}')
+            {
+              *invalid_reason = INVALID_UNTERMINATED_DIRECTIVE ();
+              FDI_SET (format, FMTDIR_ERROR);
+              return false;
+            }
         }
       c = *format;
     }

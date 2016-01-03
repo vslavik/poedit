@@ -91,6 +91,9 @@ int main()
       //Check "MyClass" is still there
       MyClass *myclass = shm.find<MyClass>("MyClass").first;
       assert(myclass != 0);
+      //<-
+      (void)myclass;
+      //->
       //The managed segment is unmapped here
    }
    {
@@ -121,6 +124,9 @@ int main()
       MyClass *myclass = shm.find<MyClass>("MyClass").first;
       assert(myclass != 0);
       //The managed segment is unmapped here
+      //<-
+      (void)myclass;
+      //->
    }
    return 0;
 }

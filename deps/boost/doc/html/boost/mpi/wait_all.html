@@ -32,13 +32,13 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../mpi/reference.html#header.boost.mpi.nonblocking_hpp" title="Header &lt;boost/mpi/nonblocking.hpp&gt;">boost/mpi/nonblocking.hpp</a>&gt;
 
 </span>
-<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <a class="link" href="../../ForwardIterator.html" title="Concept ForwardIterator">ForwardIterator</a><span class="special">,</span> <span class="keyword">typename</span> <a class="link" href="../../OutputIterator.html" title="Concept OutputIterator">OutputIterator</a><span class="special">&gt;</span> 
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ForwardIterator<span class="special">,</span> <span class="keyword">typename</span> OutputIterator<span class="special">&gt;</span> 
   <span class="identifier">OutputIterator</span> 
   <span class="identifier">wait_all</span><span class="special">(</span><span class="identifier">ForwardIterator</span> first<span class="special">,</span> <span class="identifier">ForwardIterator</span> last<span class="special">,</span> <span class="identifier">OutputIterator</span> out<span class="special">)</span><span class="special">;</span>
-<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <a class="link" href="../../ForwardIterator.html" title="Concept ForwardIterator">ForwardIterator</a><span class="special">&gt;</span> 
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ForwardIterator<span class="special">&gt;</span> 
   <span class="keyword">void</span> <span class="identifier">wait_all</span><span class="special">(</span><span class="identifier">ForwardIterator</span> first<span class="special">,</span> <span class="identifier">ForwardIterator</span> last<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp165706472"></a><h2>Description</h2>
+<a name="idp334671984"></a><h2>Description</h2>
 <p>This routine takes in a set of requests stored in the iterator range <code class="computeroutput"></code>[first,last) and waits until all of these requests have been completed. It provides functionality equivalent to <code class="computeroutput">MPI_Waitall</code>.</p>
 <p>
 

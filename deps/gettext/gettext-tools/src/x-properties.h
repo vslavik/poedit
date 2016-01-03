@@ -1,5 +1,5 @@
 /* xgettext JavaProperties backend.
-   Copyright (C) 2003, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2006, 2015 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@ extern "C" {
   { "properties", "JavaProperties" },                                   \
 
 #define SCANNERS_PROPERTIES \
-  { "JavaProperties",   extract_properties, NULL, NULL, NULL },         \
+  { "JavaProperties",   extract_properties, NULL, NULL, NULL, NULL },         \
 
 /* Scan a JavaProperties file and add its translatable strings to mdlp.  */
 extern void extract_properties (FILE *fp, const char *real_filename,

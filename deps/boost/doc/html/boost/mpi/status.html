@@ -35,56 +35,56 @@
 <span class="keyword">class</span> <a class="link" href="status.html" title="Class status">status</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="status.html#boost.mpi.statusconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="status.html#idp98029864-bb"><span class="identifier">status</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="status.html#idp98029928-bb"><span class="identifier">status</span></a><span class="special">(</span><span class="identifier">MPI_Status</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="status.html#idp207079696-bb"><span class="identifier">status</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="status.html#idp207079984-bb"><span class="identifier">status</span></a><span class="special">(</span><span class="identifier">MPI_Status</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="status.html#idp98094296-bb">public member functions</a></span>
-  <span class="keyword">int</span> <a class="link" href="status.html#idp98094504-bb"><span class="identifier">source</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">int</span> <a class="link" href="status.html#idp98095208-bb"><span class="identifier">tag</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">int</span> <a class="link" href="status.html#idp98095896-bb"><span class="identifier">error</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="status.html#idp98096584-bb"><span class="identifier">cancelled</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">optional</span><span class="special">&lt;</span> <span class="keyword">int</span> <span class="special">&gt;</span> <a class="link" href="status.html#idp98024760-bb"><span class="identifier">count</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <a class="link" href="status.html#idp98027992-bb"><span class="keyword">operator</span> <span class="identifier">MPI_Status</span> <span class="special">&amp;</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="status.html#idp98028920-bb"><span class="keyword">operator</span> <span class="keyword">const</span> <span class="identifier">MPI_Status</span> <span class="special">&amp;</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="status.html#idp220858992-bb">public member functions</a></span>
+  <span class="keyword">int</span> <a class="link" href="status.html#idp220859552-bb"><span class="identifier">source</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">int</span> <a class="link" href="status.html#idp220861104-bb"><span class="identifier">tag</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">int</span> <a class="link" href="status.html#idp220862656-bb"><span class="identifier">error</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="status.html#idp207042272-bb"><span class="identifier">cancelled</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">optional</span><span class="special">&lt;</span> <span class="keyword">int</span> <span class="special">&gt;</span> <a class="link" href="status.html#idp207043888-bb"><span class="identifier">count</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <a class="link" href="status.html#idp207050016-bb"><span class="keyword">operator</span> <span class="identifier">MPI_Status</span> <span class="special">&amp;</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="status.html#idp207077536-bb"><span class="keyword">operator</span> <span class="keyword">const</span> <span class="identifier">MPI_Status</span> <span class="special">&amp;</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 
   <span class="comment">// public data members</span>
   <span class="keyword">mutable</span> <span class="keyword">int</span> <span class="identifier">m_count</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp166531128"></a><h2>Description</h2>
+<a name="idp336274384"></a><h2>Description</h2>
 <p>This structure contains status information about messages that have been received (with <code class="computeroutput">communicator::recv</code>) or can be received (returned from <code class="computeroutput">communicator::probe</code> or <code class="computeroutput">communicator::iprobe</code>). It permits access to the source of the message, message tag, error code (rarely used), or the number of elements that have been transmitted. </p>
 <div class="refsect2">
-<a name="idp166532840"></a><h3>
+<a name="idp336277472"></a><h3>
 <a name="boost.mpi.statusconstruct-copy-destruct"></a><code class="computeroutput">status</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><a name="idp98029864-bb"></a><span class="identifier">status</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a name="idp98029928-bb"></a><span class="identifier">status</span><span class="special">(</span><span class="identifier">MPI_Status</span> <span class="keyword">const</span> <span class="special">&amp;</span> s<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp207079696-bb"></a><span class="identifier">status</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idp207079984-bb"></a><span class="identifier">status</span><span class="special">(</span><span class="identifier">MPI_Status</span> <span class="keyword">const</span> <span class="special">&amp;</span> s<span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp166538504"></a><h3>
-<a name="idp98094296-bb"></a><code class="computeroutput">status</code> public member functions</h3>
+<a name="idp336289056"></a><h3>
+<a name="idp220858992-bb"></a><code class="computeroutput">status</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">int</span> <a name="idp98094504-bb"></a><span class="identifier">source</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">int</span> <a name="idp220859552-bb"></a><span class="identifier">source</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Retrieve the source of the message. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">int</span> <a name="idp98095208-bb"></a><span class="identifier">tag</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">int</span> <a name="idp220861104-bb"></a><span class="identifier">tag</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Retrieve the message tag. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">int</span> <a name="idp98095896-bb"></a><span class="identifier">error</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">int</span> <a name="idp220862656-bb"></a><span class="identifier">error</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Retrieve the error code. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp98096584-bb"></a><span class="identifier">cancelled</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp207042272-bb"></a><span class="identifier">cancelled</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Determine whether the communication associated with this object has been successfully cancelled. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">optional</span><span class="special">&lt;</span> <span class="keyword">int</span> <span class="special">&gt;</span> <a name="idp98024760-bb"></a><span class="identifier">count</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">optional</span><span class="special">&lt;</span> <span class="keyword">int</span> <span class="special">&gt;</span> <a name="idp207043888-bb"></a><span class="identifier">count</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Determines the number of elements of type <code class="computeroutput">T</code> contained in the message. The type <code class="computeroutput">T</code> must have an associated data type, i.e., <code class="computeroutput">is_mpi_datatype&lt;T&gt;</code> must derive <code class="computeroutput">mpl::true_</code>. In cases where the type <code class="computeroutput">T</code> does not match the transmitted type, this routine will return an empty <code class="computeroutput">optional&lt;int&gt;</code>.</p>
 <p>
 </p>
@@ -100,11 +100,11 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp98027992-bb"></a><span class="keyword">operator</span> <span class="identifier">MPI_Status</span> <span class="special">&amp;</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp207050016-bb"></a><span class="keyword">operator</span> <span class="identifier">MPI_Status</span> <span class="special">&amp;</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>References the underlying <code class="computeroutput">MPI_Status</code> </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp98028920-bb"></a><span class="keyword">operator</span> <span class="keyword">const</span> <span class="identifier">MPI_Status</span> <span class="special">&amp;</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp207077536-bb"></a><span class="keyword">operator</span> <span class="keyword">const</span> <span class="identifier">MPI_Status</span> <span class="special">&amp;</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>References the underlying <code class="computeroutput">MPI_Status</code> </p>
 </li>
 </ol></div>

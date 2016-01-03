@@ -1,3 +1,187 @@
+Version 0.19.5 - July 2015
+
+* xgettext now has a feature to perform syntax checks on msgid, which
+  could enforce common styles of translatable strings, such as to
+  prefer Unicode characters to the corresponding ASCII characters.
+  They can be enabled with --check option or special "xgettext: "
+  comment in the source code.  By default, no syntax checks are
+  enabled.
+
+* msgfilter and msgexec now have an option --newline, which appends a
+  newline character to filter input and trims it from the filter
+  output.  This would allow filter programs to be more POSIX friendly.
+
+* The base Unicode standard is now updated to 8.0.0.  This
+  particularly improves "\N{...}" notation handling of xgettext for
+  Perl and Python.
+
+* msginit is now capable of generating "Plural-Forms:" from Unicode
+  CLDR.  This feature is still experimental, but you can try it by
+  setting the GETTEXTCLDRDIR environment variable pointing to the the
+  directory where the CLDR archive is extracted.  The actual
+  conversion is done by a helper program 'cldr-plural', which can be
+  used as a generic converter and evaluator of CLDR plural forms.
+
+* Programming languages support:
+  - C++ with KDE: xgettext and msgfmt can now recognize KUIT (KDE User
+    Interface Text) markup.  See the documentation section "KUIT
+    Format Strings" for more info.
+  - C++ with KDE: xgettext now recognizes all default KDE keywords.
+    This removes the need for a long list of --keyword and --flag
+    options to perform a reasonable extraction.
+
+* Bug fixes:
+  - xgettext C++11 raw string recognition is now stricter and don't
+    accept unbalanced delimiters.
+  - Suppress baseless warnings which msgfmt emits when processing a
+    .desktop file.
+  - xgettext line wrapping behaviour is now consistent between comment
+    lines and non-comment lines.
+  - Fix msgfilter-7 test failure on some platforms.
+  - Fix VPATH build.
+
+Version 0.19.4 - December 2014
+
+* The --keyword option of xgettext now accepts same argument number
+  for both singular and plural forms.
+
+* Programming languages support:
+  - C#: xgettext now properly handles Unicode characters encoded with
+    surrogate pairs.
+  - C/C++: xgettext now recognizes ISO/IEC 9899:2011 string literals
+    prefixed by R, u8, u8R, u, uR, U, UR, L, or LR.
+  - Shell: xgettext now properly recognizes Bash ANSI-C quoting ($'...').
+
+* Bug fixes:
+  - Fix integer overflow when reading certain MO files with msgunfmt.
+  - Avoid invalid memory access in various cases.  In particular, when
+    the same argument number is specified for singular/plural
+    arguments, and when checking Lisp and Scheme format strings.
+
+* Portability:
+  - Building on Mac OS X 10.10 and AIX 7.1 is now supported.
+
+Version 0.19.3 - October 2014
+
+* Bug fixes:
+  - Fix xgettext mishandling of octal character escapes in C.
+  - Fix autopoint infinite recursion with certain configure.ac.
+
+* The po/Makevars file has a new field MSGINIT_OPTIONS, that can be
+  used to adjust msginit's operation.  This is particularly useful for
+  controlling line wrapping behavior together with MSGMERGE_OPTIONS
+  and XGETTEXT_OPTIONS.
+
+* Portability:
+  - Building on Solaris 10 and 11 with Solaris Studio compiler is now
+    fixed.
+
+Version 0.19.2 - July 2014
+
+* Bug fixes:
+  - Fix xgettext crash in parsing empty string literals in C and Vala.
+  - ChangeLog file is added back to the gettext infrastructure.  It was
+    mistakenly removed in 0.19.
+  - Autoconf macro trace in autopoint now works again with Autoconf 2.68
+    or earlier.  It was a regression in 0.19.
+
+Version 0.19.1 - June 2014
+
+* Programming languages support:
+
+  - Desktop Entry:
+    msgfmt now always reads the po/LINGUAS file, regardless of whether
+    the LINGUAS environment variable is set.  The variable can now be
+    used to restrict the languages list read from the po/LINGUAS file.
+
+  - Vala:
+    Bug fix in xgettext handling of "//" in string literals.  This was
+    a regression after the C-99 Unicode escape support.
+
+* The po/Makevars.template file now contains the newly added variables.
+
+* msgfmt now treats errors in the PO file header as non-fatal.  Since
+  0.19 msgfmt started to abort on the fatal errors, but some
+  translation systems are still not ready to supply valid headers.
+
+* Future backward-incompatibilities:
+  - In future Gettext versions, msgfmt will treat header errors as
+    fatal and terminate the command execution.
+
+Version 0.19 - June 2014
+
+* Programming languages support:
+
+  - Desktop Entry:
+    xgettext and msgfmt now support .desktop files, used by desktop
+    applications, as input and output.
+
+  - GSettings:
+    xgettext now supports GSettings schema file format used by GNOME
+    applications.
+
+  - JavaScript:
+    xgettext now recognizes E4X (ECMA-357) constructs.
+
+  - PHP:
+    Single and double quotes around heredoc markers are now recognized.
+
+  - Python:
+    The acceptable format specifiers in the braced-syntax format
+    strings are now limited to the Standard Format Specifiers, to
+    reasonably avoid false-positives.
+
+  - Scheme:
+    The gettext shorthand form _"abc", used by GIMP script-fu, is now
+    recognized by xgettext.
+
+  - C and Vala:
+    xgettext now recognizes C99-style Unicode character escapes.
+
+* The --add-location option of msgattrib, msgcat, msgcomm, msgconv,
+  msgen, msgfilter, msggrep, msgmerge, msguniq, and xgettext commands
+  now takes an optional argument 'never', 'full', or 'file', to
+  control the format of "#: ..." comments.
+
+* msgfmt now has --source option to keep generated .java file when
+  running in Java mode.
+
+* msgattrib now has --empty option that sets msgstr to empty when
+  clearing fuzzy flag.
+
+* msgexec and msgfilter pass the plural information to subprocess
+  through the environment variable MSG{EXEC,FILTER}_MSGID_PLURAL and
+  MSG{EXEC,FILTER}_PLURAL_FORM.
+
+* New built-in filters 'quot' and 'boldquot' have been added to
+  msgfilter.  These filters convert Latin quotation marks ('...',
+  "...") into Unicode quotation marks (for example, U+2018) if
+  possible, similar to the sed commands used in po/Rules-quot and
+  po/Rules-boldquot.
+
+* The po/Makevars file has a couple of new options PO_DEPENDS_ON_POT
+  and DIST_DEPENDS_ON_UPDATE_PO, that can be used to adjust the
+  behavior of updating PO files on demand.
+
+* xgettext now strips prefixed string before the comment tag.  This is
+  useful to support C-style comment like this:
+
+  /*
+   * TRANSLATORS: first line
+   * second line
+   */
+
+  In this example, the extracted comment does not contain "* " at the
+  beginning of each line.
+
+* libgettextpo library:
+  - Memory leak fixes in the PO file parser.
+
+* Documentation:
+  - A complete example showing the use of GNU gettext in a GNOME 3
+    application has been added.
+
+
 Version 0.18.3 - July 2013
 
 * Runtime behaviour:
@@ -44,7 +228,7 @@ Version 0.18.3 - July 2013
   false-positives.
 
 * 'gettextize' now checks macro directories specified with
-  AC_CONFIGURE_MACRO_DIRS in configure.ac.
+  AC_CONFIG_MACRO_DIRS in configure.ac.
 
 * Portability:
   - msginit now does not require GNU sed.

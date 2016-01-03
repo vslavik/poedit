@@ -36,8 +36,9 @@ Tests
   <li><a href="#example3">Example 3: flyweights and the composite pattern</a></li>
   <li><a href="#example4">Example 4: formatted text processing</a></li>
   <li><a href="#example5">Example 5: flyweight-based memoization</a></li>
-  <li><a href="#example6">Example 6: performance comparison</a></li>
-  <li><a href="#example7">Example 7: custom factory</a></li>
+  <li><a href="#example6">Example 6: serialization</a></li>
+  <li><a href="#example7">Example 7: performance comparison</a></li>
+  <li><a href="#example8">Example 8: custom factory</a></li>
 </ul>
 
 <h2><a name="example1">Example 1: basic usage</a></h2>
@@ -155,7 +156,7 @@ characters varies.
 <p>
 For the sake of brevity, the HTML parsing capabilities of this program
 are coarse: for instance, elements without end-tag (like &lt;BR&gt;), character
-enconding and HTML entities (e.g. "&amp;copy;" for &copy;) are not properly
+encoding and HTML entities (e.g. "&amp;copy;" for &copy;) are not properly
 handled. Improving the parsing code is left as an exercise to the reader.
 </p>
 
@@ -200,7 +201,33 @@ policy is used so that the memoized computations persist for future
 use throughout the program. The provided program develops this example in full.
 </p>
 
-<h2><a name="example6">Example 6: performance comparison</a></h2>
+<h2><a name="example6">Example 6: serialization</a></h2>
+
+<p>
+See <a href="../example/serialization.cpp">source code</a>.
+</p>
+
+<p>
+If <code>T</code> is serializable (using
+<a href="../../serialization/index.html">Boost.Serialization</a>),
+<code>flyweight&lt;T&gt;</code> is automatically
+serializable as well. The example program performs the following two
+complementary procedures:
+<ul>
+  <li>Read a text file as a <code>std::vector&lt;flyweight&lt;std::string&gt; &gt;</code>
+    and save the structure to a serialization file.
+  </li>
+  <li>Load a <code>std::vector&lt;flyweight&lt;std::string&gt; &gt;</code> from a
+    serialization file and write it as a text file.
+  </li>
+</ul>
+If you visually inspect the contents of any of the generated serialization files
+you can notice that no word appears twice; Boost.Flyweight implements some internal
+machinery that avoids duplicating output information when saving equal
+<code>flyweight</code> objects.
+</p>
+
+<h2><a name="example7">Example 7: performance comparison</a></h2>
 
 <p>
 See <a href="../example/perf.cpp">source code</a>.
@@ -218,7 +245,7 @@ The program has been used to produce the experimental results given
 at the <a href="performance.html#results">performance section</a>.
 </p>
 
-<h2><a name="example7">Example 7: custom factory</a></h2>
+<h2><a name="example8">Example 8: custom factory</a></h2>
 
 <p>
 See <a href="../example/custom_factory.cpp">source code</a>.
@@ -245,9 +272,9 @@ Tests
 
 <br>
 
-<p>Revised December 2nd 2008</p>
+<p>Revised October 14th 2014</p>
 
-<p>&copy; Copyright 2006-2008 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2006-2014 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

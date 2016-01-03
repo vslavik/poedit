@@ -1,5 +1,6 @@
 /* xgettext C# backend.
-   Copyright (C) 2003, 2005-2009, 2011 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2005-2009, 2011, 2015 Free Software Foundation,
+   Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -1491,7 +1492,7 @@ do_getc_escaped ()
 /* Read a regular string literal or character literal.
    See ECMA-334 sections 9.4.4.4., 9.4.4.5.  */
 static void
-accumulate_escaped (struct string_buffer *literal, int delimiter)
+accumulate_escaped (struct mixed_string_buffer *literal, int delimiter)
 {
   int c;
 
@@ -1516,7 +1517,8 @@ accumulate_escaped (struct string_buffer *literal, int delimiter)
         }
       if (c == '\\')
         c = do_getc_escaped ();
-      string_buffer_append_unicode (literal, c);
+      if (literal)
+        mixed_string_buffer_append_unicode (literal, c);
     }
 }
 
@@ -1637,13 +1639,14 @@ phase6_get (token_ty *tp)
         case '"':
           /* Regular string literal.  */
           {
-            struct string_buffer literal;
+            struct mixed_string_buffer *literal;
 
             lexical_context = lc_string;
-            init_string_buffer (&literal);
-            accumulate_escaped (&literal, '"');
-            tp->string = xstrdup (string_buffer_result (&literal));
-            free_string_buffer (&literal);
+            literal = mixed_string_buffer_alloc (lexical_context,
+                                                 logical_file_name,
+                                                 logical_line_number);
+            accumulate_escaped (literal, '"');
+            tp->string = mixed_string_buffer_done (literal);
             tp->comment = add_reference (savable_comment);
             lexical_context = lc_outside;
             tp->type = token_type_string_literal;
@@ -1653,11 +1656,7 @@ phase6_get (token_ty *tp)
         case '\'':
           /* Character literal.  */
           {
-            struct string_buffer literal;
-
-            init_string_buffer (&literal);
-            accumulate_escaped (&literal, '\'');
-            free_string_buffer (&literal);
+            accumulate_escaped (NULL, '\'');
             tp->type = token_type_other;
             return;
           }

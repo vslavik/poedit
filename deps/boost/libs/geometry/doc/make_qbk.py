@@ -12,7 +12,9 @@
 
 import os, sys
 
-os.chdir(os.path.dirname(sys.argv[0]))
+script_dir = os.path.dirname(__file__)
+os.chdir(os.path.abspath(script_dir))
+print("Boost.Geometry is making .qbk files in %s" % os.getcwd())
 
 if 'DOXYGEN' in os.environ:
     doxygen_cmd = os.environ['DOXYGEN']
@@ -28,54 +30,64 @@ cmd = doxygen_xml2qbk_cmd
 cmd = cmd + " --xml doxy/doxygen_output/xml/%s.xml"
 cmd = cmd + " --start_include boost/geometry/"
 cmd = cmd + " --convenience_header_path ../../../boost/geometry/"
-cmd = cmd + " --convenience_headers geometry.hpp,geometries/geometries.hpp,multi/multi.hpp"
+cmd = cmd + " --convenience_headers geometry.hpp,geometries/geometries.hpp"
 cmd = cmd + " --skip_namespace boost::geometry::"
 cmd = cmd + " --copyright src/copyright_block.qbk"
 cmd = cmd + " --output_member_variables false"
 cmd = cmd + " > generated/%s.qbk"
 
+def run_command(command):
+    if os.system(command) != 0:
+        raise Exception("Error running %s" % command)
+
+def remove_all_files(dir):
+    if os.path.exists(dir):
+        for f in os.listdir(dir):
+            os.remove(dir+f)
+
 def call_doxygen():
-    os.chdir("doxy");
-    os.system("rm -f doxygen_output/xml/*.xml")
-    os.system(doxygen_cmd)
+    os.chdir("doxy")
+    remove_all_files("doxygen_output/xml/")
+    run_command(doxygen_cmd)
     os.chdir("..")
 
 def group_to_quickbook(section):
-    os.system(cmd % ("group__" + section.replace("_", "__"), section))
+    run_command(cmd % ("group__" + section.replace("_", "__"), section))
 
 def model_to_quickbook(section):
-    os.system(cmd % ("classboost_1_1geometry_1_1model_1_1" + section.replace("_", "__"), section))
+    run_command(cmd % ("classboost_1_1geometry_1_1model_1_1" + section.replace("_", "__"), section))
 
 def model_to_quickbook2(classname, section):
-    os.system(cmd % ("classboost_1_1geometry_1_1model_1_1" + classname, section))
+    run_command(cmd % ("classboost_1_1geometry_1_1model_1_1" + classname, section))
 
 def struct_to_quickbook(section):
-    os.system(cmd % ("structboost_1_1geometry_1_1" + section.replace("_", "__"), section))
+    run_command(cmd % ("structboost_1_1geometry_1_1" + section.replace("_", "__"), section))
 
 def class_to_quickbook(section):
-    os.system(cmd % ("classboost_1_1geometry_1_1" + section.replace("_", "__"), section))
+    run_command(cmd % ("classboost_1_1geometry_1_1" + section.replace("_", "__"), section))
 
 def strategy_to_quickbook(section):
     p = section.find("::")
     ns = section[:p]
     strategy = section[p+2:]
-    os.system(cmd % ("classboost_1_1geometry_1_1strategy_1_1" 
+    run_command(cmd % ("classboost_1_1geometry_1_1strategy_1_1"
         + ns.replace("_", "__") + "_1_1" + strategy.replace("_", "__"), 
         ns + "_" + strategy))
         
 def cs_to_quickbook(section):
-    os.system(cmd % ("structboost_1_1geometry_1_1cs_1_1" + section.replace("_", "__"), section))
+    run_command(cmd % ("structboost_1_1geometry_1_1cs_1_1" + section.replace("_", "__"), section))
         
 
 call_doxygen()
 
 algorithms = ["append", "assign", "make", "clear"
     , "area", "buffer", "centroid", "convert", "correct", "covered_by"
-    , "convex_hull", "difference", "disjoint", "distance" 
-    , "envelope", "equals", "expand", "for_each", "intersection", "intersects" 
-    , "length", "num_geometries", "num_interior_rings", "num_points" 
-    , "overlaps", "perimeter", "reverse", "simplify", "sym_difference" 
-    , "touches", "transform", "union", "unique", "within"]
+    , "convex_hull", "crosses", "difference", "disjoint", "distance" 
+    , "envelope", "equals", "expand", "for_each", "is_simple", "is_valid"
+    , "intersection", "intersects", "length", "num_geometries"
+    , "num_interior_rings", "num_points", "num_segments", "overlaps"
+    , "perimeter", "reverse", "simplify", "sym_difference", "touches"
+    , "transform", "union", "unique", "within"]
 
 access_functions = ["get", "set", "exterior_ring", "interior_rings"
     , "num_points", "num_interior_rings", "num_geometries"]
@@ -98,10 +110,16 @@ models = ["point", "linestring", "box"
     , "multi_linestring", "multi_point", "multi_polygon", "referring_segment"]
 
 
-strategies = ["distance::pythagoras", "distance::haversine"
+strategies = ["distance::pythagoras", "distance::pythagoras_box_box"
+    , "distance::pythagoras_point_box", "distance::haversine"
     , "distance::cross_track", "distance::projected_point"
     , "within::winding", "within::franklin", "within::crossings_multiply"
     , "area::surveyor", "area::huiller"
+    , "buffer::point_circle", "buffer::point_square"
+    , "buffer::join_round", "buffer::join_miter"
+    , "buffer::end_round", "buffer::end_flat"
+    , "buffer::distance_symmetric", "buffer::distance_asymmetric"
+    , "buffer::side_straight"
     , "centroid::bashein_detmer", "centroid::average"
     , "convex_hull::graham_andrew"
     , "simplify::douglas_peucker"
@@ -158,4 +176,4 @@ execfile("make_qbk.py")
 os.chdir("..")
 
 # Use either bjam or b2 or ../../../b2 (the last should be done on Release branch)
-os.system("bjam") 
+run_command("b2")

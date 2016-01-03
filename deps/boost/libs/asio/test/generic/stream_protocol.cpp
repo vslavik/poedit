@@ -2,7 +2,7 @@
 // generic/stream_protocol.cpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -83,7 +83,8 @@ void test()
 #if defined(BOOST_ASIO_WINDOWS_RUNTIME)
     Windows::Networking::Sockets::StreamSocket^ native_socket1 = nullptr;
 #else // defined(BOOST_ASIO_WINDOWS_RUNTIME)
-    int native_socket1 = ::socket(af_inet, sock_stream, 0);
+    sp::socket::native_handle_type native_socket1
+      = ::socket(af_inet, sock_stream, 0);
 #endif // defined(BOOST_ASIO_WINDOWS_RUNTIME)
     sp::socket socket4(ios, sp(af_inet, ipproto_tcp), native_socket1);
 
@@ -117,13 +118,15 @@ void test()
 #if defined(BOOST_ASIO_WINDOWS_RUNTIME)
     Windows::Networking::Sockets::StreamSocket^ native_socket2 = nullptr;
 #else // defined(BOOST_ASIO_WINDOWS_RUNTIME)
-    int native_socket2 = ::socket(af_inet, sock_stream, 0);
+    sp::socket::native_handle_type native_socket2
+      = ::socket(af_inet, sock_stream, 0);
 #endif // defined(BOOST_ASIO_WINDOWS_RUNTIME)
     socket1.assign(sp(af_inet, ipproto_tcp), native_socket2);
 #if defined(BOOST_ASIO_WINDOWS_RUNTIME)
     Windows::Networking::Sockets::StreamSocket^ native_socket3 = nullptr;
 #else // defined(BOOST_ASIO_WINDOWS_RUNTIME)
-    int native_socket3 = ::socket(af_inet, sock_stream, 0);
+    sp::socket::native_handle_type native_socket3
+      = ::socket(af_inet, sock_stream, 0);
 #endif // defined(BOOST_ASIO_WINDOWS_RUNTIME)
     socket1.assign(sp(af_inet, ipproto_tcp), native_socket3, ec);
 

@@ -12,8 +12,12 @@ struct X
 {
 };
 
+template<class T> void f( T & /*t*/ )
+{
+}
+
 int main()
 {
     boost::shared_ptr<X> px( new X );
-    px[ 0 ];
+    f( px[ 0 ] );
 }

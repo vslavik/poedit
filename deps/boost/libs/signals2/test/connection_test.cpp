@@ -82,9 +82,50 @@ void release_test()
   BOOST_CHECK(conn2.connected() == false);
 }
 
+void move_test()
+{
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+  sig_type sig;
+  bs2::connection conn;
+  // test move assignment from scoped_connection to connection
+  {
+    bs2::scoped_connection scoped(sig.connect(&myslot));
+    BOOST_CHECK(scoped.connected());
+    conn = std::move(scoped);
+    BOOST_CHECK(scoped.connected() == false);
+  }
+  BOOST_CHECK(conn.connected());
+
+  // test move construction from scoped to scoped
+  {
+    bs2::scoped_connection scoped2(conn);
+    BOOST_CHECK(scoped2.connected());
+    bs2::scoped_connection scoped3(std::move(scoped2));
+    BOOST_CHECK(scoped2.connected() == false);
+    BOOST_CHECK(scoped3.connected() == true);
+    BOOST_CHECK(conn.connected() == true);
+  }
+  BOOST_CHECK(conn.connected() == false);
+
+  // test move assignment from scoped to scoped
+  conn = sig.connect(&myslot);
+  {
+    bs2::scoped_connection scoped3;
+    bs2::scoped_connection scoped2(conn);
+    BOOST_CHECK(scoped2.connected());
+    scoped3 = std::move(scoped2);
+    BOOST_CHECK(scoped2.connected() == false);
+    BOOST_CHECK(scoped3.connected() == true);
+    BOOST_CHECK(conn.connected() == true);
+  }
+  BOOST_CHECK(conn.connected() == false);
+#endif // !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+}
+
 int test_main(int, char*[])
 {
   release_test();
   swap_test();
+  move_test();
   return 0;
 }

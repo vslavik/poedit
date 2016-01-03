@@ -27,7 +27,7 @@
 <a name="geometry.reference.arithmetic.dot_product"></a><a class="link" href="dot_product.html" title="dot_product">dot_product</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp57768088"></a>
+          <a class="indexterm" name="idp120332752"></a>
 Computes the dot product (or scalar product) of 2 vectors (points).
         </p>
 <h6>
@@ -36,8 +36,8 @@ Computes the dot product (or scalar product) of 2 vectors (points).
         </h6>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">P1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">P2</span><span class="special">&gt;</span>
-<span class="identifier">select_coordinate_type</span><span class="special">&lt;</span><span class="identifier">P1</span><span class="special">,</span> <span class="identifier">P2</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">dot_product</span><span class="special">(</span><span class="identifier">P1</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">p1</span><span class="special">,</span> <span class="identifier">P2</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">p2</span><span class="special">)</span></pre>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Point1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Point2</span><span class="special">&gt;</span>
+<span class="identifier">select_coordinate_type</span><span class="special">&lt;</span><span class="identifier">Point1</span><span class="special">,</span> <span class="identifier">Point2</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">dot_product</span><span class="special">(</span><span class="identifier">Point1</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">p1</span><span class="special">,</span> <span class="identifier">Point2</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">p2</span><span class="special">)</span></pre>
 <p>
         </p>
 <h6>
@@ -77,10 +77,13 @@ Computes the dot product (or scalar product) of 2 vectors (points).
 <tr>
 <td>
                   <p>
-                    P1 const &amp;
+                    Point1 const &amp;
                   </p>
                 </td>
 <td>
+                  <p>
+                    Any type fulfilling a Point Concept
+                  </p>
                 </td>
 <td>
                   <p>
@@ -96,10 +99,13 @@ Computes the dot product (or scalar product) of 2 vectors (points).
 <tr>
 <td>
                   <p>
-                    P2 const &amp;
+                    Point2 const &amp;
                   </p>
                 </td>
 <td>
+                  <p>
+                    Any type fulfilling a Point Concept
+                  </p>
                 </td>
 <td>
                   <p>
@@ -129,7 +135,7 @@ Computes the dot product (or scalar product) of 2 vectors (points).
           Either
         </p>
 <p>
-          <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
+          <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
         </p>
 <p>
           Or
@@ -140,7 +146,8 @@ Computes the dot product (or scalar product) of 2 vectors (points).
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
+      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

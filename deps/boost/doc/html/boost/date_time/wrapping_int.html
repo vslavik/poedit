@@ -38,57 +38,57 @@
   <span class="keyword">typedef</span> <span class="identifier">int_type_</span> <a name="boost.date_time.wrapping_int.int_type"></a><span class="identifier">int_type</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="wrapping_int.html#boost.date_time.wrapping_intconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="wrapping_int.html#idp21220728-bb"><span class="identifier">wrapping_int</span></a><span class="special">(</span><span class="identifier">int_type</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="wrapping_int.html#idp98732016-bb"><span class="identifier">wrapping_int</span></a><span class="special">(</span><span class="identifier">int_type</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="wrapping_int.html#idp24679688-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">int_type</span> <a class="link" href="wrapping_int.html#idp24679896-bb"><span class="identifier">wrap_value</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="wrapping_int.html#idp87416000-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">int_type</span> <a class="link" href="wrapping_int.html#idp87416560-bb"><span class="identifier">wrap_value</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="wrapping_int.html#idp19902216-bb">public member functions</a></span>
-  <span class="identifier">int_type</span> <a class="link" href="wrapping_int.html#idp19902424-bb"><span class="identifier">as_int</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <a class="link" href="wrapping_int.html#idp19903048-bb"><span class="keyword">operator</span> <span class="identifier">int_type</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> IntT<span class="special">&gt;</span> <span class="identifier">IntT</span> <a class="link" href="wrapping_int.html#idp19903528-bb"><span class="identifier">add</span></a><span class="special">(</span><span class="identifier">IntT</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> IntT<span class="special">&gt;</span> <span class="identifier">IntT</span> <a class="link" href="wrapping_int.html#idp46243368-bb"><span class="identifier">subtract</span></a><span class="special">(</span><span class="identifier">IntT</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="wrapping_int.html#idp87417840-bb">public member functions</a></span>
+  <span class="identifier">int_type</span> <a class="link" href="wrapping_int.html#idp63041376-bb"><span class="identifier">as_int</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <a class="link" href="wrapping_int.html#idp63042800-bb"><span class="keyword">operator</span> <span class="identifier">int_type</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> IntT<span class="special">&gt;</span> <span class="identifier">IntT</span> <a class="link" href="wrapping_int.html#idp63043920-bb"><span class="identifier">add</span></a><span class="special">(</span><span class="identifier">IntT</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> IntT<span class="special">&gt;</span> <span class="identifier">IntT</span> <a class="link" href="wrapping_int.html#idp92602192-bb"><span class="identifier">subtract</span></a><span class="special">(</span><span class="identifier">IntT</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="wrapping_int.html#idp21221240-bb">private member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> IntT<span class="special">&gt;</span> <span class="identifier">IntT</span> <a class="link" href="wrapping_int.html#idp21221448-bb"><span class="identifier">calculate_wrap</span></a><span class="special">(</span><span class="identifier">IntT</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="wrapping_int.html#idp98733296-bb">private member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> IntT<span class="special">&gt;</span> <span class="identifier">IntT</span> <a class="link" href="wrapping_int.html#idp98733872-bb"><span class="identifier">calculate_wrap</span></a><span class="special">(</span><span class="identifier">IntT</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp94164440"></a><h2>Description</h2>
+<a name="idp193343552"></a><h2>Description</h2>
 <p>In composite date and time types this type is used to wrap at the day boundary. Ex: A wrapping_int&lt;short, 10&gt; will roll over after nine, and roll under below zero. This gives a range of [0,9]</p>
 <p>NOTE: it is strongly recommended that <a class="link" href="wrapping_int2.html" title="Class template wrapping_int2">wrapping_int2</a> be used instead of <a class="link" href="wrapping_int.html" title="Class template wrapping_int">wrapping_int</a> as <a class="link" href="wrapping_int.html" title="Class template wrapping_int">wrapping_int</a> is to be depricated at some point soon.</p>
 <p>Also Note that warnings will occur if instantiated with an unsigned type. Only a signed type should be used! </p>
 <div class="refsect2">
-<a name="idp94166824"></a><h3>
+<a name="idp193347792"></a><h3>
 <a name="boost.date_time.wrapping_intconstruct-copy-destruct"></a><code class="computeroutput">wrapping_int</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp21220728-bb"></a><span class="identifier">wrapping_int</span><span class="special">(</span><span class="identifier">int_type</span> v<span class="special">)</span><span class="special">;</span></pre>Add, return true if wrapped. </li></ol></div>
+<pre class="literallayout"><a name="idp98732016-bb"></a><span class="identifier">wrapping_int</span><span class="special">(</span><span class="identifier">int_type</span> v<span class="special">)</span><span class="special">;</span></pre>Add, return true if wrapped. </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp94170184"></a><h3>
-<a name="idp24679688-bb"></a><code class="computeroutput">wrapping_int</code> public static functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">int_type</span> <a name="idp24679896-bb"></a><span class="identifier">wrap_value</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp193354544"></a><h3>
+<a name="idp87416000-bb"></a><code class="computeroutput">wrapping_int</code> public static functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">int_type</span> <a name="idp87416560-bb"></a><span class="identifier">wrap_value</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp94173672"></a><h3>
-<a name="idp19902216-bb"></a><code class="computeroutput">wrapping_int</code> public member functions</h3>
+<a name="idp193361776"></a><h3>
+<a name="idp87417840-bb"></a><code class="computeroutput">wrapping_int</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">int_type</span> <a name="idp19902424-bb"></a><span class="identifier">as_int</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Explicit converion method. </li>
-<li class="listitem"><pre class="literallayout"><a name="idp19903048-bb"></a><span class="keyword">operator</span> <span class="identifier">int_type</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<pre class="literallayout"><span class="identifier">int_type</span> <a name="idp63041376-bb"></a><span class="identifier">as_int</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Explicit converion method. </li>
+<li class="listitem"><pre class="literallayout"><a name="idp63042800-bb"></a><span class="keyword">operator</span> <span class="identifier">int_type</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> IntT<span class="special">&gt;</span> <span class="identifier">IntT</span> <a name="idp19903528-bb"></a><span class="identifier">add</span><span class="special">(</span><span class="identifier">IntT</span> v<span class="special">)</span><span class="special">;</span></pre>Add, return number of wraps performed. <p>The sign of the returned value will indicate which direction the wraps went. Ex: add a negative number and wrapping under could occur, this would be indicated by a negative return value. If wrapping over took place, a positive value would be returned </p>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> IntT<span class="special">&gt;</span> <span class="identifier">IntT</span> <a name="idp63043920-bb"></a><span class="identifier">add</span><span class="special">(</span><span class="identifier">IntT</span> v<span class="special">)</span><span class="special">;</span></pre>Add, return number of wraps performed. <p>The sign of the returned value will indicate which direction the wraps went. Ex: add a negative number and wrapping under could occur, this would be indicated by a negative return value. If wrapping over took place, a positive value would be returned </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> IntT<span class="special">&gt;</span> <span class="identifier">IntT</span> <a name="idp46243368-bb"></a><span class="identifier">subtract</span><span class="special">(</span><span class="identifier">IntT</span> v<span class="special">)</span><span class="special">;</span></pre>Subtract will return '+d' if wrapping under took place ('d' is the number of wraps) <p>The sign of the returned value will indicate which direction the wraps went (positive indicates wrap under, negative indicates wrap over). Ex: subtract a negative number and wrapping over could occur, this would be indicated by a negative return value. If wrapping under took place, a positive value would be returned. </p>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> IntT<span class="special">&gt;</span> <span class="identifier">IntT</span> <a name="idp92602192-bb"></a><span class="identifier">subtract</span><span class="special">(</span><span class="identifier">IntT</span> v<span class="special">)</span><span class="special">;</span></pre>Subtract will return '+d' if wrapping under took place ('d' is the number of wraps) <p>The sign of the returned value will indicate which direction the wraps went (positive indicates wrap under, negative indicates wrap over). Ex: subtract a negative number and wrapping over could occur, this would be indicated by a negative return value. If wrapping under took place, a positive value would be returned. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp94188136"></a><h3>
-<a name="idp21221240-bb"></a><code class="computeroutput">wrapping_int</code> private member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> IntT<span class="special">&gt;</span> <span class="identifier">IntT</span> <a name="idp21221448-bb"></a><span class="identifier">calculate_wrap</span><span class="special">(</span><span class="identifier">IntT</span> wrap<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp193390752"></a><h3>
+<a name="idp98733296-bb"></a><code class="computeroutput">wrapping_int</code> private member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> IntT<span class="special">&gt;</span> <span class="identifier">IntT</span> <a name="idp98733872-bb"></a><span class="identifier">calculate_wrap</span><span class="special">(</span><span class="identifier">IntT</span> wrap<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>

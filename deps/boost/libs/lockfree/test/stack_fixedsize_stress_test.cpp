@@ -6,6 +6,8 @@
 
 #include <boost/lockfree/stack.hpp>
 
+#include <boost/scoped_ptr.hpp>
+
 #define BOOST_TEST_MAIN
 #ifdef BOOST_LOCKFREE_INCLUDE_TESTS
 #include <boost/test/included/unit_test.hpp>

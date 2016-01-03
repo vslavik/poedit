@@ -1,5 +1,5 @@
 /* xgettext Tcl Lisp backend.
-   Copyright (C) 2002-2003, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2006, 2015 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2002.
 
    This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,7 @@ extern "C" {
 
 #define SCANNERS_TCL \
   { "Tcl",              extract_tcl,                                    \
-                        &flag_table_tcl, &formatstring_tcl, NULL },     \
+                        &flag_table_tcl, &formatstring_tcl, NULL, NULL },     \
 
 /* Scan a Tcl file and add its translatable strings to mdlp.  */
 extern void extract_tcl (FILE *fp, const char *real_filename,

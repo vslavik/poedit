@@ -2,7 +2,7 @@
 <!DOCTYPE library PUBLIC "-//Boost//DTD BoostBook XML V1.0//EN"
   "http://www.boost.org/tools/boostbook/dtd/boostbook.dtd">
 <library name="Any" dirname="any" xmlns:xi="http://www.w3.org/2001/XInclude" 
-         id="any" last-revision="$Date: 2013-06-01 11:56:30 -0700 (Sat, 01 Jun 2013) $">
+         id="any" last-revision="$Date$">
   <libraryinfo>
     <author>
       <firstname>Kevlin</firstname>
@@ -499,7 +499,19 @@ public:
               <paramtype><classname>any</classname> &amp;</paramtype>
             </parameter>
           </signature>
-          
+
+          <signature>
+            <template>
+              <template-type-parameter name="T"/>
+            </template>
+
+            <type>T</type>
+
+            <parameter name="operand">
+              <paramtype><classname>any</classname> &amp;&amp;</paramtype>
+            </parameter>
+          </signature>
+
           <signature>
             <template>
               <template-type-parameter name="T"/>

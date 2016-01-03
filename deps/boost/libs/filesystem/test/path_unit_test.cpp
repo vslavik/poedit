@@ -33,14 +33,7 @@
 
 #include <boost/filesystem/detail/utf8_codecvt_facet.hpp>  // for imbue tests
 #include "test_codecvt.hpp"                                // for codecvt arg tests
-#include <boost/detail/lightweight_test.hpp>
-
-#ifndef BOOST_LIGHTWEIGHT_MAIN
-#  include <boost/test/prg_exec_monitor.hpp>
-#else
-#  include <boost/detail/lightweight_main.hpp>
-#endif
-
+#include <boost/detail/lightweight_test_report.hpp>
 #include <boost/smart_ptr.hpp>  // used constructor tests
 #include <boost/functional/hash.hpp>
 
@@ -132,9 +125,9 @@ namespace
                << L"\"\n" ;
   }
 
-  void check(bool ok, const char* file, int line)
+  void check(bool ok_, const char* file, int line)
   {
-    if (ok) return;
+    if (ok_) return;
 
     ++::boost::detail::test_errors();
 
@@ -218,6 +211,14 @@ namespace
     path x9(ws.c_str());                               // const wchar_t* null terminated
     PATH_IS(x9, L"wstring");
     BOOST_TEST_EQ(x9.native().size(), 7U);
+
+    path x8nc(const_cast<char*>(s.c_str()));           // char* null terminated
+    PATH_IS(x8nc, L"string");
+    BOOST_TEST_EQ(x8nc.native().size(), 6U);
+
+    path x9nc(const_cast<wchar_t*>(ws.c_str()));       // wchar_t* null terminated
+    PATH_IS(x9nc, L"wstring");
+    BOOST_TEST_EQ(x9nc.native().size(), 7U);
 
     // non-contiguous containers
     path x10(l);                                       // std::list<char>
@@ -825,17 +826,17 @@ namespace
   void test_overloads()
   {
     std::cout << "testing overloads..." << std::endl;
-    std::string s("hello");
+    std::string sto("hello");
     const char a[] = "goodbye";
-    path p1(s);
-    path p2(s.c_str());
+    path p1(sto);
+    path p2(sto.c_str());
     path p3(a);
     path p4("foo");
 
-    std::wstring ws(L"hello");
+    std::wstring wsto(L"hello");
     const wchar_t wa[] = L"goodbye";
-    path wp1(ws);
-    path wp2(ws.c_str());
+    path wp1(wsto);
+    path wp2(wsto.c_str());
     path wp3(wa);
     path wp4(L"foo");
   }
@@ -1036,7 +1037,7 @@ namespace
 //                                                                                      //
 //--------------------------------------------------------------------------------------//
 
-int cpp_main(int, char*[])
+int test_main(int, char*[])
 {
 // document state of critical macros
 #ifdef BOOST_POSIX_API

@@ -25,7 +25,7 @@ int main()
 
     typedef geo::tag<polygon_type>::type tag;
     typedef geo::tag_cast<tag, geo::linear_tag, geo::areal_tag>::type base_tag;
-    
+
     std::cout << "tag: " << typeid(tag).name() << std::endl
         << "base tag: " << typeid(base_tag).name() << std::endl;
 

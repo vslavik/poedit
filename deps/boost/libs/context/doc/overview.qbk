@@ -1,5 +1,5 @@
 [/
-          Copyright Oliver Kowalke 2009.
+          Copyright Oliver Kowalke 2014.
  Distributed under the Boost Software License, Version 1.0.
     (See accompanying file LICENSE_1_0.txt or copy at
           http://www.boost.org/LICENSE_1_0.txt
@@ -26,7 +26,7 @@ runs on a single thread, it can be migrated to another thread at any given time.
 
 A context switch between threads requires system calls (involving the OS
 kernel), which can cost more than thousand CPU cycles on x86 CPUs. By contrast,
-transferring control among them requires only fewer than hundred CPU cycles because
+transferring control among them requires only few CPU cycles because
 it does not involve system calls as it is done within a single thread.
 
 In order to use the classes and functions described here, you can either include

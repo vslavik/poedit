@@ -4,24 +4,26 @@
          DefaultTargets="Distrib">
 
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <Import Project="..\.nuget\nuget.targets" />
 
   <PropertyGroup>
-    <OutputDir>distrib-$(Configuration)</OutputDir>
+    <PoeditVersion>1.8.6</PoeditVersion>
+    <OutputDir>distrib-$(Configuration)-$(PoeditVersion)</OutputDir>
     
     <CodesignTimestampServer>http://timestamp.verisign.com/scripts/timstamp.dll</CodesignTimestampServer>
-    <CodesignIdentity>Slavik</CodesignIdentity>
+    <CodesignIdentity>YOUR_CERTIFICATE</CodesignIdentity>
 
-    <CodesignFlags>/n $(CodesignIdentity) /t $(CodesignTimestampServer) /d Poedit /du http://www.poedit.net</CodesignFlags>
+    <CodesignFlags>/a /n $(CodesignIdentity) /t $(CodesignTimestampServer) /d Poedit /du http://poedit.net</CodesignFlags>
     <CodesignCmd>signtool sign /a $(CodesignFlags)</CodesignCmd>
 
-    <InnoCC>..\packages\Tools.InnoSetup.5.5.4\tools\ISCC.exe</InnoCC>
+    <InnoCC>..\packages\Tools.InnoSetup.5.5.6\tools\ISCC.exe</InnoCC>
     <InnoFlags>/dCONFIG=$(Configuration) /dSIGNTOOL=default /Sdefault="$(CodesignCmd) $f"</InnoFlags>
   </PropertyGroup>
 
   <ItemGroup>
     <FilesToSign Include="../$(Configuration)/*.exe" />
     <FilesToSign Include="../$(Configuration)/*.dll" />
+    <FilesToSign Include="../$(Configuration)/GettextTools/bin/*.exe" />
+    <FilesToSign Include="../$(Configuration)/GettextTools/bin/*.dll" />
     <PdbFiles Include="../$(Configuration)/*.pdb" Exclude="../$(Configuration)/vc1*.pdb" />
   </ItemGroup>
 

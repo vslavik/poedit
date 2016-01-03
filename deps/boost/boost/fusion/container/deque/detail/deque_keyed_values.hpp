@@ -8,9 +8,9 @@
 #if !defined(BOOST_FUSION_DEQUE_DETAIL_CPP11_DEQUE_KEYED_VALUES_07042012_1901)
 #define BOOST_FUSION_DEQUE_DETAIL_CPP11_DEQUE_KEYED_VALUES_07042012_1901
 
+#include <boost/fusion/support/config.hpp>
+#include <boost/fusion/support/detail/access.hpp>
 #include <boost/fusion/container/deque/detail/keyed_element.hpp>
-#include <boost/type_traits/add_reference.hpp>
-#include <boost/type_traits/add_const.hpp>
 #include <boost/mpl/int.hpp>
 
 namespace boost { namespace fusion { namespace detail
@@ -28,6 +28,7 @@ namespace boost { namespace fusion { namespace detail
         typedef typename deque_keyed_values_impl<next_index, Tail...>::type tail;
         typedef keyed_element<N, Head, tail> type;
 
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         static type construct(
           typename detail::call_param<Head>::type head
         , typename detail::call_param<Tail>::type... tail)
@@ -37,16 +38,18 @@ namespace boost { namespace fusion { namespace detail
               , deque_keyed_values_impl<next_index, Tail...>::construct(tail...)
             );
         }
-
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
         template <typename Head_, typename ...Tail_>
+        BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         static type forward_(Head_&& head, Tail_&&... tail)
         {
             return type(
-                std::forward<Head_>(head)
+                BOOST_FUSION_FWD_ELEM(Head_, head)
               , deque_keyed_values_impl<next_index, Tail_...>::
-                  forward_(std::forward<Tail_>(tail)...)
+                  forward_(BOOST_FUSION_FWD_ELEM(Tail_, tail)...)
             );
         }
+#endif
     };
 
     struct nil_keyed_element;
@@ -55,8 +58,14 @@ namespace boost { namespace fusion { namespace detail
     struct deque_keyed_values_impl<N>
     {
         typedef nil_keyed_element type;
+
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         static type construct() { return type(); }
+
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         static type forward_() { return type(); }
+#endif
     };
 
     template <typename ...Elements>

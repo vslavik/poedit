@@ -38,18 +38,21 @@ namespace ns
     {
     public:
     
-        point() : x(0), y(0) {}
-        point(int in_x, int in_y) : x(in_x), y(in_y) {}
+        point() : x(0), y(0), z(0) {}
+        point(int in_x, int in_y, int in_z) : x(in_x), y(in_y), z(in_z) {}
             
         int get_x() const { return x; }
         int get_y() const { return y; }
+        int get_z() const { return z; }
         void set_x(int x_) { x = x_; }
         void set_y(int y_) { y = y_; }
+        void set_z(int z_) { z = z_; }
         
     private:
         
         int x;
         int y;
+        int z;
     };
 
 #if !BOOST_WORKAROUND(__GNUC__,<4)
@@ -58,17 +61,22 @@ namespace ns
         friend struct boost::fusion::extension::access;
 
     public:
-        point_with_private_members() : x(0), y(0) {}
-        point_with_private_members(int x, int y) : x(x), y(y) {}
-
-    private:
+        point_with_private_members() : x(0), y(0), z(0) {}
+        point_with_private_members(int in_x, int in_y, int in_z) 
+          : x(in_x), y(in_y), z(in_z) {}
+            
         int get_x() const { return x; }
         int get_y() const { return y; }
+        int get_z() const { return z; }
         void set_x(int x_) { x = x_; }
         void set_y(int y_) { y = y_; }
-
+        void set_z(int z_) { z = z_; }
+        
+    private:
+        
         int x;
         int y;
+        int z;    
     };
 #endif
     
@@ -91,25 +99,55 @@ namespace ns
     };
 }
 
-BOOST_FUSION_ADAPT_ADT(
-    ns::point,
-    (int, int, obj.get_x(), obj.set_x(val))
-    (int, int, obj.get_y(), obj.set_y(val))
-)
+#if BOOST_PP_VARIADICS
+  BOOST_FUSION_ADAPT_ADT(
+      ns::point,
+      (int, int, obj.get_x(), obj.set_x(val))
+      (BOOST_FUSION_ADAPT_AUTO, BOOST_FUSION_ADAPT_AUTO, obj.get_y(), obj.set_y(val))
+      (obj.get_z(), obj.set_z(val))
+  )
 
-#if !BOOST_WORKAROUND(__GNUC__,<4)
-BOOST_FUSION_ADAPT_ADT(
-    ns::point_with_private_members,
-    (int, int, obj.get_x(), obj.set_x(val))
-    (int, int, obj.get_y(), obj.set_y(val))
-)
+#   if !BOOST_WORKAROUND(__GNUC__,<4)
+    BOOST_FUSION_ADAPT_ADT(
+        ns::point_with_private_members,
+        (obj.get_x(), obj.set_x(val))
+        (obj.get_y(), obj.set_y(val))
+        (obj.get_z(), obj.set_z(val))
+    )
+#   endif
+
+
+  BOOST_FUSION_ADAPT_ADT(
+      ns::name,
+      (obj.get_last(), obj.set_last(val))
+      (obj.get_first(), obj.set_first(val))
+  )
+
+
+#else // BOOST_PP_VARIADICS
+  BOOST_FUSION_ADAPT_ADT(
+      ns::point,
+      (int, int, obj.get_x(), obj.set_x(val))
+      (BOOST_FUSION_ADAPT_AUTO, BOOST_FUSION_ADAPT_AUTO, obj.get_y(), obj.set_y(val))
+      (BOOST_FUSION_ADAPT_AUTO, BOOST_FUSION_ADAPT_AUTO, obj.get_z(), obj.set_z(val))
+  )
+
+#   if !BOOST_WORKAROUND(__GNUC__,<4)
+    BOOST_FUSION_ADAPT_ADT(
+        ns::point_with_private_members,
+        (BOOST_FUSION_ADAPT_AUTO, BOOST_FUSION_ADAPT_AUTO, obj.get_x(), obj.set_x(val))
+        (BOOST_FUSION_ADAPT_AUTO, BOOST_FUSION_ADAPT_AUTO, obj.get_y(), obj.set_y(val))
+        (BOOST_FUSION_ADAPT_AUTO, BOOST_FUSION_ADAPT_AUTO, obj.get_z(), obj.set_z(val))
+    )
+#   endif
+
+  BOOST_FUSION_ADAPT_ADT(
+      ns::name,
+      (const std::string&, const std::string&, obj.get_last(), obj.set_last(val))
+      (BOOST_FUSION_ADAPT_AUTO, BOOST_FUSION_ADAPT_AUTO, obj.get_first(), obj.set_first(val))
+  )
+
 #endif
-
-BOOST_FUSION_ADAPT_ADT(
-    ns::name,
-    (const std::string&, const std::string&, obj.get_last(), obj.set_last(val))
-    (const std::string&, const std::string&, obj.get_first(), obj.set_first(val))
-)
 
 int
 main()
@@ -123,28 +161,30 @@ main()
 
     {
         BOOST_MPL_ASSERT_NOT((traits::is_view<ns::point>));
-        ns::point p(123, 456);
+        ns::point p(123, 456, 789);
 
         std::cout << at_c<0>(p) << std::endl;
         std::cout << at_c<1>(p) << std::endl;
+        std::cout << at_c<2>(p) << std::endl;
         std::cout << p << std::endl;
-        BOOST_TEST(p == make_vector(123, 456));
+        BOOST_TEST(p == make_vector(123, 456, 789));
 
         at_c<0>(p) = 6;
         at_c<1>(p) = 9;
-        BOOST_TEST(p == make_vector(6, 9));
+        at_c<2>(p) = 12;
+        BOOST_TEST(p == make_vector(6, 9, 12));
 
-        BOOST_STATIC_ASSERT(boost::fusion::result_of::size<ns::point>::value == 2);
+        BOOST_STATIC_ASSERT(boost::fusion::result_of::size<ns::point>::value == 3);
         BOOST_STATIC_ASSERT(!boost::fusion::result_of::empty<ns::point>::value);
 
         BOOST_TEST(front(p) == 6);
-        BOOST_TEST(back(p) == 9);
+        BOOST_TEST(back(p) == 12);
     }
 
     {
-        fusion::vector<int, float> v1(4, 2);
-        ns::point v2(5, 3);
-        fusion::vector<long, double> v3(5, 4);
+        fusion::vector<int, float, int> v1(4, 2, 2);
+        ns::point v2(5, 3, 3);
+        fusion::vector<long, double, int> v3(5, 4, 4);
         BOOST_TEST(v1 < v2);
         BOOST_TEST(v1 <= v2);
         BOOST_TEST(v2 > v1);
@@ -154,7 +194,7 @@ main()
         BOOST_TEST(v3 > v2);
         BOOST_TEST(v3 >= v2);
     }
-
+    
     {
         fusion::vector<std::string, std::string> v1("Lincoln", "Abraham");
         ns::name v2("Roosevelt", "Franklin");
@@ -171,15 +211,15 @@ main()
 
     {
         // conversion from ns::point to vector
-        ns::point p(5, 3);
-        fusion::vector<int, long> v(p);
+        ns::point p(5, 3, 3);
+        fusion::vector<int, long, int> v(p);
         v = p;
     }
 
     {
         // conversion from ns::point to list
-        ns::point p(5, 3);
-        fusion::list<int, long> l(p);
+        ns::point p(5, 3, 3);
+        fusion::list<int, long, int> l(p);
         l = p;
     }
 
@@ -193,26 +233,29 @@ main()
 #if !BOOST_WORKAROUND(__GNUC__,<4)
     {
         BOOST_MPL_ASSERT_NOT((traits::is_view<ns::point_with_private_members>));
-        ns::point_with_private_members p(123, 456);
+        ns::point_with_private_members p(123, 456, 789);
 
         std::cout << at_c<0>(p) << std::endl;
         std::cout << at_c<1>(p) << std::endl;
+        std::cout << at_c<2>(p) << std::endl;
         std::cout << p << std::endl;
-        BOOST_TEST(p == make_vector(123, 456));
+        BOOST_TEST(p == make_vector(123, 456, 789));
 
         at_c<0>(p) = 6;
         at_c<1>(p) = 9;
-        BOOST_TEST(p == make_vector(6, 9));
+        at_c<2>(p) = 12;
+        BOOST_TEST(p == make_vector(6, 9, 12));
 
-        BOOST_STATIC_ASSERT(boost::fusion::result_of::size<ns::point_with_private_members>::value == 2);
+        BOOST_STATIC_ASSERT(boost::fusion::result_of::size<ns::point_with_private_members>::value == 3);
         BOOST_STATIC_ASSERT(!boost::fusion::result_of::empty<ns::point_with_private_members>::value);
 
         BOOST_TEST(front(p) == 6);
-        BOOST_TEST(back(p) == 9);
+        BOOST_TEST(back(p) == 12);
     }
 #endif
 
     {
+        // Check types provided in case it's provided
         BOOST_MPL_ASSERT((
             boost::is_same<
                 boost::fusion::result_of::front<ns::point>::type,
@@ -232,6 +275,28 @@ main()
             boost::is_same<
                 boost::fusion::result_of::front<ns::point const>::type::type,
                 int
+            >));
+
+        // Check types provided in case it's deduced
+        BOOST_MPL_ASSERT((
+            boost::is_same<
+                boost::fusion::result_of::back<ns::point>::type,
+                boost::fusion::extension::adt_attribute_proxy<ns::point,2,false>
+            >));
+        BOOST_MPL_ASSERT((
+            boost::is_same<
+                boost::fusion::result_of::back<ns::point>::type::type,
+                int
+            >));
+        BOOST_MPL_ASSERT((
+            boost::is_same<
+                boost::fusion::result_of::back<ns::point const>::type,
+                boost::fusion::extension::adt_attribute_proxy<ns::point,2,true>
+            >));
+        BOOST_MPL_ASSERT((
+            boost::is_same<
+                boost::fusion::result_of::back<ns::point const>::type::type,
+                const int
             >));
     }
 

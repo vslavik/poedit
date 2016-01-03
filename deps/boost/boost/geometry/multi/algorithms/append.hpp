@@ -1,8 +1,14 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
-// Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
-// Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
+// Copyright (c) 2007-2014 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2008-2014 Bruno Lalande, Paris, France.
+// Copyright (c) 2009-2014 Mateusz Loskot, London, UK.
+
+// This file was modified by Oracle on 2014.
+// Modifications copyright (c) 2014, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -14,40 +20,8 @@
 #ifndef BOOST_GEOMETRY_MULTI_ALGORITHMS_APPEND_HPP
 #define BOOST_GEOMETRY_MULTI_ALGORITHMS_APPEND_HPP
 
+
 #include <boost/geometry/algorithms/append.hpp>
-
-#include <boost/geometry/multi/core/tags.hpp>
-#include <boost/geometry/multi/geometries/concepts/check.hpp>
-
-
-namespace boost { namespace geometry
-{
-
-#ifndef DOXYGEN_NO_DISPATCH
-namespace dispatch
-{
-
-namespace splitted_dispatch
-{
-
-template <typename Geometry, typename Point>
-struct append_point<multi_point_tag, Geometry, Point>
-    : detail::append::append_point<Geometry, Point>
-{};
-
-template <typename Geometry, typename Range>
-struct append_range<multi_point_tag, Geometry, Range>
-    : detail::append::append_range<Geometry, Range>
-{};
-
-}
-
-
-} // namespace dispatch
-#endif // DOXYGEN_NO_DISPATCH
-
-
-}} // namespace boost::geometry
 
 
 #endif // BOOST_GEOMETRY_MULTI_ALGORITHMS_APPEND_HPP

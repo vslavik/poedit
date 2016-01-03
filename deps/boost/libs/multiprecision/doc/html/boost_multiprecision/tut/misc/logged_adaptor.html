@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>logged_adaptor</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../misc.html" title="Miscellaneous Number Types.">
 <link rel="prev" href="../misc.html" title="Miscellaneous Number Types.">
@@ -89,8 +89,6 @@
           The following example demonstrates this technique in a trivial algorithm
           that deliberately introduces cancellation error:
         </p>
-<p>
-</p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">multiprecision</span><span class="special">/</span><span class="identifier">mpfi</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">multiprecision</span><span class="special">/</span><span class="identifier">logged_adaptor</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
@@ -140,13 +138,9 @@
 <span class="special">}</span>
 </pre>
 <p>
-        </p>
-<p>
           When we examine program output we can clearly see that the diameter of
           the interval increases after each subtraction:
         </p>
-<p>
-</p>
 <pre class="programlisting"><span class="identifier">Diameter</span> <span class="identifier">was</span> <span class="identifier">nan</span> <span class="identifier">after</span> <span class="identifier">operation</span><span class="special">:</span> <span class="identifier">Default</span> <span class="identifier">construct</span>
 <span class="identifier">Diameter</span> <span class="identifier">was</span> <span class="number">0</span> <span class="identifier">after</span> <span class="identifier">operation</span><span class="special">:</span> <span class="identifier">Assignment</span> <span class="identifier">from</span> <span class="identifier">arithmetic</span> <span class="identifier">type</span>
 <span class="identifier">Diameter</span> <span class="identifier">was</span> <span class="number">4.33681e-18</span> <span class="identifier">after</span> <span class="identifier">operation</span><span class="special">:</span> <span class="special">/=</span>
@@ -204,12 +198,10 @@
 <span class="identifier">Diameter</span> <span class="identifier">was</span> <span class="number">0.296861</span> <span class="identifier">after</span> <span class="identifier">operation</span><span class="special">:</span> <span class="special">-=</span>
 <span class="identifier">Final</span> <span class="identifier">value</span> <span class="identifier">was</span><span class="special">:</span> <span class="special">{</span><span class="number">8.51569e-15</span><span class="special">,</span><span class="number">1.14843e-14</span><span class="special">}</span>
 </pre>
-<p>
-        </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2012 John Maddock and Christopher Kormanyos<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2013 John Maddock and Christopher Kormanyos<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

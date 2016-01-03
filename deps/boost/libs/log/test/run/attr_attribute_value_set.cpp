@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -16,6 +16,7 @@
 
 #include <vector>
 #include <string>
+#include <sstream>
 #include <utility>
 #include <iterator>
 #include <boost/config.hpp>
@@ -219,4 +220,25 @@ BOOST_AUTO_TEST_CASE(lookup)
     BOOST_CHECK_EQUAL(view1.count(s1), 1UL);
     BOOST_CHECK_EQUAL(view1.count(data::attr3()), 1UL);
     BOOST_CHECK_EQUAL(view1.count(data::attr4()), 0UL);
+}
+
+// The test checks size method
+BOOST_AUTO_TEST_CASE(size)
+{
+    typedef logging::attribute_value_set attr_values;
+    attrs::constant< int > attr1(10);
+
+    attr_values view;
+    view.freeze();
+
+    unsigned int i = 0;
+    for (; i < 100; ++i)
+    {
+        std::ostringstream strm;
+        strm << "Attr" << i;
+
+        view.insert(attr_values::key_type(strm.str()), attr1.get_value());
+    }
+
+    BOOST_CHECK_EQUAL(view.size(), i);
 }

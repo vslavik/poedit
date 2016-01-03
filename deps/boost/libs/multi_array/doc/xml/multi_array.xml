@@ -1,4 +1,4 @@
-<sect2 id="multi_array">
+<sect2 id="multi_array_class">
 <title><literal>multi_array</literal></title>
 
 <para>
@@ -51,13 +51,16 @@ public:
   typedef multi_array_types::extent_gen         extent_gen;
   typedef multi_array_types::extent_range       extent_range;
   typedef *unspecified*                         storage_order_type;
-  
+
 
   // template typedefs
   template <std::size_t Dims> struct            subarray;
   template <std::size_t Dims> struct            const_subarray;
   template <std::size_t Dims> struct            array_view;
   template <std::size_t Dims> struct            const_array_view;
+  
+
+  static const std::size_t dimensionality = NumDims;
   
 
   // constructors and destructors

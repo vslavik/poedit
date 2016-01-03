@@ -16,8 +16,10 @@ doxygen autodoc
                                    \"BOOST_XPRESSIVE_GLOBAL_MARK_TAG(x,y)=mark_tag const x(y)\" \\
                                    \"BOOST_STATIC_CONSTANT(x,y)=static x const y\" \\
                                    \"BOOST_XPR_NONDEDUCED_TYPE_(X)=X\" \\
+                                   \"BOOST_PROTO_DISABLE_IF_IS_CONST(X)=\" \\
                                    \"UNREF(X)=typename remove_reference<X>::type\" \\
                                    \"UNCV(X)=typename remove_const<X>::type\" \\
+                                   \"UNREF(X)=typename remove_reference<X>::type\" \\
                                    \"UNCVREF(X)=typename remove_const<typename remove_reference<X>::type>::type\""
         <doxygen:param>HIDE_UNDOC_MEMBERS=NO
         <doxygen:param>EXTRACT_PRIVATE=NO
@@ -26,6 +28,8 @@ doxygen autodoc
         <doxygen:param>EXPAND_ONLY_PREDEF=YES
         <doxygen:param>SEARCH_INCLUDES=YES
         <doxygen:param>INCLUDE_PATH=$(BOOST_ROOT)
+        # So that Doxygen comments can link to sections in the quickbook users' guide
+        <doxygen:param>"ALIASES=\"RefSect{2}=\\xmlonly<link linkend='boost_xpressive.\\1'>\\2</link>\\endxmlonly\""
     ;
 
 xml xpressive

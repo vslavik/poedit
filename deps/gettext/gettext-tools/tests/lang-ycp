@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of gettext facilities in the YCP language.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles prog.ycp"
 cat <<\EOF > prog.ycp
 {
   textdomain "prog";
@@ -16,15 +13,11 @@ cat <<\EOF > prog.ycp
 }
 EOF
 
-tmpfiles="$tmpfiles l-ycp-prog.tmp l-ycp-prog.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o l-ycp-prog.tmp --omit-header --no-location prog.ycp
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-ycp-prog.tmp > l-ycp-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o prog.tmp --omit-header --no-location prog.ycp || exit 1
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-ycp-prog.ok"
-cat <<EOF > l-ycp-prog.ok
+cat <<EOF > prog.ok
 msgid "'Your command, please?', asked the waiter."
 msgstr ""
 
@@ -40,10 +33,9 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} l-ycp-prog.ok l-ycp-prog.pot || exit 1
+${DIFF} prog.ok prog.pot || exit 1
 
-tmpfiles="$tmpfiles l-ycp-fr.po"
-cat <<\EOF > l-ycp-fr.po
+cat <<\EOF > fr.po
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -65,16 +57,11 @@ msgid "%1 is replaced by %2."
 msgstr "%2 remplace %1."
 EOF
 
-tmpfiles="$tmpfiles l-ycp-fr.po.tmp l-ycp-fr.po.new"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o l-ycp-fr.po.tmp l-ycp-fr.po l-ycp-prog.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < l-ycp-fr.po.tmp > l-ycp-fr.po.new
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
 
 : ${DIFF=diff}
-${DIFF} l-ycp-fr.po l-ycp-fr.po.new || exit 1
-
-rm -fr $tmpfiles
+${DIFF} fr.po fr.po.new || exit 1
 
 exit 0

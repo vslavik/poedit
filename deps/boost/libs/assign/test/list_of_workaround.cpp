@@ -30,6 +30,7 @@ void check_list_of()
     using namespace std;
     using namespace boost;
     using namespace boost::assign;
+    using boost::array;
     
     vector<int>         v = list_of(1)(2)(3)(4).to_container( v );
     set<int>            s = list_of(1)(2)(3)(4).to_container( s );  

@@ -681,7 +681,7 @@ namespace boost { namespace polygon{
     std::cout << (ps2 == ps) << std::endl;
     ps2 ^= ps;
     std::cout << ps2.empty() << std::endl;
-    axis_transformation atr(axis_transformation::WS);
+    axis_transformation atr(axis_transformation::WEST_SOUTH);
     ps2 = ps;
     ps.transform(atr);
     transformation<int> tr(atr);

@@ -15,7 +15,7 @@
 #include <boost/interprocess/indexes/null_index.hpp>
 #include <boost/interprocess/sync/mutex_family.hpp>
 #include <boost/interprocess/detail/type_traits.hpp>
-#include <boost/type_traits/alignment_of.hpp>
+#include <boost/move/detail/type_traits.hpp> //make_unsigned, alignment_of
 #include "memory_algorithm_test_template.hpp"
 #include <iostream>
 #include <string>
@@ -69,7 +69,7 @@ int test_rbtree_best_fit()
 
 int main ()
 {
-   const std::size_t void_ptr_align = ::boost::alignment_of<offset_ptr<void> >::value;
+   const std::size_t void_ptr_align = ::boost::container::container_detail::alignment_of<offset_ptr<void> >::value;
 
    if(test_simple_seq_fit()){
       return 1;

@@ -106,7 +106,7 @@ int main()
     iterator_type iter = lex.begin(it, str.end());
     iterator_type end = lex.end();
 
-    // Parsing is done based on the the token stream, not the character 
+    // Parsing is done based on the token stream, not the character 
     // stream read from the input.
     // Note, how we use the token_def defined above as the skip parser. It must
     // be explicitly wrapped inside a state directive, switching the lexer 

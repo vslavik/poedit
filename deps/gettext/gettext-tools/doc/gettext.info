@@ -1,7 +1,7 @@
-This is gettext.info, produced by makeinfo version 5.1 from
+This is gettext.info, produced by makeinfo version 5.2 from
 gettext.texi.
 
-   Copyright (C) 1995-1998, 2001-2012 Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2001-2015 Free Software Foundation, Inc.
 
    This manual is free documentation.  It is dually licensed under the
 GNU FDL and the GNU GPL. This means that you can redistribute this
@@ -55,7 +55,7 @@ GNU ‘gettext’ utilities
 ***********************
 
    This manual documents the GNU gettext tools and the GNU libintl
-library, version 0.18.3.
+library, version 0.19.5.1.
 
 * Menu:
 
@@ -104,10 +104,10 @@ The User’s View
 * Setting the POSIX Locale::    How to Specify the Locale According to POSIX
 * Installing Localizations::    How to Install Additional Translations
 
-Setting the POSIX Locale
+Setting the Locale through Environment Variables
 
 * Locale Names::                How a Locale Specification Looks Like
-* Locale Environment Variables:: Which Environment Variable Specfies What
+* Locale Environment Variables::  Which Environment Variable Specfies What
 * The LANGUAGE variable::       How to Specify a Priority List of Languages
 
 Preparing Program Sources
@@ -252,7 +252,7 @@ The Maintainer’s View
 * gettextize Invocation::       Invoking the ‘gettextize’ Program
 * Adjusting Files::             Files You Must Create or Alter
 * autoconf macros::             Autoconf macros for use in ‘configure.ac’
-* CVS Issues::                  Integrating with CVS
+* Version Control Issues::      
 * Release Management::          Creating a Distribution Tarball
 
 Files You Must Create or Alter
@@ -278,12 +278,14 @@ Autoconf macros for use in ‘configure.ac’
 * AM_GNU_GETTEXT_NEED::         AM_GNU_GETTEXT_NEED in ‘gettext.m4’
 * AM_GNU_GETTEXT_INTL_SUBDIR::  AM_GNU_GETTEXT_INTL_SUBDIR in ‘intldir.m4’
 * AM_PO_SUBDIRS::               AM_PO_SUBDIRS in ‘po.m4’
+* AM_XGETTEXT_OPTION::          AM_XGETTEXT_OPTION in ‘po.m4’
 * AM_ICONV::                    AM_ICONV in ‘iconv.m4’
 
-Integrating with CVS
+Integrating with Version Control Systems
 
-* Distributed CVS::             Avoiding version mismatch in distributed development
-* Files under CVS::             Files to put under CVS version control
+* Distributed Development::     Avoiding version mismatch in distributed development
+* Files under Version Control::  Files to put under version control
+* Translations under Version Control::  Put PO Files under Version Control
 * autopoint Invocation::        Invoking the ‘autopoint’ Program
 
 Other Programming Languages
@@ -348,6 +350,7 @@ Individual Programming Languages
 * GCC-source::                  GNU Compiler Collection sources
 * Lua::                         Lua
 * JavaScript::                  JavaScript
+* Vala::                        Vala
 
 sh - Shell Script
 
@@ -376,6 +379,7 @@ Internationalizable Data
 * POT::                         POT - Portable Object Template
 * RST::                         Resource String Table
 * Glade::                       Glade - GNOME user interface description
+* GSettings::                   GSettings - GNOME user configuration schema
 
 Concluding Remarks
 
@@ -1018,7 +1022,7 @@ execute ‘setenv LANG de_DE’ (in ‘csh’), ‘export LANG; LANG=de_DE’ (i
 * Menu:
 
 * Locale Names::                How a Locale Specification Looks Like
-* Locale Environment Variables:: Which Environment Variable Specfies What
+* Locale Environment Variables::  Which Environment Variable Specfies What
 * The LANGUAGE variable::       How to Specify a Priority List of Languages
 
 
@@ -2094,13 +2098,12 @@ is changed but of course the arguments in the ‘printf’ don’t have.  This
 will most probably lead to problems because now the length of the string
 is regarded as the address.
 
-   To prevent errors at runtime caused by translations the ‘msgfmt’ tool
-can check statically whether the arguments in the original and the
+   To prevent errors at runtime caused by translations, the ‘msgfmt’
+tool can check statically whether the arguments in the original and the
 translation string match in type and number.  If this is not the case
 and the ‘-c’ option has been passed to ‘msgfmt’, ‘msgfmt’ will give an
-error and refuse to produce a MO file.  Thus consequent use of ‘msgfmt
--c’ will catch the error, so that it cannot cause cause problems at
-runtime.
+error and refuse to produce a MO file.  Thus consistent use of ‘msgfmt
+-c’ will catch the error, so that it cannot cause problems at runtime.
 
 If the word order in the above German translation would be correct one
 would have to write
@@ -2109,15 +2112,15 @@ would have to write
 
 The routines in ‘msgfmt’ know about this special notation.
 
-   Because not all strings in a program must be format strings it is not
-useful for ‘msgfmt’ to test all the strings in the ‘.po’ file.  This
+   Because not all strings in a program will be format strings, it is
+not useful for ‘msgfmt’ to test all the strings in the ‘.po’ file.  This
 might cause problems because the string might contain what looks like a
 format specifier, but the string is not used in ‘printf’.
 
-   Therefore the ‘xgettext’ adds a special tag to those messages it
-thinks might be a format string.  There is no absolute rule for this,
-only a heuristic.  In the ‘.po’ file the entry is marked using the
-‘c-format’ flag in the ‘#,’ comment line (*note PO Files::).
+   Therefore ‘xgettext’ adds a special tag to those messages it thinks
+might be a format string.  There is no absolute rule for this, only a
+heuristic.  In the ‘.po’ file the entry is marked using the ‘c-format’
+flag in the ‘#,’ comment line (*note PO Files::).
 
    The careful reader now might say that this again can cause problems.
 The heuristic might guess it wrong.  This is true and therefore
@@ -2524,7 +2527,7 @@ standard output.
      ‘EmacsLisp’, ‘librep’, ‘Scheme’, ‘Smalltalk’, ‘Java’,
      ‘JavaProperties’, ‘C#’, ‘awk’, ‘YCP’, ‘Tcl’, ‘Perl’, ‘PHP’,
      ‘GCC-source’, ‘NXStringTable’, ‘RST’, ‘Glade’, ‘Lua’, ‘JavaScript’,
-     ‘Vala’.
+     ‘Vala’, ‘GSettings’, ‘Desktop’.
 
 ‘-C’
 ‘--c++’
@@ -2563,6 +2566,65 @@ extension.
      in the output file.  Without a TAG, the option means to put _all_
      comment blocks preceding keyword lines in the output file.
 
+     Note that comment blocks supposed to be extracted must be adjacent
+     to keyword lines.  For example, in the following C source code:
+
+          /* This is the first comment.  */
+          gettext ("foo");
+
+          /* This is the second comment: not extracted  */
+          gettext (
+            "bar");
+
+          gettext (
+            /* This is the third comment.  */
+            "baz");
+
+     The second comment line will not be extracted, because there is one
+     blank line between the comment line and the keyword.
+
+‘--check[=CHECK]’
+     Perform a syntax check on msgid and msgid_plural.  The supported
+     checks are:
+
+     ‘ellipsis-unicode’
+          Prefer Unicode ellipsis character over ASCII ‘...’
+
+     ‘space-ellipsis’
+          Prohibit whitespace before an ellipsis character
+
+     ‘quote-unicode’
+          Prefer Unicode quotation marks over ASCII ‘"'`’
+
+     The option has an effect on all input files.  To enable or disable
+     checks for a certain string, you can mark it with an ‘xgettext:’
+     special comment in the source file.  For example, if you specify
+     the ‘--check=space-ellipsis’ option, but want to suppress the check
+     on a particular string, add the following comment:
+
+          /* xgettext: no-space-ellipsis-check */
+          gettext ("We really want a space before ellipsis here ...");
+
+     The ‘xgettext:’ comment can be followed by flags separated with a
+     comma.  The possible flags are of the form ‘[no-]NAME-check’, where
+     NAME is the name of a valid syntax check.  If a flag is prefixed by
+     ‘no-’, the meaning is negated.
+
+     Some tests apply the checks to each sentence within the msgid,
+     rather than the whole string.  xgettext detects the end of sentence
+     by performing a pattern match, which usually looks for a period
+     followed by a certain number of spaces.  The number is specified
+     with the ‘--sentence-end’ option.
+
+‘--sentence-end[=TYPE]’
+     The supported values are:
+
+     ‘single-space’
+          Expect at least one whitespace after a period
+
+     ‘double-space’
+          Expect at least two whitespaces after a period
+
 5.1.6 Language specific options
 -------------------------------
 
@@ -2572,7 +2634,8 @@ extension.
 
      This option has an effect with most languages, namely C, C++,
      ObjectiveC, Shell, Python, Lisp, EmacsLisp, librep, Java, C#, awk,
-     Tcl, Perl, PHP, GCC-source, Glade, Lua, JavaScript, Vala.
+     Tcl, Perl, PHP, GCC-source, Glade, Lua, JavaScript, Vala,
+     GSettings.
 
 ‘-k[KEYWORDSPEC]’
 ‘--keyword[=KEYWORDSPEC]’
@@ -2606,7 +2669,8 @@ extension.
 
      This option has an effect with most languages, namely C, C++,
      ObjectiveC, Shell, Python, Lisp, EmacsLisp, librep, Java, C#, awk,
-     Tcl, Perl, PHP, GCC-source, Glade, Lua, JavaScript, Vala.
+     Tcl, Perl, PHP, GCC-source, Glade, Lua, JavaScript, Vala,
+     GSettings, Desktop.
 
      The default keyword specifications, which are always looked for if
      not explicitly disabled, are language dependent.  They are:
@@ -2669,6 +2733,9 @@ extension.
         • For Vala: ‘_’, ‘Q_’, ‘N_’, ‘NC_’, ‘dgettext:2’, ‘dcgettext:2’,
           ‘ngettext:1,2’, ‘dngettext:2,3’, ‘dpgettext:2c,3’,
           ‘dpgettext2:2c,3’.
+
+        • For Desktop: ‘Name’, ‘GenericName’, ‘Comment’, ‘Icon’,
+          ‘Keywords’.
 
      To disable the default keyword specifications, the option ‘-k’ or
      ‘--keyword’ or ‘--keyword=’, without a KEYWORDSPEC, can be used.
@@ -2733,7 +2800,7 @@ extension.
 ‘--debug’
      Use the flags ‘c-format’ and ‘possible-c-format’ to show who was
      responsible for marking a message as a format string.  The latter
-     form is used if the ‘xgettext’ program decided, the format form is
+     form is used if the ‘xgettext’ program decided, the former form is
      used if the programmer prescribed it.
 
      By default only the ‘c-format’ form is used.  The translator should
@@ -2768,8 +2835,14 @@ adjacent strings, and escaped end of lines for continued strings.
      each message’s context.
 
 ‘-n’
-‘--add-location’
+‘--add-location=TYPE’
      Generate ‘#: FILENAME:LINE’ lines (default).
+
+     The optional TYPE can be either ‘full’, ‘file’, or ‘never’.  If it
+     is not given or ‘full’, it generates the lines with both file name
+     and line number.  If it is ‘file’, the line number part is omitted.
+     If it is ‘never’, it completely suppresses the lines (same as
+     ‘--no-location’).
 
 ‘--strict’
      Write out a strict Uniforum conforming PO file.  Note that this
@@ -2851,7 +2924,7 @@ adjacent strings, and escaped end of lines for continued strings.
      address or URL to which the translators shall report bugs in the
      untranslated strings:
 
-        - Strings which are not entire sentences, see the maintainer
+        - Strings which are not entire sentences; see the maintainer
           guidelines in *note Preparing Strings::.
         - Strings which use unclear terms or require additional context
           to be understood.
@@ -2924,6 +2997,39 @@ File: gettext.info,  Node: msginit Invocation,  Next: Header Entry,  Prev: Creat
 
    The ‘msginit’ program creates a new PO file, initializing the meta
 information with values from the user’s environment.
+
+   Here are more details.  The following header fields of a PO file are
+automatically filled, when possible.
+
+‘Project-Id-Version’
+     The value is guessed from the ‘configure’ script or any other files
+     in the current directory.
+
+‘PO-Revision-Date’
+     The value is taken from the ‘PO-Creation-Data’ in the input POT
+     file, or the current date is used.
+
+‘Last-Translator’
+     The value is taken from user’s password file entry and the mailer
+     configuration files.
+
+‘Language-Team, Language’
+     These values are set according to the current locale and the
+     predefined list of translation teams.
+
+‘MIME-Version, Content-Type, Content-Transfer-Encoding’
+     These values are set according to the content of the POT file and
+     the current locale.  If the POT file contains charset=UTF-8, it
+     means that the POT file contains non-ASCII characters, and we keep
+     the UTF-8 encoding.  Otherwise, when the POT file is plain ASCII,
+     we use the locale’s encoding.
+
+‘Plural-Forms’
+     The value is first looked up from the embedded table.
+
+     As an experimental feature, you can instruct ‘msginit’ to use the
+     information from Unicode CLDR, by setting the ‘GETTEXTCLDRDIR’
+     environment variable.
 
 6.1.1 Input file location
 -------------------------
@@ -3368,8 +3474,15 @@ values:
 ‘--no-location’
      Do not write ‘#: FILENAME:LINE’ lines.
 
-‘--add-location’
+‘-n’
+‘--add-location=TYPE’
      Generate ‘#: FILENAME:LINE’ lines (default).
+
+     The optional TYPE can be either ‘full’, ‘file’, or ‘never’.  If it
+     is not given or ‘full’, it generates the lines with both file name
+     and line number.  If it is ‘file’, the line number part is omitted.
+     If it is ‘never’, it completely suppresses the lines (same as
+     ‘--no-location’).
 
 ‘--strict’
      Write out a strict Uniforum conforming PO file.  Note that this
@@ -4864,8 +4977,14 @@ specified or if it is ‘-’.
      Do not write ‘#: FILENAME:LINE’ lines.
 
 ‘-n’
-‘--add-location’
+‘--add-location=TYPE’
      Generate ‘#: FILENAME:LINE’ lines (default).
+
+     The optional TYPE can be either ‘full’, ‘file’, or ‘never’.  If it
+     is not given or ‘full’, it generates the lines with both file name
+     and line number.  If it is ‘file’, the line number part is omitted.
+     If it is ‘never’, it completely suppresses the lines (same as
+     ‘--no-location’).
 
 ‘--strict’
      Write out a strict Uniforum conforming PO file.  Note that this
@@ -4993,8 +5112,15 @@ specified or if it is ‘-’.
 ‘--no-location’
      Do not write ‘#: FILENAME:LINE’ lines.
 
-‘--add-location’
+‘-n’
+‘--add-location=TYPE’
      Generate ‘#: FILENAME:LINE’ lines (default).
+
+     The optional TYPE can be either ‘full’, ‘file’, or ‘never’.  If it
+     is not given or ‘full’, it generates the lines with both file name
+     and line number.  If it is ‘file’, the line number part is omitted.
+     If it is ‘never’, it completely suppresses the lines (same as
+     ‘--no-location’).
 
 ‘--strict’
      Write out a strict Uniforum conforming PO file.  Note that this
@@ -5194,8 +5320,15 @@ regular expressions if -E is given, or fixed strings if -F is given.
 ‘--no-location’
      Do not write ‘#: FILENAME:LINE’ lines.
 
-‘--add-location’
+‘-n’
+‘--add-location=TYPE’
      Generate ‘#: FILENAME:LINE’ lines (default).
+
+     The optional TYPE can be either ‘full’, ‘file’, or ‘never’.  If it
+     is not given or ‘full’, it generates the lines with both file name
+     and line number.  If it is ‘file’, the line number part is omitted.
+     If it is ‘never’, it completely suppresses the lines (same as
+     ‘--no-location’).
 
 ‘--strict’
      Write out a strict Uniforum conforming PO file.  Note that this
@@ -5282,7 +5415,14 @@ translation catalog.
 variable ‘MSGFILTER_LOCATION’ is bound to the location in the PO file of
 the message.  If the message has a context, the environment variable
 ‘MSGFILTER_MSGCTXT’ is bound to the message’s msgctxt, otherwise it is
-unbound.
+unbound.  If the message has a plural form, environment variable
+‘MSGFILTER_MSGID_PLURAL’ is bound to the message’s msgid_plural and
+‘MSGFILTER_PLURAL_FORM’ is bound to the order number of the plural
+actually processed (starting with 0), otherwise both are unbound.  If
+the message has a previous msgid (added by ‘msgmerge’), environment
+variable ‘MSGFILTER_PREV_MSGCTXT’ is bound to the message’s previous
+msgctxt, ‘MSGFILTER_PREV_MSGID’ is bound to the previous msgid, and
+‘MSGFILTER_PREV_MSGID_PLURAL’ is bound to the previous msgid_plural.
 
 9.4.1 Input file location
 -------------------------
@@ -5317,6 +5457,10 @@ input and writes a modified translation to standard output.  A
 frequently used filter is ‘sed’.  A few particular built-in filters are
 also recognized.
 
+‘--newline’
+     Add newline at the end of each input line and also strip the ending
+     newline from the output line.
+
    Note: If the filter is not a built-in filter, you have to care about
 encodings: It is your responsibility to ensure that the FILTER can cope
 with input encoded in the translation catalog’s encoding.  If the FILTER
@@ -5329,12 +5473,13 @@ program and then make ‘msgfilter’ work in an UTF-8 locale, by using the
 ‘LC_ALL’ environment variable.
 
    Note: Most translations in a translation catalog don’t end with a
-newline character.  For this reason, it is important that the FILTER
-recognizes its last input line even if it ends without a newline, and
-that it doesn’t add an undesired trailing newline at the end.  The ‘sed’
-program on some platforms is known to ignore the last line of input if
-it is not terminated with a newline.  You can use GNU ‘sed’ instead; it
-does not have this limitation.
+newline character.  For this reason, unless the ‘--newline’ option is
+used, it is important that the FILTER recognizes its last input line
+even if it ends without a newline, and that it doesn’t add an undesired
+trailing newline at the end.  The ‘sed’ program on some platforms is
+known to ignore the last line of input if it is not terminated with a
+newline.  You can use GNU ‘sed’ instead; it does not have this
+limitation.
 
 9.4.4 Useful FILTER-OPTIONs when the FILTER is ‘sed’
 ----------------------------------------------------
@@ -5360,6 +5505,15 @@ command ‘recode-sr-latin’ converts Serbian text, written in the Cyrillic
 script, to the Latin script.  The command ‘msgfilter recode-sr-latin’
 applies this conversion to the translations of a PO file.  Thus, it can
 be used to convert an ‘sr.po’ file to an ‘sr@latin.po’ file.
+
+   The filter ‘quot’ is recognized as a built-in filter.  The command
+‘msgfilter quot’ converts any quotations surrounded by a pair of ‘"’,
+‘'’, and ‘`’.
+
+   The filter ‘boldquot’ is recognized as a built-in filter.  The
+command ‘msgfilter boldquot’ converts any quotations surrounded by a
+pair of ‘"’, ‘'’, and ‘`’, also adding the VT100 escape sequences to the
+text to decorate it as bold.
 
    The use of built-in filters is not sensitive to the current locale’s
 encoding.  Moreover, when used with a built-in filter, ‘msgfilter’ can
@@ -5404,8 +5558,15 @@ needed.
 ‘--no-location’
      Do not write ‘#: FILENAME:LINE’ lines.
 
-‘--add-location’
+‘-n’
+‘--add-location=TYPE’
      Generate ‘#: FILENAME:LINE’ lines (default).
+
+     The optional TYPE can be either ‘full’, ‘file’, or ‘never’.  If it
+     is not given or ‘full’, it generates the lines with both file name
+     and line number.  If it is ‘file’, the line number part is omitted.
+     If it is ‘never’, it completely suppresses the lines (same as
+     ‘--no-location’).
 
 ‘--strict’
      Write out a strict Uniforum conforming PO file.  Note that this
@@ -5563,8 +5724,14 @@ specified or if it is ‘-’.
      Do not write ‘#: FILENAME:LINE’ lines.
 
 ‘-n’
-‘--add-location’
+‘--add-location=TYPE’
      Generate ‘#: FILENAME:LINE’ lines (default).
+
+     The optional TYPE can be either ‘full’, ‘file’, or ‘never’.  If it
+     is not given or ‘full’, it generates the lines with both file name
+     and line number.  If it is ‘file’, the line number part is omitted.
+     If it is ‘never’, it completely suppresses the lines (same as
+     ‘--no-location’).
 
 ‘--strict’
      Write out a strict Uniforum conforming PO file.  Note that this
@@ -5713,8 +5880,14 @@ specified or if it is ‘-’.
      Do not write ‘#: FILENAME:LINE’ lines.
 
 ‘-n’
-‘--add-location’
+‘--add-location=TYPE’
      Generate ‘#: FILENAME:LINE’ lines (default).
+
+     The optional TYPE can be either ‘full’, ‘file’, or ‘never’.  If it
+     is not given or ‘full’, it generates the lines with both file name
+     and line number.  If it is ‘file’, the line number part is omitted.
+     If it is ‘never’, it completely suppresses the lines (same as
+     ‘--no-location’).
 
 ‘--strict’
      Write out a strict Uniforum conforming PO file.  Note that this
@@ -5925,6 +6098,9 @@ listed in the ONLY-FILE and not listed in the IGNORE-FILE.
 ‘--clear-previous’
      Remove the “previous msgid” (‘#|’) comments from all messages.
 
+‘--empty’
+     When removing ‘fuzzy’ mark, also set msgstr empty.
+
 ‘--only-file=FILE’
      Limit the attribute changes to entries that are listed in FILE.
      FILE should be a PO or POT file.
@@ -5976,8 +6152,14 @@ listed in the ONLY-FILE and not listed in the IGNORE-FILE.
      Do not write ‘#: FILENAME:LINE’ lines.
 
 ‘-n’
-‘--add-location’
+‘--add-location=TYPE’
      Generate ‘#: FILENAME:LINE’ lines (default).
+
+     The optional TYPE can be either ‘full’, ‘file’, or ‘never’.  If it
+     is not given or ‘full’, it generates the lines with both file name
+     and line number.  If it is ‘file’, the line number part is omitted.
+     If it is ‘never’, it completely suppresses the lines (same as
+     ‘--no-location’).
 
 ‘--strict’
      Write out a strict Uniforum conforming PO file.  Note that this
@@ -6108,8 +6290,15 @@ specified or if it is ‘-’.
 ‘--no-location’
      Do not write ‘#: FILENAME:LINE’ lines.
 
-‘--add-location’
+‘-n’
+‘--add-location=TYPE’
      Generate ‘#: FILENAME:LINE’ lines (default).
+
+     The optional TYPE can be either ‘full’, ‘file’, or ‘never’.  If it
+     is not given or ‘full’, it generates the lines with both file name
+     and line number.  If it is ‘file’, the line number part is omitted.
+     If it is ‘never’, it completely suppresses the lines (same as
+     ‘--no-location’).
 
 ‘--strict’
      Write out a strict Uniforum conforming PO file.  Note that this
@@ -6177,12 +6366,22 @@ code is the maximum return code across all invocations.
 followed by a null byte.  The output of ‘msgexec 0’ is suitable as input
 for ‘xargs -0’.
 
+‘--newline’
+     Add newline at the end of each input line.
+
    During each COMMAND invocation, the environment variable
 ‘MSGEXEC_MSGID’ is bound to the message’s msgid, and the environment
 variable ‘MSGEXEC_LOCATION’ is bound to the location in the PO file of
 the message.  If the message has a context, the environment variable
 ‘MSGEXEC_MSGCTXT’ is bound to the message’s msgctxt, otherwise it is
-unbound.
+unbound.  If the message has a plural form, environment variable
+‘MSGEXEC_MSGID_PLURAL’ is bound to the message’s msgid_plural and
+‘MSGEXEC_PLURAL_FORM’ is bound to the order number of the plural
+actually processed (starting with 0), otherwise both are unbound.  If
+the message has a previous msgid (added by ‘msgmerge’), environment
+variable ‘MSGEXEC_PREV_MSGCTXT’ is bound to the message’s previous
+msgctxt, ‘MSGEXEC_PREV_MSGID’ is bound to the previous msgid, and
+‘MSGEXEC_PREV_MSGID_PLURAL’ is bound to the previous msgid_plural.
 
    Note: It is your responsibility to ensure that the COMMAND can cope
 with input encoded in the translation catalog’s encoding.  If the
@@ -6258,7 +6457,7 @@ and ‘--style’.
 * Customizing less::            Customizing ‘less’ for viewing PO files
 
 
-File: gettext.info,  Node: The --color option,  Next: The TERM variable,  Up: Colorizing
+File: gettext.info,  Node: The --color option,  Next: The TERM variable,  Prev: Colorizing,  Up: Colorizing
 
 9.11.1 The ‘--color’ option
 ---------------------------
@@ -6796,6 +6995,9 @@ textual translation description.
 ‘--qt’
      Qt mode: generate a Qt ‘.qm’ file.
 
+‘--desktop’
+     Desktop Entry mode: generate a ‘.desktop’ file.
+
 10.1.3 Output file location
 ---------------------------
 
@@ -6831,6 +7033,9 @@ textual translation description.
 
 ‘-d DIRECTORY’
      Specify the base directory of classes directory hierarchy.
+
+‘--source’
+     Produce a .java source file, instead of a compiled .class file.
 
    The class name is determined by appending the locale name to the
 resource name, separated with an underscore.  The ‘-d’ option is
@@ -6871,7 +7076,49 @@ locale.
    The ‘-l’ and ‘-d’ options are mandatory.  The ‘.msg’ file is written
 in the specified directory.
 
-10.1.7 Input file syntax
+10.1.7 Desktop Entry mode operations
+------------------------------------
+
+‘--template=TEMPLATE’
+     Specify a .desktop file used as a template.
+
+‘-k[KEYWORDSPEC]’
+‘--keyword[=KEYWORDSPEC]’
+     Specify KEYWORDSPEC as an additional keyword to be looked for.
+     Without a KEYWORDSPEC, the option means to not use default
+     keywords.
+
+‘-l LOCALE’
+‘--locale=LOCALE’
+     Specify the locale name, either a language specification of the
+     form LL or a combined language and country specification of the
+     form LL_CC.
+
+‘-d DIRECTORY’
+     Specify the base directory of ‘.msg’ message catalogs.
+
+   To generate a ‘.desktop’ file for a single locale, you can use it as
+follows.
+
+     msgfmt --desktop --template=TEMPLATE --locale=LOCALE \
+       -o FILE FILENAME.po …
+
+   On the other hand, when using msgfmt from a Makefile, it is
+cumbersome to loop over all locales under a particular directory.
+msgfmt provides a special operation mode for this use-case.  To generate
+a ‘.desktop’ file from multiple ‘.po’ files under a directory, specify
+the directory with the ‘-d’ option.
+
+     msgfmt --desktop --template=TEMPLATE -d DIRECTORY -o FILE
+
+   msgfmt first reads the ‘LINGUAS’ file under DIRECTORY, and then
+processes all ‘.po’ files listed there.  You can also limit the locales
+to a subset, through the ‘LINGUAS’ environment variable.
+
+   For either operation modes, the ‘-o’ and ‘--template’ options are
+mandatory.
+
+10.1.8 Input file syntax
 ------------------------
 
 ‘-P’
@@ -6883,7 +7130,7 @@ in the specified directory.
      Assume the input files are NeXTstep/GNUstep localized resource
      files in ‘.strings’ syntax, not in PO file syntax.
 
-10.1.8 Input file interpretation
+10.1.9 Input file interpretation
 --------------------------------
 
 ‘-c’
@@ -6945,8 +7192,8 @@ in the specified directory.
      usually wrong, because fuzzy messages are exactly those which have
      not been validated by a human translator.
 
-10.1.9 Output details
----------------------
+10.1.10 Output details
+----------------------
 
 ‘-a NUMBER’
 ‘--alignment=NUMBER’
@@ -6969,7 +7216,7 @@ in the specified directory.
      Don’t include a hash table in the binary file.  Lookup will be more
      expensive at run time (binary search instead of hash table lookup).
 
-10.1.10 Informative output
+10.1.11 Informative output
 --------------------------
 
 ‘-h’
@@ -7989,6 +8236,8 @@ Only one form:
 
      Asian family
           Japanese, Vietnamese, Korean
+     Tai-Kadai family
+          Thai
 
 Two forms, singular used for one only
      This is the form used in most existing programs since it is what
@@ -8011,6 +8260,8 @@ Two forms, singular used for one only
           Finnish, Estonian
      Semitic family
           Hebrew
+     Austronesian family
+          Bahasa Indonesian
      Artificial
           Esperanto
 
@@ -8134,6 +8385,18 @@ Four forms, special case for one and all numbers ending in 02, 03, or 04
      Slavic family
           Slovenian
 
+Six forms, special cases for one, two, all numbers ending in 02, 03, … 10, all numbers ending in 11 … 99, and others
+     The header entry would look like this:
+
+          Plural-Forms: nplurals=6; \
+              plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 \
+              : n%100>=11 ? 4 : 5;
+
+     Languages with this property include:
+
+     Afroasiatic family
+          Arabic
+
    You might now ask, ‘ngettext’ handles only numbers N of type
 ‘unsigned long’.  What about larger integer types?  What about negative
 numbers?  What about floating-point numbers?
@@ -8176,7 +8439,11 @@ is acceptable in English, and similarly for other languages.
    ---------- Footnotes ----------
 
    (1) Additions are welcome.  Send appropriate information to
-<bug-gnu-gettext@gnu.org> and <bug-glibc-manual@gnu.org>.
+<bug-gnu-gettext@gnu.org> and <bug-glibc-manual@gnu.org>.  The Unicode
+CLDR Project (<http://cldr.unicode.org>) provides a comprehensive set of
+plural forms in a different format.  The ‘msginit’ program has
+preliminary support for the format so you can use it as a baseline
+(*note msginit Invocation::).
 
 
 File: gettext.info,  Node: Optimized gettext,  Prev: Plural forms,  Up: gettext
@@ -9188,7 +9455,7 @@ ideally revise this chapter in subsequent releases, looking for changes.
 * gettextize Invocation::       Invoking the ‘gettextize’ Program
 * Adjusting Files::             Files You Must Create or Alter
 * autoconf macros::             Autoconf macros for use in ‘configure.ac’
-* CVS Issues::                  Integrating with CVS
+* Version Control Issues::      
 * Release Management::          Creating a Distribution Tarball
 
 
@@ -9477,11 +9744,11 @@ each.
 
    So, here comes a list of files, each one followed by a description of
 all alterations it needs.  Many examples are taken out from the GNU
-‘gettext’ 0.18.3 distribution itself, or from the GNU ‘hello’
-distribution (<http://www.franken.de/users/gnu/ke/hello> or
-<http://www.gnu.franken.de/ke/hello/>) You may indeed refer to the
-source code of the GNU ‘gettext’ and GNU ‘hello’ packages, as they are
-intended to be good examples for using GNU gettext functionality.
+‘gettext’ 0.19.5.1 distribution itself, or from the GNU ‘hello’
+distribution (<http://www.gnu.org/software/hello>).  You may indeed
+refer to the source code of the GNU ‘gettext’ and GNU ‘hello’ packages,
+as they are intended to be good examples for using GNU gettext
+functionality.
 
 * Menu:
 
@@ -9634,7 +9901,7 @@ File: gettext.info,  Node: configure.ac,  Next: config.guess,  Prev: po/Rules-*,
      This is done by a set of lines like these:
 
           PACKAGE=gettext
-          VERSION=0.18.3
+          VERSION=0.19.5.1
           AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE")
           AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
           AC_SUBST(PACKAGE)
@@ -9642,12 +9909,12 @@ File: gettext.info,  Node: configure.ac,  Next: config.guess,  Prev: po/Rules-*,
 
      or, if you are using GNU ‘automake’, by a line like this:
 
-          AM_INIT_AUTOMAKE(gettext, 0.18.3)
+          AM_INIT_AUTOMAKE(gettext, 0.19.5.1)
 
      Of course, you replace ‘gettext’ with the name of your package, and
-     ‘0.18.3’ by its version numbers, exactly as they should appear in
+     ‘0.19.5.1’ by its version numbers, exactly as they should appear in
      the packaged ‘tar’ file name of your distribution
-     (‘gettext-0.18.3.tar.gz’, here).
+     (‘gettext-0.19.5.1.tar.gz’, here).
 
   2. Check for internationalization support.
 
@@ -10078,7 +10345,7 @@ packages, it can go into the ‘src’ directory.
 package that needs it should contain a copy of it on its own.
 
 
-File: gettext.info,  Node: autoconf macros,  Next: CVS Issues,  Prev: Adjusting Files,  Up: Maintainers
+File: gettext.info,  Node: autoconf macros,  Next: Version Control Issues,  Prev: Adjusting Files,  Up: Maintainers
 
 13.5 Autoconf macros for use in ‘configure.ac’
 ==============================================
@@ -10185,7 +10452,7 @@ File: gettext.info,  Node: AM_GNU_GETTEXT_VERSION,  Next: AM_GNU_GETTEXT_NEED,  
 GNU gettext infrastructure that is used by the package.
 
    The use of this macro is optional; only the ‘autopoint’ program makes
-use of it (*note CVS Issues::).
+use of it (*note Version Control Issues::).
 
 
 File: gettext.info,  Node: AM_GNU_GETTEXT_NEED,  Next: AM_GNU_GETTEXT_INTL_SUBDIR,  Prev: AM_GNU_GETTEXT_VERSION,  Up: autoconf macros
@@ -10312,38 +10579,40 @@ option to ‘CPPFLAGS’ if necessary.  If not found, it sets ‘LIBICONV’ and
 ‘gettext.m4’ relies on it.
 
 
-File: gettext.info,  Node: CVS Issues,  Next: Release Management,  Prev: autoconf macros,  Up: Maintainers
+File: gettext.info,  Node: Version Control Issues,  Next: Release Management,  Prev: autoconf macros,  Up: Maintainers
 
-13.6 Integrating with CVS
-=========================
+13.6 Integrating with Version Control Systems
+=============================================
 
-   Many projects use CVS for distributed development, version control
+   Many projects use version control systems for distributed development
 and source backup.  This section gives some advice how to manage the
-uses of ‘cvs’, ‘gettextize’, ‘autopoint’ and ‘autoconf’.
+uses of ‘gettextize’, ‘autopoint’ and ‘autoconf’ on version controlled
+files.
 
 * Menu:
 
-* Distributed CVS::             Avoiding version mismatch in distributed development
-* Files under CVS::             Files to put under CVS version control
+* Distributed Development::     Avoiding version mismatch in distributed development
+* Files under Version Control::  Files to put under version control
+* Translations under Version Control::  Put PO Files under Version Control
 * autopoint Invocation::        Invoking the ‘autopoint’ Program
 
 
-File: gettext.info,  Node: Distributed CVS,  Next: Files under CVS,  Prev: CVS Issues,  Up: CVS Issues
+File: gettext.info,  Node: Distributed Development,  Next: Files under Version Control,  Prev: Version Control Issues,  Up: Version Control Issues
 
 13.6.1 Avoiding version mismatch in distributed development
 -----------------------------------------------------------
 
-   In a project development with multiple developers, using CVS, there
-should be a single developer who occasionally - when there is desire to
-upgrade to a new ‘gettext’ version - runs ‘gettextize’ and performs the
-changes listed in *note Adjusting Files::, and then commits his changes
-to the CVS.
+   In a project development with multiple developers, there should be a
+single developer who occasionally - when there is desire to upgrade to a
+new ‘gettext’ version - runs ‘gettextize’ and performs the changes
+listed in *note Adjusting Files::, and then commits his changes to the
+repository.
 
    It is highly recommended that all developers on a project use the
 same version of GNU ‘gettext’ in the package.  In other words, if a
 developer runs ‘gettextize’, he should go the whole way, make the
-necessary remaining changes and commit his changes to the CVS. Otherwise
-the following damages will likely occur:
+necessary remaining changes and commit his changes to the repository.
+Otherwise the following damages will likely occur:
 
    • Apparent version mismatch between developers.  Since some ‘gettext’
      specific portions in ‘configure.ac’, ‘configure.in’ and
@@ -10365,14 +10634,14 @@ the following damages will likely occur:
      platform specific bug goes undiscovered due to this constellation.
 
 
-File: gettext.info,  Node: Files under CVS,  Next: autopoint Invocation,  Prev: Distributed CVS,  Up: CVS Issues
+File: gettext.info,  Node: Files under Version Control,  Next: Translations under Version Control,  Prev: Distributed Development,  Up: Version Control Issues
 
-13.6.2 Files to put under CVS version control
----------------------------------------------
+13.6.2 Files to put under version control
+-----------------------------------------
 
    There are basically three ways to deal with generated files in the
-context of a CVS repository, such as ‘configure’ generated from
-‘configure.ac’, ‘PARSER.c’ generated from ‘PARSER.y’, or
+context of a version controlled repository, such as ‘configure’
+generated from ‘configure.ac’, ‘PARSER.c’ generated from ‘PARSER.y’, or
 ‘po/Makefile.in.in’ autoinstalled by ‘gettextize’ or ‘autopoint’.
 
   1. All generated files are always committed into the repository.
@@ -10385,40 +10654,41 @@ context of a CVS repository, such as ‘configure’ generated from
    Each of these three approaches has different advantages and
 drawbacks.
 
-  1. The advantage is that anyone can check out the CVS at any moment
+  1. The advantage is that anyone can check out the source at any moment
      and gets a working build.  The drawbacks are: 1a.  It requires some
-     frequent "cvs commit" actions by the maintainers.  1b.  The
-     repository grows in size quite fast.
+     frequent "push" actions by the maintainers.  1b.  The repository
+     grows in size quite fast.
 
-  2. The advantage is that anyone can check out the CVS, and the usual
-     "./configure; make" will work.  The drawbacks are: 2a.  The one who
-     checks out the repository needs tools like GNU ‘automake’, GNU
-     ‘autoconf’, GNU ‘m4’ installed in his PATH; sometimes he even needs
-     particular versions of them.  2b.  When a release is made and a
-     commit is made on the generated files, the other developers get
-     conflicts on the generated files after doing "cvs update".
-     Although these conflicts are easy to resolve, they are annoying.
+  2. The advantage is that anyone can check out the source, and the
+     usual "./configure; make" will work.  The drawbacks are: 2a.  The
+     one who checks out the repository needs tools like GNU ‘automake’,
+     GNU ‘autoconf’, GNU ‘m4’ installed in his PATH; sometimes he even
+     needs particular versions of them.  2b.  When a release is made and
+     a commit is made on the generated files, the other developers get
+     conflicts on the generated files when merging the local work back
+     to the repository.  Although these conflicts are easy to resolve,
+     they are annoying.
 
   3. The advantage is less work for the maintainers.  The drawback is
-     that anyone who checks out the CVS not only needs tools like GNU
+     that anyone who checks out the source not only needs tools like GNU
      ‘automake’, GNU ‘autoconf’, GNU ‘m4’ installed in his PATH, but
      also that he needs to perform a package specific pre-build step
      before being able to "./configure; make".
 
    For the first and second approach, all files modified or brought in
 by the occasional ‘gettextize’ invocation and update should be committed
-into the CVS.
+into the repository.
 
-   For the third approach, the maintainer can omit from the CVS
-repository all the files that ‘gettextize’ mentions as "copy".  Instead,
-he adds to the ‘configure.ac’ or ‘configure.in’ a line of the form
+   For the third approach, the maintainer can omit from the repository
+all the files that ‘gettextize’ mentions as "copy".  Instead, he adds to
+the ‘configure.ac’ or ‘configure.in’ a line of the form
 
-     AM_GNU_GETTEXT_VERSION(0.18.3)
+     AM_GNU_GETTEXT_VERSION(0.19.5.1)
 
 and adds to the package’s pre-build script an invocation of ‘autopoint’.
-For everyone who checks out the CVS, this ‘autopoint’ invocation will
+For everyone who checks out the source, this ‘autopoint’ invocation will
 copy into the right place the ‘gettext’ infrastructure files that have
-been omitted from the CVS.
+been omitted from the repository.
 
    The version number used as argument to ‘AM_GNU_GETTEXT_VERSION’ is
 the version of the ‘gettext’ infrastructure that the package wants to
@@ -10433,9 +10703,56 @@ CVS will henceforth need to have GNU ‘gettext’ 0.12.1 or newer
 installed.
 
 
-File: gettext.info,  Node: autopoint Invocation,  Prev: Files under CVS,  Up: CVS Issues
+File: gettext.info,  Node: Translations under Version Control,  Next: autopoint Invocation,  Prev: Files under Version Control,  Up: Version Control Issues
 
-13.6.3 Invoking the ‘autopoint’ Program
+13.6.3 Put PO Files under Version Control
+-----------------------------------------
+
+   Since translations are valuable assets as well as the source code, it
+would make sense to put them under version control.  The GNU gettext
+infrastructure supports two ways to deal with translations in the
+context of a version controlled repository.
+
+  1. Both POT file and PO files are committed into the repository.
+
+  2. Only PO files are committed into the repository.
+
+   If a POT file is absent when building, it will be generated by
+scanning the source files with ‘xgettext’, and then the PO files are
+regenerated as a dependency.  On the other hand, some maintainers want
+to keep the POT file unchanged during the development phase.  So, even
+if a POT file is present and older than the source code, it won’t be
+updated automatically.  You can manually update it with ‘make
+$(DOMAIN).pot-update’, and commit it at certain point.
+
+   Special advices for particular version control systems:
+
+   • Recent version control systems, Git for instance, ignore file’s
+     timestamp.  In that case, PO files can be accidentally updated even
+     if a POT file is not updated.  To prevent this, you can set
+     ‘PO_DEPENDS_ON_POT’ variable to ‘no’ in the ‘Makevars’ file and do
+     ‘make update-po’ manually.
+
+   • Location comments such as ‘#: lib/error.c:116’ are sometimes
+     annoying, since these comments are volatile and may introduce
+     unwanted change to the working copy when building.  To mitigate
+     this, you can decide to omit those comments from the PO files in
+     the repository.
+
+     This is possible with the ‘--no-location’ option of the ‘msgmerge’
+     command (1).  The drawback is that, if the location information is
+     needed, translators have to recover the location comments by
+     running ‘msgmerge’ again.
+
+   ---------- Footnotes ----------
+
+   (1) you can also use it through the ‘MSGMERGE_OPTIONS’ option from
+‘Makevars’
+
+
+File: gettext.info,  Node: autopoint Invocation,  Prev: Translations under Version Control,  Up: Version Control Issues
+
+13.6.4 Invoking the ‘autopoint’ Program
 ---------------------------------------
 
      autopoint [OPTION]...
@@ -10447,7 +10764,7 @@ or ‘configure.ac’ file, the gettext version used by the package, and
 copies the infrastructure files belonging to this version into the
 package.
 
-13.6.3.1 Options
+13.6.4.1 Options
 ................
 
 ‘-f’
@@ -10460,7 +10777,7 @@ package.
      actions that ‘autopoint’ would normally execute are inhibited and
      instead only listed on standard output.
 
-13.6.3.2 Informative output
+13.6.4.2 Informative output
 ...........................
 
 ‘--help’
@@ -10470,8 +10787,8 @@ package.
      Output version information and exit.
 
    ‘autopoint’ supports the GNU ‘gettext’ versions from 0.10.35 to the
-current one, 0.18.3.  In order to apply ‘autopoint’ to a package using a
-‘gettext’ version newer than 0.18.3, you need to install this same
+current one, 0.19.5.1.  In order to apply ‘autopoint’ to a package using
+a ‘gettext’ version newer than 0.19.5.1, you need to install this same
 version of GNU ‘gettext’ at least.
 
    In packages using GNU ‘automake’, an invocation of ‘autopoint’ should
@@ -10487,7 +10804,7 @@ tool copies or updates mostly files in the ‘po’, ‘intl’, ‘m4’
 directories.
 
 
-File: gettext.info,  Node: Release Management,  Prev: CVS Issues,  Up: Maintainers
+File: gettext.info,  Node: Release Management,  Prev: Version Control Issues,  Up: Maintainers
 
 13.7 Creating a Distribution Tarball
 ====================================
@@ -10510,7 +10827,7 @@ File: gettext.info,  Node: Installers,  Next: Programming Languages,  Prev: Main
 *****************************************
 
    By default, packages fully using GNU ‘gettext’, internally, are
-installed in such a way that they to allow translation of messages.  At
+installed in such a way as to allow translation of messages.  At
 _configuration_ time, those packages should automatically detect whether
 the underlying host system already provides the GNU ‘gettext’ functions.
 If not, the GNU ‘gettext’ library should be automatically prepared and
@@ -10688,6 +11005,7 @@ strings.
 * qt-format::                   Qt Format Strings
 * qt-plural-format::            Qt Plural Format Strings
 * kde-format::                  KDE Format Strings
+* kde-kuit-format::             KUIT Format Strings
 * boost-format::                Boost Format Strings
 * lua-format::                  Lua Format Strings
 * javascript-format::           JavaScript Format Strings
@@ -10771,9 +11089,9 @@ the Python built-in format operator ‘%’, labelled as ‘python-format’,
 and those acceptable to the ‘format’ method of the ‘str’ object.
 
    Python ‘%’ format strings are described in Python Library reference /
-2. Built-in Types, Exceptions and Functions / 2.2. Built-in Types / 2.2.6. Sequence Types
-/ 2.2.6.2. String Formatting Operations.
-<http://www.python.org/doc/2.2.1/lib/typesseq-strings.html>.
+5. Built-in Types / 5.6. Sequence Types /
+5.6.2. String Formatting Operations.
+<http://docs.python.org/2/library/stdtypes.html#string-formatting-operations>.
 
    Python brace format strings are described in
 PEP 3101 – Advanced String Formatting,
@@ -10981,7 +11299,7 @@ QObject::tr method <file:/usr/lib/qt-4.3.0/doc/html/qobject.html>.  In
 summary, the only allowed directive is ‘%n’.
 
 
-File: gettext.info,  Node: kde-format,  Next: boost-format,  Prev: qt-plural-format,  Up: Translators for other Languages
+File: gettext.info,  Node: kde-format,  Next: kde-kuit-format,  Prev: qt-plural-format,  Up: Translators for other Languages
 
 15.3.22 KDE Format Strings
 --------------------------
@@ -10992,9 +11310,24 @@ format strings, all of ‘%1’, ..., ‘%(n-1)’ must occur as well, except
 possibly one of them.
 
 
-File: gettext.info,  Node: boost-format,  Next: lua-format,  Prev: kde-format,  Up: Translators for other Languages
+File: gettext.info,  Node: kde-kuit-format,  Next: boost-format,  Prev: kde-format,  Up: Translators for other Languages
 
-15.3.23 Boost Format Strings
+15.3.23 KUIT Format Strings
+---------------------------
+
+   KUIT (KDE User Interface Text) is compatible with KDE 4 format
+strings, while it also allows programmers to add semantic information to
+a format string, through XML markup tags.  For example, if the first
+format directive in a string is a filename, programmers could indicate
+that with a ‘filename’ tag, like ‘<filename>%1</filename>’.
+
+   KUIT format strings are described in
+<http://api.kde.org/frameworks-api/frameworks5-apidocs/ki18n/html/prg_guide.html#kuit_markup>.
+
+
+File: gettext.info,  Node: boost-format,  Next: lua-format,  Prev: kde-kuit-format,  Up: Translators for other Languages
+
+15.3.24 Boost Format Strings
 ----------------------------
 
    Boost format strings are described in the documentation of the
@@ -11008,7 +11341,7 @@ such as ‘%1%’.
 
 File: gettext.info,  Node: lua-format,  Next: javascript-format,  Prev: boost-format,  Up: Translators for other Languages
 
-15.3.24 Lua Format Strings
+15.3.25 Lua Format Strings
 --------------------------
 
    Lua format strings are described in the Lua reference manual, section
@@ -11018,7 +11351,7 @@ String Manipulation,
 
 File: gettext.info,  Node: javascript-format,  Prev: lua-format,  Up: Translators for other Languages
 
-15.3.25 JavaScript Format Strings
+15.3.26 JavaScript Format Strings
 ---------------------------------
 
    Although JavaScript specification itself does not define any format
@@ -11086,6 +11419,7 @@ File: gettext.info,  Node: List of Programming Languages,  Next: List of Data Fo
 * GCC-source::                  GNU Compiler Collection sources
 * Lua::                         Lua
 * JavaScript::                  JavaScript
+* Vala::                        Vala
 
 
 File: gettext.info,  Node: C,  Next: sh,  Prev: List of Programming Languages,  Up: List of Programming Languages
@@ -11837,7 +12171,7 @@ String syntax
      ‘"abc"’
 
 gettext shorthand
-     ‘(_ "abc")’
+     ‘(_ "abc")’, ‘_"abc"’ (GIMP script-fu extension)
 
 gettext/ngettext functions
      ‘gettext’, ‘ngettext’
@@ -12332,7 +12666,8 @@ RPMs
      gawk 3.1 or newer
 
 File extension
-     ‘awk’
+     ‘awk’, ‘gawk’, ‘twjr’.  The file extension ‘twjr’ is used by
+     TexiWeb Jr (<https://github.com/arnoldrobbins/texiwebjr>).
 
 String syntax
      ‘"abc"’
@@ -12705,7 +13040,7 @@ probably being its imperfectness.
 * Perl Pitfalls::               Bugs, Pitfalls, and Things That Do Not Work
 
 
-File: gettext.info,  Node: General Problems,  Next: Default Keywords,  Up: Perl
+File: gettext.info,  Node: General Problems,  Next: Default Keywords,  Prev: Perl,  Up: Perl
 
 15.5.18.1 General Problems Parsing Perl Code
 ............................................
@@ -13536,7 +13871,7 @@ po-mode marking
      —
 
 
-File: gettext.info,  Node: JavaScript,  Prev: Lua,  Up: List of Programming Languages
+File: gettext.info,  Node: JavaScript,  Next: Vala,  Prev: Lua,  Up: List of Programming Languages
 
 15.5.23 JavaScript
 ------------------
@@ -13587,6 +13922,58 @@ po-mode marking
      —
 
 
+File: gettext.info,  Node: Vala,  Prev: JavaScript,  Up: List of Programming Languages
+
+15.5.24 Vala
+------------
+
+RPMs
+     vala
+
+File extension
+     ‘vala’
+
+String syntax
+
+        • ‘"abc"’
+
+        • ‘"""abc"""’
+
+gettext shorthand
+     ‘_("abc")’
+
+gettext/ngettext functions
+     ‘gettext’, ‘dgettext’, ‘dcgettext’, ‘ngettext’, ‘dngettext’,
+     ‘dpgettext’, ‘dpgettext2’
+
+textdomain
+     ‘textdomain’ function, defined under the ‘Intl’ namespace
+
+bindtextdomain
+     ‘bindtextdomain’ function, defined under the ‘Intl’ namespace
+
+setlocale
+     Programmer must call ‘Intl.setlocale (LocaleCategory.ALL, "")’
+
+Prerequisite
+     —
+
+Use or emulate GNU gettext
+     Use
+
+Extractor
+     ‘xgettext’
+
+Formatting with positions
+     Same as for the C language.
+
+Portability
+     autoconf (gettext.m4) and #if ENABLE_NLS
+
+po-mode marking
+     yes
+
+
 File: gettext.info,  Node: List of Data Formats,  Prev: List of Programming Languages,  Up: Programming Languages
 
 15.6 Internationalizable Data
@@ -13600,6 +13987,7 @@ using GNU gettext.
 * POT::                         POT - Portable Object Template
 * RST::                         Resource String Table
 * Glade::                       Glade - GNOME user interface description
+* GSettings::                   GSettings - GNOME user configuration schema
 
 
 File: gettext.info,  Node: POT,  Next: RST,  Prev: List of Data Formats,  Up: List of Data Formats
@@ -13632,7 +14020,7 @@ Extractor
      ‘xgettext’, ‘rstconv’
 
 
-File: gettext.info,  Node: Glade,  Prev: RST,  Up: List of Data Formats
+File: gettext.info,  Node: Glade,  Next: GSettings,  Prev: RST,  Up: List of Data Formats
 
 15.6.3 Glade - GNOME user interface description
 -----------------------------------------------
@@ -13646,6 +14034,21 @@ File extension
 Extractor
      ‘xgettext’, ‘libglade-xgettext’, ‘xml-i18n-extract’,
      ‘intltool-extract’
+
+
+File: gettext.info,  Node: GSettings,  Prev: Glade,  Up: List of Data Formats
+
+15.6.4 GSettings - GNOME user configuration schema
+--------------------------------------------------
+
+RPMs
+     glib2
+
+File extension
+     ‘gschema.xml’
+
+Extractor
+     ‘xgettext’, ‘intltool-extract’
 
 
 File: gettext.info,  Node: Conclusion,  Next: Language Codes,  Prev: Programming Languages,  Up: Top
@@ -14331,8 +14734,6 @@ Translation Project should come from this standard.
      Albania.
 ‘AM’
      Armenia.
-‘AN’
-     Netherlands Antilles.
 ‘AO’
      Angola.
 ‘AQ’
@@ -14340,7 +14741,7 @@ Translation Project should come from this standard.
 ‘AR’
      Argentina.
 ‘AS’
-     Samoa (American).
+     American Samoa.
 ‘AT’
      Austria.
 ‘AU’
@@ -14369,12 +14770,16 @@ Translation Project should come from this standard.
      Burundi.
 ‘BJ’
      Benin.
+‘BL’
+     Saint Barthelemy.
 ‘BM’
      Bermuda.
 ‘BN’
-     Brunei.
+     Brunei Darussalam.
 ‘BO’
-     Bolivia.
+     Bolivia, Plurinational State of.
+‘BQ’
+     Bonaire, Sint Eustatius and Saba.
 ‘BR’
      Brazil.
 ‘BS’
@@ -14394,11 +14799,11 @@ Translation Project should come from this standard.
 ‘CC’
      Cocos (Keeling) Islands.
 ‘CD’
-     Congo (Dem.  Rep.).
+     Congo, The Democratic Republic of the.
 ‘CF’
      Central African Republic.
 ‘CG’
-     Congo (Rep.).
+     Congo.
 ‘CH’
      Switzerland.
 ‘CI’
@@ -14419,6 +14824,8 @@ Translation Project should come from this standard.
      Cuba.
 ‘CV’
      Cape Verde.
+‘CW’
+     Curaçao.
 ‘CX’
      Christmas Island.
 ‘CY’
@@ -14456,17 +14863,17 @@ Translation Project should come from this standard.
 ‘FJ’
      Fiji.
 ‘FK’
-     Falkland Islands.
+     Falkland Islands (Malvinas).
 ‘FM’
-     Micronesia.
+     Micronesia, Federated States of.
 ‘FO’
-     Faeroe Islands.
+     Faroe Islands.
 ‘FR’
      France.
 ‘GA’
      Gabon.
 ‘GB’
-     Britain (United Kingdom).
+     United Kingdom.
 ‘GD’
      Grenada.
 ‘GE’
@@ -14528,7 +14935,7 @@ Translation Project should come from this standard.
 ‘IQ’
      Iraq.
 ‘IR’
-     Iran.
+     Iran, Islamic Republic of.
 ‘IS’
      Iceland.
 ‘IT’
@@ -14552,11 +14959,11 @@ Translation Project should come from this standard.
 ‘KM’
      Comoros.
 ‘KN’
-     St Kitts and Nevis.
+     Saint Kitts and Nevis.
 ‘KP’
-     Korea (North).
+     Korea, Democratic People’s Republic of.
 ‘KR’
-     Korea (South).
+     Korea, Republic of.
 ‘KW’
      Kuwait.
 ‘KY’
@@ -14564,11 +14971,11 @@ Translation Project should come from this standard.
 ‘KZ’
      Kazakhstan.
 ‘LA’
-     Laos.
+     Lao People’s Democratic Republic.
 ‘LB’
      Lebanon.
 ‘LC’
-     St Lucia.
+     Saint Lucia.
 ‘LI’
      Liechtenstein.
 ‘LK’
@@ -14590,19 +14997,21 @@ Translation Project should come from this standard.
 ‘MC’
      Monaco.
 ‘MD’
-     Moldova.
+     Moldova, Republic of.
 ‘ME’
      Montenegro.
+‘MF’
+     Saint Martin (French part).
 ‘MG’
      Madagascar.
 ‘MH’
      Marshall Islands.
 ‘MK’
-     Macedonia.
+     Macedonia, The Former Yugoslav Republic of.
 ‘ML’
      Mali.
 ‘MM’
-     Myanmar (Burma).
+     Myanmar.
 ‘MN’
      Mongolia.
 ‘MO’
@@ -14670,13 +15079,13 @@ Translation Project should come from this standard.
 ‘PL’
      Poland.
 ‘PM’
-     St Pierre and Miquelon.
+     Saint Pierre and Miquelon.
 ‘PN’
      Pitcairn.
 ‘PR’
      Puerto Rico.
 ‘PS’
-     Palestine.
+     Palestine, State of.
 ‘PT’
      Portugal.
 ‘PW’
@@ -14692,7 +15101,7 @@ Translation Project should come from this standard.
 ‘RS’
      Serbia.
 ‘RU’
-     Russia.
+     Russian Federation.
 ‘RW’
      Rwanda.
 ‘SA’
@@ -14708,7 +15117,7 @@ Translation Project should come from this standard.
 ‘SG’
      Singapore.
 ‘SH’
-     St Helena.
+     Saint Helena, Ascension and Tristan da Cunha.
 ‘SI’
      Slovenia.
 ‘SJ’
@@ -14725,12 +15134,16 @@ Translation Project should come from this standard.
      Somalia.
 ‘SR’
      Suriname.
+‘SS’
+     South Sudan.
 ‘ST’
      Sao Tome and Principe.
 ‘SV’
      El Salvador.
+‘SX’
+     Sint Maarten (Dutch part).
 ‘SY’
-     Syria.
+     Syrian Arab Republic.
 ‘SZ’
      Swaziland.
 ‘TC’
@@ -14738,7 +15151,7 @@ Translation Project should come from this standard.
 ‘TD’
      Chad.
 ‘TF’
-     French Southern and Antarctic Lands.
+     French Southern Territories.
 ‘TG’
      Togo.
 ‘TH’
@@ -14762,15 +15175,15 @@ Translation Project should come from this standard.
 ‘TV’
      Tuvalu.
 ‘TW’
-     Taiwan.
+     Taiwan, Province of China.
 ‘TZ’
-     Tanzania.
+     Tanzania, United Republic of.
 ‘UA’
      Ukraine.
 ‘UG’
      Uganda.
 ‘UM’
-     US minor outlying islands.
+     United States Minor Outlying Islands.
 ‘US’
      United States.
 ‘UY’
@@ -14778,23 +15191,23 @@ Translation Project should come from this standard.
 ‘UZ’
      Uzbekistan.
 ‘VA’
-     Vatican City.
+     Holy See (Vatican City State).
 ‘VC’
-     St Vincent and the Grenadines.
+     Saint Vincent and the Grenadines.
 ‘VE’
-     Venezuela.
+     Venezuela, Bolivarian Republic of.
 ‘VG’
-     Virgin Islands (UK).
+     Virgin Islands, British.
 ‘VI’
-     Virgin Islands (US).
+     Virgin Islands, U.S..
 ‘VN’
-     Vietnam.
+     Viet Nam.
 ‘VU’
      Vanuatu.
 ‘WF’
      Wallis and Futuna.
 ‘WS’
-     Samoa (Western).
+     Samoa.
 ‘YE’
      Yemen.
 ‘YT’
@@ -14846,7 +15259,7 @@ each particular file or directory.  Here is a summary:
 * GNU FDL::                     GNU Free Documentation License
 
 
-File: gettext.info,  Node: GNU GPL,  Next: GNU LGPL,  Up: Licenses
+File: gettext.info,  Node: GNU GPL,  Next: GNU LGPL,  Prev: Licenses,  Up: Licenses
 
 C.1 GNU GENERAL PUBLIC LICENSE
 ==============================
@@ -14860,7 +15273,7 @@ C.1 GNU GENERAL PUBLIC LICENSE
      of this license document, but changing it is not allowed.
 
 Preamble
---------
+========
 
    The licenses for most software are designed to take away your freedom
 to share and change it.  By contrast, the GNU General Public License is
@@ -14868,8 +15281,8 @@ intended to guarantee your freedom to share and change free software—to
 make sure the software is free for all its users.  This General Public
 License applies to most of the Free Software Foundation’s software and
 to any other program whose authors commit to using it.  (Some other Free
-Software Foundation software is covered by the GNU Library General
-Public License instead.)  You can apply it to your programs, too.
+Software Foundation software is covered by the GNU Lesser General Public
+License instead.)  You can apply it to your programs, too.
 
    When we speak of free software, we are referring to freedom, not
 price.  Our General Public Licenses are designed to make sure that you
@@ -14909,7 +15322,8 @@ patent must be licensed for everyone’s free use or not licensed at all.
    The precise terms and conditions for copying, distribution and
 modification follow.
 
-    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+===============================================================
 
   0. This License applies to any program or other work which contains a
      notice placed by the copyright holder saying it may be distributed
@@ -15143,7 +15557,7 @@ modification follow.
                       END OF TERMS AND CONDITIONS
 
 Appendix: How to Apply These Terms to Your New Programs
--------------------------------------------------------
+=======================================================
 
    If you develop a new program, and you want it to be of the greatest
 possible use to the public, the best way to achieve this is to make it
@@ -15178,7 +15592,7 @@ mail.
    If the program is interactive, make it output a short notice like
 this when it starts in an interactive mode:
 
-     Gnomovision version 69, Copyright (C) 19YY NAME OF AUTHOR
+     Gnomovision version 69, Copyright (C) YEAR NAME OF AUTHOR
      Gnomovision comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
      This is free software, and you are welcome to redistribute it
      under certain conditions; type `show c' for details.
@@ -15203,7 +15617,7 @@ if necessary.  Here is a sample; alter the names:
 program into proprietary programs.  If your program is a subroutine
 library, you may consider it more useful to permit linking proprietary
 applications with the library.  If this is what you want to do, use the
-GNU Library General Public License instead of this License.
+GNU Lesser General Public License instead of this License.
 
 
 File: gettext.info,  Node: GNU LGPL,  Next: GNU FDL,  Prev: GNU GPL,  Up: Licenses
@@ -15214,7 +15628,7 @@ C.2 GNU LESSER GENERAL PUBLIC LICENSE
                       Version 2.1, February 1999
 
      Copyright © 1991, 1999 Free Software Foundation, Inc.
-     51 Franklin St – Fifth Floor, Boston, MA 02110-1301, USA
+     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 
      Everyone is permitted to copy and distribute verbatim copies
      of this license document, but changing it is not allowed.
@@ -15325,9 +15739,8 @@ modification follow.  Pay close attention to the difference between a
 former contains code derived from the library, whereas the latter must
 be combined with the library in order to run.
 
-                   GNU LESSER GENERAL PUBLIC LICENSE
-
-    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+---------------------------------------------------------------
 
   0. This License Agreement applies to any software library or other
      program which contains a notice placed by the copyright holder or
@@ -15680,7 +16093,8 @@ be combined with the library in order to run.
      OTHER SOFTWARE), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN
      ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
-                      END OF TERMS AND CONDITIONS
+END OF TERMS AND CONDITIONS
+---------------------------
 
 How to Apply These Terms to Your New Libraries
 ----------------------------------------------
@@ -15739,7 +16153,7 @@ C.3 GNU Free Documentation License
                       Version 1.2, November 2002
 
      Copyright © 2000,2001,2002 Free Software Foundation, Inc.
-     51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+     51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
 
      Everyone is permitted to copy and distribute verbatim copies
      of this license document, but changing it is not allowed.
@@ -16129,7 +16543,7 @@ C.3 GNU Free Documentation License
      Software Foundation.
 
 ADDENDUM: How to use this License for your documents
-----------------------------------------------------
+====================================================
 
    To use this License in a document you have written, include a copy of
 the License in the document and put the following copyright and license
@@ -16144,7 +16558,7 @@ notices just after the title page:
        Free Documentation License''.
 
    If you have Invariant Sections, Front-Cover Texts and Back-Cover
-Texts, replace the “with...Texts.” line with this:
+Texts, replace the “with…Texts.” line with this:
 
          with the Invariant Sections being LIST THEIR TITLES, with
          the Front-Cover Texts being LIST, and with the Back-Cover Texts
@@ -16168,30 +16582,38 @@ Program Index
  [index ]
 * Menu:
 
-* autopoint:                             autopoint Invocation. (line  6)
-* envsubst:                              envsubst Invocation.  (line  6)
-* gettext:                               sh.                   (line 19)
-* gettext <1>:                           gettext Invocation.   (line  6)
+* autopoint:                             autopoint Invocation.
+                                                              (line   6)
+* boldquot:                              msgfilter Invocation.
+                                                              (line 111)
+* envsubst:                              envsubst Invocation. (line   6)
+* gettext:                               sh.                  (line  19)
+* gettext <1>:                           gettext Invocation.  (line   6)
 * gettextize:                            gettextize Invocation.
-                                                               (line 34)
-* msgattrib:                             msgattrib Invocation. (line  6)
-* msgcat:                                msgcat Invocation.    (line  6)
-* msgcmp:                                msgcmp Invocation.    (line  6)
-* msgcomm:                               msgcomm Invocation.   (line  6)
-* msgconv:                               msgconv Invocation.   (line  6)
-* msgen:                                 msgen Invocation.     (line  6)
-* msgexec:                               msgexec Invocation.   (line  6)
-* msgfilter:                             msgfilter Invocation. (line  6)
-* msgfmt:                                msgfmt Invocation.    (line  6)
-* msggrep:                               msggrep Invocation.   (line  6)
-* msginit:                               msginit Invocation.   (line  6)
-* msgmerge:                              msgmerge Invocation.  (line  6)
-* msgunfmt:                              msgunfmt Invocation.  (line  6)
-* msguniq:                               msguniq Invocation.   (line  6)
-* ngettext:                              sh.                   (line 19)
-* ngettext <1>:                          ngettext Invocation.  (line  6)
-* recode-sr-latin:                       msgfilter Invocation. (line 89)
-* xgettext:                              xgettext Invocation.  (line  6)
+                                                              (line  34)
+* msgattrib:                             msgattrib Invocation.
+                                                              (line   6)
+* msgcat:                                msgcat Invocation.   (line   6)
+* msgcmp:                                msgcmp Invocation.   (line   6)
+* msgcomm:                               msgcomm Invocation.  (line   6)
+* msgconv:                               msgconv Invocation.  (line   6)
+* msgen:                                 msgen Invocation.    (line   6)
+* msgexec:                               msgexec Invocation.  (line   6)
+* msgfilter:                             msgfilter Invocation.
+                                                              (line   6)
+* msgfmt:                                msgfmt Invocation.   (line   6)
+* msggrep:                               msggrep Invocation.  (line   6)
+* msginit:                               msginit Invocation.  (line   6)
+* msgmerge:                              msgmerge Invocation. (line   6)
+* msgunfmt:                              msgunfmt Invocation. (line   6)
+* msguniq:                               msguniq Invocation.  (line   6)
+* ngettext:                              sh.                  (line  19)
+* ngettext <1>:                          ngettext Invocation. (line   6)
+* quot:                                  msgfilter Invocation.
+                                                              (line 107)
+* recode-sr-latin:                       msgfilter Invocation.
+                                                              (line 101)
+* xgettext:                              xgettext Invocation. (line   6)
 
 
 File: gettext.info,  Node: Option Index,  Next: Variable Index,  Prev: Program Index,  Up: Top
@@ -16204,27 +16626,28 @@ Option Index
 
 * --add-comments, ‘xgettext’ option:     xgettext Invocation. (line  94)
 * --add-location, ‘msgattrib’ option:    msgattrib Invocation.
-                                                              (line 135)
+                                                              (line 138)
 * --add-location, ‘msgcat’ option:       msgcat Invocation.   (line 114)
 * --add-location, ‘msgcomm’ option:      msgcomm Invocation.  (line 100)
-* --add-location, ‘msgconv’ option:      msgconv Invocation.  (line  79)
-* --add-location, ‘msgen’ option:        msgen Invocation.    (line  82)
+* --add-location, ‘msgconv’ option:      msgconv Invocation.  (line  80)
+* --add-location, ‘msgen’ option:        msgen Invocation.    (line  83)
 * --add-location, ‘msgfilter’ option:    msgfilter Invocation.
-                                                              (line 139)
-* --add-location, ‘msggrep’ option:      msggrep Invocation.  (line 151)
-* --add-location, ‘msgmerge’ option:     msgmerge Invocation. (line 149)
+                                                              (line 161)
+* --add-location, ‘msggrep’ option:      msggrep Invocation.  (line 152)
+* --add-location, ‘msgmerge’ option:     msgmerge Invocation. (line 150)
 * --add-location, ‘msguniq’ option:      msguniq Invocation.  (line  97)
-* --add-location, ‘xgettext’ option:     xgettext Invocation. (line 304)
-* --alignment, ‘msgfmt’ option:          msgfmt Invocation.   (line 202)
+* --add-location, ‘xgettext’ option:     xgettext Invocation. (line 368)
+* --alignment, ‘msgfmt’ option:          msgfmt Invocation.   (line 250)
 * --backup, ‘msgmerge’ option:           msgmerge Invocation. (line  62)
-* --boost, ‘xgettext’ option:            xgettext Invocation. (line 262)
+* --boost, ‘xgettext’ option:            xgettext Invocation. (line 326)
 * --c++, ‘xgettext’ option:              xgettext Invocation. (line  63)
-* --check, ‘msgfmt’ option:              msgfmt Invocation.   (line 140)
-* --check-accelerators, ‘msgfmt’ option: msgfmt Invocation.   (line 181)
-* --check-compatibility, ‘msgfmt’ option: msgfmt Invocation.  (line 177)
-* --check-domain, ‘msgfmt’ option:       msgfmt Invocation.   (line 172)
-* --check-format, ‘msgfmt’ option:       msgfmt Invocation.   (line 144)
-* --check-header, ‘msgfmt’ option:       msgfmt Invocation.   (line 167)
+* --check, ‘msgfmt’ option:              msgfmt Invocation.   (line 188)
+* --check, ‘xgettext’ option:            xgettext Invocation. (line 116)
+* --check-accelerators, ‘msgfmt’ option: msgfmt Invocation.   (line 229)
+* --check-compatibility, ‘msgfmt’ option: msgfmt Invocation.  (line 225)
+* --check-domain, ‘msgfmt’ option:       msgfmt Invocation.   (line 220)
+* --check-format, ‘msgfmt’ option:       msgfmt Invocation.   (line 192)
+* --check-header, ‘msgfmt’ option:       msgfmt Invocation.   (line 215)
 * --clear-fuzzy, ‘msgattrib’ option:     msgattrib Invocation.
                                                               (line  68)
 * --clear-obsolete, ‘msgattrib’ option:  msgattrib Invocation.
@@ -16232,29 +16655,30 @@ Option Index
 * --clear-previous, ‘msgattrib’ option:  msgattrib Invocation.
                                                               (line  81)
 * --color, ‘msgattrib’ option:           msgattrib Invocation.
-                                                              (line 116)
+                                                              (line 119)
 * --color, ‘msgcat’ option:              msgcat Invocation.   (line  95)
 * --color, ‘msgcat’ option <1>:          The --color option.  (line   6)
 * --color, ‘msgcomm’ option:             msgcomm Invocation.  (line  81)
 * --color, ‘msgconv’ option:             msgconv Invocation.  (line  61)
 * --color, ‘msgen’ option:               msgen Invocation.    (line  64)
 * --color, ‘msgfilter’ option:           msgfilter Invocation.
-                                                              (line 117)
+                                                              (line 138)
 * --color, ‘msggrep’ option:             msggrep Invocation.  (line 134)
-* --color, ‘msginit’ option:             msginit Invocation.  (line  60)
+* --color, ‘msginit’ option:             msginit Invocation.  (line  93)
 * --color, ‘msgmerge’ option:            msgmerge Invocation. (line 131)
 * --color, ‘msgunfmt’ option:            msgunfmt Invocation. (line 103)
 * --color, ‘msguniq’ option:             msguniq Invocation.  (line  78)
-* --color, ‘xgettext’ option:            xgettext Invocation. (line 283)
+* --color, ‘xgettext’ option:            xgettext Invocation. (line 347)
 * --comment, ‘msggrep’ option:           msggrep Invocation.  (line  86)
 * --compendium, ‘msgmerge’ option:       msgmerge Invocation. (line  36)
-* --copyright-holder, ‘xgettext’ option: xgettext Invocation. (line 354)
+* --copyright-holder, ‘xgettext’ option: xgettext Invocation. (line 424)
 * --csharp, ‘msgfmt’ option:             msgfmt Invocation.   (line  36)
 * --csharp, ‘msgunfmt’ option:           msgunfmt Invocation. (line  19)
 * --csharp-resources, ‘msgfmt’ option:   msgfmt Invocation.   (line  40)
 * --csharp-resources, ‘msgunfmt’ option: msgunfmt Invocation. (line  23)
-* --debug, ‘xgettext’ option:            xgettext Invocation. (line 266)
+* --debug, ‘xgettext’ option:            xgettext Invocation. (line 330)
 * --default-domain, ‘xgettext’ option:   xgettext Invocation. (line  35)
+* --desktop, ‘msgfmt’ option:            msgfmt Invocation.   (line  49)
 * --directory, ‘msgattrib’ option:       msgattrib Invocation.
                                                               (line  19)
 * --directory, ‘msgcat’ option:          msgcat Invocation.   (line  31)
@@ -16262,9 +16686,9 @@ Option Index
 * --directory, ‘msgcomm’ option:         msgcomm Invocation.  (line  30)
 * --directory, ‘msgconv’ option:         msgconv Invocation.  (line  19)
 * --directory, ‘msgen’ option:           msgen Invocation.    (line  25)
-* --directory, ‘msgexec’ option:         msgexec Invocation.  (line  44)
+* --directory, ‘msgexec’ option:         msgexec Invocation.  (line  54)
 * --directory, ‘msgfilter’ option:       msgfilter Invocation.
-                                                              (line  27)
+                                                              (line  34)
 * --directory, ‘msgfmt’ option:          msgfmt Invocation.   (line  18)
 * --directory, ‘msggrep’ option:         msggrep Invocation.  (line  19)
 * --directory, ‘msgmerge’ option:        msgmerge Invocation. (line  30)
@@ -16277,42 +16701,44 @@ Option Index
                                                               (line  24)
 * --dry-run, ‘gettextize’ option:        gettextize Invocation.
                                                               (line  72)
-* --endianness, ‘msgfmt’ option:         msgfmt Invocation.   (line 205)
+* --empty, ‘msgattrib’ option:           msgattrib Invocation.
+                                                              (line  84)
+* --endianness, ‘msgfmt’ option:         msgfmt Invocation.   (line 253)
 * --exclude-file, ‘xgettext’ option:     xgettext Invocation. (line  89)
 * --expression, ‘msgfilter’ option:      msgfilter Invocation.
-                                                              (line  75)
+                                                              (line  87)
 * --extended-regexp, ‘msggrep’ option:   msggrep Invocation.  (line  94)
-* --extract-all, ‘xgettext’ option:      xgettext Invocation. (line 103)
+* --extract-all, ‘xgettext’ option:      xgettext Invocation. (line 162)
 * --extracted-comment, ‘msggrep’ option: msggrep Invocation.  (line  90)
 * --file, ‘msgfilter’ option:            msgfilter Invocation.
-                                                              (line  79)
+                                                              (line  91)
 * --file, ‘msggrep’ option:              msggrep Invocation.  (line 106)
 * --files-from, ‘msgcat’ option:         msgcat Invocation.   (line  26)
 * --files-from, ‘msgcomm’ option:        msgcomm Invocation.  (line  25)
 * --files-from, ‘xgettext’ option:       xgettext Invocation. (line  19)
 * --fixed-strings, ‘msggrep’ option:     msggrep Invocation.  (line  98)
-* --flag, ‘xgettext’ option:             xgettext Invocation. (line 209)
+* --flag, ‘xgettext’ option:             xgettext Invocation. (line 273)
 * --force, ‘autopoint’ option:           autopoint Invocation.
                                                               (line  20)
 * --force, ‘gettextize’ option:          gettextize Invocation.
                                                               (line  40)
 * --force-po, ‘msgattrib’ option:        msgattrib Invocation.
-                                                              (line 124)
+                                                              (line 127)
 * --force-po, ‘msgcat’ option:           msgcat Invocation.   (line 103)
 * --force-po, ‘msgcomm’ option:          msgcomm Invocation.  (line  89)
 * --force-po, ‘msgconv’ option:          msgconv Invocation.  (line  69)
 * --force-po, ‘msgen’ option:            msgen Invocation.    (line  72)
 * --force-po, ‘msgfilter’ option:        msgfilter Invocation.
-                                                              (line 125)
+                                                              (line 146)
 * --force-po, ‘msggrep’ option:          msggrep Invocation.  (line 142)
 * --force-po, ‘msgmerge’ option:         msgmerge Invocation. (line 139)
 * --force-po, ‘msgunfmt’ option:         msgunfmt Invocation. (line 111)
 * --force-po, ‘msguniq’ option:          msguniq Invocation.  (line  86)
-* --force-po, ‘xgettext’ option:         xgettext Invocation. (line 291)
-* --foreign-user, ‘xgettext’ option:     xgettext Invocation. (line 369)
+* --force-po, ‘xgettext’ option:         xgettext Invocation. (line 355)
+* --foreign-user, ‘xgettext’ option:     xgettext Invocation. (line 439)
 * --from-code, ‘xgettext’ option:        xgettext Invocation. (line  72)
 * --fuzzy, ‘msgattrib’ option:           msgattrib Invocation.
-                                                              (line  92)
+                                                              (line  95)
 * --help, ‘autopoint’ option:            autopoint Invocation.
                                                               (line  32)
 * --help, ‘envsubst’ option:             envsubst Invocation. (line  21)
@@ -16320,43 +16746,43 @@ Option Index
 * --help, ‘gettextize’ option:           gettextize Invocation.
                                                               (line  77)
 * --help, ‘msgattrib’ option:            msgattrib Invocation.
-                                                              (line 179)
-* --help, ‘msgcat’ option:               msgcat Invocation.   (line 158)
+                                                              (line 188)
+* --help, ‘msgcat’ option:               msgcat Invocation.   (line 164)
 * --help, ‘msgcmp’ option:               msgcmp Invocation.   (line  69)
-* --help, ‘msgcomm’ option:              msgcomm Invocation.  (line 147)
-* --help, ‘msgconv’ option:              msgconv Invocation.  (line 123)
-* --help, ‘msgen’ option:                msgen Invocation.    (line 126)
-* --help, ‘msgexec’ option:              msgexec Invocation.  (line  67)
+* --help, ‘msgcomm’ option:              msgcomm Invocation.  (line 153)
+* --help, ‘msgconv’ option:              msgconv Invocation.  (line 130)
+* --help, ‘msgen’ option:                msgen Invocation.    (line 133)
+* --help, ‘msgexec’ option:              msgexec Invocation.  (line  77)
 * --help, ‘msgfilter’ option:            msgfilter Invocation.
-                                                              (line 183)
-* --help, ‘msgfmt’ option:               msgfmt Invocation.   (line 226)
-* --help, ‘msggrep’ option:              msggrep Invocation.  (line 193)
-* --help, ‘msginit’ option:              msginit Invocation.  (line  95)
-* --help, ‘msgmerge’ option:             msgmerge Invocation. (line 193)
+                                                              (line 211)
+* --help, ‘msgfmt’ option:               msgfmt Invocation.   (line 274)
+* --help, ‘msggrep’ option:              msggrep Invocation.  (line 200)
+* --help, ‘msginit’ option:              msginit Invocation.  (line 128)
+* --help, ‘msgmerge’ option:             msgmerge Invocation. (line 200)
 * --help, ‘msgunfmt’ option:             msgunfmt Invocation. (line 155)
-* --help, ‘msguniq’ option:              msguniq Invocation.  (line 141)
+* --help, ‘msguniq’ option:              msguniq Invocation.  (line 147)
 * --help, ‘ngettext’ option:             ngettext Invocation. (line  31)
-* --help, ‘xgettext’ option:             xgettext Invocation. (line 416)
+* --help, ‘xgettext’ option:             xgettext Invocation. (line 486)
 * --ignore-case, ‘msggrep’ option:       msggrep Invocation.  (line 110)
 * --ignore-file, ‘msgattrib’ option:     msgattrib Invocation.
-                                                              (line  88)
+                                                              (line  91)
 * --indent, ‘msgattrib’ option:          msgattrib Invocation.
-                                                              (line 128)
+                                                              (line 131)
 * --indent, ‘msgcat’ option:             msgcat Invocation.   (line 107)
 * --indent, ‘msgcomm’ option:            msgcomm Invocation.  (line  93)
 * --indent, ‘msgconv’ option:            msgconv Invocation.  (line  73)
 * --indent, ‘msgen’ option:              msgen Invocation.    (line  76)
 * --indent, ‘msgfilter’ option:          msgfilter Invocation.
-                                                              (line 128)
+                                                              (line 149)
 * --indent, ‘msggrep’ option:            msggrep Invocation.  (line 145)
 * --indent, ‘msgmerge’ option:           msgmerge Invocation. (line 143)
 * --indent, ‘msgunfmt’ option:           msgunfmt Invocation. (line 115)
 * --indent, ‘msguniq’ option:            msguniq Invocation.  (line  90)
-* --indent, ‘xgettext’ option:           xgettext Invocation. (line 295)
-* --input, ‘msgexec’ option:             msgexec Invocation.  (line  40)
+* --indent, ‘xgettext’ option:           xgettext Invocation. (line 359)
+* --input, ‘msgexec’ option:             msgexec Invocation.  (line  50)
 * --input, ‘msgfilter’ option:           msgfilter Invocation.
-                                                              (line  23)
-* --input, ‘msginit’ option:             msginit Invocation.  (line  16)
+                                                              (line  30)
+* --input, ‘msginit’ option:             msginit Invocation.  (line  49)
 * --intl, ‘gettextize’ option:           gettextize Invocation.
                                                               (line  43)
 * --invert-match, ‘msggrep’ option:      msggrep Invocation.  (line 114)
@@ -16364,20 +16790,22 @@ Option Index
 * --java, ‘msgunfmt’ option:             msgunfmt Invocation. (line  16)
 * --java2, ‘msgfmt’ option:              msgfmt Invocation.   (line  33)
 * --join-existing, ‘xgettext’ option:    xgettext Invocation. (line  85)
-* --kde, ‘xgettext’ option:              xgettext Invocation. (line 258)
+* --kde, ‘xgettext’ option:              xgettext Invocation. (line 322)
 * --keep-header, ‘msgfilter’ option:     msgfilter Invocation.
-                                                              (line 131)
-* --keyword, ‘xgettext’ option:          xgettext Invocation. (line 111)
+                                                              (line 152)
+* --keyword, ‘msgfmt’ option:            msgfmt Invocation.   (line 137)
+* --keyword, ‘xgettext’ option:          xgettext Invocation. (line 171)
 * --lang, ‘msgcat’ option:               msgcat Invocation.   (line  89)
 * --lang, ‘msgen’ option:                msgen Invocation.    (line  57)
 * --lang, ‘msgmerge’ option:             msgmerge Invocation. (line 123)
 * --language, ‘xgettext’ option:         xgettext Invocation. (line  54)
 * --less-than, ‘msgcat’ option:          msgcat Invocation.   (line  52)
 * --less-than, ‘msgcomm’ option:         msgcomm Invocation.  (line  51)
-* --locale, ‘msgfmt’ option:             msgfmt Invocation.   (line  77)
-* --locale, ‘msgfmt’ option <1>:         msgfmt Invocation.   (line  97)
-* --locale, ‘msgfmt’ option <2>:         msgfmt Invocation.   (line 113)
-* --locale, ‘msginit’ option:            msginit Invocation.  (line  49)
+* --locale, ‘msgfmt’ option:             msgfmt Invocation.   (line  80)
+* --locale, ‘msgfmt’ option <1>:         msgfmt Invocation.   (line 103)
+* --locale, ‘msgfmt’ option <2>:         msgfmt Invocation.   (line 119)
+* --locale, ‘msgfmt’ option <3>:         msgfmt Invocation.   (line 143)
+* --locale, ‘msginit’ option:            msginit Invocation.  (line  82)
 * --locale, ‘msgunfmt’ option:           msgunfmt Invocation. (line  45)
 * --locale, ‘msgunfmt’ option <1>:       msgunfmt Invocation. (line  62)
 * --locale, ‘msgunfmt’ option <2>:       msgunfmt Invocation. (line  78)
@@ -16387,12 +16815,15 @@ Option Index
 * --msgctxt, ‘msggrep’ option:           msggrep Invocation.  (line  74)
 * --msgid, ‘msggrep’ option:             msggrep Invocation.  (line  78)
 * --msgid-bugs-address, ‘xgettext’ option: xgettext Invocation.
-                                                              (line 382)
+                                                              (line 452)
 * --msgstr, ‘msggrep’ option:            msggrep Invocation.  (line  82)
-* --msgstr-prefix, ‘xgettext’ option:    xgettext Invocation. (line 405)
-* --msgstr-suffix, ‘xgettext’ option:    xgettext Invocation. (line 409)
+* --msgstr-prefix, ‘xgettext’ option:    xgettext Invocation. (line 475)
+* --msgstr-suffix, ‘xgettext’ option:    xgettext Invocation. (line 479)
 * --multi-domain, ‘msgcmp’ option:       msgcmp Invocation.   (line  35)
 * --multi-domain, ‘msgmerge’ option:     msgmerge Invocation. (line  96)
+* --newline, ‘msgfilter’ option:         msgfilter Invocation.
+                                                              (line  59)
+* --newline, ‘msgfilter’ option <1>:     msgexec Invocation.  (line  19)
 * --no-changelog, ‘gettextize’ option:   gettextize Invocation.
                                                               (line  58)
 * --no-fuzzy, ‘msgattrib’ option:        msgattrib Invocation.
@@ -16400,42 +16831,42 @@ Option Index
 * --no-fuzzy-matching, ‘msgcmp’ option:  msgcmp Invocation.   (line  39)
 * --no-fuzzy-matching, ‘msgmerge’ option: msgmerge Invocation.
                                                               (line 100)
-* --no-hash, ‘msgfmt’ option:            msgfmt Invocation.   (line 218)
+* --no-hash, ‘msgfmt’ option:            msgfmt Invocation.   (line 266)
 * --no-location, ‘msgattrib’ option:     msgattrib Invocation.
-                                                              (line 131)
+                                                              (line 134)
 * --no-location, ‘msgcat’ option:        msgcat Invocation.   (line 110)
 * --no-location, ‘msgcomm’ option:       msgcomm Invocation.  (line  96)
 * --no-location, ‘msgconv’ option:       msgconv Invocation.  (line  76)
 * --no-location, ‘msgen’ option:         msgen Invocation.    (line  79)
 * --no-location, ‘msgfilter’ option:     msgfilter Invocation.
-                                                              (line 136)
+                                                              (line 157)
 * --no-location, ‘msggrep’ option:       msggrep Invocation.  (line 148)
 * --no-location, ‘msgmerge’ option:      msgmerge Invocation. (line 146)
 * --no-location, ‘msguniq’ option:       msguniq Invocation.  (line  93)
-* --no-location, ‘xgettext’ option:      xgettext Invocation. (line 298)
+* --no-location, ‘xgettext’ option:      xgettext Invocation. (line 362)
 * --no-obsolete, ‘msgattrib’ option:     msgattrib Invocation.
                                                               (line  51)
-* --no-translator, ‘msginit’ option:     msginit Invocation.  (line  55)
+* --no-translator, ‘msginit’ option:     msginit Invocation.  (line  88)
 * --no-wrap, ‘msgattrib’ option:         msgattrib Invocation.
-                                                              (line 160)
-* --no-wrap, ‘msgcat’ option:            msgcat Invocation.   (line 139)
-* --no-wrap, ‘msgcomm’ option:           msgcomm Invocation.  (line 125)
-* --no-wrap, ‘msgconv’ option:           msgconv Invocation.  (line 104)
-* --no-wrap, ‘msgen’ option:             msgen Invocation.    (line 107)
+                                                              (line 169)
+* --no-wrap, ‘msgcat’ option:            msgcat Invocation.   (line 145)
+* --no-wrap, ‘msgcomm’ option:           msgcomm Invocation.  (line 131)
+* --no-wrap, ‘msgconv’ option:           msgconv Invocation.  (line 111)
+* --no-wrap, ‘msgen’ option:             msgen Invocation.    (line 114)
 * --no-wrap, ‘msgfilter’ option:         msgfilter Invocation.
-                                                              (line 164)
-* --no-wrap, ‘msggrep’ option:           msggrep Invocation.  (line 176)
-* --no-wrap, ‘msginit’ option:           msginit Invocation.  (line  85)
-* --no-wrap, ‘msgmerge’ option:          msgmerge Invocation. (line 174)
+                                                              (line 192)
+* --no-wrap, ‘msggrep’ option:           msggrep Invocation.  (line 183)
+* --no-wrap, ‘msginit’ option:           msginit Invocation.  (line 118)
+* --no-wrap, ‘msgmerge’ option:          msgmerge Invocation. (line 181)
 * --no-wrap, ‘msgunfmt’ option:          msgunfmt Invocation. (line 140)
-* --no-wrap, ‘msguniq’ option:           msguniq Invocation.  (line 122)
-* --no-wrap, ‘xgettext’ option:          xgettext Invocation. (line 328)
+* --no-wrap, ‘msguniq’ option:           msguniq Invocation.  (line 128)
+* --no-wrap, ‘xgettext’ option:          xgettext Invocation. (line 398)
 * --obsolete, ‘msgattrib’ option:        msgattrib Invocation.
-                                                              (line  96)
-* --omit-header, ‘msgcomm’ option:       msgcomm Invocation.  (line 140)
-* --omit-header, ‘xgettext’ option:      xgettext Invocation. (line 343)
+                                                              (line  99)
+* --omit-header, ‘msgcomm’ option:       msgcomm Invocation.  (line 146)
+* --omit-header, ‘xgettext’ option:      xgettext Invocation. (line 413)
 * --only-file, ‘msgattrib’ option:       msgattrib Invocation.
-                                                              (line  84)
+                                                              (line  87)
 * --only-fuzzy, ‘msgattrib’ option:      msgattrib Invocation.
                                                               (line  48)
 * --only-obsolete, ‘msgattrib’ option:   msgattrib Invocation.
@@ -16449,169 +16880,172 @@ Option Index
 * --output-file, ‘msgconv’ option:       msgconv Invocation.  (line  30)
 * --output-file, ‘msgen’ option:         msgen Invocation.    (line  36)
 * --output-file, ‘msgfilter’ option:     msgfilter Invocation.
-                                                              (line  38)
-* --output-file, ‘msgfmt’ option:        msgfmt Invocation.   (line  53)
+                                                              (line  45)
+* --output-file, ‘msgfmt’ option:        msgfmt Invocation.   (line  56)
 * --output-file, ‘msggrep’ option:       msggrep Invocation.  (line  30)
-* --output-file, ‘msginit’ option:       msginit Invocation.  (line  26)
+* --output-file, ‘msginit’ option:       msginit Invocation.  (line  59)
 * --output-file, ‘msgmerge’ option:      msgmerge Invocation. (line  51)
 * --output-file, ‘msgunfmt’ option:      msgunfmt Invocation. (line  93)
 * --output-file, ‘msguniq’ option:       msguniq Invocation.  (line  37)
-* --package-name, ‘xgettext’ option:     xgettext Invocation. (line 375)
-* --package-version, ‘xgettext’ option:  xgettext Invocation. (line 378)
+* --package-name, ‘xgettext’ option:     xgettext Invocation. (line 445)
+* --package-version, ‘xgettext’ option:  xgettext Invocation. (line 448)
 * --po-dir, ‘gettextize’ option:         gettextize Invocation.
                                                               (line  51)
 * --previous, ‘msgattrib’ option:        msgattrib Invocation.
                                                               (line  77)
 * --previous, ‘msgmerge’ option:         msgmerge Invocation. (line 104)
 * --properties-input, ‘msgattrib’ option: msgattrib Invocation.
-                                                              (line 104)
+                                                              (line 107)
 * --properties-input, ‘msgcat’ option:   msgcat Invocation.   (line  70)
 * --properties-input, ‘msgcmp’ option:   msgcmp Invocation.   (line  57)
 * --properties-input, ‘msgcomm’ option:  msgcomm Invocation.  (line  69)
 * --properties-input, ‘msgconv’ option:  msgconv Invocation.  (line  49)
 * --properties-input, ‘msgen’ option:    msgen Invocation.    (line  46)
-* --properties-input, ‘msgexec’ option:  msgexec Invocation.  (line  55)
+* --properties-input, ‘msgexec’ option:  msgexec Invocation.  (line  65)
 * --properties-input, ‘msgfilter’ option: msgfilter Invocation.
-                                                              (line 105)
-* --properties-input, ‘msgfmt’ option:   msgfmt Invocation.   (line 128)
+                                                              (line 126)
+* --properties-input, ‘msgfmt’ option:   msgfmt Invocation.   (line 176)
 * --properties-input, ‘msggrep’ option:  msggrep Invocation.  (line 122)
-* --properties-input, ‘msginit’ option:  msginit Invocation.  (line  37)
+* --properties-input, ‘msginit’ option:  msginit Invocation.  (line  70)
 * --properties-input, ‘msgmerge’ option: msgmerge Invocation. (line 112)
 * --properties-input, ‘msguniq’ option:  msguniq Invocation.  (line  58)
 * --properties-output, ‘msgattrib’ option: msgattrib Invocation.
-                                                              (line 144)
-* --properties-output, ‘msgcat’ option:  msgcat Invocation.   (line 123)
-* --properties-output, ‘msgcomm’ option: msgcomm Invocation.  (line 109)
-* --properties-output, ‘msgconv’ option: msgconv Invocation.  (line  88)
-* --properties-output, ‘msgen’ option:   msgen Invocation.    (line  91)
+                                                              (line 153)
+* --properties-output, ‘msgcat’ option:  msgcat Invocation.   (line 129)
+* --properties-output, ‘msgcomm’ option: msgcomm Invocation.  (line 115)
+* --properties-output, ‘msgconv’ option: msgconv Invocation.  (line  95)
+* --properties-output, ‘msgen’ option:   msgen Invocation.    (line  98)
 * --properties-output, ‘msgfilter’ option: msgfilter Invocation.
-                                                              (line 148)
-* --properties-output, ‘msggrep’ option: msggrep Invocation.  (line 160)
-* --properties-output, ‘msginit’ option: msginit Invocation.  (line  69)
+                                                              (line 176)
+* --properties-output, ‘msggrep’ option: msggrep Invocation.  (line 167)
+* --properties-output, ‘msginit’ option: msginit Invocation.  (line 102)
 * --properties-output, ‘msgmerge’ option: msgmerge Invocation.
-                                                              (line 158)
+                                                              (line 165)
 * --properties-output, ‘msgunfmt’ option: msgunfmt Invocation.
                                                               (line 124)
-* --properties-output, ‘msguniq’ option: msguniq Invocation.  (line 106)
+* --properties-output, ‘msguniq’ option: msguniq Invocation.  (line 112)
 * --properties-output, ‘xgettext’ option: xgettext Invocation.
-                                                              (line 312)
+                                                              (line 382)
 * --qt, ‘msgfmt’ option:                 msgfmt Invocation.   (line  46)
-* --qt, ‘xgettext’ option:               xgettext Invocation. (line 254)
+* --qt, ‘xgettext’ option:               xgettext Invocation. (line 318)
 * --quiet, ‘msgfilter’ option:           msgfilter Invocation.
-                                                              (line  84)
-* --quiet, ‘msgmerge’ option:            msgmerge Invocation. (line 206)
+                                                              (line  96)
+* --quiet, ‘msgmerge’ option:            msgmerge Invocation. (line 213)
 * --regexp=, ‘msggrep’ option:           msggrep Invocation.  (line 102)
 * --repeated, ‘msguniq’ option:          msguniq Invocation.  (line  47)
-* --resource, ‘msgfmt’ option:           msgfmt Invocation.   (line  73)
-* --resource, ‘msgfmt’ option <1>:       msgfmt Invocation.   (line  93)
+* --resource, ‘msgfmt’ option:           msgfmt Invocation.   (line  76)
+* --resource, ‘msgfmt’ option <1>:       msgfmt Invocation.   (line  99)
 * --resource, ‘msgunfmt’ option:         msgunfmt Invocation. (line  41)
 * --resource, ‘msgunfmt’ option <1>:     msgunfmt Invocation. (line  58)
+* --sentence-end, ‘xgettext’ option:     xgettext Invocation. (line 149)
 * --set-fuzzy, ‘msgattrib’ option:       msgattrib Invocation.
                                                               (line  65)
 * --set-obsolete, ‘msgattrib’ option:    msgattrib Invocation.
                                                               (line  71)
 * --silent, ‘msgfilter’ option:          msgfilter Invocation.
-                                                              (line  84)
-* --silent, ‘msgmerge’ option:           msgmerge Invocation. (line 206)
+                                                              (line  96)
+* --silent, ‘msgmerge’ option:           msgmerge Invocation. (line 213)
 * --sort-by-file, ‘msgattrib’ option:    msgattrib Invocation.
-                                                              (line 172)
-* --sort-by-file, ‘msgcat’ option:       msgcat Invocation.   (line 151)
-* --sort-by-file, ‘msgcomm’ option:      msgcomm Invocation.  (line 137)
-* --sort-by-file, ‘msgconv’ option:      msgconv Invocation.  (line 116)
-* --sort-by-file, ‘msgen’ option:        msgen Invocation.    (line 119)
+                                                              (line 181)
+* --sort-by-file, ‘msgcat’ option:       msgcat Invocation.   (line 157)
+* --sort-by-file, ‘msgcomm’ option:      msgcomm Invocation.  (line 143)
+* --sort-by-file, ‘msgconv’ option:      msgconv Invocation.  (line 123)
+* --sort-by-file, ‘msgen’ option:        msgen Invocation.    (line 126)
 * --sort-by-file, ‘msgfilter’ option:    msgfilter Invocation.
-                                                              (line 176)
-* --sort-by-file, ‘msggrep’ option:      msggrep Invocation.  (line 186)
-* --sort-by-file, ‘msgmerge’ option:     msgmerge Invocation. (line 186)
-* --sort-by-file, ‘msguniq’ option:      msguniq Invocation.  (line 134)
-* --sort-by-file, ‘xgettext’ option:     xgettext Invocation. (line 340)
+                                                              (line 204)
+* --sort-by-file, ‘msggrep’ option:      msggrep Invocation.  (line 193)
+* --sort-by-file, ‘msgmerge’ option:     msgmerge Invocation. (line 193)
+* --sort-by-file, ‘msguniq’ option:      msguniq Invocation.  (line 140)
+* --sort-by-file, ‘xgettext’ option:     xgettext Invocation. (line 410)
 * --sort-output, ‘msgattrib’ option:     msgattrib Invocation.
-                                                              (line 167)
-* --sort-output, ‘msgcat’ option:        msgcat Invocation.   (line 146)
-* --sort-output, ‘msgcomm’ option:       msgcomm Invocation.  (line 132)
-* --sort-output, ‘msgconv’ option:       msgconv Invocation.  (line 111)
-* --sort-output, ‘msgen’ option:         msgen Invocation.    (line 114)
+                                                              (line 176)
+* --sort-output, ‘msgcat’ option:        msgcat Invocation.   (line 152)
+* --sort-output, ‘msgcomm’ option:       msgcomm Invocation.  (line 138)
+* --sort-output, ‘msgconv’ option:       msgconv Invocation.  (line 118)
+* --sort-output, ‘msgen’ option:         msgen Invocation.    (line 121)
 * --sort-output, ‘msgfilter’ option:     msgfilter Invocation.
-                                                              (line 171)
-* --sort-output, ‘msggrep’ option:       msggrep Invocation.  (line 182)
-* --sort-output, ‘msgmerge’ option:      msgmerge Invocation. (line 181)
+                                                              (line 199)
+* --sort-output, ‘msggrep’ option:       msggrep Invocation.  (line 189)
+* --sort-output, ‘msgmerge’ option:      msgmerge Invocation. (line 188)
 * --sort-output, ‘msgunfmt’ option:      msgunfmt Invocation. (line 147)
-* --sort-output, ‘msguniq’ option:       msguniq Invocation.  (line 129)
-* --sort-output, ‘xgettext’ option:      xgettext Invocation. (line 335)
-* --statistics, ‘msgfmt’ option:         msgfmt Invocation.   (line 233)
+* --sort-output, ‘msguniq’ option:       msguniq Invocation.  (line 135)
+* --sort-output, ‘xgettext’ option:      xgettext Invocation. (line 405)
+* --source, ‘msgfmt’ option:             msgfmt Invocation.   (line  88)
+* --statistics, ‘msgfmt’ option:         msgfmt Invocation.   (line 281)
 * --strict, ‘msgattrib’ option:          msgattrib Invocation.
-                                                              (line 138)
-* --strict, ‘msgcat’ option:             msgcat Invocation.   (line 117)
-* --strict, ‘msgcomm’ option:            msgcomm Invocation.  (line 103)
-* --strict, ‘msgconv’ option:            msgconv Invocation.  (line  82)
-* --strict, ‘msgen’ option:              msgen Invocation.    (line  85)
+                                                              (line 147)
+* --strict, ‘msgcat’ option:             msgcat Invocation.   (line 123)
+* --strict, ‘msgcomm’ option:            msgcomm Invocation.  (line 109)
+* --strict, ‘msgconv’ option:            msgconv Invocation.  (line  89)
+* --strict, ‘msgen’ option:              msgen Invocation.    (line  92)
 * --strict, ‘msgfilter’ option:          msgfilter Invocation.
-                                                              (line 142)
-* --strict, ‘msgfmt’ option:             msgfmt Invocation.   (line  56)
-* --strict, ‘msggrep’ option:            msggrep Invocation.  (line 154)
-* --strict, ‘msgmerge’ option:           msgmerge Invocation. (line 152)
+                                                              (line 170)
+* --strict, ‘msgfmt’ option:             msgfmt Invocation.   (line  59)
+* --strict, ‘msggrep’ option:            msggrep Invocation.  (line 161)
+* --strict, ‘msgmerge’ option:           msgmerge Invocation. (line 159)
 * --strict, ‘msgunfmt’ option:           msgunfmt Invocation. (line 118)
-* --strict, ‘msguniq’ option:            msguniq Invocation.  (line 100)
-* --strict, ‘xgettext’ option:           xgettext Invocation. (line 307)
+* --strict, ‘msguniq’ option:            msguniq Invocation.  (line 106)
+* --strict, ‘xgettext’ option:           xgettext Invocation. (line 377)
 * --stringtable-input, ‘msgattrib’ option: msgattrib Invocation.
-                                                              (line 108)
+                                                              (line 111)
 * --stringtable-input, ‘msgcat’ option:  msgcat Invocation.   (line  74)
 * --stringtable-input, ‘msgcmp’ option:  msgcmp Invocation.   (line  61)
 * --stringtable-input, ‘msgcomm’ option: msgcomm Invocation.  (line  73)
 * --stringtable-input, ‘msgen’ option:   msgen Invocation.    (line  50)
-* --stringtable-input, ‘msgexec’ option: msgexec Invocation.  (line  59)
+* --stringtable-input, ‘msgexec’ option: msgexec Invocation.  (line  69)
 * --stringtable-input, ‘msgfilter’ option: msgfilter Invocation.
-                                                              (line 109)
-* --stringtable-input, ‘msgfmt’ option:  msgfmt Invocation.   (line 132)
+                                                              (line 130)
+* --stringtable-input, ‘msgfmt’ option:  msgfmt Invocation.   (line 180)
 * --stringtable-input, ‘msggrep’ option: msggrep Invocation.  (line 126)
-* --stringtable-input, ‘msginit’ option: msginit Invocation.  (line  41)
+* --stringtable-input, ‘msginit’ option: msginit Invocation.  (line  74)
 * --stringtable-input, ‘msgmerge’ option: msgmerge Invocation.
                                                               (line 116)
 * --stringtable-input, ‘msgonv’ option:  msgconv Invocation.  (line  53)
 * --stringtable-input, ‘msguniq’ option: msguniq Invocation.  (line  62)
 * --stringtable-output, ‘msgattrib’ option: msgattrib Invocation.
-                                                              (line 149)
-* --stringtable-output, ‘msgcat’ option: msgcat Invocation.   (line 128)
-* --stringtable-output, ‘msgcomm’ option: msgcomm Invocation. (line 114)
-* --stringtable-output, ‘msgconv’ option: msgconv Invocation. (line  93)
-* --stringtable-output, ‘msgen’ option:  msgen Invocation.    (line  96)
+                                                              (line 158)
+* --stringtable-output, ‘msgcat’ option: msgcat Invocation.   (line 134)
+* --stringtable-output, ‘msgcomm’ option: msgcomm Invocation. (line 120)
+* --stringtable-output, ‘msgconv’ option: msgconv Invocation. (line 100)
+* --stringtable-output, ‘msgen’ option:  msgen Invocation.    (line 103)
 * --stringtable-output, ‘msgfilter’ option: msgfilter Invocation.
-                                                              (line 153)
-* --stringtable-output, ‘msggrep’ option: msggrep Invocation. (line 165)
-* --stringtable-output, ‘msginit’ option: msginit Invocation. (line  74)
+                                                              (line 181)
+* --stringtable-output, ‘msggrep’ option: msggrep Invocation. (line 172)
+* --stringtable-output, ‘msginit’ option: msginit Invocation. (line 107)
 * --stringtable-output, ‘msgmerge’ option: msgmerge Invocation.
-                                                              (line 163)
+                                                              (line 170)
 * --stringtable-output, ‘msgunfmt’ option: msgunfmt Invocation.
                                                               (line 129)
-* --stringtable-output, ‘msguniq’ option: msguniq Invocation. (line 111)
+* --stringtable-output, ‘msguniq’ option: msguniq Invocation. (line 117)
 * --stringtable-output, ‘xgettext’ option: xgettext Invocation.
-                                                              (line 317)
+                                                              (line 387)
 * --style, ‘msgattrib’ option:           msgattrib Invocation.
-                                                              (line 120)
+                                                              (line 123)
 * --style, ‘msgcat’ option:              msgcat Invocation.   (line  99)
 * --style, ‘msgcat’ option <1>:          The --style option.  (line   6)
 * --style, ‘msgcomm’ option:             msgcomm Invocation.  (line  85)
 * --style, ‘msgconv’ option:             msgconv Invocation.  (line  65)
 * --style, ‘msgen’ option:               msgen Invocation.    (line  68)
 * --style, ‘msgfilter’ option:           msgfilter Invocation.
-                                                              (line 121)
+                                                              (line 142)
 * --style, ‘msggrep’ option:             msggrep Invocation.  (line 138)
-* --style, ‘msginit’ option:             msginit Invocation.  (line  64)
+* --style, ‘msginit’ option:             msginit Invocation.  (line  97)
 * --style, ‘msgmerge’ option:            msgmerge Invocation. (line 135)
 * --style, ‘msgunfmt’ option:            msgunfmt Invocation. (line 107)
 * --style, ‘msguniq’ option:             msguniq Invocation.  (line  82)
-* --style, ‘xgettext’ option:            xgettext Invocation. (line 287)
+* --style, ‘xgettext’ option:            xgettext Invocation. (line 351)
 * --suffix, ‘msgmerge’ option:           msgmerge Invocation. (line  65)
 * --symlink, ‘gettextize’ option:        gettextize Invocation.
                                                               (line  63)
 * --tcl, ‘msgfmt’ option:                msgfmt Invocation.   (line  43)
 * --tcl, ‘msgunfmt’ option:              msgunfmt Invocation. (line  26)
+* --template, ‘msgfmt’ option:           msgfmt Invocation.   (line 133)
 * --to-code, ‘msgcat’ option:            msgcat Invocation.   (line  82)
 * --to-code, ‘msgconv’ option:           msgconv Invocation.  (line  40)
 * --to-code, ‘msguniq’ option:           msguniq Invocation.  (line  70)
 * --translated, ‘msgattrib’ option:      msgattrib Invocation.
                                                               (line  39)
-* --trigraphs, ‘xgettext’ option:        xgettext Invocation. (line 249)
+* --trigraphs, ‘xgettext’ option:        xgettext Invocation. (line 313)
 * --unique, ‘msgcat’ option:             msgcat Invocation.   (line  62)
 * --unique, ‘msgcomm’ option:            msgcomm Invocation.  (line  61)
 * --unique, ‘msguniq’ option:            msguniq Invocation.  (line  51)
@@ -16621,11 +17055,11 @@ Option Index
 * --use-first, ‘msgcat’ option:          msgcat Invocation.   (line  85)
 * --use-first, ‘msguniq’ option:         msguniq Invocation.  (line  73)
 * --use-fuzzy, ‘msgcmp’ option:          msgcmp Invocation.   (line  43)
-* --use-fuzzy, ‘msgfmt’ option:          msgfmt Invocation.   (line 193)
+* --use-fuzzy, ‘msgfmt’ option:          msgfmt Invocation.   (line 241)
 * --use-untranslated, ‘msgcmp’ option:   msgcmp Invocation.   (line  49)
 * --variables, ‘envsubst’ option:        envsubst Invocation. (line  15)
-* --verbose, ‘msgfmt’ option:            msgfmt Invocation.   (line 239)
-* --verbose, ‘msgmerge’ option:          msgmerge Invocation. (line 201)
+* --verbose, ‘msgfmt’ option:            msgfmt Invocation.   (line 287)
+* --verbose, ‘msgmerge’ option:          msgmerge Invocation. (line 208)
 * --verbose, ‘msgunfmt’ option:          msgunfmt Invocation. (line 163)
 * --version, ‘autopoint’ option:         autopoint Invocation.
                                                               (line  35)
@@ -16634,45 +17068,45 @@ Option Index
 * --version, ‘gettextize’ option:        gettextize Invocation.
                                                               (line  80)
 * --version, ‘msgattrib’ option:         msgattrib Invocation.
-                                                              (line 183)
-* --version, ‘msgcat’ option:            msgcat Invocation.   (line 162)
+                                                              (line 192)
+* --version, ‘msgcat’ option:            msgcat Invocation.   (line 168)
 * --version, ‘msgcmp’ option:            msgcmp Invocation.   (line  73)
-* --version, ‘msgcomm’ option:           msgcomm Invocation.  (line 151)
-* --version, ‘msgconv’ option:           msgconv Invocation.  (line 127)
-* --version, ‘msgen’ option:             msgen Invocation.    (line 130)
-* --version, ‘msgexec’ option:           msgexec Invocation.  (line  71)
+* --version, ‘msgcomm’ option:           msgcomm Invocation.  (line 157)
+* --version, ‘msgconv’ option:           msgconv Invocation.  (line 134)
+* --version, ‘msgen’ option:             msgen Invocation.    (line 137)
+* --version, ‘msgexec’ option:           msgexec Invocation.  (line  81)
 * --version, ‘msgfilter’ option:         msgfilter Invocation.
-                                                              (line 187)
-* --version, ‘msgfmt’ option:            msgfmt Invocation.   (line 230)
-* --version, ‘msggrep’ option:           msggrep Invocation.  (line 197)
-* --version, ‘msginit’ option:           msginit Invocation.  (line  99)
-* --version, ‘msgmerge’ option:          msgmerge Invocation. (line 197)
+                                                              (line 215)
+* --version, ‘msgfmt’ option:            msgfmt Invocation.   (line 278)
+* --version, ‘msggrep’ option:           msggrep Invocation.  (line 204)
+* --version, ‘msginit’ option:           msginit Invocation.  (line 132)
+* --version, ‘msgmerge’ option:          msgmerge Invocation. (line 204)
 * --version, ‘msgunfmt’ option:          msgunfmt Invocation. (line 159)
-* --version, ‘msguniq’ option:           msguniq Invocation.  (line 145)
+* --version, ‘msguniq’ option:           msguniq Invocation.  (line 151)
 * --version, ‘ngettext’ option:          ngettext Invocation. (line  35)
-* --version, ‘xgettext’ option:          xgettext Invocation. (line 420)
+* --version, ‘xgettext’ option:          xgettext Invocation. (line 490)
 * --width, ‘msgattrib’ option:           msgattrib Invocation.
-                                                              (line 154)
-* --width, ‘msgcat’ option:              msgcat Invocation.   (line 133)
-* --width, ‘msgcomm’ option:             msgcomm Invocation.  (line 119)
-* --width, ‘msgconv’ option:             msgconv Invocation.  (line  98)
-* --width, ‘msgen’ option:               msgen Invocation.    (line 101)
+                                                              (line 163)
+* --width, ‘msgcat’ option:              msgcat Invocation.   (line 139)
+* --width, ‘msgcomm’ option:             msgcomm Invocation.  (line 125)
+* --width, ‘msgconv’ option:             msgconv Invocation.  (line 105)
+* --width, ‘msgen’ option:               msgen Invocation.    (line 108)
 * --width, ‘msgfilter’ option:           msgfilter Invocation.
-                                                              (line 158)
-* --width, ‘msggrep’ option:             msggrep Invocation.  (line 170)
-* --width, ‘msginit’ option:             msginit Invocation.  (line  79)
-* --width, ‘msgmerge’ option:            msgmerge Invocation. (line 168)
+                                                              (line 186)
+* --width, ‘msggrep’ option:             msggrep Invocation.  (line 177)
+* --width, ‘msginit’ option:             msginit Invocation.  (line 112)
+* --width, ‘msgmerge’ option:            msgmerge Invocation. (line 175)
 * --width, ‘msgunfmt’ option:            msgunfmt Invocation. (line 134)
-* --width, ‘msguniq’ option:             msguniq Invocation.  (line 116)
-* --width, ‘xgettext’ option:            xgettext Invocation. (line 322)
+* --width, ‘msguniq’ option:             msguniq Invocation.  (line 122)
+* --width, ‘xgettext’ option:            xgettext Invocation. (line 392)
 * -<, ‘msgcat’ option:                   msgcat Invocation.   (line  52)
 * -<, ‘msgcomm’ option:                  msgcomm Invocation.  (line  51)
 * ->, ‘msgcat’ option:                   msgcat Invocation.   (line  57)
 * ->, ‘msgcomm’ option:                  msgcomm Invocation.  (line  56)
-* -a, ‘msgfmt’ option:                   msgfmt Invocation.   (line 202)
-* -a, ‘xgettext’ option:                 xgettext Invocation. (line 103)
-* -c, ‘msgfmt’ option:                   msgfmt Invocation.   (line 140)
-* -C, ‘msgfmt’ option:                   msgfmt Invocation.   (line 177)
+* -a, ‘msgfmt’ option:                   msgfmt Invocation.   (line 250)
+* -a, ‘xgettext’ option:                 xgettext Invocation. (line 162)
+* -c, ‘msgfmt’ option:                   msgfmt Invocation.   (line 188)
+* -C, ‘msgfmt’ option:                   msgfmt Invocation.   (line 225)
 * -C, ‘msggrep’ option:                  msggrep Invocation.  (line  86)
 * -C, ‘msgmerge’ option:                 msgmerge Invocation. (line  36)
 * -C, ‘xgettext’ option:                 xgettext Invocation. (line  63)
@@ -16689,13 +17123,14 @@ Option Index
 * -D, ‘msgcomm’ option:                  msgcomm Invocation.  (line  30)
 * -D, ‘msgconv’ option:                  msgconv Invocation.  (line  19)
 * -D, ‘msgen’ option:                    msgen Invocation.    (line  25)
-* -D, ‘msgexec’ option:                  msgexec Invocation.  (line  44)
+* -D, ‘msgexec’ option:                  msgexec Invocation.  (line  54)
 * -D, ‘msgfilter’ option:                msgfilter Invocation.
-                                                              (line  27)
+                                                              (line  34)
 * -D, ‘msgfmt’ option:                   msgfmt Invocation.   (line  18)
-* -d, ‘msgfmt’ option:                   msgfmt Invocation.   (line  82)
-* -d, ‘msgfmt’ option <1>:               msgfmt Invocation.   (line 102)
-* -d, ‘msgfmt’ option <2>:               msgfmt Invocation.   (line 118)
+* -d, ‘msgfmt’ option:                   msgfmt Invocation.   (line  85)
+* -d, ‘msgfmt’ option <1>:               msgfmt Invocation.   (line 108)
+* -d, ‘msgfmt’ option <2>:               msgfmt Invocation.   (line 124)
+* -d, ‘msgfmt’ option <3>:               msgfmt Invocation.   (line 148)
 * -D, ‘msggrep’ option:                  msggrep Invocation.  (line  19)
 * -D, ‘msgmerge’ option:                 msgmerge Invocation. (line  30)
 * -d, ‘msgunfmt’ option:                 msgunfmt Invocation. (line  67)
@@ -16708,7 +17143,7 @@ Option Index
 * -e, ‘gettext’ option:                  gettext Invocation.  (line  20)
 * -E, ‘gettext’ option:                  gettext Invocation.  (line  27)
 * -e, ‘msgfilter’ option:                msgfilter Invocation.
-                                                              (line  75)
+                                                              (line  87)
 * -E, ‘msggrep’ option:                  msggrep Invocation.  (line  94)
 * -e, ‘msggrep’ option:                  msggrep Invocation.  (line 102)
 * -e, ‘ngettext’ option:                 ngettext Invocation. (line  19)
@@ -16718,69 +17153,71 @@ Option Index
 * -f, ‘gettextize’ option:               gettextize Invocation.
                                                               (line  40)
 * -F, ‘msgattrib’ option:                msgattrib Invocation.
-                                                              (line 172)
+                                                              (line 181)
 * -f, ‘msgcat’ option:                   msgcat Invocation.   (line  26)
-* -F, ‘msgcat’ option:                   msgcat Invocation.   (line 151)
+* -F, ‘msgcat’ option:                   msgcat Invocation.   (line 157)
 * -f, ‘msgcomm’ option:                  msgcomm Invocation.  (line  25)
-* -F, ‘msgcomm’ option:                  msgcomm Invocation.  (line 137)
-* -F, ‘msgconv’ option:                  msgconv Invocation.  (line 116)
-* -F, ‘msgen’ option:                    msgen Invocation.    (line 119)
+* -F, ‘msgcomm’ option:                  msgcomm Invocation.  (line 143)
+* -F, ‘msgconv’ option:                  msgconv Invocation.  (line 123)
+* -F, ‘msgen’ option:                    msgen Invocation.    (line 126)
 * -f, ‘msgfilter’ option:                msgfilter Invocation.
-                                                              (line  79)
+                                                              (line  91)
 * -F, ‘msgfilter’ option:                msgfilter Invocation.
-                                                              (line 176)
-* -f, ‘msgfmt’ option:                   msgfmt Invocation.   (line 193)
+                                                              (line 204)
+* -f, ‘msgfmt’ option:                   msgfmt Invocation.   (line 241)
 * -F, ‘msggrep’ option:                  msggrep Invocation.  (line  98)
 * -f, ‘msggrep’ option:                  msggrep Invocation.  (line 106)
-* -F, ‘msgmerge’ option:                 msgmerge Invocation. (line 186)
-* -F, ‘msguniq’ option:                  msguniq Invocation.  (line 134)
+* -F, ‘msgmerge’ option:                 msgmerge Invocation. (line 193)
+* -F, ‘msguniq’ option:                  msguniq Invocation.  (line 140)
 * -f, ‘xgettext’ option:                 xgettext Invocation. (line  19)
-* -F, ‘xgettext’ option:                 xgettext Invocation. (line 340)
+* -F, ‘xgettext’ option:                 xgettext Invocation. (line 410)
 * -h, ‘envsubst’ option:                 envsubst Invocation. (line  21)
 * -h, ‘gettext’ option:                  gettext Invocation.  (line  32)
 * -h, ‘msgattrib’ option:                msgattrib Invocation.
-                                                              (line 179)
-* -h, ‘msgcat’ option:                   msgcat Invocation.   (line 158)
+                                                              (line 188)
+* -h, ‘msgcat’ option:                   msgcat Invocation.   (line 164)
 * -h, ‘msgcmp’ option:                   msgcmp Invocation.   (line  69)
-* -h, ‘msgcomm’ option:                  msgcomm Invocation.  (line 147)
-* -h, ‘msgconv’ option:                  msgconv Invocation.  (line 123)
-* -h, ‘msgen’ option:                    msgen Invocation.    (line 126)
-* -h, ‘msgexec’ option:                  msgexec Invocation.  (line  67)
+* -h, ‘msgcomm’ option:                  msgcomm Invocation.  (line 153)
+* -h, ‘msgconv’ option:                  msgconv Invocation.  (line 130)
+* -h, ‘msgen’ option:                    msgen Invocation.    (line 133)
+* -h, ‘msgexec’ option:                  msgexec Invocation.  (line  77)
 * -h, ‘msgfilter’ option:                msgfilter Invocation.
-                                                              (line 183)
-* -h, ‘msgfmt’ option:                   msgfmt Invocation.   (line 226)
-* -h, ‘msggrep’ option:                  msggrep Invocation.  (line 193)
-* -h, ‘msginit’ option:                  msginit Invocation.  (line  95)
-* -h, ‘msgmerge’ option:                 msgmerge Invocation. (line 193)
+                                                              (line 211)
+* -h, ‘msgfmt’ option:                   msgfmt Invocation.   (line 274)
+* -h, ‘msggrep’ option:                  msggrep Invocation.  (line 200)
+* -h, ‘msginit’ option:                  msginit Invocation.  (line 128)
+* -h, ‘msgmerge’ option:                 msgmerge Invocation. (line 200)
 * -h, ‘msgunfmt’ option:                 msgunfmt Invocation. (line 155)
-* -h, ‘msguniq’ option:                  msguniq Invocation.  (line 141)
+* -h, ‘msguniq’ option:                  msguniq Invocation.  (line 147)
 * -h, ‘ngettext’ option:                 ngettext Invocation. (line  31)
-* -h, ‘xgettext’ option:                 xgettext Invocation. (line 416)
+* -h, ‘xgettext’ option:                 xgettext Invocation. (line 486)
 * -i, ‘msgattrib’ option:                msgattrib Invocation.
-                                                              (line 128)
+                                                              (line 131)
 * -i, ‘msgcat’ option:                   msgcat Invocation.   (line 107)
 * -i, ‘msgcomm’ option:                  msgcomm Invocation.  (line  93)
 * -i, ‘msgconv’ option:                  msgconv Invocation.  (line  73)
 * -i, ‘msgen’ option:                    msgen Invocation.    (line  76)
-* -i, ‘msgexec’ option:                  msgexec Invocation.  (line  40)
+* -i, ‘msgexec’ option:                  msgexec Invocation.  (line  50)
 * -i, ‘msgfilter’ option:                msgfilter Invocation.
-                                                              (line  23)
+                                                              (line  30)
 * -i, ‘msggrep’ option:                  msggrep Invocation.  (line 110)
-* -i, ‘msginit’ option:                  msginit Invocation.  (line  16)
+* -i, ‘msginit’ option:                  msginit Invocation.  (line  49)
 * -i, ‘msgmerge’ option:                 msgmerge Invocation. (line 143)
 * -i, ‘msgunfmt’ option:                 msgunfmt Invocation. (line 115)
 * -i, ‘msguniq’ option:                  msguniq Invocation.  (line  90)
-* -i, ‘xgettext’ option:                 xgettext Invocation. (line 295)
+* -i, ‘xgettext’ option:                 xgettext Invocation. (line 359)
 * -j, ‘msgfmt’ option:                   msgfmt Invocation.   (line  30)
 * -J, ‘msggrep’ option:                  msggrep Invocation.  (line  74)
 * -j, ‘msgunfmt’ option:                 msgunfmt Invocation. (line  16)
 * -j, ‘xgettext’ option:                 xgettext Invocation. (line  85)
+* -k, ‘msgfmt’ option:                   msgfmt Invocation.   (line 137)
 * -K, ‘msggrep’ option:                  msggrep Invocation.  (line  78)
-* -k, ‘xgettext’ option:                 xgettext Invocation. (line 111)
-* -l, ‘msgfmt’ option:                   msgfmt Invocation.   (line  77)
-* -l, ‘msgfmt’ option <1>:               msgfmt Invocation.   (line  97)
-* -l, ‘msgfmt’ option <2>:               msgfmt Invocation.   (line 113)
-* -l, ‘msginit’ option:                  msginit Invocation.  (line  49)
+* -k, ‘xgettext’ option:                 xgettext Invocation. (line 171)
+* -l, ‘msgfmt’ option:                   msgfmt Invocation.   (line  80)
+* -l, ‘msgfmt’ option <1>:               msgfmt Invocation.   (line 103)
+* -l, ‘msgfmt’ option <2>:               msgfmt Invocation.   (line 119)
+* -l, ‘msgfmt’ option <3>:               msgfmt Invocation.   (line 143)
+* -l, ‘msginit’ option:                  msginit Invocation.  (line  82)
 * -l, ‘msgunfmt’ option:                 msgunfmt Invocation. (line  45)
 * -l, ‘msgunfmt’ option <1>:             msgunfmt Invocation. (line  62)
 * -l, ‘msgunfmt’ option <2>:             msgunfmt Invocation. (line  78)
@@ -16788,20 +17225,20 @@ Option Index
 * -m, ‘msgcmp’ option:                   msgcmp Invocation.   (line  35)
 * -M, ‘msggrep’ option:                  msggrep Invocation.  (line  70)
 * -m, ‘msgmerge’ option:                 msgmerge Invocation. (line  96)
-* -m, ‘xgettext’ option:                 xgettext Invocation. (line 405)
-* -M, ‘xgettext’ option:                 xgettext Invocation. (line 409)
+* -m, ‘xgettext’ option:                 xgettext Invocation. (line 475)
+* -M, ‘xgettext’ option:                 xgettext Invocation. (line 479)
 * -n, ‘gettext’ option:                  gettext Invocation.  (line  35)
 * -n, ‘msgattrib’ option:                msgattrib Invocation.
-                                                              (line 135)
+                                                              (line 138)
 * -n, ‘msgcat’ option:                   msgcat Invocation.   (line 114)
 * -N, ‘msgcmp’ option:                   msgcmp Invocation.   (line  39)
 * -n, ‘msgcomm’ option:                  msgcomm Invocation.  (line 100)
 * -n, ‘msgfilter’ option:                msgfilter Invocation.
-                                                              (line  84)
+                                                              (line  96)
 * -N, ‘msggrep’ option:                  msggrep Invocation.  (line  65)
 * -N, ‘msgmerge’ option:                 msgmerge Invocation. (line 100)
 * -n, ‘msguniq’ option:                  msguniq Invocation.  (line  97)
-* -n, ‘xgettext’ option:                 xgettext Invocation. (line 304)
+* -n, ‘xgettext’ option:                 xgettext Invocation. (line 368)
 * -o, ‘msgattrib’ option:                msgattrib Invocation.
                                                               (line  30)
 * -o, ‘msgcat’ option:                   msgcat Invocation.   (line  42)
@@ -16809,65 +17246,65 @@ Option Index
 * -o, ‘msgconv’ option:                  msgconv Invocation.  (line  30)
 * -o, ‘msgen’ option:                    msgen Invocation.    (line  36)
 * -o, ‘msgfilter’ option:                msgfilter Invocation.
-                                                              (line  38)
-* -o, ‘msgfmt’ option:                   msgfmt Invocation.   (line  53)
+                                                              (line  45)
+* -o, ‘msgfmt’ option:                   msgfmt Invocation.   (line  56)
 * -o, ‘msggrep’ option:                  msggrep Invocation.  (line  30)
-* -o, ‘msginit’ option:                  msginit Invocation.  (line  26)
+* -o, ‘msginit’ option:                  msginit Invocation.  (line  59)
 * -o, ‘msgmerge’ option:                 msgmerge Invocation. (line  51)
 * -o, ‘msgunfmt’ option:                 msgunfmt Invocation. (line  93)
 * -o, ‘msguniq’ option:                  msguniq Invocation.  (line  37)
 * -o, ‘xgettext’ option:                 xgettext Invocation. (line  39)
 * -P, ‘msgattrib’ option:                msgattrib Invocation.
-                                                              (line 104)
+                                                              (line 107)
 * -p, ‘msgattrib’ option:                msgattrib Invocation.
-                                                              (line 144)
+                                                              (line 153)
 * -P, ‘msgcat’ option:                   msgcat Invocation.   (line  70)
-* -p, ‘msgcat’ option:                   msgcat Invocation.   (line 123)
+* -p, ‘msgcat’ option:                   msgcat Invocation.   (line 129)
 * -P, ‘msgcmp’ option:                   msgcmp Invocation.   (line  57)
 * -P, ‘msgcomm’ option:                  msgcomm Invocation.  (line  69)
-* -p, ‘msgcomm’ option:                  msgcomm Invocation.  (line 109)
+* -p, ‘msgcomm’ option:                  msgcomm Invocation.  (line 115)
 * -P, ‘msgconv’ option:                  msgconv Invocation.  (line  49)
-* -p, ‘msgconv’ option:                  msgconv Invocation.  (line  88)
+* -p, ‘msgconv’ option:                  msgconv Invocation.  (line  95)
 * -P, ‘msgen’ option:                    msgen Invocation.    (line  46)
-* -p, ‘msgen’ option:                    msgen Invocation.    (line  91)
-* -P, ‘msgexec’ option:                  msgexec Invocation.  (line  55)
+* -p, ‘msgen’ option:                    msgen Invocation.    (line  98)
+* -P, ‘msgexec’ option:                  msgexec Invocation.  (line  65)
 * -P, ‘msgfilter’ option:                msgfilter Invocation.
-                                                              (line 105)
+                                                              (line 126)
 * -p, ‘msgfilter’ option:                msgfilter Invocation.
-                                                              (line 148)
-* -P, ‘msgfmt’ option:                   msgfmt Invocation.   (line 128)
+                                                              (line 176)
+* -P, ‘msgfmt’ option:                   msgfmt Invocation.   (line 176)
 * -P, ‘msggrep’ option:                  msggrep Invocation.  (line 122)
-* -p, ‘msggrep’ option:                  msggrep Invocation.  (line 160)
-* -P, ‘msginit’ option:                  msginit Invocation.  (line  37)
-* -p, ‘msginit’ option:                  msginit Invocation.  (line  69)
+* -p, ‘msggrep’ option:                  msggrep Invocation.  (line 167)
+* -P, ‘msginit’ option:                  msginit Invocation.  (line  70)
+* -p, ‘msginit’ option:                  msginit Invocation.  (line 102)
 * -P, ‘msgmerge’ option:                 msgmerge Invocation. (line 112)
-* -p, ‘msgmerge’ option:                 msgmerge Invocation. (line 158)
+* -p, ‘msgmerge’ option:                 msgmerge Invocation. (line 165)
 * -p, ‘msgunfmt’ option:                 msgunfmt Invocation. (line 124)
 * -P, ‘msguniq’ option:                  msguniq Invocation.  (line  58)
-* -p, ‘msguniq’ option:                  msguniq Invocation.  (line 106)
+* -p, ‘msguniq’ option:                  msguniq Invocation.  (line 112)
 * -p, ‘xgettext’ option:                 xgettext Invocation. (line  44)
-* -q, ‘msgmerge’ option:                 msgmerge Invocation. (line 206)
-* -r, ‘msgfmt’ option:                   msgfmt Invocation.   (line  73)
-* -r, ‘msgfmt’ option <1>:               msgfmt Invocation.   (line  93)
+* -q, ‘msgmerge’ option:                 msgmerge Invocation. (line 213)
+* -r, ‘msgfmt’ option:                   msgfmt Invocation.   (line  76)
+* -r, ‘msgfmt’ option <1>:               msgfmt Invocation.   (line  99)
 * -r, ‘msgunfmt’ option:                 msgunfmt Invocation. (line  41)
 * -r, ‘msgunfmt’ option <1>:             msgunfmt Invocation. (line  58)
 * -s, ‘msgattrib’ option:                msgattrib Invocation.
-                                                              (line 167)
-* -s, ‘msgcat’ option:                   msgcat Invocation.   (line 146)
-* -s, ‘msgcomm’ option:                  msgcomm Invocation.  (line 132)
-* -s, ‘msgconv’ option:                  msgconv Invocation.  (line 111)
-* -s, ‘msgen’ option:                    msgen Invocation.    (line 114)
+                                                              (line 176)
+* -s, ‘msgcat’ option:                   msgcat Invocation.   (line 152)
+* -s, ‘msgcomm’ option:                  msgcomm Invocation.  (line 138)
+* -s, ‘msgconv’ option:                  msgconv Invocation.  (line 118)
+* -s, ‘msgen’ option:                    msgen Invocation.    (line 121)
 * -s, ‘msgfilter’ option:                msgfilter Invocation.
-                                                              (line 171)
-* -s, ‘msgmerge’ option:                 msgmerge Invocation. (line 181)
+                                                              (line 199)
+* -s, ‘msgmerge’ option:                 msgmerge Invocation. (line 188)
 * -s, ‘msgunfmt’ option:                 msgunfmt Invocation. (line 147)
-* -s, ‘msguniq’ option:                  msguniq Invocation.  (line 129)
-* -s, ‘xgettext’ option:                 xgettext Invocation. (line 335)
+* -s, ‘msguniq’ option:                  msguniq Invocation.  (line 135)
+* -s, ‘xgettext’ option:                 xgettext Invocation. (line 405)
 * -t, ‘msgcat’ option:                   msgcat Invocation.   (line  82)
 * -t, ‘msgconv’ option:                  msgconv Invocation.  (line  40)
 * -T, ‘msggrep’ option:                  msggrep Invocation.  (line  82)
 * -t, ‘msguniq’ option:                  msguniq Invocation.  (line  70)
-* -T, ‘xgettext’ option:                 xgettext Invocation. (line 249)
+* -T, ‘xgettext’ option:                 xgettext Invocation. (line 313)
 * -u, ‘msgcat’ option:                   msgcat Invocation.   (line  62)
 * -u, ‘msgcomm’ option:                  msgcomm Invocation.  (line  61)
 * -U, ‘msgmerge’ option:                 msgmerge Invocation. (line  44)
@@ -16876,41 +17313,41 @@ Option Index
 * -V, ‘envsubst’ option:                 envsubst Invocation. (line  25)
 * -V, ‘gettext’ option:                  gettext Invocation.  (line  40)
 * -V, ‘msgattrib’ option:                msgattrib Invocation.
-                                                              (line 183)
-* -V, ‘msgcat’ option:                   msgcat Invocation.   (line 162)
+                                                              (line 192)
+* -V, ‘msgcat’ option:                   msgcat Invocation.   (line 168)
 * -V, ‘msgcmp’ option:                   msgcmp Invocation.   (line  73)
-* -V, ‘msgcomm’ option:                  msgcomm Invocation.  (line 151)
-* -V, ‘msgconv’ option:                  msgconv Invocation.  (line 127)
-* -V, ‘msgen’ option:                    msgen Invocation.    (line 130)
-* -V, ‘msgexec’ option:                  msgexec Invocation.  (line  71)
+* -V, ‘msgcomm’ option:                  msgcomm Invocation.  (line 157)
+* -V, ‘msgconv’ option:                  msgconv Invocation.  (line 134)
+* -V, ‘msgen’ option:                    msgen Invocation.    (line 137)
+* -V, ‘msgexec’ option:                  msgexec Invocation.  (line  81)
 * -V, ‘msgfilter’ option:                msgfilter Invocation.
-                                                              (line 187)
-* -V, ‘msgfmt’ option:                   msgfmt Invocation.   (line 230)
-* -v, ‘msgfmt’ option:                   msgfmt Invocation.   (line 239)
+                                                              (line 215)
+* -V, ‘msgfmt’ option:                   msgfmt Invocation.   (line 278)
+* -v, ‘msgfmt’ option:                   msgfmt Invocation.   (line 287)
 * -v, ‘msggrep’ option:                  msggrep Invocation.  (line 114)
-* -V, ‘msggrep’ option:                  msggrep Invocation.  (line 197)
-* -V, ‘msginit’ option:                  msginit Invocation.  (line  99)
-* -V, ‘msgmerge’ option:                 msgmerge Invocation. (line 197)
-* -v, ‘msgmerge’ option:                 msgmerge Invocation. (line 201)
+* -V, ‘msggrep’ option:                  msggrep Invocation.  (line 204)
+* -V, ‘msginit’ option:                  msginit Invocation.  (line 132)
+* -V, ‘msgmerge’ option:                 msgmerge Invocation. (line 204)
+* -v, ‘msgmerge’ option:                 msgmerge Invocation. (line 208)
 * -V, ‘msgunfmt’ option:                 msgunfmt Invocation. (line 159)
 * -v, ‘msgunfmt’ option:                 msgunfmt Invocation. (line 163)
-* -V, ‘msguniq’ option:                  msguniq Invocation.  (line 145)
+* -V, ‘msguniq’ option:                  msguniq Invocation.  (line 151)
 * -V, ‘ngettext’ option:                 ngettext Invocation. (line  35)
-* -V, ‘xgettext’ option:                 xgettext Invocation. (line 420)
+* -V, ‘xgettext’ option:                 xgettext Invocation. (line 490)
 * -w, ‘msgattrib’ option:                msgattrib Invocation.
-                                                              (line 154)
-* -w, ‘msgcat’ option:                   msgcat Invocation.   (line 133)
-* -w, ‘msgcomm’ option:                  msgcomm Invocation.  (line 119)
-* -w, ‘msgconv’ option:                  msgconv Invocation.  (line  98)
-* -w, ‘msgen’ option:                    msgen Invocation.    (line 101)
+                                                              (line 163)
+* -w, ‘msgcat’ option:                   msgcat Invocation.   (line 139)
+* -w, ‘msgcomm’ option:                  msgcomm Invocation.  (line 125)
+* -w, ‘msgconv’ option:                  msgconv Invocation.  (line 105)
+* -w, ‘msgen’ option:                    msgen Invocation.    (line 108)
 * -w, ‘msgfilter’ option:                msgfilter Invocation.
-                                                              (line 158)
-* -w, ‘msggrep’ option:                  msggrep Invocation.  (line 170)
-* -w, ‘msginit’ option:                  msginit Invocation.  (line  79)
-* -w, ‘msgmerge’ option:                 msgmerge Invocation. (line 168)
+                                                              (line 186)
+* -w, ‘msggrep’ option:                  msggrep Invocation.  (line 177)
+* -w, ‘msginit’ option:                  msginit Invocation.  (line 112)
+* -w, ‘msgmerge’ option:                 msgmerge Invocation. (line 175)
 * -w, ‘msgunfmt’ option:                 msgunfmt Invocation. (line 134)
-* -w, ‘msguniq’ option:                  msguniq Invocation.  (line 116)
-* -w, ‘xgettext’ option:                 xgettext Invocation. (line 322)
+* -w, ‘msguniq’ option:                  msguniq Invocation.  (line 122)
+* -w, ‘xgettext’ option:                 xgettext Invocation. (line 392)
 * -X, ‘msggrep’ option:                  msggrep Invocation.  (line  90)
 * -x, ‘xgettext’ option:                 xgettext Invocation. (line  89)
 
@@ -16954,14 +17391,34 @@ Variable Index
                                                                (line 12)
 * LC_TIME, environment variable <1>:     gettext grok.         (line 29)
 * LINGUAS, environment variable:         Installers.           (line 17)
-* MSGEXEC_LOCATION, environment variable: msgexec Invocation.  (line 18)
-* MSGEXEC_MSGCTXT, environment variable: msgexec Invocation.   (line 18)
-* MSGEXEC_MSGID, environment variable:   msgexec Invocation.   (line 18)
+* MSGEXEC_LOCATION, environment variable: msgexec Invocation.  (line 21)
+* MSGEXEC_MSGCTXT, environment variable: msgexec Invocation.   (line 21)
+* MSGEXEC_MSGID, environment variable:   msgexec Invocation.   (line 21)
+* MSGEXEC_MSGID_PLURAL, environment variable: msgexec Invocation.
+                                                               (line 21)
+* MSGEXEC_PLURAL_FORM, environment variable: msgexec Invocation.
+                                                               (line 21)
+* MSGEXEC_PREV_MSGCTXT, environment variable: msgexec Invocation.
+                                                               (line 21)
+* MSGEXEC_PREV_MSGID, environment variable: msgexec Invocation.
+                                                               (line 21)
+* MSGEXEC_PREV_MSGID_PLURAL, environment variable: msgexec Invocation.
+                                                               (line 21)
 * MSGFILTER_LOCATION, environment variable: msgfilter Invocation.
                                                                (line 11)
 * MSGFILTER_MSGCTXT, environment variable: msgfilter Invocation.
                                                                (line 11)
 * MSGFILTER_MSGID, environment variable: msgfilter Invocation. (line 11)
+* MSGFILTER_MSGID_PLURAL, environment variable: msgfilter Invocation.
+                                                               (line 11)
+* MSGFILTER_PLURAL_FORM, environment variable: msgfilter Invocation.
+                                                               (line 11)
+* MSGFILTER_PREV_MSGCTXT, environment variable: msgfilter Invocation.
+                                                               (line 11)
+* MSGFILTER_PREV_MSGID, environment variable: msgfilter Invocation.
+                                                               (line 11)
+* MSGFILTER_PREV_MSGID_PLURAL, environment variable: msgfilter Invocation.
+                                                               (line 11)
 * PO_STYLE, environment variable:        The --style option.   (line 10)
 * TERM, environment variable:            The TERM variable.    (line  6)
 * TEXTDOMAIN, environment variable:      sh.                   (line 23)
@@ -17244,7 +17701,7 @@ General Index
 * ‘acconfig.h’ file:                     acconfig.            (line   6)
 * accumulating translations:             Creating Compendia.  (line  14)
 * ‘aclocal.m4’ file:                     aclocal.             (line   6)
-* adding keywords, ‘xgettext’:           xgettext Invocation. (line 115)
+* adding keywords, ‘xgettext’:           xgettext Invocation. (line 175)
 * ambiguities:                           Preparing Strings.   (line  41)
 * apply a filter to translations:        msgfilter Invocation.
                                                               (line   8)
@@ -17270,11 +17727,11 @@ General Index
 * bibliography:                          References.          (line   6)
 * big picture:                           Overview.            (line   6)
 * bind_textdomain_codeset:               Charset conversion.  (line  26)
-* Boost format strings:                  xgettext Invocation. (line 262)
+* Boost format strings:                  xgettext Invocation. (line 326)
 * boost-format flag:                     PO Files.            (line 200)
 * bug report address:                    Introduction.        (line  24)
 * C and C-like languages:                C.                   (line   6)
-* C trigraphs:                           xgettext Invocation. (line 249)
+* C trigraphs:                           xgettext Invocation. (line 313)
 * C#:                                    C#.                  (line   6)
 * C# mode, and ‘msgfmt’ program:         msgfmt Invocation.   (line  36)
 * C# mode, and ‘msgunfmt’ program:       msgunfmt Invocation. (line  19)
@@ -17283,8 +17740,8 @@ General Index
                                                               (line  23)
 * C#, string concatenation:              Preparing Strings.   (line 168)
 * c-format flag:                         PO Files.            (line  88)
-* c-format, and ‘xgettext’:              c-format Flag.       (line  48)
-* catalog encoding and ‘msgexec’ output: msgexec Invocation.  (line  25)
+* c-format, and ‘xgettext’:              c-format Flag.       (line  47)
+* catalog encoding and ‘msgexec’ output: msgexec Invocation.  (line  35)
 * ‘catclose’, a ‘catgets’ function:      Interface to catgets.
                                                               (line  44)
 * ‘catgets’, a ‘catgets’ function:       Interface to catgets.
@@ -17295,7 +17752,7 @@ General Index
 * character encoding:                    Aspects.             (line  67)
 * charset conversion at runtime:         Charset conversion.  (line   6)
 * charset of PO files:                   Header Entry.        (line 101)
-* check format strings:                  msgfmt Invocation.   (line 144)
+* check format strings:                  msgfmt Invocation.   (line 192)
 * checking of translations:              Manipulating.        (line  41)
 * clisp:                                 Common Lisp.         (line   6)
 * clisp C sources:                       clisp C.             (line   6)
@@ -17307,7 +17764,7 @@ General Index
 * Common Lisp:                           Common Lisp.         (line   6)
 * compare PO files:                      msgcmp Invocation.   (line   8)
 * comparison of interfaces:              Comparison.          (line   6)
-* compatibility with X/Open ‘msgfmt’:    msgfmt Invocation.   (line 177)
+* compatibility with X/Open ‘msgfmt’:    msgfmt Invocation.   (line 225)
 * compendium:                            Compendium.          (line   6)
 * compendium, creating:                  Creating Compendia.  (line   6)
 * concatenate PO files:                  msgcat Invocation.   (line   8)
@@ -17317,7 +17774,7 @@ General Index
 * ‘config.h.in’ file:                    config.h.in.         (line   6)
 * context:                               Contexts.            (line   6)
 * context, argument specification in ‘xgettext’: xgettext Invocation.
-                                                              (line 115)
+                                                              (line 175)
 * context, in MO files:                  MO Files.            (line  71)
 * context, in PO files:                  PO Files.            (line 211)
 * control characters:                    Preparing Strings.   (line 190)
@@ -17337,7 +17794,9 @@ General Index
 * dcpgettext:                            Contexts.            (line  56)
 * dcpgettext_expr:                       Contexts.            (line 112)
 * debugging messages marked as format strings: xgettext Invocation.
-                                                              (line 266)
+                                                              (line 330)
+* Desktop Entry mode, and ‘msgfmt’ program: msgfmt Invocation.
+                                                              (line  49)
 * dialect:                               Manipulating.        (line  28)
 * disabling NLS:                         lib/gettext.h.       (line   6)
 * distribution tarball:                  Release Management.  (line   6)
@@ -17378,11 +17837,11 @@ General Index
 * filter messages according to attributes: msgattrib Invocation.
                                                               (line   8)
 * find common messages:                  msgcomm Invocation.  (line   8)
-* force use of fuzzy entries:            msgfmt Invocation.   (line 193)
+* force use of fuzzy entries:            msgfmt Invocation.   (line 241)
 * format strings:                        c-format Flag.       (line   6)
 * Free Pascal:                           Pascal.              (line   6)
-* function attribute, __format_arg__:    xgettext Invocation. (line 227)
-* function attribute, __format__:        xgettext Invocation. (line 213)
+* function attribute, __format_arg__:    xgettext Invocation. (line 291)
+* function attribute, __format__:        xgettext Invocation. (line 277)
 * fuzzy entries:                         Fuzzy Entries.       (line   6)
 * fuzzy flag:                            PO Files.            (line  78)
 * gawk:                                  gawk.                (line   6)
@@ -17433,10 +17892,10 @@ General Index
 * Java, string concatenation:            Preparing Strings.   (line 168)
 * java-format flag:                      PO Files.            (line 143)
 * javascript-format flag:                PO Files.            (line 208)
-* KDE format strings:                    xgettext Invocation. (line 258)
+* KDE format strings:                    xgettext Invocation. (line 322)
 * KDE PO file editor:                    KBabel.              (line   5)
 * kde-format flag:                       PO Files.            (line 196)
-* keyboard accelerator checking:         msgfmt Invocation.   (line 181)
+* keyboard accelerator checking:         msgfmt Invocation.   (line 229)
 * l10n:                                  Concepts.            (line   6)
 * language codes:                        Language Codes.      (line   6)
 * language selection:                    Locale Environment Variables.
@@ -17498,7 +17957,7 @@ General Index
 * marking translatable strings:          Overview.            (line  34)
 * markup:                                Preparing Strings.   (line 190)
 * menu entries:                          Contexts.            (line   6)
-* menu, keyboard accelerator support:    msgfmt Invocation.   (line 181)
+* menu, keyboard accelerator support:    msgfmt Invocation.   (line 229)
 * merge PO files:                        msgcat Invocation.   (line   8)
 * merging two PO files:                  Manipulating.        (line  10)
 * message catalog files location:        Locating Catalogs.   (line   6)
@@ -17506,7 +17965,7 @@ General Index
 * migration from earlier versions of ‘gettext’: Prerequisites.
                                                               (line   6)
 * ‘mkinstalldirs’ file:                  mkinstalldirs.       (line   6)
-* mnemonics of menu entries:             msgfmt Invocation.   (line 181)
+* mnemonics of menu entries:             msgfmt Invocation.   (line 229)
 * MO file’s format:                      MO Files.            (line   6)
 * modify message attributes:             msgattrib Invocation.
                                                               (line  59)
@@ -17520,7 +17979,7 @@ General Index
 * ‘msgen’ program, usage:                msgen Invocation.    (line   6)
 * ‘msgexec’ program, usage:              msgexec Invocation.  (line   6)
 * ‘msgfilter’ filter and catalog encoding: msgfilter Invocation.
-                                                              (line  51)
+                                                              (line  62)
 * ‘msgfilter’ program, usage:            msgfilter Invocation.
                                                               (line   6)
 * ‘msgfmt’ program, usage:               msgfmt Invocation.   (line   6)
@@ -17542,7 +18001,7 @@ General Index
 * no-awk-format flag:                    PO Files.            (line 152)
 * no-boost-format flag:                  PO Files.            (line 201)
 * no-c-format flag:                      PO Files.            (line  89)
-* no-c-format, and ‘xgettext’:           c-format Flag.       (line  48)
+* no-c-format, and ‘xgettext’:           c-format Flag.       (line  47)
 * no-csharp-format flag:                 PO Files.            (line 148)
 * no-elisp-format flag:                  PO Files.            (line 128)
 * no-gcc-internal-format flag:           PO Files.            (line 180)
@@ -17615,7 +18074,7 @@ General Index
 * PO mode (Emacs) commands:              Main PO Commands.    (line   6)
 * PO template file:                      Template.            (line   6)
 * portability problems with ‘sed’:       msgfilter Invocation.
-                                                              (line  62)
+                                                              (line  73)
 * ‘POTFILES.in’ file:                    po/POTFILES.in.      (line   6)
 * po_file_domains:                       libgettextpo.        (line  40)
 * po_file_free:                          libgettextpo.        (line  35)
@@ -17637,7 +18096,7 @@ General Index
 * Python:                                Python.              (line   6)
 * python-brace-format flag:              PO Files.            (line 119)
 * python-format flag:                    PO Files.            (line 115)
-* Qt format strings:                     xgettext Invocation. (line 254)
+* Qt format strings:                     xgettext Invocation. (line 318)
 * Qt mode, and ‘msgfmt’ program:         msgfmt Invocation.   (line  46)
 * qt-format flag:                        PO Files.            (line 188)
 * qt-plural-format flag:                 PO Files.            (line 192)
@@ -17646,7 +18105,7 @@ General Index
 * quote characters, use in PO files:     Header Entry.        (line 160)
 * range: flag:                           PO Files.            (line 262)
 * ‘recode-sr-latin’ program:             msgfilter Invocation.
-                                                              (line  89)
+                                                              (line 101)
 * related reading:                       References.          (line   6)
 * release:                               Release Management.  (line   6)
 * RST:                                   RST.                 (line   6)
@@ -17657,6 +18116,7 @@ General Index
 * search messages in a catalog:          msggrep Invocation.  (line   8)
 * selecting message language:            Locale Environment Variables.
                                                               (line   6)
+* sentence end markers, ‘xgettext’:      xgettext Invocation. (line 149)
 * sentences:                             Preparing Strings.   (line  44)
 * setting up ‘gettext’ at build time:    Installers.          (line   6)
 * setting up ‘gettext’ at run time:      Locale Environment Variables.
@@ -17669,10 +18129,10 @@ General Index
 * shell scripts:                         sh.                  (line   6)
 * Smalltalk:                             Smalltalk.           (line   6)
 * smalltalk-format flag:                 PO Files.            (line 139)
-* sorting ‘msgcat’ output:               msgcat Invocation.   (line 146)
-* sorting ‘msgmerge’ output:             msgmerge Invocation. (line 181)
+* sorting ‘msgcat’ output:               msgcat Invocation.   (line 152)
+* sorting ‘msgmerge’ output:             msgmerge Invocation. (line 188)
 * sorting ‘msgunfmt’ output:             msgunfmt Invocation. (line 147)
-* sorting output of ‘xgettext’:          xgettext Invocation. (line 335)
+* sorting output of ‘xgettext’:          xgettext Invocation. (line 405)
 * specifying plural form in a PO file:   Plural forms.        (line 177)
 * standard output, and ‘msgcat’:         msgcat Invocation.   (line  44)
 * standard output, and ‘msgmerge’ program: msgmerge Invocation.
@@ -17681,12 +18141,13 @@ General Index
 * string normalization in entries:       Normalizing.         (line   6)
 * style:                                 Preparing Strings.   (line  24)
 * supported languages, ‘xgettext’:       xgettext Invocation. (line  54)
+* supported syntax checks, ‘xgettext’:   xgettext Invocation. (line 116)
 * Tcl:                                   Tcl.                 (line   6)
 * Tcl mode, and ‘msgfmt’ program:        msgfmt Invocation.   (line  43)
 * Tcl mode, and ‘msgunfmt’ program:      msgunfmt Invocation. (line  26)
 * tcl-format flag:                       PO Files.            (line 163)
 * template PO file:                      Overview.            (line  67)
-* testing ‘.po’ files for equivalence:   xgettext Invocation. (line 345)
+* testing ‘.po’ files for equivalence:   xgettext Invocation. (line 415)
 * Tk’s scripting language:               Tcl.                 (line   6)
 * translated entries:                    Translated Entries.  (line   6)
 * translating menu entries:              Contexts.            (line   6)
@@ -17716,242 +18177,247 @@ General Index
 
 Tag Table:
 Node: Top2954
-Node: Introduction17908
-Node: Why19550
-Ref: Why-Footnote-122806
-Node: Concepts22962
-Node: Aspects26393
-Node: Files33001
-Node: Overview34951
-Node: Users45038
-Node: System Installation45953
-Node: Setting the GUI Locale47646
-Node: Setting the POSIX Locale49054
-Node: Locale Names50035
-Node: Locale Environment Variables52524
-Node: The LANGUAGE variable54867
-Node: Installing Localizations56888
-Node: PO Files58265
-Ref: PO Files-Footnote-171403
-Node: Sources71538
-Node: Importing72780
-Node: Triggering73484
-Node: Preparing Strings76842
-Node: Mark Keywords86001
-Node: Marking90569
-Node: c-format Flag98526
-Node: Special cases102580
-Node: Bug Report Address105363
-Node: Names107342
-Node: Libraries111648
-Node: Template114738
-Node: xgettext Invocation115503
-Node: Creating132767
-Node: msginit Invocation133676
-Node: Header Entry136721
-Node: Updating146178
-Node: msgmerge Invocation146397
-Node: Editing152513
-Node: KBabel152877
-Node: Gtranslator153017
-Node: PO Mode153161
-Node: Installation154821
-Node: Main PO Commands156837
-Node: Entry Positioning162109
-Node: Normalizing167754
-Node: Translated Entries172315
-Node: Fuzzy Entries173720
-Node: Untranslated Entries177027
-Node: Obsolete Entries179026
-Node: Modifying Translations182325
-Node: Modifying Comments190467
-Node: Subedit195016
-Node: C Sources Context199034
-Node: Auxiliary204263
-Node: Compendium207583
-Node: Creating Compendia208198
-Node: Using Compendia210760
-Node: Manipulating211718
-Node: msgcat Invocation215662
-Node: msgconv Invocation220643
-Node: msggrep Invocation224284
-Node: msgfilter Invocation230756
-Node: msguniq Invocation237596
-Node: msgcomm Invocation241995
-Node: msgcmp Invocation246555
-Node: msgattrib Invocation248796
-Node: msgen Invocation254149
-Node: msgexec Invocation258208
-Node: Colorizing260914
-Node: The --color option261969
-Node: The TERM variable263679
-Node: The --style option265233
-Node: Style rules266611
-Node: Customizing less273624
-Node: libgettextpo275079
-Node: Binaries280329
-Node: msgfmt Invocation280681
-Node: msgunfmt Invocation288771
-Node: MO Files293455
-Node: Programmers302066
-Node: catgets303280
-Node: Interface to catgets304710
-Node: Problems with catgets306779
-Node: gettext307704
-Node: Interface to gettext309227
-Node: Ambiguities311595
-Node: Locating Catalogs314355
-Ref: Locating Catalogs-Footnote-1315620
-Ref: Locating Catalogs-Footnote-2315852
-Node: Charset conversion316005
-Node: Contexts318525
-Node: Plural forms324145
-Ref: Plural forms-Footnote-1340363
-Node: Optimized gettext340485
-Node: Comparison341836
-Node: Using libintl.a346203
-Node: gettext grok346658
-Node: Temp Programmers349367
-Node: Temp Implementations349899
-Node: Temp catgets351317
-Node: Temp WSI353044
-Node: Temp Notes355107
-Node: Translators355621
-Node: Trans Intro 0356166
-Node: Trans Intro 1359023
-Node: Discussions360996
-Node: Organization364714
-Node: Central Coordination366800
-Node: National Teams367948
-Node: Sub-Cultures370482
-Node: Organizational Ideas371423
-Node: Mailing Lists372454
-Node: Information Flow374291
-Node: Translating plural forms376558
-Node: Prioritizing messages380001
-Node: Maintainers384385
-Node: Flat and Non-Flat386382
-Node: Prerequisites387912
-Node: gettextize Invocation392171
-Node: Adjusting Files399951
-Node: po/POTFILES.in401843
-Node: po/LINGUAS403142
-Node: po/Makevars404949
-Node: po/Rules-*405939
-Node: configure.ac407500
-Node: config.guess410665
-Node: mkinstalldirs412131
-Node: aclocal412544
-Node: acconfig415099
-Node: config.h.in415643
-Node: Makefile417191
-Node: src/Makefile419923
-Node: lib/gettext.h424849
-Node: autoconf macros427182
-Node: AM_GNU_GETTEXT428074
-Node: AM_GNU_GETTEXT_VERSION432298
-Node: AM_GNU_GETTEXT_NEED432765
-Node: AM_GNU_GETTEXT_INTL_SUBDIR433698
-Node: AM_PO_SUBDIRS434383
-Node: AM_XGETTEXT_OPTION435222
-Node: AM_ICONV436133
-Node: CVS Issues438518
-Node: Distributed CVS439129
-Node: Files under CVS441117
-Node: autopoint Invocation444507
-Node: Release Management446493
-Node: Installers447022
-Node: Programming Languages448292
-Node: Language Implementors449130
-Node: Programmers for other Languages454120
-Node: Translators for other Languages454714
-Node: c-format456524
-Node: objc-format458298
-Node: sh-format458657
-Node: python-format459506
-Node: lisp-format460313
-Node: elisp-format460642
-Node: librep-format461137
-Node: scheme-format461540
-Node: smalltalk-format461819
-Node: java-format462350
-Node: csharp-format462805
-Node: awk-format463187
-Node: object-pascal-format463515
-Node: ycp-format463901
-Node: tcl-format464319
-Node: perl-format464621
-Node: php-format465413
-Node: gcc-internal-format465789
-Node: gfc-internal-format466948
-Node: qt-format467697
-Node: qt-plural-format468143
-Node: kde-format468502
-Node: boost-format468931
-Node: lua-format469518
-Node: javascript-format469857
-Node: Maintainers for other Languages470627
-Node: List of Programming Languages471915
-Node: C473279
-Node: sh474727
-Node: Preparing Shell Scripts476087
-Node: gettext.sh479607
-Node: gettext Invocation480175
-Node: ngettext Invocation482226
-Node: envsubst Invocation484106
-Node: eval_gettext Invocation485585
-Node: eval_ngettext Invocation486050
-Node: bash486568
-Node: Python488617
-Node: Common Lisp491097
-Node: clisp C491947
-Node: Emacs Lisp492705
-Node: librep493473
-Node: Scheme494254
-Node: Smalltalk495088
-Node: Java496183
-Node: C#502227
-Node: gawk511901
-Node: Pascal512875
-Node: wxWidgets514287
-Node: YCP515254
-Node: Tcl516033
-Node: Perl517523
-Node: General Problems520715
-Node: Default Keywords526370
-Node: Special Keywords527398
-Node: Quote-like Expressions528960
-Node: Interpolation I531277
-Node: Interpolation II535221
-Node: Parentheses537605
-Node: Long Lines539130
-Node: Perl Pitfalls540997
-Node: PHP545331
-Node: Pike546340
-Node: GCC-source547041
-Node: Lua547861
-Node: JavaScript548867
-Node: List of Data Formats549622
-Node: POT550091
-Node: RST550361
-Node: Glade550599
-Node: Conclusion550993
-Node: History551507
-Node: References555910
-Node: Language Codes557609
-Node: Usual Language Codes558124
-Node: Rare Language Codes563042
-Node: Country Codes564892
-Node: Licenses571517
-Node: GNU GPL573373
-Node: GNU LGPL592611
-Node: GNU FDL620830
-Node: Program Index643364
-Node: Option Index645250
-Node: Variable Index698648
-Node: PO Mode Index701905
-Node: Autoconf Macro Index718615
-Node: Index719422
+Node: Introduction18186
+Node: Why19828
+Ref: Why-Footnote-123084
+Node: Concepts23240
+Node: Aspects26671
+Node: Files33279
+Node: Overview35229
+Node: Users45316
+Node: System Installation46231
+Node: Setting the GUI Locale47924
+Node: Setting the POSIX Locale49332
+Node: Locale Names50314
+Node: Locale Environment Variables52803
+Node: The LANGUAGE variable55146
+Node: Installing Localizations57167
+Node: PO Files58544
+Ref: PO Files-Footnote-171682
+Node: Sources71817
+Node: Importing73059
+Node: Triggering73763
+Node: Preparing Strings77121
+Node: Mark Keywords86280
+Node: Marking90848
+Node: c-format Flag98805
+Node: Special cases102851
+Node: Bug Report Address105634
+Node: Names107613
+Node: Libraries111919
+Node: Template115009
+Node: xgettext Invocation115774
+Node: Creating135758
+Node: msginit Invocation136667
+Node: Header Entry140990
+Node: Updating150447
+Node: msgmerge Invocation150666
+Node: Editing157132
+Node: KBabel157496
+Node: Gtranslator157636
+Node: PO Mode157780
+Node: Installation159440
+Node: Main PO Commands161456
+Node: Entry Positioning166728
+Node: Normalizing172373
+Node: Translated Entries176934
+Node: Fuzzy Entries178339
+Node: Untranslated Entries181646
+Node: Obsolete Entries183645
+Node: Modifying Translations186944
+Node: Modifying Comments195086
+Node: Subedit199635
+Node: C Sources Context203653
+Node: Auxiliary208882
+Node: Compendium212202
+Node: Creating Compendia212817
+Node: Using Compendia215379
+Node: Manipulating216337
+Node: msgcat Invocation220281
+Node: msgconv Invocation225603
+Node: msggrep Invocation229594
+Node: msgfilter Invocation236416
+Node: msguniq Invocation244770
+Node: msgcomm Invocation249510
+Node: msgcmp Invocation254411
+Node: msgattrib Invocation256652
+Node: msgen Invocation262421
+Node: msgexec Invocation266830
+Node: Colorizing270154
+Node: The --color option271209
+Node: The TERM variable272938
+Node: The --style option274492
+Node: Style rules275870
+Node: Customizing less282883
+Node: libgettextpo284338
+Node: Binaries289588
+Node: msgfmt Invocation289940
+Node: msgunfmt Invocation299682
+Node: MO Files304366
+Node: Programmers312977
+Node: catgets314191
+Node: Interface to catgets315621
+Node: Problems with catgets317690
+Node: gettext318615
+Node: Interface to gettext320138
+Node: Ambiguities322506
+Node: Locating Catalogs325266
+Ref: Locating Catalogs-Footnote-1326531
+Ref: Locating Catalogs-Footnote-2326763
+Node: Charset conversion326916
+Node: Contexts329436
+Node: Plural forms335056
+Ref: Plural forms-Footnote-1351772
+Node: Optimized gettext352144
+Node: Comparison353495
+Node: Using libintl.a357862
+Node: gettext grok358317
+Node: Temp Programmers361026
+Node: Temp Implementations361558
+Node: Temp catgets362976
+Node: Temp WSI364703
+Node: Temp Notes366766
+Node: Translators367280
+Node: Trans Intro 0367825
+Node: Trans Intro 1370682
+Node: Discussions372655
+Node: Organization376373
+Node: Central Coordination378459
+Node: National Teams379607
+Node: Sub-Cultures382141
+Node: Organizational Ideas383082
+Node: Mailing Lists384113
+Node: Information Flow385950
+Node: Translating plural forms388217
+Node: Prioritizing messages391660
+Node: Maintainers396044
+Node: Flat and Non-Flat398021
+Node: Prerequisites399551
+Node: gettextize Invocation403810
+Node: Adjusting Files411590
+Node: po/POTFILES.in413438
+Node: po/LINGUAS414737
+Node: po/Makevars416544
+Node: po/Rules-*417534
+Node: configure.ac419095
+Node: config.guess422268
+Node: mkinstalldirs423734
+Node: aclocal424147
+Node: acconfig426702
+Node: config.h.in427246
+Node: Makefile428794
+Node: src/Makefile431526
+Node: lib/gettext.h436452
+Node: autoconf macros438785
+Node: AM_GNU_GETTEXT439689
+Node: AM_GNU_GETTEXT_VERSION443913
+Node: AM_GNU_GETTEXT_NEED444392
+Node: AM_GNU_GETTEXT_INTL_SUBDIR445325
+Node: AM_PO_SUBDIRS446010
+Node: AM_XGETTEXT_OPTION446849
+Node: AM_ICONV447760
+Node: Version Control Issues450145
+Node: Distributed Development450900
+Node: Files under Version Control452935
+Node: Translations under Version Control456428
+Ref: Translations under Version Control-Footnote-1458504
+Node: autopoint Invocation458594
+Node: Release Management460615
+Node: Installers461156
+Node: Programming Languages462419
+Node: Language Implementors463257
+Node: Programmers for other Languages468247
+Node: Translators for other Languages468841
+Node: c-format470703
+Node: objc-format472477
+Node: sh-format472836
+Node: python-format473685
+Node: lisp-format474458
+Node: elisp-format474787
+Node: librep-format475282
+Node: scheme-format475685
+Node: smalltalk-format475964
+Node: java-format476495
+Node: csharp-format476950
+Node: awk-format477332
+Node: object-pascal-format477660
+Node: ycp-format478046
+Node: tcl-format478464
+Node: perl-format478766
+Node: php-format479558
+Node: gcc-internal-format479934
+Node: gfc-internal-format481093
+Node: qt-format481842
+Node: qt-plural-format482288
+Node: kde-format482647
+Node: kde-kuit-format483079
+Node: boost-format483744
+Node: lua-format484336
+Node: javascript-format484675
+Node: Maintainers for other Languages485445
+Node: List of Programming Languages486733
+Node: C488134
+Node: sh489582
+Node: Preparing Shell Scripts490942
+Node: gettext.sh494462
+Node: gettext Invocation495030
+Node: ngettext Invocation497081
+Node: envsubst Invocation498961
+Node: eval_gettext Invocation500440
+Node: eval_ngettext Invocation500905
+Node: bash501423
+Node: Python503472
+Node: Common Lisp505952
+Node: clisp C506802
+Node: Emacs Lisp507560
+Node: librep508328
+Node: Scheme509109
+Node: Smalltalk509984
+Node: Java511079
+Node: C#517123
+Node: gawk526797
+Node: Pascal527902
+Node: wxWidgets529314
+Node: YCP530281
+Node: Tcl531060
+Node: Perl532550
+Node: General Problems535742
+Node: Default Keywords541410
+Node: Special Keywords542438
+Node: Quote-like Expressions544000
+Node: Interpolation I546317
+Node: Interpolation II550261
+Node: Parentheses552645
+Node: Long Lines554170
+Node: Perl Pitfalls556037
+Node: PHP560371
+Node: Pike561380
+Node: GCC-source562081
+Node: Lua562901
+Node: JavaScript563907
+Node: Vala564675
+Node: List of Data Formats565594
+Node: POT566139
+Node: RST566409
+Node: Glade566647
+Node: GSettings567059
+Node: Conclusion567354
+Node: History567868
+Node: References572271
+Node: Language Codes573970
+Node: Usual Language Codes574485
+Node: Rare Language Codes579403
+Node: Country Codes581253
+Node: Licenses588406
+Node: GNU GPL590262
+Node: GNU LGPL609579
+Node: GNU FDL637816
+Node: Program Index660347
+Node: Option Index662757
+Node: Variable Index717282
+Node: PO Mode Index721953
+Node: Autoconf Macro Index738663
+Node: Index739470
 
 End Tag Table
 

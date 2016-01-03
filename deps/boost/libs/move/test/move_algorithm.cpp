@@ -40,7 +40,7 @@ int main()
    boost::move_backward(v2.begin(), v2.end(), v.end());
 
    //Test values have been moved
-   if(!v2[0].moved()){
+   if(!v2[1].moved()){
       return 1;
    }
 
@@ -48,7 +48,7 @@ int main()
       return 1;
    }
 
-   if(v[0].moved()){
+   if(v[1].moved()){
       return 1;
    }
 

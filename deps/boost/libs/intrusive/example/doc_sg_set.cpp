@@ -12,7 +12,7 @@
 //[doc_sg_set_code
 #include <boost/intrusive/sg_set.hpp>
 #include <vector>
-#include <algorithm>
+#include <functional>
 #include <cassert>
 
 using namespace boost::intrusive;

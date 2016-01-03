@@ -1,8 +1,8 @@
 /*
  libs/numeric/odeint/examples/stochastic_euler.hpp
 
- Copyright 2009-2012 Karsten Ahnert
- Copyright 2009-2012 Mario Mulansky
+ Copyright 2012 Karsten Ahnert
+ Copyright 2012 Mario Mulansky
 
  Stochastic euler stepper example and Ornstein-Uhlenbeck process
 
@@ -109,10 +109,10 @@ struct ornstein_det
 
 struct ornstein_stoch
 {
-    boost::mt19937 m_rng;
+    boost::mt19937 &m_rng;
     boost::normal_distribution<> m_dist;
 
-    ornstein_stoch( double sigma ) : m_rng() , m_dist( 0.0 , sigma ) { }
+  ornstein_stoch( boost::mt19937 &rng , double sigma ) : m_rng( rng ) , m_dist( 0.0 , sigma ) { }
 
     void operator()( const state_type &x , state_type &dxdt )
     {
@@ -137,9 +137,10 @@ int main( int argc , char **argv )
     using namespace boost::numeric::odeint;
 
     //[ ornstein_uhlenbeck_main
+    boost::mt19937 rng;
     double dt = 0.1;
     state_type x = {{ 1.0 }};
-    integrate_const( stochastic_euler< N >() , make_pair( ornstein_det() , ornstein_stoch( 1.0 ) ) ,
+    integrate_const( stochastic_euler< N >() , make_pair( ornstein_det() , ornstein_stoch( rng , 1.0 ) ),
             x , 0.0 , 10.0 , dt , streaming_observer() );
     //]
     return 0;

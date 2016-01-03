@@ -4,8 +4,8 @@
 //  @date   Aug 14, 2011
 //  @author Andrew Hundt <ATHundt@gmail.com>
 //
-//  (C) 2011-2012 Andrew Hundt <ATHundt@gmail.com>
-//  (C) 2013 Ion Gaztanaga
+//  (C) 2011-2013 Andrew Hundt <ATHundt@gmail.com>
+//  (C) 2013-2013 Ion Gaztanaga
 //
 //  Distributed under the Boost Software License, Version 1.0. (See
 //  accompanying file LICENSE_1_0.txt or copy at
@@ -28,7 +28,7 @@ using boost::timer::cpu_times;
 using boost::timer::nanosecond_type;
 
 #ifdef NDEBUG
-static const std::size_t N = 1000;
+static const std::size_t N = 300;
 #else
 static const std::size_t N = 100;
 #endif
@@ -141,5 +141,5 @@ int main()
    }catch(std::exception e){
       std::cout << e.what();
    }
-   return 1;
+   return 0;
 }

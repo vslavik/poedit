@@ -1,8 +1,9 @@
 [/============================================================================
   Boost.odeint
 
-  Copyright (c) 2009-2012 Karsten Ahnert
-  Copyright (c) 2009-2012 Mario Mulansky
+  Copyright 2011-2013 Karsten Ahnert
+  Copyright 2011-2013 Mario Mulansky
+  Copyright 2012 Sylwester Arabas
 
   Use, modification and distribution is subject to the Boost Software License,
   Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -85,9 +86,15 @@ The system function is defined via
 
 This class is used within the `do_step` and `integrate` method. It defines a member structure `sys_functor` for the r.h.s. of each individual oscillator and the `operator()` for the use in the steppers and integrators of odeint. The functor computes first the mean field of ['__phi[subl k]] and secondly calculates the whole r.h.s. of the ODE using this mean field. Note, how nicely `thrust::tuple` and `thrust::zip_iterator` play together.
 
-Now, we are ready to put everything together. All we have to do for making odeint ready for using the GPU is to parametrize the stepper with the appropriate thrust algebra/operations:
+Now we are ready to put everything together. All we have to do for making
+odeint ready for using the GPU is to parametrize the stepper with the `state_type`
+and `value_type`:
 
 [thrust_phase_ensemble_define_rk4]
+
+[note We have specifically define four template parameters because we have to
+override the default parameter value `double` with `value_type` to ensure our
+programs runs properly if we use `float` as fundamental data type.]
 
 You can also use a controlled or dense output stepper, e.g.
 
@@ -100,7 +107,7 @@ Then, it is straightforward to integrate the phase ensemble by creating an insta
 
 We have to use `boost::ref` here in order to pass the rhs class as reference and not by value. This ensures that the natural frequencies of each oscillator are not copied when calling `integrate_const`. In the full example the performance and results of the Runge-Kutta-4 and the Dopri5 solver are compared.
 
-The full example can be found at [github_link libs/numeric/odeint/examples/thrust/phase_oscillator_ensemble.cu phase_oscillator_example.cu].
+The full example can be found at [github_link examples/thrust/phase_oscillator_ensemble.cu phase_oscillator_example.cu].
 
 [endsect]
 
@@ -123,7 +130,7 @@ Now we put everything together. We create random initial conditions and decreasi
 
 [thrust_phase_chain_integration]
 
-The full example can be found at [github_link libs/numeric/odeint/examples/thrust/phase_oscillator_chain.cu phase_oscillator_chain.cu].
+The full example can be found at [github_link examples/thrust/phase_oscillator_chain.cu phase_oscillator_chain.cu].
 
 [endsect]
 
@@ -146,7 +153,7 @@ The next thing we have to implement is the Lorenz system without perturbations. 
 
 As `state_type` a `thrust::device_vector` or a __boost_range of a `device_vector` is used. The length of the state is ['3N] where ['N] is the number of systems. The system is encoded into this vector such that all ['x] components come first, then every ['y] components and finally every ['z] components. Implementing the device function is then a simple task, you only have to decompose the tuple originating from the zip iterators.
 
-Besides the system without perturbations we furthermore need to calculate the system including linearized equations governing the time evolution of small perturbations. Using the method from above this is straightforward, with a small difficulty that Thrust's tuples have a maximal arity of 10. But this is only a small problem since we can create a zip iterator packed with zip iterators. So the top level zip iterator contains one zip iterator for the state, one normal iterator for the parameter, and one zip iterator for the derivative. Accessing the elements of this tuple in the system function is then straightforward, you unpack the tuple with `thrust::get<>()`. We will not show the code here, it is to large. It can be found [github_link libs/numeric/odeint/examples/thrust/lorenz_parameters.cu here] and is easy to understand.
+Besides the system without perturbations we furthermore need to calculate the system including linearized equations governing the time evolution of small perturbations. Using the method from above this is straightforward, with a small difficulty that Thrust's tuples have a maximal arity of 10. But this is only a small problem since we can create a zip iterator packed with zip iterators. So the top level zip iterator contains one zip iterator for the state, one normal iterator for the parameter, and one zip iterator for the derivative. Accessing the elements of this tuple in the system function is then straightforward, you unpack the tuple with `thrust::get<>()`. We will not show the code here, it is to large. It can be found [github_link examples/thrust/lorenz_parameters.cu here] and is easy to understand.
 
 Furthermore, we need an observer which determines the norm of the perturbations, normalizes them and averages the logarithm of the norm. The device functor which is used within this observer is defined
 
@@ -158,7 +165,7 @@ Now we complete the whole code to calculate the Lyapunov exponents. First, we ha
 
 [thrust_lorenz_parameters_integration]
 
-The full example can be found at [github_link libs/numeric/odeint/examples/thrust/lorenz_parameters.cu lorenz_parameters.cu].
+The full example can be found at [github_link examples/thrust/lorenz_parameters.cu lorenz_parameters.cu].
 
 [endsect]
 

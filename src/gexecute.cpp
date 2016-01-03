@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2000-2013 Vaclav Slavik
+ *  Copyright (C) 2000-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -29,7 +29,6 @@
 #include <wx/txtstrm.h>
 #include <wx/string.h>
 #include <wx/intl.h>
-#include <wx/regex.h>
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
 
@@ -37,14 +36,27 @@
 #include "errors.h"
 #include "chooselang.h"
 
+// GCC's libstdc++ didn't have functional std::regex implementation until 4.9
+#if (defined(__GNUC__) && !defined(__clang__) && !wxCHECK_GCC_VERSION(4,9))
+    #include <boost/regex.hpp>
+    using boost::wregex;
+    using boost::wsmatch;
+    using boost::regex_match;
+#else
+    #include <regex>
+    using std::wregex;
+    using std::wsmatch;
+    using std::regex_match;
+#endif
+
 namespace
 {
 
-#if defined(__WXMAC__) || defined(__WXMSW__)
+#if defined(__WXOSX__) || defined(__WXMSW__)
 
 wxString GetGettextPackagePath()
 {
-#ifdef __WXMAC__
+#ifdef __WXOSX__
     wxString dir = wxStandardPaths::Get().GetPluginsDir();
     return dir + "/GettextTools.bundle/Contents/MacOS";
 #else
@@ -78,7 +90,7 @@ wxString GetPathToAuxBinary(const wxString& program)
         return program;
     }
 }
-#endif // __WXMAC__ || __WXMSW__
+#endif // __WXOSX__ || __WXMSW__
 
 
 bool ReadOutput(wxInputStream& s, wxArrayString& out)
@@ -106,17 +118,18 @@ long DoExecuteGettext(const wxString& cmdline_, wxArrayString& gstderr)
     wxExecuteEnv env;
     wxString cmdline(cmdline_);
 
-#if defined(__WXMAC__) || defined(__WXMSW__)
+#if defined(__WXOSX__) || defined(__WXMSW__)
     wxString binary = cmdline.BeforeFirst(_T(' '));
     cmdline = GetPathToAuxBinary(binary) + cmdline.Mid(binary.length());
+    wxGetEnvMap(&env.env);
     env.env["POEDIT_USE_UTF8"] = "1";
     env.env["POEDIT_LOCALEDIR"] = GetGettextPackagePath() + "/share/locale";
-#endif
-#if NEED_CHOOSELANG_UI
+    #if NEED_CHOOSELANG_UI
 	wxString lang = GetUILanguage();
 	if ( !lang.empty() )
 		env.env["LANG"] = lang;
-#endif
+    #endif
+#endif // __WXOSX__ || __WXMSW__
 
     wxLogTrace("poedit.execute", "executing: %s", cmdline.c_str());
 
@@ -159,23 +172,22 @@ bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors
     wxArrayString gstderr;
     long retcode = DoExecuteGettext(cmdline, gstderr);
 
-    wxRegEx reError(".*\\.po:([0-9]+)(:[0-9]+)?: (.*)");
+    static const wregex RE_ERROR(L".*\\.po:([0-9]+)(:[0-9]+)?: (.*)");
 
-    for ( size_t i = 0; i < gstderr.size(); i++ )
+    for (const auto& ewx: gstderr)
     {
-        const wxString e = gstderr[i];
-        wxLogTrace("poedit.execute", "  stderr: %s", e.c_str());
+        const auto e = ewx.ToStdWstring();
+        wxLogTrace("poedit", "  stderr: %s", e.c_str());
         if ( e.empty() )
             continue;
 
         GettextError rec;
 
-        if ( reError.Matches(e) )
+        wsmatch match;
+        if (regex_match(e, match, RE_ERROR))
         {
-            long num = -1;
-            reError.GetMatch(e, 1).ToLong(&num);
-            rec.line = (int)num;
-            rec.text = reError.GetMatch(e, 3);
+            rec.line = std::stoi(match.str(1));
+            rec.text = match.str(3);
             errors.push_back(rec);
             wxLogTrace("poedit.execute",
                        _T("        => parsed error = \"%s\" at %d"),
@@ -189,4 +201,14 @@ bool ExecuteGettextAndParseOutput(const wxString& cmdline, GettextErrors& errors
     }
 
     return retcode == 0;
+}
+
+
+wxString QuoteCmdlineArg(const wxString& s)
+{
+    wxString s2(s);
+#ifdef __UNIX__
+    s2.Replace("\"", "\\\"");
+#endif
+    return "\"" + s2 + "\"";
 }

@@ -19,11 +19,11 @@ The function `is_sorted(sequence)` determines whether or not a sequence is compl
 
 ``
 namespace boost { namespace algorithm {
-	template <typename Iterator, typename Pred>
-	bool is_sorted ( Iterator first, Iterator last, Pred p );
+	template <typename ForwardIterator, typename Pred>
+	bool is_sorted ( ForwardIterator first, ForwardIterator last, Pred p );
 	
-	template <typename Iterator>
-	bool is_sorted ( Iterator first, Iterator last );
+	template <typename ForwardIterator>
+	bool is_sorted ( ForwardIterator first, ForwardIterator last );
 	
 	
 	template <typename Range, typename Pred>
@@ -34,7 +34,7 @@ namespace boost { namespace algorithm {
 }}
 ``
 
-Iterator requirements: The `is_sorted` functions will work on all kinds of iterators (except output iterators). 
+Iterator requirements: The `is_sorted` functions will work forward iterators or better.
 
 [heading is_sorted_until]
 
@@ -88,8 +88,8 @@ To test if a sequence is decreasing (each element no larger than the preceding o
 
 ``
 namespace boost { namespace algorithm {
-	template <typename Iterator>
-	bool is_decreasing ( Iterator first, Iterator last );
+	template <typename ForwardIterator>
+	bool is_decreasing ( ForwardIterator first, ForwardIterator last );
 	
 	template <typename R>
 	bool is_decreasing ( const R &range );
@@ -99,8 +99,8 @@ namespace boost { namespace algorithm {
 To test if a sequence is strictly increasing (each element larger than the preceding one):
 ``
 namespace boost { namespace algorithm {
-	template <typename Iterator>
-	bool is_strictly_increasing ( Iterator first, Iterator last );
+	template <typename ForwardIterator>
+	bool is_strictly_increasing ( ForwardIterator first, ForwardIterator last );
 	
 	template <typename R>
 	bool is_strictly_increasing ( const R &range );
@@ -110,8 +110,8 @@ namespace boost { namespace algorithm {
 To test if a sequence is strictly decreasing (each element smaller than the preceding one):
 ``
 namespace boost { namespace algorithm {
-	template <typename Iterator>
-	bool is_strictly_decreasing ( Iterator first, Iterator last );
+	template <typename ForwardIterator>
+	bool is_strictly_decreasing ( ForwardIterator first, ForwardIterator last );
 	
 	template <typename R>
 	bool is_strictly_decreasing ( const R &range );

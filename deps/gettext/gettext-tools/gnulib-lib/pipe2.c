@@ -1,5 +1,5 @@
 /* Create a pipe, with specific opening flags.
-   Copyright (C) 2009-2013 Free Software Foundation, Inc.
+   Copyright (C) 2009-2015 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,10 +22,7 @@
 #include <errno.h>
 #include <fcntl.h>
 
-#if GNULIB_BINARY_IO
-# include "binary-io.h"
-#endif
-
+#include "binary-io.h"
 #include "verify.h"
 
 #if GNULIB_defined_O_NONBLOCK
@@ -141,13 +138,13 @@ pipe2 (int fd[2], int flags)
 # if O_BINARY
   if (flags & O_BINARY)
     {
-      setmode (fd[1], O_BINARY);
-      setmode (fd[0], O_BINARY);
+      set_binary_mode (fd[1], O_BINARY);
+      set_binary_mode (fd[0], O_BINARY);
     }
   else if (flags & O_TEXT)
     {
-      setmode (fd[1], O_TEXT);
-      setmode (fd[0], O_TEXT);
+      set_binary_mode (fd[1], O_TEXT);
+      set_binary_mode (fd[0], O_TEXT);
     }
 # endif
 

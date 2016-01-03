@@ -9,11 +9,13 @@
 
 #include <boost/config.hpp>
 
-#if !defined(BOOST_NO_RVALUE_REFERENCES)
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
 
 #include <boost/fusion/container/deque/deque.hpp>
 
-#define FUSION_SEQUENCE boost::fusion::deque
+#define FUSION_SEQUENCE boost::fusion::deque<std::vector<x>>
+#define FUSION_SEQUENCE2 boost::fusion::deque<std::vector<x>, x>
+
 #include "move.hpp"
 
 #else
@@ -23,7 +25,7 @@
 int
 main()
 {
-#if !defined(BOOST_NO_RVALUE_REFERENCES)
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
     test();
 #endif
 

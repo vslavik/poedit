@@ -20,7 +20,7 @@ namespace std{
 #endif
 
 #include "test_tools.hpp"
-#include <boost/detail/no_exceptions_support.hpp>
+#include <boost/core/no_exceptions_support.hpp>
 
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/version.hpp>
@@ -103,8 +103,52 @@ bool K::operator==(const K &rhs) const
     ;
 }
 
-int test_main( int /* argc */, char* /* argv */[] )
-{
+int test1(){
+    const char * testfile = boost::archive::tmpnam(NULL);
+    BOOST_REQUIRE(NULL != testfile);
+
+    J j1, j2;
+    {
+        test_ostream os(testfile, TEST_STREAM_FLAGS);
+        test_oarchive oa(os, TEST_ARCHIVE_FLAGS);
+        oa << BOOST_SERIALIZATION_NVP(j1);
+    }
+    {
+        // try to read the archive
+        test_istream is(testfile, TEST_STREAM_FLAGS);
+        test_iarchive ia(is, TEST_ARCHIVE_FLAGS);
+        ia >> BOOST_SERIALIZATION_NVP(j2);
+    }
+    BOOST_CHECK(j1 == j2);
+    std::remove(testfile);
+    return EXIT_SUCCESS;
+}
+
+int test2(){
+    const char * testfile = boost::archive::tmpnam(NULL);
+    BOOST_REQUIRE(NULL != testfile);
+
+    J *j1 = new J;
+    j1->j = j1;
+    J *j2 = reinterpret_cast<J *>(0xBAADF00D);
+    {
+        test_ostream os(testfile, TEST_STREAM_FLAGS);
+        test_oarchive oa(os, TEST_ARCHIVE_FLAGS);
+        oa << BOOST_SERIALIZATION_NVP(j1);
+    }
+    {
+        // try to read the archive
+        test_istream is(testfile, TEST_STREAM_FLAGS);
+        test_iarchive ia(is, TEST_ARCHIVE_FLAGS);
+        ia >> BOOST_SERIALIZATION_NVP(j2);
+    }
+    BOOST_CHECK(*j1 == *j2);
+    BOOST_CHECK(j2 == j2->j);
+    std::remove(testfile);
+    return EXIT_SUCCESS;
+}
+
+int test3(){
     const char * testfile = boost::archive::tmpnam(NULL);
     BOOST_REQUIRE(NULL != testfile);
 
@@ -146,6 +190,13 @@ int test_main( int /* argc */, char* /* argv */[] )
         );
     }
     std::remove(testfile);
+    return EXIT_SUCCESS;
+}
+
+int test_main( int /* argc */, char* /* argv */[] ){
+    test1();
+    test2();
+    test3();
     return EXIT_SUCCESS;
 }
 

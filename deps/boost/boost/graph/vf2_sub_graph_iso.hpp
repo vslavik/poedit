@@ -690,11 +690,13 @@ namespace boost {
     
       typedef vf2_match_continuation<Graph1, Graph2, VertexOrder1> match_continuation_type;
       std::vector<match_continuation_type> k;
+      bool found_match = false;
   
       recur:
       if (s.success()) {
         if (!s.call_back(user_callback)) 
-          return false;
+          return true;
+        found_match = true;
 
         goto back_track;
       }
@@ -726,7 +728,7 @@ namespace boost {
 
       back_track:
       if (k.empty()) 
-        return true;    
+        return found_match;    
       
       const match_continuation_type kk = k.back();
       graph1_verts_iter = kk.graph1_verts_iter;
@@ -887,9 +889,6 @@ namespace boost {
       if (num_edges_small > num_edges_large)
         return false;
     
-      if ((num_vertices(graph_small) == 0) && (num_vertices(graph_large) == 0))
-        return true;
-
       detail::state<GraphSmall, GraphLarge, IndexMapSmall, IndexMapLarge,
                     EdgeEquivalencePredicate, VertexEquivalencePredicate,
                     SubGraphIsoMapCallback, problem_selection> 
@@ -1123,9 +1122,6 @@ namespace boost {
     if (num_edges1 != num_edges2)
       return false;
 
-    if ((num_vertices(graph1) == 0) && (num_vertices(graph2) == 0))
-      return true;
-        
     detail::state<Graph1, Graph2, IndexMap1, IndexMap2,
                   EdgeEquivalencePredicate, VertexEquivalencePredicate,
                   GraphIsoMapCallback, detail::isomorphism> 

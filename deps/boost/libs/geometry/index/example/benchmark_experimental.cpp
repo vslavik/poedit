@@ -15,6 +15,7 @@
 #include <boost/foreach.hpp>
 #include <boost/random.hpp>
 
+#include <boost/geometry.hpp>
 #include <boost/geometry/index/rtree.hpp>
 #include <boost/geometry/geometries/linestring.hpp>
 #include <boost/geometry/geometries/segment.hpp>
@@ -26,8 +27,10 @@ typedef bg::model::point<double, 2, bg::cs::cartesian> P;
 typedef bg::model::box<P> B;
 typedef bg::model::linestring<P> LS;
 typedef bg::model::segment<P> S;
-typedef B V;
 //typedef P V;
+typedef B V;
+//typedef S V;
+//#define SEGMENT_INDEXABLE
 
 template <typename V>
 struct generate_value {};
@@ -36,6 +39,12 @@ template <>
 struct generate_value<B>
 {
     static inline B apply(float x, float y) { return B(P(x - 0.5f, y - 0.5f), P(x + 0.5f, y + 0.5f)); }
+};
+
+template <>
+struct generate_value<S>
+{
+    static inline S apply(float x, float y) { return S(P(x - 0.5f, y - 0.5f), P(x + 0.5f, y + 0.5f)); }
 };
 
 template <>
@@ -278,6 +287,7 @@ int main()
             std::cout << time << " - range type-erased qbegin(B) qend() " << queries_count << " found " << temp << '\n';
         }
 
+#ifndef SEGMENT_INDEXABLE
         {
             clock_t::time_point start = clock_t::now();
             size_t temp = 0;
@@ -304,6 +314,7 @@ int main()
             dur_t time = clock_t::now() - start;
             std::cout << time << " - query(i && !w && !c) " << queries_count << " found " << temp << '\n';
         }
+#endif
 
         result.clear();
 
@@ -376,6 +387,7 @@ int main()
         }
 
 #ifdef BOOST_GEOMETRY_INDEX_DETAIL_EXPERIMENTAL
+#ifndef SEGMENT_INDEXABLE
 
         {
             LS ls;
@@ -436,6 +448,7 @@ int main()
             dur_t time = clock_t::now() - start;
             std::cout << time << " - query(path(S, " << path_values_count << ")) " << path_queries_count2 << " found " << temp << '\n';
         }
+#endif
 #endif
         {
             clock_t::time_point start = clock_t::now();

@@ -76,7 +76,7 @@ void test_all()
 
 int test_main(int, char* [])
 {
-    std::vector<int> a; 
+    std::vector<int> a;
     a.push_back(1);
     boost::range_iterator<std::vector<int> const>::type it = a.end();
     --it;

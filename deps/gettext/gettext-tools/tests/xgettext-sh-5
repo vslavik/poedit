@@ -1,11 +1,8 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of Shell support: bash $(...) syntax.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-sh-5.sh"
 cat <<\EOF > xg-sh-5.sh
 echo $(gettext 'Simple string')
 echo "$(gettext 'Simple string inside double-quotes')"
@@ -17,14 +14,10 @@ echo $(gettext "Simple decorated dstring: \"x\" \\\"y\\\"")
 echo "$(gettext "Simple decorated dstring: \"x\" \\\"y\\\" inside double-quotes")"
 EOF
 
-tmpfiles="$tmpfiles xg-sh-5.tmp.po xg-sh-5.po"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --omit-header --no-location -d xg-sh-5.tmp xg-sh-5.sh
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < xg-sh-5.tmp.po > xg-sh-5.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} --omit-header --no-location -d xg-sh-5.tmp xg-sh-5.sh || exit 1
+LC_ALL=C tr -d '\r' < xg-sh-5.tmp.po > xg-sh-5.po || exit 1
 
-tmpfiles="$tmpfiles xg-sh-5.ok"
 cat <<\EOF > xg-sh-5.ok
 msgid "Simple string"
 msgstr ""
@@ -54,7 +47,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-sh-5.ok xg-sh-5.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

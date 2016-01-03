@@ -1,934 +1,64 @@
-# French translation of the Poedit package.
-# Please see http://live.gnome.org/GnomeFr/Traduire for translation guidelines.
-# Lionel Allorge <lionel.allorge@lunerouge.com>, ???.
-# Guy Clotilde <guy.clotilde@wanadoo.fr>, 2003.
-# Nicolas Boos <nicolas.boos@wanadoo.fr>, 2003.
-# Christian Perrier <bubulle@debian.org>, 2004.
-# Jean-Christophe Gigogne <jc.gigogne@wanadoo.fr>, 2005.
-# Jonathan Ernst <jonathan@ernstfamily.ch>, 2006.
-# Maximilian Schleiss <maxschleiss@bluewin.ch>, 2007.
-# Lübbe Onken <l.onken@rac.de>, 2007
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: Poedit 1.6\n"
-"Report-Msgid-Bugs-To: poedit@googlegroups.com\n"
-"POT-Creation-Date: 2013-11-27 11:14+0100\n"
-"PO-Revision-Date: 2012-08-09 13:47+0100\n"
-"Last-Translator: FxB <fx@fxbenard.com>\n"
-"Language-Team: French & FxB <poedit@googlegroups.com>\n"
-"Language: fr\n"
+"Project-Id-Version: poedit\n"
+"Report-Msgid-Bugs-To: help@poedit.net\n"
+"POT-Creation-Date: 2015-10-20 13:51+0200\n"
+"PO-Revision-Date: 2015-10-20 07:50-0400\n"
+"Last-Translator: vslavik <vaclav@slavik.io>\n"
+"Language-Team: French\n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: poedit\n"
+"X-Crowdin-Language: fr\n"
+"X-Crowdin-File: /locales/poedit.pot\n"
 
-#. TRANSLATORS: Quoted text with leading 4 spaces
-#: ../src/edframe.cpp:2884
+msgid "Hide this notification message"
+msgstr "Masquer ce message de notification"
+
+msgid "Don't Show Again"
+msgstr "Ne plus afficher"
+
+msgid "Don't show again"
+msgstr "Ne plus afficher"
+
 #, c-format
-msgid "    “%s”"
-msgstr ""
+msgid "%i line of file '%s' was not loaded correctly."
+msgid_plural "%i lines of file '%s' were not loaded correctly."
+msgstr[0] "%i ligne du fichier « %s » n'a pas été chargée correctement."
+msgstr[1] "%i lignes du fichier « %s » n'ont pas été chargées correctement."
 
-#: ../src/edframe.cpp:2524
 #, c-format
-msgid " (beta version expires %s)"
-msgstr ""
+msgid "Line %d of file '%s' is corrupted (not valid %s data)."
+msgstr "La ligne %d du fichier '%s'  est corrompue (données %s non valides)."
 
-#: ../src/edframe.cpp:2513
-msgid " (modified)"
-msgstr " (modifié)"
-
-#: ../src/edframe.cpp:2495
-msgid " (unsaved)"
-msgstr ""
-
-#. TRANSLATORS: This is version information in about dialog, it is followed
-#. by version number when used (wxWidgets 2.8)
-#: ../src/edapp.cpp:596
-msgid " Version "
-msgstr "Version "
-
-#: ../src/edframe.cpp:1679
 #, c-format
-msgid "%d issue with the translation found."
-msgid_plural "%d issues with the translation found."
-msgstr[0] "%d problème trouvé dans la traduction"
-msgstr[1] "%d problèmes trouvés dans la traduction"
+msgid "Malformed header: '%s'"
+msgstr "En-tête mal formée : « %s »"
 
-#: ../src/edframe.cpp:2458
-#, c-format
-msgid "%i %% translated, %i string"
-msgid_plural "%i %% translated, %i strings"
-msgstr[0] "Traduit à %i %%, %i chaîne"
-msgstr[1] "Traduit à %i %%, %i chaînes"
-
-#: ../src/edframe.cpp:2463
-#, c-format
-msgid "%i %% translated, %i string (%s)"
-msgid_plural "%i %% translated, %i strings (%s)"
-msgstr[0] "Traduit à %i %%, %i chaîne (%s)"
-msgstr[1] "Traduit à %i %%, %i chaînes (%s)"
-
-# Status bar text
-#: ../src/export_html.cpp:141
-#, c-format
-msgid ""
-"%i %% translated, %i strings (%i fuzzy, %i bad tokens, %i not translated)"
-msgstr ""
-"Traduit à %i %%, %i chaînes (%i approximatives, %i marqueurs incorrects, %i "
-"restant à traduire)"
-
-#: ../src/edframe.cpp:2448
-#, c-format
-msgid "%i bad token"
-msgid_plural "%i bad tokens"
-msgstr[0] "%i marqueur incorrect"
-msgstr[1] "%i marqueurs incorrects"
-
-#: ../src/edframe.cpp:2442
-#, c-format
-msgid "%i fuzzy"
-msgid_plural "%i fuzzy"
-msgstr[0] "%i approximative"
-msgstr[1] "%i approximatives"
-
-#: ../src/catalog.cpp:131
-#, c-format
-msgid "%i lines of file '%s' were not loaded correctly."
-msgstr "%i lignes du fichier « %s » n'ont pas été chargées correctement."
-
-# Checkbox label in the Find... window
-#: ../src/edframe.cpp:2454
-#, c-format
-msgid "%i not translated"
-msgid_plural "%i not translated"
-msgstr[0] "%i non traduite"
-msgstr[1] "%i non traduites"
-
-# Help menu item label; the hint is system-supplied
-#: ../src/resources/menus.xrc:265 ../src/resources/menus.xrc:266
-#: ../src/resources/menus.xrc:330 ../src/resources/menus.xrc:331
-msgid "&About"
-msgstr "À &propos"
-
-# Help menu item label; the hint is system-supplied
-#: ../src/resources/menus.xrc:264 ../src/resources/menus.xrc:329
-msgid "&About Poedit"
-msgstr "À &propos de Poedit"
-
-# Main menu
-#: ../src/edframe.cpp:3258
-msgid "&Bookmarks"
-msgstr "&Marque-pages"
-
-# File menu item label; the hint is system-supplied (also Catalogs manager window)
-#: ../src/resources/manager.xrc:121 ../src/resources/menus.xrc:26
-msgid "&Close"
-msgstr "&Quitter"
-
-# View menu item label
-#: ../src/resources/menus.xrc:215
-msgid "&Comment Window"
-msgstr "Fenêtre de co&mmentaires"
-
-# View menu item label
-#: ../src/resources/menus.xrc:214
-msgid "&Comment window"
-msgstr "Fenêtre de co&mmentaires"
-
-#: ../src/resources/menus.xrc:169
-msgid "&Done and Next"
-msgstr "&Appliquer et continuer"
-
-#: ../src/resources/menus.xrc:168
-msgid "&Done and next"
-msgstr "&Appliquer et continuer"
-
-# Main menu
-#: ../src/resources/menus.xrc:64 ../src/resources/menus.xrc:303
-msgid "&Edit"
-msgstr "&Edition"
-
-# Main menu (also Catalogs manager window)
-#: ../src/edframe.cpp:522 ../src/resources/manager.xrc:114
-#: ../src/resources/menus.xrc:5 ../src/resources/menus.xrc:275
-msgid "&File"
-msgstr "&Fichier"
-
-# Edit menu item label
-#: ../src/resources/menus.xrc:97 ../src/resources/menus.xrc:111
-msgid "&Find..."
-msgstr "Rec&hercher..."
-
-# Help menu item label
-#: ../src/resources/menus.xrc:252 ../src/resources/menus.xrc:320
-#, fuzzy
-msgid "&GNU gettext Manual"
-msgstr "Documentation &GNU de gettext"
-
-# Help menu item label
-#: ../src/resources/menus.xrc:251 ../src/resources/menus.xrc:319
-#, fuzzy
-msgid "&GNU gettext manual"
-msgstr "Documentation &GNU de gettext"
-
-#: ../src/edframe.cpp:528 ../src/resources/menus.xrc:165
-msgid "&Go"
-msgstr "&Démarrer"
-
-# Main menu
-#: ../src/edapp.cpp:194 ../src/resources/menus.xrc:268
-#: ../src/resources/menus.xrc:333
-msgid "&Help"
-msgstr "&?"
-
-#: ../src/resources/menus.xrc:261
-msgid "&License..."
-msgstr ""
-
-# File menu item label
-#: ../src/resources/menus.xrc:8 ../src/resources/menus.xrc:278
-#, fuzzy
-msgid "&New..."
-msgstr "&Nouveau catalogue..."
-
-# Button label in the Find... window
-#: ../src/resources/find.xrc:102
-#, fuzzy
-msgid "&Next >"
-msgstr "Suivante >"
-
-#: ../src/resources/menus.xrc:181
-msgid "&Next Message"
-msgstr "Message &suivant"
-
-#: ../src/resources/menus.xrc:180
-msgid "&Next message"
-msgstr "Message &suivant"
-
-#: ../src/resources/menus.xrc:245 ../src/resources/menus.xrc:313
-msgid "&Online Help"
-msgstr "&Aide en ligne"
-
-#: ../src/resources/menus.xrc:244 ../src/resources/menus.xrc:312
-msgid "&Online help"
-msgstr "&Aide en ligne"
-
-# File menu item label
-#: ../src/resources/menus.xrc:21 ../src/resources/menus.xrc:291
-msgid "&Open..."
-msgstr "Ou&vrir..."
-
-#: ../src/resources/menus.xrc:125
-msgid "&Preferences"
-msgstr "&Préférences"
-
-# File menu item label (also Catalogs manager window)
-#: ../src/resources/manager.xrc:117 ../src/resources/menus.xrc:47
-#: ../src/resources/menus.xrc:295
-msgid "&Preferences..."
-msgstr "Pré&férences..."
-
-#: ../src/resources/menus.xrc:176
-msgid "&Previous Message"
-msgstr "Message &précédent"
-
-#: ../src/resources/menus.xrc:175
-msgid "&Previous message"
-msgstr "Message &précédent"
-
-# File menu item label (also Catalogs manager window)
-#: ../src/resources/menus.xrc:158
-msgid "&Properties..."
-msgstr "&Préférences..."
-
-# Catalog menu item label
-#: ../src/resources/menus.xrc:146
-msgid "&Purge Deleted Translations"
-msgstr "Pu&rger les traductions supprimées"
-
-# Catalog menu item label
-#: ../src/resources/menus.xrc:145
-msgid "&Purge deleted translations"
-msgstr "Pu&rger les traductions supprimées"
-
-# File menu item label; the hint is system-supplied
-#: ../src/resources/menus.xrc:30
-msgid "&Save"
-msgstr "Enre&gistrer"
-
-# Edit menu item label
-#: ../src/resources/menus.xrc:94
-msgid "&Show References"
-msgstr "&Voir les références"
-
-# Edit menu item label
-#: ../src/resources/menus.xrc:93
-msgid "&Show references"
-msgstr "&Voir les références"
-
-#: ../src/resources/menus.xrc:154
-msgid "&Statistics"
-msgstr ""
-
-#: ../src/resources/menus.xrc:237
-msgid "&Untranslated Entries First"
-msgstr "Éléments &non traduits en premier"
-
-#: ../src/resources/menus.xrc:236
-msgid "&Untranslated entries first"
-msgstr "Éléments &non traduits en premier"
-
-# Catalog menu item label
-#: ../src/resources/menus.xrc:134
-msgid "&Update from Sources"
-msgstr "Mise à jo&ur depuis les sources"
-
-# Catalog menu item label
-#: ../src/resources/menus.xrc:133
-msgid "&Update from sources"
-msgstr "Mise à jo&ur depuis les sources"
-
-# Main window list header
-#: ../src/resources/menus.xrc:150
-msgid "&Validate Translations"
-msgstr "&Valider la traduction"
-
-# View menu item label
-#: ../src/resources/menus.xrc:149
-msgid "&Validate translations"
-msgstr "&Valider les traductions"
-
-# Main menu
-#: ../src/resources/menus.xrc:196
-msgid "&View"
-msgstr "&Affichage"
-
-#: ../src/catalog.cpp:1649
-#, c-format
-msgid "'%s' is not a valid POT file."
-msgstr "« %s » n'est pas un fichier POT valide."
-
-#: ../src/summarydlg.cpp:56
-#, c-format
-msgid "(%i new, %i obsolete)"
-msgstr "(%i nouvelles, %i désuètes)"
-
-#: ../src/resources/summary.xrc:62
-msgid "(0 new, 0 obsolete)"
-msgstr "(0 nouvelles, 0 désuètes)"
-
-#: ../src/welcomescreen.cpp:227
-msgid "(Learn more about GNU gettext)"
-msgstr ""
-
-# Language selection window list entry
-#: ../src/chooselang.cpp:62
-msgid "(Use default language)"
-msgstr "(Utiliser la langue par défaut)"
-
-# Button label in the Find... window
-#: ../src/resources/find.xrc:94
-#, fuzzy
-msgid "< &Previous"
-msgstr "< Précédente"
-
-#: ../src/manager.cpp:387
-msgid "<unnamed>"
-msgstr "<sans_nom>"
-
-# Help menu item label; the hint is system-supplied
-#. TRANSLATORS: This is titlebar of about dialog, the string ends with space
-#. and is followed by application name when used ("Poedit",
-#. but don't add it to this translation yourself) (wxWidgets 2.8)
-#: ../src/edapp.cpp:600
-msgid "About "
-msgstr "À propos"
-
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#: ../src/aboutbox.cpp:77 ../src/edapp.cpp:590
-#, c-format
-msgid "About %s"
-msgstr "À propos de %s"
-
-#: ../src/aboutbox.cpp:105 ../src/aboutbox.cpp:113
-msgid "Acknowledgements"
-msgstr ""
-
-# Edit project window Browse button hint
-#: ../src/resources/manager.xrc:80
-msgid "Add directory to the list"
-msgstr "Ajouter un répertoire à la liste"
-
-# Parsers window text box label
-#: ../src/propertiesdlg.cpp:65
-#, fuzzy
-msgid "Additional keywords"
-msgstr "Un élément de la liste des mots clés :"
-
-# Preferences dialog, Editor tab check box label
-#: ../src/resources/prefs.xrc:110
-msgid "Always change focus to text input field"
-msgstr "Toujours activer la zone de saisie du texte"
-
-# Parsers window text box label
-#: ../src/resources/prefs.xrc:393
-msgid "An item in input files list:"
-msgstr "Un élément de la liste des fichiers d'éléments :"
-
-# Parsers window text box label
-#: ../src/resources/prefs.xrc:374
-msgid "An item in keywords list:"
-msgstr "Un élément de la liste des mots clés :"
-
-#: ../src/edframe.cpp:2863 ../src/edframe.cpp:2875
-msgid "Automatic Translations:"
-msgstr "Traductions automatiques :"
-
-#: ../src/export_html.cpp:191
-msgid "Automatic translation"
-msgstr "Traduction automatique"
-
-#: ../src/edframe.cpp:2861 ../src/edframe.cpp:2873
-msgid "Automatic translations:"
-msgstr "Traductions automatiques :"
-
-#: ../src/resources/prefs.xrc:69
-msgid "Automatically check for new version of Poedit"
-msgstr "Vérifier automatiquement l'existence d'une nouvelle version de Poedit"
-
-# Preferences window, Editor tab check box label
-#: ../src/resources/prefs.xrc:94
-msgid "Automatically compile .mo file on save"
-msgstr "Compiler automatiquement les fichiers .mo lors de l'enregistrement"
-
-#: ../src/manager.cpp:253
-msgid "Bad Tokens"
-msgstr "Marqueurs incorrects"
-
-# Settings window, Paths tab text box label
-#: ../src/resources/properties.xrc:156
-msgid "Base path:"
-msgstr "Chemin de base :"
-
-# Group box label in the Preferences window, Editor tab
-#: ../src/resources/prefs.xrc:90
-msgid "Behavior"
-msgstr "Comportement"
-
-#: ../src/edapp.cpp:201
-msgid "Beta expired"
-msgstr ""
-
-#: ../src/catalog.cpp:681
-msgid "Broken catalog file: plural form msgstr used without msgid_plural"
-msgstr "Catalogue corrompu : forme plurielle msgstr utilisée sans msgid_plural"
-
-#: ../src/catalog.cpp:636
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
 "Catalogue corrompu : forme singulière msgstr utilisée conjointement avec "
 "msgid_plural"
 
-# Preferences dialog, Translation Memory tab button label; Edit project window button label; Translation Memory window (?) button label
-#: ../src/resources/manager.xrc:79
-msgid "Browse"
-msgstr "Parcourir"
+msgid "Broken catalog file: plural form msgstr used without msgid_plural"
+msgstr "Catalogue corrompu : forme plurielle msgstr utilisée sans msgid_plural"
 
-#: ../src/licensing.cpp:117
-msgid "Buy Online..."
+msgid ""
+"There were errors when loading the catalog. Some data may be missing or "
+"corrupted as the result."
 msgstr ""
+"Il y a eu des erreurs lors du chargement du catalogue. Il se pourrait que "
+"des données soient manquantes ou corrompues."
 
-#: ../src/licensing.cpp:115
-msgid "Buy online..."
-msgstr ""
-
-# Main menu
-#: ../src/resources/menus.xrc:130
-msgid "C&atalog"
-msgstr "C&atalogue"
-
-# Edit comment window button label
-#: ../src/resources/comment.xrc:45
-msgid "C&lear"
-msgstr "&Effacer"
-
-# Preferences window, Editor tab group box label
-#: ../src/resources/prefs.xrc:140
-msgid "CR/LF conversion"
-msgstr "Conversion CR/LF"
-
-# Button label
-#: ../src/resources/comment.xrc:38 ../src/resources/manager.xrc:102
-#: ../src/resources/prefs.xrc:303 ../src/resources/prefs.xrc:445
-#: ../src/resources/progress.xrc:32 ../src/resources/properties.xrc:233
-msgid "Cancel"
-msgstr "Annuler"
-
-#: ../src/utility.cpp:57 ../src/utility.cpp:67
-msgid "Cannot create temporary directory."
-msgstr "Impossible de créer le répertoire temporaire."
-
-#: ../src/gexecute.cpp:133
-#, c-format
-msgid "Cannot execute program: %s"
-msgstr "Impossible d'exécuter le programme : %s"
-
-#: ../src/edapp.cpp:837
-msgid "Capitalize"
-msgstr ""
-
-# Checkbox label in the Find... window
-#: ../src/resources/find.xrc:36
-msgid "Case sensitive"
-msgstr "Respecter la casse"
-
-#: ../src/manager.cpp:249
-msgid "Catalog"
-msgstr "Catalogue"
-
-# Alert text
-#: ../src/edframe.cpp:1129
-msgid "Catalog modified. Do you want to save changes?"
-msgstr "Le catalogue a été modifié. Voulez-vous enregistrer les changements ?"
-
-#: ../src/resources/properties.xrc:4
-msgid "Catalog properties"
-msgstr "Propriétés du catalogue"
-
-# File menu item label
-#: ../src/resources/menus.xrc:53
-msgid "Catalogs &Manager"
-msgstr "Gestionnaire de &catalogues"
-
-# File menu item label
-#: ../src/resources/menus.xrc:52
-msgid "Catalogs &manager"
-msgstr "Gestion des &catalogues"
-
-# File menu item label
-#: ../src/edapp.cpp:769
-#, fuzzy
-msgid "Catalogs Manager"
-msgstr "Gestionnaire de &catalogues"
-
-# Preferences window, Personalize tab button label
-#: ../src/resources/prefs.xrc:62
-msgid "Change UI language"
-msgstr "Langue d'a&ffichage..."
-
-# Settings window, Project Info tab list box label
-#: ../src/export_html.cpp:126 ../src/resources/properties.xrc:115
-msgid "Charset:"
-msgstr "Jeu de caractères :"
-
-#: ../src/edapp.cpp:815
-msgid "Check Document Now"
-msgstr ""
-
-#: ../src/edapp.cpp:818
-msgid "Check Grammar With Spelling"
-msgstr ""
-
-#: ../src/edapp.cpp:817
-msgid "Check Spelling While Typing"
-msgstr ""
-
-#: ../src/edapp.cpp:774
-msgid "Check for Updates..."
-msgstr "Vérifier les mises à jour..."
-
-# Edit menu item label
-#: ../src/resources/toolbar.xrc:39
-msgid "Check for errors in the translation"
-msgstr "Vérifier les erreurs dans la traduction"
-
-#: ../src/resources/menus.xrc:44
-#, fuzzy
-msgid "Check for updates..."
-msgstr "Vérifier les mises à jour..."
-
-#: ../src/resources/prefs.xrc:127
-msgid "Check spelling"
-msgstr ""
-
-# Main window list header
-#: ../src/edframe.cpp:2836 ../src/resources/menus.xrc:70
-msgid "Clear Translation"
-msgstr "Vider la traduction"
-
-# Edit comment window Clear button hint
-#: ../src/resources/comment.xrc:46
-msgid "Clear the comment"
-msgstr "Effacer le commentaire"
-
-# Main window list header
-#: ../src/edframe.cpp:2834 ../src/resources/menus.xrc:69
-msgid "Clear translation"
-msgstr "Vider la traduction"
-
-# File menu item label; the hint is system-supplied (also Catalogs manager window)
-#: ../src/licensing.cpp:196 ../src/resources/find.xrc:87
-msgid "Close"
-msgstr "Fermer"
-
-# Toolbar button hint for Edit: Comment
-#: ../src/resources/toolbar.xrc:57
-msgid "Comment"
-msgstr "Commentaire"
-
-# Checkbox label in the Preferences window, Editor tab
-#: ../src/resources/prefs.xrc:119
-msgid "Comment window is editable"
-msgstr "Fenêtre de commentaire modifiable"
-
-# Edit comment window tex box label
-#: ../src/edframe.cpp:707 ../src/export_html.cpp:213
-#: ../src/resources/comment.xrc:10
-msgid "Comment:"
-msgstr "Commentaire :"
-
-#: ../src/welcomescreen.cpp:250
-msgid "Configure source code extraction in Properties."
-msgstr ""
-
-#: ../src/manager.cpp:419 ../src/manager.cpp:439
-msgid "Confirmation"
-msgstr "Confirmation"
-
-#: ../src/wordpress.cpp:115
-#, c-format
-msgid "Confused by ambiguous values of \"%s\" in %s."
-msgstr ""
-
-#: ../src/wordpress.cpp:210
-msgid "Confused: multiple main plugin files."
-msgstr ""
-
-#: ../src/prefsdlg.cpp:102
-#, fuzzy
-msgid "Consult TM when updating from sources"
-msgstr "Copier la traduction vers l'original"
-
-#: ../src/edframe.cpp:2141
-msgid "Context:"
-msgstr "Texte original :"
-
-#: ../src/edframe.cpp:2829 ../src/resources/menus.xrc:77
-msgid "Copy from Source Text"
-msgstr "Copier à partir de l'original"
-
-# Catalog menu item label
-#: ../src/edframe.cpp:2827 ../src/resources/menus.xrc:76
-msgid "Copy from source text"
-msgstr "Copier depuis l'original"
-
-#: ../src/edapp.cpp:819
-msgid "Correct Spelling Automatically"
-msgstr ""
-
-#: ../src/wordpress.cpp:238
-#, c-format
-msgid "Couldn't detect translation domain of the \"%s\" plugin."
-msgstr ""
-
-#: ../src/catalog.cpp:1055
 #, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
-msgstr "Échec au chargement du fichier %s : il est probablement corrompu."
+msgstr "Échec du chargement du fichier %s : il est probablement corrompu."
 
-#: ../src/catalog.cpp:1344 ../src/catalog.cpp:1380
-#, c-format
-msgid "Couldn't save file %s."
-msgstr "Impossible d'enregistrer le fichier %s."
-
-#: ../src/welcomescreen.cpp:198
-msgid "Create a new translation. Poedit will set everything up automatically."
-msgstr ""
-
-# Toolbar button hint for the Catalogs manager window
-#: ../src/welcomescreen.cpp:191
-#, fuzzy
-msgid "Create new translation"
-msgstr "Créer un nouveau projet de traduction"
-
-# Toolbar button hint for the Catalogs manager window
-#: ../src/resources/manager.xrc:33
-msgid "Create new translations project"
-msgstr "Créer un nouveau projet de traduction"
-
-#: ../src/prefsdlg.cpp:158
-msgid "Database size on disk:"
-msgstr ""
-
-# Button label in Preferences dialog, Parsers tab
-#: ../src/resources/manager.xrc:42 ../src/resources/prefs.xrc:269
-msgid "Delete"
-msgstr "Supprimer"
-
-# Toolbar button hint for the Catalogs manager window
-#: ../src/resources/manager.xrc:43
-msgid "Delete the project"
-msgstr "Supprimer le projet"
-
-# Edit project window list box label
-#: ../src/manager.cpp:305
-msgid "Directories:"
-msgstr "Répertoires :"
-
-#: ../src/resources/menus.xrc:209
-msgid "Display &Notes for Translators"
-msgstr "Afficher les &notes pour les traducteurs"
-
-# View menu item label
-#: ../src/resources/menus.xrc:199
-msgid "Display &Quotes"
-msgstr "Afficher les &guillemets"
-
-#: ../src/resources/menus.xrc:208
-msgid "Display &notes for translators"
-msgstr "Afficher les &notes pour les traducteurs"
-
-# View menu item label
-#: ../src/resources/menus.xrc:198
-msgid "Display &quotes"
-msgstr "Afficher les &guillemets"
-
-# View menu item label
-#: ../src/resources/menus.xrc:204
-#, fuzzy
-msgid "Display Entry &IDs"
-msgstr "Afficher les &guillemets"
-
-# View menu item label
-#: ../src/resources/menus.xrc:203
-#, fuzzy
-msgid "Display entry &IDs"
-msgstr "Afficher les numéros de &lignes"
-
-#: ../src/manager.cpp:438
-msgid ""
-"Do you really want to do mass update of\n"
-"all catalogs in this project?"
-msgstr ""
-"Voulez-vous vraiment faire une mise à jour\n"
-"de tous les catalogues de ce projet ?"
-
-#: ../src/manager.cpp:418
-msgid "Do you want to delete the project?"
-msgstr "Voulez-vous effacer ce projet ?"
-
-#: ../src/edframe.cpp:2726
-msgid "Do you want to remove all translations that are no longer used?"
-msgstr ""
-"Voulez-vous supprimer toutes les traductions qui ne sont plus utilisées ?"
-
-#: ../src/edframe.cpp:1140
-msgid "Don't Save"
-msgstr "Ne pas enregistrer"
-
-# Preferences window, Editor tab check box label
-#: ../src/resources/prefs.xrc:169
-msgid "Don't change format of existing catalogs"
-msgstr "Ne pas changer le format des catalogues existants"
-
-#: ../src/edframe.cpp:1138
-msgid "Don't save"
-msgstr "Ne pas enregistrer"
-
-#: ../src/attentionbar.cpp:240
-msgid "Don't show again"
-msgstr "Ne plus afficher"
-
-#: ../src/edapp.cpp:203
-msgid "Download"
-msgstr ""
-
-# Button label in Preferences dialog, Parsers tab
-#: ../src/resources/manager.xrc:125 ../src/resources/menus.xrc:59
-msgid "E&xit"
-msgstr "&Quitter"
-
-#: ../src/resources/menus.xrc:39
-#, fuzzy
-msgid "E&xport as HTML..."
-msgstr "Exporter en tant que..."
-
-# Button label in Preferences dialog, Parsers tab
-#: ../src/edapp.cpp:777 ../src/resources/manager.xrc:37
-#: ../src/resources/prefs.xrc:262
-msgid "Edit"
-msgstr "Modifier..."
-
-# Edit menu item label
-#: ../src/resources/menus.xrc:88
-msgid "Edit &Comment"
-msgstr "Mofidier le &commentaire"
-
-# Edit menu item label
-#: ../src/resources/menus.xrc:87
-msgid "Edit &comment"
-msgstr "Co&mmentaire"
-
-# Edit menu item label
-#: ../src/edframe.cpp:2843
-msgid "Edit Comment"
-msgstr "Mofidier le commentaire"
-
-# Main window list header
-#: ../src/welcomescreen.cpp:185
-#, fuzzy
-msgid "Edit a translation"
-msgstr "Vider la traduction"
-
-# Edit comment window caption
-#: ../src/edframe.cpp:2841 ../src/resources/comment.xrc:4
-#: ../src/resources/toolbar.xrc:58
-msgid "Edit comment"
-msgstr "Commentaire"
-
-# Edit project window caption
-#: ../src/resources/manager.xrc:53
-msgid "Edit project"
-msgstr "Modifier le projet"
-
-# Toolbar button hint for the Catalogs manager window
-#: ../src/resources/manager.xrc:38
-msgid "Edit the project"
-msgstr "Modifier le projet"
-
-# Preferences dialog tab label (&d once it accepts accelerators)
-#: ../src/resources/prefs.xrc:84
-msgid "Editor"
-msgstr "Éditeur"
-
-# File menu item label
-#: ../src/resources/menus.xrc:257 ../src/resources/menus.xrc:325
-#, fuzzy
-msgid "Email &Support..."
-msgstr "E&xporter..."
-
-# File menu item label
-#: ../src/resources/menus.xrc:256 ../src/resources/menus.xrc:324
-#, fuzzy
-msgid "Email &support..."
-msgstr "E&xporter..."
-
-#: ../src/wordpress.cpp:394
-msgid "Email Support"
-msgstr ""
-
-#: ../src/wordpress.cpp:391
-msgid "Email support"
-msgstr ""
-
-#: ../src/resources/prefs.xrc:128
-msgid "Enables on-the-fly spellchecking"
-msgstr "Active la vérification à la volée"
-
-#: ../src/edframe.cpp:1611
-msgid "Entries in the catalog are probably incorrect."
-msgstr "Certains éléments du catalogue sont probablement incorrects."
-
-#: ../src/edframe.cpp:2282
-msgid ""
-"Entries in this catalog have different plural forms count from what "
-"catalog's Plural-Forms header says"
-msgstr ""
-"Les éléments dans ce catalogue ont un nombre de formes plurielles différent "
-"de celui indiqué dans l'en-tête Plural-Forms"
-
-#: ../src/edframe.cpp:1687
-msgid ""
-"Entries with errors were marked in red in the list. Details of the error "
-"will be shown when you select such an entry."
-msgstr ""
-"Les entrées avec des erreurs ont été marquées en rouge dans la liste. Les "
-"détails de l'erreur seront affichés lorsque vous sélectionnez une telle "
-"entrée."
-
-#: ../src/edframe.cpp:2389
-#, c-format
-msgid "Error loading message catalog file '%s'."
-msgstr "Erreur au chargement du fichier catalogue « %s »."
-
-#: ../src/fileviewer.cpp:297
-#, c-format
-msgid "Error opening file %s!"
-msgstr "Erreur à l'ouverture du fichier %s !"
-
-#: ../src/catalog.cpp:1515
-msgid "Error saving catalog"
-msgstr "Erreur d'enregistrement du catalogue"
-
-#: ../src/errorbar.cpp:68
-msgid "Error:"
-msgstr "Erreur :"
-
-#: ../src/edframe.cpp:3176
-msgid "Everything"
-msgstr ""
-
-#: ../src/edframe.cpp:1276
-msgid "Export as..."
-msgstr "Exporter en tant que..."
-
-# Catalog menu item label
-#: ../src/welcomescreen.cpp:249
-#, fuzzy
-msgid "Extract from sources"
-msgstr "Mise à jo&ur depuis les sources"
-
-#: ../src/resources/properties.xrc:147
-msgid "Extract text from source files in the following directories:"
-msgstr "Extraire le teste des répertoires suivants :"
-
-#: ../src/digger.cpp:60
-#, c-format
-msgid "Failed command: %s"
-msgstr "Commande en échec : %s"
-
-#: ../src/wordpress.cpp:376
-#, fuzzy
-msgid "Failed to extract WordPress information."
-msgstr "Échec du chargement du catalogue extrait."
-
-#: ../src/digger.cpp:114
-msgid "Failed to load extracted catalog."
-msgstr "Échec du chargement du catalogue extrait."
-
-#: ../src/digger.cpp:61
-msgid "Failed to merge gettext catalogs."
-msgstr "Échec de la fusion des catalogues gettext."
-
-#: ../src/wordpress.cpp:71
-#, fuzzy, c-format
-msgid "Failed to read file '%s'."
-msgstr "Echec à la lecture du catalogue extrait."
-
-#: ../src/wordpress.cpp:135
-#, fuzzy, c-format
-msgid "Failed to read folder '%s'."
-msgstr "Echec à la lecture du catalogue extrait."
-
-#: ../src/edframe.cpp:2645
-#, fuzzy, c-format
-msgid "Failed to update translation memory: %s"
-msgstr "Mettre à jour la mémoire de traduction"
-
-#: ../src/edapp.cpp:571 ../src/edframe.cpp:445 ../src/edframe.cpp:1198
-#, c-format
-msgid "File '%s' doesn't exist."
-msgstr "Le fichier « %s » n'existe pas."
-
-#: ../src/edframe.cpp:438
-#, c-format
-msgid "File '%s' is not a message catalog."
-msgstr "Le fichier « %s » n'est pas un catalogue."
-
-#: ../src/catalog.cpp:1326
 #, c-format
 msgid ""
 "File '%s' is read-only and cannot be saved.\n"
@@ -937,1046 +67,1606 @@ msgstr ""
 "Le fichier « %s » est en lecture seule et ne peut être enregistré.\n"
 "Veuillez l'enregistrer sous un nom différent."
 
-#: ../src/prefsdlg.cpp:196 ../src/tm/tm_migrate.cpp:198
-msgid "Finalizing..."
-msgstr ""
-
-# Window caption
-#: ../src/resources/menus.xrc:109
-#, fuzzy
-msgid "Find"
-msgstr "Rechercher..."
-
-#: ../src/resources/menus.xrc:115
-#, fuzzy
-msgid "Find Next"
-msgstr "&Appliquer et continuer"
-
-# Button label in the Find... window
-#: ../src/resources/menus.xrc:119
-#, fuzzy
-msgid "Find Previous"
-msgstr "< Précédente"
-
-# Checkbox label in the Find... window
-#: ../src/resources/find.xrc:78
-msgid "Find in automatic comments"
-msgstr "Rechercher dans les commentaires automatiques"
-
-# Checkbox label in the Find... window
-#: ../src/resources/find.xrc:71
-msgid "Find in comments"
-msgstr "Rechercher dans les commentaires"
-
-# Checkbox label in the Find... window
-#: ../src/resources/find.xrc:57
-msgid "Find in original strings"
-msgstr "Rechercher dans les chaînes originales"
-
-# Checkbox label in the Find... window
-#: ../src/resources/find.xrc:64
-msgid "Find in translations"
-msgstr "Rechercher dans les traductions"
-
-# Checkbox label in the Find... window
-#: ../src/resources/menus.xrc:101
-#, fuzzy
-msgid "Find next"
-msgstr "Rechercher dans les commentaires"
-
-# Button label in the Find... window
-#: ../src/resources/menus.xrc:105
-#, fuzzy
-msgid "Find previous"
-msgstr "< Précédente"
-
-# Window caption
-#: ../src/resources/find.xrc:4
-msgid "Find..."
-msgstr "Rechercher..."
-
-#: ../src/edframe.cpp:2312
-msgid "Fix the header"
-msgstr "Corriger l'en-tête"
-
-#: ../src/wordpress.cpp:294
-msgid "Folder looks like both a plugin and a theme."
-msgstr ""
-
-# Preferences window, Editor tab group box label
-#: ../src/resources/prefs.xrc:180
-msgid "Fonts"
-msgstr "Polices"
-
-#: ../src/edframe.cpp:3178
 #, c-format
-msgid "Form %i"
-msgstr "Forme %i"
+msgid "Couldn't save file %s."
+msgstr "Impossible d'enregistrer le fichier %s."
 
-#: ../src/wordpress.cpp:296
-msgid "Found neither WordPress theme nor plugin in the folder."
-msgstr ""
-
-#: ../src/aboutbox.cpp:165
-msgid "Free version (please upgrade!)"
-msgstr ""
-
-#: ../src/manager.cpp:252 ../src/resources/toolbar.xrc:51
-msgid "Fuzzy"
-msgstr "Approximative"
-
-#: ../src/export_html.cpp:197
-msgid "Fuzzy translation"
-msgstr "Traduction approximative"
-
-#: ../src/edapp.cpp:545 ../src/edframe.cpp:1179 ../src/edframe.cpp:1239
-#: ../src/prefsdlg.cpp:169
-msgid "GNU gettext catalogs (*.po)|*.po|All files (*.*)|*.*"
-msgstr "Catalogues GNU GetGext (*.po)|*.po|Tous les fichiers (*.*)|*.*"
-
-#: ../src/edframe.cpp:1629
-msgid "GNU gettext templates (*.pot)|*.pot|All files (*.*)|*.*"
-msgstr "Modèles GNU gettext (*.pot)|*.pot|Tous les fichiers (*.*)|*.*"
-
-#: ../src/edframe.cpp:1327
-#, fuzzy
 msgid ""
-"GNU gettext templates (*.pot)|*.pot|GNU gettext catalogs (*.po)|*.po|All "
-"files (*.*)|*.*"
-msgstr "Modèles GNU gettext (*.pot)|*.pot|Tous les fichiers (*.*)|*.*"
+"There was a problem formatting the file nicely (but it was saved all right)."
+msgstr ""
+"Il y a eu un problème lors du formatage du fichier (mais il a été enregistré "
+"correctement)."
 
-# Bookmarks menu item label
-#: ../src/edframe.cpp:3270
 #, c-format
-msgid "Go to Bookmark %i\tCtrl+%i"
-msgstr "Aller au marque-page %i\tCtrl-%i"
-
-#: ../src/edframe.cpp:3264
-#, c-format
-msgid "Go to Bookmark %i\tCtrl+Alt+%i"
-msgstr "Aller au marque-page %i\tCtrl-Alt-%i"
-
-# Bookmarks menu item label
-#: ../src/edframe.cpp:3267
-#, c-format
-msgid "Go to bookmark %i\tCtrl+%i"
-msgstr "Aller au marque-page %i\tCtrl-%i"
-
-#: ../src/edframe.cpp:1278
-msgid "HTML file (*.html)|*.html"
-msgstr "Fichier HTML (*.html)|*.html"
-
-#: ../src/attentionbar.cpp:79
-msgid "Hide this notification message"
-msgstr "Masquer ce message de notification"
-
-#: ../src/edlistctrl.cpp:333
-msgid "ID"
-msgstr ""
-
-# Preferences window, Editor tab group box label
-#: ../src/resources/prefs.xrc:17
-msgid "Identity"
-msgstr "Identité"
-
-# Hint for the "Comment window is editable" checkbox, Preferences dialog, Editor tab
-#: ../src/resources/prefs.xrc:120
-msgid "If checked, the comment window will be editable."
-msgstr "Si activée, la fenêtre de commentaire peut être modifiée."
-
-#: ../src/prefsdlg.cpp:104
-msgid "If enabled, Poedit will try to fill in missing translations."
-msgstr ""
-
-#: ../src/edframe.cpp:2728
-msgid ""
-"If you continue with purging, all translations marked as deleted will be "
-"permanently removed. You will have to translate them again if they are added "
-"back in the future."
-msgstr ""
-"Si vous continuez à purger, toutes les traductions marquées comme supprimées "
-"seront définitivement supprimes. Vous allez avoir à les re-traduire si elles "
-"sont rétablies dans le futur."
-
-#: ../src/prefsdlg.cpp:180
-#, fuzzy
-msgid "Importing translations..."
-msgstr "Traductions automatiques :"
-
-#: ../src/tm/tm_migrate.cpp:141
-#, fuzzy, c-format
-msgid "Importing translations: %d"
-msgstr "Traductions automatiques :"
-
-#: ../src/resources/prefs.xrc:76
-msgid "Include beta versions"
-msgstr ""
-
-#: ../src/edframe.cpp:166 ../src/edframe.cpp:2186
-msgid "Invalid file"
-msgstr ""
-
-#: ../src/resources/prefs.xrc:351
-msgid "Invocation:"
-msgstr "Appel :"
-
-#: ../src/statistics.cpp:161
-msgid "Items"
-msgstr ""
-
-#: ../src/edframe.cpp:2732
-msgid "Keep"
-msgstr "Conserver"
-
-#: ../src/languagectrl.cpp:42
-msgid "Language Code or Name (e.g. en_GB)"
-msgstr ""
-
-#: ../src/edframe.cpp:2263
-#, fuzzy
-msgid "Language of the translation isn't set."
-msgstr "Purger les traductions supprimées"
-
-#: ../src/languagectrl.cpp:94
-#, fuzzy
-msgid "Language of the translation:"
-msgstr "Purger les traductions supprimées"
-
-# Language selection window caption
-#: ../src/chooselang.cpp:68
-msgid "Language selection"
-msgstr "Sélection de langue"
-
-# Parsers window: text box label and group box label; also Settings window, Project Info tab list box label (which is unfortunate as the two need different translations sometimes)
-#: ../src/export_html.cpp:115 ../src/resources/prefs.xrc:319
-#: ../src/resources/prefs.xrc:323 ../src/resources/properties.xrc:33
-msgid "Language:"
-msgstr "Langue :"
-
-#: ../src/manager.cpp:254
-msgid "Last modified"
-msgstr "Dernière modification"
-
-#: ../src/prefsdlg.cpp:98
-#, fuzzy
-msgid "Learn From Files..."
-msgstr "Analyse fichiers %s..."
-
-#: ../src/resources/properties.xrc:202
-#, fuzzy
-msgid "Learn about gettext keywords"
-msgstr "En savoir plus sur les formes plurielles"
-
-#: ../src/resources/properties.xrc:75
-msgid "Learn about plural forms"
-msgstr "En savoir plus sur les formes plurielles"
-
-#: ../src/edframe.cpp:1046 ../src/licensing.cpp:354
-msgid "Learn more"
-msgstr "En savoir plus"
-
-#: ../src/aboutbox.cpp:106 ../src/aboutbox.cpp:114
-msgid "License Agreement"
-msgstr ""
-
-#: ../src/licensing.cpp:99
-msgid "License Key"
-msgstr ""
-
-#: ../src/edapp.cpp:771
-msgid "License..."
-msgstr ""
-
-#: ../src/aboutbox.cpp:163
-#, c-format
-msgid "Licensed to %s"
-msgstr ""
-
-#: ../src/licensing.cpp:229
-#, c-format
-msgid "Licensed to: %s"
-msgstr ""
-
-#: ../src/catalog.cpp:144
-#, c-format
-msgid "Line %u of file '%s' is corrupted (not valid %s data)."
-msgstr "La ligne %u du fichier « %s » est corrompue (donnée %s invalide)."
-
-# Preferences window, Editor tab list box label
-#: ../src/resources/prefs.xrc:148
-msgid "Line endings format:"
-msgstr "Format de fin de ligne :"
-
-# Parsers window text box label
-#: ../src/resources/prefs.xrc:335
-msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
-msgstr "Extensions, séparées par des points-virgules (e.g. *.cpp;*.h) :"
-
-#: ../src/edapp.cpp:836
-msgid "Make Lower Case"
-msgstr ""
-
-#: ../src/edapp.cpp:835
-msgid "Make Upper Case"
-msgstr ""
-
-#: ../src/catalog.cpp:219
-#, c-format
-msgid "Malformed header: '%s'"
-msgstr "Entête mal formée : « %s »"
-
-#: ../src/catalog.cpp:1620
-msgid "Merging differences..."
-msgstr "Intégration des changements..."
-
-#: ../src/licensing.cpp:94
-msgid "Name"
-msgstr ""
-
-#: ../src/propertiesdlg.cpp:71
-#, fuzzy
-msgid "Name of the project the translation is for"
-msgstr "Aucun problème trouvé dans la traduction."
-
-#: ../src/resources/menus.xrc:191
-msgid "Ne&xt Unfinished"
-msgstr "Incomplet suivan&t"
-
-#: ../src/resources/menus.xrc:190
-msgid "Ne&xt unfinished"
-msgstr "Incomplet suivan&t"
-
-#: ../src/statistics.cpp:172
-msgid "Needs review (fuzzy)"
-msgstr ""
-
-# Hint for "Always change focus to text input field" checkbox in the Preferences window, Editor tab
-#: ../src/resources/prefs.xrc:112
-msgid ""
-"Never let the list of strings take focus. If enabled, you must use Ctrl-"
-"arrows for keyboard navigation but you can also type text immediately, "
-"without having to press Tab to change focus."
-msgstr ""
-"Ne pas laisser la main à la liste des chaînes. Si activée, vous pourrez "
-"utiliser les touches Ctrl + Haut/Bas pour la navigation dans liste des "
-"chaînes sans avoir à utiliser la touche de tabulation pour activer la zone "
-"de traduction."
-
-# Button label in Preferences dialog, Parsers tab
-#: ../src/resources/manager.xrc:32 ../src/resources/prefs.xrc:257
-msgid "New"
-msgstr "Nouveau"
-
-# Catalog menu item label
-#: ../src/resources/menus.xrc:13 ../src/resources/menus.xrc:283
-#, fuzzy
-msgid "New From &POT/PO File..."
-msgstr "Mettre à jour depuis un fichier &POT..."
-
-# Main window list header
-#: ../src/resources/menus.xrc:17 ../src/resources/menus.xrc:287
-#, fuzzy
-msgid "New WordPress Translation..."
-msgstr "Vider la traduction"
-
-# Main window list header
-#: ../src/resources/menus.xrc:16 ../src/resources/menus.xrc:286
-#, fuzzy
-msgid "New WordPress translation..."
-msgstr "Vider la traduction"
-
-# Catalog menu item label
-#: ../src/resources/menus.xrc:12 ../src/resources/menus.xrc:282
-#, fuzzy
-msgid "New from &POT/PO file..."
-msgstr "Mettre à jour depuis un fichier &POT..."
-
-#: ../src/resources/summary.xrc:29
-msgid "New strings"
-msgstr "Nouvelles chaînes"
-
-#: ../src/digger.cpp:186
-msgid "No files found in: "
-msgstr "Aucun fichier trouvé dans :"
-
-#: ../src/edframe.cpp:1702
-msgid "No problems with the translation found."
-msgstr "Aucun problème trouvé dans la traduction."
-
-#: ../src/edframe.cpp:1745
-msgid "No references to this string found."
-msgstr "Aucune référence trouvée pour cette chaîne."
-
-#: ../src/licensing.cpp:353
-msgid "No, thanks"
-msgstr ""
-
-# Checkbox label in the Find... window
-#: ../src/statistics.cpp:176
-#, fuzzy
-msgid "Not translated"
-msgstr "%i non traduite"
-
-#: ../src/export_html.cpp:158
-msgid "Notes"
-msgstr "Notes"
-
-#: ../src/edframe.cpp:700 ../src/export_html.cpp:204
-msgid "Notes for translators:"
-msgstr "Notes pour les traducteurs :"
-
-# Button label
-#: ../src/resources/comment.xrc:30 ../src/resources/manager.xrc:94
-#: ../src/resources/prefs.xrc:295 ../src/resources/prefs.xrc:437
-#: ../src/resources/properties.xrc:225 ../src/resources/summary.xrc:70
-msgid "OK"
-msgstr "OK"
-
-#: ../src/resources/summary.xrc:50
-msgid "Obsolete strings"
-msgstr "Chaînes désuètes"
-
-#: ../src/edframe.cpp:3184
-msgid "One"
-msgstr ""
-
-#: ../src/resources/toolbar.xrc:15 ../src/resources/toolbar.xrc:20
-msgid "Open"
-msgstr "Ouvrir"
-
-# Preferences dialog tab label (&d once it accepts accelerators)
-#: ../src/fileviewer.cpp:73
-#, fuzzy
-msgid "Open In Editor"
-msgstr "Éditeur"
-
-#: ../src/welcomescreen.cpp:186
-msgid "Open an existing PO file and edit the translation."
-msgstr ""
-
-# Toolbar button hint for File: Open
-#: ../src/edapp.cpp:542 ../src/edframe.cpp:1177
-#: ../src/resources/toolbar.xrc:16 ../src/resources/toolbar.xrc:21
-msgid "Open catalog"
-msgstr "Ouvrir un catalogue"
-
-#: ../src/edframe.cpp:1325 ../src/edframe.cpp:1627
-msgid "Open catalog template"
-msgstr "Ouvrir un modèle de catalogue"
-
-#: ../src/edframe.cpp:3191
-msgid "Other"
-msgstr ""
-
-#: ../src/resources/menus.xrc:186
-msgid "P&revious Unfinished"
-msgstr "Incomplet p&récédent"
-
-#: ../src/resources/menus.xrc:185
-msgid "P&revious unfinished"
-msgstr "Incomplet p&récédent"
-
-# Parsers window text box label
-#: ../src/resources/prefs.xrc:355
-msgid "Parser command:"
-msgstr "Commande de l'analyseur :"
-
-# Parsers window caption
-#: ../src/resources/prefs.xrc:314
-msgid "Parser setup"
-msgstr "Configuration d'un analyseur"
-
-# Preferences dialog tab label (&l once it accepts accelerators)
-#: ../src/resources/prefs.xrc:232
-msgid "Parsers"
-msgstr "Analyseurs"
-
-#: ../src/digger.cpp:92
-#, c-format
-msgid "Parsing %s files..."
-msgstr "Analyse fichiers %s..."
-
-#: ../src/edapp.cpp:803
-msgid "Paste and Match Style"
-msgstr ""
-
-# Settings window tab label; also Paths list label on that tab (&c once it accepts accelerators)
-#: ../src/propertiesdlg.cpp:67
-msgid "Paths"
-msgstr "Chemins"
-
-# Preferences dialog tab label (&e once it accepts accelerators)
-#: ../src/resources/prefs.xrc:11
-msgid "Personalize"
-msgstr "Personnalisation"
-
-# References window label (appears when multiple references exist and Edit: Show references is chosen)
-#: ../src/edframe.cpp:1753
-msgid "Please choose the reference you want to show:"
-msgstr "Veuillez choisir la référence que vous voulez voir :"
-
-#: ../src/edapp.cpp:202
-msgid ""
-"Please download a newer version from the Poedit website at http://poedit.net/"
-"beta/"
-msgstr ""
-
-#: ../src/wordpress.cpp:407
-msgid "Please email this log to help@poedit.net. Thank you!"
-msgstr ""
-
-#: ../src/propertiesdlg.cpp:256
-msgid "Please save the file first. This section cannot be edited until then."
-msgstr ""
-
-# Settings window, Project Info tab text box label
-#: ../src/resources/properties.xrc:45
-msgid "Plural Forms:"
-msgstr "Formes plurielles :"
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:2350
-#, c-format
-msgid "Plural forms expression used by the catalog is unusual for %s."
-msgstr ""
-
-#: ../src/edframe.cpp:679
-msgid "Plural:"
-msgstr "Pluriel :"
-
-#: ../src/edframe.cpp:462
-msgid "Poedit"
-msgstr "Poedit"
-
-# Catalogs manager window caption
-#: ../src/manager.cpp:69
-msgid "Poedit - Catalogs manager"
-msgstr "Gestionnaire de catalogues Poedit"
-
-#: ../src/licensing.cpp:69
-msgid "Poedit Registration"
-msgstr ""
-
-#: ../src/tm/tm_migrate.cpp:157 ../src/tm/tm_migrate.cpp:233
-#: ../src/tm/tm_migrate.cpp:262
-#, fuzzy
-msgid "Poedit Update"
-msgstr "Poedit"
-
-#: ../src/wordpress.cpp:386
-#, c-format
-msgid ""
-"Poedit couldn’t understand the content of the folder you selected. This may "
-"be a problem with the plugin/theme or it may be Poedit being silly. The "
-"error is:\n"
-"\n"
-" • %s\n"
-"\n"
-"Please email help@poedit.net and we’ll sort it out."
-msgstr ""
-
-#: ../src/digger.cpp:200
-msgid "Poedit did not find any files in scanned directories."
-msgstr "Poedit n'a trouvé aucun fichier dans les répertoires analysés."
-
-# About window static text
-#: ../src/edapp.cpp:607
-msgid "Poedit is an easy to use translations editor."
-msgstr "Poedit est un éditeur de traductions simple à utiliser."
-
-#: ../src/tm/tm_migrate.cpp:232
-#, fuzzy
-msgid "Poedit needs to convert your translation memory to a new format."
-msgstr "Erreur de mémoire de traduction Poedit"
-
-#: ../src/resources/prefs.xrc:4
-msgid "Preferences"
-msgstr "Préférences"
-
-#: ../src/tm/tm_migrate.cpp:157
-msgid "Preparing migration..."
-msgstr ""
-
-#: ../src/tm/tm_migrate.cpp:237
-msgid "Proceed"
-msgstr "Procéder"
-
-# Settings window tab label (&i once it accepts accelerators)
-#: ../src/export_html.cpp:108
-msgid "Project info"
-msgstr "Informations"
-
-# Settings window, Project Info tab text box label
-#: ../src/export_html.cpp:112 ../src/resources/properties.xrc:18
-msgid "Project name and version:"
-msgstr "Nom et version du projet :"
-
-# Edit project window text box label
-#: ../src/resources/manager.xrc:58
-msgid "Project name:"
-msgstr "Nom du projet :"
-
-#: ../src/licensing.cpp:318
-msgid ""
-"Purchasing the full version will unlock more features\n"
-"in this and future versions of Poedit, including:\n"
-"\n"
-msgstr ""
-
-#: ../src/edframe.cpp:2732
-msgid "Purge"
-msgstr "Purger"
-
-#: ../src/edframe.cpp:2724
-msgid "Purge deleted translations"
-msgstr "Purger les traductions supprimées"
-
-#: ../src/edapp.cpp:203 ../src/tm/tm_migrate.cpp:237
-#: ../src/resources/manager.xrc:126 ../src/resources/menus.xrc:60
-#: ../src/resources/menus.xrc:299
-msgid "Quit"
-msgstr "Quitter"
-
-#: ../src/edapp.cpp:794
-msgid "Redo"
-msgstr ""
-
-# References window caption (appears when multiple references exist and Edit: Show references is chosen)
-#: ../src/edframe.cpp:1753
-msgid "References"
-msgstr "Références"
-
-#: ../src/edframe.cpp:2896 ../src/edframe.cpp:2900
-msgid "References:"
-msgstr "Références :"
-
-#: ../src/licensing.cpp:124 ../src/licensing.cpp:128
-msgid "Register"
-msgstr ""
-
-#: ../src/edframe.cpp:2293
-msgid "Required header Plural-Forms is missing."
-msgstr "L'en-tête Plural-Forms nécessaire est manquante."
-
-#: ../src/edframe.cpp:2354
-msgid "Review"
-msgstr ""
-
-#: ../src/edframe.cpp:1136 ../src/resources/toolbar.xrc:25
-#: ../src/resources/toolbar.xrc:30
-msgid "Save"
-msgstr "Enregistrer"
-
-# File menu item label; the hint is system-supplied
-#: ../src/resources/menus.xrc:35
-msgid "Save &As..."
-msgstr "En&registrer sous..."
-
-# File menu item label; the hint is system-supplied
-#: ../src/resources/menus.xrc:34
-msgid "Save &as..."
-msgstr "En&registrer sous..."
-
-#: ../src/edframe.cpp:1238
-msgid "Save as..."
-msgstr "Enregistrer sous..."
-
-# Toolbar button hint for File: Save
-#: ../src/resources/toolbar.xrc:26 ../src/resources/toolbar.xrc:31
-msgid "Save catalog"
-msgstr "Enregistrer le catalogue"
-
-# Alert caption
-#: ../src/edframe.cpp:1130
-msgid "Save changes"
-msgstr "Enregistrer les changements"
-
-#: ../src/digger.cpp:77
-msgid "Scanning files..."
-msgstr "Analyse des fichiers..."
-
-# Language selection window caption (Preferences: Translation Memory: Browse)
-#: ../src/manager.cpp:285
-msgid "Select directory"
-msgstr "Choisir un répertoire"
-
-#: ../src/edframe.cpp:1402
-msgid "Select the folder with the WordPress theme or plugin"
-msgstr ""
-
-#: ../src/prefsdlg.cpp:166
-#, fuzzy
-msgid "Select translation files to import"
-msgstr "Erreur de mémoire de traduction Poedit"
-
-# Language selection window label (Preferences: Personalize: Change UI language)
-#: ../src/chooselang.cpp:67
-msgid "Select your prefered language"
-msgstr "Sélectionnez votre langue de préférence"
-
-# Bookmarks menu item label
-#: ../src/edframe.cpp:3269
-#, c-format
-msgid "Set Bookmark %i\tAlt+%i"
-msgstr "Créer un marque-page %i\tAlt-%i"
-
-#: ../src/edframe.cpp:3263
-#, c-format
-msgid "Set Bookmark %i\tCtrl+%i"
-msgstr "Créer un marque-page %i\tCtrl-%i"
-
-# Bookmarks menu item label
-#: ../src/edframe.cpp:3266
-#, c-format
-msgid "Set bookmark %i\tAlt+%i"
-msgstr "Créer un marque-page %i\tAlt-%i"
-
-#: ../src/edframe.cpp:2235
-msgid "Set email"
-msgstr "Indiquer le courriel"
-
-# Language selection window label (Preferences: Translation Memory: Add)
-#: ../src/edframe.cpp:2265
-#, fuzzy
-msgid "Set language"
-msgstr "Sélectionner une langue"
-
-# Language selection window label (Preferences: Translation Memory: Add)
-#: ../src/edframe.cpp:2250
-#, fuzzy
-msgid "Set name"
-msgstr "Sélectionner une langue"
-
-#: ../src/edapp.cpp:814
-msgid "Show Spelling and Grammar"
-msgstr ""
-
-#: ../src/edapp.cpp:824
-msgid "Show Substitutions"
-msgstr ""
-
-# Preferences window, Editor tab check box label
-#: ../src/resources/prefs.xrc:103
-msgid "Show summary after catalog update"
-msgstr "Afficher un résumé après la mise à jour du catalogue"
-
-#: ../src/edframe.cpp:672
-msgid "Singular:"
-msgstr "Singulier :"
-
-#: ../src/edapp.cpp:826
-msgid "Smart Copy/Paste"
-msgstr ""
-
-#: ../src/edapp.cpp:828
-msgid "Smart Dashes"
-msgstr ""
-
-#: ../src/edapp.cpp:829
-msgid "Smart Links"
-msgstr ""
-
-#: ../src/edapp.cpp:827
-msgid "Smart Quotes"
-msgstr ""
-
-#: ../src/tm/tm_migrate.cpp:265
-msgid ""
-"Something went wrong and your translation memory data couldn't be migrated. "
-"Please email help@poedit.net and we’ll get it fixed."
-msgstr ""
-
-#: ../src/resources/menus.xrc:221
-msgid "Sort by &File Order"
-msgstr "Trier selon le &fichier"
-
-#: ../src/resources/menus.xrc:226
-msgid "Sort by &Source"
-msgstr "Trier selon la &source"
-
-# Main window list header
-#: ../src/resources/menus.xrc:231
-msgid "Sort by &Translation"
-msgstr "Trier par &traduction"
-
-#: ../src/resources/menus.xrc:220
-msgid "Sort by &file order"
-msgstr "Trier selon le &fichier"
-
-#: ../src/resources/menus.xrc:225
-msgid "Sort by &source"
-msgstr "Trier selon la &source"
-
-#: ../src/resources/menus.xrc:230
-msgid "Sort by &translation"
-msgstr "Trier par &traduction"
-
-#: ../src/export_html.cpp:152
-msgid "Source"
-msgstr "Original"
-
-#: ../src/statistics.cpp:188
-#, fuzzy
-msgid "Source Text"
-msgstr "Texte original"
-
-# Parsers window text box label; also Settings window, Project Info tab list box label
-#: ../src/resources/prefs.xrc:412 ../src/resources/properties.xrc:127
-msgid "Source code charset:"
-msgstr "Jeu de caractères du code source :"
-
-#: ../src/catalog.cpp:1603
-#, fuzzy, c-format
-msgid "Source code directory '%s' doesn't exist."
-msgstr "Le fichier « %s » n'existe pas."
-
-# Preferences dialog, Parsers tab list label
-#: ../src/resources/prefs.xrc:238
-msgid "Source code parsers:"
-msgstr "Analyseurs de code source :"
-
-#: ../src/fileviewer.cpp:48
-msgid "Source file"
-msgstr "Fichier source"
-
-#: ../src/fileviewer.cpp:63
-msgid "Source file occurrence:"
-msgstr "Fichier source :"
-
-#: ../src/edlistctrl.cpp:330
-msgid "Source text"
-msgstr "Texte original"
-
-#: ../src/edframe.cpp:665
-msgid "Source text:"
-msgstr "Texte original :"
-
-#: ../src/resources/properties.xrc:214
-msgid "Sources keywords"
-msgstr "Mots-clés source"
-
-#: ../src/resources/properties.xrc:178
-msgid "Sources paths"
-msgstr "Chemins des sources"
-
-#: ../src/edapp.cpp:840
-msgid "Speech"
-msgstr ""
-
-#. TRANSLATORS: %s is language name in its basic form (as you
-#. would see e.g. in a list of supported languages). You may need
-#. to rephrase it, e.g. to an equivalent of "for language %s".
-#: ../src/edframe.cpp:1042
-#, c-format
-msgid "Spellchecker dictionary for %s isn't available, you need to install it."
-msgstr ""
-"Le dictionnaire de correction automatique pour %s n'est pas disponible, vous "
-"devez l'installer."
-
-#: ../src/edapp.cpp:812
-msgid "Spelling and Grammar"
-msgstr ""
-
-#: ../src/edapp.cpp:842
-msgid "Start Speaking"
-msgstr ""
-
-# Checkbox label in the Find... window
-#: ../src/resources/find.xrc:43
-msgid "Start from the first item"
-msgstr "Partir du premier élément"
-
-#: ../src/statistics.cpp:145
-msgid "Statistics"
-msgstr ""
-
-#: ../src/edapp.cpp:843
-msgid "Stop Speaking"
-msgstr ""
-
-#: ../src/prefsdlg.cpp:157
-#, fuzzy
-msgid "Stored translations:"
-msgstr "Trier par &traduction"
-
-# Text box label in the Find... window
-#: ../src/resources/find.xrc:21
-msgid "String to find:"
-msgstr "Chaîne à rechercher :"
-
-#: ../src/statistics.cpp:194
-msgid "Strings in source language"
-msgstr ""
-
-#: ../src/edapp.cpp:822
-msgid "Substitutions"
-msgstr ""
-
-#: ../src/edframe.cpp:2298
-#, c-format
-msgid "Syntax error in Plural-Forms header (\"%s\")."
-msgstr "Erreur de syntaxe dans l'en-tête Plural-Forms (\"%s\")."
-
-#: ../src/welcomescreen.cpp:192
-msgid ""
-"Take an existing PO file or POT template and create a new translation from "
-"it."
-msgstr ""
-
-#: ../src/welcomescreen.cpp:239
-msgid "Take translatable strings from an existing POT template."
-msgstr ""
-
-# Settings window, Project Info tab text box label
-#: ../src/export_html.cpp:122 ../src/resources/properties.xrc:101
-msgid "Team's email address:"
-msgstr "Adresse électronique de l'équipe :"
-
-# Settings window, Project Info tab text box label
-#: ../src/export_html.cpp:118 ../src/resources/properties.xrc:87
-msgid "Team:"
-msgstr "Équipe de traduction :"
-
-#: ../src/edapp.cpp:830
-msgid "Text Replacement"
-msgstr ""
-
-#: ../src/wordpress.cpp:233
-#, c-format
-msgid "The \"%s\" plugin isn't localization-ready."
-msgstr ""
-
-#: ../src/wordpress.cpp:177
-#, c-format
-msgid "The \"%s\" theme isn't localization-ready."
-msgstr ""
-
-#: ../src/catalog.cpp:1513
-#, fuzzy, c-format
 msgid ""
 "The catalog couldn't be saved in '%s' charset as specified in catalog "
 "settings.\n"
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"Le catalogue n'a pas pu être enregistré avec le jeu de caractères « %s »,\n"
+"Le catalogue n'a pas pu être enregistré avec le jeu de caractères '%s',\n"
 "tel qu'indiqué dans la configuration du catalogue. Le jeu UTF-8 a été "
 "utilisé\n"
 "en remplacement et la configuration a été modifiée en conséquence."
 
-#: ../src/edframe.cpp:165 ../src/edframe.cpp:2185
-msgid "The file cannot be opened."
-msgstr ""
+msgid "Error saving catalog"
+msgstr "Erreur d'enregistrement du catalogue"
 
-#: ../src/edframe.cpp:170 ../src/edframe.cpp:2190
+msgid "PO Translation Files"
+msgstr "Fichiers de traduction PO"
+
+msgid "POT Translation Templates"
+msgstr "Modèles de traduction POT"
+
+msgid "All Translation Files"
+msgstr "Tous les fichiers de traduction"
+
+msgid "Merging differences..."
+msgstr "Intégration des changements..."
+
+#, c-format
+msgid "'%s' is not a valid POT file."
+msgstr "« %s » n'est pas un fichier POT valide."
+
+msgid "(Use default language)"
+msgstr "(Utiliser la langue par défaut)"
+
+msgid "Select your preferred language"
+msgstr "Sélectionnez votre langue de préférence"
+
+msgid "Language selection"
+msgstr "Sélection de langue"
+
+msgid "You must restart Poedit for this change to take effect."
+msgstr "Vous devez redémarrer Poedit pour que ce changement prenne effet."
+
+msgid "Downloading translations is disabled in this project."
+msgstr "Le téléchargement des traductions est désactivé dans ce projet."
+
+msgid "Not authorized, please sign in again."
+msgstr "Non autorisé, veuillez vous connecter à nouveau."
+
+msgid ""
+"Crowdin is an online localization management platform and collaborative "
+"translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
+msgstr ""
+"Crowdin est une plateforme de gestion de localisation en ligne et un outil "
+"de traduction collaborative. Poedit peut parfaitement synchroniser les "
+"fichiers PO avec Crowdin."
+
+msgid "Sign In"
+msgstr "S'identifier"
+
+msgid "Sign in"
+msgstr "S'identifier"
+
+msgid "Sign Out"
+msgstr "Se déconnecter"
+
+msgid "Sign out"
+msgstr "Se déconnecter"
+
+msgid "Waiting for authentication…"
+msgstr "En attente d'authentification..."
+
+msgid "Updating user information…"
+msgstr "Mise à jour des informations de l'utilisateur..."
+
+msgid "Signed in as:"
+msgstr "Connecté en tant que :"
+
+msgid "Learn More About Crowdin"
+msgstr "En savoir plus sur Crowdin"
+
+msgid "Learn more about Crowdin"
+msgstr "En savoir plus sur Crowdin"
+
+msgid "Sign in to Crowdin"
+msgstr "Connectez-vous sur Crowdin"
+
+msgid "Open Crowdin translation"
+msgstr "Ouvrir la traduction Crowdin"
+
+msgid "Project:"
+msgstr "Projet :"
+
+msgid "Language:"
+msgstr "Langue :"
+
+msgid "File:"
+msgstr "Fichier :"
+
+msgid "No translation projects listed in your Crowdin account."
+msgstr "Aucun projet de traduction listé dans votre compte Crowdin."
+
+msgid "This project has no files that can be translated in Poedit."
+msgstr "Ce projet n'a aucun fichier qui puisse être traduit avec Poedit."
+
+msgid "This file can only be edited in Crowdin’s web interface."
+msgstr ""
+"Ce fichier ne peut être modifié qu'à partir de l'interface web de Crowdin."
+
+msgid "Downloading latest translations…"
+msgstr "Téléchargement des dernières traductions..."
+
+msgid "Syncing with Crowdin"
+msgstr "Synchronisation avec Crowdin"
+
+msgid "Syncing with Crowdin failed."
+msgstr "La synchronisation avec Crowdin a échoué."
+
+msgid "Crowdin error"
+msgstr "Erreur Crowdin"
+
+msgid "Uploading translations…"
+msgstr "Téléchargement des traductions..."
+
+msgid "&Copy"
+msgstr "&Copier"
+
+msgid "Learn more"
+msgstr "En savoir plus"
+
+msgid "Learn More"
+msgstr "En savoir plus"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "La commande a échoué : %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "Échec de la fusion des catalogues gettext."
+
+msgid "Scanning files..."
+msgstr "Analyse des fichiers..."
+
+#. TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
+#, c-format
+msgid "Parsing %s files..."
+msgstr "Analyse de %s fichiers..."
+
+msgid "Failed to load extracted catalog."
+msgstr "Échec du chargement du catalogue extrait."
+
+msgid "&Help"
+msgstr "&Aide"
+
+msgid "MO files can’t be directly edited in Poedit."
+msgstr "Les fichiers MO ne peuvent pas être directement modifiés dans Poedit."
+
+msgid "Error opening file"
+msgstr "Erreur à l'ouverture du fichier"
+
+msgid ""
+"Please open and edit the corresponding PO file instead. When you save it, "
+"the MO file will be updated as well."
+msgstr ""
+"Veuillez ouvrir et éditer le fichier PO correspondant. Lorsque vous "
+"l'enregistrerez, le fichier MO sera également mis à jour."
+
+msgid "don't delete temporary files (for debugging)"
+msgstr "ne pas supprimer les fichiers temporaires (à des fins de débogage)"
+
+msgid "handle a poedit:// URI"
+msgstr "gère une poedit: // URI"
+
+msgid "Failed to communicate with Poedit process."
+msgstr "Échec lors de la communication avec Poedit."
+
+#, c-format
+msgid "Unhandled exception occurred: %s"
+msgstr "Une exception non gérée s'est produite : %s"
+
+msgid "Unhandled exception occurred."
+msgstr "Une exception non gérée s'est produite."
+
+msgid "Open catalog"
+msgstr "Ouvrir un catalogue"
+
+#, c-format
+msgid "File '%s' doesn't exist."
+msgstr "Le fichier « %s » n'existe pas."
+
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#, c-format
+msgid "About %s"
+msgstr "À propos de %s"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "Version %s"
+
+msgid "Poedit is an easy to use translations editor."
+msgstr "Poedit est un logiciel de traduction simple à utiliser."
+
+msgid "Catalogs Manager"
+msgstr "Gestionnaire de catalogues"
+
+msgid "Check for Updates..."
+msgstr "Recherche des mises à jour..."
+
+msgid "&Edit"
+msgstr "&Modifier"
+
+msgid "Undo"
+msgstr "Annuler"
+
+msgid "Redo"
+msgstr "Refaire"
+
+msgid "Paste and Match Style"
+msgstr "Coller en conservant la mise en forme"
+
+msgid "Delete"
+msgstr "Supprimer"
+
+msgid "Spelling and Grammar"
+msgstr "Orthographe et Grammaire"
+
+msgid "Show Spelling and Grammar"
+msgstr "Afficher l'orthographe et la grammaire"
+
+msgid "Check Document Now"
+msgstr "Vérifier le document maintenant"
+
+msgid "Check Spelling While Typing"
+msgstr "Vérifier l'orthographe lors de la frappe"
+
+msgid "Check Grammar With Spelling"
+msgstr "Vérifier la grammaire avec l’orthographe"
+
+msgid "Correct Spelling Automatically"
+msgstr "Corriger l’orthographe automatiquement"
+
+msgid "Substitutions"
+msgstr "Substitutions"
+
+msgid "Show Substitutions"
+msgstr "Afficher les substitutions"
+
+msgid "Smart Copy/Paste"
+msgstr "Copier/coller intelligent "
+
+msgid "Smart Quotes"
+msgstr "Guillemets intelligents"
+
+msgid "Smart Dashes"
+msgstr "Tirets intelligents"
+
+msgid "Smart Links"
+msgstr "Liens intelligents"
+
+msgid "Text Replacement"
+msgstr "Texte de remplacement"
+
+msgid "Transformations"
+msgstr "Transformations"
+
+msgid "Make Upper Case"
+msgstr "Mettre en majuscules"
+
+msgid "Make Lower Case"
+msgstr "Mettre en minuscules"
+
+msgid "Capitalize"
+msgstr "Mettre en majuscule"
+
+msgid "Speech"
+msgstr "Dicter"
+
+msgid "Start Speaking"
+msgstr "Commencer à parler"
+
+msgid "Stop Speaking"
+msgstr "Arrêter de parler"
+
+msgid "&View"
+msgstr "&Affichage"
+
+msgid "Enter Full Screen"
+msgstr "Passer en mode plein écran"
+
+msgid "Window"
+msgstr "Fenêtre"
+
+msgid "Minimize"
+msgstr "Réduire"
+
+msgid "Zoom"
+msgstr "Agrandir"
+
+msgid "Bring All to Front"
+msgstr "Tout passer au premier plan"
+
+msgid "PO Translation"
+msgstr "Traduction PO"
+
+msgid "The file cannot be opened."
+msgstr "Le fichier ne peut pas être ouvert."
+
+msgid "Invalid file"
+msgstr "Fichier invalide"
+
 msgid ""
 "The file may be either corrupted or in a format not recognized by Poedit."
 msgstr ""
+"Le fichier est peut-être corrompu ou dans un format non reconnu par Poedit."
 
-#: ../src/edframe.cpp:1691
+msgid "&Undo"
+msgstr "Ann&uler"
+
+msgid "&Redo"
+msgstr "&Rétablir"
+
+msgid "Cu&t"
+msgstr "Couper"
+
+msgid "Cut"
+msgstr "Couper"
+
+msgid "Copy"
+msgstr "Copier"
+
+msgid "&Paste"
+msgstr "&Coller"
+
+msgid "Paste"
+msgstr "Coller"
+
+msgid "&Delete"
+msgstr "&Supprimer"
+
+msgid "Select &All"
+msgstr "Tout sélectionner"
+
+msgid "Select All"
+msgstr "Tout sélectionner"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+msgid "Ctrl+"
+msgstr "Ctrl+"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+msgid "Alt+"
+msgstr "Alt+"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Shift+"
+msgstr "Maj+"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Enter"
+msgstr "Entrée"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Up"
+msgstr "Haut"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Down"
+msgstr "Bas"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+msgid "ctrl"
+msgstr "ctrl"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+msgid "alt"
+msgstr "alt"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+msgid "shift"
+msgstr "maj"
+
+msgid "You can't drop more than one file on Poedit window."
+msgstr ""
+"Il est impossible de déposer plus d'un fichier à la fois dans la fenêtre de "
+"Poedit."
+
+#, c-format
+msgid "File '%s' is not a message catalog."
+msgstr "Le fichier « %s » n'est pas un catalogue de messages."
+
+msgid "Poedit"
+msgstr "Poedit"
+
+msgid "&File"
+msgstr "&Fichier"
+
+msgid "&Go"
+msgstr "&Démarrer"
+
+msgid "Source text:"
+msgstr "Texte source :"
+
+msgid "Singular:"
+msgstr "Singulier :"
+
+msgid "Plural:"
+msgstr "Pluriel :"
+
+msgid "Translation:"
+msgstr "Traduction :"
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"Les fichiers POT ne sont que des modèles et ne contiennent pas de "
+"traductions. \n"
+"Pour faire une traduction, créez un nouveau fichier PO à partir du modèle."
+
+msgid "Create New Translation"
+msgstr "Créer une nouvelle traduction"
+
+msgid "Create new translation"
+msgstr "Créer une nouvelle traduction"
+
+msgid "Upgrade to Windows 10 (for free) to enable spellchecking in Poedit."
+msgstr ""
+"Mettez à jour vers Windows 10 (gratuitement) pour activer le vérificateur "
+"orthographique dans Poedit."
+
+msgid ""
+"Poedit needs Windows 8 or newer for spellchecking, but you only have Windows "
+"7. Microsoft is offering free upgrades to Windows 10 until July 29, 2016."
+msgstr ""
+"Poedit nécessite Windows 8 ou une version ultérieure pour pouvoir utiliser "
+"le vérificateur orthographique, mais vous n'avez que Windows 7. Microsoft "
+"propose des mises à jour gratuites vers Windows 10 jusqu'au 29 juillet 2016."
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid ""
+"Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr ""
+"La vérification orthographique est désactivée, car le dictionnaire pour le "
+"%s n'est pas installé."
+
+msgid "Install"
+msgstr "Installer"
+
+msgid "Catalog modified. Do you want to save changes?"
+msgstr ""
+"Le catalogue a été modifié. Voulez-vous enregistrer les modifications ?"
+
+msgid "Save changes"
+msgstr "Enregistrer les modifications"
+
+msgid "Your changes will be lost if you don't save them."
+msgstr "Vos modifications seront perdues si vous ne les enregistrez pas."
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Don't save"
+msgstr "Ne pas enregistrer"
+
+msgid "Don't Save"
+msgstr "Ne pas enregistrer"
+
+msgid "Save as..."
+msgstr "Enregistrer sous..."
+
+msgid "Compile to..."
+msgstr "Compilation..."
+
+msgid "Compiled Translation Files"
+msgstr "Fichiers de traduction compilés"
+
+msgid "Export as..."
+msgstr "Exporter en tant que..."
+
+msgid "HTML Files"
+msgstr "Fichiers HTML"
+
+msgid "Open catalog template"
+msgstr "Ouvrir un modèle de catalogue"
+
+msgid "Updating catalog"
+msgstr "Mise à jour du catalogue"
+
+msgid "Source code not available."
+msgstr "Code source non disponible."
+
+msgid "Updating failed"
+msgstr "Échec de la mise à jour"
+
+msgid ""
+"Translations couldn’t be updated from the source code, because no code was "
+"found in the location specified in the catalog’s Properties."
+msgstr ""
+"Les traductions n'ont pas pu être mises à jour à partir du code source, car "
+"aucun code n'a été trouvé à l'emplacement précisé dans les propriétés du "
+"catalogue."
+
+msgid "Entries in the catalog are probably incorrect."
+msgstr "Certaines entrées du catalogue sont probablement incorrectes."
+
+msgid "Updating the catalog failed. Click on 'Details >>' for details."
+msgstr ""
+"La mise à jour du catalogue a échoué. Cliquez sur « Détails >> » pour en "
+"savoir plus."
+
+#, c-format
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] "%d problème trouvé dans la traduction"
+msgstr[1] "%d problèmes trouvés dans la traduction"
+
+msgid "Validation results"
+msgstr "Résultats de la validation"
+
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+"Les entrées avec des erreurs ont été marquées en rouge dans la liste. Les "
+"détails des erreurs s'afficheront lorsque vous sélectionnerez l'entrée "
+"correspondante."
+
+msgid "The file was saved safely."
+msgstr "Le fichier a été enregistré en toute sécurité."
+
+msgid ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
+msgstr ""
+"Le fichier a été enregistré avec succès et compilé au format MO, mais il ne "
+"fonctionnera probablement pas correctement."
+
 msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
 "used."
 msgstr ""
-"Le fichier a été enregistré en toute sécurité, mais il ne peut pas être "
-"compilé dans le format MO et utilisé."
+"Le fichier a été enregistré avec succès, mais il ne peut pas être compilé au "
+"format MO ni être utilisé."
 
-#: ../src/licensing.cpp:104
 msgid ""
-"The registration key can be used on multiple computers you use personally or "
-"for multiple\n"
-"accounts on a single computer."
+"The file was compiled into the MO format, but it will probably not work "
+"correctly."
 msgstr ""
+"Le fichier a été compilé au format MO, mais il ne fonctionnera probablement "
+"pas correctement."
 
-#: ../src/welcomescreen.cpp:231
-msgid "The simplest way to fill this catalog is to update it from a POT:"
-msgstr ""
+msgid "The file cannot be compiled into the MO format and used."
+msgstr "Le fichier ne peut pas être compilé au format MO et être utilisé."
 
-#: ../src/edframe.cpp:1706
+msgid "No problems with the translation found."
+msgstr "Aucun problème trouvé dans la traduction."
+
+#, c-format
+msgid "The translation is ready for use, but %d entry is not translated yet."
+msgid_plural ""
+"The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] ""
+"La traduction est prête à être utilisée, mais %d entrée n'est pas encore "
+"traduite."
+msgstr[1] ""
+"La traduction est prête à être utilisée, mais %d entrées ne sont pas encore "
+"traduites."
+
 msgid "The translation is ready for use."
 msgstr "La traduction est prête à être utilisée."
 
-#: ../src/welcomescreen.cpp:217
-msgid "There are no translations. That’s unusual."
-msgstr ""
+msgid "Context:"
+msgstr "Contexte :"
 
-#: ../src/catalog.cpp:1389
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr ""
+"Poedit a automatiquement corrigé le contenu non valide du fichier \"%s\"."
+
 msgid ""
-"There was a problem formatting the file nicely (but it was saved all right)."
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as fuzzy and correct them if "
+"necessary."
 msgstr ""
-"Il y a eu un problème lors du formatage propre du fichier (mais il a été "
-"enregistré correctement)."
+"Le fichier contenait des éléments en double, ce qui n'est pas permis dans "
+"les fichiers PO et empêcherait son utilisation. Poedit a réglé ce problème, "
+"mais vous devriez réviser les traductions de tous les éléments marqués comme "
+"approximatifs et les corriger si nécessaire."
 
-#: ../src/catalog.cpp:1045
+msgid "Language of the translation isn't set."
+msgstr "La langue de traduction n’est pas définie."
+
+msgid "Set Language"
+msgstr "Définir la langue"
+
+msgid "Set language"
+msgstr "Définir la langue"
+
+#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
 msgid ""
-"There were errors when loading the catalog. Some data may be missing or "
-"corrupted as the result."
+"Suggestions are not available if the translation language is not set "
+"correctly. Other features, such as plural forms, may be affected as well."
 msgstr ""
-"Il y a eu des erreurs lors du chargement du catalogue. Il se pourrait que "
-"des données manquent ou soient corrompues."
+"Les suggestions ne sont pas disponibles si la langue de traduction n'est pas "
+"définie. Les autres fonctionnalités, comme les pluriels, peuvent être "
+"également affectées."
 
-#: ../src/resources/summary.xrc:37
-msgid ""
-"These strings are no longer in the sources.\n"
-"Poedit will remove them from the catalog now."
-msgstr ""
-"Les chaînes suivantes ne sont plus présentes dans les sources.\n"
-"Poedit va les retirer du catalogue maintenant."
+msgid "Language of the translation is the same as source language."
+msgstr "La langue de traduction est identique à la langue source."
 
-#: ../src/resources/summary.xrc:16
-msgid ""
-"These strings were found in the sources but were not in the catalog.\n"
-"Poedit will add them to the catalog now."
-msgstr ""
-"Les chaînes suivantes ont été trouvées dans les sources mais n'existent pas "
-"dans le catalogue.\n"
-"Poedit va les ajouter au catalogue maintenant."
+msgid "Fix Language"
+msgstr "Corriger la langue"
 
-#: ../src/edapp.cpp:201
-msgid "This beta version of Poedit expired."
-msgstr ""
+msgid "Fix language"
+msgstr "Corriger la langue"
 
-#: ../src/edframe.cpp:2278
 msgid ""
 "This catalog has entries with plural forms, but doesn't have Plural-Forms "
 "header configured."
 msgstr ""
-"Ce catalogue a des éléments avec une forme plurielle, mais son en-tête "
-"Plural-Forms n'est pas configurée."
+"Ce catalogue a des entrées au pluriel, mais l'en-tête Pluriel n'est pas "
+"configurée."
 
-# Parsers window static text
-#: ../src/resources/prefs.xrc:367
 msgid ""
-"This is the command used to launch the parser.\n"
+"Entries in this catalog have different plural forms count from what "
+"catalog's Plural-Forms header says"
+msgstr ""
+"Les entrées dans ce catalogue ont un nombre de formes plurielles différent "
+"de celui indiqué dans l'en-tête Pluriel"
+
+msgid "Required header Plural-Forms is missing."
+msgstr "L'en-tête Pluriel requise est absente."
+
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr "Erreur de syntaxe dans l'en-tête Pluriel (\"%s\")."
+
+msgid "Fix the Header"
+msgstr "Corriger l'en-tête"
+
+msgid "Fix the header"
+msgstr "Corriger l'en-tête"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid "Plural forms expression used by the catalog is unusual for %s."
+msgstr ""
+"Les formes plurielles utilisées par le catalogue sont inhabituelles pour %s."
+
+#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
+msgid "Review"
+msgstr "Revoir"
+
+#, c-format
+msgid "Error loading message catalog file '%s'."
+msgstr "Erreur au chargement du fichier catalogue « %s »."
+
+#, c-format
+msgid "Translated: %d of %d (%d %%)"
+msgstr "Traduit : %d de %d (%d %%)"
+
+#, c-format
+msgid "Remaining: %d"
+msgstr "Restant : %d"
+
+#, c-format
+msgid "%d error"
+msgid_plural "%d errors"
+msgstr[0] "%d erreur"
+msgstr[1] "%d erreurs"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "%d entrée"
+msgstr[1] "%d entrées"
+
+msgid " (unsaved)"
+msgstr " (non sauvegardé)"
+
+msgid " (modified)"
+msgstr " (modifié)"
+
+msgid "Go"
+msgstr "Aller"
+
+#, c-format
+msgid "Failed to update translation memory: %s"
+msgstr "Echec de la mise à jour de la mémoire de traduction : %s"
+
+msgid "Purge deleted translations"
+msgstr "Effacer les traductions supprimées"
+
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr ""
+"Voulez-vous supprimer toutes les traductions qui ne sont plus utilisées ?"
+
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"En continuant le nettoyage, toutes les traductions marquées comme supprimées "
+"seront définitivement effacées. Il faudra recommencer la traduction si elles "
+"sont de nouveau ajoutées."
+
+msgid "Keep"
+msgstr "Conserver"
+
+msgid "Purge"
+msgstr "Effacer"
+
+msgid "Fill missing translations from TM"
+msgstr "Remplir les traductions manquantes avec la MT"
+
+msgid "Only fill in exact matches"
+msgstr "Remplir uniquement les correspondances exactes"
+
+msgid ""
+"By default, inaccurate results are filled in as well and marked as fuzzy. "
+"Check this option to only include accurate matches."
+msgstr ""
+"Par défaut, des résultats incorrects sont aussi intégrés et marqués comme "
+"approximatives. Cochez cette option pour inclure seulement les "
+"correspondances exactes."
+
+msgid "Don’t mark exact matches as fuzzy"
+msgstr "Ne pas marquer les correspondances exactes comme approximatives"
+
+msgid ""
+"Only enable if you trust the quality of your TM. By default, all matches "
+"from the TM are marked as fuzzy and should be reviewed."
+msgstr ""
+"Activer uniquement si vous êtes certain de la qualité de votre Mémoire de "
+"Traduction. Par défaut, tous les résultats sont marqués comme approximatifs "
+"et sont à revoir."
+
+msgid "Fill"
+msgstr "Remplir"
+
+#, c-format
+msgid "%d entry was filled from the translation memory."
+msgid_plural "%d entries were filled from the translation memory."
+msgstr[0] "%d entrée à été complétée par la mémoire de traduction."
+msgstr[1] "%d entrées ont été complétées par la mémoire de traduction."
+
+msgid ""
+"The translations were marked as fuzzy, because they may be inaccurate. You "
+"should review them for correctness."
+msgstr ""
+"Les traductions sont marquées comme approximatives car elles risquent d'être "
+"incorrectes. Vous devriez vérifier leur pertinence."
+
+msgid "No entries could be filled from the translation memory."
+msgstr ""
+"Aucune entrée n'a pu être complétée à partir de la mémoire de traduction."
+
+msgid ""
+"The TM doesn’t contain any strings similar to the content of this file. It "
+"is only effective for semi-automatic translations after Poedit learns enough "
+"from files that you translated manually."
+msgstr ""
+"La MT ne contient aucune chaîne identique au contenu de ce fichier. C'est "
+"effectif uniquement pour des traductions semi-automatiques après que Poedit "
+"ait appris suffisamment de fichiers traduits manuellement."
+
+msgid "Translating"
+msgstr "Traduction en cours"
+
+msgid "Filling missing translations from TM..."
+msgstr "Remplissage des traductions manquantes avec la MT..."
+
+#, c-format
+msgid "Translated %u string"
+msgid_plural "Translated %u strings"
+msgstr[0] "%u chaîne traduite"
+msgstr[1] "%u chaînes traduites"
+
+msgid "Copy from source text"
+msgstr "Copier depuis le texte original"
+
+msgid "Copy from Source Text"
+msgstr "Copier à partir du texte original"
+
+msgid "Clear translation"
+msgstr "Effacer la traduction"
+
+msgid "Clear Translation"
+msgstr "Effacer la traduction"
+
+msgid "Edit comment"
+msgstr "Modifier le commentaire"
+
+msgid "Edit Comment"
+msgstr "Modifier le commentaire"
+
+msgid "References:"
+msgstr "Références :"
+
+msgid "Everything"
+msgstr "Tout"
+
+#, c-format
+msgid "Form %i"
+msgstr "Forme %i"
+
+msgid "Singular"
+msgstr "Singulier"
+
+msgid "Zero"
+msgstr "Zéro"
+
+msgid "One"
+msgstr "Un"
+
+msgid "Two"
+msgstr "Deux"
+
+msgid "Plural"
+msgstr "Pluriel"
+
+msgid "Other"
+msgstr "Autre"
+
+msgid "&Bookmarks"
+msgstr "&Marque-pages"
+
+#, c-format
+msgid "Set bookmark %i"
+msgstr "Définir le marque page %i"
+
+#, c-format
+msgid "Go to bookmark %i"
+msgstr "Aller au marque page %i"
+
+#, c-format
+msgid "Set Bookmark %i"
+msgstr "Définir le marque page %i"
+
+#, c-format
+msgid "Go to Bookmark %i"
+msgstr "Aller au marque page %i"
+
+msgid "Hide Sidebar"
+msgstr "Masquer le panneau latéral"
+
+msgid "Show Sidebar"
+msgstr "Afficher le panneau latéral"
+
+msgid "Hide Status Bar"
+msgstr "Masquer la barre d'état"
+
+msgid "Show Status Bar"
+msgstr "Afficher la barre d'état"
+
+msgid "Source text"
+msgstr "Texte original"
+
+msgid "Translation"
+msgstr "Traduction"
+
+msgid "ID"
+msgstr "ID"
+
+#, c-format
+msgid "Source text — %s"
+msgstr "Texte source — %s"
+
+msgid "unknown language"
+msgstr "langue inconnue"
+
+#, c-format
+msgid "Translation — %s"
+msgstr "Traduction — %s"
+
+msgid "Error:"
+msgstr "Erreur :"
+
+msgid "Source file"
+msgstr "Fichier source"
+
+msgid "Source file occurrence:"
+msgstr "Présence du fichier source:"
+
+msgid "Open in Editor"
+msgstr "Ouvrir dans l’Éditeur"
+
+msgid "Open in editor"
+msgstr "Ouvrir dans l'éditeur"
+
+msgid "No references for the selected item."
+msgstr "Aucune référence pour l'élément sélectionné."
+
+#, c-format
+msgid "Error opening file %s!"
+msgstr "Erreur à l'ouverture du fichier %s !"
+
+msgid "Find"
+msgstr "Trouver"
+
+msgid "Replace"
+msgstr "Remplacer"
+
+#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+msgid "Options"
+msgstr "Options"
+
+msgid "Ignore case"
+msgstr "Ignorer la casse"
+
+msgid "Wrap around"
+msgstr "Boucler"
+
+msgid "Whole words only"
+msgstr "Mots entiers uniquement"
+
+msgid "Find in source texts"
+msgstr "Trouver dans les textes sources"
+
+msgid "Find in translations"
+msgstr "Trouver dans les traductions"
+
+msgid "Find in comments"
+msgstr "Rechercher dans les commentaires"
+
+msgid "Close"
+msgstr "Fermer"
+
+msgid "Replace All"
+msgstr "Remplacer tout"
+
+msgid "Replace all"
+msgstr "Remplacer tout"
+
+msgid "< &Previous"
+msgstr "< &Précédente"
+
+msgid "&Next >"
+msgstr "&Suivant >"
+
+msgid "String to find"
+msgstr "Chaîne à rechercher "
+
+msgid "Replacement string"
+msgstr "Chaîne de remplacement"
+
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "Impossible d'exécuter le programme : %s"
+
+msgid "Language Code or Name (e.g. en_GB)"
+msgstr "Code ou nom de la langue (ex. fr_FR)"
+
+msgid "Translation Language"
+msgstr "Langue de traduction"
+
+msgid "Language of the translation:"
+msgstr "Langue de la traduction :"
+
+msgid "Poedit - Catalogs manager"
+msgstr "Poedit - Gestionnaire des catalogues"
+
+msgid "Catalog"
+msgstr "Catalogue"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Untrans"
+msgstr "Non traduit"
+
+msgid "Fuzzy"
+msgstr "Approximative"
+
+msgid "Bad Tokens"
+msgstr "Marqueurs incorrects"
+
+msgid "Last modified"
+msgstr "Dernière modification"
+
+msgid "Select directory"
+msgstr "Choisir un répertoire"
+
+msgid "Directories:"
+msgstr "Répertoires :"
+
+msgid "<unnamed>"
+msgstr "<sans_nom>"
+
+msgid "Do you want to delete the project?"
+msgstr "Voulez-vous effacer ce projet ?"
+
+msgid "Confirmation"
+msgstr "Confirmation"
+
+msgid ""
+"Do you really want to do mass update of\n"
+"all catalogs in this project?"
+msgstr ""
+"Voulez-vous vraiment faire une mise à jour\n"
+"de tous les catalogues de ce projet ?"
+
+msgid "Information about the translator"
+msgstr "Informations sur le traducteur"
+
+msgid "Name:"
+msgstr "Nom :"
+
+msgid "Your Name"
+msgstr "Votre nom"
+
+msgid "Email:"
+msgstr "E-mail :"
+
+msgid "your_email@example.com"
+msgstr "votre.e-maill@example.com"
+
+msgid ""
+"Your name and email address are only used to set the Last-Translator header "
+"of GNU gettext files."
+msgstr ""
+"Votre nom et votre adresse e-mail sont uniquement utilisés pour définir l'en-"
+"tête Last-Translator des fichiers de GNU gettext."
+
+msgid "Editing"
+msgstr "Modifications"
+
+msgid "Automatically compile MO file when saving"
+msgstr "Compiler automatiquement le fichier MO lors de l'enregistrement"
+
+msgid "Show summary after catalog update"
+msgstr "Afficher le résumé après la mise à jour du catalogue"
+
+msgid "Check spelling"
+msgstr "Vérifier l’orthographe"
+
+msgid "Always change focus to text input field"
+msgstr "Toujours activer la zone de saisie du texte"
+
+msgid ""
+"Never let the list of strings take focus. If enabled, you must use Ctrl-"
+"arrows for keyboard navigation but you can also type text immediately, "
+"without having to press Tab to change focus."
+msgstr ""
+"Ne jamais laisser la main à la liste des chaînes. Lorsqu'elle est activée, "
+"il faut utiliser les touches Ctrl + Haut/Bas de navigation, mais vous pouvez "
+"aussi taper le texte directement sans avoir à utiliser la touche de "
+"tabulation pour activer la zone de traduction."
+
+msgid "Appearance"
+msgstr "Apparence"
+
+msgid "Use custom list font:"
+msgstr "Utiliser une police personnalisée :"
+
+msgid "Use custom text fields font:"
+msgstr "Utiliser une police personnalisée pour les champs texte :"
+
+msgid "Change UI language"
+msgstr "Changer la langue de l'interface"
+
+#. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
+msgid "(requires Windows 8 or newer)"
+msgstr "(nécessite Windows 8 ou plus récent)"
+
+msgid "General"
+msgstr "Général"
+
+msgid "Use translation memory"
+msgstr "Utiliser la mémoire de traduction"
+
+msgid "Learn From Files..."
+msgstr "Apprendre à partir des fichiers..."
+
+msgid "Learn from files..."
+msgstr "Apprendre à partir de fichiers..."
+
+#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+msgid "Reset"
+msgstr "Réinitialiser "
+
+msgid "Consult TM when updating from sources"
+msgstr "Consulter la MT lorsque vous mettez à jour depuis les sources"
+
+msgid ""
+"If enabled, Poedit will try to fill in new entries using your previous\n"
+"translations stored in the translation memory. If the TM is\n"
+"near-empty, it will not be very effective. The more translations\n"
+"you edit and the larger the TM grows, the better it gets."
+msgstr ""
+"Si activé, Poedit essaiera de remplir les nouvelles entrées en utilisant vos "
+"précédentes\n"
+"traductions stockées dans la mémoire de tradhttps://crowdin.com/translate/"
+"poedit/3/en-fr#uction. Si la TM est\n"
+"presque vide, cela sera peut effectif. Plus vous traduisez\n"
+"plus votre MT grossit, et meilleur c'est."
+
+msgid "Stored translations:"
+msgstr "Traductions stockées :"
+
+msgid "Database size on disk:"
+msgstr "Taille de la base de données sur le disque :"
+
+msgid "Select translation files to import"
+msgstr "Sélectionner les fichiers de traduction à importer"
+
+msgid "Translation Memory"
+msgstr "Mémoire de traduction"
+
+msgid "Importing translations..."
+msgstr "Importation des traductions…"
+
+msgid "Finalizing..."
+msgstr "Finalisation..."
+
+msgid "Reset translation memory"
+msgstr "Réinitialiser la mémoire de traduction"
+
+msgid "Are you sure you want to reset the translation memory?"
+msgstr "Voulez-vous vraiment réinitialiser la mémoire de traduction ?"
+
+msgid ""
+"Resetting the translation memory will irrevocably delete all stored "
+"translations from it. You can’t undo this operation."
+msgstr ""
+"La réinitialisation de la mémoire de traduction supprimera définitivement "
+"toutes les traductions qui y sont stockées. Cette opération est irréversible."
+
+msgid "Cancel"
+msgstr "Annuler"
+
+#. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on OS X.
+#. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
+#. length there.
+msgid "TM"
+msgstr "MT"
+
+msgid ""
+"Source code extractors are used to find translatable strings in the source "
+"code files and extract them so that they can be translated."
+msgstr ""
+"Les extracteurs de code source sont utilisés pour rechercher et extraire les "
+"chaînes traduisibles des fichiers du code source afin de les traduire."
+
+msgid "New"
+msgstr "Nouveau"
+
+msgid "Edit"
+msgstr "Modifier"
+
+msgid "Delete extractor"
+msgstr "Supprimer l'extracteur"
+
+#, c-format
+msgid "Are you sure you want to delete the “%s” extractor?"
+msgstr "Êtes-vous sûr de vouloir supprimer l'extracteur «%s » ?"
+
+msgid "Extractors"
+msgstr "Extracteurs"
+
+msgid "Accounts"
+msgstr "Comptes"
+
+msgid "Automatically check for updates"
+msgstr "Rechercher automatiquement les mises à jour"
+
+msgid "Include beta versions"
+msgstr "Inclure les versions bêta"
+
+msgid ""
+"Beta versions contain the latest new features and improvements, but may be a "
+"bit less stable."
+msgstr ""
+"Les versions bêta contiennent les dernières nouveautés et améliorations, "
+"mais elles peuvent être un peu moins stables."
+
+msgid "Updates"
+msgstr "Mises à jour"
+
+msgid ""
+"These settings affect internal formatting of PO files. Adjust them if you "
+"have specific requirements e.g. because of version control."
+msgstr ""
+"Ces paramètres modifient la mise en forme interne des fichiers PO. Ajustez-"
+"les si vous avez des exigences spécifiques, par exemple en raison du "
+"contrôle de version."
+
+msgid "Line endings:"
+msgstr "Fins de ligne :"
+
+msgid "Unix (recommended)"
+msgstr "Unix (recommandé)"
+
+msgid "Windows"
+msgstr "Windows"
+
+#. TRANSLATORS: Followed by text control for entering number; wraps text at given width
+msgid "Wrap at:"
+msgstr "Passer à la ligne à :"
+
+msgid "Preserve formatting of existing files"
+msgstr "Préserver le formatage des fichiers existants"
+
+msgid "Advanced"
+msgstr "Avancés"
+
+msgid ""
+"<big>Drag and Drop Folders Here</big>\n"
+"\n"
+"or use the + button"
+msgstr ""
+"<big>Glissez-déposez les dossiers ici</big>\n"
+"\n"
+"ou utilisez le bouton +"
+
+msgid ""
+"<big>Drag and drop folders here</big>\n"
+"\n"
+"or use the + button"
+msgstr ""
+"<big>Glissez-déposez les dossiers ici</big>\n"
+"\n"
+"ou utilisez le bouton +"
+
+msgid "Add Folders..."
+msgstr "Ajouter des dossiers..."
+
+msgid "Add folders..."
+msgstr "Ajouter des dossiers..."
+
+msgid "Add Files..."
+msgstr "Ajouter des fichiers..."
+
+msgid "Add files..."
+msgstr "Ajouter des fichiers..."
+
+msgid "Add Wildcard..."
+msgstr "Ajout du caractère générique..."
+
+msgid "Add wildcard..."
+msgstr "Ajout du caractère générique..."
+
+msgid "Paths"
+msgstr "Chemins"
+
+msgid "Excluded paths"
+msgstr "Chemins exclus"
+
+msgid "Additional keywords"
+msgstr "Mots clés supplémentaires"
+
+msgid "Name of the project the translation is for"
+msgstr "Nom du projet de traduction"
+
+msgid "e.g. nplurals=2; plural=(n > 1);"
+msgstr "p. ex. nplurals=2; plural=(n > 1);"
+
+msgid "UTF-8 (recommended)"
+msgstr "UTF-8 (recommandé)"
+
+msgid "Please save the file first. This section cannot be edited until then."
+msgstr ""
+"Veuillez d'abord enregistrer le fichier. Cette section ne peut pas être "
+"modifiée avant."
+
+msgid "Comment:"
+msgstr "Commentaire :"
+
+msgid "OK"
+msgstr "Ok"
+
+msgid "C&lear"
+msgstr "&Effacer"
+
+msgid "Clear the comment"
+msgstr "Effacer le commentaire"
+
+msgid "Create new translations project"
+msgstr "Créer un nouveau projet de traduction"
+
+msgid "Edit the project"
+msgstr "Modifier le projet"
+
+msgid "Delete the project"
+msgstr "Supprimer le projet"
+
+msgid "Update all"
+msgstr "Tout mettre à jour"
+
+msgid "Update all catalogs in the project"
+msgstr "Mettre à jour tous les catalogues du projet"
+
+msgid "Edit project"
+msgstr "Modifier le projet"
+
+msgid "Project name:"
+msgstr "Nom du projet :"
+
+msgid "Browse"
+msgstr "Parcourir"
+
+msgid "Add directory to the list"
+msgstr "Ajouter un répertoire à la liste"
+
+msgid "&Preferences..."
+msgstr "&Préférences..."
+
+msgid "&Close"
+msgstr "&Fermer"
+
+msgid "E&xit"
+msgstr "&Quitter"
+
+msgid "Quit"
+msgstr "Quitter"
+
+msgid "&New..."
+msgstr "&Nouveau…"
+
+msgid "New from &POT/PO file..."
+msgstr "Nouveau à partir d'un fichier &POT/PO..."
+
+msgid "New From &POT/PO File..."
+msgstr "Nouveau à partir d'un fichier &POT/PO..."
+
+msgid "&Open..."
+msgstr "&Ouvrir..."
+
+msgid "Open Recent"
+msgstr "Récemment ouverts"
+
+msgid "Open from Crowdin..."
+msgstr "Ouvrir à partir de Crowdin..."
+
+msgid "Open From Crowdin..."
+msgstr "Ouvrir à partir de Crowdin..."
+
+msgid "&Save"
+msgstr "&Enregistrer"
+
+msgid "Save &as..."
+msgstr "Enregistrer &sous..."
+
+msgid "Save &As..."
+msgstr "Enregistrer &sous..."
+
+msgid "Compile to MO..."
+msgstr "Compiler le MO..."
+
+msgid "E&xport as HTML..."
+msgstr "Exporter en HTML…"
+
+msgid "Check for updates..."
+msgstr "Recherche de mises à jour..."
+
+msgid "Catalogs &manager"
+msgstr "Gestion des &catalogues"
+
+msgid "Catalogs &Manager"
+msgstr "Gestionnaire de &catalogues"
+
+msgid "Translation is &fuzzy"
+msgstr "Traduction &approximative"
+
+msgid "Translation Is &Fuzzy"
+msgstr "La traduction est &approximative"
+
+msgid "Edit &comment"
+msgstr "Modifier le &commentaire"
+
+msgid "Edit &Comment"
+msgstr "Modifier le &commentaire"
+
+msgid "Suggestions"
+msgstr "Suggestions"
+
+msgid "&Show references"
+msgstr "&Voir les références"
+
+msgid "&Show References"
+msgstr "&Voir les références"
+
+msgid "&Find..."
+msgstr "&Rechercher..."
+
+msgid "Replace..."
+msgstr "Remplacer..."
+
+msgid "Find next"
+msgstr "Chercher le suivant"
+
+msgid "Find previous"
+msgstr "Trouver le précédent"
+
+msgid "Find and Replace..."
+msgstr "Rechercher et remplacer..."
+
+msgid "Find Next"
+msgstr "Chercher le suivant"
+
+msgid "Find Previous"
+msgstr "Chercher le précédent"
+
+msgid "&Preferences"
+msgstr "&Préférences"
+
+msgid "Display entry &IDs"
+msgstr "Afficher les &IDs des entrées"
+
+msgid "Display Entry &IDs"
+msgstr "Afficher les &IDs des entrées"
+
+msgid "Sort by &file order"
+msgstr "Trier par &fichier"
+
+msgid "Sort by &File Order"
+msgstr "Trier par &fichier"
+
+msgid "Sort by &source"
+msgstr "Trier par &source"
+
+msgid "Sort by &Source"
+msgstr "Trier par &source"
+
+msgid "Sort by &translation"
+msgstr "Trier par &traduction"
+
+msgid "Sort by &Translation"
+msgstr "Trier par &traduction"
+
+msgid "&Group by context"
+msgstr "&Grouper par contexte"
+
+msgid "&Group By Context"
+msgstr "&Grouper par contexte"
+
+msgid "Entries with errors first"
+msgstr "Entrées avec erreurs en premier"
+
+msgid "Entries with Errors First"
+msgstr "Entrées avec erreurs en premier"
+
+msgid "&Untranslated entries first"
+msgstr "Entrées &non traduites en premier"
+
+msgid "&Untranslated Entries First"
+msgstr "Entrées &non traduites en premier"
+
+msgid "Show sidebar"
+msgstr "Afficher le panneau latéral"
+
+msgid "Show status bar"
+msgstr "Afficher la barre d'état"
+
+msgid "C&atalog"
+msgstr "&Catalogue"
+
+msgid "&Update from sources"
+msgstr "&Mettre à jour depuis les sources"
+
+msgid "&Update from Sources"
+msgstr "&Mettre à jour depuis les sources"
+
+msgid "Update from &POT file..."
+msgstr "Mettre à jour depuis un fichier &POT..."
+
+msgid "Update from &POT File..."
+msgstr "Mettre à jour depuis un fichier &POT..."
+
+msgid "Sync with Crowdin"
+msgstr "Synchroniser avec Crowdin"
+
+msgid "Fill missing translations from &TM..."
+msgstr "Remplir les traductions manquantes avec la M&T..."
+
+msgid "Fill Missing Translations from &TM..."
+msgstr "Remplir les traductions manquantes avec la M&T..."
+
+msgid "&Purge deleted translations"
+msgstr "&Effacer les traductions supprimées"
+
+msgid "&Purge Deleted Translations"
+msgstr "&Effacer les traductions supprimées"
+
+msgid "&Validate translations"
+msgstr "&Valider les traductions"
+
+msgid "&Validate Translations"
+msgstr "&Valider les traductions"
+
+msgid "&Properties..."
+msgstr "&Préférences..."
+
+msgid "&Done and next"
+msgstr "&Appliquer et continuer"
+
+msgid "&Done and Next"
+msgstr "&Appliquer et continuer"
+
+msgid "&Previous translation"
+msgstr "Traduction &précédente"
+
+msgid "&Previous Translation"
+msgstr "Traduction &précédente"
+
+msgid "&Next translation"
+msgstr "Traduction suiva&nte"
+
+msgid "&Next Translation"
+msgstr "Traduction suiva&nte"
+
+msgid "P&revious unfinished"
+msgstr "P&récédent incomplet"
+
+msgid "P&revious Unfinished"
+msgstr "P&récédent incomplet"
+
+msgid "Ne&xt unfinished"
+msgstr "Incomplet suivan&t"
+
+msgid "Ne&xt Unfinished"
+msgstr "Incomplet suivan&t"
+
+msgid "&Online help"
+msgstr "&Aide en ligne"
+
+msgid "&Online Help"
+msgstr "&Aide en ligne"
+
+msgid "&GNU gettext manual"
+msgstr "Manuel de &GNU gettext"
+
+msgid "&GNU gettext Manual"
+msgstr "Manuel de &GNU gettext"
+
+msgid "&About Poedit"
+msgstr "&À propos de Poedit"
+
+msgid "&About"
+msgstr "&À propos"
+
+msgid "Extractor setup"
+msgstr "Installation de l'extracteur"
+
+msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
+msgstr ""
+"Liste des extensions séparées par des points-virgules (ex. *.cpp;*.h) :"
+
+msgid "Invocation:"
+msgstr "Appel :"
+
+msgid "Command to extract translations:"
+msgstr "Commande pour extraire des traductions :"
+
+msgid ""
+"This is the command used to launch the extractor.\n"
 "%o expands to the name of output file, %K to list\n"
 "of keywords, %F to list of input files,\n"
 "%C to charset flag (see below)."
 msgstr ""
-"Ceci est la commande qui lance l'analyseur.\n"
-"%o : nom du fichier de sortie; %K : liste des mots clés;\n"
-"%F : liste des fichiers d'entrée,\n"
+"Voici les commandes lançant l'extracteur.\n"
+"%o : étendre au nom du fichier de sortie,\n"
+"%K : lister les mots clés,\n"
+"%F : lister les fichiers d'entrée,\n"
 "%C : jeu de caractères (voir ci-dessous)."
 
-#: ../src/tm/tm_migrate.cpp:236
-msgid ""
-"This must be done before Poedit can start. It may take a few minutes if you "
-"have lots of translations stored, but should normally be much faster."
-msgstr ""
+msgid "An item in keywords list:"
+msgstr "Un élément de la liste des mots clés :"
 
-# Parsers window static text
-#: ../src/resources/prefs.xrc:424
-#, c-format
 msgid ""
-"This will be attached to the command line\n"
-"only if source codecharset was given. %c expands to charset value."
+"This will be attached to the command line once\n"
+"for each keyword. %k expands to the keyword."
 msgstr ""
-"Inséré dans la ligne de commande lorsque le code de jeu de\n"
-"caractères de la source est fourni. %c : valeur du jeu de caractères."
+"Inséré dans la ligne de commande pour chaque\n"
+"mot clé. %k : le mot clé."
 
-# Parsers window static text
-#: ../src/resources/prefs.xrc:405
+msgid "An item in input files list:"
+msgstr "Un élément de la liste des fichiers d'entrée :"
+
 #, c-format
 msgid ""
 "This will be attached to the command line once\n"
@@ -1985,33 +1675,238 @@ msgstr ""
 "Inséré dans la ligne de commande pour chaque\n"
 "fichier d'entrée. %f : nom du fichier."
 
-# Parsers window static text
-#: ../src/resources/prefs.xrc:386
+msgid "Source code charset:"
+msgstr "Jeu de caractères du code source :"
+
+#, c-format
 msgid ""
-"This will be attached to the command line once\n"
-"for each keyword. %k expands to the keyword."
+"This will be attached to the command line\n"
+"only if source codecharset was given. %c expands to charset value."
 msgstr ""
-"Inséré dans la ligne de commande pour chaque\n"
-"mot clé. %k : le mot clé."
+"Inséré dans la ligne de commande lorsque le code de jeu de\n"
+"caractères de la source est fourni. %c : valeur du jeu de caractères."
 
-# Toolbar button hint for Edit: Translation is fuzzy
-#: ../src/resources/toolbar.xrc:52
+msgid "Catalog properties"
+msgstr "Propriétés du catalogue"
+
+msgid "Project name and version:"
+msgstr "Nom et version du projet :"
+
+msgid "Plural Forms:"
+msgstr "Formes plurielles :"
+
+msgid "Use default rules for this language"
+msgstr "Utiliser les règles par défaut de cette langue"
+
+msgid "Use custom expression"
+msgstr "Utiliser une expression personnalisée"
+
+msgid "Learn about plural forms"
+msgstr "En savoir plus sur les formes plurielles"
+
+msgid "Charset:"
+msgstr "Jeu de caractères :"
+
+msgid "Team:"
+msgstr "Équipe de traduction :"
+
+msgid "Team's email address:"
+msgstr "Adresse électronique de l'équipe :"
+
+msgid "Translation properties"
+msgstr "Propriétés de traduction"
+
+msgid "Sources paths"
+msgstr "Chemins des sources"
+
+msgid "Extract text from source files in the following directories:"
+msgstr "Extraire le texte des fichiers sources dans les répertoires suivants :"
+
+msgid "Base path:"
+msgstr "Chemin de base :"
+
+msgid "Sources keywords"
+msgstr "Mots-clés sources"
+
+msgid ""
+"Use these keywords (function names) to recognize translatable strings\n"
+"in source files:"
+msgstr ""
+"Utiliser ces mots clés (noms de fonctions) pour reconnaître les chaînes\n"
+"traduisibles dans les fichiers sources :"
+
+msgid "Learn about gettext keywords"
+msgstr "En savoir plus sur les mots clés gettext"
+
+msgid "Update summary"
+msgstr "Résumé de la mise à jour"
+
+msgid ""
+"These strings were found in the sources but were not in the catalog.\n"
+"Poedit will add them to the catalog now."
+msgstr ""
+"Les chaînes suivantes ont été trouvées dans les sources mais n'existent pas "
+"dans le catalogue.\n"
+"Poedit les ajoute au catalogue."
+
+msgid "New strings"
+msgstr "Nouvelles chaînes"
+
+msgid ""
+"These strings are no longer in the sources.\n"
+"Poedit will remove them from the catalog now."
+msgstr ""
+"Ces chaînes ne sont plus dans les sources.\n"
+"Poedit les retire du catalogue."
+
+msgid "Obsolete strings"
+msgstr "Chaînes obsolètes"
+
+msgid "(0 new, 0 obsolete)"
+msgstr "(0 nouvelle, 0 obsolète)"
+
+msgid "Open"
+msgstr "Ouvrir"
+
+msgid "Save catalog"
+msgstr "Enregistrer le catalogue"
+
+msgid "Validate"
+msgstr "Valider"
+
+msgid "Check for errors in the translation"
+msgstr "Vérifier les erreurs dans la traduction"
+
+msgid "Update"
+msgstr "Mettre à jour"
+
+msgid "Update catalog - synchronize it with sources"
+msgstr "Mettre à jour le catalogue - Synchroniser avec les sources"
+
 msgid "Toggled if selected string has fuzzy translation"
+msgstr "Activer si la chaîne sélectionnée est traduite approximativement"
+
+msgid "Show or hide the sidebar"
+msgstr "Afficher ou masquer le panneau latéral"
+
+#. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
+msgid "Previous source text:"
+msgstr "Texte source précédent :"
+
+msgid ""
+"The old source text (before it changed during an update) that the fuzzy "
+"translation corresponds to."
 msgstr ""
-"Basculer la traduction sélectionnée en traduction approximative (et "
-"inversement)"
+"L'ancien texte source (avant son changement durant une mise à jour) auquel "
+"correspond la traduction approximative."
 
-#: ../src/manager.cpp:250
-msgid "Total"
-msgstr "Total"
+msgid "Notes for translators:"
+msgstr "Notes pour les traducteurs :"
 
-# Main window list header
-#: ../src/edapp.cpp:833
-#, fuzzy
-msgid "Transformations"
-msgstr "Traduction"
+msgid "Add comment"
+msgstr "Ajouter un commentaire"
 
-#: ../src/welcomescreen.cpp:222
+msgid "Add Comment"
+msgstr "Ajouter un Commentaire"
+
+msgid "Translation suggestions:"
+msgstr "Suggestions de traduction :"
+
+#. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
+msgid "No matches found"
+msgstr "Aucune correspondance trouvée"
+
+#. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (OS X, Linux).
+msgid "No Matches Found"
+msgstr "Aucune correspondance trouvée"
+
+msgid "This string was found in Poedit’s translation memory."
+msgstr "Cette chaîne a été trouvée dans la mémoire de traduction de Poedit."
+
+#, c-format
+msgid "(New: %i, obsolete: %i)"
+msgstr "(Nouvelle : %i, obsolète : %i)"
+
+#, c-format
+msgid "Importing translations: %d"
+msgstr "Import de traductions : %d"
+
+msgid "Poedit Update"
+msgstr "Mise à jour de Poedit"
+
+msgid "Preparing migration..."
+msgstr "Préparation de la migration..."
+
+#, c-format
+msgid "Migration exit status: %d"
+msgstr "État de la migration : %d"
+
+msgid "Poedit needs to convert your translation memory to a new format."
+msgstr ""
+"Poedit doit convertir votre mémoire de traduction dans un nouveau format."
+
+msgid ""
+"This must be done before Poedit can start. It may take a few minutes if you "
+"have lots of translations stored, but should normally be much faster."
+msgstr ""
+"Il faut le faire avant le démarrage de Poedit. Cela peut prendre quelques "
+"minutes si vous avez beaucoup de traductions stockées, mais ce devrait "
+"normalement être plus rapide."
+
+msgid "Proceed"
+msgstr "Poursuivre"
+
+msgid "Translation memory migration failed."
+msgstr "Échec de la migration de la mémoire de traduction."
+
+#, c-format
+msgid ""
+"Your translation memory data couldn't be migrated. The error was:\n"
+"\n"
+"%s\n"
+"Please email help@poedit.net and we’ll get it fixed."
+msgstr ""
+"Impossible de migrer votre mémoire de traduction. L'erreur est : \n"
+"\n"
+" • %s\n"
+"\n"
+"Veuillez envoyer un e-mail à help@poedit.net pour que nous puissions régler "
+"le problème."
+
+msgid "Cannot create temporary directory."
+msgstr "Impossible de créer le répertoire temporaire."
+
+msgid "Welcome to Poedit"
+msgstr "Bienvenue dans Poedit"
+
+msgid "Edit a translation"
+msgstr "Modifier une traduction"
+
+msgid "Open an existing PO file and edit the translation."
+msgstr "Ouvrir un fichier PO existant et modifier la traduction."
+
+msgid ""
+"Take an existing PO file or POT template and create a new translation from "
+"it."
+msgstr ""
+"Créer une nouvelle traduction partir d'un fichier PO ou d'un modèle POT "
+"existant."
+
+msgid "Collaborate on a translation with Crowdin"
+msgstr "Collaborer à une traduction avec Crowdin"
+
+msgid ""
+"Download a file from Crowdin project, translate and sync your changes back."
+msgstr ""
+"Télécharger un fichier d'un projet Crowdin, traduire et synchroniser vos "
+"modifications."
+
+msgid "What is Crowdin?"
+msgstr "Qu'est-ce que Crowdin ?"
+
+msgid "There are no translations. That’s unusual."
+msgstr "Il n’y a pas de traductions. Ce n’est pas courant."
+
 msgid ""
 "Translatable entries aren't added manually in the Gettext system, but are "
 "automatically extracted\n"
@@ -2019,716 +1914,40 @@ msgid ""
 "Translators typically use PO template files (POTs) prepared for them by the "
 "developer."
 msgstr ""
+"Les entrées traduisibles ne sont pas ajoutées manuellement au système "
+"Gettext, mais sont extraites automatiquement\n"
+"à partir du code source. De cette façon, elles restent à jour et exactes.\n"
+"Les traducteurs utilisent généralement des fichiers de modèle PO (POTS) "
+"préparés par le développeur."
 
-# Catalog menu item label
-#: ../src/resources/menus.xrc:142
-#, fuzzy
-msgid "Translate Using &TM"
-msgstr "Traduire &automatiquement avec TM"
+msgid "(Learn more about GNU gettext)"
+msgstr "(En savoir plus sur GNU gettext)"
 
-#: ../src/welcomescreen.cpp:197
-msgid "Translate WordPress theme or plugin"
+msgid "The simplest way to fill this catalog is to update it from a POT:"
 msgstr ""
+"La façon la plus simple de remplir ce catalogue est de le mettre à jour "
+"depuis un fichier POT :"
 
-# Main window list header
-#: ../src/resources/menus.xrc:141
-#, fuzzy
-msgid "Translate using &TM"
-msgstr "Traduction"
-
-# Main window list header
-#: ../src/statistics.cpp:168
-#, fuzzy
-msgid "Translated"
-msgstr "Traduction"
-
-#: ../src/edframe.cpp:2799
-#, fuzzy, c-format
-msgid "Translated %u strings"
-msgstr "Traduit à %i %%, %i chaîne"
-
-#: ../src/edframe.cpp:2781
-msgid "Translating using TM..."
-msgstr ""
-
-# Main window list header
-#: ../src/edlistctrl.cpp:331 ../src/export_html.cpp:155
-#: ../src/statistics.cpp:158
-msgid "Translation"
-msgstr "Traduction"
-
-# Edit menu item label
-#: ../src/resources/menus.xrc:82
-msgid "Translation Is &Fuzzy"
-msgstr "La traduction est &approximative"
-
-# Main window list header
-#: ../src/languagectrl.cpp:89
-#, fuzzy
-msgid "Translation Language"
-msgstr "Traduction"
-
-# Preferences dialog tab label (&t once it accepts accelerators)
-#: ../src/prefsdlg.cpp:179 ../src/prefsdlg.cpp:220
-msgid "Translation Memory"
-msgstr "Mémoire de traduction"
-
-# Edit menu item label
-#: ../src/resources/menus.xrc:81
-msgid "Translation is &fuzzy"
-msgstr "Traduction &approximative"
-
-#: ../src/tm/tm_migrate.cpp:261
-#, fuzzy
-msgid "Translation memory migration failed."
-msgstr "Erreur de base de données de traduction : %s"
-
-# Preferences dialog tab label (&t once it accepts accelerators)
-#: ../src/resources/properties.xrc:139
-msgid "Translation properties"
-msgstr "Propriétés de traduction"
-
-# Main window list header
-#: ../src/edlistctrl.cpp:387
-#, fuzzy, c-format
-msgid "Translation — %s"
-msgstr "Traduction"
-
-#: ../src/edframe.cpp:2248
-#, fuzzy
-msgid "Translation's project name isn't set."
-msgstr "Le fichier « %s » n'existe pas."
-
-# Main window list header
-#: ../src/edframe.cpp:687
-msgid "Translation:"
-msgstr "Traduction :"
-
-#: ../src/wordpress.cpp:312
-#, fuzzy, c-format
-msgid "Translations folder (%s) doesn't exist."
-msgstr "Le fichier « %s » n'existe pas."
-
-# Preferences dialog tab label (&t once it accepts accelerators)
-#: ../src/statistics.cpp:180
-#, fuzzy
-msgid "Translations with errors"
-msgstr "Mémoire de traduction"
-
-#: ../src/edframe.cpp:3186
-msgid "Two"
-msgstr ""
-
-#: ../src/propertiesdlg.cpp:108
-msgid "UTF-8 (recommended)"
-msgstr "UTF-8 (recommandé)"
-
-# Menu item?
-#: ../src/edapp.cpp:793 ../src/resources/summary.xrc:78
-msgid "Undo"
-msgstr "Annuler"
-
-#: ../src/resources/prefs.xrc:156
-msgid "Unix (recommended)"
-msgstr "Unix (recommandé)"
-
-#: ../src/manager.cpp:251
-msgid "Untrans"
-msgstr "Non traduite"
-
-#: ../src/resources/toolbar.xrc:44
-msgid "Update"
-msgstr "Mettre à jour"
-
-#: ../src/resources/manager.xrc:48
-msgid "Update all"
-msgstr "Tout mettre à jour"
-
-# Toolbar button hint for the Catalogs manager window
-#: ../src/resources/manager.xrc:49
-msgid "Update all catalogs in the project"
-msgstr "Mettre à jour tous les catalogues du projet"
-
-# Toolbar button hint for Catalog: Update from Sources
-#: ../src/resources/toolbar.xrc:45
-msgid "Update catalog - synchronize it with sources"
-msgstr "Mettre à jour le catalogue - le synchroniser avec les sources"
-
-# Catalog menu item label
-#: ../src/resources/menus.xrc:138
-msgid "Update from &POT File..."
-msgstr "Mettre à jour depuis un fichier &POT..."
-
-# Catalog menu item label
-#: ../src/resources/menus.xrc:137
-msgid "Update from &POT file..."
-msgstr "Mettre à jour depuis un fichier &POT..."
-
-# Catalog menu item label
-#: ../src/welcomescreen.cpp:238
-#, fuzzy
 msgid "Update from POT"
-msgstr "Mettre à jour depuis un fichier &POT..."
+msgstr "Mettre à jour depuis un POT"
 
-#: ../src/resources/summary.xrc:4
-msgid "Update summary"
-msgstr "Résumé de la mise à jour"
+msgid "Take translatable strings from an existing POT template."
+msgstr "Utiliser les chaînes traduisibles d'un modèle POT existant."
 
-#: ../src/edframe.cpp:1597 ../src/manager.cpp:447
-msgid "Updating catalog"
-msgstr "Mise à jour du catalogue"
-
-#: ../src/edframe.cpp:1613
-msgid "Updating the catalog failed. Click on 'Details >>' for details."
-msgstr ""
-"La mise à jour du catalogue a échoué. Cliquez sur « Détails >> » pour en "
-"savoir plus."
-
-#: ../src/welcomescreen.cpp:169
-msgid "Upgrade to the Pro version of Poedit with more features."
-msgstr ""
-
-#: ../src/licensing.cpp:352
-msgid "Upgrade..."
-msgstr ""
-
-#: ../src/resources/properties.xrc:61
-msgid "Use custom expression"
-msgstr ""
-
-# Preferences window, Editor tab check box label
-#: ../src/resources/prefs.xrc:206
-msgid "Use custom font for text fields"
-msgstr "Utiliser une police personnalisée pour les champs de texte"
-
-# Preferences window, Editor tab check box label
-#: ../src/resources/prefs.xrc:186
-msgid "Use custom font for translations list"
-msgstr "Utiliser une police personnalisée pour le liste des traductions"
-
-# Language selection window list entry
-#: ../src/resources/properties.xrc:52
-#, fuzzy
-msgid "Use default rules for this language"
-msgstr "(Utiliser la langue par défaut)"
-
-# Settings window, Keywords tab static text
-#: ../src/resources/properties.xrc:186
-msgid ""
-"Use these keywords (function names) to recognize translatable strings\n"
-"in source files:"
-msgstr ""
-"Utilisez ces mots clés (noms de fonctions) pour reconnaître les chaînes\n"
-"à traduire dans les fichiers sources :"
-
-#: ../src/prefsdlg.cpp:89
-#, fuzzy
-msgid "Use translation memory"
-msgstr "Mettre à jour la mémoire de traduction"
-
-#: ../src/resources/toolbar.xrc:38
-msgid "Validate"
-msgstr "Valider"
-
-# Preferences dialog tab label (&t once it accepts accelerators)
-#: ../src/edframe.cpp:1684 ../src/edframe.cpp:1703
-msgid "Validation results"
-msgstr "Résultats de la validation"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#: ../src/aboutbox.cpp:97 ../src/edapp.cpp:593 ../src/welcomescreen.cpp:156
-#, c-format
-msgid "Version %s"
-msgstr "Version %s"
-
-#: ../src/licensing.cpp:193
-msgid "View License Key"
-msgstr ""
-
-# Main menu
-#: ../src/wordpress.cpp:395
-#, fuzzy
-msgid "View Log"
-msgstr "&Affichage"
-
-#: ../src/licensing.cpp:191
-msgid "View license key"
-msgstr ""
-
-# Main menu
-#: ../src/wordpress.cpp:392
-#, fuzzy
-msgid "View log"
-msgstr "&Affichage"
-
-# Help menu item label; the hint is system-supplied
-#: ../src/welcomescreen.cpp:151
-#, fuzzy
-msgid "Welcome to Poedit"
-msgstr "À &propos de Poedit"
-
-# Checkbox label in the Find... window
-#: ../src/resources/find.xrc:50
-msgid "Whole words only"
-msgstr "Mots entiers uniquement"
-
-# Preferences window, Editor tab list entry
-#: ../src/resources/prefs.xrc:157
-msgid "Windows"
-msgstr "Windows"
-
-#: ../src/wordpress.cpp:406
-msgid "WordPress Errors Log"
-msgstr ""
-
-#: ../src/wordpress.cpp:377
-msgid "WordPress error"
-msgstr ""
-
-# Settings window tab label; also Keywords list label on that tab (&m once it accepts accelerators)
-#: ../src/statistics.cpp:162
-#, fuzzy
-msgid "Words"
-msgstr "Mots clés"
-
-#: ../src/welcomescreen.cpp:242
 msgid ""
 "You can also extract translatable strings directly from the source code:"
 msgstr ""
+"Vous pouvez également extraire les chaînes traduisibles directement à partir "
+"du code source :"
 
-# Alert text
-#: ../src/edframe.cpp:430
-msgid "You can't drop more than one file on Poedit window."
-msgstr ""
-"Il est impossible de déposer plus d'un fichier à la fois dans la fenêtre de "
-"Poedit."
+msgid "Extract from sources"
+msgstr "Extraire depuis les sources"
 
-# Alert text
-#: ../src/chooselang.cpp:86
-msgid "You must restart Poedit for this change to take effect."
-msgstr "Vous devez redémarrer Poedit pour que ce changement prenne effet."
+msgid "Configure source code extraction in Properties."
+msgstr "Configurer l’extraction de code source dans les Propriétés."
 
-# Preferences window, Personalize tab static text
-#: ../src/edframe.cpp:2233
-msgid ""
-"You should set your email address in Preferences so that it can be used for "
-"Last-Translator header in GNU gettext files."
-msgstr ""
-"Vous devriez indiquer votre adresse courriel dans les Préférences afin de "
-"l'utiliser dans l'en-tête Last-Translator des fichiers GNu gettext."
+msgid "Sync"
+msgstr "Synchroniser"
 
-#: ../src/edframe.cpp:1133
-msgid "Your changes will be lost if you don't save them."
-msgstr "Vos changements seront perdus si vous ne les enregistrez pas"
-
-#: ../src/licensing.cpp:166
-msgid "Your copy is upgraded to Poedit Pro."
-msgstr ""
-
-# Preferences window, Personalize tab text box label
-#: ../src/resources/prefs.xrc:43
-msgid "Your email address:"
-msgstr "Votre adresse électronique :"
-
-# Preferences window, Personalize tab static text
-#: ../src/resources/prefs.xrc:21
-msgid ""
-"Your name and email set below are only used\n"
-"to set the Last-Translator header of GNU gettext files."
-msgstr ""
-"Vos nom et courriel indiqués ci-dessous ne seront utilisés\n"
-"que pour l'en-tête Last-Translator des fichiers GNU gettext."
-
-# Preferences window, Personalize tab text box label
-#: ../src/resources/prefs.xrc:29
-msgid "Your name:"
-msgstr "Votre nom :"
-
-#: ../src/licensing.cpp:180
-msgid ""
-"You’re awesome! Thank you so much\n"
-"for purchasing Poedit Pro."
-msgstr ""
-
-#: ../src/edframe.cpp:3182
-msgid "Zero"
-msgstr ""
-
-#: ../src/edapp.cpp:429
-msgid "don't delete temporary files (for debugging)"
-msgstr "ne pas supprimer les fichiers temporaires (à des fins de débogage)"
-
-#: ../src/propertiesdlg.cpp:72
-msgid "e.g. nplurals=2; plural=(n > 1);"
-msgstr ""
-
-#: ../src/edlistctrl.cpp:384
-msgid "unknown language"
-msgstr ""
-
-# Catalog menu item label
-#~ msgid "&Automatically translate using TM"
-#~ msgstr "Traduire &automatiquement avec TM"
-
-# File menu item label
-#~ msgid "&New catalog..."
-#~ msgstr "&Nouveau catalogue..."
-
-#~ msgid "(none of these)"
-#~ msgstr "(aucun de ceux là)"
-
-# Preferences window, Translation Memory tab button label
-#~ msgid "Add"
-#~ msgstr "Ajouter"
-
-#~ msgid "Add files"
-#~ msgstr "Ajouter des fichiers"
-
-#~ msgid "Add path to the list of directories where catalogs lie."
-#~ msgstr "Ajouter un chemin vers un répertoire où l'on trouve des catalogues."
-
-#~ msgid "Automatic spellchecking"
-#~ msgstr "Vérification orthographique automatique"
-
-# Preferences window, Translation Memory tab check box label
-#~ msgid "Automatically translate when updating catalog"
-#~ msgstr "Traduire automatiquement lors de la mise à jour du catalogue"
-
-#~ msgid "Automatically translated %u strings"
-#~ msgstr "%u chaînes traduites automatiquement"
-
-#~ msgid "Automatically translating..."
-#~ msgstr "Traduction automatique en cours..."
-
-#~ msgid "Cannot create TM database directory!"
-#~ msgstr "Impossible de créer le répertoire de la base de données TM !"
-
-#~ msgid "Cannot extract catalogs from RPM file."
-#~ msgstr "Impossible d'extraire les catalogues du fichier RPM."
-
-# Preferences window, Editor tab button label
-#~ msgid "Choose"
-#~ msgstr "Choisir"
-
-# Preferences window, Translation Memory tab group box label
-#~ msgid "Configuration"
-#~ msgstr "Configuration"
-
-# Preferences dialog, Translation Memory tab group box label
-#~ msgid "Database"
-#~ msgstr "Base de données"
-
-# Settings window, Paths/Keywords tabs toolbox hint
-#~ msgid "Delete item"
-#~ msgstr "Supprimer"
-
-# View menu item label
-#~ msgid "Display &Line Numbers"
-#~ msgstr "Afficher les numéros de &lignes"
-
-# Settings window, Paths/Keywords tabs toolbox hint
-#~ msgid "Edit item"
-#~ msgstr "Modifier"
-
-#~ msgid "Files List"
-#~ msgstr "Liste des fichiers"
-
-#~ msgid "Form %i (e.g. \"%u\")"
-#~ msgstr "Forme %i (c.-à-d. \"%u\")"
-
-#~ msgid "Generate TM database"
-#~ msgstr "Générer la base de données TM"
-
-# Preferences window, Translation Memory tab button label
-#~ msgid "Generate database"
-#~ msgstr "Construire la base de données"
-
-#~ msgid "Line"
-#~ msgstr "Ligne"
-
-# Preferences window, Translation Memory tab number box label
-#~ msgid "Max. # of missing words:"
-#~ msgstr "Nombre maximum de mots manquants :"
-
-# Preferences window, Translation Memory tab number box label
-#~ msgid "Max. difference in sentence length:"
-#~ msgstr "Différence max. de longueur de phrase :"
-
-# Settings window, Paths/Keywords tabs toolbox hint
-#~ msgid "Move down"
-#~ msgstr "Descendre"
-
-# Settings window, Paths/Keywords tabs toolbox hint
-#~ msgid "Move up"
-#~ msgstr "Monter"
-
-#~ msgid "My Languages"
-#~ msgstr "Langues"
-
-# File menu item label
-#~ msgid "New Catalog from POT File..."
-#~ msgstr "Nouveau catalogue depuis un fichier POT..."
-
-# File menu item label
-#~ msgid "New catalog from POT file..."
-#~ msgstr "Nouveau catalogue depuis un fichier POT..."
-
-# Settings window, Paths/Keywords tabs toolbox hint
-#~ msgid "New item"
-#~ msgstr "Créer"
-
-# Preferences window, Editor tab check box label
-#~ msgid "Open catalogs manager on Poedit startup"
-#~ msgstr "Ouvrir le gestionnaire de catalogues au démarrage de Poedit"
-
-# Preferences window, Translation Memory tab, Add button hint
-#~ msgid "Pick language from the list of known languages"
-#~ msgstr "Choisissez une langue parmi la liste de celles disponibles"
-
-#~ msgid "Please add directories where locale files are stored on your system:"
-#~ msgstr ""
-#~ "Répertoires de votre système qui contiennent les fichiers de "
-#~ "localisation :"
-
-# Language selection window caption (Preferences: Translation Memory: Add)
-#~ msgid "Please select language ISO code:"
-#~ msgstr "Code ISO de la langue :"
-
-# Language selection window caption (?)
-#~ msgid "Please select language code:"
-#~ msgstr "Veuillez sélectionner le code de la langue :"
-
-#~ msgid ""
-#~ "Please verify that all files were moved to the new location or do it "
-#~ "manually if they weren't.\n"
-#~ "\n"
-#~ "Old location: %s\n"
-#~ "New location: %s"
-#~ msgstr ""
-#~ "Veuillez vérifier que tous les fichiers ont été déplacer vers le nouvel "
-#~ "emplacement ou faites-le manuellement le cas échéant.\n"
-#~ "\n"
-#~ "Ancien emplacement : %s\n"
-#~ "Nouvel emplacement : %s"
-
-# Preferences window, Translation Memory tab, Generate database button hint
-#~ msgid "Regenerate translation memory from catalogs in paths listed above."
-#~ msgstr ""
-#~ "Construire (ou reconstruire) la mémoire de traduction à partir des "
-#~ "catalogues trouvés dans les chemins spécifiés ci-dessus."
-
-#~ msgid "Reset to defaults"
-#~ msgstr "Revenir aux réglages par défaut"
-
-#~ msgid "Scanning file: "
-#~ msgstr "Analyse du fichier :"
-
-#~ msgid "Search Paths"
-#~ msgstr "Chemins pour la recherche"
-
-# Language selection window label (?)
-#~ msgid "Select catalog's language"
-#~ msgstr "Sélectionner la langue du catalogue"
-
-#~ msgid "There was a problem moving your translation memory."
-#~ msgstr ""
-#~ "Un problème a été rencontré lors du déplacement de la mémoire de "
-#~ "traduction."
-
-#~ msgid "Translation files (*.po;*.mo)|*.po;*.mo"
-#~ msgstr "Fichiers de traduction (*.po, *.mo)|*.po,*.mo"
-
-#~ msgid "Translation files (*.po;*.mo;*.rpm)|*.po;*.mo;*.rpm"
-#~ msgstr "Fichiers de traduction (*.po, *.mo, *.rpm)|*.po,*.mo,*.rpm"
-
-#~ msgid ""
-#~ "Translation memory will be built from the files listed below.\n"
-#~ "You can add more files to the list now."
-#~ msgstr ""
-#~ "La mémoire de traduction sera contruite à partir des fichiers ci-"
-#~ "dessous.\n"
-#~ "Vous pouvez ajouter d'autres fichiers à la liste maintenant."
-
-#~ msgid "Unknown locale code '%s' in registry."
-#~ msgstr "Code de localisation « %s » inconnu dans la base de registre."
-
-#~ msgid "Updating translation memory"
-#~ msgstr "Mise à jour de la mémoire de traduction"
-
-#~ msgid "What languages do you want to use the TM with?"
-#~ msgstr "Avec quelles langues voulez-vous utiliser la TM ?"
-
-# View menu item label
-#~ msgid "Automatic C&omments Window"
-#~ msgstr "Montrer la fenêtre de commentaires &automatiques"
-
-# View menu item label
-#~ msgid "Automatic c&omments window"
-#~ msgstr "Montrer la fenêtre de commentaires &automatiques"
-
-# Checkbox label in the Find... window
-#~ msgid "Automatic comments:"
-#~ msgstr "Commentaires automatiques :"
-
-#~ msgid "Cannot execute program: "
-#~ msgstr "Impossible d'exécuter le programme :"
-
-# Settings window, Project Info tab list box label
-#~ msgid "Country:"
-#~ msgstr "Pays :"
-
-#~ msgid "Gettext syntax error"
-#~ msgstr "Erreur de syntaxe Gettext"
-
-#~ msgid "There were errors while compiling the saved catalog into MO file."
-#~ msgstr ""
-#~ "Des erreurs sont survenues pendant la compilation du catalogue enregistré "
-#~ "dans le fichier MO."
-
-#, fuzzy
-#~ msgid "[checking translations: %i left]"
-#~ msgid_plural "[checking translations: %i left]"
-#~ msgstr[0] "[vérification des traductions : %i restantes]"
-#~ msgstr[1] "[vérification des traductions : %i restantes]"
-
-#~ msgid "Copy Translation from Source Text"
-#~ msgstr "Copier la traduction vers l'original"
-
-# Help menu item label
-#~ msgid "&Contents..."
-#~ msgstr "&Table des matières..."
-
-# View menu item label
-#~ msgid "&Fullscreen view"
-#~ msgstr "Plein é&cran"
-
-# Catalog menu item label
-#~ msgid "&Settings..."
-#~ msgstr "&Configuration..."
-
-# Preferences window, Editor tab static text
-#~ msgid "(%f will be substituted with filename, %l with line number)"
-#~ msgstr "(%f : nom du fichier; %l : numéro de ligne)"
-
-#~ msgid "Edit the file in text editor"
-#~ msgstr "Éditer le fichier dans un éditeur"
-
-# Preferences window, Editor tab list box label
-#~ msgid "Editor executable:"
-#~ msgstr "Exéc&utable :"
-
-#~ msgid "Error initializing spell checking: %s"
-#~ msgstr "Erreur d'initialisation du vérificateur : %s"
-
-# Preferences window, Editor tab group box label
-#~ msgid "External editor"
-#~ msgstr "Éditeur externe"
-
-# Toolbar button hint for View: Fullscreen
-#~ msgid "Fullscreen view"
-#~ msgstr "Plein écran"
-
-# Preferences window, Editor tab list entry
-#~ msgid "Macintosh"
-#~ msgstr "Macintosh"
-
-#~ msgid "My Project"
-#~ msgstr "Mon projet"
-
-#~ msgid "No editor specified. Please set it in Preferences dialog."
-#~ msgstr ""
-#~ "L'éditeur n'a pas été désigné. Veuillez le faire dans la fenêtre "
-#~ "Préférences."
-
-# Preferences window, Editor tab check box label
-#~ msgid "Open source files in editor, not in file viewer"
-#~ msgstr "Ou&vrir les fichiers sources avec cet éditeur"
-
-# Main window list header
-#~ msgid "Original string"
-#~ msgstr "Original"
-
-# Preferences dialog, Translation Memory tab text box label
-#~ msgid "Path to DB:"
-#~ msgstr "Chemin vers la &base de données :"
-
-# Settings window caption
-#~ msgid "Settings"
-#~ msgstr "Configuration"
-
-#~ msgid "Setup"
-#~ msgstr "Initialisation"
-
-#~ msgid ""
-#~ "This is first time you run Poedit.\n"
-#~ "Please fill in your name and email address.\n"
-#~ "(This information is used only in catalogs headers)"
-#~ msgstr ""
-#~ "C'est la première fois que vous lancez Poedit.\n"
-#~ "Veuillez indiquer vos nom et adresse électronique.\n"
-#~ "(Ces informations ne sont utilisées que dans les en-têtes de catalogue)"
-
-# Preferences window, Editor tab list entry
-#~ msgid "Unix"
-#~ msgstr "Unix"
-
-# Preferences window, Editor tab list entry
-#~ msgid "current platform's default"
-#~ msgstr "spécifié par le système"
-
-#~ msgid "none"
-#~ msgstr "aucun"
-
-#~ msgid "%i strings (%i fuzzy, %i bad tokens, %i not translated)"
-#~ msgstr ""
-#~ "%i chaînes (%i traduites approximativement, %i marqueurs incorrects, %i à "
-#~ "traduire)"
-
-#~ msgid "'."
-#~ msgstr "'."
-
-#~ msgid " files..."
-#~ msgstr " fichiers..."
-
-#~ msgid "Error while loading file '%s': line %u is corrupted."
-#~ msgstr ""
-#~ "Erreur lors du chargement du fichier '%s' : la ligne %u est corrompue."
-
-#~ msgid "Help"
-#~ msgstr "Aide"
-
-#~ msgid "Parsing "
-#~ msgstr "Analyse "
-
-#~ msgid ""
-#~ "Poedit installation is broken, cannot find application's home directory."
-#~ msgstr ""
-#~ "L'installation de Poedit est mauvaise, impossible de trouver le "
-#~ "répertoire de l'application."
-
-#, fuzzy
-#~ msgid "; charset="
-#~ msgstr "Jeu de caractères :"
-
-#~ msgid ""
-#~ "Cannot find resources file '%s'!\n"
-#~ "Please reinstall Poedit."
-#~ msgstr ""
-#~ "Impossible de trouver le fichier '%s'!\n"
-#~ "Veuillez réinstaller Poedit."
-
-#~ msgid ""
-#~ "Cannot find resources file '%s'!\n"
-#~ "Poedit was configured to be installed in '%s'.\n"
-#~ "You may try to set POEDIT_PREFIX environment variable to point\n"
-#~ "to the location where you installed Poedit."
-#~ msgstr ""
-#~ "Impossible de trouver le fichier '%s'!\n"
-#~ "Poedit à été configuré pour être installé dans '%s'.\n"
-#~ "Vous pouvez essayer de faire pointer la variable d'environnement "
-#~ "POEDIT_PREFIX\n"
-#~ "vers le répertoire où vous avez installé Poedit."
-
-#~ msgid "Poedit Error"
-#~ msgstr "Erreur de Poedit"
+msgid "Synchronize the translation with Crowdin"
+msgstr "Synchroniser la traduction avec Crowdin"

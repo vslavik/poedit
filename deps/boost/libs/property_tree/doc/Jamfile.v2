@@ -12,6 +12,7 @@
 
 import doxygen ;
 import quickbook ;
+
 doxygen autodoc
     :
         [ glob ../../../boost/property_tree/*.hpp ]
@@ -42,11 +43,5 @@ boostbook standalone
       <xsl:param>toc.section.depth=2
       <xsl:param>chunk.section.depth=3
       <dependency>autodoc
-      <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/functional/hash/doc/html
+      <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/libs/property_tree/doc/html
     ;
-
-#install ../
-#    : ../../../boost.png
-#      ../../../next.png
-#      ../../../prev.png
-#    ;

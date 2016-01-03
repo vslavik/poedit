@@ -1,16 +1,16 @@
 # Bulgarian translations for gettext-runtime package.
 # Copyright (C) 2010 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gettext package.
-# Roumen Petrov <transl@roumenpetrov.info>, 2010,2012.
+# Roumen Petrov <transl@roumenpetrov.info>, 2010,2012,2014,2015.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GNU gettext-runtime 0.18.2\n"
+"Project-Id-Version: GNU gettext-runtime 0.19.4.73\n"
 "Report-Msgid-Bugs-To: bug-gnu-gettext@gnu.org\n"
-"POT-Creation-Date: 2013-07-07 18:18+0900\n"
-"PO-Revision-Date: 2012-12-25 19:12+0200\n"
-"Last-Translator:  Roumen Petrov <transl@roumenpetrov.info>\n"
-"Language-Team: Bulgarian <dict@fsa-bg.org>\n"
+"POT-Creation-Date: 2015-07-15 10:37+0900\n"
+"PO-Revision-Date: 2015-06-23 22:12+0300\n"
+"Last-Translator: Roumen Petrov <transl@roumenpetrov.info>\n"
+"Language-Team: Bulgarian <dict@ludost.net>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,72 +20,77 @@ msgstr ""
 msgid "write error"
 msgstr "грешка при запис"
 
-#: gnulib-lib/error.c:188
+#: gnulib-lib/error.c:191
 msgid "Unknown system error"
 msgstr "Неизвестна системна грешка"
 
-#: gnulib-lib/getopt.c:547 gnulib-lib/getopt.c:576
+#: gnulib-lib/getopt.c:575 gnulib-lib/getopt.c:604
 #, c-format
 msgid "%s: option '%s' is ambiguous; possibilities:"
 msgstr "%s: двусмислена опция '%s', възможности:"
 
-#: gnulib-lib/getopt.c:624 gnulib-lib/getopt.c:628
+#: gnulib-lib/getopt.c:619
+#, c-format
+msgid "%s: option '%s' is ambiguous\n"
+msgstr "%s: двусмислена опция '%s'\n"
+
+#: gnulib-lib/getopt.c:654 gnulib-lib/getopt.c:658
 #, c-format
 msgid "%s: option '--%s' doesn't allow an argument\n"
 msgstr "%s: опцията '--%s' е без аргументи\n"
 
-#: gnulib-lib/getopt.c:637 gnulib-lib/getopt.c:642
+#: gnulib-lib/getopt.c:667 gnulib-lib/getopt.c:672
 #, c-format
 msgid "%s: option '%c%s' doesn't allow an argument\n"
 msgstr "%s: опцията '%c%s' е без аргумент\n"
 
-#: gnulib-lib/getopt.c:685 gnulib-lib/getopt.c:704
+#: gnulib-lib/getopt.c:715 gnulib-lib/getopt.c:734
 #, c-format
 msgid "%s: option '--%s' requires an argument\n"
 msgstr "%s: опцията '--%s' изисква аргумент\n"
 
-#: gnulib-lib/getopt.c:742 gnulib-lib/getopt.c:745
+#: gnulib-lib/getopt.c:772 gnulib-lib/getopt.c:775
 #, c-format
 msgid "%s: unrecognized option '--%s'\n"
 msgstr "%s: непозната опция '--%s'\n"
 
-#: gnulib-lib/getopt.c:753 gnulib-lib/getopt.c:756
+#: gnulib-lib/getopt.c:783 gnulib-lib/getopt.c:786
 #, c-format
 msgid "%s: unrecognized option '%c%s'\n"
 msgstr "%s: непозната опция '%c%s'\n"
 
-#: gnulib-lib/getopt.c:805 gnulib-lib/getopt.c:808
+#: gnulib-lib/getopt.c:835 gnulib-lib/getopt.c:838
 #, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: неправилна опция -- '%c'\n"
 
-#: gnulib-lib/getopt.c:861 gnulib-lib/getopt.c:878 gnulib-lib/getopt.c:1088
-#: gnulib-lib/getopt.c:1106
+#: gnulib-lib/getopt.c:891 gnulib-lib/getopt.c:908 gnulib-lib/getopt.c:1118
+#: gnulib-lib/getopt.c:1136
 #, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: опцията изисква аргумент -- '%c'\n"
 
-#: gnulib-lib/getopt.c:934 gnulib-lib/getopt.c:950
+#: gnulib-lib/getopt.c:964 gnulib-lib/getopt.c:980
 #, c-format
 msgid "%s: option '-W %s' is ambiguous\n"
 msgstr "%s: двусмислена опция '-W %s'\n"
 
-#: gnulib-lib/getopt.c:974 gnulib-lib/getopt.c:992
+#: gnulib-lib/getopt.c:1004 gnulib-lib/getopt.c:1022
 #, c-format
 msgid "%s: option '-W %s' doesn't allow an argument\n"
 msgstr "%s: опцията '-W %s' е без аргументи\n"
 
-#: gnulib-lib/getopt.c:1013 gnulib-lib/getopt.c:1031
+#: gnulib-lib/getopt.c:1043 gnulib-lib/getopt.c:1061
 #, c-format
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "%s: опцията '-W %s' изисква аргумент\n"
 
-#: gnulib-lib/xmalloc.c:37
+#: gnulib-lib/xmalloc.c:38
 #, c-format
 msgid "memory exhausted"
 msgstr "паметта е изчерпана"
 
-#: src/envsubst.c:112 src/gettext.c:133 src/ngettext.c:123
+#: src/envsubst.c:112 src/gettext.c:134 src/ngettext.c:124
 #, c-format, no-wrap
 msgid ""
 "Copyright (C) %s Free Software Foundation, Inc.\n"
@@ -98,7 +103,7 @@ msgstr ""
 "Това е свободен програмен продукт: свободни сте да го променяте и разпространя-\n"
 "вате.  Не се дават НИКАКВИ ГАРАНЦИИ до степента позволена от закона.\n"
 
-#: src/envsubst.c:118 src/gettext.c:139 src/ngettext.c:129
+#: src/envsubst.c:118 src/gettext.c:140 src/ngettext.c:130
 #, c-format
 msgid "Written by %s.\n"
 msgstr "Създадена от %s.\n"
@@ -108,17 +113,17 @@ msgstr "Създадена от %s.\n"
 msgid "Bruno Haible"
 msgstr "Бруно Хаибле"
 
-#: src/envsubst.c:127 src/gettext.c:157 src/ngettext.c:141
+#: src/envsubst.c:127 src/gettext.c:158 src/ngettext.c:142
 #, c-format
 msgid "too many arguments"
 msgstr "твърде много аргументи"
 
-#: src/envsubst.c:138 src/gettext.c:167 src/ngettext.c:153
+#: src/envsubst.c:138 src/gettext.c:168 src/ngettext.c:154
 #, c-format
 msgid "missing arguments"
 msgstr "липсващи аргументи"
 
-#: src/envsubst.c:171 src/gettext.c:238 src/ngettext.c:207
+#: src/envsubst.c:171 src/gettext.c:239 src/ngettext.c:208
 #, c-format
 msgid "Try '%s --help' for more information.\n"
 msgstr "За повече сведения, опитайте '%s --help'.\n"
@@ -188,7 +193,7 @@ msgstr ""
 #. for this package.  Please add _another line_ saying
 #. "Report translation bugs to <...>\n" with the address for translation
 #. bugs (typically your translation team's web or email address).
-#: src/envsubst.c:219 src/gettext.c:279 src/ngettext.c:245
+#: src/envsubst.c:219 src/gettext.c:280 src/ngettext.c:246
 msgid "Report bugs to <bug-gnu-gettext@gnu.org>.\n"
 msgstr ""
 "Подавайте доклади за грешки на <bug-gnu-gettext@gnu.org>,\n"
@@ -204,11 +209,11 @@ msgid "standard input"
 msgstr "стандартен вход"
 
 #. This is a proper name. See the gettext manual, section Names.
-#: src/gettext.c:139 src/ngettext.c:129
+#: src/gettext.c:140 src/ngettext.c:130
 msgid "Ulrich Drepper"
 msgstr "Улрих Дрепер"
 
-#: src/gettext.c:243
+#: src/gettext.c:244
 #, c-format, no-wrap
 msgid ""
 "Usage: %s [OPTION] [[TEXTDOMAIN] MSGID]\n"
@@ -217,12 +222,12 @@ msgstr ""
 "Употреба: %s [ОПЦИЯ] [[ОБЛАСТТЕКСТ] КЛЮЧ]\n"
 "или:      %s [ОПЦИЯ] -s [КЛЮЧ]...\n"
 
-#: src/gettext.c:249
+#: src/gettext.c:250
 #, c-format, no-wrap
 msgid "Display native language translation of a textual message.\n"
 msgstr "Извежда преведено текстово съобщение.\n"
 
-#: src/gettext.c:253
+#: src/gettext.c:254
 #, c-format, no-wrap
 msgid ""
 "  -d, --domain=TEXTDOMAIN   retrieve translated messages from TEXTDOMAIN\n"
@@ -236,14 +241,14 @@ msgid ""
 msgstr ""
 "  -d, --domain=ОБЛАСТТЕКСТ  намиране на преведените съобщения от ОБЛАСТТЕКСТ\n"
 "  -e                        разрешава разгъване на някой \"заместващи последователности\"\n"
-"  -E                        (игнорира се за съвместимост)\n"
+"  -E                        (пренебрегва се, за съвместимост)\n"
 "  -h, --help                извеждане на тази помощ и изход\n"
-"  -n                        потискам на завършващ \"нов ред\"\n"
+"  -n                        потискане на завършващ \"нов ред\"\n"
 "  -V, --version             извеждане на сведение за версия и изход\n"
 "  [ОБЛАСТТЕКСТ] КЛЮЧ        намиране на преведените съобщения съответни\n"
 "                            на КЛЮЧ от ОБЛАСТТЕКСТ\n"
 
-#: src/gettext.c:264
+#: src/gettext.c:265
 #, c-format, no-wrap
 msgid ""
 "If the TEXTDOMAIN parameter is not given, the domain is determined from the\n"
@@ -256,7 +261,7 @@ msgid ""
 "Standard search directory: %s\n"
 msgstr ""
 "Ако не е зададен параметър ОБЛАСТТЕКСТ, областта се определя от променливата\n"
-"от обкръжението TEXTDOMAIN.  Ако каталога със съобщенията не е намерен в \n"
+"от обкръжението TEXTDOMAIN.  Ако каталога със съобщенията не е намерен в\n"
 "обичайната директория, друго местоположение може да се зададе с променливата\n"
 "от обкръжението TEXTDOMAINDIR.\n"
 "Ако се използва заедно с опцията -s, програмата се държи като командата 'echo',\n"
@@ -264,19 +269,19 @@ msgstr ""
 "съобщенията, намерените в избрания каталог, се превеждат.\n"
 "Директория за търсене: %s\n"
 
-#: src/ngettext.c:212
+#: src/ngettext.c:213
 #, c-format, no-wrap
 msgid "Usage: %s [OPTION] [TEXTDOMAIN] MSGID MSGID-PLURAL COUNT\n"
 msgstr "Употреба: %s [ОПЦИЯ] [ОБЛАСТТЕКСТ] КЛЮЧ КЛЮЧ-МН.Ч. БРОЙ\n"
 
-#: src/ngettext.c:217
+#: src/ngettext.c:218
 #, c-format, no-wrap
 msgid ""
 "Display native language translation of a textual message whose grammatical\n"
 "form depends on a number.\n"
 msgstr "Извежда превода на текстово съобщение, чиято граматична форма зависи от броя.\n"
 
-#: src/ngettext.c:222
+#: src/ngettext.c:223
 #, c-format, no-wrap
 msgid ""
 "  -d, --domain=TEXTDOMAIN   retrieve translated message from TEXTDOMAIN\n"
@@ -290,14 +295,14 @@ msgid ""
 msgstr ""
 "  -d, --domain=ОБЛАСТТЕКСТ  намиране на преведените съобщения от ОБЛАСТТЕКСТ\n"
 "  -e                        разрешава разгъване на някой \"заместващи последователности\"\n"
-"  -E                        (игнорира се за съвместимост)\n"
+"  -E                        (пренебрегва се, за съвместимост)\n"
 "  -h, --help                извеждане на тази помощ и изход\n"
 "  -V, --version             извеждане на сведение за версия и изход\n"
 "  [ОБЛАСТТЕКСТ]             намиране на преведените съобщения от ОБЛАСТТЕКСТ\n"
 "  КЛЮЧ КЛЮЧ-МН.Ч.           превежда КЛЮЧ (ед.ч.) / КЛЮЧ-МН.Ч (мн.ч.)\n"
 "  БРОЙ                      на базата на тази стойност избира формата за ед/мн.ч.\n"
 
-#: src/ngettext.c:233
+#: src/ngettext.c:234
 #, c-format, no-wrap
 msgid ""
 "If the TEXTDOMAIN parameter is not given, the domain is determined from the\n"
@@ -307,7 +312,7 @@ msgid ""
 "Standard search directory: %s\n"
 msgstr ""
 "Ако не е зададен параметър ОБЛАСТТЕКСТ, областта се определя от променливата\n"
-"от обкръжението TEXTDOMAIN.  Ако каталога със съобщенията не е намерен в \n"
+"от обкръжението TEXTDOMAIN.  Ако каталога със съобщенията не е намерен в\n"
 "обичайната директория, друго местоположение може да се зададе с променливата\n"
 "от обкръжението TEXTDOMAINDIR.\n"
 "Директория за търсене: %s\n"

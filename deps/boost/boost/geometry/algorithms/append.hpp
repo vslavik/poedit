@@ -1,8 +1,14 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
-// Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
-// Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
+// Copyright (c) 2007-2014 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2008-2014 Bruno Lalande, Paris, France.
+// Copyright (c) 2009-2014 Mateusz Loskot, London, UK.
+
+// This file was modified by Oracle on 2014.
+// Modifications copyright (c) 2014, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -15,6 +21,12 @@
 #define BOOST_GEOMETRY_ALGORITHMS_APPEND_HPP
 
 
+#include <boost/range.hpp>
+
+#include <boost/variant/apply_visitor.hpp>
+#include <boost/variant/static_visitor.hpp>
+#include <boost/variant/variant_fwd.hpp>
+
 #include <boost/geometry/algorithms/num_interior_rings.hpp>
 #include <boost/geometry/algorithms/detail/convert_point_to_point.hpp>
 #include <boost/geometry/core/access.hpp>
@@ -23,9 +35,7 @@
 #include <boost/geometry/core/tags.hpp>
 #include <boost/geometry/geometries/concepts/check.hpp>
 #include <boost/geometry/geometries/variant.hpp>
-#include <boost/range.hpp>
-#include <boost/variant/static_visitor.hpp>
-#include <boost/variant/apply_visitor.hpp>
+#include <boost/geometry/util/range.hpp>
 
 
 namespace boost { namespace geometry
@@ -93,7 +103,7 @@ struct point_to_polygon
         else if (ring_index < int(num_interior_rings(polygon)))
         {
             append_point<ring_type, Point>::apply(
-                        interior_rings(polygon)[ring_index], point);
+                        range::at(interior_rings(polygon), ring_index), point);
         }
     }
 };
@@ -105,7 +115,7 @@ struct range_to_polygon
     typedef typename ring_type<Polygon>::type ring_type;
 
     static inline void apply(Polygon& polygon, Range const& range,
-                int ring_index, int )
+                int ring_index, int = 0)
     {
         if (ring_index == -1)
         {
@@ -115,7 +125,7 @@ struct range_to_polygon
         else if (ring_index < int(num_interior_rings(polygon)))
         {
             append_range<ring_type, Range>::apply(
-                        interior_rings(polygon)[ring_index], range);
+                        range::at(interior_rings(polygon), ring_index), range);
         }
     }
 };
@@ -194,8 +204,79 @@ struct append<Geometry, RangeOrPoint, point_tag>
     : splitted_dispatch::append_point<typename tag<Geometry>::type, Geometry, RangeOrPoint>
 {};
 
+} // namespace dispatch
+#endif // DOXYGEN_NO_DISPATCH
+
+#ifndef DOXYGEN_NO_DETAIL
+namespace detail { namespace append
+{
+
+template <typename MultiGeometry, typename RangeOrPoint>
+struct append_to_multigeometry
+{
+    static inline void apply(MultiGeometry& multigeometry,
+                             RangeOrPoint const& range_or_point,
+                             int ring_index, int multi_index)
+    {
+
+        dispatch::append
+            <
+                typename boost::range_value<MultiGeometry>::type,
+                RangeOrPoint
+            >::apply(range::at(multigeometry, multi_index), range_or_point, ring_index);
+    }
+};
+
+}} // namespace detail::append
+#endif // DOXYGEN_NO_DETAIL
+
+#ifndef DOXYGEN_NO_DISPATCH
+namespace dispatch
+{
+
+namespace splitted_dispatch
+{
+
+template <typename Geometry, typename Point>
+struct append_point<multi_point_tag, Geometry, Point>
+    : detail::append::append_point<Geometry, Point>
+{};
+
+template <typename Geometry, typename Range>
+struct append_range<multi_point_tag, Geometry, Range>
+    : detail::append::append_range<Geometry, Range>
+{};
+
+template <typename MultiGeometry, typename RangeOrPoint>
+struct append_point<multi_linestring_tag, MultiGeometry, RangeOrPoint>
+    : detail::append::append_to_multigeometry<MultiGeometry, RangeOrPoint>
+{};
+
+template <typename MultiGeometry, typename RangeOrPoint>
+struct append_range<multi_linestring_tag, MultiGeometry, RangeOrPoint>
+    : detail::append::append_to_multigeometry<MultiGeometry, RangeOrPoint>
+{};
+
+template <typename MultiGeometry, typename RangeOrPoint>
+struct append_point<multi_polygon_tag, MultiGeometry, RangeOrPoint>
+    : detail::append::append_to_multigeometry<MultiGeometry, RangeOrPoint>
+{};
+
+template <typename MultiGeometry, typename RangeOrPoint>
+struct append_range<multi_polygon_tag, MultiGeometry, RangeOrPoint>
+    : detail::append::append_to_multigeometry<MultiGeometry, RangeOrPoint>
+{};
+
+} // namespace splitted_dispatch
+
+} // namespace dispatch
+#endif // DOXYGEN_NO_DISPATCH
+
+
+namespace resolve_variant {
+
 template <typename Geometry>
-struct devarianted_append
+struct append
 {
     template <typename RangeOrPoint>
     static inline void apply(Geometry& geometry,
@@ -204,16 +285,16 @@ struct devarianted_append
                              int multi_index)
     {
         concept::check<Geometry>();
-        append<Geometry, RangeOrPoint>::apply(geometry,
-                                              range_or_point,
-                                              ring_index,
-                                              multi_index);
+        dispatch::append<Geometry, RangeOrPoint>::apply(geometry,
+                                                        range_or_point,
+                                                        ring_index,
+                                                        multi_index);
     }
 };
 
 
 template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
-struct devarianted_append<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
+struct append<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
 {
     template <typename RangeOrPoint>
     struct visitor: boost::static_visitor<void>
@@ -221,7 +302,7 @@ struct devarianted_append<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
         RangeOrPoint const& m_range_or_point;
         int m_ring_index;
         int m_multi_index;
-    
+
         visitor(RangeOrPoint const& range_or_point,
                 int ring_index,
                 int multi_index):
@@ -229,15 +310,14 @@ struct devarianted_append<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
             m_ring_index(ring_index),
             m_multi_index(multi_index)
         {}
-    
+
         template <typename Geometry>
         void operator()(Geometry& geometry) const
         {
-            concept::check<Geometry>();
-            append<Geometry, RangeOrPoint>::apply(geometry,
-                                                  m_range_or_point,
-                                                  m_ring_index,
-                                                  m_multi_index);
+            append<Geometry>::apply(geometry,
+                                    m_range_or_point,
+                                    m_ring_index,
+                                    m_multi_index);
         }
     };
 
@@ -258,9 +338,7 @@ struct devarianted_append<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
     }
 };
 
-
-} // namespace dispatch
-#endif // DOXYGEN_NO_DISPATCH
+} // namespace resolve_variant;
 
 
 /*!
@@ -272,7 +350,7 @@ struct devarianted_append<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
 \param range_or_point The point or range to add
 \param ring_index The index of the ring in case of a polygon:
     exterior ring (-1, the default) or  interior ring index
-\param multi_index Reserved for multi polygons or multi linestrings
+\param multi_index The index of the geometry to which the points are appended
 
 \qbk{[include reference/algorithms/append.qbk]}
 }
@@ -281,8 +359,8 @@ template <typename Geometry, typename RangeOrPoint>
 inline void append(Geometry& geometry, RangeOrPoint const& range_or_point,
                    int ring_index = -1, int multi_index = 0)
 {
-    dispatch::devarianted_append<Geometry>
-            ::apply(geometry, range_or_point, ring_index, multi_index);
+    resolve_variant::append<Geometry>
+                   ::apply(geometry, range_or_point, ring_index, multi_index);
 }
 
 

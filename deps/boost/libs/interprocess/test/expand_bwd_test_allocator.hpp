@@ -11,7 +11,7 @@
 #ifndef BOOST_INTERPROCESS_EXPAND_BWD_TEST_ALLOCATOR_HPP
 #define BOOST_INTERPROCESS_EXPAND_BWD_TEST_ALLOCATOR_HPP
 
-#if (defined _MSC_VER) && (_MSC_VER >= 1200)
+#if defined (_MSC_VER)
 #  pragma once
 #endif
 
@@ -24,11 +24,11 @@
 #include <boost/interprocess/detail/utilities.hpp>
 #include <boost/interprocess/containers/version_type.hpp>
 #include <boost/interprocess/exceptions.hpp>
+#include <boost/move/adl_move_swap.hpp>
 #include <memory>
-#include <algorithm>
 #include <cstddef>
-#include <stdexcept>
 #include <cassert>
+#include <new>
 
 //!\file
 //!Describes an allocator to test expand capabilities
@@ -113,38 +113,34 @@ class expand_bwd_test_allocator
 
    friend void swap(self_t &alloc1, self_t &alloc2)
    {
-      ipcdetail::do_swap(alloc1.mp_buffer, alloc2.mp_buffer);
-      ipcdetail::do_swap(alloc1.m_size,    alloc2.m_size);
-      ipcdetail::do_swap(alloc1.m_offset,  alloc2.m_offset);
+      ::boost::adl_move_swap(alloc1.mp_buffer, alloc2.mp_buffer);
+      ::boost::adl_move_swap(alloc1.m_size,    alloc2.m_size);
+      ::boost::adl_move_swap(alloc1.m_offset,  alloc2.m_offset);
    }
 
    //Experimental version 2 expand_bwd_test_allocator functions
 
-   std::pair<pointer, bool>
-      allocation_command(boost::interprocess::allocation_type command,
-                         size_type limit_size,
-                         size_type preferred_size,
-                         size_type &received_size, const pointer &reuse = 0)
+   pointer allocation_command(boost::interprocess::allocation_type command,
+                         size_type limit_size, size_type &prefer_in_recvd_out_size, pointer &reuse)
    {
-      (void)preferred_size;   (void)reuse;   (void)command;
+      (void)reuse;   (void)command;
       //This allocator only expands backwards!
       assert(m_allocations == 0 || (command & boost::interprocess::expand_bwd));
-
-      received_size = limit_size;
+      prefer_in_recvd_out_size = limit_size;
 
       if(m_allocations == 0){
          if((m_offset + limit_size) > m_size){
             assert(0);
          }
          ++m_allocations;
-         return std::pair<pointer, bool>(mp_buffer + m_offset, false);
+         return mp_buffer + m_offset;
       }
       else if(m_allocations == 1){
          if(limit_size > m_size){
             assert(0);
          }
          ++m_allocations;
-         return std::pair<pointer, bool>(mp_buffer, true);
+         return mp_buffer;
       }
       else{
          assert(0);

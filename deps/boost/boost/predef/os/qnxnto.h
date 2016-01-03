@@ -1,5 +1,5 @@
 /*
-Copyright Redshift Software, Inc. 2008-2013
+Copyright Rene Rivera 2008-2013
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE_1_0.txt or copy at
 http://www.boost.org/LICENSE_1_0.txt)
@@ -31,7 +31,9 @@ version 4 is specifically detected.
 
 #define BOOST_OS_QNX BOOST_VERSION_NUMBER_NOT_AVAILABLE
 
-#if defined(__QNX__) || defined(__QNXNTO__)
+#if !defined(BOOST_PREDEF_DETAIL_OS_DETECTED) && ( \
+    defined(__QNX__) || defined(__QNXNTO__) \
+    )
 #   undef BOOST_OS_QNX
 #   if !defined(BOOST_OS_QNX) && defined(_NTO_VERSION)
 #       define BOOST_OS_QNX BOOST_PREDEF_MAKE_10_VVRR(_NTO_VERSION)
@@ -46,6 +48,7 @@ version 4 is specifically detected.
 
 #if BOOST_OS_QNX
 #   define BOOST_OS_QNX_AVAILABLE
+#   include <boost/predef/detail/os_detected.h>
 #endif
 
 #define BOOST_OS_QNX_NAME "QNX"

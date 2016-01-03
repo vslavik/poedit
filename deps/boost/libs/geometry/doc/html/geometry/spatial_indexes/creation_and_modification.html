@@ -72,7 +72,51 @@
         R-tree may store <code class="computeroutput">Value</code>s of any type as long as passed function
         objects know how to interpret those <code class="computeroutput">Value</code>s, that is extract
         an <code class="computeroutput">Indexable</code> that the R-tree can handle and compare <code class="computeroutput">Value</code>s.
+        The <code class="computeroutput">Indexable</code> is a type adapted to Point, Box or Segment concept.
+        The examples of rtrees storing <code class="computeroutput">Value</code>s translatable to various
+        <code class="computeroutput">Indexable</code>s are presented below.
       </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  rtree&lt;Point, ...&gt;
+                </p>
+              </th>
+<th>
+                <p>
+                  rtree&lt;Box, ...&gt;
+                </p>
+              </th>
+<th>
+                <p>
+                  rtree&lt;Segment, ...&gt;
+                </p>
+              </th>
+</tr></thead>
+<tbody><tr>
+<td>
+                <p>
+                  <span class="inlinemediaobject"><img src="../../img/index/rtree/rtree_pt.png" alt="rtree_pt"></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="inlinemediaobject"><img src="../../img/index/rtree/rstar.png" alt="rstar"></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="inlinemediaobject"><img src="../../img/index/rtree/rtree_seg.png" alt="rtree_seg"></span>
+                </p>
+              </td>
+</tr></tbody>
+</table></div>
 <p>
         By default function objects <code class="computeroutput"><span class="identifier">index</span><span class="special">::</span><span class="identifier">indexable</span><span class="special">&lt;</span><span class="identifier">Value</span><span class="special">&gt;</span></code> and <code class="computeroutput"><span class="identifier">index</span><span class="special">::</span><span class="identifier">equal_to</span><span class="special">&lt;</span><span class="identifier">Value</span><span class="special">&gt;</span></code> are defined for some typically used
         <code class="computeroutput">Value</code> types which may be stored without defining any additional
@@ -83,14 +127,16 @@
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <code class="computeroutput">Indexable <span class="special">=</span> Point <span class="special">|</span>
-            Box</code>
+            Box <span class="special">|</span> <span class="identifier">Segment</span></code>
           </li>
 <li class="listitem">
             <code class="computeroutput">Value <span class="special">=</span> <span class="identifier">Indexable</span>
             <span class="special">|</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span>Indexable<span class="special">,</span>
             <span class="identifier">T</span><span class="special">&gt;</span>
-            <span class="special">|</span> <span class="identifier">tuple</span><span class="special">&lt;</span>Indexable<span class="special">,</span>
-            <span class="special">...&gt;</span></code>
+            <span class="special">|</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">tuple</span><span class="special">&lt;</span>Indexable<span class="special">,</span>
+            <span class="special">...&gt;</span> <span class="special">[</span>
+            <span class="special">|</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">tuple</span><span class="special">&lt;</span>Indexable<span class="special">,</span>
+            <span class="special">...&gt;</span> <span class="special">]</span></code>
           </li>
 </ul></div>
 <p>
@@ -105,6 +151,7 @@
 <pre class="programlisting"><span class="identifier">geometry</span><span class="special">::</span><span class="identifier">model</span><span class="special">::</span><span class="identifier">point</span><span class="special">&lt;...&gt;</span>
 <span class="identifier">geometry</span><span class="special">::</span><span class="identifier">model</span><span class="special">::</span><span class="identifier">point_xy</span><span class="special">&lt;...&gt;</span>
 <span class="identifier">geometry</span><span class="special">::</span><span class="identifier">model</span><span class="special">::</span><span class="identifier">box</span><span class="special">&lt;...&gt;</span>
+<span class="identifier">geometry</span><span class="special">::</span><span class="identifier">model</span><span class="special">::</span><span class="identifier">segment</span><span class="special">&lt;...&gt;</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">geometry</span><span class="special">::</span><span class="identifier">model</span><span class="special">::</span><span class="identifier">box</span><span class="special">&lt;...&gt;,</span> <span class="keyword">unsigned</span><span class="special">&gt;</span>
 <span class="identifier">boost</span><span class="special">::</span><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">geometry</span><span class="special">::</span><span class="identifier">model</span><span class="special">::</span><span class="identifier">point</span><span class="special">&lt;...&gt;,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">float</span><span class="special">&gt;</span>
 </pre>
@@ -127,8 +174,8 @@
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-            for <code class="computeroutput">Point</code> and <code class="computeroutput">Box</code> - compares <code class="computeroutput">Value</code>s
-            with geometry::equals().
+            for <code class="computeroutput">Point</code>, <code class="computeroutput">Box</code> and <code class="computeroutput"><span class="identifier">Segment</span></code>
+            - compares <code class="computeroutput">Value</code>s with geometry::equals().
           </li>
 <li class="listitem">
             for <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;...&gt;</span></code>
@@ -271,7 +318,8 @@
       </h5>
 <p>
         The R-tree allows creation, inserting and removing of Values from a range.
-        The range may be passed as [first, last) Iterators pair or as a Range.
+        The range may be passed as <code class="computeroutput"><span class="special">[</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">)</span></code> Iterators
+        pair or as a Range adapted to one of the Boost.Range Concepts.
       </p>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">bgi</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">geometry</span><span class="special">::</span><span class="identifier">index</span><span class="special">;</span>
 <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">Box</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span> Value<span class="special">;</span>
@@ -291,13 +339,13 @@
 
 <span class="comment">// create R-tree with default constructor and insert values with insert(Range)</span>
 <span class="identifier">RTree</span> <span class="identifier">rt3</span><span class="special">;</span>
-<span class="identifier">rt3</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">values</span><span class="special">);</span>
+<span class="identifier">rt3</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">values_range</span><span class="special">);</span>
 
 <span class="comment">// create R-tree with constructor taking Iterators</span>
 <span class="identifier">RTree</span> <span class="identifier">rt4</span><span class="special">(</span><span class="identifier">values</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">values</span><span class="special">.</span><span class="identifier">end</span><span class="special">());</span>
 
 <span class="comment">// create R-tree with constructor taking Range</span>
-<span class="identifier">RTree</span> <span class="identifier">rt5</span><span class="special">(</span><span class="identifier">values</span><span class="special">);</span>
+<span class="identifier">RTree</span> <span class="identifier">rt5</span><span class="special">(</span><span class="identifier">values_range</span><span class="special">);</span>
 
 <span class="comment">// remove values with remove(Value const&amp;)</span>
 <span class="identifier">BOOST_FOREACH</span><span class="special">(</span>Value <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">values</span><span class="special">)</span>
@@ -307,7 +355,15 @@
 <span class="identifier">rt2</span><span class="special">.</span><span class="identifier">remove</span><span class="special">(</span><span class="identifier">values</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">values</span><span class="special">.</span><span class="identifier">end</span><span class="special">());</span>
 
 <span class="comment">// remove values with remove(Range)</span>
-<span class="identifier">rt3</span><span class="special">.</span><span class="identifier">remove</span><span class="special">(</span><span class="identifier">values</span><span class="special">);</span>
+<span class="identifier">rt3</span><span class="special">.</span><span class="identifier">remove</span><span class="special">(</span><span class="identifier">values_range</span><span class="special">);</span>
+</pre>
+<p>
+        Furthermore, it's possible to pass a Range adapted by one of the Boost.Range
+        adaptors into the rtree (more complete example can be found in the <span class="bold"><strong>Examples</strong></span> section).
+      </p>
+<pre class="programlisting"><span class="comment">// create Rtree containing `std::pair&lt;Box, int&gt;` from a container of Boxes on the fly.</span>
+<span class="identifier">RTree</span> <span class="identifier">rt6</span><span class="special">(</span><span class="identifier">boxes</span> <span class="special">|</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">adaptors</span><span class="special">::</span><span class="identifier">indexed</span><span class="special">()</span>
+                <span class="special">|</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">adaptors</span><span class="special">::</span><span class="identifier">transformed</span><span class="special">(</span><span class="identifier">pair_maker</span><span class="special">()));</span>
 </pre>
 <h5>
 <a name="geometry.spatial_indexes.creation_and_modification.h8"></a>
@@ -339,7 +395,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
+      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

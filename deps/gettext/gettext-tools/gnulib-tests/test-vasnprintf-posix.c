@@ -1,5 +1,5 @@
 /* Test of POSIX compatible vasnprintf() and asnprintf() functions.
-   Copyright (C) 2007-2013 Free Software Foundation, Inc.
+   Copyright (C) 2007-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ have_minus_zero ()
 #ifdef WORDS_BIGENDIAN
 # define LDBL80_WORDS(exponent,manthi,mantlo) \
     { ((unsigned int) (exponent) << 16) | ((unsigned int) (manthi) >> 16), \
-      ((unsigned int) (manthi) << 16) | (unsigned int) (mantlo) >> 16),    \
+      ((unsigned int) (manthi) << 16) | ((unsigned int) (mantlo) >> 16),   \
       (unsigned int) (mantlo) << 16                                        \
     }
 #else
@@ -589,13 +589,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     ASSERT (length == strlen (result));
     free (result);
   }
-  /* The isnanl function should recognize Pseudo-NaNs, Pseudo-Infinities,
-     Pseudo-Zeroes, Unnormalized Numbers, and Pseudo-Denormals, as defined in
-       Intel IA-64 Architecture Software Developer's Manual, Volume 1:
-       Application Architecture.
-       Table 5-2 "Floating-Point Register Encodings"
-       Figure 5-6 "Memory to Floating-Point Register Data Translation"
-   */
+  /* asnprintf should print something for noncanonical values.  */
   { /* Pseudo-NaN.  */
     static union { unsigned int word[4]; long double value; } x =
       { LDBL80_WORDS (0xFFFF, 0x40000001, 0x00000000) };
@@ -603,10 +597,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%La %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Pseudo-Infinity.  */
@@ -616,10 +608,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%La %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Pseudo-Zero.  */
@@ -629,10 +619,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%La %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Unnormalized number.  */
@@ -642,10 +630,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%La %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Pseudo-Denormal.  */
@@ -655,10 +641,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%La %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
 #endif
@@ -1403,13 +1387,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     ASSERT (length == strlen (result));
     free (result);
   }
-  /* The isnanl function should recognize Pseudo-NaNs, Pseudo-Infinities,
-     Pseudo-Zeroes, Unnormalized Numbers, and Pseudo-Denormals, as defined in
-       Intel IA-64 Architecture Software Developer's Manual, Volume 1:
-       Application Architecture.
-       Table 5-2 "Floating-Point Register Encodings"
-       Figure 5-6 "Memory to Floating-Point Register Data Translation"
-   */
+  /* asnprintf should print something for noncanonical values.  */
   { /* Pseudo-NaN.  */
     static union { unsigned int word[4]; long double value; } x =
       { LDBL80_WORDS (0xFFFF, 0x40000001, 0x00000000) };
@@ -1417,10 +1395,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Lf %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Pseudo-Infinity.  */
@@ -1430,10 +1406,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Lf %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Pseudo-Zero.  */
@@ -1443,10 +1417,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Lf %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Unnormalized number.  */
@@ -1456,10 +1428,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Lf %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Pseudo-Denormal.  */
@@ -1469,10 +1439,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Lf %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
 #endif
@@ -2405,10 +2373,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Le %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   {
@@ -2419,19 +2385,11 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Le %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
-  /* The isnanl function should recognize Pseudo-NaNs, Pseudo-Infinities,
-     Pseudo-Zeroes, Unnormalized Numbers, and Pseudo-Denormals, as defined in
-       Intel IA-64 Architecture Software Developer's Manual, Volume 1:
-       Application Architecture.
-       Table 5-2 "Floating-Point Register Encodings"
-       Figure 5-6 "Memory to Floating-Point Register Data Translation"
-   */
+  /* asnprintf should print something even for noncanonical values.  */
   { /* Pseudo-NaN.  */
     static union { unsigned int word[4]; long double value; } x =
       { LDBL80_WORDS (0xFFFF, 0x40000001, 0x00000000) };
@@ -2439,10 +2397,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Le %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Pseudo-Infinity.  */
@@ -2452,10 +2408,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Le %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Pseudo-Zero.  */
@@ -2465,10 +2419,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Le %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Unnormalized number.  */
@@ -2478,10 +2430,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Le %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Pseudo-Denormal.  */
@@ -2491,10 +2441,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Le %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
 #endif
@@ -3179,13 +3127,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     ASSERT (length == strlen (result));
     free (result);
   }
-  /* The isnanl function should recognize Pseudo-NaNs, Pseudo-Infinities,
-     Pseudo-Zeroes, Unnormalized Numbers, and Pseudo-Denormals, as defined in
-       Intel IA-64 Architecture Software Developer's Manual, Volume 1:
-       Application Architecture.
-       Table 5-2 "Floating-Point Register Encodings"
-       Figure 5-6 "Memory to Floating-Point Register Data Translation"
-   */
+  /* asnprintf should print something for noncanonical values.  */
   { /* Pseudo-NaN.  */
     static union { unsigned int word[4]; long double value; } x =
       { LDBL80_WORDS (0xFFFF, 0x40000001, 0x00000000) };
@@ -3193,10 +3135,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Lg %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Pseudo-Infinity.  */
@@ -3206,10 +3146,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Lg %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Pseudo-Zero.  */
@@ -3219,10 +3157,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Lg %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Unnormalized number.  */
@@ -3232,10 +3168,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Lg %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Pseudo-Denormal.  */
@@ -3245,10 +3179,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%Lg %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strlen (result) >= 3 + 3
-            && strisnan (result, 0, strlen (result) - 3, 0)
-            && strcmp (result + strlen (result) - 3, " 33") == 0);
     ASSERT (length == strlen (result));
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
 #endif

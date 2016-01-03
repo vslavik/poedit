@@ -38,7 +38,7 @@
 int main()
 {
 
-  BOOST_STATIC_ASSERT_MSG((boost::uses_allocator<boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE>, test_allocator<double> >::value), "");
+  BOOST_STATIC_ASSERT_MSG((boost::csbl::uses_allocator<boost::packaged_task<BOOST_THREAD_DETAIL_SIGNATURE>, test_allocator<double> >::value), "");
 
   return boost::report_errors();
 }

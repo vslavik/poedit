@@ -191,19 +191,23 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_constructible<int[3][2]>::va
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_constructible<int[2][4][5][6][3]>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_constructible<UDT>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_constructible<void>::value, false);
+#if (!defined(BOOST_NO_CXX11_NOEXCEPT) && !defined(BOOST_NO_SFINAE_EXPR)) || defined(BOOST_IS_NOTHROW_MOVE_CONSTRUCT)
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_constructible<empty_POD_UDT>::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_constructible<POD_UDT>::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_constructible<POD_union_UDT>::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_constructible<empty_POD_union_UDT>::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_constructible<nothrow_copy_UDT>::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_constructible<nothrow_move_UDT>::value, true);
+#else
 // cases we would like to succeed but can't implement in the language:
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::is_nothrow_move_constructible<empty_POD_UDT>::value, true, false);
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::is_nothrow_move_constructible<POD_UDT>::value, true, false);
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::is_nothrow_move_constructible<POD_union_UDT>::value, true, false);
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::is_nothrow_move_constructible<empty_POD_union_UDT>::value, true, false);
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::is_nothrow_move_constructible<nothrow_copy_UDT>::value, true, false);
+#endif
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_constructible<nothrow_assign_UDT>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_constructible<nothrow_construct_UDT>::value, false);
-
-#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && !defined(BOOST_NO_CXX11_NOEXCEPT)
-BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_constructible<nothrow_move_UDT>::value, true);
-#endif
-
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_constructible<test_abc1>::value, false);
 
 TT_TEST_END

@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -82,8 +82,8 @@ public:
     //! Clears the buffer to the initial state
     void clear()
     {
-        register char_type* pBase = this->pbase();
-        register char_type* pPtr = this->pptr();
+        char_type* pBase = this->pbase();
+        char_type* pPtr = this->pptr();
         if (pBase != pPtr)
             this->pbump(static_cast< int >(pBase - pPtr));
     }
@@ -113,8 +113,8 @@ protected:
     int sync()
     {
         BOOST_ASSERT(m_Storage != 0);
-        register char_type* pBase = this->pbase();
-        register char_type* pPtr = this->pptr();
+        char_type* pBase = this->pbase();
+        char_type* pPtr = this->pptr();
         if (pBase != pPtr)
         {
             m_Storage->append(pBase, pPtr);
@@ -141,7 +141,7 @@ protected:
         BOOST_ASSERT(m_Storage != 0);
         basic_ostringstreambuf::sync();
         typedef typename string_type::size_type string_size_type;
-        register const string_size_type max_storage_left =
+        const string_size_type max_storage_left =
             m_Storage->max_size() - m_Storage->size();
         if (static_cast< string_size_type >(n) < max_storage_left)
         {

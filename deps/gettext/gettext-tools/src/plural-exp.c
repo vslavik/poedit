@@ -1,5 +1,5 @@
 /* Expression parsing for plural form selection.
-   Copyright (C) 2000-2001, 2003 Free Software Foundation, Inc.
+   Copyright (C) 2000-2001, 2003, 2015 Free Software Foundation, Inc.
    Written by Ulrich Drepper <drepper@cygnus.com>, 2000.
 
    This program is free software: you can redistribute it and/or modify
@@ -17,5 +17,5 @@
 
 /* Include the expression parsing code from libintl, with different function
    names.  */
-#include "../../gettext-runtime/intl/plural.c"
+#include "../intl/pluralx.c"
 #include "../../gettext-runtime/intl/plural-exp.c"

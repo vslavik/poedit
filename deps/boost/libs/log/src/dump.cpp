@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -52,8 +52,11 @@ extern dump_data_char32_t dump_data_char32_avx2;
 
 enum { stride = 256 };
 
-extern const char g_lowercase_dump_char_table[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
-extern const char g_uppercase_dump_char_table[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+extern const char g_hex_char_table[2][16] =
+{
+    { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' },
+    { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' }
+};
 
 template< typename CharT >
 void dump_data_generic(const void* data, std::size_t size, std::basic_ostream< CharT >& strm)
@@ -62,7 +65,7 @@ void dump_data_generic(const void* data, std::size_t size, std::basic_ostream< C
 
     char_type buf[stride * 3u];
 
-    const char* const char_table = (strm.flags() & std::ios_base::uppercase) ? g_uppercase_dump_char_table : g_lowercase_dump_char_table;
+    const char* const char_table = g_hex_char_table[(strm.flags() & std::ios_base::uppercase) != 0];
     const std::size_t stride_count = size / stride, tail_size = size % stride;
 
     const uint8_t* p = static_cast< const uint8_t* >(data);

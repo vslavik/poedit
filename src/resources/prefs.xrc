@@ -1,318 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resource xmlns="http://www.wxwidgets.org/wxxrc" version="2.5.3.0">
-  <object class="wxDialog" name="preferences">
-    <title>Preferences</title>
-    <centered>1</centered>
+  <object class="wxDialog" name="edit_extractor">
+    <title>Extractor setup</title>
+    <variant platform="mac">small</variant>
     <object class="wxBoxSizer">
-      <orient>wxVERTICAL</orient>
-      <object class="sizeritem">
-        <object class="wxNotebook" name="prefs_notebook">
-          <object class="notebookpage">
-            <label>Personalize</label>
-            <object class="wxPanel">
-              <object class="wxBoxSizer">
-                <orient>wxVERTICAL</orient>
-                <object class="sizeritem">
-                  <object class="wxStaticBoxSizer">
-                    <label>Identity</label>
-                    <orient>wxVERTICAL</orient>
-                    <object class="sizeritem">
-                      <object class="wxStaticText">
-                          <label>Your name and email set below are only used
-to set the Last-Translator header of GNU gettext files.</label>
-                      </object>
-                      <border>5d</border>
-                      <flag>wxLEFT|wxRIGHT|wxTOP</flag>
-                    </object>
-                    <object class="sizeritem">
-                      <object class="wxStaticText">
-                        <label>Your name:</label>
-                      </object>
-                      <border>5d</border>
-                      <flag>wxLEFT|wxTOP</flag>
-                    </object>
-                    <object class="sizeritem">
-                      <object class="wxTextCtrl" name="user_name">
-                        <focused>1</focused>
-                      </object>
-                      <flag>wxEXPAND|wxLEFT|wxRIGHT</flag>
-                      <border>5d</border>
-                    </object>
-                    <object class="sizeritem">
-                      <object class="wxStaticText">
-                        <label>Your email address:</label>
-                      </object>
-                      <flag>wxLEFT|wxTOP</flag>
-                      <border>5d</border>
-                    </object>
-                    <object class="sizeritem">
-                      <object class="wxTextCtrl" name="user_email"/>
-                      <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
-                      <border>5d</border>
-                    </object>
-                  </object>
-                  <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
-                  <option>0</option>
-                  <border>5d</border>
-                </object>
-                <object class="sizeritem">
-                    <flag>wxALL|wxALIGN_LEFT</flag>
-                    <border>5d</border>
-                    <object class="wxButton" name="ui_language">
-                    <label>Change UI language</label>
-                  </object>
-                </object>
-                <object class="sizeritem" platform="mac|win">
-                    <flag>wxALL|wxALIGN_LEFT</flag>
-                    <border>5d</border>
-                    <object class="wxCheckBox" name="auto_updates">
-                    <label>Automatically check for new version of Poedit</label>
-                  </object>
-                </object>
-                <object class="sizeritem" platform="mac|win">
-                    <flag>wxLEFT|wxALIGN_LEFT</flag>
-                    <border>15d</border>
-                    <object class="wxCheckBox" name="beta_versions">
-                    <label>Include beta versions</label>
-                  </object>
-                </object>
-              </object>
-              <style>wxTAB_TRAVERSAL</style>
-            </object>
-          </object>
-          <object class="notebookpage">
-            <label>Editor</label>
-            <object class="wxPanel">
-              <object class="wxBoxSizer">
-                <orient>wxVERTICAL</orient>
-                <object class="sizeritem">
-                  <object class="wxStaticBoxSizer">
-                    <label>Behavior</label>
-                    <orient>wxVERTICAL</orient>
-                    <object class="sizeritem">
-                      <object class="wxCheckBox" name="compile_mo">
-                        <label>Automatically compile .mo file on save</label>
-                        <checked>1</checked>
-                      </object>
-                      <border>5d</border>
-                      <flag>wxLEFT|wxRIGHT|wxTOP</flag>
-                    </object>
-                    <object class="sizeritem">
-                      <object class="wxCheckBox" name="show_summary">
-                        <checked>0</checked>
-                        <label>Show summary after catalog update</label>
-                      </object>
-                      <border>5d</border>
-                      <flag>wxLEFT|wxRIGHT</flag>
-                    </object>
-                    <object class="sizeritem">
-                      <object class="wxCheckBox" name="focus_to_text">
-                        <label>Always change focus to text input field</label>
-                        <checked>1</checked>
-                        <tooltip>Never let the list of strings take focus. If enabled, you must use Ctrl-arrows for keyboard navigation but you can also type text immediately, without having to press Tab to change focus.</tooltip>
-                      </object>
-                      <border>5d</border>
-                      <flag>wxLEFT|wxRIGHT</flag>
-                    </object>
-                    <object class="sizeritem">
-                      <object class="wxCheckBox" name="comment_window_editable">
-                        <label>Comment window is editable</label>
-                        <tooltip>If checked, the comment window will be editable.</tooltip>
-                      </object>
-                      <border>5d</border>
-                      <flag>wxLEFT|wxRIGHT</flag>
-                    </object>
-                    <object class="sizeritem">
-                      <object class="wxCheckBox" name="enable_spellchecking">
-                        <label>Check spelling</label>
-                        <tooltip>Enables on-the-fly spellchecking</tooltip>
-                      </object>
-                      <border>5d</border>
-                      <flag>wxLEFT|wxRIGHT|wxBOTTOM</flag>
-                    </object>
-                  </object>
-                  <option>0</option>
-                  <flag>wxEXPAND|wxALL</flag>
-                  <border>5d</border>
-                </object>
-                <object class="sizeritem">
-                  <object class="wxStaticBoxSizer">
-                    <label>CR/LF conversion</label>
-                    <orient>wxVERTICAL</orient>
-                    <object class="sizeritem">
-                      <border>5d</border>
-                      <flag>wxLEFT|wxRIGHT|wxTOP|wxEXPAND</flag>
-                      <object class="wxBoxSizer">
-                        <object class="sizeritem">
-                          <object class="wxStaticText">
-                            <label>Line endings format:</label>
-                          </object>
-                          <flag>wxRIGHT|wxLEFT|wxALIGN_CENTER_VERTICAL</flag>
-                          <border>2d</border>
-                        </object>
-                        <object class="sizeritem">
-                          <object class="wxChoice" name="crlf_format">
-                            <content>
-                              <item>Unix (recommended)</item>
-                              <item>Windows</item>
-                            </content>
-                          </object>
-                          <option>1</option>
-                        </object>
-                      </object>
-                    </object>
-                    <object class="sizeritem">
-                      <border>5d</border>
-                      <flag>wxLEFT|wxRIGHT|wxBOTTOM</flag>
-                      <object class="wxCheckBox" name="keep_crlf">
-                        <checked>1</checked>
-                        <label>Don't change format of existing catalogs</label>
-                      </object>
-                      <option>1</option>
-                    </object>
-                  </object>
-                  <option>0</option>
-                  <flag>wxEXPAND|wxLEFT|wxRIGHT</flag>
-                  <border>5d</border>
-                </object>
-                <object class="sizeritem">
-                  <object class="wxStaticBoxSizer">
-                    <label>Fonts</label>
-                    <orient>wxVERTICAL</orient>
-                    <object class="sizeritem">
-                      <border>5d</border>
-                      <flag>wxLEFT|wxRIGHT|wxTOP</flag>
-                      <object class="wxCheckBox" name="use_font_list">
-                        <label>Use custom font for translations list</label>
-                      </object>
-                    </object>
-                    <object class="sizeritem">
-                      <border>5d</border>
-                      <flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
-                      <object class="wxBoxSizer">
-                        <object class="sizeritem">
-                          <object class="wxFontPickerCtrl" name="font_list">
-                          </object>
-                          <option>1</option>
-                          <flag>wxRIGHT</flag>
-                          <border>5d</border>
-                        </object>
-                      </object>
-                    </object>
-                    <object class="sizeritem">
-                      <border>5d</border>
-                      <flag>wxLEFT|wxRIGHT|wxTOP</flag>
-                      <object class="wxCheckBox" name="use_font_text">
-                        <label>Use custom font for text fields</label>
-                      </object>
-                    </object>
-                    <object class="sizeritem">
-                      <border>5d</border>
-                      <flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
-                      <object class="wxBoxSizer">
-                        <object class="sizeritem">
-                          <object class="wxFontPickerCtrl" name="font_text">
-                          </object>
-                          <option>1</option>
-                          <flag>wxRIGHT</flag>
-                          <border>5d</border>
-                        </object>
-                      </object>
-                    </object>
-                  </object>
-                  <option>0</option>
-                  <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
-                  <border>5d</border>
-                </object>
-              </object>
-              <style>wxTAB_TRAVERSAL</style>
-            </object>
-          </object>
-          <object class="notebookpage">
-            <label>Parsers</label>
-            <object class="wxPanel">
-              <object class="wxBoxSizer">
-                <orient>wxVERTICAL</orient>
-                <object class="sizeritem">
-                  <object class="wxStaticText">
-                    <label>Source code parsers:</label>
-                  </object>
-                  <flag>wxALL</flag>
-                  <border>5d</border>
-                  <option>0</option>
-                </object>
-                <object class="sizeritem">
-                  <object class="wxBoxSizer">
-                    <object class="sizeritem">
-                      <object class="wxListBox" name="parsers_list"/>
-                      <option>1</option>
-                      <flag>wxEXPAND</flag>
-                      <minsize>130,-1d</minsize>
-                    </object>
-                    <object class="sizeritem">
-                      <object class="wxBoxSizer">
-                        <orient>wxVERTICAL</orient>
-                        <object class="sizeritem">
-                          <object class="wxButton" name="parser_new">
-                            <label>New</label>
-                          </object>
-                        </object>
-                        <object class="sizeritem">
-                          <object class="wxButton" name="parser_edit">
-                            <label>Edit</label>
-                          </object>
-                          <flag>wxTOP|wxBOTTOM</flag>
-                          <border>2d</border>
-                        </object>
-                        <object class="sizeritem">
-                          <object class="wxButton" name="parser_delete">
-                            <label>Delete</label>
-                          </object>
-                        </object>
-                      </object>
-                      <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_TOP</flag>
-                      <border>5d</border>
-                    </object>
-                    <orient>wxHORIZONTAL</orient>
-                  </object>
-                  <border>5d</border>
-                  <flag>wxEXPAND|wxLEFT|wxBOTTOM</flag>
-                  <option>1</option>
-                </object>
-              </object>
-              <style>wxTAB_TRAVERSAL</style>
-            </object>
-          </object>
-        </object>
-        <option>1</option>
-        <flag>wxEXPAND|wxALL</flag>
-        <border>5d</border>
-      </object>
-      <object class="sizeritem">
-        <object class="wxBoxSizer">
-          <object class="sizeritem">
-            <object class="wxButton" name="wxID_OK">
-              <label>OK</label>
-              <default>1</default>
-            </object>
-            <border>5d</border>
-            <flag>wxLEFT|wxRIGHT|wxBOTTOM</flag>
-          </object>
-          <object class="sizeritem">
-            <object class="wxButton" name="wxID_CANCEL">
-              <label>Cancel</label>
-            </object>
-            <flag>wxRIGHT|wxBOTTOM</flag>
-            <border>5d</border>
-          </object>
-        </object>
-        <flag>wxALIGN_RIGHT</flag>
-      </object>
-    </object>
-  </object>
-  <object class="wxDialog" name="edit_parser">
-    <title>Parser setup</title>
-    <object class="wxBoxSizer">
+      <minsize>300,-1d</minsize>
       <orient>wxVERTICAL</orient>
       <object class="sizeritem">
         <object class="wxStaticBoxSizer">
@@ -326,7 +18,7 @@ to set the Last-Translator header of GNU gettext files.</label>
             <border>5d</border>
           </object>
           <object class="sizeritem">
-            <object class="wxTextCtrl" name="parser_language"/>
+            <object class="wxTextCtrl" name="extractor_language"/>
             <flag>wxEXPAND|wxLEFT|wxRIGHT</flag>
             <border>5d</border>
           </object>
@@ -338,7 +30,7 @@ to set the Last-Translator header of GNU gettext files.</label>
             <flag>wxLEFT|wxRIGHT|wxTOP</flag>
           </object>
           <object class="sizeritem">
-            <object class="wxTextCtrl" name="parser_extensions"/>
+            <object class="wxTextCtrl" name="extractor_extensions"/>
             <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
             <border>5d</border>
           </object>
@@ -352,21 +44,23 @@ to set the Last-Translator header of GNU gettext files.</label>
           <orient>wxVERTICAL</orient>
           <object class="sizeritem">
             <object class="wxStaticText">
-              <label>Parser command:</label>
+              <label>Command to extract translations:</label>
             </object>
             <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
             <border>5d</border>
           </object>
           <object class="sizeritem">
-            <object class="wxTextCtrl" name="parser_command"/>
+            <object class="wxTextCtrl" name="extractor_command"/>
             <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
             <border>5d</border>
           </object>
           <object class="sizeritem">
             <object class="wxStaticText">
-              <label>This is the command used to launch the parser.\n%o expands to the name of output file, %K to list\nof keywords, %F to list of input files,\n%C to charset flag (see below).</label>
+              <label>This is the command used to launch the extractor.\n%o expands to the name of output file, %K to list\nof keywords, %F to list of input files,\n%C to charset flag (see below).</label>
+              <variant platform="mac">small</variant>
+              <fg>#777777</fg>
             </object>
-            <flag>wxLEFT|wxRIGHT</flag> 
+            <flag>wxLEFT|wxRIGHT</flag>
             <border>5d</border>
           </object>
           <object class="sizeritem">
@@ -377,15 +71,17 @@ to set the Last-Translator header of GNU gettext files.</label>
             <flag>wxLEFT|wxRIGHT|wxTOP</flag>
           </object>
           <object class="sizeritem">
-            <object class="wxTextCtrl" name="parser_keywords"/>
+            <object class="wxTextCtrl" name="extractor_keywords"/>
             <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
             <border>5d</border>
           </object>
           <object class="sizeritem">
             <object class="wxStaticText">
               <label>This will be attached to the command line once\nfor each keyword. %k expands to the keyword.</label>
+              <variant platform="mac">small</variant>
+              <fg>#777777</fg>
             </object>
-            <flag>wxLEFT|wxRIGHT</flag> 
+            <flag>wxLEFT|wxRIGHT</flag>
             <border>5d</border>
           </object>
           <object class="sizeritem">
@@ -396,15 +92,17 @@ to set the Last-Translator header of GNU gettext files.</label>
             <flag>wxLEFT|wxRIGHT|wxTOP</flag>
           </object>
           <object class="sizeritem">
-            <object class="wxTextCtrl" name="parser_files"/>
+            <object class="wxTextCtrl" name="extractor_files"/>
             <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
             <border>5d</border>
           </object>
           <object class="sizeritem">
             <object class="wxStaticText">
               <label>This will be attached to the command line once\nfor each input file. %f expands to the filename.</label>
+              <variant platform="mac">small</variant>
+              <fg>#777777</fg>
             </object>
-            <flag>wxLEFT|wxRIGHT</flag> 
+            <flag>wxLEFT|wxRIGHT</flag>
             <border>5d</border>
           </object>
           <object class="sizeritem">
@@ -415,15 +113,17 @@ to set the Last-Translator header of GNU gettext files.</label>
             <flag>wxLEFT|wxRIGHT|wxTOP</flag>
           </object>
           <object class="sizeritem">
-            <object class="wxTextCtrl" name="parser_charset"/>
+            <object class="wxTextCtrl" name="extractor_charset"/>
             <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
             <border>5d</border>
           </object>
           <object class="sizeritem">
             <object class="wxStaticText">
               <label>This will be attached to the command line\nonly if source codecharset was given. %c expands to charset value.</label>
+              <variant platform="mac">small</variant>
+              <fg>#777777</fg>
             </object>
-            <flag>wxLEFT|wxRIGHT</flag> 
+            <flag>wxLEFT|wxRIGHT</flag>
             <border>5d</border>
           </object>
         </object>
@@ -431,24 +131,23 @@ to set the Last-Translator header of GNU gettext files.</label>
         <flag>wxEXPAND|wxLEFT|wxRIGHT|wxTOP</flag>
       </object>
       <object class="sizeritem">
-        <object class="wxBoxSizer">
-          <object class="sizeritem">
+        <object class="wxStdDialogButtonSizer">
+          <object class="button">
             <object class="wxButton" name="wxID_OK">
-              <label>OK</label>
+              <variant platform="mac">normal</variant>
               <default>1</default>
             </object>
-            <border>5d</border>
-            <flag>wxALL</flag>
           </object>
-          <object class="sizeritem">
+          <object class="button">
             <object class="wxButton" name="wxID_CANCEL">
-              <label>Cancel</label>
+              <variant platform="mac">normal</variant>
             </object>
-            <flag>wxRIGHT|wxTOP|wxBOTTOM</flag>
-            <border>5d</border>
           </object>
         </object>
-        <flag>wxALIGN_RIGHT</flag>
+        <flag platform="mac">wxALIGN_RIGHT</flag>
+        <flag platform="win">wxALIGN_RIGHT|wxALL</flag>
+        <flag platform="unix">wxALIGN_RIGHT|wxTOP|wxBOTTOM</flag>
+        <border>5d</border>
       </object>
     </object>
   </object>

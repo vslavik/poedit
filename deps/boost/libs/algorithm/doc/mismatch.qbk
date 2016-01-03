@@ -22,7 +22,7 @@ Consider the two sequences:
 	
 	std::mismatch ( seq1.begin (), seq1.end (), seq2.begin ()); // <3, 3>
 	std::mismatch ( seq2.begin (), seq2.end (), seq1.begin ()); // Undefined behavior
-	std::mismatch ( seq1.begin (), seq1.end (), seq1.begin (), seq2.end ()); // <3, 3>
+	std::mismatch ( seq1.begin (), seq1.end (), seq2.begin (), seq2.end ()); // <3, 3>
 ```
 
 The first N entries in `seq2` are the same as the entries in `seq1` - but that's not all that's in `seq2`. In the second case, the algorithm will read past the end of `seq1`, resulting in undefined behavior (large earthquake, incorrect results, pregnant cat, etc).
@@ -60,7 +60,7 @@ mismatch ( c1.end(),       c1.end(),       c2.end(),   c2.end()) --> <c1.end(), 
 
 [heading Complexity]
 
-Both of the variants of `mismatch` run in ['O(N)] (linear) time; that is, they compare against each element in the list once. If the sequence is found to be equal at any point, the routine will terminate immediately, without examining the rest of the elements.
+Both of the variants of `mismatch` run in ['O(N)] (linear) time; that is, they compare against each element in the list once. If the sequence is found to be not equal at any point, the routine will terminate immediately, without examining the rest of the elements.
 
 [heading Exception Safety]
 

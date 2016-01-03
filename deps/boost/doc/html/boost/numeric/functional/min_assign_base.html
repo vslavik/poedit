@@ -6,8 +6,8 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../../accumulators/reference.html#header.boost.accumulators.numeric.functional_hpp" title="Header &lt;boost/accumulators/numeric/functional.hpp&gt;">
-<link rel="prev" href="logical_not.html" title="Struct template logical_not">
-<link rel="next" href="max_assign_base.html" title="Struct template max_assign_base">
+<link rel="prev" href="min_assign.html" title="Struct template min_assign">
+<link rel="next" href="minus.html" title="Struct template minus">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="logical_not.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../accumulators/reference.html#header.boost.accumulators.numeric.functional_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="max_assign_base.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="min_assign.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../accumulators/reference.html#header.boost.accumulators.numeric.functional_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="minus.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.numeric.functional.min_assign_base"></a><div class="titlepage"></div>
@@ -34,15 +34,15 @@
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Left<span class="special">,</span> <span class="keyword">typename</span> Right<span class="special">,</span> <span class="keyword">typename</span> EnableIf<span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="min_assign_base.html" title="Struct template min_assign_base">min_assign_base</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">binary_function</span><span class="special">&lt;</span> <span class="identifier">Left</span><span class="special">,</span> <span class="identifier">Right</span><span class="special">,</span> <span class="keyword">void</span> <span class="special">&gt;</span> <span class="special">{</span>
 
-  <span class="comment">// <a class="link" href="min_assign_base.html#idp34140056-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="min_assign_base.html#idp34140264-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Left</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">Right</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="min_assign_base.html#idp60563664-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="min_assign_base.html#idp60564224-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Left</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">Right</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp60547384"></a><h2>Description</h2>
+<a name="idp106949440"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp60547592"></a><h3>
-<a name="idp34140056-bb"></a><code class="computeroutput">min_assign_base</code> public member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="idp34140264-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Left</span> <span class="special">&amp;</span> left<span class="special">,</span> <span class="identifier">Right</span> <span class="special">&amp;</span> right<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp106949856"></a><h3>
+<a name="idp60563664-bb"></a><code class="computeroutput">min_assign_base</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="idp60564224-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Left</span> <span class="special">&amp;</span> left<span class="special">,</span> <span class="identifier">Right</span> <span class="special">&amp;</span> right<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>
@@ -56,7 +56,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="logical_not.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../accumulators/reference.html#header.boost.accumulators.numeric.functional_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="max_assign_base.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="min_assign.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../../accumulators/reference.html#header.boost.accumulators.numeric.functional_hpp"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="minus.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

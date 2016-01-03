@@ -8,7 +8,7 @@
 //
 // ------------------------------------------------------------------
 //
-// $Id: time_string.hpp 47222 2008-07-08 14:29:03Z bemandawes $
+// $Id$
 
 #ifndef BOOST_TIME_STRING_HPP_GP_20060731
 #define BOOST_TIME_STRING_HPP_GP_20060731

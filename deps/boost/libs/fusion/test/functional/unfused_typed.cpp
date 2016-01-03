@@ -9,11 +9,9 @@
 #include <boost/fusion/functional/adapter/unfused_typed.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/blank.hpp>
 #include <boost/noncopyable.hpp>
 
-#include <boost/utility/result_of.hpp>
-
+#include <boost/mpl/empty_base.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/placeholders.hpp>
 
@@ -31,7 +29,7 @@ typedef fusion::vector<> types0;
 typedef fusion::vector<long &> types1;
 typedef fusion::vector<long &,int,char> types3;
 
-template <class Base = boost::blank>
+template <class Base = boost::mpl::empty_base>
 struct test_func
     : Base
 {
@@ -85,7 +83,7 @@ void result_type_tests()
     typedef fusion::unfused_typed< test_func<>, types0 > t0;
     BOOST_TEST(( is_same< boost::result_of< t0 () >::type, long >::value ));
     typedef fusion::unfused_typed< test_func<>, types1 > t1;
-    BOOST_TEST(( is_same< boost::result_of< t1 (int) >::type, long >::value ));
+    BOOST_TEST(( is_same< boost::result_of< t1 (long &) >::type, long >::value ));
 }
 
 #if defined(BOOST_MSVC) && BOOST_MSVC < 1400

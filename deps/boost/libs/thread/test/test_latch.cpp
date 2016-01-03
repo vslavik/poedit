@@ -54,9 +54,10 @@ void test_latch()
   }
   catch (...)
   {
+    BOOST_TEST(false);
     g.interrupt_all();
     g.join_all();
-    throw;
+    //throw;
   }
 
 }

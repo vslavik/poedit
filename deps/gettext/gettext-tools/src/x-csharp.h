@@ -1,5 +1,5 @@
 /* xgettext C# backend.
-   Copyright (C) 2003, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2006, 2015 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,7 @@ extern "C" {
 
 #define SCANNERS_CSHARP \
   { "C#",               extract_csharp,                                   \
-                        &flag_table_csharp, &formatstring_csharp, NULL }, \
+                        &flag_table_csharp, &formatstring_csharp, NULL, NULL }, \
 
 extern void extract_csharp (FILE *fp, const char *real_filename,
                             const char *logical_filename,

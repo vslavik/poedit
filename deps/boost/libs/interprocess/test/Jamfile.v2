@@ -27,9 +27,10 @@ rule test_all
       :  # requirements
         <toolset>acc:<linkflags>-lrt
         <toolset>acc-pa_risc:<linkflags>-lrt
-        <toolset>gcc-mingw:<linkflags>"-lole32 -loleaut32 -lpsapi -ladvapi32"
+        <toolset>gcc,<target-os>windows:<linkflags>"-lole32 -loleaut32 -lpsapi -ladvapi32"
         <host-os>hpux,<toolset>gcc:<linkflags>"-Wl,+as,mpas"
         <host-os>windows,<toolset>clang:<linkflags>"-lole32 -loleaut32 -lpsapi -ladvapi32"
+        <host-os>linux:<linkflags>"-lrt"
       ] ;
    }
 

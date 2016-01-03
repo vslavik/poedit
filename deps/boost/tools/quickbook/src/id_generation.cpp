@@ -7,7 +7,7 @@
 =============================================================================*/
 
 #include <cctype>
-#include "id_manager_impl.hpp"
+#include "document_state_impl.hpp"
 #include <boost/make_shared.hpp>
 #include <boost/unordered_map.hpp>
 #include <boost/lexical_cast.hpp>
@@ -27,13 +27,13 @@ namespace quickbook {
     static const std::size_t max_size = 32;
 
     typedef std::vector<id_placeholder const*> placeholder_index;
-    placeholder_index index_placeholders(id_state const&, boost::string_ref);
+    placeholder_index index_placeholders(document_state_impl const&, boost::string_ref);
 
     void generate_id_block(
             placeholder_index::iterator, placeholder_index::iterator,
             std::vector<std::string>& generated_ids);
 
-    std::vector<std::string> generate_ids(id_state const& state, boost::string_ref xml)
+    std::vector<std::string> generate_ids(document_state_impl const& state, boost::string_ref xml)
     {
         std::vector<std::string> generated_ids(state.placeholders.size());
 
@@ -91,11 +91,11 @@ namespace quickbook {
 
     struct get_placeholder_order_callback : xml_processor::callback
     {
-        id_state const& state;
+        document_state_impl const& state;
         std::vector<unsigned>& order;
         unsigned count;
 
-        get_placeholder_order_callback(id_state const& state,
+        get_placeholder_order_callback(document_state_impl const& state,
                 std::vector<unsigned>& order)
           : state(state),
             order(order),
@@ -117,7 +117,7 @@ namespace quickbook {
     };
 
     placeholder_index index_placeholders(
-            id_state const& state,
+            document_state_impl const& state,
             boost::string_ref xml)
     {
         // The order that the placeholder appear in the xml source.
@@ -212,7 +212,7 @@ namespace quickbook {
         //
         // Note: can't just use the placeholder's parent, as the
         // placeholder id might contain dots.
-        unsigned child_start = resolved_id.rfind('.');
+        std::size_t child_start = resolved_id.rfind('.');
         std::string parent_id, base_id;
 
         if (child_start == std::string::npos) {
@@ -285,12 +285,12 @@ namespace quickbook {
 
     struct replace_ids_callback : xml_processor::callback
     {
-        id_state const& state;
+        document_state_impl const& state;
         std::vector<std::string> const* ids;
         boost::string_ref::const_iterator source_pos;
         std::string result;
 
-        replace_ids_callback(id_state const& state,
+        replace_ids_callback(document_state_impl const& state,
                 std::vector<std::string> const* ids)
           : state(state),
             ids(ids),
@@ -323,7 +323,7 @@ namespace quickbook {
         }
     };
 
-    std::string replace_ids(id_state const& state, boost::string_ref xml,
+    std::string replace_ids(document_state_impl const& state, boost::string_ref xml,
             std::vector<std::string> const* ids)
     {
         xml_processor processor;

@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2000-2013 Vaclav Slavik
+ *  Copyright (C) 2000-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -53,7 +53,7 @@ MergeSummaryDialog::~MergeSummaryDialog()
 void MergeSummaryDialog::TransferTo(const wxArrayString& snew, const wxArrayString& sobsolete)
 {
     wxString sum;
-    sum.Printf(_("(%i new, %i obsolete)"), 
+    sum.Printf(_("(New: %i, obsolete: %i)"),
                (int)snew.GetCount(), (int)sobsolete.GetCount());
     XRCCTRL(*this, "items_count", wxStaticText)->SetLabel(sum);
 

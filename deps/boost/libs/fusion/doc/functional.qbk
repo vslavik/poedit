@@ -66,9 +66,9 @@ function objects to accept arbitrary calls. In other words, an unary function
 object can be implemented instead of (maybe heavily overloaded) function
 templates or function call operators.
 
-The library provides both a strictly typed and a generic variant for this 
+The library provides both a strictly typed and a generic variant for this
 transformation. The latter should be used in combination with
-__boost_func_forward__ to attack __the_forwarding_problem__. 
+__boost_func_forward__ to attack __the_forwarding_problem__.
 
 Both variants have a corresponding generator function template that returns an
 adapter instance for the given argument.
@@ -364,7 +364,7 @@ implemented).
 
 [heading Header]
 
-  #include <booost/fusion/functional/invocation/invoke_procedure.hpp>
+  #include <boost/fusion/functional/invocation/invoke_procedure.hpp>
 
 [heading Example]
     __vector__<int,int> v(1,2);
@@ -546,7 +546,7 @@ Returns the result type of __invoke_function_object__.
 
 [heading Macros]
 
-The following macros can be defined to change the maximum arity. 
+The following macros can be defined to change the maximum arity.
 The default is 6.
 
 * BOOST_FUSION_INVOKE_MAX_ARITY
@@ -644,7 +644,7 @@ An unary __poly_func_obj__ adapter template for __callable_obj__ target
 functions. It takes a __forward_sequence__ that contains the arguments for
 the target function.
 
-The result is discared and the adapter's return type is `void`.
+The result is discarded and the adapter's return type is `void`.
 
 The type of the target function is allowed to be const qualified or a
 reference. Const qualification is preserved and propagated appropriately
@@ -922,7 +922,7 @@ An n-ary __poly_func_obj__ adapter template for an unary __poly_func_obj__
 target function. When called, its arguments are bundled to a
 __random_access_sequence__ that is passed to the target function object.
 
-The call operators of  esulting function objects are strictly typed
+The call operators of resulting function objects are strictly typed
 (in other words, non-templatized) with the types from a __sequence__.
 
 The type of the target function is allowed to be const qualified or a
@@ -931,11 +931,11 @@ reference. Const qualification is preserved and propagated appropriately
 the target function object is const - or, in case the target function object
 is held by value, the adapter is const).
 
-[blurb __note__ For Microsoft Visual C++ 7.1 (Visual Studio 2003) the detection
+[note For Microsoft Visual C++ 7.1 (Visual Studio 2003) the detection
 of the Function Object's const qualification easily causes an internal error.
 Therefore the adapter is always treated as if it was const. ]
 
-[blurb __tip__ If the type sequence passed to this template contains
+[tip If the type sequence passed to this template contains
 non-reference elements, the element is copied only once - the call operator's
 signature is optimized automatically to avoid by-value parameters.]
 
@@ -1060,7 +1060,7 @@ signature is optimized automatically to avoid by-value parameters.]
 
 [heading Macros]
 
-The following macros can be defined to change the maximum arity. 
+The following macros can be defined to change the maximum arity.
 The value used for these macros must not exceed `FUSION_MAX_VECTOR_SIZE`.
 The default is 6.
 

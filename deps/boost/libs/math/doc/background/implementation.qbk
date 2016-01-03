@@ -526,7 +526,21 @@ or Using Cygwin, a command such as:
   /cygdrive/c/progra~1/Inkscape/inkscape -d 120 -e $(cygpath -a -w $(basename $file .svg).png) $(cygpath -a -w $file);
 done]
 
-Currently Inkscape seems to generate the better looking png's.
+Using BASH
+
+[pre # Convert single SVG to PNG file.
+# /c/progra~1/Inkscape/inkscape -d 120 -e a.png a.svg
+]
+
+or to convert All files in folder SVG to PNG.
+
+[pre
+for file in *.svg; do
+/c/progra~1/Inkscape/inkscape -d 120 -e $(basename $file .svg).png $file
+done
+]
+
+Currently Inkscape seems to generate the better looking PNGs.
 
 The PDF is generated into \pdf\math.pdf
 using a command from a shell or command window with current directory

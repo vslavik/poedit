@@ -103,6 +103,14 @@ Complete Elliptic Integral of the Third Kind (Legendre form)
 
 [equation ellint8]
 
+Legendre also defined a forth integral D([phi],k) which is a combination of the other three:
+
+[equation ellint_d]
+
+Like the other Legendre integrals this comes in both complete and incomplete forms.
+
+[h4 Carlson Elliptic Integrals]
+
 Carlson [[link ellint_ref_carlson77 Carlson77]] [[link ellint_ref_carlson78  Carlson78]] gives an alternative definition of
 elliptic integral's canonical forms:
 
@@ -137,6 +145,9 @@ where ['x] is nonnegative and ['y] is nonzero.
 
 ['R[sub D](x, y, z) = R[sub J](x, y, z, z)]]
 
+Carlson's Symmetric Integral
+
+[equation ellint27]
 
 [h4 Duplication Theorem]
 
@@ -154,6 +165,20 @@ by equations:
 In particular,
 
 [equation ellint15]
+
+[h4 Miscellaneous Elliptic Integrals]
+
+There are two functions related to the elliptic integrals which otherwise
+defy categorisation, these are the Jacobi Zeta function:
+
+[equation jacobi_zeta]
+
+and the Heuman Lambda function:
+
+[equation heuman_lambda]
+
+Both of these functions are easily implemented in terms of Carlson's integrals, and are
+provided in this library as __jacobi_zeta and __heuman_lambda.
 
 [h4 Numerical Algorithms]
 

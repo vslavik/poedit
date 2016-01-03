@@ -25,7 +25,7 @@ unsigned int size_fct() {
   return N_THREADS;
 }
 
-boost::barrier gen_barrier(N_THREADS, size_fct);
+boost::barrier gen_barrier(N_THREADS, &size_fct);
 
 void barrier_thread()
 {
@@ -50,9 +50,10 @@ void test_barrier()
     }
     catch(...)
     {
+        BOOST_TEST(false);
         g.interrupt_all();
         g.join_all();
-        throw;
+        //throw;
     }
 
     BOOST_TEST(global_parameter==5);

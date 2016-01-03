@@ -16,10 +16,18 @@ namespace boost_no_cxx11_hdr_typeindex {
 
 int test()
 {
+#if defined( BOOST_NO_TYPEID )
+  std::type_index * p1;
+  std::hash<std::type_index> h;
+  (void)p1;
+  (void)h;
+  return 0;
+#else
   std::type_index t1 = typeid(int);
   std::type_index t2 = typeid(double);
   std::hash<std::type_index> h;
   return (t1 != t2) && (h(t1) != h(t2)) ? 0 : 1;
+#endif
 }
 
 }

@@ -1,4 +1,5 @@
 // Copyright (C) 2003, Fernando Luis Cacciola Carballal.
+// Copyright (C) 2014, Andrzej Krzemienski.
 //
 // Use, modification, and distribution is subject to the Boost Software
 // License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -9,6 +10,8 @@
 // You are welcome to contact the author at:
 //  fernando_cacciola@hotmail.com
 //
+#include <boost/core/ignore_unused.hpp>
+
 #ifdef ENABLE_TRACE
 #define TRACE(msg) std::cout << msg << std::endl ;
 #else
@@ -37,7 +40,6 @@ void assertion_failed (char const * expr, char const * func, char const * file, 
 
 using boost::optional ;
 
-template<class T> inline void unused_variable ( T ) {}
 
 #ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
 using boost::swap ;
@@ -49,6 +51,8 @@ using boost::get_pointer ;
 // via the safe_bool operator.
 #if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1300) ) // 1300 == VC++ 7.1
 #define BOOST_OPTIONAL_NO_NULL_COMPARE
+#else
+#define BOOST_OPTIONAL_NO_NULL_COMPARE  // Andrzej: I also disable 0 comparison everywhere
 #endif
 
 #define ARG(T) (static_cast< T const* >(0))

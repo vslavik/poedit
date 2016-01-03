@@ -156,7 +156,7 @@ An expression of the form `[[.col.]` matches the collating element /col/.
 A collating element is any single character, or any sequence of 
 characters that collates as a single unit.  Collating elements may also 
 be used as the end point of a range, for example: `[[.ae.]-c]` matches 
-the character sequence "ae", plus any single character in the rangle "ae"-c, 
+the character sequence "ae", plus any single character in the range "ae"-c, 
 assuming that "ae" is treated as a single collating element in the current locale.
 
 Collating elements may be used in place of escapes (which are not 
@@ -173,7 +173,7 @@ See [link boost_regex.syntax.collating_names collating element names].
 
 [h5 Equivalence classes:]
 
-An expression of theform `[[=col=]]`, matches any character or collating 
+An expression of the form `[[=col=]]`, matches any character or collating 
 element whose primary sort key is the same as that for collating element 
 /col/, as with collating elements the name /col/ may be a 
 [link boost_regex.syntax.collating_names collating symbolic name].  

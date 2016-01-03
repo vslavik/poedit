@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2013 Vaclav Slavik
+ *  Copyright (C) 2013-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -39,6 +39,7 @@ public:
 
     bool IsValid() const { return !m_code.empty(); }
     const std::string& Code() const { return m_code; }
+    std::wstring WCode() const { return std::wstring(m_code.begin(), m_code.end()); }
 
     /// Returns language part (cs)
     std::string Lang() const;
@@ -49,11 +50,19 @@ public:
     /// Returns optional variant (after @, e.g. 'latin', typically empty)
     std::string Variant() const;
 
+    /// Return code formatted as in RFC 3066, e.g. en-US
+    std::string RFC3066() const;
+
+    /// Returns name of the locale suitable for ICU
+    std::string IcuLocaleName() const { return LangAndCountry(); }
     /// Returns ICU equivalent of the language info
     icu::Locale ToIcu() const;
 
     /// Returns name of this language suitable for display to the user in current UI language
     wxString DisplayName() const;
+
+    /// Like DisplayName(), but shorted (no country/variant).
+    wxString LanguageDisplayName() const;
 
     /// Returns name of this language in itself
     wxString DisplayNameInItself() const;
@@ -81,6 +90,9 @@ public:
      */
     std::string DefaultPluralFormsExpr() const;
 
+    /// Returns true if the language is written right-to-left.
+    bool IsRTL() const;
+
     /**
         Tries to parse the string as language identification.
 
@@ -99,6 +111,8 @@ public:
         if you are not sure.
      */
     static Language TryParse(const std::wstring& s);
+    static Language TryParse(const std::string& s)
+        { return TryParse(std::wstring(s.begin(), s.end())); }
 
     /**
         Like TryParse(), but only accepts language codes if they are known
@@ -118,6 +132,17 @@ public:
      */
     static Language TryGuessFromFilename(const wxString& filename);
 
+    /**
+        Try to detect the language from UTF-8 text.
+        
+        Pass @a probableLanguage if the result is likely known, e.g. English
+        for source texts.
+     */
+    static Language TryDetectFromText(const char *buffer, size_t len,
+                                      Language probableLanguage = Language());
+
+    /// Returns object for English language
+    static Language English() { return Language("en"); }
 
     /**
         Checks if @a s has the form of language code.
@@ -126,6 +151,7 @@ public:
 
     bool operator==(const Language& other) const { return m_code == other.m_code; }
     bool operator!=(const Language& other) const { return m_code != other.m_code; }
+    bool operator<(const Language& other) const { return m_code < other.m_code; }
 
 protected:
     Language(const std::string& code) : m_code(code) {}

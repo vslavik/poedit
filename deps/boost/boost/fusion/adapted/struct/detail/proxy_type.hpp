@@ -9,7 +9,10 @@
 #ifndef BOOST_FUSION_ADAPTED_DETAIL_STRUCT_PROXY_TYPE_HPP
 #define BOOST_FUSION_ADAPTED_DETAIL_STRUCT_PROXY_TYPE_HPP
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/adapted/struct/detail/namespace.hpp>
+
+#define BOOST_FUSION_PROXY_PREFIX() obj.
 
 #define BOOST_FUSION_ADAPT_STRUCT_DEFINE_PROXY_TYPE_IMPL(                       \
     WRAPPED_TYPE,NAMESPACE_SEQ,NAME)                                            \
@@ -18,6 +21,7 @@
                                                                                 \
     struct NAME                                                                 \
     {                                                                           \
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED                                \
         NAME(WRAPPED_TYPE& in_obj)                                              \
           : obj(in_obj)                                                         \
         {}                                                                      \

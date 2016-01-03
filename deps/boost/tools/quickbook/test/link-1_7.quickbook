@@ -28,9 +28,6 @@
 
 [link link[/ comment]description]
 
-[link link\[Hello\] description]
-
-
 [endsect]
 
 [section Side-by-side links]
@@ -48,5 +45,17 @@ as well.
 
 [template thing[]x]
 [link blah.[thing]2 Templated link?]
+
+[template link_in_template[x y] [link something-[x]-[y]]]
+[link_in_template one two]
+[link_in_template one..two]
+[link_in_template one .. two ]
+
+[endsect]
+
+[section Escaping links]
+
+* [@http://svn.boost.org/trac/boost/query?status=closed&milestone=Boost+1.34.1
+  Boost Trac]
 
 [endsect]

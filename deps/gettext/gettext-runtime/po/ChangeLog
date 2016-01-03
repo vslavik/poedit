@@ -1,3 +1,108 @@
+2015-07-10  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.5 released.
+
+2015-07-10  Daiki Ueno  <ueno@gnu.org>
+
+	* bg.po: Update from Roumen Petrov <transl@roumenpetrov.info>.
+	* ca.po: Update from Ivan Vilata i Balaguer <ivan@selidor.net>.
+	* cs.po: Update from Marek Černocký <marek@manet.cz>.
+	* da.po: Update from Keld Simonsen <keld@keldix.com>.
+	* de.po: Update from Philipp Thomas <pth@suse.de>.
+	* es.po: Update from Antonio Ceballos <aceballos@gmail.com>.
+	* fr.po: Update from Stéphane Aulery <lkppo@free.fr>.
+	* hu.po: Update from Balázs Úr <urbalazs@gmail.com>.
+	* ja.po: Update from Masahito Yamaga <ma@yama-ga.com>.
+	* ko.po: Update from Changwoo Ryu <cwryu@debian.org>.
+	* nl.po: Update from Benno Schulenberg <benno@vertaalt.nl>.
+	* pl.po: Update from Rafał Maszkowski <rzm@icm.edu.pl>.
+	* ru.po: Update from Yuri Kozlov <yuray@komyakino.ru>.
+	* sk.po: Update from Marcel Telka <marcel@telka.sk>.
+	* sl.po: Update from Primoz PETERLIN <primozz.peterlin@gmail.com>.
+	* tr.po: Update from Volkan Gezer <volkangezer@gmail.com>.
+	* uk.po: Update from Yuri Chornoivan <yurchor@ukr.net>.
+	* vi.po: Update from Trần Ngọc Quân <vnwildman@gmail.com>.
+
+2015-05-31  Benno Schulenberg <bensberg@justemail.net>  (tiny change)
+
+	* Makefile.in.in: Do not use --update when simply checking for
+	the version, as this might fail when msgmerge is very old.
+
+2015-02-18  Daiki Ueno  <ueno@gnu.org>
+
+	* Makefile.in.in: Replace our own wording of licensing with GNU
+	All-Permissive License.  Reported by Riley Baird in:
+	<https://lists.debian.org/debian-legal/2015/01/msg00048.html>.
+
+2014-12-24  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.4 released.
+
+2014-12-24  Daiki Ueno  <ueno@gnu.org>
+
+	* vi.po: Update from Trần Ngọc Quân <vnwildman@gmail.com>.
+
+2014-10-15  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.3 released.
+
+2014-10-08  Daiki Ueno  <ueno@gnu.org>
+
+	* Makevars (MSGINIT_OPTIONS): New variable.
+	* Rules-quot: Use it when invoking msginit.
+	If one wants to use '--no-wrap' in MSGMERGE_OPTIONS and
+	XGETTEXT_OPTIONS, there should be a way to pass the option to
+	msginit.  Reported by Ludovic Courtès in:
+	<https://lists.gnu.org/archive/html/bug-gettext/2014-08/msg00004.html>.
+
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.2 released.
+
+2014-06-10  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.1 released.
+
+2014-06-02  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19 released.
+
+2014-05-02  Daiki Ueno  <ueno@gnu.org>
+
+	Makefile.in.in: Turn {POFILES,DISTFILES}DEPS into yes/no options
+	Preserve the previous behavior even if a user forgot to update
+	Makevars, after calling autopoint.
+	* Makevars (PO_DEPENDS_ON_POT): Rename from POFILESDEPS and turn
+	it into a yes/no option.
+	(DIST_DEPENDS_ON_UPDATE_PO): Rename from DISTFILESDEPS and turn it
+	into a yes/no option.
+
+2014-05-01  Daiki Ueno  <ueno@gnu.org>
+
+	Makefile.in.in: Add an option to claim the package as GNU/non-GNU
+	Reporeted by David Shea at:
+	<https://savannah.gnu.org/bugs/?40520>.
+	* Makevars (PACKAGE_GNU): New variable.
+	* Makefile.in.in ($(DOMAIN).pot-update): Don't search for "GNU
+	packagename" if $(PACKAGE_GNU) is set.
+
+2014-05-01  Daiki Ueno  <ueno@gnu.org>
+
+	Makefile.in.in: Make dependencies of a PO file and 'dist' customizable
+	* Makevars (POFILESDEPS): New variable.
+	(DISTFILESDEPS): New variable.
+	* Makefile.in.in ($(POFILES)): Depend on $(POFILESDEPS) instead of
+	$(srcdir)/$(DOMAIN).pot.
+	(dist distdir): Run $(DISTFILEDEPS) instead of 'update-po'.
+
+2014-04-21  Daiki Ueno  <ueno@gnu.org>
+
+	* Rules-quot: Use built-in filter if possible.
+
+2014-04-02  Daiki Ueno  <ueno@gnu.org>
+
+	* Rules-quot: Add a license notice.
+
 2013-07-07  Daiki Ueno  <ueno@gnu.org>
 
 	* cs.po: Update from Marek Černocký <marek@manet.cz>.

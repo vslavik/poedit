@@ -20,6 +20,11 @@ int main()
   BOOST_TEST(SomethingElse<AnotherType>::value);
   BOOST_TEST(!BOOST_TTI_HAS_TYPE_GEN(NoOtherType)<AnotherType>::value);
   
+  // Passing non-class enclosing type will return false
+  
+  BOOST_TEST(!BOOST_TTI_HAS_TYPE_GEN(AnIntTypeReference)<signed long>::value);
+  BOOST_TEST(!NameStruct<AType &>::value);
+  
   return boost::report_errors();
 
   }

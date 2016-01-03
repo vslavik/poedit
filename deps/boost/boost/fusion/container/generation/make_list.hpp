@@ -56,6 +56,7 @@ namespace boost { namespace fusion
         };
     }
 
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
     inline list<>
     make_list()
     {
@@ -92,24 +93,21 @@ namespace boost { namespace fusion
     namespace result_of
     {
         template <BOOST_PP_ENUM_PARAMS(N, typename T)>
-#if defined(BOOST_NO_PARTIAL_SPECIALIZATION_IMPLICIT_DEFAULT_ARGS)
         #define TEXT(z, n, text) , text
         struct make_list< BOOST_PP_ENUM_PARAMS(N, T) BOOST_PP_REPEAT_FROM_TO(BOOST_PP_DEC(N), FUSION_MAX_LIST_SIZE, TEXT, void_) >
         #undef TEXT
-#else
-        struct make_list<BOOST_PP_ENUM_PARAMS(N, T)>
-#endif
         {
             typedef list<BOOST_PP_ENUM(N, BOOST_FUSION_AS_FUSION_ELEMENT, _)> type;
         };
     }
 
     template <BOOST_PP_ENUM_PARAMS(N, typename T)>
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
     inline list<BOOST_PP_ENUM(N, BOOST_FUSION_AS_FUSION_ELEMENT, _)>
-    make_list(BOOST_PP_ENUM_BINARY_PARAMS(N, T, const& _))
+    make_list(BOOST_PP_ENUM_BINARY_PARAMS(N, T, const& arg))
     {
         return list<BOOST_PP_ENUM(N, BOOST_FUSION_AS_FUSION_ELEMENT, _)>(
-            BOOST_PP_ENUM_PARAMS(N, _));
+            BOOST_PP_ENUM_PARAMS(N, arg));
     }
 
 #undef N

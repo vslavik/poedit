@@ -6,11 +6,12 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-// $Id: member.hpp 83393 2013-03-10 03:48:33Z steven_watanabe $
+// $Id$
 
 #ifndef BOOST_TYPE_ERASURE_MEMBER_HPP_INCLUDED
 #define BOOST_TYPE_ERASURE_MEMBER_HPP_INCLUDED
 
+#include <boost/detail/workaround.hpp>
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/dec.hpp>
 #include <boost/preprocessor/comma_if.hpp>
@@ -33,7 +34,9 @@
 #define BOOST_TYPE_ERASURE_MEMBER_ARG(z, n, data)  \
     typename ::boost::type_erasure::as_param<Base, BOOST_PP_CAT(A, n)>::type BOOST_PP_CAT(a, n)
 
-#if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) || defined(BOOST_TYPE_ERASURE_DOXYGEN)
+#if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) || \
+    defined(BOOST_TYPE_ERASURE_DOXYGEN) || \
+    BOOST_WORKAROUND(BOOST_MSVC, == 1800)
 
 /** INTERNAL ONLY */
 #define BOOST_TYPE_ERASURE_MEMBER_QUALIFIED_ID(seq, N) \

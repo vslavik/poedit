@@ -26,11 +26,19 @@
 // Overall this yields 0.995 * 0.995 > 0.99 confidence that the
 // fences work as expected if this test program does not
 // report an error.
+
 #include <boost/atomic.hpp>
+
+#include <boost/bind.hpp>
+#include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/date_time/posix_time/time_formatters.hpp>
-#include <boost/test/test_tools.hpp>
-#include <boost/test/included/test_exec_monitor.hpp>
-#include <boost/thread.hpp>
+#include <boost/thread/thread.hpp>
+#include <boost/thread/thread_time.hpp>
+#include <boost/thread/locks.hpp>
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/condition_variable.hpp>
+#include <boost/thread/barrier.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 // Two threads perform the following operations:
 //
@@ -217,7 +225,7 @@ test_seq_cst(void)
         total_store_order_test<boost::memory_order_relaxed, boost::memory_order_relaxed> test;
         test.run(timeout);
         if (!test.detected_conflict()) {
-            BOOST_WARN_MESSAGE(false, "Failed to detect order=seq_cst violation while ith order=relaxed -- intrinsic ordering too strong for this test");
+            std::cout << "Failed to detect order=seq_cst violation while ith order=relaxed -- intrinsic ordering too strong for this test\n";
             return;
         }
 
@@ -241,12 +249,12 @@ test_seq_cst(void)
     total_store_order_test<boost::memory_order_seq_cst, boost::memory_order_relaxed> test;
     test.run(timeout);
 
-    BOOST_CHECK_MESSAGE(!test.detected_conflict(), "sequential consistency");
+    BOOST_TEST(!test.detected_conflict()); // sequential consistency error
 }
 
-int test_main(int, char *[])
+int main(int, char *[])
 {
     test_seq_cst();
 
-    return 0;
+    return boost::report_errors();
 }

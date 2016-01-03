@@ -9,6 +9,7 @@
 #define BOOST_MP_CPP_INT_MISC_HPP
 
 #include <boost/multiprecision/detail/bitscan.hpp> // lsb etc
+#include <boost/integer/common_factor_rt.hpp> // gcd/lcm
 
 #ifdef BOOST_MSVC
 #pragma warning(push)
@@ -240,6 +241,31 @@ inline typename enable_if_c<!is_trivial_cpp_int<cpp_int_backend<MinBits1, MaxBit
    r.sign(x.sign());
 }
 
+template <unsigned MinBits1, unsigned MaxBits1, cpp_integer_type SignType1, cpp_int_check_type Checked1, class Allocator1>
+inline typename enable_if_c<!is_trivial_cpp_int<cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1> >::value>::type
+   eval_qr(
+      const cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1>& x,
+      limb_type y,
+      cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1>& q,
+      cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1>& r) BOOST_NOEXCEPT_IF((is_non_throwing_cpp_int<cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1> >::value))
+{
+   divide_unsigned_helper(&q, x, y, r);
+   q.sign(x.sign());
+   r.sign(x.sign());
+}
+
+template <unsigned MinBits1, unsigned MaxBits1, cpp_integer_type SignType1, cpp_int_check_type Checked1, class Allocator1, class U>
+inline typename enable_if_c<is_integral<U>::value>::type eval_qr(
+      const cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1>& x,
+      U y,
+      cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1>& q,
+      cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1>& r) BOOST_NOEXCEPT_IF((is_non_throwing_cpp_int<cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1> >::value))
+{
+   using default_ops::eval_qr;
+   cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1> t(y);
+   eval_qr(x, t, q, r);
+}
+
 template <unsigned MinBits1, unsigned MaxBits1, cpp_integer_type SignType1, cpp_int_check_type Checked1, class Allocator1, class Integer>
 inline typename enable_if_c<is_unsigned<Integer>::value && !is_trivial_cpp_int<cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1> >::value, Integer>::type
    eval_integer_modulus(const cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1>& x, Integer val)
@@ -260,9 +286,7 @@ template <unsigned MinBits1, unsigned MaxBits1, cpp_integer_type SignType1, cpp_
 BOOST_MP_FORCEINLINE typename enable_if_c<is_signed<Integer>::value && !is_trivial_cpp_int<cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1> >::value, Integer>::type
    eval_integer_modulus(const cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1>& x, Integer val)
 {
-   BOOST_MP_USING_ABS
-   typedef typename make_unsigned<Integer>::type unsigned_type;
-   return eval_integer_modulus(x, static_cast<unsigned_type>(abs(val)));
+   return eval_integer_modulus(x, boost::multiprecision::detail::unsigned_abs(val));
 }
 
 inline limb_type integer_gcd_reduce(limb_type u, limb_type v)
@@ -482,14 +506,14 @@ template <unsigned MinBits1, unsigned MaxBits1, cpp_integer_type SignType1, cpp_
 BOOST_MP_FORCEINLINE typename enable_if_c<is_trivial_cpp_int<cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1> >::value>::type
    eval_gcd(cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1>& result, const cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1>& a, const cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1>& b) BOOST_NOEXCEPT
 {
-   *result.limbs() = boost::math::gcd(*a.limbs(), *b.limbs());
+   *result.limbs() = boost::integer::gcd(*a.limbs(), *b.limbs());
 }
 // This one is only enabled for unchecked cpp_int's, for checked int's we need the checking in the default version:
 template <unsigned MinBits1, unsigned MaxBits1, cpp_integer_type SignType1, cpp_int_check_type Checked1, class Allocator1>
 BOOST_MP_FORCEINLINE typename enable_if_c<is_trivial_cpp_int<cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1> >::value && (Checked1 == unchecked)>::type
    eval_lcm(cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1>& result, const cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1>& a, const cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1>& b) BOOST_NOEXCEPT_IF((is_non_throwing_cpp_int<cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1> >::value))
 {
-   *result.limbs() = boost::math::lcm(*a.limbs(), *b.limbs());
+   *result.limbs() = boost::integer::lcm(*a.limbs(), *b.limbs());
    result.normalize(); // result may overflow the specified number of bits
 }
 

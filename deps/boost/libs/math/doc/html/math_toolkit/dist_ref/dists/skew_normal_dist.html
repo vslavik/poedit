@@ -2,9 +2,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Skew Normal Distribution</title>
-<link rel="stylesheet" href="../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../../index.html" title="Math Toolkit">
+<link rel="stylesheet" href="../../../math.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="../../../index.html" title="Math Toolkit 2.2.0">
 <link rel="up" href="../dists.html" title="Distributions">
 <link rel="prev" href="rayleigh.html" title="Rayleigh Distribution">
 <link rel="next" href="students_t_dist.html" title="Students t Distribution">
@@ -31,12 +31,12 @@
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">math</span><span class="special">{</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span> <span class="special">=</span> <span class="keyword">double</span><span class="special">,</span>
-          <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;13.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>   <span class="special">=</span> <a class="link" href="../../pol_ref/pol_ref_ref.html" title="Policy Class Reference">policies::policy&lt;&gt;</a> <span class="special">&gt;</span>
+          <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>   <span class="special">=</span> <a class="link" href="../../pol_ref/pol_ref_ref.html" title="Policy Class Reference">policies::policy&lt;&gt;</a> <span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">skew_normal_distribution</span><span class="special">;</span>
 
 <span class="keyword">typedef</span> <span class="identifier">skew_normal_distribution</span><span class="special">&lt;&gt;</span> <span class="identifier">normal</span><span class="special">;</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;13.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">skew_normal_distribution</span>
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
@@ -67,13 +67,13 @@
           function is
         </p>
 <p>
-          &#160; &#160;  <span class="inlinemediaobject"><img src="../../../../equations/normal01_pdf.png"></span>
+          &#160; &#160;  <span class="inlinemediaobject"><img src="../../../../equations/normal01_pdf.svg"></span>
         </p>
 <p>
           and the cumulative distribution function
         </p>
 <p>
-          &#160; &#160;  <span class="inlinemediaobject"><img src="../../../../equations/normal01_cdf.png"></span>
+          &#160; &#160;  <span class="inlinemediaobject"><img src="../../../../equations/normal01_cdf.svg"></span>
         </p>
 <p>
           then the <a href="http://en.wikipedia.org/wiki/Probability_density_function" target="_top">PDF</a>
@@ -82,7 +82,7 @@
           Leonhard (1976) is
         </p>
 <p>
-          &#160; &#160;  <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_pdf0.png"></span>
+          &#160; &#160;  <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_pdf0.svg"></span>
         </p>
 <p>
           Given <a href="http://en.wikipedia.org/wiki/Location_parameter" target="_top">location</a>
@@ -92,13 +92,13 @@
           to the form:
         </p>
 <p>
-          &#160; &#160;  <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_pdf.png"></span>
+          &#160; &#160;  <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_pdf.svg"></span>
         </p>
 <p>
           and <a href="http://en.wikipedia.org/wiki/Cumulative_distribution_function" target="_top">CDF</a>:
         </p>
 <p>
-          &#160; &#160;  <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_cdf.png"></span>
+          &#160; &#160;  <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_cdf.svg"></span>
         </p>
 <p>
           where <span class="emphasis"><em>T(h,a)</em></span> is Owen's T function, and <span class="emphasis"><em>&#934;(x)</em></span>
@@ -109,8 +109,8 @@
           following graphs:
         </p>
 <p>
-          <span class="inlinemediaobject"><img src="../../../../graphs/skew_normal_pdf.png" align="middle"></span>
-  <span class="inlinemediaobject"><img src="../../../../graphs/skew_normal_cdf.png" align="middle"></span>
+          <span class="inlinemediaobject"><img src="../../../../graphs/skew_normal_pdf.svg" align="middle"></span>
+  <span class="inlinemediaobject"><img src="../../../../graphs/skew_normal_cdf.svg" align="middle"></span>
         </p>
 <h5>
 <a name="math_toolkit.dist_ref.dists.skew_normal_dist.h0"></a>
@@ -160,7 +160,7 @@
           </p>
 <p>
             A parameter &#948; is related to the shape &#945; by &#948; = &#945; / (1 + &#945;&#178;), and used in the expression
-            for skewness <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_skewness.png"></span>
+            for skewness <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_skewness.svg"></span>
 
           </p>
 </td></tr>
@@ -302,7 +302,7 @@
                 </td>
 <td>
                   <p>
-                    Using: <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_pdf.png"></span>
+                    Using: <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_pdf.svg"></span>
                   </p>
                 </td>
 </tr>
@@ -314,7 +314,7 @@
                 </td>
 <td>
                   <p>
-                    Using: <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_cdf.png"></span><br> where <span class="emphasis"><em>T(h,a)</em></span>
+                    Using: <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_cdf.svg"></span><br> where <span class="emphasis"><em>T(h,a)</em></span>
                     is Owen's T function, and <span class="emphasis"><em>&#934;(x)</em></span> is the normal
                     distribution.
                   </p>
@@ -412,7 +412,7 @@
                 </td>
 <td>
                   <p>
-                    <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_mean.png"></span>
+                    <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_mean.svg"></span>
                   </p>
                 </td>
 </tr>
@@ -436,7 +436,7 @@
                 </td>
 <td>
                   <p>
-                    <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_variance.png"></span>
+                    <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_variance.svg"></span>
                   </p>
                 </td>
 </tr>
@@ -448,7 +448,7 @@
                 </td>
 <td>
                   <p>
-                    <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_skewness.png"></span>
+                    <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_skewness.svg"></span>
                   </p>
                 </td>
 </tr>
@@ -472,7 +472,7 @@
                 </td>
 <td>
                   <p>
-                    <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_kurt_ex.png"></span>
+                    <span class="inlinemediaobject"><img src="../../../../equations/skew_normal_kurt_ex.svg"></span>
                   </p>
                 </td>
 </tr>
@@ -481,9 +481,10 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012, 2013 Paul A. Bristow, Christopher Kormanyos,
-      Hubert Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin
-      Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
+      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
+      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
+      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -27,7 +27,7 @@
 <a name="geometry.reference.arithmetic.assign_point"></a><a class="link" href="assign_point.html" title="assign_point">assign_point</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp57654920"></a>
+          <a class="indexterm" name="idp120115440"></a>
 Assign a point with another.
         </p>
 <h6>
@@ -45,7 +45,7 @@ Assign a point with another.
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Point1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Point2</span><span class="special">&gt;</span>
-<span class="keyword">void</span> <span class="identifier">assign_point</span><span class="special">(</span><span class="identifier">Point1</span> <span class="special">&amp;</span> <span class="identifier">p1</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Point2</span> <span class="special">&amp;</span> <span class="identifier">p2</span><span class="special">)</span></pre>
+<span class="keyword">void</span> <span class="identifier">assign_point</span><span class="special">(</span><span class="identifier">Point1</span> <span class="special">&amp;</span> <span class="identifier">p1</span><span class="special">,</span> <span class="identifier">Point2</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">p2</span><span class="special">)</span></pre>
 <p>
         </p>
 <h6>
@@ -85,29 +85,13 @@ Assign a point with another.
 <tr>
 <td>
                   <p>
-                    Point2
-                  </p>
-                </td>
-<td>
-                </td>
-<td>
-                  <p>
-                    -
-                  </p>
-                </td>
-<td>
-                  <p>
-                    Must be specified
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
                     Point1 &amp;
                   </p>
                 </td>
 <td>
+                  <p>
+                    Any type fulfilling a Point Concept
+                  </p>
                 </td>
 <td>
                   <p>
@@ -123,10 +107,13 @@ Assign a point with another.
 <tr>
 <td>
                   <p>
-                    const Point2 &amp;
+                    Point2 const &amp;
                   </p>
                 </td>
 <td>
+                  <p>
+                    Any type fulfilling a Point Concept
+                  </p>
                 </td>
 <td>
                   <p>
@@ -149,7 +136,7 @@ Assign a point with another.
           Either
         </p>
 <p>
-          <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
+          <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
         </p>
 <p>
           Or
@@ -160,7 +147,8 @@ Assign a point with another.
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
+      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

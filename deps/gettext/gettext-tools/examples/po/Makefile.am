@@ -22,6 +22,10 @@ AUTOMAKE_OPTIONS = 1.5 gnits
 POTFILES = \
   hello-c/hello.c \
   hello-c-gnome/hello.c \
+  hello-c-gnome3/hello.c \
+  hello-c-gnome3/hello.desktop.in.in \
+  hello-c-gnome3/hello.gschema.xml \
+  hello-c-gnome3/hello.ui \
   hello-c++/hello.cc \
   hello-c++-qt/hello.cc \
   hello-c++-kde/hello.cc \
@@ -61,6 +65,7 @@ POTFILES = \
 SMALLPOTS = \
   hello-c.pot \
   hello-c-gnome.pot \
+  hello-c-gnome3.pot \
   hello-c++.pot \
   hello-c++-qt.pot \
   hello-c++-kde.pot \
@@ -193,6 +198,7 @@ $(DOMAIN).pot-update: $(POTFILES_DEPS) $(SMALLPOTS) remove-potcdate.sed
 	  --add-comments=TRANSLATORS: $(XGETTEXT_OPTIONS) \
 	  --copyright-holder='$(COPYRIGHT_HOLDER)' \
 	  --msgid-bugs-address="$$msgid_bugs_address" \
+	  --directory='$(srcdir)' \
 	  $(SMALLPOTS)
 	test ! -f $(DOMAIN).po || { \
 	  if test -f $(srcdir)/$(DOMAIN).pot; then \
@@ -215,6 +221,9 @@ hello-c.pot : $(POTFILES_DEPS)
 
 hello-c-gnome.pot : $(POTFILES_DEPS)
 	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-c-gnome
+
+hello-c-gnome3.pot : $(POTFILES_DEPS)
+	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-c-gnome3
 
 hello-c++.pot : $(POTFILES_DEPS)
 	$(SHELL) '$(srcdir)/xsmallpot.sh' '$(srcdir)' hello-c++
@@ -321,9 +330,7 @@ MOSTLYCLEANFILES += stamp-poT
 MOSTLYCLEANFILES += core core.* *.stackdump $(DOMAIN).po $(DOMAIN).1po $(DOMAIN).2po *.new.po
 MOSTLYCLEANFILES += *.o
 
-DISTCLEANFILES = $(SMALLPOTS)
-
-MAINTAINERCLEANFILES = stamp-po
+MAINTAINERCLEANFILES = stamp-po $(SMALLPOTS)
 
 EXTRA_DIST = remove-potcdate.sin xsmallpot.sh mmsmallpo.sh LINGUAS \
   $(POFILES)
@@ -331,9 +338,8 @@ EXTRA_DIST = remove-potcdate.sin xsmallpot.sh mmsmallpo.sh LINGUAS \
 # Hidden from automake, but really activated. Works around an automake-1.5 bug.
 #distdir: distdir1
 distdir1:
-	$(MAKE) update-po
 	if test -f $(srcdir)/$(DOMAIN).pot; then \
-	  for file in $(DOMAIN).pot stamp-po; do \
+	  for file in $(DOMAIN).pot stamp-po $(SMALLPOTS); do \
 	    if test -f $$file; then d=.; else d=$(srcdir); fi; \
 	    cp -p $$d/$$file $(distdir)/$$file || exit 1; \
 	  done; \
@@ -378,6 +384,7 @@ $(DUMMYPOFILES):
 SMALLPOFILES_FOR_lang = \
   ../hello-c/po/$$lang.po \
   ../hello-c-gnome/po/$$lang.po \
+  ../hello-c-gnome3/po/$$lang.po \
   ../hello-c++/po/$$lang.po \
   ../hello-c++-qt/po/$$lang.po \
   ../hello-c++-kde/po/$$lang.po \
@@ -411,6 +418,9 @@ SMALLPOFILES_FOR_lang = \
 
 ../hello-c-gnome/po/$(LL).po: hello-c-gnome.pot $(LL).po
 	$(SHELL) mmsmallpo.sh hello-c-gnome $(LL)
+
+../hello-c-gnome3/po/$(LL).po: hello-c-gnome3.pot $(LL).po
+	$(SHELL) mmsmallpo.sh hello-c-gnome3 $(LL)
 
 ../hello-c++/po/$(LL).po: hello-c++.pot $(LL).po
 	$(SHELL) mmsmallpo.sh hello-c++ $(LL)

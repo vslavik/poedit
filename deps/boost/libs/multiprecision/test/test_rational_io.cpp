@@ -44,23 +44,24 @@
 template <class T>
 T generate_random()
 {
+   typedef typename boost::multiprecision::component_type<T>::type int_type;
    static boost::random::uniform_int_distribution<unsigned> ui(0, 20);
    static boost::random::mt19937 gen;
-   T val = T(gen());
+   int_type val = int_type(gen());
    unsigned lim = ui(gen);
    for(unsigned i = 0; i < lim; ++i)
    {
       val *= (gen.max)();
       val += gen();
    }
-   T denom = T(gen());
+   int_type denom = int_type(gen());
    lim = ui(gen);
    for(unsigned i = 0; i < lim; ++i)
    {
       denom *= (gen.max)();
       denom += gen();
    }
-   return val / denom;
+   return T(val, denom);
 }
 
 template <class T>

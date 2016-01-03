@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -140,10 +140,10 @@ public:
     //! Destructor. Destroys all contained elements, if any.
     ~atomic_queue()
     {
-        register node* p = m_Impl.m_pLast;
+        node* p = m_Impl.m_pLast;
         while (p != NULL)
         {
-            register node* prev = p->m_pPrev;
+            node* prev = p->m_pPrev;
             delete p;
             p = prev;
         }
@@ -154,15 +154,15 @@ public:
     {
 #if !defined(BOOST_LOG_CAS_PTR)
 
-        register node* p = new node(val);
+        node* p = new node(val);
         lock_guard< spin_mutex > _(m_Impl.m_Mutex);
         p->m_pPrev = m_Impl.m_pLast;
         m_Impl.m_pLast = p;
 
 #else // !defined(BOOST_LOG_CAS_PTR)
 
-        register node* p = new node(val);
-        register node* last;
+        node* p = new node(val);
+        node* last;
         do
         {
             last = static_cast< node* volatile& >(m_Impl.m_pLast);
@@ -181,7 +181,7 @@ public:
         unique_lock< spin_mutex > lock(m_Impl.m_Mutex, try_to_lock);
         if (lock)
         {
-            register node* p = new node(val);
+            node* p = new node(val);
             p->m_pPrev = m_Impl.m_pLast;
             m_Impl.m_pLast = p;
             return true;
@@ -192,11 +192,11 @@ public:
 #else // !defined(BOOST_LOG_CAS_PTR)
 
 /*
-        register node* p = new node(val);
-        register node* last;
+        node* p = new node(val);
+        node* last;
         last = static_cast< node* volatile& >(m_Impl.m_pLast);
         p->m_pPrev = last;
-        register bool done = BOOST_LOG_CAS_PTR(last, p, &m_Impl.m_pLast);
+        bool done = BOOST_LOG_CAS_PTR(last, p, &m_Impl.m_pLast);
         if (!done)
             delete p;
         return done;
@@ -212,7 +212,7 @@ public:
     //! Removes all elements from the queue and returns a reference to the first element.
     std::pair< node*, node* > eject_nodes()
     {
-        register node* p;
+        node* p;
 
 #if !defined(BOOST_LOG_CAS_PTR)
 
@@ -236,7 +236,7 @@ public:
         std::pair< node*, node* > res(static_cast< node* >(NULL), p);
         if (p)
         {
-            for (register node* prev = p->m_pPrev; prev != NULL; prev = p->m_pPrev)
+            for (node* prev = p->m_pPrev; prev != NULL; prev = p->m_pPrev)
             {
                 prev->m_pNext = p;
                 p = prev;

@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test what happens with the header entry.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mcomm-test4.in1 mcomm-test4.in2"
 cat <<EOF > mcomm-test4.in1
 msgid ""
 msgstr ""
@@ -29,15 +26,11 @@ msgid "2"
 msgstr "2x"
 EOF
 
-tmpfiles="$tmpfiles mcomm-test4.tmp mcomm-test4.out"
 : ${MSGCOMM=msgcomm}
 ${MSGCOMM} --more-than=0 -o mcomm-test4.tmp \
-    mcomm-test4.in1 mcomm-test4.in2
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcomm-test4.tmp > mcomm-test4.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+    mcomm-test4.in1 mcomm-test4.in2 || exit 1
+LC_ALL=C tr -d '\r' < mcomm-test4.tmp > mcomm-test4.out || exit 1
 
-tmpfiles="$tmpfiles mcomm-test4.ok"
 cat << EOF > mcomm-test4.ok
 msgid ""
 msgstr ""
@@ -62,7 +55,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcomm-test4.ok mcomm-test4.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2003-2013 Vaclav Slavik
+ *  Copyright (C) 2003-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -40,7 +40,7 @@
 /// Let the user change UI language
 void ChangeUILanguage();
 
-/** Return currently choosen language. Calls  ChooseLanguage if neccessary. */
+/** Return currently chosen language. Calls  ChooseLanguage if necessary. */
 wxString GetUILanguage();
 
 #endif // NEED_CHOOSELANG_UI

@@ -7,8 +7,9 @@
 #if !defined(FUSION_END_04052005_1141)
 #define FUSION_END_04052005_1141
 
-#include <boost/blank.hpp>
+#include <boost/fusion/support/config.hpp>
 #include <boost/utility/enable_if.hpp>
+#include <boost/mpl/empty_base.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/fusion/sequence/intrinsic_fwd.hpp>
 #include <boost/fusion/support/tag_of.hpp>
@@ -35,7 +36,7 @@ namespace boost { namespace fusion
               : mpl::if_<
                     traits::is_segmented<Sequence>
                   , detail::segmented_end<Sequence>
-                  , blank
+                  , mpl::empty_base
                 >::type
             {};
         };
@@ -70,6 +71,7 @@ namespace boost { namespace fusion
     }
 
     template <typename Sequence>
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
     inline typename
         lazy_enable_if<
             traits::is_sequence<Sequence>
@@ -81,6 +83,7 @@ namespace boost { namespace fusion
     }
 
     template <typename Sequence>
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
     inline typename
         lazy_enable_if<
             traits::is_sequence<Sequence>

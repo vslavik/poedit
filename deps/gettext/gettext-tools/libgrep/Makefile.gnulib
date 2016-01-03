@@ -1,6 +1,6 @@
 ## DO NOT EDIT! GENERATED AUTOMATICALLY!
 ## Process this file with automake to produce Makefile.in.
-# Copyright (C) 2002-2013 Free Software Foundation, Inc.
+# Copyright (C) 2002-2015 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -44,6 +44,13 @@ EXTRA_libgrep_a_SOURCES += btowc.c
 
 ## end   gnulib module btowc
 
+## begin gnulib module havelib
+
+
+EXTRA_DIST += $(top_srcdir)/../build-aux/config.rpath
+
+## end   gnulib module havelib
+
 ## begin gnulib module langinfo
 
 BUILT_SOURCES += langinfo.h
@@ -85,6 +92,12 @@ EXTRA_DIST += localeconv.c
 EXTRA_libgrep_a_SOURCES += localeconv.c
 
 ## end   gnulib module localeconv
+
+## begin gnulib module lock
+
+libgrep_a_SOURCES += glthread/lock.h glthread/lock.c
+
+## end   gnulib module lock
 
 ## begin gnulib module mbrlen
 
@@ -166,6 +179,14 @@ EXTRA_DIST += $(top_srcdir)/../build-aux/snippet/warn-on-use.h
 
 ## end   gnulib module snippet/warn-on-use
 
+## begin gnulib module threadlib
+
+libgrep_a_SOURCES += glthread/threadlib.c
+
+EXTRA_DIST += $(top_srcdir)/../build-aux/config.rpath
+
+## end   gnulib module threadlib
+
 ## begin gnulib module wcrtomb
 
 
@@ -174,12 +195,6 @@ EXTRA_DIST += wcrtomb.c
 EXTRA_libgrep_a_SOURCES += wcrtomb.c
 
 ## end   gnulib module wcrtomb
-
-## begin gnulib module dummy
-
-libgrep_a_SOURCES += dummy.c
-
-## end   gnulib module dummy
 
 
 mostlyclean-local: mostlyclean-generic

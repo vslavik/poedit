@@ -6,8 +6,8 @@
  This file tests is_resizeable meta-function of odeint.
  [end_description]
 
- Copyright 2009-2012 Karsten Ahnert
- Copyright 2009-2012 Mario Mulansky
+ Copyright 2012 Karsten Ahnert
+ Copyright 2012 Mario Mulansky
 
  Distributed under the Boost Software License, Version 1.0.
  (See accompanying file LICENSE_1_0.txt or
@@ -38,6 +38,24 @@
 
 using namespace boost::unit_test;
 using namespace boost::numeric::odeint;
+
+template< typename T > struct my_seq1 {};
+template< typename T > struct my_seq2 {};
+
+namespace boost { namespace fusion { namespace traits {
+    
+    template< typename T > struct is_sequence< my_seq1< T > > : boost::true_type {};
+    template< typename T > struct is_sequence< my_seq2< T > > : boost::true_type {};
+} } } // boost::fusion::traits
+
+namespace boost { namespace numeric { namespace odeint {
+    
+    template< typename T >
+    struct is_resizeable< my_seq2< T > > : boost::true_type {};
+    
+} } } // boost::numeric::odeint
+
+
 
 BOOST_AUTO_TEST_CASE( test_vector )
 {
@@ -85,4 +103,14 @@ BOOST_AUTO_TEST_CASE( test_fusion_quantity_sequence )
     typedef boost::fusion::vector< length_type , velocity_type > state_type;
 
     BOOST_CHECK( !( is_resizeable< state_type >::value ) );
+}
+
+BOOST_AUTO_TEST_CASE( test_my_seq1 )
+{
+    BOOST_CHECK( !is_resizeable< my_seq1< double > >::value );
+}
+
+BOOST_AUTO_TEST_CASE( test_my_seq2 )
+{
+    BOOST_CHECK( is_resizeable< my_seq2< double > >::value );
 }

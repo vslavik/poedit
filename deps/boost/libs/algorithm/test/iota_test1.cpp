@@ -42,11 +42,11 @@ void test_ints () {
     std::vector<int> v;
     std::list<int> l;
 
-    v.clear (); v.reserve ( 10 );
+    v.clear (); v.resize ( 10 );
     boost::algorithm::iota ( v.begin (), v.end (), 23 );
     BOOST_CHECK ( test_iota_results ( v.begin (), v.end (), 23 ));
     
-    v.clear (); v.reserve ( 19 );
+    v.clear (); v.resize ( 19 );
     boost::algorithm::iota ( v, 18 );
     BOOST_CHECK ( test_iota_results ( v, 18 ));
     
@@ -54,6 +54,10 @@ void test_ints () {
     boost::algorithm::iota_n ( std::back_inserter(v), 99, 20 );
     BOOST_CHECK ( test_iota_results ( v, 99 ));
     
+    v.clear ();
+    boost::algorithm::iota_n ( std::back_inserter(v), 99, 0 );
+    BOOST_CHECK ( v.size() == 0 );
+
 /*
     l.clear (); l.reserve ( 5 );
     boost::algorithm::iota ( l.begin (), l.end (), 123 );

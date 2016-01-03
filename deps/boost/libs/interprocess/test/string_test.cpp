@@ -15,18 +15,17 @@
 #include <boost/interprocess/containers/string.hpp>
 #include <boost/interprocess/offset_ptr.hpp>
 #include <string>
-#include <vector>
 #include <algorithm>
 #include <cstring>
 #include <cstdio>
 #include <cstddef>
-#include <new>
 #include "dummy_test_allocator.hpp"
 #include "check_equal_containers.hpp"
 #include "expand_bwd_test_allocator.hpp"
 #include "expand_bwd_test_template.hpp"
 #include "allocator_v1.hpp"
 #include "get_process_id_name.hpp"
+#include <new> //std::nothrow
 
 using namespace boost::interprocess;
 
@@ -45,7 +44,7 @@ struct StringEqual
       if(string1.size() != string2.size())
          return false;
       return std::char_traits<typename Str1::value_type>::compare
-		  (string1.c_str(), string2.c_str(), (std::size_t)string1.size()) == 0;
+        (string1.c_str(), string2.c_str(), (std::size_t)string1.size()) == 0;
    }
 };
 

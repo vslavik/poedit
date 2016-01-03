@@ -92,6 +92,16 @@ namespace boost
           func(BOOST_SIGNALS2_GET<indices>(args)...);
           return R();
         }
+        // This overload is redundant, as it is the same as the previous variadic method when
+        // it has zero "indices" or "Args" variadic template parameters.  This overload
+        // only exists to quiet some unused parameter warnings
+        // on certain compilers (some versions of gcc and msvc)
+        template<typename Func>
+        R m_invoke(void *, Func &func, unsigned_meta_array<>, BOOST_SIGNALS2_TUPLE<>) const
+        {
+          func();
+          return R();
+        }
       };
 
       template<typename R, typename ... Args>
@@ -115,7 +125,6 @@ namespace boost
           const void_type *) const
         {
           return call_with_tuple_args<result_type>()(connectionBody->slot.slot_function(), _args, mpl::size_t<sizeof...(Args)>());
-          return void_type();
         }
         template<typename ConnectionBodyType>
           result_type m_invoke(const ConnectionBodyType &connectionBody, ...) const
@@ -127,6 +136,5 @@ namespace boost
     } // namespace detail
   } // namespace signals2
 } // namespace boost
-
 
 #endif // BOOST_SIGNALS2_DETAIL_VARIADIC_SLOT_INVOKER_HPP

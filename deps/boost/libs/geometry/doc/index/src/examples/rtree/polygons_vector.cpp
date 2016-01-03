@@ -25,7 +25,7 @@
 namespace bg = boost::geometry;
 namespace bgi = boost::geometry::index;
 
-int main(void)
+int main()
 {
     typedef bg::model::point<float, 2, bg::cs::cartesian> point;
     typedef bg::model::box<point> box;
@@ -76,6 +76,11 @@ int main(void)
     // find 5 nearest values to a point
     std::vector<value> result_n;
     rtree.query(bgi::nearest(point(0, 0), 5), std::back_inserter(result_n));
+
+    // note: in Boost.Geometry the WKT representation of a box is polygon
+
+    // note: the values store the bounding boxes of polygons
+    // the polygons aren't used for querying but are printed
 
     // display results
     std::cout << "spatial query box:" << std::endl;

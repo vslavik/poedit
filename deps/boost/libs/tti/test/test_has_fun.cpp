@@ -23,6 +23,11 @@ int main()
   BOOST_TEST((!BOOST_TTI_HAS_FUNCTION_GEN(someFunctionMember)<AnotherType,AType,boost::mpl::vector<long,int> >::value));
   BOOST_TEST((TheTIntFunction<AnotherType,AType,boost::mpl::vector<long,double> >::value));
   
+  // Passing non-class enclosing type will return false
+  
+  BOOST_TEST((!HaveTheSIntFunction<long,int,boost::mpl::vector<long,double> >::value));
+  BOOST_TEST((!BOOST_TTI_HAS_FUNCTION_GEN(TSFunction)<AnotherType **,AType::AStructType,boost::mpl::vector<AType::AnIntType,double> >::value));
+  
   return boost::report_errors();
 
   }

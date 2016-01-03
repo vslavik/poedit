@@ -23,10 +23,9 @@ namespace winapi {
     using ::GetCurrentProcessId;
 #else
 # ifndef UNDER_CE
-extern "C" { 
-    __declspec(dllimport) unsigned long __stdcall 
-        GetCurrentProcessId(void);
-}    
+extern "C" {
+    __declspec(dllimport) DWORD_ WINAPI GetCurrentProcessId(void);
+}
 # else
     using ::GetCurrentProcessId;
 # endif

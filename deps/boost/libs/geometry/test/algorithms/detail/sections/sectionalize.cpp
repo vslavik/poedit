@@ -15,7 +15,6 @@
 #include <iostream>
 #include <string>
 
-
 #include <geometry_test_common.hpp>
 
 #include <boost/geometry/algorithms/make.hpp>
@@ -35,8 +34,6 @@
 #  include <boost/geometry/algorithms/centroid.hpp>
 #endif
 
-
-
 template <int DimensionCount, typename Geometry>
 void test_sectionalize_part()
 {
@@ -46,9 +43,11 @@ void test_sectionalize_part()
     typedef bg::sections<box_type, DimensionCount> sections_type;
     typedef typename boost::range_value<sections_type>::type section_type;
 
+    typedef boost::mpl::vector_c<std::size_t, 0> dimension_list;
+
     typedef bg::detail::sectionalize::sectionalize_part
         <
-            Geometry, point_type, sections_type, 1, 10
+            point_type, dimension_list
         > sectionalize_part;
 
     sections_type sections;
@@ -58,28 +57,34 @@ void test_sectionalize_part()
     Geometry geometry;
     geometry.push_back(bg::make<point_type>(1, 1));
 
+    bg::detail::no_rescale_policy rescale_policy;
+
     bg::ring_identifier ring_id;
-    int index = 0;
-    int ndi = 0;
-    sectionalize_part::apply(sections, section, index, ndi, geometry, ring_id);
+    sectionalize_part::apply(sections, geometry.begin(), geometry.end(), rescale_policy, ring_id, 10);
     // There should not yet be anything generated, because it is only ONE point
 
     geometry.push_back(bg::make<point_type>(2, 2));
-    sectionalize_part::apply(sections, section, index, ndi, geometry, ring_id);
-
+    sectionalize_part::apply(sections, geometry.begin(), geometry.end(), rescale_policy, ring_id, 10);
 }
 
 
-template <int DimensionCount, bool Reverse, typename G>
-void test_sectionalize(std::string const caseid, G const& g, std::size_t section_count,
-        std::string const& index_check, std::string const& dir_check)
+template <typename DimensionVector, bool Reverse, typename G>
+void test_sectionalize(std::string const& caseid, G const& g, std::size_t section_count,
+        std::string const& index_check, std::string const& dir_check,
+        std::size_t max_count = 10)
 {
+    boost::ignore_unused_variable_warning(caseid);
+
+    static const std::size_t dimension_count = boost::mpl::size<DimensionVector>::value;
+
+
     typedef typename bg::point_type<G>::type point;
     typedef bg::model::box<point> box;
-    typedef bg::sections<box, DimensionCount> sections;
+    typedef bg::sections<box, dimension_count> sections;
 
     sections s;
-    bg::sectionalize<Reverse>(g, s);
+    bg::sectionalize<Reverse, DimensionVector>(g,
+            bg::detail::no_rescale_policy(), s, 0, max_count);
 
     BOOST_CHECK_EQUAL(s.size(), section_count);
 
@@ -115,7 +120,7 @@ void test_sectionalize(std::string const caseid, G const& g, std::size_t section
         out_sections << s[i].begin_index << ".." << s[i].end_index;
         out_boxes << bg::get<0,0>(b) << " " << bg::get<0,1>(b)
             << ".." << bg::get<1,0>(b) << " " << bg::get<1,1>(b);
-        for (int d = 0; d < DimensionCount; d++)
+        for (std::size_t d = 0; d < dimension_count; d++)
         {
             out_dirs << (d == 0 ? "" : " ");
             switch(s[i].directions[d])
@@ -135,16 +140,6 @@ void test_sectionalize(std::string const caseid, G const& g, std::size_t section
     if (! dir_check.empty())
     {
         BOOST_CHECK_EQUAL(out_dirs.str(), dir_check);
-    }
-    else
-    {
-        if (out_sections.str().length() < 80)
-        {
-            std::cout << std::endl << bg::wkt(g) << std::endl;
-            std::cout << out_sections.str() << std::endl;
-            //std::cout << out_boxes.str() << std::endl;
-        }
-        std::cout << out_dirs.str() << std::endl;
     }
 
 #if defined(TEST_WITH_SVG)
@@ -176,7 +171,7 @@ void test_sectionalize(std::string const caseid, G const& g, std::size_t section
 
             std::ostringstream out;
 
-            for (int d = 0; d < DimensionCount; d++)
+            for (int d = 0; d < dimension_count; d++)
             {
                 out << (d == 0 ? "[" : " ");
                 switch(s[i].directions[d])
@@ -202,12 +197,17 @@ void test_sectionalize(std::string const caseid, G const& g, std::size_t section
 template <typename G, bool Reverse>
 void test_sectionalize(std::string const& caseid, std::string const& wkt,
         std::size_t count2, std::string const& s2, std::string const d2,
-        std::size_t count1, std::string const& s1, std::string const d1)
+        std::size_t count1, std::string const& s1, std::string const d1,
+        std::size_t max_count = 10)
 {
     G g;
     bg::read_wkt(wkt, g);
-    test_sectionalize<2, Reverse>(caseid + "_d2", g, count2, s2, d2);
-    test_sectionalize<1, Reverse>(caseid + "_d1", g, count1, s1, d1);
+
+    typedef boost::mpl::vector_c<std::size_t, 0, 1> dim2;
+    typedef boost::mpl::vector_c<std::size_t, 0> dim1;
+
+    test_sectionalize<dim2, Reverse>(caseid + "_d2", g, count2, s2, d2, max_count);
+    test_sectionalize<dim1, Reverse>(caseid + "_d1", g, count1, s1, d1, max_count);
 }
 
 template <typename P>
@@ -284,10 +284,29 @@ void test_all()
 
 
     typedef bg::model::box<P> B;
-    test_sectionalize<2, false, B>("box2", bg::make<B>(0,0,4,4),
-            4, "0..1|1..2|2..3|3..4", ". +|+ .|. -|- .");
-    test_sectionalize<1, false, B>("box1", bg::make<B>(0,0,4,4),
+    test_sectionalize<B, false>("box2", "BOX(0 0,4 4)",
+            4, "0..1|1..2|2..3|3..4", ". +|+ .|. -|- .",
             4, "0..1|1..2|2..3|3..4", ".|+|.|-");
+
+    std::string horizontal("POLYGON((0 10,1 8,2 10,3 8,4 10,5 8,6 10,7 8,8 10,9 8,10 10,11 8,12 10,12 5,9 5,9 4,8 4,8 5,7 5,7 4,6 4,6 5,5 5,5 4,4 4,4 5,3 5,3 4,2 4,2 5,1 5,1 4,0 4,0 10))");
+    test_sectionalize<bg::model::polygon<P>, false>("horizontal", horizontal,
+        33, "", "",
+        22, "", "", 100);
+    test_sectionalize<bg::model::polygon<P>, false>("horizontal4", horizontal,
+        33, "", "",
+        24, "", "", 4);
+
+    std::string vertical("POLYGON((4 0,6 1,4 2,6 3,4 4,6 5,4 6,6 7,4 8,6 9,4 10,10 10,10 9,9 9,9 8,10 8,10 7,9 7,9 6,10 6,10 5,9 5,9 4,10 4,10 3,9 3,9 2,10 2,10 1,9 1,9 0,5 0))");
+    test_sectionalize<bg::model::polygon<P>, false>("vertical", vertical,
+        31, "", "",
+        31, "", "", 100);
+
+    {
+        typedef boost::mpl::vector_c<std::size_t, 1> only_y_dim;
+        bg::model::polygon<P> pol;
+        bg::read_wkt(vertical, pol);
+        test_sectionalize<only_y_dim, false>("vertical_y", pol, 22, "", "", 100);
+    }
 
     return;
     // Buffer-case
@@ -308,12 +327,14 @@ void test_large_integers()
     bg::read_wkt(polygon_li, int_poly);
     bg::read_wkt(polygon_li, double_poly);
 
+    typedef boost::mpl::vector_c<std::size_t, 0> dimensions;
     bg::sections<bg::model::box<int_point_type>, 1> int_sections;
     bg::sections<bg::model::box<double_point_type>, 1> double_sections;
 
-    bg::sectionalize<false>(int_poly, int_sections);
-    bg::sectionalize<false>(double_poly, double_sections);
-    
+
+    bg::sectionalize<false, dimensions>(int_poly, bg::detail::no_rescale_policy(), int_sections);
+    bg::sectionalize<false, dimensions>(double_poly, bg::detail::no_rescale_policy(), double_sections);
+
     bool equally_sized = int_sections.size() == double_sections.size();
     BOOST_CHECK(equally_sized);
     if (! equally_sized)
@@ -328,6 +349,7 @@ void test_large_integers()
     }
 
 }
+
 
 
 int test_main(int, char* [])

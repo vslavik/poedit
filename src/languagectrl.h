@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2013 Vaclav Slavik
+ *  Copyright (C) 2013-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -71,6 +71,9 @@ public:
 
     virtual bool Validate();
     virtual void EndModal(int retval);
+
+    static Language GetLastChosen();
+    static void SetLastChosen(Language lang);
 
 private:
     LanguageCtrl *m_language;

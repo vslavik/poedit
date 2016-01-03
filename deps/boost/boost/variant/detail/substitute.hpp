@@ -21,6 +21,7 @@
 #include "boost/mpl/aux_/config/ctps.hpp"
 
 #include "boost/variant/detail/substitute_fwd.hpp"
+#include "boost/variant/variant_fwd.hpp" // for BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES
 #include "boost/mpl/aux_/lambda_arity_param.hpp"
 #include "boost/mpl/aux_/preprocessor/params.hpp"
 #include "boost/mpl/aux_/preprocessor/repeat.hpp"
@@ -124,6 +125,27 @@ struct substitute<
 //
 // template expression (i.e., F<...>) specializations
 //
+
+#if !defined(BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES)
+template <
+      template <typename...> class F
+    , typename... Ts
+    , typename Dest
+    , typename Source
+      BOOST_MPL_AUX_LAMBDA_ARITY_PARAM(typename Arity)
+    >
+struct substitute<
+      F<Ts...>
+    , Dest
+    , Source
+      BOOST_MPL_AUX_LAMBDA_ARITY_PARAM(Arity)
+    >
+{
+    typedef F<typename substitute<
+          Ts, Dest, Source
+        >::type...> type;
+};
+#endif // !defined(BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES)
 
 #define BOOST_VARIANT_AUX_SUBSTITUTE_TYPEDEF_IMPL(N) \
     typedef typename substitute< \

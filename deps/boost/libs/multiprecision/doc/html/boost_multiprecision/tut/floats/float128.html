@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>float128</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../floats.html" title="Floating Point Numbers">
 <link rel="prev" href="mpfr_float.html" title="mpfr_float">
@@ -49,7 +49,7 @@
           All the usual standard library and <code class="computeroutput"><span class="identifier">numeric_limits</span></code>
           support are available, performance should be equivalent to the underlying
           native types: for example the LINPACK benchmarks for GCC's <code class="computeroutput"><a class="link" href="float128.html" title="float128">float128</a></code>
-          and <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">::</span><span class="identifier">float128</span></code> both achieved 5.6 MFLOPS<a href="#ftn.boost_multiprecision.tut.floats.float128.f0" class="footnote" name="boost_multiprecision.tut.floats.float128.f0"><sup class="footnote">[3]</sup></a>.
+          and <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">::</span><span class="identifier">float128</span></code> both achieved 5.6 MFLOPS<a href="#ftn.boost_multiprecision.tut.floats.float128.f0" class="footnote"><sup class="footnote"><a name="boost_multiprecision.tut.floats.float128.f0"></a>[3]</sup></a>.
         </p>
 <p>
           As well as the usual conversions from arithmetic and string types, instances
@@ -109,39 +109,42 @@
 </ul></div>
 <h6>
 <a name="boost_multiprecision.tut.floats.float128.h0"></a>
-          <span class="phrase"><a name="boost_multiprecision.tut.floats.float128.float128_example_"></a></span><a class="link" href="float128.html#boost_multiprecision.tut.floats.float128.float128_example_">float128
+          <span class="phrase"><a name="boost_multiprecision.tut.floats.float128.float128_example"></a></span><a class="link" href="float128.html#boost_multiprecision.tut.floats.float128.float128_example">float128
           example:</a>
         </h6>
-<p>
-</p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">multiprecision</span><span class="special">/</span><span class="identifier">float128</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">special_functions</span><span class="special">/</span><span class="identifier">gamma</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 
-<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">;</span>
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+   <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">;</span>
 
-<span class="comment">// Operations at 128-bit precision and full numeric_limits support:</span>
-<span class="identifier">float128</span> <span class="identifier">b</span> <span class="special">=</span> <span class="number">2</span><span class="special">;</span>
-<span class="comment">// There are 113-bits of precision:</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">float128</span><span class="special">&gt;::</span><span class="identifier">digits</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-<span class="comment">// Or 34 decimal places:</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">float128</span><span class="special">&gt;::</span><span class="identifier">digits10</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-<span class="comment">// We can use any C++ std lib function, lets print all the digits as well:</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">setprecision</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">float128</span><span class="special">&gt;::</span><span class="identifier">max_digits10</span><span class="special">)</span>
-   <span class="special">&lt;&lt;</span> <span class="identifier">log</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// print log(2) = 0.693147180559945309417232121458176575</span>
-<span class="comment">// We can also use any function from Boost.Math:</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-<span class="comment">// And since we have an extended exponent range we can generate some really large </span>
-<span class="comment">// numbers here (4.02387260077093773543702433923004111e+2564):</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">float128</span><span class="special">(</span><span class="number">1000</span><span class="special">))</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-<span class="comment">//</span>
-<span class="comment">// We can declare constants using GCC or Intel's native types, and the Q suffix,</span>
-<span class="comment">// these can be declared constexpr if required:</span>
+   <span class="comment">// Operations at 128-bit precision and full numeric_limits support:</span>
+   <span class="identifier">float128</span> <span class="identifier">b</span> <span class="special">=</span> <span class="number">2</span><span class="special">;</span>
+   <span class="comment">// There are 113-bits of precision:</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">float128</span><span class="special">&gt;::</span><span class="identifier">digits</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+   <span class="comment">// Or 34 decimal places:</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">float128</span><span class="special">&gt;::</span><span class="identifier">digits10</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+   <span class="comment">// We can use any C++ std lib function, lets print all the digits as well:</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">setprecision</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">float128</span><span class="special">&gt;::</span><span class="identifier">max_digits10</span><span class="special">)</span>
+      <span class="special">&lt;&lt;</span> <span class="identifier">log</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// print log(2) = 0.693147180559945309417232121458176575</span>
+   <span class="comment">// We can also use any function from Boost.Math:</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+   <span class="comment">// And since we have an extended exponent range we can generate some really large </span>
+   <span class="comment">// numbers here (4.02387260077093773543702433923004111e+2564):</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">float128</span><span class="special">(</span><span class="number">1000</span><span class="special">))</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+   <span class="comment">//</span>
+   <span class="comment">// We can declare constants using GCC or Intel's native types, and the Q suffix,</span>
+   <span class="comment">// these can be declared constexpr if required:</span>
 
-<span class="keyword">constexpr</span> <span class="identifier">float128</span> <span class="identifier">pi</span> <span class="special">=</span> <span class="number">3.1415926535897932384626433832795028841971693993751058</span><span class="identifier">Q</span><span class="special">;</span>
+   <span class="keyword">constexpr</span> <span class="identifier">float128</span> <span class="identifier">pi</span> <span class="special">=</span> <span class="number">3.1415926535897932384626433832795028841971693993751058</span><span class="identifier">Q</span><span class="special">;</span>
+
+   <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
 </pre>
-<p>
-        </p>
 <div class="footnotes">
-<br><hr style="width:100; text-align:left;margin-left: 0">
+<br><hr style="width:100; align:left;">
 <div id="ftn.boost_multiprecision.tut.floats.float128.f0" class="footnote"><p><a href="#boost_multiprecision.tut.floats.float128.f0" class="para"><sup class="para">[3] </sup></a>
             On 64-bit Ubuntu 11.10, GCC-4.8.0, Intel Core 2 Duo T5800.
           </p></div>
@@ -149,7 +152,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2012 John Maddock and Christopher Kormanyos<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2013 John Maddock and Christopher Kormanyos<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -4,8 +4,10 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #define BOOST_THREAD_VERSION 2
+#define BOOST_TEST_MODULE Boost.Threads: lock_concept test suite
 
 #include <boost/test/unit_test.hpp>
+#include <boost/test/test_case_template.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/lock_types.hpp>
@@ -438,22 +440,30 @@ void test_lock_is_scoped_lock_concept_for_mutex()
     test_unlocked_after_try_lock_if_other_thread_has_lock<Mutex,Lock>()();
 }
 
+typedef boost::mpl::vector<boost::mutex,boost::try_mutex,boost::timed_mutex,
+    boost::recursive_mutex,boost::recursive_try_mutex,boost::recursive_timed_mutex> mutex_types_with_scoped_lock;
 
-BOOST_TEST_CASE_TEMPLATE_FUNCTION(test_scoped_lock_concept,Mutex)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_scoped_lock_concept,Mutex,mutex_types_with_scoped_lock)
 {
     typedef typename Mutex::scoped_lock Lock;
 
     test_lock_is_scoped_lock_concept_for_mutex<Mutex,Lock>();
 }
 
-BOOST_TEST_CASE_TEMPLATE_FUNCTION(test_unique_lock_is_scoped_lock,Mutex)
+typedef boost::mpl::vector<boost::mutex,boost::try_mutex,boost::timed_mutex,
+    boost::recursive_mutex,boost::recursive_try_mutex,boost::recursive_timed_mutex,boost::shared_mutex> all_mutex_types;
+
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_unique_lock_is_scoped_lock,Mutex,all_mutex_types)
 {
     typedef boost::unique_lock<Mutex> Lock;
 
     test_lock_is_scoped_lock_concept_for_mutex<Mutex,Lock>();
 }
 
-BOOST_TEST_CASE_TEMPLATE_FUNCTION(test_scoped_try_lock_concept,Mutex)
+typedef boost::mpl::vector<boost::try_mutex,boost::timed_mutex,
+    boost::recursive_try_mutex,boost::recursive_timed_mutex> mutex_types_with_scoped_try_lock;
+
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_scoped_try_lock_concept,Mutex,mutex_types_with_scoped_try_lock)
 {
     typedef typename Mutex::scoped_try_lock Lock;
 
@@ -534,7 +544,7 @@ struct dummy_shared_mutex
 };
 
 
-void test_shared_lock()
+BOOST_AUTO_TEST_CASE(test_shared_lock)
 {
     typedef boost::shared_mutex Mutex;
     typedef boost::shared_lock<Mutex> Lock;
@@ -564,27 +574,27 @@ void test_shared_lock()
     BOOST_CHECK(dummy.shared_timed_locked_absolute);
 }
 
-boost::unit_test::test_suite* init_unit_test_suite(int, char*[])
-{
-    boost::unit_test::test_suite* test =
-        BOOST_TEST_SUITE("Boost.Threads: lock concept test suite");
-
-    typedef boost::mpl::vector<boost::mutex,boost::try_mutex,boost::timed_mutex,
-        boost::recursive_mutex,boost::recursive_try_mutex,boost::recursive_timed_mutex> mutex_types_with_scoped_lock;
-
-    test->add(BOOST_TEST_CASE_TEMPLATE(test_scoped_lock_concept,mutex_types_with_scoped_lock));
-
-    typedef boost::mpl::vector<boost::try_mutex,boost::timed_mutex,
-        boost::recursive_try_mutex,boost::recursive_timed_mutex> mutex_types_with_scoped_try_lock;
-
-    test->add(BOOST_TEST_CASE_TEMPLATE(test_scoped_try_lock_concept,mutex_types_with_scoped_try_lock));
-
-    typedef boost::mpl::vector<boost::mutex,boost::try_mutex,boost::timed_mutex,
-        boost::recursive_mutex,boost::recursive_try_mutex,boost::recursive_timed_mutex,boost::shared_mutex> all_mutex_types;
-
-    test->add(BOOST_TEST_CASE_TEMPLATE(test_unique_lock_is_scoped_lock,all_mutex_types));
-    test->add(BOOST_TEST_CASE(&test_shared_lock));
-
-    return test;
-}
+//boost::unit_test::test_suite* init_unit_test_suite(int, char*[])
+//{
+//    boost::unit_test::test_suite* test =
+//        BOOST_TEST_SUITE("Boost.Threads: lock concept test suite");
+//
+//    typedef boost::mpl::vector<boost::mutex,boost::try_mutex,boost::timed_mutex,
+//        boost::recursive_mutex,boost::recursive_try_mutex,boost::recursive_timed_mutex> mutex_types_with_scoped_lock;
+//
+//    test->add(BOOST_TEST_CASE_TEMPLATE(test_scoped_lock_concept,mutex_types_with_scoped_lock));
+//
+//    typedef boost::mpl::vector<boost::try_mutex,boost::timed_mutex,
+//        boost::recursive_try_mutex,boost::recursive_timed_mutex> mutex_types_with_scoped_try_lock;
+//
+//    test->add(BOOST_TEST_CASE_TEMPLATE(test_scoped_try_lock_concept,mutex_types_with_scoped_try_lock));
+//
+//    typedef boost::mpl::vector<boost::mutex,boost::try_mutex,boost::timed_mutex,
+//        boost::recursive_mutex,boost::recursive_try_mutex,boost::recursive_timed_mutex,boost::shared_mutex> all_mutex_types;
+//
+//    test->add(BOOST_TEST_CASE_TEMPLATE(test_unique_lock_is_scoped_lock,all_mutex_types));
+//    test->add(BOOST_TEST_CASE(&test_shared_lock));
+//
+//    return test;
+//}
 

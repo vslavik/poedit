@@ -1,8 +1,14 @@
 # Boost.Geometry (aka GGL, Generic Geometry Library)
 #
-# Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
-# Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
-# Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
+# Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
+# Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
+# Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
+#
+# This file was modified by Oracle on 2014, 2015.
+# Modifications copyright (c) 2014-2015, Oracle and/or its affiliates.
+#
+# Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+# Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 #
 # Use, modification and distribution is subject to the Boost Software License,
 # Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -10,41 +16,55 @@
 
 test-suite boost-geometry-algorithms
     :
-    [ run append.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
+    [ run append.cpp ]
     [ run area.cpp ]
     [ run assign.cpp ]
     [ run buffer.cpp ]
-    [ run centroid.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
+    [ run centroid.cpp ]
     [ run comparable_distance.cpp ]
     [ run convex_hull.cpp ]
     [ run correct.cpp ]
-    [ run convert.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
-    [ run covered_by.cpp ]
-    [ run difference.cpp : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE <toolset>msvc:<cxxflags>/bigobj ]
-    [ run disjoint.cpp ]
-    [ run distance.cpp : : : <toolset>msvc:<cxxflags>/bigobj ]
+    [ run convert.cpp ]
     [ run envelope.cpp ]
-    [ run equals.cpp ]
     [ run expand.cpp ]
     [ run for_each.cpp ]
-    [ run intersection.cpp : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE <toolset>msvc:<cxxflags>/bigobj ]
-    [ run intersects.cpp ]
+    [ run is_simple.cpp ]
+    [ run is_valid.cpp ]
+    [ run is_valid_failure.cpp ]
     [ run length.cpp ]
     [ run make.cpp ]
-    [ run overlaps.cpp ]
+    [ run multi_area.cpp ]
+    [ run multi_centroid.cpp ]
+    [ run multi_convert.cpp ]
+    [ run multi_convex_hull.cpp ]
+    [ run multi_correct.cpp ]
+    [ run multi_envelope.cpp ]
+    [ run multi_for_each.cpp ]
+    [ run multi_length.cpp ]
+    [ run multi_num_geometries.cpp ]
+    [ run multi_num_interior_rings.cpp ]
+    [ run multi_num_points.cpp ]
+    [ run multi_perimeter.cpp ]
+    [ run multi_reverse.cpp ]
+    [ run multi_simplify.cpp ]
+    [ run multi_transform.cpp ]
+    [ run multi_unique.cpp ]
+    [ run num_geometries.cpp ]
+    [ run num_interior_rings.cpp ]
+    [ run num_points.cpp ]
+    [ run num_segments.cpp ]
     [ run perimeter.cpp ]
+    [ run point_on_surface.cpp ]
+    [ run remove_spikes.cpp ]
     [ run reverse.cpp ]
     [ run simplify.cpp ]
-    [ run touches.cpp ]
     [ run transform.cpp ]
-    [ run union.cpp : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE ]
     [ run unique.cpp ]
-    [ run within.cpp ]
     ;
 
-build-project overlay 
-    ;
-    
-build-project detail 
-    ;
-    
+build-project buffer ;
+build-project detail ;
+build-project distance ;
+build-project overlay ;
+build-project relational_operations ;
+build-project set_operations ;

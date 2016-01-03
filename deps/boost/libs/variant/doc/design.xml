@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE section PUBLIC "-//Boost//DTD BoostBook XML V1.0//EN"
   "http://www.boost.org/tools/boostbook/dtd/boostbook.dtd">
+<!--
+    Copyright 2003, Eric Friedman, Itay Maman.
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+-->
 <section id="variant.design">
   <title>Design Overview</title>
 
@@ -267,29 +273,6 @@
             guarantee.</listitem>
 
         </itemizedlist>
-
-      </para>
-
-      <para><emphasis role="bold">Caveat</emphasis>: On most platforms, the
-        <libraryname>Type Traits</libraryname> templates
-        <code>has_nothrow_copy</code> and <code>has_nothrow_constructor</code>
-        by default return <code>false</code> for all <code>class</code> and
-        <code>struct</code> types. It is necessary therefore to provide
-        specializations of these templates as appropriate for user-defined
-        types, as demonstrated in the following:
-
-<programlisting>// ...in your code (at file scope)...
-
-namespace boost {
-
-  template &lt;&gt;
-  struct <classname>has_nothrow_copy</classname>&lt; myUDT &gt;
-    : <classname>mpl::true_</classname>
-  {
-  };
-
-}
-</programlisting>
 
       </para>
 

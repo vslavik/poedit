@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -120,14 +120,14 @@ public:
     void lock()
     {
 #if defined(BOOST_LOG_PAUSE_OP)
-        register unsigned int pause_count = initial_pause;
+        unsigned int pause_count = initial_pause;
 #endif
         while (!try_lock())
         {
 #if defined(BOOST_LOG_PAUSE_OP)
             if (pause_count < max_pause)
             {
-                for (register unsigned int i = 0; i < pause_count; ++i)
+                for (unsigned int i = 0; i < pause_count; ++i)
                 {
                     BOOST_LOG_PAUSE_OP;
                 }

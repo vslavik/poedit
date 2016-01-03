@@ -47,20 +47,22 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>XML_STATIC;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\expat\lib;deps\icu4c\include;deps\icu4c\source\i18n;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HAVE_CLD2;HAVE_HTTP_CLIENT;XML_STATIC;_NO_ASYNCRTIMP;WIN32;_DEBUG;DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\cld2;deps\expat\lib;deps\icu4c\include;deps\icu4c\source\i18n;deps\casablanca\Release\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
+      <DisableSpecificWarnings>4800</DisableSpecificWarnings>
+      <PrecompiledHeaderFile>Poedit-Prefix.pch</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>Poedit-Prefix.pch</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>deps\wx\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>rpcrt4.lib;advapi32.lib;ws2_32.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>rpcrt4.lib;advapi32.lib;shlwapi.lib;ws2_32.lib;comctl32.lib;Winhttp.lib;wininet.lib;httpapi.lib;crypt32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>deps\wx\include\msvc;deps\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -72,14 +74,16 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>XML_STATIC;WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\expat\lib;deps\icu4c\include;deps\icu4c\source\i18n;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HAVE_CLD2;HAVE_HTTP_CLIENT;XML_STATIC;_NO_ASYNCRTIMP;WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\cld2;deps\expat\lib;deps\icu4c\include;deps\icu4c\source\i18n;deps\casablanca\Release\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4800</DisableSpecificWarnings>
+      <PrecompiledHeaderFile>Poedit-Prefix.pch</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>Poedit-Prefix.pch</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -87,7 +91,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>deps\wx\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>rpcrt4.lib;advapi32.lib;ws2_32.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>rpcrt4.lib;advapi32.lib;shlwapi.lib;ws2_32.lib;comctl32.lib;Winhttp.lib;wininet.lib;httpapi.lib;crypt32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>deps\wx\include\msvc;deps\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -99,8 +103,15 @@
     <ClCompile Include="src\cat_sorting.cpp" />
     <ClCompile Include="src\chooselang.cpp" />
     <ClCompile Include="src\commentdlg.cpp" />
+    <ClCompile Include="src\concurrency.cpp" />
+    <ClCompile Include="src\crowdin_client.cpp" />
+    <ClCompile Include="src\crowdin_gui.cpp" />
+    <ClCompile Include="src\customcontrols.cpp" />
     <ClCompile Include="src\digger.cpp" />
-    <ClCompile Include="src\edapp.cpp" />
+    <ClCompile Include="src\edapp.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="src\edframe.cpp" />
     <ClCompile Include="src\edlistctrl.cpp" />
     <ClCompile Include="src\errorbar.cpp" />
@@ -108,20 +119,32 @@
     <ClCompile Include="src\fileviewer.cpp" />
     <ClCompile Include="src\findframe.cpp" />
     <ClCompile Include="src\gexecute.cpp" />
+    <ClCompile Include="src\hidpi.cpp" />
+    <ClCompile Include="src\http_client.cpp" />
+    <ClCompile Include="src\http_client_casablanca.cpp" />
     <ClCompile Include="src\icons.cpp" />
+    <ClCompile Include="src\keychain\keytar_win.cc" />
     <ClCompile Include="src\language.cpp" />
     <ClCompile Include="src\languagectrl.cpp" />
     <ClCompile Include="src\manager.cpp" />
-    <ClCompile Include="src\parser.cpp" />
+    <ClCompile Include="src\extractor.cpp" />
     <ClCompile Include="src\pluralforms\pl_evaluate.cpp" />
     <ClCompile Include="src\prefsdlg.cpp" />
     <ClCompile Include="src\progressinfo.cpp" />
     <ClCompile Include="src\propertiesdlg.cpp" />
+    <ClCompile Include="src\sidebar.cpp" />
+    <ClCompile Include="src\spellchecking.cpp" />
     <ClCompile Include="src\summarydlg.cpp" />
+    <ClCompile Include="src\syntaxhighlighter.cpp" />
+    <ClCompile Include="src\text_control.cpp" />
+    <ClCompile Include="src\tm\suggestions.cpp" />
     <ClCompile Include="src\tm\tm_migrate.cpp" />
     <ClCompile Include="src\tm\transmem.cpp" />
     <ClCompile Include="src\utility.cpp" />
     <ClCompile Include="src\welcomescreen.cpp" />
+    <ClCompile Include="src\wx\main_toolbar.cpp" />
+    <ClCompile Include="src\wx_backports\wx_generic_activityindicator.cpp" />
+    <ClCompile Include="src\wx_backports\wx_msw_nativewin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\attentionbar.h" />
@@ -129,8 +152,11 @@
     <ClInclude Include="src\cat_sorting.h" />
     <ClInclude Include="src\chooselang.h" />
     <ClInclude Include="src\commentdlg.h" />
+    <ClInclude Include="src\concurrency.h" />
+    <ClInclude Include="src\crowdin_client.h" />
+    <ClInclude Include="src\crowdin_gui.h" />
+    <ClInclude Include="src\customcontrols.h" />
     <ClInclude Include="src\digger.h" />
-    <ClInclude Include="src\digits.h" />
     <ClInclude Include="src\edapp.h" />
     <ClInclude Include="src\edframe.h" />
     <ClInclude Include="src\edlistctrl.h" />
@@ -139,27 +165,40 @@
     <ClInclude Include="src\fileviewer.h" />
     <ClInclude Include="src\findframe.h" />
     <ClInclude Include="src\gexecute.h" />
+    <ClInclude Include="src\hidpi.h" />
+    <ClInclude Include="src\http_client.h" />
     <ClInclude Include="src\icons.h" />
-    <ClInclude Include="src\icuhelpers.h" />
+    <ClInclude Include="src\keychain\keytar.h" />
     <ClInclude Include="src\language.h" />
     <ClInclude Include="src\languagectrl.h" />
     <ClInclude Include="src\language_impl_legacy.h" />
     <ClInclude Include="src\language_impl_plurals.h" />
+    <ClInclude Include="src\logcapture.h" />
+    <ClInclude Include="src\main_toolbar.h" />
     <ClInclude Include="src\manager.h" />
-    <ClInclude Include="src\osx_helpers.h" />
-    <ClInclude Include="src\parser.h" />
+    <ClInclude Include="src\extractor.h" />
     <ClInclude Include="src\pluralforms\pl_evaluate.h" />
     <ClInclude Include="src\prefsdlg.h" />
     <ClInclude Include="src\progressinfo.h" />
     <ClInclude Include="src\propertiesdlg.h" />
+    <ClInclude Include="src\sidebar.h" />
+    <ClInclude Include="src\spellchecking.h" />
+    <ClInclude Include="src\str_helpers.h" />
     <ClInclude Include="src\summarydlg.h" />
+    <ClInclude Include="src\syntaxhighlighter.h" />
+    <ClInclude Include="src\text_control.h" />
+    <ClInclude Include="src\tm\suggestions.h" />
     <ClInclude Include="src\tm\transmem.h" />
     <ClInclude Include="src\utility.h" />
     <ClInclude Include="src\version.h" />
     <ClInclude Include="src\welcomescreen.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="src\poedit.rc" />
+    <ResourceCompile Include="locales\win\windows_strings.rc" />
+    <ResourceCompile Include="src\poedit.rc">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntermediateOutputPath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntermediateOutputPath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="deps\boost\boost_date_time.vcxproj">
@@ -179,6 +218,12 @@
     </ProjectReference>
     <ProjectReference Include="deps\boost\boost_thread.vcxproj">
       <Project>{d9c07f38-40e0-5091-8935-277a4f64f8e5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="deps\custom_build\casablanca.vcxproj">
+      <Project>{15f3b200-1aed-4b57-af37-b21cd67914b1}</Project>
+    </ProjectReference>
+    <ProjectReference Include="deps\custom_build\cld2.vcxproj">
+      <Project>{0f2968c8-6b72-52c5-857d-c1bbda8e9dd0}</Project>
     </ProjectReference>
     <ProjectReference Include="deps\custom_build\expat.vcxproj">
       <Project>{8d88ae38-ff38-5a85-83d1-bb6816ed2f58}</Project>
@@ -236,7 +281,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="src\resources\comment.xrc" />
-    <None Include="src\resources\find.xrc" />
     <None Include="src\resources\manager.xrc" />
     <None Include="src\resources\menus.xrc" />
     <None Include="src\resources\prefs.xrc" />

@@ -12,6 +12,7 @@
 #include <boost/array.hpp>
 #include "test.hpp"
 
+#include <boost/multiprecision/cpp_bin_float.hpp>
 #include <boost/multiprecision/cpp_dec_float.hpp>
 #include <boost/multiprecision/cpp_int.hpp>
 #include <boost/multiprecision/random.hpp>
@@ -32,6 +33,7 @@ int main()
    using namespace boost::random;
 
    independent_bits_engine<mt11213b, 1024, cpp_int> gen;
+   mt11213b small_gen;
 
    for(unsigned i = 0; i < 100; ++i)
    {
@@ -108,15 +110,15 @@ int main()
       //
       // Rational to rational conversions:
       //
-      cpp_rational cppr(c, gen());
+      cpp_rational cppr(c, gen()), cppr2, cppr3;
 #ifdef TEST_GMP
       mpq_rational mpq(cppr);
-      cpp_rational cppr2(mpq);
+      cppr2.assign(mpq);
       BOOST_CHECK_EQUAL(cppr, cppr2);
 #endif
 #ifdef TEST_TOMMATH
       tom_rational tr(cppr);
-      cpp_rational cppr3(tr);
+      cppr3.assign(tr);
       BOOST_CHECK_EQUAL(cppr, cppr3);
 #endif
       //
@@ -139,6 +141,63 @@ int main()
       df2.assign(numerator(cppr));
       df2 /= dec_float_500(denominator(cppr));
       BOOST_CHECK(fabs(df - df2) / df2 < tol);
+      //
+      // Float to rational:
+      //
+      static const int max_range = std::numeric_limits<double>::digits >= std::numeric_limits<int>::digits ? std::numeric_limits<int>::max() : (1 << (std::numeric_limits<double>::digits - 1)) - 1;
+      static const int min_range = std::numeric_limits<double>::digits >= std::numeric_limits<int>::digits ? std::numeric_limits<int>::min() : -(1 << (std::numeric_limits<double>::digits - 1)) + 1;
+      static const boost::random::uniform_int_distribution<> i_val_dist(min_range, max_range);
+      static const boost::random::uniform_int_distribution<> i_exp_dist(std::numeric_limits<double>::min_exponent, std::numeric_limits<double>::max_exponent - 2 - std::numeric_limits<int>::digits);
+      int iv = i_val_dist(small_gen);
+      int eval = i_exp_dist(small_gen);
+      double dv = iv;
+      dv = ldexp(dv, eval);
+      cppr = dv;
+      cppr2 = iv;
+      cpp_int cppi = 1;
+      cppi <<= abs(eval);
+      if(eval < 0)
+         cppr2 /= cppi;
+      else
+         cppr2 *= cppi;
+      BOOST_CHECK_EQUAL(cppr, cppr2);
+      //
+      // Again but with bigger numbers:
+      //
+      cpp_int cppi2 = gen();
+      number<cpp_bin_float<1030> > cppbf(cppi2);
+      cppbf = ldexp(cppbf, eval);
+      cppr.assign(cppbf);
+      cppr2 = cppi2;
+      if(eval < 0)
+         cppr2 /= cppi;
+      else
+         cppr2 *= cppi;
+      BOOST_CHECK_EQUAL(cppr, cppr2);
+      //
+      // MSVC will compile either the code above, or
+      // the code below, but not both in the same file.
+      // Other compilers including Intel in msvc-compatibity
+      // mode have no such difficulty.  Indeed the fact that
+      // the presence of the code below causes the code above to
+      // fail to compile strongly suggests a compiler bug.
+      //
+#if !defined(BOOST_MSVC)
+      //
+      // Again but with bigger base 10 numbers:
+      //
+      number<cpp_dec_float<std::numeric_limits<int1024_t>::digits10 + 2> > cppdec2(cppi2);
+      cppdec2 = scalbn(cppdec2, eval);
+      cppr.assign(cppdec2);
+      cppr2 = cppi2;
+      cppi = 10;
+      cppi = pow(cppi, abs(eval));
+      if(eval < 0)
+         cppr2 /= cppi;
+      else
+         cppr2 *= cppi;
+      BOOST_CHECK_EQUAL(cppr, cppr2);
+#endif
    }
 
    return boost::report_errors();

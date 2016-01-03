@@ -29,23 +29,25 @@ namespace boost { namespace property_tree { namespace json_parser
         typename std::basic_string<Ch>::const_iterator e = s.end();
         while (b != e)
         {
+            typedef typename make_unsigned<Ch>::type UCh;
+            UCh c(*b);
             // This assumes an ASCII superset. But so does everything in PTree.
             // We escape everything outside ASCII, because this code can't
             // handle high unicode characters.
-            if (*b == 0x20 || *b == 0x21 || (*b >= 0x23 && *b <= 0x2E) ||
-                (*b >= 0x30 && *b <= 0x5B) || (*b >= 0x5D && *b <= 0xFF))
+            if (c == 0x20 || c == 0x21 || (c >= 0x23 && c <= 0x2E) ||
+                (c >= 0x30 && c <= 0x5B) || (c >= 0x5D && c <= 0xFF))
                 result += *b;
             else if (*b == Ch('\b')) result += Ch('\\'), result += Ch('b');
             else if (*b == Ch('\f')) result += Ch('\\'), result += Ch('f');
             else if (*b == Ch('\n')) result += Ch('\\'), result += Ch('n');
             else if (*b == Ch('\r')) result += Ch('\\'), result += Ch('r');
+            else if (*b == Ch('\t')) result += Ch('\\'), result += Ch('t');
             else if (*b == Ch('/')) result += Ch('\\'), result += Ch('/');
             else if (*b == Ch('"'))  result += Ch('\\'), result += Ch('"');
             else if (*b == Ch('\\')) result += Ch('\\'), result += Ch('\\');
             else
             {
                 const char *hexdigits = "0123456789ABCDEF";
-                typedef typename make_unsigned<Ch>::type UCh;
                 unsigned long u = (std::min)(static_cast<unsigned long>(
                                                  static_cast<UCh>(*b)),
                                              0xFFFFul);
@@ -93,7 +95,8 @@ namespace boost { namespace property_tree { namespace json_parser
                     stream << Ch(',');
                 if (pretty) stream << Ch('\n');
             }
-            stream << Str(4 * indent, Ch(' ')) << Ch(']');
+            if (pretty) stream << Str(4 * indent, Ch(' '));
+            stream << Ch(']');
 
         }
         else
@@ -106,12 +109,7 @@ namespace boost { namespace property_tree { namespace json_parser
             {
                 if (pretty) stream << Str(4 * (indent + 1), Ch(' '));
                 stream << Ch('"') << create_escapes(it->first) << Ch('"') << Ch(':');
-                if (pretty) {
-                    if (it->second.empty())
-                        stream << Ch(' ');
-                    else
-                        stream << Ch('\n') << Str(4 * (indent + 1), Ch(' '));
-                }
+                if (pretty) stream << Ch(' ');
                 write_json_helper(stream, it->second, indent + 1, pretty);
                 if (boost::next(it) != pt.end())
                     stream << Ch(',');

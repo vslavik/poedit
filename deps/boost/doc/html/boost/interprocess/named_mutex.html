@@ -35,78 +35,78 @@
 <span class="keyword">class</span> <a class="link" href="named_mutex.html" title="Class named_mutex">named_mutex</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="named_mutex.html#boost.interprocess.named_mutexconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="named_mutex.html#idp28358152-bb"><span class="identifier">named_mutex</span></a><span class="special">(</span><a class="link" href="create_only_t.html" title="Struct create_only_t">create_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> 
+  <a class="link" href="named_mutex.html#idp56847216-bb"><span class="identifier">named_mutex</span></a><span class="special">(</span><a class="link" href="create_only_t.html" title="Struct create_only_t">create_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> 
               <span class="keyword">const</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a> <span class="special">&amp;</span> <span class="special">=</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="named_mutex.html#idp28360600-bb"><span class="identifier">named_mutex</span></a><span class="special">(</span><a class="link" href="open_or_create_t.html" title="Struct open_or_create_t">open_or_create_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> 
+  <a class="link" href="named_mutex.html#idp56852208-bb"><span class="identifier">named_mutex</span></a><span class="special">(</span><a class="link" href="open_or_create_t.html" title="Struct open_or_create_t">open_or_create_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> 
               <span class="keyword">const</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a> <span class="special">&amp;</span> <span class="special">=</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="named_mutex.html#idp28364344-bb"><span class="identifier">named_mutex</span></a><span class="special">(</span><a class="link" href="open_only_t.html" title="Struct open_only_t">open_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="named_mutex.html#idp28365864-bb"><span class="special">~</span><span class="identifier">named_mutex</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="named_mutex.html#idp56859488-bb"><span class="identifier">named_mutex</span></a><span class="special">(</span><a class="link" href="open_only_t.html" title="Struct open_only_t">open_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="named_mutex.html#idp56862560-bb"><span class="special">~</span><span class="identifier">named_mutex</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="named_mutex.html#idp28353336-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="named_mutex.html#idp28353544-bb"><span class="identifier">unlock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="named_mutex.html#idp28354248-bb"><span class="identifier">lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="named_mutex.html#idp28355400-bb"><span class="identifier">try_lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="named_mutex.html#idp28356584-bb"><span class="identifier">timed_lock</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="named_mutex.html#idp56838176-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="named_mutex.html#idp56838736-bb"><span class="identifier">unlock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="named_mutex.html#idp56840016-bb"><span class="identifier">lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="named_mutex.html#idp56842096-bb"><span class="identifier">try_lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="named_mutex.html#idp56844224-bb"><span class="identifier">timed_lock</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="named_mutex.html#idp28366472-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="named_mutex.html#idp28366680-bb"><span class="identifier">remove</span></a><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="named_mutex.html#idp56863600-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="named_mutex.html#idp56864160-bb"><span class="identifier">remove</span></a><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp119777176"></a><h2>Description</h2>
+<a name="idp243294032"></a><h2>Description</h2>
 <p>A mutex with a global name, so it can be found from different processes. This mutex can't be placed in shared memory, and each process should have it's own <a class="link" href="named_mutex.html" title="Class named_mutex">named_mutex</a>. </p>
 <div class="refsect2">
-<a name="idp119778136"></a><h3>
+<a name="idp243295760"></a><h3>
 <a name="boost.interprocess.named_mutexconstruct-copy-destruct"></a><code class="computeroutput">named_mutex</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp28358152-bb"></a><span class="identifier">named_mutex</span><span class="special">(</span><a class="link" href="create_only_t.html" title="Struct create_only_t">create_only_t</a> create_only<span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">,</span> 
+<pre class="literallayout"><a name="idp56847216-bb"></a><span class="identifier">named_mutex</span><span class="special">(</span><a class="link" href="create_only_t.html" title="Struct create_only_t">create_only_t</a> create_only<span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">,</span> 
             <span class="keyword">const</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a> <span class="special">&amp;</span> perm <span class="special">=</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Creates a global mutex with a name. Throws <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> on error. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp28360600-bb"></a><span class="identifier">named_mutex</span><span class="special">(</span><a class="link" href="open_or_create_t.html" title="Struct open_or_create_t">open_or_create_t</a> open_or_create<span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">,</span> 
+<pre class="literallayout"><a name="idp56852208-bb"></a><span class="identifier">named_mutex</span><span class="special">(</span><a class="link" href="open_or_create_t.html" title="Struct open_or_create_t">open_or_create_t</a> open_or_create<span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">,</span> 
             <span class="keyword">const</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a> <span class="special">&amp;</span> perm <span class="special">=</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Opens or creates a global mutex with a name. If the mutex is created, this call is equivalent to <code class="computeroutput"><a class="link" href="named_mutex.html" title="Class named_mutex">named_mutex</a></code>(<code class="computeroutput"><a class="link" href="create_only_t.html" title="Struct create_only_t">create_only_t</a></code>, ... ) If the mutex is already created, this call is equivalent <code class="computeroutput"><a class="link" href="named_mutex.html" title="Class named_mutex">named_mutex</a></code>(<code class="computeroutput"><a class="link" href="open_only_t.html" title="Struct open_only_t">open_only_t</a></code>, ... ) Does not throw </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp28364344-bb"></a><span class="identifier">named_mutex</span><span class="special">(</span><a class="link" href="open_only_t.html" title="Struct open_only_t">open_only_t</a> open_only<span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp56859488-bb"></a><span class="identifier">named_mutex</span><span class="special">(</span><a class="link" href="open_only_t.html" title="Struct open_only_t">open_only_t</a> open_only<span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">)</span><span class="special">;</span></pre>
 <p>Opens a global mutex with a name if that mutex is previously created. If it is not previously created this function throws <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code>. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp28365864-bb"></a><span class="special">~</span><span class="identifier">named_mutex</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp56862560-bb"></a><span class="special">~</span><span class="identifier">named_mutex</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Destroys *this and indicates that the calling process is finished using the resource. The destructor function will deallocate any system resources allocated by the system for use by this process for this resource. The resource can still be opened again calling the open constructor overload. To erase the resource from the system use remove(). </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp119802280"></a><h3>
-<a name="idp28353336-bb"></a><code class="computeroutput">named_mutex</code> public member functions</h3>
+<a name="idp243343568"></a><h3>
+<a name="idp56838176-bb"></a><code class="computeroutput">named_mutex</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp28353544-bb"></a><span class="identifier">unlock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp56838736-bb"></a><span class="identifier">unlock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Unlocks a previously locked mutex. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp28354248-bb"></a><span class="identifier">lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp56840016-bb"></a><span class="identifier">lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Locks the mutex, sleeps when the mutex is already locked. Throws <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> if a severe error is found </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp28355400-bb"></a><span class="identifier">try_lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp56842096-bb"></a><span class="identifier">try_lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Tries to lock the mutex, returns false when the mutex is already locked, returns true when success. Throws <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> if a severe error is found </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp28356584-bb"></a><span class="identifier">timed_lock</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span> abs_time<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp56844224-bb"></a><span class="identifier">timed_lock</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span> abs_time<span class="special">)</span><span class="special">;</span></pre>
 <p>Tries to lock the the mutex until time abs_time, Returns false when timeout expires, returns true when locks. Throws <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> if a severe error is found </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp119816872"></a><h3>
-<a name="idp28366472-bb"></a><code class="computeroutput">named_mutex</code> public static functions</h3>
+<a name="idp243372560"></a><h3>
+<a name="idp56863600-bb"></a><code class="computeroutput">named_mutex</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp28366680-bb"></a><span class="identifier">remove</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp56864160-bb"></a><span class="identifier">remove</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">)</span><span class="special">;</span></pre>
 <p>Erases a named mutex from the system. Returns false on error. Never throws. </p>
 </li></ol></div>
 </div>

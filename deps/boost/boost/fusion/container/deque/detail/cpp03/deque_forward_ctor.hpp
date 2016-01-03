@@ -13,7 +13,7 @@
 #error "C++03 only! This file should not have been included"
 #endif
 
-#define FUSION_DEQUE_FORWARD_CTOR_FORWARD(z, n, _)    std::forward<T_##n>(t##n)
+#define FUSION_DEQUE_FORWARD_CTOR_FORWARD(z, n, _)    BOOST_FUSION_FWD_ELEM(T_##n, t##n)
 
 #include <boost/preprocessor/iterate.hpp>
 #include <boost/preprocessor/repetition/enum_shifted_params.hpp>
@@ -30,22 +30,39 @@
 
 #define N BOOST_PP_ITERATION()
 
-#if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
-deque(BOOST_PP_ENUM_BINARY_PARAMS(N, typename add_reference<typename add_const<T, >::type>::type t))
+#if defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES)
+FUSION_HASH if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+#endif
+#if defined(BOOST_NO_CXX11_RVALUE_REFERENCES) || \
+    (defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES))
+BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+deque(BOOST_PP_ENUM_BINARY_PARAMS(N, typename detail::call_param<T, >::type t))
     : base(detail::deque_keyed_values<BOOST_PP_ENUM_PARAMS(N, T)>::construct(BOOST_PP_ENUM_PARAMS(N, t)))
 {}
+#endif
+#if defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES)
+FUSION_HASH endif
+#endif
 
-#else
-
+#if defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES)
+FUSION_HASH if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+#endif
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) || \
+    (defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES))
+BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
 deque(BOOST_PP_ENUM_BINARY_PARAMS(N, T, const& t))
     : base(detail::deque_keyed_values<BOOST_PP_ENUM_PARAMS(N, T)>::construct(BOOST_PP_ENUM_PARAMS(N, t)))
 {}
 
 template <BOOST_PP_ENUM_PARAMS(N, typename T_)>
+BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
 deque(BOOST_PP_ENUM_BINARY_PARAMS(N, T_, && t))
     : base(detail::deque_keyed_values<BOOST_PP_ENUM_PARAMS(N, T)>::
       forward_(BOOST_PP_ENUM(N, FUSION_DEQUE_FORWARD_CTOR_FORWARD, _)))
 {}
+#endif
+#if defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES)
+FUSION_HASH endif
 #endif
 
 #undef N

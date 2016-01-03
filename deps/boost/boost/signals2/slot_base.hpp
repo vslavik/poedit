@@ -29,8 +29,9 @@ namespace boost
     namespace detail
     {
       class tracked_objects_visitor;
+      class trackable_pointee;
 
-      typedef boost::variant<boost::weak_ptr<void>, detail::foreign_void_weak_ptr > void_weak_ptr_variant;
+      typedef boost::variant<boost::weak_ptr<trackable_pointee>, boost::weak_ptr<void>, detail::foreign_void_weak_ptr > void_weak_ptr_variant;
       typedef boost::variant<boost::shared_ptr<void>, detail::foreign_void_shared_ptr > void_shared_ptr_variant;
       class lock_weak_ptr_visitor
       {
@@ -40,6 +41,12 @@ namespace boost
         result_type operator()(const WeakPtr &wp) const
         {
           return wp.lock();
+        }
+        // overload to prevent incrementing use count of shared_ptr associated
+        // with signals2::trackable objects
+        result_type operator()(const weak_ptr<trackable_pointee> &) const
+        {
+          return boost::shared_ptr<void>();
         }
       };
       class expired_weak_ptr_visitor

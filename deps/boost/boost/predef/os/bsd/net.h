@@ -1,5 +1,5 @@
 /*
-Copyright Redshift Software, Inc. 2012-2013
+Copyright Rene Rivera 2012-2013
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE_1_0.txt or copy at
 http://www.boost.org/LICENSE_1_0.txt)
@@ -31,9 +31,12 @@ http://www.boost.org/LICENSE_1_0.txt)
 
 #define BOOST_OS_BSD_NET BOOST_VERSION_NUMBER_NOT_AVAILABLE
 
-#if defined(__NETBSD__) || defined(__NetBSD__)
-#   ifndef BOOST_OS_BSD
+#if !defined(BOOST_PREDEF_DETAIL_OS_DETECTED) && ( \
+    defined(__NETBSD__) || defined(__NetBSD__) \
+    )
+#   ifndef BOOST_OS_BSD_AVAILABLE
 #       define BOOST_OS_BSD BOOST_VERSION_NUMBER_AVAILABLE
+#       define BOOST_OS_BSD_AVAILABLE
 #   endif
 #   undef BOOST_OS_BSD_NET
 #   if defined(__NETBSD__)
@@ -70,6 +73,7 @@ http://www.boost.org/LICENSE_1_0.txt)
 
 #if BOOST_OS_BSD_NET
 #   define BOOST_OS_BSD_NET_AVAILABLE
+#   include <boost/predef/detail/os_detected.h>
 #endif
 
 #define BOOST_OS_BSD_NET_NAME "DragonFly BSD"

@@ -11,6 +11,14 @@
 #ifndef BOOST_INTERPROCESS_DETAIL_WINDOWS_CONDITION_HPP
 #define BOOST_INTERPROCESS_DETAIL_WINDOWS_CONDITION_HPP
 
+#ifndef BOOST_CONFIG_HPP
+#  include <boost/config.hpp>
+#endif
+#
+#if defined(BOOST_HAS_PRAGMA_ONCE)
+#  pragma once
+#endif
+
 #include <boost/interprocess/detail/config_begin.hpp>
 #include <boost/interprocess/detail/workaround.hpp>
 #include <boost/interprocess/detail/posix_time_types_wrk.hpp>
@@ -38,7 +46,11 @@ class windows_condition
    {}
 
    ~windows_condition()
-   {}
+   {
+      //Notify all waiting threads
+      //to allow POSIX semantics on condition destruction
+      this->notify_all();
+   }
 
    void notify_one()
    {  m_condition_data.notify_one();   }

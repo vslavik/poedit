@@ -156,6 +156,7 @@ namespace client
                     return stack_ptr[-1];
             }
         }
+        return -1;
     }
 }
 

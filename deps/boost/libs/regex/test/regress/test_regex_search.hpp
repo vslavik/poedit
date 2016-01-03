@@ -476,7 +476,10 @@ void test(boost::basic_regex<charT, traits>& r, const test_regex_search_tag&)
 {
    const std::basic_string<charT>& expression = test_info<charT>::expression();
    boost::regex_constants::syntax_option_type syntax_options = test_info<charT>::syntax_options();
-   try{
+#ifndef BOOST_NO_EXCEPTIONS
+   try
+#endif
+   {
       r.assign(expression, syntax_options);
       if(r.status())
       {
@@ -494,6 +497,7 @@ void test(boost::basic_regex<charT, traits>& r, const test_regex_search_tag&)
       //
       // Verify sub-expression locations:
       //
+#ifndef BOOST_NO_EXCEPTIONS
       if((syntax_options & boost::regbase::save_subexpression_location) == 0)
       {
          bool have_except = false;
@@ -510,8 +514,9 @@ void test(boost::basic_regex<charT, traits>& r, const test_regex_search_tag&)
             BOOST_REGEX_TEST_ERROR("Expected std::out_of_range error was not found.", charT);
          }
       }
+#endif
       r.assign(expression, syntax_options | boost::regbase::save_subexpression_location);
-      for(std::size_t i = 1; i < r.mark_count(); ++i)
+      for(std::size_t i = 0; i < r.mark_count(); ++i)
       {
          std::pair<const charT*, const charT*> p = r.subexpression(i);
          if(*p.first != '(')
@@ -524,6 +529,7 @@ void test(boost::basic_regex<charT, traits>& r, const test_regex_search_tag&)
          }
       }
    }
+#ifndef BOOST_NO_EXCEPTIONS
    catch(const boost::bad_expression& e)
    {
       BOOST_REGEX_TEST_ERROR("Expression did not compile when it should have done: " << e.what(), charT);
@@ -540,7 +546,7 @@ void test(boost::basic_regex<charT, traits>& r, const test_regex_search_tag&)
    {
       BOOST_REGEX_TEST_ERROR("Received an unexpected exception of unknown type", charT);
    }
-
+#endif
 }
 
 

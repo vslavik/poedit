@@ -5,6 +5,11 @@
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
+// This file was modified by Oracle on 2014.
+// Modifications copyright (c) 2014 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
 
@@ -30,6 +35,15 @@
 #include <boost/geometry/io/wkt/read.hpp>
 
 
+template <typename Poly>
+void test_order_closure(bg::order_selector expected_order, bg::closure_selector exptected_closure)
+{
+    bg::order_selector order = bg::point_order<Poly>::value;
+    bg::closure_selector closure = bg::closure<Poly>::value;
+
+    BOOST_CHECK_EQUAL(order, expected_order);
+    BOOST_CHECK_EQUAL(closure, exptected_closure);
+}
 
 
 template <typename P>
@@ -64,6 +78,17 @@ void test_all()
     test_ring<P>("POLYGON((0 0,0 3,3 3,3 0,0 0),(1 1,1 2,2 2,2 1,1 1))", 5, 1, 5);
     test_ring<P>("POLYGON((0 0,0 3,3 3,3 0,0 0),(1 1,2 2,2 1,1 1),(1 1,1 2,2 2,1 1))", 5, 2, 4);
     test_ring<P>("POLYGON((0 0,0 3,3 3,3 0,0 0))", 5, 0, 0);
+
+    test_order_closure< bg::model::polygon<P, true, true> >(bg::clockwise, bg::closed);
+    test_order_closure< bg::model::polygon<P, true, false> >(bg::clockwise, bg::open);
+    test_order_closure< bg::model::polygon<P, false, true> >(bg::counterclockwise, bg::closed);
+    test_order_closure< bg::model::polygon<P, false, false> >(bg::counterclockwise, bg::open);
+
+    test_order_closure< bg::model::polygon<P> *>(bg::clockwise, bg::closed);
+    test_order_closure< bg::model::polygon<P> &>(bg::clockwise, bg::closed);
+    test_order_closure< bg::model::polygon<P> const>(bg::clockwise, bg::closed);
+    test_order_closure< bg::model::polygon<P> *&>(bg::clockwise, bg::closed);
+    test_order_closure< const bg::model::polygon<P> *>(bg::clockwise, bg::closed);
 }
 
 

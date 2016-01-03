@@ -11,7 +11,7 @@
 #ifndef BOOST_INTERPROCESS_HEAP_ALLOCATOR_V1_HPP
 #define BOOST_INTERPROCESS_HEAP_ALLOCATOR_V1_HPP
 
-#if (defined _MSC_VER) && (_MSC_VER >= 1200)
+#if defined (_MSC_VER)
 #  pragma once
 #endif
 
@@ -25,10 +25,7 @@
 #include <boost/interprocess/detail/utilities.hpp>
 #include <boost/interprocess/containers/version_type.hpp>
 #include <boost/interprocess/exceptions.hpp>
-#include <memory>
-#include <algorithm>
-#include <cstddef>
-#include <stdexcept>
+#include <boost/move/adl_move_swap.hpp>
 
 //!\file
 //!Describes an heap_allocator_v1 that allocates portions of fixed size
@@ -141,7 +138,7 @@ class heap_allocator_v1
    //!Swap segment manager. Does not throw. If each heap_allocator_v1 is placed in
    //!different memory segments, the result is undefined.
    friend void swap(self_t &alloc1, self_t &alloc2)
-   {  ipcdetail::do_swap(alloc1.mp_mngr, alloc2.mp_mngr);   }
+   {  ::boost::adl_move_swap(alloc1.mp_mngr, alloc2.mp_mngr);   }
 };
 
 //!Equality test for same type of heap_allocator_v1

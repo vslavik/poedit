@@ -69,7 +69,7 @@ static const std::unordered_map<std::string, std::string> isoLanguages = {
     { "Irish", "ga" },
     { "Italian", "it" },
     { "Japanese", "ja" },
-    { "Javanese", "jw" },
+    { "Javanese", "jv" },
     { "Kalaallisut", "kl" },
     { "Kannada", "kn" },
     { "Kashmiri", "ks" },

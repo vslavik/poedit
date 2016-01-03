@@ -221,7 +221,7 @@ and enum types to double:
 An improved `std::min` function could be written like this:
 
    template <class T, class U>
-   typename __common_type<T, U>::type min(T t, T u)
+   typename __common_type<T, U>::type min(T t, U u)
    {
       return t < u ? t : u;
    }

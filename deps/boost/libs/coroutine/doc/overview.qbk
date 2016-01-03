@@ -8,8 +8,7 @@
 [section:overview Overview]
 
 __boost_coroutine__ provides templates for generalized subroutines which allow
-multiple entry points for suspending and resuming execution at certain
-locations.
+suspending and resuming execution at certain locations.
 It preserves the local state of execution and allows re-entering subroutines more
 than once (useful if state must be kept across function calls).
 
@@ -21,10 +20,6 @@ cooperative (programmer controls when a switch will happen). The kernel is not
 involved in the coroutine switches.
 
 The implementation uses __boost_context__ for context switching.
-
-This library is a follow-up on
-[@http://www.crystalclearsoftware.com/soc/coroutine/ Boost.Coroutine]
-by Giovanni P. Deretta.
 
 In order to use the classes and functions described here, you can either include
 the specific headers specified by the descriptions of each class or function, or

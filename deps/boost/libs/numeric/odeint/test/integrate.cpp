@@ -6,8 +6,8 @@
  This file tests the integrate function and its variants.
  [end_description]
 
- Copyright 2009-2012 Karsten Ahnert
- Copyright 2009-2012 Mario Mulansky
+ Copyright 2011-2012 Mario Mulansky
+ Copyright 2011-2012 Karsten Ahnert
 
  Distributed under the Boost Software License, Version 1.0.
  (See accompanying file LICENSE_1_0.txt or
@@ -32,10 +32,17 @@
 #include <boost/mpl/vector.hpp>
 
 // nearly everything from odeint is used in these tests
+#ifndef ODEINT_INTEGRATE_ITERATOR
 #include <boost/numeric/odeint/integrate/integrate_const.hpp>
 #include <boost/numeric/odeint/integrate/integrate_adaptive.hpp>
 #include <boost/numeric/odeint/integrate/integrate_times.hpp>
 #include <boost/numeric/odeint/integrate/integrate_n_steps.hpp>
+#else
+#include <boost/numeric/odeint/iterator/integrate/integrate_const.hpp>
+#include <boost/numeric/odeint/iterator/integrate/integrate_adaptive.hpp>
+#include <boost/numeric/odeint/iterator/integrate/integrate_times.hpp>
+#include <boost/numeric/odeint/iterator/integrate/integrate_n_steps.hpp>
+#endif
 #include <boost/numeric/odeint/stepper/euler.hpp>
 #include <boost/numeric/odeint/stepper/modified_midpoint.hpp>
 #include <boost/numeric/odeint/stepper/runge_kutta4.hpp>
@@ -96,12 +103,10 @@ struct perform_integrate_const_test
 
         std::vector< value_type > times;
 
-        integrate_const( Stepper() , lorenz , x , 0.0 , t_end ,
-                                        dt , push_back_time( times , x_end ) );
+        size_t steps = integrate_const( Stepper() , lorenz , x , 0.0 , t_end ,
+                         dt , push_back_time( times , x_end ) );
 
-        // int steps = times.size()-1;
-
-        //std::cout << t_end << " (" << dt << "), " << steps << " , " << times.size() << " , " << 10.0+dt*steps << "=" << x_end[0] << std::endl;
+        std::cout << t_end << " (" << dt << "), " << steps << " , " << times.size() << " , " << 10.0+dt*steps << "=" << x_end[0] << std::endl;
 
         BOOST_CHECK_EQUAL( static_cast<int>(times.size()) , static_cast<int>(floor(t_end/dt))+1 );
 
@@ -130,10 +135,10 @@ struct perform_integrate_adaptive_test
 
         std::vector< value_type > times;
 
-        size_t steps = integrate_adaptive( Stepper() , *lorenz , x , 0.0 , t_end ,
+        size_t steps = integrate_adaptive( Stepper() , lorenz , x , 0.0 , t_end ,
                                         dt , push_back_time( times , x_end ) );
 
-//        std::cout << t_end << " , " << steps << " , " << times.size() << " , " << 10.0+dt*steps << "=" << x_end[0] << std::endl;
+        std::cout << t_end << " , " << steps << " , " << times.size() << " , " << dt << " , " << 10.0+t_end << "=" << x_end[0] << std::endl;
 
         BOOST_CHECK_EQUAL( times.size() , steps+1 );
 
@@ -161,8 +166,8 @@ struct perform_integrate_times_test
         std::vector< double > times;
 
         std::vector< double > obs_times( abs(n) );
-        for( int i=0 ; boost::numeric::odeint::detail::less_with_sign( i ,
-                       static_cast<int>(obs_times.size()) ,
+        for( int i=0 ; boost::numeric::odeint::detail::less_with_sign( static_cast<double>(i) ,
+                       static_cast<double>(obs_times.size()) ,
                        dt ) ; i+=dn )
         {
             obs_times[i] = i;

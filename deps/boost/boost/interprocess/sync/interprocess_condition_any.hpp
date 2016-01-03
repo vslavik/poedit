@@ -11,11 +11,15 @@
 #ifndef BOOST_INTERPROCESS_CONDITION_ANY_HPP
 #define BOOST_INTERPROCESS_CONDITION_ANY_HPP
 
-#if (defined _MSC_VER) && (_MSC_VER >= 1200)
+#ifndef BOOST_CONFIG_HPP
+#  include <boost/config.hpp>
+#endif
+#
+#if defined(BOOST_HAS_PRAGMA_ONCE)
 #  pragma once
 #endif
 
-/// @cond
+#if !defined(BOOST_INTERPROCESS_DOXYGEN_INVOKED)
 
 #include <boost/interprocess/detail/config_begin.hpp>
 #include <boost/interprocess/detail/workaround.hpp>
@@ -26,15 +30,19 @@
 #include <boost/interprocess/exceptions.hpp>
 #include <boost/interprocess/sync/detail/condition_any_algorithm.hpp>
 
-/// @endcond
+#endif   //#ifndef BOOST_INTERPROCESS_DOXYGEN_INVOKED
 
 //!\file
 //!Describes process-shared variables interprocess_condition_any class
 
 namespace boost {
 
+#if !defined(BOOST_INTERPROCESS_DOXYGEN_INVOKED)
+
 namespace posix_time
 {  class ptime;   }
+
+#endif   //#if !defined(BOOST_INTERPROCESS_DOXYGEN_INVOKED)
 
 namespace interprocess {
 
@@ -48,10 +56,10 @@ namespace interprocess {
 //!
 //!Unlike std::condition_variable_any in C++11, it is NOT safe to invoke the destructor if all
 //!threads have been only notified. It is required that they have exited their respective wait
-//!functions. 
+//!functions.
 class interprocess_condition_any
 {
-   /// @cond
+   #if !defined(BOOST_INTERPROCESS_DOXYGEN_INVOKED)
    //Non-copyable
    interprocess_condition_any(const interprocess_condition_any &);
    interprocess_condition_any &operator=(const interprocess_condition_any &);
@@ -61,7 +69,7 @@ class interprocess_condition_any
       public:
       typedef interprocess_condition   condvar_type;
       typedef interprocess_mutex       mutex_type;
-   
+
       condvar_type &get_condvar() {  return m_cond;  }
       mutex_type   &get_mutex()   {  return m_mut; }
 
@@ -72,7 +80,7 @@ class interprocess_condition_any
 
    ipcdetail::condition_any_wrapper<members>   m_cond;
 
-   /// @endcond
+   #endif   //#ifndef BOOST_INTERPROCESS_DOXYGEN_INVOKED
    public:
    //!Constructs a interprocess_condition_any. On error throws interprocess_exception.
    interprocess_condition_any(){}

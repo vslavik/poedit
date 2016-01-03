@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2013 Free Software Foundation, Inc.
+# Copyright (C) 2002-2015 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -39,8 +39,12 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([gl_PROG_AR_RANLIB])
   AC_REQUIRE([AM_PROG_CC_C_O])
+  # Code from module absolute-header:
   # Code from module acl:
+  # Code from module acl-permissions:
   # Code from module acl-tests:
+  # Code from module alignof:
+  # Code from module alignof-tests:
   # Code from module alloca-opt:
   # Code from module alloca-opt-tests:
   # Code from module allocator:
@@ -121,6 +125,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module fdopen:
   # Code from module fdopen-tests:
   # Code from module fgetc-tests:
+  # Code from module file-has-acl:
+  # Code from module file-has-acl-tests:
   # Code from module file-ostream:
   # Code from module filename:
   # Code from module findprog:
@@ -193,6 +199,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module javaexec:
   # Code from module javaexec-script:
   # Code from module javaversion:
+  # Code from module langinfo:
+  # Code from module langinfo-tests:
   # Code from module largefile:
   AC_REQUIRE([AC_SYS_LARGEFILE])
   # Code from module libcroco:
@@ -274,7 +282,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module progname:
   # Code from module propername:
   # Code from module putenv:
-  # Code from module qacl:
+  # Code from module qcopy-acl:
+  # Code from module qset-acl:
   # Code from module quote:
   # Code from module quotearg:
   # Code from module quotearg-simple:
@@ -333,6 +342,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module ssize_t:
   # Code from module stat:
   # Code from module stat-tests:
+  # Code from module stdalign:
+  # Code from module stdalign-tests:
   # Code from module stdarg:
   dnl Some compilers (e.g., AIX 5.3 cc) need to be in c99 mode
   dnl for the builtin va_copy to work.  With Autoconf 2.60 or later,
@@ -411,6 +422,9 @@ AC_DEFUN([gl_EARLY],
   # Code from module uniconv/base:
   # Code from module uniconv/u8-conv-from-enc:
   # Code from module uniconv/u8-conv-from-enc-tests:
+  # Code from module unictype/base:
+  # Code from module unictype/ctype-space:
+  # Code from module unictype/ctype-space-tests:
   # Code from module unilbrk/base:
   # Code from module unilbrk/tables:
   # Code from module unilbrk/u8-possible-linebreaks:
@@ -503,6 +517,7 @@ AC_DEFUN([gl_INIT],
   m4_pushdef([gl_LIBSOURCES_DIR], [])
   gl_COMMON
   gl_source_base='gnulib-lib'
+  gl_FUNC_ACL
   gl_FUNC_ALLOCA
   gl_PROG_ANSI_CXX([CXX], [ANSICXX])
   gl_FUNC_ATEXIT
@@ -511,7 +526,6 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_ATEXIT
   fi
   gt_PREREQ_BACKUPFILE
-  gl_MODULE_INDICATOR([binary-io])
   BISON_I18N
   gl_BYTESWAP
   gl_CANONICALIZE_LGPL
@@ -603,7 +617,7 @@ AC_DEFUN([gl_INIT],
   fi
   gl_STDIO_MODULE_INDICATOR([getdelim])
   gl_FUNC_GETDTABLESIZE
-  if test $HAVE_GETDTABLESIZE = 0; then
+  if test $HAVE_GETDTABLESIZE = 0 || test $REPLACE_GETDTABLESIZE = 1; then
     AC_LIBOBJ([getdtablesize])
     gl_PREREQ_GETDTABLESIZE
   fi
@@ -670,6 +684,7 @@ AC_DEFUN([gl_INIT],
   AC_CONFIG_FILES([javacomp.sh:../build-aux/javacomp.sh.in])
   # You need to invoke gt_JAVAEXEC yourself, possibly with arguments.
   AC_CONFIG_FILES([javaexec.sh:../build-aux/javaexec.sh.in])
+  gl_LANGINFO_H
   AC_REQUIRE([gl_LARGEFILE])
   gl_LIBCROCO
   gl_LIBGLIB
@@ -830,7 +845,6 @@ AC_DEFUN([gl_INIT],
   m4_ifdef([AM_XGETTEXT_OPTION],
     [AM_][XGETTEXT_OPTION([--keyword='proper_name:1,\"This is a proper name. See the gettext manual, section Names.\"'])
      AM_][XGETTEXT_OPTION([--keyword='proper_name_utf8:1,\"This is a proper name. See the gettext manual, section Names.\"'])])
-  gl_FUNC_ACL
   gl_QUOTE
   gl_QUOTEARG
   gl_FUNC_RAISE
@@ -1040,18 +1054,21 @@ AC_DEFUN([gl_INIT],
   gl_HEADER_TIME_H
   gl_TLS
   gt_TMPDIR
-  gl_LIBUNISTRING_LIBHEADER([0.9], [uniconv.h])
+  gl_LIBUNISTRING_LIBHEADER([0.9.4], [uniconv.h])
   gl_LIBUNISTRING_MODULE([0.9], [uniconv/u8-conv-from-enc])
-  gl_LIBUNISTRING_LIBHEADER([0.9], [unilbrk.h])
+  gl_LIBUNISTRING_LIBHEADER([0.9.4], [unictype.h])
   AC_REQUIRE([AC_C_INLINE])
-  gl_LIBUNISTRING_MODULE([0.9.4], [unilbrk/u8-possible-linebreaks])
-  gl_LIBUNISTRING_MODULE([0.9.4], [unilbrk/u8-width-linebreaks])
-  gl_LIBUNISTRING_MODULE([0.9.4], [unilbrk/ulc-width-linebreaks])
-  gl_LIBUNISTRING_LIBHEADER([0.9], [uniname.h])
-  gl_LIBUNISTRING_MODULE([0.9], [uniname/uniname])
+  gl_LIBUNISTRING_MODULE([0.9.6], [unictype/ctype-space])
+  gl_LIBUNISTRING_LIBHEADER([0.9.4], [unilbrk.h])
+  AC_REQUIRE([AC_C_INLINE])
+  gl_LIBUNISTRING_MODULE([0.9.6], [unilbrk/u8-possible-linebreaks])
+  gl_LIBUNISTRING_MODULE([0.9.6], [unilbrk/u8-width-linebreaks])
+  gl_LIBUNISTRING_MODULE([0.9.6], [unilbrk/ulc-width-linebreaks])
+  gl_LIBUNISTRING_LIBHEADER([0.9.5], [uniname.h])
+  gl_LIBUNISTRING_MODULE([0.9.6], [uniname/uniname])
   gl_UNISTD_H
   gl_UNISTD_SAFER
-  gl_LIBUNISTRING_LIBHEADER([0.9.2], [unistr.h])
+  gl_LIBUNISTRING_LIBHEADER([0.9.4], [unistr.h])
   gl_MODULE_INDICATOR([unistr/u16-mbtouc])
   gl_LIBUNISTRING_MODULE([0.9], [unistr/u16-mbtouc])
   gl_LIBUNISTRING_MODULE([0.9], [unistr/u8-check])
@@ -1065,9 +1082,9 @@ AC_DEFUN([gl_INIT],
   gl_LIBUNISTRING_MODULE([0.9], [unistr/u8-prev])
   gl_MODULE_INDICATOR([unistr/u8-uctomb])
   gl_LIBUNISTRING_MODULE([0.9], [unistr/u8-uctomb])
-  gl_LIBUNISTRING_LIBHEADER([0.9], [unitypes.h])
-  gl_LIBUNISTRING_LIBHEADER([0.9], [uniwidth.h])
-  gl_LIBUNISTRING_MODULE([0.9.4], [uniwidth/width])
+  gl_LIBUNISTRING_LIBHEADER([0.9.4], [unitypes.h])
+  gl_LIBUNISTRING_LIBHEADER([0.9.4], [uniwidth.h])
+  gl_LIBUNISTRING_MODULE([0.9.6], [uniwidth/width])
   gl_FUNC_GLIBC_UNLOCKED_IO
   gl_FUNC_UNSETENV
   if test $HAVE_UNSETENV = 0 || test $REPLACE_UNSETENV = 1; then
@@ -1153,7 +1170,6 @@ changequote([, ])dnl
   AC_SUBST([gltests_WITNESS])
   gl_module_indicator_condition=$gltests_WITNESS
   m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [$gl_module_indicator_condition])
-  AC_CHECK_DECLS_ONCE([alarm])
   gl_FUNC_BTOWC
   if test $HAVE_BTOWC = 0 || test $REPLACE_BTOWC = 1; then
     AC_LIBOBJ([btowc])
@@ -1176,6 +1192,8 @@ changequote([, ])dnl
     gl_PREREQ_FDOPEN
   fi
   gl_STDIO_MODULE_INDICATOR([fdopen])
+  gl_FILE_HAS_ACL
+  AC_CHECK_DECLS_ONCE([alarm])
   gl_FUNC_FTELL
   if test $REPLACE_FTELL = 1; then
     AC_LIBOBJ([ftell])
@@ -1263,6 +1281,7 @@ changequote([, ])dnl
   fi
   gl_UNISTD_MODULE_INDICATOR([sleep])
   AC_CHECK_DECLS_ONCE([alarm])
+  gl_STDALIGN_H
   AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])
   dnl Check for prerequisites for memory fence checks.
@@ -1416,10 +1435,12 @@ AC_DEFUN([gl_FILE_LIST], [
   build-aux/snippet/warn-on-use.h
   doc/relocatable.texi
   lib/acl-errno-valid.c
+  lib/acl-internal.c
   lib/acl-internal.h
   lib/acl.h
   lib/acl_entries.c
   lib/addext.c
+  lib/alignof.h
   lib/alloca.in.h
   lib/allocator.c
   lib/allocator.h
@@ -1496,7 +1517,6 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/fd-ostream.oo.h
   lib/fd-safer-flag.c
   lib/fd-safer.c
-  lib/file-has-acl.c
   lib/file-ostream.oo.c
   lib/file-ostream.oo.h
   lib/filename.h
@@ -1518,6 +1538,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/fwriteerror.h
   lib/gcd.c
   lib/gcd.h
+  lib/get-permissions.c
   lib/getdelim.c
   lib/getdtablesize.c
   lib/getline.c
@@ -1586,6 +1607,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/javaversion.class
   lib/javaversion.h
   lib/javaversion.java
+  lib/langinfo.in.h
   lib/libcroco/cr-additional-sel.c
   lib/libcroco/cr-additional-sel.h
   lib/libcroco/cr-attr-sel.c
@@ -1818,6 +1840,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/sched.in.h
   lib/secure_getenv.c
   lib/set-acl.c
+  lib/set-permissions.c
   lib/setenv.c
   lib/setlocale.c
   lib/sh-quote.c
@@ -1900,6 +1923,10 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/trim.h
   lib/uniconv.in.h
   lib/uniconv/u8-conv-from-enc.c
+  lib/unictype.in.h
+  lib/unictype/bitmap.h
+  lib/unictype/ctype_space.c
+  lib/unictype/ctype_space.h
   lib/unilbrk.in.h
   lib/unilbrk/lbrkprop1.h
   lib/unilbrk/lbrkprop2.h
@@ -2050,6 +2077,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/java.m4
   m4/javacomp.m4
   m4/javaexec.m4
+  m4/langinfo_h.m4
   m4/largefile.m4
   m4/lcmessage.m4
   m4/lib-ld.m4
@@ -2098,6 +2126,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/nls.m4
   m4/no-c++.m4
   m4/nocrash.m4
+  m4/obstack.m4
   m4/off_t.m4
   m4/open.m4
   m4/opendir.m4
@@ -2140,6 +2169,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/spawn_h.m4
   m4/ssize_t.m4
   m4/stat.m4
+  m4/stdalign.m4
   m4/stdarg.m4
   m4/stdbool.m4
   m4/stddef_h.m4
@@ -2201,6 +2231,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/init.sh
   tests/macros.h
   tests/signature.h
+  tests/test-alignof.c
   tests/test-alloca-opt.c
   tests/test-areadlink.c
   tests/test-areadlink.h
@@ -2279,6 +2310,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-intprops.c
   tests/test-inttypes.c
   tests/test-iswblank.c
+  tests/test-langinfo.c
   tests/test-linkedhash_list.c
   tests/test-locale.c
   tests/test-localename.c
@@ -2374,6 +2406,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-spawn.c
   tests/test-stat.c
   tests/test-stat.h
+  tests/test-stdalign.c
   tests/test-stdbool.c
   tests/test-stddef.c
   tests/test-stdint.c
@@ -2403,6 +2436,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-term-ostream-xterm-88color.out
   tests/test-term-ostream-xterm-8bit.out
   tests/test-term-ostream-xterm-aix51.out
+  tests/test-term-ostream-xterm-basic-italic.out
   tests/test-term-ostream-xterm-basic.out
   tests/test-term-ostream-xterm-irix65.out
   tests/test-term-ostream-xterm-linux-debian.out
@@ -2442,8 +2476,13 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-xalloc-die.sh
   tests/test-xvasprintf.c
   tests/uniconv/test-u8-conv-from-enc.c
+  tests/unictype/test-ctype_space.c
+  tests/unictype/test-predicate-part1.h
+  tests/unictype/test-predicate-part2.h
   tests/unilbrk/test-u8-width-linebreaks.c
-  tests/uniname/UnicodeDataNames.txt
+  tests/uniname/HangulSyllableNames.txt
+  tests/uniname/NameAliases.txt
+  tests/uniname/UnicodeData.txt
   tests/uniname/test-uninames.c
   tests/uniname/test-uninames.sh
   tests/unistr/test-cmp.h
@@ -2460,6 +2499,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/btowc.c
   tests=lib/dup.c
   tests=lib/fdopen.c
+  tests=lib/file-has-acl.c
   tests=lib/fpucw.h
   tests=lib/ftell.c
   tests=lib/ftello.c
@@ -2477,6 +2517,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests=lib/read-file.h
   tests=lib/same-inode.h
   tests=lib/sleep.c
+  tests=lib/stdalign.in.h
   tests=lib/stdio-impl.h
   tests=lib/symlink.c
   tests=lib/unistr/u8-cmp.c

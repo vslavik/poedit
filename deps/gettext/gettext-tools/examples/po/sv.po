@@ -1,13 +1,13 @@
 # Swedish messages for gettext-examples.
-# Copyright © 2006 Yoyodyne, Inc.
-# Jan Djärv <jan.h.d@swipnet.se>, 2003, 2006
-# Revision: 1.9
+# Copyright © 2006, 2014 Yoyodyne, Inc. (msgids)
+# This file is distributed under the same license as the gettext package.
+# Jan Djärv <jan.h.d@swipnet.se>, 2003, 2006, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: gettext-examples 0.15-pre5\n"
+"Project-Id-Version: gettext-examples 0.19.4-rc1\n"
 "Report-Msgid-Bugs-To: bug-gnu-gettext@gnu.org\n"
-"POT-Creation-Date: 2009-08-16 12:22+0200\n"
-"PO-Revision-Date: 2006-07-04 12:39+0200\n"
+"POT-Creation-Date: 2015-07-15 10:39+0900\n"
+"PO-Revision-Date: 2014-12-23 09:18+0100\n"
 "Last-Translator: Jan Djärv <jan.h.d@swipnet.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -15,7 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: hello-c/hello.c:30 hello-c-gnome/hello.c:46 hello-c++/hello.cc:39
+#: hello-c/hello.c:30 hello-c-gnome/hello.c:46
+#: hello-c-gnome3/hello.desktop.in.in:5 hello-c++/hello.cc:39
 #: hello-c++-qt/hello.cc:45 hello-c++-kde/hellowindow.cc:42
 #: hello-c++-gnome/hello.cc:50 hello-c++-wxwidgets/hello.cc:68
 #: hello-objc/hello.m:30 hello-objc-gnustep/Hello.m:49
@@ -43,6 +44,41 @@ msgstr "Hej världen!"
 #, php-format
 msgid "This program is running as process number %d."
 msgstr "Detta program kör som process nummer %d."
+
+#: hello-c-gnome3/hello.c:79
+#, fuzzy, c-format
+msgid ""
+"<big>Hello world!</big>\n"
+"This program is running as process number <b>%d</b>."
+msgstr "Detta program kör som process nummer %d."
+
+#: hello-c-gnome3/hello.c:84
+msgid "<big><u>This is another text</u></big>"
+msgstr ""
+
+#: hello-c-gnome3/hello.c:86
+msgid "<big><i>This is yet another text</i></big>"
+msgstr ""
+
+#: hello-c-gnome3/hello.desktop.in.in:4
+msgid "Hello"
+msgstr "Hej"
+
+#: hello-c-gnome3/hello.ui:5
+msgid "Example Application"
+msgstr "Exempelprogram"
+
+#: hello-c-gnome3/hello.ui:33
+msgid "Update text"
+msgstr ""
+
+#: hello-c-gnome3/hello.gschema.xml:7
+msgid "Use XML markup"
+msgstr ""
+
+#: hello-c-gnome3/hello.gschema.xml:8
+msgid "Whether to use XML markup in the text."
+msgstr ""
 
 #: hello-c++-qt/hello.cc:52 hello-c++-kde/hellowindow.cc:49
 #: hello-smalltalk/hello.st.in:32 hello-ycp/hello.ycp:19
@@ -84,3 +120,9 @@ msgstr "Detta program kör som process nummer {0}."
 #, perl-brace-format
 msgid "This program is running as process number {pid}."
 msgstr "Detta program kör som process nummer {pid}."
+
+#~ msgid "Set label sensitive"
+#~ msgstr "Sätt etikett aktiv"
+
+#~ msgid "Whether to set the label sensitive."
+#~ msgstr "Om etikett ska sättas aktiv"

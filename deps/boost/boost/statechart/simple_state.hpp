@@ -50,7 +50,7 @@
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/static_assert.hpp>
-#include <boost/cast.hpp> // boost::polymorphic_downcast
+#include <boost/polymorphic_cast.hpp> // boost::polymorphic_downcast
 
 #include <cstddef> // std::size_t
 
@@ -527,7 +527,7 @@ class simple_state : public detail::simple_state_base_type< MostDerived,
           {
             pContext_->set_outermost_unstable_state(
               pOutermostUnstableState );
-            // fall through to next case intended
+            BOOST_FALLTHROUGH;
           }
           else
           {

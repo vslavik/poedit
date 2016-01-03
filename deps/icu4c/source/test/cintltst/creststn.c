@@ -1,11 +1,11 @@
 /********************************************************************
  * COPYRIGHT: 
- * Copyright (c) 1997-2013, International Business Machines Corporation and
+ * Copyright (c) 1997-2015, International Business Machines Corporation and
  * others. All Rights Reserved.
  ********************************************************************/
 /*******************************************************************************
 *
-* File CRESTST.C
+* File creststn.c
 *
 * Modification History:
 *        Name              Date               Description
@@ -271,7 +271,7 @@ static void TestErrorCodes(void) {
 
   if(U_SUCCESS(status) && r != NULL) {
     status = U_USING_DEFAULT_WARNING;
-    r2 = ures_getByKey(r, "LocaleScript", NULL, &status);  /* LocaleScript lives in ti */
+    r2 = ures_getByKey(r, "ExemplarCharacters", NULL, &status);  /* ExemplarCharacters lives in ti */
     checkStatus(__LINE__, U_USING_FALLBACK_WARNING, status);
   }
   ures_close(r);
@@ -288,6 +288,7 @@ static void TestErrorCodes(void) {
   ures_close(r);
   ures_close(r2);
 
+#if !UCONFIG_NO_COLLATION
   /** Now, with the collation bundle **/
  
   /* first bundle should return fallback warning */
@@ -326,6 +327,7 @@ static void TestErrorCodes(void) {
   checkStatus(__LINE__, U_USING_DEFAULT_WARNING, status);
   ures_close(r);
   ures_close(r2);
+#endif  /* !UCONFIG_NO_COLLATION */
 }
 
 static void TestAliasConflict(void) {
@@ -422,14 +424,10 @@ static void TestDecodedBundle(){
     /* pre-flight */
     int32_t num =0;
     const char *testdatapath = loadTestData(&error);
-    resB = ures_open(testdatapath, "iscii", &error);
+    resB = ures_open(testdatapath, "encoded", &error);
     srcFromRes=tres_getString(resB,-1,"str",&len,&error);
     if(U_FAILURE(error)){
-#if UCONFIG_NO_LEGACY_CONVERSION
-        log_info("Couldn't load iscii.bin from test data bundle, (because UCONFIG_NO_LEGACY_CONVERSION  is turned on)\n");
-#else
-        log_data_err("Could not find iscii.bin from test data bundle. Error: %s\n", u_errorName(error));
-#endif
+        log_data_err("Could not find encoded.res from test data bundle. Error: %s\n", u_errorName(error));
         ures_close(resB);
         return;
     }
@@ -920,11 +918,10 @@ static void TestEmptyBundle(){
 }
 
 static void TestBinaryCollationData(){
+#if !UCONFIG_NO_COLLATION 
     UErrorCode status=U_ZERO_ERROR;
     const char*      locale="te";
-#if !UCONFIG_NO_COLLATION 
     const char* testdatapath;
-#endif
     UResourceBundle *teRes = NULL;
     UResourceBundle *coll=NULL;
     UResourceBundle *binColl = NULL;
@@ -932,7 +929,6 @@ static void TestBinaryCollationData(){
     int32_t len=0;
     const char* action="testing the binary collaton data";
 
-#if !UCONFIG_NO_COLLATION 
     log_verbose("Testing binary collation data resource......\n");
 
     testdatapath=loadTestData(&status);
@@ -1407,6 +1403,7 @@ static void TestGetVersion(){
 
 
 static void TestGetVersionColl(){
+#if !UCONFIG_NO_COLLATION
     UVersionInfo minVersionArray = {0x00, 0x00, 0x00, 0x00};
     UVersionInfo maxVersionArray = {0x50, 0x80, 0xcf, 0xcf};
     UVersionInfo versionArray;
@@ -1418,7 +1415,18 @@ static void TestGetVersionColl(){
     int32_t locLen;
     const UChar* rules =NULL;
     int32_t len = 0;
-    
+
+    /* test NUL termination of UCARules */
+    resB = ures_open(U_ICUDATA_COLL,locName, &status);
+    rules = tres_getString(resB,-1,"UCARules",&len, &status);
+    if(!rules || U_FAILURE(status)) {
+        log_data_err("Could not load UCARules for locale %s\n", locName);
+        status = U_ZERO_ERROR;
+    } else if(u_strlen(rules) != len){
+        log_err("UCARules string not nul terminated! \n");
+    }
+    ures_close(resB);
+
     log_verbose("The ures_getVersion(%s) tests begin : \n", U_ICUDATA_COLL);
     locs = ures_openAvailableLocales(U_ICUDATA_COLL, &status);
     if (U_FAILURE(status)) {
@@ -1426,22 +1434,13 @@ static void TestGetVersionColl(){
        return;
     }
 
-    do{
+    for (;;) {
         log_verbose("Testing version number for locale %s\n", locName);
         resB = ures_open(U_ICUDATA_COLL,locName, &status);
         if (U_FAILURE(status)) {
             log_err("Resource bundle creation for locale %s:%s failed.: %s\n", U_ICUDATA_COLL, locName, myErrorName(status));
             ures_close(resB);
-            return;
-        }
-        /* test NUL termination of UCARules */
-        rules = tres_getString(resB,-1,"UCARules",&len, &status);
-        if(!rules || U_FAILURE(status)) {
-          log_data_err("Could not load UCARules for locale %s\n", locName);
-          continue;
-        }
-        if(u_strlen(rules) != len){
-            log_err("UCARules string not nul terminated! \n");
+            break;
         }
         ures_getVersion(resB, versionArray);
         for (i=0; i<4; ++i) {
@@ -1454,12 +1453,17 @@ static void TestGetVersionColl(){
             }
         }
         ures_close(resB);
-    } while((locName = uenum_next(locs,&locLen,&status))&&U_SUCCESS(status));
-    
-    if(U_FAILURE(status)) {
-        log_err("Err %s testing Collation locales.\n", u_errorName(status));
+        locName = uenum_next(locs, &locLen, &status);
+        if(U_FAILURE(status)) {
+            log_err("uenum_next(locs) error %s\n", u_errorName(status));
+            break;
+        }
+        if(locName == NULL) {
+            break;
+        }
     }
     uenum_close(locs);
+#endif  /* !UCONFIG_NO_COLLATION */
 }
 
 static void TestResourceBundles()
@@ -2120,7 +2124,7 @@ static void TestFallback()
         UResourceBundle* tResB;
         UResourceBundle* zoneResource;
         const UChar* version = NULL;
-        static const UChar versionStr[] = { 0x0032, 0x002E, 0x0030, 0x002E, 0x0039, 0x0030, 0x002E, 0x0036, 0x0031, 0x0000};
+        static const UChar versionStr[] = { 0x0032, 0x002E, 0x0031, 0x002E, 0x0036, 0x002E, 0x0036, 0x0039, 0x0000}; // 2.1.6.69
 
         if(err != U_ZERO_ERROR){
             log_data_err("Expected U_ZERO_ERROR when trying to test no_NO_NY aliased to nn_NO for Version err=%s\n",u_errorName(err));
@@ -2205,9 +2209,9 @@ static void TestResourceLevelAliasing(void) {
         status = U_ZERO_ERROR;
       }
       /* testing referencing/composed alias */
-      uk = ures_findResource("ja/LocaleScript/2", uk, &status);
+      uk = ures_findResource("ja/calendar/gregorian/DateTimePatterns/2", uk, &status);
       if((uk == NULL) || U_FAILURE(status)) {
-        log_err_status(status, "Couldn't findResource('ja/LocaleScript/2') err %s\n", u_errorName(status));
+        log_err_status(status, "Couldn't findResource('ja/calendar/gregorian/DateTimePatterns/2') err %s\n", u_errorName(status));
         goto cleanup;
       } 
       
@@ -2226,7 +2230,7 @@ static void TestResourceLevelAliasing(void) {
       }
       
       checkStatus(__LINE__, U_ZERO_ERROR, status);
-      tb = ures_getByKey(aliasB, "LocaleScript", tb, &status);
+      tb = ures_getByKey(aliasB, "DateTimePatterns", tb, &status);
       checkStatus(__LINE__, U_ZERO_ERROR, status);
       tb = ures_getByIndex(tb, 2, tb, &status);
       checkStatus(__LINE__, U_ZERO_ERROR, status);
@@ -2402,14 +2406,14 @@ static void TestDirectAccess(void) {
         }
     }
     
-    t = ures_findResource("ja/LocaleScript", t, &status);
+    t = ures_findResource("ja/ExemplarCharacters", t, &status);
     if(U_FAILURE(status)) {
         log_data_err("Couldn't access keyed resource, error %s\n", u_errorName(status));
         status = U_ZERO_ERROR;
     } else {
         key = ures_getKey(t);
-        if(strcmp(key, "LocaleScript")!=0) {
-            log_err("Got a strange key, expected 'LocaleScript', got %s\n", key);
+        if(strcmp(key, "ExemplarCharacters")!=0) {
+            log_err("Got a strange key, expected 'ExemplarCharacters', got %s\n", key);
         }
     }
     
@@ -2612,49 +2616,46 @@ static void TestGetFunctionalEquivalentOf(const char *path, const char *resName,
 }
 
 static void TestGetFunctionalEquivalent(void) {
+#if !UCONFIG_NO_COLLATION
     static const char * const collCases[] = {
         /*   avail   locale          equiv   */
         "f",    "sv_US_CALIFORNIA",               "sv",
         "f",    "zh_TW@collation=stroke",         "zh@collation=stroke", /* alias of zh_Hant_TW */
-        "t",    "zh_Hant_TW@collation=stroke",    "zh@collation=stroke",
+        "f",    "zh_Hant_TW@collation=stroke",    "zh@collation=stroke",
         "f",    "sv_CN@collation=pinyin",         "sv",
         "t",    "zh@collation=pinyin",            "zh",
         "f",    "zh_CN@collation=pinyin",         "zh", /* alias of zh_Hans_CN */
-        "t",    "zh_Hans_CN@collation=pinyin",    "zh",
+        "f",    "zh_Hans_CN@collation=pinyin",    "zh",
         "f",    "zh_HK@collation=pinyin",         "zh", /* alias of zh_Hant_HK */
-        "t",    "zh_Hant_HK@collation=pinyin",    "zh",
+        "f",    "zh_Hant_HK@collation=pinyin",    "zh",
         "f",    "zh_HK@collation=stroke",         "zh@collation=stroke", /* alias of zh_Hant_HK */
-        "t",    "zh_Hant_HK@collation=stroke",    "zh@collation=stroke",
+        "f",    "zh_Hant_HK@collation=stroke",    "zh@collation=stroke",
         "f",    "zh_HK",                          "zh@collation=stroke", /* alias of zh_Hant_HK */
-        "t",    "zh_Hant_HK",                     "zh@collation=stroke",
+        "f",    "zh_Hant_HK",                     "zh@collation=stroke",
         "f",    "zh_MO",                          "zh@collation=stroke", /* alias of zh_Hant_MO */
-        "t",    "zh_Hant_MO",                     "zh@collation=stroke",
+        "f",    "zh_Hant_MO",                     "zh@collation=stroke",
         "f",    "zh_TW_STROKE",                   "zh@collation=stroke",
-        "f",    "zh_TW_STROKE@collation=big5han", "zh@collation=big5han",
+        "f",    "zh_TW_STROKE@collation=pinyin",  "zh",
         "f",    "sv_CN@calendar=japanese",        "sv",
         "t",    "sv@calendar=japanese",           "sv",
-        "f",    "zh_TW@collation=big5han",        "zh@collation=big5han", /* alias of zh_Hant_TW */
-        "t",    "zh_Hant_TW@collation=big5han",   "zh@collation=big5han",
-        "f",    "zh_TW@collation=gb2312han",      "zh@collation=gb2312han", /* alias of zh_Hant_TW */
-        "t",    "zh_Hant_TW@collation=gb2312han", "zh@collation=gb2312han",
-        "f",    "zh_CN@collation=big5han",        "zh@collation=big5han", /* alias of zh_Hans_CN */
-        "t",    "zh_Hans_CN@collation=big5han",   "zh@collation=big5han",
-        "f",    "zh_CN@collation=gb2312han",      "zh@collation=gb2312han", /* alias of zh_Hans_CN */
-        "t",    "zh_Hans_CN@collation=gb2312han", "zh@collation=gb2312han",
-        "t",    "zh@collation=big5han",           "zh@collation=big5han",
-        "t",    "zh@collation=gb2312han",         "zh@collation=gb2312han",
+        "f",    "zh_TW@collation=pinyin",         "zh", /* alias of zh_Hant_TW */
+        "f",    "zh_Hant_TW@collation=pinyin",    "zh",
+        "f",    "zh_CN@collation=stroke",         "zh@collation=stroke", /* alias of zh_Hans_CN */
+        "f",    "zh_Hans_CN@collation=stroke",    "zh@collation=stroke",
+        "t",    "de@collation=phonebook",         "de@collation=phonebook",
         "t",    "hi@collation=standard",          "hi",
         "f",    "hi_AU@collation=standard;currency=CHF;calendar=buddhist",    "hi",
-        "t",    "sv_SE@collation=pinyin",         "sv", /* bug 4582 tests */
+        "f",    "sv_SE@collation=pinyin",         "sv", /* bug 4582 tests */
         "f",    "sv_SE_BONN@collation=pinyin",    "sv",
         "t",    "nl",                             "root",
-        "t",    "nl_NL",                          "root",
+        "f",    "nl_NL",                          "root",
         "f",    "nl_NL_EEXT",                     "root",
         "t",    "nl@collation=stroke",            "root",
-        "t",    "nl_NL@collation=stroke",         "root",
+        "f",    "nl_NL@collation=stroke",         "root",
         "f",    "nl_NL_EEXT@collation=stroke",    "root",
         NULL
     };
+#endif  /* !UCONFIG_NO_COLLATION */
 
     static const char *calCases[] = {
         /*   avail   locale                       equiv   */

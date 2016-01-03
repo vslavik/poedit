@@ -9,7 +9,7 @@
 [///////////////////////////////////]
 [section:reference Futures Reference]
 
-  //#include <boost/thread/futures.hpp>
+  //#include <boost/thread/future.hpp>
 
   namespace boost
   {
@@ -30,6 +30,7 @@
     {
       async = unspecified,
       deferred = unspecified,
+      executor = unspecified,
       any = async | deferred
     };
     
@@ -50,6 +51,8 @@
     const system::error_category& future_category();
 
     class future_error;
+
+    class exceptional_ptr;
 
     template <typename R>
     class promise;
@@ -76,40 +79,56 @@
     struct uses_allocator<packaged_task <S>, Alloc>;
 
     template <class F>
-    future<typename result_of<typename decay<F>::type()>::type>
-    async(F f);
+      future<typename result_of<typename decay<F>::type()>::type>
+      async(F f);
     template <class F>
-    future<typename result_of<typename decay<F>::type()>::type>
-    async(launch policy, F f);
+      future<typename result_of<typename decay<F>::type()>::type>
+      async(launch policy, F f);
 
     template <class F, class... Args>
-    future<typename result_of<typename decay<F>::type(typename decay<Args>::type...)>::type>
-    async(F&& f, Args&&... args);
+      future<typename result_of<typename decay<F>::type(typename decay<Args>::type...)>::type>
+      async(F&& f, Args&&... args);
     template <class F, class... Args>
-    future<typename result_of<typename decay<F>::type(typename decay<Args>::type...)>::type>
-    async(launch policy, F&& f, Args&&... args);
+      future<typename result_of<typename decay<F>::type(typename decay<Args>::type...)>::type>
+      async(launch policy, F&& f, Args&&... args);
+    template <class Executor, class F, class... Args>
+      future<typename result_of<typename decay<F>::type(typename decay<Args>::type...)>::type>
+      async(Executor &ex, F&& f, Args&&... args);
     
     template<typename Iterator>
-    void wait_for_all(Iterator begin,Iterator end); // EXTENSION
+      void wait_for_all(Iterator begin,Iterator end); // EXTENSION
     template<typename F1,typename... FS>
-    void wait_for_all(F1& f1,Fs&... fs); // EXTENSION
+      void wait_for_all(F1& f1,Fs&... fs); // EXTENSION
 
     template<typename Iterator>
-    Iterator wait_for_any(Iterator begin,Iterator end); // EXTENSION
+      Iterator wait_for_any(Iterator begin,Iterator end); // EXTENSION
     template<typename F1,typename... Fs>
-    unsigned wait_for_any(F1& f1,Fs&... fs); // EXTENSION
+      unsigned wait_for_any(F1& f1,Fs&... fs); // EXTENSION
     
+    template <class InputIterator>
+      future<std::vector<typename InputIterator::value_type::value_type>> 
+      when_all(InputIterator first, InputIterator last);
+    template <typename... T>
+      future<std::tuple<decay_t<T>...> when_all(T&&... futures);
+    template <class InputIterator>
+      future<std::vector<typename InputIterator::value_type::value_type>> 
+      when_any(InputIterator first, InputIterator last); // EXTENSION
+    template <typename... T>
+      future<std::tuple<decay_t<T>...> when_any(T&&... futures);
+
     template <typename T>
-    future<typename decay<T>::type> make_future(T&& value);  // DEPRECATED
+      future<typename decay<T>::type> make_future(T&& value);  // DEPRECATED
     future<void> make_future();  // DEPRECATED
     
     template <typename T>
-    future<typename decay<T>::type> make_ready_future(T&& value);  // EXTENSION
+      future<typename decay<T>::type> make_ready_future(T&& value);  // EXTENSION
     future<void> make_ready_future();  // EXTENSION
-    template <typename T>
-    future<T> make_ready_future(exception_ptr ex);  // EXTENSION
-    template <typename T, typename E>
-    future<T> make_ready_future(E ex);  // EXTENSION
+
+    exceptional_ptr make_exceptional(exception_ptr ex);  // EXTENSION
+    template <typename E>
+      exceptional_ptr make_exceptional(E ex);  // EXTENSION
+    exceptional_ptr make_exceptional();  // EXTENSION
+
     
     template <typename T>
     shared_future<typename decay<T>::type> make_shared_future(T&& value);  // DEPRECATED
@@ -147,6 +166,7 @@
     {
       async = unspecified,
       deferred = unspecified,
+      executor = unspecified,
       any = async | deferred
     };
 
@@ -260,6 +280,42 @@ The object's `name` virtual function returns a pointer to the string "future".]]
   };
 
 [endsect]
+
+[/////////////////////////////////////////]
+[section:future_error Class `exceptional_ptr` EXPERIMENTAL]
+
+  class exceptional_ptr
+  {
+  public:
+    exceptional_ptr();
+    explicit exceptional_ptr(exception_ptr ex);
+    template <class E>
+    explicit exceptional_ptr(E&& ex);
+  };
+
+[///////////////////////////////]
+[section:constructor Constructor]
+
+    exceptional_ptr();
+    explicit exceptional_ptr(exception_ptr ex);
+    template <class E>
+    explicit exceptional_ptr(E&& ex);
+
+[variablelist
+
+[[Effects:] [The exception that is passed in to the constructor or the current exception if no parameter is moved into the constructed `exceptional_ptr` if it is an rvalue. Otherwise the exception is copied into the constructed `exceptional_ptr`.]]
+
+[[Postconditions:] [ 
+ `valid() == true && is_ready() = true && has_value() = false`
+]]
+
+[[Throws:] [Nothing.]]
+]
+
+[endsect]
+[endsect]
+
+
 [////////////////////////////////////////////////////]
 [section:unique_future __unique_future class template]
 
@@ -284,13 +340,13 @@ The object's `name` virtual function returns a pointer to the string "future".]]
       shared_future<R> share();
       
       template<typename F>
-      __unique_future__<typename boost::result_of<F(__unique_future__&)>::type> 
+      __unique_future__<typename boost::result_of<F(__unique_future__)>::type> 
       then(F&& func); // EXTENSION
       template<typename S, typename F>
-      __unique_future__<typename boost::result_of<F(__unique_future__&)>::type> 
-      then(S& scheduler, F&& func); // EXTENSION NOT_YET_IMPLEMENTED
+      __unique_future__<typename boost::result_of<F(__unique_future__)>::type> 
+      then(S& scheduler, F&& func); // EXTENSION
       template<typename F>
-      __unique_future__<typename boost::result_of<F(__unique_future__&)>::type> 
+      __unique_future__<typename boost::result_of<F(__unique_future__)>::type> 
       then(launch policy, F&& func); // EXTENSION
 
       see below unwrap();  // EXTENSION
@@ -389,6 +445,7 @@ There are not too much tests yet, so it is possible that you can find out some t
 [variablelist
 
 [[Requires:] [`other.valid()`.]
+
 [[Effects:] [Constructs a new __unique_future__, and transfers ownership of the shared state associated with `other` and unwrapping the inner future (see `unwrap()`).]]
 
 [[Postconditions:] [[unique_future_get_state_link `this->get_state()`] returns the value of `other->get_state()` prior to the
@@ -557,8 +614,6 @@ associated with `*this` is not ready at the point of the call, and the current t
 [warning
 DEPRECATED since 3.00.
  
-Available only up to Boost 1.56. 
-
 Use instead __wait_for.  
 ]
 
@@ -595,8 +650,6 @@ elapsed, `false` otherwise.]]
 [warning
 DEPRECATED since 3.00.
  
-Available only up to Boost 1.56. 
-
 Use instead __wait_until.  
 ]
 
@@ -711,6 +764,8 @@ prior to waiting.]]
 [[Returns:] [`true` if `*this` is associated with a shared state, `false`
 otherwise.]]
 
+[[Remarks:] [The result of this function is not stable and that the future could become invalid even if the function returned true or vice-versa.]]
+
 [[Throws:] [Nothing.]]
 
 ]
@@ -725,6 +780,8 @@ otherwise.]]
 
 [[Returns:] [`true` if `*this` is associated with a shared state and that result is ready for retrieval, `false`
 otherwise.]]
+
+[[Remarks:] [The result of this function is not stable and that the future could become not ready even if the function returned true or vice-versa.]]
 
 [[Throws:] [Nothing.]]
 
@@ -741,6 +798,8 @@ otherwise.]]
 [[Returns:] [`true` if `*this` is associated with a shared state, that result is ready for retrieval, and the result is a
 stored value, `false` otherwise.]]
 
+[[Remarks:] [The result of this function is not stable and the future could lost its value even if the function returned true or vice-versa.]]
+
 [[Throws:] [Nothing.]]
 
 ]
@@ -755,6 +814,8 @@ stored value, `false` otherwise.]]
 
 [[Returns:] [`true` if `*this` is associated with a shared state, that result is ready for retrieval, and the result is a
 stored exception, `false` otherwise.]]
+
+[[Remarks:] [The result of this function is not stable and the future could lost its exception even if the function returned true or vice-versa.]]
 
 [[Throws:] [Nothing.]]
 
@@ -773,6 +834,8 @@ entry, and the result has a ['wait callback] set, that callback is invoked prior
 
 [[Returns:] [a exception_ptr, storring or not an exception.]]
 
+[[Remarks:] [The result of this function is not stable and the future could lost its exception even if the function returned a valid `exception_ptr` or vice-versa.]]
+
 [[Throws:] [Whatever `mutex::lock()/mutex::unlock()` can throw.]]
 
 ]
@@ -789,6 +852,8 @@ entry, and the result has a ['wait callback] set, that callback is invoked prior
 
 [[Returns:] [__uninitialized__ if `*this` is not associated with a shared state. __ready__ if the shared state
 associated with `*this` is ready for retrieval, __waiting__ otherwise.]]
+
+[[Remarks:] [The result of this function is not stable.]]
 
 [[Throws:] [Nothing.]]
 
@@ -815,13 +880,13 @@ associated with `*this` is ready for retrieval, __waiting__ otherwise.]]
 [section:then Member function `then()` - EXTENSION]
 
       template<typename F>
-      __unique_future__<typename boost::result_of<F(__unique_future__&)>::type> 
+      __unique_future__<typename boost::result_of<F(__unique_future__)>::type> 
       then(F&& func); // EXTENSION
       template<typename S, typename F>
-      __unique_future__<typename boost::result_of<F(__unique_future__&)>::type> 
-      then(S& scheduler, F&& func); // EXTENSION NOT_YET_IMPLEMENTED
+      __unique_future__<typename boost::result_of<F(__unique_future__)>::type> 
+      then(S& scheduler, F&& func); // EXTENSION
       template<typename F>
-      __unique_future__<typename boost::result_of<F(__unique_future__&)>::type> 
+      __unique_future__<typename boost::result_of<F(__unique_future__)>::type> 
       then(launch policy, F&& func); // EXTENSION
 
 [warning These functions are experimental and subject to change in future versions. 
@@ -838,6 +903,8 @@ second parameter.]]
 
 [[Effects:] [
 
+All the functions create a shared state that is associated with the returned future object. The further behavior of the functions is as follows. 
+
 - The continuation is called when the object's shared state is ready (has a value or exception stored).
 
 - The continuation launches according to the specified policy or scheduler.
@@ -845,9 +912,11 @@ second parameter.]]
 - When the scheduler or launch policy is not provided the continuation inherits the
 parent's launch policy or scheduler.
 
-- If the parent was created with `promise<<` or with a `packaged_task<>` (has no associated launch policy), the 
+- Any value returned from the continuation is stored as the result in the shared state of the resulting `future`. Any exception propagated from the execution of the continuation is stored as the exceptional result in the shared state of the resulting `future`. 
+
+- If the parent was created with `promise<>` or with a `packaged_task<>` (has no associated launch policy), the 
 continuation behaves the same as the third overload with a policy argument of `launch::async | launch::deferred` and 
-the same argument for func.
+the same argument for `func`.
 
 - If the parent has a policy of `launch::deferred` and the continuation does not have a specified launch policy or 
 scheduler, then the parent is filled by immediately calling `.wait()`, and the policy of the antecedent is 
@@ -857,11 +926,20 @@ scheduler, then the parent is filled by immediately calling `.wait()`, and the p
 
 [[Returns:] [An object of type `__unique_future__<typename boost::result_of<F(__unique_future__)>` that refers to the shared state created by the continuation.]]
 
+[[Notes:] [ 
+
+- Note that nested futures are not implicitly unwrapped yet. This could be subject to change in future versions.
+
+- The returned futures behave as the ones returned from boost::async, the destructor of the future object returned from then will block. This could be subject to change in future versions.
+]]
+
 [[Postconditions:] [
 
 - The `__unique_future__` object passed to the parameter of the continuation function is a copy of the original `__unique_future__`.
 
-- `valid() == false` on original future object immediately after it returns.
+- `valid() == false` on original future; `valid() == true` on the `future` returned from then.
+
+[/ In case of implicit unwrapping, the validity of the `future` returned from `then` cannot be established until after the completion of the functor passed into `then`. In such case, the resulting `future` becomes ready with an exception of type `future_error`, with an error code of `future_errc::broken_promise`. ]
 
 ]]
 
@@ -883,19 +961,19 @@ There are not too much tests yet, so it is possible that you can find out some t
   
 [variablelist
 
-[[Notes:] [Removes the outermost future and returns a future with the associated state been a proxy of inner future.]]
+[[Notes:] [Removes the outermost future and returns a future with the associated state been a proxy of the outer future.]]
 
 [[Effects:] [
 
-- Returns a future that becomes ready when the shared state of the inner future is ready.
+- Returns a future that becomes ready when the shared state of the outer and inner future is ready. The validity of the future returned from `get()` applied on the outer future cannot be established a priori. If it is not valid, this future is forced to be valid and becomes ready with an exception of type `future_error`, with an error code of `future_errc::broken_promise`.
 
 ]]
 
-[[Returns:] [An object of type future with the associated state been a proxy of inner future.]]
+[[Returns:] [An object of type future with the associated state been a proxy of outer future.]]
 
 [[Postconditions:] [
 
-- The returned future has `valid() == true` regardless of the validity of the inner future.
+- The returned future has `valid() == true`.
 
 ]]
 
@@ -930,19 +1008,19 @@ There are not too much tests yet, so it is possible that you can find out some t
 
       // factories
       template<typename F>
-      __unique_future__<typename boost::result_of<F(shared_future&)>::type> 
-      then(F&& func); // EXTENSION
+      __unique_future__<typename boost::result_of<F(shared_future)>::type> 
+      then(F&& func) const; // EXTENSION
       template<typename S, typename F>
-      __unique_future__<typename boost::result_of<F(shared_future&)>::type> 
-      then(S& scheduler, F&& func); // EXTENSION NOT_YET_IMPLEMENTED
+      __unique_future__<typename boost::result_of<F(shared_future)>::type> 
+      then(S& scheduler, F&& func) const; // EXTENSION
       template<typename F>
-      __unique_future__<typename boost::result_of<F(shared_future&)>::type> 
-      then(launch policy, F&& func); // EXTENSION
+      __unique_future__<typename boost::result_of<F(shared_future)>::type> 
+      then(launch policy, F&& func) const; // EXTENSION
 
       void swap(shared_future& other);
 
       // retrieving the value
-      see below get();
+      see below get() const;
 
       exception_ptr get_exception_ptr(); // EXTENSION
 
@@ -988,9 +1066,9 @@ There are not too much tests yet, so it is possible that you can find out some t
 [///////////////////////////////////]
 [section:get Member function `get()`]
 
-    const R& get();
-    R& get();
-    void get();
+    const R& get() const;
+    R& get() const;
+    void get() const;
 
 [variablelist
 
@@ -1279,14 +1357,14 @@ associated with `*this` is ready for retrieval, __waiting__ otherwise.]]
 [section:then Member function `then()` EXTENSION]
 
       template<typename F>
-      __unique_future__<typename boost::result_of<F(shared_future&)>::type> 
-      then(F&& func); // EXTENSION
+      __unique_future__<typename boost::result_of<F(shared_future)>::type> 
+      then(F&& func) const; // EXTENSION
       template<typename S, typename F>
-      __unique_future__<typename boost::result_of<F(shared_future&)>::type> 
-      then(S& scheduler, F&& func); // EXTENSION NOT_YET_IMPLEMENTED
+      __unique_future__<typename boost::result_of<F(shared_future)>::type> 
+      then(S& scheduler, F&& func) const; // EXTENSION
       template<typename F>
-      __unique_future__<typename boost::result_of<F(shared_future&)>::type> 
-      then(launch policy, F&& func); // EXTENSION
+      __unique_future__<typename boost::result_of<F(shared_future)>::type> 
+      then(launch policy, F&& func) const; // EXTENSION
 
 
 [warning These functions are experimental and subject to change in future versions. 
@@ -1322,11 +1400,22 @@ scheduler, then the parent is filled by immediately calling `.wait()`, and the p
 
 [[Returns:] [An object of type `__unique_future__<typename boost::result_of<F(shared_future)>` that refers to the shared state created by the continuation.]]
 
+
+[[Notes:] [ 
+
+- Note that nested futures are not implicitly unwrapped yet. This could be subject to change in future versions.
+
+- The returned futures behave as the ones returned from boost::async, the destructor of the future object returned from then will block. This could be subject to change in future versions.
+]]
+
+
 [[Postconditions:] [
 
 - The future object is moved to the parameter of the continuation function .
 
-- `valid() == false` on original future object immediately after it returns.
+- `valid() == true` on original `shared_future`; `valid() == true` on the `future` returned from then.
+
+[/- In case of implicit unwrapping, the validity of the `future` returned from `then` cannot be established until after the completion of the functor passed into `then`. In such case, the resulting `future` becomes ready with an exception of type `future_error`, with an error code of `future_errc::broken_promise`. ]
 
 ]]
 
@@ -1882,17 +1971,17 @@ __packaged_task__.]]
 The function template async provides a mechanism to launch a function potentially in a new thread and
 provides the result of the function in a future object with which it shares a shared state.
 
-[warning `async(launch::deferred, F)` is NOT YET IMPLEMENTED!]
-
 [heading Non-Variadic variant]
 
     template <class F>
-    __unique_future__<typename result_of<typename decay<F>::type()>::type>
-    async(F&& f);
+      __unique_future__<typename result_of<typename decay<F>::type()>::type>
+      async(F&& f);
     template <class F>
-    __unique_future__<typename result_of<typename decay<F>::type()>::type>
-    async(launch policy, F&& f);
-
+      __unique_future__<typename result_of<typename decay<F>::type()>::type>
+      async(launch policy, F&& f);
+    template <class Executor, class F>
+      __unique_future__<typename result_of<typename decay<F>::type(typename decay<Args>::type...)>::type>
+      async(Executor &ex, F&& f, Args&&... args);
 [variablelist
 
 [[Requires:] [
@@ -1908,7 +1997,7 @@ shall be a valid expression.
 The first function behaves the same as a call to the second function with a policy argument of
  `launch::async | launch::deferred` and the same arguments for `F`. 
  
-The second function creates a shared state that is associated with the returned future object.
+The second and third functions create a shared state that is associated with the returned future object.
 
 The further behavior of the second function depends on the policy argument as follows (if more than one of these conditions applies, the implementation may choose any of the corresponding policies):
 
@@ -1916,7 +2005,14 @@ The further behavior of the second function depends on the policy argument as fo
 
 - if `policy & launch::deferred` is non-zero - Stores `decay_copy(boost::forward<F>(f))` in the shared state. This copy of `f` constitute a deferred function. Invocation of the deferred function evaluates `boost::move(g)()` where `g` is the stored value of `decay_copy(boost::forward<F>(f))`. The shared state is not made ready until the function has completed. The first call to a non-timed waiting function on an asynchronous return object referring to this shared state shall invoke the deferred function in the thread that called the waiting function. Once evaluation of `boost::move(g)()` begins, the function is no longer considered deferred. (Note: If this policy is specified together with other policies, such as when using a policy value of `launch::async | launch::deferred`, implementations should defer invocation or the selection of the policy when no more concurrency can be effectively exploited.)
 
-- if no valid launch policy is provided the behaviour is undefined.
+- if no valid launch policy is provided the behavior is undefined.
+
+
+The further behavior of the third function is as follows: 
+
+- The Executor::submit() function is given a function<void ()> which calls `INVOKE (DECAY_COPY 
+(std::forward<F>(f)), DECAY_COPY (std::forward<Args>(args))...). The implementation of the executor 
+is decided by the programmer. 
 
 ]]
 
@@ -1944,20 +2040,23 @@ If the implementation chooses the `launch::async` policy,
 
 ]]
 
-[[Remarks:] [The first signature shall not participate in overload resolution if decay<F>::type is boost::launch.
-]]
+[[Remarks::] [The first signature shall not participate in overload resolution if `decay_t<F> is `boost::
+launch` or `boost::is_executor<F>` is `true_type`.]]
 
 ]
 
 [heading Variadic variant]
 
     template <class F, class... Args>
-    __unique_future__<typename result_of<typename decay<F>::type(typename decay<Args>::type...)>::type>
-    async(F&& f, Args&&... args);
+      __unique_future__<typename result_of<typename decay<F>::type(typename decay<Args>::type...)>::type>
+      async(F&& f, Args&&... args);
     template <class F, class... Args>
-    __unique_future__<typename result_of<typename decay<F>::type(typename decay<Args>::type...)>::type>
-    async(launch policy, F&& f, Args&&... args);
-
+      __unique_future__<typename result_of<typename decay<F>::type(typename decay<Args>::type...)>::type>
+      async(launch policy, F&& f, Args&&... args);
+    template <class Executor, class F, class... Args>
+      __unique_future__<typename result_of<typename decay<F>::type(typename decay<Args>::type...)>::type>
+      async(Executor &ex, F&& f, Args&&... args);
+    
 [warning the variadic prototype is provided only on C++11 compilers supporting rvalue references, variadic templates, decltype and a standard library providing <tuple> (waiting for a boost::tuple that is move aware), and BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK is defined.]
 
 [variablelist
@@ -2037,19 +2136,19 @@ with the return from the last function that releases the shared state, whichever
 [section:wait_for_any Non-member function `wait_for_any()` - EXTENSION]
 
     template<typename Iterator>
-    Iterator wait_for_any(Iterator begin,Iterator end); // EXTENSION
+      Iterator wait_for_any(Iterator begin,Iterator end); // EXTENSION
 
     template<typename F1,typename F2>
-    unsigned wait_for_any(F1& f1,F2& f2); // EXTENSION
+      unsigned wait_for_any(F1& f1,F2& f2); // EXTENSION
 
     template<typename F1,typename F2,typename F3>
-    unsigned wait_for_any(F1& f1,F2& f2,F3& f3); // EXTENSION
+      unsigned wait_for_any(F1& f1,F2& f2,F3& f3); // EXTENSION
 
     template<typename F1,typename F2,typename F3,typename F4>
-    unsigned wait_for_any(F1& f1,F2& f2,F3& f3,F4& f4); // EXTENSION
+      unsigned wait_for_any(F1& f1,F2& f2,F3& f3,F4& f4); // EXTENSION
 
     template<typename F1,typename F2,typename F3,typename F4,typename F5>
-    unsigned wait_for_any(F1& f1,F2& f2,F3& f3,F4& f4,F5& f5); // EXTENSION
+      unsigned wait_for_any(F1& f1,F2& f2,F3& f3,F4& f4,F5& f5); // EXTENSION
 
 [variablelist
 
@@ -2077,19 +2176,19 @@ with any of the futures being waited for.  `std::bad_alloc` if memory could not 
 [section:wait_for_all Non-member function `wait_for_all()` - EXTENSION]
 
     template<typename Iterator>
-    void wait_for_all(Iterator begin,Iterator end); // EXTENSION
+      void wait_for_all(Iterator begin,Iterator end); // EXTENSION
 
     template<typename F1,typename F2>
-    void wait_for_all(F1& f1,F2& f2); // EXTENSION
+      void wait_for_all(F1& f1,F2& f2); // EXTENSION
 
     template<typename F1,typename F2,typename F3>
-    void wait_for_all(F1& f1,F2& f2,F3& f3); // EXTENSION
+      void wait_for_all(F1& f1,F2& f2,F3& f3); // EXTENSION
 
     template<typename F1,typename F2,typename F3,typename F4>
-    void wait_for_all(F1& f1,F2& f2,F3& f3,F4& f4); // EXTENSION
+      void wait_for_all(F1& f1,F2& f2,F3& f3,F4& f4); // EXTENSION
 
     template<typename F1,typename F2,typename F3,typename F4,typename F5>
-    void wait_for_all(F1& f1,F2& f2,F3& f3,F4& f4,F5& f5); // EXTENSION
+      void wait_for_all(F1& f1,F2& f2,F3& f3,F4& f4,F5& f5); // EXTENSION
 
 [variablelist
 
@@ -2108,24 +2207,179 @@ __unique_future__ or __shared_future__.]]
 
 
 [endsect]
+
+[/////////////////////////////////////////////////////////////////////]
+[section:when_all Non-member function `when_all()` - EXTENSION]
+
+
+  template <class InputIterator>
+    future<std::vector<typename InputIterator::value_type::value_type>> 
+    when_all(InputIterator first, InputIterator last);
+
+  template <typename... FutTypes>
+    future<std::tuple<decay_t<FutTypes>...> when_all(FutTypes&&... futures);
+
+[variablelist
+
+[[Requires:] [
+
+ - For the first overload, `InputIterator`'s value type shall be convertible to `future<R>` or `shared_future<R>`. 
+All `R` types must be the same. If any of the `future<R>` or `shared_future<R>` objects are in invalid state (i.e. `valid() == false`), the behavior is undefined.
+ - For the second overload, `FutTypes` is of type `future<R>` or `shared_future<R>`. The effect of calling `when_all` on a `future` or a `shared_future` object for which `valid() == false` is undefined.
+
+]]
+
+[[Notes:] [
+
+- There are two variations of `when_all`. The first version takes a pair of `InputIterators`. The second takes any arbitrary number of `future<R0>` and `shared_future<R1>` objects, where `R0` and `R1` need not be the same type.
+
+- Calling the first signature of `when_all` where `InputIterator` first equals last, returns a future with an empty `vector` that is immediately ready.
+
+- Calling the second signature of `when_all` with no arguments returns a future<tuple<>> that is immediately ready.
+
+]]
+
+[[Effects:] [
+
+- If any of the futures supplied to a call to `when_all` refer to deferred tasks that have not started execution, those tasks are executed before the call to `when_all` returns. Once all such tasks have been executed, the call to `when_all` returns immediately.
+
+- The call to `when_all` does not wait for non-deferred tasks, or deferred tasks that have already started executing elsewhere, to complete before returning.
+
+- Once all the `future`s/`shared_future`s supplied to the call to `when_all` are ready, the `future`s/`shared_future`s are moved/copied into the associated state of the future returned from the call to `when_all`, preserving the order of the futures supplied to `when_all`. 
+
+- The collection is then stored as the result in a newly created shared state.
+
+- A new future object that refers to the shared state is created. The exact type of the future is further described below. 
+
+- The `future` returned by `when_all` will not throw an exception when calling `wait()` or `get()`, but the futures held in the output collection may.
+]]
+
+[[Returns:] [
+
+- `future<tuple<>>` if `when_all` is called with zero arguments.
+
+- `future<vector<future<R>>>` if the input cardinality is unknown at compile and the iterator pair yields `future<R>`. The order of the futures in the output vector will be the same as given by the input iterator.
+
+- `future<vector<shared_future<R>>>` if the input cardinality is unknown at compile time and the iterator pair yields `shared_future<R>`. The order of the futures in the output vector will be the same as given by the input iterator.
+
+- `future<tuple<decay_t<FutTypes>...>>` if inputs are fixed in number.
+
+]]
+
+[[Postconditions:] [
+
+- All input futures valid() == false.
+
+- All input shared future valid() == true.
+
+- valid() == true.
+
+]]
+
+]
+
+
+[endsect]
+[/////////////////////////////////////////////////////////////////////]
+[section:when_any Non-member function `when_any()` - EXTENSION]
+
+
+  template <class InputIterator>
+    future<std::vector<typename InputIterator::value_type::value_type>> 
+    when_any(InputIterator first, InputIterator last);
+
+  template <typename... FutTypes>
+    future<std::tuple<decay_t<FutTypes>...> 
+    when_any(FutTypes&&... futures);
+
+[variablelist
+
+[[Requires:] [
+
+
+
+ - For the first overload, `InputIterator`'s value type shall be convertible to `future<R>` or `shared_future<R>`. All `R` types must be the same. If any of the `future<R>` or `shared_future<R>` objects are in invalid state (i.e. `valid() == false`), the behavior is undefined.
+ - For the second overload, `FutTypes` is of type `future<R>` or `shared_future<R>`. The effect of calling `when_any` on a `future` or a `shared_future` object for which `valid() == false is undefined`.
+
+]]
+
+[[Notes:] [
+
+- There are two variations of `when_any `. The first version takes a pair of `InputIterators`. The second takes any arbitrary number of `future<R0>` and `shared_future<R1>` objects, where `R0` and `R1` need not be the same type.
+
+- Calling the first signature of `when_any ` where `InputIterator` first equals last, returns a future with an empty `vector` that is immediately ready.
+
+- Calling the second signature of `when_any` with no arguments returns a future<tuple<>> that is immediately ready.
+
+]]
+
+[[Effects:] [
+
+- Each of the futures supplied to `when_any` is checked in the order supplied. If a given future is ready, then no further futures are checked, and the call to `when_any` returns immediately. If a given future refers to a deferred task that has not yet started execution, then no further futures are checked, that task is executed, and the call to `when_any` then returns immediately.
+
+- The call to `when_any` does not wait for non-deferred tasks, or deferred tasks that have already started executing elsewhere, to complete before returning.
+
+- Once at least one of the futures supplied to the call to `when_any` are ready, the futures are moved into the associated state of the future returned from the call to `when_any`, preserving the order of the futures supplied to `when_any`. That future is then ready.
+
+- The collection is then stored as the result in a newly created shared state.
+
+- A new future object that refers to the shared state is created. The exact type of the future is further described below. 
+
+- The future returned by `when_any` will not throw an exception when calling `wait()` or `get()`, but the futures held in the output collection may.
+
+]]
+
+[[Returns:] [
+
+- `future<tuple<>>` if `when_any ` is called with zero arguments.
+
+- `future<vector<future<R>>>` if the input cardinality is unknown at compile and the iterator pair yields `future<R>`. The order of the futures in the output vector will be the same as given by the input iterator.
+
+- `future<vector<shared_future<R>>>` if the input cardinality is unknown at compile time and the iterator pair yields `shared_future<R>`. The order of the futures in the output vector will be the same as given by the input iterator.
+
+- `future<tuple<decat_t<FutTypes>...>>` if inputs are fixed in number.
+
+]]
+
+[[Postconditions:] [
+
+- All input futures valid() == false.
+
+- All input shared_futures valid() == true.
+
+- valid() == true.
+
+
+]]
+
+]
+
+
+[endsect]
+
+
 [/////////////////////////////////////////////////////////////////////////////]
 [section:make_ready_future Non-member function `make_ready_future()` EXTENSION]
 
     template <typename T>
-    future<typename decay<T>::type> make_ready_future(T&& value);  // EXTENSION
+      future<V> make_ready_future(T&& value);  // EXTENSION
     future<void> make_ready_future();  // EXTENSION
     template <typename T>
-    future<T> make_ready_future(exception_ptr ex);  // EXTENSION
+      future<T> make_ready_future(exception_ptr ex);  // DEPRECATED
     template <typename T, typename E>
-    future<T> make_ready_future(E ex);  // EXTENSION
+      future<T> make_ready_future(E ex);  // DEPRECATED
 
 [variablelist
 
+[[Remark:][
+where `V` is determined as follows: Let `U` be `decay_t<T>`. Then `V` is `X&`
+if `U` equals `reference_wrapper<X>`, otherwise `V` is `U`.
+]]
 [[Effects:] [
-- value prototype: The value that is passed into the function is moved to the shared state of the returned function if it is an rvalue. 
-Otherwise the value is copied to the shared state of the returned function.
+- value prototype: The value that is passed into the function is moved to the shared state of the returned future if it is an rvalue. 
+Otherwise the value is copied to the shared state of the returned future.
 
-- exception: The exception that is passed into the function is copied to the shared state of the returned function.
+- exception: The exception that is passed into the function is copied to the shared state of the returned future.
 
 .]]
 
@@ -2152,11 +2406,33 @@ Otherwise the value is copied to the shared state of the returned function.
 ]
     
 [endsect]
+[/////////////////////////////////////////////////////////////////////////////]
+[section:make_exceptional Non-member function `make_exceptional()` EXTENSION]
+
+    exceptional_ptr make_exceptional(exception_ptr ex);  // EXTENSION
+    template <typename E>
+      exceptional_ptr make_exceptional(E ex);  // EXTENSION
+    exceptional_ptr make_exceptional();  // EXTENSION
+
+[variablelist
+
+[[Effects:] [
+The exception that is passed in to the function or the current exception if no parameter is given is moved into the returned `exceptional_ptr` if it is an rvalue. Otherwise the exception is copied into the returned `exceptional_ptr`.
+]]
+
+[[Returns:] [
+An exceptional_ptr instance implicitly convertible to a future<T>
+]]
+
+]
+    
+[endsect]
+
 [//////////////////////////////////////////////////////////////////]
 [section:make_future Non-member function `make_future()` DEPRECATED]
 
     template <typename T>
-    future<typename decay<T>::type> make_future(T&& value);  // DEPRECATED
+      future<typename decay<T>::type> make_future(T&& value);  // DEPRECATED
     future<void> make_future();  // DEPRECATED
     
 
@@ -2192,7 +2468,7 @@ Otherwise the value is copied to the shared state of the returned function.
 [section:make_shared_future Non-member function `make_shared_future()` DEPRECATED]
 
     template <typename T>
-    shared_future<typename decay<T>::type> make_shared_future(T&& value);  // DEPRECATED
+      shared_future<typename decay<T>::type> make_shared_future(T&& value);  // DEPRECATED
     shared_future<void> make_shared_future();  // DEPRECATED
  
 [variablelist

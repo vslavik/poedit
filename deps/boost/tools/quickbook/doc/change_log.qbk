@@ -297,7 +297,7 @@ Boost 1.46.1:
   * Clean up the source map implementation (used to get the correct
     location for error messages in things like templates and snippets).
 
-[heading Version 1.6.0 beta 1 - Boost 1.55 beta]
+[heading Version 1.6.0 - Boost 1.55]
 
 * Remove nested blocks in lists from 1.6, move to 1.7.
   (Can still nest block elements in lists though).
@@ -317,3 +317,17 @@ Boost 1.46.1:
     in a phrase template.
 * Internal changes:
   * Clean up the id manager implementation.
+
+[heading Version 1.6.1]
+
+* Better URI encoding of links.
+* Extra validation of attribute values.
+* 1.7 changes:
+  * Improved source mode tagging:
+    * Works for lists and paragraphs.
+    * If the source mode is changed inside a tagged element, that change
+      will now persist after the element.
+    * Tagged sections will now use the source mode for the whole section.
+  * Template calls from anchor, role and include elements.
+  * Stricter handling of templates called in attribute values.
+  * Glob support.

@@ -1,11 +1,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Chapter&#160;1.&#160;Phoenix 3.0</title>
+<title>Chapter&#160;1.&#160;Phoenix 3.2.0</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="index.html" title="Chapter&#160;1.&#160;Phoenix 3.0">
-<link rel="next" href="phoenix/what_s_new.html" title="What's New">
+<link rel="home" href="index.html" title="Chapter&#160;1.&#160;Phoenix 3.2.0">
+<link rel="next" href="phoenix/release_notes.html" title="Release Notes">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -17,11 +17,11 @@
 <td align="center"><a href="../../../../more/index.htm">More</a></td>
 </tr></table>
 <hr>
-<div class="spirit-nav"><a accesskey="n" href="phoenix/what_s_new.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a></div>
+<div class="spirit-nav"><a accesskey="n" href="phoenix/release_notes.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a></div>
 <div class="chapter">
 <div class="titlepage"><div>
 <div><h2 class="title">
-<a name="phoenix"></a>Chapter&#160;1.&#160;Phoenix 3.0</h2></div>
+<a name="phoenix"></a>Chapter&#160;1.&#160;Phoenix 3.2.0</h2></div>
 <div><div class="author"><h3 class="author">
 <span class="firstname">Joel</span> <span class="surname">de Guzman</span>
 </h3></div></div>
@@ -31,7 +31,11 @@
 <div><div class="author"><h3 class="author">
 <span class="firstname">Thomas</span> <span class="surname">Heller</span>
 </h3></div></div>
-<div><p class="copyright">Copyright &#169; 2002-2005, 2010 Joel de Guzman, Dan Marsden, Thomas Heller</p></div>
+<div><div class="author"><h3 class="author">
+<span class="firstname">John</span> <span class="surname">Fletcher</span>
+</h3></div></div>
+<div><p class="copyright">Copyright &#169; 2002-2005, 2010, 2014, 2015 Joel de Guzman, Dan Marsden, Thomas
+      Heller, John Fletcher</p></div>
 <div><div class="legalnotice">
 <a name="phoenix.legal"></a><p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -42,8 +46,20 @@
 <div class="toc">
 <p><b>Table of Contents</b></p>
 <dl class="toc">
+<dt><span class="section"><a href="phoenix/release_notes.html">Release Notes</a></span></dt>
 <dt><span class="section"><a href="phoenix/what_s_new.html">What's New</a></span></dt>
-<dd><dl><dt><span class="section"><a href="phoenix/what_s_new/phoenix_3_0.html">Phoenix 3.0</a></span></dt></dl></dd>
+<dd><dl>
+<dt><span class="section"><a href="phoenix/what_s_new/phoenix___warning_on__lambda_and_let_.html">Phoenix
+      - warning on <span class="bold"><strong>lambda and let</strong></span></a></span></dt>
+<dt><span class="section"><a href="phoenix/what_s_new/phoenix_3_2_0__boost_1_58_0_.html">Phoenix
+      3.2.0 (Boost 1.58.0)</a></span></dt>
+<dt><span class="section"><a href="phoenix/what_s_new/phoenix_3_1_1.html">Phoenix 3.1.1</a></span></dt>
+<dt><span class="section"><a href="phoenix/what_s_new/phoenix_3_1_0.html">Phoenix 3.1.0</a></span></dt>
+<dt><span class="section"><a href="phoenix/what_s_new/phoenix_3_0_6__boost_1_57_0_.html">Phoenix
+      3.0.6 (Boost 1.57.0)</a></span></dt>
+<dt><span class="section"><a href="phoenix/what_s_new/phoenix_3_0_5.html">Phoenix 3.0.5</a></span></dt>
+<dt><span class="section"><a href="phoenix/what_s_new/phoenix_3_0.html">Phoenix 3.0</a></span></dt>
+</dl></dd>
 <dt><span class="section"><a href="phoenix/introduction.html">Introduction</a></span></dt>
 <dt><span class="section"><a href="phoenix/starter_kit.html">Starter Kit</a></span></dt>
 <dd><dl>
@@ -137,6 +153,39 @@
 <dt><span class="section"><a href="phoenix/examples/transforming_the_expression_tree.html">Transforming
       the Expression Tree</a></span></dt>
 </dl></dd>
+<dt><span class="section"><a href="phoenix/lazy_list.html">Lazy List</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="phoenix/lazy_list/background.html">Background</a></span></dt>
+<dt><span class="section"><a href="phoenix/lazy_list/what_is_provided.html">What is provided</a></span></dt>
+<dt><span class="section"><a href="phoenix/lazy_list/tutorial_with_examples.html">Tutorial with
+      examples</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="phoenix/lazy_list/tutorial_with_examples/arithmetic_functions.html">Arithmetic
+        functions</a></span></dt>
+<dt><span class="section"><a href="phoenix/lazy_list/tutorial_with_examples/list_generation.html">List
+        Generation</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="phoenix/lazy_list/exceptions.html">Exceptions</a></span></dt>
+<dt><span class="section"><a href="phoenix/lazy_list/implementation_details.html">Implementation
+      Details</a></span></dt>
+<dt><span class="section"><a href="phoenix/lazy_list/testing.html">Testing</a></span></dt>
+<dt><span class="section"><a href="phoenix/lazy_list/where_next_.html">Where Next?</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="phoenix/maintenance.html">Maintenance</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="phoenix/maintenance/background.html">Background</a></span></dt>
+<dt><span class="section"><a href="phoenix/maintenance/my_understanding_of_how_maintenance_works.html">My
+      Understanding of how maintenance works</a></span></dt>
+<dt><span class="section"><a href="phoenix/maintenance/method_in_use.html">Method in use</a></span></dt>
+<dt><span class="section"><a href="phoenix/maintenance/experience.html">Experience</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="phoenix/maintenance/experience/maintenance_tools.html">Maintenance
+        Tools</a></span></dt>
+<dt><span class="section"><a href="phoenix/maintenance/experience/bugs_to_be_fixed.html">Bugs
+        to be fixed</a></span></dt>
+<dt><span class="section"><a href="phoenix/maintenance/experience/compilers.html">Compilers</a></span></dt>
+</dl></dd>
+</dl></dd>
 <dt><span class="section"><a href="phoenix/wrap_up.html">Wrap Up</a></span></dt>
 <dt><span class="section"><a href="phoenix/acknowledgments.html">Acknowledgments</a></span></dt>
 <dt><span class="section"><a href="phoenix/references.html">References</a></span></dt>
@@ -159,7 +208,7 @@
       Matters</em></span>
     </p></blockquote></div>
 <p>
-    <span class="inlinemediaobject"><img src="images/lambda_cpp.png" alt="lambda_cpp"></span>
+    <span class="inlinemediaobject"><img src="images/lambda_cpp.png"></span>
   </p>
 <h3>
 <a name="phoenix.h1"></a>
@@ -167,7 +216,7 @@
   </h3>
 <p>
     Phoenix enables Functional Programming (FP) in C++. The design and implementation
-    of Phoenix is highly influenced by <a href="http://www.cc.gatech.edu/~yannis/fc++/" target="_top">FC++</a>
+    of Phoenix is highly influenced by <a href="http://cgi.di.uoa.gr/~smaragd/fc++/" target="_top">FC++</a>
     by Yannis Smaragdakis and Brian McNamara and the <a href="http://www.boost.org/libs/lambda/doc/index.html" target="_top">BLL</a>
     (Boost Lambda Library) by Jaakko Jaarvi and Gary Powell. Phoenix is a blend of
     FC++ and BLL using the implementation techniques used in the <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
@@ -231,7 +280,7 @@
 <tr>
 <td>
             <p>
-              <span class="inlinemediaobject"><img src="images/note.png" alt="note"></span>
+              <span class="inlinemediaobject"><img src="images/note.png"></span>
             </p>
           </td>
 <td>
@@ -249,7 +298,7 @@
 <tr>
 <td>
             <p>
-              <span class="inlinemediaobject"><img src="images/alert.png" alt="alert"></span>
+              <span class="inlinemediaobject"><img src="images/alert.png"></span>
             </p>
           </td>
 <td>
@@ -266,7 +315,7 @@
 <tr>
 <td>
             <p>
-              <span class="inlinemediaobject"><img src="images/tip.png" alt="tip"></span>
+              <span class="inlinemediaobject"><img src="images/tip.png"></span>
             </p>
           </td>
 <td>
@@ -286,9 +335,10 @@
 <br class="table-break"><div class="sidebar">
 <div class="titlepage"></div>
 <p>
-    <span class="inlinemediaobject"><img src="images/note.png" alt="note"></span> Unless otherwise noted <code class="computeroutput"><span class="keyword">using</span>
-    <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">;</span></code>
-    is assumed
+    <span class="inlinemediaobject"><img src="images/note.png"></span>
+    Unless otherwise noted <code class="computeroutput"><span class="keyword">using</span> <span class="keyword">namespace</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">;</span></code> is
+    assumed
   </p>
 </div>
 <h3>
@@ -297,10 +347,10 @@
   </h3>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: October 02, 2013 at 23:01:03 GMT</small></p></td>
+<td align="left"><p><small>Last revised: April 07, 2015 at 22:41:06 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>
-<div class="spirit-nav"><a accesskey="n" href="phoenix/what_s_new.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a></div>
+<div class="spirit-nav"><a accesskey="n" href="phoenix/release_notes.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a></div>
 </body>
 </html>

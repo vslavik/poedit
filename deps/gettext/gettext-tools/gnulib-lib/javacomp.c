@@ -1,5 +1,5 @@
 /* Compile a Java program.
-   Copyright (C) 2001-2003, 2006-2013 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006-2015 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -50,11 +50,6 @@
 #include "gettext.h"
 
 #define _(str) gettext (str)
-
-/* The results of open() in this file are not used with fchdir,
-   therefore save some unnecessary work in fchdir.c.  */
-#undef open
-#undef close
 
 
 /* Survey of Java compilers.

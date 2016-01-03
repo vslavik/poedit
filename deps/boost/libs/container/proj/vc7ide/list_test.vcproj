@@ -13,15 +13,14 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="../../Bin/Win32/Debug"
-			IntermediateDirectory="Debug/list_ex"
+			IntermediateDirectory="Debug/list_test"
 			ConfigurationType="1"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../../../.."
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;BOOST_DATE_TIME_NO_LIB"
-				GeneratePreprocessedFile="0"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				KeepComments="FALSE"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
@@ -37,11 +36,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="winmm.lib"
-				OutputFile="$(OutDir)/list_ex_d.exe"
+				OutputFile="$(OutDir)/list_test_d.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="../../../../stage/lib"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="$(OutDir)/list_ex.pdb"
+				ProgramDatabaseFile="$(OutDir)/list_test.pdb"
 				SubSystem="1"
 				TargetMachine="1"
 				FixedBaseAddress="1"/>
@@ -69,13 +68,13 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="../../Bin/Win32/Release"
-			IntermediateDirectory="Release/list_ex"
+			IntermediateDirectory="Release/list_test"
 			ConfigurationType="1"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../../.."
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;BOOST_DATE_TIME_NO_LIB"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="TRUE"
 				ForceConformanceInForLoopScope="FALSE"
@@ -88,14 +87,15 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="winmm.lib"
-				OutputFile="$(OutDir)/list_ex.exe"
+				OutputFile="$(OutDir)/list_test.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="../../../../stage/lib"
 				GenerateDebugInformation="TRUE"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				TargetMachine="1"/>
+				TargetMachine="1"
+				FixedBaseAddress="1"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
@@ -128,11 +128,6 @@
 			<File
 				RelativePath="..\..\test\list_test.cpp">
 			</File>
-		</Filter>
-		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 		</Filter>
 	</Files>
 	<Globals>

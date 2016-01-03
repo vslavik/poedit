@@ -4,8 +4,9 @@
  * This example demonstrates some details about the steppers in odeint.
  *
  *
- * Copyright 2009-2012 Karsten Ahnert
- * Copyright 2009-2012 Mario Mulansky
+ * Copyright 2011-2012 Karsten Ahnert
+ * Copyright 2012 Mario Mulansky
+ * Copyright 2013 Pascal Germroth
  *
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or
@@ -14,7 +15,7 @@
 
 #include <iostream>
 #include <boost/array.hpp>
-
+#include <boost/bind.hpp>
 #include <boost/numeric/odeint.hpp>
 
 using namespace std;
@@ -177,6 +178,7 @@ int main( int argc , char **argv )
         dense_output_runge_kutta< controlled_runge_kutta< runge_kutta_dopri5< state_type > > > dense;
         dense.initialize( in , t , dt );
         pair< double , double > times = dense.do_step( sys );
+        (void)times;
         //]
 
         state_type inout;
@@ -185,6 +187,7 @@ int main( int argc , char **argv )
         typedef boost::numeric::odeint::result_of::make_dense_output<
             runge_kutta_dopri5< state_type > >::type dense_stepper_type;
         dense_stepper_type dense2 = make_dense_output( 1.0e-6 , 1.0e-6 , runge_kutta_dopri5< state_type >() );
+        (void)dense2;
         //]
 
         //[ dense_output_detail_generation2

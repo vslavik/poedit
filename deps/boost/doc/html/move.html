@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Chapter&#160;18.&#160;Boost.Move</title>
+<title>Chapter&#160;19.&#160;Boost.Move</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
@@ -25,11 +25,11 @@
 <div class="chapter">
 <div class="titlepage"><div>
 <div><h2 class="title">
-<a name="move"></a>Chapter&#160;18.&#160;Boost.Move</h2></div>
+<a name="move"></a>Chapter&#160;19.&#160;Boost.Move</h2></div>
 <div><div class="author"><h3 class="author">
 <span class="firstname">Ion</span> <span class="surname">Gaztanaga</span>
 </h3></div></div>
-<div><p class="copyright">Copyright &#169; 2008-2012 Ion Gaztanaga</p></div>
+<div><p class="copyright">Copyright &#169; 2008-2014 Ion Gaztanaga</p></div>
 <div><div class="legalnotice">
 <a name="move.legal"></a><p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -54,6 +54,8 @@
 <dt><span class="section"><a href="move/movable_only_classes.html">Movable but Non-Copyable Types</a></span></dt>
 <dt><span class="section"><a href="move/move_and_containers.html">Containers and move semantics</a></span></dt>
 <dt><span class="section"><a href="move/construct_forwarding.html">Constructor Forwarding</a></span></dt>
+<dt><span class="section"><a href="move/move_return.html">Implicit Move when returning a local
+    object</a></span></dt>
 <dt><span class="section"><a href="move/move_iterator.html">Move iterators</a></span></dt>
 <dt><span class="section"><a href="move/move_inserters.html">Move inserters</a></span></dt>
 <dt><span class="section"><a href="move/move_algorithms.html">Move algorithms</a></span></dt>
@@ -72,9 +74,36 @@
 <dt><span class="section"><a href="move/thanks_to.html">Thanks and credits</a></span></dt>
 <dt><span class="section"><a href="move/release_notes.html">Release Notes</a></span></dt>
 <dd><dl>
+<dt><span class="section"><a href="move/release_notes.html#move.release_notes.release_notes_boost_1_58_00">Boost
+      1.58 Release</a></span></dt>
+<dt><span class="section"><a href="move/release_notes.html#move.release_notes.release_notes_boost_1_57_00">Boost
+      1.57 Release</a></span></dt>
+<dt><span class="section"><a href="move/release_notes.html#move.release_notes.release_notes_boost_1_56_00">Boost
+      1.56 Release</a></span></dt>
 <dt><span class="section"><a href="move/release_notes.html#move.release_notes.release_notes_boost_1_55_00">Boost
       1.55 Release</a></span></dt>
-<dt><span class="section"><a href="move/release_notes.html#move.reference">Reference</a></span></dt>
+<dt><span class="section"><a href="move/release_notes.html#move.release_notes.release_notes_boost_1_54_00">Boost
+      1.54 Release</a></span></dt>
+<dt><span class="section"><a href="move/release_notes.html#move.release_notes.release_notes_boost_1_53_00">Boost
+      1.53 Release</a></span></dt>
+<dt><span class="section"><a href="move/release_notes.html#move.release_notes.release_notes_boost_1_51_00">Boost
+      1.51 Release</a></span></dt>
+<dt><span class="section"><a href="move/release_notes.html#move.release_notes.release_notes_boost_1_49_00">Boost
+      1.49 Release</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="move/reference.html">Reference</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="move/reference.html#header.boost.move.adl_move_swap_hpp">Header &lt;boost/move/adl_move_swap.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="move/reference.html#header.boost.move.algorithm_hpp">Header &lt;boost/move/algorithm.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="move/reference.html#header.boost.move.core_hpp">Header &lt;boost/move/core.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="move/reference.html#header.boost.move.default_delete_hpp">Header &lt;boost/move/default_delete.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="move/reference.html#header.boost.move.iterator_hpp">Header &lt;boost/move/iterator.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="move/reference.html#header.boost.move.make_unique_hpp">Header &lt;boost/move/make_unique.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="move/reference.html#header.boost.move.move_hpp">Header &lt;boost/move/move.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="move/reference.html#header.boost.move.traits_hpp">Header &lt;boost/move/traits.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="move/reference.html#header.boost.move.unique_ptr_hpp">Header &lt;boost/move/unique_ptr.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="move/reference.html#header.boost.move.utility_hpp">Header &lt;boost/move/utility.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="move/reference.html#header.boost.move.utility_core_hpp">Header &lt;boost/move/utility_core.hpp&gt;</a></span></dt>
 </dl></dd>
 </dl>
 </div>
@@ -113,7 +142,7 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: October 02, 2013 at 23:29:09 GMT</small></p></td>
+<td align="left"><p><small>Last revised: April 07, 2015 at 22:50:42 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

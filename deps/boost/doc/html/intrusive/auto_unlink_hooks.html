@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../intrusive.html" title="Chapter&#160;14.&#160;Boost.Intrusive">
+<link rel="up" href="../intrusive.html" title="Chapter&#160;15.&#160;Boost.Intrusive">
 <link rel="prev" href="safe_hook.html" title="Safe hooks">
 <link rel="next" href="slist.html" title="Intrusive singly linked list: slist">
 </head>
@@ -127,7 +127,8 @@
 
    <span class="keyword">public</span><span class="special">:</span>
    <span class="identifier">MyClass</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span>   <span class="special">:</span>  <span class="identifier">int_</span><span class="special">(</span><span class="identifier">i</span><span class="special">)</span>  <span class="special">{}</span>
-   <span class="keyword">void</span> <span class="identifier">unlink</span><span class="special">()</span>     <span class="special">{</span>  <span class="identifier">auto_unlink_hook</span><span class="special">::</span><span class="identifier">unlink</span><span class="special">();</span>  <span class="special">}</span>
+   <span class="keyword">int</span>  <span class="identifier">get_int</span><span class="special">()</span>    <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">int_</span><span class="special">;</span> <span class="special">}</span>
+   <span class="keyword">void</span> <span class="identifier">unlink</span><span class="special">()</span>     <span class="special">{</span>  <span class="identifier">auto_unlink_hook</span><span class="special">::</span><span class="identifier">unlink</span><span class="special">();</span> <span class="special">}</span>
    <span class="keyword">bool</span> <span class="identifier">is_linked</span><span class="special">()</span>  <span class="special">{</span>  <span class="keyword">return</span> <span class="identifier">auto_unlink_hook</span><span class="special">::</span><span class="identifier">is_linked</span><span class="special">();</span>  <span class="special">}</span>
 <span class="special">};</span>
 

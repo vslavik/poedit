@@ -1,5 +1,6 @@
 /* GNU gettext - internationalization aids
-   Copyright (C) 1995-1998, 2000-2010, 2012 Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2010, 2012, 2015 Free Software
+   Foundation, Inc.
 
    This file was written by Peter Miller <millerp@canb.auug.org.au>
 
@@ -306,21 +307,57 @@ message_print_comment_dot (const message_ty *mp, ostream_t stream)
 
 /* Output mp->filepos as a set of comment lines.  */
 
+static enum filepos_comment_type filepos_comment_type = filepos_comment_full;
+
 void
 message_print_comment_filepos (const message_ty *mp, ostream_t stream,
                                bool uniforum, size_t page_width)
 {
-  if (mp->filepos_count != 0)
+  if (filepos_comment_type != filepos_comment_none
+      && mp->filepos_count != 0)
     {
+      size_t filepos_count;
+      lex_pos_ty *filepos;
+
       begin_css_class (stream, class_reference_comment);
+
+      if (filepos_comment_type == filepos_comment_file)
+        {
+          size_t i;
+
+          filepos_count = 0;
+          filepos = XNMALLOC (mp->filepos_count, lex_pos_ty);
+
+          for (i = 0; i < mp->filepos_count; ++i)
+            {
+              lex_pos_ty *pp = &mp->filepos[i];
+              size_t j;
+
+              for (j = 0; j < filepos_count; j++)
+                if (strcmp (filepos[j].file_name, pp->file_name) == 0)
+                  break;
+
+              if (j == filepos_count)
+                {
+                  filepos[filepos_count].file_name = pp->file_name;
+                  filepos[filepos_count].line_number = (size_t)-1;
+                  filepos_count++;
+                }
+            }
+        }
+      else
+        {
+          filepos = mp->filepos;
+          filepos_count = mp->filepos_count;
+        }
 
       if (uniforum)
         {
           size_t j;
 
-          for (j = 0; j < mp->filepos_count; ++j)
+          for (j = 0; j < filepos_count; ++j)
             {
-              lex_pos_ty *pp = &mp->filepos[j];
+              lex_pos_ty *pp = &filepos[j];
               const char *cp = pp->file_name;
               char *str;
 
@@ -345,24 +382,26 @@ message_print_comment_filepos (const message_ty *mp, ostream_t stream,
 
           ostream_write_str (stream, "#:");
           column = 2;
-          for (j = 0; j < mp->filepos_count; ++j)
+          for (j = 0; j < filepos_count; ++j)
             {
               lex_pos_ty *pp;
               char buffer[21];
               const char *cp;
               size_t len;
 
-              pp = &mp->filepos[j];
+              pp = &filepos[j];
               cp = pp->file_name;
               while (cp[0] == '.' && cp[1] == '/')
                 cp += 2;
-              /* Some xgettext input formats, like RST, lack line numbers.  */
-              if (pp->line_number == (size_t)(-1))
+              if (filepos_comment_type == filepos_comment_file
+                  /* Some xgettext input formats, like RST, lack line
+                     numbers.  */
+                  || pp->line_number == (size_t)(-1))
                 buffer[0] = '\0';
               else
                 sprintf (buffer, ":%ld", (long) pp->line_number);
               len = strlen (cp) + strlen (buffer) + 1;
-              if (column > 2 && column + len >= page_width)
+              if (column > 2 && column + len > page_width)
                 {
                   ostream_write_str (stream, "\n#:");
                   column = 2;
@@ -376,6 +415,9 @@ message_print_comment_filepos (const message_ty *mp, ostream_t stream,
             }
           ostream_write_str (stream, "\n");
         }
+
+      if (filepos != mp->filepos)
+        free (filepos);
 
       end_css_class (stream, class_reference_comment);
     }
@@ -503,6 +545,37 @@ void
 message_print_style_escape (bool flag)
 {
   escape = flag;
+}
+
+void
+message_print_style_filepos (enum filepos_comment_type type)
+{
+  filepos_comment_type = type;
+}
+
+
+/* --add-location argument handling.  Return an error indicator.  */
+bool
+handle_filepos_comment_option (const char *option)
+{
+  if (option != NULL)
+    {
+      if (strcmp (option, "never") == 0 || strcmp (option, "no") == 0)
+        message_print_style_filepos (filepos_comment_none);
+      else if (strcmp (option, "full") == 0 || strcmp (option, "yes") == 0)
+        message_print_style_filepos (filepos_comment_full);
+      else if (strcmp (option, "file") == 0)
+        message_print_style_filepos (filepos_comment_file);
+      else
+        {
+          fprintf (stderr, "invalid --add-location argument: %s\n", option);
+          return true;
+        }
+    }
+  else
+    /* --add-location is equivalent to --add-location=full.  */
+    message_print_style_filepos (filepos_comment_full);
+  return false;
 }
 
 
@@ -738,6 +811,15 @@ wrap (const message_ty *mp, ostream_t stream,
                         {
                           po_xerror (PO_SEVERITY_ERROR, mp, NULL, 0, 0, false,
                                      _("invalid multibyte sequence"));
+                          continue;
+                        }
+                      else if (errno == EINVAL)
+                        {
+                          /* This could happen if an incomplete
+                             multibyte sequence at the end of input
+                             bytes.  */
+                          po_xerror (PO_SEVERITY_ERROR, mp, NULL, 0, 0, false,
+                                     _("incomplete multibyte sequence"));
                           continue;
                         }
                       else
@@ -1341,15 +1423,10 @@ message_print_obsolete (const message_ty *mp, ostream_t stream,
   /* Print flag information in special comment.  */
   if (mp->is_fuzzy)
     {
-      bool first = true;
-
       ostream_write_str (stream, "#,");
 
       if (mp->is_fuzzy)
-        {
-          ostream_write_str (stream, " fuzzy");
-          first = false;
-        }
+        ostream_write_str (stream, " fuzzy");
 
       ostream_write_str (stream, "\n");
     }

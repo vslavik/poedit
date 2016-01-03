@@ -58,6 +58,10 @@ constexpr float fval = boost::math::constants::pi<float>();
 constexpr double dval = boost::math::constants::pi<double>();
 constexpr long double ldval = boost::math::constants::pi<long double>();
 
+constexpr float fval2 = boost::math::float_constants::pi;
+constexpr double dval2 = boost::math::double_constants::pi;
+constexpr long double ldval2 = boost::math::long_double_constants::pi;
+
 #endif
 
 // We need to declare a conceptual type whose precision is unknown at
@@ -138,7 +142,6 @@ void test_spots(RealType)
    BOOST_CHECK_CLOSE_FRACTION(0.14159265358979323846264338327950288419716939937510L, pi_minus_three<RealType>(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(4.L - 3.14159265358979323846264338327950288419716939937510L, four_minus_pi<RealType>(), tolerance);
 #ifndef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
-   BOOST_CHECK_CLOSE_FRACTION(pow((4 - 3.14159265358979323846264338327950288419716939937510L), 1.5L), pow23_four_minus_pi<RealType>(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(pow((3.14159265358979323846264338327950288419716939937510L), 2.71828182845904523536028747135266249775724709369995L), pi_pow_e<RealType>(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(pow((3.14159265358979323846264338327950288419716939937510L), 0.33333333333333333333333333333333333333333333333333L), cbrt_pi<RealType>(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(exp(-0.5L), exp_minus_half<RealType>(), tolerance);
@@ -146,7 +149,6 @@ void test_spots(RealType)
 
 
 #else // Only double, so no suffix L.
-   BOOST_CHECK_CLOSE_FRACTION(pow((4 - 3.14159265358979323846264338327950288419716939937510), 1.5), pow23_four_minus_pi<RealType>(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(pow((3.14159265358979323846264338327950288419716939937510), 2.71828182845904523536028747135266249775724709369995), pi_pow_e<RealType>(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(pow((3.14159265358979323846264338327950288419716939937510), 0.33333333333333333333333333333333333333333333333333), cbrt_pi<RealType>(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(exp(-0.5), exp_minus_half<RealType>(), tolerance);
@@ -179,9 +181,8 @@ void test_spots(RealType)
    BOOST_CHECK_CLOSE_FRACTION(1 / sqrt(3.14159265358979323846264338327950288419716939937510L), one_div_root_pi<RealType>(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(1 / sqrt(2 * 3.14159265358979323846264338327950288419716939937510L), one_div_root_two_pi<RealType>(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(sqrt(1. / 3.14159265358979323846264338327950288419716939937510L), root_one_div_pi<RealType>(), tolerance);
-   BOOST_CHECK_CLOSE_FRACTION(3.14159265358979323846264338327950288419716939937510L - 3.L, pi_minus_three<RealType>(), tolerance * 2 ); // tolerance * 2 because of cancellation loss.
+   BOOST_CHECK_CLOSE_FRACTION(3.14159265358979323846264338327950288419716939937510L - 3.L, pi_minus_three<RealType>(), tolerance * 4 ); // tolerance * 2 because of cancellation loss.
    BOOST_CHECK_CLOSE_FRACTION(4.L - 3.14159265358979323846264338327950288419716939937510L, four_minus_pi<RealType>(), tolerance );
-   //  BOOST_CHECK_CLOSE_FRACTION(pow((4 - 3.14159265358979323846264338327950288419716939937510L), 1.5L), pow23_four_minus_pi<RealType>(), tolerance); See above.
    //
    BOOST_CHECK_CLOSE_FRACTION(pow((3.14159265358979323846264338327950288419716939937510L), 2.71828182845904523536028747135266249775724709369995L), pi_pow_e<RealType>(), tolerance);  // See above.
    BOOST_CHECK_CLOSE_FRACTION(3.14159265358979323846264338327950288419716939937510L * 3.14159265358979323846264338327950288419716939937510L, pi_sqr<RealType>(), tolerance);  // See above.
@@ -272,7 +273,6 @@ void test_float_spots()
    BOOST_CHECK_CLOSE_FRACTION(static_cast<float>(0.14159265358979323846264338327950288419716939937510F), pi_minus_three, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<float>(4.F - 3.14159265358979323846264338327950288419716939937510F), four_minus_pi, tolerance);
 #ifndef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
-   BOOST_CHECK_CLOSE_FRACTION(static_cast<float>(pow((4 - 3.14159265358979323846264338327950288419716939937510F), 1.5F)), pow23_four_minus_pi, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<float>(pow((3.14159265358979323846264338327950288419716939937510F), 2.71828182845904523536028747135266249775724709369995F)), pi_pow_e, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<float>(pow((3.14159265358979323846264338327950288419716939937510F), 0.33333333333333333333333333333333333333333333333333F)), cbrt_pi, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<float>(exp(-0.5F)), exp_minus_half, tolerance);
@@ -280,7 +280,6 @@ void test_float_spots()
 
 
 #else // Only double, so no suffix F.
-   BOOST_CHECK_CLOSE_FRACTION(static_cast<float>(pow((4 - 3.14159265358979323846264338327950288419716939937510), 1.5)), pow23_four_minus_pi, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<float>(pow((3.14159265358979323846264338327950288419716939937510), 2.71828182845904523536028747135266249775724709369995)), pi_pow_e, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<float>(pow((3.14159265358979323846264338327950288419716939937510), 0.33333333333333333333333333333333333333333333333333)), cbrt_pi, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<float>(exp(-0.5)), exp_minus_half, tolerance);
@@ -315,7 +314,6 @@ void test_float_spots()
    BOOST_CHECK_CLOSE_FRACTION(static_cast<float>(sqrt(1. / 3.14159265358979323846264338327950288419716939937510F)), root_one_div_pi, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<float>(3.14159265358979323846264338327950288419716939937510L - 3.L), pi_minus_three, tolerance * 2 ); // tolerance * 2 because of cancellation loss.
    BOOST_CHECK_CLOSE_FRACTION(static_cast<float>(4.L - 3.14159265358979323846264338327950288419716939937510L), four_minus_pi, tolerance );
-   //  BOOST_CHECK_CLOSE_FRACTION(static_cast<float>(pow((4 - 3.14159265358979323846264338327950288419716939937510F), 1.5F)), pow23_four_minus_pi, tolerance); See above.
    //
    BOOST_CHECK_CLOSE_FRACTION(static_cast<float>(pow((3.14159265358979323846264338327950288419716939937510F), 2.71828182845904523536028747135266249775724709369995F)), pi_pow_e, tolerance);  // See above.
    BOOST_CHECK_CLOSE_FRACTION(static_cast<float>(3.14159265358979323846264338327950288419716939937510F * 3.14159265358979323846264338327950288419716939937510F), pi_sqr, tolerance);  // See above.
@@ -392,7 +390,6 @@ void test_double_spots()
    BOOST_CHECK_CLOSE_FRACTION(static_cast<double>(0.14159265358979323846264338327950288419716939937510), pi_minus_three, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<double>(4. - 3.14159265358979323846264338327950288419716939937510), four_minus_pi, tolerance);
 #ifndef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
-   BOOST_CHECK_CLOSE_FRACTION(static_cast<double>(pow((4 - 3.14159265358979323846264338327950288419716939937510), 1.5)), pow23_four_minus_pi, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<double>(pow((3.14159265358979323846264338327950288419716939937510), 2.71828182845904523536028747135266249775724709369995)), pi_pow_e, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<double>(pow((3.14159265358979323846264338327950288419716939937510), 0.33333333333333333333333333333333333333333333333333)), cbrt_pi, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<double>(exp(-0.5)), exp_minus_half, tolerance);
@@ -400,7 +397,6 @@ void test_double_spots()
 
 
 #else // Only double, so no suffix .
-   BOOST_CHECK_CLOSE_FRACTION(static_cast<double>(pow((4 - 3.14159265358979323846264338327950288419716939937510), 1.5)), pow23_four_minus_pi, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<double>(pow((3.14159265358979323846264338327950288419716939937510), 2.71828182845904523536028747135266249775724709369995)), pi_pow_e, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<double>(pow((3.14159265358979323846264338327950288419716939937510), 0.33333333333333333333333333333333333333333333333333)), cbrt_pi, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<double>(exp(-0.5)), exp_minus_half, tolerance);
@@ -435,7 +431,6 @@ void test_double_spots()
    BOOST_CHECK_CLOSE_FRACTION(static_cast<double>(sqrt(1. / 3.14159265358979323846264338327950288419716939937510)), root_one_div_pi, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<double>(3.14159265358979323846264338327950288419716939937510 - 3.), pi_minus_three, tolerance * 2 ); // tolerance * 2 because of cancellation loss.
    BOOST_CHECK_CLOSE_FRACTION(static_cast<double>(4. - 3.14159265358979323846264338327950288419716939937510), four_minus_pi, tolerance );
-   //  BOOST_CHECK_CLOSE_FRACTION(static_cast<double>(pow((4 - 3.14159265358979323846264338327950288419716939937510), 1.5)), pow23_four_minus_pi, tolerance); See above.
    //
    BOOST_CHECK_CLOSE_FRACTION(static_cast<double>(pow((3.14159265358979323846264338327950288419716939937510), 2.71828182845904523536028747135266249775724709369995)), pi_pow_e, tolerance);  // See above.
    BOOST_CHECK_CLOSE_FRACTION(static_cast<double>(3.14159265358979323846264338327950288419716939937510 * 3.14159265358979323846264338327950288419716939937510), pi_sqr, tolerance);  // See above.
@@ -516,7 +511,6 @@ void test_long_double_spots()
    BOOST_CHECK_CLOSE_FRACTION(static_cast<long double>(0.14159265358979323846264338327950288419716939937510L), pi_minus_three, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<long double>(4.L - 3.14159265358979323846264338327950288419716939937510L), four_minus_pi, tolerance);
 #ifndef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
-   BOOST_CHECK_CLOSE_FRACTION(static_cast<long double>(pow((4 - 3.14159265358979323846264338327950288419716939937510L), 1.5L)), pow23_four_minus_pi, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<long double>(pow((3.14159265358979323846264338327950288419716939937510L), 2.71828182845904523536028747135266249775724709369995L)), pi_pow_e, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<long double>(pow((3.14159265358979323846264338327950288419716939937510L), 0.33333333333333333333333333333333333333333333333333L)), cbrt_pi, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<long double>(exp(-0.5L)), exp_minus_half, tolerance);
@@ -524,7 +518,6 @@ void test_long_double_spots()
 
 
 #else // Only double, so no suffix L.
-   BOOST_CHECK_CLOSE_FRACTION(static_cast<long double>(pow((4 - 3.14159265358979323846264338327950288419716939937510), 1.5)), pow23_four_minus_pi, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<long double>(pow((3.14159265358979323846264338327950288419716939937510), 2.71828182845904523536028747135266249775724709369995)), pi_pow_e, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<long double>(pow((3.14159265358979323846264338327950288419716939937510), 0.33333333333333333333333333333333333333333333333333)), cbrt_pi, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<long double>(exp(-0.5)), exp_minus_half, tolerance);
@@ -557,9 +550,8 @@ void test_long_double_spots()
    BOOST_CHECK_CLOSE_FRACTION(static_cast<long double>(1 / sqrt(3.14159265358979323846264338327950288419716939937510L)), one_div_root_pi, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<long double>(1 / sqrt(2 * 3.14159265358979323846264338327950288419716939937510L)), one_div_root_two_pi, tolerance);
    BOOST_CHECK_CLOSE_FRACTION(static_cast<long double>(sqrt(1. / 3.14159265358979323846264338327950288419716939937510L)), root_one_div_pi, tolerance);
-   BOOST_CHECK_CLOSE_FRACTION(static_cast<long double>(3.14159265358979323846264338327950288419716939937510L - 3.L), pi_minus_three, tolerance * 2 ); // tolerance * 2 because of cancellation loss.
+   BOOST_CHECK_CLOSE_FRACTION(static_cast<long double>(3.14159265358979323846264338327950288419716939937510L - 3.L), pi_minus_three, tolerance * 4 ); // tolerance * 2 because of cancellation loss.
    BOOST_CHECK_CLOSE_FRACTION(static_cast<long double>(4.L - 3.14159265358979323846264338327950288419716939937510L), four_minus_pi, tolerance );
-   //  BOOST_CHECK_CLOSE_FRACTION(static_cast<long double>(pow((4 - 3.14159265358979323846264338327950288419716939937510L), 1.5L)), pow23_four_minus_pi, tolerance); See above.
    //
    BOOST_CHECK_CLOSE_FRACTION(static_cast<long double>(pow((3.14159265358979323846264338327950288419716939937510L), 2.71828182845904523536028747135266249775724709369995L)), pi_pow_e, tolerance);  // See above.
    BOOST_CHECK_CLOSE_FRACTION(static_cast<long double>(3.14159265358979323846264338327950288419716939937510L * 3.14159265358979323846264338327950288419716939937510L), pi_sqr, tolerance);  // See above.
@@ -648,7 +640,6 @@ void test_real_concept_policy(const Policy&)
    BOOST_CHECK_CLOSE_FRACTION(0.14159265358979323846264338327950288419716939937510L, (pi_minus_three<real_concept, Policy>)(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(4.L - 3.14159265358979323846264338327950288419716939937510L, (four_minus_pi<real_concept, Policy>)(), tolerance);
 #ifndef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
-   BOOST_CHECK_CLOSE_FRACTION(pow((4 - 3.14159265358979323846264338327950288419716939937510L), 1.5L), (pow23_four_minus_pi<real_concept, Policy>)(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(pow((3.14159265358979323846264338327950288419716939937510L), 2.71828182845904523536028747135266249775724709369995L), (pi_pow_e<real_concept, Policy>)(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(pow((3.14159265358979323846264338327950288419716939937510L), 0.33333333333333333333333333333333333333333333333333L), (cbrt_pi<real_concept, Policy>)(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(exp(-0.5L), (exp_minus_half<real_concept, Policy>)(), tolerance);
@@ -656,7 +647,6 @@ void test_real_concept_policy(const Policy&)
 
 
 #else // Only double, so no suffix L.
-   BOOST_CHECK_CLOSE_FRACTION(pow((4 - 3.14159265358979323846264338327950288419716939937510), 1.5), (pow23_four_minus_pi<real_concept, Policy>)(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(pow((3.14159265358979323846264338327950288419716939937510), 2.71828182845904523536028747135266249775724709369995), (pi_pow_e<real_concept, Policy>)(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(pow((3.14159265358979323846264338327950288419716939937510), 0.33333333333333333333333333333333333333333333333333), (cbrt_pi<real_concept, Policy>)(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(exp(-0.5), (exp_minus_half<real_concept, Policy>)(), tolerance);
@@ -689,9 +679,8 @@ void test_real_concept_policy(const Policy&)
    BOOST_CHECK_CLOSE_FRACTION(1 / sqrt(3.14159265358979323846264338327950288419716939937510L), (one_div_root_pi<real_concept, Policy>)(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(1 / sqrt(2 * 3.14159265358979323846264338327950288419716939937510L), (one_div_root_two_pi<real_concept, Policy>)(), tolerance);
    BOOST_CHECK_CLOSE_FRACTION(sqrt(1. / 3.14159265358979323846264338327950288419716939937510L), (root_one_div_pi<real_concept, Policy>)(), tolerance);
-   BOOST_CHECK_CLOSE_FRACTION(3.14159265358979323846264338327950288419716939937510L - 3.L, (pi_minus_three<real_concept, Policy>)(), tolerance * 2 ); // tolerance * 2 because of cancellation loss.
+   BOOST_CHECK_CLOSE_FRACTION(3.14159265358979323846264338327950288419716939937510L - 3.L, (pi_minus_three<real_concept, Policy>)(), tolerance * 4 ); // tolerance * 2 because of cancellation loss.
    BOOST_CHECK_CLOSE_FRACTION(4.L - 3.14159265358979323846264338327950288419716939937510L, (four_minus_pi<real_concept, Policy>)(), tolerance );
-   //  BOOST_CHECK_CLOSE_FRACTION(pow((4 - 3.14159265358979323846264338327950288419716939937510L), 1.5L), (pow23_four_minus_pi<real_concept, Policy>)(), tolerance); See above.
    //
    BOOST_CHECK_CLOSE_FRACTION(pow((3.14159265358979323846264338327950288419716939937510L), 2.71828182845904523536028747135266249775724709369995L), (pi_pow_e<real_concept, Policy>)(), tolerance);  // See above.
    BOOST_CHECK_CLOSE_FRACTION(3.14159265358979323846264338327950288419716939937510L * 3.14159265358979323846264338327950288419716939937510L, (pi_sqr<real_concept, Policy>)(), tolerance);  // See above.
@@ -792,6 +781,7 @@ BOOST_AUTO_TEST_CASE( test_main )
 
    test_float_spots(); // Test float_constants, like boost::math::float_constants::pi;
    test_double_spots(); // Test double_constants.
+#ifndef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
    test_long_double_spots(); // Test long_double_constants.
 #ifdef BOOST_MATH_USE_FLOAT128
    test_float128();
@@ -802,7 +792,7 @@ BOOST_AUTO_TEST_CASE( test_main )
    test_real_concept_policy(real_concept_policy_2()); // Increased precision forcing construction from string.
    test_real_concept_policy(real_concept_policy_3()); // Increased precision forcing caching of computed values.
    test_real_concept_policy(boost::math::policies::policy<>()); // Default.
-
+#endif
    // (Parameter value, arbitrarily zero, only communicates the floating-point type).
    test_spots(0.0F); // Test float.
    test_spots(0.0); // Test double.

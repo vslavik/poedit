@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../variant.html" title="Chapter&#160;37.&#160;Boost.Variant">
+<link rel="up" href="../variant.html" title="Chapter&#160;38.&#160;Boost.Variant">
 <link rel="prev" href="../boost/visitor_ptr.html" title="Function template visitor_ptr">
 <link rel="next" href="misc.html" title="Miscellaneous Notes">
 </head>
@@ -278,30 +278,6 @@
             the left-hand side operand so as to preserve the never-empty
             guarantee.</li>
 </ul></div>
-<p>
-
-      </p>
-<p><span class="bold"><strong>Caveat</strong></span>: On most platforms, the
-        <a href="../../../libs/type_traits/index.html" target="_top">Type Traits</a> templates
-        <code class="computeroutput">has_nothrow_copy</code> and <code class="computeroutput">has_nothrow_constructor</code>
-        by default return <code class="computeroutput">false</code> for all <code class="computeroutput">class</code> and
-        <code class="computeroutput">struct</code> types. It is necessary therefore to provide
-        specializations of these templates as appropriate for user-defined
-        types, as demonstrated in the following:
-
-</p>
-<pre class="programlisting">// ...in your code (at file scope)...
-
-namespace boost {
-
-  template &lt;&gt;
-  struct <code class="computeroutput">has_nothrow_copy</code>&lt; myUDT &gt;
-    : <code class="computeroutput">mpl::true_</code>
-  {
-  };
-
-}
-</pre>
 <p>
 
       </p>

@@ -132,9 +132,9 @@ BOOST_AUTO_TEST_CASE(event_comparison_test4) {
 BOOST_AUTO_TEST_CASE(event_comparison_test5) {
   circle_type circle(1, 2, 3);
   CHECK_EVENT_COMPARISON(circle, site_type(0, 100), false, true);
-  CHECK_EVENT_COMPARISON(circle, site_type(3, 0), false, true);
+  CHECK_EVENT_COMPARISON(circle, site_type(3, 0), false, false);
   CHECK_EVENT_COMPARISON(circle, site_type(3, 2), false, false);
-  CHECK_EVENT_COMPARISON(circle, site_type(3, 3), true, false);
+  CHECK_EVENT_COMPARISON(circle, site_type(3, 3), false, false);
   CHECK_EVENT_COMPARISON(circle, site_type(4, 2), true, false);
 }
 
@@ -513,4 +513,50 @@ BOOST_AUTO_TEST_CASE(circle_formation_predicate_test10) {
   site3.sorted_index(2);
   site1.inverse();
   CHECK_CIRCLE_FORMATION_PREDICATE(site1, site2, site3, 1.0, 30.0, 25.0);
+}
+
+BOOST_AUTO_TEST_CASE(circle_formation_predicate_test11) {
+  site_type site1(0, 0, 0, 10);
+  site1.sorted_index(2);
+  site1.inverse();
+  site_type site2(-8, 10);
+  site2.sorted_index(0);
+  site_type site3(-7, 14, -1, 14);
+  site3.sorted_index(1);
+  CHECK_CIRCLE_FORMATION_PREDICATE(site1, site2, site3, -4.0, 10.0, 0.0);
+}
+
+BOOST_AUTO_TEST_CASE(circle_formation_predicate_test12) {
+  site_type site1(0, 0, 0, 10);
+  site1.sorted_index(2);
+  site1.inverse();
+  site_type site2(-8, 10);
+  site2.sorted_index(0);
+  site_type site3(-7, 15, -1, 15);
+  site3.sorted_index(1);
+  CHECK_CIRCLE_EXISTENCE(site1, site2, site3, false);
+}
+
+BOOST_AUTO_TEST_CASE(circle_formation_predicate_test13) {
+  site_type site1(0, 0, 0, 10);
+  site1.sorted_index(2);
+  site1.inverse();
+  site_type site2(-7, -4, -1, -4);
+  site2.sorted_index(1);
+  site2.inverse();
+  site_type site3(-8, 0);
+  site3.sorted_index(0);
+  CHECK_CIRCLE_FORMATION_PREDICATE(site1, site2, site3, -4.0, 0.0, 0.0);
+}
+
+BOOST_AUTO_TEST_CASE(circle_formation_predicate_test14) {
+  site_type site1(0, 0, 0, 10);
+  site1.sorted_index(2);
+  site1.inverse();
+  site_type site2(-7, -5, -1, -5);
+  site2.sorted_index(1);
+  site2.inverse();
+  site_type site3(-8, 0);
+  site3.sorted_index(0);
+  CHECK_CIRCLE_EXISTENCE(site1, site2, site3, false);
 }

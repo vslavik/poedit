@@ -57,7 +57,6 @@ ALIASES                = qbk{1}="\xmlonly <qbk>\1</qbk> \endxmlonly" \
 			tparam_radius="numeric type for radius (of sphere, earth)" \
 			tparam_container="container type, for example std::vector, std::deque" \
 			tparam_dimension_required="Dimension, this template parameter is required. Should contain \\[0 .. n-1\\] for an n-dimensional geometry" \
-			tparam_first_point="first point type" \
 			tparam_functor="Function or class with operator()" \
 			tparam_output_collection="output collection, either a multi-geometry, or a std::vector<Geometry> / std::deque<Geometry> etc" \
 			tparam_geometry="Any type fulfilling a Geometry Concept" \
@@ -67,8 +66,10 @@ ALIASES                = qbk{1}="\xmlonly <qbk>\1</qbk> \endxmlonly" \
 			tparam_out{1}="A valid output iterator type, accepting geometries of \1 Concept" \
 			tparam_point="Any type fulfilling a Point Concept" \
 			tparam_range_point="Any type fulfilling a Range Concept where it range_value type fulfills the Point Concept" \
-			tparam_first_point="point type" \
+			tparam_first_point="first point type" \
+			tparam_first_box="first box type" \
 			tparam_second_point="second point type" \
+			tparam_second_box="second box type" \
 			tparam_segment_point="segment point type" \
 			tparam_strategy{1}="Any type fulfilling a \1 Strategy Concept" \
 			tparam_strategy_overlay="Compound strategy for segment intersection" \
@@ -90,6 +91,8 @@ ALIASES                = qbk{1}="\xmlonly <qbk>\1</qbk> \endxmlonly" \
 			param_z="Third coordinate (usually z-coordinate)" \
 			constructor_default{1}="Default constructor, creating an empty \1" \
 			constructor_begin_end{1}="Constructor with begin and end,  filling the \1" \
+			constructor_initializer_list{1}="Constructor taking std::initializer_list, filling the \1" \
+			assignment_initializer_list{1}="Assignment operator taking std::initializer_list, assigning values to the \1" \
 			details_calc{2}="The free function \1 calculates the \2 of a geometry" \
 			details_calc{1}="The free function \1 calculates the \1 of a geometry" \
 			details_calc2{2}="The free function \1 calculates the \2 of two geometries" \
@@ -176,9 +179,19 @@ WARN_LOGFILE           =
 INPUT                  = . .. ../../../../boost/geometry/core \
 			../../../../boost/geometry/algorithms \
 			../../../../boost/geometry/algorithms/detail \
-			../../../../boost/geometry/algorithms/detail/overlay \
+                        ../../../../boost/geometry/algorithms/detail/buffer \
+			../../../../boost/geometry/algorithms/detail/comparable_distance \
+			../../../../boost/geometry/algorithms/detail/disjoint \
+			../../../../boost/geometry/algorithms/detail/distance \
 			../../../../boost/geometry/algorithms/detail/equals \
+                        ../../../../boost/geometry/algorithms/detail/intersection \
+			../../../../boost/geometry/algorithms/detail/is_simple \
+			../../../../boost/geometry/algorithms/detail/is_valid \
+			../../../../boost/geometry/algorithms/detail/overlay \
+			../../../../boost/geometry/algorithms/detail/relate \
 			../../../../boost/geometry/algorithms/detail/sections \
+			../../../../boost/geometry/algorithms/detail/turns \
+			../../../../boost/geometry/algorithms/detail/within \
 			../../../../boost/geometry/arithmetic \
 			../../../../boost/geometry/geometries/concepts \
 			../../../../boost/geometry/geometries \
@@ -233,7 +246,7 @@ FILTER_SOURCE_FILES    = NO
 #---------------------------------------------------------------------------
 # configuration options related to source browsing
 #---------------------------------------------------------------------------
-SOURCE_BROWSER         = YES
+SOURCE_BROWSER         = NO
 INLINE_SOURCES         = NO
 STRIP_CODE_COMMENTS    = YES
 REFERENCED_BY_RELATION = NO
@@ -250,7 +263,7 @@ IGNORE_PREFIX          =
 # configuration options related to the HTML output
 #---------------------------------------------------------------------------
 GENERATE_HTML          = YES
-HTML_OUTPUT            = html
+HTML_OUTPUT            = html_by_doxygen
 HTML_FILE_EXTENSION    = .html
 HTML_HEADER            = doxygen_input/ggl_doxygen_header.html
 HTML_FOOTER            = doxygen_input/ggl_doxygen_footer.html

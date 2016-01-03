@@ -2,14 +2,14 @@
 
 ``#include <boost/math/distributions/normal.hpp>``
 
-   namespace boost{ namespace math{ 
-      
-   template <class RealType = double, 
+   namespace boost{ namespace math{
+
+   template <class RealType = double,
              class ``__Policy``   = ``__policy_class`` >
    class normal_distribution;
-   
+
    typedef normal_distribution<> normal;
-   
+
    template <class RealType, class ``__Policy``>
    class normal_distribution
    {
@@ -25,10 +25,10 @@
       RealType location()const;
       RealType scale()const;
    };
-   
+
    }} // namespaces
-   
-The normal distribution is probably the most well known statistical 
+
+The normal distribution is probably the most well known statistical
 distribution: it is also known as the Gaussian Distribution.
 A normal distribution with mean zero and standard deviation one
 is known as the ['Standard Normal Distribution].
@@ -54,20 +54,20 @@ and illustrated by this graph
 [h4 Member Functions]
 
    normal_distribution(RealType mean = 0, RealType sd = 1);
-   
-Constructs a normal distribution with mean /mean/ and 
+
+Constructs a normal distribution with mean /mean/ and
 standard deviation /sd/.
 
 Requires sd > 0, otherwise __domain_error is called.
 
    RealType mean()const;
-   RealType location()const;   
-   
+   RealType location()const;
+
 both return the /mean/ of this distribution.
-   
+
    RealType standard_deviation()const;
    RealType scale()const;
-      
+
 both return the /standard deviation/ of this distribution.
 (Redundant location and scale function are provided to match other similar distributions,
 allowing the functions find_location and find_scale to be used generically).
@@ -85,8 +85,8 @@ if RealType permits.
 
 [h4 Accuracy]
 
-The normal distribution is implemented in terms of the 
-[link math_toolkit.sf_erf.error_function error function], 
+The normal distribution is implemented in terms of the
+[link math_toolkit.sf_erf.error_function error function],
 and as such should have very low error rates.
 
 [h4 Implementation]
@@ -109,7 +109,7 @@ and /s/ is its standard deviation.
 [[kurtosis excess][0]]
 ]
 
-[endsect][/section:normal_dist Normal]
+[endsect] [/section:normal_dist Normal]
 
 [/ normal.qbk
   Copyright 2006, 2007, 2012 John Maddock and Paul A. Bristow.

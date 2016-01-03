@@ -2,7 +2,7 @@
 // strand.cpp
 // ~~~~~~~~~~
 //
-// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -57,7 +57,7 @@ void increment(int* count)
   ++(*count);
 }
 
-void increment_without_lock(strand* s, int* count)
+void increment_without_lock(io_service::strand* s, int* count)
 {
   BOOST_ASIO_CHECK(!s->running_in_this_thread());
 
@@ -70,7 +70,7 @@ void increment_without_lock(strand* s, int* count)
   BOOST_ASIO_CHECK(*count == original_count + 1);
 }
 
-void increment_with_lock(strand* s, int* count)
+void increment_with_lock(io_service::strand* s, int* count)
 {
   BOOST_ASIO_CHECK(s->running_in_this_thread());
 
@@ -91,7 +91,7 @@ void sleep_increment(io_service* ios, int* count)
   ++(*count);
 }
 
-void start_sleep_increments(io_service* ios, strand* s, int* count)
+void start_sleep_increments(io_service* ios, io_service::strand* s, int* count)
 {
   // Give all threads a chance to start.
   timer t(*ios, chronons::seconds(2));
@@ -116,7 +116,7 @@ void io_service_run(io_service* ios)
 void strand_test()
 {
   io_service ios;
-  strand s(ios);
+  io_service::strand s(ios);
   int count = 0;
 
   ios.post(bindns::bind(increment_without_lock, &s, &count));

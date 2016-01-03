@@ -23,14 +23,14 @@ int main()
     boost::array<float, 2> a = { {1, 2} };
     boost::array<double, 2> b = { {2, 3} };
     std::cout << boost::geometry::distance(a, b) << std::endl;
-    
-    boost::geometry::set<0>(a, 1.1);
-    boost::geometry::set<1>(a, 2.2);
+
+    boost::geometry::set<0>(a, 1.1f);
+    boost::geometry::set<1>(a, 2.2f);
     std::cout << boost::geometry::distance(a, b) << std::endl;
 
     boost::geometry::assign_values(b, 2.2, 3.3);
     std::cout << boost::geometry::distance(a, b) << std::endl;
-    
+
     boost::geometry::model::linestring<boost::array<double, 2> > line;
     line.push_back(b);
 

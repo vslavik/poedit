@@ -18,12 +18,12 @@ namespace std{
     using ::remove;
 }
 #endif
-#include <boost/type_traits/broken_compiler_spec.hpp>
+
+#include <boost/serialization/nvp.hpp>
+#include <boost/serialization/export.hpp>
 
 #include <boost/serialization/shared_ptr.hpp>
 #include <boost/serialization/weak_ptr.hpp>
-#include <boost/serialization/nvp.hpp>
-#include <boost/serialization/export.hpp>
 
 #include "test_tools.hpp"
 
@@ -141,17 +141,35 @@ void load2(
 // clearing them (deleting the objects) and then reloading the
 // objects back from an archive.
 
+template<class T, class U>
+boost::shared_ptr<T> dynamic_pointer_cast(boost::shared_ptr<U> const & u)
+BOOST_NOEXCEPT
+{
+    return boost::dynamic_pointer_cast<T>(u);
+}
+
+#ifndef BOOST_NO_CXX11_SMART_PTR
+template<class T, class U>
+std::shared_ptr<T> dynamic_pointer_cast(std::shared_ptr<U> const & u)
+BOOST_NOEXCEPT
+{
+    return std::dynamic_pointer_cast<T>(u);
+}
+#endif
+
 // Serialization sequence
 // First,  shared_ptr
 // Second, weak_ptr
-template <class FIRST, class SECOND>
+template <class SP, class WP>
 void shared_weak(
-    boost::shared_ptr<FIRST>& first, 
-    boost::weak_ptr<SECOND>& second
+    SP & first,
+    WP & second
 ){
     const char * testfile = boost::archive::tmpnam(NULL);
     BOOST_REQUIRE(NULL != testfile);
     int firstm = first->m_x;
+    
+    BOOST_REQUIRE(! second.expired());
     int secondm = second.lock()->m_x;
     save2(testfile, first, second);
 
@@ -160,13 +178,14 @@ void shared_weak(
     first.reset();
 
     load2(testfile, first, second);
+    BOOST_CHECK(! second.expired());
 
     // Check data member
     BOOST_CHECK(firstm == first->m_x);
     BOOST_CHECK(secondm == second.lock()->m_x);
     // Check pointer to vtable
-    BOOST_CHECK(boost::dynamic_pointer_cast<Sub>(first));
-    BOOST_CHECK(boost::dynamic_pointer_cast<Sub>(second.lock()));
+    BOOST_CHECK(::dynamic_pointer_cast<Sub>(first));
+    BOOST_CHECK(::dynamic_pointer_cast<Sub>(second.lock()));
 
     std::remove(testfile);
 }
@@ -174,13 +193,14 @@ void shared_weak(
 // Serialization sequence
 // First,  weak_ptr
 // Second, shared_ptr
-template <class FIRST, class SECOND>
+template <class WP, class SP>
 void weak_shared(
-    boost::weak_ptr<FIRST>& first, 
-    boost::shared_ptr<SECOND>& second
+    WP & first,
+    SP & second
 ){
     const char * testfile = boost::archive::tmpnam(NULL);
     BOOST_REQUIRE(NULL != testfile);
+    BOOST_CHECK(! first.expired());
     int firstm = first.lock()->m_x;
     int secondm = second->m_x;
     save2(testfile, first, second);
@@ -190,57 +210,57 @@ void weak_shared(
     second.reset();
 
     load2(testfile, first, second);
+    BOOST_CHECK(! first.expired());
 
     // Check data member
     BOOST_CHECK(firstm == first.lock()->m_x);
     BOOST_CHECK(secondm == second->m_x);
     // Check pointer to vtable
-    BOOST_CHECK(boost::dynamic_pointer_cast<Sub>(first.lock()));
-    BOOST_CHECK(boost::dynamic_pointer_cast<Sub>(second));
+    BOOST_CHECK(::dynamic_pointer_cast<Sub>(first.lock()));
+    BOOST_CHECK(::dynamic_pointer_cast<Sub>(second));
 
     std::remove(testfile);
 }
 
 // This does the tests
-int test_main(int /* argc */, char * /* argv */[])
-{
-
+template<template<class T> class SPT, template<class T> class WPT>
+bool test(){
     // Both Sub
-    boost::shared_ptr<Sub> tc1_sp(new Sub(10));
-    boost::weak_ptr<Sub> tc1_wp(tc1_sp);
+    SPT<Sub> tc1_sp(new Sub(10));
+    WPT<Sub> tc1_wp(tc1_sp);
     shared_weak(tc1_sp, tc1_wp);
     weak_shared(tc1_wp, tc1_sp);
     tc1_sp.reset();
     BOOST_CHECK(0 == Sub::count);
 
     // Sub and Base1
-    boost::shared_ptr<Sub> tc2_sp(new Sub(10));
-    boost::weak_ptr<Base1> tc2_wp(tc2_sp);
+    SPT<Sub> tc2_sp(new Sub(10));
+    WPT<Base1> tc2_wp(tc2_sp);
     shared_weak(tc2_sp, tc2_wp);
     weak_shared(tc2_wp, tc2_sp);
     tc2_sp.reset();
     BOOST_CHECK(0 == Sub::count);
 
     // Sub and Base2
-    boost::shared_ptr<Sub> tc3_sp(new Sub(10));
-    boost::weak_ptr<Base2> tc3_wp(tc3_sp);
+    SPT<Sub> tc3_sp(new Sub(10));
+    WPT<Base2> tc3_wp(tc3_sp);
     shared_weak(tc3_sp, tc3_wp);
     weak_shared(tc3_wp, tc3_sp);
     tc3_sp.reset();
     BOOST_CHECK(0 == Sub::count);
 
     // Sub and Base3
-    boost::shared_ptr<Sub> tc4_sp(new Sub(10));
-    boost::weak_ptr<Base3> tc4_wp(tc4_sp);
+    SPT<Sub> tc4_sp(new Sub(10));
+    WPT<Base3> tc4_wp(tc4_sp);
     shared_weak(tc4_sp, tc4_wp);
     weak_shared(tc4_wp, tc4_sp);
     tc4_sp.reset();
     BOOST_CHECK(0 == Sub::count);
 
     // Base1 and Base2
-    boost::shared_ptr<Sub> tc5_sp_tmp(new Sub(10));
-    boost::shared_ptr<Base1> tc5_sp(tc5_sp_tmp);
-    boost::weak_ptr<Base2> tc5_wp(tc5_sp_tmp);
+    SPT<Sub> tc5_sp_tmp(new Sub(10));
+    SPT<Base1> tc5_sp(tc5_sp_tmp);
+    WPT<Base2> tc5_wp(tc5_sp_tmp);
     tc5_sp_tmp.reset();
     shared_weak(tc5_sp, tc5_wp);
     weak_shared(tc5_wp, tc5_sp);
@@ -248,9 +268,9 @@ int test_main(int /* argc */, char * /* argv */[])
     BOOST_CHECK(0 == Sub::count);
 
     // Base2 and Base3
-    boost::shared_ptr<Sub> tc6_sp_tmp(new Sub(10));
-    boost::shared_ptr<Base2> tc6_sp(tc6_sp_tmp);
-    boost::weak_ptr<Base3> tc6_wp(tc6_sp_tmp);
+    SPT<Sub> tc6_sp_tmp(new Sub(10));
+    SPT<Base2> tc6_sp(tc6_sp_tmp);
+    WPT<Base3> tc6_wp(tc6_sp_tmp);
     tc6_sp_tmp.reset();
     shared_weak(tc6_sp, tc6_wp);
     weak_shared(tc6_wp, tc6_sp);
@@ -258,14 +278,25 @@ int test_main(int /* argc */, char * /* argv */[])
     BOOST_CHECK(0 == Sub::count);
 
     // Base3 and Base1
-    boost::shared_ptr<Sub> tc7_sp_tmp(new Sub(10));
-    boost::shared_ptr<Base3> tc7_sp(tc7_sp_tmp);
-    boost::weak_ptr<Base1> tc7_wp(tc7_sp_tmp);
+    SPT<Sub> tc7_sp_tmp(new Sub(10));
+    SPT<Base3> tc7_sp(tc7_sp_tmp);
+    WPT<Base1> tc7_wp(tc7_sp_tmp);
     tc7_sp_tmp.reset();
     shared_weak(tc7_sp, tc7_wp);
     weak_shared(tc7_wp, tc7_sp);
     tc7_sp.reset();
     BOOST_CHECK(0 == Sub::count);
 
-    return EXIT_SUCCESS;
+    return true;
+}
+
+// This does the tests
+int test_main(int /* argc */, char * /* argv */[])
+{
+    bool result = true;
+    result &= test<boost::shared_ptr, boost::weak_ptr>();
+    #ifndef BOOST_NO_CXX11_SMART_PTR
+    result &= test<std::shared_ptr, std::weak_ptr>();
+    #endif
+    return result ? EXIT_SUCCESS : EXIT_FAILURE;
 }

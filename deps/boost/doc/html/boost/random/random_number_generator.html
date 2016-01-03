@@ -40,30 +40,30 @@
   <span class="keyword">typedef</span> <span class="identifier">IntType</span> <a name="boost.random.random_number_generator.result_type"></a><span class="identifier">result_type</span><span class="special">;</span>  
 
   <span class="comment">// <a class="link" href="random_number_generator.html#boost.random.random_number_generatorconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="random_number_generator.html#idp91858088-bb"><span class="identifier">random_number_generator</span></a><span class="special">(</span><span class="identifier">base_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="random_number_generator.html#idp217868192-bb"><span class="identifier">random_number_generator</span></a><span class="special">(</span><span class="identifier">base_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="random_number_generator.html#idp91856840-bb">public member functions</a></span>
-  <span class="identifier">result_type</span> <a class="link" href="random_number_generator.html#idp91857048-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">argument_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="random_number_generator.html#idp31040320-bb">public member functions</a></span>
+  <span class="identifier">result_type</span> <a class="link" href="random_number_generator.html#idp33839264-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">argument_type</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp200824312"></a><h2>Description</h2>
+<a name="idp405868032"></a><h2>Description</h2>
 <p>Instantiations of class template <a class="link" href="random_number_generator.html" title="Class template random_number_generator">random_number_generator</a> model a RandomNumberGenerator (std:25.2.11 [lib.alg.random.shuffle]). On each invocation, it returns a uniformly distributed integer in the range [0..n).</p>
 <p>The template parameter IntType shall denote some integer-like value type. </p>
 <div class="refsect2">
-<a name="idp200825592"></a><h3>
+<a name="idp405870064"></a><h3>
 <a name="boost.random.random_number_generatorconstruct-copy-destruct"></a><code class="computeroutput">random_number_generator</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp91858088-bb"></a><span class="identifier">random_number_generator</span><span class="special">(</span><span class="identifier">base_type</span> <span class="special">&amp;</span> rng<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp217868192-bb"></a><span class="identifier">random_number_generator</span><span class="special">(</span><span class="identifier">base_type</span> <span class="special">&amp;</span> rng<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructs a <code class="computeroutput"><a class="link" href="random_number_generator.html" title="Class template random_number_generator">random_number_generator</a></code> functor with the given  <a class="link" href="../../boost_random/reference.html#boost_random.reference.concepts.uniform_random_number_generator" title="Uniform Random Number Generator">uniform random number generator</a>  as the underlying source of random numbers. </p>
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp200830600"></a><h3>
-<a name="idp91856840-bb"></a><code class="computeroutput">random_number_generator</code> public member functions</h3>
+<a name="idp405879904"></a><h3>
+<a name="idp31040320-bb"></a><code class="computeroutput">random_number_generator</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="identifier">result_type</span> <a name="idp91857048-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">argument_type</span> n<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">result_type</span> <a name="idp33839264-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">argument_type</span> n<span class="special">)</span><span class="special">;</span></pre>
 <p>Returns a value in the range [0, n) </p>
 </li></ol></div>
 </div>

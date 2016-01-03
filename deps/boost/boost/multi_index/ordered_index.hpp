@@ -1,4 +1,4 @@
-/* Copyright 2003-2013 Joaquin M Lopez Munoz.
+/* Copyright 2003-2014 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -36,7 +36,7 @@
 #ifndef BOOST_MULTI_INDEX_ORDERED_INDEX_HPP
 #define BOOST_MULTI_INDEX_ORDERED_INDEX_HPP
 
-#if defined(_MSC_VER)&&(_MSC_VER>=1200)
+#if defined(_MSC_VER)
 #pragma once
 #endif
 
@@ -58,7 +58,6 @@
 #include <boost/multi_index/detail/modify_key_adaptor.hpp>
 #include <boost/multi_index/detail/ord_index_node.hpp>
 #include <boost/multi_index/detail/ord_index_ops.hpp>
-#include <boost/multi_index/detail/safe_ctr_proxy.hpp>
 #include <boost/multi_index/detail/safe_mode.hpp>
 #include <boost/multi_index/detail/scope_guard.hpp>
 #include <boost/multi_index/detail/unbounded.hpp>
@@ -117,15 +116,8 @@ class ordered_index:
   BOOST_MULTI_INDEX_PROTECTED_IF_MEMBER_TEMPLATE_FRIENDS SuperMeta::type
 
 #if defined(BOOST_MULTI_INDEX_ENABLE_SAFE_MODE)
-#if BOOST_WORKAROUND(BOOST_MSVC,<1300)
-  ,public safe_ctr_proxy_impl<
-    bidir_node_iterator<
-      ordered_index_node<typename SuperMeta::type::node_type> >,
-    ordered_index<KeyFromValue,Compare,SuperMeta,TagList,Category> >
-#else
   ,public safe_mode::safe_container<
     ordered_index<KeyFromValue,Compare,SuperMeta,TagList,Category> >
-#endif
 #endif
 
 { 
@@ -164,16 +156,9 @@ public:
   typedef typename allocator_type::const_reference   const_reference;
 
 #if defined(BOOST_MULTI_INDEX_ENABLE_SAFE_MODE)
-#if BOOST_WORKAROUND(BOOST_MSVC,<1300)
-  typedef safe_mode::safe_iterator<
-    bidir_node_iterator<node_type>,
-    safe_ctr_proxy<
-      bidir_node_iterator<node_type> > >             iterator;
-#else
   typedef safe_mode::safe_iterator<
     bidir_node_iterator<node_type>,
     ordered_index>                                   iterator;
-#endif
 #else
   typedef bidir_node_iterator<node_type>             iterator;
 #endif
@@ -213,13 +198,7 @@ protected:
 
 private:
 #if defined(BOOST_MULTI_INDEX_ENABLE_SAFE_MODE)
-#if BOOST_WORKAROUND(BOOST_MSVC,<1300)
-  typedef safe_ctr_proxy_impl<
-    bidir_node_iterator<node_type>,
-    ordered_index>                                   safe_super;
-#else
   typedef safe_mode::safe_container<ordered_index>   safe_super;
-#endif
 #endif
 
   typedef typename call_traits<
@@ -256,25 +235,37 @@ public:
   }
 #endif
 
-  allocator_type get_allocator()const
+  allocator_type get_allocator()const BOOST_NOEXCEPT
   {
     return this->final().get_allocator();
   }
 
   /* iterators */
 
-  iterator               begin(){return make_iterator(leftmost());}
-  const_iterator         begin()const{return make_iterator(leftmost());}
-  iterator               end(){return make_iterator(header());}
-  const_iterator         end()const{return make_iterator(header());}
-  reverse_iterator       rbegin(){return make_reverse_iterator(end());}
-  const_reverse_iterator rbegin()const{return make_reverse_iterator(end());}
-  reverse_iterator       rend(){return make_reverse_iterator(begin());}
-  const_reverse_iterator rend()const{return make_reverse_iterator(begin());}
-  const_iterator         cbegin()const{return begin();}
-  const_iterator         cend()const{return end();}
-  const_reverse_iterator crbegin()const{return rbegin();}
-  const_reverse_iterator crend()const{return rend();}
+  iterator
+    begin()BOOST_NOEXCEPT{return make_iterator(leftmost());}
+  const_iterator
+    begin()const BOOST_NOEXCEPT{return make_iterator(leftmost());}
+  iterator
+    end()BOOST_NOEXCEPT{return make_iterator(header());}
+  const_iterator
+    end()const BOOST_NOEXCEPT{return make_iterator(header());}
+  reverse_iterator
+    rbegin()BOOST_NOEXCEPT{return boost::make_reverse_iterator(end());}
+  const_reverse_iterator
+    rbegin()const BOOST_NOEXCEPT{return boost::make_reverse_iterator(end());}
+  reverse_iterator
+    rend()BOOST_NOEXCEPT{return boost::make_reverse_iterator(begin());}
+  const_reverse_iterator
+    rend()const BOOST_NOEXCEPT{return boost::make_reverse_iterator(begin());}
+  const_iterator
+    cbegin()const BOOST_NOEXCEPT{return begin();}
+  const_iterator
+    cend()const BOOST_NOEXCEPT{return end();}
+  const_reverse_iterator
+    crbegin()const BOOST_NOEXCEPT{return rbegin();}
+  const_reverse_iterator
+    crend()const BOOST_NOEXCEPT{return rend();}
  
   iterator iterator_to(const value_type& x)
   {
@@ -288,9 +279,9 @@ public:
 
   /* capacity */
 
-  bool      empty()const{return this->final_empty_();}
-  size_type size()const{return this->final_size_();}
-  size_type max_size()const{return this->final_max_size_();}
+  bool      empty()const BOOST_NOEXCEPT{return this->final_empty_();}
+  size_type size()const BOOST_NOEXCEPT{return this->final_size_();}
+  size_type max_size()const BOOST_NOEXCEPT{return this->final_max_size_();}
 
   /* modifiers */
 
@@ -431,7 +422,7 @@ public:
   }
 
   template<typename Modifier,typename Rollback>
-  bool modify(iterator position,Modifier mod,Rollback back)
+  bool modify(iterator position,Modifier mod,Rollback back_)
   {
     BOOST_MULTI_INDEX_CHECK_VALID_ITERATOR(position);
     BOOST_MULTI_INDEX_CHECK_DEREFERENCEABLE_ITERATOR(position);
@@ -448,7 +439,7 @@ public:
 #endif
 
     return this->final_modify_(
-      mod,back,static_cast<final_node_type*>(position.get_node()));
+      mod,back_,static_cast<final_node_type*>(position.get_node()));
   }
   
   template<typename Modifier>
@@ -463,7 +454,7 @@ public:
   }
 
   template<typename Modifier,typename Rollback>
-  bool modify_key(iterator position,Modifier mod,Rollback back)
+  bool modify_key(iterator position,Modifier mod,Rollback back_)
   {
     BOOST_MULTI_INDEX_CHECK_VALID_ITERATOR(position);
     BOOST_MULTI_INDEX_CHECK_DEREFERENCEABLE_ITERATOR(position);
@@ -472,7 +463,7 @@ public:
     return modify(
       position,
       modify_key_adaptor<Modifier,value_type,KeyFromValue>(mod,key),
-      modify_key_adaptor<Rollback,value_type,KeyFromValue>(back,key));
+      modify_key_adaptor<Rollback,value_type,KeyFromValue>(back_,key));
   }
 
   void swap(ordered_index<KeyFromValue,Compare,SuperMeta,TagList,Category>& x)
@@ -482,7 +473,7 @@ public:
     this->final_swap_(x.final());
   }
 
-  void clear()
+  void clear()BOOST_NOEXCEPT
   {
     BOOST_MULTI_INDEX_ORD_INDEX_CHECK_INVARIANT;
     this->final_clear_();
@@ -709,32 +700,35 @@ BOOST_MULTI_INDEX_PROTECTED_IF_MEMBER_TEMPLATE_FRIENDS:
   }
 
   template<typename Variant>
-  node_type* insert_(value_param_type v,node_type* x,Variant variant)
+  final_node_type* insert_(
+    value_param_type v,final_node_type*& x,Variant variant)
   {
     link_info inf;
     if(!link_point(key(v),inf,Category())){
-      return node_type::from_impl(inf.pos);
+      return static_cast<final_node_type*>(node_type::from_impl(inf.pos));
     }
 
-    node_type* res=static_cast<node_type*>(super::insert_(v,x,variant));
+    final_node_type* res=super::insert_(v,x,variant);
     if(res==x){
-      node_impl_type::link(x->impl(),inf.side,inf.pos,header()->impl());
+      node_impl_type::link(
+        static_cast<node_type*>(x)->impl(),inf.side,inf.pos,header()->impl());
     }
     return res;
   }
 
   template<typename Variant>
-  node_type* insert_(
-    value_param_type v,node_type* position,node_type* x,Variant variant)
+  final_node_type* insert_(
+    value_param_type v,node_type* position,final_node_type*& x,Variant variant)
   {
     link_info inf;
     if(!hinted_link_point(key(v),position,inf,Category())){
-      return node_type::from_impl(inf.pos);
+      return static_cast<final_node_type*>(node_type::from_impl(inf.pos));
     }
 
-    node_type* res=static_cast<node_type*>(super::insert_(v,position,x,variant));
+    final_node_type* res=super::insert_(v,position,x,variant);
     if(res==x){
-      node_impl_type::link(x->impl(),inf.side,inf.pos,header()->impl());
+      node_impl_type::link(
+        static_cast<node_type*>(x)->impl(),inf.side,inf.pos,header()->impl());
     }
     return res;
   }
@@ -993,6 +987,7 @@ private:
 
   struct link_info
   {
+    /* coverity[uninit_ctor]: suppress warning */
     link_info():side(to_left){}
 
     ordered_index_side side;
@@ -1324,7 +1319,8 @@ private:
     ordered_non_unique_tag)
   {
     lm.load(
-      ::boost::bind(&ordered_index::rearranger,this,_1,_2),
+      ::boost::bind(
+        &ordered_index::rearranger,this,::boost::arg<1>(),::boost::arg<2>()),
       ar,version);
     super::load_(ar,version,lm);
   }

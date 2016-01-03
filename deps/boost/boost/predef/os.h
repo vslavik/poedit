@@ -1,5 +1,6 @@
 /*
-Copyright Redshift Software, Inc. 2008-2012
+Copyright Rene Rivera 2008-2012
+Copyright Franz Detro 2014
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE_1_0.txt or copy at
 http://www.boost.org/LICENSE_1_0.txt)
@@ -14,8 +15,10 @@ http://www.boost.org/LICENSE_1_0.txt)
 #include <boost/predef/os/beos.h>
 #include <boost/predef/os/bsd.h>
 #include <boost/predef/os/cygwin.h>
+#include <boost/predef/os/haiku.h>
 #include <boost/predef/os/hpux.h>
 #include <boost/predef/os/irix.h>
+#include <boost/predef/os/ios.h>
 #include <boost/predef/os/linux.h>
 #include <boost/predef/os/macos.h>
 #include <boost/predef/os/os400.h>

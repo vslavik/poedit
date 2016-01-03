@@ -20,8 +20,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../../../.."
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;BOOST_DATE_TIME_NO_LIB"
-				GeneratePreprocessedFile="0"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -74,7 +73,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../../.."
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;BOOST_DATE_TIME_NO_LIB"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="TRUE"
 				ForceConformanceInForLoopScope="FALSE"
@@ -94,7 +93,8 @@
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				TargetMachine="1"/>
+				TargetMachine="1"
+				FixedBaseAddress="1"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
@@ -127,11 +127,6 @@
 			<File
 				RelativePath="..\..\test\scoped_allocator_adaptor_test.cpp">
 			</File>
-		</Filter>
-		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93815995-89BD-b043-5E8B-65FBE52E2AFB}">
 		</Filter>
 	</Files>
 	<Globals>

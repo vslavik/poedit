@@ -1,5 +1,6 @@
 ## Makefile for the gettext-tools/examples subdirectory of GNU gettext
-## Copyright (C) 2001-2007, 2009-2012 Free Software Foundation, Inc.
+## Copyright (C) 2001-2007, 2009-2015 Free Software Foundation,
+## Inc.
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -50,6 +51,20 @@ EXAMPLESFILES = \
   hello-c-gnome/m4/gnome-orbit-check.m4 \
   hello-c-gnome/po/Makevars \
   hello-c-gnome/po/POTFILES.in \
+  \
+  hello-c-gnome3/INSTALL \
+  hello-c-gnome3/autogen.sh \
+  hello-c-gnome3/autoclean.sh \
+  hello-c-gnome3/hello.c \
+  hello-c-gnome3/hello.desktop.in.in \
+  hello-c-gnome3/hello.gschema.xml \
+  hello-c-gnome3/hello.gresource.xml \
+  hello-c-gnome3/hello.ui \
+  hello-c-gnome3/Makefile.am \
+  hello-c-gnome3/configure.ac \
+  hello-c-gnome3/m4/Makefile.am \
+  hello-c-gnome3/po/Makevars \
+  hello-c-gnome3/po/POTFILES.in \
   \
   hello-c++/INSTALL \
   hello-c++/autogen.sh \
@@ -361,6 +376,7 @@ EXAMPLESFILES = \
 EXAMPLESDIRS = \
   hello-c \
   hello-c-gnome \
+  hello-c-gnome3 \
   hello-c++ \
   hello-c++-qt \
   hello-c++-kde \
@@ -419,6 +435,7 @@ EXAMPLESPOFILES = \
   nl.po \
   pl.po \
   pt.po \
+  pt_BR.po \
   ro.po \
   ru.po \
   sk.po \
@@ -449,6 +466,10 @@ install-data-local: $(EXAMPLESFILES)
 	for f1 in $(EXAMPLESDIRS); do \
 	  for f2 in $(EXAMPLESPOFILES); do \
 	    f=$$f1/po/$$f2; \
+	    test -f $(srcdir)/$$f || { \
+	      echo "WARNING: $(srcdir)/$$f doesn't exist; do \"make dist\" to prepare" >&2; \
+	      break; \
+	    }; \
 	    d=`echo /$$f | sed -e 's,/[^/]*$$,,'`; \
 	    test -z "$$d" || $(MKDIR_P) $(DESTDIR)$(examplesdir)$$d || exit 1; \
 	    b=`echo $$f | sed -e 's,^.*/,,'`; \
@@ -484,7 +505,7 @@ uninstall-local:
 
 # Invoked from inside automake's distdir target.
 distdir1:
-	cd po && $(MAKE) update-po
+	cd po && $(MAKE) update-po all
 	for file in $(EXAMPLESFILES); do \
 	  if test -f $$file; then d=.; else d=$(srcdir); fi; \
 	  dir=`echo "$$file" | sed -e 's,/[^/]*$$,,'`; \
@@ -508,3 +529,8 @@ distdir1:
 # Temporary directories created by po/Makefile.
 clean-local:
 	-rm -rf tmp-hello-*
+
+maintainer-update-po: $(top_builddir)/config.status
+	$(SHELL) ./config.status --recheck
+	$(SHELL) ./config.status po/Makefile
+	cd po && $(MAKE) update-po

@@ -23,11 +23,11 @@ BOOST_GEOMETRY_REGISTER_BOOST_ARRAY_CS(cs::cartesian)
 int main()
 {
     // Define a polygon storing points in a deque and storing interior rings
-    // in a list (note that std::list is not supported by most algorithms 
+    // in a list (note that std::list is not supported by most algorithms
     // because not supporting a random access iterator)
     typedef boost::geometry::model::polygon
         <
-            boost::array<short, 3>, 
+            boost::array<short, 3>,
             true, true,
             std::deque, std::list
         > polygon;

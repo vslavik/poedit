@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -23,6 +23,7 @@
 #include <boost/type_traits/remove_cv.hpp>
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/log/detail/config.hpp>
+#include <boost/log/detail/copy_cv.hpp>
 #include <boost/log/detail/custom_terminal_spec.hpp>
 #include <boost/log/detail/header.hpp>
 
@@ -62,26 +63,16 @@ public:
     template< typename >
     struct result;
 
-    template< typename ContextT >
-    struct result< this_type(ContextT) >
+    template< typename ThisT, typename ContextT >
+    struct result< ThisT(ContextT) >
     {
         typedef typename remove_cv<
             typename remove_reference< typename phoenix::result_of::env< ContextT >::type >::type
         >::type env_type;
         typedef typename env_type::args_type args_type;
+        typedef typename boost::log::aux::copy_cv< ThisT, function_type >::type cv_function_type;
 
-        typedef typename boost::result_of< function_type(typename fusion::result_of::at_c< args_type, 0 >::type) >::type type;
-    };
-
-    template< typename ContextT >
-    struct result< const this_type(ContextT) >
-    {
-        typedef typename remove_cv<
-            typename remove_reference< typename phoenix::result_of::env< ContextT >::type >::type
-        >::type env_type;
-        typedef typename env_type::args_type args_type;
-
-        typedef typename boost::result_of< const function_type(typename fusion::result_of::at_c< args_type, 0 >::type) >::type type;
+        typedef typename boost::result_of< cv_function_type(typename fusion::result_of::at_c< args_type, 0 >::type) >::type type;
     };
 
 private:

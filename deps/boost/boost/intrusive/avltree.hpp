@@ -13,15 +13,12 @@
 #define BOOST_INTRUSIVE_AVLTREE_HPP
 
 #include <boost/intrusive/detail/config_begin.hpp>
-#include <algorithm>
-#include <cstddef>
-#include <functional>
-#include <iterator>
-#include <utility>
-
-#include <boost/intrusive/detail/assert.hpp>
-#include <boost/static_assert.hpp>
 #include <boost/intrusive/intrusive_fwd.hpp>
+#include <cstddef>
+#include <boost/intrusive/detail/minimal_less_equal_header.hpp>
+#include <boost/intrusive/detail/minimal_pair_header.hpp>
+
+#include <boost/static_assert.hpp>
 #include <boost/intrusive/avl_set_hook.hpp>
 #include <boost/intrusive/detail/avltree_node.hpp>
 #include <boost/intrusive/bstree.hpp>
@@ -29,24 +26,34 @@
 #include <boost/intrusive/detail/ebo_functor_holder.hpp>
 #include <boost/intrusive/detail/mpl.hpp>
 #include <boost/intrusive/pointer_traits.hpp>
-#include <boost/intrusive/pointer_traits.hpp>
-#include <boost/intrusive/options.hpp>
-#include <boost/intrusive/detail/utilities.hpp>
+#include <boost/intrusive/detail/get_value_traits.hpp>
 #include <boost/intrusive/avltree_algorithms.hpp>
 #include <boost/intrusive/link_mode.hpp>
-#include <boost/move/move.hpp>
+#include <boost/move/utility_core.hpp>
+
+#if defined(BOOST_HAS_PRAGMA_ONCE)
+#  pragma once
+#endif
 
 namespace boost {
 namespace intrusive {
 
 /// @cond
 
+struct default_avltree_hook_applier
+{  template <class T> struct apply{ typedef typename T::default_avltree_hook type;  };  };
+
+template<>
+struct is_default_hook_tag<default_avltree_hook_applier>
+{  static const bool value = true;  };
+
 struct avltree_defaults
 {
-   typedef detail::default_avltree_hook proto_value_traits;
+   typedef default_avltree_hook_applier proto_value_traits;
    static const bool constant_time_size = true;
    typedef std::size_t size_type;
    typedef void compare;
+   typedef void header_holder_type;
 };
 
 /// @endcond
@@ -67,18 +74,19 @@ struct avltree_defaults
 #if defined(BOOST_INTRUSIVE_DOXYGEN_INVOKED)
 template<class T, class ...Options>
 #else
-template<class ValueTraits, class VoidOrKeyComp, class SizeType, bool ConstantTimeSize>
+template<class ValueTraits, class VoidOrKeyComp, class SizeType, bool ConstantTimeSize, typename HeaderHolder>
 #endif
 class avltree_impl
    /// @cond
-   :  public bstree_impl<ValueTraits, VoidOrKeyComp, SizeType, ConstantTimeSize, AvlTreeAlgorithms>
+   :  public bstree_impl<ValueTraits, VoidOrKeyComp, SizeType, ConstantTimeSize, AvlTreeAlgorithms, HeaderHolder>
    /// @endcond
 {
    public:
    typedef ValueTraits value_traits;
    /// @cond
    typedef bstree_impl< ValueTraits, VoidOrKeyComp, SizeType
-                      , ConstantTimeSize, AvlTreeAlgorithms>         tree_type;
+                      , ConstantTimeSize, AvlTreeAlgorithms
+                      , HeaderHolder>                                tree_type;
    typedef tree_type                                                 implementation_defined;
    /// @endcond
 
@@ -132,12 +140,12 @@ class avltree_impl
 
    //! @copydoc ::boost::intrusive::bstree::bstree(bstree &&)
    avltree_impl(BOOST_RV_REF(avltree_impl) x)
-      :  tree_type(::boost::move(static_cast<tree_type&>(x)))
+      :  tree_type(BOOST_MOVE_BASE(tree_type, x))
    {}
 
    //! @copydoc ::boost::intrusive::bstree::operator=(bstree &&)
    avltree_impl& operator=(BOOST_RV_REF(avltree_impl) x)
-   {  return static_cast<avltree_impl&>(tree_type::operator=(::boost::move(static_cast<tree_type&>(x)))); }
+   {  return static_cast<avltree_impl&>(tree_type::operator=(BOOST_MOVE_BASE(tree_type, x))); }
 
    #ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
 
@@ -296,10 +304,10 @@ class avltree_impl
    //! @copydoc ::boost::intrusive::bstree::count(const KeyType&,KeyValueCompare)const
    template<class KeyType, class KeyValueCompare>
    size_type count(const KeyType& key, KeyValueCompare comp) const;
-   
+
    //! @copydoc ::boost::intrusive::bstree::lower_bound(const_reference)
    iterator lower_bound(const_reference value);
-   
+
    //! @copydoc ::boost::intrusive::bstree::lower_bound(const KeyType&,KeyValueCompare)
    template<class KeyType, class KeyValueCompare>
    iterator lower_bound(const KeyType& key, KeyValueCompare comp);
@@ -430,7 +438,8 @@ void swap(avltree_impl<T, Options...> &x, avltree_impl<T, Options...> &y);
 template<class T, class ...Options>
 #else
 template<class T, class O1 = void, class O2 = void
-                , class O3 = void, class O4 = void>
+                , class O3 = void, class O4 = void
+                , class O5 = void>
 #endif
 struct make_avltree
 {
@@ -438,7 +447,7 @@ struct make_avltree
    typedef typename pack_options
       < avltree_defaults,
       #if !defined(BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-      O1, O2, O3, O4
+      O1, O2, O3, O4, O5
       #else
       Options...
       #endif
@@ -452,6 +461,7 @@ struct make_avltree
          , typename packed_options::compare
          , typename packed_options::size_type
          , packed_options::constant_time_size
+         , typename packed_options::header_holder_type
          > implementation_defined;
    /// @endcond
    typedef implementation_defined type;
@@ -461,14 +471,14 @@ struct make_avltree
 #ifndef BOOST_INTRUSIVE_DOXYGEN_INVOKED
 
 #if !defined(BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-template<class T, class O1, class O2, class O3, class O4>
+template<class T, class O1, class O2, class O3, class O4, class O5>
 #else
 template<class T, class ...Options>
 #endif
 class avltree
    :  public make_avltree<T,
       #if !defined(BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-      O1, O2, O3, O4
+      O1, O2, O3, O4, O5
       #else
       Options...
       #endif
@@ -477,7 +487,7 @@ class avltree
    typedef typename make_avltree
       <T,
       #if !defined(BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-      O1, O2, O3, O4
+      O1, O2, O3, O4, O5
       #else
       Options...
       #endif
@@ -487,14 +497,13 @@ class avltree
    public:
    typedef typename Base::value_compare      value_compare;
    typedef typename Base::value_traits       value_traits;
-   typedef typename Base::real_value_traits  real_value_traits;
    typedef typename Base::iterator           iterator;
    typedef typename Base::const_iterator     const_iterator;
    typedef typename Base::reverse_iterator           reverse_iterator;
    typedef typename Base::const_reverse_iterator     const_reverse_iterator;
 
    //Assert if passed value traits are compatible with the type
-   BOOST_STATIC_ASSERT((detail::is_same<typename real_value_traits::value_type, T>::value));
+   BOOST_STATIC_ASSERT((detail::is_same<typename value_traits::value_type, T>::value));
 
    explicit avltree( const value_compare &cmp = value_compare()
                    , const value_traits &v_traits = value_traits())
@@ -509,11 +518,11 @@ class avltree
    {}
 
    avltree(BOOST_RV_REF(avltree) x)
-      :  Base(::boost::move(static_cast<Base&>(x)))
+      :  Base(BOOST_MOVE_BASE(Base, x))
    {}
 
    avltree& operator=(BOOST_RV_REF(avltree) x)
-   {  return static_cast<avltree &>(this->Base::operator=(::boost::move(static_cast<Base&>(x))));  }
+   {  return static_cast<avltree &>(this->Base::operator=(BOOST_MOVE_BASE(Base, x)));  }
 
    static avltree &container_from_end_iterator(iterator end_iterator)
    {  return static_cast<avltree &>(Base::container_from_end_iterator(end_iterator));   }

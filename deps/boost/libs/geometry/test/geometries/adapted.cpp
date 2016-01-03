@@ -11,6 +11,7 @@
 #include <vector>
 
 #include <geometry_test_common.hpp>
+#include <boost/core/ignore_unused.hpp>
 
 #include <boost/geometry/geometries/geometries.hpp>
 #include <boost/geometry/multi/multi.hpp>
@@ -31,7 +32,7 @@
 
     BOOST_GEOMETRY_REGISTER_RING_TEMPLATED(std::vector)
     BOOST_GEOMETRY_REGISTER_RING_TEMPLATED(std::deque)
-  
+
 #elif defined(BOOST_GEOMETRY_TEST_MULTI_POINT)
 
     #include <boost/geometry/multi/geometries/register/multi_point.hpp>
@@ -39,7 +40,7 @@
 
     BOOST_GEOMETRY_REGISTER_MULTI_POINT_TEMPLATED(std::vector)
     BOOST_GEOMETRY_REGISTER_MULTI_POINT_TEMPLATED(std::deque)
-  
+
 #else
 
     #include <boost/geometry/geometries/register/linestring.hpp>
@@ -47,7 +48,7 @@
 
     BOOST_GEOMETRY_REGISTER_LINESTRING_TEMPLATED(std::vector)
     BOOST_GEOMETRY_REGISTER_LINESTRING_TEMPLATED(std::deque)
-  
+
 #endif
 
 
@@ -70,10 +71,10 @@ void test_geometry(G const& geometry, std::size_t expected_size = 0)
 
     typedef typename bg::point_type<G>::type P;
     typedef typename bg::coordinate_type<P>::type C;
+    boost::ignore_unused<P, C>();
 
     // Check range-like behaviour
     BOOST_CHECK_EQUAL(boost::size(geometry), expected_size);
-
 }
 
 template <typename P>

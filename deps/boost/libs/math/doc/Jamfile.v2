@@ -17,7 +17,7 @@ boostbook standalone
     :
         # Path for links to Boost:
         <xsl:param>boost.root=../../../..
-        <xsl:param>html.stylesheet=boostbook.css
+        <xsl:param>html.stylesheet=math.css
         
         # Some general style settings:
         <xsl:param>table.footnote.number.format=1
@@ -81,6 +81,7 @@ boostbook standalone
 
 install pdfinstall : standalone/<format>pdf : <location>. <install-type>PDF <name>math.pdf ;
 explicit pdfinstall ;
+
 
 
 

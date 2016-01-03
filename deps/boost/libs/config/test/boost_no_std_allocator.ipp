@@ -18,17 +18,23 @@
 
 namespace boost_no_std_allocator{
 
+#if defined(__GNUC__) && ((__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)))
+#  define BOOST_UNUSED_ATTRIBUTE __attribute__((unused))
+#else
+#  define BOOST_UNUSED_ATTRIBUTE
+#endif
+
 template <class T>
 int test_allocator(const T& i)
 {
    typedef std::allocator<int> alloc1_t;
    typedef typename alloc1_t::size_type           size_type;
-   typedef typename alloc1_t::difference_type     difference_type;
+   typedef typename alloc1_t::difference_type     difference_type BOOST_UNUSED_ATTRIBUTE;
    typedef typename alloc1_t::pointer             pointer;
    typedef typename alloc1_t::const_pointer       const_pointer;
    typedef typename alloc1_t::reference           reference;
    typedef typename alloc1_t::const_reference     const_reference;
-   typedef typename alloc1_t::value_type          value_type;
+   typedef typename alloc1_t::value_type          value_type BOOST_UNUSED_ATTRIBUTE;
 
    typedef typename alloc1_t::BOOST_NESTED_TEMPLATE rebind<double> binder_t;
    typedef typename binder_t::other alloc2_t;
@@ -53,6 +59,8 @@ int test_allocator(const T& i)
    // and isn't currently required by anything in boost
    // so don't test for now...
    // a3 = a2;
+
+   (void)a2;
    return 0;
 }
 
@@ -64,7 +72,7 @@ int test()
 
 }
 
-
+#undef BOOST_UNUSED_ATTRIBUTE
 
 
 

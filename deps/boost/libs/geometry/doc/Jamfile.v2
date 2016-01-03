@@ -8,17 +8,14 @@
 # Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 
-
 project geometry/doc ;
 
 # Auto-index, experimental. Commented otherwise does not build without.
 #using auto-index ; 
-
 using quickbook ;
 
 path-constant here : . ;
 path-constant images_location : html ;
-
 
 boostbook geometry 
     : geometry.qbk
@@ -43,3 +40,4 @@ boostbook geometry
 
 install pdfinstall : geometry/<format>pdf : <location>. <name>geometry.pdf <install-type>PDF ;
 explicit pdfinstall ;
+

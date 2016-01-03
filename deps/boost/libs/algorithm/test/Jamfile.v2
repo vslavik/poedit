@@ -27,8 +27,10 @@ alias unit_test_framework
      [ compile-fail search_fail2.cpp  : : : : ]
      [ compile-fail search_fail3.cpp  : : : : ]
 
-# Clamp tests
+# Misc tests
      [ run clamp_test.cpp unit_test_framework         : : : : clamp_test ]
+     [ run power_test.cpp unit_test_framework         : : : : power_test ]
+     [ compile-fail power_fail1.cpp  : : : : ]
    
 # Cxx11 tests
      [ run all_of_test.cpp unit_test_framework         : : : : all_of_test ]

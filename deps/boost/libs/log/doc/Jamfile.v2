@@ -1,5 +1,5 @@
 #
-#          Copyright Andrey Semashev 2007 - 2013.
+#          Copyright Andrey Semashev 2007 - 2015.
 # Distributed under the Boost Software License, Version 1.0.
 #    (See accompanying file LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
@@ -49,6 +49,7 @@ local doxygen_params =
                         BOOST_FORCEINLINE=inline \\
                         BOOST_STATIC_ASSERT(x)= \\
                         BOOST_STATIC_ASSERT_MSG(x,y)= \\
+                        BOOST_STATIC_CONSTANT(x,y)=\"static constexpr x y\" \\
                         BOOST_RV_REF(x)=\"x&&\" \\
                         BOOST_NESTED_TEMPLATE=template \\
                         BOOST_CONSTEXPR=constexpr \\
@@ -70,6 +71,7 @@ local doxygen_params =
                         BOOST_DEFAULTED_FUNCTION(x,y)=\"x = default;\" \\
                         BOOST_DELETED_FUNCTION(x)=\"x = delete;\" \\
                         BOOST_EXPLICIT_OPERATOR_BOOL()=\"explicit operator bool() const;\" \\
+                        BOOST_EXPLICIT_OPERATOR_BOOL_NOEXCEPT()=\"explicit operator bool() const noexcept;\" \\
                         BOOST_LOG_USE_CHAR \\
                         BOOST_LOG_USE_WCHAR_T \\
                         BOOST_LOG_API= \\

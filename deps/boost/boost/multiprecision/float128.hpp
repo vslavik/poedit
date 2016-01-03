@@ -136,18 +136,18 @@ struct float128_backend
 private:
    float128_type m_value;
 public:
-   BOOST_CONSTEXPR float128_backend() : m_value(0) {}
-   BOOST_CONSTEXPR float128_backend(const float128_backend& o) : m_value(o.m_value) {}
-   float128_backend& operator = (const float128_backend& o) 
+   BOOST_CONSTEXPR float128_backend() BOOST_NOEXCEPT : m_value(0) {}
+   BOOST_CONSTEXPR float128_backend(const float128_backend& o) BOOST_NOEXCEPT : m_value(o.m_value) {}
+   float128_backend& operator = (const float128_backend& o) BOOST_NOEXCEPT
    {
       m_value = o.m_value;
       return *this;
    }
    template <class T>
-   BOOST_CONSTEXPR float128_backend(const T& i, const typename enable_if_c<is_convertible<T, float128_type>::value>::type* = 0)
+   BOOST_CONSTEXPR float128_backend(const T& i, const typename enable_if_c<is_convertible<T, float128_type>::value>::type* = 0) BOOST_NOEXCEPT
       : m_value(i) {}
    template <class T>
-   typename enable_if_c<is_arithmetic<T>::value || is_convertible<T, float128_type>::value, float128_backend&>::type operator = (const T& i)
+   typename enable_if_c<is_arithmetic<T>::value || is_convertible<T, float128_type>::value, float128_backend&>::type operator = (const T& i) BOOST_NOEXCEPT
    {
       m_value = i;
       return *this;
@@ -162,11 +162,11 @@ public:
          BOOST_THROW_EXCEPTION(std::runtime_error("Unable to interpret input string as a floating point value"));
       }
 #else
-      detail::convert_from_string(*this, s);
+      boost::multiprecision::detail::convert_from_string(*this, s);
 #endif
       return *this;
    }
-   void swap(float128_backend& o)
+   void swap(float128_backend& o) BOOST_NOEXCEPT
    {
       std::swap(m_value, o.value());
    }
@@ -206,10 +206,10 @@ public:
       }
       return buf;
 #else
-      return detail::convert_to_string(*this, digits ? digits : 37, f);
+      return boost::multiprecision::detail::convert_to_string(*this, digits ? digits : 37, f);
 #endif
    }
-   void negate()
+   void negate() BOOST_NOEXCEPT
    {
       m_value = -m_value;
    }
@@ -562,6 +562,59 @@ public:
    BOOST_STATIC_CONSTEXPR bool tinyness_before = false;
    BOOST_STATIC_CONSTEXPR float_round_style round_style = round_to_nearest;
 };
+
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const bool numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::is_specialized;
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const int numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::digits;
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const int numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::digits10;
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const int numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::max_digits10;
+
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const bool numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::is_signed;
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const bool numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::is_integer;
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const bool numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::is_exact;
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const int numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::radix;
+
+
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const int numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::min_exponent;
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const int numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::max_exponent;
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const int numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::min_exponent10;
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const int numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::max_exponent10;
+
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const bool numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::has_infinity;
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const bool numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::has_quiet_NaN;
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const bool numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::has_signaling_NaN;
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const bool numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::has_denorm_loss;
+
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const bool numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::is_iec559;
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const bool numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::is_bounded;
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const bool numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::is_modulo;
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const bool numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::traps;
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const bool numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::tinyness_before;
+
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const float_round_style numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::round_style;
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+const float_denorm_style numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::has_denorm;
 
 } // namespace std
 

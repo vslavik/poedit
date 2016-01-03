@@ -12,6 +12,8 @@
 
 #include <iostream>
 
+#include <boost/assert.hpp>
+
 #include <boost/iterator.hpp>
 #include <boost/iterator/iterator_adaptor.hpp>
 #include <boost/iterator/iterator_categories.hpp>
@@ -43,14 +45,14 @@ class my_polygon
         // Const access
         my_point const& get_point(std::size_t i) const
         {
-            assert(i < points.size());
+            BOOST_ASSERT(i < points.size());
             return points[i];
         }
 
         // Mutable access
         my_point & get_point(std::size_t i)
         {
-            assert(i < points.size());
+            BOOST_ASSERT(i < points.size());
             return points[i];
         }
 

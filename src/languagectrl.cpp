@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2013 Vaclav Slavik
+ *  Copyright (C) 2013-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -25,9 +25,17 @@
 
 #include "languagectrl.h"
 
+#include "hidpi.h"
+
 #include <wx/config.h>
 #include <wx/sizer.h>
 #include <wx/stattext.h>
+
+#ifdef __WXOSX__
+extern "C" {
+#import "NSObject+REResponder.h"
+}
+#endif
 
 IMPLEMENT_DYNAMIC_CLASS(LanguageCtrl, wxComboBox)
 
@@ -53,6 +61,21 @@ void LanguageCtrl::Init(Language lang)
         Append(x);
     NSComboBox *cb = (NSComboBox*) GetHandle();
     [cb setCompletes:YES];
+    if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_7)
+    {
+        // default completion is case-sensitive, we'd rather be case-insensitive, so plug in
+        // customized completedString: implementation
+        RESetBlock(cb.cell, @selector(completedString:), NO, nil, ^(NSComboBox *receiver, NSString *string) {
+            for (NSString *item in receiver.objectValues) {
+                if ([item compare:string
+                          options:NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch
+                            range:NSMakeRange(0, std::min([item length], [string length]))
+                           locale:[NSLocale currentLocale]] == NSOrderedSame)
+                    return item;
+            }
+            return (NSString*)nil;
+        });
+    }
 #else
     static wxArrayString choices;
     if (choices.empty())
@@ -83,7 +106,7 @@ void LanguageCtrl::SetLang(const Language& lang)
 
 Language LanguageCtrl::GetLang() const
 {
-    return Language::TryParse(GetValue());
+    return Language::TryParse(GetValue().ToStdWstring());
 }
 
 #ifdef __WXMSW__
@@ -102,28 +125,25 @@ LanguageDialog::LanguageDialog(wxWindow *parent)
     : wxDialog(parent, wxID_ANY, _("Translation Language")),
       m_validatedLang(-1)
 {
-    wxString langcode = wxConfigBase::Get()->Read("/last_translation_lang", "");
-    Language lang;
-    if (!langcode.empty())
-        lang = Language::TryParse(langcode);
+    auto lang = GetLastChosen();
 
     auto sizer = new wxBoxSizer(wxVERTICAL);
 
     auto label = new wxStaticText(this, wxID_ANY, _("Language of the translation:"));
     m_language = new LanguageCtrl(this, wxID_ANY, lang);
-    m_language->SetMinSize(wxSize(300,-1));
+    m_language->SetMinSize(wxSize(PX(300),-1));
     auto buttons = CreateButtonSizer(wxOK | wxCANCEL);
 
 #ifdef __WXOSX__
-    sizer->AddSpacer(10);
-    sizer->Add(label, wxSizerFlags().Border());
-    sizer->Add(m_language, wxSizerFlags().Expand().DoubleBorder(wxLEFT|wxRIGHT));
+    sizer->AddSpacer(PX(10));
+    sizer->Add(label, wxSizerFlags().PXBorderAll());
+    sizer->Add(m_language, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
     sizer->Add(buttons, wxSizerFlags().Expand());
 #else
-    sizer->AddSpacer(10);
-    sizer->Add(label, wxSizerFlags().DoubleBorder(wxLEFT|wxRIGHT));
-    sizer->Add(m_language, wxSizerFlags().Expand().DoubleBorder(wxLEFT|wxRIGHT));
-    sizer->Add(buttons, wxSizerFlags().Expand().Border());
+    sizer->AddSpacer(PX(10));
+    sizer->Add(label, wxSizerFlags().PXDoubleBorder(wxLEFT|wxRIGHT));
+    sizer->Add(m_language, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT));
+    sizer->Add(buttons, wxSizerFlags().Expand().PXBorderAll());
 #endif
 
     m_language->Bind(wxEVT_TEXT,     [=](wxCommandEvent& e){ m_validatedLang = -1; e.Skip(); });
@@ -157,7 +177,7 @@ void LanguageDialog::EndModal(int retval)
 {
     if (retval == wxID_OK)
     {
-        wxConfigBase::Get()->Write("/last_translation_lang", GetLang().Code().c_str());
+        SetLastChosen(GetLang());
     }
     wxDialog::EndModal(retval);
 }
@@ -168,3 +188,18 @@ void LanguageDialog::SetLang(const Language& lang)
     m_validatedLang = -1;
     m_language->SetLang(lang);
 }
+
+Language LanguageDialog::GetLastChosen()
+{
+    wxString langcode = wxConfigBase::Get()->Read("/last_translation_lang", "");
+    Language lang;
+    if (!langcode.empty())
+        lang = Language::TryParse(langcode.ToStdWstring());
+    return lang;
+}
+
+void LanguageDialog::SetLastChosen(Language lang)
+{
+    wxConfigBase::Get()->Write("/last_translation_lang", lang.Code().c_str());
+}
+

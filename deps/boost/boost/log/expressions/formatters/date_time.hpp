@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -317,6 +317,24 @@ format_date_time(attribute_actor< T, FallbackPolicyT, TagT, ActorT > const& plac
 } // namespace expressions
 
 BOOST_LOG_CLOSE_NAMESPACE // namespace log
+
+#ifndef BOOST_LOG_DOXYGEN_PASS
+
+namespace phoenix {
+
+namespace result_of {
+
+template< typename T, typename FallbackPolicyT, typename CharT >
+struct is_nullary< custom_terminal< boost::log::expressions::format_date_time_terminal< T, FallbackPolicyT, CharT > > > :
+    public mpl::false_
+{
+};
+
+} // namespace result_of
+
+} // namespace phoenix
+
+#endif // BOOST_LOG_DOXYGEN_PASS
 
 } // namespace boost
 

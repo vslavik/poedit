@@ -11,7 +11,11 @@
 #ifndef BOOST_INTERPROCESS_INTERMODULE_SINGLETON_HPP
 #define BOOST_INTERPROCESS_INTERMODULE_SINGLETON_HPP
 
-#if defined(_MSC_VER)&&(_MSC_VER>=1200)
+#ifndef BOOST_CONFIG_HPP
+#  include <boost/config.hpp>
+#endif
+#
+#if defined(BOOST_HAS_PRAGMA_ONCE)
 #pragma once
 #endif
 
@@ -20,8 +24,9 @@
 
 #ifdef BOOST_INTERPROCESS_WINDOWS
    #include <boost/interprocess/detail/windows_intermodule_singleton.hpp>
+#else
+   #include <boost/interprocess/detail/portable_intermodule_singleton.hpp>
 #endif
-#include <boost/interprocess/detail/portable_intermodule_singleton.hpp>
 
 namespace boost{
 namespace interprocess{
@@ -30,7 +35,7 @@ namespace ipcdetail{
 //Now this class is a singleton, initializing the singleton in
 //the first get() function call if LazyInit is false. If true
 //then the singleton will be initialized when loading the module.
-template<typename C, bool LazyInit = true, bool Phoenix = true>
+template<typename C, bool LazyInit = true, bool Phoenix = false>
 class intermodule_singleton
    #ifdef BOOST_INTERPROCESS_WINDOWS
    : public windows_intermodule_singleton<C, LazyInit, Phoenix>

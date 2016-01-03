@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Primality Testing</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../tut.html" title="Tutorial">
 <link rel="prev" href="random.html" title="Generating Random Numbers">
@@ -40,8 +40,10 @@
 <p>
         These functions perform a Miller-Rabin test for primality, if the result
         is <code class="computeroutput"><span class="keyword">false</span></code> then <span class="emphasis"><em>n</em></span>
-        is definitely composite, while if the result is <code class="computeroutput"><span class="keyword">true</span></code>
-        then <span class="emphasis"><em>n</em></span> is prime with probability <span class="emphasis"><em>0.25^trials</em></span>.
+        is definitely composite, while if the result is true then n is probably prime.
+        The probability to declare a composite n as probable prime is at most 0.25<sup>trials</sup>.
+        Note that this does not allow a statement about the probability of n being
+        actually prime (for that, the prior probability would have to be known).
         The algorithm used performs some trial divisions to exclude small prime factors,
         does one Fermat test to exclude many more composites, and then uses the Miller-Rabin
         algorithm straight out of Knuth Vol 2, which recommends 25 trials for a pretty
@@ -60,8 +62,6 @@
         The following example searches for a prime <code class="computeroutput"><span class="identifier">p</span></code>
         for which <code class="computeroutput"><span class="special">(</span><span class="identifier">p</span><span class="special">-</span><span class="number">1</span><span class="special">)/</span><span class="number">2</span></code> is also probably prime:
       </p>
-<p>
-</p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">multiprecision</span><span class="special">/</span><span class="identifier">cpp_int</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">multiprecision</span><span class="special">/</span><span class="identifier">miller_rabin</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
@@ -99,12 +99,10 @@
    <span class="keyword">return</span> <span class="number">1</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
-<p>
-      </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2012 John Maddock and Christopher Kormanyos<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2013 John Maddock and Christopher Kormanyos<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

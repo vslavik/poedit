@@ -1,5 +1,5 @@
 /* Abstract sequential list data type, with out-of-memory checking.
-   Copyright (C) 2009-2013 Free Software Foundation, Inc.
+   Copyright (C) 2009-2015 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2009.
 
    This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,9 @@
 #include "gl_list.h"
 #include "xalloc.h"
 
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef GL_XLIST_INLINE
 # define GL_XLIST_INLINE _GL_INLINE

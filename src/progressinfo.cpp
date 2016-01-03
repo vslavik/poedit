@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2000-2013 Vaclav Slavik
+ *  Copyright (C) 2000-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -25,7 +25,9 @@
 
 #include "progressinfo.h"
 
+#include <wx/app.h>
 #include <wx/dialog.h>
+#include <wx/evtloop.h>
 #include <wx/log.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/gauge.h>
@@ -59,7 +61,7 @@ ProgressInfo::ProgressInfo(wxWindow *parent, const wxString& title)
 {
     m_cancelled = false;
     m_dlg = new ProgressDlg(&m_cancelled);
-    wxXmlResource::Get()->LoadDialog(m_dlg, parent, "parser_progress");
+    wxXmlResource::Get()->LoadDialog(m_dlg, parent, "extractor_progress");
     m_dlg->SetTitle(title);
     m_dlg->Show(true);
     m_disabler = new wxWindowDisabler(m_dlg);
@@ -76,10 +78,19 @@ void ProgressInfo::SetGaugeMax(int limit)
     XRCCTRL(*m_dlg, "progress", wxGauge)->SetRange(limit);
 }
 
-void ProgressInfo::UpdateGauge(int increment)
+bool ProgressInfo::UpdateGauge(int increment)
 {
     wxGauge *g = XRCCTRL(*m_dlg, "progress", wxGauge);
     g->SetValue(g->GetValue() + increment);
+
+#ifdef __WXOSX__
+    // Set again the message to workaround a wxOSX bug
+    wxStaticText *txt = XRCCTRL(*m_dlg, "info", wxStaticText);
+    txt->SetLabel(txt->GetLabel());
+    txt->Update();
+#endif
+
+    return !m_cancelled;
 }
 
 void ProgressInfo::ResetGauge(int value)
@@ -89,7 +100,10 @@ void ProgressInfo::ResetGauge(int value)
 
 void ProgressInfo::UpdateMessage(const wxString& text)
 {
-    XRCCTRL(*m_dlg, "info", wxStaticText)->SetLabel(text);
+    wxStaticText *txt = XRCCTRL(*m_dlg, "info", wxStaticText);
+    txt->SetLabel(text);
+    txt->Refresh();
+    txt->Update();
     m_dlg->Refresh();
-    wxYield();
+    wxEventLoop::GetActive()->Yield(/*onlyIfNeeded=*/true);
 }

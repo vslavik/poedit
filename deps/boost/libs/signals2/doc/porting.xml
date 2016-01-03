@@ -227,8 +227,20 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
   </section>
   <section id="signals2.api_history">
     <title>Signals2 API Development</title>
+    <section id="signals2.api_history.1-56">
+      <title>Version 1.56</title>
+      <para>
+        Version 1.56 modified the behavior of the signal destructor, in that it no longer
+        explicitly calls disconnect_all_slots.  Any signal invocations running
+        concurrently with the signal destructor should now complete normally, rather
+        than skipping all remaining slots.  Once all concurrent signal invocations
+        complete, all connections to the deleted signal will still ultimately
+        be disconnected.  This change brings Boost.Signals2
+        behavior closer to the behavior of the original Boost.Signals library.
+      </para>
+    </section>
     <section id="signals2.api_history.1-45">
-      <title>Version 1.4x</title>
+      <title>Version 1.45</title>
       <para>
         Version 1.45 added <methodname>slot::track_foreign</methodname>().  This method allows tracking
         of objects owned by <code>shared_ptr</code> classes other than <classname>boost::shared_ptr</classname>,
@@ -263,7 +275,7 @@ file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
       </para>
       <para>Version 1.40 also introduces a variadic templates implementation of
         Signals2, which is used when Boost detects compiler support for variadic templates
-        (variadic templates are a new feature of C++0x).
+        (variadic templates are a new feature of C++11).
         This change is mostly transparent to the user, however it does introduce a few
         visible tweaks to the interface as described in the following.
       </para>

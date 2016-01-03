@@ -9,8 +9,9 @@
   Springer Series in Comput. Mathematics, Vol. 8, Springer-Verlag 1987, Second revised edition 1993.
   [end_description]
 
-  Copyright 2009-2011 Karsten Ahnert
-  Copyright 2009-2011 Mario Mulansky
+  Copyright 2011-2013 Mario Mulansky
+  Copyright 2011-2013 Karsten Ahnert
+  Copyright 2012 Christoph Koke
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE_1_0.txt or
@@ -36,6 +37,8 @@
 #include <boost/numeric/odeint/stepper/controlled_step_result.hpp>
 #include <boost/numeric/odeint/algebra/range_algebra.hpp>
 #include <boost/numeric/odeint/algebra/default_operations.hpp>
+#include <boost/numeric/odeint/algebra/algebra_dispatcher.hpp>
+#include <boost/numeric/odeint/algebra/operations_dispatcher.hpp>
 
 #include <boost/numeric/odeint/util/state_wrapper.hpp>
 #include <boost/numeric/odeint/util/is_resizeable.hpp>
@@ -52,8 +55,8 @@ template<
     class Value = double ,
     class Deriv = State ,
     class Time = Value ,
-    class Algebra = range_algebra ,
-    class Operations = default_operations ,
+    class Algebra = typename algebra_dispatcher< State >::algebra_type ,
+    class Operations = typename operations_dispatcher< State >::operations_type ,
     class Resizer = initially_resizer
     >
 class bulirsch_stoer {
@@ -191,7 +194,6 @@ public:
 
         static const value_type val1( 1.0 );
 
-        typename odeint::unwrap_reference< System >::type &sys = system;
         if( m_resizer.adjust_size( in , detail::bind( &controlled_error_bs_type::template resize_impl< StateIn > , detail::ref( *this ) , detail::_1 ) ) )
         {
             reset(); // system resized -> reset
@@ -216,12 +218,12 @@ public:
             m_midpoint.set_steps( m_interval_sequence[k] );
             if( k == 0 )
             {
-                m_midpoint.do_step( sys , in , dxdt , t , out , dt );
+                m_midpoint.do_step( system , in , dxdt , t , out , dt );
                 /* the first step, nothing more to do */
             }
             else
             {
-                m_midpoint.do_step( sys , in , dxdt , t , m_table[k-1].m_v , dt );
+                m_midpoint.do_step( system , in , dxdt , t , m_table[k-1].m_v , dt );
                 extrapolate( k , m_table , m_coeff , out );
                 // get error estimate
                 m_algebra.for_each3( m_err.m_v , out , m_table[0].m_v ,
@@ -338,7 +340,7 @@ public:
         resize_m_dxdt( x );
         resize_m_xnew( x );
         resize_impl( x );
-        m_midpoint.adjust_size();
+        m_midpoint.adjust_size( x );
     }
 
 
@@ -407,7 +409,7 @@ private:
         else
         {
             fac = STEPFAC2 / pow BOOST_PREVENT_MACRO_SUBSTITUTION( error / STEPFAC1 , expo );
-            fac = max BOOST_PREVENT_MACRO_SUBSTITUTION( facmin/STEPFAC4 , min BOOST_PREVENT_MACRO_SUBSTITUTION( 1.0/facmin , fac ) );
+            fac = max BOOST_PREVENT_MACRO_SUBSTITUTION( static_cast<value_type>(facmin/STEPFAC4) , min BOOST_PREVENT_MACRO_SUBSTITUTION( static_cast<value_type>(1.0/facmin) , fac ) );
         }
         return h*fac;
     }

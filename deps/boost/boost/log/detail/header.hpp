@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -38,6 +38,12 @@
 #pragma warning(disable: 4714)
 // decorated name length exceeded, name was truncated
 #pragma warning(disable: 4503)
+// declaration of 'A' hides previous local declaration
+#pragma warning(disable: 4456)
+// declaration of 'A' hides global declaration
+#pragma warning(disable: 4459)
+// 'X': This function or variable may be unsafe. Consider using Y instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+#pragma warning(disable: 4996)
 
 #elif defined(__GNUC__) && !(defined(__INTEL_COMPILER) || defined(__ICL) || defined(__ICC) || defined(__ECC)) \
     && (__GNUC__ * 100 + __GNUC_MINOR__) >= 406
@@ -51,7 +57,7 @@
 #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
 
 #if (__GNUC__ * 100 + __GNUC_MINOR__) >= 407
-// typedef ‘foo’ locally defined but not used
+// typedef 'foo' locally defined but not used
 #pragma GCC diagnostic ignored "-Wunused-local-typedefs"
 #endif
 

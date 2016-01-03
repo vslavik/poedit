@@ -280,22 +280,35 @@
           and <code class="computeroutput"><span class="identifier">thrust</span><span class="special">::</span><span class="identifier">zip_iterator</span></code> play together.
         </p>
 <p>
-          Now, we are ready to put everything together. All we have to do for making
-          odeint ready for using the GPU is to parametrize the stepper with the appropriate
-          thrust algebra/operations:
+          Now we are ready to put everything together. All we have to do for making
+          odeint ready for using the GPU is to parametrize the stepper with the
+          <code class="computeroutput"><span class="identifier">state_type</span></code> and <code class="computeroutput"><span class="identifier">value_type</span></code>:
         </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">runge_kutta4</span><span class="special">&lt;</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="identifier">value_type</span> <span class="special">,</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="identifier">value_type</span> <span class="special">,</span> <span class="identifier">thrust_algebra</span> <span class="special">,</span> <span class="identifier">thrust_operations</span> <span class="special">&gt;</span> <span class="identifier">stepper_type</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">runge_kutta4</span><span class="special">&lt;</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="identifier">value_type</span> <span class="special">,</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="identifier">value_type</span> <span class="special">&gt;</span> <span class="identifier">stepper_type</span><span class="special">;</span>
 </pre>
 <p>
         </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            We have specifically define four template parameters because we have
+            to override the default parameter value <code class="computeroutput"><span class="keyword">double</span></code>
+            with <code class="computeroutput"><span class="identifier">value_type</span></code> to ensure
+            our programs runs properly if we use <code class="computeroutput"><span class="keyword">float</span></code>
+            as fundamental data type.
+          </p></td></tr>
+</table></div>
 <p>
           You can also use a controlled or dense output stepper, e.g.
         </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">runge_kutta_dopri5</span><span class="special">&lt;</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="identifier">value_type</span> <span class="special">,</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="identifier">value_type</span> <span class="special">,</span> <span class="identifier">thrust_algebra</span> <span class="special">,</span> <span class="identifier">thrust_operations</span> <span class="special">&gt;</span> <span class="identifier">stepper_type</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">runge_kutta_dopri5</span><span class="special">&lt;</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="identifier">value_type</span> <span class="special">,</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="identifier">value_type</span> <span class="special">&gt;</span> <span class="identifier">stepper_type</span><span class="special">;</span>
 </pre>
 <p>
         </p>
@@ -323,7 +336,7 @@
           the Dopri5 solver are compared.
         </p>
 <p>
-          The full example can be found at <a href="../../../../../../../libs/numeric/odeint/examples/thrust/phase_oscillator_ensemble.cu" target="_top">phase_oscillator_example.cu</a>.
+          The full example can be found at <a href="https://github.com/headmyshoulder/odeint-v2/blob/master/examples/thrust/phase_oscillator_ensemble.cu" target="_top">phase_oscillator_example.cu</a>.
         </p>
 </div>
 <div class="section">
@@ -454,7 +467,7 @@
 <span class="identifier">state_type</span> <span class="identifier">omega</span> <span class="special">=</span> <span class="identifier">omega_host</span><span class="special">;</span>
 
 <span class="comment">// create stepper</span>
-<span class="identifier">runge_kutta4</span><span class="special">&lt;</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="identifier">value_type</span> <span class="special">,</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="identifier">value_type</span> <span class="special">,</span> <span class="identifier">thrust_algebra</span> <span class="special">,</span> <span class="identifier">thrust_operations</span> <span class="special">&gt;</span> <span class="identifier">stepper</span><span class="special">;</span>
+<span class="identifier">runge_kutta4</span><span class="special">&lt;</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="identifier">value_type</span> <span class="special">,</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="identifier">value_type</span> <span class="special">&gt;</span> <span class="identifier">stepper</span><span class="special">;</span>
 
 <span class="comment">// create phase oscillator system function</span>
 <span class="identifier">phase_oscillators</span> <span class="identifier">sys</span><span class="special">(</span> <span class="identifier">omega</span> <span class="special">);</span>
@@ -468,7 +481,7 @@
 <p>
         </p>
 <p>
-          The full example can be found at <a href="../../../../../../../libs/numeric/odeint/examples/thrust/phase_oscillator_chain.cu" target="_top">phase_oscillator_chain.cu</a>.
+          The full example can be found at <a href="https://github.com/headmyshoulder/odeint-v2/blob/master/examples/thrust/phase_oscillator_chain.cu" target="_top">phase_oscillator_chain.cu</a>.
         </p>
 </div>
 <div class="section">
@@ -571,7 +584,7 @@
 <p>
         </p>
 <p>
-          As <code class="computeroutput"><span class="identifier">state_type</span></code> a <code class="computeroutput"><span class="identifier">thrust</span><span class="special">::</span><span class="identifier">device_vector</span></code> or a <a href="http://www.boost.org/doc/libs/release/libs/range/index.html" target="_top">Boost.Range</a>
+          As <code class="computeroutput"><span class="identifier">state_type</span></code> a <code class="computeroutput"><span class="identifier">thrust</span><span class="special">::</span><span class="identifier">device_vector</span></code> or a <a href="http://www.boost.org/doc/libs/release/libs/range/" target="_top">Boost.Range</a>
           of a <code class="computeroutput"><span class="identifier">device_vector</span></code> is used.
           The length of the state is <span class="emphasis"><em>3N</em></span> where <span class="emphasis"><em>N</em></span>
           is the number of systems. The system is encoded into this vector such that
@@ -590,7 +603,7 @@
           for the state, one normal iterator for the parameter, and one zip iterator
           for the derivative. Accessing the elements of this tuple in the system
           function is then straightforward, you unpack the tuple with <code class="computeroutput"><span class="identifier">thrust</span><span class="special">::</span><span class="identifier">get</span><span class="special">&lt;&gt;()</span></code>.
-          We will not show the code here, it is to large. It can be found <a href="../../../../../../../libs/numeric/odeint/examples/thrust/lorenz_parameters.cu" target="_top">here</a> and
+          We will not show the code here, it is to large. It can be found <a href="https://github.com/headmyshoulder/odeint-v2/blob/master/examples/thrust/lorenz_parameters.cu" target="_top">here</a> and
           is easy to understand.
         </p>
 <p>
@@ -631,7 +644,7 @@
           Runge-Kutta Dormand-Prince 5 stepper. We start with some integration to
           overcome the transient behavior. For this, we do not involve the perturbation
           and run the algorithm only on the state <span class="emphasis"><em>x,y,z</em></span> without
-          any observer. Note, how <a href="http://www.boost.org/doc/libs/release/libs/range/index.html" target="_top">Boost.Range</a>
+          any observer. Note, how <a href="http://www.boost.org/doc/libs/release/libs/range/" target="_top">Boost.Range</a>
           is used for partial integration of the state vector without perturbations
           (the first half of the whole state). After the transient, the full system
           with perturbations is integrated and the Lyapunov exponents are calculated
@@ -652,7 +665,7 @@
 
 
 <span class="comment">// create error stepper, can be used with make_controlled or make_dense_output</span>
-<span class="keyword">typedef</span> <span class="identifier">runge_kutta_dopri5</span><span class="special">&lt;</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="identifier">value_type</span> <span class="special">,</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="identifier">value_type</span> <span class="special">,</span> <span class="identifier">thrust_algebra</span> <span class="special">,</span> <span class="identifier">thrust_operations</span> <span class="special">&gt;</span> <span class="identifier">stepper_type</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">runge_kutta_dopri5</span><span class="special">&lt;</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="identifier">value_type</span> <span class="special">,</span> <span class="identifier">state_type</span> <span class="special">,</span> <span class="identifier">value_type</span> <span class="special">&gt;</span> <span class="identifier">stepper_type</span><span class="special">;</span>
 
 
 <span class="identifier">lorenz_system</span> <span class="identifier">lorenz</span><span class="special">(</span> <span class="identifier">N</span> <span class="special">,</span> <span class="identifier">beta</span> <span class="special">);</span>
@@ -680,7 +693,7 @@
 <p>
         </p>
 <p>
-          The full example can be found at <a href="../../../../../../../libs/numeric/odeint/examples/thrust/lorenz_parameters.cu" target="_top">lorenz_parameters.cu</a>.
+          The full example can be found at <a href="https://github.com/headmyshoulder/odeint-v2/blob/master/examples/thrust/lorenz_parameters.cu" target="_top">lorenz_parameters.cu</a>.
         </p>
 </div>
 </div>

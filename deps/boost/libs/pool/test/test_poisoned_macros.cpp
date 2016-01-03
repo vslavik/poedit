@@ -19,8 +19,15 @@
 #include <iostream>
 #include <locale>
 
-#define malloc(x) undefined_poisoned_symbol
-#define free(x) undefined_poisoned_symbol
+namespace std{
+
+   void* undefined_poisoned_symbol1(unsigned x);
+   void undefined_poisoned_symbol2(void* x);
+
+}
+
+#define malloc(x) undefined_poisoned_symbol1(x)
+#define free(x) undefined_poisoned_symbol2(x)
 
 #include <boost/pool/pool.hpp>
 #include <boost/pool/object_pool.hpp>

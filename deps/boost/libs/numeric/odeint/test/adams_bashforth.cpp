@@ -6,8 +6,8 @@
  This file tests the use of the adams bashforth stepper.
  [end_description]
 
- Copyright 2009-2012 Karsten Ahnert
- Copyright 2009-2012 Mario Mulansky
+ Copyright 2011-2012 Karsten Ahnert
+ Copyright 2011-2012 Mario Mulansky
 
  Distributed under the Boost Software License, Version 1.0.
  (See accompanying file LICENSE_1_0.txt or
@@ -69,14 +69,14 @@ public:
     size_t do_count;
 
     template< class System , class StateIn , class DerivIn , class StateOut >
-    void do_step( System system , const StateIn &in , const DerivIn &dxdt , value_type t , StateOut &out , value_type dt )
+    void do_step_dxdt_impl( System system , const StateIn &in , const DerivIn &dxdt , value_type t , StateOut &out , value_type dt )
     {
         m_stepper.do_step( system , in , dxdt , t , out , dt );
         ++do_count;
     }
 
     template< class System , class StateInOut , class DerivIn >
-    void do_step( System system , StateInOut &x , const DerivIn &dxdt , value_type t , value_type dt )
+    void do_step_dxdt_impl( System system , StateInOut &x , const DerivIn &dxdt , value_type t , value_type dt )
     {
         m_stepper.do_step( system , x , dxdt , t , dt );
         ++do_count;

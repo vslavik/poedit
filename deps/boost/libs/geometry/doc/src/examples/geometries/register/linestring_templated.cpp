@@ -18,18 +18,18 @@
 #include <boost/geometry/geometries/register/linestring.hpp>
 
 // Adapt any deque to Boost.Geometry Linestring Concept
-BOOST_GEOMETRY_REGISTER_LINESTRING_TEMPLATED(std::deque) 
+BOOST_GEOMETRY_REGISTER_LINESTRING_TEMPLATED(std::deque)
 
 int main()
 {
     std::deque<boost::geometry::model::d2::point_xy<double> > line(2);
     boost::geometry::assign_values(line[0], 1, 1);
     boost::geometry::assign_values(line[1], 2, 2);
-    
+
     // Boost.Geometry algorithms work on any deque now
     std::cout << "Length: "  << boost::geometry::length(line) << std::endl;
     std::cout << "Line: "  << boost::geometry::dsv(line) << std::endl;
-    
+
     return 0;
 }
 

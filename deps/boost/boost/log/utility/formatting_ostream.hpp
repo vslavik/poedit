@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -710,6 +710,34 @@ operator<< (basic_formatting_ostream< CharT, TraitsT, AllocatorT >& strm, T cons
     strm.stream() << value;
     return strm;
 }
+
+template< typename CharT, typename TraitsT, typename AllocatorT, typename T >
+inline basic_formatting_ostream< CharT, TraitsT, AllocatorT >&
+operator<< (basic_formatting_ostream< CharT, TraitsT, AllocatorT >& strm, T& value)
+{
+    strm.stream() << value;
+    return strm;
+}
+
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+
+template< typename CharT, typename TraitsT, typename AllocatorT, typename T >
+inline basic_formatting_ostream< CharT, TraitsT, AllocatorT >&
+operator<< (basic_formatting_ostream< CharT, TraitsT, AllocatorT >&& strm, T const& value)
+{
+    static_cast< basic_formatting_ostream< CharT, TraitsT, AllocatorT >& >(strm) << value;
+    return strm;
+}
+
+template< typename CharT, typename TraitsT, typename AllocatorT, typename T >
+inline basic_formatting_ostream< CharT, TraitsT, AllocatorT >&
+operator<< (basic_formatting_ostream< CharT, TraitsT, AllocatorT >&& strm, T& value)
+{
+    static_cast< basic_formatting_ostream< CharT, TraitsT, AllocatorT >& >(strm) << value;
+    return strm;
+}
+
+#endif // !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
 
 BOOST_LOG_CLOSE_NAMESPACE // namespace log
 

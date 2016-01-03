@@ -18,8 +18,6 @@
 #include <boost/geometry/geometries/register/point.hpp>
 #include <boost/geometry/geometries/register/linestring.hpp>
 
-// To register the 'geographic' distance function to calculate distance over the earth:
-#include <boost/geometry/extensions/gis/geographic/strategies/andoyer.hpp>
 #include <boost/geometry/extensions/algorithms/parse.hpp>
 
 // Define a GPS point with coordinates in latitude/longitude and some additional values

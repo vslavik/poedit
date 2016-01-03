@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../unordered.html" title="Chapter&#160;36.&#160;Boost.Unordered">
+<link rel="up" href="../unordered.html" title="Chapter&#160;37.&#160;Boost.Unordered">
 <link rel="prev" href="compliance.html" title="C++11 Compliance">
 <link rel="next" href="changes.html" title="Change Log">
 </head>
@@ -89,7 +89,8 @@
 <p>
       Using a prime number of buckets, and choosing a bucket by using the modulus
       of the hash function's result will usually give a good result. The downside
-      is that the required modulus operation is fairly expensive.
+      is that the required modulus operation is fairly expensive. This is what the
+      containers do in most cases.
     </p>
 <p>
       Using a power of 2 allows for much quicker selection of the bucket to use,
@@ -100,16 +101,22 @@
     </p>
 <p>
       To avoid this a transformation could be applied to the hash function, for an
-      example see <a href="http://www.concentric.net/~Ttwang/tech/inthash.htm" target="_top">Thomas
+      example see <a href="http://web.archive.org/web/20121102023700/http://www.concentric.net/~Ttwang/tech/inthash.htm" target="_top">Thomas
       Wang's article on integer hash functions</a>. Unfortunately, a transformation
       like Wang's requires knowledge of the number of bits in the hash value, so
-      it isn't portable enough. This leaves more expensive methods, such as Knuth's
-      Multiplicative Method (mentioned in Wang's article). These don't tend to work
-      as well as taking the modulus of a prime, and the extra computation required
-      might negate efficiency advantage of power of 2 hash tables.
+      it isn't portable enough to use as a default. It can applicable in certain
+      cases so the containers have a policy based implementation that can use this
+      alternative technique.
     </p>
 <p>
-      So, this implementation uses a prime number for the hash table size.
+      Currently this is only done on 64 bit architecures, where prime number modulus
+      can be expensive. Although this varies depending on the architecture, so I
+      probably should revisit it.
+    </p>
+<p>
+      I'm also thinking of introducing a mechanism whereby a hash function can indicate
+      that it's safe to be used directly with power of 2 buckets, in which case a
+      faster plain power of 2 implementation can be used.
     </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

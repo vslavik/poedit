@@ -16,7 +16,9 @@ import quickbook-testing : quickbook-test quickbook-error-test ;
 test-suite quickbook.test :
     [ quickbook-test import-basic-1.6 ]
     [ quickbook-test filename ]
+    [ quickbook-test filename-1_7 ]
     [ quickbook-test filename-path : : : <quickbook-test-include>sub ]
+    [ quickbook-test filename_path-1_7 : : : <quickbook-test-include>sub ]
     [ quickbook-test doc-title1-1.5 ]
     [ quickbook-test doc-title1a-1.5 ]
     [ quickbook-test section ]
@@ -41,4 +43,6 @@ test-suite quickbook.test :
     [ quickbook-test source_mode-1_6 ]
     [ quickbook-test nested_compatibility-1_5 ]
     [ quickbook-test nested_compatibility-1_6 ]
+    [ quickbook-test template_include-1_7 ]
+    [ quickbook-test glob-1_7 ]
     ;

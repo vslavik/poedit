@@ -4,7 +4,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-// File: 
+// File:
 // =====
 // zip_iterator_test_main.cpp
 
@@ -55,13 +55,6 @@
 #include <boost/detail/workaround.hpp>
 #include <stddef.h>
 
-template <class It>
-struct pure_traversal
-  : boost::detail::pure_traversal_tag<
-        typename boost::iterator_traversal<It>::type
-    >
-{};
-
 
 /// Tests for https://svn.boost.org/trac/boost/ticket/1517
 int to_value(int const &v)
@@ -82,13 +75,13 @@ void category_test()
     );
 }
 ///
-  
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Das Main Funktion
 //
 /////////////////////////////////////////////////////////////////////////////
-  
+
 int main( void )
 {
 
@@ -105,16 +98,16 @@ int main( void )
 
   size_t num_successful_tests = 0;
   size_t num_failed_tests = 0;
-  
+
   /////////////////////////////////////////////////////////////////////////////
   //
   // Zip iterator construction and dereferencing
   //
   /////////////////////////////////////////////////////////////////////////////
-  
+
   std::cout << "Zip iterator construction and dereferencing: "
             << std::flush;
-  
+
   std::vector<double> vect1(3);
   vect1[0] = 42.;
   vect1[1] = 43.;
@@ -141,9 +134,9 @@ int main( void )
     )
   );
 
-  boost::tuples::tuple<int, double> val_tuple( 
+  boost::tuples::tuple<int, double> val_tuple(
       *zip_it_mixed);
-  
+
   boost::tuples::tuple<const int&, double&> ref_tuple(
       *zip_it_mixed);
 
@@ -177,7 +170,7 @@ int main( void )
 
   std::cout << "Zip iterators with 12 components:            "
             << std::flush;
-            
+
   // Declare 12 containers
   //
   std::list<int> li1;
@@ -210,30 +203,30 @@ int main( void )
 
   // typedefs for cons lists of iterators.
   typedef boost::tuples::cons<
-    std::set<int>::iterator, 
+    std::set<int>::iterator,
     boost::tuples::tuple<
       std::vector<int>::iterator,
-      std::list<int>::iterator, 
-      std::set<int>::iterator, 
+      std::list<int>::iterator,
+      std::set<int>::iterator,
       std::vector<int>::iterator,
-      std::list<int>::iterator, 
-      std::set<int>::iterator, 
+      std::list<int>::iterator,
+      std::set<int>::iterator,
       std::vector<int>::iterator,
-      std::list<int>::iterator, 
-      std::set<int>::iterator, 
+      std::list<int>::iterator,
+      std::set<int>::iterator,
       std::vector<int>::const_iterator
       >::inherited
     > cons_11_its_type;
   //
   typedef boost::tuples::cons<
-    std::list<int>::const_iterator, 
+    std::list<int>::const_iterator,
     cons_11_its_type
     > cons_12_its_type;
 
   // typedefs for cons lists for dereferencing the zip iterator
   // made from the cons list above.
   typedef boost::tuples::cons<
-    const int&, 
+    const int&,
     boost::tuples::tuple<
       int&,
       int&,
@@ -249,7 +242,7 @@ int main( void )
     > cons_11_refs_type;
   //
   typedef boost::tuples::cons<
-    const int&, 
+    const int&,
     cons_11_refs_type
     > cons_12_refs_type;
 
@@ -259,19 +252,19 @@ int main( void )
   // Declare a 12-element zip iterator.
   zip_it_12_type zip_it_12(
     cons_12_its_type(
-      li1.begin(), 
+      li1.begin(),
       cons_11_its_type(
         se1.begin(),
         boost::make_tuple(
           ve1.begin(),
-          li2.begin(), 
-          se2.begin(), 
+          li2.begin(),
+          se2.begin(),
           ve2.begin(),
-          li3.begin(), 
-          se3.begin(), 
+          li3.begin(),
+          se3.begin(),
           ve3.begin(),
-          li4.begin(), 
-          se4.begin(), 
+          li4.begin(),
+          se4.begin(),
           ve4.begin()
           )
         )
@@ -281,7 +274,7 @@ int main( void )
   // Dereference, mess with the result a little.
   cons_12_refs_type zip_it_12_dereferenced(*zip_it_12);
   boost::tuples::get<9>(zip_it_12_dereferenced) = 42;
-  
+
   // Make a copy and move it a little to force some instantiations.
   zip_it_12_type zip_it_12_copy(zip_it_12);
   ++zip_it_12_copy;
@@ -315,12 +308,12 @@ int main( void )
   vect2[0] = 2.2;
   vect2[1] = 3.3;
   vect2[2] = 4.4;
-  
+
   boost::zip_iterator<
     boost::tuples::tuple<
-      std::vector<double>::const_iterator, 
+      std::vector<double>::const_iterator,
       std::vector<double>::const_iterator
-      > 
+      >
     >
   zip_it_begin(
     boost::make_tuple(
@@ -331,9 +324,9 @@ int main( void )
 
   boost::zip_iterator<
     boost::tuples::tuple<
-      std::vector<double>::const_iterator, 
+      std::vector<double>::const_iterator,
       std::vector<double>::const_iterator
-      > 
+      >
     >
   zip_it_run(
     boost::make_tuple(
@@ -344,9 +337,9 @@ int main( void )
 
   boost::zip_iterator<
     boost::tuples::tuple<
-      std::vector<double>::const_iterator, 
+      std::vector<double>::const_iterator,
       std::vector<double>::const_iterator
-      > 
+      >
     >
   zip_it_end(
     boost::make_tuple(
@@ -379,7 +372,7 @@ int main( void )
   // Zip iterator decrementing and dereferencing
   //
   /////////////////////////////////////////////////////////////////////////////
-  
+
   std::cout << "Zip iterator -- and *:                       "
             << std::flush;
 
@@ -408,13 +401,13 @@ int main( void )
   // Zip iterator copy construction and equality
   //
   /////////////////////////////////////////////////////////////////////////////
-  
-  std::cout << "Zip iterator copy construction and equality: " 
+
+  std::cout << "Zip iterator copy construction and equality: "
             << std::flush;
 
   boost::zip_iterator<
     boost::tuples::tuple<
-      std::vector<double>::const_iterator, 
+      std::vector<double>::const_iterator,
       std::vector<double>::const_iterator
       >
     > zip_it_run_copy(zip_it_run);
@@ -435,10 +428,10 @@ int main( void )
   // Zip iterator inequality
   //
   /////////////////////////////////////////////////////////////////////////////
-  
+
   std::cout << "Zip iterator inequality:                     "
             << std::flush;
-  
+
   if(!(zip_it_run != zip_it_run_copy) && zip_it_run != ++zip_it_run_copy)
   {
     ++num_successful_tests;
@@ -455,14 +448,14 @@ int main( void )
   // Zip iterator less than
   //
   /////////////////////////////////////////////////////////////////////////////
-  
+
   std::cout << "Zip iterator less than:                      "
             << std::flush;
-  
+
   // Note: zip_it_run_copy == zip_it_run + 1
   //
   if( zip_it_run < zip_it_run_copy  &&
-      !( zip_it_run < --zip_it_run_copy) && 
+      !( zip_it_run < --zip_it_run_copy) &&
       zip_it_run == zip_it_run_copy
     )
   {
@@ -480,18 +473,18 @@ int main( void )
   // Zip iterator less than or equal
   //
   /////////////////////////////////////////////////////////////////////////////
-  
+
   std::cout << "zip iterator less than or equal:             "
             << std::flush;
-  
+
   // Note: zip_it_run_copy == zip_it_run
   //
   ++zip_it_run;
   zip_it_run_copy += 2;
 
-  if( zip_it_run <= zip_it_run_copy && 
-      zip_it_run <= --zip_it_run_copy && 
-      !( zip_it_run <= --zip_it_run_copy) && 
+  if( zip_it_run <= zip_it_run_copy &&
+      zip_it_run <= --zip_it_run_copy &&
+      !( zip_it_run <= --zip_it_run_copy) &&
       zip_it_run <= zip_it_run
     )
   {
@@ -509,14 +502,14 @@ int main( void )
   // Zip iterator greater than
   //
   /////////////////////////////////////////////////////////////////////////////
-  
+
   std::cout << "Zip iterator greater than:                   "
             << std::flush;
-  
+
   // Note: zip_it_run_copy == zip_it_run - 1
   //
-  if( zip_it_run > zip_it_run_copy && 
-      !( zip_it_run > ++zip_it_run_copy) && 
+  if( zip_it_run > zip_it_run_copy &&
+      !( zip_it_run > ++zip_it_run_copy) &&
       zip_it_run == zip_it_run_copy
     )
   {
@@ -534,17 +527,17 @@ int main( void )
   // Zip iterator greater than or equal
   //
   /////////////////////////////////////////////////////////////////////////////
-  
+
   std::cout << "Zip iterator greater than or equal:          "
             << std::flush;
 
   ++zip_it_run;
-  
+
   // Note: zip_it_run == zip_it_run_copy + 1
   //
-  if( zip_it_run >= zip_it_run_copy && 
-      --zip_it_run >= zip_it_run_copy && 
-      ! (zip_it_run >= ++zip_it_run_copy) 
+  if( zip_it_run >= zip_it_run_copy &&
+      --zip_it_run >= zip_it_run_copy &&
+      ! (zip_it_run >= ++zip_it_run_copy)
     )
   {
     ++num_successful_tests;
@@ -589,13 +582,13 @@ int main( void )
 
   std::cout << "Zip iterator - int:                          "
             << std::flush;
-  
+
   // Note: zip_it_run == zip_it_run_copy, and both are at end position
-  // 
+  //
   zip_it_run = zip_it_run - 2;
   --zip_it_run_copy;
   --zip_it_run_copy;
-  
+
   if( zip_it_run == zip_it_run_copy && (zip_it_run - 1) == zip_it_begin )
   {
     ++num_successful_tests;
@@ -612,12 +605,12 @@ int main( void )
   // Zip iterator +=
   //
   /////////////////////////////////////////////////////////////////////////////
-  
+
   std::cout << "Zip iterator +=:                             "
             << std::flush;
-            
+
   // Note: zip_it_run == zip_it_run_copy, and both are at begin + 1
-  // 
+  //
   zip_it_run += 2;
   if( zip_it_run == zip_it_begin + 3 )
   {
@@ -641,7 +634,7 @@ int main( void )
 
   // Note: zip_it_run is at end position, zip_it_run_copy is at
   // begin plus one.
-  // 
+  //
   zip_it_run -= 2;
   if( zip_it_run == zip_it_run_copy )
   {
@@ -659,13 +652,13 @@ int main( void )
   // Zip iterator getting member iterators
   //
   /////////////////////////////////////////////////////////////////////////////
-  
+
   std::cout << "Zip iterator member iterators:               "
             << std::flush;
-            
+
   // Note: zip_it_run and zip_it_run_copy are both at
   // begin plus one.
-  // 
+  //
   if( boost::tuples::get<0>(zip_it_run.get_iterator_tuple()) == vect1.begin() + 1 &&
       boost::tuples::get<1>(zip_it_run.get_iterator_tuple()) == vect2.begin() + 1
     )
@@ -684,7 +677,7 @@ int main( void )
   // Making zip iterators
   //
   /////////////////////////////////////////////////////////////////////////////
-  
+
   std::cout << "Making zip iterators:                        "
             << std::flush;
 
@@ -694,13 +687,13 @@ int main( void )
   std::copy(
     boost::make_zip_iterator(
     boost::make_tuple(
-      vect1.begin(), 
+      vect1.begin(),
       vect2.begin()
       )
     ),
     boost::make_zip_iterator(
     boost::make_tuple(
-      vect1.end(), 
+      vect1.end(),
       vect2.end()
       )
     ),
@@ -729,19 +722,19 @@ int main( void )
   // Zip iterator non-const --> const conversion
   //
   /////////////////////////////////////////////////////////////////////////////
-  
+
   std::cout << "Zip iterator non-const to const conversion:  "
             << std::flush;
-  
+
   boost::zip_iterator<
     boost::tuples::tuple<
       std::set<int>::const_iterator,
       std::vector<double>::const_iterator
       >
-    > 
+    >
   zip_it_const(
     boost::make_tuple(
-      intset.begin(), 
+      intset.begin(),
       vect2.begin()
     )
   );
@@ -751,10 +744,10 @@ int main( void )
       std::set<int>::iterator,
       std::vector<double>::const_iterator
       >
-    > 
+    >
   zip_it_half_const(
     boost::make_tuple(
-      intset.begin(), 
+      intset.begin(),
       vect2.begin()
     )
   );
@@ -764,10 +757,10 @@ int main( void )
       std::set<int>::iterator,
       std::vector<double>::iterator
       >
-    > 
+    >
   zip_it_non_const(
     boost::make_tuple(
-      intset.begin(), 
+      intset.begin(),
       vect2.begin()
     )
   );
@@ -776,7 +769,7 @@ int main( void )
   zip_it_const = zip_it_half_const;
   ++zip_it_const;
 //  zip_it_non_const = ++zip_it_const;  // Error: can't convert from const to non-const
-  
+
   if( 54 == boost::tuples::get<0>(*zip_it_const) &&
       4.4 == boost::tuples::get<1>(*zip_it_const)  &&
       53 == boost::tuples::get<0>(*zip_it_half_const)  &&
@@ -801,7 +794,7 @@ int main( void )
 
   std::cout << "Zip iterator categories:                     "
             << std::flush;
-            
+
   // The big iterator of the previous test has vector, list, and set iterators.
   // Therefore, it must be bidirectional, but not random access.
   bool bBigItIsBidirectionalIterator = boost::is_convertible<
@@ -819,11 +812,11 @@ int main( void )
   //
   typedef boost::zip_iterator<
     boost::tuples::tuple<
-      std::vector<double>::const_iterator, 
+      std::vector<double>::const_iterator,
       std::vector<double>::const_iterator
       >
     > all_vects_type;
-  
+
   bool bAllVectsIsRandomAccessIterator = boost::is_convertible<
     boost::iterator_traversal<all_vects_type>::type
         , boost::random_access_traversal_tag

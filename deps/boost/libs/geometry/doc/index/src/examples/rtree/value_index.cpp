@@ -37,7 +37,7 @@ public:
     result_type operator()(size_t i) const { return container[i]; }
 };
 
-int main(void)
+int main()
 {
     typedef bg::model::point<float, 2, bg::cs::cartesian> point;
     typedef bg::model::box<point> box;
@@ -52,7 +52,7 @@ int main(void)
     for ( unsigned i = 0 ; i < 10 ; ++i )
     {
         // add a box
-        boxes.push_back(box(point(i, i), point(i+0.5f, i+0.5f)));
+        boxes.push_back(box(point(i+0.0f, i+0.0f), point(i+0.5f, i+0.5f)));
     }
 
     // display boxes
@@ -77,6 +77,8 @@ int main(void)
     // find 5 nearest values to a point
     std::vector<value> result_n;
     rtree.query(bgi::nearest(point(0, 0), 5), std::back_inserter(result_n));
+
+    // note: in Boost.Geometry the WKT representation of a box is polygon
 
     // display results
     std::cout << "spatial query box:" << std::endl;

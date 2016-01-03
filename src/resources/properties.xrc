@@ -3,6 +3,7 @@
   <object class="wxDialog" name="properties">
     <title>Catalog properties</title>
     <centered>1</centered>
+    <style>wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER</style>
     <object class="wxBoxSizer">
       <orient>wxVERTICAL</orient>
       <object class="sizeritem">
@@ -29,7 +30,7 @@
                   <flag>wxEXPAND|wxRIGHT|wxTOP|wxBOTTOM</flag>
                 </object>
                 <object class="sizeritem">
-                  <object class="wxStaticText">
+                  <object class="wxStaticText" name="language_label">
                     <label>Language:</label>
                   </object>
                   <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
@@ -41,7 +42,7 @@
                   <flag>wxEXPAND|wxRIGHT|wxBOTTOM</flag>
                 </object>
                 <object class="sizeritem">
-                  <object class="wxStaticText">
+                  <object class="wxStaticText" name="plural_forms_label">
                     <label>Plural Forms:</label>
                   </object>
                   <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
@@ -69,18 +70,46 @@
                   <border>3d</border>
                   <flag>wxEXPAND|wxRIGHT|wxTOP|wxBOTTOM</flag>
                 </object>
-                <object class="spacer"></object>
+                <object class="spacer">
+                    <size>10,20</size>
+                </object>
                 <object class="sizeritem">
-                  <object class="wxHyperlinkCtrl" name="plural_forms_help">
+                  <object class="LearnMoreLink" name="plural_forms_help">
                     <label>Learn about plural forms</label>
-                    <url>http://www.poedit.net/trac/wiki/Doc/PluralForms</url>
-                    <font platform="mac">
-                      <size>11</size>
-                      <underlined>1</underlined>
-                    </font>
+                    <url>http://poedit.net/trac/wiki/Doc/PluralForms</url>
                   </object>
                   <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
                   <border>5d</border>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>Charset:</label>
+                  </object>
+                  <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
+                  <border>5d</border>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxComboBox" name="charset"/>
+                  <border>5d</border>
+                  <flag>wxEXPAND|wxRIGHT|wxBOTTOM</flag>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>Source code charset:</label>
+                  </object>
+                  <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
+                  <border>5d</border>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxComboBox" name="source_code_charset"/>
+                  <border>5d</border>
+                  <flag>wxEXPAND|wxRIGHT|wxBOTTOM</flag>
+                </object>
+                <object class="spacer">
+                    <size>10,20</size>
+                </object>
+                <object class="spacer">
+                    <size>10,20</size>
                 </object>
                 <object class="sizeritem">
                   <object class="wxStaticText">
@@ -110,36 +139,13 @@
                   <border>5d</border>
                   <flag>wxEXPAND|wxRIGHT|wxBOTTOM</flag>
                 </object>
-                <object class="sizeritem">
-                  <object class="wxStaticText">
-                    <label>Charset:</label>
-                  </object>
-                  <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
-                  <border>5d</border>
-                </object>
-                <object class="sizeritem">
-                  <object class="wxComboBox" name="charset"/>
-                  <border>5d</border>
-                  <flag>wxEXPAND|wxRIGHT|wxBOTTOM</flag>
-                </object>
-                <object class="sizeritem">
-                  <object class="wxStaticText">
-                    <label>Source code charset:</label>
-                  </object>
-                  <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
-                  <border>5d</border>
-                </object>
-                <object class="sizeritem">
-                  <object class="wxComboBox" name="source_code_charset"/>
-                  <border>5d</border>
-                  <flag>wxEXPAND|wxRIGHT|wxBOTTOM</flag>
-                </object>
               </object>
             </object>
             <label>Translation properties</label>
           </object>
           <object class="notebookpage">
-            <object class="wxPanel">
+            <label>Sources paths</label>
+            <object class="wxPanel" name="page_paths">
               <object class="wxBoxSizer">
                 <orient>wxVERTICAL</orient>
                 <object class="sizeritem">
@@ -154,31 +160,57 @@
                     <object class="sizeritem">
                       <object class="wxStaticText">
                         <label>Base path:</label>
+                        <variant platform="mac">small</variant>
                       </object>
                       <border>5d</border>
                       <flag>wxLEFT|wxTOP|wxALIGN_CENTER_VERTICAL</flag>
                     </object>
                     <object class="sizeritem">
-                      <object class="wxTextCtrl" name="basepath"/>
-                      <flag>wxLEFT|wxRIGHT|wxTOP</flag>
+                      <object class="unknown" name="basepath"/>
+                      <flag>wxLEFT|wxTOP|wxALIGN_CENTER_VERTICAL</flag>
                       <border>5d</border>
                       <option>1</option>
+                    </object>
+                    <object class="spacer">
+                      <size>3,-1d</size>
+                    </object>
+                    <object class="sizeritem">
+                      <object class="wxBitmapButton" name="open_basepath">
+                        <style>wxNO_BORDER</style>
+                        <variant>small</variant>
+                        <bitmap platform="mac"  stock_id="NSFollowLinkFreestandingTemplate"/>
+                        <bitmap platform="unix" stock_id="gtk-jump-to"/>
+                        <bitmap platform="win"  stock_id="follow-link"/>
+                        <bg platform="win">#ffffff</bg>
+                      </object>
+                      <flag>wxRIGHT|wxTOP|wxALIGN_CENTER_VERTICAL</flag>
+                      <border>5d</border>
+                    </object>
+                    <object class="spacer">
+                      <size>1,1d</size>
                     </object>
                   </object>
                   <flag>wxEXPAND</flag>
                 </object>
                 <object class="sizeritem">
                   <object class="unknown" name="paths"/>
-                  <option>1</option>
+                  <option>3</option>
+                  <flag>wxEXPAND|wxALL</flag>
+                  <border>5d</border>
+                </object>
+                <object class="sizeritem">
+                  <object class="unknown" name="excluded_paths">
+                  </object>
+                  <option>2</option>
                   <flag>wxEXPAND|wxALL</flag>
                   <border>5d</border>
                 </object>
               </object>
             </object>
-            <label>Sources paths</label>
           </object>
           <object class="notebookpage">
-            <object class="wxPanel">
+            <label>Sources keywords</label>
+            <object class="wxPanel" name="page_keywords">
               <object class="wxBoxSizer">
                 <orient>wxVERTICAL</orient>
                 <object class="sizeritem">
@@ -198,45 +230,39 @@
                     <size>0,4</size>
                 </object>
                 <object class="sizeritem">
-                  <object class="wxHyperlinkCtrl" name="keywords_help">
+                  <object class="LearnMoreLink" name="keywords_help">
                     <label>Learn about gettext keywords</label>
-                    <url>http://www.poedit.net/trac/wiki/Doc/Keywords</url>
-                    <font platform="mac">
-                      <size>11</size>
-                      <underlined>1</underlined>
-                    </font>
+                    <url>http://poedit.net/trac/wiki/Doc/Keywords</url>
                   </object>
                   <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
                   <border>5d</border>
                 </object>
               </object>
             </object>
-            <label>Sources keywords</label>
           </object>
         </object>
         <option>1</option>
-        <flag>wxEXPAND|wxALL</flag>
+        <flag>wxEXPAND|wxTOP|wxLEFT|wxRIGHT</flag>
         <border>5d</border>
       </object>
       <object class="sizeritem">
-        <object class="wxBoxSizer">
-          <object class="sizeritem">
+        <object class="wxStdDialogButtonSizer">
+          <object class="button">
             <object class="wxButton" name="wxID_OK">
-              <label>OK</label>
+              <variant platform="mac">normal</variant>
               <default>1</default>
             </object>
-            <border>5d</border>
-            <flag>wxLEFT|wxRIGHT|wxBOTTOM</flag>
           </object>
-          <object class="sizeritem">
+          <object class="button">
             <object class="wxButton" name="wxID_CANCEL">
-              <label>Cancel</label>
+              <variant platform="mac">normal</variant>
             </object>
-            <flag>wxRIGHT|wxBOTTOM</flag>
-            <border>5d</border>
           </object>
         </object>
-        <flag>wxALIGN_RIGHT</flag>
+        <flag platform="mac">wxALIGN_RIGHT</flag>
+        <flag platform="win">wxALIGN_RIGHT|wxALL</flag>
+        <flag platform="unix">wxALIGN_RIGHT|wxTOP|wxBOTTOM</flag>
+        <border>5d</border>
       </object>
     </object>
   </object>

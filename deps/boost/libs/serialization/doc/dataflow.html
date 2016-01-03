@@ -35,19 +35,19 @@ We would prefer the solution that is:
 <ul>
   <li>Decomposable. so we can code, test, verify and use each (simple) stage of the conversion 
   independently.
-  <li>Composable. so we can used this composite as a new component somewhere else.
+  <li>Composable. so we can use this composite as a new component somewhere else.
   <li>Efficient, so we're not required to re-implement it again.
   <li>Scalable, so that it works well for short and arbitrarily long sequences.
 </ul>
 The approach that comes closest to meeting these requirements is that described
 and implemented with <a href="../../iterator/doc/index.html">Iterator Adaptors</a>.
-The fundamental feature of an Iterator Adaptor template that makes in interesting to
+The fundamental feature of an Iterator Adaptor template that makes it interesting to
 us is that it takes as a parameter a base iterator from which it derives its
 input. This suggests that something like the following might be possible.
 <pre><code>
 typedef 
-    insert_linebreaks&lt;         // insert line breaks every 72 characters
-        base64_from_binary&lt;    // convert binary values ot base64 characters
+    insert_linebreaks&lt;         // insert line breaks every 76 characters
+        base64_from_binary&lt;    // convert binary values to base64 characters
             transform_width&lt;   // retrieve 6 bit integers from a sequence of 8 bit bytes
                 const char *,
                 6,
@@ -71,12 +71,12 @@ included is <a target="transform_iterator" href="../../iterator/doc/transform_it
 transform_iterator</a>, which can be used to implement 6 bit integer =&gt; base64 code.
 
 <h3>Dataflow Iterators</h3>
-Unfortunately, not all iterators which inherit from Iterator Adaptors are guarenteed
+Unfortunately, not all iterators which inherit from Iterator Adaptors are guaranteed
 to meet the composability goals stated above.  To accomplish this purpose, they have
 to be written with some additional considerations in mind.
 
 We define a Dataflow Iterator as an class inherited from <code style="white-space: normal">iterator_adaptor</code> which
-fulfills as a small set of additional requirements.
+fulfills a small set of additional requirements.
 
 <h4>Templated Constructors</h4>
 <p>
@@ -110,12 +110,12 @@ std::copy(
 The recursive application of this template is what automatically generates the
 constructor <code style="white-space: normal">base64_text(const char *)</code>  in our example above.  The original
 Iterator Adaptors include a <code style="white-space: normal">make_xxx_iterator</code> to fulfill this function.
-However, I believe these are unwieldy to use compared to the above solution usiing
+However, I believe these are unwieldy to use compared to the above solution using
 Templated constructors.
 <p>
 Unfortunately, some systems which fail to properly support partial function template
 ordering cannot support the concept of a templated constructor as implemented above.  
-A special"wrapper"  macro has been created to work around this problem. With this "wrapper" 
+A special "wrapper"  macro has been created to work around this problem. With this "wrapper" 
 the above example is modified to:
 <pre><code>
 std::copy(
@@ -195,7 +195,7 @@ The standard stream iterators don't quite work for us.  On systems which impleme
 as unsigned short integers (E.G. VC 6) they didn't function as I expected. I also made some
 adjustments to be consistent with our concept of Dataflow Iterators.  Like the rest of our
 iterators, they are found in the namespace <code style="white-space: normal">boost::archive::interators</code> to avoid
-conflict the standard library version.
+conflicts with the standard library versions.
 <dl class = "index">
   <dt><a target="istream_iterator" href="../../../boost/archive/iterators/istream_iterator.hpp">
   istream_iterator</a></dt>

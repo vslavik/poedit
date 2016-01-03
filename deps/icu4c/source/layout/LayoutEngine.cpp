@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. and others 1998-2013 - All Rights Reserved
+ * (C) Copyright IBM Corp. and others 1998-2015 - All Rights Reserved
  */
 
 #include "LETypes.h"
@@ -53,6 +53,7 @@ const le_int32 DefaultCharMapper::controlCharsCount = LE_ARRAY_SIZE(controlChars
 
 LEUnicode32 DefaultCharMapper::mapChar(LEUnicode32 ch) const
 {
+    (void)copyright;    // Suppress unused variable warning.
     if (fFilterControls) {
         le_int32 index = OpenTypeUtilities::search((le_uint32)ch, (le_uint32 *)controlChars, controlCharsCount);
 
@@ -605,9 +606,9 @@ LayoutEngine *LayoutEngine::layoutEngineFactory(const LEFontInstance *fontInstan
             break;
         }
     } else {
-        MorphTableHeader2 *morxTable = (MorphTableHeader2 *)fontInstance->getFontTable(morxTableTag);
-        if (morxTable != NULL && SWAPL(morxTable->version)==0x00020000) {
-            result = new GXLayoutEngine2(fontInstance, scriptCode, languageCode, morxTable, typoFlags, success);
+        LEReferenceTo<MorphTableHeader2> morxTable(fontInstance, morxTableTag, success);
+        if (LE_SUCCESS(success) && morxTable.isValid() && SWAPL(morxTable->version)==0x00020000) {
+          result = new GXLayoutEngine2(fontInstance, scriptCode, languageCode, morxTable, typoFlags, success);
         } else {
           LEReferenceTo<MorphTableHeader> mortTable(fontInstance, mortTableTag, success);
           if (LE_SUCCESS(success) && mortTable.isValid() && SWAPL(mortTable->version)==0x00010000) { // mort

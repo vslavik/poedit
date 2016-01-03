@@ -1,3 +1,1007 @@
+2015-07-10  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.5 released.
+
+2015-06-29  Daiki Ueno  <ueno@gnu.org>
+
+	* msginit.c (catalogname_for_locale): Remove sr_YU, which were
+	removed from ISO 3166-1:1997.  Add comment saying that pap_AN,
+	which were removed from ISO 3166-1:2006, can be removed in the
+	future.
+	Reported by Jakub Wilk in:
+	<https://lists.gnu.org/archive/html/bug-gettext/2015-06/msg00057.html>.
+
+2015-06-25  Daiki Ueno  <ueno@gnu.org>
+
+	* x-c.c (literalstring_parse): Bail out if C == NUL.  Also adjust
+	the loop invariant in Unicode literal handling.
+	Reported by Hanno Boeck in:
+	<http://savannah.gnu.org/bugs/?45391>.
+
+2015-06-25  Daiki Ueno  <ueno@gnu.org>
+
+	* x-c.c (literalstring_parse): Add more NUL checks.  Change the
+	loop invariant so that C always points to the character previously
+	pointed by P.
+	Reported by Hanno Boeck in:
+	<http://savannah.gnu.org/bugs/?45391>.
+
+2015-06-24  Daiki Ueno  <ueno@gnu.org>
+
+	* x-c.c (literalstring_parse): Check if the next character of a
+	backslash is NUL.
+	Reported by Hanno Boeck in:
+	<http://savannah.gnu.org/bugs/?45391>.
+
+2015-06-23  Daiki Ueno  <ueno@gnu.org>
+
+	* cldr-plurals.c (main): Fix unmatched braces when
+	!(DYNLOAD_LIBEXPAT || HAVE_LIBEXPAT).
+
+2015-06-23  Daiki Ueno  <ueno@gnu.org>
+
+	* cldr-plurals.c: Include "basename.h".
+	(main): Place optind on the right hand side of the expression, to
+	work around build failure on Solaris.
+
+2015-06-23  Daiki Ueno  <ueno@gnu.org>
+
+	* Makefile.am (uninstall-local): Remove cldr-plurals.
+
+2015-06-23  Daiki Ueno  <ueno@gnu.org>
+
+	* Makefile.am (noinst_HEADERS): Add cldr-plural.h and
+	cldr-plural-exp.h.
+
+2015-06-22  Daiki Ueno  <ueno@gnu.org>
+
+	msginit: Guess plural rules from Unicode CLDR
+	* Makefile.am (noinst_PROGRAMS): Add cldr-plurals.
+	(install-exec-local): Install cldr-plurals.
+	(BUILT_SOURCES): Add cldr-plural.c and cldr-plural.h.
+	(cldr_plural_SOURCES): New variable.
+	(cldr_plural_LDADD): New variable.
+	* cldr-plural-exp.h: New file.
+	* cldr-plural-exp.c: New file.
+	* cldr-plural.y: New file.
+	* cldr-plurals.c: New file.
+	* msginit.c (plural_forms): Call cldr-plurals program if the
+	plural rule is not defined in the code.
+
+2015-06-01  Daiki Ueno  <ueno@gnu.org>
+
+	* x-awk.h (EXTENSIONS_AWK): Register file extensions ".gawk" and
+	".twjr".  Suggested by Karl Berry in:
+	<https://lists.gnu.org/archive/html/bug-gettext/2015-05/msg00032.html>.
+
+2015-05-08  Часлав Илић (Chusslove Illich)  <caslav.ilic@gmx.net>  (tiny change)
+
+	* x-c.c (init_flag_table_kde): New function.
+	(additional_keywords_kde): New variable.
+	(activate_additional_keywords_kde): New function.
+	(init_keywords): Optional addition of KDE-specific keywords.
+	* x-c.h (init_flag_table_kde): New function declaration.
+	(activate_additional_keywords_kde): New function declaration.
+	* xgettext.c (main): Invoke addition of KDE-specific keywords when
+	language is C++ with KDE.
+
+2015-03-20  Daiki Ueno  <ueno@gnu.org>
+
+	kde-kuit: Use xmlns to avoid element name conflict
+	* format-kde-kuit.c (XML_NS): New macro.
+	(format_parse): Add namespace qualifier to the <kuit> tag.
+
+2015-03-12  Daiki Ueno  <ueno@gnu.org>
+
+	* format-kde-kuit.c (format_parse): Remove dead assignment,
+	spotted by clang-analyzer.
+	* x-c.c (phase5_get): Likewise.
+
+2015-03-11  Daiki Ueno  <ueno@gnu.org>
+
+	msgunfmt: Check allocated size for static segment
+	Reported by Max Lin in:
+	http://lists.gnu.org/archive/html/bug-gettext/2015-03/msg00005.html
+	* read-mo.c (get_sysdep_string): Check if the embedded segment
+	size is valid, before adding it to the string length.
+
+2015-03-06  Daiki Ueno  <ueno@gnu.org>
+
+	format-kde: Recognize KUIT markup
+	Reported by Chusslove Illich in:
+	https://lists.gnu.org/archive/html/bug-gettext/2015-01/msg00017.html
+	* format.h (formatstring_kde_kuit): New variable declaration.
+	* format.c (formatstring_parsers): Register formatstring_kde_kuit
+	as a format string parser.
+	* format-kde-kuit.c: New file.
+	* message.h (NFORMATS): Increment.
+	(enum format_type): New enum value format_kde_kuit.
+	* xgettext.c (xgettext_record_flag): Handle format_kde_kuit.
+	* Makefile.am (xgettext_SOURCES): Move libexpat-compat.c to...
+	(libgettextsrc_la_SOURCES): ...here.
+	(xgettext_LDADD): Move @LTLIBEXPAT@ to...
+	(libgettextsrc_la_LDFLAGS): ...here.
+	(FORMAT_SOURCE): Add format-kde-kuit.c.
+
+2015-03-02  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: Support message syntax checks
+	With this change, xgettext could report common syntactic problems
+	in extracted strings.  The current built-in checks are
+	ellipsis-unicode, space-ellipsis, and quote-unicode.  Those checks
+	can be enabled with --check option of xgettext and disabled with
+	special "xgettext:" comment in source files.
+	Feature suggested by Philip Withnall in:
+	https://savannah.gnu.org/bugs/?44098
+	* message.h (enum syntax_check_type): New enum.
+	(NSYNTAXCHECKS): New constant.
+	(enum is_syntax_check): New enum.
+	(struct message_ty): New field 'do_syntax_check'.
+	(syntax_check_name): New variable declaration.
+	* message.c (syntax_check_name): New variable.
+	* msgl-cat.c (catenate_msgdomain_list): Propagate
+	mp->do_syntax_check.
+	* msgmerge.c (message_merge): Propagate ref->do_syntax_check.
+	* msgl-check.h (syntax_check_message_list): New declaration.
+	* msgl-check.c (syntax_check_ellipsis_unicode): New function.
+	(syntax_check_space_ellipsis): New function.
+	(syntax_check_quote_unicode): New function.
+	(syntax_check_message): New function.
+	(syntax_check_message_list): New function.
+	* read-catalog-abstract.h (po_parse_comment_special): Adjust
+	function declaration.
+	* read-catalog-abstract.c (po_parse_comment_special): Add new
+	argument SCP for syntax checking; all callers changed.
+	* read-catalog.h (DEFAULT_CATALOG_READER_TY): New field
+	'do_syntax_check'.
+	* read-catalog.c (default_constructor): Initialize
+	this->do_syntax_check.
+	(default_copy_comment_state): Propagate this->do_syntax_check.
+	* sentence.h: New file.
+	* sentence.c: New file.
+	* xgettext.c (long_options): Add options --check and --sentence-end.
+	(main): Handle options --check and --sentence-end.
+	(usage): Document options --check and --sentence-end.
+	(remember_a_message): Propagate do_syntax_check value.
+
+2015-02-05  Alex Henrie  <alexhenrie24@gmail.com>  (tiny change)
+
+	xgettext: Wrap location comments to 79 characters
+	Previously, messages were wrapped to 79 characters, but location
+	comments were wrapped to 78 characters.
+	* write-po.c (message_print_comment_filepos): Fix off-by-one in
+	calculating line-wrapping width of location comment.
+
+2015-02-03  Daiki Ueno  <ueno@gnu.org>
+
+	msgfilter: Factor out quoted string handling
+	For later use in xgettext, separate out the scanner part in
+	filter-quote.c into a separate file.  See:
+	<https://savannah.gnu.org/bugs/?44098>.
+	* quote.h: New file split from filter-quote.c.
+	* filter-quote.c: Include "quote.h".
+	(convert_quote_callback): New function.
+	(convert_ascii_quote_to_unicode): Use scan_quoted from quote.h.
+	* Makefile.am (libgettextsrc_la_SOURCES): Add quote.h.
+
+2015-01-29  Daiki Ueno  <ueno@gnu.org>
+
+	msgexec: Add --newline option
+	See the commit 96dde0b for the rationale.
+	* msgexec.c (newline): New variable.
+	(long_options): Add --newline option.
+	(main): Handle --newline option.
+	(usage): Document --newline option.
+	(process_string): Handle --newline option.
+
+2015-01-28  Daiki Ueno  <ueno@gnu.org>
+
+	msgfilter: Add --newline option
+	The filter program was supposed to handle translation without a
+	newline character at the end of line.  This was causing
+	portability problems with standard text processing programs on
+	some platforms (BSD sed, for instance) and not friendly towards
+	POSIX, where a "text file" is required to have an ending newline.
+	The new --newline option controls the behavior.  If it is given,
+	both filter input and output are assumed to end with a newline
+	character.
+	* msgfilter.c (newline): New variable.
+	(long_options): Add --newline option.
+	(main): Handle --newline option.
+	(usage): Document --newline option.
+	(process_string_with_newline): New function which wraps
+	process_string.
+	(process_message): Use process_string_with_newline instead of
+	process_string if --newline is specified.
+
+2015-01-24  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext, msgmerge: Avoid undefined non-null argument behavior
+	* xgettext.c (remember_a_message): Building with gcc's
+	-fsanitize=undefined and running tests triggered:
+	  xgettext.c:2425:17: runtime error: null pointer passed as argument \
+	    2, which is declared to never be null
+	Adjust the argument of strncmp to never be null.
+	* msgmerge.c (message_merge): Likewise for memcpy.
+
+2015-01-23  Daiki Ueno  <ueno@gnu.org>
+
+	build: Fix parallel build from git checkout
+	Since po-gram-gen2.h depends on po-gram-gen.h, an explicit
+	dependency on the YACC rule is needed for parallel compilation.
+	* Makefile.am (po-gram-gen.h): Depend on po-gram-gen.c.
+
+2015-01-16  Daiki Ueno  <ueno@gnu.org>
+
+	desktop: Avoid useless warning for group header
+	Reported by Marek Černocký at:
+	<https://savannah.gnu.org/bugs/?44005>
+	* read-desktop.c (desktop_lex): Fix "invalid non-blank
+	character" check after reading a group header.
+
+2015-01-13  Daiki Ueno  <ueno@gnu.org>
+
+	* x-c.c (phase5_get): Reset raw_expected at the beginning of the
+	function.
+
+2015-01-13  Daiki Ueno  <ueno@gnu.org>
+
+	c++: Make C++11 raw string recognition stricter
+	Reported by Vaclav Slavik at:
+	<http://savannah.gnu.org/bugs/?43970>.
+	* x-c.c (struct token_ty): New field 'escape'.
+	(struct xgettext_token_ty): New field 'escape'.
+	(phase5_get): Recognize raw strings more strictly.  Set 'escape'
+	field of token appropriately for string literals.
+	(extract_parenthesized): Respect 'escape' field of token.
+
+2015-01-13  Daiki Ueno  <ueno@gnu.org>
+
+	c++: Differentiate scanning logic from C
+	To enable raw string literals only in C++, add a flag indicating
+	the current source language is C++.
+	Suggested by Vaclav Slavik at:
+	<https://savannah.gnu.org/bugs/?43970>.
+	* x-c.h (extract_cxx): New declaration.
+	(SCANNERS_C): Use extract_cxx for "C++".
+	* x-c.c (cxx_extensions): New variable.
+	(phase5_get): Respect cxx_extensions and recognize raw string
+	literals only when it is set.
+	(extract_cxx): New function.
+	(extract_c, extract_objc): Reset cxx_extensions.
+
+2014-12-24  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.4 released.
+
+2014-12-18  Daiki Ueno  <ueno@gnu.org>
+
+	* x-sh.c (read_word): Use phase1 instead of phase2 for Bash ANSI-C
+	escape sequences.  Also handle '\"' and '\E'.
+
+2014-12-17  Daiki Ueno  <ueno@gnu.org>
+
+	* x-sh.c (phase2_getc): Fix typo: debackslahificication ->
+	debackslashification.
+
+2014-12-12  Daiki Ueno  <ueno@gnu.org>
+
+	* read-desktop.c (desktop_parse): Check and ignore
+	token_type_other.
+
+2014-12-12  Daiki Ueno  <ueno@gnu.org>
+
+	* format-lisp.c (make_intersected_list): Don't dereference
+	potentially released memory.  'append_repeated_to_initial' may
+	release the LIST->element.  Spotted by clang-analyzer.
+	* format-scheme.c (make_intersected_list): Likewise.
+
+2014-12-10  Daiki Ueno  <ueno@gnu.org>
+
+	* msgl-check.c (check_header_entry): Don't declare unused variable
+	'nrequiredfields'.
+
+2014-12-09  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext.c (arglist_parser_done): Avoid potential
+	null-dereference.  Spotted by clang-analyzer.
+
+2014-12-09  Daiki Ueno  <ueno@gnu.org>
+
+	* msgfmt.c (msgfmt_desktop_bulk): Don't dereference potentially
+	uninitialized value.  Spotted by clang-analyzer.
+
+2014-12-09  Daiki Ueno  <ueno@gnu.org>
+
+	* x-vala.c (phase3_get): Factor out the buffer allocation as a
+	macro.
+
+2014-12-09  Daiki Ueno  <ueno@gnu.org>
+
+	* read-desktop.c (desktop_lex): Undef the APPEND macro before
+	defining.
+
+2014-12-09  Daiki Ueno  <ueno@gnu.org>
+
+	desktop: Simplify the parsing logic
+	* read-desktop.h (desktop_reader_class_ty): Rename 'handle_text'
+	to 'handle_blank'.
+	(desktop_reader_handle_blank): Rename from
+	'desktop_reader_handle_text'.
+	* read-desktop.c (SIZEOF): New macro.
+	(desktop_reader_handle_blank): Rename from
+	'desktop_reader_handle_blank'.
+	(read_until_newline, read_group_name, read_key_name): Remove.
+	Merge into...
+	(desktop_lex): ...here.
+	(desktop_parse): Call 'desktop_lex' instead of read_*.  Don't
+	normalize whitespaces.
+	(enum token_type_ty): New enum.
+	(struct token_ty): New struct.
+	(free_token): New function.
+	* write-desktop.c (msgfmt_desktop_handle_blank): Rename from
+	'msgfmt_desktop_handle_text'.
+	* x-desktop.c: Include "c-ctype.h".
+	(extract_desktop_handle_comment): Normalize whitespaces here.
+	(extract_desktop_handle_blank): Rename from
+	'extract_desktop_handle_text'.
+
+2014-12-07  Daiki Ueno  <ueno@gnu.org>
+
+	vala: Make regex literal handling robuster
+	* x-vala.c (token_type_ty): New enumeration values
+	'token_type_arithmetic_operator' and 'token_type_question'.
+	Remove 'token_type_minus'.
+	(phase3_get): Rewrite regex literal handling right after
+	arithmetic assignment operators.
+
+2014-12-05  Daiki Ueno  <ueno@gnu.org>
+
+	msgunfmt: Avoid integer overflow using xsize
+	* read-mo.c (get_uint32, get_sysdep_string): Use xsum to avoid
+	integer overflow, when checking length and offset fields.
+	Reported by Jakub Wilk at:
+	<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=772088>.
+
+2014-12-04  Daiki Ueno  <ueno@gnu.org>
+
+	libgettextsrc: Follow plural.c -> pluralx.c file name change
+	* plural-exp.c: Include "../intl/pluralx.c" instead of
+	"../intl/plural.c".  Adjust to commit d2d04ba9.
+
+2014-12-03  Daiki Ueno  <ueno@gnu.org>
+
+	intl: Work around LCOV relative base directory resolution
+	* plural-exp.c: Include "../intl/plural.c" instead of
+	"../../gettext-runtime/intl/plural.c".
+
+2014-12-02  Daiki Ueno  <ueno@gnu.org>
+
+	c: Minor cleanup of the previous commit
+	* x-c.c (phase5_get): Remove redundant check of is_prefix; fit
+	lines to 80 column.
+
+2014-12-02  Daiki Ueno  <ueno@gnu.org>
+
+	c: Support C++11 string literals
+	* x-c.c (phase5_get): Recognize C++ string literals, defined in
+	ISO/IEC 9899:2011.  Reported at:
+	<https://savannah.gnu.org/bugs/?39499>.
+
+2014-12-01  Daiki Ueno  <ueno@gnu.org>
+
+	c#: Recognize Unicode surrogate character pair
+	* x-csharp.c (accumulate_escaped): Change the first argument type
+	from 'struct string_buffer *' to 'struct mixed_string_buffer *',
+	for Unicode surrogate character pair handling; all callers
+	changed.  Reported by Petr Kadlec at:
+	<https://savannah.gnu.org/bugs/?32505>.
+
+2014-11-28  Daiki Ueno  <ueno@gnu.org>
+
+	* msgfilter.c (prepare_read): Simplify the last commit 06e206f5,
+	by always adding 1 to the buffer size.
+
+2014-11-28  Daiki Ueno  <ueno@gnu.org>
+
+	msgfilter: Fix read buffer allocation for empty input
+	* msgfilter.c (prepare_read): Increase allocated buffer size even
+	if the original size is < 2.
+	Reported by Robin McCorkell at:
+	<https://savannah.gnu.org/bugs/?43720>.
+
+2014-11-27  Daiki Ueno  <ueno@gnu.org>
+
+	javascript: Simplify Unicode character escape handling
+	ECMA-262 only supports "\uXXXX" style Unicode character escape and
+	we don't need extra space for character names.
+	* x-javascript.c: Don't include "uniname.h".
+	(phase2_pushback): Decrease to 5.  Don't refer to UNINAME_MAX.
+
+2014-11-18  Daiki Ueno  <ueno@gnu.org>
+
+	* read-mo.c: Include "xsize.h".
+	(get_string): Use xsum3 to avoid overflow, when checking length
+	and offset fields.
+	Reported by Jakub Wilk at:
+	<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=769901>.
+
+2014-10-28  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: Allow plural extraction from a single argument function
+	The commit 8137d2b4 was a wrong fix since both singular/plural msgids
+	may point to the same address for Qt4 plural forms.  This reverts
+	the commit and fix the original double-free problem in the right
+	way.  Thanks to Jesper Fehrlund for suggestions.
+	* xgettext.c (arglist_parser_remember_literal): Don't ignore
+	plural argument even if ARGNUM1 equals to ARGNUM2.
+	(arglist_parser_done): Make a copy of best_cp->msgid_plural when
+	passing it to remember_a_message_plural, if it equals to
+	best_cp->msgid.  Also move code conversion logic earlier taking
+	into account of the ownership transfer of best_cp->msgid.
+
+2014-10-28  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: Fix double-free in singular/plural argument extraction
+	After commit 6aa7b7ed in 2009, xgettext assumed that ARGNUM1 and
+	ARGNUM2 of -k are different.  That could cause an double-free in
+	exceptional cases.
+	Reported by Johan Liljegren in:
+	<https://lists.gnu.org/archive/html/bug-gettext/2014-10/msg00028.html>.
+	* xgettext.c (arglist_parser_remember_literal): Don't assume that
+	ARGNUM1 and ARGNUM2 are different.
+
+2014-10-15  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.3 released.
+
+2014-10-08  Daiki Ueno  <ueno@gnu.org>
+
+	* write-po.c (wrap): Report error on incomplete multibyte sequence
+	at the end of input bytes.
+	Reported by Jakub Wilk at:
+	<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=763820>.
+
+2014-09-30  Daiki Ueno  <ueno@gnu.org>
+
+	* x-c.c (literalstring_parse): Fix octal character escape handling.
+	Reported by Kjartan Maraas at:
+	<https://bugzilla.redhat.com/show_bug.cgi?id=1147535>.
+
+2014-09-24  Daiki Ueno  <ueno@gnu.org>
+
+	* x-python.c (x_python_lex): Move 'token3' variable declaration
+	out of the internal block.
+
+2014-09-24  Daiki Ueno  <ueno@gnu.org>
+
+	* filter-quote.c (BOLD_START, BOLD_END): Don't use non-portable
+	character escape "\e".
+
+2014-08-28  Jonas 'Sortie' Termansen <sortie@maxsi.org>  (tiny change)
+
+	* msginit.c: Include <stdint.h>.
+	(get_user_pwd): Cast uid_t value into uintmax_t and print it with
+	'%ju' format directive.
+
+2014-08-27  Jonas 'Sortie' Termansen <sortie@maxsi.org>  (tiny change)
+
+	* msgfilter.c (process_message): Use proper format directive for
+	printing size_t.
+	* msgexec.c (process_message): Likewise.
+
+2014-08-27  Jonas 'Sortie' Termansen <sortie@maxsi.org>  (tiny change)
+
+	* hostname.c: Add guard around #include <sys/param.h>.
+
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.2 released.
+
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	vala: Fix empty string literal handling
+	Similar to the commit 7b2d8d61 on July 11.
+	* x-vala.c (phase3_get): Add missing memory allocation for empty
+	string literal.
+
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	build: Fix race in post-install removal of *.a
+	There was an implicit dependency between the prerequisites of
+	install-exec-local, which may have caused error with make -jN.
+	Use install-exec-hook to remove the dependency.
+	Reported by Christian Weisgerber in:
+	<https://lists.gnu.org/archive/html/bug-gettext/2014-07/msg00008.html>.
+	* Makefile.am (install-exec-local): Remove.
+	(install-exec-hook): New rule, depend on install-exec-clean.
+
+2014-07-11  Daiki Ueno  <ueno@gnu.org>
+
+	c: Fix empty string literal handling
+	Problem reported by Bernhard Voelker in:
+	<http://lists.gnu.org/archive/html/bug-gnulib/2014-07/msg00059.html>.
+	* x-c.c (phase5_get): Add missing memory allocation for empty
+	string literal.
+
+2014-06-10  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19.1 released.
+
+2014-06-09  Daiki Ueno  <ueno@gnu.org>
+
+	msgmerge: Disable --color option in --update mode
+	Suggested by 林Ｖ字龍 at:
+	<https://lists.gnu.org/archive/html/bug-gettext/2014-06/msg00017.html>.
+	* msgmerge.c (main): Error out when --color and --update are
+	specified at the same time.
+
+2014-06-07  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: Fix misrecognition of character literals in C and Vala
+	Problem reported by Paul Eggert at
+	<http://lists.gnu.org/archive/html/bug-gettext/2014-06/msg00015.html>.
+	* x-c.c (phase5_get): Make sure to skip contents of character constant.
+	* x-vala.c (phase3_get): Likewise.
+
+2014-06-03  Daiki Ueno  <ueno@gnu.org>
+
+	desktop: Use logical filename as msgid location
+	* read-desktop.c (desktop_parse): Pass logical filename instead of
+	real filename to desktop_reader_handle_pair.
+
+2014-06-03  Daiki Ueno  <ueno@gnu.org>
+
+	desktop: Read LINGUAS file even if LINGUAS envvar is set
+	* msgfmt.c (get_languages): If the LINGUAS envvar is set, use it
+	to restrict the languages list read from the LINGUAS file, not to
+	extend the list.
+	(add_languages): Take an optional DESIRED_LANGUAGES argument.
+
+2014-06-03  Daiki Ueno  <ueno@gnu.org>
+
+	vala: Don't elide comments while parsing string literal
+	* x-vala.c (phase3_get): Use phase1_getc to read characters inside
+	a string literal.
+
+2014-06-02  Daiki Ueno  <ueno@gnu.org>
+
+	msgl-check: Treat missing header errors as warnings
+	Problem reported by Richard Hughes at
+	<https://lists.fedoraproject.org/pipermail/devel/2014-June/199539.html>.
+	After <https://savannah.gnu.org/bugs/?40262>, "msgfmt -c" reports
+	error on missing PO headers.  However, it turned out to be too strict
+	for the projects using Launchpad Translations.  Let's relax the check
+	for the moment and wait for one or two release cycles.
+	* msgl-check.c (check_header_entry): Report missing
+	required headers as warning, instead of error.
+
+2014-06-02  Daiki Ueno  <ueno@gnu.org>
+
+	* gettext 0.19 released.
+
+2014-05-31  Daiki Ueno  <ueno@gnu.org>
+
+	msgexec: Pass previous msgid to the child process
+	Suggested by Pavel Kharitonov in:
+	<http://lists.gnu.org/archive/html/bug-gettext/2014-05/msg00022.html>.
+	* msgexec.c (process_string): Set MSGEXEC_PREV_* envvar.
+
+2014-05-31  Daiki Ueno  <ueno@gnu.org>
+
+	msgfilter: Pass previous msgid to the child process
+	Suggested by Pavel Kharitonov in:
+	<http://lists.gnu.org/archive/html/bug-gettext/2014-05/msg00022.html>.
+	* msgfilter.c (process_message): Set MSGFILTER_PREV_* envvar.
+
+2014-05-19  Daiki Ueno  <ueno@gnu.org>
+
+	* Makefile.am (po-gram-gen2.h): Adjust the directory to which
+	po-gram-gen.h, for VPATH build.
+
+2014-05-15  Stanislav Brabec  <sbrabec@suse.cz>  (tiny change)
+
+	msgfilter: Implement plural support
+	* msgfilter.c (process_message): Set or unset
+	MSGFILTER_MSGID_PLURAL and MSGFILTER_PLURAL_FORM.
+
+2014-05-15  Stanislav Brabec  <sbrabec@suse.cz>  (tiny change)
+
+	msgexec: Implement plural support
+	* msgexec.c (process_string): Set or unset MSGEXEC_MSGID_PLURAL.
+	(process_message): Set or unset MSGEXEC_PLURAL_FORM.
+
+2014-05-14  Daiki Ueno  <ueno@gnu.org>
+
+	msgfmt: Report error on accelerator mismatch
+	* msgl-check.c (check_pair): Increment error count on missing
+	accelerator character or too many accelerators.
+
+2014-05-13  Daiki Ueno  <ueno@gnu.org>
+
+	msgfmt: Accumulate errors when parsing the PO header
+	Problem reported by Peter Eisentraut at
+	<https://savannah.gnu.org/bugs/?40262>.
+	* msgl-check.c (check_header_entry): Return the number of errors.
+	(check_message): Check the return value of check_header_entry.
+
+2014-05-13  Felipe Sateler <fsateler@debian.org>  (tiny change)
+
+	project-id: Add missing quotes around `pwd` for basename
+	Problem reported at <http://bugs.debian.org/654779>.
+	* project-id: Quote argument of the basename command.
+
+2014-05-12  Daiki Ueno  <ueno@gnu.org>
+
+	msgfilter: Fix quote handling of doubled grave charaters
+	* filter-quote.c (convert_ascii_quote_to_unicode): Fix handling of
+	doubled grave characters.
+
+2014-05-12  Daiki Ueno  <ueno@gnu.org>
+
+	* msgfmt.c (add_languages): New function split from get_languages.
+	(get_languages): Use add_languages instead of manually parsing
+	LINGUAS envvar with strtok_r.
+
+	* x-c.h (literalstring_c): Remove unnecessary DLL_VARIABLE.
+	* xgettext.c (arglist_parser_alloc): Use LET_NONE instead of 0.
+	(arglist_parser_remember): Likewise.
+	* xgettext.h (enum literalstring_escape_type): New enum value
+	LET_NONE.
+
+2014-05-10  Guido Flohr  <guido@imperia.net>
+
+	msgattrib: Add --empty option to clear msgstr
+	* msgattrib.c (REMOVE_TRANSLATION): New enum value.
+	(long_options): Add --empty.
+	(main): Set REMOVE_TRANSLATION flag when --empty is given.
+	(usage): Show help of --empty.
+	(process_message_list): Handle REMOVE_TRANSLATION flag.
+
+2014-05-09  Daiki Ueno  <ueno@gnu.org>
+
+	vala: Interpret string literals lazily
+	* x-vala.c (P7_EOF, P7_STRING_END, P7_QUOTES, P7_QUOTE, P7_NEWLINE)
+	(UNICODE, IS_UNICODE, UNICODE_VALUE): Remove.
+	(phase7_getc): Remove.
+	(phase7_ungetc): Remove.
+	(phase3_get): Use 'phase2_get' directly to extract string
+	literals; use 'arglist_parser_remember_literal' instead of
+	'arglist_parser_remember'.
+	(literalstring_c): Declare external variable.
+	(extract_balanced): Remove the
+	'xgettext_current_source_encoding' setting to prevent encoding
+	conversion around 'arglist_parser_done'.
+	(token_ty): New field 'escape'.
+	* x-vala.h (SCANNERS_VALA): Register 'literalstring_c' as a
+	literalstring_parser.
+
+2014-05-09  Daiki Ueno  <ueno@gnu.org>
+
+	c: Interpret string literals lazily
+	* x-c.c (P7_EOF, P7_STRING_END, P7_QUOTES, P7_QUOTE, P7_NEWLINE)
+	(UNICODE, IS_UNICODE, UNICODE_VALUE): Remove.
+	(phase7_get): Remove.
+	(phase7_ungetc): Remove.
+	(phase5_get): Use 'phase3_get' directly to extract string
+	literals; use 'arglist_parser_remember_literal' instead of
+	'arglist_parser_remember'.
+	(literalstring_parse): New function.
+	(literalstring_c): New variable.
+	(extract_parenthesized): Remove the
+	'xgettext_current_source_encoding' setting to prevent encoding
+	conversion around 'arglist_parser_done'.
+	* x-c.h (SCANNERS_C): Register 'literalstring_c' as a
+	literalstring_parser.
+	(literalstring_c): New variable declaration.
+
+2014-05-09  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: Provide a way to interpret string literals lazily
+	* xgettext.c (extract_ty): New field 'literalstring_parser'.
+	(current_literalstring_parser): New variable.
+	(extract_from_file): Set 'current_literalstring_parser'.
+	(savable_comment_convert_encoding): New function.
+	(arglist_parser_remember_literal): New function.
+	(arglist_parser_remember): Call 'arglist_parser_remember_literal'.
+	(arglist_parser_done): Call literalstring_parser on msgctxt,
+	msgid, and msgid_plural before calling 'remember_a_message';
+	convert encoding of msgid_comment.
+	* x-*.h: Register 'literalstring_parser' through SCANNER_*.
+	* xgettext.h (enum literalstring_escape_type): New enum.
+	(struct literalstring_parser): New struct.
+	(struct partial_call): New fields 'msgctxt_escape',
+	'msgid_escape', and 'msgid_plural_escape'.
+	(arglist_parser_remember_literal): New function declaration.
+	(savable_comment_convert_encoding): New function declaration.
+
+2014-05-03  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: Recognize prefixed comment tag
+	Reported by Jiang Xin in
+	<http://article.gmane.org/gmane.comp.version-control.git/246462>.
+	* xgettext.c (remember_a_message): Discard a string prefixed to
+	the comment tag from all remaining comment lines.
+
+2014-05-03  Daiki Ueno  <ueno@gnu.org>
+
+	c: Support C99-style Unicode character escapes
+	* x-c.c: Include assert.h and po-charset.h.
+	(P7_QUOTES, P7_QUOTE, P7_NEWLINE): Redefine as a negative integer.
+	(P7_EOF, P7_STRING_END): New definitions.
+	(UNICODE): New macro.
+	(IS_UNICODE): New macro.
+	(UNICODE_VALUE): New macro.
+	(phase7_getc): Recognize "\unnnn" and "\Unnnnnnnn".
+	(phase5_get): Use mixed_string_buffer for parse string literal.
+
+2014-05-02  Daiki Ueno  <ueno@gnu.org>
+
+	vala: Support C99-style Unicode character escapes
+	* x-vala.c: Include assert.h and po-charset.h.
+	(P7_QUOTES, P7_QUOTE, P7_NEWLINE): Redefine as a negative integer.
+	(P7_EOF, P7_STRING_END): New definitions.
+	(UNICODE): New macro.
+	(IS_UNICODE): New macro.
+	(UNICODE_VALUE): New macro.
+	(phase7_getc): Recognize "\unnnn" and "\Unnnnnnnn".
+	(phase3_get): Use mixed_string_buffer for parse string literal.
+
+2014-05-02  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: Factor out commonly used mixed_string_buffer
+	* x-python.c (init_mixed_string_buffer)
+	(mixed_string_buffer_append_byte)
+	(mixed_string_buffer_append_unicode_grow)
+	(mixed_string_buffer_append_unicode)
+	(mixed_string_buffer_flush_utf16_surr)
+	(mixed_string_buffer_flush_curr_buffer)
+	(mixed_string_buffer_append, mixed_string_buffer_result)
+	(free_mixed_string_buffer): Move to...
+	* xgettext.c: ...here.
+	(mixed_string_buffer_alloc): Rename from init_mixed_string_buffer.
+	(mixed_string_buffer_append_to_curr_buffer): Rename from
+	mixed_string_buffer_append_byte.
+	(mixed_string_buffer_append_to_utf8_buffer): Rename from
+	mixed_string_buffer_append_unicode.
+	(mixed_string_buffer_grow_utf8_buffer): Rename from
+	mixed_string_buffer_append_unicode_grow.
+	(mixed_string_buffer_append_char): Split from
+	mixed_string_buffer_append.
+	(mixed_string_buffer_append_unicode): Split from
+	mixed_string_buffer_append.
+	(mixed_string_buffer_done): New function merging
+	mixed_string_buffer_result and free_mixed_string_buffer.
+	* xgettext.h (mixed_string_buffer): New struct moved from
+	x-python.c; add logical_file_name and line_number fields.
+	(mixed_string_buffer_alloc): New function declaration.
+	(mixed_string_buffer_append_char): New function declaration.
+	(mixed_string_buffer_append_unicode): New function declaration.
+	(mixed_string_buffer_done): New function declaration.
+	* x-javascript.c (init_mixed_string_buffer)
+	(mixed_string_buffer_append_byte)
+	(mixed_string_buffer_append_unicode_grow)
+	(mixed_string_buffer_append_unicode)
+	(mixed_string_buffer_flush_utf16_surr)
+	(mixed_string_buffer_flush_curr_buffer)
+	(mixed_string_buffer_append, mixed_string_buffer_result)
+	(free_mixed_string_buffer): Remove.
+
+2014-04-30  Daiki Ueno  <ueno@gnu.org>
+
+	scheme: Recognize GIMP script-fu extension _"abc"
+	* x-scheme.c (read_object): Recognize _"abc".
+
+2014-04-30  Daiki Ueno  <ueno@gnu.org>
+
+	format-python-brace: Limit acceptable format specifiers
+	Problem reported by Kovid Goyal at:
+	<https://savannah.gnu.org/bugs/?41668>.
+	* format-python-brace.c (parse_directive): Only recognize a single
+	nested format directive or the standard format specifiers as
+	format specifiers.
+
+2014-04-22  Roumen Petrov  <bugtrack@roumenpetrov.info>  (tiny change)
+
+	build: Use Automake 'subdir-objects' option
+	* Makefile.am (AUTOMAKE_OPTIONS): Add 'subdir-objects'.
+
+2014-04-21  Daiki Ueno  <ueno@gnu.org>
+
+	msgfilter: Fix single quote handling in the quot filter
+	* filter-quote.c (convert_ascii_quote_to_unicode): Fix single
+	quote handling to accept multiple quotations in a string.
+
+2014-04-17  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: Strip multiple ".in" suffixes from the file name.
+	* xgettext.c (main): Strip multiple ".in" suffixes.
+
+2014-04-16  Daiki Ueno  <ueno@gnu.org>
+
+	* msgfmt.c (get_languages): Allow any whitespace character as a
+	list separator in LINGUAS.
+
+2014-04-15  Daiki Ueno  <ueno@gnu.org>
+
+	msgfilter: Add 'quot' and 'boldquot' built-in filters
+	* filter-quote.c: New file.
+	* filters.h (ascii_quote_to_unicode, ascii_quote_to_unicode_bold):
+	New function declaration.
+	* msgfilter.c (main): Handle 'quot' and 'boldquot' filters.
+	* Makefile.am (msgfilter_SOURCES): Add filter-quote.c.
+
+2014-04-04  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext.c (main): Warn user if invalid encoding name is
+	specified with the --from-code option.
+	Reported by jaroslav.fojtik@evolvsys.cz in
+	<https://lists.gnu.org/archive/html/bug-gettext/2014-03/msg00034.html>.
+
+2014-04-04  Daiki Ueno  <ueno@gnu.org>
+
+	msgfmt: Add support for Desktop Entry files
+	* write-desktop.h: New file.
+	* write-desktop.c: New file.
+	* msgfmt.c (desktop_mode, desktop_locale_name)
+	(desktop_template_name, desktop_base_directory, desktop_keywords)
+	(desktop_default_keywords): New variables.
+	(long_options): Add --desktop and --template options for Desktop
+	Entry mode.
+	(get_languages): New function.
+	(msgfmt_desktop_bulk): New function which implements bulk
+	operation mode for Desktop Entry mode.
+	(main): Handle Desktop Entry mode options; call
+	'msgfmt_desktop_bulk' if -d option is seen.
+	* Makefile.am (noinst_HEADERS): Add write-desktop.h.
+	(msgfmt_SOURCES): Add write-desktop.c
+
+2014-04-04  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: Add support for Desktop Entry files
+	* read-desktop.h: New file.
+	* read-desktop.c: New file.
+	* x-desktop.h: New file.
+	* x-desktop.h: New file.
+	* xgettext.c (main): Regiser keywords for Desktop Entry mode.
+	(usage): Mention Desktop Entry source language.
+	(language_to_extractor): Add Desktop Entry rule.
+	(extension_to_language): Add Desktop Entry rule.
+	* Makefile.am (noinst_HEADERS): Add read-desktop.h and x-desktop.h.
+	(xgettext_SOURCES): Add x-desktop.c.
+
+2014-03-26  Aurélien Gâteau <mail@agateau.com>  (tiny change)
+
+	msgfmt: Add --source option to generate .java file instead of .class
+	* msgfmt.c (java_output_source): New variable.
+	(long_options, main, usage): Add --source option.
+	* write-java.h (msgdomain_write_java): Add OUTPUT_SOURCE argument.
+	* write-java.c (msgdomain_write_java): Generate .java file instead
+	of .class if OUTPUT_SOURCE argument is given.
+	Reported at <https://savannah.gnu.org/bugs/?41766>.
+
+2014-03-25  Daiki Ueno  <ueno@gnu.org>
+
+	Extend --add-location option to suppress line number output
+	The --add-location option of msgattrib, msgcat, msgcomm, msgconv,
+	msgen, msgfilter, msggrep, msgmerge, msguniq, and xgettext
+	commands now got new semantics.  It takes an optional argument
+	'never', 'full', or 'file', to control the format of "#: ..."
+	comments.
+	The default catalog reader changed to always remember file
+	positions so the line number part can be suppressed in output
+	phase rather than input phase.
+	Feature requested in:
+	<https://lists.gnu.org/archive/html/bug-gettext/2013-08/msg00039.html>.
+	* read-catalog.h (line_comment): Abolish.
+	(DEFAULT_CATALOG_READER_TY): Remove handle_filepos_comments field.
+	* read-catalog.c (line_comment): Abolish.
+	(default_destructor, default_copy_comment_state)
+	(default_reset_comment_state, default_comment_filepos): Always
+	remember filepos.
+	(default_parse_brief, read_catalog_stream): Adjust to the change.
+	* write-po.h (enum filepos_comment_type): New enum.
+	(message_print_style_filepos): New function declaration.
+	(handle_filepos_comment_option): New function declaration.
+	* write-po.c (message_print_style_filepos): New function
+	(handle_filepos_comment_option): New function.
+	(message_print_comment_filepos): Uniquify mp->filepos elements
+	ignoring line number if filepos_comment_type is
+	filepos_comment_file.
+	* msgfmt.c: Adjust to the change.
+	* msgattrib.c (long_options, main): Allow --add-location option to
+	take an optional format specifier.
+	* msgcat.c (long_options, main): Likewise.
+	* msgcomm.c (long_options, main): Likewise.
+	* msguniq.c (long_options, main): Likewise.
+	* xgettext.c (long_options, main): Likewise.
+	* msgconv.c (long_options, main): Likewise; add a new option -n as
+	an alias of --add-location.
+	* msgen.c (long_options, main): Likewise.
+	* msgfilter.c (long_options, main): Likewise.
+	* msggrep.c (long_options, main): Likewise.
+	* msgmerge.c (long_options, main): Likewise.
+
+2014-03-12  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: Fix infloop on loading Glade files with non-DL expat
+	* libexpat-compat.c: Keep the references to
+	XML_GetCurrent{Line,Column}Number symbols before including
+	libexpat-compat.h, since they are redefined.
+
+2014-03-10  Daiki Ueno  <ueno@gnu.org>
+
+	php: Recognize single and double quotes around heredoc label
+	Problem reported by Byrial Jensen in:
+	<https://lists.gnu.org/archive/html/bug-gettext/2012-04/msg00001.html>.
+	Based on the patch by Andreas Stricker posted as:
+	<https://lists.gnu.org/archive/html/bug-gettext/2012-04/msg00002.html>.
+	* x-php.c (phase4_get): Strip quotes around heredoc label.
+
+2013-11-20  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: Add E4X support to JavaScript scanner
+	Reported by Piotr Drąg at: <https://savannah.gnu.org/bugs/?40125>.
+	* xgettext.h (enum lexical_context_ty): New enumeration items
+	lc_xml_open_tag, lc_xml_close_tag, lc_xml_content.
+	* x-javascript.c (phase5_scan_xml_markup): New function.
+	(phase5_get): Handle '<', '>', '/', '=', '{', and '}' specially
+	to support E4X.
+	(enum token_type_ty): New enumeration item token_type_equal.
+	(xml_element_depth): New variable.
+	(inside_embedded_in_xml): New variable.
+	(extract_javascript): Initialize those variables.
+
+2013-11-14  Daiki Ueno  <ueno@gnu.org>
+
+	* x-javascript.c (phase3_getc): Make sure to call comment_line_end
+	after parsing C++ style comment line.
+	Reported by Illimar Tambek at: <http://savannah.gnu.org/bugs/?40572>.
+
+2013-11-14  Daiki Ueno  <ueno@gnu.org>
+
+	* x-javascript.c (comment_line_end): Add missing chars_to_remove
+	argument; all callers changed.
+	Reported by Illimar Tambek at: <http://savannah.gnu.org/bugs/?40573>.
+
+2013-11-11  Daiki Ueno  <ueno@gnu.org>
+
+	* x-c.c (phase5_get): Fix misuse of a logical operator.
+	* x-perl.c (extract_quotelike_pass3): Likewise.
+	* x-vala.c (phase3_get): Likewise.
+	Reported by David Binderman at: <https://savannah.gnu.org/bugs/?40528>.
+
+2013-10-23  Daiki Ueno  <ueno@gnu.org>
+
+	* read-catalog-abstract.c (catalog_reader_parse): Clear
+	error_message_count before parsing, rather than after.  The
+	variable may be > 0 before calling the PO parser, when xgettext
+	handles mutiple files.
+	Problem reported by Emil Wojak in
+	<https://lists.gnu.org/archive/html/bug-gettext/2013-10/msg00005.html>.
+
+2013-10-15  Peter Eisentraut  <peter_e@gmx.net>  (tiny change)
+
+	* msgl-check.c (check_header_entry): Adjust the default value of
+	PO-Revision-Date to xgettext output.  Reported at
+	<https://savannah.gnu.org/bugs/?40261>.
+
+2013-08-29  Daiki Ueno  <ueno@gnu.org>
+
+	* po-gram-gen.y (message): Free memory allocated for
+	msgid_pluralform.
+	(string_list): Free memory allocated for STRING.
+	(prev_string_list): Free memory allocated for PREV_STRING.
+	Reported by Alexander Potashev in
+	<https://lists.gnu.org/archive/html/bug-gettext/2013-08/msg00043.html>.
+
+2013-08-13  Miguel Angel Arruga Vivas  <rosen644835@gmail.com>
+
+	* x-glade.c (start_element_glade1): Use extract_all variable.
+	(start_element_glade2): Ignore --extract-all option.
+	(start_element_gtkbuilder): Likewise.
+	(start_element_handler): Initialize p->extract_string to false.
+
 2013-08-12  Daiki Ueno  <ueno@gnu.org>
 
 	* xgettext.c (remember_a_message): Handle multi-line extracted
@@ -5,10 +1009,40 @@
 	Reported by Gabor Kelemen in
 	<http://lists.gnu.org/archive/html/bug-gettext/2013-08/msg00026.html>.
 
+2013-08-09  Daiki Ueno  <ueno@gnu.org>
+
+	* x-gsettings.c (extract_gsettings): Add guard when expat is not
+	available at compile time.
+
 2013-08-08  Miguel Angel Arruga Vivas  <rosen644835@gmail.com> (tiny change)
 
 	Fix copyright year in xgettext version string.
 	* xgettext.c (main): Update copyright year.
+
+2013-08-06  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: add support for GSettings schema file
+	* x-gsettings.h: New file.
+	* x-gsettings.c: New file.
+	* xgettext.c: Include x-gsettings.h.
+	(flag_table_vala): New variable.
+	(usage): Mention GSettings source language.
+	(language_to_extractor): Add GSettings rule.
+	(extension_to_language): Add GSettings rule.
+	* Makefile.am (noinst_HEADERS): Add x-gsettings.h.
+	(xgettext_SOURCES): Add x-gsettings.c.
+	* FILES: Update.
+
+2013-08-05  Daiki Ueno  <ueno@gnu.org>
+
+	* xgettext.c (main): Allow exntension with multiple
+	dots. e.g. .gschema.xml.
+
+2013-03-02  Miguel Angel Arruga Vivas  <rosen644385@gmail.com>
+
+	Extract libexpat compatibility layer.
+	* libexpat-compat.h, libexpat-compat.c: Extracted from x-glade.c
+	* x-glade.c: Use libexpat-compat.h
 
 2013-07-11  Daiki Ueno  <ueno@gnu.org>
 

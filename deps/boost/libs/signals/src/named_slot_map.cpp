@@ -24,7 +24,7 @@ typedef slot_container_type::iterator group_iterator;
 typedef slot_container_type::const_iterator const_group_iterator;
 
 
-#if BOOST_WORKAROUND(_MSC_VER, <= 1700)
+#if BOOST_WORKAROUND(_MSC_VER, <= 1900)
 void named_slot_map_iterator::decrement() { assert(false); }
 void named_slot_map_iterator::advance(difference_type) { assert(false); }
 #endif

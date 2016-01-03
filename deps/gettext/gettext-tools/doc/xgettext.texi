@@ -74,7 +74,7 @@ are @code{C}, @code{C++}, @code{ObjectiveC}, @code{PO}, @code{Shell},
 @code{Smalltalk}, @code{Java}, @code{JavaProperties}, @code{C#}, @code{awk},
 @code{YCP}, @code{Tcl}, @code{Perl}, @code{PHP}, @code{GCC-source},
 @code{NXStringTable}, @code{RST}, @code{Glade}, @code{Lua}, @code{JavaScript},
-@code{Vala}.
+@code{Vala}, @code{GSettings}, @code{Desktop}.
 
 @item -C
 @itemx --c++
@@ -125,6 +125,79 @@ Place comment blocks starting with @var{tag} and preceding keyword lines
 in the output file.  Without a @var{tag}, the option means to put @emph{all}
 comment blocks preceding keyword lines in the output file.
 
+Note that comment blocks supposed to be extracted must be adjacent to
+keyword lines.  For example, in the following C source code:
+
+@example
+/* This is the first comment.  */
+gettext ("foo");
+
+/* This is the second comment: not extracted  */
+gettext (
+  "bar");
+
+gettext (
+  /* This is the third comment.  */
+  "baz");
+@end example
+
+The second comment line will not be extracted, because there is one
+blank line between the comment line and the keyword.
+
+@item --check[=@var{CHECK}]
+@opindex --check@r{, @code{xgettext} option}
+@cindex supported syntax checks, @code{xgettext}
+Perform a syntax check on msgid and msgid_plural.  The supported checks
+are:
+
+@table @samp
+@item ellipsis-unicode
+Prefer Unicode ellipsis character over ASCII @code{...}
+
+@item space-ellipsis
+Prohibit whitespace before an ellipsis character
+
+@item quote-unicode
+Prefer Unicode quotation marks over ASCII @code{"'`}
+
+@end table
+
+The option has an effect on all input files.  To enable or disable
+checks for a certain string, you can mark it with an @code{xgettext:}
+special comment in the source file.  For example, if you specify the
+@code{--check=space-ellipsis} option, but want to suppress the check on
+a particular string, add the following comment:
+
+@example
+/* xgettext: no-space-ellipsis-check */
+gettext ("We really want a space before ellipsis here ...");
+@end example
+
+The @code{xgettext:} comment can be followed by flags separated with a
+comma.  The possible flags are of the form @samp{[no-]@var{name}-check},
+where @var{name} is the name of a valid syntax check.  If a flag is
+prefixed by @code{no-}, the meaning is negated.
+
+Some tests apply the checks to each sentence within the msgid, rather
+than the whole string.  xgettext detects the end of sentence by
+performing a pattern match, which usually looks for a period followed by
+a certain number of spaces.  The number is specified with the
+@code{--sentence-end} option.
+
+@item --sentence-end[=@var{TYPE}]
+@opindex --sentence-end@r{, @code{xgettext} option}
+@cindex sentence end markers, @code{xgettext}
+The supported values are:
+
+@table @samp
+@item single-space
+Expect at least one whitespace after a period
+
+@item double-space
+Expect at least two whitespaces after a period
+
+@end table
+
 @end table
 
 @subsection Language specific options
@@ -138,7 +211,7 @@ Extract all strings.
 
 This option has an effect with most languages, namely C, C++, ObjectiveC,
 Shell, Python, Lisp, EmacsLisp, librep, Java, C#, awk, Tcl, Perl, PHP,
-GCC-source, Glade, Lua, JavaScript, Vala.
+GCC-source, Glade, Lua, JavaScript, Vala, GSettings.
 
 @item -k[@var{keywordspec}]
 @itemx --keyword[=@var{keywordspec}]
@@ -181,7 +254,7 @@ escaped.
 
 This option has an effect with most languages, namely C, C++, ObjectiveC,
 Shell, Python, Lisp, EmacsLisp, librep, Java, C#, awk, Tcl, Perl, PHP,
-GCC-source, Glade, Lua, JavaScript, Vala.
+GCC-source, Glade, Lua, JavaScript, Vala, GSettings, Desktop.
 
 The default keyword specifications, which are always looked for if not
 explicitly disabled, are language dependent.  They are:
@@ -261,6 +334,10 @@ For JavaScript: @code{_}, @code{gettext}, @code{dgettext:2},
 For Vala: @code{_}, @code{Q_}, @code{N_}, @code{NC_}, @code{dgettext:2},
 @code{dcgettext:2}, @code{ngettext:1,2}, @code{dngettext:2,3},
 @code{dpgettext:2c,3}, @code{dpgettext2:2c,3}.
+
+@item
+For Desktop: @code{Name}, @code{GenericName}, @code{Comment},
+@code{Icon}, @code{Keywords}.
 @end itemize
 
 To disable the default keyword specifications, the option @samp{-k} or
@@ -350,7 +427,7 @@ This option has an effect only with the language C++.
 @cindex debugging messages marked as format strings
 Use the flags @code{c-format} and @code{possible-c-format} to show who was
 responsible for marking a message as a format string.  The latter form is
-used if the @code{xgettext} program decided, the format form is used if
+used if the @code{xgettext} program decided, the former form is used if
 the programmer prescribed it.
 
 By default only the @code{c-format} form is used.  The translator should
@@ -395,10 +472,16 @@ this option makes it harder for technically skilled translators to understand
 each message's context.
 
 @item -n
-@itemx --add-location
+@itemx --add-location=@var{type}
 @opindex -n@r{, @code{xgettext} option}
 @opindex --add-location@r{, @code{xgettext} option}
 Generate @samp{#: @var{filename}:@var{line}} lines (default).
+
+The optional @var{type} can be either @samp{full}, @samp{file}, or
+@samp{never}.  If it is not given or @samp{full}, it generates the
+lines with both file name and line number.  If it is @samp{file}, the
+line number part is omitted.  If it is @samp{never}, it completely
+suppresses the lines (same as @code{--no-location}).
 
 @item --strict
 @opindex --strict@r{, @code{xgettext} option}
@@ -494,7 +577,7 @@ Set the reporting address for msgid bugs.  This is the email address or URL
 to which the translators shall report bugs in the untranslated strings:
 
 @itemize -
-@item Strings which are not entire sentences, see the maintainer guidelines
+@item Strings which are not entire sentences; see the maintainer guidelines
 in @ref{Preparing Strings}.
 @item Strings which use unclear terms or require additional context to be
 understood.

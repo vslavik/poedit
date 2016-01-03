@@ -1,5 +1,6 @@
 /* GNU gettext - internationalization aids
-   Copyright (C) 1995-1998, 2000-2003, 2006, 2008 Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2003, 2006, 2008, 2015 Free Software
+   Foundation, Inc.
 
    This file was written by Peter Miller <millerp@canb.auug.org.au>
 
@@ -29,6 +30,13 @@
 extern "C" {
 #endif
 
+
+enum filepos_comment_type
+  {
+    filepos_comment_none,
+    filepos_comment_full,
+    filepos_comment_file
+  };
 
 /* These functions are used to output a #, flags line.  */
 extern const char *
@@ -61,6 +69,12 @@ extern void
        message_print_style_uniforum (void);
 extern void
        message_print_style_escape (bool flag);
+extern void
+       message_print_style_filepos (enum filepos_comment_type type);
+
+/* --add-location argument handling.  Return an error indicator.  */
+extern bool handle_filepos_comment_option (const char *option);
+
 
 /* Describes a PO file in .po syntax.  */
 extern DLL_VARIABLE const struct catalog_output_format output_format_po;

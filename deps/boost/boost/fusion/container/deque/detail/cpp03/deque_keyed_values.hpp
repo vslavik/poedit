@@ -68,11 +68,13 @@ namespace boost { namespace fusion { namespace detail
     {
         typedef nil_keyed_element type;
 
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         static type construct()
         {
             return type();
         }
 
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         static type forward_()
         {
             return type();

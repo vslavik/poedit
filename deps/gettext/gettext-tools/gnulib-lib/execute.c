@@ -1,5 +1,5 @@
 /* Creation of autonomous subprocesses.
-   Copyright (C) 2001-2004, 2006-2013 Free Software Foundation, Inc.
+   Copyright (C) 2001-2004, 2006-2015 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -48,10 +48,12 @@
 
 #endif
 
-/* The results of open() in this file are not used with fchdir,
-   therefore save some unnecessary work in fchdir.c.  */
-#undef open
-#undef close
+/* environ is the exported symbol referencing the internal
+   __cygwin_environ variable on cygwin64:
+   <https://cygwin.com/ml/cygwin/2013-06/msg00228.html>.  */
+#if defined __CYGWIN__ && defined __x86_64__
+extern DLL_VARIABLE char **environ;
+#endif
 
 
 #if defined EINTR && ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)

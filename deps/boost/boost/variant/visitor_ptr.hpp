@@ -55,7 +55,7 @@ private: // private typedefs
 
 public: // structors
 
-    explicit visitor_ptr_t(visitor_t visitor)
+    explicit visitor_ptr_t(visitor_t visitor) BOOST_NOEXCEPT
       : visitor_(visitor)
     {
     }

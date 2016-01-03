@@ -7,6 +7,7 @@
 #if !defined(FUSION_DEREF_05042005_1019)
 #define FUSION_DEREF_05042005_1019
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/support/iterator_base.hpp>
 #include <boost/fusion/support/tag_of.hpp>
 
@@ -54,7 +55,8 @@ namespace boost { namespace fusion
     }
 
     template <typename Iterator>
-    typename result_of::deref<Iterator>::type
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+    inline typename result_of::deref<Iterator>::type
     deref(Iterator const& i)
     {
         typedef result_of::deref<Iterator> deref_meta;
@@ -62,7 +64,8 @@ namespace boost { namespace fusion
     }
 
     template <typename Iterator>
-    typename result_of::deref<Iterator>::type
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+    inline typename result_of::deref<Iterator>::type
     operator*(iterator_base<Iterator> const& i)
     {
         return fusion::deref(i.cast());

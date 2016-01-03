@@ -136,7 +136,10 @@ void test_deprecated(const char&, const test_regex_search_tag&)
    //
    if(test_info<char>::syntax_options() & ~boost::regex::icase)
       return;
-   try{
+#ifndef BOOST_NO_EXCEPTIONS
+   try
+#endif
+   {
       boost::RegEx e(expression, (test_info<char>::syntax_options() & boost::regex::icase) != 0);
       if(e.error_code())
       {
@@ -180,6 +183,7 @@ void test_deprecated(const char&, const test_regex_search_tag&)
          }
       }
    }
+#ifndef BOOST_NO_EXCEPTIONS
    catch(const boost::bad_expression& r)
    {
       BOOST_REGEX_TEST_ERROR("Expression did not compile with RegEx class: " << r.what(), char);
@@ -196,7 +200,7 @@ void test_deprecated(const char&, const test_regex_search_tag&)
    {
       BOOST_REGEX_TEST_ERROR("Unexpected exception of unknown type", char);
    }
-
+#endif
 }
 
 void test_deprecated(const wchar_t&, const test_regex_search_tag&)
@@ -302,11 +306,15 @@ void test_deprecated(const char&, const test_invalid_regex_tag&)
    if(test_info<char>::syntax_options() & ~boost::regex::icase)
       return;
    bool have_catch = false;
-   try{
+#ifndef BOOST_NO_EXCEPTIONS
+   try
+#endif
+   {
       boost::RegEx e(expression, (test_info<char>::syntax_options() & boost::regex::icase) != 0);
       if(e.error_code())
          have_catch = true;
    }
+#ifndef BOOST_NO_EXCEPTIONS
    catch(const boost::bad_expression&)
    {
       have_catch = true;
@@ -326,6 +334,7 @@ void test_deprecated(const char&, const test_invalid_regex_tag&)
       have_catch = true;
       BOOST_REGEX_TEST_ERROR("Expected a bad_expression exception, but got an exception of unknown type instead", char);
    }
+#endif
    if(!have_catch)
    {
       // oops expected exception was not thrown:

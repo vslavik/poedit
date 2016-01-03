@@ -6,6 +6,12 @@
 #ifndef TT_HAS_BINARY_OPERATORS_HPP
 #define TT_HAS_BINARY_OPERATORS_HPP
 
+#if defined(__GNUC__) && (__GNUC__*10000 + __GNUC_MINOR__*100 + __GNUC_PATCHLEVEL__ > 40900)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
+#endif
+
+
 // test with one template parameter
 #define TEST_T(TYPE,RESULT) BOOST_CHECK_INTEGRAL_CONSTANT((::boost::BOOST_TT_TRAIT_NAME<TYPE>::value), RESULT)
 // test with one template parameter plus return value
@@ -24,7 +30,7 @@ struct ret { };
 struct internal { ret operator BOOST_TT_TRAIT_OP (const internal&) const; };
 
 struct external { };
-ret operator BOOST_TT_TRAIT_OP (const external&, const external&);
+inline ret operator BOOST_TT_TRAIT_OP (const external&, const external&) {  return ret();  }
 
 struct comma1_ret { };
 struct ret_with_comma1 { comma1_ret operator,(int); };
@@ -32,14 +38,14 @@ struct ret_with_comma1 { comma1_ret operator,(int); };
 struct internal_comma1 { ret_with_comma1 operator BOOST_TT_TRAIT_OP (const internal_comma1&) const; };
 
 struct external_comma1 { };
-ret_with_comma1 operator BOOST_TT_TRAIT_OP (const external_comma1&, const external_comma1&);
+ret_with_comma1 operator BOOST_TT_TRAIT_OP (const external_comma1&, const external_comma1&) { return ret_with_comma1(); }
 
 struct ret_with_comma2 { void operator,(int); };
 
 struct internal_comma2 { ret_with_comma2 operator BOOST_TT_TRAIT_OP (const internal_comma2&) const; };
 
 struct external_comma2 { };
-ret_with_comma2 operator BOOST_TT_TRAIT_OP (const external_comma2&, const external_comma2&);
+ret_with_comma2 operator BOOST_TT_TRAIT_OP (const external_comma2&, const external_comma2&){ return ret_with_comma2(); }
 
 struct returns_int { int operator BOOST_TT_TRAIT_OP (const returns_int&); };
 
@@ -76,9 +82,9 @@ struct B : public A { };
 
 struct C { };
 struct D { };
-bool operator BOOST_TT_TRAIT_OP (const C&, void*) { return true; }
-bool operator BOOST_TT_TRAIT_OP (void*, const D&) { return true; }
-bool operator BOOST_TT_TRAIT_OP (const C&, const D&) { return true; }
+inline bool operator BOOST_TT_TRAIT_OP (const C&, void*) { return true; }
+inline bool operator BOOST_TT_TRAIT_OP (void*, const D&) { return true; }
+inline bool operator BOOST_TT_TRAIT_OP (const C&, const D&) { return true; }
 
 //class internal_private { ret operator BOOST_TT_TRAIT_OP (const internal_private&) const; };
 
@@ -142,4 +148,9 @@ void common() {
 
 }
 
+#if defined(__GNUC__) && (__GNUC__*10000 + __GNUC_MINOR__*100 + __GNUC_PATCHLEVEL__ > 40900)
+#pragma GCC diagnostic pop
 #endif
+
+#endif
+

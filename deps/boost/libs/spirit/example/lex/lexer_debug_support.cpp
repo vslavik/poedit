@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
     language_tokens<lexer_type> tokenizer;           // Our lexer
     language_grammar<iterator_type> g (tokenizer);   // Our parser 
 
-    // Parsing is done based on the the token stream, not the character 
+    // Parsing is done based on the token stream, not the character 
     // stream read from the input.
     std::string str ("float f = 3.4\nint i = 6\n");
     base_iterator_type first = str.begin();

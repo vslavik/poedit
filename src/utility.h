@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2010-2013 Vaclav Slavik
+ *  Copyright (C) 2010-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef _UTILITY_H_
-#define _UTILITY_H_
+#ifndef Poedit_utility_h
+#define Poedit_utility_h
 
 #ifndef HAVE_MKDTEMP
     #ifdef __WXOSX__
@@ -32,11 +32,141 @@
     #endif
 #endif
 
-#include <wx/string.h>
 #include <wx/arrstr.h>
-#include <wx/toplevel.h>
+#include <wx/filename.h>
+#include <wx/string.h>
+
+#if wxUSE_GUI
+    #include <wx/toplevel.h>
+#endif
+
+
+// ----------------------------------------------------------------------
+// Misc platform differences
+// ----------------------------------------------------------------------
+
+#ifdef __WXMSW__
+    #define MSW_OR_OTHER(msw, other) msw
+#else
+    #define MSW_OR_OTHER(msw, other) other
+#endif
+
+#ifdef __WXOSX__
+    #define OSX_OR_OTHER(msw, other) msw
+#else
+    #define OSX_OR_OTHER(msw, other) other
+#endif
+
+#ifdef __WXOSX__
+    #define BORDER_WIN(dir, n) Border(dir, 0)
+    #define BORDER_OSX(dir, n) Border(dir, n)
+#else
+    #define BORDER_WIN(dir, n) Border(dir, n)
+    #define BORDER_OSX(dir, n) Border(dir, 0)
+#endif
+
+// ----------------------------------------------------------------------
+// Misc helpers
+// ----------------------------------------------------------------------
 
 wxString EscapeMarkup(const wxString& str);
+
+// Encoding and decoding a string with C escape sequences:
+
+template<typename T>
+inline T EscapeCString(const T& str)
+{
+    T out;
+    out.reserve(str.length());
+    for (wchar_t c: str)
+    {
+        switch (c)
+        {
+            case '"' : out += L"\\\"";  break;
+            case '\a': out += L"\\a";   break;
+            case '\b': out += L"\\b";   break;
+            case '\f': out += L"\\f";   break;
+            case '\n': out += L"\\n";   break;
+            case '\r': out += L"\\r";   break;
+            case '\t': out += L"\\t";   break;
+            case '\v': out += L"\\v";   break;
+            case '\\': out += L"\\\\";  break;
+            default:
+                out += c;
+                break;
+        }
+    }
+    return out;
+}
+
+template<typename T>
+inline T UnescapeCString(const T& str)
+{
+    T out;
+    out.reserve(str.length());
+    for (auto i = str.begin(); i != str.end(); ++i)
+    {
+        wchar_t c = *i;
+        if (c == '\\')
+        {
+            if (++i != str.end())
+            {
+                switch ((wchar_t)*i)
+                {
+                    case 'a': out += '\a'; break;
+                    case 'b': out += '\b'; break;
+                    case 'f': out += '\f'; break;
+                    case 'n': out += '\n'; break;
+                    case 'r': out += '\r'; break;
+                    case 't': out += '\t'; break;
+                    case 'v': out += '\v'; break;
+                    case '\\':
+                    case '"':
+                    case '\'':
+                    case '?':
+                        out += *i;
+                        break;
+                    default:
+                        out += c;
+                        out += *i;
+                        break;
+                }
+            }
+            else
+            {
+                out += c;
+                break;
+            }
+        }
+        else
+        {
+            out += c;
+        }
+    }
+    return out;
+}
+
+
+wxFileName MakeFileName(const wxString& path);
+
+inline wxFileName MakeFileName(wxFileName fn)
+{
+    fn.Normalize();
+    return fn;
+}
+
+wxFileName CommonDirectory(const wxFileName& a, const wxFileName& b);
+
+template<typename T>
+inline wxFileName CommonDirectory(const T& a)
+{
+    wxFileName root;
+    for (auto& i: a)
+        root = CommonDirectory(root, MakeFileName(i));
+    return root;
+}
+
+
 
 // ----------------------------------------------------------------------
 // TempDirectory
@@ -56,20 +186,62 @@ public:
     // creates new file name in that directory
     wxString CreateFileName(const wxString& suffix);
 
+    /// Clears the temp directory (only safe if none of the files are open). Called by dtor.
+    void Clear();
+
     // whether to keep temporary files
     static void KeepFiles(bool keep = true) { ms_keepFiles = keep; }
 
 private:
     int m_counter;
     wxString m_dir;
-    wxArrayString m_files;
 
     static bool ms_keepFiles;
 };
 
+/// Holder of temporary file for creating the output.
+/// Use Commit() to move the written file to its final location.
+/// Destructor deletes the temp file if it still exists.
+class TempOutputFileFor
+{
+public:
+    explicit TempOutputFileFor(const wxString& filename);
+    ~TempOutputFileFor();
+
+    /// Name of the temporary placeholder
+    const wxString& FileName() const { return m_filenameTmp; }
+
+    /// Renames temp file to the final one (passed to ctor).
+    bool Commit();
+
+    /// Rename file to replace another *while preserving destination
+    /// file's permissions*.
+    /// Make this helper publicly accessible for code that can't
+    /// use TempOutputFileFor directly.
+    static bool ReplaceFile(const wxString& temp, const wxString& dest);
+
+#ifdef __WXOSX__
+    wxString m_tempDir;
+#endif
+    wxString m_filenameTmp;
+    wxString m_filenameFinal;
+};
+
+
+#ifdef __WXMSW__
+/// Return filename safe for passing to CLI tools (gettext).
+/// Uses 8.3 short names to avoid Unicode and codepage issues.
+wxString CliSafeFileName(const wxString& fn);
+#else
+inline wxString CliSafeFileName(const wxString& fn) { return fn; }
+#endif
+
+
 // ----------------------------------------------------------------------
 // Helpers for persisting windows' state
 // ----------------------------------------------------------------------
+
+#if wxUSE_GUI
 
 enum WinStateFlags
 {
@@ -87,4 +259,6 @@ inline wxString WindowStatePath(const wxWindow *win)
     return wxString::Format("/windows/%s/", win->GetName().c_str());
 }
 
-#endif // _UTILITY_H_
+#endif // wxUSE_GUI
+
+#endif // Poedit_utility_h

@@ -1,11 +1,8 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
-# Test C support: comments meant for xgettext, and whitespace.
+# Test C support: comments meant for xgettext, whitespace, and literals.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-c-2.in.c"
 cat <<EOF > xg-c-2.in.c
 This is a test of the xgettext functionality.
 /* xgettext:no-c-format */
@@ -18,16 +15,18 @@ _
 (
 "hello"
 )
+static int c = '';
+_("after character")
+static char *s = "";
+_("after string")
+static double d = 10e-1;
+_("after double")
 EOF
 
-tmpfiles="$tmpfiles xg-c-2.tmp.po xg-c-2.po"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -d xg-c-2.tmp -k_ --omit-header --no-location xg-c-2.in.c
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < xg-c-2.tmp.po > xg-c-2.po
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -d xg-c-2.tmp -k_ --omit-header --no-location xg-c-2.in.c || exit 1
+LC_ALL=C tr -d '\r' < xg-c-2.tmp.po > xg-c-2.po || exit 1
 
-tmpfiles="$tmpfiles xg-c-2.ok"
 cat <<EOF > xg-c-2.ok
 #, no-c-format
 msgid "extract me"
@@ -38,12 +37,19 @@ msgstr ""
 
 msgid "hello"
 msgstr ""
+
+msgid "after character"
+msgstr ""
+
+msgid "after string"
+msgstr ""
+
+msgid "after double"
+msgstr ""
 EOF
 
 : ${DIFF=diff}
 ${DIFF} xg-c-2.ok xg-c-2.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

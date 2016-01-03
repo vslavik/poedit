@@ -3,25 +3,21 @@
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/math/bindings/rr.hpp>
 #include <boost/math/special_functions/expint.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <fstream>
-
 #include <boost/math/tools/test_data.hpp>
+#include "mp_t.hpp"
 
 using namespace boost::math::tools;
 
 
 int main()
 {
-   boost::math::ntl::RR::SetPrecision(1000);
-   boost::math::ntl::RR::SetOutputPrecision(40);
+   parameter_info<mp_t> arg1;
+   test_data<mp_t> data;
 
-   parameter_info<boost::math::ntl::RR> arg1;
-   test_data<boost::math::ntl::RR> data;
-
-   boost::math::ntl::RR (*f)(boost::math::ntl::RR) = boost::math::expint;
+   mp_t (*f)(mp_t) = boost::math::expint;
 
    std::cout << "Welcome.\n"
       "This program will generate spot tests for the expint Ei function:\n"
@@ -46,6 +42,7 @@ int main()
    if(line == "")
       line = "expinti_data.ipp";
    std::ofstream ofs(line.c_str());
+   ofs << std::scientific << std::setprecision(40);
    write_code(ofs, data, "expinti_data");
    
    return 0;

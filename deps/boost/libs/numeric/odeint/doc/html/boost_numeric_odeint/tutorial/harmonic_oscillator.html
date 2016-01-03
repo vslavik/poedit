@@ -36,6 +36,8 @@
         with Constant Step Size</a></span></dt>
 <dt><span class="section"><a href="harmonic_oscillator.html#boost_numeric_odeint.tutorial.harmonic_oscillator.integration_with_adaptive_step_size">Integration
         with Adaptive Step Size</a></span></dt>
+<dt><span class="section"><a href="harmonic_oscillator.html#boost_numeric_odeint.tutorial.harmonic_oscillator.using_iterators">Using
+        iterators</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
@@ -192,10 +194,12 @@
           </p>
 <p>
 </p>
-<pre class="programlisting"><span class="identifier">runge_kutta4</span><span class="special">&lt;</span> <span class="identifier">state_type</span> <span class="special">&gt;</span> <span class="identifier">stepper</span><span class="special">;</span>
+<pre class="programlisting"><span class="special">{</span>
+<span class="identifier">runge_kutta4</span><span class="special">&lt;</span> <span class="identifier">state_type</span> <span class="special">&gt;</span> <span class="identifier">stepper</span><span class="special">;</span>
 <span class="identifier">integrate_const</span><span class="special">(</span> <span class="identifier">stepper</span> <span class="special">,</span> <span class="special">[](</span> <span class="keyword">const</span> <span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">x</span> <span class="special">,</span> <span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">dxdt</span> <span class="special">,</span> <span class="keyword">double</span> <span class="identifier">t</span> <span class="special">)</span> <span class="special">{</span>
         <span class="identifier">dxdt</span><span class="special">[</span><span class="number">0</span><span class="special">]</span> <span class="special">=</span> <span class="identifier">x</span><span class="special">[</span><span class="number">1</span><span class="special">];</span> <span class="identifier">dxdt</span><span class="special">[</span><span class="number">1</span><span class="special">]</span> <span class="special">=</span> <span class="special">-</span><span class="identifier">x</span><span class="special">[</span><span class="number">0</span><span class="special">]</span> <span class="special">-</span> <span class="identifier">gam</span><span class="special">*</span><span class="identifier">x</span><span class="special">[</span><span class="number">1</span><span class="special">];</span> <span class="special">}</span>
     <span class="special">,</span> <span class="identifier">x</span> <span class="special">,</span> <span class="number">0.0</span> <span class="special">,</span> <span class="number">10.0</span> <span class="special">,</span> <span class="number">0.01</span> <span class="special">);</span>
+<span class="special">}</span>
 </pre>
 <p>
           </p>
@@ -290,7 +294,7 @@
 </p>
 <pre class="programlisting"><span class="keyword">double</span> <span class="identifier">abs_err</span> <span class="special">=</span> <span class="number">1.0e-10</span> <span class="special">,</span> <span class="identifier">rel_err</span> <span class="special">=</span> <span class="number">1.0e-6</span> <span class="special">,</span> <span class="identifier">a_x</span> <span class="special">=</span> <span class="number">1.0</span> <span class="special">,</span> <span class="identifier">a_dxdt</span> <span class="special">=</span> <span class="number">1.0</span><span class="special">;</span>
 <span class="identifier">controlled_stepper_type</span> <span class="identifier">controlled_stepper</span><span class="special">(</span>
-    <span class="identifier">default_error_checker</span><span class="special">&lt;</span> <span class="keyword">double</span> <span class="special">&gt;(</span> <span class="identifier">abs_err</span> <span class="special">,</span> <span class="identifier">rel_err</span> <span class="special">,</span> <span class="identifier">a_x</span> <span class="special">,</span> <span class="identifier">a_dxdt</span> <span class="special">)</span> <span class="special">);</span>
+    <span class="identifier">default_error_checker</span><span class="special">&lt;</span> <span class="keyword">double</span> <span class="special">,</span> <span class="identifier">range_algebra</span> <span class="special">,</span> <span class="identifier">default_operations</span> <span class="special">&gt;(</span> <span class="identifier">abs_err</span> <span class="special">,</span> <span class="identifier">rel_err</span> <span class="special">,</span> <span class="identifier">a_x</span> <span class="special">,</span> <span class="identifier">a_dxdt</span> <span class="special">)</span> <span class="special">);</span>
 <span class="identifier">integrate_adaptive</span><span class="special">(</span> <span class="identifier">controlled_stepper</span> <span class="special">,</span> <span class="identifier">harmonic_oscillator</span> <span class="special">,</span> <span class="identifier">x</span> <span class="special">,</span> <span class="number">0.0</span> <span class="special">,</span> <span class="number">10.0</span> <span class="special">,</span> <span class="number">0.01</span> <span class="special">);</span>
 </pre>
 <p>
@@ -483,8 +487,29 @@
           works.
         </p>
 </div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="boost_numeric_odeint.tutorial.harmonic_oscillator.using_iterators"></a><a class="link" href="harmonic_oscillator.html#boost_numeric_odeint.tutorial.harmonic_oscillator.using_iterators" title="Using iterators">Using
+        iterators</a>
+</h4></div></div></div>
 <p>
-        The full source file for this example can be found here: <a href="../../../../../../../libs/numeric/odeint/examples/harmonic_oscillator.cpp" target="_top">harmonic_oscillator.cpp</a>
+          odeint supports iterators for solving ODEs. That is, you instantiate a
+          pair of iterators and instead of using the integrate routines with an appropriate
+          observer you put the iterators in one of the algorithm from the C++ standard
+          library or from Boost.Range. An example is
+        </p>
+<p>
+</p>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">for_each</span><span class="special">(</span> <span class="identifier">make_const_step_time_iterator_begin</span><span class="special">(</span> <span class="identifier">stepper</span> <span class="special">,</span> <span class="identifier">harmonic_oscillator</span><span class="special">,</span> <span class="identifier">x</span> <span class="special">,</span> <span class="number">0.0</span> <span class="special">,</span> <span class="number">0.1</span> <span class="special">,</span> <span class="number">10.0</span> <span class="special">)</span> <span class="special">,</span>
+               <span class="identifier">make_const_step_time_iterator_end</span><span class="special">(</span> <span class="identifier">stepper</span> <span class="special">,</span> <span class="identifier">harmonic_oscillator</span><span class="special">,</span> <span class="identifier">x</span> <span class="special">)</span> <span class="special">,</span>
+               <span class="special">[](</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="keyword">const</span> <span class="identifier">state_type</span> <span class="special">&amp;</span> <span class="special">,</span> <span class="keyword">const</span> <span class="keyword">double</span> <span class="special">&amp;</span> <span class="special">&gt;</span> <span class="identifier">x</span> <span class="special">)</span> <span class="special">{</span>
+                   <span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">x</span><span class="special">.</span><span class="identifier">second</span> <span class="special">&lt;&lt;</span> <span class="string">" "</span> <span class="special">&lt;&lt;</span> <span class="identifier">x</span><span class="special">.</span><span class="identifier">first</span><span class="special">[</span><span class="number">0</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="string">" "</span> <span class="special">&lt;&lt;</span> <span class="identifier">x</span><span class="special">.</span><span class="identifier">first</span><span class="special">[</span><span class="number">1</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="string">"\n"</span><span class="special">;</span> <span class="special">}</span> <span class="special">);</span>
+</pre>
+<p>
+        </p>
+</div>
+<p>
+        The full source file for this example can be found here: <a href="https://github.com/headmyshoulder/odeint-v2/blob/master/examples/harmonic_oscillator.cpp" target="_top">harmonic_oscillator.cpp</a>
       </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

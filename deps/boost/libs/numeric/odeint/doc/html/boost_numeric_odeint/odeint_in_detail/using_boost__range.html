@@ -29,14 +29,14 @@
 </h3></div></div></div>
 <p>
         Most steppers in odeint also accept the state give as a range. A range is
-        sequence of values modeled by a range concept. See <a href="http://www.boost.org/doc/libs/release/libs/range/index.html" target="_top">Boost.Range</a>
+        sequence of values modeled by a range concept. See <a href="http://www.boost.org/doc/libs/release/libs/range/" target="_top">Boost.Range</a>
         for an overview over existing concepts and examples of ranges. This means
         that the <code class="computeroutput"><span class="identifier">state_type</span></code> of the
         stepper need not necessarily be used to call the <code class="computeroutput"><span class="identifier">do_step</span></code>
         method.
       </p>
 <p>
-        One use-case for <a href="http://www.boost.org/doc/libs/release/libs/range/index.html" target="_top">Boost.Range</a>
+        One use-case for <a href="http://www.boost.org/doc/libs/release/libs/range/" target="_top">Boost.Range</a>
         in odeint has been shown in <a class="link" href="../tutorial/chaotic_systems_and_lyapunov_exponents.html" title="Chaotic systems and Lyapunov exponents">Chaotic
         System</a> where the state consists of two parts: one for the original
         system and one for the perturbations. The ranges are used to initialize (solve)
@@ -48,11 +48,11 @@
         Another use case is a system consisting of coupled units where you want to
         initialize each unit separately with the ODE of the uncoupled unit. An example
         is a chain of coupled van-der-Pol-oscillators which are initialized uniformly
-        from the uncoupled van-der-Pol-oscillator. Then you can use <a href="http://www.boost.org/doc/libs/release/libs/range/index.html" target="_top">Boost.Range</a>
+        from the uncoupled van-der-Pol-oscillator. Then you can use <a href="http://www.boost.org/doc/libs/release/libs/range/" target="_top">Boost.Range</a>
         to solve only one individual oscillator in the chain.
       </p>
 <p>
-        In short, you can <a href="http://www.boost.org/doc/libs/release/libs/range/index.html" target="_top">Boost.Range</a>
+        In short, you can <a href="http://www.boost.org/doc/libs/release/libs/range/" target="_top">Boost.Range</a>
         to use one state within two system functions which expect states with different
         sizes.
       </p>
@@ -103,7 +103,7 @@
       </p>
 <p>
         The following two tables show which steppers and which algebras are compatible
-        with <a href="http://www.boost.org/doc/libs/release/libs/range/index.html" target="_top">Boost.Range</a>.
+        with <a href="http://www.boost.org/doc/libs/release/libs/range/" target="_top">Boost.Range</a>.
       </p>
 <div class="table">
 <a name="boost_numeric_odeint.odeint_in_detail.using_boost__range.steppers_supporting_boost_range"></a><p class="title"><b>Table&#160;1.9.&#160;Steppers supporting Boost.Range</b></p>

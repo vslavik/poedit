@@ -15,9 +15,8 @@
 #include <boost/container/detail/config_begin.hpp>
 #include <boost/container/detail/workaround.hpp>
 #include <boost/container/detail/mpl.hpp>
-#include <boost/move/utility.hpp>
-#include <boost/container/detail/utilities.hpp>
-#include <boost/aligned_storage.hpp>
+#include <boost/move/utility_core.hpp>
+#include <boost/container/detail/type_traits.hpp>
 
 namespace boost{
 namespace container {
@@ -147,7 +146,7 @@ bool test_expected_container(const Container &ec, const std::pair<EmplaceInt, Em
 static EmplaceInt expected [10];
 
 typedef std::pair<EmplaceInt, EmplaceInt> EmplaceIntPair;
-static boost::aligned_storage<sizeof(EmplaceIntPair)*10>::type pair_storage;
+static boost::container::container_detail::aligned_storage<sizeof(EmplaceIntPair)*10>::type pair_storage;
 
 static EmplaceIntPair* initialize_emplace_int_pair()
 {

@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by an array.
-   Copyright (C) 2006-2013 Free Software Foundation, Inc.
+   Copyright (C) 2006-2015 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -120,7 +120,7 @@ gl_array_size (gl_list_t list)
   return list->count;
 }
 
-static const void *
+static const void * _GL_ATTRIBUTE_PURE
 gl_array_node_value (gl_list_t list, gl_list_node_t node)
 {
   uintptr_t index = NODE_TO_INDEX (node);
@@ -142,7 +142,7 @@ gl_array_node_nx_set_value (gl_list_t list, gl_list_node_t node,
   return 0;
 }
 
-static gl_list_node_t
+static gl_list_node_t _GL_ATTRIBUTE_PURE
 gl_array_next_node (gl_list_t list, gl_list_node_t node)
 {
   uintptr_t index = NODE_TO_INDEX (node);
@@ -156,7 +156,7 @@ gl_array_next_node (gl_list_t list, gl_list_node_t node)
     return NULL;
 }
 
-static gl_list_node_t
+static gl_list_node_t _GL_ATTRIBUTE_PURE
 gl_array_previous_node (gl_list_t list, gl_list_node_t node)
 {
   uintptr_t index = NODE_TO_INDEX (node);
@@ -169,7 +169,7 @@ gl_array_previous_node (gl_list_t list, gl_list_node_t node)
     return NULL;
 }
 
-static const void *
+static const void * _GL_ATTRIBUTE_PURE
 gl_array_get_at (gl_list_t list, size_t position)
 {
   size_t count = list->count;

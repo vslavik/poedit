@@ -71,7 +71,7 @@ void test_base64(unsigned int size){
         boost::archive::iterators::transform_width<
             boost::archive::iterators::binary_from_base64<
                 boost::archive::iterators::remove_whitespace<
-                    BOOST_DEDUCED_TYPENAME text_base64_type::iterator
+                    typename text_base64_type::iterator
                 >
             >,
             sizeof(CharType) * 8,

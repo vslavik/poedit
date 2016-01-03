@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../intrusive.html" title="Chapter&#160;14.&#160;Boost.Intrusive">
-<link rel="prev" href="avl_set_multiset.html" title="Intrusive avl tree based associative containers: avl_set, avl_multiset and avltree">
+<link rel="up" href="../intrusive.html" title="Chapter&#160;15.&#160;Boost.Intrusive">
+<link rel="prev" href="splay_set_multiset.html" title="Intrusive splay tree based associative containers: splay_set, splay_multiset and , splay_tree">
 <link rel="next" href="treap_set_multiset.html" title="Intrusive treap based associative containers: treap_set, treap_multiset and treap">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="avl_set_multiset.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../intrusive.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="treap_set_multiset.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="splay_set_multiset.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../intrusive.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="treap_set_multiset.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
@@ -28,8 +28,6 @@
     associative containers: sg_set, sg_multiset and sgtree</a>
 </h2></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="sg_set_multiset.html#intrusive.sg_set_multiset.sg_set_multiset_hooks">Using
-      binary search tree hooks: bs_set_base_hook and bs_set_member_hook</a></span></dt>
 <dt><span class="section"><a href="sg_set_multiset.html#intrusive.sg_set_multiset.sg_set_multiset_containers">sg_set,
       sg_multiset and sgtree containers</a></span></dt>
 <dt><span class="section"><a href="sg_set_multiset.html#intrusive.sg_set_multiset.sg_set_multiset_example">Example</a></span></dt>
@@ -107,56 +105,11 @@
       has also the size of 3 pointers, two integers and two floating point values
       (equivalent to the size of 7 pointers on most systems).
     </p>
-<div class="section">
-<div class="titlepage"><div><div><h3 class="title">
-<a name="intrusive.sg_set_multiset.sg_set_multiset_hooks"></a><a class="link" href="sg_set_multiset.html#intrusive.sg_set_multiset.sg_set_multiset_hooks" title="Using binary search tree hooks: bs_set_base_hook and bs_set_member_hook">Using
-      binary search tree hooks: bs_set_base_hook and bs_set_member_hook</a>
-</h3></div></div></div>
 <p>
-        <code class="computeroutput"><a class="link" href="../boost/intrusive/sg_set.html" title="Class template sg_set">sg_set</a></code>, <code class="computeroutput"><a class="link" href="../boost/intrusive/sg_multiset.html" title="Class template sg_multiset">sg_multiset</a></code> and <code class="computeroutput"><a class="link" href="../boost/intrusive/sgtree.html" title="Class template sgtree">sgtree</a></code> don't use their own hooks
-        but plain binary search tree hooks. This has many advantages since binary
-        search tree hooks can also be used to insert values in splay and treap containers.
-      </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="special">...</span><span class="identifier">Options</span><span class="special">&gt;</span>
-<span class="keyword">class</span> <span class="identifier">bs_set_base_hook</span><span class="special">;</span>
-</pre>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
-            <code class="computeroutput"><a class="link" href="../boost/intrusive/bs_set_base_hook.html" title="Class template bs_set_base_hook">bs_set_base_hook</a></code>:
-            the user class derives publicly from this class to make it compatible
-            with scapegoat tree based containers.
-          </li></ul></div>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="special">...</span><span class="identifier">Options</span><span class="special">&gt;</span>
-<span class="keyword">class</span> <span class="identifier">bs_set_member_hook</span><span class="special">;</span>
-</pre>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
-            <code class="computeroutput"><a class="link" href="../boost/intrusive/set_member_hook.html" title="Class template set_member_hook">set_member_hook</a></code>:
-            the user class contains a public member of this class to make it compatible
-            with scapegoat tree based containers.
-          </li></ul></div>
-<p>
-        <code class="computeroutput"><a class="link" href="../boost/intrusive/bs_set_base_hook.html" title="Class template bs_set_base_hook">bs_set_base_hook</a></code>
-        and <code class="computeroutput"><a class="link" href="../boost/intrusive/bs_set_member_hook.html" title="Class template bs_set_member_hook">bs_set_member_hook</a></code>
-        receive the same options explained in the section <a class="link" href="usage.html" title="How to use Boost.Intrusive">How
-        to use Boost.Intrusive</a>:
-      </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
-<li class="listitem">
-            <span class="bold"><strong><code class="computeroutput"><span class="identifier">tag</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Tag</span><span class="special">&gt;</span></code></strong></span>
-            (for base hooks only): This argument serves as a tag, so you can derive
-            from more than one base hook. Default: <code class="computeroutput"><span class="identifier">tag</span><span class="special">&lt;</span><span class="identifier">default_tag</span><span class="special">&gt;</span></code>.
-          </li>
-<li class="listitem">
-            <span class="bold"><strong><code class="computeroutput"><span class="identifier">link_mode</span><span class="special">&lt;</span><span class="identifier">link_mode_type</span>
-            <span class="identifier">LinkMode</span><span class="special">&gt;</span></code></strong></span>:
-            The linking policy. Default: <code class="computeroutput"><span class="identifier">link_mode</span><span class="special">&lt;</span><span class="identifier">safe_link</span><span class="special">&gt;</span></code>.
-          </li>
-<li class="listitem">
-            <span class="bold"><strong><code class="computeroutput"><span class="identifier">void_pointer</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">VoidPointer</span><span class="special">&gt;</span></code></strong></span>:
-            The pointer type to be used internally in the hook and propagated to
-            the container. Default: <code class="computeroutput"><span class="identifier">void_pointer</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">*&gt;</span></code>.
-          </li>
-</ul></div>
-</div>
+      <span class="bold"><strong>Boost.Intrusive</strong></span> scapegoat associative containers
+      don't use their own hook types but plain Binary search tree hooks. See <a class="link" href="bst_hooks.html" title="Binary search tree hooks: bs_set_base_hook and bs_set_member_hook">Binary search tree hooks: bs_set_base_hook and
+      bs_set_member_hook</a> section for more information about these hooks.
+    </p>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="intrusive.sg_set_multiset.sg_set_multiset_containers"></a><a class="link" href="sg_set_multiset.html#intrusive.sg_set_multiset.sg_set_multiset_containers" title="sg_set, sg_multiset and sgtree containers">sg_set,
@@ -215,14 +168,14 @@
 <a name="intrusive.sg_set_multiset.sg_set_multiset_example"></a><a class="link" href="sg_set_multiset.html#intrusive.sg_set_multiset.sg_set_multiset_example" title="Example">Example</a>
 </h3></div></div></div>
 <p>
-        Now let's see a small example using both hooks and <code class="computeroutput"><a class="link" href="../boost/intrusive/sg_set.html" title="Class template sg_set">sg_set</a></code>/
-        <code class="computeroutput"><a class="link" href="../boost/intrusive/sg_multiset.html" title="Class template sg_multiset">sg_multiset</a></code> containers:
+        Now let's see a small example using binary search tree hooks and <code class="computeroutput"><a class="link" href="../boost/intrusive/sg_set.html" title="Class template sg_set">sg_set</a></code>/ <code class="computeroutput"><a class="link" href="../boost/intrusive/sg_multiset.html" title="Class template sg_multiset">sg_multiset</a></code>
+        containers:
       </p>
 <p>
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">intrusive</span><span class="special">/</span><span class="identifier">sg_set</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">vector</span><span class="special">&gt;</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">algorithm</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">functional</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cassert</span><span class="special">&gt;</span>
 
 <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">intrusive</span><span class="special">;</span>
@@ -306,7 +259,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="avl_set_multiset.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../intrusive.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="treap_set_multiset.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="splay_set_multiset.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../intrusive.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="treap_set_multiset.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

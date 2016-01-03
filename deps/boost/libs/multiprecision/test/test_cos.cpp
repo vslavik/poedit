@@ -16,13 +16,14 @@
 #include <boost/array.hpp>
 #include "test.hpp"
 
-#if !defined(TEST_MPF_50) && !defined(TEST_MPF) && !defined(TEST_BACKEND) && !defined(TEST_CPP_DEC_FLOAT) && !defined(TEST_MPFR) && !defined(TEST_MPFR_50) && !defined(TEST_MPFI_50) && !defined(TEST_FLOAT128)
+#if !defined(TEST_MPF_50) && !defined(TEST_MPF) && !defined(TEST_BACKEND) && !defined(TEST_CPP_DEC_FLOAT) && !defined(TEST_MPFR) && !defined(TEST_MPFR_50) && !defined(TEST_MPFI_50) && !defined(TEST_FLOAT128) && !defined(TEST_CPP_BIN_FLOAT)
 #  define TEST_MPF_50
 //#  define TEST_MPF
 #  define TEST_BACKEND
 #  define TEST_CPP_DEC_FLOAT
 #  define TEST_MPFI_50
 #  define TEST_FLOAT128
+#  define TEST_CPP_BIN_FLOAT
 
 #ifdef _MSC_VER
 #pragma message("CAUTION!!: No backend type specified so testing everything.... this will take some time!!")
@@ -50,6 +51,9 @@
 #endif
 #ifdef TEST_FLOAT128
 #include <boost/multiprecision/float128.hpp>
+#endif
+#ifdef TEST_CPP_BIN_FLOAT
+#include <boost/multiprecision/cpp_bin_float.hpp>
 #endif
 
 template <class T>
@@ -296,6 +300,19 @@ void test()
 #else
    BOOST_TEST(fabs(cos(half_pi)) < std::numeric_limits<T>::epsilon());
 #endif
+
+#include "sincos.ipp"
+   max_err = 0;
+   for(unsigned k = 0; k < sincos.size(); k++)
+   {
+      T val = cos(sincos[k][0]);
+      T e = relative_error(val, sincos[k][2]);
+      unsigned err = e.template convert_to<unsigned>();
+      if(err > max_err)
+         max_err = err;
+   }
+   std::cout << "Max error was: " << max_err << std::endl;
+   BOOST_TEST(max_err < 20);
 }
 
 
@@ -333,6 +350,9 @@ int main()
 #endif
 #ifdef TEST_FLOAT128
    test<boost::multiprecision::float128>();
+#endif
+#ifdef TEST_CPP_BIN_FLOAT
+   test<boost::multiprecision::cpp_bin_float_50>();
 #endif
    return boost::report_errors();
 }

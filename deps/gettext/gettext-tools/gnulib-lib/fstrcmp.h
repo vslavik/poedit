@@ -1,5 +1,5 @@
 /* Fuzzy string comparison.
-   Copyright (C) 1995, 2000, 2002-2003, 2006, 2008-2013 Free Software
+   Copyright (C) 1995, 2000, 2002-2003, 2006, 2008-2015 Free Software
    Foundation, Inc.
 
    This file was written by Peter Miller <pmiller@agso.gov.au>

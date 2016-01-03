@@ -27,7 +27,7 @@
 <a name="geometry.reference.core.ring_type"></a><a class="link" href="ring_type.html" title="ring_type">ring_type</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp58886248"></a>
+          <a class="indexterm" name="idp122536560"></a>
 Metafunction defining <span class="bold"><strong>type</strong></span> as the ring_type
           of the specified geometry type.
         </p>
@@ -94,6 +94,15 @@ Metafunction defining <span class="bold"><strong>type</strong></span> as the rin
           <span class="phrase"><a name="geometry.reference.core.ring_type.header"></a></span><a class="link" href="ring_type.html#geometry.reference.core.ring_type.header">Header</a>
         </h6>
 <p>
+          Either
+        </p>
+<p>
+          <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
+        </p>
+<p>
+          Or
+        </p>
+<p>
           <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">core</span><span class="special">/</span><span class="identifier">ring_type</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
         </p>
 <h6>
@@ -130,7 +139,7 @@ Metafunction defining <span class="bold"><strong>type</strong></span> as the rin
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="keyword">typeid</span><span class="special">(</span><span class="identifier">ring_type</span><span class="special">).</span><span class="identifier">name</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="keyword">typeid</span><span class="special">(</span><span class="identifier">int_type</span><span class="special">).</span><span class="identifier">name</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 
-    <span class="comment">// So int_type defines a collection of rings, </span>
+    <span class="comment">// So int_type defines a collection of rings,</span>
     <span class="comment">// which is a Boost.Range compatible range</span>
     <span class="comment">// The type of an element of the collection is the very same ring type again.</span>
     <span class="comment">// We show that.</span>
@@ -156,7 +165,8 @@ true
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
+      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

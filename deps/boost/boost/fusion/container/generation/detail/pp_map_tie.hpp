@@ -24,7 +24,7 @@
 #include <boost/fusion/container/generation/detail/preprocessed/map_tie.hpp>
 #else
 #if defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "detail/preprocessed/map_tie" FUSION_MAX_MAP_SIZE_STR".hpp")
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/map_tie" FUSION_MAX_MAP_SIZE_STR".hpp")
 #endif
 
 /*=============================================================================
@@ -62,6 +62,7 @@ namespace boost { namespace fusion
         };
     }
 
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
     inline map<>
     map_tie()
     {
@@ -73,7 +74,7 @@ namespace boost { namespace fusion
         BOOST_PP_CAT(K, n)                                                                          \
       , typename add_reference<BOOST_PP_CAT(D, n)>::type>
 
-#define BOOST_FUSION_PAIR_TIE(z, n, data)                                      \
+#define BOOST_FUSION_PAIR_TIE(z, n, _)                                         \
     fusion::pair_tie<BOOST_PP_CAT(K, n)>(BOOST_PP_CAT(_, n))                   \
 
 #define BOOST_PP_FILENAME_1 <boost/fusion/container/generation/detail/pp_map_tie.hpp>
@@ -107,14 +108,9 @@ namespace boost { namespace fusion
             BOOST_PP_ENUM_PARAMS(N, typename K)
           , BOOST_PP_ENUM_PARAMS(N, typename D)
         >
-#if defined(BOOST_NO_PARTIAL_SPECIALIZATION_IMPLICIT_DEFAULT_ARGS)
         #define TEXT(z, n, text) , text
-
         struct map_tie<BOOST_PP_ENUM_PARAMS(N, K), BOOST_PP_ENUM_PARAMS(N, D) BOOST_PP_REPEAT_FROM_TO(N, FUSION_MAX_MAP_SIZE, TEXT, void_) BOOST_PP_REPEAT_FROM_TO(BOOST_PP_DEC(N), FUSION_MAX_MAP_SIZE, TEXT, void_)>
         #undef TEXT
-#else
-        struct map_tie<BOOST_PP_ENUM_PARAMS(N, K), BOOST_PP_ENUM_PARAMS(N, D)>
-#endif
         {
             typedef map<BOOST_PP_ENUM(N, BOOST_FUSION_TIED_PAIR, _)> type;
         };
@@ -124,11 +120,12 @@ namespace boost { namespace fusion
         BOOST_PP_ENUM_PARAMS(N, typename K)
       , BOOST_PP_ENUM_PARAMS(N, typename D)
     >
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
     inline map<BOOST_PP_ENUM(N, BOOST_FUSION_TIED_PAIR, _)>
-    map_tie(BOOST_PP_ENUM_BINARY_PARAMS(N, D, & _))
+    map_tie(BOOST_PP_ENUM_BINARY_PARAMS(N, D, & arg))
     {
         return map<BOOST_PP_ENUM(N, BOOST_FUSION_TIED_PAIR, _)>(
-            BOOST_PP_ENUM(N, BOOST_FUSION_PAIR_TIE, _));
+            BOOST_PP_ENUM(N, BOOST_FUSION_PAIR_TIE, arg));
     }
 
 #undef N

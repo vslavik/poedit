@@ -27,7 +27,7 @@
 <a name="geometry.reference.algorithms.append"></a><a class="link" href="append.html" title="append">append</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp52514360"></a>
+          <a class="indexterm" name="idp107276800"></a>
 Appends one or more points to a linestring, ring, polygon, multi-geometry.
         </p>
 <h6>
@@ -37,7 +37,8 @@ Appends one or more points to a linestring, ring, polygon, multi-geometry.
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Geometry</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">RangeOrPoint</span><span class="special">&gt;</span>
-<span class="keyword">void</span> <span class="identifier">append</span><span class="special">(</span><span class="identifier">Geometry</span> <span class="special">&amp;</span> <span class="identifier">geometry</span><span class="special">,</span> <span class="identifier">RangeOrPoint</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">range_or_point</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">ring_index</span> <span class="special">=</span> <span class="special">-</span><span class="number">1</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">multi_index</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span></pre>
+<span class="keyword">void</span> <span class="identifier">append</span><span class="special">(</span><span class="identifier">Geometry</span> <span class="special">&amp;</span> <span class="identifier">geometry</span><span class="special">,</span> <span class="identifier">RangeOrPoint</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">range_or_point</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">ring_index</span> <span class="special">=</span> <span class="special">-</span><span class="number">1</span><span class="special">,</span>
+            <span class="keyword">int</span> <span class="identifier">multi_index</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span></pre>
 <p>
         </p>
 <h6>
@@ -154,7 +155,7 @@ Appends one or more points to a linestring, ring, polygon, multi-geometry.
                 </td>
 <td>
                   <p>
-                    Reserved for multi polygons or multi linestrings
+                    The index of the geometry to which the points are appended
                   </p>
                 </td>
 </tr>
@@ -168,7 +169,7 @@ Appends one or more points to a linestring, ring, polygon, multi-geometry.
           Either
         </p>
 <p>
-          <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
+          <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
         </p>
 <p>
           Or
@@ -336,12 +337,12 @@ Appends one or more points to a linestring, ring, polygon, multi-geometry.
                 </td>
 <td>
                   <p>
-                    <span class="inlinemediaobject"><img src="../../../img/nyi.png" alt="nyi"></span>
+                    <span class="inlinemediaobject"><img src="../../../img/ok.png" alt="ok"></span>
                   </p>
                 </td>
 <td>
                   <p>
-                    <span class="inlinemediaobject"><img src="../../../img/nyi.png" alt="nyi"></span>
+                    <span class="inlinemediaobject"><img src="../../../img/ok.png" alt="ok"></span>
                   </p>
                 </td>
 </tr>
@@ -353,12 +354,12 @@ Appends one or more points to a linestring, ring, polygon, multi-geometry.
                 </td>
 <td>
                   <p>
-                    <span class="inlinemediaobject"><img src="../../../img/nyi.png" alt="nyi"></span>
+                    <span class="inlinemediaobject"><img src="../../../img/ok.png" alt="ok"></span>
                   </p>
                 </td>
 <td>
                   <p>
-                    <span class="inlinemediaobject"><img src="../../../img/nyi.png" alt="nyi"></span>
+                    <span class="inlinemediaobject"><img src="../../../img/ok.png" alt="ok"></span>
                   </p>
                 </td>
 </tr>
@@ -437,6 +438,42 @@ Appends one or more points to a linestring, ring, polygon, multi-geometry.
                     case, the interior rings are not resized automatically, so ensure
                     that the zero-based index is smaller than the number of interior
                     rings
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    Multi Linestring
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Appends point or range to the end of the linestring with the
+                    given multi index. The multi-linestring is not resized automatically,
+                    so ensure that the multi index is smaller than then number of
+                    linestring in the multi-linestring.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    Multi Polygon
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Appends point or range to the end of the polygon (without explicitly
+                    closing it) with the given multi-index. The point or range is
+                    appended at the end of the exterior ring (the default) or specify
+                    a zero-based ring index for the interior rings. The multi-polygon
+                    is not resized automatically, so ensure that the multi index
+                    is smaller than then number of polygon in the multi-polygon.
+                    The same applies for the interior rings of the polygon: the interior
+                    rings are not resized automatically, so ensure that the zero-based
+                    ring index is smaller than the number of interior rings of the
+                    polygon.
                   </p>
                 </td>
 </tr>
@@ -529,7 +566,8 @@ Appends one or more points to a linestring, ring, polygon, multi-geometry.
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
+      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

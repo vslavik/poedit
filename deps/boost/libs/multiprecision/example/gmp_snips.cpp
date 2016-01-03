@@ -10,8 +10,11 @@
 void t1()
 {
    //[mpz_eg
-   //=#include <boost/multiprecision/gmp.hpp>
-
+//=#include <boost/multiprecision/gmp.hpp>
+//=#include <iostream>
+//=
+//=int main()
+//={
    using namespace boost::multiprecision;
 
    mpz_int v = 1;
@@ -26,15 +29,21 @@ void t1()
    mpz_t z;
    mpz_init(z);
    mpz_set(z, v.backend().data());
-   //]
    mpz_clear(z);
+//=   return 0;
+//=}
+//]
 }
 
 void t2()
 {
-   //[mpf_eg
-   //=#include <boost/multiprecision/gmp.hpp>
-
+//[mpf_eg
+//=#include <boost/multiprecision/gmp.hpp>
+//=#include <boost/math/special_functions/gamma.hpp>
+//=#include <iostream>
+//=
+//=int main()
+//={
    using namespace boost::multiprecision;
 
    // Operations at variable precision and limited standard library support:
@@ -57,15 +66,21 @@ void t2()
    mpf_t f;
    mpf_init(f);
    mpf_set(f, a.backend().data());
-   //]
    mpf_clear(f);
+//=   return 0;
+//=}
+//]
 }
 
 void t3()
 {
-   //[mpq_eg
-   //=#include <boost/multiprecision/gmp.hpp>
-
+//[mpq_eg
+//=#include <boost/multiprecision/gmp.hpp>
+//=#include <boost/multiprecision/gmp.hpp>
+//=#include <iostream>
+//=
+//=int main()
+//={
    using namespace boost::multiprecision;
 
    mpq_rational v = 1;
@@ -86,8 +101,10 @@ void t3()
    mpq_t q;
    mpq_init(q);
    mpq_set(q, v.backend().data());
-   //]
    mpq_clear(q);
+//=   return 0;
+//=}
+//]
 }
 
 int main()

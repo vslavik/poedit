@@ -11,7 +11,11 @@
 #ifndef BOOST_INTERPROCESS_ROBUST_EMULATION_HPP
 #define BOOST_INTERPROCESS_ROBUST_EMULATION_HPP
 
-#if defined(_MSC_VER)&&(_MSC_VER>=1200)
+#ifndef BOOST_CONFIG_HPP
+#  include <boost/config.hpp>
+#endif
+#
+#if defined(BOOST_HAS_PRAGMA_ONCE)
 #pragma once
 #endif
 
@@ -21,10 +25,12 @@
 #include <boost/interprocess/sync/interprocess_recursive_mutex.hpp>
 #include <boost/interprocess/detail/atomic.hpp>
 #include <boost/interprocess/detail/os_file_functions.hpp>
-#include <boost/interprocess/detail/tmp_dir_helpers.hpp>
+#include <boost/interprocess/detail/shared_dir_helpers.hpp>
 #include <boost/interprocess/detail/intermodule_singleton.hpp>
+#include <boost/interprocess/detail/portable_intermodule_singleton.hpp>
 #include <boost/interprocess/exceptions.hpp>
 #include <boost/interprocess/sync/spin/wait.hpp>
+#include <boost/interprocess/sync/detail/common_algorithms.hpp>
 #include <string>
 
 namespace boost{
@@ -62,7 +68,7 @@ inline const char *robust_lock_prefix()
 
 inline void robust_lock_path(std::string &s)
 {
-   tmp_folder(s);
+   get_shared_dir(s);
    s += "/";
    s += robust_lock_subdir_path();
 }
@@ -215,38 +221,7 @@ inline robust_spin_mutex<Mutex>::robust_spin_mutex()
 
 template<class Mutex>
 inline void robust_spin_mutex<Mutex>::lock()
-{
-   //If the mutex is broken (recovery didn't call consistent()),
-   //then throw an exception
-   if(atomic_read32(&this->state) == broken_state){
-      throw interprocess_exception(lock_error, "Broken id");
-   }
-
-   //This function provokes intermodule_singleton instantiation
-   if(!this->lock_own_unique_file()){
-      throw interprocess_exception(lock_error, "Broken id");
-   }
-
-   //Now the logic. Try to lock, if successful mark the owner
-   //if it fails, start recovery logic
-   spin_wait swait;
-   while(1){
-      if (mtx.try_lock()){
-         atomic_write32(&this->owner, get_current_process_id());
-         break;
-      }
-      else{
-         //Do the dead owner checking each spin_threshold lock tries
-         swait.yield();
-         if(0 == (swait.count() & 255u)){
-            //Check if owner dead and take ownership if possible
-            if(this->robust_check()){
-               break;
-            }
-         }
-      }
-   }
-}
+{  try_based_lock(*this);  }
 
 template<class Mutex>
 inline bool robust_spin_mutex<Mutex>::try_lock()
@@ -277,34 +252,7 @@ inline bool robust_spin_mutex<Mutex>::try_lock()
 template<class Mutex>
 inline bool robust_spin_mutex<Mutex>::timed_lock
    (const boost::posix_time::ptime &abs_time)
-{
-   //Same as lock() but with an additional timeout
-   if(abs_time == boost::posix_time::pos_infin){
-      this->lock();
-      return true;
-   }
-   //Obtain current count and target time
-   boost::posix_time::ptime now = microsec_clock::universal_time();
-
-   if(now >= abs_time)
-      return this->try_lock();
-
-   spin_wait swait;
-   do{
-      if(this->try_lock()){
-         break;
-      }
-      now = microsec_clock::universal_time();
-
-      if(now >= abs_time){
-         return this->try_lock();
-      }
-      // relinquish current time slice
-      swait.yield();
-   }while (true);
-
-   return true;
-}
+{  return try_based_timed_lock(*this, abs_time);   }
 
 template<class Mutex>
 inline void robust_spin_mutex<Mutex>::owner_to_filename(boost::uint32_t own, std::string &s)
@@ -402,7 +350,7 @@ inline bool robust_spin_mutex<Mutex>::previous_owner_dead()
 {
    //Notifies if a owner recovery has been performed in the last lock()
    return atomic_read32(&this->state) == fixing_state;
-};
+}
 
 template<class Mutex>
 inline void robust_spin_mutex<Mutex>::unlock()

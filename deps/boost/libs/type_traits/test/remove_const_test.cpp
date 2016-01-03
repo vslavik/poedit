@@ -27,10 +27,27 @@ BOOST_DECL_TRANSFORM_TEST(remove_const_test_14, ::tt::remove_const, const volati
 BOOST_DECL_TRANSFORM_TEST(remove_const_test_15, ::tt::remove_const, [2], [2])
 BOOST_DECL_TRANSFORM_TEST(remove_const_test_16, ::tt::remove_const, const*, const*)
 BOOST_DECL_TRANSFORM_TEST(remove_const_test_17, ::tt::remove_const, const*const, const*)
+BOOST_DECL_TRANSFORM_TEST(remove_const_test_18, ::tt::remove_const, (*), (*))
+BOOST_DECL_TRANSFORM_TEST(remove_const_test_19, ::tt::remove_const, (*const), (*))
+
+struct S
+{
+   template<typename T>
+   typename ::tt::remove_const<T>::type *operator=(T const &) const { return 0; }
+};
+
+void bar() {}
+
+void bug_case_7317()
+{
+   S s;
+   s = bar;
+   (void)s;
+}
 
 TT_TEST_BEGIN(remove_const)
 
-BOOST_CHECK_TYPE(int, int);   
+   BOOST_CHECK_TYPE(int, int);   
 
    remove_const_test_1();
    remove_const_test_2();
@@ -47,6 +64,8 @@ BOOST_CHECK_TYPE(int, int);
    remove_const_test_15();
    remove_const_test_16();
    remove_const_test_17();
+   remove_const_test_18();
+   remove_const_test_19();
 
 TT_TEST_END
 

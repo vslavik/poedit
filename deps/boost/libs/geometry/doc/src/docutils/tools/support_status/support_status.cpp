@@ -1,8 +1,8 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Tool reporting Implementation Support Status in QBK or plain text format
 
-// Copyright (c) 2011-2012 Bruno Lalande, Paris, France.
-// Copyright (c) 2011-2012 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2011-2015 Bruno Lalande, Paris, France.
+// Copyright (c) 2011-2015 Barend Gehrels, Amsterdam, the Netherlands.
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -12,14 +12,13 @@
 #include <fstream>
 #include <sstream>
 
-#include <boost/type_traits/is_base_of.hpp>
 #include <boost/mpl/for_each.hpp>
 #include <boost/mpl/vector.hpp>
+#include <boost/type_traits/is_base_of.hpp>
 
 #define BOOST_GEOMETRY_IMPLEMENTATION_STATUS_BUILD true
 #include <boost/geometry/core/cs.hpp>
 #include <boost/geometry/geometries/geometries.hpp>
-#include <boost/geometry/multi/geometries/multi_geometries.hpp>
 #include <boost/geometry/algorithms/append.hpp>
 #include <boost/geometry/algorithms/area.hpp>
 #include <boost/geometry/algorithms/buffer.hpp>
@@ -35,10 +34,13 @@
 #include <boost/geometry/algorithms/equals.hpp>
 #include <boost/geometry/algorithms/expand.hpp>
 #include <boost/geometry/algorithms/for_each.hpp>
+#include <boost/geometry/algorithms/is_simple.hpp>
+#include <boost/geometry/algorithms/is_valid.hpp>
 #include <boost/geometry/algorithms/length.hpp>
 #include <boost/geometry/algorithms/num_geometries.hpp>
 #include <boost/geometry/algorithms/num_interior_rings.hpp>
 #include <boost/geometry/algorithms/num_points.hpp>
+#include <boost/geometry/algorithms/num_segments.hpp>
 #include <boost/geometry/algorithms/overlaps.hpp>
 #include <boost/geometry/algorithms/perimeter.hpp>
 #include <boost/geometry/algorithms/reverse.hpp>
@@ -46,27 +48,6 @@
 #include <boost/geometry/algorithms/transform.hpp>
 #include <boost/geometry/algorithms/unique.hpp>
 #include <boost/geometry/io/wkt/wkt.hpp>
-#include <boost/geometry/multi/algorithms/append.hpp>
-#include <boost/geometry/multi/algorithms/area.hpp>
-#include <boost/geometry/multi/algorithms/centroid.hpp>
-#include <boost/geometry/multi/algorithms/clear.hpp>
-#include <boost/geometry/multi/algorithms/convert.hpp>
-#include <boost/geometry/multi/algorithms/correct.hpp>
-#include <boost/geometry/multi/algorithms/covered_by.hpp>
-#include <boost/geometry/multi/algorithms/distance.hpp>
-#include <boost/geometry/multi/algorithms/envelope.hpp>
-#include <boost/geometry/multi/algorithms/equals.hpp>
-#include <boost/geometry/multi/algorithms/for_each.hpp>
-#include <boost/geometry/multi/algorithms/length.hpp>
-#include <boost/geometry/multi/algorithms/num_geometries.hpp>
-#include <boost/geometry/multi/algorithms/num_interior_rings.hpp>
-#include <boost/geometry/multi/algorithms/num_points.hpp>
-#include <boost/geometry/multi/algorithms/perimeter.hpp>
-#include <boost/geometry/multi/algorithms/reverse.hpp>
-#include <boost/geometry/multi/algorithms/simplify.hpp>
-#include <boost/geometry/multi/algorithms/transform.hpp>
-#include <boost/geometry/multi/algorithms/unique.hpp>
-#include <boost/geometry/multi/io/wkt/wkt.hpp>
 #include <boost/geometry/strategies/strategies.hpp>
 
 #include "text_outputter.hpp"
@@ -102,6 +83,11 @@ typedef boost::mpl::vector<
     struct algorithm: boost::geometry::dispatch::algorithm<G> \
     {};
 
+#define DECLARE_UNARY_ALGORITHM_WITH_BOOLEAN(algorithm) \
+    template <typename G> \
+    struct algorithm: boost::geometry::dispatch::algorithm<G,false>  \
+    {};
+
 #define DECLARE_BINARY_ALGORITHM(algorithm) \
     template <typename G1, typename G2> \
     struct algorithm: boost::geometry::dispatch::algorithm<G1, G2> \
@@ -123,10 +109,13 @@ DECLARE_BINARY_ALGORITHM(equals)
 DECLARE_BINARY_ALGORITHM(expand)
 DECLARE_UNARY_ALGORITHM(for_each_point)
 DECLARE_UNARY_ALGORITHM(for_each_segment)
+DECLARE_UNARY_ALGORITHM(is_simple)
+DECLARE_UNARY_ALGORITHM(is_valid)
 DECLARE_UNARY_ALGORITHM(length)
 DECLARE_UNARY_ALGORITHM(num_geometries)
 DECLARE_UNARY_ALGORITHM(num_interior_rings)
-DECLARE_UNARY_ALGORITHM(num_points)
+DECLARE_UNARY_ALGORITHM_WITH_BOOLEAN(num_points)
+DECLARE_UNARY_ALGORITHM(num_segments)
 DECLARE_BINARY_ALGORITHM(overlaps)
 DECLARE_UNARY_ALGORITHM(perimeter)
 DECLARE_UNARY_ALGORITHM(reverse)
@@ -259,10 +248,12 @@ void support_status()
     test_binary_algorithm<expand, all_types, all_types, OutputFactory>("expand");
     test_unary_algorithm<for_each_point, all_types, OutputFactory>("for_each_point");
     test_unary_algorithm<for_each_segment, all_types, OutputFactory>("for_each_segment");
+    test_unary_algorithm<is_simple, all_types, OutputFactory>("is_simple");
+    test_unary_algorithm<is_valid, all_types, OutputFactory>("is_valid");
     test_unary_algorithm<length, all_types, OutputFactory>("length");
     test_unary_algorithm<num_geometries, all_types, OutputFactory>("num_geometries");
     test_unary_algorithm<num_interior_rings, all_types, OutputFactory>("num_interior_rings");
-    test_unary_algorithm<num_interior_rings, all_types, OutputFactory>("num_points");
+    test_unary_algorithm<num_points, all_types, OutputFactory>("num_points");
     test_binary_algorithm<overlaps, all_types, all_types, OutputFactory>("overlaps");
     test_unary_algorithm<perimeter, all_types, OutputFactory>("perimeter");
     test_unary_algorithm<reverse, all_types, OutputFactory>("reverse");

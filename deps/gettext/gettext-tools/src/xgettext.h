@@ -1,5 +1,6 @@
 /* xgettext common functions.
-   Copyright (C) 2001-2003, 2005-2006, 2008-2009, 2011 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2005-2006, 2008-2009, 2011, 2015 Free
+   Software Foundation, Inc.
    Written by Peter Miller <millerp@canb.auug.org.au>
    and Bruno Haible <haible@clisp.cons.org>, 2001.
 
@@ -144,7 +145,12 @@ typedef enum
   {
     lc_outside, /* Initial context: outside of comments and strings.  */
     lc_comment, /* Inside a comment.  */
-    lc_string   /* Inside a string literal.  */
+    lc_string,  /* Inside a string literal.  */
+
+    /* For embedded XML in programming code, like E4X in JavaScript.  */
+    lc_xml_open_tag,   /* Inside an opening tag of an XML element.  */
+    lc_xml_close_tag,  /* Inside a closing tag of an XML element.  */
+    lc_xml_content     /* Inside an XML text node.  */
   }
   lexical_context_ty;
 
@@ -237,6 +243,25 @@ extern refcounted_string_list_ty *savable_comment;
 extern void savable_comment_add (const char *str);
 extern void savable_comment_reset (void);
 
+/* Convert character encoding of COMMENT according to the current
+   source encoding.  Returns a new refcounted_string_list_ty.  */
+extern refcounted_string_list_ty *
+       savable_comment_convert_encoding (refcounted_string_list_ty *comment,
+                                         lex_pos_ty *pos);
+
+
+enum literalstring_escape_type
+{
+  LET_NONE = 0,
+  LET_ANSI_C = 1 << 0,
+  LET_UNICODE = 1 << 1
+};
+
+struct literalstring_parser
+{
+  char * (*parse) (const char *string, lex_pos_ty *pos,
+                   enum literalstring_escape_type type);
+};
 
 /* Add a message to the list of extracted messages.
    msgctxt must be either NULL or a malloc()ed string; its ownership is passed
@@ -270,7 +295,6 @@ extern void remember_a_message_plural (message_ty *mp,
                                        lex_pos_ty *pos,
                                        refcounted_string_list_ty *comment);
 
-
 /* Represents the progressive parsing of an argument list w.r.t. a single
    'struct callshape'.  */
 struct partial_call
@@ -283,12 +307,15 @@ struct partial_call
   int argtotal;                 /* total number of arguments, 0 if unspecified */
   string_list_ty xcomments;     /* auto-extracted comments */
   char *msgctxt;                /* context - owned string, or NULL */
+  enum literalstring_escape_type msgctxt_escape;
   lex_pos_ty msgctxt_pos;
   char *msgid;                  /* msgid - owned string, or NULL */
+  enum literalstring_escape_type msgid_escape;
   flag_context_ty msgid_context;
   lex_pos_ty msgid_pos;
   refcounted_string_list_ty *msgid_comment;
   char *msgid_plural;           /* msgid_plural - owned string, or NULL */
+  enum literalstring_escape_type msgid_plural_escape;
   flag_context_ty msgid_plural_context;
   lex_pos_ty msgid_plural_pos;
 };
@@ -321,12 +348,65 @@ extern void arglist_parser_remember (struct arglist_parser *ap,
                                      flag_context_ty context,
                                      char *file_name, size_t line_number,
                                      refcounted_string_list_ty *comment);
+/* Adds an uninterpreted string argument to an arglist_parser.  ARGNUM
+   must be > 0.
+   STRING is must be malloc()ed string; its ownership is passed to the callee.
+   FILE_NAME must be allocated with indefinite extent.
+   COMMENT may be savable_comment, or it may be a saved copy of savable_comment
+   (then add_reference must be used when saving it, and drop_reference while
+   dropping it).  Clear savable_comment.  */
+extern void arglist_parser_remember_literal (struct arglist_parser *ap,
+                                             int argnum, char *string,
+                                             flag_context_ty context,
+                                             char *file_name, size_t line_number,
+                                             refcounted_string_list_ty *comment,
+                                             enum literalstring_escape_type type);
 /* Tests whether an arglist_parser has is not waiting for more arguments after
    argument ARGNUM.  */
 extern bool arglist_parser_decidedp (struct arglist_parser *ap, int argnum);
 /* Terminates the processing of an arglist_parser after argument ARGNUM and
    deletes it.  */
 extern void arglist_parser_done (struct arglist_parser *ap, int argnum);
+
+
+/* A string buffer type that allows appending bytes (in the
+   xgettext_current_source_encoding) or Unicode characters.
+   Returns the entire string in UTF-8 encoding.  */
+
+struct mixed_string_buffer
+{
+  /* The part of the string that has already been converted to UTF-8.  */
+  char *utf8_buffer;
+  size_t utf8_buflen;
+  size_t utf8_allocated;
+  /* The first half of an UTF-16 surrogate character.  */
+  unsigned short utf16_surr;
+  /* The part of the string that is still in the source encoding.  */
+  char *curr_buffer;
+  size_t curr_buflen;
+  size_t curr_allocated;
+  /* The lexical context.  Used only for error message purposes.  */
+  lexical_context_ty lcontext;
+  const char *logical_file_name;
+  int line_number;
+};
+
+/* Creates a fresh mixed_string_buffer.  */
+extern struct mixed_string_buffer *
+       mixed_string_buffer_alloc (lexical_context_ty lcontext,
+                                  const char *logical_file_name,
+                                  int line_number);
+
+/* Appends a character to a mixed_string_buffer.  */
+extern void mixed_string_buffer_append_char (struct mixed_string_buffer *bp,
+                                             int c);
+
+/* Appends a Unicode character to a mixed_string_buffer.  */
+extern void mixed_string_buffer_append_unicode (struct mixed_string_buffer *bp,
+                                                int c);
+
+/* Frees mixed_string_buffer and returns the accumulated string in UTF-8.  */
+extern char * mixed_string_buffer_done (struct mixed_string_buffer *bp);
 
 
 #ifdef __cplusplus

@@ -1,5 +1,5 @@
 /*
- *          Copyright Andrey Semashev 2007 - 2013.
+ *          Copyright Andrey Semashev 2007 - 2015.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
  *          http://www.boost.org/LICENSE_1_0.txt)
@@ -10,7 +10,7 @@
 #include <iostream>
 #include <functional>
 #include <boost/smart_ptr/shared_ptr.hpp>
-#include <boost/utility/empty_deleter.hpp>
+#include <boost/core/null_deleter.hpp>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/log/core.hpp>
 #include <boost/log/expressions.hpp>
@@ -55,7 +55,7 @@ boost::shared_ptr< sink_t > init_logging()
     boost::shared_ptr< sinks::text_ostream_backend > backend =
         boost::make_shared< sinks::text_ostream_backend >();
     backend->add_stream(
-        boost::shared_ptr< std::ostream >(&std::clog, boost::empty_deleter()));
+        boost::shared_ptr< std::ostream >(&std::clog, boost::null_deleter()));
 
     // Wrap it into the frontend and register in the core
     boost::shared_ptr< sink_t > sink(new sink_t(

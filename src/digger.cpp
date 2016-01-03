@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2000-2013 Vaclav Slavik
+ *  Copyright (C) 2000-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -30,8 +30,7 @@
 #include <wx/filename.h>
 
 #include "digger.h"
-#include "parser.h"
-#include "catalog.h"
+#include "extractor.h"
 #include "progressinfo.h"
 #include "gexecute.h"
 #include "utility.h"
@@ -40,18 +39,29 @@ namespace
 {
 
 // concatenates catalogs using msgcat
-bool ConcatCatalogs(const wxArrayString& files, const wxString& outfile)
+bool ConcatCatalogs(const wxArrayString& files, TempDirectory& tmpdir, wxString *outfile)
 {
+    if (files.empty())
+        return false;
+
+    if (files.size() == 1)
+    {
+        *outfile = files.front();
+        return true;
+    }
+
+    *outfile = tmpdir.CreateFileName("merged.pot");
+
     wxString list;
     for ( wxArrayString::const_iterator i = files.begin();
           i != files.end(); ++i )
     {
-        list += wxString::Format(_T(" \"%s\""), i->c_str());
+        list += wxString::Format(" %s", QuoteCmdlineArg(*i));
     }
 
     wxString cmd =
-        wxString::Format(_T("msgcat --force-po -o \"%s\" %s"),
-                         outfile.c_str(),
+        wxString::Format("msgcat --force-po -o %s %s",
+                         QuoteCmdlineArg(*outfile),
                          list.c_str());
     bool succ = ExecuteGettext(cmd);
 
@@ -67,53 +77,54 @@ bool ConcatCatalogs(const wxArrayString& files, const wxString& outfile)
 
 } // anonymous namespace
 
-Catalog *SourceDigger::Dig(const wxArrayString& paths,
-                           const wxArrayString& keywords,
-                           const wxString& charset)
+CatalogPtr SourceDigger::Dig(const wxArrayString& paths,
+                             const wxArrayString& excludePaths,
+                             const wxArrayString& keywords,
+                             const wxString& charset,
+                             UpdateResultReason& reason)
 {
-    ParsersDB pdb;
-    pdb.Read(wxConfig::Get());
+    ExtractorsDB db;
+    db.Read(wxConfig::Get());
 
     m_progressInfo->UpdateMessage(_("Scanning files..."));
 
-    wxArrayString *all_files = FindFiles(paths, pdb);
-    if (all_files == NULL)
-        return NULL;
+    wxArrayString *all_files = FindFiles(paths, PathsToMatch(excludePaths), db);
+    if (all_files == nullptr)
+    {
+        reason = UpdateResultReason::NoSourcesFound;
+        return nullptr;
+    }
 
     TempDirectory tmpdir;
     wxArrayString partials;
 
-    for (size_t i = 0; i < pdb.GetCount(); i++)
+    for (size_t i = 0; i < db.Data.size(); i++)
     {
         if ( all_files[i].empty() )
             continue; // no files of this kind
 
         m_progressInfo->UpdateMessage(
-            wxString::Format(_("Parsing %s files..."), pdb[i].Name.c_str()));
-        if (!DigFiles(tmpdir, partials, all_files[i], pdb[i], keywords, charset))
+            // TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
+            wxString::Format(_("Parsing %s files..."), db.Data[i].Name.c_str()));
+        if (!DigFiles(tmpdir, partials, all_files[i], db.Data[i], keywords, charset))
         {
             delete[] all_files;
-            return NULL;
+            return nullptr;
         }
     }
 
     delete[] all_files;
 
-    if ( partials.empty() )
-        return NULL; // couldn't parse any source files
+    wxString mergedFile;
+    if ( !ConcatCatalogs(partials, tmpdir, &mergedFile) )
+        return nullptr; // couldn't parse any source files
 
-    wxString mergedFile = tmpdir.CreateFileName("merged.pot");
-
-    if ( !ConcatCatalogs(partials, mergedFile) )
-        return NULL;
-
-    Catalog *c = new Catalog(mergedFile, Catalog::CreationFlag_IgnoreHeader);
+    CatalogPtr c = std::make_shared<Catalog>(mergedFile, Catalog::CreationFlag_IgnoreHeader);
 
     if ( !c->IsOk() )
     {
         wxLogError(_("Failed to load extracted catalog."));
-        delete c;
-        return NULL;
+        return nullptr;
     }
 
     return c;
@@ -128,7 +139,7 @@ Catalog *SourceDigger::Dig(const wxArrayString& paths,
 bool SourceDigger::DigFiles(TempDirectory& tmpdir,
                             wxArrayString& outFiles,
                             const wxArrayString& files,
-                            Parser &parser, const wxArrayString& keywords,
+                            Extractor &extract, const wxArrayString& keywords,
                             const wxString& charset)
 {
     wxArrayString batchfiles;
@@ -144,7 +155,7 @@ bool SourceDigger::DigFiles(TempDirectory& tmpdir,
 
         wxString tempfile = tmpdir.CreateFileName("extracted.pot");
         if (!ExecuteGettext(
-                    parser.GetCommand(batchfiles, keywords, tempfile, charset)))
+                    extract.GetCommand(batchfiles, keywords, tempfile, charset)))
         {
             return false;
         }
@@ -157,12 +168,9 @@ bool SourceDigger::DigFiles(TempDirectory& tmpdir,
             return false;
     }
 
-    if ( tempfiles.empty() )
+    wxString outfile;
+    if ( !ConcatCatalogs(tempfiles, tmpdir, &outfile) )
         return false; // failed to parse any source files
-
-    wxString outfile = tmpdir.CreateFileName("merged_chunks.pot");
-    if ( !ConcatCatalogs(tempfiles, outfile) )
-        return false;
 
     outFiles.push_back(outfile);
     return true;
@@ -170,43 +178,64 @@ bool SourceDigger::DigFiles(TempDirectory& tmpdir,
 
 
 
-wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths, 
-                                       ParsersDB& pdb)
+wxArrayString *SourceDigger::FindFiles(const wxArrayString& paths,
+                                       const PathsToMatch& excludePaths,
+                                       ExtractorsDB& db)
 {
-    if (pdb.GetCount() == 0)
+    if (db.Data.empty())
       return NULL;
-    wxArrayString *p_files = new wxArrayString[pdb.GetCount()];
+
+    wxArrayString *p_files = new wxArrayString[db.Data.size()];
     wxArrayString files;
     size_t i;
     
     for (i = 0; i < paths.GetCount(); i++)
     {
-        if ( !FindInDir(paths[i], files) )
+        if (wxFileName::FileExists(paths[i]))
         {
-            wxLogWarning(_("No files found in: ") + paths[i]);
+            if (excludePaths.MatchesFile(paths[i]))
+            {
+                wxLogTrace("poedit", "no files found in '%s'", paths[i]);
+                continue;
+            }
+            files.Add(paths[i]);
+        }
+        else if ( !FindInDir(paths[i], excludePaths, files) )
+        {
+            wxLogTrace("poedit", "no files found in '%s'", paths[i]);
         }
     }
 
+    // Sort the filenames in some well-defined order. This is because directory
+    // traversal has, generally speaking, undefined order, and the order differs
+    // between filesystems. Finally, the order is reflected in the created PO
+    // files and it is much better for diffs if it remains consistent.
+    files.Sort();
+
     size_t filescnt = 0;
-    for (i = 0; i < pdb.GetCount(); i++)
+    for (i = 0; i < db.Data.size(); i++)
     {
-        p_files[i] = pdb[i].SelectParsable(files);
+        if (!db.Data[i].Enabled)
+            continue;
+        p_files[i] = db.Data[i].SelectParsable(files);
         filescnt += p_files[i].GetCount();
     }
     m_progressInfo->SetGaugeMax((int)filescnt);
     
     if (filescnt == 0)
-    {
-        wxLogError(_("Poedit did not find any files in scanned directories."));
-    }
+        return nullptr;
 
     return p_files;
 }
 
 
 
-int SourceDigger::FindInDir(const wxString& dirname, wxArrayString& files)
+int SourceDigger::FindInDir(const wxString& dirname,
+                            const PathsToMatch& excludePaths,
+                            wxArrayString& files)
 {
+    if (dirname.empty())
+        return 0;
     wxDir dir(dirname);
     if (!dir.IsOpened()) 
         return 0;
@@ -217,16 +246,26 @@ int SourceDigger::FindInDir(const wxString& dirname, wxArrayString& files)
     cont = dir.GetFirst(&filename, wxEmptyString, wxDIR_FILES);
     while (cont)
     {
-        files.Add(dirname + "/" + filename);
-        found++;
+        const wxString f = (dirname == ".") ? filename : dirname + "/" + filename;
         cont = dir.GetNext(&filename);
-    }    
+
+        if (excludePaths.MatchesFile(f))
+            continue;
+
+        files.Add(f);
+        found++;
+    }
 
     cont = dir.GetFirst(&filename, wxEmptyString, wxDIR_DIRS);
     while (cont)
     {
-        found += FindInDir(dirname + "/" + filename, files);
+        const wxString f = (dirname == ".") ? filename : dirname + "/" + filename;
         cont = dir.GetNext(&filename);
+
+        if (excludePaths.MatchesFile(f))
+            continue;
+
+        found += FindInDir(f, excludePaths, files);
     }
 
     return found;

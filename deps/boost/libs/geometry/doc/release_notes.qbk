@@ -1,10 +1,15 @@
 [/============================================================================
   Boost.Geometry (aka GGL, Generic Geometry Library)
 
-  Copyright (c) 2009-2013 Barend Gehrels, Geodan, Amsterdam, the Netherlands.
-  Copyright (c) 2009-2013 Mateusz Loskot (mateusz@loskot.net)
-  Copyright (c) 2009-2013 Mateusz Lalande, Paris, France.
-  Copyright (c) 2011-2013 Adam Wulkiewicz
+  Copyright (c) 2009-2015 Barend Gehrels, Geodan, Amsterdam, the Netherlands.
+  Copyright (c) 2009-2015 Bruno Lalande, Paris, France.
+  Copyright (c) 2009-2015 Mateusz Loskot <mateusz@loskot.net>, London, UK
+  Copyright (c) 2011-2015 Adam Wulkiewicz
+
+  This file was modified by Oracle on 2015.
+  Modifications copyright (c) 2015, Oracle and/or its affiliates.
+
+  Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 
   Use, modification and distribution is subject to the Boost Software License,
   Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -12,6 +17,154 @@
 =============================================================================/]
 
 [section:release_notes Release Notes]
+
+[/=================]
+[heading Boost 1.58]
+[/=================]
+
+[*Additional functionality]
+
+* New algorithm num_segments, returning the number of segments of a geometry
+* New overload for is_valid algorithm, that takes a string reference as a second argument and fills it with a message related to the validity or invalidity of the geometry
+* New overload for is_valid algorithm, that takes an enum reference as a second argument and fills it with a value related to the validity or invalidity of the geometry
+* Disjoint and intersects support the following geometry combinations: point/multipoint, multipoint/multipoint, multipoint/segment, multipoint/box
+
+[*Improvements]
+
+* Buffer now supports flat-ends for linestrings with a bend close to the start (such that buffered segment crosses flat-end).
+* Buffer performance is improved significantly
+* Partition performance is improved significantly for polygons, potentially enhancing all overlay operations
+
+[*Solved tickets]
+
+* [@https://svn.boost.org/trac/boost/ticket/8379 8379] Invalid comparison of the result of determinant
+* [@https://svn.boost.org/trac/boost/ticket/10108 10108] Error in overlay operations in specific cases where geometries touch at one point
+* [@https://svn.boost.org/trac/boost/ticket/10201 10201] Suggestion to use different function to compare coordinates [wontfix]
+* [@https://svn.boost.org/trac/boost/ticket/10467 10467] Template parameter name coliding with B0 macro name defined in termios.h
+* [@https://svn.boost.org/trac/boost/ticket/10640 10640] Invalid result of buffer() for CCW Polygons.
+* [@https://svn.boost.org/trac/boost/ticket/10666 10666] MSVC compiler warning C4127: conditional expression is constant
+* [@https://svn.boost.org/trac/boost/ticket/10747 10747] Error in rescaling causing errors in areal/areal set operations
+* [@https://svn.boost.org/trac/boost/ticket/10770 10770] Buffer fails for large distances, or rough round joins, where concavities where not intersected properly
+* [@https://svn.boost.org/trac/boost/ticket/10658 10658] sym_difference yields bad result for int polygons
+* [@https://svn.boost.org/trac/boost/ticket/10835 10835] Difference of multilinestring and polygon yields wrong result
+* [@https://svn.boost.org/trac/boost/ticket/10861 10861] Rtree failing to compile for Value being a pair or a tuple containing pointer to Geometry and the default equal_to<> used
+* [@https://svn.boost.org/trac/boost/ticket/10863 10863] Template parameter name coliding with B0 macro name defined in termios.h (duplicate of 10467)
+* [@https://svn.boost.org/trac/boost/ticket/10887 10887] Invalid result of within() and relate() for Linear/MultiPolygon
+* [@https://svn.boost.org/trac/boost/ticket/10890 10890] Invalid result of disjoint() for Point/Segment.
+* [@https://svn.boost.org/trac/boost/ticket/10904 10904] Invalid calculation of most significant Dimension of a segment in relate_cartesian_segments strategy
+* [@https://svn.boost.org/trac/boost/ticket/10912 10912] Invalid result of within() and relate() for Areal/Areal
+* [@https://svn.boost.org/trac/boost/ticket/10951 10951] Tests failing on windows with intel compiler due to lack of /bigobj flag.
+* [@https://svn.boost.org/trac/boost/ticket/10957 10957] Assertion failure and invalid results of various relational operations.
+* [@https://svn.boost.org/trac/boost/ticket/10958 10958] Invalid results of disjoint() L/L and L/A.
+* [@https://svn.boost.org/trac/boost/ticket/10959 10959] Assertion failure in get_turns() used with no_rescale_policy.
+* [@https://svn.boost.org/trac/boost/ticket/10960 10960] Invalid result of get_turns() for L/A, missing turn.
+* [@https://svn.boost.org/trac/boost/ticket/10961 10961] Invalid result of get_turns() for L/A, invalid turn for a Linear spike.
+* [@https://svn.boost.org/trac/boost/ticket/11112 11112] Compilation failure on Solaris due to a CS name clash (used for a macro on this platform)
+* [@https://svn.boost.org/trac/boost/ticket/11121 11121] Invalid result of difference() for integral coordinates
+
+[*Bugfixes]
+
+* Bug in multipoint/polygon multipoint/multipolygon distance computation (wrong detection of points inside the areal geometry)
+* Bug in flatten_iterator's assignment operator causing an access violation 
+* Bug in Cartesian segment-segment intersection strategy when one segment degenerates to a point and is collinear to the other non-degenerate segment
+* Bug in centroid(), non-deterministic result if calculated for e.g. a Polygon with zero-area.
+* Bug in buffers for joins with a limited number of points
+* Bug in buffers for round joins with limited number of points around sharp corners
+* Bug in buffers for joins with large buffer distances
+* Bug in buffers for round ends with an odd number of points
+* Bug in buffers for flat ends with large buffer distances
+* Bug in buffers for interior rings with large negative buffer distances
+* Bug in closing_iterator not working properly when the input range is empty
+* Bug in is_simple, not handling properly closed simple linestrings within multilinestrings
+* Bug in rtree constructors taking a pair of Iterators or a Range (packing algorithm), the use of reference to destroyed temporary when Iterator's reference is not true reference, e.g. for some of the Range Adaptors. It also affects distance() and comparable_distance(). This bug may cause unexpected behavior of the rtree or distance() algorithm, e.g. an assertion failure or a SEGFAULT.
+* Bug in rtree count() member function, the use of reference to destroyed temporary when object of type convertible but not the same as value_type or indexable_type is passed. If this happens, wrong result may be returned, in most cases 0.
+* Bugs related to the handling of Ranges, preventing compilation of Geometries using non-Container Ranges in some algorithms (thanks to Samuel Debionne)
+
+[/=================]
+[heading Boost 1.57]
+[/=================]
+
+[*Additional functionality]
+
+[*Improvements]
+
+* The support of parameters convertible to value_type in rtree insert(), remove() and count() functions
+* Support for counterclockwise input/output in algorithm buffer
+* Support for open-geometry input in algorithm buffer (open output not yet supported)
+* Support for degenerate input (point-like linestrings, polygons) in algorithm buffer
+
+[*Solved tickets]
+
+* [@https://svn.boost.org/trac/boost/ticket/6443 6443] Wrong degenerated hulls returned by convex_hull().
+* [@https://svn.boost.org/trac/boost/ticket/8402 8402] Implicit conversion warnings
+* [@https://svn.boost.org/trac/boost/ticket/9354 9354] Bug in winding strategy affecting within() and covered_by() for non-cartesian coordinate systems
+* [@https://svn.boost.org/trac/boost/ticket/10177 10177] Missing include
+* [@https://svn.boost.org/trac/boost/ticket/10345 10345] Distance fails to compile for some coordinate types
+* [@https://svn.boost.org/trac/boost/ticket/10398 10398] Wrong neighbour check in buffer, calculating turns
+* [@https://svn.boost.org/trac/boost/ticket/10421 10421] Invalid Point-Box distance for spherical CS
+* [@https://svn.boost.org/trac/boost/ticket/10562 10562] Invalid number of Points in the result of convex_hull() for open output
+* [@https://svn.boost.org/trac/boost/ticket/10615 10615] Rtree constructor feature request
+* [@https://svn.boost.org/trac/boost/ticket/10643 10643] Invalid point_on_surface() result for big coordinates
+* [@https://svn.boost.org/trac/boost/ticket/10647 10647] Invalid result of disjoint() in some cases when polygon is inside inner ring of other polygon
+* [@https://svn.boost.org/trac/boost/ticket/10668 10668] Implicit conversion warnings (duplicated 8402)
+
+[*Bugfixes]
+
+* Several fixes of bugs in algorithm buffer
+* Bug in point_on_surface() for CCW Polygons (extreme_points()) and numerical issue (thanks to Matt Amos)
+* Bug in disjoint() for A/A fixed by replacement of point_on_surface() with point_on_border() (thanks to Matt Amos)
+* The result of convex_hull(), duplicated Point in open output, too small number of Points for 1- and 2-Point input
+* Imprecision for big coordinates in centroid(), fixed by Points translation (related with ticket 10643)
+* for_each_segment() not taking into account the last segment of open Geometry
+
+[/=================]
+[heading Boost 1.56]
+[/=================]
+
+[*Additional functionality]
+
+* New algorithm buffer for inflating/deflating geometries (buffer itself already existed but that was only to enlarge a box)
+* New algorithm remove_spikes, algorithm to remove spikes from a ring, polygon or multi_polygon
+* New algorithm point_on_surface, generating a point lying on the surface (interior) of the polygon
+* New algorithm is_simple, returning true if a geometry is simple according to the OGC standard
+* New algorithm is_valid, returning true if a geometry is valid according to the OGC standard
+* New algorithm crosses for checking this spatial relation according to the OGC standard
+* The set operation algorithms (difference, intersection, sym_difference and union_) now support as input pairs of pointlike or linear geometries
+* The distance and comparable_distance algorithms now support all pairs of geometry combinations
+* The spatial relations which didn't support it (covered_by, touches, within, etc.) now support as input linear and/or areal geometries
+* The support for boost::variants as input geometries in various algorithms
+* The rtree support for indexing segments
+* The rtree nearest() predicate support for arbitrary geometries
+
+[*Improvements]
+
+* The rtree pack-creation algorithm optimization (thanks to Lu Wang)
+
+[*Solved tickets]
+
+* [@https://svn.boost.org/trac/boost/ticket/8310 8310] Wrong results with overlapping polygons (fixed using point_on_surface for disjoint)
+* [@https://svn.boost.org/trac/boost/ticket/8375 8375] sym_difference of non-closed polygons returns closed polygon
+* [@https://svn.boost.org/trac/boost/ticket/8376 8376] difference of non-closed polygons returns closed polygon
+* [@https://svn.boost.org/trac/boost/ticket/9081 9081] Booleans create self-intersecting polygons from non-self-intersecting polygons
+* [@https://svn.boost.org/trac/boost/ticket/9245 9245] Check for process errors in make_qbk.py
+* [@https://svn.boost.org/trac/boost/ticket/9563 9563] (Sym)difference not successful, fixed by rescaling to robust type
+* [@https://svn.boost.org/trac/boost/ticket/9628 9628] Wrong result of within() due to the winding strategy not working correctly for nearly-horizontal segments
+* [@https://svn.boost.org/trac/boost/ticket/9828 9828] boost::geometry::union_(...) creates redundant closing point
+* [@https://svn.boost.org/trac/boost/ticket/9871 9871] Remove spike in polygon with only a spike
+* [@https://svn.boost.org/trac/boost/ticket/9941 9941] Add support for touches(box, box)
+* [@https://svn.boost.org/trac/boost/ticket/9947 9947] Missing info about WKT in documentation
+* [@https://svn.boost.org/trac/boost/ticket/9759 9759] Invalid results of R-tree knn queries for non-cartesian coordinate systems
+* [@https://svn.boost.org/trac/boost/ticket/10019 10019] Difference of Linestring and Box returns their intersection
+* [@https://svn.boost.org/trac/boost/ticket/10077 10077] Wrong types in concept checks in boost/geometry/arithmetic/arithmetic.hpp
+* [@https://svn.boost.org/trac/boost/ticket/10234 10234] Wrong results of covered_by() for nearly-horizontal segments
+
+[*Bugfixes]
+
+* intersects(polygon) could return a self-intersection-point for its closing point, fixed
+* equals() could return invalid results for non-simple linear geometries according to the OGC standard, fixed
+* touches() didn't work properly for CCW areal geomtries, fixed
+* rtree nearest queries returned wrong elements for non-cartesian coordinate systems, fixed
+* rtree crashed in some cases when used with Interprocess allocator, fixed
 
 [/=================]
 [heading Boost 1.55]
@@ -30,6 +183,8 @@
 [*Bugfixes]
 
 * In some cases .back() or .clear() was called, violating the usage of Concepts. Fixed for the reported cases
+* Use consistent side information in cart_intersect and get_turn_info and handle_tangencies and enrich_intersection_info. This
+  is done by switching to integer (if necessary) for the specific 6 points only, zooming in on the 4 or 3 segments
 
 [*Solved tickets]
 
@@ -43,10 +198,10 @@
 
 [*Internal changes]
 
-* Distance-strategy TODO
-* Transform-strategy TODO
+* Adapted projected_point<> distance strategy, point-type in template is replaced by calculation-type
+* Adapted transform strategies, they have points now as member-template, and calculation-type as template. Similar to what was done for projected_point distance
 * Spikes (could be generated in difference) in integer-based overlays are now avoided during generation
-* Cleanup, removed old MSVC2005 project files, let all tests pass green (also in extensions)
+* Cleanup, removed old MSVC2005 project files
 * R*-tree balancing algorithm optimized
 
 [/=================]

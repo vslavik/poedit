@@ -12,14 +12,14 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-#if defined(_MSC_VER) && _MSC_VER >= 1000
+#if defined(_MSC_VER)
 # pragma once
 #endif
 
 #ifndef BOOST_PHOENIX_STD_HASH_MAP_FWD_EN_16_12_2004
 #define BOOST_PHOENIX_STD_HASH_MAP_FWD_EN_16_12_2004
 
-#include <boost/config.hpp>
+#include <boost/phoenix/config.hpp>
 
 #if defined(BOOST_HAS_HASH)
 

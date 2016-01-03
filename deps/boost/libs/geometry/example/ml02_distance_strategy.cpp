@@ -32,5 +32,5 @@ int main()
   strategy2_type strategy2;
   strategy2_type::calculation_type d2 = strategy2.apply(p1, p2);
 
-  return 0;  
+  return 0;
 }

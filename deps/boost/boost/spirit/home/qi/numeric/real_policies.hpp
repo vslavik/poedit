@@ -116,7 +116,7 @@ namespace boost { namespace spirit { namespace qi
             // nan[(...)] ?
             if (detail::string_parse("nan", "NAN", first, last, unused))
             {
-                if (*first == '(')
+                if (first != last && *first == '(')
                 {
                     // skip trailing (...) part
                     Iterator i = first;

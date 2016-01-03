@@ -27,8 +27,8 @@
 <a name="boost_asio.reference.strand"></a><a class="link" href="strand.html" title="strand">strand</a>
 </h3></div></div></div>
 <p>
-        <a class="indexterm" name="idp98796488"></a> 
-Typedef for backwards compatibility.
+        <a class="indexterm" name="idp168748560"></a> 
+(Deprecated: Use <a class="link" href="io_service__strand.html" title="io_service::strand"><code class="computeroutput"><span class="identifier">io_service</span><span class="special">::</span><span class="identifier">strand</span></code></a>.) Typedef for backwards compatibility.
       </p>
 <pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">asio</span><span class="special">::</span><span class="identifier">io_service</span><span class="special">::</span><span class="identifier">strand</span> <span class="identifier">strand</span><span class="special">;</span>
 </pre>
@@ -222,6 +222,15 @@ Typedef for backwards compatibility.
       </p>
 <h5>
 <a name="boost_asio.reference.strand.h2"></a>
+        <span class="phrase"><a name="boost_asio.reference.strand.remarks"></a></span><a class="link" href="strand.html#boost_asio.reference.strand.remarks">Remarks</a>
+      </h5>
+<p>
+        The implementation makes no guarantee that handlers posted or dispatched
+        through different <code class="computeroutput"><span class="identifier">strand</span></code>
+        objects will be invoked concurrently.
+      </p>
+<h5>
+<a name="boost_asio.reference.strand.h3"></a>
         <span class="phrase"><a name="boost_asio.reference.strand.thread_safety"></a></span><a class="link" href="strand.html#boost_asio.reference.strand.thread_safety">Thread
         Safety</a>
       </h5>
@@ -232,7 +241,7 @@ Typedef for backwards compatibility.
         <span class="emphasis"><em>Shared</em></span> <span class="emphasis"><em>objects:</em></span> Safe.
       </p>
 <h5>
-<a name="boost_asio.reference.strand.h3"></a>
+<a name="boost_asio.reference.strand.h4"></a>
         <span class="phrase"><a name="boost_asio.reference.strand.requirements"></a></span><a class="link" href="strand.html#boost_asio.reference.strand.requirements">Requirements</a>
       </h5>
 <p>
@@ -244,7 +253,8 @@ Typedef for backwards compatibility.
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2013 Christopher M. Kohlhoff<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2015 Christopher M.
+      Kohlhoff<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

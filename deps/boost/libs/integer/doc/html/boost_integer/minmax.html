@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Compile time min/max calculation</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="Boost.Integer">
 <link rel="up" href="../index.html" title="Boost.Integer">
 <link rel="prev" href="log2.html" title="Compile Time log2 Calculation">
@@ -24,9 +24,9 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="boost_integer.minmax"></a><a class="link" href="minmax.html" title="Compile time min/max calculation"> Compile time min/max calculation</a>
+<a name="boost_integer.minmax"></a><a class="link" href="minmax.html" title="Compile time min/max calculation">Compile time min/max calculation</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="minmax.html#boost_integer.minmax.synopsis">Synopsis</a></span></dt>
 <dt><span class="section"><a href="minmax.html#boost_integer.minmax.usage">Usage</a></span></dt>
 <dt><span class="section"><a href="minmax.html#boost_integer.minmax.example">Example</a></span></dt>
@@ -98,18 +98,18 @@
     <span class="keyword">void</span>  <span class="keyword">operator</span> <span class="special">()(</span> <span class="identifier">addend1_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="identifier">a1</span><span class="special">,</span> <span class="identifier">addend2_type</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="identifier">a2</span><span class="special">,</span> <span class="identifier">sum_type</span> <span class="special">&amp;</span><span class="identifier">s</span> <span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">};</span>
 
-<span class="comment">//...
-</span>
+<span class="comment">//...</span>
+
 <span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
-    <span class="keyword">int</span> <span class="keyword">const</span>   <span class="identifier">a1</span><span class="special">[]</span> <span class="special">=</span> <span class="special">{</span> <span class="number">0</span><span class="special">,</span> <span class="number">4</span><span class="special">,</span> <span class="number">3</span> <span class="special">};</span>  <span class="comment">// 340
-</span>    <span class="keyword">int</span> <span class="keyword">const</span>   <span class="identifier">a2</span><span class="special">[]</span> <span class="special">=</span> <span class="special">{</span> <span class="number">9</span><span class="special">,</span> <span class="number">8</span> <span class="special">};</span>     <span class="comment">//  89
-</span>    <span class="keyword">int</span>         <span class="identifier">s</span><span class="special">[</span> <span class="number">4</span> <span class="special">];</span>
+    <span class="keyword">int</span> <span class="keyword">const</span>   <span class="identifier">a1</span><span class="special">[]</span> <span class="special">=</span> <span class="special">{</span> <span class="number">0</span><span class="special">,</span> <span class="number">4</span><span class="special">,</span> <span class="number">3</span> <span class="special">};</span>  <span class="comment">// 340</span>
+    <span class="keyword">int</span> <span class="keyword">const</span>   <span class="identifier">a2</span><span class="special">[]</span> <span class="special">=</span> <span class="special">{</span> <span class="number">9</span><span class="special">,</span> <span class="number">8</span> <span class="special">};</span>     <span class="comment">//  89</span>
+    <span class="keyword">int</span>         <span class="identifier">s</span><span class="special">[</span> <span class="number">4</span> <span class="special">];</span>
     <span class="identifier">adder</span><span class="special">&lt;</span><span class="number">3</span><span class="special">,</span><span class="number">2</span><span class="special">&gt;</span>  <span class="identifier">obj</span><span class="special">;</span>
 
-    <span class="identifier">obj</span><span class="special">(</span> <span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">,</span> <span class="identifier">s</span> <span class="special">);</span>  <span class="comment">// 's' should be 429 or { 9, 2, 4, 0 }
-</span>    <span class="comment">//...
-</span><span class="special">}</span>
+    <span class="identifier">obj</span><span class="special">(</span> <span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">,</span> <span class="identifier">s</span> <span class="special">);</span>  <span class="comment">// 's' should be 429 or { 9, 2, 4, 0 }</span>
+    <span class="comment">//...</span>
+<span class="special">}</span>
 </pre>
 </div>
 <div class="section">
@@ -145,8 +145,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001 -2009 Beman Dawes, Daryle Walker, Gennaro Prota,
-      John Maddock<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2009 Beman
+      Dawes, Daryle Walker, Gennaro Prota, John Maddock<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

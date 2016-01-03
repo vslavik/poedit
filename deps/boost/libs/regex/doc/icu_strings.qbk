@@ -65,25 +65,25 @@ The character encoding of the sequence is determined based upon sizeof(*i):
                               = boost::regex_constants::perl);
 
 [*Effects]: Creates a regular expression object from the Null-terminated 
-UTF-8 characater sequence /p/.
+UTF-8 character sequence /p/.
 
    u32regex make_u32regex(const unsigned char* p, 
                           boost::regex_constants::syntax_option_type opt 
                               = boost::regex_constants::perl);
 
-[*Effects]: Creates a regular expression object from the Null-terminated UTF-8 characater sequence p.
+[*Effects]: Creates a regular expression object from the Null-terminated UTF-8 character sequence p.
 
    u32regex make_u32regex(const wchar_t* p, 
                           boost::regex_constants::syntax_option_type opt 
                               = boost::regex_constants::perl);
 
-[*Effects]: Creates a regular expression object from the Null-terminated characater sequence p.  The character encoding of the sequence is determined based upon sizeof(wchar_t): 1 implies UTF-8, 2 implies UTF-16, and 4 implies UTF-32.
+[*Effects]: Creates a regular expression object from the Null-terminated character sequence p.  The character encoding of the sequence is determined based upon sizeof(wchar_t): 1 implies UTF-8, 2 implies UTF-16, and 4 implies UTF-32.
 
    u32regex make_u32regex(const UChar* p, 
                           boost::regex_constants::syntax_option_type opt 
                               = boost::regex_constants::perl);
 
-[*Effects]: Creates a regular expression object from the Null-terminated UTF-16 characater sequence p.
+[*Effects]: Creates a regular expression object from the Null-terminated UTF-16 character sequence p.
 
    template<class C, class T, class A>
    u32regex make_u32regex(const std::basic_string<C, T, A>& s, 

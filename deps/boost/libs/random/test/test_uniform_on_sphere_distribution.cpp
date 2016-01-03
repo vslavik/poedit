@@ -5,7 +5,7 @@
  * accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
  *
- * $Id: test_uniform_on_sphere_distribution.cpp 71018 2011-04-05 21:27:52Z steven_watanabe $
+ * $Id$
  *
  */
 
@@ -41,3 +41,31 @@ std::vector<double> max1 = boost::assign::list_of(1.0)(0.0)(0.0);
 BOOST_TEST_DONT_PRINT_LOG_VALUE( std::vector<double> )
 
 #include "test_distribution.ipp"
+
+#include <boost/math/special_functions/fpclassify.hpp>
+
+struct generate_zeros {
+public:
+    generate_zeros() : i(0) {}
+    typedef unsigned result_type;
+    static unsigned (min)() { return 0u; }
+    static unsigned (max)() { return boost::random::minstd_rand0::max(); }
+    unsigned operator()() {
+        static unsigned data[] = { 0, 0, 0, 0, 0, 0 };
+        if(i < 6) {
+            return data[i++];
+        } else {
+            return gen();
+        }
+    }
+private:
+    int i;
+    boost::random::minstd_rand0 gen;
+};
+
+BOOST_AUTO_TEST_CASE(test_zeros) {
+    generate_zeros gen;
+    boost::random::uniform_on_sphere<> dist(2);
+    std::vector<double> val = dist(gen);
+    BOOST_CHECK(!(boost::math::isnan)(val[0]));
+}

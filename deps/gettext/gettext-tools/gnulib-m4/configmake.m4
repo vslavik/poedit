@@ -1,5 +1,5 @@
-# configmake.m4 serial 1
-dnl Copyright (C) 2010-2013 Free Software Foundation, Inc.
+# configmake.m4 serial 2
+dnl Copyright (C) 2010-2015 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -7,8 +7,9 @@ dnl with or without modifications, as long as this notice is preserved.
 # gl_CONFIGMAKE_PREP
 # ------------------
 # Guarantee all of the standard directory variables, even when used with
-# autoconf 2.59 (datarootdir wasn't supported until 2.59c) or automake
-# 1.9.6 (pkglibexecdir wasn't supported until 1.10b.).
+# autoconf 2.59 (datarootdir wasn't supported until 2.59c, and runstatedir
+# in 2.70) or automake 1.9.6 (pkglibexecdir wasn't supported until 1.10b,
+# and runstatedir in 1.14.1).
 AC_DEFUN([gl_CONFIGMAKE_PREP],
 [
   dnl Technically, datadir should default to datarootdir.  But if
@@ -42,6 +43,10 @@ AC_DEFUN([gl_CONFIGMAKE_PREP],
   fi
   if test "x$localedir" = x; then
     AC_SUBST([localedir], ['${datarootdir}/locale'])
+  fi
+  dnl Added in autoconf 2.70
+  if test "x$runstatedir" = x; then
+    AC_SUBST([runstatedir], ['${localstatedir}/run'])
   fi
 
   dnl Automake 1.9.6 only lacks pkglibexecdir; and since 1.11 merely

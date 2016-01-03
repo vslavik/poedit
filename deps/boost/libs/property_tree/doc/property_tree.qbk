@@ -7,15 +7,16 @@
  /]
 
 [library Boost.PropertyTree
-    [quickbook 1.4]
-    [copyright 2008 Marcin Kalicinski]
+    [quickbook 1.6]
+    [copyright 2008-2010 Marcin Kalicinski]
+    [copyright 2010-2013 Sebastian Redl]
     [purpose Property Tree library]
     [license
         Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
         [@http://www.boost.org/LICENSE_1_0.txt])
     ]
-    [authors [Kalicinski, Marcin]]
+    [authors [Kalicinski, Marcin], [Redl, Sebastian]]
     [id property_tree]
     [dirname property_tree]
     [category container]
@@ -29,19 +30,20 @@
 [def __ptree_data_type__ [classref boost::property_tree::basic_ptree::data_type data_type]]
 [def __ptree_iterator__ [classref boost::property_tree::basic_ptree::iterator iterator]]
 [def __ptree_const_iterator__ [classref boost::property_tree::basic_ptree::const_iterator const_iterator]]
+[def __ptree_assoc_iterator__ [classref boost::property_tree::basic_ptree::assoc_iterator assoc_iterator]]
+[def __ptree_const_assoc_iterator__ [classref boost::property_tree::basic_ptree::const_assoc_iterator const_assoc_iterator]]
 [def __path__ [classref boost::property_tree::string_path path]]
 [def __ptree_error__ [classref boost::property_tree::ptree_error ptree_error]]
 [def __ptree_bad_data__ [classref boost::property_tree::ptree_bad_data ptree_bad_data]]
 [def __ptree_bad_path__ [classref boost::property_tree::ptree_bad_path ptree_bad_path]]
 
 [/ members]
-[def __ptree_insert__ [memberref boost::property_tree::basic_ptree::insert insert]]
-[def __ptree_push_back__ [memberref boost::property_tree::basic_ptree::push_back push_back]]
-[def __ptree_find__ [memberref boost::property_tree::basic_ptree::find find]]
-[def __ptree_erase__ [memberref boost::property_tree::basic_ptree::erase erase]]
-[def __ptree_find__ [memberref boost::property_tree::basic_ptree::find find]]
 [def __ptree_data__ [memberref boost::property_tree::basic_ptree::data data]]
+[def __ptree_find__ [memberref boost::property_tree::basic_ptree::find find]]
+[def __ptree_insert__ [memberref boost::property_tree::basic_ptree::insert insert]]
 [def __ptree_push_front__ [memberref boost::property_tree::basic_ptree::push_front push_front]]
+[def __ptree_push_back__ [memberref boost::property_tree::basic_ptree::push_back push_back]]
+[def __ptree_erase__ [memberref boost::property_tree::basic_ptree::erase erase]]
 [def __ptree_sort__ [memberref boost::property_tree::basic_ptree::sort sort]]
 [def __ptree_get__ [memberref boost::property_tree::basic_ptree::get get]]
 [/ XXX: Don't know how to specify overloads]

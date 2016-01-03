@@ -4,7 +4,7 @@
 <title>The Full Extension Mechanism</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Fusion 2.1">
+<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../extension.html" title="Extension">
 <link rel="prev" href="../extension.html" title="Extension">
 <link rel="next" href="sequence_facade.html" title="Sequence Facade">
@@ -114,7 +114,7 @@
 </pre>
 <p>
         <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">tag_of</span></code> also has a second template argument,
-        that can be used in conjuction with <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">enable_if</span></code>
+        that can be used in conjunction with <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">enable_if</span></code>
         to provide tag support for groups of related types. This feature is not necessary
         for our sequence, but for an example see the code in:
       </p>
@@ -317,7 +317,7 @@
 </tr>
 <tr><td align="left" valign="top"><p>
           Although there is a fair amount of left to do to produce a fully fledged
-          Fusion sequence, <a class="link" href="../iterator/metafunctions/value_of.html" title="value_of"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">value_of</span></code></a> and <a class="link" href="../iterator/functions/deref.html" title="deref"><code class="computeroutput"><span class="identifier">deref</span></code></a> illustrate all the signficant
+          Fusion sequence, <a class="link" href="../iterator/metafunctions/value_of.html" title="value_of"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">value_of</span></code></a> and <a class="link" href="../iterator/functions/deref.html" title="deref"><code class="computeroutput"><span class="identifier">deref</span></code></a> illustrate all the significant
           concepts required. The remainder of the process is very repetitive, simply
           requiring implementation of a suitable <code class="computeroutput"><span class="identifier">xxxx_impl</span></code>
           for each feature <code class="computeroutput"><span class="identifier">xxxx</span></code>.
@@ -439,8 +439,8 @@
         In order for <code class="computeroutput"><span class="identifier">example_struct</span></code>
         to serve as an associative forward sequence, we need to adapt the traversal
         category of our sequence and our iterator accordingly and enable 3 intrinsic
-        sequence lookup features, <a class="link" href="../sequence/intrinsic/functions/at_key.html" title="at_key"><code class="computeroutput"><span class="identifier">at_key</span></code></a>, __value_at_key__ and <a class="link" href="../sequence/intrinsic/functions/has_key.html" title="has_key"><code class="computeroutput"><span class="identifier">has_key</span></code></a>.
-        We also need to enable 3 iterator lookup features, <a class="link" href="../iterator/metafunctions/key_of.html" title="key_of"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">key_of</span></code></a>, <a class="link" href="../iterator/metafunctions/value_of_data.html" title="value_of_data"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">value_of_data</span></code></a> and <a class="link" href="../iterator/functions/deref_data.html" title="deref_data"><code class="computeroutput"><span class="identifier">deref_data</span></code></a>.
+        sequence lookup features, <a class="link" href="../sequence/intrinsic/functions/at_key.html" title="at_key"><code class="computeroutput"><span class="identifier">at_key</span></code></a>, <a class="link" href="../sequence/intrinsic/metafunctions/value_at_key.html" title="value_at_key"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">value_at_key</span></code></a> and <a class="link" href="../sequence/intrinsic/functions/has_key.html" title="has_key"><code class="computeroutput"><span class="identifier">has_key</span></code></a>. We also need to enable
+        3 iterator lookup features, <a class="link" href="../iterator/metafunctions/key_of.html" title="key_of"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">key_of</span></code></a>, <a class="link" href="../iterator/metafunctions/value_of_data.html" title="value_of_data"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">value_of_data</span></code></a> and <a class="link" href="../iterator/functions/deref_data.html" title="deref_data"><code class="computeroutput"><span class="identifier">deref_data</span></code></a>.
       </p>
 <p>
         To implement <code class="computeroutput"><span class="identifier">at_key_impl</span></code>
@@ -501,7 +501,7 @@
 <p>
         We've now worked through the entire process for adding a new random access
         sequence and we've also enabled our type to serve as an associative sequence.
-        The implementation was slightly longwinded, but followed a simple repeating
+        The implementation was slightly long-winded, but followed a simple repeating
         pattern.
       </p>
 <p>

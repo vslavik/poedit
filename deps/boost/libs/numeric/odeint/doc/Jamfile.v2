@@ -1,12 +1,16 @@
-# (C) Copyright 2009 - 2012 : Karsten Ahnert, Mario Mulansky
+# Copyright 2009-2013 Karsten Ahnert
+# Copyright 2011-2012 Mario Mulansky
+# Copyright 2012 Daniel James
+# Copyright 2013 Pascal Germroth
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 
-import quickbook ;
-import boostbook ;
-import doxygen ;
+using quickbook ;
+using boostbook ;
+using doxygen ;
 import modules ;
+path-constant here : . ;
 
 project : requirements
         <include>$(BOOST_ROOT)/tools/auto_index/include
@@ -34,7 +38,7 @@ if --enable-index in  [ modules.peek : ARGV ]
         # PDF native index support is probably better for PDFs as then you actually get page numbers.
 
         <auto-index-script>odeint.idx # Specifies the name of the index script to load. 
-        <auto-index-prefix>../../../.. 
+        <auto-index-prefix>../include
         
         # Inform Quickbook that there is to be an index(es).
         <quickbook-define>enable_index
@@ -49,15 +53,16 @@ else
 
 doxygen reference 
     :
-#    [ glob ../../../../boost/numeric/odeint/*.hpp ] 
-    [ glob ../../../../boost/numeric/odeint/stepper/*.hpp ]
-    [ glob ../../../../boost/numeric/odeint/stepper/base/*.hpp ]
-#    [ glob ../../../../boost/numeric/odeint/stepper/generation/*.hpp ]
-    [ glob ../../../../boost/numeric/odeint/integrate/*.hpp ]
-#    [ glob ../../../../boost/numeric/odeint/iterator/*.hpp ]
-#    [ glob ../../../../boost/numeric/odeint/algebra/*.hpp ]
-#    [ glob ../../../../boost/numeric/odeint/util/*.hpp ]
-#    ../../../../boost/numeric/odeint.hpp
+#    [ glob ../include/boost/numeric/odeint/*.hpp ] 
+    [ glob ../include/boost/numeric/odeint/stepper/*.hpp ]
+    [ glob ../incude/boost/numeric/odeint/stepper/base/*.hpp ]
+#    [ glob ../include/boost/numeric/odeint/stepper/generation/*.hpp ]
+    [ glob ../include/boost/numeric/odeint/integrate/*.hpp : ../include/boost/numeric/odeint/integrate/null_observer.hpp ../include/boost/numeric/odeint/integrate/observer_collection.hpp ]
+    [ glob ../include/boost/numeric/odeint/iterator/*.hpp ]
+#    [ glob ../include/boost/numeric/odeint/iterator/impl/*.hpp ]
+#    [ glob ../include/boost/numeric/odeint/algebra/*.hpp ]
+#    [ glob ../include/boost/numeric/odeint/util/*.hpp ]
+#    ../include/boost/numeric/odeint.hpp
     : 
 
     # Lots of parameters passed to Doxygen. You can see these in the doxygen docs, or the Wizard Expert tab displays them.
@@ -223,9 +228,9 @@ boostbook standalone
     <format>pdf:<xsl:param>admon.graphics.extension=".svg"  #
     <format>pdf:<xsl:param>use.role.for.mediaobject=1 # Use print role on next line.
     <format>pdf:<xsl:param>preferred.mediaobject.role=print # pdf role is to be printed.
-    <format>pdf:<xsl:param>img.src.path=$(images_location)/ # Path of image (.svg) files. (Note trailing /) ? 
-    <format>pdf:<xsl:param>admon.graphics.path=$(nav_images)/ # path to admonition (warning, note...) image (.svg) files.
-    <format>pdf:<xsl:param>draft.mode="yes" # Yes if draft watermark wanted!
+    <format>pdf:<xsl:param>img.src.path=$(here)/html/ # Path of image (.svg) files. (Note trailing /) ? 
+    #<format>pdf:<xsl:param>admon.graphics.path=$(nav_images)/ # path to admonition (warning, note...) image (.svg) files.
+    #<format>pdf:<xsl:param>draft.mode="yes" # Yes if draft watermark wanted!
     #<format>pdf:<xsl:param>draft.watermark.image="draft.png" # Watermark (local copy).
     #<format>pdf:<xsl:param>draft.watermark.image=http://docbook.sourceforge.net/release/images/draft.png # Watermark.
 
@@ -267,11 +272,6 @@ boostbook standalone
 # will rename the file to the expected filename, here quick_auto_dox_index.pdf.
 # <location>. means installed in same place as this jamfile, /doc.
 
-install pdf-install : standalone : <install-type>PDF <location>. <name>checks.pdf ;
+install pdfinstall : standalone : <install-type>PDF <location>. <name>odeint.pdf ;
 
 install callouts : [ glob src/images/callouts/*.png ] : <location>html/images/callouts ;
-
-
-
-
-

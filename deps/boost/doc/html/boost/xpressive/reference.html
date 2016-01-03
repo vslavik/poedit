@@ -6,8 +6,8 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp" title="Header &lt;boost/xpressive/regex_actions.hpp&gt;">
-<link rel="prev" href="value.html" title="Struct template value">
-<link rel="next" href="local.html" title="Struct template local">
+<link rel="prev" href="placeholder.html" title="Struct template placeholder">
+<link rel="next" href="value.html" title="Struct template value">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,13 +20,13 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="value.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="local.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="placeholder.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="value.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.xpressive.reference"></a><div class="titlepage"></div>
 <div class="refnamediv">
 <h2><span class="refentrytitle">Struct template reference</span></h2>
-<p>boost::xpressive::reference</p>
+<p>boost::xpressive::reference &#8212; <code class="computeroutput">reference&lt;&gt;</code> is a lazy wrapper for a reference that can be used in xpressive semantic actions. </p>
 </div>
 <h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp" title="Header &lt;boost/xpressive/regex_actions.hpp&gt;">boost/xpressive/regex_actions.hpp</a>&gt;
@@ -34,28 +34,67 @@
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="reference.html" title="Struct template reference">reference</a> <span class="special">:</span> <span class="keyword">public</span> proto::extends&lt; proto::terminal&lt; reference_wrapper&lt; T &gt; &gt;::type, reference&lt; T &gt; &gt;
 <span class="special">{</span>
-  <span class="comment">// types</span>
-  <span class="keyword">typedef</span> <span class="identifier">proto</span><span class="special">::</span><span class="identifier">extends</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">proto</span><span class="special">::</span><span class="identifier">terminal</span><span class="special">&lt;</span> <span class="identifier">reference_wrapper</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">,</span> <a class="link" href="reference.html" title="Struct template reference">reference</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&gt;</span> <a name="boost.xpressive.reference.base_type"></a><span class="identifier">base_type</span><span class="special">;</span>
-
   <span class="comment">// <a class="link" href="reference.html#boost.xpressive.referenceconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">explicit</span> <a class="link" href="reference.html#idp167930968-bb"><span class="identifier">reference</span></a><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="reference.html#idp352659568-bb"><span class="identifier">reference</span></a><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="reference.html#idp167930296-bb">public member functions</a></span>
-  <span class="identifier">T</span> <span class="special">&amp;</span> <a class="link" href="reference.html#idp167930504-bb"><span class="identifier">get</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="reference.html#idp352657424-bb">public member functions</a></span>
+  <span class="identifier">T</span> <span class="special">&amp;</span> <a class="link" href="reference.html#idp352657984-bb"><span class="identifier">get</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp259368056"></a><h2>Description</h2>
+<a name="idp531345712"></a><h2>Description</h2>
+<p>
+Here is an example of how to use <code class="computeroutput">reference&lt;&gt;</code> to create a lazy reference to an existing object so it can be read and written in an xpressive semantic action.</p>
+<pre class="programlisting"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">xpressive</span><span class="special">;</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">map</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">result</span><span class="special">;</span>
+<span class="identifier">reference</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">map</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">result_ref</span><span class="special">(</span><span class="identifier">result</span><span class="special">)</span><span class="special">;</span>
+
+<span class="comment">// Match a word and an integer, separated by =&gt;,</span>
+<span class="comment">// and then stuff the result into a std::map&lt;&gt;</span>
+<span class="identifier">sregex</span> <span class="identifier">pair</span> <span class="special">=</span> <span class="special">(</span> <span class="special">(</span><span class="identifier">s1</span><span class="special">=</span> <span class="special">+</span><span class="identifier">_w</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="string">"=&gt;"</span> <span class="special">&gt;&gt;</span> <span class="special">(</span><span class="identifier">s2</span><span class="special">=</span> <span class="special">+</span><span class="identifier">_d</span><span class="special">)</span> <span class="special">)</span>
+    <span class="special">[</span> <span class="identifier">result_ref</span><span class="special">[</span><span class="identifier">s1</span><span class="special">]</span> <span class="special">=</span> <span class="identifier">as</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span><span class="special">(</span><span class="identifier">s2</span><span class="special">)</span> <span class="special">]</span><span class="special">;</span>
+</pre>
+<p> </p>
 <div class="refsect2">
-<a name="idp259368264"></a><h3>
+<a name="idp531391024"></a><h3>Template Parameters</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+<pre class="literallayout"><span class="keyword">typename</span> T</pre>
+<p>The type of the referent.</p>
+</li></ol></div>
+</div>
+<div class="refsect2">
+<a name="idp531394160"></a><h3>
 <a name="boost.xpressive.referenceconstruct-copy-destruct"></a><code class="computeroutput">reference</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">explicit</span> <a name="idp167930968-bb"></a><span class="identifier">reference</span><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span> t<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp352659568-bb"></a><span class="identifier">reference</span><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span> t<span class="special">)</span><span class="special">;</span></pre>Store a reference to <code class="computeroutput">t</code>. <p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term">Parameters:</span></p></td>
+<td><div class="variablelist"><table border="0" class="variablelist compact">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><code class="computeroutput">t</code></span></p></td>
+<td><p>Reference to object </p></td>
+</tr></tbody>
+</table></div></td>
+</tr></tbody>
+</table></div>
+</li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp259372184"></a><h3>
-<a name="idp167930296-bb"></a><code class="computeroutput">reference</code> public member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="identifier">T</span> <span class="special">&amp;</span> <a name="idp167930504-bb"></a><span class="identifier">get</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp531406112"></a><h3>
+<a name="idp352657424-bb"></a><code class="computeroutput">reference</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+<pre class="literallayout"><span class="identifier">T</span> <span class="special">&amp;</span> <a name="idp352657984-bb"></a><span class="identifier">get</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Fetch the stored value. </li></ol></div>
 </div>
 </div>
 </div>
@@ -69,7 +108,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="value.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="local.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="placeholder.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="value.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

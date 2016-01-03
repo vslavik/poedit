@@ -1,13 +1,10 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test --update: POT-Creation-Date changed. This change must not be reflected
 # in the resulting PO file; this is needed for projects which don't put the
 # .pot file under CVS.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mm-u-3.po"
 cat <<\EOF > mm-u-3.po
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -30,7 +27,6 @@ msgid "white"
 msgstr "weiﬂ"
 EOF
 
-tmpfiles="$tmpfiles mm-u-3.pot"
 cat <<EOF > mm-u-3.pot
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -52,12 +48,9 @@ msgid "white"
 msgstr ""
 EOF
 
-tmpfiles="$tmpfiles mm-u-3.po~"
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q --update mm-u-3.po mm-u-3.pot
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${MSGMERGE} -q --update mm-u-3.po mm-u-3.pot || exit 1
 
-tmpfiles="$tmpfiles mm-u-3.ok"
 cat <<\EOF > mm-u-3.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
@@ -83,7 +76,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mm-u-3.ok mm-u-3.po
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

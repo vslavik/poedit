@@ -5,6 +5,7 @@
 //
 //  Copyright (c) 2002-2003 Eric Friedman
 //  Copyright (c) 2002 by Andrei Alexandrescu
+//  Copyright (c) 2013-2014 Antony Polukhin
 //
 //  Use, modification and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
@@ -25,9 +26,9 @@
 #include "boost/config.hpp"
 #include "boost/detail/workaround.hpp"
 #include "boost/move/move.hpp"
+#include "boost/move/adl_move_swap.hpp"
 
-namespace boost {
-namespace detail { namespace variant {
+namespace boost { namespace detail { namespace variant {
 
 using boost::move;
 
@@ -38,47 +39,13 @@ using boost::move;
 // types and on non-conforming compilers.
 //
 
-#if   defined(BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP)   \
- ||   BOOST_WORKAROUND(__GNUC__, BOOST_TESTED_AT(2))
-
-// [Indicate that move_swap by overload is disabled...]
-#define BOOST_NO_MOVE_SWAP_BY_OVERLOAD
-
-// [...and provide straight swap-by-move implementation:]
 template <typename T>
 inline void move_swap(T& lhs, T& rhs)
 {
-    T tmp( boost::detail::variant::move(lhs) );
-    lhs = boost::detail::variant::move(rhs);
-    rhs = boost::detail::variant::move(tmp);
+    ::boost::adl_move_swap(lhs, rhs);
 }
 
-#else// !workaround
-
-namespace detail { namespace move_swap {
-
-template <typename T>
-inline void swap(T& lhs, T& rhs)
-{
-    T tmp( boost::detail::variant::move(lhs) );
-    lhs = boost::detail::variant::move(rhs);
-    rhs = boost::detail::variant::move(tmp);
-}
-
-}} // namespace detail::move_swap
-
-template <typename T>
-inline void move_swap(T& lhs, T& rhs)
-{
-    using detail::move_swap::swap;
-
-    swap(lhs, rhs);
-}
-
-#endif // workaround
-
-}} // namespace detail::variant
-} // namespace boost
+}}} // namespace boost::detail::variant
 
 #endif // BOOST_VARIANT_DETAIL_MOVE_HPP
 

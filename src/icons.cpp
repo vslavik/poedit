@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2004-2013 Vaclav Slavik
+ *  Copyright (C) 2004-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -29,8 +29,9 @@
 
 #include "icons.h"
 #include "edapp.h"
+#include "hidpi.h"
 
-#ifndef __WXMAC__
+#ifndef __WXOSX__
 
 #ifdef __WXGTK20__
 // translates poedit item id or Tango stock item id to "legacy" GNOME id:
@@ -93,13 +94,9 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
     }
 
     wxString icon;
-    icon.Printf("%s/%s.png", iconsdir.c_str(), id.c_str());
-    if ( !wxFileExists(icon) )
-        return wxNullBitmap;
-
+    icon.Printf("%s/%s", iconsdir.c_str(), id.c_str());
     wxLogTrace("poedit.icons", "loading from %s", icon.c_str());
-    wxBitmap bmp(wxImage(icon, wxBITMAP_TYPE_ANY));
-    return bmp;
+    return LoadScaledBitmap(icon);
 }
 
-#endif // !__WXMAC__
+#endif // !__WXOSX__

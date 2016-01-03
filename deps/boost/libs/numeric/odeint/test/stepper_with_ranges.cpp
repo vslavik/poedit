@@ -6,8 +6,8 @@
  This file tests if the steppers play well with Boost.Range.
  [end_description]
 
- Copyright 2009-2012 Karsten Ahnert
- Copyright 2009-2012 Mario Mulansky
+ Copyright 2011-2012 Karsten Ahnert
+ Copyright 2011-2013 Mario Mulansky
 
  Distributed under the Boost Software License, Version 1.0.
  (See accompanying file LICENSE_1_0.txt or
@@ -41,6 +41,15 @@
 
 typedef std::vector< double > state_type;
 typedef boost::array< double , 3 > state_type2;
+
+/* explicitly force range algebra for this array! */
+namespace boost { namespace numeric { namespace odeint {
+
+template<>
+struct algebra_dispatcher< state_type2 >
+{ typedef range_algebra algebra_type; };
+
+} } }
 
 
 /*

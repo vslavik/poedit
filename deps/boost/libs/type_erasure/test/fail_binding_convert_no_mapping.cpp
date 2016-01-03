@@ -6,7 +6,7 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-// $Id: fail_binding_convert_no_mapping.cpp 78461 2012-05-13 20:48:45Z steven_watanabe $
+// $Id$
 
 #include <boost/type_erasure/binding.hpp>
 #include <boost/type_erasure/builtin.hpp>

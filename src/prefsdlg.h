@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2000-2013 Vaclav Slavik
+ *  Copyright (C) 2000-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -23,53 +23,20 @@
  *
  */
 
-#ifndef _PREFSDLG_H_
-#define _PREFSDLG_H_
+#ifndef Poedit_prefsdlg_h
+#define Poedit_prefsdlg_h
 
-#include <wx/dialog.h>
+#include <memory>
+#include <wx/preferences.h>
 
-#include "parser.h"
-#include "chooselang.h"
 
-class WXDLLIMPEXP_FWD_BASE wxConfigBase;
-class PreferencesPage;
-
-/** Preferences dialog for setting user's identity, parsers and other
-    global, catalog-independent settings.
- */
-class PreferencesDialog : public wxDialog
+class PoeditPreferencesEditor : public wxPreferencesEditor
 {
-    public:
-        /// Ctor.
-        PreferencesDialog(wxWindow *parent = NULL);
+public:
+    static std::unique_ptr<PoeditPreferencesEditor> Create();
 
-        /// Reads data from config/registry and fills dialog's controls.
-        void TransferTo(wxConfigBase *cfg);
-
-        /// Saves data from the dialog to config/registry.
-        void TransferFrom(wxConfigBase *cfg);
-            
-    private:
-        ParsersDB m_parsers;
-
-    private:
-        DECLARE_EVENT_TABLE()
-
-#if NEED_CHOOSELANG_UI
-        void OnUILanguage(wxCommandEvent& event);
-#endif
-        void OnNewParser(wxCommandEvent& event);
-        void OnEditParser(wxCommandEvent& event);
-        void OnDeleteParser(wxCommandEvent& event);
-        void OnUpdateUIFontList(wxUpdateUIEvent& event);
-        void OnUpdateUIFontText(wxUpdateUIEvent& event);
-
-        /// Called to launch dialog for editting parser properties.
-        template<typename TFunctor>
-        void EditParser(int num, TFunctor completionHandler);
-
-        PreferencesPage *m_pageTM;
+private:
+    PoeditPreferencesEditor() {}
 };
 
-
-#endif // _PREFSDLG_H_
+#endif // Poedit_prefsdlg_h

@@ -1,22 +1,25 @@
 # Danish messages for gettext-examples.
-# Copyright (C) 2011 Yoyodyne, Inc. (msgids)
+# Copyright (C) 2015 Yoyodyne, Inc. (msgids)
 # This file is distributed under the same license as the gettext package.
-# Jan Djærv <jan.h.d@swipnet.se>, 2003, 2006
-# Keld Simonsen <keld@keldix.com>, 2011
+# Jan DjÃ¦rv <jan.h.d@swipnet.se>, 2003, 2006.
+# Keld Simonsen <keld@keldix.com>, 2011.
+# Joe Hansen <joedalton2@yahoo.dk>, 2015.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: gettext-examples 0.18\n"
+"Project-Id-Version: gettext-examples 0.19.4.73\n"
 "Report-Msgid-Bugs-To: bug-gnu-gettext@gnu.org\n"
-"POT-Creation-Date: 2009-08-16 12:22+0200\n"
-"PO-Revision-Date: 2011-01-08 12:39+0100\n"
-"Last-Translator: Keld Simonsen <keld@keldix.com>\n"
+"POT-Creation-Date: 2015-07-15 10:39+0900\n"
+"PO-Revision-Date: 2015-06-27 12:39+0100\n"
+"Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: hello-c/hello.c:30 hello-c-gnome/hello.c:46 hello-c++/hello.cc:39
+#: hello-c/hello.c:30 hello-c-gnome/hello.c:46
+#: hello-c-gnome3/hello.desktop.in.in:5 hello-c++/hello.cc:39
 #: hello-c++-qt/hello.cc:45 hello-c++-kde/hellowindow.cc:42
 #: hello-c++-gnome/hello.cc:50 hello-c++-wxwidgets/hello.cc:68
 #: hello-objc/hello.m:30 hello-objc-gnustep/Hello.m:49
@@ -43,17 +46,54 @@ msgstr "Hej verden!"
 #: hello-perl/hello-1.pl.in:19 hello-php/hello.php:14
 #, php-format
 msgid "This program is running as process number %d."
-msgstr "Dette program kører som proces nummer %d."
+msgstr "Dette program kÃ¸rer som proces nummer %d."
+
+#: hello-c-gnome3/hello.c:79
+#, c-format
+msgid ""
+"<big>Hello world!</big>\n"
+"This program is running as process number <b>%d</b>."
+msgstr ""
+"<big>Hej verden!</big>\n"
+"Dette program kÃ¸rer som proces nummer <b>%d</b>."
+
+#: hello-c-gnome3/hello.c:84
+msgid "<big><u>This is another text</u></big>"
+msgstr "<big><u>Dette er en anden tekst</u></big>"
+
+#: hello-c-gnome3/hello.c:86
+msgid "<big><i>This is yet another text</i></big>"
+msgstr "<big><i>Endnu en tekst</i></big>"
+
+#: hello-c-gnome3/hello.desktop.in.in:4
+msgid "Hello"
+msgstr "Hej"
+
+#: hello-c-gnome3/hello.ui:5
+msgid "Example Application"
+msgstr "Eksempelprogram"
+
+#: hello-c-gnome3/hello.ui:33
+msgid "Update text"
+msgstr "Opdater tekst"
+
+#: hello-c-gnome3/hello.gschema.xml:7
+msgid "Use XML markup"
+msgstr "Brug XML-opmÃ¦rkning"
+
+#: hello-c-gnome3/hello.gschema.xml:8
+msgid "Whether to use XML markup in the text."
+msgstr "Hvorvidt der skal bruges XML-opmÃ¦rkning i teksten."
 
 #: hello-c++-qt/hello.cc:52 hello-c++-kde/hellowindow.cc:49
 #: hello-smalltalk/hello.st.in:32 hello-ycp/hello.ycp:19
 #, ycp-format
 msgid "This program is running as process number %1."
-msgstr "Dette program kører som proces nummer %1."
+msgstr "Dette program kÃ¸rer som proces nummer %1."
 
 #: hello-c++-kde/hello.cc:46
 msgid "Hello example"
-msgstr "Eksempel på hilsen"
+msgstr "Eksempel pÃ¥ hilsen"
 
 #: hello-c++-kde/hello.cc:48
 msgid "Hello world example"
@@ -62,26 +102,26 @@ msgstr "\"Hej verden\"-eksempel"
 #: hello-sh/hello.sh:17
 #, sh-format
 msgid "This program is running as process number $pid."
-msgstr "Dette program kører som proces nummer $pid."
+msgstr "Dette program kÃ¸rer som proces nummer $pid."
 
 #: hello-python/hello.py.in:13
 #, python-format
 msgid "This program is running as process number %(pid)d."
-msgstr "Dette program kører som proces nummer %(pid)d."
+msgstr "Dette program kÃ¸rer som proces nummer %(pid)d."
 
 #: hello-clisp/hello.lisp.in:13 hello-guile/hello.scm:17
 #, scheme-format
 msgid "This program is running as process number ~D."
-msgstr "Dette program kører som proces nummer ~D."
+msgstr "Dette program kÃ¸rer som proces nummer ~D."
 
 #: hello-java/Hello.java:18 hello-java-awt/Hello.java:28
 #: hello-java-swing/Hello.java:25 hello-java-qtjambi/Hello.java:34
 #: hello-csharp/hello.cs:17 hello-csharp-forms/hello.cs:36
 #, csharp-format
 msgid "This program is running as process number {0}."
-msgstr "Dette program kører som proces nummer {0}."
+msgstr "Dette program kÃ¸rer som proces nummer {0}."
 
 #: hello-perl/hello-2.pl.in:14
 #, perl-brace-format
 msgid "This program is running as process number {pid}."
-msgstr "Dette program kører som proces nummer {pid}."
+msgstr "Dette program kÃ¸rer som proces nummer {pid}."

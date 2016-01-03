@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../chrono.html" title="Chapter&#160;5.&#160;Boost.Chrono 2.0.2">
+<link rel="up" href="../chrono.html" title="Chapter&#160;6.&#160;Boost.Chrono 2.0.5">
 <link rel="prev" href="reference.html" title="Reference">
-<link rel="next" href="../idp18721496-bb.html" title="Chapter&#160;6.&#160;Boost.Concept_Check">
+<link rel="next" href="../circular_buffer.html" title="Chapter&#160;7.&#160;Boost.Circular Buffer">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="reference.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../chrono.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../idp18721496-bb.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="reference.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../chrono.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../circular_buffer.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
@@ -40,6 +40,9 @@
 <a name="chrono.appendices.history"></a><a class="link" href="appendices.html#chrono.appendices.history" title="Appendix: History">Appendix: History</a>
 </h3></div></div></div>
 <div class="toc"><dl class="toc">
+<dt><span class="section"><a href="appendices.html#chrono.appendices.history.__version_2_0_5__february_18__2015___1_58__"><span class="bold"><strong>Version 2.0.5, February 18, 2015 - 1.58</strong></span> </a></span></dt>
+<dt><span class="section"><a href="appendices.html#chrono.appendices.history.__version_2_0_4__july_12__2014___1_56__"><span class="bold"><strong>Version 2.0.4, July 12, 2014 - 1.56</strong></span> </a></span></dt>
+<dt><span class="section"><a href="appendices.html#chrono.appendices.history.__version_2_0_3__september_29__2013___1_55__"><span class="bold"><strong>Version 2.0.3, September 29, 2013 - 1.55</strong></span> </a></span></dt>
 <dt><span class="section"><a href="appendices.html#chrono.appendices.history.__version_2_0_2__june_15__2013___1_54__"><span class="bold"><strong>Version 2.0.2, June 15, 2013 - 1.54</strong></span> </a></span></dt>
 <dt><span class="section"><a href="appendices.html#chrono.appendices.history.__version_2_0_1__january_18__2013___1_53__"><span class="bold"><strong>Version 2.0.1, January 18, 2013 - 1.53</strong></span> </a></span></dt>
 <dt><span class="section"><a href="appendices.html#chrono.appendices.history.__version_2_0_0__october_23__2012___1_52__"><span class="bold"><strong>Version 2.0.0, October 23, 2012 - 1.52</strong></span> </a></span></dt>
@@ -50,6 +53,143 @@
 <dt><span class="section"><a href="appendices.html#chrono.appendices.history.__version_1_1_0__mars_17__2011__"><span class="bold"><strong>Version 1.1.0, Mars 17, 2011</strong></span> </a></span></dt>
 <dt><span class="section"><a href="appendices.html#chrono.appendices.history.__version_1_0_0__january_6__2011__"><span class="bold"><strong>Version 1.0.0, January 6, 2011</strong></span> </a></span></dt>
 </dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="chrono.appendices.history.__version_2_0_5__february_18__2015___1_58__"></a><a class="link" href="appendices.html#chrono.appendices.history.__version_2_0_5__february_18__2015___1_58__" title="Version 2.0.5, February 18, 2015 - 1.58"><span class="bold"><strong>Version 2.0.5, February 18, 2015 - 1.58</strong></span> </a>
+</h4></div></div></div>
+<p>
+          <span class="bold"><strong>Fixes:</strong></span>
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/10778" target="_top">#10778</a>
+              VC14 CTP4 Atomic don't compile with boost::chrono durations which are
+              not TriviallyCopyable
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/10840" target="_top">#10840</a>
+              Missing std:: qualifier for puts call in test_7868.cpp
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/10851" target="_top">#10851</a>
+              Missing std:: qualifier for puts call in time_point_output.cpp
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/10893" target="_top">#10893</a>
+              Minor doc typo in Boost.Chrono
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/10992" target="_top">#10992</a>
+              Chrono IO state savers inconsistent with Boost.IO state savers
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/10995" target="_top">#10995</a>
+              duration_put::put_value truncates fractional part
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/11006" target="_top">#11006</a>
+              Impossible to instantiate time_fmt_io_saver due to several errors.
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/11012" target="_top">#11012</a>
+              chrono_io v2 fail to compile with boost::chrono::duration&lt; boost::rational&lt;int&gt;
+              &gt;
+            </li>
+</ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="chrono.appendices.history.__version_2_0_4__july_12__2014___1_56__"></a><a class="link" href="appendices.html#chrono.appendices.history.__version_2_0_4__july_12__2014___1_56__" title="Version 2.0.4, July 12, 2014 - 1.56"><span class="bold"><strong>Version 2.0.4, July 12, 2014 - 1.56</strong></span> </a>
+</h4></div></div></div>
+<p>
+          <span class="bold"><strong>Fixes:</strong></span>
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/6918" target="_top">#6918</a>
+              Boost Chrono compilation failure on HP uX due to undefined pthread_getcpuclockid
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/8006" target="_top">#8006</a>
+              Boost::Chrono Assertion at startup - steady_clock::now() - Windows
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9337" target="_top">#9337</a>
+              chrono::process_cpu_clock time points wrong by factor 1000 on Linux
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9342" target="_top">#9342</a>
+              Regression on process_cpu_clock::timepoint io on V2
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9419" target="_top">#9419</a>
+              boost::chrono::floor()/round() and negative durations is wrong
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9698" target="_top">#9698</a>
+              boost::chrono::thread_clock not declared in OSX
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9720" target="_top">#9720</a>
+              boost::this_thread::sleep_for() sometimes returns immediately on win32
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9859" target="_top">#9859</a>
+              Remove references to gcc-mingw
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9918" target="_top">#9918</a>
+              chrono compilation error on Solaris, function timegm
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9811" target="_top">#9811</a>
+              boost/boost/chrono/duration.hpp:355:56: error: call to non-constexpr
+              function 'static std::numeric_limits&lt;float&gt;::_Ty std::numeric_limits&lt;float&gt;::max()'
+              /home/zosun/input_service/inputservices-core-service/other/boost/boost/chrono/duration.hpp:
+              In static member function 'static constexpr double boost::chrono::detail::chrono_numeric_limits&lt;double,
+              true&gt;::lowest()':
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/10069" target="_top">#10069</a>
+              Overflow in chrono clocks on 32bit
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/10151" target="_top">#10151</a>
+              timegm function not available on QNX
+            </li>
+</ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="chrono.appendices.history.__version_2_0_3__september_29__2013___1_55__"></a><a class="link" href="appendices.html#chrono.appendices.history.__version_2_0_3__september_29__2013___1_55__" title="Version 2.0.3, September 29, 2013 - 1.55"><span class="bold"><strong>Version 2.0.3, September 29, 2013 - 1.55</strong></span> </a>
+</h4></div></div></div>
+<p>
+          <span class="bold"><strong>Fixes:</strong></span>
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/7868" target="_top">#7868</a>
+              chrono_io parses time incorrectly (1.53 and 1.52)
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9028" target="_top">#9028</a>
+              Typo in boost/chrono/stopwatches/formatters/base_formatter.hpp
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9147" target="_top">#9147</a>
+              uninitialized std::tm
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9274" target="_top">#9274</a>
+              lost of precision on system_clock input.
+            </li>
+<li class="listitem">
+              <a href="http://svn.boost.org/trac/boost/ticket/9276" target="_top">#9276</a>
+              output from a system_clock::time_point get a time_point that is one
+              day later than expected.
+            </li>
+</ul></div>
+</div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="chrono.appendices.history.__version_2_0_2__june_15__2013___1_54__"></a><a class="link" href="appendices.html#chrono.appendices.history.__version_2_0_2__june_15__2013___1_54__" title="Version 2.0.2, June 15, 2013 - 1.54"><span class="bold"><strong>Version 2.0.2, June 15, 2013 - 1.54</strong></span> </a>
@@ -107,13 +247,13 @@
               refactored in version 2.0.0
             </li>
 <li class="listitem">
-              chrono I/O: The manipulators <a class="link" href="reference.html#chrono.reference.io_v1.chrono_io_hpp.manipulators" title="I/O Manipulators"><code class="computeroutput"><span class="identifier">duration_short</span></code></a>, <a class="link" href="reference.html#chrono.reference.io_v1.chrono_io_hpp.manipulators" title="I/O Manipulators"><code class="computeroutput"><span class="identifier">duration_long</span></code></a> are depreceated.
+              chrono I/O: The manipulators <a class="link" href="reference.html#chrono.reference.io_v1.chrono_io_hpp.manipulators" title="I/O Manipulators"><code class="computeroutput"><span class="identifier">duration_short</span></code></a>, <a class="link" href="reference.html#chrono.reference.io_v1.chrono_io_hpp.manipulators" title="I/O Manipulators"><code class="computeroutput"><span class="identifier">duration_long</span></code></a> are deprecated.
               You should use the parameterized form <a class="link" href="reference.html#chrono.reference.io.duration_io_hpp.manipulators.duration_fmt" title="Template Class duration_fmt"><code class="computeroutput"><span class="identifier">duration_fmt</span></code></a> or the renamed
               manipulators __duration_symbol and __duration_prefix instead.
             </li>
 <li class="listitem">
               chrono I/O: The <a class="link" href="reference.html#chrono.reference.io_v1.chrono_io_hpp.duration_punct" title="Template Class duration_punct&lt;&gt;"><code class="computeroutput"><span class="identifier">duration_punct</span></code></a>&lt;&gt; facet
-              is depreceated. You should use the <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.sag.get_duration_style" title="Non Member Function get_duration_style(std::ios_base &amp;)"><code class="computeroutput"><span class="identifier">get_duration_style</span></code></a> free function
+              is deprecated. You should use the <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.sag.get_duration_style" title="Non Member Function get_duration_style(std::ios_base &amp;)"><code class="computeroutput"><span class="identifier">get_duration_style</span></code></a> free function
               to get the informations and use the <a class="link" href="reference.html#chrono.reference.io.duration_units_hpp.duration_units" title="Template Class duration_units"><code class="computeroutput"><span class="identifier">duration_units</span></code></a> facet for localization
               purposes.
             </li>
@@ -177,13 +317,13 @@
               refactored in version 2.0.0
             </li>
 <li class="listitem">
-              chrono I/O: The manipulators <a class="link" href="reference.html#chrono.reference.io_v1.chrono_io_hpp.manipulators" title="I/O Manipulators"><code class="computeroutput"><span class="identifier">duration_short</span></code></a>, <a class="link" href="reference.html#chrono.reference.io_v1.chrono_io_hpp.manipulators" title="I/O Manipulators"><code class="computeroutput"><span class="identifier">duration_long</span></code></a> are depreceated.
+              chrono I/O: The manipulators <a class="link" href="reference.html#chrono.reference.io_v1.chrono_io_hpp.manipulators" title="I/O Manipulators"><code class="computeroutput"><span class="identifier">duration_short</span></code></a>, <a class="link" href="reference.html#chrono.reference.io_v1.chrono_io_hpp.manipulators" title="I/O Manipulators"><code class="computeroutput"><span class="identifier">duration_long</span></code></a> are deprecated.
               You should use the parameterized form <a class="link" href="reference.html#chrono.reference.io.duration_io_hpp.manipulators.duration_fmt" title="Template Class duration_fmt"><code class="computeroutput"><span class="identifier">duration_fmt</span></code></a> or the renamed
               manipulators __duration_symbol and __duration_prefix instead.
             </li>
 <li class="listitem">
               chrono I/O: The <a class="link" href="reference.html#chrono.reference.io_v1.chrono_io_hpp.duration_punct" title="Template Class duration_punct&lt;&gt;"><code class="computeroutput"><span class="identifier">duration_punct</span></code></a>&lt;&gt; facet
-              is depreceated. You should use the <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.sag.get_duration_style" title="Non Member Function get_duration_style(std::ios_base &amp;)"><code class="computeroutput"><span class="identifier">get_duration_style</span></code></a> free function
+              is deprecated. You should use the <a class="link" href="reference.html#chrono.reference.io.ios_state_hpp.sag.get_duration_style" title="Non Member Function get_duration_style(std::ios_base &amp;)"><code class="computeroutput"><span class="identifier">get_duration_style</span></code></a> free function
               to get the informations and use the <a class="link" href="reference.html#chrono.reference.io.duration_units_hpp.duration_units" title="Template Class duration_units"><code class="computeroutput"><span class="identifier">duration_units</span></code></a> facet for localization
               purposes.
             </li>
@@ -224,7 +364,7 @@
               chrono_io.hpp: operator&lt;&lt;(ostream&amp; os, ...) modifies the
               state of os.
               <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
-                    The neww io interface provided in version 2 solves this issue.
+                    The new io interface provided in version 2 solves this issue.
                     You should move to the new version.
                   </li></ul></div>
             </li></ul></div>
@@ -592,11 +732,11 @@
         APIs have been chosen to implement each clock on each platform?</a>
       </h5>
 <p>
-        The following table presents a resume of which API is uused for each clock
+        The following table presents a resume of which API is used for each clock
         on each platform
       </p>
 <div class="table">
-<a name="chrono.appendices.implementation.clock_api_correspondence"></a><p class="title"><b>Table&#160;5.3.&#160;Clock API correspondence</b></p>
+<a name="chrono.appendices.implementation.clock_api_correspondence"></a><p class="title"><b>Table&#160;6.4.&#160;Clock API correspondence</b></p>
 <div class="table-contents"><table class="table" summary="Clock API correspondence">
 <colgroup>
 <col>
@@ -908,7 +1048,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="reference.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../chrono.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../idp18721496-bb.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="reference.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../chrono.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../circular_buffer.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

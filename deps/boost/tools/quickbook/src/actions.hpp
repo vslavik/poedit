@@ -46,12 +46,6 @@ namespace quickbook
     int load_snippets(fs::path const& file, std::vector<template_symbol>& storage,
         std::string const& extension, value::tag_type load_type);
 
-    void syntax_highlight(
-        parse_iterator first, parse_iterator last,
-        quickbook::state& state,
-        std::string const& source_mode,
-        bool is_block);
-
     struct xinclude_path {
         xinclude_path(fs::path const& path, std::string const& uri) :
             path(path), uri(uri) {}
@@ -249,6 +243,101 @@ namespace quickbook
         quickbook::state& state;
         std::vector<std::string> saved_anchors;
         value::tag_type tag;
+    };
+
+    // member_action
+    //
+    // Action for calling a member function taking two parse iterators.
+
+    template <typename T>
+    struct member_action
+    {
+        typedef void(T::*member_function)(parse_iterator, parse_iterator);
+
+        T& l;
+        member_function mf;
+
+        member_action(T& l, member_function mf) : l(l), mf(mf) {}
+
+        void operator()(parse_iterator first, parse_iterator last) const {
+            (l.*mf)(first, last);
+        }
+    };
+
+    // member_action1
+    //
+    // Action for calling a member function taking two parse iterators and a value.
+
+    template <typename T, typename Arg1>
+    struct member_action1
+    {
+        typedef void(T::*member_function)(parse_iterator, parse_iterator, Arg1);
+
+        T& l;
+        member_function mf;
+
+        member_action1(T& l, member_function mf) : l(l), mf(mf) {}
+
+        struct impl
+        {
+            member_action1 a;
+            Arg1 value;
+
+            impl(member_action1& a, Arg1 value) :
+                a(a), value(value)
+            {}
+
+            void operator()(parse_iterator first, parse_iterator last) const {
+                (a.l.*a.mf)(first, last, value);
+            }
+        };
+
+        impl operator()(Arg1 a1) {
+            return impl(*this, a1);
+        }
+    };
+
+    // member_action_value
+    //
+    // Action for calling a unary member function.
+
+    template <typename T, typename Value>
+    struct member_action_value
+    {
+        typedef void(T::*member_function)(Value);
+
+        T& l;
+        member_function mf;
+
+        member_action_value(T& l, member_function mf) : l(l), mf(mf) {}
+
+        void operator()(Value v) const {
+            (l.*mf)(v);
+        }
+    };
+
+    // member_action_value
+    //
+    // Action for calling a unary member function with a fixed value.
+
+    template <typename T, typename Value>
+    struct member_action_fixed_value
+    {
+        typedef void(T::*member_function)(Value);
+
+        T& l;
+        member_function mf;
+        Value v;
+
+        member_action_fixed_value(T& l, member_function mf, Value v) : l(l), mf(mf), v(v) {}
+
+        void operator()() const {
+            (l.*mf)(v);
+        }
+
+        void operator()(parse_iterator first, parse_iterator last) const {
+            (l.*mf)(v);
+        }
     };
 }
 

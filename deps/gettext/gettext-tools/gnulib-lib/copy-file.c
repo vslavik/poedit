@@ -1,5 +1,5 @@
 /* Copying of files.
-   Copyright (C) 2001-2003, 2006-2007, 2009-2013 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006-2007, 2009-2015 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -47,11 +47,6 @@
 #include "xalloc.h"
 
 #define _(str) gettext (str)
-
-/* The results of open() in this file are not used with fchdir,
-   therefore save some unnecessary work in fchdir.c.  */
-#undef open
-#undef close
 
 enum { IO_SIZE = 32 * 1024 };
 

@@ -1,5 +1,6 @@
 ## Makefile for the gnulib-local directory of GNU gettext
-## Copyright (C) 2006-2008, 2010-2011 Free Software Foundation, Inc.
+## Copyright (C) 2006-2008, 2010-2011, 2015 Free Software Foundation,
+## Inc.
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -36,6 +37,7 @@ lib/error.h.diff \
 lib/error-progname.c \
 lib/error-progname.h \
 lib/exitfail.h.diff \
+lib/execute.c.diff \
 lib/fd-ostream.oo.c \
 lib/fd-ostream.oo.h \
 lib/file-ostream.oo.c \
@@ -227,6 +229,7 @@ lib/ostream.oo.h \
 lib/progname.h.diff \
 lib/regexec.c.diff \
 lib/regex_internal.h.diff \
+lib/spawn-pipe.c.diff \
 lib/styled-ostream.oo.c \
 lib/styled-ostream.oo.h \
 lib/term-ostream.oo.c \
@@ -283,7 +286,6 @@ modules/memory-ostream \
 modules/moo \
 modules/moo-tests \
 modules/ostream \
-modules/regex.diff \
 modules/styled-ostream \
 modules/termcap \
 modules/termcap-h \
@@ -297,6 +299,7 @@ modules/xalloc \
 modules/xalloc-die \
 modules/xerror \
 modules/xgetcwd \
+tests/test-environ.c.diff \
 tests/test-moo-aroot.oo.c \
 tests/test-moo-aroot.oo.h \
 tests/test-moo-assign.c \
@@ -313,6 +316,7 @@ tests/test-term-ostream-xterm \
 tests/test-term-ostream-xterm-r6.out \
 tests/test-term-ostream-xterm-xf86-v32.out \
 tests/test-term-ostream-xterm-basic.out \
+tests/test-term-ostream-xterm-basic-italic.out \
 tests/test-term-ostream-xterm-8bit.out \
 tests/test-term-ostream-xterm-linux-debian.out \
 tests/test-term-ostream-xterm-linux-mandriva.out \
@@ -325,3 +329,5 @@ tests/test-term-ostream-xterm-mingw.out \
 tests/test-term-ostream-xterm-16color.out \
 tests/test-term-ostream-xterm-88color.out \
 tests/test-term-ostream-xterm-256color.out
+
+maintainer-update-po:

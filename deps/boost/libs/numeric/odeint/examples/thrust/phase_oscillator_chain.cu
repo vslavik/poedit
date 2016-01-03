@@ -1,8 +1,10 @@
 /*
- * phase_osc_chain.cu
- *
- *  Created on: Apr 1, 2011
- *      Author: mario
+ Copyright 2011-2013 Mario Mulansky
+ Copyright 2011 Karsten Ahnert
+
+ Distributed under the Boost Software License, Version 1.0.
+ (See accompanying file LICENSE_1_0.txt or
+ copy at http://www.boost.org/LICENSE_1_0.txt)
  */
 
 /*
@@ -28,9 +30,7 @@
 
 #include <boost/numeric/odeint/stepper/runge_kutta4.hpp>
 #include <boost/numeric/odeint/integrate/integrate_const.hpp>
-#include <boost/numeric/odeint/external/thrust/thrust_algebra.hpp>
-#include <boost/numeric/odeint/external/thrust/thrust_operations.hpp>
-#include <boost/numeric/odeint/external/thrust/thrust_resize.hpp>
+#include <boost/numeric/odeint/external/thrust/thrust.hpp>
 
 using namespace std;
 
@@ -142,7 +142,7 @@ int main( int arc , char* argv[] )
     state_type omega = omega_host;
 
     // create stepper
-    runge_kutta4< state_type , value_type , state_type , value_type , thrust_algebra , thrust_operations > stepper;
+    runge_kutta4< state_type , value_type , state_type , value_type > stepper;
 
     // create phase oscillator system function
     phase_oscillators sys( omega );

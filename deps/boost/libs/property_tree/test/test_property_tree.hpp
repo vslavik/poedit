@@ -797,9 +797,6 @@ void test_get_put(PTREE *)
                                     
 void test_get_child_put_child(PTREE *)
 {
-
-    typedef std::basic_string<CHTYPE> str_t;
-
     PTREE pt(T("ala ma kota"));
 
     // Do insertions via put_child
@@ -1076,7 +1073,6 @@ void test_custom_data_type(PTREE *)
 
     typedef std::basic_string<CHTYPE> Str;
     typedef PTREE::key_compare Comp;
-    typedef PTREE::path_type Path;
 
     // Property_tree with boost::any as data type
     typedef boost::property_tree::basic_ptree<Str, boost::any, Comp> my_ptree;
@@ -1252,42 +1248,80 @@ void test_bool(PTREE *)
 
 void test_char(PTREE *)
 {
+    typedef signed char schar;
+    typedef unsigned char uchar;
 
     // Prepare test tree
     PTREE pt;
 #if WIDECHAR == 0
     pt.put(T("char"), char('A'));
 #endif
-    pt.put(T("signed char"), static_cast<signed char>('A'));
-    pt.put(T("unsigned char"), static_cast<unsigned char>('A'));
-    pt.put(T("signed char min"), (std::numeric_limits<signed char>::min)());
-    pt.put(T("signed char max"), (std::numeric_limits<signed char>::max)());
-    pt.put(T("unsigned char min"), (std::numeric_limits<unsigned char>::min)());
-    pt.put(T("unsigned char max"), (std::numeric_limits<unsigned char>::max)());
+    pt.put(T("signed char"), static_cast<schar>('A'));
+    pt.put(T("unsigned char"), static_cast<uchar>('A'));
+    pt.put(T("signed char min"), (std::numeric_limits<schar>::min)());
+    pt.put(T("signed char max"), (std::numeric_limits<schar>::max)());
+    pt.put(T("signed char underflow"),
+           static_cast<int>((std::numeric_limits<schar>::min)()) - 1);
+    pt.put(T("signed char overflow"),
+           static_cast<int>((std::numeric_limits<schar>::max)()) + 1);
+    pt.put(T("unsigned char min"), (std::numeric_limits<uchar>::min)());
+    pt.put(T("unsigned char max"), (std::numeric_limits<uchar>::max)());
+    pt.put(T("unsigned char overflow"),
+           static_cast<unsigned>((std::numeric_limits<uchar>::max)()) + 1);
 
     // Verify normal conversions
 #if WIDECHAR == 0
     BOOST_CHECK(pt.get<char>(T("char")) == 'A');
 #endif
-    BOOST_CHECK(pt.get<signed char>(T("signed char")) ==
-        static_cast<signed char>('A'));
-    BOOST_CHECK(pt.get<unsigned char>(T("unsigned char")) ==
-        static_cast<unsigned char>('A'));
+    BOOST_CHECK(pt.get<schar>(T("signed char")) == static_cast<schar>('A'));
+    BOOST_CHECK(pt.get<uchar>(T("unsigned char")) == static_cast<uchar>('A'));
 
     // Verify that numbers are saved for signed and unsigned char
     BOOST_CHECK(pt.get<int>(T("signed char")) == int('A'));
     BOOST_CHECK(pt.get<int>(T("unsigned char")) == int('A'));
 
     // Verify ranges
-    BOOST_CHECK(pt.get<signed char>(T("signed char min")) ==
-        (std::numeric_limits<signed char>::min)());
-    BOOST_CHECK(pt.get<signed char>(T("signed char max")) ==
-        (std::numeric_limits<signed char>::max)());
-    BOOST_CHECK(pt.get<unsigned char>(T("unsigned char min")) ==
-        (std::numeric_limits<unsigned char>::min)());
-    BOOST_CHECK(pt.get<unsigned char>(T("unsigned char max")) ==
-        (std::numeric_limits<unsigned char>::max)());
+    BOOST_CHECK(pt.get<schar>(T("signed char min")) ==
+        (std::numeric_limits<schar>::min)());
+    BOOST_CHECK(pt.get<schar>(T("signed char max")) ==
+        (std::numeric_limits<schar>::max)());
+    BOOST_CHECK(pt.get<uchar>(T("unsigned char min")) ==
+        (std::numeric_limits<uchar>::min)());
+    BOOST_CHECK(pt.get<uchar>(T("unsigned char max")) ==
+        (std::numeric_limits<uchar>::max)());
 
+    // Check that out-of-range throws.
+    try {
+        pt.get<schar>(T("signed char underflow"));
+        BOOST_ERROR("expected ptree_bad_data, but nothing was thrown");
+    } catch (boost::property_tree::ptree_bad_data&) {
+    } catch (...) {
+        BOOST_ERROR("expected ptree_bad_data, but something else was thrown");
+    }
+    try {
+        pt.get<schar>(T("signed char overflow"));
+        BOOST_ERROR("expected ptree_bad_data, but nothing was thrown");
+    } catch (boost::property_tree::ptree_bad_data&) {
+    } catch (...) {
+        BOOST_ERROR("expected ptree_bad_data, but something else was thrown");
+    }
+    try {
+        pt.get<uchar>(T("unsigned char overflow"));
+        BOOST_ERROR("expected ptree_bad_data, but nothing was thrown");
+    } catch (boost::property_tree::ptree_bad_data&) {
+    } catch (...) {
+        BOOST_ERROR("expected ptree_bad_data, but something else was thrown");
+    }
+}
+
+void test_float(PTREE*)
+{
+    const double difficult = -183.12345000098765e-10;
+    PTREE pt;
+    pt.put(T("num"), difficult);
+    double result = pt.get<double>(T("num"));
+
+    BOOST_CHECK(!(result < difficult || result > difficult));
 }
 
 void test_sort(PTREE *)

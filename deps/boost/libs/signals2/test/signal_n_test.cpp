@@ -34,7 +34,7 @@ struct max_or_default {
     {
       try
       {
-        if(max == false) max = *first;
+        if(!max) max = *first;
         else max = (*first > max.get())? *first : max;
       }
       catch(const boost::bad_weak_ptr &)

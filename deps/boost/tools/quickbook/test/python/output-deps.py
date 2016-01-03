@@ -24,6 +24,10 @@ def main(args, directory):
             deps_gold = 'include_path_deps.txt',
             locations_gold = 'include_path_locs.txt',
             input_path = ['sub1', 'sub2'])
+    failures += run_quickbook(quickbook_command, 'include_glob.qbk',
+            deps_gold = 'include_glob_deps.txt',
+            locations_gold = 'include_glob_locs.txt',
+            input_path = ['sub1', 'sub2'])
 
     if failures == 0:
         print "Success"
@@ -123,22 +127,34 @@ def load_dependencies(filename, adjust_paths = False):
     return dependencies
 
 def load_locations(filename, adjust_paths = False):
-    line_matcher = re.compile("^([+-]) (.*)$")
+    line_matcher = re.compile("^([+-g]) (.*)$")
     dependencies = {}
     f = open(filename, 'r')
+    glob = None
+    globs = {}
     for line in f:
         if line[0] == '#': continue
         m = line_matcher.match(line)
-        if not m:
-            raise Exception("Invalid dependency file: %1s" % filename)
-        found = m.group(1) == '+'
+
         path = m.group(2)
         if adjust_paths:
             path = os.path.realpath(path)
-        if path in dependencies:
-            raise Exception("Duplicate path (%1s) in %2s" % (path, filename))
-        dependencies[path] = found
-    return dependencies
+
+        if not m:
+            raise Exception("Invalid dependency file: %1s" % filename)
+        if m.group(1) == 'g':
+            globs[path] = []
+            glob = path
+        elif glob:
+            if m.group(1) != '+':
+                raise Exception("Negative match in glob.")
+            globs[glob].append(path)
+        else:
+            found = m.group(1) == '+'
+            if path in dependencies:
+                raise Exception("Duplicate path (%1s) in %2s" % (path, filename))
+            dependencies[path] = found
+    return { 'dependencies': dependencies, 'globs': globs }
 
 def temp_filename(extension):
     file = tempfile.mkstemp(suffix = extension)

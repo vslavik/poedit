@@ -6,7 +6,7 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Geometry">
-<link rel="prev" href="spatial_indexes/rtree_examples/index_stored_in_shared_memory_using_boost_interprocess.html" title="Index stored in shared memory using Boost.Interprocess">
+<link rel="prev" href="spatial_indexes/rtree_examples/index_stored_in_mapped_file_using_boost_interprocess.html" title="Index stored in mapped file using Boost.Interprocess">
 <link rel="next" href="reference/access.html" title="Access Functions">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="spatial_indexes/rtree_examples/index_stored_in_shared_memory_using_boost_interprocess.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="reference/access.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="spatial_indexes/rtree_examples/index_stored_in_mapped_file_using_boost_interprocess.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="reference/access.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
@@ -56,6 +56,7 @@
 <dt><span class="section"><a href="reference/algorithms/convex_hull.html">convex_hull</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/correct.html">correct</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/covered_by.html">covered_by</a></span></dt>
+<dt><span class="section"><a href="reference/algorithms/crosses.html">crosses</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/difference.html">difference</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/disjoint.html">disjoint</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/distance.html">distance</a></span></dt>
@@ -65,11 +66,14 @@
 <dt><span class="section"><a href="reference/algorithms/for_each.html">for_each</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/intersection.html">intersection</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/intersects.html">intersects</a></span></dt>
+<dt><span class="section"><a href="reference/algorithms/is_simple.html">is_simple</a></span></dt>
+<dt><span class="section"><a href="reference/algorithms/is_valid.html">is_valid</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/length.html">length</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/make.html">make</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/num_geometries.html">num_geometries</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/num_interior_rings.html">num_interior_rings</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/num_points.html">num_points</a></span></dt>
+<dt><span class="section"><a href="reference/algorithms/num_segments.html">num_segments</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/overlaps.html">overlaps</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/perimeter.html">perimeter</a></span></dt>
 <dt><span class="section"><a href="reference/algorithms/reverse.html">reverse</a></span></dt>
@@ -144,8 +148,12 @@
 </dl></dd>
 <dt><span class="section"><a href="reference/enumerations.html">Enumerations</a></span></dt>
 <dd><dl>
+<dt><span class="section"><a href="reference/enumerations/buffer_side_selector.html">buffer_side_selector</a></span></dt>
 <dt><span class="section"><a href="reference/enumerations/closure_selector.html">closure_selector</a></span></dt>
+<dt><span class="section"><a href="reference/enumerations/join_selector.html">join_selector</a></span></dt>
 <dt><span class="section"><a href="reference/enumerations/order_selector.html">order_selector</a></span></dt>
+<dt><span class="section"><a href="reference/enumerations/piece_type.html">piece_type</a></span></dt>
+<dt><span class="section"><a href="reference/enumerations/validity_failure_type.html">validity_failure_type</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="reference/exceptions.html">Exceptions</a></span></dt>
 <dd><dl>
@@ -195,11 +203,22 @@
 <dt><span class="section"><a href="reference/strategies.html">Strategies</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="reference/strategies/strategy_distance_pythagoras.html">strategy::distance::pythagoras</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_distance_pythagoras_box_box.html">strategy::distance::pythagoras_box_box</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_distance_pythagoras_point_box.html">strategy::distance::pythagoras_point_box</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_distance_haversine.html">strategy::distance::haversine</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_distance_projected_point.html">strategy::distance::projected_point</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_distance_cross_track.html">strategy::distance::cross_track</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_area_surveyor.html">strategy::area::surveyor</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_area_huiller.html">strategy::area::huiller</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_buffer_join_round.html">strategy::buffer::join_round</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_buffer_join_miter.html">strategy::buffer::join_miter</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_buffer_end_round.html">strategy::buffer::end_round</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_buffer_end_flat.html">strategy::buffer::end_flat</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_buffer_distance_symmetric.html">strategy::buffer::distance_symmetric</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_buffer_distance_asymmetric.html">strategy::buffer::distance_asymmetric</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_buffer_point_circle.html">strategy::buffer::point_circle</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_buffer_point_square.html">strategy::buffer::point_square</a></span></dt>
+<dt><span class="section"><a href="reference/strategies/strategy_buffer_side_straight.html">strategy::buffer::side_straight</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_centroid_average.html">strategy::centroid::average</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_centroid_bashein_detmer.html">strategy::centroid::bashein_detmer</a></span></dt>
 <dt><span class="section"><a href="reference/strategies/strategy_convex_hull_graham_andrew.html">strategy::convex_hull::graham_andrew</a></span></dt>
@@ -229,7 +248,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
+      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -237,7 +257,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="spatial_indexes/rtree_examples/index_stored_in_shared_memory_using_boost_interprocess.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="reference/access.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="spatial_indexes/rtree_examples/index_stored_in_mapped_file_using_boost_interprocess.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="reference/access.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

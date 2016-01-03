@@ -1,4 +1,4 @@
-// Boost.Geometry (aka GGL, Generic Geometry Library) 
+// Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
 // Copyright (c) 2010-2012 Barend Gehrels, Amsterdam, the Netherlands.
@@ -30,7 +30,7 @@ struct wrapped_boost_array
     inline wrapped_boost_array() : size(0) {}
 
     boost::array<Point, Count> array;
-    int size;
+    std::size_t size;
 };
 
 

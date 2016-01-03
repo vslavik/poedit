@@ -13,8 +13,14 @@
 #ifndef BOOST_INTRUSIVE_POINTER_PLUS_BITS_HPP
 #define BOOST_INTRUSIVE_POINTER_PLUS_BITS_HPP
 
+#include <boost/intrusive/detail/config_begin.hpp>
+#include <boost/intrusive/intrusive_fwd.hpp>
 #include <boost/intrusive/detail/mpl.hpp> //ls_zeros
 #include <boost/intrusive/detail/assert.hpp> //BOOST_INTRUSIVE_INVARIANT_ASSERT
+
+#if defined(BOOST_HAS_PRAGMA_ONCE)
+#  pragma once
+#endif
 
 namespace boost {
 namespace intrusive {
@@ -82,5 +88,7 @@ struct pointer_plus_bits<T*, NumBits>
 
 } //namespace intrusive
 } //namespace boost
+
+#include <boost/intrusive/detail/config_end.hpp>
 
 #endif //BOOST_INTRUSIVE_POINTER_PLUS_BITS_HPP

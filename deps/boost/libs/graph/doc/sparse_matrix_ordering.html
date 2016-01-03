@@ -143,7 +143,7 @@ namespace boost {
     rcm_queue&lt;Vertex, Degree&gt; Q(degree);
     
     typename boost::graph_traits&lt;Graph&gt;::vertex_iterator ui, ui_end;
-    for (tie(ui, ui_end) = vertices(G); ui != ui_end; ++ui)
+    for (boost::tie(ui, ui_end) = vertices(G); ui != ui_end; ++ui)
       put(color, *ui, white(c));
     breadth_first_search(G, u, Q, bfs_visitor&lt;&gt;(), color);
 
@@ -214,7 +214,7 @@ from BGL can be reused.
     CMVisitor cm_visitor(inverse_permutation);
     
     typename boost::graph_traits&lt;Graph&gt;::vertex_iterator ui, ui_end;
-    for (tie(ui, ui_end) = vertices(G); ui != ui_end; ++ui)
+    for (boost::tie(ui, ui_end) = vertices(G); ui != ui_end; ++ui)
       put(color, *ui, white(c));
     breadth_first_search(G, s, Q, cm_visitor, color);
   }  

@@ -32,14 +32,14 @@
           &amp;, Value const &amp;)</a></span></dt>
 <dt><span class="section"><a href="group__rtree__functions/insert_rtree_________iterator__iterator_.html">insert(rtree&lt;...&gt;
           &amp;, Iterator, Iterator)</a></span></dt>
-<dt><span class="section"><a href="group__rtree__functions/insert_rtree_________range_const___.html">insert(rtree&lt;...&gt;
-          &amp;, Range const &amp;)</a></span></dt>
+<dt><span class="section"><a href="group__rtree__functions/insert_rtree_________convertibleorrange_const___.html">insert(rtree&lt;...&gt;
+          &amp;, ConvertibleOrRange const &amp;)</a></span></dt>
 <dt><span class="section"><a href="group__rtree__functions/remove_rtree_________value_const___.html">remove(rtree&lt;...&gt;
           &amp;, Value const &amp;)</a></span></dt>
 <dt><span class="section"><a href="group__rtree__functions/remove_rtree_________iterator__iterator_.html">remove(rtree&lt;...&gt;
           &amp;, Iterator, Iterator)</a></span></dt>
-<dt><span class="section"><a href="group__rtree__functions/remove_rtree_________range_const___.html">remove(rtree&lt;...&gt;
-          &amp;, Range const &amp;)</a></span></dt>
+<dt><span class="section"><a href="group__rtree__functions/remove_rtree_________convertibleorrange_const___.html">remove(rtree&lt;...&gt;
+          &amp;, ConvertibleOrRange const &amp;)</a></span></dt>
 <dt><span class="section"><a href="group__rtree__functions/query_rtree______const____predicates_const____outiter_.html">query(rtree&lt;...&gt;
           const &amp;, Predicates const &amp;, OutIter)</a></span></dt>
 <dt><span class="section"><a href="group__rtree__functions/qbegin_rtree______const____predicates_const___.html">qbegin(rtree&lt;...&gt;
@@ -109,14 +109,15 @@
 <tr>
 <td>
                   <p>
-                    <a class="link" href="group__rtree__functions/insert_rtree_________range_const___.html#group__rtree__functions_1ga524e332717347c3ffb54d2497047215b"><code class="computeroutput"><span class="identifier">insert</span><span class="special">(</span><span class="identifier">rtree</span><span class="special">&lt;...&gt;</span>
-                    <span class="special">&amp;,</span> <span class="identifier">Range</span>
+                    <a class="link" href="group__rtree__functions/insert_rtree_________convertibleorrange_const___.html#group__rtree__functions_1gab4edad000d63eb103f2dad3813ceb2b3"><code class="computeroutput"><span class="identifier">insert</span><span class="special">(</span><span class="identifier">rtree</span><span class="special">&lt;...&gt;</span>
+                    <span class="special">&amp;,</span> <span class="identifier">ConvertibleOrRange</span>
                     <span class="keyword">const</span> <span class="special">&amp;)</span></code></a>
                   </p>
                 </td>
 <td>
                   <p>
-                    Insert a range of values to the index.
+                    Insert a value created using convertible object or a range of
+                    values to the index.
                   </p>
                 </td>
 </tr>
@@ -150,14 +151,15 @@
 <tr>
 <td>
                   <p>
-                    <a class="link" href="group__rtree__functions/remove_rtree_________range_const___.html#group__rtree__functions_1ga421f4fe0554d1b436b9e7e64794e6349"><code class="computeroutput"><span class="identifier">remove</span><span class="special">(</span><span class="identifier">rtree</span><span class="special">&lt;...&gt;</span>
-                    <span class="special">&amp;,</span> <span class="identifier">Range</span>
+                    <a class="link" href="group__rtree__functions/remove_rtree_________convertibleorrange_const___.html#group__rtree__functions_1ga700c922f8b4d5ebd073e999e12b55249"><code class="computeroutput"><span class="identifier">remove</span><span class="special">(</span><span class="identifier">rtree</span><span class="special">&lt;...&gt;</span>
+                    <span class="special">&amp;,</span> <span class="identifier">ConvertibleOrRange</span>
                     <span class="keyword">const</span> <span class="special">&amp;)</span></code></a>
                   </p>
                 </td>
 <td>
                   <p>
-                    Remove a range of values from the container.
+                    Remove a value corresponding to an object convertible to it or
+                    a range of values from the container.
                   </p>
                 </td>
 </tr>
@@ -277,7 +279,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Barend Gehrels, Bruno Lalande, Mateusz Loskot, Adam Wulkiewicz<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Barend Gehrels, Bruno Lalande,
+      Mateusz Loskot, Adam Wulkiewicz, Oracle and/or its affiliates<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

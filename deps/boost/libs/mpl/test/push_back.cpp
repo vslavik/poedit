@@ -7,7 +7,7 @@
 //
 // See http://www.boost.org/libs/mpl for documentation.
 
-// $Id: push_back.cpp 55647 2009-08-18 05:00:17Z agurtovoy $
+// $Id$
 // $Date: 2008-10-10 02:21:07 -0700 (Fri, 10 Oct 2008) $
 // $Revision: 49240 $
 

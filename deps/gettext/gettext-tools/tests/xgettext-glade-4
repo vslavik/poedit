@@ -1,25 +1,20 @@
 #!/bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Test of Glade 2 support.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles xg-gl-4-empty.glade"
 cat <<EOF > xg-gl-4-empty.glade
 <?xml version="1.0"?>
 <GTK-Interface/>
 EOF
 
-tmpfiles="$tmpfiles xg-gl-4.pot"
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} -o xg-gl-4.pot xg-gl-4-empty.glade 2>/dev/null
 test $? = 0 || {
   echo "Skipping test: xgettext was built without Glade support"
-  rm -fr $tmpfiles; exit 77
+  exit 77
 }
 
-tmpfiles="$tmpfiles xg-gl-4.glade"
 cat <<EOF > xg-gl-4.glade
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
@@ -39,15 +34,12 @@ cat <<EOF > xg-gl-4.glade
 </glade-interface>
 EOF
 
-tmpfiles="$tmpfiles xg-gl-4.tmp xg-gl-4.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o xg-gl-4.tmp xg-gl-4.glade
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o xg-gl-4.tmp xg-gl-4.glade || exit 1
 # Don't simplify this to "grep ... < xg-gl-4.tmp", otherwise OpenBSD 4.0 grep
 # only outputs "Binary file (standard input) matches".
 cat xg-gl-4.tmp | grep -v 'POT-Creation-Date' > xg-gl-4.pot
 
-tmpfiles="$tmpfiles xg-gl-4.ok"
 cat <<\EOF > xg-gl-4.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -81,7 +73,6 @@ test $result = 0 || {
     rm -fr $tempfiles; exit $result
 }
 
-tmpfiles="$tmpfiles xg-gl-4a.glade"
 cat <<EOF > xg-gl-4a.glade
 <?xml version="1.0"?>
 <glade-interface>
@@ -98,14 +89,11 @@ cat <<EOF > xg-gl-4a.glade
 </glade-interface>
 EOF
 
-tmpfiles="$tmpfiles xg-gl-4a.tmp xg-gl-4a.pot"
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o xg-gl-4a.tmp xg-gl-4a.glade
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+${XGETTEXT} -o xg-gl-4a.tmp xg-gl-4a.glade || exit 1
 # Look upwards
 cat xg-gl-4a.tmp | grep -v 'POT-Creation-Date' > xg-gl-4a.pot
 
-tmpfiles="$tmpfiles xg-gl-4a.ok"
 cat <<\EOF > xg-gl-4a.ok
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -134,7 +122,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} xg-gl-4a.ok xg-gl-4a.pot
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

@@ -729,6 +729,7 @@
 <pre class="programlisting"><span class="identifier">dense_output_runge_kutta</span><span class="special">&lt;</span> <span class="identifier">controlled_runge_kutta</span><span class="special">&lt;</span> <span class="identifier">runge_kutta_dopri5</span><span class="special">&lt;</span> <span class="identifier">state_type</span> <span class="special">&gt;</span> <span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">dense</span><span class="special">;</span>
 <span class="identifier">dense</span><span class="special">.</span><span class="identifier">initialize</span><span class="special">(</span> <span class="identifier">in</span> <span class="special">,</span> <span class="identifier">t</span> <span class="special">,</span> <span class="identifier">dt</span> <span class="special">);</span>
 <span class="identifier">pair</span><span class="special">&lt;</span> <span class="keyword">double</span> <span class="special">,</span> <span class="keyword">double</span> <span class="special">&gt;</span> <span class="identifier">times</span> <span class="special">=</span> <span class="identifier">dense</span><span class="special">.</span><span class="identifier">do_step</span><span class="special">(</span> <span class="identifier">sys</span> <span class="special">);</span>
+<span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="identifier">times</span><span class="special">;</span>
 </pre>
 <p>
         </p>
@@ -756,6 +757,7 @@
 <pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">numeric</span><span class="special">::</span><span class="identifier">odeint</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">make_dense_output</span><span class="special">&lt;</span>
     <span class="identifier">runge_kutta_dopri5</span><span class="special">&lt;</span> <span class="identifier">state_type</span> <span class="special">&gt;</span> <span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">dense_stepper_type</span><span class="special">;</span>
 <span class="identifier">dense_stepper_type</span> <span class="identifier">dense2</span> <span class="special">=</span> <span class="identifier">make_dense_output</span><span class="special">(</span> <span class="number">1.0e-6</span> <span class="special">,</span> <span class="number">1.0e-6</span> <span class="special">,</span> <span class="identifier">runge_kutta_dopri5</span><span class="special">&lt;</span> <span class="identifier">state_type</span> <span class="special">&gt;()</span> <span class="special">);</span>
+<span class="special">(</span><span class="keyword">void</span><span class="special">)</span><span class="identifier">dense2</span><span class="special">;</span>
 </pre>
 <p>
         </p>
@@ -2003,6 +2005,54 @@
                   </p>
                 </td>
 </tr>
+<tr>
+<td>
+                  <p>
+                    Velocity Verlet
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">velocity_verlet</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <a class="link" href="../concepts/stepper.html" title="Stepper">Stepper</a>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <a class="link" href="../concepts/second_order_system.html" title="Second Order System">Second
+                    Order System</a>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    1
+                  </p>
+                </td>
+<td>
+                  <p>
+                    No
+                  </p>
+                </td>
+<td>
+                  <p>
+                    No
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Yes
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Velocity verlet method suitable for molecular dynamics simulation.
+                  </p>
+                </td>
+</tr>
 </tbody>
 </table></div>
 </div>
@@ -2151,10 +2201,10 @@
 
 <span class="keyword">struct</span> <span class="identifier">ornstein_stoch</span>
 <span class="special">{</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mt19937</span> <span class="identifier">m_rng</span><span class="special">;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mt19937</span> <span class="special">&amp;</span><span class="identifier">m_rng</span><span class="special">;</span>
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">normal_distribution</span><span class="special">&lt;&gt;</span> <span class="identifier">m_dist</span><span class="special">;</span>
 
-    <span class="identifier">ornstein_stoch</span><span class="special">(</span> <span class="keyword">double</span> <span class="identifier">sigma</span> <span class="special">)</span> <span class="special">:</span> <span class="identifier">m_rng</span><span class="special">()</span> <span class="special">,</span> <span class="identifier">m_dist</span><span class="special">(</span> <span class="number">0.0</span> <span class="special">,</span> <span class="identifier">sigma</span> <span class="special">)</span> <span class="special">{</span> <span class="special">}</span>
+  <span class="identifier">ornstein_stoch</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mt19937</span> <span class="special">&amp;</span><span class="identifier">rng</span> <span class="special">,</span> <span class="keyword">double</span> <span class="identifier">sigma</span> <span class="special">)</span> <span class="special">:</span> <span class="identifier">m_rng</span><span class="special">(</span> <span class="identifier">rng</span> <span class="special">)</span> <span class="special">,</span> <span class="identifier">m_dist</span><span class="special">(</span> <span class="number">0.0</span> <span class="special">,</span> <span class="identifier">sigma</span> <span class="special">)</span> <span class="special">{</span> <span class="special">}</span>
 
     <span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()(</span> <span class="keyword">const</span> <span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">x</span> <span class="special">,</span> <span class="identifier">state_type</span> <span class="special">&amp;</span><span class="identifier">dxdt</span> <span class="special">)</span>
     <span class="special">{</span>
@@ -2172,9 +2222,10 @@
         </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">double</span> <span class="identifier">dt</span> <span class="special">=</span> <span class="number">0.1</span><span class="special">;</span>
+<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">mt19937</span> <span class="identifier">rng</span><span class="special">;</span>
+<span class="keyword">double</span> <span class="identifier">dt</span> <span class="special">=</span> <span class="number">0.1</span><span class="special">;</span>
 <span class="identifier">state_type</span> <span class="identifier">x</span> <span class="special">=</span> <span class="special">{{</span> <span class="number">1.0</span> <span class="special">}};</span>
-<span class="identifier">integrate_const</span><span class="special">(</span> <span class="identifier">stochastic_euler</span><span class="special">&lt;</span> <span class="identifier">N</span> <span class="special">&gt;()</span> <span class="special">,</span> <span class="identifier">make_pair</span><span class="special">(</span> <span class="identifier">ornstein_det</span><span class="special">()</span> <span class="special">,</span> <span class="identifier">ornstein_stoch</span><span class="special">(</span> <span class="number">1.0</span> <span class="special">)</span> <span class="special">)</span> <span class="special">,</span>
+<span class="identifier">integrate_const</span><span class="special">(</span> <span class="identifier">stochastic_euler</span><span class="special">&lt;</span> <span class="identifier">N</span> <span class="special">&gt;()</span> <span class="special">,</span> <span class="identifier">make_pair</span><span class="special">(</span> <span class="identifier">ornstein_det</span><span class="special">()</span> <span class="special">,</span> <span class="identifier">ornstein_stoch</span><span class="special">(</span> <span class="identifier">rng</span> <span class="special">,</span> <span class="number">1.0</span> <span class="special">)</span> <span class="special">),</span>
         <span class="identifier">x</span> <span class="special">,</span> <span class="number">0.0</span> <span class="special">,</span> <span class="number">10.0</span> <span class="special">,</span> <span class="identifier">dt</span> <span class="special">,</span> <span class="identifier">streaming_observer</span><span class="special">()</span> <span class="special">);</span>
 </pre>
 <p>

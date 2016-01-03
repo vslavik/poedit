@@ -1,7 +1,7 @@
 /*
 *******************************************************************************
 *
-*   Copyright (C) 2002-2013, International Business Machines
+*   Copyright (C) 2002-2015, International Business Machines
 *   Corporation and others.  All Rights Reserved.
 *
 *******************************************************************************
@@ -25,8 +25,7 @@
 #include "unicode/ucasemap.h"
 #include "cmemory.h"
 #include "cintltst.h"
-
-#define LENGTHOF(array) (int32_t)(sizeof(array)/sizeof((array)[0]))
+#include "ustr_imp.h"
 
 /* test string case mapping functions --------------------------------------- */
 
@@ -891,9 +890,9 @@ TestUCaseMapToTitle(void) {
     }
 
     /* Use default UBreakIterator: Word breaks. */
-    length=ucasemap_toTitle(csm, buffer, LENGTHOF(buffer), beforeTitle, LENGTHOF(beforeTitle), &errorCode);
+    length=ucasemap_toTitle(csm, buffer, UPRV_LENGTHOF(buffer), beforeTitle, UPRV_LENGTHOF(beforeTitle), &errorCode);
     if( U_FAILURE(errorCode) ||
-        length!=LENGTHOF(titleWord) ||
+        length!=UPRV_LENGTHOF(titleWord) ||
         0!=u_memcmp(buffer, titleWord, length) ||
         buffer[length]!=0
     ) {
@@ -913,9 +912,9 @@ TestUCaseMapToTitle(void) {
         return;
     }
 
-    length=ucasemap_toTitle(csm, buffer, LENGTHOF(buffer), beforeTitle, LENGTHOF(beforeTitle), &errorCode);
+    length=ucasemap_toTitle(csm, buffer, UPRV_LENGTHOF(buffer), beforeTitle, UPRV_LENGTHOF(beforeTitle), &errorCode);
     if( U_FAILURE(errorCode) ||
-        length!=LENGTHOF(titleWordNoAdjust) ||
+        length!=UPRV_LENGTHOF(titleWordNoAdjust) ||
         0!=u_memcmp(buffer, titleWordNoAdjust, length) ||
         buffer[length]!=0
     ) {
@@ -949,18 +948,18 @@ TestUCaseMapToTitle(void) {
     }
 
     /* Use the sentence break iterator with the option. Preflight first. */
-    length=ucasemap_toTitle(csm, NULL, 0, beforeTitle, LENGTHOF(beforeTitle), &errorCode);
+    length=ucasemap_toTitle(csm, NULL, 0, beforeTitle, UPRV_LENGTHOF(beforeTitle), &errorCode);
     if( errorCode!=U_BUFFER_OVERFLOW_ERROR ||
-        length!=LENGTHOF(titleSentNoLower)
+        length!=UPRV_LENGTHOF(titleSentNoLower)
     ) {
         log_err("ucasemap_toTitle(preflight sentence break iterator, no lowercasing)=%ld failed - %s\n", (long)length, u_errorName(errorCode));
     }
 
     errorCode=U_ZERO_ERROR;
     buffer[0]=0;
-    length=ucasemap_toTitle(csm, buffer, LENGTHOF(buffer), beforeTitle, LENGTHOF(beforeTitle), &errorCode);
+    length=ucasemap_toTitle(csm, buffer, UPRV_LENGTHOF(buffer), beforeTitle, UPRV_LENGTHOF(beforeTitle), &errorCode);
     if( U_FAILURE(errorCode) ||
-        length!=LENGTHOF(titleSentNoLower) ||
+        length!=UPRV_LENGTHOF(titleSentNoLower) ||
         0!=u_memcmp(buffer, titleSentNoLower, length) ||
         buffer[length]!=0
     ) {
@@ -973,8 +972,8 @@ TestUCaseMapToTitle(void) {
         int32_t utf8BeforeTitleLength, utf8TitleSentNoLowerLength;
 
         errorCode=U_ZERO_ERROR;
-        u_strToUTF8(utf8BeforeTitle, (int32_t)sizeof(utf8BeforeTitle), &utf8BeforeTitleLength, beforeTitle, LENGTHOF(beforeTitle), &errorCode);
-        u_strToUTF8(utf8TitleSentNoLower, (int32_t)sizeof(utf8TitleSentNoLower), &utf8TitleSentNoLowerLength, titleSentNoLower, LENGTHOF(titleSentNoLower), &errorCode);
+        u_strToUTF8(utf8BeforeTitle, (int32_t)sizeof(utf8BeforeTitle), &utf8BeforeTitleLength, beforeTitle, UPRV_LENGTHOF(beforeTitle), &errorCode);
+        u_strToUTF8(utf8TitleSentNoLower, (int32_t)sizeof(utf8TitleSentNoLower), &utf8TitleSentNoLowerLength, titleSentNoLower, UPRV_LENGTHOF(titleSentNoLower), &errorCode);
 
         length=ucasemap_utf8ToTitle(csm, utf8, (int32_t)sizeof(utf8), utf8BeforeTitle, utf8BeforeTitleLength, &errorCode);
         if( U_FAILURE(errorCode) ||
@@ -990,6 +989,49 @@ TestUCaseMapToTitle(void) {
 }
 
 #endif
+
+/* Test case for internal API u_caseInsensitivePrefixMatch */
+static void
+TestUCaseInsensitivePrefixMatch(void) {
+    struct {
+        const char     *s1;
+        const char     *s2;
+        int32_t         r1;
+        int32_t         r2;
+    } testCases[] = {
+        {"ABC", "ab", 2, 2},
+        {"ABCD", "abcx", 3, 3},
+        {"ABC", "xyz", 0, 0},
+        /* U+00DF LATIN SMALL LETTER SHARP S */
+        {"A\\u00dfBC", "Ass", 2, 3},
+        {"Fust", "Fu\\u00dfball", 2, 2},
+        {"\\u00dfsA", "s\\u00dfB", 2, 2},
+        {"\\u00dfs", "s\\u00df", 2, 2},
+        /* U+0130 LATIN CAPITAL LETTER I WITH DOT ABOVE */
+        {"XYZ\\u0130i\\u0307xxx", "xyzi\\u0307\\u0130yyy", 6, 6},
+        {0, 0, 0, 0}
+    };
+    int32_t i;
+
+    for (i = 0; testCases[i].s1 != 0; i++) {
+        UErrorCode sts = U_ZERO_ERROR;
+        UChar u1[64], u2[64];
+        int32_t matchLen1, matchLen2;
+
+        u_unescape(testCases[i].s1, u1, 64);
+        u_unescape(testCases[i].s2, u2, 64);
+
+        u_caseInsensitivePrefixMatch(u1, -1, u2, -1, 0, &matchLen1, &matchLen2, &sts);
+        if (U_FAILURE(sts)) {
+            log_err("error: %s, s1=%s, s2=%s", u_errorName(sts), testCases[i].s1, testCases[i].s2);
+        } else if (matchLen1 != testCases[i].r1 || matchLen2 != testCases[i].r2) {
+            log_err("s1=%s, s2=%2 / match len1=%d, len2=%d / expected len1=%d, len2=%d",
+                testCases[i].s1, testCases[i].s2,
+                matchLen1, matchLen2,
+                testCases[i].r1, testCases[i].r2);
+        }
+    }
+}
 
 void addCaseTest(TestNode** root);
 
@@ -1007,4 +1049,5 @@ void addCaseTest(TestNode** root) {
 #if !UCONFIG_NO_BREAK_ITERATION && !UCONFIG_NO_FILE_IO
     addTest(root, &TestUCaseMapToTitle, "tsutil/cstrcase/TestUCaseMapToTitle");
 #endif
+    addTest(root, &TestUCaseInsensitivePrefixMatch, "tsutil/cstrcase/TestUCaseInsensitivePrefixMatch");
 }

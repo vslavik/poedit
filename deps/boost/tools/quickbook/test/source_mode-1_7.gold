@@ -26,7 +26,14 @@
   <itemizedlist>
     <listitem>
       <simpara>
-        Sadly this doesn't work.
+        <code><phrase role="keyword">int</phrase> <phrase role="identifier">main</phrase><phrase
+        role="special">()</phrase> <phrase role="special">{}</phrase></code>
+      </simpara>
+    </listitem>
+    <listitem>
+      <simpara>
+        <code><phrase role="keyword">int</phrase> <phrase role="identifier">main</phrase><phrase
+        role="special">()</phrase> <phrase role="special">{}</phrase></code>
       </simpara>
     </listitem>
     <listitem>
@@ -35,4 +42,22 @@
       </simpara>
     </listitem>
   </itemizedlist>
+  <para>
+    <code><phrase role="keyword">int</phrase> <phrase role="identifier">main</phrase><phrase
+    role="special">()</phrase> <phrase role="special">{}</phrase></code> and <code><phrase
+    role="keyword">int</phrase> <phrase role="identifier">main</phrase><phrase role="special">()</phrase>
+    <phrase role="special">{}</phrase></code> should both be C++ highlighted. <code>int
+    main() {}</code> shouldn't be, but <code><phrase role="keyword">int</phrase>
+    <phrase role="identifier">main</phrase><phrase role="special">()</phrase> <phrase
+    role="special">{}</phrase></code> should.
+  </para>
+  <para>
+    <code><phrase role="keyword">int</phrase> <phrase role="identifier">main</phrase><phrase
+    role="special">()</phrase> <phrase role="special">{}</phrase></code>. Not highlighted:
+    <code>int main() {}</code>.
+  </para>
+  <section id="source_mode_test.cpp">
+    <title><link linkend="source_mode_test.cpp">C++ section</link></title>
+<programlisting><phrase role="keyword">int</phrase> <phrase role="identifier">main</phrase><phrase role="special">()</phrase> <phrase role="special">{}</phrase></programlisting>
+  </section>
 </article>

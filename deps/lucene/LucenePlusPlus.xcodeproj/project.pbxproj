@@ -838,6 +838,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B228A1571AD95D0A006B0BBC /* third_party.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = third_party.xcconfig; path = ../custom_build/third_party.xcconfig; sourceTree = "<group>"; };
 		B23D1F7D181598E600E6B212 /* libLucenePlusPlus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLucenePlusPlus.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B23D1F851815995C00E6B212 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		B23D1F871815997200E6B212 /* AbstractAllTermDocs.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = AbstractAllTermDocs.h; path = LucenePlusPlus/include/AbstractAllTermDocs.h; sourceTree = "<group>"; };
@@ -1683,6 +1684,7 @@
 		B23D1F74181598E600E6B212 = {
 			isa = PBXGroup;
 			children = (
+				B228A1571AD95D0A006B0BBC /* third_party.xcconfig */,
 				B23D1F851815995C00E6B212 /* Config.h */,
 				B23D1F841815994E00E6B212 /* Headers */,
 				B23D22911815998C00E6B212 /* Sources */,
@@ -3156,7 +3158,7 @@
 		B23D1F75181598E600E6B212 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Václav Slavík";
 			};
 			buildConfigurationList = B23D1F78181598E600E6B212 /* Build configuration list for PBXProject "LucenePlusPlus" */;
@@ -3564,6 +3566,7 @@
 /* Begin XCBuildConfiguration section */
 		B23D1F7F181598E600E6B212 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B228A1571AD95D0A006B0BBC /* third_party.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -3577,13 +3580,16 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = LPP_BUILDING_LIB;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					LPP_BUILDING_LIB,
+					LPP_HAVE_GXXCLASSVISIBILITY,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -3596,15 +3602,14 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
 		B23D1F80181598E600E6B212 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B228A1571AD95D0A006B0BBC /* third_party.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -3618,12 +3623,16 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = LPP_BUILDING_LIB;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					LPP_BUILDING_LIB,
+					LPP_HAVE_GXXCLASSVISIBILITY,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -3636,15 +3645,14 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
 		B23D1F82181598E600E6B212 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LucenePlusPlus/src/core/include/LuceneInc.h;
@@ -3655,6 +3663,7 @@
 		B23D1F83181598E600E6B212 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LucenePlusPlus/src/core/include/LuceneInc.h;

@@ -31,11 +31,14 @@ namespace
     template<class Container, class Iterator>
     void test_rotate_copy_impl(Container& cont, Iterator where_it)
     {
-        typedef BOOST_DEDUCED_TYPENAME boost::range_value<Container>::type value_type;
+        typedef BOOST_DEDUCED_TYPENAME boost::range_value<Container>::type
+                                            value_type;
+
         std::vector<value_type> reference;
         std::vector<value_type> test;
 
-        typedef BOOST_DEDUCED_TYPENAME boost::range_iterator<Container>::type iterator_t;
+        typedef BOOST_DEDUCED_TYPENAME boost::range_iterator<Container>::type
+                                            iterator_t BOOST_RANGE_UNUSED;
 
         test_append(
             std::rotate_copy(cont.begin(), where_it, cont.end(),

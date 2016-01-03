@@ -11,10 +11,11 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/phoenix1_tuples.hpp>
 
-using namespace std;
-using namespace phoenix;
 using namespace phoenix;
 using namespace phoenix::tuple_index_names;
+using std::cout;
+using std::endl;
+using std::string;
 
 int
 main()

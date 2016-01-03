@@ -8,6 +8,7 @@
 #if !defined(BOOST_FUSION_SINGLE_VIEW_05052005_0335)
 #define BOOST_FUSION_SINGLE_VIEW_05052005_0335
 
+#include <boost/fusion/support/config.hpp>
 #include <boost/fusion/support/detail/access.hpp>
 #include <boost/fusion/support/detail/as_fusion_element.hpp>
 #include <boost/fusion/support/sequence_base.hpp>
@@ -42,9 +43,11 @@ namespace boost { namespace fusion
         typedef mpl::int_<1> size;
         typedef T value_type;
 
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         single_view()
             : val() {}
 
+        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         explicit single_view(typename detail::call_param<T>::type in_val)
             : val(in_val) {}
 
@@ -52,6 +55,7 @@ namespace boost { namespace fusion
     };
     
     template <typename T>
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
     inline single_view<typename detail::as_fusion_element<T>::type>
     make_single_view(T const& v)
     {

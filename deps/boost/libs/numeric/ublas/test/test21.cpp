@@ -12,7 +12,7 @@
 
 #include "test2.hpp"
 
-template<class V, int N>
+template<class V, std::size_t N>
 void test_blas_1<V, N>::test () {
     {
         value_type t;

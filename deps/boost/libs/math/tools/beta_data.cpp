@@ -3,22 +3,22 @@
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/math/bindings/rr.hpp>
 #include <boost/math/special_functions/gamma.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <boost/math/tools/test_data.hpp>
 #include <fstream>
+#include "mp_t.hpp"
 
 using namespace boost::math::tools;
 
 struct beta_data_generator
 {
-   boost::math::ntl::RR operator()(boost::math::ntl::RR a, boost::math::ntl::RR b)
+   mp_t operator()(mp_t a, mp_t b)
    {
       if(a < b)
          throw std::domain_error("");
       // very naively calculate spots:
-      boost::math::ntl::RR g1, g2, g3;
+      mp_t g1, g2, g3;
       int s1, s2, s3;
       g1 = boost::math::lgamma(a, &s1);
       g2 = boost::math::lgamma(b, &s2);
@@ -33,11 +33,8 @@ struct beta_data_generator
 
 int main()
 {
-   boost::math::ntl::RR::SetPrecision(1000);
-   boost::math::ntl::RR::SetOutputPrecision(40);
-
-   parameter_info<boost::math::ntl::RR> arg1, arg2;
-   test_data<boost::math::ntl::RR> data;
+   parameter_info<mp_t> arg1, arg2;
+   test_data<mp_t> data;
 
    std::cout << "Welcome.\n"
       "This program will generate spot tests for the beta function:\n"
@@ -63,6 +60,7 @@ int main()
    if(line == "")
       line = "beta_data.ipp";
    std::ofstream ofs(line.c_str());
+   ofs << std::scientific << std::setprecision(40);
    write_code(ofs, data, "beta_data");
    
    return 0;

@@ -21,7 +21,7 @@
 #include <boost/fusion/container/generation/detail/preprocessed/make_map.hpp>
 #else
 #if defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES)
-#pragma wave option(preserve: 2, line: 0, output: "detail/preprocessed/make_map" FUSION_MAX_MAP_SIZE_STR".hpp")
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/make_map" FUSION_MAX_MAP_SIZE_STR".hpp")
 #endif
 
 /*=============================================================================
@@ -59,6 +59,7 @@ namespace boost { namespace fusion
         };
     }
 
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
     inline map<>
     make_map()
     {
@@ -70,7 +71,7 @@ namespace boost { namespace fusion
         BOOST_PP_CAT(K, n)                                                      \
       , typename detail::as_fusion_element<BOOST_PP_CAT(D, n)>::type>
 
-#define BOOST_FUSION_MAKE_PAIR(z, n, data)                                      \
+#define BOOST_FUSION_MAKE_PAIR(z, n, _)                                         \
     fusion::make_pair<BOOST_PP_CAT(K, n)>(BOOST_PP_CAT(_, n))                   \
 
 #define BOOST_PP_FILENAME_1 <boost/fusion/container/generation/detail/pp_make_map.hpp>
@@ -104,13 +105,9 @@ namespace boost { namespace fusion
             BOOST_PP_ENUM_PARAMS(N, typename K)
           , BOOST_PP_ENUM_PARAMS(N, typename D)
         >
-#if defined(BOOST_NO_PARTIAL_SPECIALIZATION_IMPLICIT_DEFAULT_ARGS)
-         #define TEXT(z, n, text) , text
-         struct make_map<BOOST_PP_ENUM_PARAMS(N, K), BOOST_PP_ENUM_PARAMS(N, D) BOOST_PP_REPEAT_FROM_TO(N, FUSION_MAX_VECTOR_SIZE, TEXT, void_) BOOST_PP_REPEAT_FROM_TO(BOOST_PP_DEC(N), FUSION_MAX_VECTOR_SIZE, TEXT, void_)>
-         #undef TEXT
-#else
-        struct make_map<BOOST_PP_ENUM_PARAMS(N, K), BOOST_PP_ENUM_PARAMS(N, D)>
-#endif
+        #define TEXT(z, n, text) , text
+        struct make_map<BOOST_PP_ENUM_PARAMS(N, K), BOOST_PP_ENUM_PARAMS(N, D) BOOST_PP_REPEAT_FROM_TO(N, FUSION_MAX_VECTOR_SIZE, TEXT, void_) BOOST_PP_REPEAT_FROM_TO(BOOST_PP_DEC(N), FUSION_MAX_VECTOR_SIZE, TEXT, void_)>
+        #undef TEXT
         {
             typedef map<BOOST_PP_ENUM(N, BOOST_FUSION_PAIR, _)> type;
         };
@@ -120,11 +117,12 @@ namespace boost { namespace fusion
         BOOST_PP_ENUM_PARAMS(N, typename K)
       , BOOST_PP_ENUM_PARAMS(N, typename D)
     >
+    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
     inline map<BOOST_PP_ENUM(N, BOOST_FUSION_PAIR, _)>
-    make_map(BOOST_PP_ENUM_BINARY_PARAMS(N, D, const& _))
+    make_map(BOOST_PP_ENUM_BINARY_PARAMS(N, D, const& arg))
     {
         return map<BOOST_PP_ENUM(N, BOOST_FUSION_PAIR, _)>(
-            BOOST_PP_ENUM(N, BOOST_FUSION_MAKE_PAIR, _));
+            BOOST_PP_ENUM(N, BOOST_FUSION_MAKE_PAIR, arg));
     }
 
 #undef N

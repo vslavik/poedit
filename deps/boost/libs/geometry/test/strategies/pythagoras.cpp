@@ -23,6 +23,7 @@
 
 #include <boost/concept/requires.hpp>
 #include <boost/concept_check.hpp>
+#include <boost/core/ignore_unused.hpp>
 
 #include <boost/geometry/algorithms/assign.hpp>
 #include <boost/geometry/strategies/cartesian/distance_pythagoras.hpp>
@@ -122,7 +123,12 @@ void test_services()
     {
 
         // Compile-check if there is a strategy for this type
-        typedef typename services::default_strategy<bg::point_tag, P1, P2>::type pythagoras_strategy_type;
+        typedef typename services::default_strategy
+            <
+                bg::point_tag, bg::point_tag, P1, P2
+            >::type pythagoras_strategy_type;
+
+        boost::ignore_unused<pythagoras_strategy_type>();
     }
 
 
@@ -232,20 +238,27 @@ void test_integer(bool check_types)
     bg::assign_values(p2, 98765432, 87654321);
 
     typedef bg::strategy::distance::pythagoras<> pythagoras_type;
-    pythagoras_type pythagoras;
-    BOOST_AUTO(distance, pythagoras.apply(p1, p2));
-    BOOST_CHECK_CLOSE(distance, 107655455.02347542, 0.001);
-
     typedef typename bg::strategy::distance::services::comparable_type
         <
             pythagoras_type
         >::type comparable_type;
-    comparable_type comparable;
-    BOOST_AUTO(cdistance, comparable.apply(p1, p2));
-    BOOST_CHECK_EQUAL(cdistance, 11589696996311540);
 
-    typedef BOOST_TYPEOF(cdistance) cdistance_type;
-    typedef BOOST_TYPEOF(distance) distance_type;
+    typedef typename bg::strategy::distance::services::return_type
+        <
+            pythagoras_type, point_type, point_type
+        >::type distance_type;
+    typedef typename bg::strategy::distance::services::return_type
+        <
+            comparable_type, point_type, point_type
+        >::type cdistance_type;
+
+    pythagoras_type pythagoras;
+    distance_type distance = pythagoras.apply(p1, p2);
+    BOOST_CHECK_CLOSE(distance, 107655455.02347542, 0.001);
+
+    comparable_type comparable;
+    cdistance_type cdistance = comparable.apply(p1, p2);
+    BOOST_CHECK_EQUAL(cdistance, 11589696996311540);
 
     distance_type distance2 = sqrt(distance_type(cdistance));
     BOOST_CHECK_CLOSE(distance, distance2, 0.001);
@@ -253,7 +266,9 @@ void test_integer(bool check_types)
     if (check_types)
     {
         BOOST_CHECK((boost::is_same<distance_type, double>::type::value));
-        BOOST_CHECK((boost::is_same<cdistance_type, boost::long_long_type>::type::value));
+        // comparable_distance results in now double too, obviously because
+        // comp.distance point-segment can be fraction, even for integer input
+        BOOST_CHECK((boost::is_same<cdistance_type, double>::type::value));
     }
 }
 

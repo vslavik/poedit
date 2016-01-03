@@ -2,7 +2,7 @@
 #define BOOST_ARCHIVE_DETAIL_BASIC_ARCHIVE_IMPL_HPP
 
 // MS compatible compilers support #pragma once
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
+#if defined(_MSC_VER)
 # pragma once
 #endif
 
@@ -15,9 +15,6 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org for updates, documentation, and revision history.
-
-// can't use this - much as I'd like to as borland doesn't support it
-// #include <boost/scoped_ptr.hpp>
 
 #include <set>
 

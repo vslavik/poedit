@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2012-2012. Distributed under the Boost
+// (C) Copyright Ion Gaztanaga 2012-2013. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying file
 // LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
@@ -11,7 +11,7 @@
 #ifndef BOOST_CONTAINER_TEST_FORWARD_TO_INPUT_ITERATOR_HPP
 #define BOOST_CONTAINER_TEST_FORWARD_TO_INPUT_ITERATOR_HPP
 
-#include <iterator>
+#include <boost/container/detail/iterator.hpp>
 
 namespace boost{
 namespace container {
@@ -19,11 +19,11 @@ namespace test{
 
 template<class FwdIterator>
 class input_iterator_wrapper
-   : public std::iterator< std::input_iterator_tag
-                         , typename std::iterator_traits<FwdIterator>::value_type
-                         , typename std::iterator_traits<FwdIterator>::difference_type
-                         , typename std::iterator_traits<FwdIterator>::pointer
-                         , typename std::iterator_traits<FwdIterator>::reference
+   : public boost::container::iterator< std::input_iterator_tag
+                         , typename boost::container::iterator_traits<FwdIterator>::value_type
+                         , typename boost::container::iterator_traits<FwdIterator>::difference_type
+                         , typename boost::container::iterator_traits<FwdIterator>::pointer
+                         , typename boost::container::iterator_traits<FwdIterator>::reference
                          >
 {
    FwdIterator m_it;
@@ -46,10 +46,10 @@ class input_iterator_wrapper
    //Default destructor...
    //~input_iterator_wrapper();
 
-   typename std::iterator_traits<FwdIterator>::reference operator*() const
+   typename boost::container::iterator_traits<FwdIterator>::reference operator*() const
    { return *m_it; }
 
-   typename std::iterator_traits<FwdIterator>::pointer operator->() const
+   typename boost::container::iterator_traits<FwdIterator>::pointer operator->() const
    { return m_it.operator->(); }
 
    input_iterator_wrapper& operator++()

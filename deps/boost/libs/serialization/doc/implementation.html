@@ -128,7 +128,7 @@ void serialize(
 The whole question of character encoding combined with wide characters
 is much more complicated than it would seem to be. The current library
 defines in 3 formats (text, binary, and XML), wide and narrow characters, 
-an attempts to be portable between compiler libraries.  The results of 
+and attempts to be portable between compiler libraries.  The results of 
 a rather long consideration of all these factors has been to set
 default encoding according to the following rules.
 <ul>
@@ -149,7 +149,7 @@ default encoding according to the following rules.
 </ul>
 This character encoding is implemented by changing the <code style="white-space: normal">locale</code> of the
 i/o stream used by an archive when the archive is constructed, the stream
-local is changed back to its original value. This action can be overridden 
+locale is changed back to its original value. This action can be overridden 
 by specifying <code style="white-space: normal">boost::archive::no_codecvt</code>
 when the archive is opened.  In this case, the stream <code style="white-space: normal">locale</code> will
 not be changed by the serialization library.
@@ -177,7 +177,7 @@ do the following.
 Naturally, the input process has to be symmetrical.
 <h3><a name="partialtemplatespecialization">Partial Template Specialization</a></h3>
 Compilers which fail to support partial template specialization will fail to compile
-the following code.  To make this compiler, the <code style="white-space: normal">const</code> has to be removed.
+the following code.  To make this compile, the <code style="white-space: normal">const</code> has to be removed.
 <pre><code>
 void f(A const* a, text_oarchive& oa)
 {
@@ -199,7 +199,6 @@ so that one may write <code style="white-space: normal">ar.register_type(static_
 the syntax described above.
 </ul>
 <h3><a name="othercompilerissues">Specific Compiler/Library Issues</a></h3>
-
 <h4><a name="gcc3x">GCC 3.X, 4.X</a></h4>
 <ul>
     <li>GCC versions for Cygwin and MinGW fail to support wide character I/O.  
@@ -250,12 +249,12 @@ This is due to the way that VC++ handles templated code with __decl(dllexport) a
 __decl(dllimport) specifications.  Basically, this compiler requires that all the
 instantiations have the same specification - even though they have different
 template arguments. The example <code style="white-space: normal">
-demo_portable_iarchive.cpp</code> would have to reformulated as a library or dll
+demo_portable_iarchive.cpp</code> would have to be reformulated as a library or dll
 similar to the pre-defined archives in order to function.
 <p>
 This compiler does not have RTTI or exception handling turned on by default.  Although
 they are not strictly necessary to use the serialization package, the example and test
-program presume that they are enabled.  So be sure your command line or IDE settings 
+programs presume that they are enabled.  So be sure your command line or IDE settings 
 enable these features if you want to build and run these programs.
 <p>
 This compiler can treat <code style="white-space: normal">wchar_t</code> as either
@@ -271,14 +270,14 @@ includes this switch by default.  So if want to use the libraries that
 when you compile your own applications.
 <h5>Using the Visual C++ IDE</h5>
 The library includes a VC++ 7.1 "Solution" - <code style="white-space: normal">BoostSerializationLibrary</code>
-along with of a set of project files - one for each demo and test. Consider the following if you
-decided to use these configurations.
+along with a set of project files - one for each demo and test. Consider the following if you
+decide to use these configurations.
 <ul>
     <li>The projects assume that the tests have been built with bjam using the default
     locations.  This will result in a <code style="white-space: normal">bin</code> subdirectory
     within one's main boost directory.  Below this there is a whole structure which maintains 
     object and library files according to the type of build.  The easiest way to build this is to
-    invoke the runtest script which uses bjam. (see below)  If the libraries are not in these locations,
+    invoke the runtest script which uses bjam (see below).  If the libraries are not in these locations,
     the projects will have to be modified accordingly.
     <li>There are project configurations for all the combinations of build variants that boost
     supports. That is for release, debug, static, static multi-threading, etc..
@@ -339,7 +338,7 @@ all the above issues for Visual C++ 7.0 plus:
     still demonstrate this facility.
     <li>This compiler does not support <code style="white-space: normal">wchar_t</code> as a separate type.  It defines
     <code style="white-space: normal">wchar_t</code> as an alias for <code style="white-space: normal">short int</code>.  In general things will still
-    function.  However certain customization, such as overloading archive operators for
+    function.  However certain customizations, such as overloading archive operators for
     saving/loading wide character arrays would produce surprises in this environment.
     <li>Under certain circumstances, a program will fail to link with the message:
     LIN1179 - "invalid or corrupt file: duplicate comdat".  According
@@ -374,7 +373,7 @@ all the above issues for Visual C++ 7.0 plus:
     Conversion to/from integers will work around the problem.
     <li>If class serialize functions are not accessible either by making them public or by
     including <code style="white-space: normal">friend</code> declarations as described in 
-    <a href="serialization.html#member">Class Serialization - Member Function</a>, the
+    <a href="serialization.html#member">Class Serialization - Member Function</a>, the code
     will compile but fail at runtime.
     <li>Tests using custom extended type which doesn't use RTTI fails. (5.64 only !).
     <li>Tests built in release mode fail. This seems to be an issue with the boost test system
@@ -393,7 +392,7 @@ all the above issues for Visual C++ 7.0 plus:
 
 <h4><a name="codewarrior9">Code Warrior 9.x</a></h4>
 <ul>
-    <li>Some tests and demos demos fail - still under investigation
+    <li>Some tests and demos fail - still under investigation
 </ul>
 
 <h4><a name="codewarrior">Code Warrior 8.3</a></h4>
@@ -413,7 +412,7 @@ Several compilers, including Visual C++ 6.0, use an older dinkumware library.
 These platforms have several issues: 
 <ul>
     <li>The dinkumware library shipped with this compiler does not change the locale facet
-    of an i/o stream unless the <code style="white-space: normal">imbue</code> function is called before the the
+    of an i/o stream unless the <code style="white-space: normal">imbue</code> function is called before the
     stream is opened.  In order to use this library with this environment to generate UTF-8
     files, one cannot depend on the "automatic" setting of locale that archives implement. The
     stream locale must be set explicitly on the stream before an archive is opened on it.  The
@@ -425,7 +424,7 @@ These platforms have several issues:
 
 <h4><a name="stlport">STLPort 4.5.3</a></h4>
 <ul>
-    <li>when built to use dynamic linking versions of C++ runtime code (<runtime-link>dynamic)
+    <li>when built to use the dynamic linking versions of the C++ runtime code (<runtime-link>dynamic)
     all tests fail to link.  This is due to a missing symbol in the stlport library related
     to custom codecvt facets.
     <li>the test_set fails to run correctly. It seems the hashed set iterator doesn't

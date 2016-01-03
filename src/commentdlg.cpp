@@ -1,7 +1,7 @@
 /*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 2001-2013 Vaclav Slavik
+ *  Copyright (C) 2001-2015 Vaclav Slavik
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -35,9 +35,18 @@
 CommentDialog::CommentDialog(wxWindow *parent, const wxString& comment) : wxDialog()
 {
     wxXmlResource::Get()->LoadDialog(this, parent, "comment_dlg");
+#ifndef __WXOSX__
+    CenterOnParent();
+#endif
     m_text = XRCCTRL(*this, "comment", wxTextCtrl);
 
     m_text->SetValue(RemoveStartHash(comment));
+
+    wxAcceleratorEntry entries[] = {
+        { wxACCEL_CMD,  WXK_RETURN, wxID_OK }
+    };
+    wxAcceleratorTable accel(WXSIZEOF(entries), entries);
+    SetAcceleratorTable(accel);
 }
 
 wxString CommentDialog::GetComment() const

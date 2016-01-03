@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2013 Free Software Foundation, Inc.
+# Copyright (C) 2002-2015 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -38,15 +38,20 @@ AC_DEFUN([grgl_EARLY],
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([gl_PROG_AR_RANLIB])
+  AC_REQUIRE([AM_PROG_CC_C_O])
   # Code from module btowc:
+  # Code from module havelib:
   # Code from module langinfo:
   # Code from module localeconv:
+  # Code from module lock:
   # Code from module mbrlen:
   # Code from module mbtowc:
   # Code from module nl_langinfo:
   # Code from module regex:
   # Code from module snippet/c++defs:
   # Code from module snippet/warn-on-use:
+  # Code from module threadlib:
+  gl_THREADLIB_EARLY
   # Code from module wcrtomb:
 ])
 
@@ -80,6 +85,8 @@ AC_DEFUN([grgl_INIT],
     gl_PREREQ_LOCALECONV
   fi
   gl_LOCALE_MODULE_INDICATOR([localeconv])
+  gl_LOCK
+  gl_MODULE_INDICATOR([lock])
   gl_FUNC_MBRLEN
   if test $HAVE_MBRLEN = 0 || test $REPLACE_MBRLEN = 1; then
     AC_LIBOBJ([mbrlen])
@@ -102,6 +109,7 @@ AC_DEFUN([grgl_INIT],
     AC_LIBOBJ([regex])
     gl_PREREQ_REGEX
   fi
+  gl_THREADLIB
   gl_FUNC_WCRTOMB
   if test $HAVE_WCRTOMB = 0 || test $REPLACE_WCRTOMB = 1; then
     AC_LIBOBJ([wcrtomb])
@@ -249,10 +257,13 @@ AC_DEFUN([grgltests_LIBSOURCES], [
 # This macro records the list of files which have been installed by
 # gnulib-tool and may be removed by future gnulib-tool invocations.
 AC_DEFUN([grgl_FILE_LIST], [
+  build-aux/config.rpath
   build-aux/snippet/c++defs.h
   build-aux/snippet/warn-on-use.h
   lib/btowc.c
-  lib/dummy.c
+  lib/glthread/lock.c
+  lib/glthread/lock.h
+  lib/glthread/threadlib.c
   lib/langinfo.in.h
   lib/localeconv.c
   lib/mbrlen.c
@@ -272,16 +283,21 @@ AC_DEFUN([grgl_FILE_LIST], [
   m4/eealloc.m4
   m4/gnulib-common.m4
   m4/langinfo_h.m4
+  m4/lib-ld.m4
+  m4/lib-link.m4
+  m4/lib-prefix.m4
   m4/locale-fr.m4
   m4/locale-ja.m4
   m4/locale-zh.m4
   m4/localeconv.m4
+  m4/lock.m4
   m4/mbrlen.m4
   m4/mbrtowc.m4
   m4/mbstate_t.m4
   m4/mbtowc.m4
   m4/nl_langinfo.m4
   m4/regex.m4
+  m4/threadlib.m4
   m4/warn-on-use.m4
   m4/wcrtomb.m4
 ])

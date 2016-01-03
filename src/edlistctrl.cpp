@@ -1,7 +1,7 @@
 ﻿/*
- *  This file is part of Poedit (http://www.poedit.net)
+ *  This file is part of Poedit (http://poedit.net)
  *
- *  Copyright (C) 1999-2013 Vaclav Slavik
+ *  Copyright (C) 1999-2015 Vaclav Slavik
  *  Copyright (C) 2005 Olivier Sannier
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
@@ -26,8 +26,8 @@
 
 #include "edlistctrl.h"
 
+#include "hidpi.h"
 #include "language.h"
-#include "digits.h"
 #include "cat_sorting.h"
 
 #include <wx/wx.h>
@@ -81,87 +81,53 @@ const wxColour gs_FuzzyForBlack("#a9861b");
 
 const wxColour gs_TranspColor(254, 0, 253); // FIXME: get rid of this
 
+// wxMSW doesn't need a dummy image to align columns properly, unlike wxOSX
+#ifdef __WXMSW__
+#define IMG_NOTHING -1
+#endif
+
 enum
 {
-    IMG_NOTHING   = 0x00,
-    IMG_AUTOMATIC = 0x01,
-    IMG_COMMENT   = 0x02,
-    IMG_MODIFIED  = 0x04,
-    IMG_BK0       =  1 << 3,
-    IMG_BK1       =  2 << 3,
-    IMG_BK2       =  3 << 3,
-    IMG_BK3       =  4 << 3,
-    IMG_BK4       =  5 << 3,
-    IMG_BK5       =  6 << 3,
-    IMG_BK6       =  7 << 3,
-    IMG_BK7       =  8 << 3,
-    IMG_BK8       =  9 << 3,
-    IMG_BK9       = 10 << 3
+#ifndef __WXMSW__
+    IMG_NOTHING,
+#endif
+    IMG_AUTOMATIC,
+    IMG_COMMENT,
+    IMG_BOOKMARK
 };
 
 
-wxBitmap AddDigit(int digit, int x, int y, const wxBitmap& bmp)
+class SelectionPreserver
 {
-    wxMemoryDC dc;
-    int width = bmp.GetWidth();
-    int height = bmp.GetHeight();
-    wxBitmap tmpBmp(width, height);
-    dc.SelectObject(tmpBmp);
-    dc.SetPen(*wxTRANSPARENT_PEN);
-    dc.SetBrush(wxBrush(gs_TranspColor, wxSOLID));
-    dc.DrawRectangle(0, 0, width, height);
-
-    dc.DrawBitmap(bmp, 0,0,true);
-
-    dc.SetPen(*wxBLACK_PEN);
-    for(int i = 0; i < 5; i++)
+public:
+    SelectionPreserver(PoeditListCtrl *list_) : list(list_), focus(-1)
     {
-        for(int j = 0; j < 3; j++)
+        if (!list)
+            return;
+        selection = list->GetSelectedCatalogItems();
+        focus = list->ListIndexToCatalog(list->GetFocusedItem());
+    }
+
+    ~SelectionPreserver()
+    {
+        if (!list)
+            return;
+        if (!selection.empty())
+            list->SetSelectedCatalogItems(selection);
+        if (focus != -1)
         {
-            if (g_digits[digit][i][j] == 1)
-                dc.DrawPoint(x+j, y+i);
+            int idx = list->CatalogIndexToList(focus);
+            list->EnsureVisible(idx);
+            list->Focus(idx);
         }
     }
 
-    dc.SelectObject(wxNullBitmap);
-    tmpBmp.SetMask(new wxMask(tmpBmp, gs_TranspColor));
-    return tmpBmp;
-}
+private:
+    PoeditListCtrl *list;
+    std::vector<int> selection;
+    int focus;
+};
 
-wxBitmap MergeBitmaps(const wxBitmap& bmp1, const wxBitmap& bmp2)
-{
-    wxMemoryDC dc;
-    wxBitmap tmpBmp(bmp1.GetWidth(), bmp1.GetHeight());
-
-    dc.SelectObject(tmpBmp);
-    dc.SetPen(*wxTRANSPARENT_PEN);
-    dc.SetBrush(wxBrush(gs_TranspColor, wxSOLID));
-    dc.DrawRectangle(0, 0, bmp1.GetWidth(), bmp1.GetHeight());
-    dc.DrawBitmap(bmp1, 0, 0, true);
-    dc.DrawBitmap(bmp2, 0, 0, true);
-    dc.SelectObject(wxNullBitmap);
-
-    tmpBmp.SetMask(new wxMask(tmpBmp, gs_TranspColor));
-    return tmpBmp;
-}
-
-wxBitmap BitmapFromList(wxImageList* list, int index)
-{
-    int width, height;
-    list->GetSize(index, width, height);
-    wxMemoryDC dc;
-    wxBitmap bmp(width, height);
-    dc.SelectObject(bmp);
-    dc.SetPen(*wxTRANSPARENT_PEN);
-    dc.SetBrush(wxBrush(gs_TranspColor, wxSOLID));
-    dc.DrawRectangle(0, 0, width, height);
-
-    list->Draw(index, dc, 0, 0, wxIMAGELIST_DRAW_TRANSPARENT);
-
-    dc.SelectObject(wxNullBitmap);
-    bmp.SetMask(new wxMask(bmp, gs_TranspColor));
-    return bmp;
-}
 
 } // anonymous namespace
 
@@ -180,46 +146,24 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
                const wxString &name)
      : wxListView(parent, id, pos, size, style | wxLC_VIRTUAL, validator, name)
 {
-    m_catalog = NULL;
     m_displayIDs = dispIDs;
+
+    m_isRTL = false;
+    m_appIsRTL = (wxTheApp->GetLayoutDirection() == wxLayout_RightToLeft);
 
     sortOrder = SortOrder::Default();
 
     CreateColumns();
 
-    int i;
-    wxImageList *list = new wxImageList(16, 16);
+    wxImageList *list = new wxImageList(PX(16), PX(16));
 
-    // IMG_NOTHING:
+    // IMG_XXX:
+#ifndef __WXMSW__
     list->Add(wxArtProvider::GetBitmap("poedit-status-nothing"));
-
-    // IMG_AUTOMATIC:
+#endif
     list->Add(wxArtProvider::GetBitmap("poedit-status-automatic"));
-    // IMG_COMMENT:
     list->Add(wxArtProvider::GetBitmap("poedit-status-comment"));
-    // IMG_AUTOMATIC | IMG_COMMENT:
-    list->Add(MergeBitmaps(wxArtProvider::GetBitmap("poedit-status-automatic"),
-                           wxArtProvider::GetBitmap("poedit-status-comment")));
-
-    // IMG_MODIFIED
-    list->Add(wxArtProvider::GetBitmap("poedit-status-modified"));
-
-    // IMG_MODIFIED variations:
-    for (i = 1; i < IMG_MODIFIED; i++)
-    {
-        list->Add(MergeBitmaps(BitmapFromList(list, i),
-                               wxArtProvider::GetBitmap("poedit-status-modified")));
-    }
-
-    // BK_XX variations:
-    for (int bk = 0; bk < 10; bk++)
-    {
-        for(i = 0; i <= (IMG_AUTOMATIC|IMG_COMMENT|IMG_MODIFIED); i++)
-        {
-            wxBitmap bmp = BitmapFromList(list, i);
-            list->Add(AddDigit(bk, 0, 0, bmp));
-        }
-    }
+    list->Add(wxArtProvider::GetBitmap("poedit-status-bookmark"));
 
     AssignImageList(list, wxIMAGE_LIST_SMALL);
 
@@ -241,14 +185,14 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     }
     else
 #endif // __WXMSW__
-#ifdef __WXMAC__
+#ifdef __WXOSX__
     if ( shaded == *wxWHITE )
     {
         // use standard shaded color from finder/databrowser:
         shaded.Set("#f0f5fd");
     }
     else
-#endif // __WXMAC__
+#endif // __WXOSX__
     {
         shaded.Set(int(DARKEN_FACTOR * shaded.Red()),
                    int(DARKEN_FACTOR * shaded.Green()),
@@ -327,76 +271,134 @@ void PoeditListCtrl::SetDisplayLines(bool dl)
 void PoeditListCtrl::CreateColumns()
 {
     DeleteAllColumns();
-    InsertColumn(0, _("Source text"));
-    InsertColumn(1, _("Translation"));
+
+    int curr = 0;
+    m_colSource = (int)InsertColumn(curr++, _("Source text"));
+    if (m_catalog && m_catalog->HasCapability(Catalog::Cap::Translations))
+        m_colTrans = (int)InsertColumn(curr++, _("Translation"));
+    else
+        m_colTrans = -1;
     if (m_displayIDs)
-        InsertColumn(2, _("ID"), wxLIST_FORMAT_RIGHT);
+        m_colId = (int)InsertColumn(curr++, _("ID"), wxLIST_FORMAT_RIGHT);
+    else
+        m_colId = -1;
+
+#ifdef __WXMSW__
+    if (m_appIsRTL)
+    {
+        // another wx quirk: if we truly need left alignment, we must lie under RTL locales
+        wxListItem colInfoOrig;
+        colInfoOrig.SetAlign(wxLIST_FORMAT_RIGHT);
+        SetColumn(m_colSource, colInfoOrig);
+    }
+#endif
+
     SizeColumns();
 }
 
 void PoeditListCtrl::SizeColumns()
 {
-    const int LINE_COL_SIZE = m_displayIDs ? 50 : 0;
+    const int LINE_COL_SIZE = m_displayIDs ? PX(50) : 0;
 
     int w = GetSize().x
             - wxSystemSettings::GetMetric(wxSYS_VSCROLL_X) - 10
             - LINE_COL_SIZE;
-    SetColumnWidth(0, w / 2);
-    SetColumnWidth(1, w - w / 2);
-    if (m_displayIDs)
-        SetColumnWidth(2, LINE_COL_SIZE);
 
-    m_colWidth = (w/2) / GetCharWidth();
+    if (m_colTrans != -1)
+    {
+        SetColumnWidth(m_colSource, w / 2);
+        SetColumnWidth(m_colTrans, w - w / 2);
+        m_colWidth = (w/2) / GetCharWidth();
+    }
+    else
+    {
+        SetColumnWidth(m_colSource, w);
+        m_colWidth = w / GetCharWidth();
+    }
+
+    if (m_displayIDs)
+        SetColumnWidth(m_colId, LINE_COL_SIZE);
 }
 
 
-void PoeditListCtrl::CatalogChanged(Catalog* catalog)
+void PoeditListCtrl::CatalogChanged(const CatalogPtr& catalog)
 {
     wxWindowUpdateLocker no_updates(this);
 
+    const bool isSameCatalog = (catalog == m_catalog);
+    const bool sizeChanged = (catalog && (int)catalog->GetCount() != GetItemCount());
+
+    SelectionPreserver preserve(isSameCatalog ? this : nullptr);
+
     // this is to prevent crashes (wxMac at least) when shortening virtual
     // listctrl when its scrolled to the bottom:
-    m_catalog = NULL;
-    SetItemCount(0);
+    if (sizeChanged)
+    {
+        m_catalog.reset();
+        SetItemCount(0);
+    }
 
     // now read the new catalog:
     m_catalog = catalog;
-    ReadCatalog();
+    CreateColumns();
+    ReadCatalog(/*resetSizeAndSelection=*/sizeChanged);
 }
 
-void PoeditListCtrl::ReadCatalog()
+void PoeditListCtrl::ReadCatalog(bool resetSizeAndSelection)
 {
     wxWindowUpdateLocker no_updates(this);
 
     // clear the list and its sort order too:
-    SetItemCount(0);
+    if (resetSizeAndSelection)
+        SetItemCount(0);
     m_mapListToCatalog.clear();
     m_mapCatalogToList.clear();
 
-    if (m_catalog == NULL)
+    if (!m_catalog)
     {
         Refresh();
         return;
     }
 
-    wxString lang = m_catalog->GetLanguage().IsValid()
-                    ? m_catalog->GetLanguage().DisplayName()
-                    : _("unknown language");
+    auto srclang = m_catalog->GetSourceLanguage();
+    auto lang = m_catalog->GetLanguage();
+    auto isRTL = lang.IsRTL();
+#ifdef __WXMSW__
+    // a quirk of wx API: if the current locale is RTL, the meaning of L and R is reversed
+    if (m_appIsRTL)
+        isRTL = !isRTL;
+#endif
+    m_isRTL = isRTL;
+
     wxListItem colInfo;
     colInfo.SetMask(wxLIST_MASK_TEXT);
-    colInfo.SetText(wxString::Format(_(L"Translation — %s"), lang));
-    SetColumn(1, colInfo);
+
+    if (srclang.IsValid())
+        colInfo.SetText(wxString::Format(_(L"Source text — %s"), srclang.DisplayName()));
+    else
+        colInfo.SetText(_("Source text"));
+    SetColumn(m_colSource, colInfo);
+
+    if (m_colTrans != -1)
+    {
+        wxString langname = lang.IsValid() ? lang.DisplayName() : _("unknown language");
+        colInfo.SetText(wxString::Format(_(L"Translation — %s"), langname));
+        colInfo.SetAlign(isRTL ? wxLIST_FORMAT_RIGHT : wxLIST_FORMAT_LEFT);
+        SetColumn(m_colTrans, colInfo);
+    }
 
     // sort catalog items, create indexes mapping
     CreateSortMap();
 
     // now that everything is prepared, we may set the item count
-    SetItemCount(m_catalog->GetCount());
+    if (resetSizeAndSelection)
+        SetItemCount(m_catalog->GetCount());
 
     // scroll to the top and refresh everything:
     if ( m_catalog->GetCount() )
     {
-        Select(0);
+        if (resetSizeAndSelection)
+            SelectOnly(0);
         RefreshItems(0, m_catalog->GetCount()-1);
     }
     else
@@ -410,13 +412,10 @@ void PoeditListCtrl::Sort()
 {
     if ( m_catalog && m_catalog->GetCount() )
     {
-        int sel = GetSelectedCatalogItem();
+        SelectionPreserver preserve(this);
 
         CreateSortMap();
         RefreshItems(0, m_catalog->GetCount()-1);
-
-        if ( sel != -1 )
-            SelectCatalogItem(sel);
     }
     else
     {
@@ -455,33 +454,41 @@ void PoeditListCtrl::CreateSortMap()
 
 wxString PoeditListCtrl::OnGetItemText(long item, long column) const
 {
-    if (m_catalog == NULL)
+    if (!m_catalog)
         return wxEmptyString;
 
-    const CatalogItem& d = ListIndexToCatalogItem((int)item);
+    auto d = ListIndexToCatalogItem((int)item);
 
-    switch (column)
+    if (column == m_colSource)
     {
-        case 0:
-        {
-            wxString orig;
-            if ( d.HasContext() )
-                orig.Printf("%s  [ %s ]",
-                            d.GetString().c_str(), d.GetContext().c_str());
-            else
-                orig = d.GetString();
-            return orig.substr(0,GetMaxColChars());
-        }
-        case 1:
-        {
-            wxString trans = d.GetTranslation();
-            return trans;
-        }
-        case 2:
-            return wxString() << d.GetId();
+        wxString orig;
+        if ( d->HasContext() )
+            orig.Printf("%s  [ %s ]",
+                        d->GetString().c_str(), d->GetContext().c_str());
+        else
+            orig = d->GetString();
 
-        default:
-            return wxEmptyString;
+        // Add RTL Unicode mark to render bidi texts correctly
+        if (m_appIsRTL)
+            return L"\u202a" + orig.substr(0,GetMaxColChars());
+        else
+            return orig.substr(0,GetMaxColChars());
+    }
+    else if (column == m_colTrans)
+    {
+        // Add RTL Unicode mark to render bidi texts correctly
+        if (m_isRTL && !m_appIsRTL)
+            return L"\u202b" + d->GetTranslation();
+        else
+            return d->GetTranslation();
+    }
+    else if (column == m_colId)
+    {
+        return wxString() << d->GetId();
+    }
+    else
+    {
+        return wxEmptyString;
     }
 }
 
@@ -489,16 +496,16 @@ wxListItemAttr *PoeditListCtrl::OnGetItemAttr(long item) const
 {
     long idx = item % 2;
 
-    if (m_catalog == NULL)
+    if (!m_catalog)
         return (wxListItemAttr*)&m_attrNormal[idx];
 
-    const CatalogItem& d = ListIndexToCatalogItem((int)item);
+    auto d = ListIndexToCatalogItem((int)item);
 
-    if (d.GetValidity() == CatalogItem::Val_Invalid)
+    if (d->GetValidity() == CatalogItem::Val_Invalid)
         return (wxListItemAttr*)&m_attrInvalid[idx];
-    else if (!d.IsTranslated())
+    else if (!d->IsTranslated())
         return (wxListItemAttr*)&m_attrUntranslated[idx];
-    else if (d.IsFuzzy())
+    else if (d->IsFuzzy())
         return (wxListItemAttr*)&m_attrFuzzy[idx];
     else
         return (wxListItemAttr*)&m_attrNormal[idx];
@@ -506,7 +513,7 @@ wxListItemAttr *PoeditListCtrl::OnGetItemAttr(long item) const
 
 wxListItemAttr *PoeditListCtrl::OnGetItemColumnAttr(long item, long column) const
 {
-    if (column == 2)
+    if (column == m_colId)
     {
         return (wxListItemAttr*)&m_attrId;
     }
@@ -518,26 +525,25 @@ wxListItemAttr *PoeditListCtrl::OnGetItemColumnAttr(long item, long column) cons
 
 int PoeditListCtrl::OnGetItemImage(long item) const
 {
-    if (m_catalog == NULL)
+    if (!m_catalog)
         return IMG_NOTHING;
 
-    const CatalogItem& d = ListIndexToCatalogItem((int)item);
-    int index = IMG_NOTHING;
+    auto d = ListIndexToCatalogItem((int)item);
 
-    if (d.IsAutomatic())
-        index |= IMG_AUTOMATIC;
-    if (d.HasComment())
-        index |= IMG_COMMENT;
-    if (d.IsModified())
-        index |= IMG_MODIFIED;
-
-    index |= (static_cast<int>(d.GetBookmark())+1) << 3;
-
-    return index;
+    if (d->GetBookmark() != NO_BOOKMARK)
+        return IMG_BOOKMARK;
+    else if (d->HasComment() || d->HasExtractedComments())
+        return IMG_COMMENT;
+    else if (d->IsAutomatic())
+        return IMG_AUTOMATIC;
+    else
+        return IMG_NOTHING;
 }
 
 void PoeditListCtrl::OnSize(wxSizeEvent& event)
 {
+    wxWindowUpdateLocker lock(this);
+
     SizeColumns();
     event.Skip();
 }

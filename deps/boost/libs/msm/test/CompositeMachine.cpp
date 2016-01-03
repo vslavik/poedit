@@ -13,7 +13,9 @@
 #include <boost/msm/back/state_machine.hpp>
 //front-end
 #include <boost/msm/front/state_machine_def.hpp>
+#ifndef BOOST_MSM_NONSTANDALONE_TEST
 #define BOOST_TEST_MODULE MyTest
+#endif
 #include <boost/test/unit_test.hpp>
 
 namespace msm = boost::msm;
@@ -208,7 +210,7 @@ namespace
         > {};
         // Replaces the default no-transition response.
         template <class FSM,class Event>
-        void no_transition(Event const& e, FSM&,int state)
+        void no_transition(Event const&, FSM&,int)
         {
             BOOST_FAIL("no_transition called!");
         }

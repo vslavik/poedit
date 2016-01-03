@@ -68,10 +68,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\..\lib\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\..\bin\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\x86\Release\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\..\..\lib\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\..\..\bin\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\x86\Debug\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\x64\Release\</OutDir>
@@ -80,6 +80,12 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\x64\Debug\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\x64\Debug\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <TargetName>icuuc55</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>icuuc55d</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Midl>
@@ -100,24 +106,25 @@
       <AssemblerListingLocation>.\x86\Release/</AssemblerListingLocation>
       <ObjectFileName>.\x86\Release/</ObjectFileName>
       <ProgramDataBaseFileName>.\x86\Release/</ProgramDataBaseFileName>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level2</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <OutputFile>..\..\bin\icuuc52.dll</OutputFile>
+      <OutputFile>..\..\bin\icuuc55.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ProgramDatabaseFile>.\..\..\lib\icuuc.pdb</ProgramDatabaseFile>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <BaseAddress>0x4a800000</BaseAddress>
-      <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention>
-      </DataExecutionPrevention>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
       <ImportLibrary>..\..\lib\icuuc.lib</ImportLibrary>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -141,25 +148,26 @@
       <ObjectFileName>.\x86\Debug/</ObjectFileName>
       <ProgramDataBaseFileName>.\x86\Debug/</ProgramDataBaseFileName>
       <BrowseInformation>true</BrowseInformation>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level2</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <OutputFile>..\..\bin\icuuc52d.dll</OutputFile>
+      <OutputFile>..\..\bin\icuuc55d.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>.\..\..\lib\icuucd.pdb</ProgramDatabaseFile>
       <BaseAddress>0x4a800000</BaseAddress>
-      <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention>
-      </DataExecutionPrevention>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
       <ImportLibrary>..\..\lib\icuucd.lib</ImportLibrary>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -181,15 +189,16 @@
       <AssemblerListingLocation>.\x64\Release/</AssemblerListingLocation>
       <ObjectFileName>.\x64\Release/</ObjectFileName>
       <ProgramDataBaseFileName>.\x64\Release/</ProgramDataBaseFileName>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level2</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <OutputFile>..\..\bin64\icuuc52.dll</OutputFile>
+      <OutputFile>..\..\bin64\icuuc55.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ProgramDatabaseFile>.\..\..\lib64\icuuc.pdb</ProgramDatabaseFile>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -219,16 +228,17 @@
       <ObjectFileName>.\x64\Debug/</ObjectFileName>
       <ProgramDataBaseFileName>.\x64\Debug/</ProgramDataBaseFileName>
       <BrowseInformation>true</BrowseInformation>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level2</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <OutputFile>..\..\bin64\icuuc52d.dll</OutputFile>
+      <OutputFile>..\..\bin64\icuuc55d.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>.\..\..\lib64\icuucd.pdb</ProgramDatabaseFile>
@@ -242,6 +252,7 @@
     <ClCompile Include="ubidi_props.c" />
     <ClCompile Include="ubidiln.c" />
     <ClCompile Include="ubidiwrt.c" />
+    <ClCompile Include="uloc_keytype.cpp" />
     <ClCompile Include="ushape.cpp" />
     <ClCompile Include="brkeng.cpp">
     </ClCompile>
@@ -334,16 +345,13 @@
     <ClCompile Include="ucnvhz.c" />
     <ClCompile Include="ucnvisci.c" />
     <ClCompile Include="ucnvlat1.c" />
-    <ClCompile Include="ucnvmbcs.c" />
+    <ClCompile Include="ucnvmbcs.cpp" />
     <ClCompile Include="ucnvscsu.c" />
     <ClCompile Include="ucnvsel.cpp">
     </ClCompile>
     <ClCompile Include="cmemory.c" />
-    <ClCompile Include="ucln_cmn.c">
-      <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DisableLanguageExtensions>
-      <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DisableLanguageExtensions>
-      <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</DisableLanguageExtensions>
-      <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DisableLanguageExtensions>
+    <ClCompile Include="ucln_cmn.cpp">
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="ucmndata.c" />
     <ClCompile Include="udata.cpp" />
@@ -389,14 +397,12 @@
     <ClCompile Include="caniter.cpp">
     </ClCompile>
     <ClCompile Include="filterednormalizer2.cpp" />
-    <ClCompile Include="normalizer2.cpp">
-    </ClCompile>
-    <ClCompile Include="normalizer2impl.cpp">
-    </ClCompile>
+    <ClCompile Include="loadednormalizer2impl.cpp" />
+    <ClCompile Include="normalizer2.cpp" />
+    <ClCompile Include="normalizer2impl.cpp" />
     <ClCompile Include="normlzr.cpp">
     </ClCompile>
     <ClCompile Include="unorm.cpp" />
-    <ClCompile Include="unorm_it.c" />
     <ClCompile Include="unormcmp.cpp" />
     <ClCompile Include="bmpset.cpp" />
     <ClCompile Include="patternprops.cpp" />
@@ -407,6 +413,9 @@
     </ClCompile>
     <ClCompile Include="uchar.c" />
     <ClCompile Include="unames.cpp" />
+    <ClCompile Include="unifiedcache.cpp">
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+    </ClCompile>
     <ClCompile Include="unifilt.cpp" />
     <ClCompile Include="unifunct.cpp" />
     <ClCompile Include="uniset.cpp" />
@@ -420,7 +429,7 @@
     <ClCompile Include="uset.cpp" />
     <ClCompile Include="uset_props.cpp" />
     <ClCompile Include="usetiter.cpp" />
-    <ClCompile Include="icuplug.c" />
+    <ClCompile Include="icuplug.cpp" />
     <ClCompile Include="serv.cpp">
     </ClCompile>
     <ClCompile Include="servlk.cpp">
@@ -449,6 +458,7 @@
     <ClCompile Include="schriter.cpp" />
     <ClCompile Include="stringpiece.cpp" />
     <ClCompile Include="stringtriebuilder.cpp" />
+    <ClCompile Include="simplepatternformatter.cpp" />
     <ClCompile Include="ucasemap.cpp" />
     <ClCompile Include="ucasemap_titlecase_brkiter.cpp" />
     <ClCompile Include="ucharstrie.cpp" />
@@ -463,7 +473,7 @@
     <ClCompile Include="unistr_cnv.cpp" />
     <ClCompile Include="unistr_props.cpp" />
     <ClCompile Include="unistr_titlecase_brkiter.cpp" />
-    <ClCompile Include="ustr_cnv.c" />
+    <ClCompile Include="ustr_cnv.cpp" />
     <ClCompile Include="ustr_titlecase_brkiter.cpp" />
     <ClCompile Include="ustr_wcs.cpp" />
     <ClCompile Include="ustrcase.cpp" />
@@ -472,8 +482,8 @@
     <ClCompile Include="ustrtrns.cpp" />
     <ClCompile Include="utext.cpp" />
     <ClCompile Include="utf_impl.c" />
-    <ClCompile Include="listformatter.cpp">
-    </ClCompile>
+    <ClCompile Include="listformatter.cpp" />
+    <ClCompile Include="ulistformatter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="unicode\ubidi.h">
@@ -1086,6 +1096,9 @@
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\include\unicode\%(Filename)%(Extension);%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="sharedobject.h" />
+    <ClCompile Include="sharedobject.cpp" />
+    <ClInclude Include="simplepatternformatter.h" />
     <CustomBuild Include="unicode\ucat.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">copy "%(FullPath)" ..\..\include\unicode
 </Command>
@@ -1129,6 +1142,7 @@
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\include\unicode\%(Filename)%(Extension);%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="unifiedcache.h" />
     <ClInclude Include="uresdata.h" />
     <ClInclude Include="uresimp.h" />
     <ClInclude Include="ureslocs.h" />
@@ -1146,6 +1160,7 @@
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\include\unicode\%(Filename)%(Extension);%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="norm2allmodes.h" />
     <CustomBuild Include="unicode\normalizer2.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">copy "%(FullPath)" ..\..\include\unicode
 </Command>
@@ -1203,7 +1218,6 @@
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\include\unicode\%(Filename)%(Extension);%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="unorm_it.h" />
     <ClInclude Include="unormimp.h" />
     <ClInclude Include="bmpset.h" />
     <ClInclude Include="messageimpl.h" />
@@ -1731,6 +1745,20 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\include\unicode\%(Filename)%(Extension);%(Outputs)</Outputs>
     </CustomBuild>
     <CustomBuild Include="unicode\listformatter.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">copy "%(FullPath)" ..\..\include\unicode
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\include\unicode\%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">copy "%(FullPath)" ..\..\include\unicode
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\include\unicode\%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy "%(FullPath)" ..\..\include\unicode
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\include\unicode\%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">copy "%(FullPath)" ..\..\include\unicode
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\include\unicode\%(Filename)%(Extension);%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="unicode\ulistformatter.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">copy "%(FullPath)" ..\..\include\unicode
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\include\unicode\%(Filename)%(Extension);%(Outputs)</Outputs>

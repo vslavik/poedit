@@ -2,10 +2,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Performance Tuning Macros</title>
-<link rel="stylesheet" href="../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../index.html" title="Math Toolkit">
-<link rel="up" href="../perf.html" title="Chapter&#160;14.&#160;Performance">
+<link rel="stylesheet" href="../math.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="../index.html" title="Math Toolkit 2.2.0">
+<link rel="up" href="../perf.html" title="Chapter&#160;15.&#160;Performance">
 <link rel="prev" href="comp_compilers.html" title="Comparing Compilers">
 <link rel="next" href="comparisons.html" title="Comparisons to Other Open Source Libraries">
 </head>
@@ -234,7 +234,7 @@
       processors in the future.
     </p>
 <div class="table">
-<a name="math_toolkit.tuning.a_comparison_of_polynomial_evalu"></a><p class="title"><b>Table&#160;14.3.&#160;A Comparison of Polynomial Evaluation Methods</b></p>
+<a name="math_toolkit.tuning.a_comparison_of_polynomial_evalu"></a><p class="title"><b>Table&#160;15.3.&#160;A Comparison of Polynomial Evaluation Methods</b></p>
 <div class="table-contents"><table class="table" summary="A Comparison of Polynomial Evaluation Methods">
 <colgroup>
 <col>
@@ -620,7 +620,7 @@
 </div>
 <br class="table-break"><p>
       There is one final performance tuning option that is available as a compile
-      time <a class="link" href="../policy.html" title="Chapter&#160;13.&#160;Policies: Controlling Precision, Error Handling etc">policy</a>. Normally when evaluating functions
+      time <a class="link" href="../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">policy</a>. Normally when evaluating functions
       at <code class="computeroutput"><span class="keyword">double</span></code> precision, these are
       actually evaluated at <code class="computeroutput"><span class="keyword">long</span> <span class="keyword">double</span></code>
       precision internally: this helps to ensure that as close to full <code class="computeroutput"><span class="keyword">double</span></code> precision as possible is achieved, but
@@ -632,7 +632,7 @@
       See also the <a class="link" href="pol_tutorial.html" title="Policy Tutorial">policy tutorial</a>.
     </p>
 <div class="table">
-<a name="math_toolkit.tuning.performance_comparison_with_and_"></a><p class="title"><b>Table&#160;14.4.&#160;Performance Comparison with and Without Internal Promotion to long double</b></p>
+<a name="math_toolkit.tuning.performance_comparison_with_and_"></a><p class="title"><b>Table&#160;15.4.&#160;Performance Comparison with and Without Internal Promotion to long double</b></p>
 <div class="table-contents"><table class="table" summary="Performance Comparison with and Without Internal Promotion to long double">
 <colgroup>
 <col>
@@ -878,9 +878,10 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012, 2013 Paul A. Bristow, Christopher Kormanyos,
-      Hubert Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin
-      Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
+      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
+      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
+      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

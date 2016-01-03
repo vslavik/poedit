@@ -1,12 +1,9 @@
 #! /bin/sh
+. "${srcdir=.}/init.sh"; path_prepend_ . ../src
 
 # Verify msgcat of two files, when the header entries have the same comments
 # but different contents. The resulting header entry must be marked fuzzy.
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="$tmpfiles mcat-test9.in1 mcat-test9.in2"
 cat <<\EOF > mcat-test9.in1
 # German message file for xyz.
 # Copyright (C) 1999, 2000, 2001 xyz.
@@ -55,17 +52,13 @@ msgstr ""
 "Glückwunsch!"
 EOF
 
-tmpfiles="$tmpfiles mcat-test9.tmp mcat-test9.out"
 rm -f mcat-test9.tmp
 
 : ${MSGCAT=msgcat}
 ${MSGCAT} --more-than=0 -o mcat-test9.tmp \
-    mcat-test9.in1 mcat-test9.in2
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
-LC_ALL=C tr -d '\r' < mcat-test9.tmp > mcat-test9.out
-test $? = 0 || { rm -fr $tmpfiles; exit 1; }
+    mcat-test9.in1 mcat-test9.in2 || exit 1
+LC_ALL=C tr -d '\r' < mcat-test9.tmp > mcat-test9.out || exit 1
 
-tmpfiles="$tmpfiles mcat-test9.ok"
 cat <<\EOF > mcat-test9.ok
 # German message file for xyz.
 # Copyright (C) 1999, 2000, 2001 xyz.
@@ -102,7 +95,5 @@ EOF
 : ${DIFF=diff}
 ${DIFF} mcat-test9.ok mcat-test9.out
 result=$?
-
-rm -fr $tmpfiles
 
 exit $result

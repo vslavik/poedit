@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2005-2012. Distributed under the Boost
+// (C) Copyright Ion Gaztanaga 2005-2013. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying file
 // LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
@@ -11,26 +11,32 @@
 #ifndef BOOST_CONTAINER_EXPAND_BWD_TEST_ALLOCATOR_HPP
 #define BOOST_CONTAINER_EXPAND_BWD_TEST_ALLOCATOR_HPP
 
-#if (defined _MSC_VER)
+#ifndef BOOST_CONFIG_HPP
+#  include <boost/config.hpp>
+#endif
+
+#if defined(BOOST_HAS_PRAGMA_ONCE)
 #  pragma once
 #endif
 
 #include <boost/container/detail/config_begin.hpp>
 #include <boost/container/detail/workaround.hpp>
-
 #include <boost/container/container_fwd.hpp>
+
 #include <boost/container/throw_exception.hpp>
+
+#include <boost/container/detail/addressof.hpp>
 #include <boost/container/detail/allocation_type.hpp>
-#include <boost/assert.hpp>
-#include <boost/container/detail/utilities.hpp>
 #include <boost/container/detail/version_type.hpp>
+
+#include <boost/move/adl_move_swap.hpp>
+
+#include <boost/assert.hpp>
+
 #include <memory>
 #include <algorithm>
 #include <cstddef>
 #include <cassert>
-
-//!\file
-//!Describes an allocator to test expand capabilities
 
 namespace boost {
 namespace container {
@@ -111,43 +117,41 @@ class expand_bwd_test_allocator
    {  return m_size;   }
 
    friend void swap(self_t &alloc1, self_t &alloc2)
-   { 
-      boost::container::swap_dispatch(alloc1.mp_buffer, alloc2.mp_buffer);
-      boost::container::swap_dispatch(alloc1.m_size,    alloc2.m_size);
-      boost::container::swap_dispatch(alloc1.m_offset,  alloc2.m_offset);
+   {
+      boost::adl_move_swap(alloc1.mp_buffer, alloc2.mp_buffer);
+      boost::adl_move_swap(alloc1.m_size,    alloc2.m_size);
+      boost::adl_move_swap(alloc1.m_offset,  alloc2.m_offset);
    }
 
    //Experimental version 2 expand_bwd_test_allocator functions
 
-   std::pair<pointer, bool>
-      allocation_command(boost::container::allocation_type command,
-                         size_type limit_size,
-                         size_type preferred_size,
-                         size_type &received_size, const pointer &reuse = 0)
+   pointer allocation_command(boost::container::allocation_type command,
+                         size_type limit_size,size_type &prefer_in_recvd_out_size,pointer &reuse)
    {
-      (void)preferred_size;   (void)reuse;   (void)command;
+      (void)reuse;   (void)command;
       //This allocator only expands backwards!
       assert(m_allocations == 0 || (command & boost::container::expand_bwd));
-     
-      received_size = limit_size;
+
+      prefer_in_recvd_out_size = limit_size;
 
       if(m_allocations == 0){
          if((m_offset + limit_size) > m_size){
             assert(0);
          }
          ++m_allocations;
-         return std::pair<pointer, bool>(mp_buffer + m_offset, false);
+         reuse = 0;
+         return (mp_buffer + m_offset);
       }
       else if(m_allocations == 1){
          if(limit_size > m_size){
             assert(0);
          }
          ++m_allocations;
-         return std::pair<pointer, bool>(mp_buffer, true);
+         return mp_buffer;
       }
       else{
          throw_bad_alloc();
-         return std::pair<pointer, bool>(mp_buffer, true);
+         return mp_buffer;
       }
    }
 

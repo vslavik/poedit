@@ -28,6 +28,8 @@ namespace boost
 
     const char * line_break();
 
+    path search_root_path();
+
     class inspector
     {
     protected:

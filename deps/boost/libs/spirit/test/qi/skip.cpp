@@ -39,6 +39,10 @@ main()
         BOOST_TEST((test("ab c d", lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']], space)));
         BOOST_TEST((test("abcd", lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']], space)));
         BOOST_TEST(!(test("a bcd", lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']], space)));
+        
+        BOOST_TEST((test("ab c d", lexeme[lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']]], space)));
+        BOOST_TEST((test("abcd", lexeme[lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']]], space)));
+        BOOST_TEST(!(test("a bcd", lexeme[lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']]], space)));
     }
 
     { // lazy skip

@@ -54,7 +54,7 @@
 
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">mismatch</span> <span class="special">(</span> <span class="identifier">seq1</span><span class="special">.</span><span class="identifier">begin</span> <span class="special">(),</span> <span class="identifier">seq1</span><span class="special">.</span><span class="identifier">end</span> <span class="special">(),</span> <span class="identifier">seq2</span><span class="special">.</span><span class="identifier">begin</span> <span class="special">());</span> <span class="comment">// &lt;3, 3&gt;</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">mismatch</span> <span class="special">(</span> <span class="identifier">seq2</span><span class="special">.</span><span class="identifier">begin</span> <span class="special">(),</span> <span class="identifier">seq2</span><span class="special">.</span><span class="identifier">end</span> <span class="special">(),</span> <span class="identifier">seq1</span><span class="special">.</span><span class="identifier">begin</span> <span class="special">());</span> <span class="comment">// Undefined behavior</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">mismatch</span> <span class="special">(</span> <span class="identifier">seq1</span><span class="special">.</span><span class="identifier">begin</span> <span class="special">(),</span> <span class="identifier">seq1</span><span class="special">.</span><span class="identifier">end</span> <span class="special">(),</span> <span class="identifier">seq1</span><span class="special">.</span><span class="identifier">begin</span> <span class="special">(),</span> <span class="identifier">seq2</span><span class="special">.</span><span class="identifier">end</span> <span class="special">());</span> <span class="comment">// &lt;3, 3&gt;</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">mismatch</span> <span class="special">(</span> <span class="identifier">seq1</span><span class="special">.</span><span class="identifier">begin</span> <span class="special">(),</span> <span class="identifier">seq1</span><span class="special">.</span><span class="identifier">end</span> <span class="special">(),</span> <span class="identifier">seq2</span><span class="special">.</span><span class="identifier">begin</span> <span class="special">(),</span> <span class="identifier">seq2</span><span class="special">.</span><span class="identifier">end</span> <span class="special">());</span> <span class="comment">// &lt;3, 3&gt;</span>
 </pre>
 <p>
       </p>
@@ -128,9 +128,9 @@
 <p>
         Both of the variants of <code class="computeroutput"><span class="identifier">mismatch</span></code>
         run in <span class="emphasis"><em>O(N)</em></span> (linear) time; that is, they compare against
-        each element in the list once. If the sequence is found to be equal at any
-        point, the routine will terminate immediately, without examining the rest
-        of the elements.
+        each element in the list once. If the sequence is found to be not equal at
+        any point, the routine will terminate immediately, without examining the
+        rest of the elements.
       </p>
 <h5>
 <a name="the_boost_algorithm_library.CXX14.mismatch.h4"></a>

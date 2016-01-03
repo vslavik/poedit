@@ -14,6 +14,7 @@
 #include <boost/geometry/core/access.hpp>
 #include <boost/geometry/core/radian_access.hpp>
 
+#include <boost/geometry/util/math.hpp>
 #include <boost/geometry/util/select_calculation_type.hpp>
 #include <boost/geometry/util/promote_floating_point.hpp>
 
@@ -111,7 +112,7 @@ A mathematically equivalent formula, which is less subject
     to rounding error for short distances is:
     d=2*asin(sqrt((sin((lat1-lat2) / 2))^2
     + cos(lat1)*cos(lat2)*(sin((lon1-lon2) / 2))^2))
-    
+
 
 \qbk{
 [heading See also]
@@ -156,8 +157,8 @@ public :
     {
         typedef typename calculation_type<Point1, Point2>::type calculation_type;
         calculation_type const a = comparable_type::apply(p1, p2);
-        calculation_type const c = calculation_type(2.0) * asin(sqrt(a));
-        return m_radius * c;
+        calculation_type const c = calculation_type(2.0) * asin(math::sqrt(a));
+        return calculation_type(m_radius) * c;
     }
 
     /*!
@@ -276,10 +277,14 @@ public :
 };
 
 
-// Register it as the default for point-types 
+// Register it as the default for point-types
 // in a spherical equatorial coordinate system
 template <typename Point1, typename Point2>
-struct default_strategy<point_tag, Point1, Point2, spherical_equatorial_tag, spherical_equatorial_tag>
+struct default_strategy
+    <
+        point_tag, point_tag, Point1, Point2,
+        spherical_equatorial_tag, spherical_equatorial_tag
+    >
 {
     typedef strategy::distance::haversine<typename select_coordinate_type<Point1, Point2>::type> type;
 };

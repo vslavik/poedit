@@ -412,7 +412,7 @@ key are accomplished by passing tuples with the values searched:
 <span class=identifier>phonebook</span> <span class=identifier>pb</span><span class=special>;</span>
 <span class=special>...</span>
 <span class=comment>// search for Dorothea White's number</span>
-<span class=identifier>phonebook</span><span class=special>::</span><span class=identifier>iterator</span> <span class=identifier>it</span><span class=special>=</span><span class=identifier>pb</span><span class=special>.</span><span class=identifier>find</span><span class=special>(</span><span class=identifier>boost</span><span class=special>::</span><span class=identifier>make_tuple</span><span class=special>(</span><span class=string>&quot;White&quot;</span><span class=special>,</span><span class=string>&quot;Dorothea&quot;</span><span class=special>));</span>
+<span class=identifier>phonebook</span><span class=special>::</span><span class=identifier>iterator</span> <span class=identifier>it</span><span class=special>=</span><span class=identifier>pb</span><span class=special>.</span><span class=identifier>find</span><span class=special>(</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>make_tuple</span><span class=special>(</span><span class=string>&quot;White&quot;</span><span class=special>,</span><span class=string>&quot;Dorothea&quot;</span><span class=special>));</span>
 <span class=identifier>std</span><span class=special>::</span><span class=identifier>string</span> <span class=identifier>number</span><span class=special>=</span><span class=identifier>it</span><span class=special>-&gt;</span><span class=identifier>phone_number</span><span class=special>;</span>
 </pre></blockquote>
 
@@ -427,7 +427,7 @@ order allows for partial searches where only the first keys are specified:
 <span class=special>...</span>
 <span class=comment>// look for all Whites</span>
 <span class=identifier>std</span><span class=special>::</span><span class=identifier>pair</span><span class=special>&lt;</span><span class=identifier>phonebook</span><span class=special>::</span><span class=identifier>iterator</span><span class=special>,</span><span class=identifier>phonebook</span><span class=special>::</span><span class=identifier>iterator</span><span class=special>&gt;</span> <span class=identifier>p</span><span class=special>=</span>
-  <span class=identifier>pb</span><span class=special>.</span><span class=identifier>equal_range</span><span class=special>(</span><span class=identifier>boost</span><span class=special>::</span><span class=identifier>make_tuple</span><span class=special>(</span><span class=string>&quot;White&quot;</span><span class=special>));</span>
+  <span class=identifier>pb</span><span class=special>.</span><span class=identifier>equal_range</span><span class=special>(</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>make_tuple</span><span class=special>(</span><span class=string>&quot;White&quot;</span><span class=special>));</span>
 </pre></blockquote>
 
 <p>
@@ -522,7 +522,7 @@ Composite keys can also be used with hashed indices in a straightforward manner:
 <span class=keyword>void</span> <span class=identifier>streets_in_quadrant</span><span class=special>(</span><span class=keyword>int</span> <span class=identifier>x</span><span class=special>,</span><span class=keyword>int</span> <span class=identifier>y</span><span class=special>)</span>
 <span class=special>{</span>
   <span class=identifier>std</span><span class=special>::</span><span class=identifier>pair</span><span class=special>&lt;</span><span class=identifier>street_locator</span><span class=special>::</span><span class=identifier>iterator</span><span class=special>,</span><span class=identifier>street_locator</span><span class=special>::</span><span class=identifier>iterator</span><span class=special>&gt;</span> <span class=identifier>p</span><span class=special>=</span>
-    <span class=identifier>sl</span><span class=special>.</span><span class=identifier>equal_range</span><span class=special>(</span><span class=identifier>boost</span><span class=special>::</span><span class=identifier>make_tuple</span><span class=special>(</span><span class=identifier>x</span><span class=special>,</span><span class=identifier>y</span><span class=special>));</span>
+    <span class=identifier>sl</span><span class=special>.</span><span class=identifier>equal_range</span><span class=special>(</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>make_tuple</span><span class=special>(</span><span class=identifier>x</span><span class=special>,</span><span class=identifier>y</span><span class=special>));</span>
 
   <span class=keyword>while</span><span class=special>(</span><span class=identifier>p</span><span class=special>.</span><span class=identifier>first</span><span class=special>!=</span><span class=identifier>p</span><span class=special>.</span><span class=identifier>second</span><span class=special>){</span>
     <span class=identifier>std</span><span class=special>::</span><span class=identifier>cout</span><span class=special>&lt;&lt;</span><span class=identifier>p</span><span class=special>.</span><span class=identifier>first</span><span class=special>-&gt;</span><span class=identifier>name</span><span class=special>&lt;&lt;</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>endl</span><span class=special>;</span>
@@ -587,7 +587,7 @@ only the first elements of a composite key:
 <span class=comment>// try to locate streets in quadrants with x==0
 // compile-time error: hashed indices do not allow such operations</span>
 <span class=identifier>std</span><span class=special>::</span><span class=identifier>pair</span><span class=special>&lt;</span><span class=identifier>street_locator</span><span class=special>::</span><span class=identifier>iterator</span><span class=special>,</span><span class=identifier>street_locator</span><span class=special>::</span><span class=identifier>iterator</span><span class=special>&gt;</span> <span class=identifier>p</span><span class=special>=</span>
-  <span class=identifier>sl</span><span class=special>.</span><span class=identifier>equal_range</span><span class=special>(</span><span class=identifier>boost</span><span class=special>::</span><span class=identifier>make_tuple</span><span class=special>(</span><span class=number>0</span><span class=special>));</span>
+  <span class=identifier>sl</span><span class=special>.</span><span class=identifier>equal_range</span><span class=special>(</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>make_tuple</span><span class=special>(</span><span class=number>0</span><span class=special>));</span>
 </pre></blockquote>
 
 <p>
@@ -955,9 +955,9 @@ Container creation
 
 <br>
 
-<p>Revised June 11th 2007</p>
+<p>Revised August 20th 2014</p>
 
-<p>&copy; Copyright 2003-2007 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2003-2014 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

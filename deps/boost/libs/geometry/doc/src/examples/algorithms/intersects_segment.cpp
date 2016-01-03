@@ -15,7 +15,6 @@
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/linestring.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
-#include <boost/geometry/io/wkt/wkt.hpp>
 
 int main()
 {
