@@ -141,7 +141,7 @@
 { "tl"   , "nplurals=2; plural=(n > 1);" },
 { "tlh"  , "nplurals=2; plural=(n > 1);" },
 { "to"   , "nplurals=1; plural=0;" },
-{ "tr"   , "nplurals=1; plural=0;" },
+{ "tr"   , "nplurals=2; plural=(n != 1);" },
 { "tt"   , "nplurals=1; plural=0;" },
 { "udm"  , "nplurals=1; plural=0;" },
 { "ug"   , "nplurals=1; plural=0;" },
